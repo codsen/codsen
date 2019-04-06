@@ -103,7 +103,7 @@ function removeDuplicateHeadsTails(str) {
     var noteDownTheIndex;
     var resultOfAttemptToMatchHeads = stringMatchLeftRight.matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
-      cb: function cb(char, theRemainderOfTheString, index) {
+      cb: function cb(_char, theRemainderOfTheString, index) {
         noteDownTheIndex = index;
         return true;
       },
@@ -114,7 +114,7 @@ function removeDuplicateHeadsTails(str) {
     }
     var resultOfAttemptToMatchTails = stringMatchLeftRight.matchRightIncl(str1, noteDownTheIndex, opts1.tails, {
       trimBeforeMatching: true,
-      cb: function cb(char, theRemainderOfTheString, index) {
+      cb: function cb(_char2, theRemainderOfTheString, index) {
         noteDownTheIndex = index;
         return true;
       },
@@ -132,7 +132,7 @@ function removeDuplicateHeadsTails(str) {
     var noteDownTheIndex;
     var resultOfAttemptToMatchTails = stringMatchLeftRight.matchLeftIncl(str1, str1.length - 1, opts1.tails, {
       trimBeforeMatching: true,
-      cb: function cb(char, theRemainderOfTheString, index) {
+      cb: function cb(_char3, theRemainderOfTheString, index) {
         noteDownTheIndex = index;
         return true;
       },
@@ -143,7 +143,7 @@ function removeDuplicateHeadsTails(str) {
     }
     var resultOfAttemptToMatchHeads = stringMatchLeftRight.matchLeftIncl(str1, noteDownTheIndex, opts1.heads, {
       trimBeforeMatching: true,
-      cb: function cb(char, theRemainderOfTheString, index) {
+      cb: function cb(_char4, theRemainderOfTheString, index) {
         noteDownTheIndex = index;
         return true;
       },
@@ -171,7 +171,7 @@ function removeDuplicateHeadsTails(str) {
       var noteDownTheIndex = void 0;
       var resultOfAttemptToMatchHeads = stringMatchLeftRight.matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
-        cb: function cb(char, theRemainderOfTheString, index) {
+        cb: function cb(_char5, theRemainderOfTheString, index) {
           noteDownTheIndex = index;
           return true;
         },
@@ -185,7 +185,7 @@ function removeDuplicateHeadsTails(str) {
         var tempIndexUpTo = void 0;
         var _resultOfAttemptToMatchTails = stringMatchLeftRight.matchRightIncl(str, noteDownTheIndex, opts.tails, {
           trimBeforeMatching: true,
-          cb: function cb(char, theRemainderOfTheString, index) {
+          cb: function cb(_char6, theRemainderOfTheString, index) {
             tempIndexUpTo = index;
             return true;
           },
@@ -212,7 +212,7 @@ function removeDuplicateHeadsTails(str) {
       }
       var resultOfAttemptToMatchTails = stringMatchLeftRight.matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
-        cb: function cb(char, theRemainderOfTheString, index) {
+        cb: function cb(_char7, theRemainderOfTheString, index) {
           noteDownTheIndex = existy(index) ? index : str.length;
           return true;
         },

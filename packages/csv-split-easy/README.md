@@ -192,3 +192,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE
+[all-contributors-url]: https://github.com/kentcdodds/all-contributors

@@ -39,7 +39,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-set-all-values-to.cjs.js` | 2 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-set-all-values-to.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-set-all-values-to.umd.js` | 11 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-set-all-values-to.umd.js` | 12 KB |
 
 **[⬆ back to top](#)**
 

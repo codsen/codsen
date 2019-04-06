@@ -1,6 +1,6 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 83 npm libraries
+    A lerna monorepo for our 84 npm libraries
 
 ## 💡 Table of Contents
 
@@ -9,7 +9,7 @@
 - [String Processing Libraries](#-26-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-17-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-18-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -157,10 +157,11 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#-codsen-)**
 
-## 🛠️ 17 Miscellaneous Libraries
+## 🛠️ 18 Miscellaneous Libraries
 
 | Library's name | Purpose | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
+| [`all-named-html-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) | Array of all named HTML entities | [![all-named-html-entities on npm](https://img.shields.io/npm/v/all-named-html-entities.svg?style=flat-square)](https://www.npmjs.com/package/all-named-html-entities) | [packages/all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) |
 | [`array-group-str-omit-num-char`](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) | Groups array of strings by omitting number characters | [![array-group-str-omit-num-char on npm](https://img.shields.io/npm/v/array-group-str-omit-num-char.svg?style=flat-square)](https://www.npmjs.com/package/array-group-str-omit-num-char) | [packages/array-group-str-omit-num-char](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) |
 | [`array-includes-with-glob`](https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob/) | like `_.includes` but with wildcards | [![array-includes-with-glob on npm](https://img.shields.io/npm/v/array-includes-with-glob.svg?style=flat-square)](https://www.npmjs.com/package/array-includes-with-glob) | [packages/array-includes-with-glob](https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob/) |
 | [`array-of-arrays-into-ast`](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast/) | turns an array of arrays of data into a nested tree of plain objects | [![array-of-arrays-into-ast on npm](https://img.shields.io/npm/v/array-of-arrays-into-ast.svg?style=flat-square)](https://www.npmjs.com/package/array-of-arrays-into-ast) | [packages/array-of-arrays-into-ast](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast/) |

@@ -31,11 +31,11 @@ function _typeof(obj) {
 var isArr = Array.isArray;
 function expander(originalOpts) {
   var letterOrDigit = /^[0-9a-zA-Z]+$/;
-  function isWhitespace(char) {
-    if (!char || typeof char !== "string") {
+  function isWhitespace(_char) {
+    if (!_char || typeof _char !== "string") {
       return false;
     }
-    return char.trim().length === 0;
+    return _char.trim().length === 0;
   }
   function isStr(something) {
     return typeof something === "string";

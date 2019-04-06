@@ -41,11 +41,11 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function isAstral(char) {
-  if (typeof char !== "string") {
+function isAstral(_char) {
+  if (typeof _char !== "string") {
     return false;
   }
-  return char.charCodeAt(0) >= 55296 && char.charCodeAt(0) <= 57343;
+  return _char.charCodeAt(0) >= 55296 && _char.charCodeAt(0) <= 57343;
 }
 function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
   var strToMatchVal = typeof strToMatch === "function" ? strToMatch() : strToMatch;
