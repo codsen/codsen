@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.0 (2019-04-06)
+
+### Features
+
+- Bump padding to four if input is longer than 50K characters ([6855b53](https://gitlab.com/codsen/codsen/commit/6855b53))
+
 ## 1.3.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.5.13",
+  "version": "0.5.14",
   "description": "Maintenance automation for Readme's and, optionally, other project files",
   "license": "MIT",
   "engines": {
@@ -167,10 +167,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.19",
-    "arrayiffy-if-string": "^3.10.19",
-    "ast-monkey-traverse": "^1.11.15",
-    "bitbucket-slug": "^1.9.18",
+    "array-pull-all-with-glob": "^4.12.20",
+    "arrayiffy-if-string": "^3.10.20",
+    "ast-monkey-traverse": "^1.11.16",
+    "bitbucket-slug": "^1.9.19",
     "chalk": "^2.4.2",
     "execa": "^1.0.0",
     "filesize": "^4.1.2",
@@ -189,8 +189,8 @@
     "log-symbols": "^2.2.0",
     "matcher": "^1.1.1",
     "meow": "^5.0.0",
-    "object-delete-key": "^1.8.19",
-    "object-merge-advanced": "^10.10.19",
+    "object-delete-key": "^1.8.20",
+    "object-merge-advanced": "^10.10.20",
     "object-path": "^0.11.4",
     "p-map": "^2.0.0",
     "p-reduce": "^2.1.0",
@@ -218,8 +218,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     "esm": "^3.2.22",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "tempy": "^0.2.1"

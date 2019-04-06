@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "1.11.19",
+  "version": "1.11.20",
   "description": "Command line app to deep sort JSON files, also dot-files as long as they are valid JSON",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.15",
+    "ast-monkey-traverse": "^1.11.16",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "globby": "^9.2.0",
@@ -186,8 +186,8 @@
     "eslint-plugin-prettier": "^3.0.1",
     "esm": "^3.2.22",
     "execa": "^1.0.0",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "p-map": "^2.0.0",
     "prettier": "^1.16.4",

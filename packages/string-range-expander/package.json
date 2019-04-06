@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.10.19",
+  "version": "1.10.20",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.15",
+    "check-types-mini": "^5.7.16",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -176,8 +176,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",
