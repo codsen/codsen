@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.1.6...string-fix-broken-named-entities@2.2.0) (2019-04-06)
+
+
+### Bug Fixes
+
+* Align nbsp missing semicol error with other entities, use -malformed-nbsp ([12420e5](https://gitlab.com/codsen/codsen/commit/12420e5))
+
+
+### Features
+
+* Algorithm improvements - WIP - 7 tests failing ([40f0a5d](https://gitlab.com/codsen/codsen/commit/40f0a5d))
+* Before recoding missing semicolon check part ([ad3394f](https://gitlab.com/codsen/codsen/commit/ad3394f))
+* Checks for all named HTML entities, missing ampersands or semicolon recognition ([7762556](https://gitlab.com/codsen/codsen/commit/7762556))
+* Full support of all named HTML entities - missing semicolons or ampersands ([c0b92c5](https://gitlab.com/codsen/codsen/commit/c0b92c5))
+* Missing semicolon recognition on all entities - WIP - 8 failing ([31170b2](https://gitlab.com/codsen/codsen/commit/31170b2))
+* Rebase to use all-named-html-entities instead of plain list array of entities ([434945a](https://gitlab.com/codsen/codsen/commit/434945a))
+* Rudimentary protection against CSS false positive display:block ([8c14b90](https://gitlab.com/codsen/codsen/commit/8c14b90))
+* Separate numeric entities for releases later ([1942303](https://gitlab.com/codsen/codsen/commit/1942303))
+* WIP - 10 tests failing ([92237cd](https://gitlab.com/codsen/codsen/commit/92237cd))
+* WIP - 11 tests failing ([695a9e9](https://gitlab.com/codsen/codsen/commit/695a9e9))
+* WIP - 3 failing ([40db536](https://gitlab.com/codsen/codsen/commit/40db536))
+* WIP - 4 failing ([82aee92](https://gitlab.com/codsen/codsen/commit/82aee92))
+* WIP - 5 failing ([910f983](https://gitlab.com/codsen/codsen/commit/910f983))
+* WIP - callback guaranteed to always match non-callback result ([2ac4c60](https://gitlab.com/codsen/codsen/commit/2ac4c60))
+* WIP - rebasing, aiming to support missing semicols or ampersands on all entities ([271e5ee](https://gitlab.com/codsen/codsen/commit/271e5ee))
+
+
+
+
+
 ## 2.1.0 (2019-03-17)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "regex-empty-conditional-comments",
-  "version": "1.8.19",
+  "version": "1.8.20",
   "description": "Regular expression for matching HTML empty conditional comments",
   "license": "MIT",
   "engines": {
@@ -175,8 +175,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",

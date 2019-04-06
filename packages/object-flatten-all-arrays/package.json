@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "4.7.19",
+  "version": "4.7.20",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "license": "MIT",
   "engines": {
@@ -163,7 +163,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.15",
+    "check-types-mini": "^5.7.16",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.1",
     "type-detect": "^4.0.8"
@@ -180,8 +180,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",

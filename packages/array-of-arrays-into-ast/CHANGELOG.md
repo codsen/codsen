@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.20](https://gitlab.com/codsen/codsen/compare/array-of-arrays-into-ast@1.8.19...array-of-arrays-into-ast@1.8.20) (2019-04-06)
+
+**Note:** Version bump only for package array-of-arrays-into-ast
+
+
+
+
+
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

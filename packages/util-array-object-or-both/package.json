@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "2.7.19",
+  "version": "2.7.20",
   "description": "Validate and normalise user choice: array, object or both?",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.15",
+    "check-types-mini": "^5.7.16",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -177,8 +177,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",

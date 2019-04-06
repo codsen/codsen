@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.6.19",
+  "version": "2.6.20",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
@@ -170,7 +170,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.15",
+    "ast-monkey-traverse": "^1.11.16",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^1.1.1"
   },
@@ -186,8 +186,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.19",
-    "lect": "^0.5.13",
+    "js-row-num-cli": "^1.5.20",
+    "lect": "^0.5.14",
     "nyc": "^13.3.0",
     "object-path": "^0.11.4",
     "prettier": "^1.16.4",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://gitlab.com/codsen/codsen/compare/html-crush@1.0.10...html-crush@1.0.11) (2019-04-06)
+
+
+### Bug Fixes
+
+* Algorithm improvement not to break in front of </a to prevent accidentally adding new spaces ([8939654](https://gitlab.com/codsen/codsen/commit/8939654))
+
+
+
+
+
 ## 0.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
