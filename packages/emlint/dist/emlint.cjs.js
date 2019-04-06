@@ -13,7 +13,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var allNamedHtmlEntities = require('all-named-html-entities');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var checkTypes = _interopDefault(require('check-types-mini'));
@@ -981,18 +980,6 @@ function isTagChar(char) {
   }
   return !"><=".includes(char);
 }
-function lastChar(str) {
-  if (typeof str !== "string" || !str.length) {
-    return "";
-  }
-  return str[str.length - 1];
-}
-function secondToLastChar(str) {
-  if (typeof str !== "string" || !str.length || str.length === 1) {
-    return "";
-  }
-  return str[str.length - 2];
-}
 function isLowerCaseLetter(char) {
   return isStr(char) && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
 }
@@ -1494,13 +1481,11 @@ var isArr$1 = Array.isArray;
 var attributeOnTheRight$1 = attributeOnTheRight,
     withinTagInnerspace$1 = withinTagInnerspace,
     isLowerCaseLetter$1 = isLowerCaseLetter,
-    secondToLastChar$1 = secondToLastChar,
     findClosingQuote$1 = findClosingQuote,
     tagOnTheRight$1 = tagOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
     pingEspTag$1 = pingEspTag,
-    lastChar$1 = lastChar,
     isStr$1 = isStr,
     flip$1 = flip;
 function lint(str, originalOpts) {
@@ -1563,7 +1548,6 @@ function lint(str, originalOpts) {
   }
   var doNothingUntil = null;
   var doNothingUntilReason = null;
-  var letterSeqStartAt = null;
   var logTag;
   var defaultLogTag = {
     tagStartAt: null,
@@ -1642,7 +1626,6 @@ function lint(str, originalOpts) {
     issues: [],
     applicableRules: {}
   };
-  var entitiesTackledByFixBrokenEntities = ["nbsp"];
   Object.keys(errorsRules).concat(Object.keys(errorsCharacters)).sort().forEach(function (ruleName) {
     retObj.applicableRules[ruleName] = false;
   });
@@ -1764,36 +1747,6 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
-    if (letterSeqStartAt !== null && (str[_i].trim().length && !isLowerCaseLetter$1(str[_i]) || !str[_i + 1])) {
-      var potentialEntity = str.slice(letterSeqStartAt, str[_i + 1] ? _i : _i + 1);
-      var whatsOnTheLeft = str[stringLeftRight.left(str, letterSeqStartAt)];
-      if (whatsOnTheLeft === "&" || str[_i] === ";") {
-        var _temp;
-        if (whatsOnTheLeft !== "&" && allNamedHtmlEntities.entEndsWith.hasOwnProperty(lastChar$1(potentialEntity)) && allNamedHtmlEntities.entEndsWith[lastChar$1(potentialEntity)].hasOwnProperty(secondToLastChar$1(potentialEntity)) && allNamedHtmlEntities.entEndsWith[lastChar$1(potentialEntity)][secondToLastChar$1(potentialEntity)].some(function (val) {
-          if (potentialEntity.endsWith(val)) {
-            _temp = val;
-            i = _i;
-            return true;
-          }
-        })) {
-          if (!entitiesTackledByFixBrokenEntities.includes(_temp)) {
-            submit({
-              name: "bad-named-html-entity-malformed-".concat(potentialEntity),
-              position: [[_i - _temp.length, _i - _temp.length, "&"]]
-            });
-          }
-        } else if (str[_i] !== ";") {
-          submit({
-            name: "bad-named-html-entity-malformed-".concat(potentialEntity),
-            position: [[str[_i + 1] ? _i : _i + 1, str[_i + 1] ? _i : _i + 1, ";"]]
-          });
-        }
-      }
-      letterSeqStartAt = null;
-    }
-    if (letterSeqStartAt === null && isLowerCaseLetter$1(str[_i])) {
-      letterSeqStartAt = _i;
-    }
     if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars.includes(str[_i + 1])) {
       doNothingUntil = _i + 1;
     }
@@ -1858,9 +1811,9 @@ function lint(str, originalOpts) {
         }
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && _i >= logAttr.attrNameEndAt && str[_i].trim().length) {
-        var _temp2;
+        var _temp;
         if (str[_i] === "'" || str[_i] === '"') {
-          _temp2 = attributeOnTheRight$1(str, _i);
+          _temp = attributeOnTheRight$1(str, _i);
         }
         if (str[_i] === "=") {
           logAttr.attrEqualAt = _i;
@@ -1876,10 +1829,10 @@ function lint(str, originalOpts) {
                   name: "tag-attribute-repeated-equal",
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
-                var _temp3 = stringLeftRight.right(str, nextEqualEndAt - 1);
-                if (str[_temp3] === "=") {
+                var _temp2 = stringLeftRight.right(str, nextEqualEndAt - 1);
+                if (str[_temp2] === "=") {
                   nextEqualStartAt = nextEqualEndAt;
-                  nextEqualEndAt = _temp3 + 1;
+                  nextEqualEndAt = _temp2 + 1;
                   doNothingUntil = nextEqualEndAt;
                   doNothingUntilReason = "already processed equals";
                 } else {
@@ -1888,19 +1841,19 @@ function lint(str, originalOpts) {
               }
             }
           }
-        } else if (_temp2) {
+        } else if (_temp) {
           submit({
             name: "tag-attribute-missing-equal",
             position: [[_i, _i, "="]]
           });
           logAttr.attrEqualAt = _i;
           logAttr.attrValueStartAt = _i + 1;
-          logAttr.attrValueEndAt = _temp2;
+          logAttr.attrValueEndAt = _temp;
           logAttr.attrOpeningQuote.pos = _i;
           logAttr.attrOpeningQuote.val = str[_i];
-          logAttr.attrClosingQuote.pos = _temp2;
-          logAttr.attrClosingQuote.val = str[_temp2];
-          logAttr.attrValue = str.slice(_i + 1, _temp2);
+          logAttr.attrClosingQuote.pos = _temp;
+          logAttr.attrClosingQuote.val = str[_temp];
+          logAttr.attrValue = str.slice(_i + 1, _temp);
         } else {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
@@ -2107,11 +2060,11 @@ function lint(str, originalOpts) {
             var startingPoint = innerTagEndsAt;
             var attributeOnTheRightBeginsAt;
             if (innerTagContents.includes("=")) {
-              var _temp4 = innerTagContents.split("=")[0];
-              if (_temp4.split("").some(function (char) {
+              var _temp3 = innerTagContents.split("=")[0];
+              if (_temp3.split("").some(function (char) {
                 return !char.trim().length;
               })) {
-                for (var z = _i + _temp4.length; z--;) {
+                for (var z = _i + _temp3.length; z--;) {
                   if (!str[z].trim().length) {
                     attributeOnTheRightBeginsAt = z + 1;
                     break;
@@ -2144,9 +2097,9 @@ function lint(str, originalOpts) {
               if (!str[_z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = _z + 1;
                 if (str[stringLeftRight.right(str, caughtAttrEnd)] === "=") {
-                  var _temp5 = stringLeftRight.left(str, caughtAttrStart);
-                  if (!charIsQuote$1(str[_temp5])) {
-                    attributeOnTheRightBeginsAt = stringLeftRight.right(str, _temp5 + 1);
+                  var _temp4 = stringLeftRight.left(str, caughtAttrStart);
+                  if (!charIsQuote$1(str[_temp4])) {
+                    attributeOnTheRightBeginsAt = stringLeftRight.right(str, _temp4 + 1);
                   }
                   break;
                 } else {
@@ -2183,9 +2136,9 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos, logAttr.attrClosingQuote.pos);
             if (logAttr.attrValueStartAt < logAttr.attrValueEndAt) {
               for (var _z2 = logAttr.attrValueStartAt; _z2 < logAttr.attrValueEndAt; _z2++) {
-                var _temp6 = encodeChar$1(str, _z2);
-                if (_temp6) {
-                  submit(_temp6);
+                var _temp5 = encodeChar$1(str, _z2);
+                if (_temp5) {
+                  submit(_temp5);
                 }
               }
             }
@@ -2200,8 +2153,8 @@ function lint(str, originalOpts) {
             return "continue";
           } else {
             var start = logAttr.attrStartAt;
-            var _temp7 = stringLeftRight.right(str, _i);
-            if (str[_i] === "/" && _temp7 && str[_temp7] === ">" || str[_i] === ">") {
+            var _temp6 = stringLeftRight.right(str, _i);
+            if (str[_i] === "/" && _temp6 && str[_temp6] === ">" || str[_i] === ">") {
               for (var _y3 = logAttr.attrStartAt; _y3--;) {
                 if (str[_y3].trim().length) {
                   start = _y3 + 1;

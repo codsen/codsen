@@ -1,13 +1,11 @@
 import { c } from "../test-util/util";
 import test from "ava";
-// avanotonly
+// avaonly
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;
 const RAWSUP = `\u2283`;
 const RAWZWNJ = `\u200C`;
-
-// `a &sup b`
 
 //                                 HTML ENTITY TESTS
 
@@ -39,7 +37,12 @@ test(`00.05 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - three, raw amp`, t =>
   ));
 
 test(`00.06 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
-  c(`${RAWNBSP}${RAWNBSP}${RAWNBSP}`, `&nbsp;&nbsp;&nbsp;`, ["z"], t));
+  c(
+    `${RAWNBSP}${RAWNBSP}${RAWNBSP}`,
+    `&nbsp;&nbsp;&nbsp;`,
+    ["bad-character-unencoded-non-breaking-space"],
+    t
+  ));
 
 test(`00.07 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
   c(`${RAWSUP}${RAWSUP}${RAWSUP}`, `&sup;&sup;&sup;`, ["z"], t));

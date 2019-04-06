@@ -1,5 +1,4 @@
 import knownBooleanHTMLAttributes from "./knownBooleanHTMLAttributes.json";
-import { entStartsWith, entEndsWith } from "all-named-html-entities";
 import fixBrokenEntities from "string-fix-broken-named-entities";
 import errorsCharacters from "./errors-characters.json";
 import knownHTMLTags from "./knownHTMLTags.json";
@@ -17,15 +16,11 @@ const {
   attributeOnTheRight,
   withinTagInnerspace,
   isLowerCaseLetter,
-  secondToLastChar,
   findClosingQuote,
   tagOnTheRight,
   charIsQuote,
   encodeChar,
   pingEspTag,
-  secondChar,
-  firstChar,
-  lastChar,
   isStr,
   flip,
   log
@@ -290,8 +285,6 @@ function lint(str, originalOpts) {
     issues: [],
     applicableRules: {}
   };
-
-  const entitiesTackledByFixBrokenEntities = ["nbsp"];
 
   // prepare the "applicableRules"
   // -----------------------------------------------------------------------------
@@ -801,93 +794,6 @@ function lint(str, originalOpts) {
     //                                S
     //                                S
     //                                S
-
-    // Catch the end of a latin letter sequence.
-    if (
-      letterSeqStartAt !== null &&
-      ((str[i].trim().length && !isLowerCaseLetter(str[i])) || !str[i + 1])
-    ) {
-      const potentialEntity = str.slice(
-        letterSeqStartAt,
-        str[i + 1] ? i : i + 1
-      );
-      console.log(
-        `821 ${`\u001b[${35}m${`██ CARVED A SEQUENCE:\n${potentialEntity}`}\u001b[${39}m`}`
-      );
-      const whatsOnTheLeft = str[left(str, letterSeqStartAt)];
-      if (whatsOnTheLeft === "&" || str[i] === ";") {
-        // if (knownNamedHTMLEntities.includes(potentialEntity)) {
-        //   console.log(
-        //     `827 ${`\u001b[${35}m${`██ ENTITY CONFIRMED:\n${potentialEntity}`}\u001b[${39}m`}`
-        //   );
-        // }
-
-        let temp;
-
-        // tackle missing ampersand
-        if (
-          whatsOnTheLeft !== "&" &&
-          entEndsWith.hasOwnProperty(lastChar(potentialEntity)) &&
-          entEndsWith[lastChar(potentialEntity)].hasOwnProperty(
-            secondToLastChar(potentialEntity)
-          ) &&
-          entEndsWith[lastChar(potentialEntity)][
-            secondToLastChar(potentialEntity)
-          ].some(val => {
-            if (potentialEntity.endsWith(val)) {
-              temp = val;
-              return true;
-            }
-          })
-        ) {
-          if (!entitiesTackledByFixBrokenEntities.includes(temp)) {
-            // some entities (nbsp only at the moment) can be fixed with library
-            // string-fix-broken-named-entities which does more than just
-            // missing ampersands, semicolons and gaps, it also detects swapped
-            // or missing letters. To prevent both systems patching up entities,
-            // turn off the entity if it's known to be fixed by
-            // string-fix-broken-named-entities.
-            submit({
-              name: `bad-named-html-entity-malformed-${potentialEntity}`,
-              position: [[i - temp.length, i - temp.length, "&"]]
-            });
-            console.log(
-              `861 ${log(
-                "push",
-                `bad-named-html-entity-malformed-${potentialEntity}`,
-                `${`[[${i - temp.length}, ${i - temp.length}, "&"]]`}`
-              )}`
-            );
-          }
-        } else if (str[i] !== ";") {
-          // ELSE - tackle missing semicolon
-          submit({
-            name: `bad-named-html-entity-malformed-${potentialEntity}`,
-            position: [[str[i + 1] ? i : i + 1, str[i + 1] ? i : i + 1, ";"]]
-          });
-          console.log(
-            `875 ${log(
-              "push",
-              `bad-named-html-entity-malformed-${potentialEntity}`,
-              `${`[[${str[i + 1] ? i : i + 1}, ${
-                str[i + 1] ? i : i + 1
-              }, ";"]]`}`
-            )}`
-          );
-        }
-      }
-
-      letterSeqStartAt = null;
-      console.log(`887 ${log("set", "letterSeqStartAt", letterSeqStartAt)}`);
-    }
-
-    // Catch the start of the sequence of latin letters. It's necessary to
-    // tackle named HTML entity recognition, missing ampersands and semicolons.
-
-    if (letterSeqStartAt === null && isLowerCaseLetter(str[i])) {
-      letterSeqStartAt = i;
-      console.log(`895 ${log("set", "letterSeqStartAt", letterSeqStartAt)}`);
-    }
 
     // in heuristical ESP tag recognition cases, catch the closing of tails,
     // for example, if ESP tag was %%- ... -%% then we'd catch the -%% part here

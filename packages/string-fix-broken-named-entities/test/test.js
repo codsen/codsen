@@ -1666,6 +1666,11 @@ test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolate
   t.deepEqual(fix(inp1, { cb }), outp1, "08.003.02");
 });
 
+test(`08.004 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`, t => {
+  const inp1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
+  t.deepEqual(fix(inp1), null, "08.004");
+});
+
 // -----------------------------------------------------------------------------
 // 09. spaces within entities
 // -----------------------------------------------------------------------------

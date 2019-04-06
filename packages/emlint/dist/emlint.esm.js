@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
-import { entEndsWith } from 'all-named-html-entities';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import arrayiffy from 'arrayiffy-if-string';
 import checkTypes from 'check-types-mini';
@@ -1733,15 +1732,11 @@ const {
   attributeOnTheRight: attributeOnTheRight$1,
   withinTagInnerspace: withinTagInnerspace$1,
   isLowerCaseLetter: isLowerCaseLetter$1,
-  secondToLastChar: secondToLastChar$1,
   findClosingQuote: findClosingQuote$1,
   tagOnTheRight: tagOnTheRight$1,
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
   pingEspTag: pingEspTag$1,
-  secondChar: secondChar$1,
-  firstChar: firstChar$1,
-  lastChar: lastChar$1,
   isStr: isStr$1,
   flip: flip$1,
   log: log$1
@@ -1827,7 +1822,6 @@ function lint(str, originalOpts) {
   }
   let doNothingUntil = null;
   let doNothingUntilReason = null;
-  let letterSeqStartAt = null;
   let logTag;
   const defaultLogTag = {
     tagStartAt: null,
@@ -1900,7 +1894,6 @@ function lint(str, originalOpts) {
     issues: [],
     applicableRules: {}
   };
-  const entitiesTackledByFixBrokenEntities = ["nbsp"];
   Object.keys(errorsRules)
     .concat(Object.keys(errorsCharacters))
     .sort()
@@ -2126,50 +2119,6 @@ function lint(str, originalOpts) {
     if (withinQuotesEndAt && withinQuotesEndAt === i) {
       withinQuotes = null;
       withinQuotesEndAt = null;
-    }
-    if (
-      letterSeqStartAt !== null &&
-      ((str[i].trim().length && !isLowerCaseLetter$1(str[i])) || !str[i + 1])
-    ) {
-      const potentialEntity = str.slice(
-        letterSeqStartAt,
-        str[i + 1] ? i : i + 1
-      );
-      const whatsOnTheLeft = str[left(str, letterSeqStartAt)];
-      if (whatsOnTheLeft === "&" || str[i] === ";") {
-        let temp;
-        if (
-          whatsOnTheLeft !== "&" &&
-          entEndsWith.hasOwnProperty(lastChar$1(potentialEntity)) &&
-          entEndsWith[lastChar$1(potentialEntity)].hasOwnProperty(
-            secondToLastChar$1(potentialEntity)
-          ) &&
-          entEndsWith[lastChar$1(potentialEntity)][
-            secondToLastChar$1(potentialEntity)
-          ].some(val => {
-            if (potentialEntity.endsWith(val)) {
-              temp = val;
-              return true;
-            }
-          })
-        ) {
-          if (!entitiesTackledByFixBrokenEntities.includes(temp)) {
-            submit({
-              name: `bad-named-html-entity-malformed-${potentialEntity}`,
-              position: [[i - temp.length, i - temp.length, "&"]]
-            });
-          }
-        } else if (str[i] !== ";") {
-          submit({
-            name: `bad-named-html-entity-malformed-${potentialEntity}`,
-            position: [[str[i + 1] ? i : i + 1, str[i + 1] ? i : i + 1, ";"]]
-          });
-        }
-      }
-      letterSeqStartAt = null;
-    }
-    if (letterSeqStartAt === null && isLowerCaseLetter$1(str[i])) {
-      letterSeqStartAt = i;
     }
     if (
       doNothingUntil &&

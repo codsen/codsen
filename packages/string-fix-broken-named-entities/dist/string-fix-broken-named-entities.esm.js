@@ -367,7 +367,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   i,
                   ...oneOfKnownEntities.split("")
                 );
-                if (tempRes && oneOfKnownEntities !== "nbsp") {
+                if (
+                  tempRes &&
+                  oneOfKnownEntities !== "nbsp" &&
+                  !(
+                    oneOfKnownEntities === "block" &&
+                    str[left(str, letterSeqStartAt)] === ":"
+                  )
+                ) {
                   return gatheredSoFar.concat([
                     { tempEnt: oneOfKnownEntities, tempRes }
                   ]);

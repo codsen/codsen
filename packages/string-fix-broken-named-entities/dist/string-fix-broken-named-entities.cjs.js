@@ -58,8 +58,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  function isLatinLetterOrNumber(char) {
-    return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91);
+  function isLatinLetterOrNumber(_char) {
+    return isStr(_char) && _char.length === 1 && (_char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123 || _char.charCodeAt(0) > 47 && _char.charCodeAt(0) < 58 || _char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91);
   }
   function onlyContainsNbsp(str, from, to) {
     for (var i = from; i < to; i++) {
@@ -258,7 +258,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             var _tempRes;
             var _temp2 = allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
               var tempRes = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
-              if (tempRes && oneOfKnownEntities !== "nbsp") {
+              if (tempRes && oneOfKnownEntities !== "nbsp" && !(oneOfKnownEntities === "block" && str[stringLeftRight.left(str, letterSeqStartAt)] === ":")) {
                 return gatheredSoFar.concat([{
                   tempEnt: oneOfKnownEntities,
                   tempRes: tempRes
