@@ -9,6 +9,8 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+![update](https://glcdn.githack.com/codsen/codsen/raw/master/packages/update-versions/media/upd.gif)
+
 ## Table of Contents
 
 - [Install](#install)
