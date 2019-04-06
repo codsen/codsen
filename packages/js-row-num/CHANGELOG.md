@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.1.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.0.10...js-row-num@2.1.0) (2019-04-06)
-
+## 2.1.0 (2019-04-06)
 
 ### Features
 
-* Bump padding to four if input is longer than 50K characters ([6855b53](https://gitlab.com/codsen/codsen/commit/6855b53))
-
-
-
-
+- Bump padding to four if input is longer than 50K characters ([6855b53](https://gitlab.com/codsen/codsen/commit/6855b53))
 
 ## 1.3.0 (2019-01-20)
 

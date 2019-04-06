@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.2.0](https://gitlab.com/codsen/codsen/compare/string-left-right@2.1.6...string-left-right@2.2.0) (2019-04-06)
-
+## 2.2.0 (2019-04-06)
 
 ### Features
 
-* Case insensitive opts to seqLeft and seqRight ([fafbf19](https://gitlab.com/codsen/codsen/commit/fafbf19))
-* Hungry chomp ([fd07afd](https://gitlab.com/codsen/codsen/commit/fd07afd))
-
-
-
-
+- Case insensitive opts to seqLeft and seqRight ([fafbf19](https://gitlab.com/codsen/codsen/commit/fafbf19))
+- Hungry chomp ([fd07afd](https://gitlab.com/codsen/codsen/commit/fd07afd))
 
 ## 2.1.5 (2019-03-22)
 
