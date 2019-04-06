@@ -255,7 +255,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           str.slice(nbsp.nameStartsAt, i) === "&nbsp"
         ) {
           rangesArr2.push({
-            ruleName: "bad-named-html-entity-missing-semicolon",
+            ruleName: "bad-named-html-entity-malformed-nbsp",
             entityName: "nbsp",
             rangeFrom: nbsp.nameStartsAt,
             rangeTo: i,

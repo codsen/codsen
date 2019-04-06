@@ -995,7 +995,7 @@ test(`02.111 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - missing semicolon gets
   const inp5 = "aaa&nbspbbb";
   const outp5 = [
     {
-      ruleName: "bad-named-html-entity-missing-semicolon",
+      ruleName: "bad-named-html-entity-malformed-nbsp",
       entityName: "nbsp",
       rangeFrom: 3,
       rangeTo: 8,
