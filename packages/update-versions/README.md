@@ -30,7 +30,7 @@ Alternatively, you can also run it without installing, using `npx update-version
 
 `npx update-versions`
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## The Problem
 
@@ -48,7 +48,7 @@ Enforcing all dependencies are prefixed with `^`, no matter what comes from `pac
 
 Lerna will not properly bootstrap the dependencies if those are not in `^x.y.z`
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## The Solution
 
@@ -64,7 +64,7 @@ By _smartly_ we mean:
 - It's automated and doesn't even need to read your lerna config to find all packages.
 - Algorithm skips all folders at or within `node_modules`.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Extras
 
@@ -76,7 +76,7 @@ By _smartly_ we mean:
 
 PS. We are using `update-versions` to maintain itself — our [monorepo](https://gitlab.com/codsen/codsen/) version updates are driven by this very CLI.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Ingredients
 
@@ -95,20 +95,20 @@ Only the finest dependencies are used:
 | [`update-notifier`](https://www.npmjs.com/package/update-notifier)           | Pesters users if CLI is not up-to-date. npm use it too.                                                                                           |
 | [`write-json-file`](https://www.npmjs.com/package/write-json-file)           | Atomically writes JSON. [Prevents](<https://en.wikipedia.org/wiki/Atomicity_(database_systems)>) broken files if/when write operation goes wrong. |
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here).
-* If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here). Let's discuss it.
-* If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here). We'll try to help.
-* If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
+- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=update-versions%20package%20-%20put%20title%20here&issue[description]=%23%23%20update-versions%0A%0Aput%20description%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -116,22 +116,15 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-
-
 [node-img]: https://img.shields.io/node/v/update-versions.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/update-versions
-
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/update-versions
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/update-versions
-
 [downloads-img]: https://img.shields.io/npm/dm/update-versions.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/update-versions
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

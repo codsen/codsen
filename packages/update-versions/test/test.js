@@ -181,8 +181,7 @@ test.serial("01 - monorepo", async t => {
     .catch(err => t.fail(err));
 });
 
-// test.serial("02 - normal repo", async t => {
-test.only("02 - normal repo", async t => {
+test.serial("02 - normal repo", async t => {
   const tempFolder = "temp";
 
   // 1. create folders:

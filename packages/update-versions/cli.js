@@ -95,16 +95,29 @@ if (cli.flags) {
               updatedThisDep = true;
             }
           } else {
-            const retrievedVersion = await pacote
-              .manifest(singleDepName)
-              .then(pkg => pkg.version);
-            db[singleDepName] = retrievedVersion;
-            if (
-              contents.dependencies[singleDepName] !== `^${retrievedVersion}`
-            ) {
-              contents.dependencies[singleDepName] = `^${retrievedVersion}`;
-              wrote = true;
-              updatedThisDep = true;
+            let retrievedVersion;
+            try {
+              retrievedVersion = await pacote
+                .manifest(singleDepName)
+                .then(pkg => pkg.version);
+            } catch (err) {
+              console.log(
+                `   ${`\u001b[${36}m${path.dirname(
+                  p
+                )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
+              );
+              logUpdate.done();
+            }
+
+            if (retrievedVersion) {
+              db[singleDepName] = retrievedVersion;
+              if (
+                contents.dependencies[singleDepName] !== `^${retrievedVersion}`
+              ) {
+                contents.dependencies[singleDepName] = `^${retrievedVersion}`;
+                wrote = true;
+                updatedThisDep = true;
+              }
             }
           }
           if (updatedThisDep) {
@@ -148,9 +161,6 @@ if (cli.flags) {
           const singleDepName = keys[y];
           const singleDepValue = contents.devDependencies[keys[y]];
           if (db.hasOwnProperty(singleDepName)) {
-            // if (path.dirname(p) === "html-crush") {
-            //   console.log(`152 ${singleDepName} db`);
-            // }
             if (
               contents.devDependencies[singleDepName] !==
               `^${db[singleDepName]}`
@@ -160,19 +170,31 @@ if (cli.flags) {
               updatedThisDep = true;
             }
           } else {
-            // if (path.dirname(p) === "html-crush") {
-            //   console.log(`164 ${singleDepName} ping pacote`);
-            // }
-            const retrievedVersion = await pacote
-              .manifest(singleDepName)
-              .then(pkg => pkg.version);
-            db[singleDepName] = retrievedVersion;
-            if (
-              contents.devDependencies[singleDepName] !== `^${retrievedVersion}`
-            ) {
-              contents.devDependencies[singleDepName] = `^${retrievedVersion}`;
-              wrote = true;
-              updatedThisDep = true;
+            let retrievedVersion;
+            try {
+              retrievedVersion = await pacote
+                .manifest(singleDepName)
+                .then(pkg => pkg.version);
+            } catch (err) {
+              console.log(
+                `   ${`\u001b[${36}m${path.dirname(
+                  p
+                )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
+              );
+              logUpdate.done();
+            }
+            if (retrievedVersion) {
+              db[singleDepName] = retrievedVersion;
+              if (
+                contents.devDependencies[singleDepName] !==
+                `^${retrievedVersion}`
+              ) {
+                contents.devDependencies[
+                  singleDepName
+                ] = `^${retrievedVersion}`;
+                wrote = true;
+                updatedThisDep = true;
+              }
             }
           }
           if (updatedThisDep) {
@@ -200,8 +222,9 @@ if (cli.flags) {
       logUpdate(
         `${
           logSymbols.success
-        } ${`\u001b[${90}m${`update-versions:`}\u001b[${39}m`} ${i +
-          1}/${totalLength} ${`\u001b[${90}m${`done`}\u001b[${39}m`}`
+        } ${`\u001b[${90}m${`update-versions:`}\u001b[${39}m`}${
+          totalLength > 1 ? ` ${i + 1}/${totalLength}` : ""
+        } ${`\u001b[${90}m${`done`}\u001b[${39}m`}`
       );
     } catch (err) {
       console.log(
