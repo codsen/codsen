@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import { entStartsWith, decode, entEndsWith } from 'all-named-html-entities';
-import { left, right, chompLeft, leftSeq, rightSeq } from 'string-left-right';
+import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
 function stringFixBrokenNamedEntities(str, originalOpts) {
@@ -24,13 +24,22 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  function isLatinLetter(char) {
+  function isLatinLetterOrNumber(char) {
     return (
       isStr(char) &&
       char.length === 1 &&
-      ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
-        (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+      ((char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123) ||
+        (char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58) ||
+        (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91))
     );
+  }
+  function onlyContainsNbsp(str, from, to) {
+    for (let i = from; i < to; i++) {
+      if (str[i].trim().length && !`nbsp`.includes(str[i].toLowerCase())) {
+        return false;
+      }
+    }
+    return true;
   }
   function findLongest(temp1) {
     if (isArr(temp1) && temp1.length) {
@@ -136,7 +145,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   const nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
-    patience: 2,
+    patience: 1,
     matchedN: null,
     matchedB: null,
     matchedS: null,
@@ -214,11 +223,32 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           str[i].toLowerCase() !== "p") ||
         str[left(str, i)] === ";") &&
       str[i] !== ";" &&
-      (str[i + 1] === undefined || str[right(str, i)] !== ";")
+      (str[i + 1] === undefined || str[right(str, i)] !== ";") &&
+      (nbsp.matchedB !== null ||
+        (!(
+          str[smallestCharFromTheSetAt] === "n" &&
+          str[left(str, smallestCharFromTheSetAt)] &&
+          str[left(str, smallestCharFromTheSetAt)].toLowerCase() === "e"
+        ) &&
+          !(
+            nbsp.matchedN !== null &&
+            rightSeq(str, nbsp.matchedN, { i: true }, "s", "u", "p")
+          ) &&
+          str[right(str, nbsp.matchedN)].toLowerCase() !== "c")) &&
+      (nbsp.matchedB === null ||
+        onlyContainsNbsp(
+          str,
+          smallestCharFromTheSetAt,
+          largestCharFromTheSetAt + 1
+        ) ||
+        !(
+          str[smallestCharFromTheSetAt] &&
+          str[largestCharFromTheSetAt] &&
+          str[smallestCharFromTheSetAt].toLowerCase() === "n" &&
+          str[largestCharFromTheSetAt].toLowerCase() === "b"
+        ))
     ) {
-      if (
-        str.slice(nbsp.nameStartsAt, i) !== "&nbsp;"
-      ) {
+      if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
         if (
           nbsp.nameStartsAt != null &&
           i - nbsp.nameStartsAt === 5 &&
@@ -274,7 +304,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
     if (
       letterSeqStartAt !== null &&
-      (!str[i] || (str[i].trim().length && !isLatinLetter(str[i])))
+      (!str[i] || (str[i].trim().length && !isLatinLetterOrNumber(str[i])))
     ) {
       if (i > letterSeqStartAt + 1) {
         const potentialEntity = str.slice(letterSeqStartAt, i);
@@ -366,7 +396,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
       letterSeqStartAt = null;
     }
-    if (letterSeqStartAt === null && isLatinLetter(str[i])) {
+    if (letterSeqStartAt === null && isLatinLetterOrNumber(str[i])) {
       letterSeqStartAt = i;
     }
     if (str[i] === "a") {

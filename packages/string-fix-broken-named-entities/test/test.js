@@ -1,6 +1,6 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
-// import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
+import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -903,15 +903,15 @@ test(`02.098 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampers
 });
 
 test(`02.099 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - full set`, t => {
-  const inp1 = "a&bnsp;b&nsbp;c&nspb;";
-  const outp1 = [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]];
+  const inp1 = "a&bnsp;b&nsbp;c";
+  const outp1 = [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.099.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.099.02");
 });
 
 test(`02.100 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - one missing`, t => {
-  const inp1 = "abnsp;bnsbp;cnspb;";
-  const outp1 = [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]];
+  const inp1 = "abnsp;bnsbp;c";
+  const outp1 = [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.100.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.100.02");
 });
@@ -931,15 +931,15 @@ test(`02.102 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swappe
 });
 
 test(`02.103 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - s missing`, t => {
-  const inp1 = "a&bnp;b&nbp;c&npb;";
-  const outp1 = [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]];
+  const inp1 = "a&mbsp;b&nbdp;c&nbsb;";
+  const outp1 = [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.103.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.103.02");
 });
 
 test(`02.104 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${90}m${`swapped letters`}\u001b[${39}m - p missing`, t => {
-  const inp1 = "a&bns;b&nsb;c&nsb;";
-  const outp1 = [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]];
+  const inp1 = "a&nbso;b&nbsl;c&nsbb;";
+  const outp1 = [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.104.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.104.02");
 });
@@ -1670,7 +1670,7 @@ test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolate
 // 09. spaces within entities
 // -----------------------------------------------------------------------------
 
-test(`09.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`, t => {
+test(`09.001 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`, t => {
   const inp5 = "& nbsp;";
   const outp5 = [
     {
@@ -1685,7 +1685,7 @@ test(`09.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "09.001.01");
 });
 
-test(`09.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
+test(`09.002 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
   const inp5 = "&nbsp ;";
   const outp5 = [
     {
@@ -1700,7 +1700,7 @@ test(`09.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "09.002.01");
 });
 
-test(`09.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
+test(`09.003 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
   const inp5 = "& nbsp ;";
   const outp5 = [
     {
@@ -1719,16 +1719,25 @@ test(`09.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
 // 10. programmatic tests
 // -----------------------------------------------------------------------------
 
-// test(`10.XXX - ${`\u001b[${33}m${`programmatic tests`}\u001b[${39}m`}`, t => {
-//   Object.keys(allEntities).forEach(singleEntity => {
-//     // ampersand missing, isolated:
-//     t.deepEqual(
-//       fix(`${singleEntity};`),
-//       [[0, singleEntity.length + 1, `&${singleEntity};`]],
-//       `${singleEntity} - 01`
-//     );
-//   });
-// });
+test(`10.1-${
+  Object.keys(allEntities).length
+} - ${`\u001b[${33}m${`programmatic tests`}\u001b[${39}m`}`, t => {
+  Object.keys(allEntities).forEach((singleEntity, i, arr) => {
+    // ampersand missing, isolated:
+    t.deepEqual(
+      fix(`${singleEntity};`),
+      [[0, singleEntity.length + 1, `&${singleEntity};`]],
+      `${singleEntity} - 01; ${i}/${arr.length}`
+    );
+
+    // semicolon missing, isolated:
+    t.deepEqual(
+      fix(`&${singleEntity}`),
+      [[0, singleEntity.length + 1, `&${singleEntity};`]],
+      `${singleEntity} - 02; ${i}/${arr.length}`
+    );
+  });
+});
 
 // -----------------------------------------------------------------------------
 // 11. numeric entities

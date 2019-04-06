@@ -58,8 +58,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  function isLatinLetter(char) {
-    return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  function isLatinLetterOrNumber(char) {
+    return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91);
+  }
+  function onlyContainsNbsp(str, from, to) {
+    for (var i = from; i < to; i++) {
+      if (str[i].trim().length && !"nbsp".includes(str[i].toLowerCase())) {
+        return false;
+      }
+    }
+    return true;
   }
   function findLongest(temp1) {
     if (isArr(temp1) && temp1.length) {
@@ -123,7 +131,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
-    patience: 2,
+    patience: 1,
     matchedN: null,
     matchedB: null,
     matchedS: null,
@@ -167,33 +175,34 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     });
     smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";")) {
-      if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;"
-      ) {
-          if (nbsp.nameStartsAt != null && i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, i) === "&nbsp") {
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";") && (nbsp.matchedB !== null || !(str[smallestCharFromTheSetAt] === "n" && str[stringLeftRight.left(str, smallestCharFromTheSetAt)] && str[stringLeftRight.left(str, smallestCharFromTheSetAt)].toLowerCase() === "e") && !(nbsp.matchedN !== null && stringLeftRight.rightSeq(str, nbsp.matchedN, {
+      i: true
+    }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
+      if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
+        if (nbsp.nameStartsAt != null && i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, i) === "&nbsp") {
+          rangesArr2.push({
+            ruleName: "bad-named-html-entity-missing-semicolon",
+            entityName: "nbsp",
+            rangeFrom: nbsp.nameStartsAt,
+            rangeTo: i,
+            rangeValEncoded: "&nbsp;",
+            rangeValDecoded: "\xA0"
+          });
+        } else {
+          var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
+          var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
+          if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
             rangesArr2.push({
-              ruleName: "bad-named-html-entity-missing-semicolon",
+              ruleName: "bad-named-html-entity-malformed-nbsp",
               entityName: "nbsp",
-              rangeFrom: nbsp.nameStartsAt,
+              rangeFrom: beginningOfTheRange,
               rangeTo: i,
               rangeValEncoded: "&nbsp;",
               rangeValDecoded: "\xA0"
             });
-          } else {
-            var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
-            var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
-            if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
-              rangesArr2.push({
-                ruleName: "bad-named-html-entity-malformed-nbsp",
-                entityName: "nbsp",
-                rangeFrom: beginningOfTheRange,
-                rangeTo: i,
-                rangeValEncoded: "&nbsp;",
-                rangeValDecoded: "\xA0"
-              });
-            }
           }
         }
+      }
       nbspWipe();
       counter++;
       return "continue|outerloop";
@@ -203,7 +212,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       counter++;
       return "continue|outerloop";
     }
-    if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetter(str[i]))) {
+    if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumber(str[i]))) {
       if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = stringLeftRight.left(str, letterSeqStartAt);
@@ -279,7 +288,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
       letterSeqStartAt = null;
     }
-    if (letterSeqStartAt === null && isLatinLetter(str[i])) {
+    if (letterSeqStartAt === null && isLatinLetterOrNumber(str[i])) {
       letterSeqStartAt = i;
     }
     if (str[i] === "a") {
