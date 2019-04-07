@@ -1033,7 +1033,7 @@ test("06.01 - some keys filled, some ignored because they have placeholders-only
 // 7. opts.useNullAsExplicitFalse
 // ========================================================
 
-test("06.01 - opts.useNullAsExplicitFalse - case #1", t => {
+test("07.01 - opts.useNullAsExplicitFalse - case #1", t => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -1067,7 +1067,7 @@ test("06.01 - opts.useNullAsExplicitFalse - case #1", t => {
       },
       z: "z"
     },
-    "06.01.01"
+    "07.01.01"
   );
 
   t.deepEqual(
@@ -1100,11 +1100,11 @@ test("06.01 - opts.useNullAsExplicitFalse - case #1", t => {
       },
       z: "z"
     },
-    "06.01.02"
+    "07.01.02"
   );
 });
 
-test("06.02 - opts.useNullAsExplicitFalse - case #2", t => {
+test("07.02 - opts.useNullAsExplicitFalse - case #2", t => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -1120,7 +1120,7 @@ test("06.02 - opts.useNullAsExplicitFalse - case #2", t => {
     {
       a: true
     },
-    "06.02.01"
+    "07.02.01"
   );
   t.deepEqual(
     fillMissingKeys(
@@ -1137,11 +1137,11 @@ test("06.02 - opts.useNullAsExplicitFalse - case #2", t => {
     {
       a: null
     },
-    "06.02.02"
+    "07.02.02"
   );
 });
 
-test("06.03 - opts.useNullAsExplicitFalse - case #3", t => {
+test("07.03 - opts.useNullAsExplicitFalse - case #3", t => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -1157,7 +1157,7 @@ test("06.03 - opts.useNullAsExplicitFalse - case #3", t => {
     {
       a: ["z"]
     },
-    "06.03.01"
+    "07.03.01"
   );
   t.deepEqual(
     fillMissingKeys(
@@ -1174,6 +1174,6 @@ test("06.03 - opts.useNullAsExplicitFalse - case #3", t => {
     {
       a: null
     },
-    "06.03.02"
+    "07.03.02"
   );
 });

@@ -58,7 +58,7 @@ This library performs the key creation part in the JSON files' _normalisation_ o
 
 First, you take two or more plain objects, normally originating from JSON files' contents.
 
-Then, you [calculate](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core) the _schema reference_ out of them. It's a superset object of all possible keys used across the objects (your JSON files).
+Then, you [calculate the _schema reference_](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core#getkeysetsync) out of them. It's a superset object of all possible keys used across the objects (your JSON files).
 
 Finally, you go through your plain objects second time, one-by-one and [fill missing keys](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core) using **this library**. It takes the plain object and your generated _schema reference_ (and optionally a custom placeholder if you don't like Boolean `false`) and creates missing keys/arrays in that plain object.
 
