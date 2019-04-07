@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- Algorithm improvement not to break in front of </a to prevent accidentally adding new spaces ([8939654](https://gitlab.com/codsen/codsen/commit/8939654))
+- Algorithm improvement not to break in front of `</a>` to prevent accidentally adding new spaces ([8939654](https://gitlab.com/codsen/codsen/commit/8939654))
 
 ## 0.8.0 (2019-01-20)
 
