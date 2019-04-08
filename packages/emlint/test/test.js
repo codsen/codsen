@@ -2877,7 +2877,6 @@ test(`XX.03 - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - correct entities`, 
 // todo - duplicate attribute - boolean and normal, with a value
 // todo - tag-missing-closing-bracket, where there's also hanging slash but no bracket
 // todo - duplicate closing bracket
-// todo - duplicate slash
 // todo - duplicate closing quotes
 // todo - duplicate opening quotes
 // todo - duplicate equal
