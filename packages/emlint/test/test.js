@@ -2804,6 +2804,52 @@ test(`34.03 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash mi
     t
   ));
 
+// 35. rule "tag-duplicate-closing-slash"
+// -----------------------------------------------------------------------------
+
+test(`35.01 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - double slash, tight`, t =>
+  c(`<a something//>`, `<a something/>`, "tag-duplicate-closing-slash", t));
+
+test(`35.02 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - double slash space`, t =>
+  c(
+    `<a something// >`,
+    `<a something/>`,
+    ["tag-duplicate-closing-slash", "tag-whitespace-closing-slash-and-bracket"],
+    t
+  ));
+
+test(`35.03 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - space double slash`, t =>
+  c(
+    `<a something //>`,
+    `<a something/>`,
+    ["tag-duplicate-closing-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`35.04 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - spaced double slash`, t =>
+  c(
+    `<a something // >`,
+    `<a something/>`,
+    [
+      "tag-duplicate-closing-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
+    t
+  ));
+
+test(`35.05 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - excessive mixed-spacing slashes`, t =>
+  c(
+    `<a something / / / / / / / /////  / /   >`,
+    `<a something/>`,
+    [
+      "tag-duplicate-closing-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
+    t
+  ));
+
 // XX. ad hoc
 // -----------------------------------------------------------------------------
 
@@ -2860,4 +2906,4 @@ test(`XX.03 - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - correct entities`, 
 // < --> &lt;
 // > --> &gt;
 // " --> &quot;
-// "...escape all characters with ASCII values less than 256"
+// "...escape all characters with ASCII values more than 256"

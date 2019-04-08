@@ -77,7 +77,7 @@ const c1CharacterNames = [
 
 function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
-  // console.log(`080 emlint/util/charSuitableForAttrName(): return ${res}`);
+  // console.log(`0080 emlint/util/charSuitableForAttrName(): return ${res}`);
   return res;
 }
 
@@ -128,13 +128,13 @@ function onlyTheseLeadToThat(
   let lastRes = false;
 
   for (let i = 0, len = str.length; i < len; i++) {
-    console.log(`131 str[${i}] = ${str[i]}`);
+    console.log(`0131 str[${i}] = ${str[i]}`);
     // catch breaking character; run given char. through breaking validators
     if (breakingCharValidatorFuncArr.some(func => func(str[i], i))) {
       if (!terminatorCharValidatorFuncArr) {
         // not greedy
         console.log(
-          `137 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${i}`}\u001b[${39}m`}`
+          `0137 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${i}`}\u001b[${39}m`}`
         );
         return i;
       }
@@ -149,7 +149,7 @@ function onlyTheseLeadToThat(
       terminatorCharValidatorFuncArr.some(func => func(str[i], i))
     ) {
       console.log(
-        `152 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${lastRes}`}\u001b[${39}m`}`
+        `0152 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${lastRes}`}\u001b[${39}m`}`
       );
       return lastRes;
     }
@@ -160,7 +160,7 @@ function onlyTheseLeadToThat(
       !breakingCharValidatorFuncArr.some(func => func(str[i], i))
     ) {
       console.log(
-        `163 util/onlyTheseLeadToThat: ${`\u001b[${31}m${`██`}\u001b[${39}m`} return ${`\u001b[${31}m${`false`}\u001b[${39}m`}`
+        `0163 util/onlyTheseLeadToThat: ${`\u001b[${31}m${`██`}\u001b[${39}m`} return ${`\u001b[${31}m${`false`}\u001b[${39}m`}`
       );
       return false;
     }
@@ -196,7 +196,7 @@ function charIsQuote(char) {
   // u2019 - right single
   // also notice backtick escaped below, third character in a quotes row:
   const res = `"'\`\u2018\u2019\u201C\u201D`.includes(char);
-  // console.log(`199 emlint/util/charIsQuote(): return ${res}`);
+  // console.log(`0199 emlint/util/charIsQuote(): return ${res}`);
   return res;
 }
 
@@ -207,7 +207,7 @@ function isTagChar(char) {
     );
   }
   // const res = !`><=`.includes(char);
-  // console.log(`210 emlint/util/charNotTag(): return ${res}`);
+  // console.log(`0210 emlint/util/charNotTag(): return ${res}`);
   // return res;
   return !`><=`.includes(char);
 }
@@ -315,7 +315,7 @@ function log(...pairs) {
 // index 1" would mean that exact meant location is to the left of "b", between "a" and "b".
 function withinTagInnerspace(str, idx, closingQuotePos) {
   console.log("\n\n\n\n\n");
-  console.log(`318 withinTagInnerspace() called, idx = ${idx}`);
+  console.log(`0318 withinTagInnerspace() called, idx = ${idx}`);
   if (typeof idx !== "number") {
     if (idx == null) {
       idx = 0;
@@ -517,7 +517,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     ) {
       quotes.at = null;
       // console.log(
-      //   `520 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //   `0520 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
       //     "set",
       //     "quotes.at",
       //     quotes.at
@@ -554,7 +554,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       ">".includes(str[right(str, i)])
     ) {
       console.log(
-        `557 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `0557 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "return",
           "true"
         )}`
@@ -574,7 +574,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     if (!quotes.within && beginningOfAString && str[i] === ">" && !r3_1) {
       r3_1 = true;
       console.log(
-        `577 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `0577 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r3_1",
           r3_1
@@ -593,7 +593,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         // <img alt=>
         //          ^ <---- we're here, at closing bracket, further there's EOF
         console.log(
-          `596 EOF detected ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0596 EOF detected ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -603,7 +603,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       } else if (str[right(str, i)] === "<") {
         // nobody puts "><" within attribute values
         console.log(
-          `606 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0606 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -618,7 +618,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (str[i] === "<") {
         r3_2 = true;
         console.log(
-          `621 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0621 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_2",
             r3_2
@@ -627,7 +627,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       } else {
         r3_1 = false;
         console.log(
-          `630 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0630 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1
@@ -641,7 +641,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (charSuitableForTagName(str[i]) || str[i] === "/") {
         r3_3 = true;
         console.log(
-          `644 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0644 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_3",
             r3_3
@@ -651,7 +651,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r3_1 = false;
         r3_2 = false;
         console.log(
-          `654 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0654 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -676,7 +676,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         (str[i] === "/" && "<>".includes(right(str, i)))
       ) {
         console.log(
-          `679 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0679 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -689,7 +689,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r3_2 = false;
         r3_3 = false;
         console.log(
-          `692 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0692 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -706,7 +706,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r3_3 && !r3_4 && !str[i].trim().length) {
       r3_4 = true;
       console.log(
-        `709 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `0709 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r3_4",
           r3_4
@@ -720,7 +720,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         // if it seems an attribute name starts
         r3_5 = true;
         console.log(
-          `723 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0723 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_5",
             r3_5
@@ -732,7 +732,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r3_3 = false;
         r3_4 = false;
         console.log(
-          `735 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0735 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -752,7 +752,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r3_5) {
       if (!str[i].trim().length || str[i] === "=" || charIsQuote(str[i])) {
         console.log(
-          `755 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0755 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -782,7 +782,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     ) {
       r2_1 = true;
       console.log(
-        `785 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `0785 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r2_1",
           r2_1
@@ -801,7 +801,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (str[i] === "=") {
         r2_2 = true;
         console.log(
-          `804 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0804 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r2_2",
             r2_2
@@ -823,7 +823,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           r3_1 = true;
           r2_1 = false;
           console.log(
-            `826 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            `0826 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
               "set",
               "r2_1",
               r2_1,
@@ -833,7 +833,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           );
         } else {
           console.log(
-            `836 ${`\u001b[${32}m${`██ R2.1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            `0836 ${`\u001b[${32}m${`██ R2.1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
               "return",
               "true"
             )}`
@@ -844,7 +844,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       } else {
         r2_1 = false;
         console.log(
-          `847 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0847 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r2_1",
             r2_1
@@ -858,7 +858,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (`'"`.includes(str[i])) {
         r2_3 = true;
         console.log(
-          `861 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0861 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r2_3",
             r2_3
@@ -868,7 +868,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r2_1 = false;
         r2_2 = false;
         console.log(
-          `871 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0871 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r2_1",
             r2_1,
@@ -884,7 +884,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (str[i] === str[quotes.at]) {
         r2_4 = true;
         console.log(
-          `887 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0887 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r2_4",
             r2_4
@@ -894,7 +894,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         // check, is this a recursion and closing quote is given as a message
         // from the future
         if (closingQuotePos != null && closingQuotePos === i) {
-          console.log("897 recursion, this is the index the future indicated");
+          console.log("0897 recursion, this is the index the future indicated");
           // it's a recursion
 
           // - if quotes are single-opening, double-closing or double-opening,
@@ -916,7 +916,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
 
             r2_4 = true;
             console.log(
-              `919 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              `0919 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
                 "set",
                 "r2_4",
                 r2_4
@@ -930,7 +930,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
             // Single curly quotes. Fine.
             r2_4 = true;
             console.log(
-              `933 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              `0933 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
                 "set",
                 "r2_4",
                 r2_4
@@ -944,7 +944,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
             // Double curly quotes. Fine too.
             r2_4 = true;
             console.log(
-              `947 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              `0947 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
                 "set",
                 "r2_4",
                 r2_4
@@ -965,7 +965,9 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           console.log("                        ██");
           console.log("                        ██");
 
-          console.log("968 not a recursion, but result from one came positive");
+          console.log(
+            "0968 not a recursion, but result from one came positive"
+          );
 
           // not a recursion, but it's confirmed that quotes were mismatching:
           // 1. turn off "quotes.within", because it won't turn off by itself
@@ -975,7 +977,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           // 2. do the other deeds
           r2_4 = true;
           console.log(
-            `978 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            `0978 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
               "set",
               "r2_4",
               r2_4
@@ -989,7 +991,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r2_4 && !quotes.within && str[i].trim().length && str[i] !== "/") {
       if (str[i] === ">") {
         console.log(
-          `992 ${`\u001b[${32}m${`██ R2/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `0992 ${`\u001b[${32}m${`██ R2/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`

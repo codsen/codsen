@@ -39,6 +39,14 @@ function c(bad, good, issuesArr, t, opts) {
     const res1 = lint(bad, opts);
     // ensure fixes turn "bad" into "good":
     t.is(apply(bad, res1.fix), good, "part 1 - code fixed correctly");
+
+    //                    v
+    //                    v
+    //                    v
+    //                    v
+    //                    v
+    //                    v
+
     // ensure rules list is as expected:
     t.deepEqual(
       getUniqueIssueNames(res1.issues).sort(),
@@ -79,6 +87,14 @@ function c(bad, good, issuesArr, t, opts) {
       [],
       "part 3 - rules disabled"
     );
+
+    //                    ^
+    //                    ^
+    //                    ^
+    //                    ^
+    //                    ^
+    //                    ^
+    //
   }
 }
 

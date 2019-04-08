@@ -1,7 +1,7 @@
 {
-  "bad-named-html-entity-multiple-encoding": {
-    "description": "HTML named entity was encoded multiple times, causing repeated amp;",
-    "excerpt": "repeated amp; because of over-encoding",
+  "bad-cdata-tag-malformed": {
+    "description": "CDATA opening tag is malformed",
+    "excerpt": "malformed CDATA tag",
     "scope": "html"
   },
   "bad-named-html-entity-malformed-nbsp": {
@@ -9,15 +9,21 @@
     "excerpt": "malformed &nbsp;",
     "scope": "html"
   },
-  "bad-cdata-tag-malformed": {
-    "description": "CDATA opening tag is malformed",
-    "excerpt": "malformed CDATA tag",
-    "scope": "html"
-  },
   "bad-named-html-entity-missing-semicolon": {
     "description": "HTML named entity is missing a semicolon",
     "excerpt": "missing semicolon on a named HTML entity",
     "scope": "html"
+  },
+  "bad-named-html-entity-multiple-encoding": {
+    "description": "HTML named entity was encoded multiple times, causing repeated amp;",
+    "excerpt": "repeated amp; because of over-encoding",
+    "scope": "html"
+  },
+  "esp-line-break-within-templating-tag": {
+    "description": "There should be no line breaks within ESP template tags",
+    "excerpt": "line break should be removed",
+    "scope": "all",
+    "unfixable": true
   },
   "esp-more-closing-parentheses-than-opening": {
     "description": "There are more closing parentheses than opening-ones",
@@ -30,32 +36,6 @@
     "excerpt": "too many opening parentheses",
     "scope": "all",
     "unfixable": true
-  },
-  "esp-line-break-within-templating-tag": {
-    "description": "There should be no line breaks within ESP template tags",
-    "excerpt": "line break should be removed",
-    "scope": "all",
-    "unfixable": true
-  },
-  "html-comment-spaces": {
-    "description": "There should be no spaces between HTML comment characters",
-    "excerpt": "rogue spaces",
-    "scope": "html"
-  },
-  "html-comment-redundant-dash": {
-    "description": "There are too many dashes in HTML comment",
-    "excerpt": "redundant dash",
-    "scope": "html"
-  },
-  "html-comment-missing-dash": {
-    "description": "The dash in the comment is missing",
-    "excerpt": "missing dash",
-    "scope": "html"
-  },
-  "html-comment-missing-exclamation-mark": {
-    "description": "The exclamation mark in the HTML comment is missing",
-    "excerpt": "missing exclamation mark",
-    "scope": "html"
   },
   "file-empty": {
     "description": "the contents are empty",
@@ -96,6 +76,26 @@
     "description": "Line Feed (ASCII #10) line ending detected",
     "excerpt": "Line Feed line ending",
     "scope": "all"
+  },
+  "html-comment-missing-dash": {
+    "description": "The dash in the comment is missing",
+    "excerpt": "missing dash",
+    "scope": "html"
+  },
+  "html-comment-missing-exclamation-mark": {
+    "description": "The exclamation mark in the HTML comment is missing",
+    "excerpt": "missing exclamation mark",
+    "scope": "html"
+  },
+  "html-comment-redundant-dash": {
+    "description": "There are too many dashes in HTML comment",
+    "excerpt": "redundant dash",
+    "scope": "html"
+  },
+  "html-comment-spaces": {
+    "description": "There should be no spaces between HTML comment characters",
+    "excerpt": "rogue spaces",
+    "scope": "html"
   },
   "tag-attribute-closing-quotation-mark-missing": {
     "description": "The closing quotation mark is missing",
@@ -160,6 +160,11 @@
   "tag-attribute-space-between-name-and-equals": {
     "description": "There's a space between attribute's name and equal sign",
     "excerpt": "space between attribute's name and equal sign",
+    "scope": "html"
+  },
+  "tag-duplicate-closing-slash": {
+    "description": "Tag's closing slash is repeated",
+    "excerpt": "repeated tag's closing slash",
     "scope": "html"
   },
   "tag-excessive-whitespace-inside-tag": {

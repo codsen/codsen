@@ -72,91 +72,6 @@ var errorsCharacters = {
 	excerpt: "bad character - bell",
 	scope: "all"
 },
-	"bad-character-en-quad": {
-	description: "https://www.fileformat.info/info/unicode/char/2000/index.htm",
-	excerpt: "bad character - en quad",
-	scope: "all"
-},
-	"bad-character-em-quad": {
-	description: "https://www.fileformat.info/info/unicode/char/2001/index.htm",
-	excerpt: "bad character - em quad",
-	scope: "all"
-},
-	"bad-character-en-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2000/index.htm",
-	excerpt: "bad character - en space",
-	scope: "all"
-},
-	"bad-character-em-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2001/index.htm",
-	excerpt: "bad character - em space",
-	scope: "all"
-},
-	"bad-character-three-per-em-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2004/index.htm",
-	excerpt: "bad character - three-per-em space",
-	scope: "all"
-},
-	"bad-character-four-per-em-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2005/index.htm",
-	excerpt: "bad character - four-per-em space",
-	scope: "all"
-},
-	"bad-character-six-per-em-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2005/index.htm",
-	excerpt: "bad character - six-per-em space",
-	scope: "all"
-},
-	"bad-character-figure-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2007/index.htm",
-	excerpt: "bad character - figure space",
-	scope: "all"
-},
-	"bad-character-punctuation-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2008/index.htm",
-	excerpt: "bad character - punctuation space",
-	scope: "all"
-},
-	"bad-character-thin-space": {
-	description: "https://www.fileformat.info/info/unicode/char/2009/index.htm",
-	excerpt: "bad character - thin space",
-	scope: "all"
-},
-	"bad-character-hair-space": {
-	description: "https://www.fileformat.info/info/unicode/char/200a/index.htm",
-	excerpt: "bad character - hair space",
-	scope: "all"
-},
-	"bad-character-narrow-no-break-space": {
-	description: "https://www.fileformat.info/info/unicode/char/202f/index.htm",
-	excerpt: "bad character - narrow no-break space",
-	scope: "all"
-},
-	"bad-character-line-separator": {
-	description: "https://www.fileformat.info/info/unicode/char/2028/index.htm",
-	excerpt: "bad character - line separator",
-	scope: "all"
-},
-	"bad-character-paragraph-separator": {
-	description: "https://www.fileformat.info/info/unicode/char/2029/index.htm",
-	excerpt: "bad character - paragraph separator",
-	scope: "all"
-},
-	"bad-character-medium-mathematical-space": {
-	description: "https://www.fileformat.info/info/unicode/char/205f/index.htm",
-	excerpt: "bad character - medium mathematical space",
-	scope: "all"
-},
-	"bad-character-ideographic-space": {
-	description: "https://www.fileformat.info/info/unicode/char/3000/index.htm",
-	excerpt: "bad character - ideographic space",
-	scope: "all"
-},
-	"bad-character-ogham-space-mark": {
-	description: "https://www.fileformat.info/info/unicode/char/1680/index.htm",
-	excerpt: "bad character - ogham space mark",
-	scope: "all"
-},
 	"bad-character-break-permitted-here": {
 	description: "http://www.fileformat.info/info/unicode/char/0082/index.htm",
 	excerpt: "bad character - break permitted here",
@@ -165,11 +80,6 @@ var errorsCharacters = {
 	"bad-character-cancel": {
 	description: "https://www.fileformat.info/info/unicode/char/0018/index.htm",
 	excerpt: "bad character - cancel",
-	scope: "all"
-},
-	"bad-character-generic": {
-	description: "This character is invalid",
-	excerpt: "bad character",
 	scope: "all"
 },
 	"bad-character-cancel-character": {
@@ -232,6 +142,26 @@ var errorsCharacters = {
 	excerpt: "bad character - device control two",
 	scope: "all"
 },
+	"bad-character-em-quad": {
+	description: "https://www.fileformat.info/info/unicode/char/2001/index.htm",
+	excerpt: "bad character - em quad",
+	scope: "all"
+},
+	"bad-character-em-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2001/index.htm",
+	excerpt: "bad character - em space",
+	scope: "all"
+},
+	"bad-character-en-quad": {
+	description: "https://www.fileformat.info/info/unicode/char/2000/index.htm",
+	excerpt: "bad character - en quad",
+	scope: "all"
+},
+	"bad-character-en-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2000/index.htm",
+	excerpt: "bad character - en space",
+	scope: "all"
+},
 	"bad-character-end-of-medium": {
 	description: "https://www.fileformat.info/info/unicode/char/0019/index.htm",
 	excerpt: "bad character - end of medium",
@@ -272,9 +202,24 @@ var errorsCharacters = {
 	excerpt: "bad character - escape",
 	scope: "all"
 },
+	"bad-character-figure-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2007/index.htm",
+	excerpt: "bad character - figure space",
+	scope: "all"
+},
 	"bad-character-form-feed": {
 	description: "https://www.fileformat.info/info/unicode/char/000c/index.htm",
 	excerpt: "bad character - form feed",
+	scope: "all"
+},
+	"bad-character-four-per-em-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2005/index.htm",
+	excerpt: "bad character - four-per-em space",
+	scope: "all"
+},
+	"bad-character-generic": {
+	description: "This character is invalid",
+	excerpt: "bad character",
 	scope: "all"
 },
 	"bad-character-grave-accent": {
@@ -282,9 +227,19 @@ var errorsCharacters = {
 	excerpt: "bad character - grave accent",
 	scope: "html"
 },
+	"bad-character-hair-space": {
+	description: "https://www.fileformat.info/info/unicode/char/200a/index.htm",
+	excerpt: "bad character - hair space",
+	scope: "all"
+},
 	"bad-character-high-octet-preset": {
 	description: "http://www.fileformat.info/info/unicode/char/0081/index.htm",
 	excerpt: "bad character - high octet preset",
+	scope: "all"
+},
+	"bad-character-ideographic-space": {
+	description: "https://www.fileformat.info/info/unicode/char/3000/index.htm",
+	excerpt: "bad character - ideographic space",
 	scope: "all"
 },
 	"bad-character-index": {
@@ -312,6 +267,11 @@ var errorsCharacters = {
 	excerpt: "bad character - information separator two",
 	scope: "all"
 },
+	"bad-character-line-separator": {
+	description: "https://www.fileformat.info/info/unicode/char/2028/index.htm",
+	excerpt: "bad character - line separator",
+	scope: "all"
+},
 	"bad-character-line-tabulation": {
 	description: "https://www.fileformat.info/info/unicode/char/000b/index.htm",
 	excerpt: "bad character - line tabulation",
@@ -322,9 +282,19 @@ var errorsCharacters = {
 	excerpt: "bad character - line tabulation set",
 	scope: "all"
 },
+	"bad-character-medium-mathematical-space": {
+	description: "https://www.fileformat.info/info/unicode/char/205f/index.htm",
+	excerpt: "bad character - medium mathematical space",
+	scope: "all"
+},
 	"bad-character-message-waiting": {
 	description: "http://www.fileformat.info/info/unicode/char/0095/index.htm",
 	excerpt: "bad character - message waiting",
+	scope: "all"
+},
+	"bad-character-narrow-no-break-space": {
+	description: "https://www.fileformat.info/info/unicode/char/202f/index.htm",
+	excerpt: "bad character - narrow no-break space",
 	scope: "all"
 },
 	"bad-character-negative-acknowledge": {
@@ -347,6 +317,11 @@ var errorsCharacters = {
 	excerpt: "bad character - null",
 	scope: "all"
 },
+	"bad-character-ogham-space-mark": {
+	description: "https://www.fileformat.info/info/unicode/char/1680/index.htm",
+	excerpt: "bad character - ogham space mark",
+	scope: "all"
+},
 	"bad-character-operating-system-command": {
 	description: "http://www.fileformat.info/info/unicode/char/009d/index.htm",
 	excerpt: "bad character - operating system command",
@@ -355,6 +330,11 @@ var errorsCharacters = {
 	"bad-character-padding": {
 	description: "http://www.fileformat.info/info/unicode/char/0080/index.htm",
 	excerpt: "bad character - padding",
+	scope: "all"
+},
+	"bad-character-paragraph-separator": {
+	description: "https://www.fileformat.info/info/unicode/char/2029/index.htm",
+	excerpt: "bad character - paragraph separator",
 	scope: "all"
 },
 	"bad-character-partial-line-backward": {
@@ -380,6 +360,11 @@ var errorsCharacters = {
 	"bad-character-private-use-2": {
 	description: "http://www.fileformat.info/info/unicode/char/0092/index.htm",
 	excerpt: "bad character - private use 2",
+	scope: "all"
+},
+	"bad-character-punctuation-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2008/index.htm",
+	excerpt: "bad character - punctuation space",
 	scope: "all"
 },
 	"bad-character-reverse-line-feed": {
@@ -422,6 +407,11 @@ var errorsCharacters = {
 	excerpt: "bad character - single shift two",
 	scope: "all"
 },
+	"bad-character-six-per-em-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2005/index.htm",
+	excerpt: "bad character - six-per-em space",
+	scope: "all"
+},
 	"bad-character-start-of-heading": {
 	description: "https://www.fileformat.info/info/unicode/char/0001/index.htm",
 	excerpt: "bad character - start of heading",
@@ -460,6 +450,16 @@ var errorsCharacters = {
 	"bad-character-synchronous-idle": {
 	description: "https://www.fileformat.info/info/unicode/char/0016/index.htm",
 	excerpt: "bad character - synchronous idle",
+	scope: "all"
+},
+	"bad-character-thin-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2009/index.htm",
+	excerpt: "bad character - thin space",
+	scope: "all"
+},
+	"bad-character-three-per-em-space": {
+	description: "https://www.fileformat.info/info/unicode/char/2004/index.htm",
+	excerpt: "bad character - three-per-em space",
 	scope: "all"
 },
 	"bad-character-unencoded-ampersand": {
@@ -612,53 +612,53 @@ var knownHTMLTags = [
 ];
 
 var $ = {
-	type: "closing",
-	sibling: "$"
+	sibling: "$",
+	type: "closing"
 };
 var knownESPTags = {
-	"{%": {
-	type: "opening",
-	sibling: [
-		"%}",
-		"-%}"
-	]
-},
+	$: $,
 	"%}": {
-	type: "closing",
 	sibling: [
 		"{%",
 		"{%-"
-	]
+	],
+	type: "closing"
 },
-	"{%-": {
-	type: "opening",
-	sibling: [
-		"-%}",
-		"%}"
-	]
+	"*|": {
+	sibling: "|*",
+	type: "opening"
 },
 	"-%}": {
-	type: "closing",
 	sibling: [
 		"{%-",
 		"{%"
-	]
+	],
+	type: "closing"
 },
-	"*|": {
-	type: "opening",
-	sibling: "|*"
+	"{%": {
+	sibling: [
+		"%}",
+		"-%}"
+	],
+	type: "opening"
+},
+	"{%-": {
+	sibling: [
+		"-%}",
+		"%}"
+	],
+	type: "opening"
 },
 	"|*": {
-	type: "closing",
-	sibling: "*|"
-},
-	$: $
+	sibling: "*|",
+	type: "closing"
+}
 };
 
 var errorsRules = {
-	"bad-named-html-entity-multiple-encoding": {
-	description: "HTML named entity was encoded multiple times, causing repeated amp;",
-	excerpt: "repeated amp; because of over-encoding",
+	"bad-cdata-tag-malformed": {
+	description: "CDATA opening tag is malformed",
+	excerpt: "malformed CDATA tag",
 	scope: "html"
 },
 	"bad-named-html-entity-malformed-nbsp": {
@@ -666,15 +666,21 @@ var errorsRules = {
 	excerpt: "malformed &nbsp;",
 	scope: "html"
 },
-	"bad-cdata-tag-malformed": {
-	description: "CDATA opening tag is malformed",
-	excerpt: "malformed CDATA tag",
-	scope: "html"
-},
 	"bad-named-html-entity-missing-semicolon": {
 	description: "HTML named entity is missing a semicolon",
 	excerpt: "missing semicolon on a named HTML entity",
 	scope: "html"
+},
+	"bad-named-html-entity-multiple-encoding": {
+	description: "HTML named entity was encoded multiple times, causing repeated amp;",
+	excerpt: "repeated amp; because of over-encoding",
+	scope: "html"
+},
+	"esp-line-break-within-templating-tag": {
+	description: "There should be no line breaks within ESP template tags",
+	excerpt: "line break should be removed",
+	scope: "all",
+	unfixable: true
 },
 	"esp-more-closing-parentheses-than-opening": {
 	description: "There are more closing parentheses than opening-ones",
@@ -687,32 +693,6 @@ var errorsRules = {
 	excerpt: "too many opening parentheses",
 	scope: "all",
 	unfixable: true
-},
-	"esp-line-break-within-templating-tag": {
-	description: "There should be no line breaks within ESP template tags",
-	excerpt: "line break should be removed",
-	scope: "all",
-	unfixable: true
-},
-	"html-comment-spaces": {
-	description: "There should be no spaces between HTML comment characters",
-	excerpt: "rogue spaces",
-	scope: "html"
-},
-	"html-comment-redundant-dash": {
-	description: "There are too many dashes in HTML comment",
-	excerpt: "redundant dash",
-	scope: "html"
-},
-	"html-comment-missing-dash": {
-	description: "The dash in the comment is missing",
-	excerpt: "missing dash",
-	scope: "html"
-},
-	"html-comment-missing-exclamation-mark": {
-	description: "The exclamation mark in the HTML comment is missing",
-	excerpt: "missing exclamation mark",
-	scope: "html"
 },
 	"file-empty": {
 	description: "the contents are empty",
@@ -753,6 +733,26 @@ var errorsRules = {
 	description: "Line Feed (ASCII #10) line ending detected",
 	excerpt: "Line Feed line ending",
 	scope: "all"
+},
+	"html-comment-missing-dash": {
+	description: "The dash in the comment is missing",
+	excerpt: "missing dash",
+	scope: "html"
+},
+	"html-comment-missing-exclamation-mark": {
+	description: "The exclamation mark in the HTML comment is missing",
+	excerpt: "missing exclamation mark",
+	scope: "html"
+},
+	"html-comment-redundant-dash": {
+	description: "There are too many dashes in HTML comment",
+	excerpt: "redundant dash",
+	scope: "html"
+},
+	"html-comment-spaces": {
+	description: "There should be no spaces between HTML comment characters",
+	excerpt: "rogue spaces",
+	scope: "html"
 },
 	"tag-attribute-closing-quotation-mark-missing": {
 	description: "The closing quotation mark is missing",
@@ -817,6 +817,11 @@ var errorsRules = {
 	"tag-attribute-space-between-name-and-equals": {
 	description: "There's a space between attribute's name and equal sign",
 	excerpt: "space between attribute's name and equal sign",
+	scope: "html"
+},
+	"tag-duplicate-closing-slash": {
+	description: "Tag's closing slash is repeated",
+	excerpt: "repeated tag's closing slash",
 	scope: "html"
 },
 	"tag-excessive-whitespace-inside-tag": {
@@ -3366,44 +3371,59 @@ function lint(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
-      charcode === 62 &&
       logTag.tagStartAt !== null &&
       (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < i)
     ) {
-      if (tagIssueStaging.length) {
-        tagIssueStaging.forEach(issue => {
-          submit(issue);
-        });
-        tagIssueStaging = [];
-      }
-      if (rawIssueStaging.length) {
-        rawIssueStaging.forEach(issueObj => {
-          if (
-            issueObj.position[0][0] < logTag.tagStartAt ||
-            (logTag.attributes.some(attrObj => {
-              return (
-                attrObj.attrValueStartAt < issueObj.position[0][0] &&
-                attrObj.attrValueEndAt > issueObj.position[0][0]
-              );
-            }) &&
-              !retObj.issues.some(existingIssue => {
+      if (charcode === 62) {
+        if (tagIssueStaging.length) {
+          tagIssueStaging.forEach(issue => {
+            submit(issue);
+          });
+          tagIssueStaging = [];
+        }
+        if (rawIssueStaging.length) {
+          rawIssueStaging.forEach(issueObj => {
+            if (
+              issueObj.position[0][0] < logTag.tagStartAt ||
+              (logTag.attributes.some(attrObj => {
                 return (
-                  existingIssue.position[0][0] === issueObj.position[0][0] &&
-                  existingIssue.position[0][1] === issueObj.position[0][1]
+                  attrObj.attrValueStartAt < issueObj.position[0][0] &&
+                  attrObj.attrValueEndAt > issueObj.position[0][0]
                 );
-              }))
-          ) {
-            submit(issueObj);
+              }) &&
+                !retObj.issues.some(existingIssue => {
+                  return (
+                    existingIssue.position[0][0] === issueObj.position[0][0] &&
+                    existingIssue.position[0][1] === issueObj.position[0][1]
+                  );
+                }))
+            ) {
+              submit(issueObj);
+            }
+          });
+          rawIssueStaging = [];
+        }
+        if (logTag.tagName === "script") {
+          doNothingUntil = true;
+          doNothingUntilReason = "script tag";
+        }
+        resetLogTag();
+        resetLogAttr();
+      } else if (charcode === 47) {
+        const chompedSlashes = chompRight(str, i, { mode: 3 }, "/");
+        if (str[chompedSlashes] === ">") {
+          if (logWhitespace.startAt !== null) {
+            submit({
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt, i]]
+            });
           }
-        });
-        rawIssueStaging = [];
+          submit({
+            name: "tag-duplicate-closing-slash",
+            position: [[i + 1, chompedSlashes]]
+          });
+        }
       }
-      if (logTag.tagName === "script") {
-        doNothingUntil = true;
-        doNothingUntilReason = "script tag";
-      }
-      resetLogTag();
-      resetLogAttr();
     }
     if (
       doNothingUntil &&

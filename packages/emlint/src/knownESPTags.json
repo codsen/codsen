@@ -1,34 +1,42 @@
 {
-  "{%": {
-    "type": "opening",
-    "sibling": ["%}", "-%}"]
+  "$": {
+    "sibling": "$",
+    "type": "closing"
   },
   "%}": {
-    "type": "closing",
-    "sibling": ["{%", "{%-"]
-  },
-  "{%-": {
-    "type": "opening",
-    "sibling": ["-%}", "%}"]
-  },
-  "-%}": {
-    "type": "closing",
-    "sibling": ["{%-", "{%"]
+    "sibling": [
+      "{%",
+      "{%-"
+    ],
+    "type": "closing"
   },
   "*|": {
-    "type": "opening",
-    "sibling": "|*"
+    "sibling": "|*",
+    "type": "opening"
+  },
+  "-%}": {
+    "sibling": [
+      "{%-",
+      "{%"
+    ],
+    "type": "closing"
+  },
+  "{%": {
+    "sibling": [
+      "%}",
+      "-%}"
+    ],
+    "type": "opening"
+  },
+  "{%-": {
+    "sibling": [
+      "-%}",
+      "%}"
+    ],
+    "type": "opening"
   },
   "|*": {
-    "type": "closing",
-    "sibling": "*|"
-  },
-  "$": {
-    "type": "opening",
-    "sibling": "$"
-  },
-  "$": {
-    "type": "closing",
-    "sibling": "$"
+    "sibling": "*|",
+    "type": "closing"
   }
 }

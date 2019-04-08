@@ -19,95 +19,6 @@
     "excerpt": "bad character - bell",
     "scope": "all"
   },
-
-  "bad-character-en-quad": {
-    "description": "https://www.fileformat.info/info/unicode/char/2000/index.htm",
-    "excerpt": "bad character - en quad",
-    "scope": "all"
-  },
-  "bad-character-em-quad": {
-    "description": "https://www.fileformat.info/info/unicode/char/2001/index.htm",
-    "excerpt": "bad character - em quad",
-    "scope": "all"
-  },
-  "bad-character-en-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2000/index.htm",
-    "excerpt": "bad character - en space",
-    "scope": "all"
-  },
-  "bad-character-em-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2001/index.htm",
-    "excerpt": "bad character - em space",
-    "scope": "all"
-  },
-
-  "bad-character-three-per-em-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2004/index.htm",
-    "excerpt": "bad character - three-per-em space",
-    "scope": "all"
-  },
-
-  "bad-character-four-per-em-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2005/index.htm",
-    "excerpt": "bad character - four-per-em space",
-    "scope": "all"
-  },
-  "bad-character-six-per-em-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2005/index.htm",
-    "excerpt": "bad character - six-per-em space",
-    "scope": "all"
-  },
-  "bad-character-figure-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2007/index.htm",
-    "excerpt": "bad character - figure space",
-    "scope": "all"
-  },
-  "bad-character-punctuation-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2008/index.htm",
-    "excerpt": "bad character - punctuation space",
-    "scope": "all"
-  },
-  "bad-character-thin-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/2009/index.htm",
-    "excerpt": "bad character - thin space",
-    "scope": "all"
-  },
-  "bad-character-hair-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/200a/index.htm",
-    "excerpt": "bad character - hair space",
-    "scope": "all"
-  },
-  "bad-character-narrow-no-break-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/202f/index.htm",
-    "excerpt": "bad character - narrow no-break space",
-    "scope": "all"
-  },
-  "bad-character-line-separator": {
-    "description": "https://www.fileformat.info/info/unicode/char/2028/index.htm",
-    "excerpt": "bad character - line separator",
-    "scope": "all"
-  },
-  "bad-character-paragraph-separator": {
-    "description": "https://www.fileformat.info/info/unicode/char/2029/index.htm",
-    "excerpt": "bad character - paragraph separator",
-    "scope": "all"
-  },
-  "bad-character-medium-mathematical-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/205f/index.htm",
-    "excerpt": "bad character - medium mathematical space",
-    "scope": "all"
-  },
-  "bad-character-ideographic-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/3000/index.htm",
-    "excerpt": "bad character - ideographic space",
-    "scope": "all"
-  },
-  "bad-character-ogham-space-mark": {
-    "description": "https://www.fileformat.info/info/unicode/char/1680/index.htm",
-    "excerpt": "bad character - ogham space mark",
-    "scope": "all"
-  },
-
   "bad-character-break-permitted-here": {
     "description": "http://www.fileformat.info/info/unicode/char/0082/index.htm",
     "excerpt": "bad character - break permitted here",
@@ -116,11 +27,6 @@
   "bad-character-cancel": {
     "description": "https://www.fileformat.info/info/unicode/char/0018/index.htm",
     "excerpt": "bad character - cancel",
-    "scope": "all"
-  },
-  "bad-character-generic": {
-    "description": "This character is invalid",
-    "excerpt": "bad character",
     "scope": "all"
   },
   "bad-character-cancel-character": {
@@ -183,6 +89,26 @@
     "excerpt": "bad character - device control two",
     "scope": "all"
   },
+  "bad-character-em-quad": {
+    "description": "https://www.fileformat.info/info/unicode/char/2001/index.htm",
+    "excerpt": "bad character - em quad",
+    "scope": "all"
+  },
+  "bad-character-em-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2001/index.htm",
+    "excerpt": "bad character - em space",
+    "scope": "all"
+  },
+  "bad-character-en-quad": {
+    "description": "https://www.fileformat.info/info/unicode/char/2000/index.htm",
+    "excerpt": "bad character - en quad",
+    "scope": "all"
+  },
+  "bad-character-en-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2000/index.htm",
+    "excerpt": "bad character - en space",
+    "scope": "all"
+  },
   "bad-character-end-of-medium": {
     "description": "https://www.fileformat.info/info/unicode/char/0019/index.htm",
     "excerpt": "bad character - end of medium",
@@ -223,9 +149,24 @@
     "excerpt": "bad character - escape",
     "scope": "all"
   },
+  "bad-character-figure-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2007/index.htm",
+    "excerpt": "bad character - figure space",
+    "scope": "all"
+  },
   "bad-character-form-feed": {
     "description": "https://www.fileformat.info/info/unicode/char/000c/index.htm",
     "excerpt": "bad character - form feed",
+    "scope": "all"
+  },
+  "bad-character-four-per-em-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2005/index.htm",
+    "excerpt": "bad character - four-per-em space",
+    "scope": "all"
+  },
+  "bad-character-generic": {
+    "description": "This character is invalid",
+    "excerpt": "bad character",
     "scope": "all"
   },
   "bad-character-grave-accent": {
@@ -233,9 +174,19 @@
     "excerpt": "bad character - grave accent",
     "scope": "html"
   },
+  "bad-character-hair-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/200a/index.htm",
+    "excerpt": "bad character - hair space",
+    "scope": "all"
+  },
   "bad-character-high-octet-preset": {
     "description": "http://www.fileformat.info/info/unicode/char/0081/index.htm",
     "excerpt": "bad character - high octet preset",
+    "scope": "all"
+  },
+  "bad-character-ideographic-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/3000/index.htm",
+    "excerpt": "bad character - ideographic space",
     "scope": "all"
   },
   "bad-character-index": {
@@ -278,9 +229,19 @@
     "excerpt": "bad character - line tabulation set",
     "scope": "all"
   },
+  "bad-character-medium-mathematical-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/205f/index.htm",
+    "excerpt": "bad character - medium mathematical space",
+    "scope": "all"
+  },
   "bad-character-message-waiting": {
     "description": "http://www.fileformat.info/info/unicode/char/0095/index.htm",
     "excerpt": "bad character - message waiting",
+    "scope": "all"
+  },
+  "bad-character-narrow-no-break-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/202f/index.htm",
+    "excerpt": "bad character - narrow no-break space",
     "scope": "all"
   },
   "bad-character-negative-acknowledge": {
@@ -303,6 +264,11 @@
     "excerpt": "bad character - null",
     "scope": "all"
   },
+  "bad-character-ogham-space-mark": {
+    "description": "https://www.fileformat.info/info/unicode/char/1680/index.htm",
+    "excerpt": "bad character - ogham space mark",
+    "scope": "all"
+  },
   "bad-character-operating-system-command": {
     "description": "http://www.fileformat.info/info/unicode/char/009d/index.htm",
     "excerpt": "bad character - operating system command",
@@ -311,6 +277,11 @@
   "bad-character-padding": {
     "description": "http://www.fileformat.info/info/unicode/char/0080/index.htm",
     "excerpt": "bad character - padding",
+    "scope": "all"
+  },
+  "bad-character-paragraph-separator": {
+    "description": "https://www.fileformat.info/info/unicode/char/2029/index.htm",
+    "excerpt": "bad character - paragraph separator",
     "scope": "all"
   },
   "bad-character-partial-line-backward": {
@@ -336,6 +307,11 @@
   "bad-character-private-use-2": {
     "description": "http://www.fileformat.info/info/unicode/char/0092/index.htm",
     "excerpt": "bad character - private use 2",
+    "scope": "all"
+  },
+  "bad-character-punctuation-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2008/index.htm",
+    "excerpt": "bad character - punctuation space",
     "scope": "all"
   },
   "bad-character-reverse-line-feed": {
@@ -378,6 +354,11 @@
     "excerpt": "bad character - single shift two",
     "scope": "all"
   },
+  "bad-character-six-per-em-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2005/index.htm",
+    "excerpt": "bad character - six-per-em space",
+    "scope": "all"
+  },
   "bad-character-start-of-heading": {
     "description": "https://www.fileformat.info/info/unicode/char/0001/index.htm",
     "excerpt": "bad character - start of heading",
@@ -416,6 +397,16 @@
   "bad-character-synchronous-idle": {
     "description": "https://www.fileformat.info/info/unicode/char/0016/index.htm",
     "excerpt": "bad character - synchronous idle",
+    "scope": "all"
+  },
+  "bad-character-thin-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2009/index.htm",
+    "excerpt": "bad character - thin space",
+    "scope": "all"
+  },
+  "bad-character-three-per-em-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/2004/index.htm",
+    "excerpt": "bad character - three-per-em space",
     "scope": "all"
   },
   "bad-character-unencoded-ampersand": {
