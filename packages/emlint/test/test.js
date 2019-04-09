@@ -3024,7 +3024,6 @@ test(`XX.03 - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - correct entities`, 
 // todo - duplicate closing bracket
 // todo - duplicate closing quotes
 // todo - duplicate opening quotes
-// todo - duplicate equal
 // what if un-pushed logAttr is still available when logTag is closing?
 // test.todo("same opening/closing quotes repeated twice") <img width=""zzz"/>
 // test.todo("file-xhtml-tag-ending");
