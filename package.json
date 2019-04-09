@@ -52,7 +52,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^1.3.1",
     "lect": "^0.5.14",
-    "lerna": "^3.13.1",
+    "lerna": "^3.13.2",
     "lerna-clean-changelogs-cli": "^1.2.11",
     "npm-watch": "^0.6.0",
     "prettier": "^1.16.4"
