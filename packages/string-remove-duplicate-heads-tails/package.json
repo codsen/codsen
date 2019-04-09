@@ -197,7 +197,7 @@
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-node-resolve": "^4.2.0",
+    "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.4"
   }

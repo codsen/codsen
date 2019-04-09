@@ -5,7 +5,10 @@
       "message": "[skip ci] chore: Release"
     }
   },
-  "ignoreChanges": ["packages/*/CHANGELOG.md"],
+  "ignoreChanges": [
+    "packages/*/CHANGELOG.md",
+    "packages/*/package.json"
+  ],
   "lifecycle": {
     "version": "npm run build && git add ."
   },

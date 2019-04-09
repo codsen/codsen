@@ -180,7 +180,7 @@
     "pacote": "^9.5.0",
     "path": "^0.12.7",
     "update-notifier": "^2.5.0",
-    "write-json-file": "^3.1.0"
+    "write-json-file": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -203,7 +203,7 @@
     "lect": "^0.5.14",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^13.3.0",
-    "p-map": "^2.0.0",
+    "p-map": "^2.1.0",
     "prettier": "^1.16.4",
     "tempy": "^0.2.1"
   }

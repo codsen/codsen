@@ -202,7 +202,7 @@
     "lect": "^0.5.14",
     "node-fetch": "^2.3.0",
     "nyc": "^13.3.0",
-    "p-map": "^2.0.0",
+    "p-map": "^2.1.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",
     "rollup-plugin-ascii": "^0.0.3",
@@ -212,7 +212,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^0.8.1",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-resolve": "^4.2.0",
+    "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.4"
   }

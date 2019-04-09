@@ -192,7 +192,7 @@
     "object-delete-key": "^1.8.20",
     "object-merge-advanced": "^10.10.20",
     "object-path": "^0.11.4",
-    "p-map": "^2.0.0",
+    "p-map": "^2.1.0",
     "p-reduce": "^2.1.0",
     "pacote": "^9.5.0",
     "pify": "^4.0.1",
@@ -203,7 +203,7 @@
     "split-lines": "^2.0.0",
     "update-notifier": "^2.5.0",
     "write-file-atomic": "^2.4.2",
-    "write-json-file": "^3.1.0"
+    "write-json-file": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
