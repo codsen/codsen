@@ -522,7 +522,50 @@ test.serial("01.05 - fixes minified dotfiles in JSON format", async t => {
   t.deepEqual(await processedFileContents, prettifiedContents);
 });
 
-test.serial("01.06 - version output mode", async t => {
+test.serial("01.06 - topmost level is array", async t => {
+  const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+
+  const processedFileContents = fs
+    .writeFile(
+      pathOfTheTestfile,
+      JSON.stringify([
+        {
+          x: "y",
+          a: "b"
+        },
+        {
+          p: "r",
+          c: "d"
+        }
+      ])
+    )
+    .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+
+  t.deepEqual(
+    await processedFileContents,
+    `[
+  {
+    "a": "b",
+    "x": "y"
+  },
+  {
+    "c": "d",
+    "p": "r"
+  }
+]\n`
+  );
+});
+
+test.serial("01.07 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.is(reportedVersion1.stdout, pack.version);
 
@@ -530,7 +573,7 @@ test.serial("01.06 - version output mode", async t => {
   t.is(reportedVersion2.stdout, pack.version);
 });
 
-test.serial("01.07 - help output mode", async t => {
+test.serial("01.08 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.regex(reportedVersion1.stdout, /Usage/);
   t.regex(reportedVersion1.stdout, /Options/);
@@ -542,7 +585,7 @@ test.serial("01.07 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Example/);
 });
 
-test.serial("01.08 - no files found in the given directory", async t => {
+test.serial("01.09 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";

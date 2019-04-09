@@ -61,8 +61,9 @@ const badFiles = [
 // -----------------------------------------------------------------------------
 
 function readSortAndWriteOverFile(oneOfPaths) {
+  // console.log("\n\n\n\n==========\n\n\n\n");
   // console.log(
-  //   `\n=====\n058 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `066 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
   //     oneOfPaths,
   //     null,
   //     4
@@ -73,7 +74,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then(filesContent => {
       let parsedJson;
       // console.log(
-      //   `076 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `077 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
       //     filesContent,
       //     null,
       //     4
@@ -93,19 +94,26 @@ function readSortAndWriteOverFile(oneOfPaths) {
         }
         return Promise.resolve(null);
       }
-      // console.log("096 all OK, proceeding to sort & write JSON");
       return fs
         .writeJson(
           oneOfPaths,
-          sortObject(
-            traverse(parsedJson, (key, val) => {
-              const current = val !== undefined ? val : key;
-              if (isObj(current)) {
-                return sortObject(current);
-              }
-              return current;
-            })
-          ),
+          isObj(parsedJson)
+            ? sortObject(
+                traverse(parsedJson, (key, val) => {
+                  const current = val !== undefined ? val : key;
+                  if (isObj(current)) {
+                    return sortObject(current);
+                  }
+                  return current;
+                })
+              )
+            : traverse(parsedJson, (key, val) => {
+                const current = val !== undefined ? val : key;
+                if (isObj(current)) {
+                  return sortObject(current);
+                }
+                return current;
+              }),
           {
             spaces: cli.flags.t ? "\t" : 2
           }
@@ -168,7 +176,7 @@ globby(input, { dot: true })
       process.exit(0);
     }
     // console.log(
-    //   `171 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `179 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
     //     resolvedPathsArray,
     //     null,
     //     4
@@ -201,7 +209,7 @@ globby(input, { dot: true })
       // then reduce again, now actually concatenating them all together
     ).then(received => {
       // console.log(
-      //   `204 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `212 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
       //     received,
       //     null,
       //     4
@@ -221,7 +229,7 @@ globby(input, { dot: true })
   )
   .then(paths => {
     // console.log(
-    //   `224 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `232 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
     //     paths,
     //     null,
     //     4
@@ -256,7 +264,7 @@ globby(input, { dot: true })
       );
     });
     // console.log(
-    //   `259 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `267 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
     //     tempRez,
     //     null,
     //     4
@@ -272,15 +280,13 @@ globby(input, { dot: true })
         )}\n${received.join("\n")}`
       );
     } else {
-      // if (cli.flags.s) {
-      // silent mode is now default:
       return pReduce(
         received,
         (counter, currentPath) =>
           readSortAndWriteOverFile(currentPath)
             .then(received => {
               // console.log(
-              //   `283 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `289 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
               //     received,
               //     null,
               //     4
@@ -310,7 +316,7 @@ globby(input, { dot: true })
         { good: [], bad: [] }
       ).then(counter => {
         // console.log(
-        //   `313 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `319 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
         //     counter,
         //     null,
         //     4
@@ -332,20 +338,6 @@ globby(input, { dot: true })
           }`
         );
       });
-      // }
-
-      // non-silent mode - Listr
-
-      // const tasks = new Listr(
-      //   uniq(received).map(onePath => ({
-      //     title: onePath,
-      //     task: () => readSortAndWriteOverFile(onePath)
-      //   })),
-      //   { exitOnError: false }
-      // );
-      // tasks.run().catch(err => {
-      //   log(`${chalk.grey("✨ json-sort-cli: ")}${chalk.red("Oops!")} ${err}`);
-      // });
     }
   })
   .catch(err => {
