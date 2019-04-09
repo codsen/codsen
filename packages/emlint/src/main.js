@@ -3859,9 +3859,11 @@ function lint(str, originalOpts) {
                 "push",
                 "tag-excessive-whitespace-inside-tag",
                 `${`[[${logWhitespace.startAt}, ${i}]]`}`
-              )}`
+              )}; then reset whitespace`
             );
+            resetLogWhitespace();
           }
+
           // if there are no repeated slashes, they'd get picked up so it's
           // OK to keep this whitespace tackle here.
 
@@ -3871,10 +3873,21 @@ function lint(str, originalOpts) {
             position: [[i + 1, chompedSlashes]]
           });
           console.log(
-            `3874 ${log(
+            `3876 ${log(
               "push",
               "tag-duplicate-closing-slash",
               `${`[[${i + 1}, ${chompedSlashes}]]`}`
+            )}`
+          );
+          doNothingUntil = chompedSlashes;
+          doNothingUntilReason = "repeated slash";
+          console.log(
+            `3885 ${log(
+              "set",
+              "doNothingUntil",
+              doNothingUntil,
+              "doNothingUntilReason",
+              doNothingUntilReason
             )}`
           );
         }
@@ -3882,7 +3895,7 @@ function lint(str, originalOpts) {
         // if we are upon a left slash \
         // TODO
         console.log(
-          `3885 ${`\u001b[${90}m${`LEFT SLASH clauses`}\u001b[${39}m`}`
+          `3898 ${`\u001b[${90}m${`LEFT SLASH clauses`}\u001b[${39}m`}`
         );
       }
     }
@@ -3927,7 +3940,7 @@ function lint(str, originalOpts) {
       const charOnTheRight = right(str, i);
       const charOnTheLeft = left(str, i - 5);
       console.log(
-        `3930 ${log(
+        `3943 ${log(
           "set",
           "charOnTheRight",
           charOnTheRight,
@@ -3944,7 +3957,7 @@ function lint(str, originalOpts) {
         // check what's on the left:
         const charFurtherOnTheLeft = left(str, charOnTheLeft);
         console.log(
-          `3947 ${log(
+          `3960 ${log(
             "set",
             "charFurtherOnTheLeft",
             charFurtherOnTheLeft,
@@ -3954,11 +3967,11 @@ function lint(str, originalOpts) {
         );
       } else if (str[charOnTheLeft] === "<") {
         // we have a new opening <script> tag!
-        console.log(`3957 opening <script> tag!`);
+        console.log(`3970 opening <script> tag!`);
       }
 
       doNothingUntil = charOnTheRight + 1;
-      console.log(`3961 ${log("set", "doNothingUntil", doNothingUntil)}`);
+      console.log(`3974 ${log("set", "doNothingUntil", doNothingUntil)}`);
     }
 
     // reset whitespace
@@ -3968,16 +3981,16 @@ function lint(str, originalOpts) {
       str[i].trim().length
     ) {
       resetLogWhitespace();
-      console.log(`3971 ${log("reset", "logWhitespace")}`);
+      console.log(`3984 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the string's end, EOF EOL
     // if (!doNothingUntil && !str[i + 1]) {
     if (!str[i + 1]) {
-      console.log("3977");
+      console.log("3990");
       // this (str[i]) is the last character
       if (rawIssueStaging.length) {
-        console.log("3980");
+        console.log("3993");
         // if this resembles a tag (there's at least one attribute with equal+quotes pattern),
         // wipe all raw issues since the beginning of this tag, then push the rest in.
         // then, add all tagIssueStaging
@@ -3988,12 +4001,12 @@ function lint(str, originalOpts) {
               attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null
           )
         ) {
-          console.log("3991");
+          console.log("4004");
           // 1. push all issues before index at which the tag started
           rawIssueStaging.forEach(issueObj => {
             if (issueObj.position[0][0] < logTag.tagStartAt) {
               submit(issueObj);
-              console.log(`3996 ${log("push", "issueObj", issueObj)}`);
+              console.log(`4009 ${log("push", "issueObj", issueObj)}`);
             } else {
               console.log(
                 `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -4008,7 +4021,7 @@ function lint(str, originalOpts) {
               );
             }
           });
-          console.log(`4011 wipe rawIssueStaging`);
+          console.log(`4024 wipe rawIssueStaging`);
           rawIssueStaging = [];
 
           // 2. add missing closing bracket
@@ -4023,7 +4036,7 @@ function lint(str, originalOpts) {
             ]
           });
           console.log(
-            `4026 ${log(
+            `4039 ${log(
               "push",
               "tag-missing-closing-bracket",
               `${`[[${
@@ -4042,7 +4055,7 @@ function lint(str, originalOpts) {
           rawIssueStaging.forEach(issueObj => {
             submit(issueObj);
             console.log(
-              `4045 ${`\u001b[${32}m${`SUBMIT`}\u001b[${39}m`} ${JSON.stringify(
+              `4058 ${`\u001b[${32}m${`SUBMIT`}\u001b[${39}m`} ${JSON.stringify(
                 issueObj,
                 null,
                 0
@@ -4050,7 +4063,7 @@ function lint(str, originalOpts) {
             );
           });
           console.log(
-            `4053 wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
+            `4066 wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
           );
           rawIssueStaging = [];
         }
@@ -4220,7 +4233,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("4223 CR clearly prevalent");
+      console.log("4236 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4242,7 +4255,7 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("4245 LF clearly prevalent");
+      console.log("4258 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4264,7 +4277,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("4267 CRLF clearly prevalent");
+      console.log("4280 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -4286,7 +4299,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("4289 same amount of each type of EOL");
+      console.log("4302 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4305,7 +4318,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("4308 CR & CRLF are prevalent over LF");
+      console.log("4321 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -4330,7 +4343,7 @@ function lint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "4333 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "4346 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -4390,7 +4403,7 @@ function lint(str, originalOpts) {
   });
 
   console.log(
-    `4393 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
+    `4406 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
       "log",
       "htmlEntityFixes",
       htmlEntityFixes
@@ -4426,12 +4439,12 @@ function lint(str, originalOpts) {
   ) {
     retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
     console.log(
-      `4429 SET retObj.applicableRules["bad-character-unencoded-ampersand"] = false`
+      `4442 SET retObj.applicableRules["bad-character-unencoded-ampersand"] = false`
     );
   }
   // also push "htmlEntityFixes" to applicable rules:
   console.log(
-    `4434 ${`\u001b[${33}m${`htmlEntityFixes`}\u001b[${39}m`} = ${JSON.stringify(
+    `4447 ${`\u001b[${33}m${`htmlEntityFixes`}\u001b[${39}m`} = ${JSON.stringify(
       htmlEntityFixes,
       null,
       4
@@ -4440,7 +4453,7 @@ function lint(str, originalOpts) {
   if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
     htmlEntityFixes.forEach(issueObj => {
       console.log(
-        `4443 ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+        `4456 ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
           issueObj,
           null,
           4
@@ -4449,7 +4462,7 @@ function lint(str, originalOpts) {
       if (!retObj.applicableRules[issueObj.name]) {
         retObj.applicableRules[issueObj.name] = true;
         console.log(
-          `4452 retObj.applicableRules[issueObj.name] = ${
+          `4465 retObj.applicableRules[issueObj.name] = ${
             retObj.applicableRules[issueObj.name]
           }`
         );
@@ -4458,7 +4471,7 @@ function lint(str, originalOpts) {
   }
 
   // console.log(
-  //   `4461 ████\n     ████\n     ████\n retObj = ${JSON.stringify(
+  //   `4474 ████\n     ████\n     ████\n retObj = ${JSON.stringify(
   //     retObj,
   //     null,
   //     4
@@ -4479,8 +4492,8 @@ function lint(str, originalOpts) {
   //                          '----------------'
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("4482 BEFORE FIX:");
-  console.log(`4483 ${log("log", "retObj.issues", retObj.issues)}`);
+  console.log("4495 BEFORE FIX:");
+  console.log(`4496 ${log("log", "retObj.issues", retObj.issues)}`);
 
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length
@@ -4488,14 +4501,14 @@ function lint(str, originalOpts) {
           retObj.issues
             .filter(issueObj => {
               console.log(
-                `4491 errorsRules[${issueObj.name}] = ${(errorsRules[
+                `4504 errorsRules[${issueObj.name}] = ${(errorsRules[
                   issueObj.name
                 ],
                 null,
                 4)}`
               );
               console.log(
-                `4498 errorsRules[issueObj.name].unfixable = ${
+                `4511 errorsRules[issueObj.name].unfixable = ${
                   errorsRules[issueObj.name]
                     ? errorsRules[issueObj.name].unfixable
                     : errorsRules[issueObj.name]
@@ -4511,7 +4524,7 @@ function lint(str, originalOpts) {
             }, [])
         )
       : null;
-  console.log(`4514 ${log("log", "retObj.fix", retObj.fix)}`);
+  console.log(`4527 ${log("log", "retObj.fix", retObj.fix)}`);
 
   return retObj;
 }

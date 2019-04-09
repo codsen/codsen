@@ -3417,11 +3417,14 @@ function lint(str, originalOpts) {
               name: "tag-excessive-whitespace-inside-tag",
               position: [[logWhitespace.startAt, i]]
             });
+            resetLogWhitespace();
           }
           submit({
             name: "tag-duplicate-closing-slash",
             position: [[i + 1, chompedSlashes]]
           });
+          doNothingUntil = chompedSlashes;
+          doNothingUntilReason = "repeated slash";
         }
       }
     }

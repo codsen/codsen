@@ -2811,12 +2811,7 @@ test(`35.01 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(`<a something//>`, `<a something/>`, "tag-duplicate-closing-slash", t));
 
 test(`35.02 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - double slash space`, t =>
-  c(
-    `<a something// >`,
-    `<a something/>`,
-    ["tag-duplicate-closing-slash", "tag-whitespace-closing-slash-and-bracket"],
-    t
-  ));
+  c(`<a something// >`, `<a something/>`, "tag-duplicate-closing-slash", t));
 
 test(`35.03 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - space double slash`, t =>
   c(
@@ -2830,11 +2825,7 @@ test(`35.04 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(
     `<a something // >`,
     `<a something/>`,
-    [
-      "tag-duplicate-closing-slash",
-      "tag-excessive-whitespace-inside-tag",
-      "tag-whitespace-closing-slash-and-bracket"
-    ],
+    ["tag-duplicate-closing-slash", "tag-excessive-whitespace-inside-tag"],
     t
   ));
 
@@ -2842,11 +2833,7 @@ test(`35.05 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(
     `<a something / / / / / / / /////  / /   >`,
     `<a something/>`,
-    [
-      "tag-duplicate-closing-slash",
-      "tag-excessive-whitespace-inside-tag",
-      "tag-whitespace-closing-slash-and-bracket"
-    ],
+    ["tag-duplicate-closing-slash", "tag-excessive-whitespace-inside-tag"],
     t
   ));
 
