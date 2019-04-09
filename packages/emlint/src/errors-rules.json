@@ -167,6 +167,11 @@
     "excerpt": "repeated tag's closing slash",
     "scope": "html"
   },
+  "tag-closing-left-slash": {
+    "description": "Tag's closing slash is wrong, it's left not right",
+    "excerpt": "should be right slash",
+    "scope": "html"
+  },
   "tag-excessive-whitespace-inside-tag": {
     "description": "There's an excessive whitespace inside the tag",
     "excerpt": "space between attribute's name and equal sign",

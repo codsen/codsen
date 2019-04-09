@@ -3833,21 +3833,33 @@ function lint(str, originalOpts) {
       } else if (charcode === 47) {
         // if we are upon a right slash /
         console.log(
-          `3836 ${`\u001b[${90}m${`RIGHT SLASH clauses`}\u001b[${39}m`}`
+          `3836 ${`\u001b[${90}m${`inside RIGHT SLASH clauses`}\u001b[${39}m`}`
         );
         // mode 3 chomp is the most aggressive chomp which will go past all
         // the whitespace including line breaks presend between slashes or after
         // the last slash. It will stop only at the first non-whitespace
         // character which is not slash.
-        const chompedSlashes = chompRight(str, i, { mode: 3 }, "/");
+        const chompedSlashes = chompRight(
+          str,
+          i,
+          { mode: 1 },
+          "\\?*",
+          "/*",
+          "\\?*"
+        );
         console.log(
-          `3844 ${`\u001b[${33}m${`chompedSlashes`}\u001b[${39}m`} = ${JSON.stringify(
+          `3851 ${`\u001b[${33}m${`chompedSlashes`}\u001b[${39}m`} = ${JSON.stringify(
             chompedSlashes,
             null,
             4
           )}`
         );
-        if (str[chompedSlashes] === ">") {
+        if (
+          str[chompedSlashes] === ">" ||
+          (str[chompedSlashes] &&
+            !str[chompedSlashes].trim().length &&
+            str[right(str, chompedSlashes)] === ">")
+        ) {
           // 1. tackle preceding whitespace
           if (logWhitespace.startAt !== null) {
             submit({
@@ -3855,7 +3867,7 @@ function lint(str, originalOpts) {
               position: [[logWhitespace.startAt, i]]
             });
             console.log(
-              `3858 ${log(
+              `3870 ${log(
                 "push",
                 "tag-excessive-whitespace-inside-tag",
                 `${`[[${logWhitespace.startAt}, ${i}]]`}`
@@ -3868,21 +3880,24 @@ function lint(str, originalOpts) {
           // OK to keep this whitespace tackle here.
 
           // 2. remove repeated slashes
+          const issueName = str.slice(i + 1, chompedSlashes).includes("\\")
+            ? "tag-closing-left-slash"
+            : "tag-duplicate-closing-slash";
           submit({
-            name: "tag-duplicate-closing-slash",
+            name: issueName,
             position: [[i + 1, chompedSlashes]]
           });
           console.log(
-            `3876 ${log(
+            `3891 ${log(
               "push",
-              "tag-duplicate-closing-slash",
+              issueName,
               `${`[[${i + 1}, ${chompedSlashes}]]`}`
             )}`
           );
           doNothingUntil = chompedSlashes;
           doNothingUntilReason = "repeated slash";
           console.log(
-            `3885 ${log(
+            `3900 ${log(
               "set",
               "doNothingUntil",
               doNothingUntil,
@@ -3893,10 +3908,95 @@ function lint(str, originalOpts) {
         }
       } else if (charcode === 92) {
         // if we are upon a left slash \
-        // TODO
         console.log(
-          `3898 ${`\u001b[${90}m${`LEFT SLASH clauses`}\u001b[${39}m`}`
+          `3912 ${`\u001b[${90}m${`inside LEFT SLASH clauses`}\u001b[${39}m`}`
         );
+        const chompedSlashes = chompRight(
+          str,
+          i,
+          { mode: 1 },
+          "/?*",
+          "\\*",
+          "/?*"
+        );
+        console.log(
+          `3923 ${`\u001b[${33}m${`chompedSlashes`}\u001b[${39}m`} = ${JSON.stringify(
+            chompedSlashes,
+            null,
+            4
+          )}`
+        );
+        if (
+          str[chompedSlashes] === ">" ||
+          (str[chompedSlashes] &&
+            !str[chompedSlashes].trim().length &&
+            str[right(str, chompedSlashes)] === ">")
+        ) {
+          console.log(
+            `3936 there's a closing bracket at ${right(str, chompedSlashes)}`
+          );
+
+          // if there are no repeated slashes, they'd get picked up so it's
+          // OK to keep this whitespace tackle here.
+
+          // 2. remove repeated slashes
+          submit({
+            name: "tag-closing-left-slash",
+            position: [[i, chompedSlashes, "/"]]
+          });
+          console.log(
+            `3948 ${log(
+              "push",
+              "tag-closing-left-slash",
+              `${`[[${i}, ${chompedSlashes}, "/"]]`}`
+            )}`
+          );
+          doNothingUntil = chompedSlashes;
+          doNothingUntilReason = "repeated slash";
+          console.log(
+            `3957 ${log(
+              "set",
+              "doNothingUntil",
+              doNothingUntil,
+              "doNothingUntilReason",
+              doNothingUntilReason
+            )}`
+          );
+        } else if (chompedSlashes === null && str[right(str, i)] === ">") {
+          console.log(`3966`);
+          // there is only one left slash at str[i]
+          // submit the issue
+          submit({
+            name: "tag-closing-left-slash",
+            position: [[i, i + 1, "/"]]
+          });
+          console.log(
+            `3974 ${log(
+              "push",
+              "tag-closing-left-slash",
+              `${`[[${i}, ${i + 1}, "/"]]`}`
+            )}`
+          );
+        }
+
+        // tackle preceding whitespace
+
+        // we want to remove this left slash at str[i], so the starting range
+        // is there but maybe there was some whitespace leading up to it.
+        if (logWhitespace.startAt !== null) {
+          submit({
+            name: "tag-excessive-whitespace-inside-tag",
+            position: [[logWhitespace.startAt, i]]
+          });
+          console.log(
+            `3992 ${log(
+              "push",
+              "tag-excessive-whitespace-inside-tag",
+              `${`[[${logWhitespace.startAt}, ${i}]]`}`
+            )}; then reset whitespace`
+          );
+          resetLogWhitespace();
+        }
       }
     }
 
@@ -3940,7 +4040,7 @@ function lint(str, originalOpts) {
       const charOnTheRight = right(str, i);
       const charOnTheLeft = left(str, i - 5);
       console.log(
-        `3943 ${log(
+        `4043 ${log(
           "set",
           "charOnTheRight",
           charOnTheRight,
@@ -3957,7 +4057,7 @@ function lint(str, originalOpts) {
         // check what's on the left:
         const charFurtherOnTheLeft = left(str, charOnTheLeft);
         console.log(
-          `3960 ${log(
+          `4060 ${log(
             "set",
             "charFurtherOnTheLeft",
             charFurtherOnTheLeft,
@@ -3967,11 +4067,11 @@ function lint(str, originalOpts) {
         );
       } else if (str[charOnTheLeft] === "<") {
         // we have a new opening <script> tag!
-        console.log(`3970 opening <script> tag!`);
+        console.log(`4070 opening <script> tag!`);
       }
 
       doNothingUntil = charOnTheRight + 1;
-      console.log(`3974 ${log("set", "doNothingUntil", doNothingUntil)}`);
+      console.log(`4074 ${log("set", "doNothingUntil", doNothingUntil)}`);
     }
 
     // reset whitespace
@@ -3981,16 +4081,16 @@ function lint(str, originalOpts) {
       str[i].trim().length
     ) {
       resetLogWhitespace();
-      console.log(`3984 ${log("reset", "logWhitespace")}`);
+      console.log(`4084 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the string's end, EOF EOL
     // if (!doNothingUntil && !str[i + 1]) {
     if (!str[i + 1]) {
-      console.log("3990");
+      console.log("4090");
       // this (str[i]) is the last character
       if (rawIssueStaging.length) {
-        console.log("3993");
+        console.log("4093");
         // if this resembles a tag (there's at least one attribute with equal+quotes pattern),
         // wipe all raw issues since the beginning of this tag, then push the rest in.
         // then, add all tagIssueStaging
@@ -4001,12 +4101,12 @@ function lint(str, originalOpts) {
               attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null
           )
         ) {
-          console.log("4004");
+          console.log("4104");
           // 1. push all issues before index at which the tag started
           rawIssueStaging.forEach(issueObj => {
             if (issueObj.position[0][0] < logTag.tagStartAt) {
               submit(issueObj);
-              console.log(`4009 ${log("push", "issueObj", issueObj)}`);
+              console.log(`4109 ${log("push", "issueObj", issueObj)}`);
             } else {
               console.log(
                 `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -4021,7 +4121,7 @@ function lint(str, originalOpts) {
               );
             }
           });
-          console.log(`4024 wipe rawIssueStaging`);
+          console.log(`4124 wipe rawIssueStaging`);
           rawIssueStaging = [];
 
           // 2. add missing closing bracket
@@ -4036,7 +4136,7 @@ function lint(str, originalOpts) {
             ]
           });
           console.log(
-            `4039 ${log(
+            `4139 ${log(
               "push",
               "tag-missing-closing-bracket",
               `${`[[${
@@ -4055,7 +4155,7 @@ function lint(str, originalOpts) {
           rawIssueStaging.forEach(issueObj => {
             submit(issueObj);
             console.log(
-              `4058 ${`\u001b[${32}m${`SUBMIT`}\u001b[${39}m`} ${JSON.stringify(
+              `4158 ${`\u001b[${32}m${`SUBMIT`}\u001b[${39}m`} ${JSON.stringify(
                 issueObj,
                 null,
                 0
@@ -4063,7 +4163,7 @@ function lint(str, originalOpts) {
             );
           });
           console.log(
-            `4066 wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
+            `4166 wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
           );
           rawIssueStaging = [];
         }
@@ -4233,7 +4333,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("4236 CR clearly prevalent");
+      console.log("4336 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4255,7 +4355,7 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("4258 LF clearly prevalent");
+      console.log("4358 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4277,7 +4377,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("4280 CRLF clearly prevalent");
+      console.log("4380 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -4299,7 +4399,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("4302 same amount of each type of EOL");
+      console.log("4402 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -4318,7 +4418,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("4321 CR & CRLF are prevalent over LF");
+      console.log("4421 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -4343,7 +4443,7 @@ function lint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "4346 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "4446 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -4403,7 +4503,7 @@ function lint(str, originalOpts) {
   });
 
   console.log(
-    `4406 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
+    `4506 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
       "log",
       "htmlEntityFixes",
       htmlEntityFixes
@@ -4439,12 +4539,12 @@ function lint(str, originalOpts) {
   ) {
     retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
     console.log(
-      `4442 SET retObj.applicableRules["bad-character-unencoded-ampersand"] = false`
+      `4542 SET retObj.applicableRules["bad-character-unencoded-ampersand"] = false`
     );
   }
   // also push "htmlEntityFixes" to applicable rules:
   console.log(
-    `4447 ${`\u001b[${33}m${`htmlEntityFixes`}\u001b[${39}m`} = ${JSON.stringify(
+    `4547 ${`\u001b[${33}m${`htmlEntityFixes`}\u001b[${39}m`} = ${JSON.stringify(
       htmlEntityFixes,
       null,
       4
@@ -4453,7 +4553,7 @@ function lint(str, originalOpts) {
   if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
     htmlEntityFixes.forEach(issueObj => {
       console.log(
-        `4456 ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+        `4556 ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
           issueObj,
           null,
           4
@@ -4462,7 +4562,7 @@ function lint(str, originalOpts) {
       if (!retObj.applicableRules[issueObj.name]) {
         retObj.applicableRules[issueObj.name] = true;
         console.log(
-          `4465 retObj.applicableRules[issueObj.name] = ${
+          `4565 retObj.applicableRules[issueObj.name] = ${
             retObj.applicableRules[issueObj.name]
           }`
         );
@@ -4471,7 +4571,7 @@ function lint(str, originalOpts) {
   }
 
   // console.log(
-  //   `4474 ████\n     ████\n     ████\n retObj = ${JSON.stringify(
+  //   `4574 ████\n     ████\n     ████\n retObj = ${JSON.stringify(
   //     retObj,
   //     null,
   //     4
@@ -4492,8 +4592,8 @@ function lint(str, originalOpts) {
   //                          '----------------'
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("4495 BEFORE FIX:");
-  console.log(`4496 ${log("log", "retObj.issues", retObj.issues)}`);
+  console.log("4595 BEFORE FIX:");
+  console.log(`4596 ${log("log", "retObj.issues", retObj.issues)}`);
 
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length
@@ -4501,14 +4601,14 @@ function lint(str, originalOpts) {
           retObj.issues
             .filter(issueObj => {
               console.log(
-                `4504 errorsRules[${issueObj.name}] = ${(errorsRules[
+                `4604 errorsRules[${issueObj.name}] = ${(errorsRules[
                   issueObj.name
                 ],
                 null,
                 4)}`
               );
               console.log(
-                `4511 errorsRules[issueObj.name].unfixable = ${
+                `4611 errorsRules[issueObj.name].unfixable = ${
                   errorsRules[issueObj.name]
                     ? errorsRules[issueObj.name].unfixable
                     : errorsRules[issueObj.name]
@@ -4524,7 +4624,7 @@ function lint(str, originalOpts) {
             }, [])
         )
       : null;
-  console.log(`4527 ${log("log", "retObj.fix", retObj.fix)}`);
+  console.log(`4627 ${log("log", "retObj.fix", retObj.fix)}`);
 
   return retObj;
 }

@@ -824,6 +824,11 @@ var errorsRules = {
 	excerpt: "repeated tag's closing slash",
 	scope: "html"
 },
+	"tag-closing-left-slash": {
+	description: "Tag's closing slash is wrong, it's left not right",
+	excerpt: "should be right slash",
+	scope: "html"
+},
 	"tag-excessive-whitespace-inside-tag": {
 	description: "There's an excessive whitespace inside the tag",
 	excerpt: "space between attribute's name and equal sign",
@@ -3410,8 +3415,20 @@ function lint(str, originalOpts) {
         resetLogTag();
         resetLogAttr();
       } else if (charcode === 47) {
-        const chompedSlashes = chompRight(str, i, { mode: 3 }, "/");
-        if (str[chompedSlashes] === ">") {
+        const chompedSlashes = chompRight(
+          str,
+          i,
+          { mode: 1 },
+          "\\?*",
+          "/*",
+          "\\?*"
+        );
+        if (
+          str[chompedSlashes] === ">" ||
+          (str[chompedSlashes] &&
+            !str[chompedSlashes].trim().length &&
+            str[right(str, chompedSlashes)] === ">")
+        ) {
           if (logWhitespace.startAt !== null) {
             submit({
               name: "tag-excessive-whitespace-inside-tag",
@@ -3419,12 +3436,49 @@ function lint(str, originalOpts) {
             });
             resetLogWhitespace();
           }
+          const issueName = str.slice(i + 1, chompedSlashes).includes("\\")
+            ? "tag-closing-left-slash"
+            : "tag-duplicate-closing-slash";
           submit({
-            name: "tag-duplicate-closing-slash",
+            name: issueName,
             position: [[i + 1, chompedSlashes]]
           });
           doNothingUntil = chompedSlashes;
           doNothingUntilReason = "repeated slash";
+        }
+      } else if (charcode === 92) {
+        const chompedSlashes = chompRight(
+          str,
+          i,
+          { mode: 1 },
+          "/?*",
+          "\\*",
+          "/?*"
+        );
+        if (
+          str[chompedSlashes] === ">" ||
+          (str[chompedSlashes] &&
+            !str[chompedSlashes].trim().length &&
+            str[right(str, chompedSlashes)] === ">")
+        ) {
+          submit({
+            name: "tag-closing-left-slash",
+            position: [[i, chompedSlashes, "/"]]
+          });
+          doNothingUntil = chompedSlashes;
+          doNothingUntilReason = "repeated slash";
+        } else if (chompedSlashes === null && str[right(str, i)] === ">") {
+          submit({
+            name: "tag-closing-left-slash",
+            position: [[i, i + 1, "/"]]
+          });
+        }
+        if (logWhitespace.startAt !== null) {
+          submit({
+            name: "tag-excessive-whitespace-inside-tag",
+            position: [[logWhitespace.startAt, i]]
+          });
+          resetLogWhitespace();
         }
       }
     }

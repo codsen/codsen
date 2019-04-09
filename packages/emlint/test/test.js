@@ -2,6 +2,8 @@ import test from "ava";
 import { lint } from "../dist/emlint.esm";
 import { c, c2, getUniqueIssueNames } from "../test-util/util";
 
+// avaonly
+
 // 00. Insurance
 // -----------------------------------------------------------------------------
 
@@ -2811,7 +2813,12 @@ test(`35.01 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(`<a something//>`, `<a something/>`, "tag-duplicate-closing-slash", t));
 
 test(`35.02 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - double slash space`, t =>
-  c(`<a something// >`, `<a something/>`, "tag-duplicate-closing-slash", t));
+  c(
+    `<a something// >`,
+    `<a something/>`,
+    ["tag-duplicate-closing-slash", "tag-whitespace-closing-slash-and-bracket"],
+    t
+  ));
 
 test(`35.03 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - space double slash`, t =>
   c(
@@ -2825,7 +2832,11 @@ test(`35.04 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(
     `<a something // >`,
     `<a something/>`,
-    ["tag-duplicate-closing-slash", "tag-excessive-whitespace-inside-tag"],
+    [
+      "tag-duplicate-closing-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
     t
   ));
 
@@ -2833,7 +2844,154 @@ test(`35.05 - ${`\u001b[${32}m${`tag-duplicate-closing-slash`}\u001b[${39}m`} - 
   c(
     `<a something / / / / / / / /////  / /   >`,
     `<a something/>`,
-    ["tag-duplicate-closing-slash", "tag-excessive-whitespace-inside-tag"],
+    [
+      "tag-duplicate-closing-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
+    t
+  ));
+
+// 36. rule "tag-closing-left-slash"
+// -----------------------------------------------------------------------------
+
+// single
+
+test(`36.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, tight`, t =>
+  c(`<a something\\>`, `<a something/>`, "tag-closing-left-slash", t));
+
+test(`36.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, space left`, t =>
+  c(
+    `<a something \\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, space left`, t =>
+  c(
+    `<a something  \\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.04 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, space right`, t =>
+  c(
+    `<a something\\ >`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.05 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, excessive space left`, t =>
+  c(
+    `<a something  \n  \\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.06 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - left slash, excessive space right`, t =>
+  c(
+    `<a something\\ \n  >`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+// double
+
+test(`36.07 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, tight`, t =>
+  c(`<a something\\\\>`, `<a something/>`, "tag-closing-left-slash", t));
+
+test(`36.08 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, left space`, t =>
+  c(
+    `<a something \\\\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.09 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, right space`, t =>
+  c(
+    `<a something\\\\ >`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.10 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, spaced`, t =>
+  c(
+    `<a something \\\\ >`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.11 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, excessive left space`, t =>
+  c(
+    `<a something      \n \\\\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.12 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, excessive left space`, t =>
+  c(
+    `<a something      \n \\\\>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.13 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - double left slash, excessively spaced`, t =>
+  c(
+    `<a something      \n \\\\    \n>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.14 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - multiple left slashes, excessively spaced`, t =>
+  c(
+    `<a something      \n \\ \n \\  \\  \n>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+// mixed with right slashes
+
+test(`36.15 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - mixed with right slashes #1`, t =>
+  c(
+    `<a something      \n \\ \n  \\  \\ / \n>`,
+    `<a something/>`,
+    [
+      "tag-closing-left-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
+    t
+  ));
+
+test(`36.16 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - mixed with right slashes #2`, t =>
+  c(
+    `<a something    /  \n \\ \n  \\  \\ \n>`,
+    `<a something/>`,
+    ["tag-closing-left-slash", "tag-excessive-whitespace-inside-tag"],
+    t
+  ));
+
+test(`36.17 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - mixed with right slashes #3`, t =>
+  c(
+    `<a something    /  \n \\ \n / \\  \\ / \n>`,
+    `<a something/>`,
+    [
+      "tag-closing-left-slash",
+      "tag-excessive-whitespace-inside-tag",
+      "tag-whitespace-closing-slash-and-bracket"
+    ],
     t
   ));
 
