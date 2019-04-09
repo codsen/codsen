@@ -50,6 +50,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | `-n`  | `--nodemodules` | Don't ignore any **n**ode_modules folders and package-lock.json's |
 | `-t`  | `--tabs`        | Use **t**abs for JSON file indentation                            |
 | `-s`  | `--silent`      | Don't show line per each processed file, only total recap         |
+| `-a`  | `--arrays`      | Also sort any arrays if they contain only string elements         |
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
 

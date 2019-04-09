@@ -530,16 +530,20 @@ test.serial("01.06 - topmost level is array", async t => {
   const processedFileContents = fs
     .writeFile(
       pathOfTheTestfile,
-      JSON.stringify([
-        {
-          x: "y",
-          a: "b"
-        },
-        {
-          p: "r",
-          c: "d"
-        }
-      ])
+      JSON.stringify(
+        [
+          {
+            x: "y",
+            a: "b"
+          },
+          {
+            p: "r",
+            c: "d"
+          }
+        ],
+        null,
+        2
+      )
     )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
@@ -565,7 +569,118 @@ test.serial("01.06 - topmost level is array", async t => {
   );
 });
 
-test.serial("01.07 - version output mode", async t => {
+test.serial(
+  "01.07 - when asked, sorts arrays which contain only strings",
+  async t => {
+    const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+
+    const processedFileContents = fs
+      .writeFile(
+        pathOfTheTestfile,
+        JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
+      )
+      .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
+      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+      .then(received =>
+        execa
+          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+          .then(() => received)
+      )
+      .catch(err => t.fail(err));
+
+    t.deepEqual(
+      await processedFileContents,
+      `[
+  "a",
+  "A",
+  "m",
+  "M",
+  "z",
+  "Z"
+]\n`
+    );
+  }
+);
+
+test.serial(
+  "01.08 - when not asked, does not sort arrays which contain only strings",
+  async t => {
+    const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+    const sourceArr = ["Z", "A", "z", "m", "M", "a"];
+
+    const processedFileContents = fs
+      .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
+      .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
+      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+      .then(received =>
+        execa
+          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+          .then(() => received)
+      )
+      .catch(err => t.fail(err));
+    t.deepEqual(
+      await processedFileContents,
+      `${JSON.stringify(sourceArr, null, 2)}\n`
+    );
+  }
+);
+
+test.serial("01.09 - array in deeper levels sorted (upon request)", async t => {
+  const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+
+  const processedFileContents = fs
+    .writeFile(
+      pathOfTheTestfile,
+      JSON.stringify(
+        {
+          a: {
+            b: [
+              {
+                c: "d"
+              },
+              ["z", "m", "A"]
+            ]
+          }
+        },
+        null,
+        2
+      )
+    )
+    .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+
+  t.deepEqual(
+    await processedFileContents,
+    `{
+  "a": {
+    "b": [
+      {
+        "c": "d"
+      },
+      [
+        "A",
+        "m",
+        "z"
+      ]
+    ]
+  }
+}\n`
+  );
+});
+
+test.serial("01.10 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.is(reportedVersion1.stdout, pack.version);
 
@@ -573,7 +688,7 @@ test.serial("01.07 - version output mode", async t => {
   t.is(reportedVersion2.stdout, pack.version);
 });
 
-test.serial("01.08 - help output mode", async t => {
+test.serial("01.11 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.regex(reportedVersion1.stdout, /Usage/);
   t.regex(reportedVersion1.stdout, /Options/);
@@ -585,7 +700,7 @@ test.serial("01.08 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Example/);
 });
 
-test.serial("01.09 - no files found in the given directory", async t => {
+test.serial("01.12 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";

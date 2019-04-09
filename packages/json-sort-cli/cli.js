@@ -14,6 +14,11 @@ const pReduce = require("p-reduce");
 const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
+const isArr = Array.isArray;
+
+function isStr(something) {
+  return typeof something === "string";
+}
 
 const { log } = console;
 const cli = meow(
@@ -30,6 +35,7 @@ const cli = meow(
     -s, --silent        Does not show the result per-file, only totals in the end
     -h, --help          Shows this help
     -v, --version       Shows the version of your json-sort-cli
+    -a, --arrays        Sort arrays if they contain only more than string
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
@@ -39,7 +45,8 @@ const cli = meow(
     alias: {
       n: "nodemodules",
       t: "tabs",
-      s: "silent"
+      s: "silent",
+      a: "arrays"
     }
   }
 );
@@ -60,7 +67,7 @@ const badFiles = [
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function readSortAndWriteOverFile(oneOfPaths) {
+function readSortAndWriteOverFile(oneOfPaths, sortArrays) {
   // console.log("\n\n\n\n==========\n\n\n\n");
   // console.log(
   //   `066 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
@@ -94,26 +101,46 @@ function readSortAndWriteOverFile(oneOfPaths) {
         }
         return Promise.resolve(null);
       }
+      let result;
+
+      if (isObj(parsedJson)) {
+        result = sortObject(parsedJson);
+      } else if (
+        cli.flags.a &&
+        isArr(parsedJson) &&
+        parsedJson.length &&
+        parsedJson.every(isStr)
+      ) {
+        // if it was an array full of strings, it's an early ending:
+        return fs.writeJson(
+          oneOfPaths,
+          parsedJson.sort((a, b) => a.localeCompare(b)),
+          {
+            spaces: cli.flags.t ? "\t" : 2
+          }
+        );
+      } else {
+        result = parsedJson;
+      }
+
       return fs
         .writeJson(
           oneOfPaths,
-          isObj(parsedJson)
-            ? sortObject(
-                traverse(parsedJson, (key, val) => {
-                  const current = val !== undefined ? val : key;
-                  if (isObj(current)) {
-                    return sortObject(current);
-                  }
-                  return current;
-                })
-              )
-            : traverse(parsedJson, (key, val) => {
-                const current = val !== undefined ? val : key;
-                if (isObj(current)) {
-                  return sortObject(current);
-                }
-                return current;
-              }),
+          traverse(result, (key, val) => {
+            const current = val !== undefined ? val : key;
+            if (isObj(current)) {
+              return sortObject(current);
+            } else if (
+              cli.flags.a &&
+              isArr(current) &&
+              current.length > 1 &&
+              current.every(isStr)
+            ) {
+              // alphabetical sort
+              return current.sort((a, b) => a.localeCompare(b));
+            }
+            return current;
+          }),
           {
             spaces: cli.flags.t ? "\t" : 2
           }
@@ -283,7 +310,7 @@ globby(input, { dot: true })
       return pReduce(
         received,
         (counter, currentPath) =>
-          readSortAndWriteOverFile(currentPath)
+          readSortAndWriteOverFile(currentPath, cli.flags.a)
             .then(received => {
               // console.log(
               //   `289 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
