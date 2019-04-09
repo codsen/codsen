@@ -1875,6 +1875,9 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
 // Traverse until single/double quote, followed by zero or more whitespace, followed
 // by zero or more slashes followed by one or more closing brackets.
+// OR
+// Traverse until the first =" pattern is found.
+//
 // Make a note of that single/double quote. If later checks pass, that's what
 // we'll return - index of that single/double quote.
 // Now, once such thing is found, check what's on the right of that quote, does
@@ -1885,7 +1888,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 // If end of the loop is reached fruitless, return null.
 function findClosingQuote(str, idx = 0) {
   console.log(
-    `1888 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
+    `1891 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
   );
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
@@ -1916,7 +1919,7 @@ function findClosingQuote(str, idx = 0) {
       // quick ending - if closing quote, matching the opening-one is met, that's the result
       if (str[i] === startingQuote && i > idx) {
         console.log(
-          `1919 (util/findClosingQuote) quick ending, ${i} is the matching quote`
+          `1922 (util/findClosingQuote) quick ending, ${i} is the matching quote`
         );
         return i;
       }
@@ -1924,7 +1927,7 @@ function findClosingQuote(str, idx = 0) {
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       console.log(
-        `1927 (util/findClosingQuote) ${log(
+        `1930 (util/findClosingQuote) ${log(
           "set",
           "lastNonWhitespaceCharWasQuoteAt",
           lastNonWhitespaceCharWasQuoteAt
@@ -1938,32 +1941,32 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
-        console.log(`1941 (util/findClosingQuote) ${log("return", i)}`);
+        console.log(`1944 (util/findClosingQuote) ${log("return", i)}`);
         return i;
       }
-      console.log("1944 (util/findClosingQuote) didn't pass");
+      console.log("1947 (util/findClosingQuote) didn't pass");
       // maybe this is an unclosed tag and there's a healthy tag on the right?
       if (tagOnTheRight(str, i + 1)) {
         console.log(
-          `1948 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
+          `1951 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
         );
         return i;
       }
       console.log(
-        `1953 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
+        `1956 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
       );
     }
 
     // catch non-whitespace characters
     else if (str[i].trim().length) {
-      console.log("1959 (util/findClosingQuote)");
+      console.log("1962 (util/findClosingQuote)");
 
       if (str[i] === ">") {
         // catch closing brackets:
         lastClosingBracketAt = i;
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           console.log(
-            `1966 (util/findClosingQuote) ${log(
+            `1969 (util/findClosingQuote) ${log(
               "!",
               "suitable candidate found"
             )}`
@@ -1972,7 +1975,7 @@ function findClosingQuote(str, idx = 0) {
           // of a tag:
           const temp = withinTagInnerspace(str, i);
           console.log(
-            `1975 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
+            `1978 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
           );
           if (temp) {
             // now, we have two cases.
@@ -1995,7 +1998,7 @@ function findClosingQuote(str, idx = 0) {
             // Detect if code is messed up - lastNonWhitespaceCharWasQuoteAt === idx
             if (lastNonWhitespaceCharWasQuoteAt === idx) {
               console.log(
-                `1998 (util/findClosingQuote) ${log(
+                `2001 (util/findClosingQuote) ${log(
                   "return",
                   "lastNonWhitespaceCharWasQuoteAt + 1",
                   lastNonWhitespaceCharWasQuoteAt + 1
@@ -2004,7 +2007,7 @@ function findClosingQuote(str, idx = 0) {
               return lastNonWhitespaceCharWasQuoteAt + 1;
             }
             console.log(
-              `2007 (util/findClosingQuote) ${log(
+              `2010 (util/findClosingQuote) ${log(
                 "return",
                 "lastNonWhitespaceCharWasQuoteAt",
                 lastNonWhitespaceCharWasQuoteAt
@@ -2025,39 +2028,49 @@ function findClosingQuote(str, idx = 0) {
 
         const whatFollowsEq = right(str, i);
         console.log(
-          `2028 (util/findClosingQuote) ${log(
+          `2031 (util/findClosingQuote) ${log(
             "set",
             "whatFollowsEq",
             whatFollowsEq
           )}`
         );
 
-        // const temp = withinTagInnerspace(str, )
-
         if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
-          console.log("2038 (util/findClosingQuote)");
+          console.log("2039 (util/findClosingQuote)");
           console.log(
-            `${`\u001b[${33}m${`lastNonWhitespaceCharWasQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `2041 (util/findClosingQuote) ${log(
+              "log",
+              "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt,
-              null,
-              4
+              "lastQuoteAt",
+              lastQuoteAt,
+              "idx",
+              idx
             )}`
           );
+
           // since we discovered another attribute starting, go back, to the
           // last quote, check does it pass the util/withinTagInnerspace()
-          if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
+          if (
+            lastQuoteAt &&
+            lastQuoteAt !== idx &&
+            withinTagInnerspace(str, lastQuoteAt + 1)
+          ) {
             console.log(
-              `2050 (util/findClosingQuote) ${log(
+              `2060 (util/findClosingQuote) ${log(
                 "return",
                 "lastQuoteAt + 1",
                 lastQuoteAt + 1
               )}`
             );
             return lastQuoteAt + 1;
-          } else if (!lastQuoteAt) {
-            console.log(`2058 we don't have lastQuoteAt`);
+          } else if (!lastQuoteAt || lastQuoteAt === idx) {
+            console.log(`2068 we don't have lastQuoteAt`);
             // we have a case like:
             // <a bcd=ef ghi='jk' lmn>
+            // or
+            // <a bcd="ef ghi='jk' lmn>
+            //
             // if we started at index 7, at letter "e", went up to closing quote
             // after equal of "ghi=", at 14. There are no closing quotes up to
             // there.
@@ -2072,24 +2085,32 @@ function findClosingQuote(str, idx = 0) {
               : left(str, i);
             let res;
             console.log(
-              `2075 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
+              `2088 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
                 startingPoint,
                 null,
                 4
-              )}`
+              )}; idx=${idx}`
             );
             for (let y = startingPoint; y--; ) {
               console.log(
-                `2083 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
+                `2096 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
               );
               if (!str[y].trim().length) {
-                console.log(`2086 \u001b[${36}m${`break`}\u001b[${39}m`);
                 res = left(str, y) + 1;
+                console.log(
+                  `2101 \u001b[${36}m${`break`}\u001b[${39}m res=${res}`
+                );
+                break;
+              } else if (y === idx) {
+                res = idx + 1;
+                console.log(
+                  `2107 \u001b[${36}m${`break`}\u001b[${39}m res=${res}`
+                );
                 break;
               }
             }
             console.log(
-              `2092 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`}: ${JSON.stringify(
+              `2113 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`}: ${JSON.stringify(
                 res,
                 null,
                 4
@@ -2098,12 +2119,14 @@ function findClosingQuote(str, idx = 0) {
             return res;
           }
 
-          console.log("2101 recursive cycle didn't pass");
+          console.log(
+            "2123 ${`\u001b[${31}m${`recursive cycle didn't pass`}\u001b[${39}m`}"
+          );
         } else if (str[i + 1].trim().length) {
           // the quote is missing and there is no space after equal character
           console.log("");
           console.log(
-            `2106 it's not the expected quote but ${
+            `2129 it's not the expected quote but ${
               str[whatFollowsEq]
             } at index ${whatFollowsEq}`
           );
@@ -2116,12 +2139,12 @@ function findClosingQuote(str, idx = 0) {
           let temp;
           for (let y = i; y--; ) {
             console.log(
-              `2119 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
+              `2142 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
             );
             if (!str[y].trim().length) {
               temp = left(str, y);
               console.log(
-                `2124 (util/findClosingQuote) ${log(
+                `2147 (util/findClosingQuote) ${log(
                   "set",
                   "temp",
                   temp
@@ -2132,12 +2155,12 @@ function findClosingQuote(str, idx = 0) {
           }
           if (charIsQuote(temp)) {
             console.log(
-              `2135 (util/findClosingQuote) ${log("return", "temp", temp)}`
+              `2158 (util/findClosingQuote) ${log("return", "temp", temp)}`
             );
             return temp;
           }
           console.log(
-            `2140 (util/findClosingQuote) ${log(
+            `2163 (util/findClosingQuote) ${log(
               "return",
               "temp + 1",
               temp + 1
@@ -2148,10 +2171,10 @@ function findClosingQuote(str, idx = 0) {
       } else if (str[i] !== "/") {
         // 1. catch <
         if (str[i] === "<" && tagOnTheRight(str, i)) {
-          console.log(`2151 ██ tag on the right`);
+          console.log(`2174 ██ tag on the right`);
           if (lastClosingBracketAt !== null) {
             console.log(
-              `2154 (util/findClosingQuote) ${log(
+              `2177 (util/findClosingQuote) ${log(
                 "return",
                 "lastClosingBracketAt",
                 lastClosingBracketAt
@@ -2165,7 +2188,7 @@ function findClosingQuote(str, idx = 0) {
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `2168 (util/findClosingQuote) ${log(
+            `2191 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -2177,7 +2200,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `2180 (util/findClosingQuote) ${log(
+      `2203 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt
@@ -2284,7 +2307,7 @@ function pingEspTag(str, espTagObj, submit) {
           position: [[espTagObj.startAt, espTagObj.endAt]]
         });
         console.log(
-          `2287 util.js: ${log(
+          `2310 util.js: ${log(
             "push",
             "esp-more-opening-parentheses-than-closing",
             `${`[[${espTagObj.startAt}, ${espTagObj.endAt}]]`}`
@@ -2301,7 +2324,7 @@ function pingEspTag(str, espTagObj, submit) {
           position: [[espTagObj.startAt, espTagObj.endAt]]
         });
         console.log(
-          `2304 util.js: ${log(
+          `2327 util.js: ${log(
             "push",
             "esp-more-closing-parentheses-than-opening",
             `${`[[${espTagObj.startAt}, ${espTagObj.endAt}]]`}`

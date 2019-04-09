@@ -1492,7 +1492,15 @@ test(`15.23 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
     t
   ));
 
-// test(`15.24 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - two consecutive attributes with closing quotes missing`, t => {
+test(`15.24 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - missing closing quote on first attribute`, t =>
+  c(
+    `<a href="xyz target="_blank">`,
+    `<a href="xyz" target="_blank">`,
+    "tag-attribute-closing-quotation-mark-missing",
+    t
+  ));
+
+// test(`15.XX - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - two consecutive attributes with closing quotes missing`, t => {
 //   const bad1 = `<abc def="0 ghi="1>`;
 //   const good1 = `<abc def="0" ghi="1">`;
 //   const res1 = lint(bad1);

@@ -705,9 +705,13 @@ function findClosingQuote(str, idx = 0) {
       } else if (str[i] === "=") {
         const whatFollowsEq = right(str, i);
         if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
-          if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
+          if (
+            lastQuoteAt &&
+            lastQuoteAt !== idx &&
+            withinTagInnerspace(str, lastQuoteAt + 1)
+          ) {
             return lastQuoteAt + 1;
-          } else if (!lastQuoteAt) {
+          } else if (!lastQuoteAt || lastQuoteAt === idx) {
             const startingPoint = str[i - 1].trim().length
               ? i - 1
               : left(str, i);
@@ -715,6 +719,9 @@ function findClosingQuote(str, idx = 0) {
             for (let y = startingPoint; y--; ) {
               if (!str[y].trim().length) {
                 res = left(str, y) + 1;
+                break;
+              } else if (y === idx) {
+                res = idx + 1;
                 break;
               }
             }

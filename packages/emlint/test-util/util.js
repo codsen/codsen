@@ -33,8 +33,8 @@ function c(bad, good, issuesArr, t, opts) {
   } else {
     const config = {
       enabled1: true,
-      enabled2: true,
-      enabled3: true
+      enabled2: false,
+      enabled3: false
     };
 
     // get the linting result:

@@ -1383,14 +1383,17 @@ function findClosingQuote(str) {
         } else if (str[i] === "=") {
           var whatFollowsEq = stringLeftRight.right(str, i);
           if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
-            if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
+            if (lastQuoteAt && lastQuoteAt !== idx && withinTagInnerspace(str, lastQuoteAt + 1)) {
               return lastQuoteAt + 1;
-            } else if (!lastQuoteAt) {
+            } else if (!lastQuoteAt || lastQuoteAt === idx) {
               var startingPoint = str[i - 1].trim().length ? i - 1 : stringLeftRight.left(str, i);
               var res = void 0;
               for (var y = startingPoint; y--;) {
                 if (!str[y].trim().length) {
                   res = stringLeftRight.left(str, y) + 1;
+                  break;
+                } else if (y === idx) {
+                  res = idx + 1;
                   break;
                 }
               }
@@ -1994,11 +1997,18 @@ function lint(str, originalOpts) {
               }
               logTag.attributes.push(clone(logAttr));
               if (str[closingQuotePeek].trim().length) {
-                doNothingUntil = closingQuotePeek - (charIsQuote$1(str[closingQuotePeek]) ? 0 : 1) + 1;
+                var calculatedDoNothingUntil = closingQuotePeek - (charIsQuote$1(str[closingQuotePeek]) ? 0 : 1) + 1;
+                if (calculatedDoNothingUntil > _i) {
+                  doNothingUntil = calculatedDoNothingUntil;
+                  doNothingUntilReason = "closing quote looked up";
+                }
               } else {
-                doNothingUntil = stringLeftRight.left(str, closingQuotePeek) + 1;
+                var _calculatedDoNothingUntil = stringLeftRight.left(str, closingQuotePeek) + 1;
+                if (_calculatedDoNothingUntil > _i) {
+                  doNothingUntil = _calculatedDoNothingUntil;
+                  doNothingUntilReason = "closing quote looked up";
+                }
               }
-              doNothingUntilReason = "closing quote looked up";
               if (withinQuotes !== null) {
                 withinQuotesEndAt = logAttr.attrClosingQuote.pos;
               }
