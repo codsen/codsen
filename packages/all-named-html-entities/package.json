@@ -1,6 +1,6 @@
 {
   "name": "all-named-html-entities",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Array of all named HTML entities",
   "license": "MIT",
   "engines": {
@@ -178,8 +178,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.20",
-    "lect": "^0.5.14",
+    "js-row-num-cli": "^1.5.21",
+    "lect": "^0.5.15",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",

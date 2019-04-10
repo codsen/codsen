@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://gitlab.com/codsen/codsen/compare/emlint@1.3.0...emlint@1.4.0) (2019-04-10)
+
+
+### Features
+
+* Algorithm improvements ([634dde7](https://gitlab.com/codsen/codsen/commit/634dde7))
+* Dedupe repeated slash errors, now there's only one reported per tag ([bb53589](https://gitlab.com/codsen/codsen/commit/bb53589))
+* Improve closing slash error reporting consistency and rule name precision ([a3d7570](https://gitlab.com/codsen/codsen/commit/a3d7570))
+* Rule tag-duplicate-closing-slash ([8887552](https://gitlab.com/codsen/codsen/commit/8887552))
+
+
+
+
+
 ## 1.3.0 (2019-04-06)
 
 ### Features

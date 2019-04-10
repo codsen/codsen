@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.10.20",
+  "version": "7.10.21",
   "description": "Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
@@ -170,14 +170,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.11.20",
-    "ast-monkey-traverse": "^1.11.16",
-    "check-types-mini": "^5.7.16",
+    "ast-compare": "^1.11.21",
+    "ast-monkey-traverse": "^1.11.17",
+    "check-types-mini": "^5.7.17",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "type-detect": "^4.0.8",
-    "util-array-object-or-both": "^2.7.20"
+    "util-array-object-or-both": "^2.7.21"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -191,8 +191,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.20",
-    "lect": "^0.5.14",
+    "js-row-num-cli": "^1.5.21",
+    "lect": "^0.5.15",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",

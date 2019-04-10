@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "10.10.20",
+  "version": "10.10.21",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "engines": {
@@ -189,14 +189,14 @@
   },
   "dependencies": {
     "array-includes-all": "^2.0.0",
-    "array-includes-with-glob": "^2.11.20",
-    "arrayiffy-if-string": "^3.10.20",
-    "check-types-mini": "^5.7.16",
+    "array-includes-with-glob": "^2.11.21",
+    "arrayiffy-if-string": "^3.10.21",
+    "check-types-mini": "^5.7.17",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
-    "util-nonempty": "^2.9.20"
+    "util-nonempty": "^2.9.21"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -211,8 +211,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "js-row-num-cli": "^1.5.20",
-    "lect": "^0.5.14",
+    "js-row-num-cli": "^1.5.21",
+    "lect": "^0.5.15",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.9.0",
