@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.12.0](https://gitlab.com/codsen/codsen/compare/json-sort-cli@1.11.20...json-sort-cli@1.12.0) (2019-04-10)
-
+## 1.12.0 (2019-04-10)
 
 ### Features
 
-* Allow JSON files to contain topmost element as array not just plain object ([09e066f](https://gitlab.com/codsen/codsen/commit/09e066f))
-* Flag -a instructs to sort all arrays which contain only string elements ([7fb34ac](https://gitlab.com/codsen/codsen/commit/7fb34ac))
-
-
-
-
+- Allow JSON files to contain topmost element as array not just plain object ([09e066f](https://gitlab.com/codsen/codsen/commit/09e066f))
+- Flag -a instructs to sort all arrays which contain only string elements ([7fb34ac](https://gitlab.com/codsen/codsen/commit/7fb34ac))
 
 ## 1.11.0 (2019-01-20)
 
