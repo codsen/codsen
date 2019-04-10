@@ -3039,6 +3039,8 @@ test(`XX.03 - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - correct entities`, 
 // test.todo("file-trailing-line-break-present");
 // test.todo("file-trailing-line-break-absent");
 // stray letters at the end of a line, surrounded by tag one the left and EOL
+// <a b="cd "fg>
+// <td width="100 nowrap>
 // <>< ><gh="ij">< ><>
 // <table ab="bb cc="dd">
 // messed up HTML comments - excl. mark missing, dash missing etc
