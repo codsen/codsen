@@ -1,6 +1,6 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 84 npm libraries
+    A lerna monorepo for our 85 npm libraries
 
 ## 💡 Table of Contents
 
@@ -9,7 +9,7 @@
 - [String Processing Libraries](#-26-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-18-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-19-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -157,7 +157,7 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#-codsen-)**
 
-## 🛠️ 18 Miscellaneous Libraries
+## 🛠️ 19 Miscellaneous Libraries
 
 | Library's name | Purpose | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -175,6 +175,7 @@ You use them in the Terminal (command line), for example:
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Non-parsing, email template-oriented linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
+| [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |
