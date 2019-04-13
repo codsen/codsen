@@ -149,6 +149,14 @@ globby(input)
     //   )}\n\n\n\n`
     // );
 
+    // console.log(
+    //   `${`\u001b[${33}m${`cli.flags`}\u001b[${39}m`} = ${JSON.stringify(
+    //     cli.flags,
+    //     null,
+    //     4
+    //   )}`
+    // );
+
     // bail early if there is nothing to work upon:
     if (finalPathsToProcessArr.length === 0) {
       log(`${messagePrefix}[ID_1] Nothing found! Bye!`);
@@ -157,15 +165,22 @@ globby(input)
     paths = finalPathsToProcessArr; // make a note of the final paths, we'll need it
     let allFileContentsArr;
     let referenceKeyset;
-
-    // console.log(
-    //   `${`\u001b[${33}m${`cli.flags`}\u001b[${39}m`} = ${JSON.stringify(
-    //     cli.flags,
-    //     null,
-    //     4
-    //   )}`
-    // );
     if (cli.flags.n) {
+      // console.log(
+      //   `169 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+      //     finalPathsToProcessArr,
+      //     null,
+      //     4
+      //   )}`
+      // );
+      if (finalPathsToProcessArr.length === 1) {
+        log(
+          `${messagePrefix}[ID_2] We can't normalise one file (${
+            finalPathsToProcessArr[0]
+          }), we need more than one.`
+        );
+        process.exit(0);
+      }
       return pMap(paths, oneOfPaths => fs.readJson(oneOfPaths))
         .then(allJsonValuesArr => {
           // console.log(

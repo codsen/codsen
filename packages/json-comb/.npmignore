@@ -13,7 +13,6 @@
 
 .nyc_output
 coverage
-temp
 test
 
 # files:

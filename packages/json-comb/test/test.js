@@ -124,13 +124,14 @@ test.serial("01.02 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Options/);
 });
 
-test.serial("01.03 - no files found in the given directory", async t => {
+test.serial("01.03 - no files found in the given directory [ID_1]", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
   t.regex(stdOutContents.stdout, /Nothing found!/);
+  t.regex(stdOutContents.stdout, /ID_1/);
 });
 
 test.serial(
@@ -140,8 +141,8 @@ test.serial(
 
     // 1.1 For debug purposes, you can temporarily  re-route the test files into
     // `temp/` folder instead for easier access. Just comment either one of two lines:
-    // const tempFolder = tempy.directory();
-    const tempFolder = "temp";
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
 
     // ---------------------------------------------------------------------------
 
@@ -182,6 +183,27 @@ test.serial(
       .catch(err => t.fail(err));
 
     t.deepEqual(await processedFileContents, normalisedFileContents);
+  }
+);
+
+test.serial(
+  "01.05 - normalisation stops if one file is given [ID_2]",
+  async t => {
+    // fetch us a random temp folder
+    // const tempFolder = "temp";
+    // fs.ensureDirSync(path.join(tempFolder));
+    const tempFolder = tempy.directory();
+
+    const stdOutContents = await fs
+      .writeJson(path.join(tempFolder, "data.json"), {
+        a: "b",
+        c: "d"
+      })
+      .then(() => execa("./cli.js", ["-n", tempFolder]))
+      .catch(err => t.fail(err));
+
+    // CLI will complain no files could be found
+    t.regex(stdOutContents.stdout, /ID_2/);
   }
 );
 
