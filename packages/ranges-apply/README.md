@@ -78,7 +78,7 @@ This library consumes such parent arrays and does the actual job of crunching yo
 Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check, does the slice you want correspond to the indexes you've got.
 
 ```js
-const repl = require("ranges-apply");
+const apply = require("ranges-apply");
 let str = "aaa delete me bbb and me too ccc";
 // we preview the slice #1, "delete me", is it actually indexes from 4 to 13:
 console.log("slice 1: >>>" + str.slice(4, 13) + "<<<");
@@ -86,7 +86,7 @@ console.log("slice 1: >>>" + str.slice(4, 13) + "<<<");
 console.log("slice 2: >>>" + str.slice(18, 28) + "<<<\n");
 //
 // then instruct this library to replace each with `zzz` and `yyy`:
-str = repl(str, [[4, 13, "zzz"], [18, 28, "yyy"]]);
+str = apply(str, [[4, 13, "zzz"], [18, 28, "yyy"]]);
 console.log("str = " + str);
 // => 'aaa zzz bbb yyy ccc',
 ```
