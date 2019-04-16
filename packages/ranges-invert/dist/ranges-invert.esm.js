@@ -14,7 +14,7 @@ import mergeRanges from 'ranges-merge';
 
 const isArr = Array.isArray;
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
-  if (!isArr(arrOfRanges)) {
+  if (!isArr(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -32,8 +32,13 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}`
     );
   }
-  if (arrOfRanges.length === 0) {
-    return arrOfRanges;
+  if (arrOfRanges === null) {
+    if (strLen === 0) {
+      return [];
+    }
+    return [[0, strLen]];
+  } else if (arrOfRanges.length === 0) {
+    return [];
   }
   const defaults = {
     strictlyTwoElementsInRangeArrays: false
@@ -123,6 +128,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     Array.from(arrOfRanges).filter(rangeArr => rangeArr[0] !== rangeArr[1])
   );
   if (prep.length === 0) {
+    if (strLen === 0) {
+      return [];
+    }
     return [[0, strLen]];
   }
   const res = prep.reduce((accum, currArr, i, arr) => {

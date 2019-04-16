@@ -32,7 +32,7 @@ function _typeof(obj) {
 
 var isArr = Array.isArray;
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
-  if (!isArr(arrOfRanges)) {
+  if (!isArr(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
   if (!isNatNum(strLen, {
@@ -40,8 +40,13 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   })) {
     throw new TypeError("ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
   }
-  if (arrOfRanges.length === 0) {
-    return arrOfRanges;
+  if (arrOfRanges === null) {
+    if (strLen === 0) {
+      return [];
+    }
+    return [[0, strLen]];
+  } else if (arrOfRanges.length === 0) {
+    return [];
   }
   var defaults = {
     strictlyTwoElementsInRangeArrays: false
@@ -91,6 +96,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     return rangeArr[0] !== rangeArr[1];
   }));
   if (prep.length === 0) {
+    if (strLen === 0) {
+      return [];
+    }
     return [[0, strLen]];
   }
   var res = prep.reduce(function (accum, currArr, i, arr) {

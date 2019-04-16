@@ -26,13 +26,13 @@ import rangesInvert from "ranges-invert";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                        | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-invert.cjs.js` | 4 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-invert.esm.js` | 4 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-invert.umd.js` | 33 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-invert.cjs.js` | 5 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-invert.esm.js` | 4 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-invert.umd.js` | 33 KB
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Table of Contents
 
@@ -56,7 +56,7 @@ As you noticed the input string is used for reference - to find, how far does th
 
 There is possibility that string will not cover the inverted range. For example, if reference string was "abc" but range-to-invert was `[1,10]`. The result in such case would be `[0, 1]`.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## API
 
@@ -72,7 +72,7 @@ There is possibility that string will not cover the inverted range. For example,
 
 This package does not mutate the input array, instead it creates and returns a new array with ranges inverted.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ### Options object
 
@@ -82,20 +82,20 @@ This package does not mutate the input array, instead it creates and returns a n
 | `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to true, all ranges must have two and only two elements, otherwise an error will be thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (because of 3 elements), as well as `[ ['a'] ]` (1 element). |
 | }                                  |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
+* If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here).
+* If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here). Let's discuss it.
+* If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-invert%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-invert%0A%0Aput%20description%20here). We'll try to help.
+* If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Licence
 
@@ -103,19 +103,28 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
+
+
 [node-img]: https://img.shields.io/node/v/ranges-invert.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-invert
+
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
+
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-invert
+
 [downloads-img]: https://img.shields.io/npm/dm/ranges-invert.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-invert
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-invert
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

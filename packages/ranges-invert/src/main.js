@@ -9,8 +9,7 @@ const isArr = Array.isArray;
 
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-  // arrOfRanges validation
-  if (!isArr(arrOfRanges)) {
+  if (!isArr(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -19,6 +18,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}`
     );
   }
+
   // strLen validation
   if (!isNatNum(strLen, { includeZero: true })) {
     throw new TypeError(
@@ -29,8 +29,17 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}`
     );
   }
-  if (arrOfRanges.length === 0) {
-    return arrOfRanges;
+  // arrOfRanges validation
+  if (arrOfRanges === null) {
+    // this could be ranges.current() from "ranges-push" npm library
+    // which means, absence of any ranges, so invert result is everything:
+    // from index zero to index string.length
+    if (strLen === 0) {
+      return [];
+    }
+    return [[0, strLen]];
+  } else if (arrOfRanges.length === 0) {
+    return [];
   }
 
   // opts validation
@@ -136,6 +145,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   );
 
   if (prep.length === 0) {
+    if (strLen === 0) {
+      return [];
+    }
     return [[0, strLen]];
   }
 

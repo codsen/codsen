@@ -7,30 +7,34 @@ import i from "../dist/ranges-invert.esm";
 
 test("00.01 - not array", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  const error1a = t.throws(() => {
     i(null);
   });
-  t.truthy(error1.message.includes("THROW_ID_01"));
+  t.regex(error1a.message, /THROW_ID_02/);
+
+  t.notThrows(() => {
+    i(null, 0);
+  });
 
   const error2 = t.throws(() => {
     i(1);
   });
-  t.truthy(error2.message.includes("THROW_ID_01"));
+  t.regex(error2.message, /THROW_ID_01/);
 
   const error3 = t.throws(() => {
     i(true);
   });
-  t.truthy(error3.message.includes("THROW_ID_01"));
+  t.regex(error3.message, /THROW_ID_01/);
 
   const error4 = t.throws(() => {
     i({ e: true });
   });
-  t.truthy(error4.message.includes("THROW_ID_01"));
+  t.regex(error4.message, /THROW_ID_01/);
 
   const error5 = t.throws(() => {
     i([1, 3], 1); // <----- not array of arrays!
   });
-  t.truthy(error5.message.includes("THROW_ID_07"));
+  t.regex(error5.message, /THROW_ID_07/);
 });
 
 test("00.02 - not two arguments in one of ranges", t => {
@@ -253,4 +257,9 @@ test(`01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given n
 
 test(`01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`, t => {
   t.deepEqual(i([[0, 5, "zzz"], [3, 7, "aaaa"]], 9), [[7, 9]], "01.07");
+});
+
+test(`01.08 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`, t => {
+  t.deepEqual(i(null, 0), [], "01.08.01");
+  t.deepEqual(i(null, 3), [[0, 3]], "01.08.02");
 });
