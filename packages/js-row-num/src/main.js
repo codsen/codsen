@@ -38,7 +38,7 @@ function fixRowNums(str, originalOpts) {
   let wasLetterDetected = false;
   let digitStartsAt = null;
 
-  if (opts.padStart && len > 50000) {
+  if (opts.padStart && len > 45000) {
     opts.padStart = 4;
   }
 
