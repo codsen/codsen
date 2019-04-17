@@ -41,7 +41,7 @@ test(`00.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callbac
 });
 
 // ==============================
-// 01. Normal use
+// 01. Iterating only
 // ==============================
 
 test(`01.01 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, middle`, t => {
@@ -277,4 +277,34 @@ test(`01.16 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent 
     index++;
   });
   t.is(pinged, source, "01.16");
+});
+
+// ==============================
+// 02. Pushing
+// ==============================
+
+test(`02.01 - \u001b[${34}m${`pushing`}\u001b[${39}m - one range pushed, ranges array is a plain array`, t => {
+  let pinged = "";
+  let index = 0;
+  const originalRanges = [[2, 7, "xyz"]];
+  i("abcdefghij", originalRanges, ({ i, val }) => {
+    // console.log(
+    //   `54t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+    // );
+    if (i === 0) {
+      originalRanges.push([3, 5]); // redundant range, pushed over deleted
+      // character zone, 3-5 is being deleted by range [2, 7, "xyz"]!
+    }
+    if (i === 1) {
+      // ensure this "a" does not appear in this iteration:
+      originalRanges.push([7, 8, "a"]);
+    }
+    pinged += val;
+    t.is(i, index);
+    index++;
+  });
+  t.is(pinged, `abxyzhij`, "02.01");
+  // ensure we did mutate the ranges we traversed but traversal did not
+  // include new additions:
+  t.deepEqual(originalRanges, [[2, 7, "xyz"], [3, 5], [7, 8, "a"]]);
 });

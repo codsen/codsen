@@ -8,7 +8,7 @@
  */
 
 const isArr = Array.isArray;
-function rangesIterate(str, ranges, cb, offset = 0) {
+function rangesIterate(str, originalRanges, cb, offset = 0) {
   if (typeof str !== "string") {
     throw new TypeError(
       `ranges-iterate: [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${JSON.stringify(
@@ -22,10 +22,10 @@ function rangesIterate(str, ranges, cb, offset = 0) {
       `ranges-iterate: [THROW_ID_02] Input string must be non-empty!`
     );
   }
-  if (ranges !== null && !isArr(ranges)) {
+  if (originalRanges !== null && !isArr(originalRanges)) {
     throw new TypeError(
-      `ranges-iterate: [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof ranges}, equal to: ${JSON.stringify(
-        ranges,
+      `ranges-iterate: [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof originalRanges}, equal to: ${JSON.stringify(
+        originalRanges,
         null,
         0
       )}`
@@ -44,7 +44,7 @@ function rangesIterate(str, ranges, cb, offset = 0) {
       )}`
     );
   }
-  if (ranges === null || !ranges.length) {
+  if (originalRanges === null || !originalRanges.length) {
     for (let i = 0; i < str.length; i++) {
       cb({
         i,
@@ -52,6 +52,7 @@ function rangesIterate(str, ranges, cb, offset = 0) {
       });
     }
   } else {
+    const ranges = Array.from(originalRanges);
     let currentIdx = offset;
     let finalIdx = offset;
     if (finalIdx < ranges[0][0]) {
