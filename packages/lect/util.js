@@ -46,9 +46,9 @@ function resolveVars(str, pack, parsedPack) {
     "%USERNAME%": parsedPack.user,
     "%ISSUELINK%": `${pack.repository}issues/new?issue[title]=${
       pack.name
-    }%20package%20-%20put%20title%20here&issue[description]=%23%23%20${
+    }%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0A${
       pack.name
-    }%0A%0Aput%20description%20here`,
+    }%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt`,
     "%COMMITLINK%": `https://bitbucket.org/${parsedPack.user}/${
       parsedPack.project
     }/commits`,
