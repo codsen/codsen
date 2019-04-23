@@ -10719,7 +10719,11 @@ function decode(ent) {
   var val = ent.slice(1, ent.length - 1);
   return allNamedEntities[val] ? allNamedEntities[val] : null;
 }
+var minLength = 2;
+var maxLength = 31;
 
 exports.decode = decode;
 exports.entEndsWith = endsWith;
 exports.entStartsWith = startsWith;
+exports.maxLength = maxLength;
+exports.minLength = minLength;

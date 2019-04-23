@@ -1,8 +1,10 @@
 import allNamedEntities from "./allNamedEntities.json";
 import entStartsWith from "./startsWith.json";
 import entEndsWith from "./endsWith.json";
-// import fs from "fs";
 
+// -----------------------------------------------------------------------------
+
+// import fs from "fs";
 // const all = Object.keys(allNamedEntities);
 
 // // GENERATOR:
@@ -65,4 +67,17 @@ function decode(ent) {
   return allNamedEntities[val] ? allNamedEntities[val] : null;
 }
 
-export { entStartsWith, entEndsWith, decode };
+// -----------------------------------------------------------------------------
+
+// const minLength = Math.min(
+//   ...Object.keys(allNamedEntities).map(entName => entName.length)
+// );
+// const maxLength = Math.max(
+//   ...Object.keys(allNamedEntities).map(entName => entName.length)
+// );
+const minLength = 2;
+const maxLength = 31;
+
+// -----------------------------------------------------------------------------
+
+export { entStartsWith, entEndsWith, decode, minLength, maxLength };

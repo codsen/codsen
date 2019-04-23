@@ -10722,5 +10722,7 @@ function decode(ent) {
   const val = ent.slice(1, ent.length - 1);
   return allNamedEntities[val] ? allNamedEntities[val] : null;
 }
+const minLength = 2;
+const maxLength = 31;
 
-export { decode, endsWith as entEndsWith, startsWith as entStartsWith };
+export { decode, endsWith as entEndsWith, startsWith as entStartsWith, maxLength, minLength };
