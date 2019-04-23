@@ -4258,6 +4258,15 @@ var allNamedEntities = {
 	zwnj: zwnj
 };
 
+var poumd = "pound";
+var poubd = "pound";
+var ound = "pound";
+var brokenNamedEntities = {
+	poumd: poumd,
+	poubd: poubd,
+	ound: ound
+};
+
 var A = {
 	a: [
 		"Aacute"
@@ -10725,4 +10734,4 @@ function decode(ent) {
 const minLength = 2;
 const maxLength = 31;
 
-export { decode, endsWith as entEndsWith, startsWith as entStartsWith, maxLength, minLength };
+export { brokenNamedEntities, decode, endsWith as entEndsWith, startsWith as entStartsWith, maxLength, minLength };

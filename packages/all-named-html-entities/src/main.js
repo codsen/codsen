@@ -1,4 +1,5 @@
 import allNamedEntities from "./allNamedEntities.json";
+import brokenNamedEntities from "./brokenNamedEntities.json";
 import entStartsWith from "./startsWith.json";
 import entEndsWith from "./endsWith.json";
 
@@ -80,4 +81,11 @@ const maxLength = 31;
 
 // -----------------------------------------------------------------------------
 
-export { entStartsWith, entEndsWith, decode, minLength, maxLength };
+export {
+  entStartsWith,
+  entEndsWith,
+  brokenNamedEntities,
+  decode,
+  minLength,
+  maxLength
+};
