@@ -4266,11 +4266,17 @@ var poumd = "pound";
 var poubd = "pound";
 var ound = "pound";
 var poud = "pound";
+var poun = "pound";
+var pund = "pound";
+var pond = "pound";
 var brokenNamedEntities = {
 	poumd: poumd,
 	poubd: poubd,
 	ound: ound,
-	poud: poud
+	poud: poud,
+	poun: poun,
+	pund: pund,
+	pond: pond
 };
 
 var A = {
@@ -10723,6 +10729,4852 @@ var endsWith = {
 	N: N$1
 };
 
+var a$2 = {
+	a: [
+		"aacute"
+	],
+	b: [
+		"abreve"
+	],
+	c: [
+		"ac",
+		"acd",
+		"ace",
+		"acirc",
+		"acute",
+		"acy"
+	],
+	e: [
+		"aelig"
+	],
+	f: [
+		"af",
+		"afr"
+	],
+	g: [
+		"agrave"
+	],
+	l: [
+		"alefsym",
+		"aleph",
+		"alpha"
+	],
+	m: [
+		"amacr",
+		"amalg",
+		"amp"
+	],
+	n: [
+		"and",
+		"andand",
+		"andd",
+		"andslope",
+		"andv",
+		"ang",
+		"ange",
+		"angle",
+		"angmsd",
+		"angmsdaa",
+		"angmsdab",
+		"angmsdac",
+		"angmsdad",
+		"angmsdae",
+		"angmsdaf",
+		"angmsdag",
+		"angmsdah",
+		"angrt",
+		"angrtvb",
+		"angrtvbd",
+		"angsph",
+		"angst",
+		"angzarr"
+	],
+	o: [
+		"aogon",
+		"aopf"
+	],
+	p: [
+		"ap",
+		"apacir",
+		"ape",
+		"apid",
+		"apos",
+		"applyfunction",
+		"approx",
+		"approxeq"
+	],
+	r: [
+		"aring"
+	],
+	s: [
+		"ascr",
+		"assign",
+		"ast",
+		"asymp",
+		"asympeq"
+	],
+	t: [
+		"atilde"
+	],
+	u: [
+		"auml"
+	],
+	w: [
+		"awconint",
+		"awint"
+	]
+};
+var b$2 = {
+	a: [
+		"backcong",
+		"backepsilon",
+		"backprime",
+		"backsim",
+		"backsimeq",
+		"backslash",
+		"barv",
+		"barvee",
+		"barwed",
+		"barwedge"
+	],
+	b: [
+		"bbrk",
+		"bbrktbrk"
+	],
+	c: [
+		"bcong",
+		"bcy"
+	],
+	d: [
+		"bdquo"
+	],
+	e: [
+		"becaus",
+		"because",
+		"bemptyv",
+		"bepsi",
+		"bernou",
+		"bernoullis",
+		"beta",
+		"beth",
+		"between"
+	],
+	f: [
+		"bfr"
+	],
+	i: [
+		"bigcap",
+		"bigcirc",
+		"bigcup",
+		"bigodot",
+		"bigoplus",
+		"bigotimes",
+		"bigsqcup",
+		"bigstar",
+		"bigtriangledown",
+		"bigtriangleup",
+		"biguplus",
+		"bigvee",
+		"bigwedge"
+	],
+	k: [
+		"bkarow"
+	],
+	l: [
+		"blacklozenge",
+		"blacksquare",
+		"blacktriangle",
+		"blacktriangledown",
+		"blacktriangleleft",
+		"blacktriangleright",
+		"blank",
+		"blk12",
+		"blk14",
+		"blk34",
+		"block"
+	],
+	n: [
+		"bne",
+		"bnequiv",
+		"bnot"
+	],
+	o: [
+		"bopf",
+		"bot",
+		"bottom",
+		"bowtie",
+		"boxbox",
+		"boxdl",
+		"boxdr",
+		"boxh",
+		"boxhd",
+		"boxhu",
+		"boxminus",
+		"boxplus",
+		"boxtimes",
+		"boxul",
+		"boxur",
+		"boxv",
+		"boxvh",
+		"boxvl",
+		"boxvr"
+	],
+	p: [
+		"bprime"
+	],
+	r: [
+		"breve",
+		"brvbar"
+	],
+	s: [
+		"bscr",
+		"bsemi",
+		"bsim",
+		"bsime",
+		"bsol",
+		"bsolb",
+		"bsolhsub"
+	],
+	u: [
+		"bull",
+		"bullet",
+		"bump",
+		"bumpe",
+		"bumpeq"
+	]
+};
+var c$2 = {
+	a: [
+		"cacute",
+		"cap",
+		"capand",
+		"capbrcup",
+		"capcap",
+		"capcup",
+		"capdot",
+		"capitaldifferentiald",
+		"caps",
+		"caret",
+		"caron",
+		"cayleys"
+	],
+	c: [
+		"ccaps",
+		"ccaron",
+		"ccedil",
+		"ccirc",
+		"cconint",
+		"ccups",
+		"ccupssm"
+	],
+	d: [
+		"cdot"
+	],
+	e: [
+		"cedil",
+		"cedilla",
+		"cemptyv",
+		"cent",
+		"centerdot"
+	],
+	f: [
+		"cfr"
+	],
+	h: [
+		"chcy",
+		"check",
+		"checkmark",
+		"chi"
+	],
+	i: [
+		"cir",
+		"circ",
+		"circeq",
+		"circlearrowleft",
+		"circlearrowright",
+		"circledast",
+		"circledcirc",
+		"circleddash",
+		"circledot",
+		"circledr",
+		"circleds",
+		"circleminus",
+		"circleplus",
+		"circletimes",
+		"cire",
+		"cirfnint",
+		"cirmid",
+		"cirscir"
+	],
+	l: [
+		"clockwisecontourintegral",
+		"closecurlydoublequote",
+		"closecurlyquote",
+		"clubs",
+		"clubsuit"
+	],
+	o: [
+		"colon",
+		"colone",
+		"coloneq",
+		"comma",
+		"commat",
+		"comp",
+		"compfn",
+		"complement",
+		"complexes",
+		"cong",
+		"congdot",
+		"congruent",
+		"conint",
+		"contourintegral",
+		"copf",
+		"coprod",
+		"coproduct",
+		"copy",
+		"copysr",
+		"counterclockwisecontourintegral"
+	],
+	r: [
+		"crarr",
+		"cross"
+	],
+	s: [
+		"cscr",
+		"csub",
+		"csube",
+		"csup",
+		"csupe"
+	],
+	t: [
+		"ctdot"
+	],
+	u: [
+		"cudarrl",
+		"cudarrr",
+		"cuepr",
+		"cuesc",
+		"cularr",
+		"cularrp",
+		"cup",
+		"cupbrcap",
+		"cupcap",
+		"cupcup",
+		"cupdot",
+		"cupor",
+		"cups",
+		"curarr",
+		"curarrm",
+		"curlyeqprec",
+		"curlyeqsucc",
+		"curlyvee",
+		"curlywedge",
+		"curren",
+		"curvearrowleft",
+		"curvearrowright",
+		"cuvee",
+		"cuwed"
+	],
+	w: [
+		"cwconint",
+		"cwint"
+	],
+	y: [
+		"cylcty"
+	]
+};
+var d$2 = {
+	a: [
+		"dagger",
+		"daleth",
+		"darr",
+		"dash",
+		"dashv"
+	],
+	b: [
+		"dbkarow",
+		"dblac"
+	],
+	c: [
+		"dcaron",
+		"dcy"
+	],
+	d: [
+		"dd",
+		"ddagger",
+		"ddarr",
+		"ddotrahd",
+		"ddotseq"
+	],
+	e: [
+		"deg",
+		"del",
+		"delta",
+		"demptyv"
+	],
+	f: [
+		"dfisht",
+		"dfr"
+	],
+	h: [
+		"dhar",
+		"dharl",
+		"dharr"
+	],
+	i: [
+		"diacriticalacute",
+		"diacriticaldot",
+		"diacriticaldoubleacute",
+		"diacriticalgrave",
+		"diacriticaltilde",
+		"diam",
+		"diamond",
+		"diamondsuit",
+		"diams",
+		"die",
+		"differentiald",
+		"digamma",
+		"disin",
+		"div",
+		"divide",
+		"divideontimes",
+		"divonx"
+	],
+	j: [
+		"djcy"
+	],
+	l: [
+		"dlcorn",
+		"dlcrop"
+	],
+	o: [
+		"dollar",
+		"dopf",
+		"dot",
+		"dotdot",
+		"doteq",
+		"doteqdot",
+		"dotequal",
+		"dotminus",
+		"dotplus",
+		"dotsquare",
+		"doublebarwedge",
+		"doublecontourintegral",
+		"doubledot",
+		"doubledownarrow",
+		"doubleleftarrow",
+		"doubleleftrightarrow",
+		"doublelefttee",
+		"doublelongleftarrow",
+		"doublelongleftrightarrow",
+		"doublelongrightarrow",
+		"doublerightarrow",
+		"doublerighttee",
+		"doubleuparrow",
+		"doubleupdownarrow",
+		"doubleverticalbar",
+		"downarrow",
+		"downarrowbar",
+		"downarrowuparrow",
+		"downbreve",
+		"downdownarrows",
+		"downharpoonleft",
+		"downharpoonright",
+		"downleftrightvector",
+		"downleftteevector",
+		"downleftvector",
+		"downleftvectorbar",
+		"downrightteevector",
+		"downrightvector",
+		"downrightvectorbar",
+		"downtee",
+		"downteearrow"
+	],
+	r: [
+		"drbkarow",
+		"drcorn",
+		"drcrop"
+	],
+	s: [
+		"dscr",
+		"dscy",
+		"dsol",
+		"dstrok"
+	],
+	t: [
+		"dtdot",
+		"dtri",
+		"dtrif"
+	],
+	u: [
+		"duarr",
+		"duhar"
+	],
+	w: [
+		"dwangle"
+	],
+	z: [
+		"dzcy",
+		"dzigrarr"
+	]
+};
+var e$2 = {
+	a: [
+		"eacute",
+		"easter"
+	],
+	c: [
+		"ecaron",
+		"ecir",
+		"ecirc",
+		"ecolon",
+		"ecy"
+	],
+	d: [
+		"eddot",
+		"edot"
+	],
+	e: [
+		"ee"
+	],
+	f: [
+		"efdot",
+		"efr"
+	],
+	g: [
+		"eg",
+		"egrave",
+		"egs",
+		"egsdot"
+	],
+	l: [
+		"el",
+		"element",
+		"elinters",
+		"ell",
+		"els",
+		"elsdot"
+	],
+	m: [
+		"emacr",
+		"empty",
+		"emptyset",
+		"emptysmallsquare",
+		"emptyv",
+		"emptyverysmallsquare",
+		"emsp",
+		"emsp13",
+		"emsp14"
+	],
+	n: [
+		"eng",
+		"ensp"
+	],
+	o: [
+		"eogon",
+		"eopf"
+	],
+	p: [
+		"epar",
+		"eparsl",
+		"eplus",
+		"epsi",
+		"epsilon",
+		"epsiv"
+	],
+	q: [
+		"eqcirc",
+		"eqcolon",
+		"eqsim",
+		"eqslantgtr",
+		"eqslantless",
+		"equal",
+		"equals",
+		"equaltilde",
+		"equest",
+		"equilibrium",
+		"equiv",
+		"equivdd",
+		"eqvparsl"
+	],
+	r: [
+		"erarr",
+		"erdot"
+	],
+	s: [
+		"escr",
+		"esdot",
+		"esim"
+	],
+	t: [
+		"eta",
+		"eth"
+	],
+	u: [
+		"euml",
+		"euro"
+	],
+	x: [
+		"excl",
+		"exist",
+		"exists",
+		"expectation",
+		"exponentiale"
+	]
+};
+var f$2 = {
+	a: [
+		"fallingdotseq"
+	],
+	c: [
+		"fcy"
+	],
+	e: [
+		"female"
+	],
+	f: [
+		"ffilig",
+		"fflig",
+		"ffllig",
+		"ffr"
+	],
+	i: [
+		"filig",
+		"filledsmallsquare",
+		"filledverysmallsquare"
+	],
+	j: [
+		"fjlig"
+	],
+	l: [
+		"flat",
+		"fllig",
+		"fltns"
+	],
+	n: [
+		"fnof"
+	],
+	o: [
+		"fopf",
+		"forall",
+		"fork",
+		"forkv",
+		"fouriertrf"
+	],
+	p: [
+		"fpartint"
+	],
+	r: [
+		"frac12",
+		"frac13",
+		"frac14",
+		"frac15",
+		"frac16",
+		"frac18",
+		"frac23",
+		"frac25",
+		"frac34",
+		"frac35",
+		"frac38",
+		"frac45",
+		"frac56",
+		"frac58",
+		"frac78",
+		"frasl",
+		"frown"
+	],
+	s: [
+		"fscr"
+	]
+};
+var g$2 = {
+	a: [
+		"gacute",
+		"gamma",
+		"gammad",
+		"gap"
+	],
+	b: [
+		"gbreve"
+	],
+	c: [
+		"gcedil",
+		"gcirc",
+		"gcy"
+	],
+	d: [
+		"gdot"
+	],
+	e: [
+		"ge",
+		"gel",
+		"geq",
+		"geqq",
+		"geqslant",
+		"ges",
+		"gescc",
+		"gesdot",
+		"gesdoto",
+		"gesdotol",
+		"gesl",
+		"gesles"
+	],
+	f: [
+		"gfr"
+	],
+	g: [
+		"gg",
+		"ggg"
+	],
+	i: [
+		"gimel"
+	],
+	j: [
+		"gjcy"
+	],
+	l: [
+		"gl",
+		"gla",
+		"gle",
+		"glj"
+	],
+	n: [
+		"gnap",
+		"gnapprox",
+		"gne",
+		"gneq",
+		"gneqq",
+		"gnsim"
+	],
+	o: [
+		"gopf"
+	],
+	r: [
+		"grave",
+		"greaterequal",
+		"greaterequalless",
+		"greaterfullequal",
+		"greatergreater",
+		"greaterless",
+		"greaterslantequal",
+		"greatertilde"
+	],
+	s: [
+		"gscr",
+		"gsim",
+		"gsime",
+		"gsiml"
+	],
+	t: [
+		"gt",
+		"gtcc",
+		"gtcir",
+		"gtdot",
+		"gtlpar",
+		"gtquest",
+		"gtrapprox",
+		"gtrarr",
+		"gtrdot",
+		"gtreqless",
+		"gtreqqless",
+		"gtrless",
+		"gtrsim"
+	],
+	v: [
+		"gvertneqq",
+		"gvne"
+	]
+};
+var h$2 = {
+	a: [
+		"hacek",
+		"hairsp",
+		"half",
+		"hamilt",
+		"hardcy",
+		"harr",
+		"harrcir",
+		"harrw",
+		"hat"
+	],
+	b: [
+		"hbar"
+	],
+	c: [
+		"hcirc"
+	],
+	e: [
+		"hearts",
+		"heartsuit",
+		"hellip",
+		"hercon"
+	],
+	f: [
+		"hfr"
+	],
+	i: [
+		"hilbertspace"
+	],
+	k: [
+		"hksearow",
+		"hkswarow"
+	],
+	o: [
+		"hoarr",
+		"homtht",
+		"hookleftarrow",
+		"hookrightarrow",
+		"hopf",
+		"horbar",
+		"horizontalline"
+	],
+	s: [
+		"hscr",
+		"hslash",
+		"hstrok"
+	],
+	u: [
+		"humpdownhump",
+		"humpequal"
+	],
+	y: [
+		"hybull",
+		"hyphen"
+	]
+};
+var i$2 = {
+	a: [
+		"iacute"
+	],
+	c: [
+		"ic",
+		"icirc",
+		"icy"
+	],
+	d: [
+		"idot"
+	],
+	e: [
+		"iecy",
+		"iexcl"
+	],
+	f: [
+		"iff",
+		"ifr"
+	],
+	g: [
+		"igrave"
+	],
+	i: [
+		"ii",
+		"iiiint",
+		"iiint",
+		"iinfin",
+		"iiota"
+	],
+	j: [
+		"ijlig"
+	],
+	m: [
+		"im",
+		"imacr",
+		"image",
+		"imaginaryi",
+		"imagline",
+		"imagpart",
+		"imath",
+		"imof",
+		"imped",
+		"implies"
+	],
+	n: [
+		"in",
+		"incare",
+		"infin",
+		"infintie",
+		"inodot",
+		"int",
+		"intcal",
+		"integers",
+		"integral",
+		"intercal",
+		"intersection",
+		"intlarhk",
+		"intprod",
+		"invisiblecomma",
+		"invisibletimes"
+	],
+	o: [
+		"iocy",
+		"iogon",
+		"iopf",
+		"iota"
+	],
+	p: [
+		"iprod"
+	],
+	q: [
+		"iquest"
+	],
+	s: [
+		"iscr",
+		"isin",
+		"isindot",
+		"isine",
+		"isins",
+		"isinsv",
+		"isinv"
+	],
+	t: [
+		"it",
+		"itilde"
+	],
+	u: [
+		"iukcy",
+		"iuml"
+	]
+};
+var j$2 = {
+	c: [
+		"jcirc",
+		"jcy"
+	],
+	f: [
+		"jfr"
+	],
+	m: [
+		"jmath"
+	],
+	o: [
+		"jopf"
+	],
+	s: [
+		"jscr",
+		"jsercy"
+	],
+	u: [
+		"jukcy"
+	]
+};
+var k$2 = {
+	a: [
+		"kappa",
+		"kappav"
+	],
+	c: [
+		"kcedil",
+		"kcy"
+	],
+	f: [
+		"kfr"
+	],
+	g: [
+		"kgreen"
+	],
+	h: [
+		"khcy"
+	],
+	j: [
+		"kjcy"
+	],
+	o: [
+		"kopf"
+	],
+	s: [
+		"kscr"
+	]
+};
+var l$2 = {
+	a: [
+		"laarr",
+		"lacute",
+		"laemptyv",
+		"lagran",
+		"lambda",
+		"lang",
+		"langd",
+		"langle",
+		"lap",
+		"laplacetrf",
+		"laquo",
+		"larr",
+		"larrb",
+		"larrbfs",
+		"larrfs",
+		"larrhk",
+		"larrlp",
+		"larrpl",
+		"larrsim",
+		"larrtl",
+		"lat",
+		"latail",
+		"late",
+		"lates"
+	],
+	b: [
+		"lbarr",
+		"lbbrk",
+		"lbrace",
+		"lbrack",
+		"lbrke",
+		"lbrksld",
+		"lbrkslu"
+	],
+	c: [
+		"lcaron",
+		"lcedil",
+		"lceil",
+		"lcub",
+		"lcy"
+	],
+	d: [
+		"ldca",
+		"ldquo",
+		"ldquor",
+		"ldrdhar",
+		"ldrushar",
+		"ldsh"
+	],
+	e: [
+		"le",
+		"leftanglebracket",
+		"leftarrow",
+		"leftarrowbar",
+		"leftarrowrightarrow",
+		"leftarrowtail",
+		"leftceiling",
+		"leftdoublebracket",
+		"leftdownteevector",
+		"leftdownvector",
+		"leftdownvectorbar",
+		"leftfloor",
+		"leftharpoondown",
+		"leftharpoonup",
+		"leftleftarrows",
+		"leftrightarrow",
+		"leftrightarrows",
+		"leftrightharpoons",
+		"leftrightsquigarrow",
+		"leftrightvector",
+		"lefttee",
+		"leftteearrow",
+		"leftteevector",
+		"leftthreetimes",
+		"lefttriangle",
+		"lefttrianglebar",
+		"lefttriangleequal",
+		"leftupdownvector",
+		"leftupteevector",
+		"leftupvector",
+		"leftupvectorbar",
+		"leftvector",
+		"leftvectorbar",
+		"leg",
+		"leq",
+		"leqq",
+		"leqslant",
+		"les",
+		"lescc",
+		"lesdot",
+		"lesdoto",
+		"lesdotor",
+		"lesg",
+		"lesges",
+		"lessapprox",
+		"lessdot",
+		"lesseqgtr",
+		"lesseqqgtr",
+		"lessequalgreater",
+		"lessfullequal",
+		"lessgreater",
+		"lessgtr",
+		"lessless",
+		"lesssim",
+		"lessslantequal",
+		"lesstilde"
+	],
+	f: [
+		"lfisht",
+		"lfloor",
+		"lfr"
+	],
+	g: [
+		"lg",
+		"lge"
+	],
+	h: [
+		"lhar",
+		"lhard",
+		"lharu",
+		"lharul",
+		"lhblk"
+	],
+	j: [
+		"ljcy"
+	],
+	l: [
+		"ll",
+		"llarr",
+		"llcorner",
+		"lleftarrow",
+		"llhard",
+		"lltri"
+	],
+	m: [
+		"lmidot",
+		"lmoust",
+		"lmoustache"
+	],
+	n: [
+		"lnap",
+		"lnapprox",
+		"lne",
+		"lneq",
+		"lneqq",
+		"lnsim"
+	],
+	o: [
+		"loang",
+		"loarr",
+		"lobrk",
+		"longleftarrow",
+		"longleftrightarrow",
+		"longmapsto",
+		"longrightarrow",
+		"looparrowleft",
+		"looparrowright",
+		"lopar",
+		"lopf",
+		"loplus",
+		"lotimes",
+		"lowast",
+		"lowbar",
+		"lowerleftarrow",
+		"lowerrightarrow",
+		"loz",
+		"lozenge",
+		"lozf"
+	],
+	p: [
+		"lpar",
+		"lparlt"
+	],
+	r: [
+		"lrarr",
+		"lrcorner",
+		"lrhar",
+		"lrhard",
+		"lrm",
+		"lrtri"
+	],
+	s: [
+		"lsaquo",
+		"lscr",
+		"lsh",
+		"lsim",
+		"lsime",
+		"lsimg",
+		"lsqb",
+		"lsquo",
+		"lsquor",
+		"lstrok"
+	],
+	t: [
+		"lt",
+		"ltcc",
+		"ltcir",
+		"ltdot",
+		"lthree",
+		"ltimes",
+		"ltlarr",
+		"ltquest",
+		"ltri",
+		"ltrie",
+		"ltrif",
+		"ltrpar"
+	],
+	u: [
+		"lurdshar",
+		"luruhar"
+	],
+	v: [
+		"lvertneqq",
+		"lvne"
+	]
+};
+var m$2 = {
+	a: [
+		"macr",
+		"male",
+		"malt",
+		"maltese",
+		"map",
+		"mapsto",
+		"mapstodown",
+		"mapstoleft",
+		"mapstoup",
+		"marker"
+	],
+	c: [
+		"mcomma",
+		"mcy"
+	],
+	d: [
+		"mdash",
+		"mddot"
+	],
+	e: [
+		"measuredangle",
+		"mediumspace",
+		"mellintrf"
+	],
+	f: [
+		"mfr"
+	],
+	h: [
+		"mho"
+	],
+	i: [
+		"micro",
+		"mid",
+		"midast",
+		"midcir",
+		"middot",
+		"minus",
+		"minusb",
+		"minusd",
+		"minusdu",
+		"minusplus"
+	],
+	l: [
+		"mlcp",
+		"mldr"
+	],
+	n: [
+		"mnplus"
+	],
+	o: [
+		"models",
+		"mopf"
+	],
+	p: [
+		"mp"
+	],
+	s: [
+		"mscr",
+		"mstpos"
+	],
+	u: [
+		"mu",
+		"multimap",
+		"mumap"
+	]
+};
+var n$2 = {
+	a: [
+		"nabla",
+		"nacute",
+		"nang",
+		"nap",
+		"nape",
+		"napid",
+		"napos",
+		"napprox",
+		"natur",
+		"natural",
+		"naturals"
+	],
+	b: [
+		"nbsp",
+		"nbump",
+		"nbumpe"
+	],
+	c: [
+		"ncap",
+		"ncaron",
+		"ncedil",
+		"ncong",
+		"ncongdot",
+		"ncup",
+		"ncy"
+	],
+	d: [
+		"ndash"
+	],
+	e: [
+		"ne",
+		"nearhk",
+		"nearr",
+		"nearrow",
+		"nedot",
+		"negativemediumspace",
+		"negativethickspace",
+		"negativethinspace",
+		"negativeverythinspace",
+		"nequiv",
+		"nesear",
+		"nesim",
+		"nestedgreatergreater",
+		"nestedlessless",
+		"newline",
+		"nexist",
+		"nexists"
+	],
+	f: [
+		"nfr"
+	],
+	g: [
+		"nge",
+		"ngeq",
+		"ngeqq",
+		"ngeqslant",
+		"nges",
+		"ngg",
+		"ngsim",
+		"ngt",
+		"ngtr",
+		"ngtv"
+	],
+	h: [
+		"nharr",
+		"nhpar"
+	],
+	i: [
+		"ni",
+		"nis",
+		"nisd",
+		"niv"
+	],
+	j: [
+		"njcy"
+	],
+	l: [
+		"nlarr",
+		"nldr",
+		"nle",
+		"nleftarrow",
+		"nleftrightarrow",
+		"nleq",
+		"nleqq",
+		"nleqslant",
+		"nles",
+		"nless",
+		"nll",
+		"nlsim",
+		"nlt",
+		"nltri",
+		"nltrie",
+		"nltv"
+	],
+	m: [
+		"nmid"
+	],
+	o: [
+		"nobreak",
+		"nonbreakingspace",
+		"nopf",
+		"not",
+		"notcongruent",
+		"notcupcap",
+		"notdoubleverticalbar",
+		"notelement",
+		"notequal",
+		"notequaltilde",
+		"notexists",
+		"notgreater",
+		"notgreaterequal",
+		"notgreaterfullequal",
+		"notgreatergreater",
+		"notgreaterless",
+		"notgreaterslantequal",
+		"notgreatertilde",
+		"nothumpdownhump",
+		"nothumpequal",
+		"notin",
+		"notindot",
+		"notine",
+		"notinva",
+		"notinvb",
+		"notinvc",
+		"notlefttriangle",
+		"notlefttrianglebar",
+		"notlefttriangleequal",
+		"notless",
+		"notlessequal",
+		"notlessgreater",
+		"notlessless",
+		"notlessslantequal",
+		"notlesstilde",
+		"notnestedgreatergreater",
+		"notnestedlessless",
+		"notni",
+		"notniva",
+		"notnivb",
+		"notnivc",
+		"notprecedes",
+		"notprecedesequal",
+		"notprecedesslantequal",
+		"notreverseelement",
+		"notrighttriangle",
+		"notrighttrianglebar",
+		"notrighttriangleequal",
+		"notsquaresubset",
+		"notsquaresubsetequal",
+		"notsquaresuperset",
+		"notsquaresupersetequal",
+		"notsubset",
+		"notsubsetequal",
+		"notsucceeds",
+		"notsucceedsequal",
+		"notsucceedsslantequal",
+		"notsucceedstilde",
+		"notsuperset",
+		"notsupersetequal",
+		"nottilde",
+		"nottildeequal",
+		"nottildefullequal",
+		"nottildetilde",
+		"notverticalbar"
+	],
+	p: [
+		"npar",
+		"nparallel",
+		"nparsl",
+		"npart",
+		"npolint",
+		"npr",
+		"nprcue",
+		"npre",
+		"nprec",
+		"npreceq"
+	],
+	r: [
+		"nrarr",
+		"nrarrc",
+		"nrarrw",
+		"nrightarrow",
+		"nrtri",
+		"nrtrie"
+	],
+	s: [
+		"nsc",
+		"nsccue",
+		"nsce",
+		"nscr",
+		"nshortmid",
+		"nshortparallel",
+		"nsim",
+		"nsime",
+		"nsimeq",
+		"nsmid",
+		"nspar",
+		"nsqsube",
+		"nsqsupe",
+		"nsub",
+		"nsube",
+		"nsubset",
+		"nsubseteq",
+		"nsubseteqq",
+		"nsucc",
+		"nsucceq",
+		"nsup",
+		"nsupe",
+		"nsupset",
+		"nsupseteq",
+		"nsupseteqq"
+	],
+	t: [
+		"ntgl",
+		"ntilde",
+		"ntlg",
+		"ntriangleleft",
+		"ntrianglelefteq",
+		"ntriangleright",
+		"ntrianglerighteq"
+	],
+	u: [
+		"nu",
+		"num",
+		"numero",
+		"numsp"
+	],
+	v: [
+		"nvap",
+		"nvdash",
+		"nvge",
+		"nvgt",
+		"nvharr",
+		"nvinfin",
+		"nvlarr",
+		"nvle",
+		"nvlt",
+		"nvltrie",
+		"nvrarr",
+		"nvrtrie",
+		"nvsim"
+	],
+	w: [
+		"nwarhk",
+		"nwarr",
+		"nwarrow",
+		"nwnear"
+	]
+};
+var o$2 = {
+	a: [
+		"oacute",
+		"oast"
+	],
+	c: [
+		"ocir",
+		"ocirc",
+		"ocy"
+	],
+	d: [
+		"odash",
+		"odblac",
+		"odiv",
+		"odot",
+		"odsold"
+	],
+	e: [
+		"oelig"
+	],
+	f: [
+		"ofcir",
+		"ofr"
+	],
+	g: [
+		"ogon",
+		"ograve",
+		"ogt"
+	],
+	h: [
+		"ohbar",
+		"ohm"
+	],
+	i: [
+		"oint"
+	],
+	l: [
+		"olarr",
+		"olcir",
+		"olcross",
+		"oline",
+		"olt"
+	],
+	m: [
+		"omacr",
+		"omega",
+		"omicron",
+		"omid",
+		"ominus"
+	],
+	o: [
+		"oopf"
+	],
+	p: [
+		"opar",
+		"opencurlydoublequote",
+		"opencurlyquote",
+		"operp",
+		"oplus"
+	],
+	r: [
+		"or",
+		"orarr",
+		"ord",
+		"order",
+		"orderof",
+		"ordf",
+		"ordm",
+		"origof",
+		"oror",
+		"orslope",
+		"orv"
+	],
+	s: [
+		"os",
+		"oscr",
+		"oslash",
+		"osol"
+	],
+	t: [
+		"otilde",
+		"otimes",
+		"otimesas"
+	],
+	u: [
+		"ouml"
+	],
+	v: [
+		"ovbar",
+		"overbar",
+		"overbrace",
+		"overbracket",
+		"overparenthesis"
+	]
+};
+var p$2 = {
+	a: [
+		"par",
+		"para",
+		"parallel",
+		"parsim",
+		"parsl",
+		"part",
+		"partiald"
+	],
+	c: [
+		"pcy"
+	],
+	e: [
+		"percnt",
+		"period",
+		"permil",
+		"perp",
+		"pertenk"
+	],
+	f: [
+		"pfr"
+	],
+	h: [
+		"phi",
+		"phiv",
+		"phmmat",
+		"phone"
+	],
+	i: [
+		"pi",
+		"pitchfork",
+		"piv"
+	],
+	l: [
+		"planck",
+		"planckh",
+		"plankv",
+		"plus",
+		"plusacir",
+		"plusb",
+		"pluscir",
+		"plusdo",
+		"plusdu",
+		"pluse",
+		"plusminus",
+		"plusmn",
+		"plussim",
+		"plustwo"
+	],
+	m: [
+		"pm"
+	],
+	o: [
+		"poincareplane",
+		"pointint",
+		"popf",
+		"pound"
+	],
+	r: [
+		"pr",
+		"prap",
+		"prcue",
+		"pre",
+		"prec",
+		"precapprox",
+		"preccurlyeq",
+		"precedes",
+		"precedesequal",
+		"precedesslantequal",
+		"precedestilde",
+		"preceq",
+		"precnapprox",
+		"precneqq",
+		"precnsim",
+		"precsim",
+		"prime",
+		"primes",
+		"prnap",
+		"prne",
+		"prnsim",
+		"prod",
+		"product",
+		"profalar",
+		"profline",
+		"profsurf",
+		"prop",
+		"proportion",
+		"proportional",
+		"propto",
+		"prsim",
+		"prurel"
+	],
+	s: [
+		"pscr",
+		"psi"
+	],
+	u: [
+		"puncsp"
+	]
+};
+var q$2 = {
+	f: [
+		"qfr"
+	],
+	i: [
+		"qint"
+	],
+	o: [
+		"qopf"
+	],
+	p: [
+		"qprime"
+	],
+	s: [
+		"qscr"
+	],
+	u: [
+		"quaternions",
+		"quatint",
+		"quest",
+		"questeq",
+		"quot"
+	]
+};
+var r$2 = {
+	a: [
+		"raarr",
+		"race",
+		"racute",
+		"radic",
+		"raemptyv",
+		"rang",
+		"rangd",
+		"range",
+		"rangle",
+		"raquo",
+		"rarr",
+		"rarrap",
+		"rarrb",
+		"rarrbfs",
+		"rarrc",
+		"rarrfs",
+		"rarrhk",
+		"rarrlp",
+		"rarrpl",
+		"rarrsim",
+		"rarrtl",
+		"rarrw",
+		"ratail",
+		"ratio",
+		"rationals"
+	],
+	b: [
+		"rbarr",
+		"rbbrk",
+		"rbrace",
+		"rbrack",
+		"rbrke",
+		"rbrksld",
+		"rbrkslu"
+	],
+	c: [
+		"rcaron",
+		"rcedil",
+		"rceil",
+		"rcub",
+		"rcy"
+	],
+	d: [
+		"rdca",
+		"rdldhar",
+		"rdquo",
+		"rdquor",
+		"rdsh"
+	],
+	e: [
+		"re",
+		"real",
+		"realine",
+		"realpart",
+		"reals",
+		"rect",
+		"reg",
+		"reverseelement",
+		"reverseequilibrium",
+		"reverseupequilibrium"
+	],
+	f: [
+		"rfisht",
+		"rfloor",
+		"rfr"
+	],
+	h: [
+		"rhar",
+		"rhard",
+		"rharu",
+		"rharul",
+		"rho",
+		"rhov"
+	],
+	i: [
+		"rightanglebracket",
+		"rightarrow",
+		"rightarrowbar",
+		"rightarrowleftarrow",
+		"rightarrowtail",
+		"rightceiling",
+		"rightdoublebracket",
+		"rightdownteevector",
+		"rightdownvector",
+		"rightdownvectorbar",
+		"rightfloor",
+		"rightharpoondown",
+		"rightharpoonup",
+		"rightleftarrows",
+		"rightleftharpoons",
+		"rightrightarrows",
+		"rightsquigarrow",
+		"righttee",
+		"rightteearrow",
+		"rightteevector",
+		"rightthreetimes",
+		"righttriangle",
+		"righttrianglebar",
+		"righttriangleequal",
+		"rightupdownvector",
+		"rightupteevector",
+		"rightupvector",
+		"rightupvectorbar",
+		"rightvector",
+		"rightvectorbar",
+		"ring",
+		"risingdotseq"
+	],
+	l: [
+		"rlarr",
+		"rlhar",
+		"rlm"
+	],
+	m: [
+		"rmoust",
+		"rmoustache"
+	],
+	n: [
+		"rnmid"
+	],
+	o: [
+		"roang",
+		"roarr",
+		"robrk",
+		"ropar",
+		"ropf",
+		"roplus",
+		"rotimes",
+		"roundimplies"
+	],
+	p: [
+		"rpar",
+		"rpargt",
+		"rppolint"
+	],
+	r: [
+		"rrarr",
+		"rrightarrow"
+	],
+	s: [
+		"rsaquo",
+		"rscr",
+		"rsh",
+		"rsqb",
+		"rsquo",
+		"rsquor"
+	],
+	t: [
+		"rthree",
+		"rtimes",
+		"rtri",
+		"rtrie",
+		"rtrif",
+		"rtriltri"
+	],
+	u: [
+		"ruledelayed",
+		"ruluhar"
+	],
+	x: [
+		"rx"
+	]
+};
+var s$2 = {
+	a: [
+		"sacute"
+	],
+	b: [
+		"sbquo"
+	],
+	c: [
+		"sc",
+		"scap",
+		"scaron",
+		"sccue",
+		"sce",
+		"scedil",
+		"scirc",
+		"scnap",
+		"scne",
+		"scnsim",
+		"scpolint",
+		"scsim",
+		"scy"
+	],
+	d: [
+		"sdot",
+		"sdotb",
+		"sdote"
+	],
+	e: [
+		"searhk",
+		"searr",
+		"searrow",
+		"sect",
+		"semi",
+		"seswar",
+		"setminus",
+		"setmn",
+		"sext"
+	],
+	f: [
+		"sfr",
+		"sfrown"
+	],
+	h: [
+		"sharp",
+		"shchcy",
+		"shcy",
+		"shortdownarrow",
+		"shortleftarrow",
+		"shortmid",
+		"shortparallel",
+		"shortrightarrow",
+		"shortuparrow",
+		"shy"
+	],
+	i: [
+		"sigma",
+		"sigmaf",
+		"sigmav",
+		"sim",
+		"simdot",
+		"sime",
+		"simeq",
+		"simg",
+		"simge",
+		"siml",
+		"simle",
+		"simne",
+		"simplus",
+		"simrarr"
+	],
+	l: [
+		"slarr"
+	],
+	m: [
+		"smallcircle",
+		"smallsetminus",
+		"smashp",
+		"smeparsl",
+		"smid",
+		"smile",
+		"smt",
+		"smte",
+		"smtes"
+	],
+	o: [
+		"softcy",
+		"sol",
+		"solb",
+		"solbar",
+		"sopf"
+	],
+	p: [
+		"spades",
+		"spadesuit",
+		"spar"
+	],
+	q: [
+		"sqcap",
+		"sqcaps",
+		"sqcup",
+		"sqcups",
+		"sqrt",
+		"sqsub",
+		"sqsube",
+		"sqsubset",
+		"sqsubseteq",
+		"sqsup",
+		"sqsupe",
+		"sqsupset",
+		"sqsupseteq",
+		"squ",
+		"square",
+		"squareintersection",
+		"squaresubset",
+		"squaresubsetequal",
+		"squaresuperset",
+		"squaresupersetequal",
+		"squareunion",
+		"squarf",
+		"squf"
+	],
+	r: [
+		"srarr"
+	],
+	s: [
+		"sscr",
+		"ssetmn",
+		"ssmile",
+		"sstarf"
+	],
+	t: [
+		"star",
+		"starf",
+		"straightepsilon",
+		"straightphi",
+		"strns"
+	],
+	u: [
+		"sub",
+		"subdot",
+		"sube",
+		"subedot",
+		"submult",
+		"subne",
+		"subplus",
+		"subrarr",
+		"subset",
+		"subseteq",
+		"subseteqq",
+		"subsetequal",
+		"subsetneq",
+		"subsetneqq",
+		"subsim",
+		"subsub",
+		"subsup",
+		"succ",
+		"succapprox",
+		"succcurlyeq",
+		"succeeds",
+		"succeedsequal",
+		"succeedsslantequal",
+		"succeedstilde",
+		"succeq",
+		"succnapprox",
+		"succneqq",
+		"succnsim",
+		"succsim",
+		"suchthat",
+		"sum",
+		"sung",
+		"sup",
+		"sup1",
+		"sup2",
+		"sup3",
+		"supdot",
+		"supdsub",
+		"supe",
+		"supedot",
+		"superset",
+		"supersetequal",
+		"suphsol",
+		"suphsub",
+		"suplarr",
+		"supmult",
+		"supne",
+		"supplus",
+		"supset",
+		"supseteq",
+		"supseteqq",
+		"supsetneq",
+		"supsetneqq",
+		"supsim",
+		"supsub",
+		"supsup"
+	],
+	w: [
+		"swarhk",
+		"swarr",
+		"swarrow",
+		"swnwar"
+	],
+	z: [
+		"szlig"
+	]
+};
+var t$2 = {
+	a: [
+		"tab",
+		"target",
+		"tau"
+	],
+	b: [
+		"tbrk"
+	],
+	c: [
+		"tcaron",
+		"tcedil",
+		"tcy"
+	],
+	d: [
+		"tdot"
+	],
+	e: [
+		"telrec"
+	],
+	f: [
+		"tfr"
+	],
+	h: [
+		"there4",
+		"therefore",
+		"theta",
+		"thetasym",
+		"thetav",
+		"thickapprox",
+		"thicksim",
+		"thickspace",
+		"thinsp",
+		"thinspace",
+		"thkap",
+		"thksim",
+		"thorn"
+	],
+	i: [
+		"tilde",
+		"tildeequal",
+		"tildefullequal",
+		"tildetilde",
+		"times",
+		"timesb",
+		"timesbar",
+		"timesd",
+		"tint"
+	],
+	o: [
+		"toea",
+		"top",
+		"topbot",
+		"topcir",
+		"topf",
+		"topfork",
+		"tosa"
+	],
+	p: [
+		"tprime"
+	],
+	r: [
+		"trade",
+		"triangle",
+		"triangledown",
+		"triangleleft",
+		"trianglelefteq",
+		"triangleq",
+		"triangleright",
+		"trianglerighteq",
+		"tridot",
+		"trie",
+		"triminus",
+		"tripledot",
+		"triplus",
+		"trisb",
+		"tritime",
+		"trpezium"
+	],
+	s: [
+		"tscr",
+		"tscy",
+		"tshcy",
+		"tstrok"
+	],
+	w: [
+		"twixt",
+		"twoheadleftarrow",
+		"twoheadrightarrow"
+	]
+};
+var u$2 = {
+	a: [
+		"uacute",
+		"uarr",
+		"uarrocir"
+	],
+	b: [
+		"ubrcy",
+		"ubreve"
+	],
+	c: [
+		"ucirc",
+		"ucy"
+	],
+	d: [
+		"udarr",
+		"udblac",
+		"udhar"
+	],
+	f: [
+		"ufisht",
+		"ufr"
+	],
+	g: [
+		"ugrave"
+	],
+	h: [
+		"uhar",
+		"uharl",
+		"uharr",
+		"uhblk"
+	],
+	l: [
+		"ulcorn",
+		"ulcorner",
+		"ulcrop",
+		"ultri"
+	],
+	m: [
+		"umacr",
+		"uml"
+	],
+	n: [
+		"underbar",
+		"underbrace",
+		"underbracket",
+		"underparenthesis",
+		"union",
+		"unionplus"
+	],
+	o: [
+		"uogon",
+		"uopf"
+	],
+	p: [
+		"uparrow",
+		"uparrowbar",
+		"uparrowdownarrow",
+		"updownarrow",
+		"upequilibrium",
+		"upharpoonleft",
+		"upharpoonright",
+		"uplus",
+		"upperleftarrow",
+		"upperrightarrow",
+		"upsi",
+		"upsih",
+		"upsilon",
+		"uptee",
+		"upteearrow",
+		"upuparrows"
+	],
+	r: [
+		"urcorn",
+		"urcorner",
+		"urcrop",
+		"uring",
+		"urtri"
+	],
+	s: [
+		"uscr"
+	],
+	t: [
+		"utdot",
+		"utilde",
+		"utri",
+		"utrif"
+	],
+	u: [
+		"uuarr",
+		"uuml"
+	],
+	w: [
+		"uwangle"
+	]
+};
+var v$2 = {
+	a: [
+		"vangrt",
+		"varepsilon",
+		"varkappa",
+		"varnothing",
+		"varphi",
+		"varpi",
+		"varpropto",
+		"varr",
+		"varrho",
+		"varsigma",
+		"varsubsetneq",
+		"varsubsetneqq",
+		"varsupsetneq",
+		"varsupsetneqq",
+		"vartheta",
+		"vartriangleleft",
+		"vartriangleright"
+	],
+	b: [
+		"vbar",
+		"vbarv"
+	],
+	c: [
+		"vcy"
+	],
+	d: [
+		"vdash",
+		"vdashl"
+	],
+	e: [
+		"vee",
+		"veebar",
+		"veeeq",
+		"vellip",
+		"verbar",
+		"vert",
+		"verticalbar",
+		"verticalline",
+		"verticalseparator",
+		"verticaltilde",
+		"verythinspace"
+	],
+	f: [
+		"vfr"
+	],
+	l: [
+		"vltri"
+	],
+	n: [
+		"vnsub",
+		"vnsup"
+	],
+	o: [
+		"vopf"
+	],
+	p: [
+		"vprop"
+	],
+	r: [
+		"vrtri"
+	],
+	s: [
+		"vscr",
+		"vsubne",
+		"vsupne"
+	],
+	v: [
+		"vvdash"
+	],
+	z: [
+		"vzigzag"
+	]
+};
+var w$2 = {
+	c: [
+		"wcirc"
+	],
+	e: [
+		"wedbar",
+		"wedge",
+		"wedgeq",
+		"weierp"
+	],
+	f: [
+		"wfr"
+	],
+	o: [
+		"wopf"
+	],
+	p: [
+		"wp"
+	],
+	r: [
+		"wr",
+		"wreath"
+	],
+	s: [
+		"wscr"
+	]
+};
+var x$2 = {
+	c: [
+		"xcap",
+		"xcirc",
+		"xcup"
+	],
+	d: [
+		"xdtri"
+	],
+	f: [
+		"xfr"
+	],
+	h: [
+		"xharr"
+	],
+	i: [
+		"xi"
+	],
+	l: [
+		"xlarr"
+	],
+	m: [
+		"xmap"
+	],
+	n: [
+		"xnis"
+	],
+	o: [
+		"xodot",
+		"xopf",
+		"xoplus",
+		"xotime"
+	],
+	r: [
+		"xrarr"
+	],
+	s: [
+		"xscr",
+		"xsqcup"
+	],
+	u: [
+		"xuplus",
+		"xutri"
+	],
+	v: [
+		"xvee"
+	],
+	w: [
+		"xwedge"
+	]
+};
+var y$2 = {
+	a: [
+		"yacute",
+		"yacy"
+	],
+	c: [
+		"ycirc",
+		"ycy"
+	],
+	e: [
+		"yen"
+	],
+	f: [
+		"yfr"
+	],
+	i: [
+		"yicy"
+	],
+	o: [
+		"yopf"
+	],
+	s: [
+		"yscr"
+	],
+	u: [
+		"yucy",
+		"yuml"
+	]
+};
+var z$2 = {
+	a: [
+		"zacute"
+	],
+	c: [
+		"zcaron",
+		"zcy"
+	],
+	d: [
+		"zdot"
+	],
+	e: [
+		"zeetrf",
+		"zerowidthspace",
+		"zeta"
+	],
+	f: [
+		"zfr"
+	],
+	h: [
+		"zhcy"
+	],
+	i: [
+		"zigrarr"
+	],
+	o: [
+		"zopf"
+	],
+	s: [
+		"zscr"
+	],
+	w: [
+		"zwj",
+		"zwnj"
+	]
+};
+var startsWithCaseInsensitive = {
+	a: a$2,
+	b: b$2,
+	c: c$2,
+	d: d$2,
+	e: e$2,
+	f: f$2,
+	g: g$2,
+	h: h$2,
+	i: i$2,
+	j: j$2,
+	k: k$2,
+	l: l$2,
+	m: m$2,
+	n: n$2,
+	o: o$2,
+	p: p$2,
+	q: q$2,
+	r: r$2,
+	s: s$2,
+	t: t$2,
+	u: u$2,
+	v: v$2,
+	w: w$2,
+	x: x$2,
+	y: y$2,
+	z: z$2
+};
+
+var e$3 = {
+	t: [
+		"aacute",
+		"acute",
+		"cacute",
+		"closecurlydoublequote",
+		"closecurlyquote",
+		"diacriticalacute",
+		"diacriticaldoubleacute",
+		"eacute",
+		"gacute",
+		"iacute",
+		"lacute",
+		"late",
+		"nacute",
+		"oacute",
+		"opencurlydoublequote",
+		"opencurlyquote",
+		"racute",
+		"sacute",
+		"sdote",
+		"smte",
+		"uacute",
+		"yacute",
+		"zacute"
+	],
+	v: [
+		"abreve",
+		"agrave",
+		"breve",
+		"diacriticalgrave",
+		"downbreve",
+		"egrave",
+		"gbreve",
+		"grave",
+		"igrave",
+		"ograve",
+		"ubreve",
+		"ugrave"
+	],
+	c: [
+		"ace",
+		"hilbertspace",
+		"lbrace",
+		"mediumspace",
+		"negativemediumspace",
+		"negativethickspace",
+		"negativethinspace",
+		"negativeverythinspace",
+		"nonbreakingspace",
+		"nsce",
+		"overbrace",
+		"race",
+		"rbrace",
+		"sce",
+		"thickspace",
+		"thinspace",
+		"underbrace",
+		"verythinspace",
+		"zerowidthspace"
+	],
+	p: [
+		"andslope",
+		"ape",
+		"bumpe",
+		"csupe",
+		"nape",
+		"nbumpe",
+		"nsqsupe",
+		"nsupe",
+		"orslope",
+		"sqsupe",
+		"supe"
+	],
+	g: [
+		"ange",
+		"barwedge",
+		"bigwedge",
+		"blacklozenge",
+		"curlywedge",
+		"doublebarwedge",
+		"ge",
+		"image",
+		"lge",
+		"lozenge",
+		"nge",
+		"nvge",
+		"range",
+		"simge",
+		"wedge",
+		"xwedge"
+	],
+	l: [
+		"angle",
+		"blacktriangle",
+		"dwangle",
+		"exponentiale",
+		"female",
+		"gle",
+		"langle",
+		"le",
+		"lefttriangle",
+		"male",
+		"measuredangle",
+		"nle",
+		"notlefttriangle",
+		"notrighttriangle",
+		"nvle",
+		"rangle",
+		"righttriangle",
+		"simle",
+		"smallcircle",
+		"smile",
+		"ssmile",
+		"triangle",
+		"uwangle"
+	],
+	a: [
+		"angmsdae"
+	],
+	d: [
+		"atilde",
+		"diacriticaltilde",
+		"divide",
+		"equaltilde",
+		"greatertilde",
+		"itilde",
+		"lesstilde",
+		"notequaltilde",
+		"notgreatertilde",
+		"notlesstilde",
+		"notsucceedstilde",
+		"nottilde",
+		"nottildetilde",
+		"ntilde",
+		"otilde",
+		"precedestilde",
+		"succeedstilde",
+		"tilde",
+		"tildetilde",
+		"trade",
+		"utilde",
+		"verticaltilde"
+	],
+	m: [
+		"backprime",
+		"bprime",
+		"bsime",
+		"gsime",
+		"lsime",
+		"nsime",
+		"prime",
+		"qprime",
+		"sime",
+		"tprime",
+		"tritime",
+		"xotime"
+	],
+	e: [
+		"barvee",
+		"bigvee",
+		"curlyvee",
+		"cuvee",
+		"doublelefttee",
+		"doublerighttee",
+		"downtee",
+		"ee",
+		"lefttee",
+		"lthree",
+		"righttee",
+		"rthree",
+		"uptee",
+		"vee",
+		"xvee"
+	],
+	s: [
+		"because",
+		"maltese",
+		"pluse"
+	],
+	r: [
+		"blacksquare",
+		"cire",
+		"dotsquare",
+		"emptysmallsquare",
+		"emptyverysmallsquare",
+		"filledsmallsquare",
+		"filledverysmallsquare",
+		"incare",
+		"npre",
+		"pre",
+		"re",
+		"square",
+		"therefore"
+	],
+	n: [
+		"bne",
+		"colone",
+		"gne",
+		"gvne",
+		"horizontalline",
+		"imagline",
+		"isine",
+		"lne",
+		"lvne",
+		"ne",
+		"newline",
+		"notine",
+		"oline",
+		"phone",
+		"poincareplane",
+		"prne",
+		"profline",
+		"realine",
+		"scne",
+		"simne",
+		"subne",
+		"supne",
+		"verticalline",
+		"vsubne",
+		"vsupne"
+	],
+	i: [
+		"bowtie",
+		"die",
+		"infintie",
+		"ltrie",
+		"nltrie",
+		"nrtrie",
+		"nvltrie",
+		"nvrtrie",
+		"rtrie",
+		"trie"
+	],
+	b: [
+		"csube",
+		"nsqsube",
+		"nsube",
+		"sqsube",
+		"sube"
+	],
+	k: [
+		"lbrke",
+		"rbrke"
+	],
+	h: [
+		"lmoustache",
+		"rmoustache"
+	],
+	u: [
+		"nprcue",
+		"nsccue",
+		"prcue",
+		"sccue"
+	]
+};
+var c$3 = {
+	a: [
+		"ac",
+		"angmsdac",
+		"dblac",
+		"odblac",
+		"udblac"
+	],
+	r: [
+		"acirc",
+		"bigcirc",
+		"ccirc",
+		"circ",
+		"circledcirc",
+		"ecirc",
+		"eqcirc",
+		"gcirc",
+		"hcirc",
+		"icirc",
+		"jcirc",
+		"nrarrc",
+		"ocirc",
+		"rarrc",
+		"scirc",
+		"ucirc",
+		"wcirc",
+		"xcirc",
+		"ycirc"
+	],
+	s: [
+		"cuesc",
+		"nsc",
+		"sc"
+	],
+	e: [
+		"curlyeqprec",
+		"nprec",
+		"prec",
+		"telrec"
+	],
+	c: [
+		"curlyeqsucc",
+		"gescc",
+		"gtcc",
+		"lescc",
+		"ltcc",
+		"nsucc",
+		"succ"
+	],
+	i: [
+		"ic",
+		"radic"
+	],
+	v: [
+		"notinvc",
+		"notnivc"
+	]
+};
+var d$3 = {
+	c: [
+		"acd"
+	],
+	n: [
+		"and",
+		"andand",
+		"capand",
+		"diamond",
+		"pound"
+	],
+	d: [
+		"andd",
+		"dd",
+		"equivdd"
+	],
+	s: [
+		"angmsd",
+		"minusd",
+		"nisd",
+		"timesd"
+	],
+	a: [
+		"angmsdad",
+		"gammad"
+	],
+	b: [
+		"angrtvbd"
+	],
+	i: [
+		"apid",
+		"cirmid",
+		"mid",
+		"napid",
+		"nmid",
+		"nshortmid",
+		"nsmid",
+		"omid",
+		"rnmid",
+		"shortmid",
+		"smid"
+	],
+	e: [
+		"barwed",
+		"cuwed",
+		"imped",
+		"ruledelayed"
+	],
+	h: [
+		"boxhd",
+		"ddotrahd"
+	],
+	l: [
+		"capitaldifferentiald",
+		"differentiald",
+		"lbrksld",
+		"odsold",
+		"partiald",
+		"rbrksld"
+	],
+	o: [
+		"coprod",
+		"intprod",
+		"iprod",
+		"period",
+		"prod"
+	],
+	g: [
+		"langd",
+		"rangd"
+	],
+	r: [
+		"lhard",
+		"llhard",
+		"lrhard",
+		"ord",
+		"rhard"
+	]
+};
+var y$3 = {
+	c: [
+		"acy",
+		"bcy",
+		"chcy",
+		"dcy",
+		"djcy",
+		"dscy",
+		"dzcy",
+		"ecy",
+		"fcy",
+		"gcy",
+		"gjcy",
+		"hardcy",
+		"icy",
+		"iecy",
+		"iocy",
+		"iukcy",
+		"jcy",
+		"jsercy",
+		"jukcy",
+		"kcy",
+		"khcy",
+		"kjcy",
+		"lcy",
+		"ljcy",
+		"mcy",
+		"ncy",
+		"njcy",
+		"ocy",
+		"pcy",
+		"rcy",
+		"scy",
+		"shchcy",
+		"shcy",
+		"softcy",
+		"tcy",
+		"tscy",
+		"tshcy",
+		"ubrcy",
+		"ucy",
+		"vcy",
+		"yacy",
+		"ycy",
+		"yicy",
+		"yucy",
+		"zcy",
+		"zhcy"
+	],
+	p: [
+		"copy"
+	],
+	t: [
+		"cylcty",
+		"empty"
+	],
+	h: [
+		"shy"
+	]
+};
+var g$3 = {
+	i: [
+		"aelig",
+		"ffilig",
+		"fflig",
+		"ffllig",
+		"filig",
+		"fjlig",
+		"fllig",
+		"ijlig",
+		"oelig",
+		"szlig"
+	],
+	l: [
+		"amalg",
+		"lg",
+		"ntlg"
+	],
+	n: [
+		"ang",
+		"aring",
+		"backcong",
+		"bcong",
+		"cong",
+		"eng",
+		"lang",
+		"leftceiling",
+		"loang",
+		"nang",
+		"ncong",
+		"rang",
+		"rightceiling",
+		"ring",
+		"roang",
+		"sung",
+		"uring",
+		"varnothing"
+	],
+	a: [
+		"angmsdag",
+		"vzigzag"
+	],
+	e: [
+		"deg",
+		"eg",
+		"leg",
+		"reg"
+	],
+	g: [
+		"gg",
+		"ggg",
+		"ngg"
+	],
+	s: [
+		"lesg"
+	],
+	m: [
+		"lsimg",
+		"simg"
+	]
+};
+var f$3 = {
+	a: [
+		"af",
+		"angmsdaf",
+		"sigmaf"
+	],
+	p: [
+		"aopf",
+		"bopf",
+		"copf",
+		"dopf",
+		"eopf",
+		"fopf",
+		"gopf",
+		"hopf",
+		"iopf",
+		"jopf",
+		"kopf",
+		"lopf",
+		"mopf",
+		"nopf",
+		"oopf",
+		"popf",
+		"qopf",
+		"ropf",
+		"sopf",
+		"topf",
+		"uopf",
+		"vopf",
+		"wopf",
+		"xopf",
+		"yopf",
+		"zopf"
+	],
+	i: [
+		"dtrif",
+		"ltrif",
+		"rtrif",
+		"utrif"
+	],
+	o: [
+		"fnof",
+		"imof",
+		"orderof",
+		"origof"
+	],
+	r: [
+		"fouriertrf",
+		"laplacetrf",
+		"mellintrf",
+		"profsurf",
+		"squarf",
+		"sstarf",
+		"starf",
+		"zeetrf"
+	],
+	l: [
+		"half"
+	],
+	f: [
+		"iff"
+	],
+	z: [
+		"lozf"
+	],
+	d: [
+		"ordf"
+	],
+	u: [
+		"squf"
+	]
+};
+var r$3 = {
+	f: [
+		"afr",
+		"bfr",
+		"cfr",
+		"dfr",
+		"efr",
+		"ffr",
+		"gfr",
+		"hfr",
+		"ifr",
+		"jfr",
+		"kfr",
+		"lfr",
+		"mfr",
+		"nfr",
+		"ofr",
+		"pfr",
+		"qfr",
+		"rfr",
+		"sfr",
+		"tfr",
+		"ufr",
+		"vfr",
+		"wfr",
+		"xfr",
+		"yfr",
+		"zfr"
+	],
+	c: [
+		"amacr",
+		"ascr",
+		"bscr",
+		"cscr",
+		"dscr",
+		"emacr",
+		"escr",
+		"fscr",
+		"gscr",
+		"hscr",
+		"imacr",
+		"iscr",
+		"jscr",
+		"kscr",
+		"lscr",
+		"macr",
+		"mscr",
+		"nscr",
+		"omacr",
+		"oscr",
+		"pscr",
+		"qscr",
+		"rscr",
+		"sscr",
+		"tscr",
+		"umacr",
+		"uscr",
+		"vscr",
+		"wscr",
+		"xscr",
+		"yscr",
+		"zscr"
+	],
+	r: [
+		"angzarr",
+		"crarr",
+		"cudarrr",
+		"cularr",
+		"curarr",
+		"darr",
+		"ddarr",
+		"dharr",
+		"duarr",
+		"dzigrarr",
+		"erarr",
+		"gtrarr",
+		"harr",
+		"hoarr",
+		"laarr",
+		"larr",
+		"lbarr",
+		"llarr",
+		"loarr",
+		"lrarr",
+		"ltlarr",
+		"nearr",
+		"nharr",
+		"nlarr",
+		"nrarr",
+		"nvharr",
+		"nvlarr",
+		"nvrarr",
+		"nwarr",
+		"olarr",
+		"orarr",
+		"raarr",
+		"rarr",
+		"rbarr",
+		"rlarr",
+		"roarr",
+		"rrarr",
+		"searr",
+		"simrarr",
+		"slarr",
+		"srarr",
+		"subrarr",
+		"suplarr",
+		"swarr",
+		"uarr",
+		"udarr",
+		"uharr",
+		"uuarr",
+		"varr",
+		"xharr",
+		"xlarr",
+		"xrarr",
+		"zigrarr"
+	],
+	i: [
+		"apacir",
+		"cir",
+		"cirscir",
+		"ecir",
+		"gtcir",
+		"harrcir",
+		"ltcir",
+		"midcir",
+		"ocir",
+		"ofcir",
+		"olcir",
+		"plusacir",
+		"pluscir",
+		"topcir",
+		"uarrocir"
+	],
+	a: [
+		"bigstar",
+		"brvbar",
+		"dhar",
+		"dollar",
+		"doubleverticalbar",
+		"downarrowbar",
+		"downleftvectorbar",
+		"downrightvectorbar",
+		"duhar",
+		"epar",
+		"gtlpar",
+		"hbar",
+		"horbar",
+		"ldrdhar",
+		"ldrushar",
+		"leftarrowbar",
+		"leftdownvectorbar",
+		"lefttrianglebar",
+		"leftupvectorbar",
+		"leftvectorbar",
+		"lhar",
+		"lopar",
+		"lowbar",
+		"lpar",
+		"lrhar",
+		"ltrpar",
+		"lurdshar",
+		"luruhar",
+		"nesear",
+		"nhpar",
+		"notdoubleverticalbar",
+		"notlefttrianglebar",
+		"notrighttrianglebar",
+		"notverticalbar",
+		"npar",
+		"nspar",
+		"nwnear",
+		"ohbar",
+		"opar",
+		"ovbar",
+		"overbar",
+		"par",
+		"profalar",
+		"rdldhar",
+		"rhar",
+		"rightarrowbar",
+		"rightdownvectorbar",
+		"righttrianglebar",
+		"rightupvectorbar",
+		"rightvectorbar",
+		"rlhar",
+		"ropar",
+		"rpar",
+		"ruluhar",
+		"seswar",
+		"solbar",
+		"spar",
+		"star",
+		"swnwar",
+		"timesbar",
+		"udhar",
+		"uhar",
+		"underbar",
+		"uparrowbar",
+		"vbar",
+		"veebar",
+		"verbar",
+		"verticalbar",
+		"wedbar"
+	],
+	d: [
+		"boxdr",
+		"circledr",
+		"mldr",
+		"nldr"
+	],
+	u: [
+		"boxur",
+		"natur"
+	],
+	v: [
+		"boxvr"
+	],
+	s: [
+		"copysr"
+	],
+	p: [
+		"cuepr",
+		"npr",
+		"pr"
+	],
+	o: [
+		"cupor",
+		"downleftrightvector",
+		"downleftteevector",
+		"downleftvector",
+		"downrightteevector",
+		"downrightvector",
+		"ldquor",
+		"leftdownteevector",
+		"leftdownvector",
+		"leftfloor",
+		"leftrightvector",
+		"leftteevector",
+		"leftupdownvector",
+		"leftupteevector",
+		"leftupvector",
+		"leftvector",
+		"lesdotor",
+		"lfloor",
+		"lsquor",
+		"or",
+		"oror",
+		"rdquor",
+		"rfloor",
+		"rightdownteevector",
+		"rightdownvector",
+		"rightfloor",
+		"rightteevector",
+		"rightupdownvector",
+		"rightupteevector",
+		"rightupvector",
+		"rightvector",
+		"rsquor",
+		"verticalseparator"
+	],
+	e: [
+		"dagger",
+		"ddagger",
+		"easter",
+		"greatergreater",
+		"lessequalgreater",
+		"lessgreater",
+		"llcorner",
+		"lrcorner",
+		"marker",
+		"nestedgreatergreater",
+		"notgreater",
+		"notgreatergreater",
+		"notlessgreater",
+		"notnestedgreatergreater",
+		"order",
+		"ulcorner",
+		"urcorner"
+	],
+	t: [
+		"eqslantgtr",
+		"lesseqgtr",
+		"lesseqqgtr",
+		"lessgtr",
+		"ngtr"
+	],
+	w: [
+		"wr"
+	]
+};
+var m$3 = {
+	y: [
+		"alefsym",
+		"thetasym"
+	],
+	i: [
+		"backsim",
+		"bsim",
+		"eqsim",
+		"esim",
+		"gnsim",
+		"gsim",
+		"gtrsim",
+		"im",
+		"larrsim",
+		"lesssim",
+		"lnsim",
+		"lsim",
+		"nesim",
+		"ngsim",
+		"nlsim",
+		"nsim",
+		"nvsim",
+		"parsim",
+		"plussim",
+		"precnsim",
+		"precsim",
+		"prnsim",
+		"prsim",
+		"rarrsim",
+		"scnsim",
+		"scsim",
+		"sim",
+		"subsim",
+		"succnsim",
+		"succsim",
+		"supsim",
+		"thicksim",
+		"thksim"
+	],
+	o: [
+		"bottom"
+	],
+	s: [
+		"ccupssm"
+	],
+	r: [
+		"curarrm",
+		"lrm"
+	],
+	a: [
+		"diam"
+	],
+	u: [
+		"equilibrium",
+		"num",
+		"reverseequilibrium",
+		"reverseupequilibrium",
+		"sum",
+		"trpezium",
+		"upequilibrium"
+	],
+	h: [
+		"ohm"
+	],
+	d: [
+		"ordm"
+	],
+	p: [
+		"pm"
+	],
+	l: [
+		"rlm"
+	]
+};
+var h$3 = {
+	p: [
+		"aleph",
+		"angsph"
+	],
+	a: [
+		"angmsdah"
+	],
+	s: [
+		"backslash",
+		"circleddash",
+		"dash",
+		"hslash",
+		"ldsh",
+		"lsh",
+		"mdash",
+		"ndash",
+		"nvdash",
+		"odash",
+		"oslash",
+		"rdsh",
+		"rsh",
+		"vdash",
+		"vvdash"
+	],
+	t: [
+		"beth",
+		"daleth",
+		"eth",
+		"imath",
+		"jmath",
+		"wreath"
+	],
+	x: [
+		"boxh"
+	],
+	v: [
+		"boxvh"
+	],
+	k: [
+		"planckh"
+	],
+	i: [
+		"upsih"
+	]
+};
+var a$3 = {
+	h: [
+		"alpha"
+	],
+	a: [
+		"angmsdaa"
+	],
+	t: [
+		"beta",
+		"delta",
+		"eta",
+		"iiota",
+		"iota",
+		"theta",
+		"vartheta",
+		"zeta"
+	],
+	l: [
+		"cedilla",
+		"gla",
+		"nabla"
+	],
+	m: [
+		"comma",
+		"digamma",
+		"gamma",
+		"invisiblecomma",
+		"mcomma",
+		"sigma",
+		"varsigma"
+	],
+	p: [
+		"kappa",
+		"varkappa"
+	],
+	d: [
+		"lambda"
+	],
+	c: [
+		"ldca",
+		"rdca"
+	],
+	v: [
+		"notinva",
+		"notniva"
+	],
+	g: [
+		"omega"
+	],
+	r: [
+		"para"
+	],
+	e: [
+		"toea"
+	],
+	s: [
+		"tosa"
+	]
+};
+var p$3 = {
+	m: [
+		"amp",
+		"asymp",
+		"bump",
+		"comp",
+		"humpdownhump",
+		"mp",
+		"nbump",
+		"nothumpdownhump"
+	],
+	a: [
+		"ap",
+		"bigcap",
+		"cap",
+		"capcap",
+		"cupbrcap",
+		"cupcap",
+		"gap",
+		"gnap",
+		"lap",
+		"lnap",
+		"map",
+		"multimap",
+		"mumap",
+		"nap",
+		"ncap",
+		"notcupcap",
+		"nvap",
+		"prap",
+		"prnap",
+		"rarrap",
+		"scap",
+		"scnap",
+		"sqcap",
+		"thkap",
+		"xcap",
+		"xmap"
+	],
+	u: [
+		"bigcup",
+		"bigsqcup",
+		"bigtriangleup",
+		"capbrcup",
+		"capcup",
+		"csup",
+		"cup",
+		"cupcup",
+		"leftharpoonup",
+		"mapstoup",
+		"ncup",
+		"nsup",
+		"rightharpoonup",
+		"sqcup",
+		"sqsup",
+		"subsup",
+		"sup",
+		"supsup",
+		"vnsup",
+		"xcup",
+		"xsqcup"
+	],
+	r: [
+		"cularrp",
+		"operp",
+		"perp",
+		"sharp",
+		"weierp"
+	],
+	o: [
+		"dlcrop",
+		"drcrop",
+		"prop",
+		"top",
+		"ulcrop",
+		"urcrop",
+		"vprop"
+	],
+	s: [
+		"emsp",
+		"ensp",
+		"hairsp",
+		"nbsp",
+		"numsp",
+		"puncsp",
+		"thinsp"
+	],
+	i: [
+		"hellip",
+		"vellip"
+	],
+	l: [
+		"larrlp",
+		"rarrlp"
+	],
+	c: [
+		"mlcp"
+	],
+	h: [
+		"smashp"
+	],
+	w: [
+		"wp"
+	]
+};
+var v$3 = {
+	d: [
+		"andv"
+	],
+	r: [
+		"barv",
+		"orv",
+		"vbarv"
+	],
+	y: [
+		"bemptyv",
+		"cemptyv",
+		"demptyv",
+		"emptyv",
+		"laemptyv",
+		"raemptyv"
+	],
+	i: [
+		"bnequiv",
+		"div",
+		"epsiv",
+		"equiv",
+		"nequiv",
+		"niv",
+		"odiv",
+		"phiv",
+		"piv"
+	],
+	x: [
+		"boxv"
+	],
+	h: [
+		"dashv"
+	],
+	k: [
+		"forkv",
+		"plankv"
+	],
+	s: [
+		"isinsv"
+	],
+	n: [
+		"isinv"
+	],
+	a: [
+		"kappav",
+		"sigmav",
+		"thetav"
+	],
+	t: [
+		"ngtv",
+		"nltv"
+	],
+	o: [
+		"rhov"
+	]
+};
+var b$3 = {
+	a: [
+		"angmsdab",
+		"tab"
+	],
+	v: [
+		"angrtvb",
+		"notinvb",
+		"notnivb"
+	],
+	l: [
+		"bsolb",
+		"solb"
+	],
+	u: [
+		"bsolhsub",
+		"csub",
+		"lcub",
+		"nsub",
+		"rcub",
+		"sqsub",
+		"sub",
+		"subsub",
+		"supdsub",
+		"suphsub",
+		"supsub",
+		"vnsub"
+	],
+	r: [
+		"larrb",
+		"rarrb"
+	],
+	q: [
+		"lsqb",
+		"rsqb"
+	],
+	s: [
+		"minusb",
+		"plusb",
+		"timesb",
+		"trisb"
+	],
+	t: [
+		"sdotb"
+	]
+};
+var t$3 = {
+	r: [
+		"angrt",
+		"imagpart",
+		"npart",
+		"part",
+		"realpart",
+		"sqrt",
+		"vangrt",
+		"vert"
+	],
+	s: [
+		"angst",
+		"ast",
+		"circledast",
+		"equest",
+		"exist",
+		"gtquest",
+		"iquest",
+		"lmoust",
+		"lowast",
+		"ltquest",
+		"midast",
+		"nexist",
+		"oast",
+		"quest",
+		"rmoust"
+	],
+	n: [
+		"awconint",
+		"awint",
+		"cconint",
+		"cent",
+		"cirfnint",
+		"complement",
+		"congruent",
+		"conint",
+		"cwconint",
+		"cwint",
+		"element",
+		"fpartint",
+		"geqslant",
+		"iiiint",
+		"iiint",
+		"int",
+		"leqslant",
+		"ngeqslant",
+		"nleqslant",
+		"notcongruent",
+		"notelement",
+		"notreverseelement",
+		"npolint",
+		"oint",
+		"percnt",
+		"pointint",
+		"qint",
+		"quatint",
+		"reverseelement",
+		"rppolint",
+		"scpolint",
+		"tint"
+	],
+	o: [
+		"bigodot",
+		"bnot",
+		"bot",
+		"capdot",
+		"cdot",
+		"centerdot",
+		"circledot",
+		"congdot",
+		"ctdot",
+		"cupdot",
+		"diacriticaldot",
+		"dot",
+		"dotdot",
+		"doteqdot",
+		"doubledot",
+		"dtdot",
+		"eddot",
+		"edot",
+		"efdot",
+		"egsdot",
+		"elsdot",
+		"erdot",
+		"esdot",
+		"gdot",
+		"gesdot",
+		"gtdot",
+		"gtrdot",
+		"idot",
+		"inodot",
+		"isindot",
+		"lesdot",
+		"lessdot",
+		"lmidot",
+		"ltdot",
+		"mddot",
+		"middot",
+		"ncongdot",
+		"nedot",
+		"not",
+		"notindot",
+		"odot",
+		"quot",
+		"sdot",
+		"simdot",
+		"subdot",
+		"subedot",
+		"supdot",
+		"supedot",
+		"tdot",
+		"topbot",
+		"tridot",
+		"tripledot",
+		"utdot",
+		"xodot",
+		"zdot"
+	],
+	f: [
+		"blacktriangleleft",
+		"circlearrowleft",
+		"curvearrowleft",
+		"downharpoonleft",
+		"looparrowleft",
+		"mapstoleft",
+		"ntriangleleft",
+		"triangleleft",
+		"upharpoonleft",
+		"vartriangleleft"
+	],
+	h: [
+		"blacktriangleright",
+		"circlearrowright",
+		"curvearrowright",
+		"dfisht",
+		"downharpoonright",
+		"homtht",
+		"lfisht",
+		"looparrowright",
+		"ntriangleright",
+		"rfisht",
+		"triangleright",
+		"ufisht",
+		"upharpoonright",
+		"vartriangleright"
+	],
+	e: [
+		"bullet",
+		"caret",
+		"emptyset",
+		"leftanglebracket",
+		"leftdoublebracket",
+		"notsquaresubset",
+		"notsquaresuperset",
+		"notsubset",
+		"notsuperset",
+		"nsubset",
+		"nsupset",
+		"overbracket",
+		"rightanglebracket",
+		"rightdoublebracket",
+		"sqsubset",
+		"sqsupset",
+		"squaresubset",
+		"squaresuperset",
+		"subset",
+		"superset",
+		"supset",
+		"target",
+		"underbracket"
+	],
+	i: [
+		"clubsuit",
+		"diamondsuit",
+		"heartsuit",
+		"it",
+		"spadesuit"
+	],
+	a: [
+		"commat",
+		"flat",
+		"hat",
+		"lat",
+		"phmmat",
+		"suchthat"
+	],
+	c: [
+		"coproduct",
+		"product",
+		"rect",
+		"sect"
+	],
+	g: [
+		"gt",
+		"ngt",
+		"nvgt",
+		"ogt",
+		"rpargt"
+	],
+	l: [
+		"hamilt",
+		"lparlt",
+		"lt",
+		"malt",
+		"nlt",
+		"nvlt",
+		"olt",
+		"submult",
+		"supmult"
+	],
+	x: [
+		"sext",
+		"twixt"
+	],
+	m: [
+		"smt"
+	]
+};
+var n$3 = {
+	o: [
+		"aogon",
+		"applyfunction",
+		"backepsilon",
+		"caron",
+		"ccaron",
+		"colon",
+		"dcaron",
+		"ecaron",
+		"ecolon",
+		"eogon",
+		"epsilon",
+		"eqcolon",
+		"expectation",
+		"hercon",
+		"intersection",
+		"iogon",
+		"lcaron",
+		"ncaron",
+		"ogon",
+		"omicron",
+		"proportion",
+		"rcaron",
+		"scaron",
+		"squareintersection",
+		"squareunion",
+		"straightepsilon",
+		"tcaron",
+		"union",
+		"uogon",
+		"upsilon",
+		"varepsilon",
+		"zcaron"
+	],
+	g: [
+		"assign"
+	],
+	e: [
+		"between",
+		"curren",
+		"hyphen",
+		"kgreen",
+		"yen"
+	],
+	w: [
+		"bigtriangledown",
+		"blacktriangledown",
+		"frown",
+		"leftharpoondown",
+		"mapstodown",
+		"rightharpoondown",
+		"sfrown",
+		"triangledown"
+	],
+	f: [
+		"compfn"
+	],
+	i: [
+		"disin",
+		"iinfin",
+		"in",
+		"infin",
+		"isin",
+		"notin",
+		"nvinfin"
+	],
+	r: [
+		"dlcorn",
+		"drcorn",
+		"thorn",
+		"ulcorn",
+		"urcorn"
+	],
+	a: [
+		"lagran"
+	],
+	m: [
+		"plusmn",
+		"setmn",
+		"ssetmn"
+	]
+};
+var s$3 = {
+	o: [
+		"apos",
+		"mstpos",
+		"napos",
+		"os"
+	],
+	u: [
+		"becaus",
+		"bigoplus",
+		"biguplus",
+		"boxminus",
+		"boxplus",
+		"circleminus",
+		"circleplus",
+		"dotminus",
+		"dotplus",
+		"eplus",
+		"loplus",
+		"minus",
+		"minusplus",
+		"mnplus",
+		"ominus",
+		"oplus",
+		"plus",
+		"plusminus",
+		"roplus",
+		"setminus",
+		"simplus",
+		"smallsetminus",
+		"subplus",
+		"supplus",
+		"triminus",
+		"triplus",
+		"unionplus",
+		"uplus",
+		"xoplus",
+		"xuplus"
+	],
+	i: [
+		"bernoullis",
+		"nis",
+		"overparenthesis",
+		"underparenthesis",
+		"xnis"
+	],
+	e: [
+		"bigotimes",
+		"boxtimes",
+		"circletimes",
+		"complexes",
+		"divideontimes",
+		"ges",
+		"gesles",
+		"implies",
+		"invisibletimes",
+		"lates",
+		"leftthreetimes",
+		"les",
+		"lesges",
+		"lotimes",
+		"ltimes",
+		"nges",
+		"nles",
+		"notprecedes",
+		"otimes",
+		"precedes",
+		"primes",
+		"rightthreetimes",
+		"rotimes",
+		"roundimplies",
+		"rtimes",
+		"smtes",
+		"spades",
+		"times"
+	],
+	p: [
+		"caps",
+		"ccaps",
+		"ccups",
+		"cups",
+		"sqcaps",
+		"sqcups"
+	],
+	y: [
+		"cayleys"
+	],
+	d: [
+		"circleds",
+		"notsucceeds",
+		"succeeds"
+	],
+	b: [
+		"clubs"
+	],
+	s: [
+		"cross",
+		"eqslantless",
+		"greaterequalless",
+		"greaterless",
+		"gtreqless",
+		"gtreqqless",
+		"gtrless",
+		"lessless",
+		"nestedlessless",
+		"nless",
+		"notgreaterless",
+		"notless",
+		"notlessless",
+		"notnestedlessless",
+		"olcross"
+	],
+	m: [
+		"diams"
+	],
+	w: [
+		"downdownarrows",
+		"leftleftarrows",
+		"leftrightarrows",
+		"rightleftarrows",
+		"rightrightarrows",
+		"upuparrows"
+	],
+	g: [
+		"egs"
+	],
+	r: [
+		"elinters",
+		"integers"
+	],
+	l: [
+		"els",
+		"equals",
+		"models",
+		"naturals",
+		"rationals",
+		"reals"
+	],
+	t: [
+		"exists",
+		"hearts",
+		"nexists",
+		"notexists"
+	],
+	n: [
+		"fltns",
+		"isins",
+		"leftrightharpoons",
+		"quaternions",
+		"rightleftharpoons",
+		"strns"
+	],
+	f: [
+		"larrbfs",
+		"larrfs",
+		"rarrbfs",
+		"rarrfs"
+	],
+	a: [
+		"otimesas"
+	]
+};
+var x$3 = {
+	o: [
+		"approx",
+		"boxbox",
+		"gnapprox",
+		"gtrapprox",
+		"lessapprox",
+		"lnapprox",
+		"napprox",
+		"precapprox",
+		"precnapprox",
+		"succapprox",
+		"succnapprox",
+		"thickapprox"
+	],
+	n: [
+		"divonx"
+	],
+	r: [
+		"rx"
+	]
+};
+var q$3 = {
+	e: [
+		"approxeq",
+		"asympeq",
+		"backsimeq",
+		"bumpeq",
+		"circeq",
+		"coloneq",
+		"ddotseq",
+		"doteq",
+		"fallingdotseq",
+		"geq",
+		"gneq",
+		"leq",
+		"lneq",
+		"ngeq",
+		"nleq",
+		"npreceq",
+		"nsimeq",
+		"nsubseteq",
+		"nsucceq",
+		"nsupseteq",
+		"ntrianglelefteq",
+		"ntrianglerighteq",
+		"preccurlyeq",
+		"preceq",
+		"questeq",
+		"risingdotseq",
+		"simeq",
+		"sqsubseteq",
+		"sqsupseteq",
+		"subseteq",
+		"subsetneq",
+		"succcurlyeq",
+		"succeq",
+		"supseteq",
+		"supsetneq",
+		"trianglelefteq",
+		"triangleq",
+		"trianglerighteq",
+		"varsubsetneq",
+		"varsupsetneq",
+		"veeeq",
+		"wedgeq"
+	],
+	q: [
+		"geqq",
+		"gneqq",
+		"gvertneqq",
+		"leqq",
+		"lneqq",
+		"lvertneqq",
+		"ngeqq",
+		"nleqq",
+		"nsubseteqq",
+		"nsupseteqq",
+		"precneqq",
+		"subseteqq",
+		"subsetneqq",
+		"succneqq",
+		"supseteqq",
+		"supsetneqq",
+		"varsubsetneqq",
+		"varsupsetneqq"
+	]
+};
+var l$3 = {
+	m: [
+		"auml",
+		"euml",
+		"gsiml",
+		"iuml",
+		"ouml",
+		"siml",
+		"uml",
+		"uuml",
+		"yuml"
+	],
+	d: [
+		"boxdl"
+	],
+	u: [
+		"boxul",
+		"lharul",
+		"rharul"
+	],
+	v: [
+		"boxvl"
+	],
+	o: [
+		"bsol",
+		"dsol",
+		"gesdotol",
+		"osol",
+		"sol",
+		"suphsol"
+	],
+	l: [
+		"bull",
+		"ell",
+		"forall",
+		"hybull",
+		"ll",
+		"nll"
+	],
+	i: [
+		"ccedil",
+		"cedil",
+		"gcedil",
+		"kcedil",
+		"latail",
+		"lcedil",
+		"lceil",
+		"leftarrowtail",
+		"ncedil",
+		"permil",
+		"ratail",
+		"rcedil",
+		"rceil",
+		"rightarrowtail",
+		"scedil",
+		"tcedil"
+	],
+	a: [
+		"clockwisecontourintegral",
+		"contourintegral",
+		"counterclockwisecontourintegral",
+		"dotequal",
+		"doublecontourintegral",
+		"equal",
+		"greaterequal",
+		"greaterfullequal",
+		"greaterslantequal",
+		"humpequal",
+		"intcal",
+		"integral",
+		"intercal",
+		"lefttriangleequal",
+		"lessfullequal",
+		"lessslantequal",
+		"natural",
+		"notequal",
+		"notgreaterequal",
+		"notgreaterfullequal",
+		"notgreaterslantequal",
+		"nothumpequal",
+		"notlefttriangleequal",
+		"notlessequal",
+		"notlessslantequal",
+		"notprecedesequal",
+		"notprecedesslantequal",
+		"notrighttriangleequal",
+		"notsquaresubsetequal",
+		"notsquaresupersetequal",
+		"notsubsetequal",
+		"notsucceedsequal",
+		"notsucceedsslantequal",
+		"notsupersetequal",
+		"nottildeequal",
+		"nottildefullequal",
+		"precedesequal",
+		"precedesslantequal",
+		"proportional",
+		"real",
+		"righttriangleequal",
+		"squaresubsetequal",
+		"squaresupersetequal",
+		"subsetequal",
+		"succeedsequal",
+		"succeedsslantequal",
+		"supersetequal",
+		"tildeequal",
+		"tildefullequal"
+	],
+	r: [
+		"cudarrl",
+		"dharl",
+		"uharl"
+	],
+	e: [
+		"del",
+		"el",
+		"gel",
+		"gimel",
+		"nparallel",
+		"nshortparallel",
+		"parallel",
+		"prurel",
+		"shortparallel"
+	],
+	s: [
+		"eparsl",
+		"eqvparsl",
+		"frasl",
+		"gesl",
+		"nparsl",
+		"parsl",
+		"smeparsl"
+	],
+	c: [
+		"excl",
+		"iexcl"
+	],
+	g: [
+		"gl",
+		"ntgl"
+	],
+	p: [
+		"larrpl",
+		"rarrpl"
+	],
+	t: [
+		"larrtl",
+		"rarrtl"
+	],
+	h: [
+		"vdashl"
+	]
+};
+var k$3 = {
+	r: [
+		"bbrk",
+		"bbrktbrk",
+		"checkmark",
+		"fork",
+		"lbbrk",
+		"lobrk",
+		"pitchfork",
+		"rbbrk",
+		"robrk",
+		"tbrk",
+		"topfork"
+	],
+	n: [
+		"blank",
+		"pertenk"
+	],
+	c: [
+		"block",
+		"check",
+		"lbrack",
+		"planck",
+		"rbrack"
+	],
+	o: [
+		"dstrok",
+		"hstrok",
+		"lstrok",
+		"tstrok"
+	],
+	e: [
+		"hacek"
+	],
+	h: [
+		"intlarhk",
+		"larrhk",
+		"nearhk",
+		"nwarhk",
+		"rarrhk",
+		"searhk",
+		"swarhk"
+	],
+	l: [
+		"lhblk",
+		"uhblk"
+	],
+	a: [
+		"nobreak"
+	]
+};
+var o$3 = {
+	u: [
+		"bdquo",
+		"laquo",
+		"ldquo",
+		"lsaquo",
+		"lsquo",
+		"raquo",
+		"rdquo",
+		"rsaquo",
+		"rsquo",
+		"sbquo"
+	],
+	r: [
+		"euro",
+		"micro",
+		"numero"
+	],
+	t: [
+		"gesdoto",
+		"lesdoto",
+		"longmapsto",
+		"mapsto",
+		"propto",
+		"varpropto"
+	],
+	h: [
+		"mho",
+		"rho",
+		"varrho"
+	],
+	d: [
+		"plusdo"
+	],
+	w: [
+		"plustwo"
+	],
+	i: [
+		"ratio"
+	]
+};
+var i$3 = {
+	s: [
+		"bepsi",
+		"epsi",
+		"psi",
+		"upsi"
+	],
+	m: [
+		"bsemi",
+		"semi"
+	],
+	h: [
+		"chi",
+		"phi",
+		"straightphi",
+		"varphi"
+	],
+	r: [
+		"dtri",
+		"lltri",
+		"lrtri",
+		"ltri",
+		"nltri",
+		"nrtri",
+		"rtri",
+		"rtriltri",
+		"ultri",
+		"urtri",
+		"utri",
+		"vltri",
+		"vrtri",
+		"xdtri",
+		"xutri"
+	],
+	i: [
+		"ii"
+	],
+	y: [
+		"imaginaryi"
+	],
+	n: [
+		"ni",
+		"notni"
+	],
+	p: [
+		"pi",
+		"varpi"
+	],
+	x: [
+		"xi"
+	]
+};
+var u$3 = {
+	o: [
+		"bernou"
+	],
+	h: [
+		"boxhu"
+	],
+	l: [
+		"lbrkslu",
+		"rbrkslu"
+	],
+	r: [
+		"lharu",
+		"rharu"
+	],
+	d: [
+		"minusdu",
+		"plusdu"
+	],
+	m: [
+		"mu"
+	],
+	n: [
+		"nu"
+	],
+	q: [
+		"squ"
+	],
+	a: [
+		"tau"
+	]
+};
+var w$3 = {
+	o: [
+		"bkarow",
+		"dbkarow",
+		"doubledownarrow",
+		"doubleleftarrow",
+		"doubleleftrightarrow",
+		"doublelongleftarrow",
+		"doublelongleftrightarrow",
+		"doublelongrightarrow",
+		"doublerightarrow",
+		"doubleuparrow",
+		"doubleupdownarrow",
+		"downarrow",
+		"downarrowuparrow",
+		"downteearrow",
+		"drbkarow",
+		"hksearow",
+		"hkswarow",
+		"hookleftarrow",
+		"hookrightarrow",
+		"leftarrow",
+		"leftarrowrightarrow",
+		"leftrightarrow",
+		"leftrightsquigarrow",
+		"leftteearrow",
+		"lleftarrow",
+		"longleftarrow",
+		"longleftrightarrow",
+		"longrightarrow",
+		"lowerleftarrow",
+		"lowerrightarrow",
+		"nearrow",
+		"nleftarrow",
+		"nleftrightarrow",
+		"nrightarrow",
+		"nwarrow",
+		"rightarrow",
+		"rightarrowleftarrow",
+		"rightsquigarrow",
+		"rightteearrow",
+		"rrightarrow",
+		"searrow",
+		"shortdownarrow",
+		"shortleftarrow",
+		"shortrightarrow",
+		"shortuparrow",
+		"swarrow",
+		"twoheadleftarrow",
+		"twoheadrightarrow",
+		"uparrow",
+		"uparrowdownarrow",
+		"updownarrow",
+		"upperleftarrow",
+		"upperrightarrow",
+		"upteearrow"
+	],
+	r: [
+		"harrw",
+		"nrarrw",
+		"rarrw"
+	]
+};
+var j$3 = {
+	l: [
+		"glj"
+	],
+	w: [
+		"zwj"
+	],
+	n: [
+		"zwnj"
+	]
+};
+var z$3 = {
+	o: [
+		"loz"
+	]
+};
+var endsWithCaseInsensitive = {
+	"1": {
+	p: [
+		"sup1"
+	]
+},
+	"2": {
+	"1": [
+		"blk12",
+		"frac12"
+	],
+	p: [
+		"sup2"
+	]
+},
+	"3": {
+	"1": [
+		"emsp13",
+		"frac13"
+	],
+	"2": [
+		"frac23"
+	],
+	p: [
+		"sup3"
+	]
+},
+	"4": {
+	"1": [
+		"blk14",
+		"emsp14",
+		"frac14"
+	],
+	"3": [
+		"blk34",
+		"frac34"
+	],
+	e: [
+		"there4"
+	]
+},
+	"5": {
+	"1": [
+		"frac15"
+	],
+	"2": [
+		"frac25"
+	],
+	"3": [
+		"frac35"
+	],
+	"4": [
+		"frac45"
+	]
+},
+	"6": {
+	"1": [
+		"frac16"
+	],
+	"5": [
+		"frac56"
+	]
+},
+	"8": {
+	"1": [
+		"frac18"
+	],
+	"3": [
+		"frac38"
+	],
+	"5": [
+		"frac58"
+	],
+	"7": [
+		"frac78"
+	]
+},
+	e: e$3,
+	c: c$3,
+	d: d$3,
+	y: y$3,
+	g: g$3,
+	f: f$3,
+	r: r$3,
+	m: m$3,
+	h: h$3,
+	a: a$3,
+	p: p$3,
+	v: v$3,
+	b: b$3,
+	t: t$3,
+	n: n$3,
+	s: s$3,
+	x: x$3,
+	q: q$3,
+	l: l$3,
+	k: k$3,
+	o: o$3,
+	i: i$3,
+	u: u$3,
+	w: w$3,
+	j: j$3,
+	z: z$3
+};
+
 function decode(ent) {
   if (typeof ent !== "string" || !ent.length || !ent.startsWith("&") || !ent.endsWith(";")) {
     throw new Error("all-named-html-entities/decode(): [THROW_ID_01] Input must be an HTML entity with leading ampersand and trailing semicolon, but \"".concat(ent, "\" was given"));
@@ -10736,6 +15588,8 @@ var maxLength = 31;
 exports.brokenNamedEntities = brokenNamedEntities;
 exports.decode = decode;
 exports.entEndsWith = endsWith;
+exports.entEndsWithCaseInsensitive = endsWithCaseInsensitive;
 exports.entStartsWith = startsWith;
+exports.entStartsWithCaseInsensitive = startsWithCaseInsensitive;
 exports.maxLength = maxLength;
 exports.minLength = minLength;
