@@ -1,11 +1,5 @@
 {
-  "bsp": "nbsp",
-  "nsp": "nbsp",
-  "nbp": "nbsp",
-  "nbs": "nbsp",
-  "bnsp": "nbsp",
-  "nsbp": "nbsp",
-  "nbps": "nbsp",
-  "npbs": "nbsp",
-  "npsb": "nbsp"
+  "poumd": "pound",
+  "poubd": "pound",
+  "ound": "pound"
 }
