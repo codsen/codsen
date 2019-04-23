@@ -4261,10 +4261,12 @@ var allNamedEntities = {
 var poumd = "pound";
 var poubd = "pound";
 var ound = "pound";
+var poud = "pound";
 var brokenNamedEntities = {
 	poumd: poumd,
 	poubd: poubd,
-	ound: ound
+	ound: ound,
+	poud: poud
 };
 
 var A = {
