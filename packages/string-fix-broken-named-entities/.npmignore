@@ -14,6 +14,7 @@
 .nyc_output
 coverage
 src
+tap
 test
 
 # files:

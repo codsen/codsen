@@ -429,8 +429,8 @@ test(`02.037 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorr
 
   const inp2 = "&&&&nbsp;x&&&&nbsp;y&&&&nbsp;";
   const outp2 = [[0, 9, "&nbsp;"], [10, 19, "&nbsp;"], [20, 29, "&nbsp;"]];
-  t.deepEqual(fix(inp2), outp2, "02.037.01 - duplicate ampersand");
-  t.deepEqual(fix(inp2, { cb }), outp2, "02.037.02");
+  t.deepEqual(fix(inp2), outp2, "02.037.03 - duplicate ampersand");
+  t.deepEqual(fix(inp2, { cb }), outp2, "02.037.04");
 });
 
 test(`02.038 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m characters - complete set - duplicate n`, t => {
@@ -1033,7 +1033,7 @@ test(`03.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - do not touch healthy &
   );
 });
 
-test(`03.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`, t => {
+test(`03.002 - ${`\u001b[${33}m${`insp`}\u001b[${39}m`} - more false positives`, t => {
   t.deepEqual(fix("insp;"), null, "03.002.01");
   t.deepEqual(fix("an insp;"), null, "03.002.02");
   t.deepEqual(fix("an inspp;"), null, "03.002.03");
@@ -1044,13 +1044,17 @@ test(`03.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`,
   t.deepEqual(fix("an inspp;", { decode: true }), null, "03.002.06");
 });
 
-test(`03.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - first bug spotted - v1.0.1 release`, t => {
+test(`03.003 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - first bug spotted - v1.0.1 release`, t => {
   t.deepEqual(fix("z&hairsp;y"), null, "03.003.01");
   t.deepEqual(fix("y&VeryThinSpace;z"), null, "03.003.02");
 
   // decode on:
   t.deepEqual(fix("z&hairsp;y", { decode: true }), null, "03.003.03");
   t.deepEqual(fix("y&VeryThinSpace;z", { decode: true }), null, "03.003.04");
+});
+
+test(`03.004 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - healthy &pound;`, t => {
+  t.deepEqual(fix("&pound;"), null, "03.004");
 });
 
 // -----------------------------------------------------------------------------
@@ -1705,7 +1709,7 @@ test(`09.002 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "09.002.01");
 });
 
-test(`09.003 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
+test(`09.003 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`, t => {
   const inp5 = "& nbsp ;";
   const outp5 = [
     {
@@ -1742,6 +1746,192 @@ test(`10.1-${
       `${singleEntity} - 02; ${i}/${arr.length}`
     );
   });
+});
+
+// -----------------------------------------------------------------------------
+// 11. not broken HTML entities: unrecognised or recognised and correct
+// -----------------------------------------------------------------------------
+
+test(`11.001 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unrecognised`}\u001b[${39}m - one`, t => {
+  const inp1 = "abc &x  y z; def";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-unrecognised`,
+        entityName: null,
+        rangeFrom: 4,
+        rangeTo: 12,
+        rangeValEncoded: null,
+        rangeValDecoded: null
+      }
+    ],
+    "11.001"
+  );
+});
+
+test(`11.002 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity`, t => {
+  const inp1 = "abc &poumd; def";
+  const outp1 = [[4, 11, "&pound;"]];
+  t.deepEqual(fix(inp1), outp1, "11.002.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "11.002.02");
+});
+
+test(`11.003 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity, cb() separately`, t => {
+  const inp1 = "abc &p oumd; def";
+  // const outp1 = [[4, 12, "&pound;"]];
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-pound`,
+        entityName: "pound",
+        rangeFrom: 4,
+        rangeTo: 12,
+        rangeValEncoded: "&pound;",
+        rangeValDecoded: "\xA3" // <= pound symbol
+      }
+    ],
+    "11.003"
+  );
+});
+
+test(`11.004 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with whitespace`, t => {
+  const inp1 = "abc &p ou\nnd; def";
+  const outp1 = [[4, 13, "&pound;"]];
+  t.deepEqual(fix(inp1), outp1, "11.004.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "11.004.02");
+});
+
+test(`11.005 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with capital letter`, t => {
+  const inp1 = "x &Pound; y";
+  const outp1 = [[2, 9, "&pound;"]];
+  t.deepEqual(fix(inp1), outp1, "11.005.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "11.005.02");
+});
+
+test(`11.006 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`, t => {
+  const inp1 = "abc &pound; def";
+  const outp1 = null;
+  t.is(fix(inp1), outp1, "11.006.01");
+  t.is(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    null,
+    "11.006"
+  );
+});
+
+test(`11.007 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
+  const inp1 = "x &Pound2; y";
+  // const outp1 = [[2, 8, "&pound;"]];
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-pound`,
+        entityName: "pound",
+        rangeFrom: 2,
+        rangeTo: 8,
+        rangeValEncoded: "&pound;",
+        rangeValDecoded: "\xA3" // <= pound symbol
+      }
+    ],
+    "11.007"
+  );
+});
+
+test(`11.008 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
+  const inp1 = "a&poUnd;b";
+  const outp1 = [[1, 8, "&pound;"]];
+  t.deepEqual(fix(inp1), outp1, "11.008");
+});
+
+test(`11.009 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`, t => {
+  const inp1 = "abc &pozzz; def";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-unrecognised`,
+        entityName: null,
+        rangeFrom: 4,
+        rangeTo: 11,
+        rangeValEncoded: null,
+        rangeValDecoded: null
+      }
+    ],
+    "11.009"
+  );
+});
+
+test(`11.010 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`, t => {
+  const inp1 = "&Poun;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-pound`,
+        entityName: "pound",
+        rangeFrom: 0,
+        rangeTo: 6,
+        rangeValEncoded: "&pound;",
+        rangeValDecoded: "\xA3" // <= pound symbol
+      }
+    ],
+    "11.010"
+  );
+});
+
+test(`11.011 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`, t => {
+  const oneOfBrokenEntities = "a&pound ;b";
+  t.deepEqual(
+    fix(oneOfBrokenEntities, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-pound`,
+        entityName: "pound",
+        rangeFrom: 1,
+        rangeTo: 9,
+        rangeValEncoded: "&pound;",
+        rangeValDecoded: "\xA3" // <= pound symbol
+      }
+    ],
+    "11.011"
+  );
+});
+
+test(`11.012 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`, t => {
+  const inp1 = "a&twoheadRightarrow;b";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-twoheadrightarrow`,
+        entityName: "twoheadrightarrow",
+        rangeFrom: 1,
+        rangeTo: 20,
+        rangeValEncoded: "&twoheadrightarrow;",
+        rangeValDecoded: "\u21A0"
+      }
+    ],
+    "11.012"
+  );
 });
 
 // -----------------------------------------------------------------------------

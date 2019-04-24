@@ -69,6 +69,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
     return true;
   }
+  function trimPerCharacter(str, fromIdx, toIdx) {
+    return str.slice(fromIdx, toIdx).split("").reduce(function (accum, curr) {
+      if (curr.trim().length) {
+        return accum += curr;
+      }
+      return accum;
+    }, "");
+  }
   function findLongest(temp1) {
     if (isArr(temp1) && temp1.length) {
       if (temp1.length === 1) {
@@ -213,12 +221,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       return "continue|outerloop";
     }
     if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetterOrNumber(str[i]))) {
-      if (i > letterSeqStartAt + 1) {
+      if (i > letterSeqStartAt + 1 && str.slice(letterSeqStartAt - 1, i + 1) !== "&nbsp;") {
         var potentialEntity = str.slice(letterSeqStartAt, i);
         var whatsOnTheLeft = stringLeftRight.left(str, letterSeqStartAt);
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           var firstChar = letterSeqStartAt;
-          var secondChar = stringLeftRight.right(str, letterSeqStartAt);
+          var secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
           if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstChar]) && allNamedHtmlEntities.entStartsWith[str[firstChar]].hasOwnProperty(str[secondChar])) {
             var tempEnt;
             var tempRes;
@@ -250,7 +258,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               });
             }
           }
-        } else if (str[whatsOnTheLeft] !== "&" && str[i] && str[i] === ";") {
+        } else if (str[whatsOnTheLeft] !== "&" && str[i] === ";") {
           var lastChar = stringLeftRight.left(str, i);
           var secondToLast = lastChar ? stringLeftRight.left(str, lastChar) : null;
           if (secondToLast !== null && allNamedHtmlEntities.entEndsWith.hasOwnProperty(str[lastChar]) && allNamedHtmlEntities.entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast])) {
@@ -284,11 +292,98 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               });
             }
           }
+        } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
+          if (i === whatsOnTheLeft + 1) {
+            rangesArr2.push({
+              ruleName: "suspicious-characters",
+              entityName: null,
+              rangeFrom: whatsOnTheLeft,
+              rangeTo: i + 1,
+              rangeValEncoded: null,
+              rangeValDecoded: null
+            });
+          } else if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
+            var _firstChar = letterSeqStartAt;
+            var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
+            var _tempEnt2;
+            var charTrimmed = trimPerCharacter(str, whatsOnTheLeft + 1, i);
+            if (allNamedHtmlEntities.entStartsWithCaseInsensitive.hasOwnProperty(str[_firstChar].toLowerCase()) && allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()].hasOwnProperty(str[_secondChar].toLowerCase())) {
+              var _tempRes2;
+              var matchedEntity = allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()][str[_secondChar].toLowerCase()].reduce(function (gatheredSoFar, oneOfKnownEntities) {
+                var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
+                  i: true
+                }].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+                if (tempRes && oneOfKnownEntities !== "nbsp") {
+                  return gatheredSoFar.concat([{
+                    tempEnt: oneOfKnownEntities,
+                    tempRes: tempRes
+                  }]);
+                }
+                return gatheredSoFar;
+              }, []);
+              matchedEntity = removeGappedFromMixedCases(matchedEntity);
+              if (matchedEntity) {
+                var _matchedEntity = matchedEntity;
+                _tempEnt2 = _matchedEntity.tempEnt;
+                _tempRes2 = _matchedEntity.tempRes;
+              }
+              if (_tempEnt2) {
+                var issue = false;
+                var _firstChar2 = _tempRes2.leftmostChar;
+                var _secondChar2 = stringLeftRight.right(str, _firstChar2);
+                if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[_firstChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]].hasOwnProperty(str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(charTrimmed)) {
+                  if (i - whatsOnTheLeft - 1 === _tempEnt2.length) ; else {
+                    issue = true;
+                  }
+                } else {
+                  issue = true;
+                }
+                if (issue) {
+                  var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(_tempEnt2, ";"));
+                  var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1;
+                  if (str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[stringLeftRight.right(str, endingIdx)] === ";") {
+                    endingIdx = stringLeftRight.right(str, endingIdx) + 1;
+                  }
+                  rangesArr2.push({
+                    ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt2),
+                    entityName: _tempEnt2,
+                    rangeFrom: whatsOnTheLeft,
+                    rangeTo: endingIdx,
+                    rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                    rangeValDecoded: _decodedEntity2
+                  });
+                }
+              }
+            }
+            if (!_tempEnt2) {
+              if (allNamedHtmlEntities.brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())) {
+                _tempEnt2 = charTrimmed;
+                var _decodedEntity3 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"));
+                rangesArr2.push({
+                  ruleName: "bad-named-html-entity-malformed-".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()]),
+                  entityName: allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()],
+                  rangeFrom: whatsOnTheLeft,
+                  rangeTo: i + 1,
+                  rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"),
+                  rangeValDecoded: _decodedEntity3
+                });
+              } else if (charTrimmed.toLowerCase() !== "&nbsp;") {
+                rangesArr2.push({
+                  ruleName: "bad-named-html-entity-unrecognised",
+                  entityName: null,
+                  rangeFrom: whatsOnTheLeft,
+                  rangeTo: i + 1,
+                  rangeValEncoded: null,
+                  rangeValDecoded: null
+                });
+              }
+            }
+          }
         }
       }
       letterSeqStartAt = null;
     }
-    if (letterSeqStartAt === null && isLatinLetterOrNumber(str[i])) {
+    if (letterSeqStartAt === null && isLatinLetterOrNumber(str[i]) && str[i + 1]) {
       letterSeqStartAt = i;
     }
     if (str[i] === "a") {
@@ -481,6 +576,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     return rangesArr2.every(function (oneOfEveryObj, y) {
       return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
     });
+  }).filter(function (filteredRangeObj, i, allRangesArr) {
+    if (filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" && allRangesArr.some(function (oneRangeObj, y) {
+      return i !== y &&
+      oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom && oneRangeObj.rangeTo === filteredRangeObj.rangeTo;
+    })) {
+      return false;
+    }
+    return true;
   }).map(opts.cb);
   return res;
 }

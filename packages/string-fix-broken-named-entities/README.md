@@ -42,30 +42,40 @@ import fix from "string-fix-broken-named-entities";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 21 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 20 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 94 KB |
+| Type                                                                                                    | Key in `package.json` | Path                                           | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 26 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 26 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 115 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-Detects and proposes fixes for a string that contains broken named HTML entities (for example, `&nnbsp;` with repeated "n"). The result is not a string but a `null` (nothing to fix) or an array of [ranges](https://gitlab.com/codsen/codsen/tree/master#-11-range-libraries) of index arrays with a value to replace. For example, `[[0, 6, "&nbsp;"]]` means replace from index `0` to `6` putting `&nbsp;`. Notice it's array of arrays because each range is an array and there can be few.
+The main purpose of this package is to fix broken named HTML entities, for example, `&nnbsp;` with repeated "n" is definitely an error and should be turned into `&nbsp;`.
 
-For example:
+Now, package like this does not function in a vacuum:
 
-```js
-console.log(JSON.stringify(fix("aaa&nnnbbssssp.ppp"), null, 4));
-// => [[3, 14, "&nbsp;"]]
+**First consideration** is format of the result. This package returns "everything" for each detected broken entity: index ranges of marking position, name, encoded and decoded values for example:
 
-console.log(JSON.stringify(fix("a&amp;nbsp;b"), null, 4));
-// => [[1, 11, "&nbsp;"]]
-
-console.log(JSON.stringify(fix("a&bnsp;b&nsbp;c&nspb;"), null, 4));
-// => [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]]
 ```
+{
+  ruleName: "bad-named-html-entity-malformed-nbsp",
+  entityName: "nbsp",
+  rangeFrom: 3,
+  rangeTo: 8,
+  rangeValEncoded: "&nbsp;",
+  rangeValDecoded: "\xA0"
+}
+```
+
+It's because "consumers" might require more or less information and it's impossible to cater all cases unless "everything" is given.
+
+**Second consideration** is encoding/decoding. Maybe "consumers" will want everything, broken or right, decoded? This means, this package should be able to report positions of any named or numeric HTML entities found, so that consuming packages could then decode.
+
+**Third consideration** is performance. We are already matching entities against 2127 known named entities (thanks to [all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities)). This is costly resource-wise. Since we match all entities anyway, it's cheap to report also any recognised or invalid named HTML entities as well as numeric-ones. If we left this to separate package, it would traverse and match again. Why do the same thing twice?
+
+**Fourth consideration** is numeric entities. Even though this package fixes named entities, it should report locations of all HTML entities, both named and numeric. This way consumers won't need to traverse the input second time, for numeric entities only.
 
 **[⬆ back to top](#)**
 
@@ -318,9 +328,9 @@ This library was initially part of [Detergent.js](https://gitlab.com/codsen/cods
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Astring-fix-broken-named-entities%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Astring-fix-broken-named-entities%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Astring-fix-broken-named-entities%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
@@ -339,7 +349,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
-[cov-img]: https://img.shields.io/badge/coverage-91.34%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.39%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities

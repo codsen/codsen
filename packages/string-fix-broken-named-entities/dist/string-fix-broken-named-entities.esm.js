@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, decode, entEndsWith } from 'all-named-html-entities';
+import { entStartsWith, decode, entEndsWith, entStartsWithCaseInsensitive, brokenNamedEntities } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -40,6 +40,17 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     return true;
+  }
+  function trimPerCharacter(str, fromIdx, toIdx) {
+    return str
+      .slice(fromIdx, toIdx)
+      .split("")
+      .reduce((accum, curr) => {
+        if (curr.trim().length) {
+          return (accum += curr);
+        }
+        return accum;
+      }, "");
   }
   function findLongest(temp1) {
     if (isArr(temp1) && temp1.length) {
@@ -306,12 +317,17 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       letterSeqStartAt !== null &&
       (!str[i] || (str[i].trim().length && !isLatinLetterOrNumber(str[i])))
     ) {
-      if (i > letterSeqStartAt + 1) {
+      if (
+        i > letterSeqStartAt + 1 &&
+        str.slice(letterSeqStartAt - 1, i + 1) !== "&nbsp;"
+      ) {
         const potentialEntity = str.slice(letterSeqStartAt, i);
         const whatsOnTheLeft = left(str, letterSeqStartAt);
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           const firstChar = letterSeqStartAt;
-          const secondChar = right(str, letterSeqStartAt);
+          const secondChar = letterSeqStartAt
+            ? right(str, letterSeqStartAt)
+            : null;
           if (
             entStartsWith.hasOwnProperty(str[firstChar]) &&
             entStartsWith[str[firstChar]].hasOwnProperty(str[secondChar])
@@ -350,7 +366,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               });
             }
           }
-        } else if (str[whatsOnTheLeft] !== "&" && str[i] && str[i] === ";") {
+        } else if (str[whatsOnTheLeft] !== "&" && str[i] === ";") {
           const lastChar = left(str, i);
           const secondToLast = lastChar ? left(str, lastChar) : null;
           if (
@@ -399,11 +415,141 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               });
             }
           }
+        } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
+          if (i === whatsOnTheLeft + 1) {
+            rangesArr2.push({
+              ruleName: `suspicious-characters`,
+              entityName: null,
+              rangeFrom: whatsOnTheLeft,
+              rangeTo: i + 1,
+              rangeValEncoded: null,
+              rangeValDecoded: null
+            });
+          } else if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
+            const firstChar = letterSeqStartAt;
+            const secondChar = letterSeqStartAt
+              ? right(str, letterSeqStartAt)
+              : null;
+            let tempEnt;
+            const charTrimmed = trimPerCharacter(str, whatsOnTheLeft + 1, i);
+            if (
+              entStartsWithCaseInsensitive.hasOwnProperty(
+                str[firstChar].toLowerCase()
+              ) &&
+              entStartsWithCaseInsensitive[
+                str[firstChar].toLowerCase()
+              ].hasOwnProperty(str[secondChar].toLowerCase())
+            ) {
+              let tempRes;
+              let matchedEntity = entStartsWithCaseInsensitive[
+                str[firstChar].toLowerCase()
+              ][str[secondChar].toLowerCase()].reduce(
+                (gatheredSoFar, oneOfKnownEntities) => {
+                  const tempRes = rightSeq(
+                    str,
+                    letterSeqStartAt - 1,
+                    {
+                      i: true
+                    },
+                    ...oneOfKnownEntities.split("")
+                  );
+                  if (tempRes && oneOfKnownEntities !== "nbsp") {
+                    return gatheredSoFar.concat([
+                      { tempEnt: oneOfKnownEntities, tempRes }
+                    ]);
+                  }
+                  return gatheredSoFar;
+                },
+                []
+              );
+              matchedEntity = removeGappedFromMixedCases(matchedEntity);
+              if (matchedEntity) {
+                ({ tempEnt, tempRes } = matchedEntity);
+              }
+              if (tempEnt) {
+                let issue = false;
+                const firstChar = tempRes.leftmostChar;
+                const secondChar = right(str, firstChar);
+                if (
+                  entStartsWith.hasOwnProperty(str[firstChar]) &&
+                  entStartsWith[str[firstChar]].hasOwnProperty(
+                    str[secondChar]
+                  ) &&
+                  entStartsWith[str[firstChar]][str[secondChar]].includes(
+                    charTrimmed
+                  )
+                ) {
+                  if (i - whatsOnTheLeft - 1 === tempEnt.length) ; else {
+                    issue = true;
+                  }
+                } else {
+                  issue = true;
+                }
+                if (issue) {
+                  const decodedEntity = decode(`&${tempEnt};`);
+                  let endingIdx =
+                    tempRes.rightmostChar + 1 === i
+                      ? i + 1
+                      : tempRes.rightmostChar + 1;
+                  if (
+                    str[endingIdx] !== ";" &&
+                    !str[endingIdx].trim().length &&
+                    str[right(str, endingIdx)] === ";"
+                  ) {
+                    endingIdx = right(str, endingIdx) + 1;
+                  }
+                  rangesArr2.push({
+                    ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                    entityName: tempEnt,
+                    rangeFrom: whatsOnTheLeft,
+                    rangeTo: endingIdx,
+                    rangeValEncoded: `&${tempEnt};`,
+                    rangeValDecoded: decodedEntity
+                  });
+                }
+              }
+            }
+            if (!tempEnt) {
+              if (
+                brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())
+              ) {
+                tempEnt = charTrimmed;
+                const decodedEntity = decode(
+                  `&${brokenNamedEntities[charTrimmed.toLowerCase()]};`
+                );
+                rangesArr2.push({
+                  ruleName: `bad-named-html-entity-malformed-${
+                    brokenNamedEntities[charTrimmed.toLowerCase()]
+                  }`,
+                  entityName: brokenNamedEntities[charTrimmed.toLowerCase()],
+                  rangeFrom: whatsOnTheLeft,
+                  rangeTo: i + 1,
+                  rangeValEncoded: `&${
+                    brokenNamedEntities[charTrimmed.toLowerCase()]
+                  };`,
+                  rangeValDecoded: decodedEntity
+                });
+              } else if (charTrimmed.toLowerCase() !== "&nbsp;") {
+                rangesArr2.push({
+                  ruleName: `bad-named-html-entity-unrecognised`,
+                  entityName: null,
+                  rangeFrom: whatsOnTheLeft,
+                  rangeTo: i + 1,
+                  rangeValEncoded: null,
+                  rangeValDecoded: null
+                });
+              }
+            }
+          }
         }
       }
       letterSeqStartAt = null;
     }
-    if (letterSeqStartAt === null && isLatinLetterOrNumber(str[i])) {
+    if (
+      letterSeqStartAt === null &&
+      isLatinLetterOrNumber(str[i]) &&
+      str[i + 1]
+    ) {
       letterSeqStartAt = i;
     }
     if (str[i] === "a") {
@@ -646,6 +792,21 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           )
         );
       });
+    })
+    .filter((filteredRangeObj, i, allRangesArr) => {
+      if (
+        filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" &&
+        allRangesArr.some((oneRangeObj, y) => {
+          return (
+            i !== y &&
+            oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom &&
+            oneRangeObj.rangeTo === filteredRangeObj.rangeTo
+          );
+        })
+      ) {
+        return false;
+      }
+      return true;
     })
     .map(opts.cb);
   return res;
