@@ -67,10 +67,25 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     return temp1;
   }
   function removeGappedFromMixedCases(temp1) {
+    let copy;
     if (isArr(temp1) && temp1.length) {
+      copy = Array.from(temp1);
+      if (
+        copy.length > 1 &&
+        copy.some(
+          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+        ) &&
+        copy.some(
+          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] !== ";"
+        )
+      ) {
+        copy = copy.filter(
+          entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+        );
+      }
       if (
         !(
-          temp1.every(
+          copy.every(
             entObj =>
               !entObj ||
               !entObj.tempRes ||
@@ -78,7 +93,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               !isArr(entObj.tempRes.gaps) ||
               !entObj.tempRes.gaps.length
           ) ||
-          temp1.every(
+          copy.every(
             entObj =>
               entObj &&
               entObj.tempRes &&
@@ -89,7 +104,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         )
       ) {
         return findLongest(
-          temp1.filter(
+          copy.filter(
             entObj =>
               !entObj.tempRes.gaps ||
               !isArr(entObj.tempRes.gaps) ||
@@ -416,16 +431,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
           }
         } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
-          if (i === whatsOnTheLeft + 1) {
-            rangesArr2.push({
-              ruleName: `suspicious-characters`,
-              entityName: null,
-              rangeFrom: whatsOnTheLeft,
-              rangeTo: i + 1,
-              rangeValEncoded: null,
-              rangeValDecoded: null
-            });
-          } else if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
+          if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             const firstChar = letterSeqStartAt;
             const secondChar = letterSeqStartAt
               ? right(str, letterSeqStartAt)
@@ -466,6 +472,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               if (matchedEntity) {
                 ({ tempEnt, tempRes } = matchedEntity);
               }
+              let entitysValue;
               if (tempEnt) {
                 let issue = false;
                 const firstChar = tempRes.leftmostChar;
@@ -479,19 +486,22 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     charTrimmed
                   )
                 ) {
+                  entitysValue = charTrimmed;
                   if (i - whatsOnTheLeft - 1 === tempEnt.length) ; else {
                     issue = true;
                   }
                 } else {
+                  entitysValue = tempEnt;
                   issue = true;
                 }
                 if (issue) {
-                  const decodedEntity = decode(`&${tempEnt};`);
+                  const decodedEntity = decode(`&${entitysValue};`);
                   let endingIdx =
                     tempRes.rightmostChar + 1 === i
                       ? i + 1
                       : tempRes.rightmostChar + 1;
                   if (
+                    str[endingIdx] &&
                     str[endingIdx] !== ";" &&
                     !str[endingIdx].trim().length &&
                     str[right(str, endingIdx)] === ";"
@@ -499,11 +509,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     endingIdx = right(str, endingIdx) + 1;
                   }
                   rangesArr2.push({
-                    ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
-                    entityName: tempEnt,
+                    ruleName: `bad-named-html-entity-malformed-${entitysValue}`,
+                    entityName: entitysValue,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: endingIdx,
-                    rangeValEncoded: `&${tempEnt};`,
+                    rangeValEncoded: `&${entitysValue};`,
                     rangeValDecoded: decodedEntity
                   });
                 }

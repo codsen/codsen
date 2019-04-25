@@ -92,13 +92,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     return temp1;
   }
   function removeGappedFromMixedCases(temp1) {
+    var copy;
     if (isArr(temp1) && temp1.length) {
-      if (!(temp1.every(function (entObj) {
+      copy = Array.from(temp1);
+      if (copy.length > 1 && copy.some(function (entityObj) {
+        return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
+      }) && copy.some(function (entityObj) {
+        return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] !== ";";
+      })) {
+        copy = copy.filter(function (entityObj) {
+          return str[stringLeftRight.right(str, entityObj.tempRes.rightmostChar)] === ";";
+        });
+      }
+      if (!(copy.every(function (entObj) {
         return !entObj || !entObj.tempRes || !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
-      }) || temp1.every(function (entObj) {
+      }) || copy.every(function (entObj) {
         return entObj && entObj.tempRes && entObj.tempRes.gaps && isArr(entObj.tempRes.gaps) && entObj.tempRes.gaps.length;
       }))) {
-        return findLongest(temp1.filter(function (entObj) {
+        return findLongest(copy.filter(function (entObj) {
           return !entObj.tempRes.gaps || !isArr(entObj.tempRes.gaps) || !entObj.tempRes.gaps.length;
         }));
       }
@@ -293,16 +304,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
           }
         } else if (str[whatsOnTheLeft] === "&" && str[i] === ";") {
-          if (i === whatsOnTheLeft + 1) {
-            rangesArr2.push({
-              ruleName: "suspicious-characters",
-              entityName: null,
-              rangeFrom: whatsOnTheLeft,
-              rangeTo: i + 1,
-              rangeValEncoded: null,
-              rangeValDecoded: null
-            });
-          } else if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
+          if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
             var _firstChar = letterSeqStartAt;
             var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
             var _tempEnt2;
@@ -327,29 +329,32 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 _tempEnt2 = _matchedEntity.tempEnt;
                 _tempRes2 = _matchedEntity.tempRes;
               }
+              var entitysValue;
               if (_tempEnt2) {
                 var issue = false;
                 var _firstChar2 = _tempRes2.leftmostChar;
                 var _secondChar2 = stringLeftRight.right(str, _firstChar2);
                 if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[_firstChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]].hasOwnProperty(str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(charTrimmed)) {
+                  entitysValue = charTrimmed;
                   if (i - whatsOnTheLeft - 1 === _tempEnt2.length) ; else {
                     issue = true;
                   }
                 } else {
+                  entitysValue = _tempEnt2;
                   issue = true;
                 }
                 if (issue) {
-                  var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(_tempEnt2, ";"));
+                  var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(entitysValue, ";"));
                   var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1;
-                  if (str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[stringLeftRight.right(str, endingIdx)] === ";") {
+                  if (str[endingIdx] && str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[stringLeftRight.right(str, endingIdx)] === ";") {
                     endingIdx = stringLeftRight.right(str, endingIdx) + 1;
                   }
                   rangesArr2.push({
-                    ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt2),
-                    entityName: _tempEnt2,
+                    ruleName: "bad-named-html-entity-malformed-".concat(entitysValue),
+                    entityName: entitysValue,
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: endingIdx,
-                    rangeValEncoded: "&".concat(_tempEnt2, ";"),
+                    rangeValEncoded: "&".concat(entitysValue, ";"),
                     rangeValDecoded: _decodedEntity2
                   });
                 }

@@ -1,6 +1,7 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
 import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
+import { decode } from "all-named-html-entities";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -1725,34 +1726,10 @@ test(`09.003 - ${`\u001b[${35}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
 });
 
 // -----------------------------------------------------------------------------
-// 10. programmatic tests
+// 10. not broken HTML entities: unrecognised or recognised and correct
 // -----------------------------------------------------------------------------
 
-test(`10.1-${
-  Object.keys(allEntities).length
-} - ${`\u001b[${33}m${`programmatic tests`}\u001b[${39}m`}`, t => {
-  Object.keys(allEntities).forEach((singleEntity, i, arr) => {
-    // ampersand missing, isolated:
-    t.deepEqual(
-      fix(`${singleEntity};`),
-      [[0, singleEntity.length + 1, `&${singleEntity};`]],
-      `${singleEntity} - 01; ${i}/${arr.length}`
-    );
-
-    // semicolon missing, isolated:
-    t.deepEqual(
-      fix(`&${singleEntity}`),
-      [[0, singleEntity.length + 1, `&${singleEntity};`]],
-      `${singleEntity} - 02; ${i}/${arr.length}`
-    );
-  });
-});
-
-// -----------------------------------------------------------------------------
-// 11. not broken HTML entities: unrecognised or recognised and correct
-// -----------------------------------------------------------------------------
-
-test(`11.001 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unrecognised`}\u001b[${39}m - one`, t => {
+test(`10.001 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unrecognised`}\u001b[${39}m - one`, t => {
   const inp1 = "abc &x  y z; def";
   t.deepEqual(
     fix(inp1, {
@@ -1768,18 +1745,18 @@ test(`11.001 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: null
       }
     ],
-    "11.001"
+    "10.001"
   );
 });
 
-test(`11.002 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity`, t => {
+test(`10.002 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity`, t => {
   const inp1 = "abc &poumd; def";
   const outp1 = [[4, 11, "&pound;"]];
-  t.deepEqual(fix(inp1), outp1, "11.002.01");
-  t.deepEqual(fix(inp1, { cb }), outp1, "11.002.02");
+  t.deepEqual(fix(inp1), outp1, "10.002.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "10.002.02");
 });
 
-test(`11.003 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity, cb() separately`, t => {
+test(`10.003 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity, cb() separately`, t => {
   const inp1 = "abc &p oumd; def";
   // const outp1 = [[4, 12, "&pound;"]];
   t.deepEqual(
@@ -1796,38 +1773,38 @@ test(`11.003 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: "\xA3" // <= pound symbol
       }
     ],
-    "11.003"
+    "10.003"
   );
 });
 
-test(`11.004 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with whitespace`, t => {
+test(`10.004 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with whitespace`, t => {
   const inp1 = "abc &p ou\nnd; def";
   const outp1 = [[4, 13, "&pound;"]];
-  t.deepEqual(fix(inp1), outp1, "11.004.01");
-  t.deepEqual(fix(inp1, { cb }), outp1, "11.004.02");
+  t.deepEqual(fix(inp1), outp1, "10.004.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "10.004.02");
 });
 
-test(`11.005 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with capital letter`, t => {
+test(`10.005 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with capital letter`, t => {
   const inp1 = "x &Pound; y";
   const outp1 = [[2, 9, "&pound;"]];
-  t.deepEqual(fix(inp1), outp1, "11.005.01");
-  t.deepEqual(fix(inp1, { cb }), outp1, "11.005.02");
+  t.deepEqual(fix(inp1), outp1, "10.005.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "10.005.02");
 });
 
-test(`11.006 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`, t => {
+test(`10.006 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`, t => {
   const inp1 = "abc &pound; def";
   const outp1 = null;
-  t.is(fix(inp1), outp1, "11.006.01");
+  t.is(fix(inp1), outp1, "10.006.01");
   t.is(
     fix(inp1, {
       cb: obj => obj
     }),
     null,
-    "11.006"
+    "10.006"
   );
 });
 
-test(`11.007 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
+test(`10.007 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
   const inp1 = "x &Pound2; y";
   // const outp1 = [[2, 8, "&pound;"]];
   t.deepEqual(
@@ -1844,17 +1821,17 @@ test(`11.007 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: "\xA3" // <= pound symbol
       }
     ],
-    "11.007"
+    "10.007"
   );
 });
 
-test(`11.008 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
+test(`10.008 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, t => {
   const inp1 = "a&poUnd;b";
   const outp1 = [[1, 8, "&pound;"]];
-  t.deepEqual(fix(inp1), outp1, "11.008");
+  t.deepEqual(fix(inp1), outp1, "10.008");
 });
 
-test(`11.009 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`, t => {
+test(`10.009 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`, t => {
   const inp1 = "abc &pozzz; def";
   t.deepEqual(
     fix(inp1, {
@@ -1870,11 +1847,11 @@ test(`11.009 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: null
       }
     ],
-    "11.009"
+    "10.009"
   );
 });
 
-test(`11.010 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`, t => {
+test(`10.010 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`, t => {
   const inp1 = "&Poun;";
   t.deepEqual(
     fix(inp1, {
@@ -1890,11 +1867,11 @@ test(`11.010 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: "\xA3" // <= pound symbol
       }
     ],
-    "11.010"
+    "10.010"
   );
 });
 
-test(`11.011 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`, t => {
+test(`10.011 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`, t => {
   const oneOfBrokenEntities = "a&pound ;b";
   t.deepEqual(
     fix(oneOfBrokenEntities, {
@@ -1910,11 +1887,11 @@ test(`11.011 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: "\xA3" // <= pound symbol
       }
     ],
-    "11.011"
+    "10.011"
   );
 });
 
-test(`11.012 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`, t => {
+test(`10.012 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`, t => {
   const inp1 = "a&twoheadRightarrow;b";
   t.deepEqual(
     fix(inp1, {
@@ -1930,8 +1907,136 @@ test(`11.012 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         rangeValDecoded: "\u21A0"
       }
     ],
-    "11.012"
+    "10.012"
   );
+});
+
+test(`10.013 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`, t => {
+  const inp1 = "x&A lpha;y";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-Alpha`,
+        entityName: "Alpha",
+        rangeFrom: 1,
+        rangeTo: 9,
+        rangeValEncoded: "&Alpha;",
+        rangeValDecoded: "\u0391"
+      }
+    ],
+    "10.013"
+  );
+});
+
+test(`10.014 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`, t => {
+  const inp1 = "&ac d;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-acd`,
+        entityName: "acd",
+        rangeFrom: 0,
+        rangeTo: 6,
+        rangeValEncoded: "&acd;",
+        rangeValDecoded: "\u223F"
+      }
+    ],
+    "10.014"
+  );
+});
+
+// -----------------------------------------------------------------------------
+// 20. programmatic tests
+// -----------------------------------------------------------------------------
+
+test(`20.1-${
+  Object.keys(allEntities).length
+} - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`, t => {
+  Object.keys(allEntities)
+    .filter(entity => entity !== "nbsp")
+    .forEach((singleEntity, i, arr) => {
+      //
+      // 1. ampersand missing, isolated:
+      //
+      t.deepEqual(
+        fix(`${singleEntity};`, {
+          cb: obj => obj
+        }),
+        [
+          {
+            ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+            entityName: singleEntity,
+            rangeFrom: 0,
+            rangeTo: singleEntity.length + 1,
+            rangeValEncoded: `&${singleEntity};`,
+            rangeValDecoded: decode(`&${singleEntity};`)
+          }
+        ],
+        `${singleEntity} - 01; ${i + 1}/${arr.length}`
+      );
+
+      //
+      // 2. semicolon missing, isolated:
+      //
+      t.deepEqual(
+        fix(`&${singleEntity}`, {
+          cb: obj => obj
+        }),
+        [
+          {
+            ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+            entityName: singleEntity,
+            rangeFrom: 0,
+            rangeTo: singleEntity.length + 1,
+            rangeValEncoded: `&${singleEntity};`,
+            rangeValDecoded: decode(`&${singleEntity};`)
+          }
+        ],
+        `${singleEntity} - 02; ${i + 1}/${arr.length}`
+      );
+
+      //
+      // 3. insert spaces between each character, once for every position
+      // for example:
+      // & nbsp; - &n bsp; - &nb sp; - &nbs p; - &nbsp ;
+      // there are one count more variations than entity's length
+      if (i < 10) {
+        console.log("-");
+      }
+      for (let y = singleEntity.length + 1; y--; ) {
+        const entityWithSpaceInserted = `${`&${singleEntity};`.slice(
+          0,
+          singleEntity.length - y + 1
+        )} ${`&${singleEntity};`.slice(singleEntity.length - y + 1)}`;
+        if (i < 10) {
+          console.log(
+            `${`\u001b[${33}m${`entityWithSpaceInserted`}\u001b[${39}m`} = "${entityWithSpaceInserted}"`
+          );
+        }
+        t.deepEqual(
+          fix(entityWithSpaceInserted, {
+            cb: obj => obj
+          }),
+          [
+            {
+              ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+              entityName: singleEntity,
+              rangeFrom: 0,
+              rangeTo: singleEntity.length + 3,
+              rangeValEncoded: `&${singleEntity};`,
+              rangeValDecoded: decode(`&${singleEntity};`)
+            }
+          ],
+          `"${entityWithSpaceInserted}" - 02; ${i + 1}/${arr.length}`
+        );
+      }
+    });
 });
 
 // -----------------------------------------------------------------------------
