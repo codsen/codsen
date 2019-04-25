@@ -1,10 +1,8 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
-import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
-import { decode } from "all-named-html-entities";
 
 // -----------------------------------------------------------------------------
-// group 01. various throws
+// helper functions
 // -----------------------------------------------------------------------------
 
 function cb(obj) {
@@ -17,6 +15,10 @@ function cbDecoded(obj) {
     ? [obj.rangeFrom, obj.rangeTo, obj.rangeValDecoded]
     : [obj.rangeFrom, obj.rangeTo];
 }
+
+// -----------------------------------------------------------------------------
+// group 01. various throws
+// -----------------------------------------------------------------------------
 
 test(`01.001 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`, t => {
   t.notThrows(() => {
@@ -1951,92 +1953,44 @@ test(`10.014 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
   );
 });
 
-// -----------------------------------------------------------------------------
-// 20. programmatic tests
-// -----------------------------------------------------------------------------
-
-test(`20.1-${
-  Object.keys(allEntities).length
-} - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`, t => {
-  Object.keys(allEntities)
-    .filter(entity => entity !== "nbsp")
-    .forEach((singleEntity, i, arr) => {
-      //
-      // 1. ampersand missing, isolated:
-      //
-      t.deepEqual(
-        fix(`${singleEntity};`, {
-          cb: obj => obj
-        }),
-        [
-          {
-            ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
-            entityName: singleEntity,
-            rangeFrom: 0,
-            rangeTo: singleEntity.length + 1,
-            rangeValEncoded: `&${singleEntity};`,
-            rangeValDecoded: decode(`&${singleEntity};`)
-          }
-        ],
-        `${singleEntity} - 01; ${i + 1}/${arr.length}`
-      );
-
-      //
-      // 2. semicolon missing, isolated:
-      //
-      t.deepEqual(
-        fix(`&${singleEntity}`, {
-          cb: obj => obj
-        }),
-        [
-          {
-            ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
-            entityName: singleEntity,
-            rangeFrom: 0,
-            rangeTo: singleEntity.length + 1,
-            rangeValEncoded: `&${singleEntity};`,
-            rangeValDecoded: decode(`&${singleEntity};`)
-          }
-        ],
-        `${singleEntity} - 02; ${i + 1}/${arr.length}`
-      );
-
-      //
-      // 3. insert spaces between each character, once for every position
-      // for example:
-      // & nbsp; - &n bsp; - &nb sp; - &nbs p; - &nbsp ;
-      // there are one count more variations than entity's length
-      if (i < 10) {
-        console.log("-");
+test(`10.015 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`, t => {
+  const inp1 = "&Acd;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-acd`,
+        entityName: "acd",
+        rangeFrom: 0,
+        rangeTo: 5,
+        rangeValEncoded: "&acd;",
+        rangeValDecoded: "\u223F"
       }
-      for (let y = singleEntity.length + 1; y--; ) {
-        const entityWithSpaceInserted = `${`&${singleEntity};`.slice(
-          0,
-          singleEntity.length - y + 1
-        )} ${`&${singleEntity};`.slice(singleEntity.length - y + 1)}`;
-        if (i < 10) {
-          console.log(
-            `${`\u001b[${33}m${`entityWithSpaceInserted`}\u001b[${39}m`} = "${entityWithSpaceInserted}"`
-          );
-        }
-        t.deepEqual(
-          fix(entityWithSpaceInserted, {
-            cb: obj => obj
-          }),
-          [
-            {
-              ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
-              entityName: singleEntity,
-              rangeFrom: 0,
-              rangeTo: singleEntity.length + 3,
-              rangeValEncoded: `&${singleEntity};`,
-              rangeValDecoded: decode(`&${singleEntity};`)
-            }
-          ],
-          `"${entityWithSpaceInserted}" - 02; ${i + 1}/${arr.length}`
-        );
+    ],
+    "10.015"
+  );
+});
+
+test(`10.016 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`, t => {
+  const inp1 = "&Aelig;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-unrecognised`,
+        entityName: null,
+        rangeFrom: 0,
+        rangeTo: 7,
+        rangeValEncoded: null,
+        rangeValDecoded: null
       }
-    });
+    ],
+    "10.016"
+  );
 });
 
 // -----------------------------------------------------------------------------

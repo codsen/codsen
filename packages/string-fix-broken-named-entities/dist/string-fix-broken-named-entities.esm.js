@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, decode, entEndsWith, entStartsWithCaseInsensitive, brokenNamedEntities } from 'all-named-html-entities';
+import { entStartsWith, decode, entEndsWith, entStartsWithCaseInsensitive, allNamedEntities, brokenNamedEntities } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -252,7 +252,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       (str[i + 1] === undefined || str[right(str, i)] !== ";") &&
       (nbsp.matchedB !== null ||
         (!(
-          str[smallestCharFromTheSetAt] === "n" &&
+          str[smallestCharFromTheSetAt].toLowerCase() === "n" &&
           str[left(str, smallestCharFromTheSetAt)] &&
           str[left(str, smallestCharFromTheSetAt)].toLowerCase() === "e"
         ) &&
@@ -491,8 +491,62 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     issue = true;
                   }
                 } else {
-                  entitysValue = tempEnt;
                   issue = true;
+                  const matchingEntities = Object.keys(allNamedEntities).filter(
+                    entity =>
+                      charTrimmed.toLowerCase().startsWith(entity.toLowerCase())
+                  );
+                  if (matchingEntities.length === 1) {
+                    entitysValue = matchingEntities[0];
+                  } else {
+                    const filterLongest = matchingEntities.reduce(
+                      (accum, curr) => {
+                        if (!accum.length || curr.length === accum[0].length) {
+                          return accum.concat([curr]);
+                        }
+                        if (curr.length > accum[0].length) {
+                          return [curr];
+                        }
+                        return accum;
+                      },
+                      []
+                    );
+                    if (filterLongest.length === 1) {
+                      entitysValue = filterLongest[0];
+                    } else {
+                      const missingLetters = filterLongest.map(entity => {
+                        let count = 0;
+                        for (let z = 0, len = entity.length; z < len; z++) {
+                          if (entity[z] !== charTrimmed[z]) {
+                            count++;
+                          }
+                        }
+                        return count;
+                      });
+                      if (
+                        missingLetters.filter(
+                          val => val === Math.min(...missingLetters)
+                        ).length > 1
+                      ) {
+                        rangesArr2.push({
+                          ruleName: `bad-named-html-entity-unrecognised`,
+                          entityName: null,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo:
+                            tempRes.rightmostChar + 1 === i
+                              ? i + 1
+                              : tempRes.rightmostChar + 1,
+                          rangeValEncoded: null,
+                          rangeValDecoded: null
+                        });
+                        issue = false;
+                      }
+                      entitysValue =
+                        filterLongest[
+                          missingLetters.indexOf(Math.min(...missingLetters))
+                        ];
+                    }
+                  }
                 }
                 if (issue) {
                   const decodedEntity = decode(`&${entitysValue};`);
@@ -656,7 +710,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (str[i] && str[i].toLowerCase() === "n") {
-      if (str[i - 1] === "i" && str[i + 1] === "s") {
+      if (
+        str[i - 1] &&
+        str[i - 1].toLowerCase() === "i" &&
+        str[i + 1] &&
+        str[i + 1].toLowerCase() === "s"
+      ) {
         nbspWipe();
         counter++;
         continue outerloop;

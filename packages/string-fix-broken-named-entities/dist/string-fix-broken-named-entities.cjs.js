@@ -194,7 +194,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     });
     smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";") && (nbsp.matchedB !== null || !(str[smallestCharFromTheSetAt] === "n" && str[stringLeftRight.left(str, smallestCharFromTheSetAt)] && str[stringLeftRight.left(str, smallestCharFromTheSetAt)].toLowerCase() === "e") && !(nbsp.matchedN !== null && stringLeftRight.rightSeq(str, nbsp.matchedN, {
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";") && (nbsp.matchedB !== null || !(str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[stringLeftRight.left(str, smallestCharFromTheSetAt)] && str[stringLeftRight.left(str, smallestCharFromTheSetAt)].toLowerCase() === "e") && !(nbsp.matchedN !== null && stringLeftRight.rightSeq(str, nbsp.matchedN, {
       i: true
     }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
@@ -340,8 +340,50 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     issue = true;
                   }
                 } else {
-                  entitysValue = _tempEnt2;
                   issue = true;
+                  var matchingEntities = Object.keys(allNamedHtmlEntities.allNamedEntities).filter(function (entity) {
+                    return charTrimmed.toLowerCase().startsWith(entity.toLowerCase());
+                  });
+                  if (matchingEntities.length === 1) {
+                    entitysValue = matchingEntities[0];
+                  } else {
+                    var filterLongest = matchingEntities.reduce(function (accum, curr) {
+                      if (!accum.length || curr.length === accum[0].length) {
+                        return accum.concat([curr]);
+                      }
+                      if (curr.length > accum[0].length) {
+                        return [curr];
+                      }
+                      return accum;
+                    }, []);
+                    if (filterLongest.length === 1) {
+                      entitysValue = filterLongest[0];
+                    } else {
+                      var missingLetters = filterLongest.map(function (entity) {
+                        var count = 0;
+                        for (var z = 0, _len = entity.length; z < _len; z++) {
+                          if (entity[z] !== charTrimmed[z]) {
+                            count++;
+                          }
+                        }
+                        return count;
+                      });
+                      if (missingLetters.filter(function (val) {
+                        return val === Math.min.apply(Math, _toConsumableArray(missingLetters));
+                      }).length > 1) {
+                        rangesArr2.push({
+                          ruleName: "bad-named-html-entity-unrecognised",
+                          entityName: null,
+                          rangeFrom: whatsOnTheLeft,
+                          rangeTo: _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1,
+                          rangeValEncoded: null,
+                          rangeValDecoded: null
+                        });
+                        issue = false;
+                      }
+                      entitysValue = filterLongest[missingLetters.indexOf(Math.min.apply(Math, _toConsumableArray(missingLetters)))];
+                    }
+                  }
                 }
                 if (issue) {
                   var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(entitysValue, ";"));
@@ -457,7 +499,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (str[i] && str[i].toLowerCase() === "n") {
-      if (str[i - 1] === "i" && str[i + 1] === "s") {
+      if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {
         nbspWipe();
         counter++;
         return "continue|outerloop";
