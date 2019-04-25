@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, decode, entEndsWith, entStartsWithCaseInsensitive, allNamedEntities, brokenNamedEntities } from 'all-named-html-entities';
+import { entStartsWith, decode, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -438,7 +438,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               : null;
             let tempEnt;
             const charTrimmed = trimPerCharacter(str, whatsOnTheLeft + 1, i);
-            if (
+            if (brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())) {
+              tempEnt = charTrimmed;
+              const decodedEntity = decode(
+                `&${brokenNamedEntities[charTrimmed.toLowerCase()]};`
+              );
+              rangesArr2.push({
+                ruleName: `bad-named-html-entity-malformed-${
+                  brokenNamedEntities[charTrimmed.toLowerCase()]
+                }`,
+                entityName: brokenNamedEntities[charTrimmed.toLowerCase()],
+                rangeFrom: whatsOnTheLeft,
+                rangeTo: i + 1,
+                rangeValEncoded: `&${
+                  brokenNamedEntities[charTrimmed.toLowerCase()]
+                };`,
+                rangeValDecoded: decodedEntity
+              });
+            } else if (
               entStartsWithCaseInsensitive.hasOwnProperty(
                 str[firstChar].toLowerCase()
               ) &&
@@ -574,26 +591,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               }
             }
             if (!tempEnt) {
-              if (
-                brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())
-              ) {
-                tempEnt = charTrimmed;
-                const decodedEntity = decode(
-                  `&${brokenNamedEntities[charTrimmed.toLowerCase()]};`
-                );
-                rangesArr2.push({
-                  ruleName: `bad-named-html-entity-malformed-${
-                    brokenNamedEntities[charTrimmed.toLowerCase()]
-                  }`,
-                  entityName: brokenNamedEntities[charTrimmed.toLowerCase()],
-                  rangeFrom: whatsOnTheLeft,
-                  rangeTo: i + 1,
-                  rangeValEncoded: `&${
-                    brokenNamedEntities[charTrimmed.toLowerCase()]
-                  };`,
-                  rangeValDecoded: decodedEntity
-                });
-              } else if (charTrimmed.toLowerCase() !== "&nbsp;") {
+              if (charTrimmed.toLowerCase() !== "&nbsp;") {
                 rangesArr2.push({
                   ruleName: `bad-named-html-entity-unrecognised`,
                   entityName: null,

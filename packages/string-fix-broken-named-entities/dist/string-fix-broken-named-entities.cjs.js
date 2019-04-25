@@ -309,7 +309,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
             var _tempEnt2;
             var charTrimmed = trimPerCharacter(str, whatsOnTheLeft + 1, i);
-            if (allNamedHtmlEntities.entStartsWithCaseInsensitive.hasOwnProperty(str[_firstChar].toLowerCase()) && allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()].hasOwnProperty(str[_secondChar].toLowerCase())) {
+            if (allNamedHtmlEntities.brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())) {
+              _tempEnt2 = charTrimmed;
+              var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"));
+              rangesArr2.push({
+                ruleName: "bad-named-html-entity-malformed-".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()]),
+                entityName: allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()],
+                rangeFrom: whatsOnTheLeft,
+                rangeTo: i + 1,
+                rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"),
+                rangeValDecoded: _decodedEntity2
+              });
+            } else if (allNamedHtmlEntities.entStartsWithCaseInsensitive.hasOwnProperty(str[_firstChar].toLowerCase()) && allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()].hasOwnProperty(str[_secondChar].toLowerCase())) {
               var _tempRes2;
               var matchedEntity = allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()][str[_secondChar].toLowerCase()].reduce(function (gatheredSoFar, oneOfKnownEntities) {
                 var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
@@ -386,7 +397,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   }
                 }
                 if (issue) {
-                  var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(entitysValue, ";"));
+                  var _decodedEntity3 = allNamedHtmlEntities.decode("&".concat(entitysValue, ";"));
                   var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1;
                   if (str[endingIdx] && str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[stringLeftRight.right(str, endingIdx)] === ";") {
                     endingIdx = stringLeftRight.right(str, endingIdx) + 1;
@@ -397,24 +408,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeFrom: whatsOnTheLeft,
                     rangeTo: endingIdx,
                     rangeValEncoded: "&".concat(entitysValue, ";"),
-                    rangeValDecoded: _decodedEntity2
+                    rangeValDecoded: _decodedEntity3
                   });
                 }
               }
             }
             if (!_tempEnt2) {
-              if (allNamedHtmlEntities.brokenNamedEntities.hasOwnProperty(charTrimmed.toLowerCase())) {
-                _tempEnt2 = charTrimmed;
-                var _decodedEntity3 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"));
-                rangesArr2.push({
-                  ruleName: "bad-named-html-entity-malformed-".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()]),
-                  entityName: allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()],
-                  rangeFrom: whatsOnTheLeft,
-                  rangeTo: i + 1,
-                  rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[charTrimmed.toLowerCase()], ";"),
-                  rangeValDecoded: _decodedEntity3
-                });
-              } else if (charTrimmed.toLowerCase() !== "&nbsp;") {
+              if (charTrimmed.toLowerCase() !== "&nbsp;") {
                 rangesArr2.push({
                   ruleName: "bad-named-html-entity-unrecognised",
                   entityName: null,

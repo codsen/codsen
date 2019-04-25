@@ -1964,7 +1964,7 @@ test(`10.015 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         ruleName: `bad-named-html-entity-malformed-acd`,
         entityName: "acd",
         rangeFrom: 0,
-        rangeTo: 5,
+        rangeTo: inp1.length,
         rangeValEncoded: "&acd;",
         rangeValDecoded: "\u223F"
       }
@@ -1984,12 +1984,32 @@ test(`10.016 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
         ruleName: `bad-named-html-entity-unrecognised`,
         entityName: null,
         rangeFrom: 0,
-        rangeTo: 7,
+        rangeTo: inp1.length,
         rangeValEncoded: null,
         rangeValDecoded: null
       }
     ],
     "10.016"
+  );
+});
+
+test(`10.017 - ${`\u001b[${33}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`, t => {
+  const inp1 = "&zwjn;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [
+      {
+        ruleName: `bad-named-html-entity-malformed-zwnj`,
+        entityName: "zwnj",
+        rangeFrom: 0,
+        rangeTo: inp1.length,
+        rangeValEncoded: "&zwnj;",
+        rangeValDecoded: "\u200C"
+      }
+    ],
+    "10.017"
   );
 });
 
