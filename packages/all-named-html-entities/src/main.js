@@ -115,6 +115,7 @@ const maxLength = 31;
 // -----------------------------------------------------------------------------
 
 export {
+  allNamedEntities,
   entStartsWith,
   entEndsWith,
   entStartsWithCaseInsensitive,

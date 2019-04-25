@@ -15585,6 +15585,7 @@ function decode(ent) {
 var minLength = 2;
 var maxLength = 31;
 
+exports.allNamedEntities = allNamedEntities;
 exports.brokenNamedEntities = brokenNamedEntities;
 exports.decode = decode;
 exports.entEndsWith = endsWith;

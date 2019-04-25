@@ -15588,4 +15588,4 @@ function decode(ent) {
 const minLength = 2;
 const maxLength = 31;
 
-export { brokenNamedEntities, decode, endsWith as entEndsWith, endsWithCaseInsensitive as entEndsWithCaseInsensitive, startsWith as entStartsWith, startsWithCaseInsensitive as entStartsWithCaseInsensitive, maxLength, minLength };
+export { allNamedEntities, brokenNamedEntities, decode, endsWith as entEndsWith, endsWithCaseInsensitive as entEndsWithCaseInsensitive, startsWith as entStartsWith, startsWithCaseInsensitive as entStartsWithCaseInsensitive, maxLength, minLength };
