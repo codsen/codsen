@@ -1,5 +1,6 @@
 import test from "ava";
 import {
+  allNamedEntities,
   entStartsWith,
   entEndsWith,
   entStartsWithCaseInsensitive,
@@ -52,9 +53,26 @@ test(`08 - decode numeric`, t => {
   t.is(decode("&#x2135;"), null);
 });
 
-test(`09 - broken entities list is truthy`, t => {
-  t.true(typeof brokenNamedEntities === "object");
-  t.true(Object.keys(brokenNamedEntities).length > 0);
+test(`09 - brokenNamedEntities.json is OK`, t => {
+  // t.true(typeof brokenNamedEntities === "object");
+  // t.true(Object.keys(brokenNamedEntities).length > 0);
+  Object.keys(brokenNamedEntities).forEach((oneOfEntities, i) => {
+    // 1. ensure all are keys unique:
+    Object.keys(brokenNamedEntities).forEach((entity, y) =>
+      t.true(
+        !(entity === oneOfEntities && i !== y),
+        `key "${oneOfEntities}" is not unique`
+      )
+    );
+
+    // 2. ensure "oneOfEntities" is not used by any keys:
+    Object.keys(brokenNamedEntities).forEach(entity =>
+      t.true(
+        entity !== brokenNamedEntities[oneOfEntities],
+        `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`
+      )
+    );
+  });
 });
 
 test(`10 - minLength is numeric`, t => {
@@ -65,4 +83,8 @@ test(`10 - minLength is numeric`, t => {
 test(`11 - maxLength is numeric`, t => {
   t.true(Number.isInteger(maxLength));
   t.true(maxLength > 0);
+});
+
+test(`12 - allNamedEntities checks`, t => {
+  t.true(Object.keys(allNamedEntities).length > 0);
 });

@@ -4262,21 +4262,67 @@ var allNamedEntities = {
 	zwnj: zwnj
 };
 
-var poumd = "pound";
-var poubd = "pound";
 var ound = "pound";
+var pond = "pound";
+var poubd = "pound";
 var poud = "pound";
+var poumd = "pound";
 var poun = "pound";
 var pund = "pound";
-var pond = "pound";
+var zvbj = "zwnj";
+var zvhj = "zwnj";
+var zvjb = "zwnj";
+var zvjh = "zwnj";
+var zvjm = "zwnj";
+var zvjn = "zwnj";
+var zvmj = "zwnj";
+var zvng = "zwnj";
+var zvnh = "zwnj";
+var zvnj = "zwnj";
+var zvnk = "zwnj";
+var zvnm = "zwnj";
+var zwbj = "zwnj";
+var zwhj = "zwnj";
+var zwjb = "zwnj";
+var zwjh = "zwnj";
+var zwjm = "zwnj";
+var zwjn = "zwnj";
+var zwmj = "zwnj";
+var zwng = "zwnj";
+var zwnh = "zwnj";
+var zwnk = "zwnj";
+var zwnm = "zwnj";
 var brokenNamedEntities = {
-	poumd: poumd,
-	poubd: poubd,
 	ound: ound,
+	pond: pond,
+	poubd: poubd,
 	poud: poud,
+	poumd: poumd,
 	poun: poun,
 	pund: pund,
-	pond: pond
+	zvbj: zvbj,
+	zvhj: zvhj,
+	zvjb: zvjb,
+	zvjh: zvjh,
+	zvjm: zvjm,
+	zvjn: zvjn,
+	zvmj: zvmj,
+	zvng: zvng,
+	zvnh: zvnh,
+	zvnj: zvnj,
+	zvnk: zvnk,
+	zvnm: zvnm,
+	zwbj: zwbj,
+	zwhj: zwhj,
+	zwjb: zwjb,
+	zwjh: zwjh,
+	zwjm: zwjm,
+	zwjn: zwjn,
+	zwmj: zwmj,
+	zwng: zwng,
+	zwnh: zwnh,
+	zwnk: zwnk,
+	zwnm: zwnm
 };
 
 var A = {
