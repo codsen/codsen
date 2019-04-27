@@ -1060,6 +1060,14 @@ test(`03.004 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - healthy &pound;`, t =
   t.deepEqual(fix("&pound;"), null, "03.004");
 });
 
+test(`03.005 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - numeric entity &#x pattern`, t => {
+  t.deepEqual(fix("&#xA3;"), null, "03.005");
+});
+
+test(`03.006 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - numeric entity &# pattern`, t => {
+  t.deepEqual(fix("&#65;"), null, "03.006");
+});
+
 // -----------------------------------------------------------------------------
 // 04. other entities
 // -----------------------------------------------------------------------------
