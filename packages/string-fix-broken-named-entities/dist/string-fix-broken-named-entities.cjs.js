@@ -80,7 +80,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     var probablyNumeric = false;
     if (!lettersCount && numbersCount > othersCount) {
       probablyNumeric = "deci";
-    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" || charTrimmed[0].toLowerCase() === "x" && !othersCount)) {
+    } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
       probablyNumeric = "hexi";
     }
     return {

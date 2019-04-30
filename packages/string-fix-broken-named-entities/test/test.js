@@ -2061,6 +2061,34 @@ test(`10.017 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
   );
 });
 
+test(`10.018 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, t => {
+  const inp1 = "&xcap;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    [],
+    "10.018.01"
+  );
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj,
+      decode: true
+    }),
+    [
+      {
+        ruleName: `encoded-html-entity-xcap`,
+        entityName: "xcap",
+        rangeFrom: 0,
+        rangeTo: inp1.length,
+        rangeValEncoded: "&xcap;",
+        rangeValDecoded: "\u22C2"
+      }
+    ],
+    "10.018.02"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 11. numeric entities
 // -----------------------------------------------------------------------------
@@ -2197,9 +2225,39 @@ test(`11.007 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   );
 });
 
-test(`11.008 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - pound, decode outside ASCII range - pound`, t => {
+test(`11.008 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decoding text with healthy numeric entities`, t => {
+  const inp1 = "something here &#163;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj,
+      decode: false
+    }),
+    [],
+    "11.008.001"
+  );
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj,
+      decode: true
+    }),
+    [
+      {
+        ruleName: `encoded-numeric-html-entity-reference`,
+        entityName: "#163",
+        rangeFrom: 15,
+        rangeTo: 21,
+        rangeValEncoded: "&#163;",
+        rangeValDecoded: "\xA3"
+      }
+    ],
+    "11.008.002"
+  );
+  t.deepEqual(fix(inp1, { decode: true }), [[15, 21, "\xA3"]], "11.008.03");
+});
+
+test(`11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - pound, decode outside ASCII range - pound`, t => {
   const inp1 = "&#xA3;";
-  t.deepEqual(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "11.008.01");
+  t.deepEqual(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "11.009.01");
   t.deepEqual(
     fix(inp1, {
       decode: true,
@@ -2215,11 +2273,11 @@ test(`11.008 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
         rangeValDecoded: "\xA3"
       }
     ],
-    "11.008.02"
+    "11.009.02"
   );
 });
 
-test(`11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`, t => {
+test(`11.010 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`, t => {
   const inp1 = "&x#A3;";
   t.deepEqual(
     fix(inp1, {
@@ -2236,13 +2294,13 @@ test(`11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
         rangeValDecoded: null
       }
     ],
-    "11.009"
+    "11.010"
   );
 });
 
-test(`11.010 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`, t => {
+test(`11.011 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`, t => {
   const inp1 = "&x#A3;";
-  t.deepEqual(fix(inp1, { decode: true }), [[0, 6]], "11.010.01");
+  t.deepEqual(fix(inp1, { decode: true }), [[0, 6]], "11.011.01");
   t.deepEqual(
     fix(inp1, {
       decode: true,
@@ -2258,11 +2316,11 @@ test(`11.010 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
         rangeValDecoded: null
       }
     ],
-    "11.010.02"
+    "11.011.02"
   );
 });
 
-test(`11.011 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`, t => {
+test(`11.012 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`, t => {
   const inp1 = "&x1000;";
   t.deepEqual(
     fix(inp1, {
@@ -2278,11 +2336,11 @@ test(`11.011 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
         rangeValDecoded: null
       }
     ],
-    "11.011"
+    "11.012"
   );
 });
 
-test(`11.012 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`, t => {
+test(`11.013 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`, t => {
   const inp1 = "abc#x26;def";
   t.deepEqual(
     fix(inp1, {
@@ -2298,7 +2356,7 @@ test(`11.012 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
         rangeValDecoded: null
       }
     ],
-    "11.012"
+    "11.013"
   );
 });
 
