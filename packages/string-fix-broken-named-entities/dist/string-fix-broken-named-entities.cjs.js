@@ -329,7 +329,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               _tempEnt = _temp3.tempEnt;
               _tempRes = _temp3.tempRes;
             }
-            if (_tempEnt) {
+            if (_tempEnt && !allNamedHtmlEntities.uncertain.includes(_tempEnt)) {
               var _decodedEntity = allNamedHtmlEntities.decode("&".concat(_tempEnt, ";"));
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt),

@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, decode, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
+import { entStartsWith, decode, entEndsWith, uncertain, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -470,7 +470,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
-            if (tempEnt) {
+            if (tempEnt && !uncertain.includes(tempEnt)) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
                 ruleName: `bad-named-html-entity-malformed-${tempEnt}`,

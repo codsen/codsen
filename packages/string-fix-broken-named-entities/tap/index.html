@@ -67,7 +67,9 @@
       mounted: function () {
         const retrieved = myStorage.getItem("storage_for_string_fix_broken")
         if (typeof retrieved === "string" && retrieved.length) {
-          this.text1 = retrieved;
+          const {text1, decodeFlipSwitch} = JSON.parse(retrieved);
+          this.text1 = text1;
+          this.decode = decodeFlipSwitch;
         };
         this.$refs.in.focus();
       },
@@ -98,15 +100,30 @@
       watch: {
         text1: function () {
           // console.log(`${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
-          const calculatedRes = stringFixBrokenNamedEntities(
+          this.res = stringFixBrokenNamedEntities(
             this.text1,
             {
               cb: obj => obj,
               decode: this.decode
             }
           );
-          this.res = calculatedRes;
-          myStorage.setItem("storage_for_string_fix_broken", this.text1);
+          myStorage.setItem(
+            "storage_for_string_fix_broken",
+            JSON.stringify({text1: this.text1, decodeFlipSwitch: this.decode}, null, 0)
+          );
+        },
+        decode: function () {
+          this.res = stringFixBrokenNamedEntities(
+            this.text1,
+            {
+              cb: obj => obj,
+              decode: this.decode
+            }
+          );
+          myStorage.setItem(
+            "storage_for_string_fix_broken",
+            JSON.stringify({text1: this.text1, decodeFlipSwitch: this.decode}, null, 0)
+          );
         }
       }
     });

@@ -1318,6 +1318,15 @@ test(`04.025 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${
   );
 });
 
+test(`04.026 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - \u001b[${32}m${`pound`}\u001b[${39}m - in front of semicolon`, t => {
+  t.deepEqual(
+    fix("&pound1;", { decode: false }),
+    [[0, 6, "&pound;"]],
+    "04.026.01"
+  );
+  t.deepEqual(fix("&pound1;", { decode: true }), [[0, 6, "\xA3"]], "04.026.02");
+});
+
 // -----------------------------------------------------------------------------
 // 05. multiple encoding
 // -----------------------------------------------------------------------------
@@ -1711,13 +1720,17 @@ test(`08.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${
   t.deepEqual(fix("z &acute; y"), [], "08.001.02");
 });
 
-test(`08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - legit letter in front and gap is actually legit too`, t => {
-  t.deepEqual(fix("z acute; y"), [[2, 8, "&acute;"]], "08.002");
+test(`08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - legit word same as entity name, ending with semicol`, t => {
+  t.deepEqual(
+    fix("Diagnosis can be acute; it is up to a doctor to"),
+    [],
+    "08.002"
+  );
 });
 
-test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t => {
-  const inp1 = "amp;";
-  const outp1 = [[0, 4, "&amp;"]];
+test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, rarrpl`, t => {
+  const inp1 = "rarrpl;";
+  const outp1 = [[0, 7, "&rarrpl;"]];
   t.deepEqual(fix(inp1), outp1, "08.003.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "08.003.02");
 });
@@ -2361,6 +2374,32 @@ test(`11.013 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
 });
 
 // -----------------------------------------------------------------------------
+// 12. False positives
+// -----------------------------------------------------------------------------
+
+test(`12.001 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`, t => {
+  const inp1 = "one pound;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj,
+      decode: false
+    }),
+    [],
+    "12.001"
+  );
+});
+
+test(`12.002 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`, t => {
+  const inp1 = "one pound;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj,
+      decode: true
+    }),
+    [],
+    "12.002"
+  );
+});
 
 // TODO:
 
