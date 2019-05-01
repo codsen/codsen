@@ -7,6 +7,8 @@ import entEndsWith from "./endsWith.json";
 import entStartsWithCaseInsensitive from "./startsWithCaseInsensitive.json";
 import entEndsWithCaseInsensitive from "./endsWithCaseInsensitive.json";
 
+import uncertain from "./uncertain.json";
+
 // -----------------------------------------------------------------------------
 
 // import fs from "fs";
@@ -123,5 +125,6 @@ export {
   brokenNamedEntities,
   decode,
   minLength,
-  maxLength
+  maxLength,
+  uncertain
 };
