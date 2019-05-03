@@ -183,6 +183,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   if (opts.cb && typeof opts.cb !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.cb), ", equal to: ").concat(JSON.stringify(opts.cb, null, 4)));
   }
+  if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.entityCatcherCb), ", equal to: ").concat(JSON.stringify(opts.entityCatcherCb, null, 4)));
+  }
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
   }
@@ -240,6 +243,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
       var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
       var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
+      if (opts.entityCatcherCb) {
+        opts.entityCatcherCb(beginningOfTheRange, i);
+      }
       if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
         rangesArr2.push({
           ruleName: "bad-named-html-entity-malformed-nbsp",
@@ -388,6 +394,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValDecoded: null
                 });
               }
+              if (opts.entityCatcherCb) {
+                opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+              }
             } else {
               var _firstChar = letterSeqStartAt;
               var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
@@ -483,9 +492,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       }
                     }
                   }
+                  var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1;
                   if (issue) {
                     var _decodedEntity3 = allNamedHtmlEntities.decode("&".concat(entitysValue, ";"));
-                    var endingIdx = _tempRes2.rightmostChar + 1 === i ? i + 1 : _tempRes2.rightmostChar + 1;
                     if (str[endingIdx] && str[endingIdx] !== ";" && !str[endingIdx].trim().length && str[stringLeftRight.right(str, endingIdx)] === ";") {
                       endingIdx = stringLeftRight.right(str, endingIdx) + 1;
                     }
@@ -497,6 +506,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       rangeValEncoded: "&".concat(entitysValue, ";"),
                       rangeValDecoded: _decodedEntity3
                     });
+                  }
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, endingIdx);
                   }
                 }
               }
@@ -510,6 +522,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeValEncoded: null,
                     rangeValDecoded: null
                   });
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
                 }
               }
             }

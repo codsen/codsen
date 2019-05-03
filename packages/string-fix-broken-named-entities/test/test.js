@@ -347,27 +347,23 @@ test(`02.026 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correc
 test(`02.027 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, digits + decode`, t => {
   const inp1 = "&nbsp123&nbsp123&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.027.01 - surrounded by digits"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.027.02");
-  // t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.027.03");
 });
 
 test(`02.028 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tabs + decode`, t => {
   const inp1 = "&nbsp\t\t\t&nbsp\t\t\t&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.028.01 - surrounded by tabs"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.028.02");
-  // t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.028.03");
 });
 
 test(`02.029 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, no semicol, trailing letter`, t => {
@@ -2400,6 +2396,373 @@ test(`12.002 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound
     "12.002"
   );
 });
+
+// -----------------------------------------------------------------------------
+// 13. opts.entityCatcherCb - all entities callback
+// -----------------------------------------------------------------------------
+
+//
+//
+//
+//
+//
+//                                 &nbsp;
+//
+//
+//
+//
+//
+
+test(`13.001 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, no decode`, t => {
+  const inp1 = "y &nbsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.001");
+});
+
+test(`13.002 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, no decode`, t => {
+  const inp1 = "y &nbsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.002");
+});
+
+test(`13.003 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, with decode`, t => {
+  const inp1 = "y &nbsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.003");
+});
+
+test(`13.004 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, with decode`, t => {
+  const inp1 = "y &nbsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.004");
+});
+
+//
+//
+//
+//
+//
+//                               &isindot;
+//
+//
+//
+//
+//
+
+test(`13.005 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, with callback, no decode`, t => {
+  const inp1 = "y &isindot; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.005");
+});
+
+test(`13.006 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, without callback, no decode`, t => {
+  const inp1 = "y &isindot; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.006");
+});
+
+test(`13.007 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, with callback, with decode`, t => {
+  const inp1 = "y &isindot; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.007");
+});
+
+test(`13.008 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`isindot`}\u001b[${39}m`} - one named entity, without callback, with decode`, t => {
+  const inp1 = "y &isindot; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.008");
+});
+
+//
+//
+//
+//
+//
+//                          &nsp; (broken &nbsp;)
+//
+//
+//
+//
+//
+
+// Two ranges are reported below because we report everything straight away,
+// upon finding, as opposed to issue ranges which get deduped
+
+// For perf reasons, opts.entityCatcherCb can report the same range multiple times
+
+test(`13.009 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, no decode`, t => {
+  const inp1 = "y &nsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7], [2, 7]], "13.009");
+});
+
+test(`13.010 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, no decode`, t => {
+  const inp1 = "y &nsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7], [2, 7]], "13.010");
+});
+
+test(`13.011 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, with decode`, t => {
+  const inp1 = "y &nsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7], [2, 7]], "13.011");
+});
+
+test(`13.012 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, with decode`, t => {
+  const inp1 = "y &nsp; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7], [2, 7]], "13.012");
+});
+
+//
+//
+//
+//
+//
+//                               &abcdefg;
+//
+//
+//
+//
+//
+
+test(`13.013 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, no decode`, t => {
+  const inp1 = "y &abcdefg; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.013");
+});
+
+test(`13.014 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, no decode`, t => {
+  const inp1 = "y &abcdefg; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.014");
+});
+
+test(`13.015 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, with decode`, t => {
+  const inp1 = "y &abcdefg; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.015");
+});
+
+test(`13.016 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, with decode`, t => {
+  const inp1 = "y &abcdefg; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.016");
+});
+
+//
+//
+//
+//
+//
+//                           decimal numeric &#65;
+//
+//
+//
+//
+//
+
+test(`13.017 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, with callback, no decode`, t => {
+  const inp1 = "y &#65; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7]], "13.017");
+});
+
+test(`13.018 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, without callback, no decode`, t => {
+  const inp1 = "y &#65; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7]], "13.018");
+});
+
+test(`13.019 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, with callback, with decode`, t => {
+  const inp1 = "y &#65; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7]], "13.019");
+});
+
+test(`13.020 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one decimal numeric entity, without callback, with decode`, t => {
+  const inp1 = "y &#65; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 7]], "13.020");
+});
+
+//
+//
+//
+//
+//
+//                           more ad hoc tests
+//
+//
+//
+//
+//
+
+test(`13.021 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one broken decimal numeric entity`, t => {
+  const inp1 = "y &65; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 6]], "13.021");
+});
+
+test(`13.022 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`#65`}\u001b[${39}m`} - one broken decimal numeric entity`, t => {
+  const inp1 = "y &#99999999999999999999; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 25]], "13.022");
+});
+
+//
+//
+//
+//
+//
+//                         hexidecimal numeric &x#A3;
+//
+//
+//
+//
+//
+
+test(`13.021 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, with callback, no decode`, t => {
+  const inp1 = "y &x#A3; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.021");
+});
+
+test(`13.022 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, without callback, no decode`, t => {
+  const inp1 = "y &x#A3; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: false
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.022");
+});
+
+test(`13.023 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, with callback, with decode`, t => {
+  const inp1 = "y &x#A3; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    cb: obj => obj,
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.023");
+});
+
+test(`13.024 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`x#A3`}\u001b[${39}m`} - one decimal numeric entity, without callback, with decode`, t => {
+  const inp1 = "y &x#A3; z";
+  const gatheredEntityRanges = [];
+  fix(inp1, {
+    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    decode: true
+  });
+  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.024");
+});
+
+// -----------------------------------------------------------------------------
 
 // TODO:
 

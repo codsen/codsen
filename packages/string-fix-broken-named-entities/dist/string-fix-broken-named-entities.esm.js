@@ -209,6 +209,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       )}`
     );
   }
+  if (opts.entityCatcherCb && typeof opts.entityCatcherCb !== "function") {
+    throw new TypeError(
+      `string-fix-broken-named-entities: [THROW_ID_03] opts.entityCatcherCb must be a function (or falsey)! Currently it's: ${typeof opts.entityCatcherCb}, equal to: ${JSON.stringify(
+        opts.entityCatcherCb,
+        null,
+        4
+      )}`
+    );
+  }
   if (opts.progressFn && typeof opts.progressFn !== "function") {
     throw new TypeError(
       `string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(
@@ -338,6 +347,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       const beginningOfTheRange = chompedAmpFromLeft
         ? chompedAmpFromLeft
         : nbsp.nameStartsAt;
+      if (opts.entityCatcherCb) {
+        opts.entityCatcherCb(beginningOfTheRange, i);
+      }
       if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
         rangesArr2.push({
           ruleName: "bad-named-html-entity-malformed-nbsp",
@@ -551,6 +563,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValDecoded: null
                 });
               }
+              if (opts.entityCatcherCb) {
+                opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+              }
             } else {
               const firstChar = letterSeqStartAt;
               const secondChar = letterSeqStartAt
@@ -701,12 +716,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       }
                     }
                   }
+                  let endingIdx =
+                    tempRes.rightmostChar + 1 === i
+                      ? i + 1
+                      : tempRes.rightmostChar + 1;
                   if (issue) {
                     const decodedEntity = decode(`&${entitysValue};`);
-                    let endingIdx =
-                      tempRes.rightmostChar + 1 === i
-                        ? i + 1
-                        : tempRes.rightmostChar + 1;
                     if (
                       str[endingIdx] &&
                       str[endingIdx] !== ";" &&
@@ -724,6 +739,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       rangeValDecoded: decodedEntity
                     });
                   }
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, endingIdx);
+                  }
                 }
               }
               if (!tempEnt) {
@@ -736,6 +754,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeValEncoded: null,
                     rangeValDecoded: null
                   });
+                  if (opts.entityCatcherCb) {
+                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  }
                 }
               }
             }
