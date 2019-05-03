@@ -239,6 +239,34 @@ test(`01.05 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each
     [],
     "01.05.05 - ranges with deltas of one index"
   );
+
+  // opts.skipChecks - results are the same
+
+  t.deepEqual(
+    i([[3, 5], [5, 7]], 9, { skipChecks: true }),
+    [[0, 3], [7, 9]],
+    "01.05.06 - ranges with deltas of two indexes"
+  );
+  t.deepEqual(
+    i([[3, 4], [4, 7]], 9, { skipChecks: true }),
+    [[0, 3], [7, 9]],
+    "01.05.07 - ranges with deltas of one index"
+  );
+  t.deepEqual(
+    i([[0, 1], [1, 2]], 9, { skipChecks: true }),
+    [[2, 9]],
+    "01.05.08 - ranges with deltas of one index"
+  );
+  t.deepEqual(
+    i([[0, 1], [1, 2], [5, 9]], 9, { skipChecks: true }),
+    [[2, 5]],
+    "01.05.09 - ranges with deltas of one index"
+  );
+  t.deepEqual(
+    i([[0, 1], [1, 9]], 9, { skipChecks: true }),
+    [],
+    "01.05.10 - ranges with deltas of one index"
+  );
 });
 
 test(`01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`, t => {
@@ -253,6 +281,12 @@ test(`01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given n
     [[0, 2], [7, 9]],
     "01.06.02 - does not start at zero"
   );
+
+  // PS. opts.skipChecks would give erroneous result here
+  const error1 = t.throws(() => {
+    i([[0, 5], [3, 7]], 9, { skipChecks: true });
+  });
+  t.regex(error1.message, /THROW_ID_08/);
 });
 
 test(`01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`, t => {

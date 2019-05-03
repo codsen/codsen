@@ -41,13 +41,15 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     return [];
   }
   const defaults = {
-    strictlyTwoElementsInRangeArrays: false
+    strictlyTwoElementsInRangeArrays: false,
+    skipChecks: false
   };
   const opts = Object.assign({}, defaults, originalOptions);
   checkTypes(opts, defaults, { msg: "ranges-invert: [THROW_ID_03*]" });
   let culpritsIndex;
   let culpritsLen;
   if (
+    !opts.skipChecks &&
     opts.strictlyTwoElementsInRangeArrays &&
     !arrOfRanges.every((rangeArr, indx) => {
       if (rangeArr.length !== 2) {
@@ -69,6 +71,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
   if (
+    !opts.skipChecks &&
     !arrOfRanges.every((rangeArr, indx) => {
       if (
         !isNatNum(rangeArr[0], { includeZero: true }) ||
@@ -104,6 +107,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
   if (
+    !opts.skipChecks &&
     arrOfRanges.some((range, i) => {
       if (range[1] > strLen) {
         culpritsIndex = i;
@@ -124,9 +128,14 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       } > ${strLen} (strLen).`
     );
   }
-  const prep = mergeRanges(
-    Array.from(arrOfRanges).filter(rangeArr => rangeArr[0] !== rangeArr[1])
-  );
+  let prep;
+  if (!opts.skipChecks) {
+    prep = mergeRanges(
+      arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1])
+    );
+  } else {
+    prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
+  }
   if (prep.length === 0) {
     if (strLen === 0) {
       return [];
@@ -140,6 +149,17 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
+      if (opts.skipChecks && currArr[1] > endingIndex) {
+        throw new TypeError(
+          `ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${
+            currArr[1]
+          }, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(
+            arr,
+            null,
+            0
+          )}`
+        );
+      }
       res.push([currArr[1], endingIndex]);
     }
     return accum.concat(res);
