@@ -160,6 +160,7 @@
     "check-types-mini": "^5.7.17",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
+    "ranges-crop": "^2.0.12",
     "ranges-merge": "^4.1.8"
   },
   "devDependencies": {

@@ -15,6 +15,7 @@ var isNatNum = _interopDefault(require('is-natural-number'));
 var ordinalSuffix = _interopDefault(require('ordinal-number-suffix'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
+var rangesCrop = _interopDefault(require('ranges-crop'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -84,15 +85,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     throw new TypeError("ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(ordinalSuffix(culpritsIndex + 1), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
   }
-  if (!opts.skipChecks && arrOfRanges.some(function (range, i) {
-    if (range[1] > strLen) {
-      culpritsIndex = i;
-      return true;
-    }
-    return false;
-  })) {
-    throw new TypeError("ranges-invert: [THROW_ID_06] The reference string length strLen=".concat(strLen, " does not cover all the ranges. For example, the ").concat(ordinalSuffix(culpritsIndex), " range, ").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), " - ending of this range, ").concat(arrOfRanges[culpritsIndex][1], " > ").concat(strLen, " (strLen)."));
-  }
   var prep;
   if (!opts.skipChecks) {
     prep = mergeRanges(arrOfRanges.filter(function (rangeArr) {
@@ -123,7 +115,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     return accum.concat(res);
   }, []);
-  return res;
+  return rangesCrop(res, strLen);
 }
 
 module.exports = rangesInvert;

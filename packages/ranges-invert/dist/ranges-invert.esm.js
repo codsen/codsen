@@ -11,6 +11,7 @@ import isNatNum from 'is-natural-number';
 import ordinalSuffix from 'ordinal-number-suffix';
 import checkTypes from 'check-types-mini';
 import mergeRanges from 'ranges-merge';
+import rangesCrop from 'ranges-crop';
 
 const isArr = Array.isArray;
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
@@ -106,28 +107,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}) does not consist of only natural numbers!`
     );
   }
-  if (
-    !opts.skipChecks &&
-    arrOfRanges.some((range, i) => {
-      if (range[1] > strLen) {
-        culpritsIndex = i;
-        return true;
-      }
-      return false;
-    })
-  ) {
-    throw new TypeError(
-      `ranges-invert: [THROW_ID_06] The reference string length strLen=${strLen} does not cover all the ranges. For example, the ${ordinalSuffix(
-        culpritsIndex
-      )} range, ${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        0
-      )} - ending of this range, ${
-        arrOfRanges[culpritsIndex][1]
-      } > ${strLen} (strLen).`
-    );
-  }
   let prep;
   if (!opts.skipChecks) {
     prep = mergeRanges(
@@ -164,7 +143,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     return accum.concat(res);
   }, []);
-  return res;
+  return rangesCrop(res, strLen);
 }
 
 export default rangesInvert;

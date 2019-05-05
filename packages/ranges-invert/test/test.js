@@ -172,12 +172,9 @@ test(`01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string c
 
 test(`01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`, t => {
   // good:
-  t.deepEqual(i([[1, 3]], 3), [[0, 1]], "01.02");
-  // bad - length is 1 digit short:
-  const error = t.throws(() => {
-    i([[1, 3]], 2);
-  });
-  t.truthy(error.message.includes("THROW_ID_06"));
+  t.deepEqual(i([[1, 3]], 3), [[0, 1]], "01.02.01");
+  // one too short - will crop:
+  t.deepEqual(i([[1, 3]], 2), [[0, 1]], "01.02.02");
 });
 
 test(`01.03 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - same element range invert`, t => {
@@ -296,4 +293,16 @@ test(`01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument pr
 test(`01.08 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`, t => {
   t.deepEqual(i(null, 0), [], "01.08.01");
   t.deepEqual(i(null, 3), [[0, 3]], "01.08.02");
+});
+
+test(`01.09 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`, t => {
+  t.deepEqual(i([[100, 200]], 10), [[0, 10]], "01.09");
+});
+
+test(`01.10 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`, t => {
+  t.deepEqual(i([[100, 200], [300, 400]], 10), [[0, 10]], "01.10");
+});
+
+test(`01.11 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`, t => {
+  t.deepEqual(i([[300, 400], [100, 200]], 10), [[0, 10]], "01.11");
 });

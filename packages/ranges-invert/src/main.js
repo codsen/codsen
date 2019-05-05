@@ -1,9 +1,8 @@
-/* eslint no-console:0 */
-
 import isNatNum from "is-natural-number";
 import ordinalSuffix from "ordinal-number-suffix";
 import checkTypes from "check-types-mini";
 import mergeRanges from "ranges-merge";
+import rangesCrop from "ranges-crop";
 
 const isArr = Array.isArray;
 
@@ -120,29 +119,29 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
 
-  // validate string length:
-  if (
-    !opts.skipChecks &&
-    arrOfRanges.some((range, i) => {
-      if (range[1] > strLen) {
-        culpritsIndex = i;
-        return true;
-      }
-      return false;
-    })
-  ) {
-    throw new TypeError(
-      `ranges-invert: [THROW_ID_06] The reference string length strLen=${strLen} does not cover all the ranges. For example, the ${ordinalSuffix(
-        culpritsIndex
-      )} range, ${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        0
-      )} - ending of this range, ${
-        arrOfRanges[culpritsIndex][1]
-      } > ${strLen} (strLen).`
-    );
-  }
+  // // validate string length:
+  // if (
+  //   !opts.skipChecks &&
+  //   arrOfRanges.some((range, i) => {
+  //     if (range[1] > strLen) {
+  //       culpritsIndex = i;
+  //       return true;
+  //     }
+  //     return false;
+  //   })
+  // ) {
+  //   throw new TypeError(
+  //     `ranges-invert: [THROW_ID_06] The reference string length strLen=${strLen} does not cover all the ranges. For example, the ${ordinalSuffix(
+  //       culpritsIndex
+  //     )} range, ${JSON.stringify(
+  //       arrOfRanges[culpritsIndex],
+  //       null,
+  //       0
+  //     )} - ending of this range, ${
+  //       arrOfRanges[culpritsIndex][1]
+  //     } > ${strLen} (strLen).`
+  //   );
+  // }
 
   let prep;
 
@@ -172,7 +171,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
 
   console.log(
-    `175 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `174 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -191,7 +190,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`194 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`193 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res.push([0, arr[0][0]]);
     }
 
@@ -201,7 +200,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `204 \u001b[${36}m${`PUSH [${
+        `203 \u001b[${36}m${`PUSH [${
           currArr[1]
         }, ${endingIndex}]`}\u001b[${39}m`
       );
@@ -232,7 +231,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     )}\n\n\n`
   );
 
-  return res;
+  return rangesCrop(res, strLen);
 }
 
 export default rangesInvert;
