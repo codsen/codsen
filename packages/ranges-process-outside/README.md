@@ -28,9 +28,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-process-outside.cjs.js` | 4 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-process-outside.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-process-outside.umd.js` | 32 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-process-outside.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-process-outside.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-process-outside.umd.js` | 36 KB |
 
 **[⬆ back to top](#)**
 
@@ -44,13 +44,7 @@ Here's what you'll get:
 
 ## Purpose
 
-Imagine you processed the string and made a note (in shape of string range arrays), that for example, you want to delete from index 1 to 2 (to delete second character).
-
-Now, imagine, you want to perform a second operation, and you don't want to iterate over the characters, marked by ranges you already captured. In our example, you want to process only two chunks: [0, 1] (first character), and what's left, what follows second character (third character and onwards).
-
-This library will take a string, ranges array and callback function. It will feed the chunks outside the given ranges into that callback function. Same thing like `Array.forEach(key => {...})` does.
-
-**[⬆ back to top](#)**
+This program iterates over inverted ranges. First, it inverts given ranges and then, calls the callback function (which you supply) with index of every character in those inverted ranges.
 
 ## API
 
@@ -58,21 +52,14 @@ This library will take a string, ranges array and callback function. It will fee
 
 Bracket around 4th input argument above means it's optional.
 
-| Input argument   | Type                                                         | Obligatory? | Description          |
-| ---------------- | ------------------------------------------------------------ | ----------- | -------------------- |
-| `str`            | Array of zero or more arrays                                 | yes         | String you work upon |
-| `originalRanges` | Array of zero or more arrays, OR, `null` (absence of arrays) | yes         | Ranges you have      |
-| `cb`             | Function                                                     | yes         | Callback function    |
+| Input argument   | Type                                                         | Obligatory? | Description                       |
+| ---------------- | ------------------------------------------------------------ | ----------- | --------------------------------- |
+| `str`            | Array of zero or more arrays                                 | yes         | String you work upon              |
+| `originalRanges` | Array of zero or more arrays, OR, `null` (absence of arrays) | yes         | Ranges you have                   |
+| `cb`             | Function                                                     | yes         | Callback function                 |
+| `skipChecks`     | Boolean                                                      | no          | Should checks be performed or not |
 
-**Output**: undefined. Only callback is called zero or more times. If/when callback function is called, its first input argument receives the following plain object:
-
-```
-{
-	from: 0,
-	to: 1,
-	value: "z"
-}
-```
+**Output**: undefined. Only callback is called zero or more times. If/when callback function is called, its first input argument receives string index, one or more times.
 
 For example:
 
@@ -82,27 +69,26 @@ const rangesProcessOutside = require("ranges-process-outside");
 // (name it anyway you want, function was exported as "default")
 
 // define an empty array which we'll soon fill:
-const gather = [];
+const gathered = [];
 
-// call the function with aforementioned arguments.
-// observe the
-rangesProcessOutside("abcdefghij", [[1, 5]], obj => {
-  const value = obj.value; // or shorter, const {value} = obj;
+// call our function:
+rangesProcessOutside("abcdefghij", [[1, 5]], i => {
+  const value = i; // or shorter, const {value} = obj;
   // push this value into our array:
-  gather.push(value);
+  console.log("received: " + i);
+  gathered.push(i);
 });
-// after processing, do anything you want with
-console.log("gather = " + JSON.stringify(gather, null, 0));
-// => ["a", "fghij"]
+console.log("gathered = " + JSON.stringify(gathered, null, 0));
+// => [0, 5, 6, 7, 8, 9]
 ```
 
 **[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-process-outside%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-process-outside%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-process-outside%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-process-outside%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-process-outside%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-process-outside%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).

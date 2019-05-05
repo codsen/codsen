@@ -5,44 +5,50 @@ import p from "../dist/ranges-process-outside.esm";
 // 0. THROWS
 // ==============================
 
-test(`00.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong`, t => {
-  // throw pinning:
+// throw pinning:
+test(`00.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #1`, t => {
   const error1 = t.throws(() => {
     p(undefined, [[0, 1]]);
   });
   t.regex(error1.message, /THROW_ID_01/g);
+});
 
+test(`00.02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #2`, t => {
   const error2 = t.throws(() => {
     p(null, [[0, 1]]);
   });
   t.regex(error2.message, /THROW_ID_02/g);
+});
 
+test(`00.03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #3`, t => {
   const error3 = t.throws(() => {
     p(true, [[0, 1]]);
   });
   t.regex(error3.message, /THROW_ID_02/g);
 });
 
-test(`00.02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong`, t => {
+test(`00.04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #4`, t => {
   // throw pinning:
   const error1 = t.throws(() => {
     p("zzz", true);
   });
   t.regex(error1.message, /THROW_ID_03/g);
+});
 
+test(`00.05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #5`, t => {
   const error2 = t.throws(() => {
     p("zzz", ["zzz"], () => {});
   });
-  t.regex(error2.message, /THROW_ID_04/g);
-  t.regex(error2.message, /ranges-sort/g);
+  t.regex(error2.message, /THROW_ID_05/g);
+});
 
-  // null means absence of ranges
+test(`00.06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg null means absence of ranges`, t => {
   t.notThrows(() => {
     p("zzz", null, () => {});
   });
 });
 
-test(`00.03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - third arg wrong`, t => {
+test(`00.07 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - third arg wrong`, t => {
   // throw pinning:
   const error1 = t.throws(() => {
     p("zzz", [[0, 1]], null);
@@ -55,142 +61,158 @@ test(`00.03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - third arg wrong`, t =
 // 01. Normal use
 // ==============================
 
-test(`01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - not touching zero`, t => {
+test(`01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - not touching zero - checks`, t => {
   const gather = [];
-  p("abcdefghij", [[1, 5]], ({ value }) => {
-    gather.push(value);
+  p("abcdefghij", [[1, 5]], idx => {
+    gather.push(idx);
   });
-  t.deepEqual(gather, ["a", "fghij"]);
+  t.deepEqual(gather, [0, 5, 6, 7, 8, 9], "01.01");
+});
 
-  // skip checks
-  const gathe2 = [];
+test(`01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - not touching zero - skip checks`, t => {
+  const gather2 = [];
   p(
     "abcdefghij",
     [[1, 5]],
-    ({ value }) => {
-      gathe2.push(value);
+    idx => {
+      gather2.push(idx);
     },
     true
   );
-  t.deepEqual(gathe2, ["a", "fghij"]);
+  t.deepEqual(gather2, [0, 5, 6, 7, 8, 9], "01.02");
 });
 
-test(`01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - touching zero - 1 range`, t => {
+test(`01.03 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - checks`, t => {
   const gather = [];
-  p("abcdefghij", [[0, 5]], ({ value }) => {
-    gather.push(value);
+  p("abcdefghij", [[0, 5]], idx => {
+    gather.push(idx);
   });
-  t.deepEqual(gather, ["fghij"]);
+  t.deepEqual(gather, [5, 6, 7, 8, 9], "01.03");
+});
 
-  // skip checks
+test(`01.04 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - skip checks`, t => {
   const gathe2 = [];
   p(
     "abcdefghij",
     [[0, 5]],
-    ({ value }) => {
-      gathe2.push(value);
+    idx => {
+      gathe2.push(idx);
     },
     true
   );
-  t.deepEqual(gathe2, ["fghij"]);
+  t.deepEqual(gathe2, [5, 6, 7, 8, 9], "01.04");
 });
 
-test(`01.03 - ${`\u001b[${33}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - 2 ranges`, t => {
+test(`01.05 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - 2 ranges`, t => {
   const gather = [];
-  p("abcdefghij", [[0, 5], [7, 8]], ({ value }) => {
-    gather.push(value);
+  p("abcdefghij", [[0, 5], [7, 8]], idx => {
+    gather.push(idx);
   });
-  t.deepEqual(gather, ["fg", "ij"], "01.03.01");
+  t.deepEqual(gather, [5, 6, 8, 9], "01.05");
+});
 
-  // opposite order (testing ranges-merge)
+test(`01.06 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - opposite order (testing ranges-merge)`, t => {
   const gather2 = [];
   const messy = [[7, 8], [0, 5]];
-  p("abcdefghij", messy, ({ value }) => {
-    gather2.push(value);
+  p("abcdefghij", messy, idx => {
+    gather2.push(idx);
   });
-  t.deepEqual(messy, [[7, 8], [0, 5]], "01.03.02 - inputs were not mutated");
+  t.deepEqual(messy, [[7, 8], [0, 5]], "01.06.01 - inputs were not mutated");
   t.deepEqual(
     gather2,
-    ["fg", "ij"],
-    "01.03.03 - result is the same as 01.03.01"
+    [5, 6, 8, 9],
+    "01.06.02 - result is the same as in previous test"
   );
+});
 
+test(`01.07 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - throws`, t => {
   // skipping checking/merges/sorts will trigger safety latches and cause a throw
+  const gather2 = [];
   const error1 = t.throws(() => {
     p(
       "abcdefghij",
-      messy,
-      ({ value }) => {
-        gather2.push(value);
+      [[7, 8], [0, 5]],
+      idx => {
+        gather2.push(idx);
       },
       true
     );
   });
-  t.regex(error1.message, /THROW_ID_05/g);
-  t.regex(error1.message, /ranges-process-outside/g);
+  t.regex(error1.message, /THROW_ID_08/g);
+  t.regex(error1.message, /ranges-invert/g);
 });
 
 // range outside the string length
-test(`01.04 - ${`\u001b[${33}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes`, t => {
+test(`01.08 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks`, t => {
   const gather = [];
-  p("abcdefghij", [[0, 5], [7, 100]], ({ value }) => {
-    gather.push(value);
+  p("abcdefghij", [[0, 5], [7, 100]], idx => {
+    gather.push(idx);
   });
-  t.deepEqual(gather, ["fg"]);
-
-  const gather2 = [];
-  p(
-    "abcdefghij",
-    [[0, 5], [7, 100]],
-    ({ value }) => {
-      gather2.push(value);
-    },
-    true
-  );
-  t.deepEqual(gather2, ["fg"]);
+  t.deepEqual(gather, [5, 6], "01.08 - result is the same as in previous test");
 });
 
-// absent ranges
-test(`01.05 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges`, t => {
-  // empty array given:
-  const gather1 = [];
-  p("abcdefghij", [], ({ value }) => {
-    gather1.push(value);
+test(`01.09 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks skip`, t => {
+  const gather = [];
+  // The problem is, reference string is 10 chars/indexes long and ranges span
+  // up to index 100. In practice, on a clean input this should never happen so
+  // it is safe and worthy to cut corners and skip checks. For example, this
+  // index 100 would not come at the first place if we processed the same string
+  // even on many different iterations and different functions. That index 100
+  // can't appear from anywhere if reference string's indexes don't span that far.
+  const error = t.throws(() => {
+    p(
+      "abcdefghij",
+      [[0, 5], [7, 100]],
+      idx => {
+        gather.push(idx);
+      },
+      true
+    );
   });
-  t.deepEqual(gather1, ["abcdefghij"]);
+  t.regex(error.message, /THROW_ID_08/);
+});
 
-  // null given
+test(`01.10 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - empty array given`, t => {
+  const gather = [];
+  p("abcdefghij", [], idx => {
+    gather.push(idx);
+  });
+  t.deepEqual(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.10");
+});
+
+test(`01.11 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - null given`, t => {
   const gather2 = [];
-  p("abcdefghij", null, ({ value }) => {
-    gather2.push(value);
+  p("abcdefghij", null, idx => {
+    gather2.push(idx);
   });
-  t.deepEqual(gather2, ["abcdefghij"]);
+  t.deepEqual(gather2, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.11");
+});
 
-  // null given + true (skip checks)
-  const gather3 = [];
+test(`01.12 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - null given + true (skip checks)`, t => {
+  const gather = [];
   p(
     "abcdefghij",
     null,
-    ({ value }) => {
-      gather3.push(value);
+    idx => {
+      gather.push(idx);
     },
     true
   );
-  t.deepEqual(gather3, ["abcdefghij"]);
+  t.deepEqual(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.12");
 });
 
-test(`01.06 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges completely cover str`, t => {
+test(`01.13 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges completely cover str`, t => {
   const gather1 = [];
-  p("abcdefghij", [[0, 100]], ({ value }) => {
-    gather1.push(value);
+  p("abcdefghij", [[0, 100]], idx => {
+    gather1.push(idx);
   });
-  t.deepEqual(gather1, [], "01.06");
+  t.deepEqual(gather1, [], "01.13");
 });
 
-test(`01.07 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges not cover str at all`, t => {
+test(`01.14 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges not cover str at all`, t => {
   const gather = [];
-  p("abcdefghij", [[100, 200]], ({ value }) => {
-    gather.push(value);
+  p("abcdefghij", [[100, 200]], idx => {
+    gather.push(idx);
   });
-  t.deepEqual(gather, ["abcdefghij"], "01.07");
+  t.deepEqual(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.14");
 });

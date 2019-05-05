@@ -1,14 +1,21 @@
-import mergeRanges from "ranges-merge";
+import invert from "ranges-invert";
+import crop from "ranges-crop";
 
 const isArr = Array.isArray;
 
-function processOutside(str, originalRanges, cb, skipChecks) {
+function processOutside(str, originalRanges, cb, skipChecks = false) {
+  //
+  // internal functions:
+  //
   function isFunction(functionToCheck) {
     return (
       functionToCheck &&
       {}.toString.call(functionToCheck) === "[object Function]"
     );
   }
+  //
+  // insurance:
+  //
   if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error(
@@ -24,7 +31,7 @@ function processOutside(str, originalRanges, cb, skipChecks) {
       );
     }
   }
-  if (originalRanges !== null && !isArr(originalRanges)) {
+  if (originalRanges && !isArr(originalRanges)) {
     throw new Error(
       `ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(
         originalRanges,
@@ -32,14 +39,6 @@ function processOutside(str, originalRanges, cb, skipChecks) {
         4
       )} (type ${typeof originalRanges})`
     );
-  }
-  if (!isArr(originalRanges) || originalRanges.length === 0) {
-    cb({
-      from: 0,
-      to: str.length,
-      value: str
-    });
-    return;
   }
   if (!isFunction(cb)) {
     throw new Error(
@@ -51,87 +50,42 @@ function processOutside(str, originalRanges, cb, skipChecks) {
     );
   }
 
-  let ranges;
-  if (skipChecks) {
-    ranges = originalRanges;
-  } else {
-    ranges = mergeRanges(originalRanges);
+  // separate the iterator because it might be called with inverted ranges or
+  // with separately calculated "everything" if the ranges are empty/falsey
+  function iterator(arrOfArrays) {
+    console.log(
+      `057 iterator called with ${JSON.stringify(arrOfArrays, null, 4)}`
+    );
+    arrOfArrays.forEach(([fromIdx, toIdx]) => {
+      console.log(`060 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      for (let i = fromIdx; i < toIdx; i++) {
+        console.log(`062 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        cb(i);
+      }
+    });
   }
 
-  let previousTo = 0;
-  ranges.forEach(([receivedFrom, receivedTo], i, wholeArr) => {
-    console.log("-------------");
-    console.log(
-      `065 OLD ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
-        previousTo,
-        null,
-        4
-      )}`
+  if (originalRanges && originalRanges.length) {
+    // if ranges are given, invert and run callback against each character
+    const temp = crop(
+      invert(skipChecks ? originalRanges : originalRanges, str.length, {
+        skipChecks: !!skipChecks
+      }),
+      str.length
     );
     console.log(
-      `072 ${`\u001b[${33}m${`receivedFrom`}\u001b[${39}m`} = ${JSON.stringify(
-        receivedFrom,
-        null,
-        4
-      )}`
-    );
-    console.log(
-      `079 ${`\u001b[${33}m${`receivedTo`}\u001b[${39}m`} = ${JSON.stringify(
-        receivedTo,
+      `077 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+        temp,
         null,
         4
       )}`
     );
 
-    if (receivedFrom < previousTo) {
-      throw new Error(
-        `ranges-process-outside: [THROW_ID_05] the ranges array is not sorted/merged. It's equal to:\n${JSON.stringify(
-          originalRanges,
-          null,
-          4
-        )}\n\nNotice ranges at index ${i} and ${i - 1}: [... ${JSON.stringify(
-          ranges[i - 1],
-          null,
-          0
-        )}, ${JSON.stringify(
-          ranges[i],
-          null,
-          0
-        )}...] - use ranges-merge, ranges-sort or ranges-push npm libraries to process your ranges array upfont.`
-      );
-    }
-
-    // receivedFrom when ranges exceed string length, we set receivedFrom to null
-    if (receivedFrom !== null && receivedFrom !== 0) {
-      console.log(`106 calling with [${previousTo}, ${receivedFrom}]`);
-      cb({
-        from: previousTo,
-        to: receivedFrom,
-        value: str.slice(previousTo, receivedFrom)
-      });
-    }
-
-    previousTo = receivedTo <= str.length ? receivedTo : null;
-    console.log(
-      `116 SET ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
-        previousTo,
-        null,
-        4
-      )}`
-    );
-
-    if (previousTo !== null && i === wholeArr.length - 1) {
-      console.log("-------------");
-      console.log("125 last slice");
-      console.log(`126 calling with [${previousTo}, ${str.length}]`);
-      cb({
-        from: previousTo,
-        to: str.length,
-        value: str.slice(previousTo, str.length)
-      });
-    }
-  });
-  console.log("-------------");
+    iterator(temp);
+  } else {
+    // otherwise, run callback on everything
+    iterator([[0, str.length]]);
+  }
 }
 
 export default processOutside;

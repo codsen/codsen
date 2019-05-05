@@ -7,10 +7,11 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
  */
 
-import mergeRanges from 'ranges-merge';
+import invert from 'ranges-invert';
+import crop from 'ranges-crop';
 
 const isArr = Array.isArray;
-function processOutside(str, originalRanges, cb, skipChecks) {
+function processOutside(str, originalRanges, cb, skipChecks = false) {
   function isFunction(functionToCheck) {
     return (
       functionToCheck &&
@@ -32,7 +33,7 @@ function processOutside(str, originalRanges, cb, skipChecks) {
       );
     }
   }
-  if (originalRanges !== null && !isArr(originalRanges)) {
+  if (originalRanges && !isArr(originalRanges)) {
     throw new Error(
       `ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(
         originalRanges,
@@ -40,14 +41,6 @@ function processOutside(str, originalRanges, cb, skipChecks) {
         4
       )} (type ${typeof originalRanges})`
     );
-  }
-  if (!isArr(originalRanges) || originalRanges.length === 0) {
-    cb({
-      from: 0,
-      to: str.length,
-      value: str
-    });
-    return;
   }
   if (!isFunction(cb)) {
     throw new Error(
@@ -58,47 +51,24 @@ function processOutside(str, originalRanges, cb, skipChecks) {
       )} (type ${typeof cb})`
     );
   }
-  let ranges;
-  if (skipChecks) {
-    ranges = originalRanges;
-  } else {
-    ranges = mergeRanges(originalRanges);
+  function iterator(arrOfArrays) {
+    arrOfArrays.forEach(([fromIdx, toIdx]) => {
+      for (let i = fromIdx; i < toIdx; i++) {
+        cb(i);
+      }
+    });
   }
-  let previousTo = 0;
-  ranges.forEach(([receivedFrom, receivedTo], i, wholeArr) => {
-    if (receivedFrom < previousTo) {
-      throw new Error(
-        `ranges-process-outside: [THROW_ID_05] the ranges array is not sorted/merged. It's equal to:\n${JSON.stringify(
-          originalRanges,
-          null,
-          4
-        )}\n\nNotice ranges at index ${i} and ${i - 1}: [... ${JSON.stringify(
-          ranges[i - 1],
-          null,
-          0
-        )}, ${JSON.stringify(
-          ranges[i],
-          null,
-          0
-        )}...] - use ranges-merge, ranges-sort or ranges-push npm libraries to process your ranges array upfont.`
-      );
-    }
-    if (receivedFrom !== null && receivedFrom !== 0) {
-      cb({
-        from: previousTo,
-        to: receivedFrom,
-        value: str.slice(previousTo, receivedFrom)
-      });
-    }
-    previousTo = receivedTo <= str.length ? receivedTo : null;
-    if (previousTo !== null && i === wholeArr.length - 1) {
-      cb({
-        from: previousTo,
-        to: str.length,
-        value: str.slice(previousTo, str.length)
-      });
-    }
-  });
+  if (originalRanges && originalRanges.length) {
+    const temp = crop(
+      invert(skipChecks ? originalRanges : originalRanges, str.length, {
+        skipChecks: !!skipChecks
+      }),
+      str.length
+    );
+    iterator(temp);
+  } else {
+    iterator([[0, str.length]]);
+  }
 }
 
 export default processOutside;
