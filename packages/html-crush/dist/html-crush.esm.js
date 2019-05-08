@@ -470,7 +470,6 @@ function crush(str, originalOpts) {
                 if (
                   !(
                     i === whitespaceStartedAt + 1 &&
-                    str[whitespaceStartedAt] === " " &&
                     whatToAdd === " "
                   )
                 ) {
@@ -492,7 +491,16 @@ function crush(str, originalOpts) {
                     whatToAdd = "\n";
                     countCharactersPerLine = 1;
                   }
-                  finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                  if (
+                    countCharactersPerLine > opts.lineLengthLimit ||
+                    !(whatToAdd === " " && i === whitespaceStartedAt + 1)
+                  ) {
+                    finalIndexesToDelete.push(
+                      whitespaceStartedAt,
+                      i,
+                      whatToAdd
+                    );
+                  }
                   stageFrom = null;
                   stageTo = null;
                   stageAdd = null;
@@ -565,7 +573,15 @@ function crush(str, originalOpts) {
               ) {
                 whatToAdd = "\n";
               }
-              finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+              if (
+                countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
+                  opts.lineLengthLimit ||
+                !(whatToAdd === " " && stageTo === stageFrom + 1)
+              ) {
+                finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+              } else {
+                countCharactersPerLine -= lastLinebreak;
+              }
             }
             if (
               str[i].trim().length &&

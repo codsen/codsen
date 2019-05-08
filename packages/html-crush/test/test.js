@@ -1,8 +1,6 @@
 import "@babel/polyfill";
 import test from "ava";
-import fetch from "node-fetch";
 import { crush as m, defaults, version } from "../dist/html-crush.esm";
-import pMap from "p-map";
 
 function strip(str) {
   if (typeof str === "string") {
@@ -281,6 +279,16 @@ test(`01.19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence 
       .result,
     "aaaaaa bbbbbb\ncccccc",
     "clone of 02.05.14"
+  );
+});
+
+test(`01.20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with character`, t => {
+  t.deepEqual(
+    m(" <a> \n <b>\n\n\n<c>", {
+      removeLineBreaks: true
+    }).result,
+    "<a><b><c>",
+    "01.20"
   );
 });
 
@@ -602,7 +610,7 @@ test(`02.06 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters
   t.deepEqual(
     m("aaaaaa\nbbbbbb\ncccccc", { removeLineBreaks: true, lineLengthLimit: 0 })
       .result,
-    "aaaaaa bbbbbb cccccc",
+    "aaaaaa\nbbbbbb\ncccccc",
     "02.06.01"
   );
   t.deepEqual(
@@ -676,6 +684,14 @@ test(`02.06 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters
       .result,
     "aaaaaa\nbbbbbb\ncccccc",
     "02.06.13 - the very edge"
+  );
+  t.deepEqual(
+    m("aaaaaa\nbbbbbb\ncccccc", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100
+    }).result,
+    "aaaaaa\nbbbbbb\ncccccc",
+    "02.06.14"
   );
 });
 
@@ -1318,6 +1334,29 @@ test(`02.16 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - whitespace in front of <
   );
 });
 
+test(`02.17 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is not replaced with a single space`, t => {
+  t.is(m("a\nb", { removeLineBreaks: true }).result, "a\nb", "02.17.01");
+  t.is(
+    m("a\nb", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
+    "a\nb",
+    "02.17.02"
+  );
+  t.is(
+    m("a\nb", { removeLineBreaks: true, lineLengthLimit: 100 }).result,
+    "a\nb",
+    "02.17.03"
+  );
+  t.is(
+    m("a\nb", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
+    "a\nb",
+    "02.17.04"
+  );
+});
+
+test(`02.18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is deleted though`, t => {
+  t.is(m("<a>\n<b>", { removeLineBreaks: true }).result, "<a><b>", "02.18.01");
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
@@ -1433,11 +1472,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   );
 
   // 2. check the counter variable:
-  t.is(
-    counter,
-    99,
-    "03.01.04 - counter called 99 times, reporting from 1% to 99%, inclusive"
-  );
+  t.true(counter > 50, "03.01.04 - counter called");
 });
 
 // 04. opts.removeIndentations
@@ -1939,108 +1974,6 @@ test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
   );
 });
 
-// 08. Fetch sources of some real websites and see, a) are any non-whitespace
-// characters deleted; b) that there are no throws; c) is minified source less
-// than or equal to orginal
-// -----------------------------------------------------------------------------
-
-const websitesToTest = [
-  [
-    "https://bitbucket.org/codsen/html-crush/src/master/",
-    "html-crush on Bitbucket"
-  ],
-  ["https://detergent.io", "Detergent.io website"],
-  [
-    "https://en.wikipedia.org/wiki/Doughnut",
-    "the Wikipedia page about doughnuts"
-  ],
-  ["http://www.muji.eu/", "Muji EU online store"],
-  ["https://www.mozilla.org/en-GB/", "Mozilla UK homepage"],
-  ["https://sjhgldgldgjdlfgldgldflkgjd.com", "Non-existent URL"]
-];
-
-test(`08.01-0${
-  websitesToTest.length
-} - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`}`, async t => {
-  await pMap(websitesToTest, (websiteArr, rowNum) =>
-    fetch(websiteArr[0])
-      .then(res => res.text())
-      .then(sourceStr => {
-        t.true(
-          typeof sourceStr === "string" && sourceStr.length > 0,
-          `08.0${rowNum + 1}.01 - fetched non-empty, valid HTML source from "${
-            websiteArr[0]
-          }"`
-        );
-        // test #1 - indentations removed
-        // we allow website fetch to fail, but not errors during minification
-        let minifiedResult1;
-        try {
-          minifiedResult1 = m(sourceStr, {
-            removeIndentations: true,
-            removeLineBreaks: false
-          });
-        } catch (error) {
-          t.fail(
-            `During minification of URL "${
-              websiteArr[0]
-            }", minification threw an error:\n${error}`
-          );
-        }
-
-        t.true(
-          minifiedResult1.result.length <= sourceStr.length,
-          `08.0${rowNum + 1}.02 - minified size is the same or less (${
-            minifiedResult1.log.percentageReducedOfOriginal
-          }% size savings)`
-        );
-        console.log(
-          `08.0${rowNum + 1}.03 - ${
-            websiteArr[1]
-          } - only indentations removed: ${
-            minifiedResult1.log.percentageReducedOfOriginal
-          }% size savings`
-        );
-
-        // test #2 - linebreaks removed along with indentations
-        // we allow website fetch to fail, but not errors during minification
-        let minifiedResult2;
-        try {
-          minifiedResult2 = m(sourceStr, {
-            removeLineBreaks: true,
-            lineLengthLimit: 0
-          });
-        } catch (error) {
-          t.fail(
-            `During minification of URL "${
-              websiteArr[0]
-            }", minification threw an error:\n${error}`
-          );
-        }
-
-        t.true(
-          minifiedResult2.result.length <= sourceStr.length,
-          `08.0${rowNum + 1}.04 - minified size is the same or less (${
-            minifiedResult2.log.percentageReducedOfOriginal
-          }% size savings)`
-        );
-        console.log(
-          `08.0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
-            minifiedResult2.log.percentageReducedOfOriginal
-          }% size savings`
-        );
-      })
-      .catch(err => {
-        console.log(
-          `08.0${rowNum + 1}.xx - ${
-            websiteArr[1]
-          } - ${`\u001b[${31}m${`could not fetch the web page! Moving on...`}\u001b[${39}m`}`
-        );
-        t.pass(err.message);
-      })
-  );
-});
-
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
 
@@ -2061,9 +1994,7 @@ test(`99.02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set
 });
 
 test(`99.03 - ${`\u001b[${90}m${`adhoc 3`}\u001b[${39}m`} - yet another peculiar set of chars`, t => {
-  t.deepEqual(
-    m(
-      `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  const input = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 xmlns:v="urn:schemas-microsoft-com:vml"
 xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -2073,14 +2004,16 @@ xmlns:o="urn:schemas-microsoft-com:office:office">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->
 <meta name="format-detection" content="telephone=no" />
-<meta name="viewport" zzz`,
-      {
-        removeLineBreaks: true,
-        breakToTheLeftOf: []
-      }
-    ).result,
-    `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!--<![endif]--><meta name="format-detection" content="telephone=no" /><meta
-name="viewport" zzz`,
+<meta name="viewport" zzz`;
+  const output = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!--<![endif]--><meta name="format-detection" content="telephone=no" /><meta name="viewport" zzz`;
+  t.deepEqual(
+    m(input, {
+      removeLineBreaks: true,
+      breakToTheLeftOf: []
+    }).result,
+    output,
     "99.03 - another peculiar set of characters"
   );
 });
@@ -2121,6 +2054,32 @@ test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
     }).result,
     chunk,
     "99.06.03"
+  );
+});
+
+test(`99.07 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - line length control`, t => {
+  const input = `<a>
+<b>
+<c>
+<d>
+<e
+f
+g>
+<h>
+<i>
+<j>
+<j klm`;
+  const output = `<a><b><c><d><e
+f
+g><h><i><j><j klm`;
+  t.deepEqual(
+    m(input, {
+      lineLengthLimit: 20,
+      removeLineBreaks: true,
+      breakToTheLeftOf: []
+    }).result,
+    output,
+    "99.07"
   );
 });
 

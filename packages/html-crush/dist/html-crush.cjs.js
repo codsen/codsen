@@ -343,7 +343,8 @@ function crush(str, originalOpts) {
                 countCharactersPerLine++;
               }
               if (!opts.lineLengthLimit) {
-                if (!(_i === whitespaceStartedAt + 1 && str[whitespaceStartedAt] === " " && whatToAdd === " ")) {
+                if (!(_i === whitespaceStartedAt + 1 &&
+                whatToAdd === " ")) {
                   finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
                 }
               } else {
@@ -352,7 +353,9 @@ function crush(str, originalOpts) {
                     whatToAdd = "\n";
                     countCharactersPerLine = 1;
                   }
-                  finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
+                  if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && _i === whitespaceStartedAt + 1)) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
+                  }
                   stageFrom = null;
                   stageTo = null;
                   stageAdd = null;
@@ -396,7 +399,11 @@ function crush(str, originalOpts) {
               if (str[_i].trim().length && str[_i + 1] && str[_i + 1].trim().length && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
                 _whatToAdd = "\n";
               }
-              finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+              if (countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
+                finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+              } else {
+                countCharactersPerLine -= lastLinebreak;
+              }
             }
             if (str[_i].trim().length && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1]))) {
               stageFrom = _i;
