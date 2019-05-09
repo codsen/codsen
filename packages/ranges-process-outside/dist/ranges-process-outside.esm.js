@@ -54,7 +54,11 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
   function iterator(arrOfArrays) {
     arrOfArrays.forEach(([fromIdx, toIdx]) => {
       for (let i = fromIdx; i < toIdx; i++) {
-        cb(i);
+        cb(i, offsetValue => {
+          if (offsetValue != null) {
+            i += offsetValue;
+          }
+        });
       }
     });
   }

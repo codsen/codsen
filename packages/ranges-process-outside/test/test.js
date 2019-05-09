@@ -216,3 +216,41 @@ test(`01.14 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges not cover s
   });
   t.deepEqual(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.14");
 });
+
+// ==============================
+// 02. Index offsets
+// ==============================
+
+test(`02.01 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 5`, t => {
+  const gather = [];
+  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
+    gather.push(idx);
+    if (idx === 5) {
+      offsetBy(1);
+    }
+  });
+  t.deepEqual(gather, [0, 5, 7, 8, 9], "02.01");
+});
+
+test(`02.02 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 6`, t => {
+  const gather = [];
+  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
+    gather.push(idx);
+    if (idx === 6) {
+      offsetBy(1);
+    }
+  });
+  t.deepEqual(gather, [0, 5, 6, 8, 9], "02.02");
+});
+
+test(`02.03 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - sequential offsets`, t => {
+  const gather = [];
+  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
+    if (idx === 5 || idx === 6) {
+      offsetBy(1);
+    } else {
+      gather.push(idx);
+    }
+  });
+  t.deepEqual(gather, [0, 7, 8, 9], "02.03");
+});

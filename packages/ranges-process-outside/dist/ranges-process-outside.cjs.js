@@ -91,7 +91,11 @@ function processOutside(str, originalRanges, cb) {
           fromIdx = _ref2[0],
           toIdx = _ref2[1];
       for (var i = fromIdx; i < toIdx; i++) {
-        cb(i);
+        cb(i, function (offsetValue) {
+          if (offsetValue != null) {
+            i += offsetValue;
+          }
+        });
       }
     });
   }

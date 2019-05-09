@@ -60,7 +60,11 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       console.log(`060 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
         console.log(`062 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
-        cb(i);
+        cb(i, offsetValue => {
+          if (offsetValue != null) {
+            i += offsetValue;
+          }
+        });
       }
     });
   }
@@ -74,7 +78,7 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       str.length
     );
     console.log(
-      `077 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `081 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
         4
