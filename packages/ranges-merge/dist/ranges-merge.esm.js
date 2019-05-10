@@ -27,9 +27,15 @@ function mergeRanges(arrOfRanges, originalOpts) {
   if (originalOpts) {
     if (isObj(originalOpts)) {
       opts = Object.assign({}, defaults, originalOpts);
-      if (opts.progressFn && typeof opts.progressFn !== "function") {
+      if (
+        opts.progressFn &&
+        isObj(opts.progressFn) &&
+        !Object.keys(opts.progressFn).length
+      ) {
+        opts.progressFn = null;
+      } else if (opts.progressFn && typeof opts.progressFn !== "function") {
         throw new Error(
-          `ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(
+          `ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(
             opts.progressFn,
             null,
             4

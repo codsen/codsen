@@ -40,6 +40,14 @@ test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", t => {
   t.regex(error1.message, /THROW_ID_04/);
 });
 
+test("00.05", t => {
+  t.notThrows(() => {
+    mergeRanges([[1, 2], [0, 1]], {
+      progressFn: {}
+    });
+  });
+});
+
 // 01. mergeRanges()
 // ==========================
 
