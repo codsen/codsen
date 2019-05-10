@@ -5,96 +5,10 @@ import wthn from "../dist/ranges-is-index-within.esm";
 // 0. THROWS
 // ==============================
 
-test("00.01 - 1st arg is not a natural number", t => {
+test("00.01 - native Array methods throw when null is given", t => {
+  const ranges = null;
   t.throws(() => {
-    wthn(1.2, [[0, 3]]);
-  });
-});
-
-test("00.02 - 1st arg is neither natural number nor string", t => {
-  t.throws(() => {
-    wthn(null, [[0, 3]]);
-  });
-  t.throws(() => {
-    wthn(undefined, [[0, 3]]);
-  });
-  t.throws(() => {
-    wthn(["a"], [[0, 3]]);
-  });
-  t.throws(() => {
-    wthn([], [[0, 3]]);
-  });
-});
-
-test("00.03 - 1st arg can be a natural number string", t => {
-  t.notThrows(() => {
-    wthn("1", [[0, 3]]);
-  });
-  t.throws(() => {
-    wthn("1.2", [[0, 3]]);
-  });
-});
-
-test("00.04 - ranges contain non-natural numbers", t => {
-  t.throws(() => {
-    wthn(1, [[0, 3.1], [4, 5]]);
-  });
-});
-
-test("00.05 - second input, ranges, is missing", t => {
-  t.throws(() => {
-    wthn(1);
-  });
-});
-
-test("00.06 - second input, ranges, is of a wrong type", t => {
-  t.throws(() => {
-    wthn(1, 1);
-  });
-  t.throws(() => {
-    wthn(1, ["1"]);
-  });
-  t.throws(() => {
-    wthn(1, ["1, 2"]);
-  });
-  t.notThrows(() => {
-    wthn(1, null);
-  });
-  t.throws(() => {
-    wthn(1, true);
-  });
-  t.throws(() => {
-    wthn(1, 1.5);
-  });
-});
-
-test("00.07 - second input, ranges, is array, but it's empty", t => {
-  t.throws(() => {
-    wthn(1, []);
-  });
-});
-
-test("00.08 - opts is of a wrong type", t => {
-  t.throws(() => {
-    wthn(2, [[1, 3]], 1);
-  });
-  t.throws(() => {
-    wthn(2, [[1, 3]], []);
-  });
-  t.throws(() => {
-    wthn(2, [[1, 3]], true);
-  });
-  t.throws(() => {
-    wthn(2, [[1, 3]], "a");
-  });
-  t.notThrows(() => {
-    wthn(2, [[1, 3]], {});
-  });
-  t.notThrows(() => {
-    wthn(2, [[1, 3]], null); // can be falsey - will be ignored
-  });
-  t.notThrows(() => {
-    wthn(2, [[1, 3]], undefined); // can be hard-coded literal undefined - will be ignored
+    ranges.some(arr => arr[0] <= 1 && arr[1] >= 1);
   });
 });
 
@@ -3965,24 +3879,6 @@ test("03.05 - identical range endings", t => {
   );
 });
 
-test("03.06 - out of whack ranges - throw", t => {
-  t.throws(() => {
-    wthn(1, [[10, 2]]);
-  });
-  t.throws(() => {
-    wthn(1, [[10, 2]], { returnMatchedRangeInsteadOfTrue: true });
-  });
-  t.throws(() => {
-    wthn(1, [[10, 2]], { inclusiveRangeEnds: true });
-  });
-  t.throws(() => {
-    wthn(1, [[10, 2]], {
-      returnMatchedRangeInsteadOfTrue: true,
-      inclusiveRangeEnds: true
-    });
-  });
-});
-
 // ==============================
 // 4. AD-HOC
 // ==============================
@@ -4031,8 +3927,7 @@ test("Ad-hoc #1", t => {
       ],
       {
         inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true,
-        skipIncomingRangeSorting: true
+        returnMatchedRangeInsteadOfTrue: true
       }
     ),
     [125, 130],

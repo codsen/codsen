@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.14.0 (2019-05-11)
+
+Rebased the program to be around 84 times faster - from around 4,443 ops/sec to 396,730 ops/sec. It is still slower than plain `Array.some` (around 490,747 ops/sec) but we perform input validation and still return a result if null is given (meaning there are no ranges).
+
+- 💥 Removed `opts.skipIncomingRangeSorting` because we're switched to simple `Array.some` now
+- 💥 Removed all dependencies:
+  - `lodash.isplainobject`
+  - `check-types-mini`
+  - `is-natural-number-string`
+  - `is-natural-number`
+  - `ordinal-number-suffix`
+  - `ranges-sort`
+
 ## 1.13.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

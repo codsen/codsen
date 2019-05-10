@@ -28,9 +28,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 8 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 7 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 32 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 1 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 1 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 824 B |
 
 **[⬆ back to top](#)**
 
@@ -92,22 +92,9 @@ A wrong type will cause `throw`s.
 | {                                 |                   |         |
 | `inclusiveRangeEnds`              | Boolean           | `false` | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes. |
 | `returnMatchedRangeInsteadOfTrue` | Boolean           | `false` | If set to `true`, instead of result `true` it will return the matched range. `false` is still used as a negative answer. It's handy when you want to know **which** range it matched. |
-| `skipIncomingRangeSorting`        | Boolean           | `false` | If you know the input ranges are already sorted, turn off the sorting using this flag. |
 | }                                 |                   |         |
 
 <!-- prettier-ignore-end -->
-
-Options object is "patrolled" using `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
-
-Here is the options object in one place (in case you ever want to copy it):
-
-```js
-{
-  inclusiveRangeEnds: false,
-  returnMatchedRangeInsteadOfTrue: false,
-  skipIncomingRangeSorting: false,
-}
-```
 
 **[⬆ back to top](#)**
 
@@ -116,18 +103,6 @@ Here is the options object in one place (in case you ever want to copy it):
 Boolean `true`^ or `false`, answering the question, is the given `index` found within any of the ranges.
 
 ^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
-
-**[⬆ back to top](#)**
-
-### `opts.skipIncomingRangeSorting`
-
-If you use this library as an internal dependency and you know the ranges upfront, it makes sense to sort them upfront, before feeding into this library and turn off the sorting here.
-
-You can wire up temporary `console.log` and use [ranges-sort](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
-
-Now you can save users' resources and turn off range sorting in this library using `opts.skipIncomingRangeSorting`.
-
-For example, in my library `charcode-is-valid-xml-name-character` ([npm](https://www.npmjs.com/package/charcode-is-valid-xml-name-character), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character)) I'm checking is the character a valid to be XML element's name. I know Unicode ranges upfront, so I sorted them, console-logg'ed and pasted as constant. Then, when checking user input character's index, is it among my ranges, I use this library, `ranges-is-index-within`, with sorting turned off.
 
 **[⬆ back to top](#)**
 
@@ -222,53 +197,17 @@ console.log(res4);
 
 ## The algorithm
 
-I implemented the [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm) idea.
+Sugarcoated `Array.some` / `Array.find` — no dependencies. This program is slightly slower than raw `Array` methods but it gives you insurance when ranges are `null` (returns `false` while raw `Array` methods would throw).
 
-First, we check is the index not outside of the ranges. Then we pick the middle of the ranges and check, is index within, below or above it. We narrow down the ranges until there's nothing left to narrow-down.
-
-For example, here's how the following function would perform the calculations:
-
-```js
-rangesIsIndexWithin(
-  79, // <- index
-  [
-    // <- ranges
-    [5, 10],
-    [15, 20],
-    [25, 30],
-    [35, 40],
-    [45, 50],
-    [55, 60],
-    [65, 70],
-    [75, 80],
-    [85, 90],
-    [95, 100],
-    [105, 110],
-    [115, 120],
-    [125, 130]
-  ]
-);
-```
-
-Let's say we're checking index number `79`. Question: is it within any of the ranges above?
-
-The first algorithm would pick the middle range, `[65,70]`. Index (`79`) is apparently above it. Narrow-down the ranges we work on to `[65,70]`-`[125,130]` (6th - 12th counting from zero).
-
-Pick the middle range of `[65,70]`-`[125,130]`, which is 9th, `[95,100]`. Index (`79`) is apparently under it. Narrow-down the ranges we work on to `[65,70]`-`[95,100]` (6th - 9th, counting zero-inclusive).
-
-Pick the middle range of `[65,70]`-`[95,100]`, which is `[75,80]`. Bob's your uncle, `79` is within that.
-
-It took three iterations of a `while` loop to measure `13` ranges. Would could have checked it using `Array.some` but it would have been the less efficient, the more our index would be towards the end of the array. The most inefficient way would be `for` loop without `break`, checking all ranges even if one was detected.
-
-In our example above, the `for` loop with `break` or `Array.some` would have stopped after checking 8th range. Our algorithm did it in 3 checks. That's the meaning of "efficient" I'm talking about.
+By the way, [Binary Search algorithm](https://en.wikipedia.org/wiki/Binary_search_algorithm) would be 85 times slower than `Array.some`/`Array.find`, which I tried in previous versions of this package.
 
 **[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-is-index-within%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-is-index-within%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-is-index-within%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
