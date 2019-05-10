@@ -8,7 +8,9 @@ import {
   brokenNamedEntities,
   decode,
   minLength,
-  maxLength
+  maxLength,
+  notEmailFriendly,
+  uncertain
 } from "../dist/all-named-html-entities.esm";
 
 test(`01 - entStartsWith is set`, t => {
@@ -87,4 +89,16 @@ test(`11 - maxLength is numeric`, t => {
 
 test(`12 - allNamedEntities checks`, t => {
   t.true(Object.keys(allNamedEntities).length > 0);
+});
+
+test(`13 - notEmailFriendly is set`, t => {
+  t.true(notEmailFriendly.Abreve === "#x102");
+});
+
+test(`14 - uncertain list is set`, t => {
+  t.true(notEmailFriendly.includes("Alpha"));
+  t.true(notEmailFriendly.includes("alpha"));
+  t.true(notEmailFriendly.includes("amp"));
+  t.true(notEmailFriendly.includes("And"));
+  t.true(notEmailFriendly.includes("and"));
 });
