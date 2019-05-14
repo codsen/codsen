@@ -138,6 +138,7 @@ function crush(str, originalOpts) {
   let stageAdd = null;
   const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
   const CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
+  const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
   const DELETE_TIGHTLY_IF_ON_LEFT_IS = [">"];
   const DELETE_TIGHTLY_IF_ON_RIGHT_IS = ["<"];
   const set = ["{", "}", ",", ":", ";", "<", ">", "~", "+"];
@@ -579,7 +580,8 @@ function crush(str, originalOpts) {
           countCharactersPerLine <= opts.lineLengthLimit
         ) {
           if (
-            CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
+            (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+              !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
             (str[i - 1] &&
               CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1])) ||
             !str[i].trim().length ||

@@ -1355,7 +1355,7 @@ test(`02.17 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is not 
 });
 
 test(`02.18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is deleted though`, t => {
-  t.is(m("<a>\n<b>", { removeLineBreaks: true }).result, "<a><b>", "02.18.01");
+  t.is(m("<a>\n<b>", { removeLineBreaks: true }).result, "<a><b>", "02.18");
 });
 
 // 03. opts.reportProgressFunc

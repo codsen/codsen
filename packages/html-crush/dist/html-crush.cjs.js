@@ -168,6 +168,7 @@ function crush(str, originalOpts) {
   var stageAdd = null;
   var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
   var CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
+  var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
   var DELETE_TIGHTLY_IF_ON_LEFT_IS = [">"];
   var DELETE_TIGHTLY_IF_ON_RIGHT_IS = ["<"];
   var set = ["{", "}", ",", ":", ";", "<", ">", "~", "+"];
@@ -403,7 +404,7 @@ function crush(str, originalOpts) {
           countCharactersPerLine = 1;
           continue;
         } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
-          if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1]) || !str[_i].trim().length || !str[_i + 1]) {
+          if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1]) || !str[_i].trim().length || !str[_i + 1]) {
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
               var _whatToAdd = stageAdd;
               if (str[_i].trim().length && str[_i + 1] && str[_i + 1].trim().length && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
