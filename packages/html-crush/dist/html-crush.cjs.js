@@ -157,6 +157,7 @@ function crush(str, originalOpts) {
   var nonWhitespaceCharMet = false;
   var countCharactersPerLine = 0;
   var withinStyleTag = false;
+  var withinInlineStyle = null;
   var styleCommentStartedAt = null;
   var scriptStartedAt = null;
   var preStartedAt = null;
@@ -191,6 +192,9 @@ function crush(str, originalOpts) {
             opts.reportProgressFunc(currentPercentageDone);
           }
         }
+      }
+      if (Number.isInteger(doNothing) && _i >= doNothing) {
+        doNothing = false;
       }
       if (!doNothing && preStartedAt !== null && codeStartedAt !== null && _i >= preStartedAt && _i >= codeStartedAt) {
         doNothing = true;
@@ -269,7 +273,7 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
-      if (!doNothing && withinStyleTag && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
+      if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
         var _expand = expand({
           str: str,
           from: styleCommentStartedAt,
@@ -281,15 +285,16 @@ function crush(str, originalOpts) {
         stageFrom = _expand2[0];
         stageTo = _expand2[1];
         styleCommentStartedAt = null;
-        if (stageFrom != null && str[stageTo] === undefined) {
-          finalIndexesToDelete.push(stageFrom, stageTo);
-        } else {
+        if (stageFrom != null
+        ) {
+            finalIndexesToDelete.push(stageFrom, stageTo);
+          } else {
           countCharactersPerLine++;
           _i++;
-          continue;
         }
+        doNothing = _i + 2;
       }
-      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
+      if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
         styleCommentStartedAt = _i;
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" && !isLetter(str[_i + 7])) {
@@ -297,18 +302,23 @@ function crush(str, originalOpts) {
       } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e" && !isLetter(str[_i + 6])) {
         withinStyleTag = true;
       }
+      if (!doNothing && !withinInlineStyle && "\"'".includes(str[_i]) && str[_i - 1] === "=" && str[_i - 2] === "e" && str[_i - 3] === "l" && str[_i - 4] === "y" && str[_i - 5] === "t" && str[_i - 6] === "s") {
+        withinInlineStyle = _i;
+      }
       if (!doNothing && !str[_i].trim().length) {
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = _i;
         }
-      } else if (!doNothing && !(withinStyleTag && styleCommentStartedAt !== null)) {
+      } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
             countCharactersPerLine++;
           }
           if (beginningOfAFile) {
             beginningOfAFile = false;
-            finalIndexesToDelete.push(0, _i);
+            if (opts.removeIndentations || opts.removeLineBreaks) {
+              finalIndexesToDelete.push(0, _i);
+            }
           } else {
             if (opts.removeIndentations && !opts.removeLineBreaks) {
               if (!nonWhitespaceCharMet && lastLinebreak !== null && _i > lastLinebreak) {
@@ -323,7 +333,7 @@ function crush(str, originalOpts) {
                 }
               }
             }
-            if (opts.removeLineBreaks) {
+            if (opts.removeLineBreaks || withinInlineStyle) {
               if (breakToTheLeftOfFirstLetters.length && breakToTheLeftOfFirstLetters.includes(str[_i]) && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
                 if (!(str[_i - 1] === "\n" && whitespaceStartedAt === _i - 1)) {
                   finalIndexesToDelete.push(whitespaceStartedAt, _i, "\n");
@@ -336,7 +346,7 @@ function crush(str, originalOpts) {
                 continue;
               }
               var whatToAdd = " ";
-              if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || withinStyleTag && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t") {
+              if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t") {
                 whatToAdd = "";
               }
               if (whatToAdd && whatToAdd.length) {
@@ -359,7 +369,7 @@ function crush(str, originalOpts) {
                   stageFrom = null;
                   stageTo = null;
                   stageAdd = null;
-                } else {
+                } else if (stageFrom === null || whitespaceStartedAt < stageFrom) {
                   stageFrom = whitespaceStartedAt;
                   stageTo = _i;
                   stageAdd = whatToAdd;
@@ -409,7 +419,7 @@ function crush(str, originalOpts) {
               stageFrom = _i;
               stageTo = _i;
               stageAdd = null;
-            } else {
+            } else if (styleCommentStartedAt === null) {
               stageFrom = null;
               stageTo = null;
               stageAdd = null;
@@ -484,6 +494,9 @@ function crush(str, originalOpts) {
         } else if (whitespaceStartedAt && (str[_i] === "\r" && str[_i + 1] === "\n" || str[_i] === "\n")) {
           finalIndexesToDelete.push(whitespaceStartedAt, _i);
         }
+      }
+      if (!doNothing && withinInlineStyle && withinInlineStyle < _i && str[withinInlineStyle] === str[_i]) {
+        withinInlineStyle = null;
       }
     }
     if (finalIndexesToDelete.current()) {

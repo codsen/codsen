@@ -335,7 +335,8 @@ c
 
   t.is(
     m(source, { removeLineBreaks: false, removeIndentations: false }).result,
-    `<a>
+    `
+<a>
   <b>
     c
   </b>
@@ -1524,7 +1525,7 @@ test(`04.03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - lead
   );
 });
 
-// 05. OTHER API PIECES
+// 05. OTHER API AREAS
 // -----------------------------------------------------------------------------
 
 test(`05.01 - ${`\u001b[${32}m${`API's defaults`}\u001b[${39}m`} - plain object is exported and contains correct keys`, t => {
@@ -1971,6 +1972,68 @@ test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
     }).result,
     'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
     "07.08.04"
+  );
+});
+
+// 08. inline CSS minification
+// -----------------------------------------------------------------------------
+
+test(`08.01 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - one tag, minimal - double quotes`, t => {
+  const input1 = `  <a style="a: 100%; b: c-d; ">`;
+  const indentationsOnly = `<a style="a: 100%; b: c-d; ">`;
+  t.deepEqual(
+    m(input1, {
+      removeLineBreaks: true
+    }).result,
+    `<a style="a:100%;b:c-d;">`,
+    "08.01.01"
+  );
+  t.deepEqual(
+    m(input1, {
+      removeLineBreaks: false
+    }).result,
+    indentationsOnly,
+    "08.01.02 - indentations are removed on default settings"
+  );
+  t.deepEqual(
+    m(input1, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    input1,
+    "08.01.03 - indentations off"
+  );
+});
+
+test(`08.02 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - inline CSS comments`, t => {
+  t.deepEqual(
+    m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      removeLineBreaks: true
+    }).result,
+    `<a style="a:100%;e:f;">`,
+    "08.02"
+  );
+});
+
+test(`08.03 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length limit falls in the middle of inline CSS comment`, t => {
+  t.deepEqual(
+    m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 18
+    }).result,
+    `<a style="a:100%;\ne:f;">`,
+    "08.03"
+  );
+});
+
+test(`08.04 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length becomes all right because of truncation`, t => {
+  t.deepEqual(
+    m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 30
+    }).result,
+    `<a style="a:100%;e:f;">`,
+    "08.04 - deletion makes it to be within a limit"
   );
 });
 
