@@ -17,6 +17,7 @@ var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
+var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -78,32 +79,33 @@ function existy(x) {
   return x != null;
 }
 var isArr = Array.isArray;
+var isNum = Number.isInteger;
 function isStr(something) {
   return typeof something === "string";
 }
 function mandatory(i) {
-  throw new Error("string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ".concat(ordinal(i), " input parameter!"));
+  throw new Error("ranges-push/Ranges/add(): [THROW_ID_01] Missing ".concat(ordinal(i), " input parameter!"));
 }
 function prepNumStr(str) {
   return isNumStr(str, {
     includeZero: true
   }) ? parseInt(str, 10) : str;
 }
-var Slices =
+var Ranges =
 function () {
-  function Slices(originalOpts) {
-    _classCallCheck(this, Slices);
+  function Ranges(originalOpts) {
+    _classCallCheck(this, Ranges);
     var defaults = {
       limitToBeAddedWhitespace: false,
       limitLinebreaksCount: 1
     };
     var opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
-      msg: "string-slices-array-push: [THROW_ID_02*]"
+      msg: "ranges-push: [THROW_ID_02*]"
     });
     this.opts = opts;
   }
-  _createClass(Slices, [{
+  _createClass(Ranges, [{
     key: "add",
     value: function add() {
       var _this = this;
@@ -114,7 +116,7 @@ function () {
         etc[_key - 3] = arguments[_key];
       }
       if (etc.length > 0) {
-        throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
       }
       if (originalFrom === null && originalTo === undefined && addVal === undefined) {
         return;
@@ -147,17 +149,17 @@ function () {
                   if (!existy(arr[2]) || isStr(arr[2])) {
                     _this.add.apply(_this, _toConsumableArray(arr));
                   } else {
-                    throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_04] The ".concat(ordinal(idx), " ranges array's \"to add\" value is not string but ").concat(_typeof(arr[2]), "! It's equal to: ").concat(arr[2], "."));
+                    throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_04] The ".concat(ordinal(idx), " ranges array's \"to add\" value is not string but ").concat(_typeof(arr[2]), "! It's equal to: ").concat(arr[2], "."));
                   }
                 } else {
-                  throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_05] The ".concat(ordinal(idx), " ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ").concat(arr[1], "."));
+                  throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_05] The ".concat(ordinal(idx), " ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ").concat(arr[1], "."));
                 }
               } else {
-                throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_06] The ".concat(ordinal(idx), " ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ").concat(arr[0], "."));
+                throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_06] The ".concat(ordinal(idx), " ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ").concat(arr[0], "."));
               }
             });
           } else {
-            throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ".concat(culpritId, " we have ").concat(_typeof(culpritVal), "-type value:\n").concat(JSON.stringify(culpritVal, null, 4), "."));
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ".concat(culpritId, " we have ").concat(_typeof(culpritVal), "-type value:\n").concat(JSON.stringify(culpritVal, null, 4), "."));
           }
         }
       } else if (isInt(from, {
@@ -166,7 +168,7 @@ function () {
         includeZero: true
       })) {
         if (existy(addVal) && !isStr(addVal)) {
-          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
         }
         if (existy(this.slices) && isArr(this.last()) && from === this.last()[1]) {
           this.last()[1] = to;
@@ -189,9 +191,9 @@ function () {
         if (!isInt(from, {
           includeZero: true
         })) {
-          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
         } else {
-          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));
         }
       }
     }
@@ -227,6 +229,19 @@ function () {
       this.slices = undefined;
     }
   }, {
+    key: "replace",
+    value: function replace(givenRanges) {
+      if (isArr(givenRanges) && givenRanges.length) {
+        if (!(isArr(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+          throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
+        } else {
+          this.slices = clone(givenRanges);
+        }
+      } else {
+        this.slices = undefined;
+      }
+    }
+  }, {
     key: "last",
     value: function last() {
       if (this.slices !== undefined && Array.isArray(this.slices)) {
@@ -235,7 +250,7 @@ function () {
       return null;
     }
   }]);
-  return Slices;
+  return Ranges;
 }();
 
-module.exports = Slices;
+module.exports = Ranges;

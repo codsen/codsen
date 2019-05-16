@@ -48,6 +48,7 @@ export default commandLineArgs => {
         "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
+        "lodash.clonedeep",
         "ordinal-number-suffix",
         "ranges-merge",
         "string-collapse-leading-whitespace"
@@ -73,6 +74,7 @@ export default commandLineArgs => {
         "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
+        "lodash.clonedeep",
         "ordinal-number-suffix",
         "ranges-merge",
         "string-collapse-leading-whitespace"

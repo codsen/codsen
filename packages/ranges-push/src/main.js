@@ -4,17 +4,19 @@ import ordinal from "ordinal-number-suffix";
 import mergeRanges from "ranges-merge";
 import checkTypes from "check-types-mini";
 import collapseLeadingWhitespace from "string-collapse-leading-whitespace";
+import clone from "lodash.clonedeep";
 
 function existy(x) {
   return x != null;
 }
 const isArr = Array.isArray;
+const isNum = Number.isInteger;
 function isStr(something) {
   return typeof something === "string";
 }
 function mandatory(i) {
   throw new Error(
-    `string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${ordinal(
+    `ranges-push/Ranges/add(): [THROW_ID_01] Missing ${ordinal(
       i
     )} input parameter!`
   );
@@ -25,7 +27,7 @@ function prepNumStr(str) {
 
 // -----------------------------------------------------------------------------
 
-class Slices {
+class Ranges {
   //
 
   // O P T I O N S
@@ -38,7 +40,7 @@ class Slices {
     };
     const opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
-      msg: "string-slices-array-push: [THROW_ID_02*]"
+      msg: "ranges-push: [THROW_ID_02*]"
     });
     // so it's correct, let's get it in:
     this.opts = opts;
@@ -49,7 +51,7 @@ class Slices {
   add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
     if (etc.length > 0) {
       throw new TypeError(
-        `string-slices-array-push/Slices/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(
+        `ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(
           etc,
           null,
           4
@@ -99,7 +101,7 @@ class Slices {
                   this.add(...arr);
                 } else {
                   throw new TypeError(
-                    `string-slices-array-push/Slices/add(): [THROW_ID_04] The ${ordinal(
+                    `ranges-push/Ranges/add(): [THROW_ID_04] The ${ordinal(
                       idx
                     )} ranges array's "to add" value is not string but ${typeof arr[2]}! It's equal to: ${
                       arr[2]
@@ -108,7 +110,7 @@ class Slices {
                 }
               } else {
                 throw new TypeError(
-                  `string-slices-array-push/Slices/add(): [THROW_ID_05] The ${ordinal(
+                  `ranges-push/Ranges/add(): [THROW_ID_05] The ${ordinal(
                     idx
                   )} ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ${
                     arr[1]
@@ -117,7 +119,7 @@ class Slices {
               }
             } else {
               throw new TypeError(
-                `string-slices-array-push/Slices/add(): [THROW_ID_06] The ${ordinal(
+                `ranges-push/Ranges/add(): [THROW_ID_06] The ${ordinal(
                   idx
                 )} ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ${
                   arr[0]
@@ -127,7 +129,7 @@ class Slices {
           });
         } else {
           throw new TypeError(
-            `string-slices-array-push/Slices/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ${culpritId} we have ${typeof culpritVal}-type value:\n${JSON.stringify(
+            `ranges-push/Ranges/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ${culpritId} we have ${typeof culpritVal}-type value:\n${JSON.stringify(
               culpritVal,
               null,
               4
@@ -142,7 +144,7 @@ class Slices {
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal)) {
         throw new TypeError(
-          `string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
+          `ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
             addVal,
             null,
             4
@@ -201,7 +203,7 @@ class Slices {
       // is it first arg?
       if (!isInt(from, { includeZero: true })) {
         throw new TypeError(
-          `string-slices-array-push/Slices/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(
+          `ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(
             from,
             null,
             4
@@ -210,7 +212,7 @@ class Slices {
       } else {
         // then it's second...
         throw new TypeError(
-          `string-slices-array-push/Slices/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(
+          `ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(
             to,
             null,
             4
@@ -255,6 +257,29 @@ class Slices {
     this.slices = undefined;
   }
 
+  // R E P L A C E ()
+  // ==========
+  replace(givenRanges) {
+    if (isArr(givenRanges) && givenRanges.length) {
+      // Now, ranges can be array of arrays, correct format but also single
+      // range, an array of two natural numbers might be given.
+      // Let's put safety latch against such cases
+      if (!(isArr(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+        throw new Error(
+          `ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(
+            givenRanges[0],
+            null,
+            4
+          )} should be an array and its first element should be an integer, a string index.`
+        );
+      } else {
+        this.slices = clone(givenRanges);
+      }
+    } else {
+      this.slices = undefined;
+    }
+  }
+
   // L A S T ()
   // ==========
   last() {
@@ -265,4 +290,4 @@ class Slices {
   }
 }
 
-export default Slices;
+export default Ranges;

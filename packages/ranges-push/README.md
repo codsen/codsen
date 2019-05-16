@@ -1,6 +1,6 @@
 # ranges-push
 
-> Manage the array of slices referencing the index ranges within the string
+> Manage the array of ranges referencing the index ranges within the string
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -28,20 +28,20 @@ npm i ranges-push
 
 ```js
 // consume via a CommonJS require:
-const Slices = require("ranges-push");
+const Ranges = require("ranges-push");
 // or as an ES Module:
-import Slices from "ranges-push";
+import Ranges from "ranges-push";
 ```
 
 ```js
-const Slices = require("ranges-push");
-let slices = new Slices();
-slices.add(1, 2);
-slices.push(2, 4); // .push is same as .add
-console.log(slices.last());
+const Ranges = require("ranges-push");
+let ranges = new Ranges();
+ranges.add(1, 2);
+ranges.push(2, 4); // .push is same as .add
+console.log(ranges.last());
 // => [ [1, 4] ]
-slices.add(10, 20);
-console.log(slices.current());
+ranges.add(10, 20);
+console.log(ranges.current());
 // => [ [1, 4], [10, 20] ]
 ```
 
@@ -49,8 +49,8 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 9 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 7 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 36 KB |
 
 **[⬆ back to top](#)**
@@ -75,22 +75,22 @@ Imagine, you want to delete bunch of characters from a string. Like making a bun
 
 ---
 
-**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
+**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of ranges, use [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
 
 **[⬆ back to top](#)**
 
 ## API
 
-This package exports a constructor, Slices, which you first `require()`, then call using `new`:
+This package exports a constructor, Ranges, which you first `require()`, then call using `new`:
 
 ```js
-const Slices = require("ranges-push");
-let slices = new Slices();
+const Ranges = require("ranges-push");
+let ranges = new Ranges();
 // or, with Optional Options Object:
-let slices = new Slices({ limitToBeAddedWhitespace: true });
+let ranges = new Ranges({ limitToBeAddedWhitespace: true });
 ```
 
-The `slices` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
+The `ranges` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
 
 You can also provide an Optional Options Object when creating the class:
 
@@ -116,11 +116,11 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 }
 ```
 
-You then interact with your newly-created slices class by calling its _methods_:
+You then interact with your newly-created ranges class by calling its _methods_:
 
 **[⬆ back to top](#)**
 
-### slices.add(from, to[, str])
+### ranges.add(from, to[, str])
 
 alias - **.push**
 
@@ -146,9 +146,9 @@ You can use either `.add` or `.push`, both do the same thing.
 
 **[⬆ back to top](#)**
 
-### slices.current()
+### ranges.current()
 
-This method fetches the **current** state of your slices array, sorts and **merges it**, then outputs it to you.
+This method fetches the **current** state of your ranges array, sorts and **merges it**, then outputs it to you.
 
 Result is either
 
@@ -176,7 +176,7 @@ Result is either
 [[2, 5], [2, 3], [1, 10]] => [[1, 10]] // there was an overlap, so ranges were merged
 ```
 
-In theory, since `.current()` does not mutate our slices array in the memory, you could add more ranges and call `.current()` again, this time possibly with a slightly different result. However, be aware that merging will lose some of the data in the ranges.
+In theory, since `.current()` does not mutate our ranges array in the memory, you could add more ranges and call `.current()` again, this time possibly with a slightly different result. However, be aware that merging will lose some of the data in the ranges.
 
 Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and became `[ [10, 20, 'bbbaaa'] ]`. Now if you use this range in [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) to amend the string, but then later discover that you left out the range `[12, 17, ccc]`, that is, you wanted to delete between indexes 12 and 17, and then insert `ccc`, you'll be in trouble. Since you amended your string, you can't "stick in" `ccc` between original `bbb` and `aaa` — your desired place to add `ccc`, at index 17 has been "merged" by `bbb` and `aaa`.
 
@@ -184,21 +184,39 @@ Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and becam
 
 **[⬆ back to top](#)**
 
-### slices.wipe()
+### ranges.wipe()
 
-Sets your slices array to `null`. Right after that `slices.current()` will yield `null`. You can then start `add`-ing again, from scratch.
+Sets your ranges array to `null`. Right after that `ranges.current()` will yield `null`. You can then start `add`-ing again, from scratch.
 
-### slices.last()
+### ranges.replace(newRanges)
+
+If you have a new set of ranges and you want to replace existing set, instead of using `ranges.wipe()` and then iterating through all new ranges and adding them one-by-one, you can simple replace everything using `ranges.replace()`. For example:
+
+```js
+const oldRanges = new Ranges();
+oldRanges.add(1, 2, "a");
+oldRanges.add(3, 4, "b");
+oldRanges.add(9, 10);
+console.log(oldRanges.current());
+// => [[1, 2, "a"], [3, 4, "b"], [9, 10]]
+
+// now replace them with new ranges:
+oldRanges.replace([[6, 8, "zzz"]]);
+console.log(oldRanges.current());
+// => [[6, 8, "zzz"]]
+```
+
+### ranges.last()
 
 Outputs:
 
-1.  the last ranges' array from the slices array, for example:
+1.  the last ranges' array from the ranges array, for example:
 
 ```js
 [51, 55];
 ```
 
-2.  Or, if there's nothing in the slices array yet, `null`.
+2.  Or, if there's nothing in the ranges array yet, `null`.
 
 ---
 
@@ -216,9 +234,9 @@ This library is part one of two library combo, second one being [ranges-apply](h
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-push%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-push%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=%23%23%20ranges-push%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-push%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-push%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-push%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-push%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
