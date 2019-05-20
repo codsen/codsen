@@ -152,6 +152,19 @@ test("02.12 - deletion only - two unmergeable vs two unmergeable", t => {
 });
 
 test("02.13 - deletion only - two unmergeable vs two unmergeable", t => {
+  // "abcdefghij" -> "abceghij"
+  // "abceghij" -> "abcgij"
+  // composed quivalent: [[3, 6], [7, 8]]
+  compare(
+    t,
+    "abcdefghij",
+    [[3, 4], [5, 6]],
+    [[3, 4], [5, 6]],
+    [[3, 6], [7, 8]]
+  );
+});
+
+test("02.14 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdefgh"
   // [0, 1] deletes "a"
   // [3, 5] deletes "de"
@@ -167,7 +180,7 @@ test("02.13 - deletion only - two unmergeable vs two unmergeable", t => {
   compare(t, "abcdefgh", [[0, 1], [3, 5]], [[0, 1], [2, 3]], [[0, 2], [3, 6]]);
 });
 
-test("02.14 - deletion only - two unmergeable vs two unmergeable", t => {
+test("02.15 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdefgh" -> "bfgh"
   // "bfgh" -> "fh"
   // composed equivalent: [[0, 5], [6, 7]]

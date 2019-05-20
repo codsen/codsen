@@ -45,7 +45,7 @@ function composeRanges(str, olderRanges, newerRanges, originalOpts) {
             offset += older[0][1] - older[0][0] + (isStr(older[0][2]) ? older[0][2].length : 0);
             composed.push(older[0]);
             var rangeToPut = void 0;
-            if (newer[0][0] < older[0][1]) {
+            if (newer[0][0] < older[0][0]) {
               rangeToPut = [Math.min(older[0][0], newer[0][0]), newer[0][1] + offset];
             } else {
               rangeToPut = [newer[0][0] + offset, newer[0][1] + offset];
