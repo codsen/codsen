@@ -30,63 +30,91 @@ test("01.02 - one incoming - #2", t => {
 });
 
 test("01.03 - one incoming - #3", t => {
-  // "jumps over" the second older range because there was enough "space"
-  // to fit it in the incoming "newer" range
+  // newer ([0, 1]) fits into gap between older[0] ([0, 1]) and older[1] ([2, 3])
   compare(t, "abcd", [[0, 1], [2, 3]], [[0, 1]], [[0, 3]]);
 });
 
-test.only("01.04 - one incoming - #4", t => {
+test("01.04 - one incoming - #4", t => {
+  // like above but with insertion
+  compare(t, "abcd", [[0, 1], [2, 3]], [[0, 1, "xyz"]], [[0, 3, "xyz"]]);
+});
+
+test("01.05 - one incoming - #5", t => {
   // "jumps over" the second older range because there was enough "space"
   // to fix in the incoming "newer" range
   compare(t, "abcd", [[0, 1], [2, 3], [4, 5], [6, 7]], [[0, 4]], [[0, 8]]);
 });
 
+test("01.06 - one incoming - #6", t => {
+  // with insertion
+  compare(
+    t,
+    "abcd",
+    [[0, 1], [2, 3], [4, 5], [6, 7]],
+    [[0, 4, "klmnop"]],
+    [[0, 8, "klmnop"]]
+  );
+});
+
 // 02. just composing deletion operations
 // -----------------------------------------------------------------------------
 
-test("02.01 - deletion only - one vs one - #1", t => {
+test("02.01 - deletion only - one vs one", t => {
   // "abcd"
   // [0, 1] deletes "a" from "abcd", yielding "bcd"
   // [0, 1] deletes "b" from "bcd", yielding "cd"
   compare(t, "abcd", [[0, 1]], [[0, 1]], [[0, 2]]);
 });
 
-test("02.02 - deletion only - one vs one - #2", t => {
+test("02.02 - deletion only - one vs one", t => {
   // "abcd"
   // [1, 2] deletes "b" from "abcd", yielding "acd"
   // [0, 1] deletes "a" from "bcd", yielding "cd"
   compare(t, "abcd", [[1, 2]], [[0, 1]], [[0, 2]]);
 });
 
-test("02.03 - deletion only - one vs one - #3", t => {
+test("02.03 - deletion only - one vs one", t => {
   // "abcd"
-  // [3, 4] deletes "d" from "abcd", yielding "abc"
-  // [0, 1] deletes "a" from "abc", yielding "bc"
-  compare(t, "abcd", [[3, 4]], [[0, 1]], [[0, 1], [3, 4]]);
+  // [1, 2] deletes "b" from "abcd", yielding "acd"
+  // [0, 1] deletes "a" from "bcd", yielding "cd"
+  compare(t, "abcd", [[1, 2]], [[0, 1]], [[0, 2]]);
 });
 
-test("02.04 - deletion only - one vs one - #4", t => {
-  // "abcd"
-  // [2, 3] deletes "c" from "abcd", yielding "abd"
-  // [2, 3] deletes "d" from "abd", yielding "ab"
-  compare(t, "abcd", [[2, 3]], [[2, 3]], [[2, 4]]);
+test("02.04 - deletion only - one vs one", t => {
+  // "abcdefghij" - "acdefghij"
+  // "acdefghij" - "fghij"
+  compare(t, "abcdefghij", [[1, 2]], [[0, 4]], [[0, 5]]);
 });
 
-test("02.05 - deletion only - one vs one - #5", t => {
+test("02.05 - deletion only - one vs one", t => {
   // "abcd"
   // [0, 1] deletes "a" from "abcd", yielding "bcd"
   // [2, 3] deletes "d" from "bcd", yielding "bc"
   compare(t, "abcd", [[0, 1]], [[2, 3]], [[0, 1], [3, 4]]);
 });
 
-test("02.06 - deletion only - one vs one - #6", t => {
+test("02.06 - deletion only - one vs one", t => {
+  // "abcd"
+  // [3, 4] deletes "d" from "abcd", yielding "abc"
+  // [0, 1] deletes "a" from "abc", yielding "bc"
+  compare(t, "abcd", [[3, 4]], [[0, 1]], [[0, 1], [3, 4]]);
+});
+
+test("02.07 - deletion only - one vs one", t => {
+  // "abcd"
+  // [2, 3] deletes "c" from "abcd", yielding "abd"
+  // [2, 3] deletes "d" from "abd", yielding "ab"
+  compare(t, "abcd", [[2, 3]], [[2, 3]], [[2, 4]]);
+});
+
+test("02.08 - deletion only - one vs one", t => {
   // "abcd"
   // [2, 3] deletes "c" from "abcd", yielding "abd"
   // [0, 2] deletes "d" from "abd", yielding "d"
   compare(t, "abcd", [[2, 3]], [[0, 2]], [[0, 3]]);
 });
 
-test("02.07 - deletion only - two mergeable vs one", t => {
+test("02.09 - deletion only - two mergeable vs one", t => {
   // "abcd"
   // [0, 1] deletes "a" from "abcd", yielding "bcd"
   // [1, 2] deletes "b" from "bcd", yielding "cd"
@@ -95,7 +123,7 @@ test("02.07 - deletion only - two mergeable vs one", t => {
   compare(t, "abcd", [[0, 1], [1, 2]], [[0, 1]], [[0, 3]]);
 });
 
-test("02.08 - deletion only - one vs two mergeable", t => {
+test("02.10 - deletion only - one vs two mergeable", t => {
   // "abcd"
   // [0, 1] deletes "a" from "abcd", yielding "bcd"
   // +
@@ -104,7 +132,7 @@ test("02.08 - deletion only - one vs two mergeable", t => {
   compare(t, "abcd", [[0, 1]], [[1, 2], [0, 1]], [[0, 3]]);
 });
 
-test("02.09 - deletion only - two unmergeable vs one", t => {
+test("02.11 - deletion only - two unmergeable vs one", t => {
   // "abcdef"
   // [0, 1] deletes "a" from "abcdef", yielding "bcdef"
   // [2, 3] deletes "c" from "bcdef", yielding "bdef"
@@ -113,7 +141,7 @@ test("02.09 - deletion only - two unmergeable vs one", t => {
   compare(t, "abcdef", [[0, 1], [2, 3]], [[0, 1]], [[0, 3]]);
 });
 
-test("02.10 - deletion only - two unmergeable vs two unmergeable #1", t => {
+test("02.12 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdef"
   // [0, 1] deletes "a" from "abcdef", yielding "bcdef"
   // [2, 3] deletes "c" from "bcdef", yielding "bdef"
@@ -123,7 +151,7 @@ test("02.10 - deletion only - two unmergeable vs two unmergeable #1", t => {
   compare(t, "abcdef", [[0, 1], [2, 3]], [[0, 1], [2, 3]], [[0, 3], [4, 5]]);
 });
 
-test("02.11 - deletion only - two unmergeable vs two unmergeable #2", t => {
+test("02.13 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdefgh"
   // [0, 1] deletes "a"
   // [3, 5] deletes "de"
@@ -139,7 +167,7 @@ test("02.11 - deletion only - two unmergeable vs two unmergeable #2", t => {
   compare(t, "abcdefgh", [[0, 1], [3, 5]], [[0, 1], [2, 3]], [[0, 2], [3, 6]]);
 });
 
-test("02.12 - deletion only - two unmergeable vs two unmergeable #2", t => {
+test("02.14 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdefgh" -> "bfgh"
   // "bfgh" -> "fh"
   // composed equivalent: [[0, 5], [6, 7]]
