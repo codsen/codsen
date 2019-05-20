@@ -15,49 +15,27 @@ import merge from "ranges-merge";
 //                  ' _____./
 //
 //
-//
-//          ??????/?? ?
-//
-//          __ ___  ____
-//        /   \   \\    \
-//        \             /
-//         \          //
-//         .----------,
-//       /  ,----.  __\_
-//     /   /      \/    /\
-//    |    |   ?? |  ??/  \
-//    |    |   ?? |\__/    \
-//    \     `----'   /__   _\
-//     \             \  U   /
-//      \            ,\    ,
-//       `-------- -   \  /
-//       /         /    \/
-//      /         /
-//     /         /
-//    /         /
-//   /         /
-//  /         /
-//
 
-function composeRanges(str, olderRanges1, newerRanges2, originalOpts) {
+function isStr(something) {
+  return typeof something === "string";
+}
+
+function composeRanges(str, olderRanges, newerRanges, originalOpts) {
   // early ending:
-  if (olderRanges1 === null) {
-    if (newerRanges2 === null) {
+  if (olderRanges === null) {
+    if (newerRanges === null) {
       return null;
     }
-    return newerRanges2;
-  }
-  if (newerRanges2 === null) {
-    return olderRanges1;
+    return newerRanges;
+  } else if (newerRanges === null) {
+    return olderRanges;
   }
 
-  // normal, composing cases
-  const older = merge(olderRanges1);
-  const newer = merge(newerRanges2);
-  const newerlen = newer.length;
-  const olderlen = older.length;
+  // first, ranges have to be sorted so we can process them using loops:
+  const older = merge(olderRanges);
+  const newer = merge(newerRanges);
   console.log(
-    `060 ${`\u001b[${33}m${`older`}\u001b[${39}m`} = ${JSON.stringify(
+    `038 ${`\u001b[${33}m${`older`}\u001b[${39}m`} = ${JSON.stringify(
       older,
       null,
       0
@@ -70,20 +48,22 @@ function composeRanges(str, olderRanges1, newerRanges2, originalOpts) {
 
   // new composed ranges:
   const composed = [];
+
+  // incoming ranges are offset by a certain amount of characters by old ranges.
+  // For example, if old ranges is [0, 1] and new ranges is [0, 2] latter ones
+  // are offset by 1 so they are actually starting not from zero to two but
+  // from one to three, offset being one (which is 1 - 0 = 1).
+  // This counter counts by how much:
   let offset = 0;
-  let currentNewerPushed = false;
-  let lastOlderPushed = null;
 
   // ---------------------------------------------------------------------------
-  for (let i = 0; i < newerlen; i++) {
+  while (newer.length) {
     console.log("\n");
     console.log(
-      `081 ==========================================\n${`\u001b[${35}m${`processing newer`}\u001b[${39}m`}[${i}] = ${`\u001b[${32}m[${
-        newer[i]
+      `063 ==========================================\n${`\u001b[${35}m${`processing newer`}\u001b[${39}m`}[0] = ${`\u001b[${32}m[${
+        newer[0]
       }]\u001b[${39}m`}\n`
     );
-
-    currentNewerPushed = false;
 
     //                         L O O P     S T A R T S
     //                                  |
@@ -95,132 +75,229 @@ function composeRanges(str, olderRanges1, newerRanges2, originalOpts) {
     //                                 \|/
     //                                  V
 
-    for (let y = 0; y < olderlen; y++) {
-      if (y !== lastOlderPushed) {
-        offset += older[y][1] - older[y][0];
-        console.log(
-          `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} offset = ${offset}`
-        );
+    while (older.length) {
+      console.log(
+        `080 ██ \n${`\u001b[${36}m${`processing older`}\u001b[${39}m`}[0] = ${`\u001b[${32}m[${
+          older[0]
+        }]\u001b[${39}m`}\n`
+      );
 
-        console.log("");
-        console.log(
-          `107 ${`\u001b[${36}m${`---------------------`}\u001b[${39}m`}\n${`\u001b[${35}m${`processing older`}\u001b[${39}m`}[${y}] = ${`\u001b[${36}m[${
-            older[y]
-          }]\u001b[${39}m`}; ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${offset}; ${`\u001b[${33}m${`lastOlderPushed`}\u001b[${39}m`} = ${lastOlderPushed}\n`
-        );
+      // 0.
 
-        // case #1
-        // if newer range is in front of older, for example, older is [3, 4] and
-        // newer is [0, 1], newer goes in front as is
-        if (newer[i][1] < older[y][0]) {
-          //
-          //                        CASE #1
-          //
-          console.log(`119 ${`\u001b[${32}m${`CASE #1`}\u001b[${39}m`}`);
-          composed.push(newer[i]);
+      // If there are no more newer[] elements left, push older[] elements
+      // starting from the first-one. This clause happens later in the loops.
+
+      if (!newer.length) {
+        console.log(
+          `092 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            older[0],
+            null,
+            0
+          )}`
+        );
+        composed.push(older.shift());
+      }
+
+      // 1.
+
+      // easiest case - incoming range is fully in front of a current old range
+      // for example, older ranges: [100, 101], newer ranges [2, 3]. Result is
+      // [[2, 3], [100, 101]].
+      else if (newer[0][1] < older[0][0]) {
+        console.log(`107 CASE #1`);
+        // Array.shift will move the first element of array "newer" into
+        // array "composed":
+        console.log(
+          `111 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            newer[0],
+            null,
+            0
+          )}, then ${JSON.stringify(older[0], null, 0)}`
+        );
+        composed.push(newer.shift());
+        composed.push(older.shift());
+      } else {
+        // 2.
+
+        const newerLen = newer[0][1] - newer[0][0];
+        // harder cases.
+        if (older.length === 1 || newerLen <= older[1][0] - older[0][1]) {
           console.log(
-            `122 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-              newer[i],
+            `126 newer ${JSON.stringify(newer[0], null, 0)} will fit`
+          );
+          offset +=
+            older[0][1] -
+            older[0][0] +
+            (isStr(older[0][2]) ? older[0][2].length : 0);
+          console.log(
+            `133 range ${JSON.stringify(
+              older[0],
               null,
               0
-            )} into composed now = ${JSON.stringify(composed, null, 0)}`
+            )} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${offset}`
           );
 
-          currentNewerPushed = true;
-        } else if (newer[i][1] === older[y][0]) {
-          //
-          //                        CASE #2
-          //
           console.log(
-            `135 ${`\u001b[${32}m${`CASE #2`}\u001b[${39}m`} - newer[i=${i}][1]=${
-              newer[i][1]
-            } === older[y=${y}][0]=${older[y][0]}`
-          );
-          // merge new range with old range
-          composed.push([newer[i][0], older[y][1]]);
-          console.log(
-            `142 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-              [newer[i][0], older[y][1]],
+            `141 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              newer[0].map(val => val + offset),
               null,
               0
-            )} into composed now = ${JSON.stringify(composed, null, 0)}`
+            )}, then ${JSON.stringify(older[0], null, 0)}`
           );
+          composed.push(older.shift());
+          composed.push(newer.shift().map(val => val + offset));
+        } else {
+          console.log(
+            `151 newer ${JSON.stringify(newer[0], null, 0)} won't fit`
+          );
+          // the gap between current older[] and the following older[] elements
+          // is not enough to fix the current newer[] in.
+          // The plan is, loop through all remaining older[] and fill all the
+          // gaps with characters from newer[0]
 
-          currentNewerPushed = true;
-        } else if (newer[i][0] === older[y][0]) {
-          //
-          //                        CASE #3
-          //
+          let lengthToCover = newer[0][1] - newer[0][0];
+          while (lengthToCover && older.length) {
+            console.log(
+              `161 ${`\u001b[${36}m${`========`}\u001b[${39}m`} LOOP ${`\u001b[${36}m${`========`}\u001b[${39}m`}`
+            );
+            console.log(
+              `164 ${`\u001b[${33}m${`older`}\u001b[${39}m`} = ${JSON.stringify(
+                older,
+                null,
+                0
+              )}`
+            );
 
-          // so resulting range will be combination of old and new
-          const newFromVal = older[y][0];
-          const newToVal = older[y][1] + (newer[i][1] - newer[i][0]);
+            // if there are more than 1 elements left
+            if (older.length > 1) {
+              const gapLength = older[1][0] - older[0][1];
+              if (lengthToCover >= gapLength) {
+                console.log(
+                  `176 ${`\u001b[${32}m${`GAP [${older[0][1]}, ${
+                    older[1][0]
+                  }] WILL BE COVERED COMPLETELY`}\u001b[${39}m`}`
+                );
+                // 0. first, push current older[0]
+                const currentOlder = older[0];
+                console.log(
+                  `183 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                    currentOlder,
+                    null,
+                    0
+                  )}`
+                );
+                composed.push(currentOlder);
+                console.log(
+                  `191 ${`\u001b[${33}m${`composed`}\u001b[${39}m`} = ${JSON.stringify(
+                    composed,
+                    null,
+                    0
+                  )}`
+                );
+                // push 1. filler for this gap in older[] and 2. that next older[]
+                // range as well
 
-          if (older[y + 1]) {
-            console.log("160 next older exists");
-          } else {
-            console.log("162 next older does not exist");
+                // 1.
+                console.log(
+                  `202 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                    [older[0][1], older[1][0]],
+                    null,
+                    0
+                  )}`
+                );
+                composed.push([older[0][1], older[1][0]]);
+                console.log(
+                  `210 ${`\u001b[${33}m${`composed`}\u001b[${39}m`} = ${JSON.stringify(
+                    composed,
+                    null,
+                    0
+                  )}`
+                );
+                lengthToCover -= older[1][0] - older[0][1];
+                // 2. get rid of current element older[0], we already submitted it
+                older.shift();
+                // // 3.
+                // console.log(
+                //   `221 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                //     older[0],
+                //     null,
+                //     0
+                //   )}`
+                // );
+                // composed.push(older.shift());
+                // console.log(
+                //   `229 ${`\u001b[${33}m${`composed`}\u001b[${39}m`} = ${JSON.stringify(
+                //     composed,
+                //     null,
+                //     0
+                //   )}`
+                // );
+                // 3. reduce the counter
+                console.log(
+                  `237 AFTER THAT, ${`\u001b[${33}m${`older`}\u001b[${39}m`} = ${JSON.stringify(
+                    older,
+                    null,
+                    0
+                  )}; ${`\u001b[${33}m${`lengthToCover`}\u001b[${39}m`} = ${lengthToCover}`
+                );
+              } else {
+                console.log(
+                  `245 ${`\u001b[${31}m${`GAP [${older[0][1]}, ${
+                    older[1][0]
+                  }] WILL NOT BE COVERED COMPLETELY`}\u001b[${39}m`}`
+                );
+                // this gap is too big, so just push the remainder of the newer[]
+                console.log(
+                  `251 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                    newer[0][1]
+                  }, ${newer[0][1] + lengthToCover}]`
+                );
+                composed.push(newer[0][1], newer[0][1] + lengthToCover);
+                console.log(
+                  `257 ${`\u001b[${33}m${`composed`}\u001b[${39}m`} = ${JSON.stringify(
+                    composed,
+                    null,
+                    0
+                  )}`
+                );
+                // reset lengthToCover
+                lengthToCover = 0;
+                console.log(`265 lengthToCover = ${lengthToCover}`);
+              }
+            } else {
+              // there's just last element left
+              // 1. push it
+              console.log(
+                `271 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                  older[0],
+                  null,
+                  0
+                )}`
+              );
+              const lastElFromOlder = older.shift();
+              composed.push(lastElFromOlder);
+              composed.push([
+                lastElFromOlder[1],
+                lastElFromOlder[1] + lengthToCover
+              ]);
+
+              lengthToCover = 0;
+
+              console.log(
+                `287 ${`\u001b[${33}m${`composed`}\u001b[${39}m`} = ${JSON.stringify(
+                  composed,
+                  null,
+                  0
+                )}; lengthToCover = ${lengthToCover}`
+              );
+            }
           }
-
-          const tempToPush = [newFromVal, newToVal];
-          console.log(
-            `167 ${`\u001b[${32}m${`CASE #3`}\u001b[${39}m`} - newer[i=${i}][0]=${`\u001b[${33}m${
-              newer[i][0]
-            }\u001b[${39}m`} ${`\u001b[${33}m${`===`}\u001b[${39}m`} older[y=${y}][0]=${`\u001b[${33}m${
-              older[y][0]
-            }\u001b[${39}m`}`
-          );
-          composed.push(tempToPush);
-          console.log(
-            `175 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-              tempToPush,
-              null,
-              0
-            )} into composed now = ${JSON.stringify(composed, null, 0)}`
-          );
-
-          currentNewerPushed = true;
-          lastOlderPushed = y;
+          // at last, remove newer[0]
+          newer.shift();
 
           console.log(
-            `186 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`} - this newer ${`\u001b[${33}m${JSON.stringify(
-              newer[i],
-              null,
-              0
-            )}\u001b[${39}m`} is done`
+            `299 ${`\u001b[${36}m${`========`}\u001b[${39}m`} LOOP ENDS${`\u001b[${36}m${`========`}\u001b[${39}m`}`
           );
-          break;
-        } else if (newer[i][0] > older[y][1]) {
-          //
-          //                        CASE #4
-          //
-          console.log(
-            `198 ${`\u001b[${32}m${`CASE #4`}\u001b[${39}m`} - newer[i=${i}][0]=${`\u001b[${33}m${
-              newer[i][0]
-            }\u001b[${39}m`} ${`\u001b[${33}m${`>`}\u001b[${39}m`} older[y=${y}][1]=${`\u001b[${33}m${
-              older[y][1]
-            }\u001b[${39}m`}`
-          );
-
-          // push that older array
-          composed.push(older[y]);
-          console.log(
-            `208 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} older[y=${y}]=${
-              older[y]
-            } into composed; which is now equal to ${JSON.stringify(
-              composed,
-              null,
-              0
-            )}`
-          );
-
-          // offset += older[y][1] - older[y][0];
-          // console.log(`218 SET offset = ${offset}`);
-
-          // offset the index by how much subsequent
-          // characters were changed because of this
-
-          // we don't touch "currentNewerPushed"
         }
       }
     }
@@ -234,69 +311,11 @@ function composeRanges(str, olderRanges1, newerRanges2, originalOpts) {
     //                                  |
     //                                  |
     //                         L O O P     E N D S
-
-    // if by now the newer hasn't been pushed, push it.
-    // Practically, this way we move all older ranges that sit before the
-    // current newer into composed array
-    if (!currentNewerPushed) {
-      const tempToPush = [newer[i][0] + offset, newer[i][1] + offset];
-      console.log(
-        `244 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-          tempToPush,
-          null,
-          4
-        )}`
-      );
-      composed.push(tempToPush);
-    } else if (i + 1 === newerlen && lastOlderPushed < olderlen) {
-      // ended with "currentNewerPushed" = true
-
-      // if by now there are no more newer's left, push all pending "olders" if
-      // there are any left
-      console.log(
-        `257 ${`\u001b[${90}m${`PS. newer array's end reached`}\u001b[${39}m`}`
-      );
-      console.log(
-        `260 LOG ${`\u001b[${33}m${`lastOlderPushed`}\u001b[${39}m`} = ${lastOlderPushed}`
-      );
-
-      // push all remaining older ranges:
-      for (let z = lastOlderPushed + 1; z < olderlen; z++) {
-        composed.push(older[z]);
-        console.log(
-          `267 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} older[z=${z}]=${
-            older[z]
-          } into composed; which is now equal to ${JSON.stringify(
-            composed,
-            null,
-            0
-          )}`
-        );
-      }
-    }
-
-    // if last range from newer is done
-    if (i === newerlen - 1) {
-      // if this last newer range is before any older ranges, submit those
-      // older ranges. For example, older [3, 4], newer [0, 1]. The newer does
-      // not overlap so goes in. End of all newer is reached, there's still
-      // older [3, 4] left which comes after, so we submit it.
-      if (newer[i][1] < older[0][0]) {
-        composed.push(older[0]);
-        console.log(
-          `287 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} older[0]=${JSON.stringify(
-            older[0],
-            null,
-            0
-          )} into composed now = ${JSON.stringify(composed, null, 0)}`
-        );
-      }
-    }
   }
 
   console.log("\n---------------------\n");
   console.log(
-    `299 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}\n${`\u001b[${35}m${`raw`}\u001b[${39}m`}:    ${JSON.stringify(
+    `318 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}\n${`\u001b[${35}m${`raw`}\u001b[${39}m`}:    ${JSON.stringify(
       composed,
       null,
       0
