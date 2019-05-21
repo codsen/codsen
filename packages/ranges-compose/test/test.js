@@ -177,10 +177,40 @@ test("02.14 - deletion only - two unmergeable vs two unmergeable", t => {
   // yielding "cgh"
   //
   // flat, composed equivalent against "abcdefgh": [[0, 2], [3, 6]]
+
+  // newer ranges converted:
+  // [0, 1] -> [1, 2] (offset === 1)
+  // [2, 3] -> [5, 6] (offset === 3)
   compare(t, "abcdefgh", [[0, 1], [3, 5]], [[0, 1], [2, 3]], [[0, 2], [3, 6]]);
 });
 
 test("02.15 - deletion only - two unmergeable vs two unmergeable", t => {
+  // "abcdefgh"
+  // [0, 1] deletes "a"
+  // [3, 5] deletes "de"
+  //
+  // yielding "bcfgh"
+  //
+  // [0, 1] deletes "b"
+  // [3, 4] deletes "g"
+  //
+  // yielding "cfh"
+  //
+  // flat, composed equivalent against "abcdefgh": [[0, 2], [3, 5], [6, 7]]
+
+  // newer ranges converted:
+  // [0, 1] -> [1, 2] (offset === 1)
+  // [3, 4] -> [6, 7] (offset === 3)
+  compare(
+    t,
+    "abcdefgh",
+    [[0, 1], [3, 5]],
+    [[0, 1], [3, 4]],
+    [[0, 2], [3, 5], [6, 7]]
+  );
+});
+
+test("02.16 - deletion only - two unmergeable vs two unmergeable", t => {
   // "abcdefgh" -> "bfgh"
   // "bfgh" -> "fh"
   // composed equivalent: [[0, 5], [6, 7]]

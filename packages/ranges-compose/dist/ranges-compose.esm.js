@@ -11,8 +11,14 @@ import 'lodash.clonedeep';
 import 'lodash.isplainobject';
 import merge from 'ranges-merge';
 
-function isStr(something) {
-  return typeof something === "string";
+function calculateOffset(olderRanges, i) {
+  const res = olderRanges.reduce((acc, curr) => {
+    if (curr[0] < i + 1) {
+      return acc + curr[1] - curr[0];
+    }
+    return acc;
+  }, 0);
+  return res;
 }
 function composeRanges(str, olderRanges, newerRanges, originalOpts) {
   if (olderRanges === null) {
@@ -25,32 +31,37 @@ function composeRanges(str, olderRanges, newerRanges, originalOpts) {
   }
   const older = merge(olderRanges);
   const newer = merge(newerRanges);
-  const composed = [];
-  let offset = 0;
+  let composed = [];
   while (newer.length) {
     while (older.length) {
+      const offset = calculateOffset(olderRanges, newer[0][0]);
       if (!newer.length) {
         composed.push(older.shift());
       }
-      else if (newer[0][1] <= older[0][0]) {
+      else if (
+        newer[0][1] + calculateOffset(olderRanges, newer[0][1]) <=
+        older[0][0]
+      ) {
         composed.push(newer.shift());
         composed.push(older.shift());
       } else {
         const newerLen = newer[0][1] - newer[0][0];
         if (older.length === 1 || newerLen <= older[1][0] - older[0][1]) {
-          offset +=
-            older[0][1] -
-            older[0][0] +
-            (isStr(older[0][2]) ? older[0][2].length : 0);
           composed.push(older[0]);
           let rangeToPut;
-          if (newer[0][0] < older[0][0]) {
+          if (
+            newer[0][0] + calculateOffset(olderRanges, newer[0][0]) <
+            older[0][0]
+          ) {
             rangeToPut = [
               Math.min(older[0][0], newer[0][0]),
-              newer[0][1] + offset
+              newer[0][1] + calculateOffset(olderRanges, newer[0][1])
             ];
           } else {
-            rangeToPut = [newer[0][0] + offset, newer[0][1] + offset];
+            rangeToPut = [
+              newer[0][0] + calculateOffset(olderRanges, newer[0][0]),
+              newer[0][1] + calculateOffset(olderRanges, newer[0][1])
+            ];
           }
           if (newer[0][2] !== undefined) {
             rangeToPut.push(newer[0][2]);
@@ -94,7 +105,11 @@ function composeRanges(str, olderRanges, newerRanges, originalOpts) {
           newer.shift();
         }
       }
+      break;
     }
+  }
+  if (older.length) {
+    composed = composed.concat(older);
   }
   return merge(composed);
 }
