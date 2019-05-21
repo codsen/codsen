@@ -1,6 +1,6 @@
 import test from "ava";
 import compose from "../dist/ranges-compose.esm";
-import clone from "lodash.clonedeep";
+// import clone from "lodash.clonedeep";
 import apply from "ranges-apply";
 
 function compare(t, str, older, newer, composed) {
@@ -218,10 +218,10 @@ test("02.16 - deletion only - two unmergeable vs two unmergeable", t => {
   compare(t, "abcdefgh", [[0, 1], [2, 5]], [[0, 1], [2, 3]], [[0, 5], [6, 7]]);
 });
 
-// 02. Adding then deletion
+// 03. Insert comes into play
 // -----------------------------------------------------------------------------
 
-test("03.01 - adding + deletion - one vs one - #1", t => {
+test("03.01 - adding + deletion - one vs one", t => {
   const str = "abcdefghij";
   const ranges1 = [[0, 1, "xyz"]]; // yields "xyzbcdefghij"
   const ranges2 = [[1, 4]]; // yields "xcdefghij"
@@ -236,7 +236,41 @@ test("03.01 - adding + deletion - one vs one - #1", t => {
   );
 });
 
-test("03.02 - adding + deletion - two vs one - #1", t => {
+test("03.02 - adding + deletion - one vs one", t => {
+  const str = "abcdefghij";
+  const ranges1 = [[0, 1, "xyz"]]; // yields "xyzbcdefghij"
+  const ranges2 = [[3, 6]]; // yields "xyzefghij" -
+
+  // [3, 6]: offset === -2; converts to [1, 4]
+  // equivalent to combined: [[0, 4, "xyz"]]
+  t.deepEqual(
+    compose(
+      str,
+      ranges1,
+      ranges2
+    ),
+    [[0, 4, "xyz"]],
+    "03.02"
+  );
+});
+
+test("03.03 - adding + deletion - one vs one", t => {
+  const str = "abcdefghij";
+  const ranges1 = [[0, 1, "xyz"]]; // yields "xyzbcdefghij"
+  const ranges2 = [[4, 7]]; // yields "xyzbfghij"
+  // equivalent to combined: [[0, 1, "xyz"], [2, 5]]
+  t.deepEqual(
+    compose(
+      str,
+      ranges1,
+      ranges2
+    ),
+    [[0, 1, "xyz"], [2, 5]],
+    "03.03"
+  );
+});
+
+test("03.04 - adding + deletion - two vs one", t => {
   const str = "abcdefghij";
   const ranges1 = [[0, 1, "xyz"], [3, 5, "klm"]]; // yields "xyzbcklmfghij"
   const ranges2 = [[1, 4]]; // yields "xcklmfghij"
@@ -247,11 +281,11 @@ test("03.02 - adding + deletion - two vs one - #1", t => {
       ranges2
     ),
     [[0, 2, "x"], [3, 5, "klm"]],
-    "03.02"
+    "03.04"
   );
 });
 
-test("03.03 - adding + deletion - two vs one - #2", t => {
+test("03.05 - adding + deletion - two vs one", t => {
   const str = "abcdefghij";
   const ranges1 = [[0, 1, "xyz"], [3, 5, "klm"]]; // yields "xyzbcklmfghij"
   const ranges2 = [[1, 5]]; // yields "xklmfghij"
@@ -262,6 +296,6 @@ test("03.03 - adding + deletion - two vs one - #2", t => {
       ranges2
     ),
     [[0, 5, "xklm"]],
-    "03.03"
+    "03.05"
   );
 });

@@ -18,7 +18,7 @@ var merge = _interopDefault(require('ranges-merge'));
 function calculateOffset(olderRanges, i) {
   var res = olderRanges.reduce(function (acc, curr) {
     if (curr[0] < i + 1) {
-      return acc + curr[1] - curr[0];
+      return acc + curr[1] - curr[0] - (curr[2] !== undefined ? curr[2].length : 0);
     }
     return acc;
   }, 0);
@@ -48,7 +48,18 @@ function composeRanges(str, olderRanges, newerRanges, originalOpts) {
         } else {
           var newerLen = newer[0][1] - newer[0][0];
           if (older.length === 1 || newerLen <= older[1][0] - older[0][1]) {
-            composed.push(older[0]);
+            if (older[0][2] !== undefined && newer[0][0] === older[0][1] + older[0][2].length - 1) {
+              composed.push(older[0]);
+            } else if (older[0][2] === undefined || newer[0][0] >= older[0][1] + older[0][2].length - 1) {
+              composed.push(older[0]);
+            } else {
+              composed.push(older[0].map(function (val, idx) {
+                if (idx === 2) {
+                  return val.slice(0, val.length - (older[0][1] + newer[0][0]));
+                }
+                return val;
+              }));
+            }
             var rangeToPut = void 0;
             if (newer[0][0] + calculateOffset(olderRanges, newer[0][0]) < older[0][0]) {
               rangeToPut = [Math.min(older[0][0], newer[0][0]), newer[0][1] + calculateOffset(olderRanges, newer[0][1])];
