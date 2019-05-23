@@ -301,7 +301,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               tempEnt = _temp.tempEnt;
               tempRes = _temp.tempRes;
             }
-            if (tempEnt) {
+            if (tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(tempEnt) || (allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent === true || allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
               var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-malformed-".concat(tempEnt),
@@ -335,7 +335,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               _tempEnt = _temp3.tempEnt;
               _tempRes = _temp3.tempRes;
             }
-            if (_tempEnt && !allNamedHtmlEntities.uncertain.includes(_tempEnt)) {
+            if (_tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(_tempEnt) || allNamedHtmlEntities.uncertain[_tempEnt].addAmpIfSemiPresent === true || allNamedHtmlEntities.uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
               var _decodedEntity = allNamedHtmlEntities.decode("&".concat(_tempEnt, ";"));
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt),
@@ -437,6 +437,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   var issue = false;
                   var _firstChar2 = _tempRes2.leftmostChar;
                   var _secondChar2 = stringLeftRight.right(str, _firstChar2);
+                  if (Object.keys(allNamedHtmlEntities.uncertain).includes(potentialEntity) && isStr(str[_firstChar2 - 1]) && !str[_firstChar2 - 1].trim().length && allNamedHtmlEntities.uncertain[potentialEntity].addAmpIfSemiPresent !== true) {
+                    letterSeqStartAt = null;
+                    return "continue";
+                  }
                   if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[_firstChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]].hasOwnProperty(str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(situation.charTrimmed)) {
                     entitysValue = situation.charTrimmed;
                     if (i - whatsOnTheLeft - 1 === _tempEnt2.length) {

@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, decode, entEndsWith, uncertain, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
+import { entStartsWith, uncertain, decode, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -429,7 +429,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
-            if (tempEnt) {
+            if (
+              tempEnt &&
+              (!Object.keys(uncertain).includes(tempEnt) ||
+                ((uncertain[tempEnt].addSemiIfAmpPresent === true ||
+                  (uncertain[tempEnt].addSemiIfAmpPresent &&
+                    (!str[tempRes.rightmostChar + 1] ||
+                      !str[tempRes.rightmostChar + 1].trim().length))) &&
+                  str[tempRes.leftmostChar - 1] === "&"))
+            ) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
                 ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
@@ -482,7 +490,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (temp1) {
               ({ tempEnt, tempRes } = temp1);
             }
-            if (tempEnt && !uncertain.includes(tempEnt)) {
+            if (
+              tempEnt &&
+              (!Object.keys(uncertain).includes(tempEnt) ||
+                (uncertain[tempEnt].addAmpIfSemiPresent === true ||
+                  (uncertain[tempEnt].addAmpIfSemiPresent &&
+                    (!tempRes.leftmostChar ||
+                      (isStr(str[tempRes.leftmostChar - 1]) &&
+                        !str[tempRes.leftmostChar - 1].trim().length)))))
+            ) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
                 ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
@@ -635,6 +651,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   let issue = false;
                   const firstChar = tempRes.leftmostChar;
                   const secondChar = right(str, firstChar);
+                  if (
+                    Object.keys(uncertain).includes(potentialEntity) &&
+                    (isStr(str[firstChar - 1]) &&
+                      !str[firstChar - 1].trim().length &&
+                      uncertain[potentialEntity].addAmpIfSemiPresent !== true)
+                  ) {
+                    letterSeqStartAt = null;
+                    continue;
+                  }
                   if (
                     entStartsWith.hasOwnProperty(str[firstChar]) &&
                     entStartsWith[str[firstChar]].hasOwnProperty(
