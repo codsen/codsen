@@ -37,21 +37,28 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                  | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/all-named-html-entities.cjs.js` | 195 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/all-named-html-entities.esm.js` | 195 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/all-named-html-entities.umd.js` | 110 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/all-named-html-entities.cjs.js` | 312 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/all-named-html-entities.esm.js` | 311 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/all-named-html-entities.umd.js` | 160 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-This package exports a plain object with three keys:
+This package exports a plain object with 11 keys:
 
 | Key's name      | Key's value's type | Purpose                                                                    |
 | --------------- | ------------------ | -------------------------------------------------------------------------- |
+| `allNamedEntities` | plain object       | all named HTML entities, key is entity's name, value is raw decoded entity. 2125 in total. |
 | `entStartsWith` | plain object       | all named HTML entities, grouped by first character, then by second        |
 | `entEndsWith`   | plain object       | all named HTML entities, grouped by last character, then by second-to-last |
+| `entStartsWithCaseInsensitive` | plain object       | all named HTML entities, grouped by first character, then by second, both case-insensitive |
+| `entEndsWithCaseInsensitive`   | plain object       | all named HTML entities, grouped by last character, then by second-to-last, both case insensitive |
 | `decode`        | function           | decodes named HTML entities (`&...;` format)                               |
+| `minLength`        | integer           | length of the shortest of all named HTML entities (currently `2`) |
+| `maxLength`        | integer           | length of the longest of all named HTML entities (currently `31`) |
+| `notEmailFriendly`        | plain object           | all named HTML entities which are not suitable for email template use. Key is entity's name, value is raw decoded entity |
+| `uncertain`        | plain object           | all named HTML entities which could be interpreted as words if entity was malformed (missing ampersand for example) |
 
 **[⬆ back to top](#)**
 
