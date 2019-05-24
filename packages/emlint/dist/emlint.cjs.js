@@ -1570,6 +1570,7 @@ function lint(str, originalOpts) {
     tagName: null,
     recognised: null,
     closing: null,
+    comment: false,
     pureHTML: true,
     attributes: [],
     esp: []
@@ -1795,7 +1796,7 @@ function lint(str, originalOpts) {
         }
       }
     }
-    if (logEspTag.startAt === null && logEspTag.headStartAt === null && espChars.includes(str[_i]) && str[_i + 1] && !stringLeftRight.leftSeq(str, _i, "<", "!") && (!doNothingUntil || doNothingUntil === true)) {
+    if (!logTag.comment && logEspTag.startAt === null && logEspTag.headStartAt === null && espChars.includes(str[_i]) && str[_i + 1] && !stringLeftRight.leftSeq(str, _i, "<", "!") && (!doNothingUntil || doNothingUntil === true)) {
       if (espChars.includes(str[_i + 1])) {
         logEspTag.headStartAt = _i;
         logEspTag.startAt = _i;
@@ -2408,6 +2409,7 @@ function lint(str, originalOpts) {
             }
             var whatsOnTheRight4 = stringLeftRight.right(str, whatsOnTheRight3);
             if (str[whatsOnTheRight3] === "-") {
+              logTag.comment = true;
               if (whatsOnTheRight3 > whatsOnTheRight2 + 1) {
                 submit({
                   name: "html-comment-spaces",

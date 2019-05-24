@@ -2,7 +2,7 @@ import test from "ava";
 import { lint } from "../dist/emlint.esm";
 import { c, c2, getUniqueIssueNames } from "../test-util/util";
 
-// avaonly
+// avanotonly
 
 // 00. Insurance
 // -----------------------------------------------------------------------------
@@ -2727,6 +2727,15 @@ test(`32.01 - ${`\u001b[${34}m${`esp-line-break-within-templating-tag`}\u001b[${
           position: [[19, 20]]
         }
       ]
+    },
+    t
+  ));
+
+test(`32.02 - ${`\u001b[${34}m${`esp-line-break-within-templating-tag`}\u001b[${39}m`} - false cases`, t =>
+  c2(
+    `<!--[if (gte mso 9)|(IE)]>\nzz`,
+    {
+      issues: []
     },
     t
   ));

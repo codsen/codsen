@@ -1,6 +1,7 @@
-import { c } from "../test-util/util";
-import test from "ava";
 // avanotonly
+
+import { c, c2 } from "../test-util/util";
+import test from "ava";
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;
@@ -95,55 +96,64 @@ test(`01.08 - ${`\u001b[${31}m${`all OK`}\u001b[${39}m`} - minimal sandwiched, n
 test(`02.01 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t =>
   c(`amp;`, `&amp;`, "bad-named-html-entity-malformed-amp", t));
 
-test(`02.02 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, nbsp`, t =>
+test(`02.02 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal not isolated, named, amp`, t =>
+  c(`abc amp; def`, `abc &amp; def`, "bad-named-html-entity-malformed-amp", t));
+
+test(`02.03 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, nbsp`, t =>
   c(`nbsp;`, `&nbsp;`, "bad-named-html-entity-malformed-nbsp", t));
 
-test(`02.03 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, sup`, t =>
+test(`02.04 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, sup`, t =>
   c(`sup;`, `&sup;`, "bad-named-html-entity-malformed-sup", t));
 
-test(`02.04 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, zwnj`, t =>
+test(`02.05 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, zwnj`, t =>
   c(`zwnj;`, `&zwnj;`, "bad-named-html-entity-malformed-zwnj", t));
 
 // sandwiched
 
-test(`02.05 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, amp`, t =>
-  c(`xamp;y`, `x&amp;y`, "bad-named-html-entity-malformed-amp", t));
+test(`02.06 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, amp`, t =>
+  c2(
+    `xamp;y`,
+    {
+      issues: []
+    },
+    t
+  ));
 
-test(`02.06 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, nbsp`, t =>
+test(`02.07 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, nbsp`, t =>
   c(`xnbsp;y`, `x&nbsp;y`, "bad-named-html-entity-malformed-nbsp", t));
 
-test(`02.07 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, sup`, t =>
+test(`02.08 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, sup`, t =>
   c(`xsup;y`, `x&sup;y`, "bad-named-html-entity-malformed-sup", t));
 
-test(`02.08 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, zwnj`, t =>
+test(`02.09 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal sandwiched, named, zwnj`, t =>
   c(`xzwnj;y`, `x&zwnj;y`, "bad-named-html-entity-malformed-zwnj", t));
 
 // spaced
 
-test(`02.09 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, amp`, t =>
+test(`02.10 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, amp`, t =>
   c(`x amp; y`, `x &amp; y`, "bad-named-html-entity-malformed-amp", t));
 
-test(`02.10 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, nbsp`, t =>
+test(`02.11 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, nbsp`, t =>
   c(`x nbsp; y`, `x &nbsp; y`, "bad-named-html-entity-malformed-nbsp", t));
 
-test(`02.11 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, sup`, t =>
+test(`02.12 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, sup`, t =>
   c(`x sup; y`, `x &sup; y`, "bad-named-html-entity-malformed-sup", t));
 
-test(`02.12 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, zwnj`, t =>
+test(`02.13 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal spaced, named, zwnj`, t =>
   c(`x zwnj; y`, `x &zwnj; y`, "bad-named-html-entity-malformed-zwnj", t));
 
 // linebreaked
 
-test(`02.13 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, amp`, t =>
+test(`02.14 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, amp`, t =>
   c(`x\namp;\ny`, `x\n&amp;\ny`, "bad-named-html-entity-malformed-amp", t));
 
-test(`02.14 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, nbsp`, t =>
+test(`02.15 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, nbsp`, t =>
   c(`x\nnbsp;\ny`, `x\n&nbsp;\ny`, "bad-named-html-entity-malformed-nbsp", t));
 
-test(`02.15 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, sup`, t =>
+test(`02.16 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, sup`, t =>
   c(`x\nsup;\ny`, `x\n&sup;\ny`, "bad-named-html-entity-malformed-sup", t));
 
-test(`02.16 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, zwnj`, t =>
+test(`02.17 - ${`\u001b[${32}m${`missing amp`}\u001b[${39}m`} - minimal linebreaked, named, zwnj`, t =>
   c(`x\nzwnj;\ny`, `x\n&zwnj;\ny`, "bad-named-html-entity-malformed-zwnj", t));
 
 // 03. semicolon missing

@@ -1848,6 +1848,7 @@ function lint(str, originalOpts) {
     tagName: null,
     recognised: null,
     closing: null,
+    comment: false,
     pureHTML: true,
     attributes: [],
     esp: []
@@ -2202,6 +2203,7 @@ function lint(str, originalOpts) {
       }
     }
     if (
+      !logTag.comment &&
       logEspTag.startAt === null &&
       logEspTag.headStartAt === null &&
       espChars.includes(str[i]) &&
@@ -2996,6 +2998,7 @@ function lint(str, originalOpts) {
             }
             const whatsOnTheRight4 = right(str, whatsOnTheRight3);
             if (str[whatsOnTheRight3] === "-") {
+              logTag.comment = true;
               if (whatsOnTheRight3 > whatsOnTheRight2 + 1) {
                 submit({
                   name: "html-comment-spaces",

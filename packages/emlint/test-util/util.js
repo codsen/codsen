@@ -115,7 +115,7 @@ function c2(bad, resToCompareWith, t, opts) {
   //   )}`
   // );
   t.deepEqual(linted.issues, resToCompareWith.issues);
-  t.deepEqual(lint(bad, allOff).issues, []);
+  // t.deepEqual(lint(bad, allOff).issues, []);
   t.is(apply(bad, linted.fix), bad);
 }
 
