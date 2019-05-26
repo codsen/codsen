@@ -146,8 +146,7 @@
         "label": ""
       },
       "devDependencies": [
-        "benchmark",
-        "non-lang-charcodes-outside-latin"
+        "benchmark"
       ],
       "travisVersionsOverride": []
     }
@@ -160,32 +159,32 @@
     "sourceMap": false
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "ava": "^1.4.1",
     "babel-plugin-istanbul": "^5.1.4",
     "benchmark": "^2.1.4",
     "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.2.0",
+    "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-ava": "^6.0.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
-    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-prettier": "^3.1.0",
     "js-row-num-cli": "^1.5.21",
     "lect": "^0.5.15",
-    "non-lang-charcodes-outside-latin": "^1.0.0",
+    "non-latin-charcodes": "^1.0.0",
     "nyc": "^14.1.1",
-    "prettier": "^1.17.0",
-    "rollup": "^1.11.3",
+    "prettier": "^1.17.1",
+    "rollup": "^1.12.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",
-    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^4.0.4"
+    "rollup-plugin-terser": "^5.0.0"
   }
 }
