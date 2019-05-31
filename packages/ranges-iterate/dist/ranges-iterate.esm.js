@@ -48,7 +48,8 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
     for (let i = 0; i < str.length; i++) {
       cb({
         i,
-        val: str[i]
+        val: str[i],
+        push: received => received
       });
     }
   } else {

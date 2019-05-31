@@ -1,5 +1,6 @@
 import test from "ava";
 import i from "../dist/ranges-invert.esm";
+// import fs from "fs";
 
 // ==============================
 // 0. THROWS

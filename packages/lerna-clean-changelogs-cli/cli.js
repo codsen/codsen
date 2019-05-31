@@ -13,7 +13,7 @@ const updateNotifier = require("update-notifier");
 const pReduce = require("p-reduce");
 const pFilter = require("p-filter");
 const clean = require("lerna-clean-changelogs");
-const pify = require("pify");
+const { promisify } = require("util");
 const write = require("write-file-atomic");
 
 const { log } = console;
@@ -81,7 +81,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
         return "skipped";
       }
       // by this point, there should be some valid content to write
-      return pify(write)(oneOfPaths, preppedContents.res).then(() => {
+      return promisify(write)(oneOfPaths, preppedContents.res).then(() => {
         return "ok";
       });
     })

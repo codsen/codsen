@@ -405,7 +405,7 @@ This library is meant to be used on any HTML where there are **no external CSS s
 
 Common unused CSS removal tools on the market ([purgecss](https://github.com/FullHuman/purgecss), [purifycss](https://github.com/purifycss/purifycss) and [uncss](https://github.com/uncss/uncss) for example) work only on valid HTML which does not contain back-end code: ESP templating strings (Oracle Responsys, Adobe Neolane, Exact Target, SalesForce or Mailchimp), different templating languages (Mustache, Jinja or Nunjucks) or different programming languages (PHP or Java JSP's).
 
-But, in email development, it is normal to expect that code will contain templating code (like `Hi {{ data.firatName }}!`).
+But, in email development, it is normal to expect that code will contain templating code (like `Hi {{ data.firstName }}!`).
 
 `email-comb` can process the email template after it has been wired up as a campaign.
 
@@ -417,9 +417,9 @@ On the other hand, you can clean your email campaign's HTML template, along with
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=%23%23%20email-comb%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=%23%23%20email-comb%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=%23%23%20email-comb%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aemail-comb%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aemail-comb%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=email-comb%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aemail-comb%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
@@ -456,4 +456,3 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE
-[all-contributors-url]: https://github.com/kentcdodds/all-contributors

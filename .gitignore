@@ -4,6 +4,7 @@
 /packages/*/LICENSE
 /packages/*/license.md
 /packages/*/.nyc_output
+/packages/*/package-lock.json
 *.hg
 *.log
 *.cache

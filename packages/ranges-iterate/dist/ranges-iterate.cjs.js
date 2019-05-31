@@ -43,7 +43,10 @@ function rangesIterate(str, originalRanges, cb) {
     for (var i = 0; i < str.length; i++) {
       cb({
         i: i,
-        val: str[i]
+        val: str[i],
+        push: function push(received) {
+          return received;
+        }
       });
     }
   } else {

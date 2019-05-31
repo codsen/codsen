@@ -1,8 +1,6 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
 
-// avanotonly
-
 // -----------------------------------------------------------------------------
 // helper functions
 // -----------------------------------------------------------------------------

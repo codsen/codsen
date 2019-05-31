@@ -15,3 +15,6 @@ add1:
 
 remove1:
 	./scripts/remove1.sh
+
+build-test:
+	./scripts/build-test.sh

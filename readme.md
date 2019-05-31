@@ -1,15 +1,41 @@
-# 📦 Codsen 📦
+# Codsen
 
-    A lerna monorepo for our 85 npm libraries
+    A lerna monorepo for our 87 npm libraries 📦📦📦
+
+We, Codsen Ltd, provide consulting services in email marketing field since 2014.
+
+Our strength is **coding and maintaining email templates**.
+
+We are small but we aim to deliver big.
+
+Our tooling is usually either completely unique or better than paid corporate offerings.
+
+We believe that small-scale, closed-source, "secret" tooling would not give company any competitive advantage. Quite on the opposite, closed-source, small-scale software _rots_, especially after employee who coded it leaves the company.
+
+People, not software, make company win.
+
+And open-sourcing the tooling is one of the best decisions a company can make. Remember the story of Ruby on Rails. Or React.
+
+Our tools are open-sourced:
+
+* Email-pattern HTML code minifier — [HTML Crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/)
+* Tool to prepare text for pasting into HTML template — [Detergent.js](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)
+* Unused CSS removal tool — [Email Comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/)
+* JSON preprocessor — [json-variables](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables/)
+* and many others, see below.
+
+It's just _tools_.
+
+So, be our guest, use them to serve your own clients or in your side projects or even compete with us. Git-clone, fork the code, report bugs and contribute new features.
 
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#-flagship-libraries)
-- [Range Libraries](#-11-range-libraries)
+- [Range Libraries](#-12-range-libraries)
 - [String Processing Libraries](#-26-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-19-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-20-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -26,7 +52,7 @@ There are quite a few small libraries, so let's group them by a common purpose.
 
 **[⬆ back to top](#-codsen-)**
 
-## 🎯 11 Range Libraries
+## 🎯 12 Range Libraries
 
 > _Range_ means an array of two text character index numbers, "from" and "to" (plus optional third element, string, which marks "what to add").
 
@@ -56,7 +82,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 | Library's name | Purpose | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
-| [`ranges-push`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) | Manage the array of slices referencing the index ranges within the string | [![ranges-push on npm](https://img.shields.io/npm/v/ranges-push.svg?style=flat-square)](https://www.npmjs.com/package/ranges-push) | [packages/ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) |
+| [`ranges-push`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) | Manage the array of ranges referencing the index ranges within the string | [![ranges-push on npm](https://img.shields.io/npm/v/ranges-push.svg?style=flat-square)](https://www.npmjs.com/package/ranges-push) | [packages/ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) |
 | [`ranges-apply`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) | Take an array of string slice ranges, delete/replace the string according to them | [![ranges-apply on npm](https://img.shields.io/npm/v/ranges-apply.svg?style=flat-square)](https://www.npmjs.com/package/ranges-apply) | [packages/ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) |
 | [`ranges-merge`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/) | Merge and sort arrays which mean string slice ranges | [![ranges-merge on npm](https://img.shields.io/npm/v/ranges-merge.svg?style=flat-square)](https://www.npmjs.com/package/ranges-merge) | [packages/ranges-merge](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/) |
 | [`ranges-sort`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort/) | Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ] | [![ranges-sort on npm](https://img.shields.io/npm/v/ranges-sort.svg?style=flat-square)](https://www.npmjs.com/package/ranges-sort) | [packages/ranges-sort](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort/) |
@@ -65,6 +91,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 | [`ranges-ent-decode`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode/) | Decode HTML entities recursively, get string index ranges of what needs to be replaced where | [![ranges-ent-decode on npm](https://img.shields.io/npm/v/ranges-ent-decode.svg?style=flat-square)](https://www.npmjs.com/package/ranges-ent-decode) | [packages/ranges-ent-decode](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode/) |
 | [`ranges-invert`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert/) | Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ] | [![ranges-invert on npm](https://img.shields.io/npm/v/ranges-invert.svg?style=flat-square)](https://www.npmjs.com/package/ranges-invert) | [packages/ranges-invert](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert/) |
 | [`ranges-is-index-within`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within/) | Efficiently checks if index is within any of the given ranges | [![ranges-is-index-within on npm](https://img.shields.io/npm/v/ranges-is-index-within.svg?style=flat-square)](https://www.npmjs.com/package/ranges-is-index-within) | [packages/ranges-is-index-within](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within/) |
+| [`ranges-iterate`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-iterate/) | Iterate a string and any changes within already existing ranges | [![ranges-iterate on npm](https://img.shields.io/npm/v/ranges-iterate.svg?style=flat-square)](https://www.npmjs.com/package/ranges-iterate) | [packages/ranges-iterate](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-iterate/) |
 | [`ranges-process-outside`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) | Iterate through string and optionally a given ranges as if they were one | [![ranges-process-outside on npm](https://img.shields.io/npm/v/ranges-process-outside.svg?style=flat-square)](https://www.npmjs.com/package/ranges-process-outside) | [packages/ranges-process-outside](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) |
 | [`ranges-regex`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) | Perform a regex search on string and get a ranges array of findings (or null) | [![ranges-regex on npm](https://img.shields.io/npm/v/ranges-regex.svg?style=flat-square)](https://www.npmjs.com/package/ranges-regex) | [packages/ranges-regex](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) |
 
@@ -157,7 +184,7 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#-codsen-)**
 
-## 🛠️ 19 Miscellaneous Libraries
+## 🛠️ 20 Miscellaneous Libraries
 
 | Library's name | Purpose | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -175,6 +202,7 @@ You use them in the Terminal (command line), for example:
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Non-parsing, email template-oriented linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
+| [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 | [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |

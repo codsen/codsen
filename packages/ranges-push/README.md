@@ -206,6 +206,8 @@ console.log(oldRanges.current());
 // => [[6, 8, "zzz"]]
 ```
 
+**[⬆ back to top](#)**
+
 ### ranges.last()
 
 Outputs:

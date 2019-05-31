@@ -19322,7 +19322,7 @@ var alpha$1 = {
 };
 var amp$1 = {
 	addAmpIfSemiPresent: "edge only",
-	addSemiIfAmpPresent: "edge only"
+	addSemiIfAmpPresent: true
 };
 var And$2 = {
 	addAmpIfSemiPresent: false,

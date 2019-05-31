@@ -7,7 +7,7 @@ const chlu = require("chlu");
 const fs = require("fs-extra");
 const writeFileAtomic = require("write-file-atomic");
 const git = require("simple-git/promise");
-const pify = require("pify");
+const { promisify } = require("util");
 
 const pack = "./package.json";
 const changeLogFile = "./changelog.md";
@@ -123,7 +123,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
     ) {
       process.exit(0);
     }
-    await pify(writeFileAtomic)(changeLogFile, contentToWrite).then(() => {
+    await promisify(writeFileAtomic)(changeLogFile, contentToWrite).then(() => {
       if (cli.flags.loud) {
         log(`${messagePrefix} ${`\u001b[${32}m${`OK.`}\u001b[${39}m`}`);
       }

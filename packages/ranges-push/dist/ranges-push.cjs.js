@@ -1,6 +1,6 @@
 /**
  * ranges-push
- * Manage the array of slices referencing the index ranges within the string
+ * Manage the array of ranges referencing the index ranges within the string
  * Version: 3.0.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

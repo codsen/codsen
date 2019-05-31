@@ -1,16 +1,15 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
-import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
-import { decode, uncertain } from "all-named-html-entities";
+import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
 
 // -----------------------------------------------------------------------------
 // programmatic tests
 // -----------------------------------------------------------------------------
 
 test(`${
-  Object.keys(allEntities).length
+  Object.keys(allNamedEntities).length
 } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`, t => {
-  Object.keys(allEntities)
+  Object.keys(allNamedEntities)
     .filter(
       entity => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
     )

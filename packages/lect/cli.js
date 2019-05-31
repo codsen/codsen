@@ -28,7 +28,7 @@ const uniq = require("lodash.uniq");
 const camelCase = require("lodash.camelcase");
 const semverRegex = require("semver-regex");
 const semverCompare = require("semver-compare");
-const bSlug = require("bitbucket-slug");
+// const bSlug = require("bitbucket-slug");
 const GithubSlugger = require("github-slugger");
 const slugger = new GithubSlugger();
 
@@ -60,7 +60,7 @@ const {
   extractStringUnderBadges,
   replaceRollupInfoTableAndItsHeader,
   parseReadme,
-  getUserInfo,
+  // getUserInfo,
   standardiseBools,
   contributionTypes
 } = require("./util");
@@ -104,7 +104,7 @@ let readmeData = ""; // readme's contents
 let pack = {}; // package.json of the lib located at root
 let parsedPack; // package.json parsed through "getPkgRepo"
 let lectrc = {}; // .lectrc one level above from root
-let contributors = null; // final result of async-fetched contributors from github
+const contributors = null; // final result of async-fetched contributors from github
 let addBackToTopLinks = true; // should we add back-to-top anchor links under sections?
 
 // -----------------------------------------------------------------------------
@@ -256,9 +256,10 @@ async function step14(receivedPack) {
   // finally, write out amended var "lectrc" contents onto .lectrc.json
 
   if (isObj(lectrc) && Object.keys(lectrc).length) {
+    // console.log(`259 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
     await writeJsonFile(path.join(__dirname, "../.lectrc.json"), lectrc)
       .then(() => {
-        // log(`${chalk.green(logSymbols.success, ".lectrc.json OK")}`);
+        log(`${chalk.green(logSymbols.success, ".lectrc.json written OK")}`);
       })
       .catch(err => {
         log(
@@ -970,7 +971,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         semverRegex().test(packDevDeps[dependency])
       ) {
         // console.log(
-        //   `dep: ${`\u001b[${33}m${dependency}\u001b[${39}m`} - pack: ${packDevDeps[
+        //   `973 lect/cli.js - dep: ${`\u001b[${33}m${dependency}\u001b[${39}m`} - pack: ${packDevDeps[
         //     dependency
         //   ].match(semverRegex())} vs. lectrc: ${lectrcDevDeps[dependency].match(
         //     semverRegex()
@@ -998,6 +999,13 @@ async function writePackageJson(receivedPackageJsonObj) {
             `${prefix}${packDevDeps[dependency].match(semverRegex())}`
           );
         }
+
+        // console.log(
+        //   `1002 lect/cli.js - lectrc.package.devDependencies.${dependency} = ${objectPath.get(
+        //     lectrc,
+        //     `package.devDependencies.${dependency}`
+        //   )}`
+        // );
       }
     });
 
@@ -1943,35 +1951,35 @@ function step5() {
 // -----------------------------------------------------------------------------
 // 4. fetch github contributors user data
 
-function step4() {
-  // log(`${chalk.white("\nSTEP 4 - Fetch Github contributors data")}`);
+// function step4() {
+//   // log(`${chalk.white("\nSTEP 4 - Fetch Github contributors data")}`);
 
-  if (
-    objectPath.has(pack, "lect.contributors") &&
-    pack.lect.contributors.length > 0
-  ) {
-    const names = pack.lect.contributors.map(obj => obj.username);
-    pMap(names, getUserInfo, { concurrency: 2 })
-      .then(result => {
-        contributors = result;
-        return Promise.resolve(step5());
-      })
-      .catch(() => {
-        log(`${chalk.red(logSymbols.error, "error fetching from GitHub!")}`);
-        log(
-          `${chalk.yellow(
-            logSymbols.warning,
-            "contributors' data will be stale"
-          )}`
-        );
-        contributors = null;
-        return Promise.resolve(step5());
-      });
-  } else {
-    contributors = null;
-    step5();
-  }
-}
+//   if (
+//     objectPath.has(pack, "lect.contributors") &&
+//     pack.lect.contributors.length > 0
+//   ) {
+//     const names = pack.lect.contributors.map(obj => obj.username);
+//     pMap(names, getUserInfo, { concurrency: 2 })
+//       .then(result => {
+//         contributors = result;
+//         return Promise.resolve(step5());
+//       })
+//       .catch(() => {
+//         log(`${chalk.red(logSymbols.error, "error fetching from GitHub!")}`);
+//         log(
+//           `${chalk.yellow(
+//             logSymbols.warning,
+//             "contributors' data will be stale"
+//           )}`
+//         );
+//         contributors = null;
+//         return Promise.resolve(step5());
+//       });
+//   } else {
+//     contributors = null;
+//     step5();
+//   }
+// }
 
 // -----------------------------------------------------------------------------
 // 3. Read the lectrc file one level above, the .lectrc
@@ -2009,7 +2017,7 @@ function step3() {
           process.exit(1);
         }
         lectrc = obj;
-        step4();
+        step5();
       });
     } catch (e) {
       log(

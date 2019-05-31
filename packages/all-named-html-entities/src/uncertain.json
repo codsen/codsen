@@ -17,7 +17,7 @@
   },
   "amp": {
     "addAmpIfSemiPresent": "edge only",
-    "addSemiIfAmpPresent": "edge only"
+    "addSemiIfAmpPresent": true
   },
   "And": {
     "addAmpIfSemiPresent": false,

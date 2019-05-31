@@ -42,11 +42,11 @@ import {
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                               | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 33 KB |
+| Type                                                                                                    | Key in `package.json` | Path                                               | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
 
@@ -158,9 +158,9 @@ It **consumes** a single character (can be any Unicode character, including astr
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=%23%23%20charcode-is-valid-xml-name-character%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=%23%23%20charcode-is-valid-xml-name-character%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=%23%23%20charcode-is-valid-xml-name-character%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Acharcode-is-valid-xml-name-character%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Acharcode-is-valid-xml-name-character%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=charcode-is-valid-xml-name-character%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Acharcode-is-valid-xml-name-character%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).

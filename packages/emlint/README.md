@@ -39,8 +39,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                 | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 108 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 111 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 192 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 112 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 215 KB |
 
 **[⬆ back to top](#)**
 

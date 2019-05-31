@@ -13,6 +13,13 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
+  "keywords": [
+    "string",
+    "ranges",
+    "array",
+    "sort",
+    "indexes"
+  ],
   "main": "dist/ranges-process-outside.cjs.js",
   "module": "dist/ranges-process-outside.esm.js",
   "browser": "dist/ranges-process-outside.umd.js",
@@ -30,6 +37,11 @@
     "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
     "version": "npm run build && git add ."
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
   "ava": {
     "compileEnhancements": false,
     "require": [
@@ -42,18 +54,6 @@
     "await": true,
     "cjs": true
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && npm test"
-    }
-  },
-  "keywords": [
-    "string",
-    "ranges",
-    "array",
-    "sort",
-    "indexes"
-  ],
   "lect": {
     "babelrc": {
       "override": false,

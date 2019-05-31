@@ -167,7 +167,7 @@ globby(input)
     let referenceKeyset;
     if (cli.flags.n) {
       // console.log(
-      //   `169 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `170 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
       //     finalPathsToProcessArr,
       //     null,
       //     4
@@ -184,7 +184,7 @@ globby(input)
       return pMap(paths, oneOfPaths => fs.readJson(oneOfPaths))
         .then(allJsonValuesArr => {
           // console.log(
-          //   `174${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `187${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
           //     allJsonValuesArr,
           //     null,
           //     4

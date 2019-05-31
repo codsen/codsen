@@ -42,7 +42,7 @@ PS. That dollar sign above just means it's a terminal. Never type that dollar si
 
 ## Purpose
 
-This application will performs the following cleaning steps on all encountered `changelog.md`'s:
+This application performs the following cleaning steps on all encountered `changelog.md`'s:
 
 1. It removes bump-only changelog entries that `conventional-changelog` generates. There can be many reasons For example:
 
@@ -96,9 +96,9 @@ When you install it globally, it will check occasionally, are there newer versio
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=%23%23%20lerna-clean-changelogs-cli%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=%23%23%20lerna-clean-changelogs-cli%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=%23%23%20lerna-clean-changelogs-cli%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Alerna-clean-changelogs-cli%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Alerna-clean-changelogs-cli%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=lerna-clean-changelogs-cli%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Alerna-clean-changelogs-cli%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).

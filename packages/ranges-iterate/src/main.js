@@ -51,9 +51,11 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
   if (originalRanges === null || !originalRanges.length) {
     // TODO - implement ranges push
     for (let i = 0; i < str.length; i++) {
+      // push converter simply returns range that was given, no changes needed
       cb({
         i,
-        val: str[i]
+        val: str[i],
+        push: received => received
       });
     }
   } else {
@@ -71,13 +73,13 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
     let finalIdx = offset;
 
     console.log(
-      `074 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+      `076 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
     );
 
     // cover the first characters up to starting range
     if (finalIdx < ranges[0][0]) {
       console.log(
-        `080 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${
+        `082 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${
           ranges[0][0]
         }\u001b[${39}m`} so ping all characters up to it`
       );
@@ -87,7 +89,8 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
           break;
         }
         // ELSE
-        console.log(`090 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+        console.log(`092 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+        // TODO - add push
         cb({
           i: finalIdx,
           val: str[finalIdx]
@@ -96,7 +99,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
     }
 
     console.log(
-      `099 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+      `102 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
     );
 
     // check, if the next range reaches before the end of the string
@@ -106,14 +109,14 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
     if (ranges[0][0] <= currentIdx) {
       ranges.forEach((rangeArr, rangeArrIdx) => {
         console.log(
-          `109 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
+          `112 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
             rangeArr,
             null,
             0
           )} ----------`}\u001b[${39}m`}`
         );
         console.log(
-          `116 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+          `119 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
         );
 
         // 1. if "to insert" value, third range's argument is given, loop through it,
@@ -121,7 +124,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         // because it marks real index on old string (and it does not move yet).
         if (rangeArr[2]) {
           console.log(
-            `124 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
+            `127 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
               rangeArr[2],
               null,
               0
@@ -129,7 +132,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
           );
           for (let y = 0, len = rangeArr[2].length; y < len; y++) {
             console.log(
-              `132 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+              `135 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
             );
             cb({
               i: finalIdx,
@@ -142,7 +145,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         // 2. skip all characters in the range because those will be deleted
         while (currentIdx < rangeArr[1]) {
           console.log(
-            `145 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${currentIdx +
+            `148 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${currentIdx +
               1}\u001b[${39}m`}`
           );
 
@@ -155,9 +158,9 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
         if (ranges[rangeArrIdx + 1]) {
           loopUntil = ranges[rangeArrIdx + 1][0];
         }
-        console.log(`158 loopUntil = ${loopUntil}`);
+        console.log(`161 loopUntil = ${loopUntil}`);
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
-          console.log(`160 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+          console.log(`163 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
           cb({
             i: finalIdx,
             val: str[currentIdx]
@@ -166,11 +169,11 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
 
         console.log("");
         console.log(
-          `169 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
+          `172 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`
         );
       });
     }
-    console.log(`173 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
+    console.log(`176 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
   }
 }
 

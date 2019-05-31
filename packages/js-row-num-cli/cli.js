@@ -8,8 +8,8 @@ const globby = require("globby");
 const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
 const writeFileAtomic = require("write-file-atomic");
-const pify = require("pify");
-const write = pify(writeFileAtomic);
+const { promisify } = require("util");
+const write = promisify(writeFileAtomic);
 
 const fixRowNums = require("js-row-num");
 const updateNotifier = require("update-notifier");

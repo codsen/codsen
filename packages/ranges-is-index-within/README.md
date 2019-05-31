@@ -26,13 +26,13 @@ import rangesIsIndexWithin from "ranges-is-index-within";
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-is-index-within.cjs.js` | 1 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-is-index-within.esm.js` | 1 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-is-index-within.umd.js` | 824 B
+| Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 1 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 1 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 824 B |
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
@@ -70,7 +70,7 @@ This library would answer the question, is your index `79` within any of the ran
 
 In the example above, yes, because `79` is within range `[75, 80]`. If you want range endings to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Input
 
@@ -82,7 +82,7 @@ In the example above, yes, because `79` is within range `[75, 80]`. If you want 
 
 A wrong type will cause `throw`s.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -97,7 +97,7 @@ A wrong type will cause `throw`s.
 
 <!-- prettier-ignore-end -->
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -105,7 +105,7 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 
 ^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Example
 
@@ -194,7 +194,7 @@ console.log(res4);
 // > [25, 30]  <------ ! not Boolean, but the range itself.
 ```
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## The algorithm
 
@@ -202,7 +202,7 @@ Sugarcoated `Array.some` / `Array.find` — no dependencies. This program is sli
 
 By the way, [Binary Search algorithm](https://en.wikipedia.org/wiki/Binary_search_algorithm) would be 85 times slower than `Array.some`/`Array.find`, which I tried in previous versions of this package.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Benchmark
 
@@ -212,16 +212,16 @@ node benchmark.js
 
 ## Contributing
 
-* If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt).
-* If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt). Let's discuss it.
-* If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt). We'll try to help.
-* If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
+- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
+- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-is-index-within%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-is-index-within%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -229,28 +229,19 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-
-
 [node-img]: https://img.shields.io/node/v/ranges-is-index-within.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-is-index-within
-
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
-
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-is-index-within
-
 [downloads-img]: https://img.shields.io/npm/dm/ranges-is-index-within.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-is-index-within
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-is-index-within
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE
