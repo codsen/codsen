@@ -60,7 +60,7 @@ const {
   extractStringUnderBadges,
   replaceRollupInfoTableAndItsHeader,
   parseReadme,
-  // getUserInfo,
+  getUserInfo,
   standardiseBools,
   contributionTypes
 } = require("./util");
@@ -322,7 +322,6 @@ function step13() {
   // if Rollup is not used, skip to next step:
   if (!objectPath.has(pack, "devDependencies.rollup")) {
     step14(pack);
-    return;
   }
 
   let allFilesInSrc;
@@ -343,6 +342,10 @@ function step13() {
     //   )}`
     // );
   } catch (err) {
+    step14(pack);
+  }
+
+  if (!isArr(allFilesInSrc)) {
     step14(pack);
   }
 
