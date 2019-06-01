@@ -484,7 +484,10 @@ function crush(str, originalOpts) {
                   str[i + 6] === "t" &&
                   str[i + 7] === "a" &&
                   str[i + 8] === "n" &&
-                  str[i + 9] === "t")
+                  str[i + 9] === "t") ||
+                (withinInlineStyle &&
+                  (str[whitespaceStartedAt - 1] === "'" ||
+                    str[whitespaceStartedAt - 1] === '"'))
               ) {
                 whatToAdd = "";
               }

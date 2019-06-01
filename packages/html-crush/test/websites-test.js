@@ -11,8 +11,8 @@ import pMap from "p-map";
 
 const websitesToTest = [
   [
-    "https://bitbucket.org/codsen/html-crush/src/master/",
-    "html-crush on Bitbucket"
+    "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/",
+    "html-crush on GitLab"
   ],
   ["https://detergent.io", "Detergent.io website"],
   [

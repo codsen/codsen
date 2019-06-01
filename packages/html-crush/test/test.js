@@ -2037,6 +2037,26 @@ test(`08.04 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line
   );
 });
 
+test(`08.05 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside double quotes`, t => {
+  t.deepEqual(
+    m(`<a href="zzz" style=" font-size: 1px; ">`, {
+      removeLineBreaks: true
+    }).result,
+    `<a href="zzz" style="font-size:1px;">`,
+    "08.05"
+  );
+});
+
+test(`08.06 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside single quotes`, t => {
+  t.deepEqual(
+    m(`<a href='zzz' style=' font-size: 1px; '>`, {
+      removeLineBreaks: true
+    }).result,
+    `<a href='zzz' style='font-size:1px;'>`,
+    "08.06"
+  );
+});
+
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
 

@@ -347,7 +347,7 @@ function crush(str, originalOpts) {
                 continue;
               }
               var whatToAdd = " ";
-              if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t") {
+              if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"')) {
                 whatToAdd = "";
               }
               if (whatToAdd && whatToAdd.length) {
