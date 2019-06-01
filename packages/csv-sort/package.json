@@ -169,7 +169,7 @@
   },
   "dependencies": {
     "csv-split-easy": "^3.0.14",
-    "currency.js": "^1.2.1",
+    "currency.js": "^1.2.2",
     "is-numeric": "^0.0.9",
     "lodash.pull": "^4.1.0",
     "ordinal": "^1.0.3"
