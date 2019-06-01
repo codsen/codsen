@@ -18,20 +18,20 @@
   },
   "scripts": {
     "all:lect": "make run-lect",
-    "all:test:full": "lerna run test --concurrency 1",
-    "all:test:only": "lerna run unittest --concurrency 1",
-    "bootstrap": "npx lerna bootstrap --hoist --ignore-scripts",
-    "build": "lerna run test && npm run readme:generate",
+    "all:test:full": "FORCE_COLOR=1 lerna run test --concurrency 1",
+    "all:test:only": "FORCE_COLOR=1 lerna run unittest --concurrency 1",
+    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
+    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run readme:generate",
     "build:just": "lerna run build --bail",
-    "cm": "git-cz",
+    "cm": "git-cz -n",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
-    "publish": "npx lerna version --conventional-commits --yes && lernacleanchangelog '**' && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",
+    "publish": "FORCE_COLOR=1 npx lerna version --conventional-commits --yes && lernacleanchangelog '**' && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
     "test": "lerna run unittest --concurrency 1",
-    "wipe": "rm -rf node_modules && npx lerna clean -y"
+    "wipe": "rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
   "husky": {
     "hooks": {

@@ -41,6 +41,8 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 20 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 68 KB |
 
+**[⬆ back to top](#)**
+
 ## Idea - updated for v.7 - full rewrite
 
 This library allows JSON keys to reference other keys. It is aimed at JSON files which are used as means to store the _data_ part, separate from the template code.

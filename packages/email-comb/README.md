@@ -108,6 +108,8 @@ Its key "version" is a string, for example, "2.0.12" and mirrors same key `packa
 comb(str, [options]);
 ```
 
+**[⬆ back to top](#)**
+
 ### API - Input
 
 | Input argument | Type         | Obligatory? | Description                               |
