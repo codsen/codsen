@@ -254,10 +254,13 @@ async function step14(receivedPack) {
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
+  // console.log(`257 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
 
   if (isObj(lectrc) && Object.keys(lectrc).length) {
     // console.log(`259 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
-    await writeJsonFile(path.join(__dirname, "../.lectrc.json"), lectrc)
+    // console.log(`261 lect: path=${path.resolve("../.lectrc.json")}`);
+
+    await writeJsonFile(path.resolve("../.lectrc.json"), lectrc)
       .then(() => {
         log(`${chalk.green(logSymbols.success, ".lectrc.json written OK")}`);
       })
@@ -268,7 +271,9 @@ async function step14(receivedPack) {
             `could not write .lectrc.json:\n${err}`
           )}`
         );
-        process.exit(1);
+        if (!(isStr(formattedPack) && formattedPack.length)) {
+          process.exit(1);
+        }
       });
   } else {
     throw new Error(
@@ -961,53 +966,53 @@ async function writePackageJson(receivedPackageJsonObj) {
   // instead, pack's version is taken and written to .lectrc.json
 
   const packDevDeps = pack.devDependencies;
-  const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
+  // const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
+  const lectrcDevDeps = lectrc.package.devDependencies;
+  // console.log(`${`\u001b[${33}m${`968 lect: packDevDeps`}\u001b[${39}m`} = ${JSON.stringify(packDevDeps, null, 4)}`);
+  // console.log(`${`\u001b[${33}m${`969 lect: lectrcDevDeps`}\u001b[${39}m`} = ${JSON.stringify(lectrcDevDeps, null, 4)}`);
 
-  Object.keys(packDevDeps)
-    .filter(singleDependency => objectPath.has(lectrcDevDeps, singleDependency))
-    .forEach(dependency => {
-      if (
-        semverRegex().test(lectrcDevDeps[dependency]) &&
-        semverRegex().test(packDevDeps[dependency])
-      ) {
-        // console.log(
-        //   `973 lect/cli.js - dep: ${`\u001b[${33}m${dependency}\u001b[${39}m`} - pack: ${packDevDeps[
-        //     dependency
-        //   ].match(semverRegex())} vs. lectrc: ${lectrcDevDeps[dependency].match(
-        //     semverRegex()
-        //   )}`
-        // );
+  Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
+    // if a certain dev dependency in package.json does not exist in a reference
+    // lectrc list of dev devpendencies, we remove it, unless it is among
+    // lect.various.devDependencies[]
+    if (
+      !lectrcDevDeps.hasOwnProperty(key) &&
+      (!isArr(lectrc.various.devDependencies) ||
+        !lectrc.various.devDependencies.includes(key))
+    ) {
+      // console.log(`1019 lect: we'll delete key "${key}" from dev dependencies`);
+      delete receivedPackageJsonObj.devDependencies[key];
+    } else if (
+      lectrcDevDeps.hasOwnProperty(key) &&
+      receivedPackageJsonObj.devDependencies.hasOwnProperty(key) &&
+      semverCompare(
+        String(lectrc.package.devDependencies[key].match(semverRegex())),
+        String(pack.devDependencies[key].match(semverRegex()))
+      ) === -1
+    ) {
+      // === 1 means first arg is more than second, when semantic versions are compared
+      // console.log(`1029 lect: key ${key}, current version in lectrc is outdated`);
+      // console.log(`1035 lect: we'll update lectrc version for devdep ${key} to ${pack.devDependencies[key]}`);
+      lectrc.package.devDependencies[key] = pack.devDependencies[key];
 
-        // semverCompare will return 1 when first arg is more than second.
-        if (
-          semverCompare(
-            String(packDevDeps[dependency].match(semverRegex())),
-            String(lectrcDevDeps[dependency].match(semverRegex()))
-          ) === 1
-        ) {
-          // 1. set that semver to lectrcDevDeps
-          const prefix = lectrcDevDeps[dependency].includes("^") ? "^" : "";
-          objectPath.set(
-            receivedPackageJsonObj,
-            `devDependencies.${dependency}`,
-            `${prefix}${packDevDeps[dependency].match(semverRegex())}`
-          );
-          // 2. update .lectrc.json itself
-          objectPath.set(
-            lectrc,
-            `package.devDependencies.${dependency}`,
-            `${prefix}${packDevDeps[dependency].match(semverRegex())}`
-          );
-        }
+      // console.log(`1033 lect: key ${key} #1 = ${String(lectrc.package.devDependencies[key].match(semverRegex()))}; #2 = ${receivedPackageJsonObj.devDependencies[key].match(semverRegex())}; #3 = ${pack.devDependencies[key].match(semverRegex())}`)
+      // const temp = semverCompare(
+      //   String(lectrc.package.devDependencies[key].match(semverRegex())),
+      //   String(pack.devDependencies[key].match(semverRegex()))
+      // ); // === 1
+      // console.log(`1037 lect: ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`);
+    }
+    // console.log('\n-------\n')
+  });
 
-        // console.log(
-        //   `1002 lect/cli.js - lectrc.package.devDependencies.${dependency} = ${objectPath.get(
-        //     lectrc,
-        //     `package.devDependencies.${dependency}`
-        //   )}`
-        // );
-      }
-    });
+  Object.keys(lectrcDevDeps).forEach(key => {
+    // if certain key is not present in package.json dev deps but it's listed
+    // in lectrc, add it
+    if (!packDevDeps.hasOwnProperty(key)) {
+      // console.log(`1027 lect: we'll add a new key ${key} under dev deps`);
+      receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
+    }
+  });
 
   // delete "bugs" key from package.json
   objectPath.del(receivedPackageJsonObj, "bugs");
