@@ -60,7 +60,7 @@ const {
   extractStringUnderBadges,
   replaceRollupInfoTableAndItsHeader,
   parseReadme,
-  getUserInfo,
+  // getUserInfo,
   standardiseBools,
   contributionTypes
 } = require("./util");
