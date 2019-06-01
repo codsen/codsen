@@ -242,27 +242,7 @@ We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
 Our strength is **coding and maintaining email templates**.
 
-We are small but we aim to deliver big.
-
-Our tooling is usually either completely unique or better than paid corporate offerings.
-
-We believe that small-scale, closed-source, "secret" tooling would not give company any competitive advantage. Quite on the opposite, closed-source, small-scale software _rots_, especially after employee who coded it leaves the company.
-
-People, not software, make company win.
-
-And open-sourcing the tooling is one of the best decisions a company can make. Remember the story of Ruby on Rails. Or React.
-
-Our tools are open-sourced:
-
-* Email-pattern HTML code minifier — [HTML Crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/)
-* Tool to prepare text for pasting into HTML template — [Detergent.js](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)
-* Unused CSS removal tool — [Email Comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/)
-* JSON preprocessor — [json-variables](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables/)
-* and many others, see below.
-
-It's just _tools_.
-
-So, be our guest, use them to serve your own clients or in your side projects or even compete with us. Git-clone, fork the code, report bugs and contribute new features.
+We coded up and maintain a few npm packages:
 
 ## 💡 Table of Contents
 

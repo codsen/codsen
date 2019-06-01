@@ -285,6 +285,7 @@
 			"tap",
 			"temp",
 			"test",
+			"test_alt",
 			"test-folder",
 			"test-util",
 			"t-util"
@@ -301,8 +302,7 @@
 		"goodFolders": [
 			"bin",
 			"dist",
-			"lib",
-			"test_alt"
+			"lib"
 		]
 	},
 	"package": {
