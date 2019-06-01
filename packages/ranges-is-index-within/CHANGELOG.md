@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.14.0](https://gitlab.com/codsen/codsen/compare/ranges-is-index-within@1.13.21...ranges-is-index-within@1.14.0) (2019-06-01)
-
+## 1.14.0 (2019-06-01)
 
 ### Features
 
-* Add benchmark ([e8ad5d6](https://gitlab.com/codsen/codsen/commit/e8ad5d6))
-* Rebase removing all dependencies, simplifying algorithm and making it around 85x faster ([a6fb39f](https://gitlab.com/codsen/codsen/commit/a6fb39f))
-
-
-
-
+- Add benchmark ([e8ad5d6](https://gitlab.com/codsen/codsen/commit/e8ad5d6))
+- Rebase removing all dependencies, simplifying algorithm and making it around 85x faster ([a6fb39f](https://gitlab.com/codsen/codsen/commit/a6fb39f))
 
 ## 1.14.0 (2019-05-11)
 

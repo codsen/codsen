@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.2.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.1.1...js-row-num@2.2.0) (2019-06-01)
-
+## 2.2.0 (2019-06-01)
 
 ### Features
 
-* Lower the 4 digit padding threshold to 45K characters ([e5f8ec7](https://gitlab.com/codsen/codsen/commit/e5f8ec7))
-
-
-
-
+- Lower the 4 digit padding threshold to 45K characters ([e5f8ec7](https://gitlab.com/codsen/codsen/commit/e5f8ec7))
 
 ## 2.1.0 (2019-04-06)
 

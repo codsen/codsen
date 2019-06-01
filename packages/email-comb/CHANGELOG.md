@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://gitlab.com/codsen/codsen/compare/email-comb@2.0.12...email-comb@3.0.0) (2019-06-01)
-
+## 3.0.0 (2019-06-01)
 
 ### Features
 
-* Change the default export to { comb } instead of function exported as default ([3db706e](https://gitlab.com/codsen/codsen/commit/3db706e))
-
+- Change the default export to { comb } instead of function exported as default ([3db706e](https://gitlab.com/codsen/codsen/commit/3db706e))
 
 ### BREAKING CHANGES
 
-* Now you must consume importing or requiring { comb } instead of assigning to any
+- Now you must consume importing or requiring { comb } instead of assigning to any
 variable you like as before
-
-
-
-
 
 ## 2.0.10 (2019-03-22)
 

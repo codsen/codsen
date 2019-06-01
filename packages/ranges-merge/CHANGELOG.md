@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.2.0](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.1.8...ranges-merge@4.2.0) (2019-06-01)
-
+## 4.2.0 (2019-06-01)
 
 ### Features
 
-* Tweak API to correctly interpret opts.processFn given as an empty plain object ([bcedd6e](https://gitlab.com/codsen/codsen/commit/bcedd6e))
-
-
-
-
+- Tweak API to correctly interpret opts.processFn given as an empty plain object ([bcedd6e](https://gitlab.com/codsen/codsen/commit/bcedd6e))
 
 ## 4.1.0 (2019-03-17)
 

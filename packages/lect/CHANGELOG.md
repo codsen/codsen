@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.6.0](https://gitlab.com/codsen/codsen/compare/lect@0.5.15...lect@0.6.0) (2019-06-01)
-
+## 0.6.0 (2019-06-01)
 
 ### Features
 
-* Fix the dependency versions caching ([439c97d](https://gitlab.com/codsen/codsen/commit/439c97d))
-* Improvements to issue presets ([0e2c2eb](https://gitlab.com/codsen/codsen/commit/0e2c2eb))
-
-
-
-
+- Fix the dependency versions caching ([439c97d](https://gitlab.com/codsen/codsen/commit/439c97d))
+- Improvements to issue presets ([0e2c2eb](https://gitlab.com/codsen/codsen/commit/0e2c2eb))
 
 ## 0.5.0 (2019-02-05)
 

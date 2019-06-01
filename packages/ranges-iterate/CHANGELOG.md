@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.1.0 (2019-06-01)
-
+## 1.1.0 (2019-06-01)
 
 ### Features
 
-* Iterates given string considering given ranges ([44dd179](https://gitlab.com/codsen/codsen/commit/44dd179))
-* Pushing ([3a5c38d](https://gitlab.com/codsen/codsen/commit/3a5c38d))
-
-
-
-
+- Iterates given string considering given ranges ([44dd179](https://gitlab.com/codsen/codsen/commit/44dd179))
+- Pushing ([3a5c38d](https://gitlab.com/codsen/codsen/commit/3a5c38d))
 
 ## 3.10.0 (2019-01-20)
 
