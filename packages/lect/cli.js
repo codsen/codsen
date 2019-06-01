@@ -322,6 +322,7 @@ function step13() {
   // if Rollup is not used, skip to next step:
   if (!objectPath.has(pack, "devDependencies.rollup")) {
     step14(pack);
+    return;
   }
 
   let allFilesInSrc;
@@ -343,10 +344,7 @@ function step13() {
     // );
   } catch (err) {
     step14(pack);
-  }
-
-  if (!isArr(allFilesInSrc)) {
-    step14(pack);
+    return;
   }
 
   // console.log(`addon:\n-------\n` + addon + `\n-------`);
@@ -367,6 +365,10 @@ function step13() {
       .join(",\n        ")},`;
   }
 
+  if (!isArr(allFilesInSrc)) {
+    step14(pack);
+    return;
+  }
   const addon = allFilesInSrc.reduce((acc, currVal) => {
     return `${acc},
 
@@ -980,8 +982,8 @@ async function writePackageJson(receivedPackageJsonObj) {
     // lect.various.devDependencies[]
     if (
       !lectrcDevDeps.hasOwnProperty(key) &&
-      (!isArr(lectrc.various.devDependencies) ||
-        !lectrc.various.devDependencies.includes(key)) &&
+      (!isArr(pack.lect.various.devDependencies) ||
+        !pack.lect.various.devDependencies.includes(key)) &&
       (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
@@ -990,6 +992,8 @@ async function writePackageJson(receivedPackageJsonObj) {
     } else if (
       lectrcDevDeps.hasOwnProperty(key) &&
       receivedPackageJsonObj.devDependencies.hasOwnProperty(key) &&
+      lectrc.package.devDependencies[key] &&
+      pack.devDependencies[key] &&
       semverCompare(
         String(lectrc.package.devDependencies[key].match(semverRegex())),
         String(pack.devDependencies[key].match(semverRegex()))

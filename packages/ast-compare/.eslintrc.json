@@ -55,6 +55,7 @@
           "**/*test.js",
           "test/**/*.*",
           "test-util/**/*.*",
+          "t-util/**/*.*",
           "rollup.config.js"
         ]
       }

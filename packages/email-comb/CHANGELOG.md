@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - Now you must consume importing or requiring { comb } instead of assigning to any
-variable you like as before
+  variable you like as before
 
 ## 2.0.10 (2019-03-22)
 

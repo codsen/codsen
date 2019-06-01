@@ -1,4 +1,4 @@
-const comb = require("email-comb");
+const { comb } = require("email-comb");
 const PluginError = require("plugin-error");
 const { Transform } = require("stream");
 
