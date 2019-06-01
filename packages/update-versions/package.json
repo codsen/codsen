@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
@@ -199,8 +199,8 @@
     "esm": "^3.2.25",
     "execa": "^1.0.0",
     "husky": "^2.3.0",
-    "js-row-num-cli": "^1.5.21",
-    "lect": "^0.5.15",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "p-map": "^2.1.0",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://gitlab.com/codsen/codsen/compare/ranges-push@3.0.12...ranges-push@3.1.0) (2019-06-01)
+
+
+### Features
+
+* ranges.replace() ([f0a2de0](https://gitlab.com/codsen/codsen/commit/f0a2de0))
+
+
+
+
+
 ## 2.16.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

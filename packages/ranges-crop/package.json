@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,7 @@
   "dependencies": {
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^4.1.8"
+    "ranges-merge": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -180,12 +180,12 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
-    "js-row-num-cli": "^1.5.21",
-    "lect": "^0.5.15",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "ranges-apply": "^3.0.12",
+    "ranges-apply": "^3.0.13",
     "rollup": "^1.13.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.2",

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.0.12...html-crush@1.1.0) (2019-06-01)
+
+
+### Features
+
+* Inline CSS minification ([0518f05](https://gitlab.com/codsen/codsen/commit/0518f05))
+* Only replace linebreaks when result will be smaller in size, not the same ([a431686](https://gitlab.com/codsen/codsen/commit/a431686))
+
+
+
+
+
 ## 1.0.11 (2019-04-06)
 
 ### Bug Fixes

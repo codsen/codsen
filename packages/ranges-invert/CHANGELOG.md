@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://gitlab.com/codsen/codsen/compare/ranges-invert@2.0.12...ranges-invert@2.1.0) (2019-06-01)
+
+
+### Features
+
+* If ranges exceed reference string length, result is cropped (as opposed to error) ([c05d954](https://gitlab.com/codsen/codsen/commit/c05d954))
+* null instead of ranges array produces whole input string ([e3ff153](https://gitlab.com/codsen/codsen/commit/e3ff153))
+* opts.skipChecks and precautionary measures when it's on ([b129666](https://gitlab.com/codsen/codsen/commit/b129666))
+
+
+
+
+
 ## 1.4.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

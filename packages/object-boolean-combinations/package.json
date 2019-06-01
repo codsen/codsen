@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "2.11.21",
+  "version": "2.11.22",
   "description": "Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.",
   "license": "MIT",
   "engines": {
@@ -176,8 +176,8 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
-    "js-row-num-cli": "^1.5.21",
-    "lect": "^0.5.15",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
     "rollup": "^1.13.1",

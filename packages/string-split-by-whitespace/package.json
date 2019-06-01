@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "1.6.21",
+  "version": "1.6.22",
   "description": "Split string into array by chunks of whitespace",
   "license": "MIT",
   "engines": {
@@ -168,8 +168,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.17",
-    "ranges-is-index-within": "^1.13.21"
+    "check-types-mini": "^5.7.18",
+    "ranges-is-index-within": "^1.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -183,8 +183,8 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
-    "js-row-num-cli": "^1.5.21",
-    "lect": "^0.5.15",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
     "rollup": "^1.13.1",
@@ -197,6 +197,6 @@
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^5.0.0",
-    "string-find-heads-tails": "^3.14.21"
+    "string-find-heads-tails": "^3.14.22"
   }
 }
