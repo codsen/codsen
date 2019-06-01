@@ -981,7 +981,9 @@ async function writePackageJson(receivedPackageJsonObj) {
     if (
       !lectrcDevDeps.hasOwnProperty(key) &&
       (!isArr(lectrc.various.devDependencies) ||
-        !lectrc.various.devDependencies.includes(key))
+        !lectrc.various.devDependencies.includes(key)) &&
+      (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
+        (key !== "tempy" && key !== "execa"))
     ) {
       // console.log(`1019 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
@@ -1010,8 +1012,14 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   Object.keys(lectrcDevDeps).forEach(key => {
     // if certain key is not present in package.json dev deps but it's listed
-    // in lectrc, add it
-    if (!packDevDeps.hasOwnProperty(key)) {
+    // in lectrc, add it.
+    // Ensure it's not a CLI app or it is but it's not rollup-
+    // dependency
+    if (
+      (!packDevDeps.hasOwnProperty(key) &&
+        !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
+      !key.startsWith("rollup")
+    ) {
       // console.log(`1027 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
