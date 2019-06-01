@@ -36,6 +36,7 @@ deploy:
     - echo '█████████████████████████████ 5 █████████████████████████████'
     - git status
     - git add packages
+    - git add readme.md
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
     - npm run pub:vers
