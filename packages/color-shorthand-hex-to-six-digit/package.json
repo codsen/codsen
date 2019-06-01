@@ -1,6 +1,6 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "2.10.23",
+  "version": "2.10.24",
   "description": "Convert shorthand hex color codes into full",
   "license": "MIT",
   "engines": {
@@ -183,8 +183,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.23",
-    "lect": "^0.7.0",
+    "js-row-num-cli": "^1.5.24",
+    "lect": "^0.7.1",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
     "rollup": "^1.13.1",
