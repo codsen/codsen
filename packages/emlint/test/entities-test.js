@@ -1,6 +1,6 @@
 // avanotonly
 
-import { c, c2 } from "../test-util/util";
+import { c, c2 } from "../t-util/util";
 import test from "ava";
 
 const RAWAMP = `&`;

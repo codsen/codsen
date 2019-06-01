@@ -1,6 +1,6 @@
 import { lint } from "../dist/emlint.esm";
 import apply from "ranges-apply";
-import { c } from "../test-util/util";
+import { c } from "../t-util/util";
 import test from "ava";
 
 const charactersToTest = [

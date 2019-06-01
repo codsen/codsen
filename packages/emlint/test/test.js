@@ -1,6 +1,6 @@
 import test from "ava";
 import { lint } from "../dist/emlint.esm";
-import { c, c2, getUniqueIssueNames } from "../test-util/util";
+import { c, c2, getUniqueIssueNames } from "../t-util/util";
 
 // avanotonly
 

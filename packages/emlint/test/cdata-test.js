@@ -1,4 +1,4 @@
-import { c } from "../test-util/util";
+import { c } from "../t-util/util";
 import test from "ava";
 // avanotonly
 
