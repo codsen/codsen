@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Non-parsing, email template-oriented linter",
   "license": "MIT",
   "engines": {
@@ -167,14 +167,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "all-named-html-entities": "^1.1.0",
-    "arrayiffy-if-string": "^3.10.22",
-    "check-types-mini": "^5.7.18",
+    "all-named-html-entities": "^1.1.1",
+    "arrayiffy-if-string": "^3.10.23",
+    "check-types-mini": "^5.7.19",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.2.0",
-    "string-fix-broken-named-entities": "^2.3.0",
-    "string-left-right": "^2.2.2"
+    "ranges-merge": "^4.2.1",
+    "string-fix-broken-named-entities": "^2.3.1",
+    "string-left-right": "^2.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -190,11 +190,11 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.22",
-    "lect": "^0.6.0",
+    "js-row-num-cli": "^1.5.23",
+    "lect": "^0.7.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "ranges-apply": "^3.0.13",
+    "ranges-apply": "^3.0.14",
     "rollup": "^1.13.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.2",

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://gitlab.com/codsen/codsen/compare/lect@0.6.0...lect@0.7.0) (2019-06-01)
+
+
+### Bug Fixes
+
+* Bail early if CLI app is detected, stop assembling Rollup config ([a141172](https://gitlab.com/codsen/codsen/commit/a141172))
+* Remove unused getUserInfo ([a07ac61](https://gitlab.com/codsen/codsen/commit/a07ac61))
+
+
+### Features
+
+* Exclude non-CLI devdeps from CLI packages ([20afe7a](https://gitlab.com/codsen/codsen/commit/20afe7a))
+
+
+
+
+
 ## 0.6.0 (2019-06-01)
 
 ### Features
