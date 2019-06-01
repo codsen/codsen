@@ -38,13 +38,13 @@ npm i email-comb
 then,
 
 ```js
-const comb = require("email-comb");
+const { comb, defaults, version } = require("email-comb");
 ```
 
 or
 
 ```js
-import comb from "email-comb";
+import { comb, defaults, version } from "email-comb";
 ```
 
 Name the function as `comb` or any way you like because we're using `export default`.
@@ -54,8 +54,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 52 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 53 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 74 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 54 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 75 KB |
 
 **[⬆ back to top](#)**
 
@@ -98,6 +98,12 @@ COMPETITORS (ALL WEB DEVELOPMENT-ORIENTED):
 
 ## API
 
+This package exports a plain object: `{ comb, defaults, version }`.
+
+Its key "comb" has a value which is the main function, `comb()`.
+Its key "defaults" has a value, a plain object, which is defaults of the main function.
+Its key "version" is a string, for example, "2.0.12" and mirrors same key `package.json`.
+
 ```js
 comb(str, [options]);
 ```
@@ -113,7 +119,7 @@ For example,
 
 ```js
 // Require it first. You get a function which you can feed with strings:
-const comb = require("email-comb");
+const { comb } = require("email-comb");
 // Let's define a string to work upon:
 const html = '<html>zzz</html><body class="class-1">zzz</body>';
 // Assign a new string to the output of this library:
@@ -235,7 +241,7 @@ Here's an example:
 ```js
 // Require it first. You get a function which you can feed with strings.
 // Notice you can name it any way you want (because in the source it's using "export default").
-const comb = require("email-comb");
+const { comb } = require("email-comb");
 
 // Let's define a string equal to some processed HTML:
 const res = comb(
@@ -315,7 +321,7 @@ Code-wise, here's the idea:
 
 ```js
 const tap = require("gulp-tap");
-const comb = require("email-comb");
+const { comb } = require("email-comb");
 const util = require("gulp-util");
 const whitelist = [
   ".External*",
@@ -442,7 +448,7 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [node-url]: https://www.npmjs.com/package/email-comb
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
-[cov-img]: https://img.shields.io/badge/coverage-96.91%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-96.92%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb

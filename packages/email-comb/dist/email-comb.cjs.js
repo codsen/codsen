@@ -9,6 +9,8 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var stringMatchLeftRight = require('string-match-left-right');
@@ -69,7 +71,16 @@ function generateShortname(seed) {
   return prefix + library[seed % libraryLength];
 }
 
+var version = "2.0.12";
+
 var isArr = Array.isArray;
+var defaults = {
+  whitelist: [],
+  backend: [],
+  uglify: false,
+  removeHTMLComments: true,
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+};
 function comb(str, opts) {
   var start = Date.now();
   var finalIndexesToDelete = new Slices({
@@ -150,13 +161,6 @@ function comb(str, opts) {
       opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [];
     }
   }
-  var defaults = {
-    whitelist: [],
-    backend: [],
-    uglify: false,
-    removeHTMLComments: true,
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
-  };
   if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
     opts.backend = [];
   }
@@ -1202,4 +1206,6 @@ function comb(str, opts) {
   };
 }
 
-module.exports = comb;
+exports.comb = comb;
+exports.defaults = defaults;
+exports.version = version;

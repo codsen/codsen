@@ -5,6 +5,7 @@ import extract from "string-extract-class-names";
 import intersection from "lodash.intersection";
 import expander from "string-range-expander";
 import { generateShortname } from "./util";
+import { version } from "../package.json";
 import isObj from "lodash.isplainobject";
 import applySlices from "ranges-apply";
 import pullAll from "lodash.pullall";
@@ -13,6 +14,13 @@ import Slices from "ranges-push";
 import uniq from "lodash.uniq";
 import matcher from "matcher";
 const isArr = Array.isArray;
+const defaults = {
+  whitelist: [],
+  backend: [], // pass the ESP head & tail sets as separate objects inside this array
+  uglify: false,
+  removeHTMLComments: true,
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+};
 
 function comb(str, opts) {
   const start = Date.now();
@@ -226,14 +234,6 @@ function comb(str, opts) {
     }
   }
 
-  // checking opts
-  const defaults = {
-    whitelist: [],
-    backend: [], // pass the ESP head & tail sets as separate objects inside this array
-    uglify: false,
-    removeHTMLComments: true,
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
-  };
   if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
     opts.backend = [];
   }
@@ -3551,4 +3551,4 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
   };
 }
 
-export default comb;
+export { comb, defaults, version };

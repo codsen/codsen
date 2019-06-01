@@ -31,7 +31,16 @@ function generateShortname(seed) {
   return prefix + library[seed % libraryLength];
 }
 
+var version = "2.0.12";
+
 const isArr = Array.isArray;
+const defaults = {
+  whitelist: [],
+  backend: [],
+  uglify: false,
+  removeHTMLComments: true,
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+};
 function comb(str, opts) {
   const start = Date.now();
   const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
@@ -132,13 +141,6 @@ function comb(str, opts) {
       opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [];
     }
   }
-  const defaults = {
-    whitelist: [],
-    backend: [],
-    uglify: false,
-    removeHTMLComments: true,
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
-  };
   if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
     opts.backend = [];
   }
@@ -1625,4 +1627,4 @@ function comb(str, opts) {
   };
 }
 
-export default comb;
+export { comb, defaults, version };

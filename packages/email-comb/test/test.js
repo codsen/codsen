@@ -1,7 +1,7 @@
 /* eslint max-len:0 */
 
 import test from "ava";
-import comb from "../dist/email-comb.esm";
+import { comb } from "../dist/email-comb.esm";
 
 const allKindsOfLineBreaks = /\r?\n|\r/g;
 
