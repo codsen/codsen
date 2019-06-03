@@ -168,7 +168,7 @@
     "fs-extra": "^8.0.1",
     "globby": "^9.2.0",
     "is-d": "^1.0.0",
-    "json-comb-core": "^6.5.23",
+    "json-comb-core": "^6.5.24",
     "meow": "^5.0.0",
     "p-map": "^2.1.0",
     "p-reduce": "^2.1.0",

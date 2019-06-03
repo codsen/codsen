@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.19",
+    "ast-monkey-traverse": "^1.11.20",
     "chalk": "^2.4.2",
     "fs-extra": "^8.0.1",
     "globby": "^9.2.0",
@@ -186,8 +186,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^1.0.0",
-    "js-row-num-cli": "^1.5.23",
-    "lect": "^0.7.0",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "nyc": "^14.1.1",
     "p-map": "^2.1.0",
     "prettier": "^1.17.1",

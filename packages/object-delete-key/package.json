@@ -170,11 +170,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-is-empty": "^1.9.23",
-    "ast-monkey": "^7.10.23",
-    "check-types-mini": "^5.7.19",
+    "ast-is-empty": "^1.9.24",
+    "ast-monkey": "^7.10.24",
+    "check-types-mini": "^5.7.20",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^2.7.23"
+    "util-array-object-or-both": "^2.7.24"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -189,8 +189,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.23",
-    "lect": "^0.7.0",
+    "js-row-num-cli": "^1.5.22",
+    "lect": "^0.6.0",
     "nyc": "^14.1.1",
     "posthtml-parser": "^0.4.1",
     "prettier": "^1.17.1",
