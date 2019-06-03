@@ -157,7 +157,7 @@ function crush(str, originalOpts) {
             opts.reportProgressFunc(50);
           }
         } else if (len >= 2000) {
-          currentPercentageDone = Math.floor((i / len) * 80);
+          currentPercentageDone = Math.floor((i / len) * 98);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
@@ -776,7 +776,7 @@ function crush(str, originalOpts) {
     if (finalIndexesToDelete.current()) {
       const res = applySlices(str, finalIndexesToDelete.current(), percDone => {
         if (opts.reportProgressFunc && len >= 2000) {
-          currentPercentageDone = 80 + Math.floor(percDone / 5);
+          currentPercentageDone = 98 + Math.floor(percDone / 50);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);

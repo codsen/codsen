@@ -185,7 +185,7 @@ function crush(str, originalOpts) {
   // 1. TODO: Tackle indentations
   // 2. Remove excessive whitespace between strings on each line (not touching indentations)
 
-  // progress-wise, 95% will be allocated to loop, rest 5% - to range applies and
+  // progress-wise, 98% will be allocated to loop, rest 2% - to range applies and
   // final return clauses
 
   let currentPercentageDone;
@@ -211,14 +211,14 @@ function crush(str, originalOpts) {
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
       );
 
-      // Report the progress. We'll allocate 80% of the progress bar to this stage
+      // Report the progress. We'll allocate 98% of the progress bar to this stage
       if (opts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
           if (i === midLen) {
             opts.reportProgressFunc(50);
           }
         } else if (len >= 2000) {
-          currentPercentageDone = Math.floor((i / len) * 80);
+          currentPercentageDone = Math.floor((i / len) * 98);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
@@ -1516,9 +1516,9 @@ function crush(str, originalOpts) {
     if (finalIndexesToDelete.current()) {
       const res = applySlices(str, finalIndexesToDelete.current(), percDone => {
         //
-        // allocate remaining 20% of progress reporting to this stage
+        // allocate remaining 2% of progress reporting to this stage
         if (opts.reportProgressFunc && len >= 2000) {
-          currentPercentageDone = 80 + Math.floor(percDone / 5);
+          currentPercentageDone = 98 + Math.floor(percDone / 50);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
