@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.16.23",
+  "version": "1.16.24",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -184,8 +184,13 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^1.0.0",
+<<<<<<< HEAD
     "js-row-num-cli": "^1.5.22",
     "lect": "^0.6.0",
+=======
+    "js-row-num-cli": "^1.5.24",
+    "lect": "^0.7.1",
+>>>>>>> 8fc70ebaa596614bdfc31db455648450dd134fc4
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
     "tempy": "^0.3.0"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.2.0 (2019-06-01)
+
+### Features
+
+- Delete leading whitespace inside inline CSS ([614d11b](https://gitlab.com/codsen/codsen/commit/614d11b))
+
 ## 1.1.0 (2019-06-01)
 
 ### Features
