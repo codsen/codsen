@@ -51,11 +51,11 @@ Name the function as `comb` or any way you like because we're using `export defa
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                     | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 54 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 55 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 75 KB |
+| Type                                                                                                    | Key in `package.json` | Path                     | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 54 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 55 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 150 KB |
 
 **[⬆ back to top](#)**
 
