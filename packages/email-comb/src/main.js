@@ -19,7 +19,8 @@ const defaults = {
   backend: [], // pass the ESP head & tail sets as separate objects inside this array
   uglify: false,
   removeHTMLComments: true,
-  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
+  reportProgressFunc: null
 };
 
 function comb(str, opts) {
@@ -306,6 +307,18 @@ function comb(str, opts) {
       );
     }
   }
+  if (
+    opts.reportProgressFunc &&
+    typeof opts.reportProgressFunc !== "function"
+  ) {
+    throw new TypeError(
+      `email-remove-unused-css: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+        opts.reportProgressFunc,
+        null,
+        4
+      )} (${typeof opts.reportProgressFunc})`
+    );
+  }
 
   let allHeads = null;
   let allTails = null;
@@ -334,10 +347,12 @@ function comb(str, opts) {
   let allClassesAndIdsWithinHead;
   let allClassesAndIdsWithinBody;
   let headSelectorsCountClone;
+  let currentPercentageDone;
   let stateWithinHeadStyles;
   let currentlyWithinQuotes;
   let whitespaceStartedAt;
   let bodyClassesToDelete;
+  let lastPercentage = 0;
   let stateWithinBody;
   let bodyIdsToDelete;
   let bodyCssToDelete;
@@ -501,6 +516,22 @@ function comb(str, opts) {
       //                                S
       //                                S
       //                                S
+
+      // Report the progress. We'll allocate 94% of the progress bar to this stage
+      if (opts.reportProgressFunc) {
+        if (len > 1000 && len < 2000) {
+          if (round === 1 && i === 0) {
+            opts.reportProgressFunc(50);
+          }
+        } else if (len >= 2000) {
+          currentPercentageDone =
+            Math.floor((i / len) * 47) + (round === 1 ? 0 : 47);
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+          }
+        }
+      }
 
       const chr = str[i];
 
@@ -3470,6 +3501,9 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
     str = applySlices(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(95);
+  }
   console.log("\n\n");
   console.log(`3474 string after ROUND 3:\n${str}\n\n`);
 
@@ -3481,10 +3515,16 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
     str = str.replace(regexEmptyMediaQuery, "");
     totalCounter += str.length;
   }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(96);
+  }
 
   // remove empty style tags:
   str = str.replace(regexEmptyStyleTag, "\n");
   totalCounter += str.length;
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(97);
+  }
 
   // remove empty Outlook conditional comments:
   let tempLen = str.length;
@@ -3492,6 +3532,9 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
   totalCounter += str.length;
   if (tempLen !== str.length) {
     commentsLength += str.length - tempLen;
+  }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(98);
   }
 
   // remove empty lines:
@@ -3501,6 +3544,9 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
     nonIndentationsWhitespaceLength += str.length - tempLen;
   }
   totalCounter += str.length;
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(99);
+  }
 
   if (str.length) {
     if (

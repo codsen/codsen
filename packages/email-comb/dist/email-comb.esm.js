@@ -39,7 +39,8 @@ const defaults = {
   backend: [],
   uglify: false,
   removeHTMLComments: true,
-  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
+  reportProgressFunc: null
 };
 function comb(str, opts) {
   const start = Date.now();
@@ -211,6 +212,18 @@ function comb(str, opts) {
       );
     }
   }
+  if (
+    opts.reportProgressFunc &&
+    typeof opts.reportProgressFunc !== "function"
+  ) {
+    throw new TypeError(
+      `email-remove-unused-css: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+        opts.reportProgressFunc,
+        null,
+        4
+      )} (${typeof opts.reportProgressFunc})`
+    );
+  }
   let allHeads = null;
   let allTails = null;
   if (isArr(opts.backend) && opts.backend.length) {
@@ -229,10 +242,12 @@ function comb(str, opts) {
   let allClassesAndIdsWithinHead;
   let allClassesAndIdsWithinBody;
   let headSelectorsCountClone;
+  let currentPercentageDone;
   let stateWithinHeadStyles;
   let currentlyWithinQuotes;
   let whitespaceStartedAt;
   let bodyClassesToDelete;
+  let lastPercentage = 0;
   let stateWithinBody;
   let bodyIdsToDelete;
   let bodyCssToDelete;
@@ -274,6 +289,20 @@ function comb(str, opts) {
     doNothing = false;
     totalCounter += len;
     stepouter: for (i = 0; i < len; i++) {
+      if (opts.reportProgressFunc) {
+        if (len > 1000 && len < 2000) {
+          if (round === 1 && i === 0) {
+            opts.reportProgressFunc(50);
+          }
+        } else if (len >= 2000) {
+          currentPercentageDone =
+            Math.floor((i / len) * 47) + (round === 1 ? 0 : 47);
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
+          }
+        }
+      }
       const chr = str[i];
       if (str[i] === "\n") {
         if (str[i - 1] === "\r") {
@@ -1561,17 +1590,29 @@ function comb(str, opts) {
     str = applySlices(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(95);
+  }
   while (regexEmptyMediaQuery.test(str)) {
     str = str.replace(regexEmptyMediaQuery, "");
     totalCounter += str.length;
   }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(96);
+  }
   str = str.replace(regexEmptyStyleTag, "\n");
   totalCounter += str.length;
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(97);
+  }
   let tempLen = str.length;
   str = str.replace(emptyCondCommentRegex(), "");
   totalCounter += str.length;
   if (tempLen !== str.length) {
     commentsLength += str.length - tempLen;
+  }
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(98);
   }
   tempLen = str.length;
   str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
@@ -1579,6 +1620,9 @@ function comb(str, opts) {
     nonIndentationsWhitespaceLength += str.length - tempLen;
   }
   totalCounter += str.length;
+  if (opts.reportProgressFunc && len >= 2000) {
+    opts.reportProgressFunc(99);
+  }
   if (str.length) {
     if (
       (!str[0].trim().length || !str[str.length - 1].trim().length) &&

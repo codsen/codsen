@@ -53,8 +53,8 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 52 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 54 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 54 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 55 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 75 KB |
 
 **[⬆ back to top](#)**
@@ -450,7 +450,7 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [node-url]: https://www.npmjs.com/package/email-comb
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
-[cov-img]: https://img.shields.io/badge/coverage-96.92%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-95.09%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb
