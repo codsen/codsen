@@ -9,8 +9,6 @@ function geruc(options) {
   stream._transform = (file, encoding, cb) => {
     if (file.isStream()) {
       const error = "Streaming not supported";
-
-      // TODO: remove the gutil:
       return cb(new PluginError(PLUGIN_NAME, error));
     } else if (file.isBuffer()) {
       const contents = String(file.contents);

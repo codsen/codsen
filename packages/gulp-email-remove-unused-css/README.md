@@ -90,7 +90,7 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 
 ## Next level
 
-If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) library of it instead.
+If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [npm library](https://www.npmjs.com/package/email-comb), the API of this Gulp plugin directly.
 
 The idea is the following: in Gulp, everything flows as a vinyl Buffer streams. You [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations, then convert it back to Buffer and place it back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
 
@@ -98,19 +98,25 @@ Code-wise, here's the idea:
 
 ```js
 const tap = require('gulp-tap')
-const removeUnused = require('email-remove-unused-css')
+const comb = require('email-comb')
 const util = require('gulp-util')
 const whitelist = ['.External*', '.ReadMsgBody', '.yshortcuts', '.Mso*', '#outlook', '.module*']
 
 gulp.task('build', () => {
   return gulp.src('emails/*.html')
     .pipe(tap((file) => {
-      const cleanedHtmlResult = removeUnused(file.contents.toString(), { whitelist })
+      const cleanedHtmlResult = comb(file.contents.toString(), { whitelist })
       util.log(util.colors.green(`\nremoved ${cleanedHtmlResult.deletedFromHead.length} from head: ${cleanedHtmlResult.deletedFromHead.join(' ')}`))
       util.log(util.colors.green(`\nremoved ${cleanedHtmlResult.deletedFromBody.length} from body: ${cleanedHtmlResult.deletedFromBody.join(' ')}`))
       file.contents = Buffer.from(cleanedHtmlResult.result)
 }))
 ```
+
+There are many benefits for tapping npm packages directly, without gulp plugins:
+
+- You can add more functions, wrap them over `comb()` and Buffer-String-Buffer conversion will happen only once. If each of those functions was a Gulp plugin and did their Buffer-String-Buffer conversions that would be less efficient. Yes, all packages should be in streams but it adds complexity.
+- Gulp plugins can only be same or worse maintained than their API packages which drive them. Often it's the latter case.
+- Gulp plugins might be misconfigured and fail — even though the API package will work fine. Bigger surface to test, maintain and report bugs is worse than just one npm package.
 
 **[⬆ back to top](#)**
 

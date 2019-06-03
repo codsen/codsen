@@ -147,7 +147,9 @@
         "label": ""
       },
       "devDependencies": [
-        "tempy"
+        "tempy",
+        "map-stream",
+        "vinyl-string"
       ],
       "travisVersionsOverride": []
     }
@@ -178,8 +180,10 @@
     "esm": "^3.2.25",
     "js-row-num-cli": "^1.5.22",
     "lect": "^0.6.0",
+    "map-stream": "^0.0.7",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "tempy": "^0.3.0"
+    "tempy": "^0.3.0",
+    "vinyl-string": "^1.0.2"
   }
 }
