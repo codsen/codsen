@@ -37,12 +37,13 @@ deploy:
     - git status
     - git add packages
     - git add readme.md
-    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
+    - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
     - npm run pub:vers
     - echo '█████████████████████████████ 6 █████████████████████████████'
     - git status
     - git add packages
+    - git add readme.md
     - echo '█████████████████████████████ 7 █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
