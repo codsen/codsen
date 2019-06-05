@@ -8,6 +8,8 @@
         padding: 0;
         margin: 0;
         font-family: monospace;
+        background-color: #2e2e2e;
+        color: #fff;
       }
       .w50p {
         width: 49%;
@@ -21,18 +23,26 @@
       }
       textarea {
         font-family: monospace;
+        width: 100%;
       }
     </style>
   </head>
   <body>
 
     <div id="app">
-      <textarea class="w50p fl" rows="10" v-model="text1" placeholder="put some HTML here"></textarea>
-      <textarea class="w50p fr" rows="10" v-model="text2" readonly></textarea>
+      <div class="w50p fl">
+        put HTML below:
+        <textarea rows="10" v-model="text1" placeholder="put some HTML here"></textarea>
+      </div>
+      <div class="w50p fr">
+        here's the patched HTML:
+        <textarea class="" rows="10" v-model="text2" readonly></textarea>
+      </div>
+      <br>
       <div>
-        patched:
+        patching:
         <input type="checkbox" id="checkbox" v-model="checked">
-        <label for="checkbox">{{ checked }}</label>
+        <label for="checkbox">{{ checked ? "enabled" : "disabled" }}</label>
       </div>
       <iframe :srcdoc="preview" width="98%" height="1500"></iframe>
     </div>
