@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>table patcher</title>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: monospace;
+      }
+      .w50p {
+        width: 49%;
+        height: 100%;
+      }
+      .fl {
+        float: left;
+      }
+      .fr {
+        float: right;
+      }
+      textarea {
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      <textarea class="w50p fl" rows="10" v-model="text1" placeholder="put some HTML here"></textarea>
+      <textarea class="w50p fr" rows="10" v-model="text2" readonly></textarea>
+      <div>
+        patched:
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+      </div>
+      <iframe :srcdoc="preview" width="98%" height="1500"></iframe>
+    </div>
+
+    <script src="vue.js"></script>
+    <script src="../dist/html-table-patcher.umd.js"></script>
+    <script>
+    window.Event = new Vue();
+
+    new Vue({
+    el: '#app',
+    data: {
+      text1: '',
+      checked: true
+    },
+    computed: {
+      text2: function () {
+        return this.text1 ? htmlTablePatcher(this.text1) : ""
+      },
+      preview: function () {
+        return this.checked ? this.text2 : this.text1
+      }
+    }
+
+    });
+    </script>
+  </body>
+</html>
