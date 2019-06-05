@@ -52,9 +52,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                             | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-table-patcher.cjs.js` | 7 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-table-patcher.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-table-patcher.umd.js` | 39 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-table-patcher.cjs.js` | 9 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-table-patcher.esm.js` | 10 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-table-patcher.umd.js` | 40 KB |
 
 **[⬆ back to top](#)**
 
@@ -66,7 +66,7 @@ This library patches the HTML, so the browser in the correct places renders that
 
 The patched code is not meant for production by any means - it's for visual display in a browser only!
 
-This library takes string and outputs string, so it's not an _end tool_, it's rather an API for a feature in other tools and browser plugins.
+This library takes _string_ (hopefully some HTML) and outputs patched up _string_, so it's not an _end tool_, it's rather an API for a feature in other tools and browser plugins.
 
 **[⬆ back to top](#)**
 
@@ -116,7 +116,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/html-table-patcher
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
-[cov-img]: https://img.shields.io/badge/coverage-90.29%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-90%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/html-table-patcher

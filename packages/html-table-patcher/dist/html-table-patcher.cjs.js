@@ -15,6 +15,7 @@ var rangesApply = _interopDefault(require('ranges-apply'));
 var Ranges = _interopDefault(require('ranges-push'));
 var htmlCommentRegex = _interopDefault(require('html-comment-regex'));
 
+var isArr = Array.isArray;
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
@@ -32,11 +33,15 @@ function patcher(str) {
   var tdOpeningStartsAt = null;
   var tdClosingEndsAt = null;
   var trClosingEndsAt = null;
+  var countTds = false;
+  var countVal = null;
   var quotes = null;
   var type1Gaps = new Ranges();
   var type2Gaps = new Ranges();
   var type3Gaps = new Ranges();
   var type4Gaps = new Ranges();
+  var tableColumnCounts = [];
+  var tableColumnCount = [];
   outerLoop: for (var i = 0, len = str.length; i < len; i++) {
     if (str[i] === "<" && str[i + 1] === "!" && str[i + 2] === "-" && str[i + 3] === "-") {
       for (var y = i; y < len; y++) {
@@ -83,12 +88,30 @@ function patcher(str) {
       tdClosingEndsAt !== null && (trClosingEndsAt === null || tdClosingEndsAt > trClosingEndsAt)) {
         if (deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim().length !== 0) {
           type3Gaps.push(tdClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim());
+          if (countTds) {
+            countTds = false;
+          }
+        }
+      }
+      if (countTds) {
+        if (countVal === null) {
+          countVal = 1;
+        } else {
+          countVal++;
         }
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "a" && str[i + 4] === "b" && str[i + 5] === "l" && str[i + 6] === "e" && str[i + 7] === ">") {
       if (deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim().length !== 0) {
         type1Gaps.push(trClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim());
+      }
+      if (tableColumnCount) {
+        if (countVal !== null) {
+          tableColumnCounts.push([tableColumnCount[0], i + 7, countVal]);
+        }
+        tableColumnCount = [];
+        countTds = false;
+        countVal = null;
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "r" && str[i + 4] === ">") {
@@ -97,6 +120,9 @@ function patcher(str) {
       }
       trClosingEndsAt = i + 4;
       trOpeningStartsAt = null;
+      if (countTds) {
+        countTds = false;
+      }
       i += 4;
       continue;
     }
@@ -114,6 +140,9 @@ function patcher(str) {
         }
         trClosingEndsAt = null;
       }
+      if (!countTds && countVal === null) {
+        countTds = true;
+      }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "t" && str[i + 2] === "r" && !isLetter(str[i + 3])) {
       if (trClosingEndsAt !== null && tableTagEndsAt === null && deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim().length !== 0) {
@@ -124,6 +153,9 @@ function patcher(str) {
     }
     if (!quotes && str[i] === ">" && tableTagStartsAt !== null && tableTagStartsAt < i) {
       tableTagEndsAt = i;
+      if (!(isArr(tableColumnCount) && tableColumnCount.length)) {
+        tableColumnCount.push(tableTagStartsAt);
+      }
       tableTagStartsAt = null;
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "t" && str[i + 2] === "a" && str[i + 3] === "b" && str[i + 4] === "l" && str[i + 5] === "e" && !isLetter(str[i + 6])) {
@@ -137,7 +169,18 @@ function patcher(str) {
   if (type1Gaps.current()) {
     resRanges.push(type1Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        return [range[0], range[1], "<tr><td>".concat(range[2].trim(), "</td></tr>")];
+        var colspanToAdd = "";
+        var tempColspanValIfFound;
+        if (isArr(tableColumnCounts) && tableColumnCounts.length && tableColumnCounts.some(function (refRange) {
+          if (range[0] >= refRange[0] && range[0] <= refRange[1] && refRange[2] !== 1) {
+            tempColspanValIfFound = refRange[2];
+            return true;
+          }
+          return false;
+        })) {
+          colspanToAdd = " colspan=\"".concat(tempColspanValIfFound, "\"");
+        }
+        return [range[0], range[1], "<tr><td".concat(colspanToAdd, ">").concat(range[2].trim(), "</td></tr>")];
       }
       return range;
     }));
@@ -145,7 +188,18 @@ function patcher(str) {
   if (type2Gaps.current()) {
     resRanges.push(type2Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        return [range[0], range[1], "<td>".concat(range[2].trim(), "</td></tr>\n<tr>")];
+        var colspanToAdd = "";
+        var tempColspanValIfFound;
+        if (isArr(tableColumnCounts) && tableColumnCounts.length && tableColumnCounts.some(function (refRange) {
+          if (range[0] >= refRange[0] && range[0] <= refRange[1] && refRange[2] !== 1) {
+            tempColspanValIfFound = refRange[2];
+            return true;
+          }
+          return false;
+        })) {
+          colspanToAdd = " colspan=\"".concat(tempColspanValIfFound, "\"");
+        }
+        return [range[0], range[1], "<td".concat(colspanToAdd, ">").concat(range[2].trim(), "</td></tr>\n<tr>")];
       }
       return range;
     }));

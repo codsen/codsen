@@ -12,7 +12,7 @@ function processThis(str) {
 
 test(`01.01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`, t => {
   t.deepEqual(
-    processThis(`<table width="100%">
+    processThis(`<table>
   zzz
   <tr>
     <td>
@@ -20,7 +20,7 @@ test(`01.01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    tiny(`<table width="100%">
+    tiny(`<table>
   <tr>
     <td>
       zzz
@@ -32,13 +32,13 @@ test(`01.01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "01.01.01 - str before tr - 1 col"
+    "01.01 - str before tr - 1 col"
   );
 });
 
 test(`01.02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`, t => {
   t.deepEqual(
-    processThis(`<table width="100%">
+    processThis(`<table>
   <tr>
     <td>
       something
@@ -46,7 +46,7 @@ test(`01.02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   </tr>
   zzz
 </table>`),
-    tiny(`<table width="100%">
+    tiny(`<table>
   <tr>
     <td>
       something
@@ -58,49 +58,49 @@ test(`01.02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "01.02.01 - string after the tr - 1 col"
+    "01.02 - string after the tr - 1 col"
   );
 });
 
 test(`01.03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`, t => {
   t.deepEqual(
-    processThis(`<table width="100%">
-  <tr>
-    <td>
-      something
-    </td>
-  </tr>
-  zzz
-  <tr>
-    <td>
-      else
-    </td>
-  </tr>
+    processThis(`<table>
+<tr>
+<td>
+1
+</td>
+</tr>
+zzz
+<tr>
+<td>
+2
+</td>
+</tr>
 </table>`),
-    tiny(`<table width="100%">
-  <tr>
-    <td>
-      something
-    </td>
-  </tr>
-  <tr>
-    <td>
-      zzz
-    </td>
-  </tr>
-  <tr>
-    <td>
-      else
-    </td>
-  </tr>
+    tiny(`<table>
+<tr>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+zzz
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+</tr>
 </table>`),
-    "01.03.01 - string between the tr's - 1 col"
+    "01.03 - string between the tr's - 1 col"
   );
 });
 
 test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - unfinished comment`, t => {
   t.deepEqual(
-    processThis(`<table width="100%">
+    processThis(`<table>
   zzz
   <tr><!--
     <td>
@@ -109,7 +109,7 @@ test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     zzz
   </tr>
 </table>`),
-    tiny(`<table width="100%">
+    tiny(`<table>
   <tr>
     <td>
       zzz
@@ -122,13 +122,13 @@ test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     zzz
   </tr>
 </table>`),
-    "01.04.01 - notice comment is never closed, yet wrapping occurs before it"
+    "01.04 - notice comment is never closed, yet wrapping occurs before it"
   );
 });
 
 test(`01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`, t => {
   t.deepEqual(
-    processThis(`<table width="100%">
+    processThis(`<table>
   <tr>
     <td>
       something
@@ -141,7 +141,7 @@ test(`01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    tiny(`<table width="100%">
+    tiny(`<table>
   <tr>
     <td>
       something
@@ -158,7 +158,35 @@ test(`01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "01.05.01 - code + comments"
+    "01.05 - code + comments"
+  );
+});
+
+test(`01.06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`, t => {
+  t.deepEqual(
+    processThis(`<table>
+  xyz
+  <tr>
+    <td>
+      abc
+    </td>
+    <td>
+      def
+    </td>
+  </tr>
+</table>`),
+    tiny(`<table>
+  <tr><td colspan="2">xyz</td></tr>
+  <tr>
+    <td>
+      abc
+    </td>
+    <td>
+      def
+    </td>
+  </tr>
+</table>`),
+    "01.06"
   );
 });
 
@@ -187,7 +215,39 @@ test(`02.01 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "02.01.01 - str before tr - 1 col"
+    "02.01 - str before tr - 1 col"
+  );
+});
+
+test(`02.02 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - colspan=2`, t => {
+  t.deepEqual(
+    processThis(`<table>
+  <tr>
+    x
+    <td>
+      1
+    </td>
+    <td>
+      2
+    </td>
+  </tr>
+</table>`),
+    tiny(`<table>
+  <tr>
+    <td colspan="2">
+      x
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      2
+    </td>
+  </tr>
+</table>`),
+    "02.02 - str before tr - colspan=2"
   );
 });
 
@@ -224,7 +284,39 @@ test(`03.01 - ${`\u001b[${31}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "03.01.01 - str before tr - 1 col"
+    "03.01 - str before tr - 1 col"
+  );
+});
+
+test(`03.02 - ${`\u001b[${31}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TD and TD`}\u001b[${39}m`} - 3 places`, t => {
+  t.deepEqual(
+    processThis(`<table>
+<tr>
+x
+<td>1</td>
+y
+<td>2</td>
+z
+</tr>
+</table>`),
+    tiny(`<table>
+<tr>
+<td>x</td>
+</tr>
+<tr>
+<td>1</td>
+</tr>
+<tr>
+<td>y</td>
+</tr>
+<tr>
+<td>2</td>
+</tr>
+<tr>
+<td>z</td>
+</tr>
+</table>`),
+    "03.02"
   );
 });
 
@@ -253,7 +345,7 @@ test(`04.01 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - co
     </td>
   </tr>
 </table>`),
-    "04.01.01 - 1 col"
+    "04.01 - 1 col"
   );
 });
 

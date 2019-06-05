@@ -11,6 +11,7 @@ import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
 import htmlCommentRegex from 'html-comment-regex';
 
+const isArr = Array.isArray;
 function isLetter(str) {
   return (
     typeof str === "string" &&
@@ -32,11 +33,15 @@ function patcher(str) {
   let tdOpeningStartsAt = null;
   let tdClosingEndsAt = null;
   let trClosingEndsAt = null;
+  let countTds = false;
+  let countVal = null;
   let quotes = null;
   const type1Gaps = new Ranges();
   const type2Gaps = new Ranges();
   const type3Gaps = new Ranges();
   const type4Gaps = new Ranges();
+  const tableColumnCounts = [];
+  let tableColumnCount = [];
   outerLoop: for (let i = 0, len = str.length; i < len; i++) {
     if (
       str[i] === "<" &&
@@ -130,6 +135,16 @@ function patcher(str) {
             i,
             deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
           );
+          if (countTds) {
+            countTds = false;
+          }
+        }
+      }
+      if (countTds) {
+        if (countVal === null) {
+          countVal = 1;
+        } else {
+          countVal++;
         }
       }
     }
@@ -154,6 +169,14 @@ function patcher(str) {
           deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
         );
       }
+      if (tableColumnCount) {
+        if (countVal !== null) {
+          tableColumnCounts.push([tableColumnCount[0], i + 7, countVal]);
+        }
+        tableColumnCount = [];
+        countTds = false;
+        countVal = null;
+      }
     }
     if (
       !quotes &&
@@ -176,6 +199,9 @@ function patcher(str) {
       }
       trClosingEndsAt = i + 4;
       trOpeningStartsAt = null;
+      if (countTds) {
+        countTds = false;
+      }
       i += 4;
       continue;
     }
@@ -220,6 +246,9 @@ function patcher(str) {
         }
         trClosingEndsAt = null;
       }
+      if (!countTds && countVal === null) {
+        countTds = true;
+      }
     }
     if (
       !quotes &&
@@ -250,6 +279,9 @@ function patcher(str) {
       tableTagStartsAt < i
     ) {
       tableTagEndsAt = i;
+      if (!(isArr(tableColumnCount) && tableColumnCount.length)) {
+        tableColumnCount.push(tableTagStartsAt);
+      }
       tableTagStartsAt = null;
     }
     if (
@@ -278,7 +310,30 @@ function patcher(str) {
     resRanges.push(
       type1Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
-          return [range[0], range[1], `<tr><td>${range[2].trim()}</td></tr>`];
+          let colspanToAdd = "";
+          let tempColspanValIfFound;
+          if (
+            isArr(tableColumnCounts) &&
+            tableColumnCounts.length &&
+            tableColumnCounts.some(refRange => {
+              if (
+                range[0] >= refRange[0] &&
+                range[0] <= refRange[1] &&
+                refRange[2] !== 1
+              ) {
+                tempColspanValIfFound = refRange[2];
+                return true;
+              }
+              return false;
+            })
+          ) {
+            colspanToAdd = ` colspan="${tempColspanValIfFound}"`;
+          }
+          return [
+            range[0],
+            range[1],
+            `<tr><td${colspanToAdd}>${range[2].trim()}</td></tr>`
+          ];
         }
         return range;
       })
@@ -288,7 +343,30 @@ function patcher(str) {
     resRanges.push(
       type2Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
-          return [range[0], range[1], `<td>${range[2].trim()}</td></tr>\n<tr>`];
+          let colspanToAdd = "";
+          let tempColspanValIfFound;
+          if (
+            isArr(tableColumnCounts) &&
+            tableColumnCounts.length &&
+            tableColumnCounts.some(refRange => {
+              if (
+                range[0] >= refRange[0] &&
+                range[0] <= refRange[1] &&
+                refRange[2] !== 1
+              ) {
+                tempColspanValIfFound = refRange[2];
+                return true;
+              }
+              return false;
+            })
+          ) {
+            colspanToAdd = ` colspan="${tempColspanValIfFound}"`;
+          }
+          return [
+            range[0],
+            range[1],
+            `<td${colspanToAdd}>${range[2].trim()}</td></tr>\n<tr>`
+          ];
         }
         return range;
       })
