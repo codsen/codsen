@@ -1,5 +1,5 @@
 import test from "ava";
-import patcher from "../dist/html-table-patcher.esm";
+import { patcher, defaults, version } from "../dist/html-table-patcher.esm";
 import tiny from "tinyhtml";
 
 function processThis(str) {
@@ -529,4 +529,16 @@ test(`05.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}
 
   const str3 = `\n\n\n>£$<>@<>@\n£<$>@<£>$<>£<___£($\n(@£&$*&_>\n<!DOCTYPE html>@£(&$^@£^$^ )\n<!DOCTYPE html>$*%(*$&%(£\n&$(($£&))))<4873874795 html>lslhflsjhdfljshdlh&£^R*^$*&^@*&$\n^@£$*@^$*@&$^`;
   t.deepEqual(patcher(str3), str3, "05.02.03");
+});
+
+// 06. checking API bits
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${32}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
+  t.true(typeof defaults === "object", "06.01.01");
+  t.true(Object.keys(defaults).length > 0, "06.01.02");
+});
+
+test(`06.02 - ${`\u001b[${32}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
+  t.regex(version, /\d*\.\d*\.\d*/, "06.02.01");
 });

@@ -1,6 +1,7 @@
 import rangesApply from "ranges-apply";
 import Ranges from "ranges-push";
 import htmlCommentRegex from "html-comment-regex";
+import { version } from "../package.json";
 const isArr = Array.isArray;
 
 function isLetter(str) {
@@ -10,15 +11,35 @@ function isLetter(str) {
     str.toUpperCase() !== str.toLowerCase()
   );
 }
+function isStr(something) {
+  return typeof something === "string";
+}
 
 function deleteAllKindsOfComments(str) {
-  if (typeof str === "string") {
+  if (isStr(str)) {
     return str.replace(htmlCommentRegex, "");
   }
   return str;
 }
 
-function patcher(str) {
+// opts
+const defaults = {
+  cssStylesContent: ""
+};
+
+function patcher(str, originalOpts) {
+  // quick ending
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+  const opts = Object.assign({}, defaults, originalOpts);
+  if (
+    opts.cssStylesContent &&
+    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)
+  ) {
+    opts.cssStylesContent = undefined;
+  }
+
   let tableTagStartsAt = null;
   let tableTagEndsAt = null;
 
@@ -726,6 +747,9 @@ function patcher(str) {
             if (addAlignCenter) {
               attributesToAdd += ` align="center"`;
             }
+            if (opts.cssStylesContent) {
+              attributesToAdd += ` style="${opts.cssStylesContent}"`;
+            }
           }
           return [
             range[0],
@@ -771,6 +795,9 @@ function patcher(str) {
             }
             if (addAlignCenter) {
               attributesToAdd += ` align="center"`;
+            }
+            if (opts.cssStylesContent) {
+              attributesToAdd += ` style="${opts.cssStylesContent}"`;
             }
           }
           return [
@@ -831,4 +858,4 @@ function patcher(str) {
   return str;
 }
 
-export default patcher;
+export { patcher, defaults, version };
