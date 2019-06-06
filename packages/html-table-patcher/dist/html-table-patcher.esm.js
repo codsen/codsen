@@ -31,7 +31,8 @@ function deleteAllKindsOfComments(str) {
   return str;
 }
 const defaults = {
-  cssStylesContent: ""
+  cssStylesContent: "",
+  alwaysCenter: false
 };
 function patcher(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -368,11 +369,11 @@ function patcher(str, originalOpts) {
             if (tempColspanValIfFound) {
               attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
             }
-            if (addAlignCenter) {
-              attributesToAdd += ` align="center"`;
-            }
             if (opts.cssStylesContent) {
               attributesToAdd += ` style="${opts.cssStylesContent}"`;
+            }
+            if (opts.alwaysCenter || addAlignCenter) {
+              attributesToAdd += ` align="center"`;
             }
           }
           return [
@@ -411,11 +412,11 @@ function patcher(str, originalOpts) {
             if (tempColspanValIfFound) {
               attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
             }
-            if (addAlignCenter) {
-              attributesToAdd += ` align="center"`;
-            }
             if (opts.cssStylesContent) {
               attributesToAdd += ` style="${opts.cssStylesContent}"`;
+            }
+            if (opts.alwaysCenter || addAlignCenter) {
+              attributesToAdd += ` align="center"`;
             }
           }
           return [
@@ -432,10 +433,17 @@ function patcher(str, originalOpts) {
     resRanges.push(
       type3Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
+          let attributesToAdd = "";
+          if (opts.alwaysCenter) {
+            attributesToAdd += ` align="center"`;
+          }
+          if (opts.cssStylesContent) {
+            attributesToAdd += ` style="${opts.cssStylesContent}"`;
+          }
           return [
             range[0],
             range[1],
-            `</tr>\n<tr><td>${range[2].trim()}</td></tr><tr>`
+            `</tr>\n<tr><td${attributesToAdd}>${range[2].trim()}</td></tr><tr>`
           ];
         }
         return range;
@@ -446,7 +454,18 @@ function patcher(str, originalOpts) {
     resRanges.push(
       type4Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
-          return [range[0], range[1], `</tr><tr><td>${range[2].trim()}</td>`];
+          let attributesToAdd = "";
+          if (opts.alwaysCenter) {
+            attributesToAdd += ` align="center"`;
+          }
+          if (opts.cssStylesContent) {
+            attributesToAdd += ` style="${opts.cssStylesContent}"`;
+          }
+          return [
+            range[0],
+            range[1],
+            `</tr><tr><td${attributesToAdd}>${range[2].trim()}</td>`
+          ];
         }
         return range;
       })

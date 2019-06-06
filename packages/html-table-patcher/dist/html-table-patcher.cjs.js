@@ -33,7 +33,8 @@ function deleteAllKindsOfComments(str) {
   return str;
 }
 var defaults = {
-  cssStylesContent: ""
+  cssStylesContent: "",
+  alwaysCenter: false
 };
 function patcher(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -210,11 +211,11 @@ function patcher(str, originalOpts) {
           if (tempColspanValIfFound) {
             attributesToAdd += " colspan=\"".concat(tempColspanValIfFound, "\"");
           }
-          if (addAlignCenter) {
-            attributesToAdd += " align=\"center\"";
-          }
           if (opts.cssStylesContent) {
             attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+          }
+          if (opts.alwaysCenter || addAlignCenter) {
+            attributesToAdd += " align=\"center\"";
           }
         }
         return [range[0], range[1], "<tr><td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>")];
@@ -243,11 +244,11 @@ function patcher(str, originalOpts) {
           if (tempColspanValIfFound) {
             attributesToAdd += " colspan=\"".concat(tempColspanValIfFound, "\"");
           }
-          if (addAlignCenter) {
-            attributesToAdd += " align=\"center\"";
-          }
           if (opts.cssStylesContent) {
             attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+          }
+          if (opts.alwaysCenter || addAlignCenter) {
+            attributesToAdd += " align=\"center\"";
           }
         }
         return [range[0], range[1], "<td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>\n<tr>")];
@@ -258,7 +259,14 @@ function patcher(str, originalOpts) {
   if (type3Gaps.current()) {
     resRanges.push(type3Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        return [range[0], range[1], "</tr>\n<tr><td>".concat(range[2].trim(), "</td></tr><tr>")];
+        var attributesToAdd = "";
+        if (opts.alwaysCenter) {
+          attributesToAdd += " align=\"center\"";
+        }
+        if (opts.cssStylesContent) {
+          attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+        }
+        return [range[0], range[1], "</tr>\n<tr><td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr><tr>")];
       }
       return range;
     }));
@@ -266,7 +274,14 @@ function patcher(str, originalOpts) {
   if (type4Gaps.current()) {
     resRanges.push(type4Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        return [range[0], range[1], "</tr><tr><td>".concat(range[2].trim(), "</td>")];
+        var attributesToAdd = "";
+        if (opts.alwaysCenter) {
+          attributesToAdd += " align=\"center\"";
+        }
+        if (opts.cssStylesContent) {
+          attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+        }
+        return [range[0], range[1], "</tr><tr><td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td>")];
       }
       return range;
     }));

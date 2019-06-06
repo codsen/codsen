@@ -2,8 +2,8 @@ import test from "ava";
 import { patcher, defaults, version } from "../dist/html-table-patcher.esm";
 import tiny from "tinyhtml";
 
-function processThis(str) {
-  return tiny(patcher(str));
+function processThis(str, opts) {
+  return tiny(patcher(str, opts));
 }
 
 // 01. type #1 - code between two TR's or TR and TABLE
@@ -279,6 +279,33 @@ test(`01.09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 <tr><td>s</td></tr>
 </table>`),
     "01.09"
+  );
+});
+
+test(`01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`, t => {
+  t.deepEqual(
+    processThis(
+      `<table>
+<tr><td>a</td></tr>
+{{ 0 }}
+<tr><td>'</td></tr>
+{{ 1 }}
+<tr><td>s</td></tr>
+</table>`,
+      {
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
+      }
+    ),
+    tiny(`<table>
+<tr><td>a</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 0 }}</td></tr>
+<tr><td>'</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 1 }}</td></tr>
+<tr><td>s</td></tr>
+</table>`),
+    "01.10"
   );
 });
 
