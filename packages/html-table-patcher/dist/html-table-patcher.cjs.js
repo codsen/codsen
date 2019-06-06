@@ -35,6 +35,7 @@ function patcher(str) {
   var trClosingEndsAt = null;
   var countTds = false;
   var countVal = null;
+  var centeredTdsDetected = false;
   var quotes = null;
   var type1Gaps = new Ranges();
   var type2Gaps = new Ranges();
@@ -75,6 +76,9 @@ function patcher(str) {
       }
     }
     if (!quotes && str[i] === ">" && tdOpeningStartsAt !== null && tdOpeningStartsAt < i && tableTagStartsAt === null && tableTagEndsAt < i && trOpeningStartsAt === null && trOpeningEndsAt < i) {
+      if (countTds && (str.slice(tdOpeningStartsAt, i).includes('align="center"') || str.slice(tdOpeningStartsAt, i).match(/text-align:\s*center/gi))) {
+        centeredTdsDetected = true;
+      }
       tdOpeningStartsAt = null;
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "t" && str[i + 2] === "d" && !isLetter(str[i + 3])) {
@@ -107,11 +111,12 @@ function patcher(str) {
       }
       if (tableColumnCount) {
         if (countVal !== null) {
-          tableColumnCounts.push([tableColumnCount[0], i + 7, countVal]);
+          tableColumnCounts.push([tableColumnCount[0], i + 7, countVal, centeredTdsDetected]);
         }
         tableColumnCount = [];
         countTds = false;
         countVal = null;
+        centeredTdsDetected = false;
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "r" && str[i + 4] === ">") {
@@ -169,18 +174,29 @@ function patcher(str) {
   if (type1Gaps.current()) {
     resRanges.push(type1Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        var colspanToAdd = "";
+        var attributesToAdd = "";
         var tempColspanValIfFound;
+        var addAlignCenter = false;
         if (isArr(tableColumnCounts) && tableColumnCounts.length && tableColumnCounts.some(function (refRange) {
-          if (range[0] >= refRange[0] && range[0] <= refRange[1] && refRange[2] !== 1) {
-            tempColspanValIfFound = refRange[2];
+          if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
+            if (refRange[2] !== 1) {
+              tempColspanValIfFound = refRange[2];
+            }
+            if (refRange[3]) {
+              addAlignCenter = refRange[3];
+            }
             return true;
           }
           return false;
         })) {
-          colspanToAdd = " colspan=\"".concat(tempColspanValIfFound, "\"");
+          if (tempColspanValIfFound) {
+            attributesToAdd += " colspan=\"".concat(tempColspanValIfFound, "\"");
+          }
+          if (addAlignCenter) {
+            attributesToAdd += " align=\"center\"";
+          }
         }
-        return [range[0], range[1], "<tr><td".concat(colspanToAdd, ">").concat(range[2].trim(), "</td></tr>")];
+        return [range[0], range[1], "<tr><td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>")];
       }
       return range;
     }));
@@ -188,18 +204,29 @@ function patcher(str) {
   if (type2Gaps.current()) {
     resRanges.push(type2Gaps.current().map(function (range) {
       if (typeof range[2] === "string" && range[2].length > 0) {
-        var colspanToAdd = "";
+        var attributesToAdd = "";
         var tempColspanValIfFound;
+        var addAlignCenter = false;
         if (isArr(tableColumnCounts) && tableColumnCounts.length && tableColumnCounts.some(function (refRange) {
-          if (range[0] >= refRange[0] && range[0] <= refRange[1] && refRange[2] !== 1) {
-            tempColspanValIfFound = refRange[2];
+          if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
+            if (refRange[2] !== 1) {
+              tempColspanValIfFound = refRange[2];
+            }
+            if (refRange[3]) {
+              addAlignCenter = refRange[3];
+            }
             return true;
           }
           return false;
         })) {
-          colspanToAdd = " colspan=\"".concat(tempColspanValIfFound, "\"");
+          if (tempColspanValIfFound) {
+            attributesToAdd += " colspan=\"".concat(tempColspanValIfFound, "\"");
+          }
+          if (addAlignCenter) {
+            attributesToAdd += " align=\"center\"";
+          }
         }
-        return [range[0], range[1], "<td".concat(colspanToAdd, ">").concat(range[2].trim(), "</td></tr>\n<tr>")];
+        return [range[0], range[1], "<td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>\n<tr>")];
       }
       return range;
     }));

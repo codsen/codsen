@@ -190,6 +190,78 @@ test(`01.06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
+test(`01.07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`, t => {
+  t.deepEqual(
+    processThis(`<table>
+<tr>
+<td align="center">
+1
+</td>
+</tr>
+zzz
+<tr>
+<td>
+2
+</td>
+</tr>
+</table>`),
+    tiny(`<table>
+<tr>
+<td align="center">
+1
+</td>
+</tr>
+<tr>
+<td align="center">
+zzz
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+</tr>
+</table>`),
+    "01.07 - string between the tr's - 1 col"
+  );
+});
+
+test(`01.08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`, t => {
+  t.deepEqual(
+    processThis(`<table>
+<tr>
+<td style="text-align: center;">
+1
+</td>
+</tr>
+zzz
+<tr>
+<td>
+2
+</td>
+</tr>
+</table>`),
+    tiny(`<table>
+<tr>
+<td style="text-align: center;">
+1
+</td>
+</tr>
+<tr>
+<td align="center">
+zzz
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+</tr>
+</table>`),
+    "01.08 - string between the tr's - 1 col"
+  );
+});
+
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 
@@ -248,6 +320,64 @@ test(`02.02 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   </tr>
 </table>`),
     "02.02 - str before tr - colspan=2"
+  );
+});
+
+test(`02.03 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - align="center", one TD`, t => {
+  t.deepEqual(
+    processThis(`<table>
+  <tr>
+    x
+    <td align="center">
+      1
+    </td>
+  </tr>
+</table>`),
+    tiny(`<table>
+  <tr>
+    <td align="center">
+      x
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      1
+    </td>
+  </tr>
+</table>`),
+    "02.03"
+  );
+});
+
+test(`02.04 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - align="center" on one of two TD's`, t => {
+  t.deepEqual(
+    processThis(`<table>
+  <tr>
+    x
+    <td align="center">
+      1
+    </td>
+    <td>
+      2
+    </td>
+  </tr>
+</table>`),
+    tiny(`<table>
+  <tr>
+    <td colspan="2" align="center">
+      x
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      1
+    </td>
+    <td>
+      2
+    </td>
+  </tr>
+</table>`),
+    "02.04"
   );
 });
 

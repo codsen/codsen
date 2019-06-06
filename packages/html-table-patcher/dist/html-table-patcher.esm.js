@@ -35,6 +35,7 @@ function patcher(str) {
   let trClosingEndsAt = null;
   let countTds = false;
   let countVal = null;
+  let centeredTdsDetected = false;
   let quotes = null;
   const type1Gaps = new Ranges();
   const type2Gaps = new Ranges();
@@ -98,6 +99,13 @@ function patcher(str) {
       trOpeningStartsAt === null &&
       trOpeningEndsAt < i
     ) {
+      if (
+        countTds &&
+        (str.slice(tdOpeningStartsAt, i).includes('align="center"') ||
+          str.slice(tdOpeningStartsAt, i).match(/text-align:\s*center/gi))
+      ) {
+        centeredTdsDetected = true;
+      }
       tdOpeningStartsAt = null;
     }
     if (
@@ -171,11 +179,17 @@ function patcher(str) {
       }
       if (tableColumnCount) {
         if (countVal !== null) {
-          tableColumnCounts.push([tableColumnCount[0], i + 7, countVal]);
+          tableColumnCounts.push([
+            tableColumnCount[0],
+            i + 7,
+            countVal,
+            centeredTdsDetected
+          ]);
         }
         tableColumnCount = [];
         countTds = false;
         countVal = null;
+        centeredTdsDetected = false;
       }
     }
     if (
@@ -310,29 +324,36 @@ function patcher(str) {
     resRanges.push(
       type1Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
-          let colspanToAdd = "";
+          let attributesToAdd = "";
           let tempColspanValIfFound;
+          let addAlignCenter = false;
           if (
             isArr(tableColumnCounts) &&
             tableColumnCounts.length &&
             tableColumnCounts.some(refRange => {
-              if (
-                range[0] >= refRange[0] &&
-                range[0] <= refRange[1] &&
-                refRange[2] !== 1
-              ) {
-                tempColspanValIfFound = refRange[2];
+              if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
+                if (refRange[2] !== 1) {
+                  tempColspanValIfFound = refRange[2];
+                }
+                if (refRange[3]) {
+                  addAlignCenter = refRange[3];
+                }
                 return true;
               }
               return false;
             })
           ) {
-            colspanToAdd = ` colspan="${tempColspanValIfFound}"`;
+            if (tempColspanValIfFound) {
+              attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
+            }
+            if (addAlignCenter) {
+              attributesToAdd += ` align="center"`;
+            }
           }
           return [
             range[0],
             range[1],
-            `<tr><td${colspanToAdd}>${range[2].trim()}</td></tr>`
+            `<tr><td${attributesToAdd}>${range[2].trim()}</td></tr>`
           ];
         }
         return range;
@@ -343,29 +364,36 @@ function patcher(str) {
     resRanges.push(
       type2Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
-          let colspanToAdd = "";
+          let attributesToAdd = "";
           let tempColspanValIfFound;
+          let addAlignCenter = false;
           if (
             isArr(tableColumnCounts) &&
             tableColumnCounts.length &&
             tableColumnCounts.some(refRange => {
-              if (
-                range[0] >= refRange[0] &&
-                range[0] <= refRange[1] &&
-                refRange[2] !== 1
-              ) {
-                tempColspanValIfFound = refRange[2];
+              if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
+                if (refRange[2] !== 1) {
+                  tempColspanValIfFound = refRange[2];
+                }
+                if (refRange[3]) {
+                  addAlignCenter = refRange[3];
+                }
                 return true;
               }
               return false;
             })
           ) {
-            colspanToAdd = ` colspan="${tempColspanValIfFound}"`;
+            if (tempColspanValIfFound) {
+              attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
+            }
+            if (addAlignCenter) {
+              attributesToAdd += ` align="center"`;
+            }
           }
           return [
             range[0],
             range[1],
-            `<td${colspanToAdd}>${range[2].trim()}</td></tr>\n<tr>`
+            `<td${attributesToAdd}>${range[2].trim()}</td></tr>\n<tr>`
           ];
         }
         return range;
