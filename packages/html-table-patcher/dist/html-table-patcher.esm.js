@@ -11,6 +11,8 @@ import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
 import htmlCommentRegex from 'html-comment-regex';
 
+var version = "1.0.15";
+
 const isArr = Array.isArray;
 function isLetter(str) {
   return (
@@ -19,13 +21,29 @@ function isLetter(str) {
     str.toUpperCase() !== str.toLowerCase()
   );
 }
+function isStr(something) {
+  return typeof something === "string";
+}
 function deleteAllKindsOfComments(str) {
-  if (typeof str === "string") {
+  if (isStr(str)) {
     return str.replace(htmlCommentRegex, "");
   }
   return str;
 }
-function patcher(str) {
+const defaults = {
+  cssStylesContent: ""
+};
+function patcher(str, originalOpts) {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+  const opts = Object.assign({}, defaults, originalOpts);
+  if (
+    opts.cssStylesContent &&
+    (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)
+  ) {
+    opts.cssStylesContent = undefined;
+  }
   let tableTagStartsAt = null;
   let tableTagEndsAt = null;
   let trOpeningStartsAt = null;
@@ -60,15 +78,19 @@ function patcher(str) {
         }
       }
     }
-    if (str[i] === "'" || str[i] === '"') {
+    if (
+      (str[i] === "'" || str[i] === '"') &&
+      (str[i - 1] === "=" || (str[i - 1] === " " && str[i - 2] === "="))
+    ) {
       if (!quotes) {
         quotes = {
           type: str[i],
           startedAt: i
         };
-      } else if (str[i] === quotes.type) {
-        quotes = null;
       }
+    }
+    if (quotes && str[i] === quotes.type) {
+      quotes = null;
     }
     if (
       !quotes &&
@@ -349,6 +371,9 @@ function patcher(str) {
             if (addAlignCenter) {
               attributesToAdd += ` align="center"`;
             }
+            if (opts.cssStylesContent) {
+              attributesToAdd += ` style="${opts.cssStylesContent}"`;
+            }
           }
           return [
             range[0],
@@ -388,6 +413,9 @@ function patcher(str) {
             }
             if (addAlignCenter) {
               attributesToAdd += ` align="center"`;
+            }
+            if (opts.cssStylesContent) {
+              attributesToAdd += ` style="${opts.cssStylesContent}"`;
             }
           }
           return [
@@ -431,4 +459,4 @@ function patcher(str) {
   return str;
 }
 
-export default patcher;
+export { defaults, patcher, version };

@@ -9,23 +9,40 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var rangesApply = _interopDefault(require('ranges-apply'));
 var Ranges = _interopDefault(require('ranges-push'));
 var htmlCommentRegex = _interopDefault(require('html-comment-regex'));
 
+var version = "1.0.15";
+
 var isArr = Array.isArray;
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
+function isStr(something) {
+  return typeof something === "string";
+}
 function deleteAllKindsOfComments(str) {
-  if (typeof str === "string") {
+  if (isStr(str)) {
     return str.replace(htmlCommentRegex, "");
   }
   return str;
 }
-function patcher(str) {
+var defaults = {
+  cssStylesContent: ""
+};
+function patcher(str, originalOpts) {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+  var opts = Object.assign({}, defaults, originalOpts);
+  if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)) {
+    opts.cssStylesContent = undefined;
+  }
   var tableTagStartsAt = null;
   var tableTagEndsAt = null;
   var trOpeningStartsAt = null;
@@ -52,15 +69,16 @@ function patcher(str) {
         }
       }
     }
-    if (str[i] === "'" || str[i] === '"') {
+    if ((str[i] === "'" || str[i] === '"') && (str[i - 1] === "=" || str[i - 1] === " " && str[i - 2] === "=")) {
       if (!quotes) {
         quotes = {
           type: str[i],
           startedAt: i
         };
-      } else if (str[i] === quotes.type) {
-        quotes = null;
       }
+    }
+    if (quotes && str[i] === quotes.type) {
+      quotes = null;
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "d") {
       if (str[i + 3] === ">") {
@@ -195,6 +213,9 @@ function patcher(str) {
           if (addAlignCenter) {
             attributesToAdd += " align=\"center\"";
           }
+          if (opts.cssStylesContent) {
+            attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+          }
         }
         return [range[0], range[1], "<tr><td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>")];
       }
@@ -225,6 +246,9 @@ function patcher(str) {
           if (addAlignCenter) {
             attributesToAdd += " align=\"center\"";
           }
+          if (opts.cssStylesContent) {
+            attributesToAdd += " style=\"".concat(opts.cssStylesContent, "\"");
+          }
         }
         return [range[0], range[1], "<td".concat(attributesToAdd, ">").concat(range[2].trim(), "</td></tr>\n<tr>")];
       }
@@ -254,4 +278,6 @@ function patcher(str) {
   return str;
 }
 
-module.exports = patcher;
+exports.defaults = defaults;
+exports.patcher = patcher;
+exports.version = version;

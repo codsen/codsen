@@ -138,25 +138,31 @@ function patcher(str, originalOpts) {
     // catch being within some quotes.
     // this ensures some cheeky characters within quotes (like URL's) don't
     // terminate the tag or otherwise mess things up.
-    if (str[i] === "'" || str[i] === '"') {
+    if (
+      (str[i] === "'" || str[i] === '"') &&
+      (str[i - 1] === "=" || (str[i - 1] === " " && str[i - 2] === "="))
+    ) {
+      console.log(`145 within quotes clauses`);
       if (!quotes) {
         quotes = {
           type: str[i],
           startedAt: i
         };
-        // console.log(
-        //   `127 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
-        //     quotes,
-        //     null,
-        //     4
-        //   )}`
-        // );
-      } else if (str[i] === quotes.type) {
-        quotes = null;
-        // console.log(
-        //   `136 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${quotes}`
-        // );
+        console.log(
+          `152 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
+            quotes,
+            null,
+            4
+          )}`
+        );
       }
+    }
+    // stop within quotes
+    if (quotes && str[i] === quotes.type) {
+      quotes = null;
+      console.log(
+        `164 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${quotes}`
+      );
     }
 
     // catch the closing TD tag:
@@ -170,7 +176,7 @@ function patcher(str, originalOpts) {
       // 1. set the marker
       tdClosingStartsAt = i;
       console.log(
-        `152 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
+        `179 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
       );
       // 2. set the closing as well:
       if (str[i + 3] === ">") {
@@ -181,11 +187,11 @@ function patcher(str, originalOpts) {
           if (str[y] === ">") {
             tdClosingEndsAt = y;
             console.log(
-              `163 SET ${`\u001b[${33}m${`tdClosingEndsAt`}\u001b[${39}m`} = ${tdClosingEndsAt}`
+              `190 SET ${`\u001b[${33}m${`tdClosingEndsAt`}\u001b[${39}m`} = ${tdClosingEndsAt}`
             );
             i = y;
-            console.log(`166 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
-            console.log("167 THEN CONTINUE OUTER");
+            console.log(`193 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+            console.log("194 THEN CONTINUE OUTER");
             continue outerLoop;
           }
         }
@@ -204,7 +210,7 @@ function patcher(str, originalOpts) {
       trOpeningEndsAt < i
     ) {
       console.log(
-        `186 \u001b[${31}m${`ENDING OF AN OPENING TD TAG`}\u001b[${39}m`
+        `213 \u001b[${31}m${`ENDING OF AN OPENING TD TAG`}\u001b[${39}m`
       );
       // 1. catch align="center" if applicable, set "centeredTdsDetected"
       if (
@@ -214,7 +220,7 @@ function patcher(str, originalOpts) {
       ) {
         centeredTdsDetected = true;
         console.log(
-          `195 SET ${`\u001b[${33}m${`centeredTdsDetected`}\u001b[${39}m`} = ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
+          `223 SET ${`\u001b[${33}m${`centeredTdsDetected`}\u001b[${39}m`} = ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
         );
       }
 
@@ -234,7 +240,7 @@ function patcher(str, originalOpts) {
       // 1. set the marker
       tdOpeningStartsAt = i;
       console.log(
-        `215 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
+        `243 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
       );
       // 2. maybe there's content between last closing TD or opening TR and this?
 
@@ -247,7 +253,7 @@ function patcher(str, originalOpts) {
           deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim()
             .length !== 0
         ) {
-          console.log(`228 PUSH [${trOpeningEndsAt + 1}, ${i}] to type2Gaps`);
+          console.log(`256 PUSH [${trOpeningEndsAt + 1}, ${i}] to type2Gaps`);
           type2Gaps.push(
             trOpeningEndsAt + 1,
             i,
@@ -264,7 +270,7 @@ function patcher(str, originalOpts) {
             .length !== 0
         ) {
           // 1.
-          console.log(`245 PUSH [${tdClosingEndsAt + 1}, ${i}] to type3Gaps`);
+          console.log(`273 PUSH [${tdClosingEndsAt + 1}, ${i}] to type3Gaps`);
           type3Gaps.push(
             tdClosingEndsAt + 1,
             i,
@@ -290,7 +296,7 @@ function patcher(str, originalOpts) {
           // as having 2 columns.
           if (countTds) {
             countTds = false;
-            console.log(`271 SET countTds = false`);
+            console.log(`299 SET countTds = false`);
           }
         }
       }
@@ -303,7 +309,7 @@ function patcher(str, originalOpts) {
           countVal++;
         }
         console.log(
-          `284 BUMP ${`\u001b[${33}m${`countVal`}\u001b[${39}m`} now = ${countVal}`
+          `312 BUMP ${`\u001b[${33}m${`countVal`}\u001b[${39}m`} now = ${countVal}`
         );
       }
     }
@@ -327,7 +333,7 @@ function patcher(str, originalOpts) {
         deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
           .length !== 0
       ) {
-        console.log(`308 PUSH [${trClosingEndsAt + 1}, ${i}] to type1Gaps`);
+        console.log(`336 PUSH [${trClosingEndsAt + 1}, ${i}] to type1Gaps`);
         type1Gaps.push(
           trClosingEndsAt + 1,
           i,
@@ -353,14 +359,14 @@ function patcher(str, originalOpts) {
             centeredTdsDetected
           ]);
           console.log(
-            `334 PUSH [${tableColumnCount[0]}, ${i +
+            `362 PUSH [${tableColumnCount[0]}, ${i +
               7}, ${countVal}, ${centeredTdsDetected}]`
           );
         }
 
         // 2. reset
         console.log(
-          `341 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tableColumnCount, countTds & countVal`
+          `369 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tableColumnCount, countTds & countVal`
         );
         tableColumnCount = [];
         countTds = false;
@@ -384,7 +390,7 @@ function patcher(str, originalOpts) {
         deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
           .length !== 0
       ) {
-        console.log(`365 PUSH [${tdClosingEndsAt + 1}, ${i}] to type4Gaps`);
+        console.log(`393 PUSH [${tdClosingEndsAt + 1}, ${i}] to type4Gaps`);
         type4Gaps.push(
           tdClosingEndsAt + 1,
           i,
@@ -395,13 +401,13 @@ function patcher(str, originalOpts) {
       // 2. set the ending marker
       trClosingEndsAt = i + 4;
       console.log(
-        `376 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
+        `404 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
       );
       // 3. wipe the opening marker so that "ending of the opening" will not
       // activate afterwards (we've got a closing bracket):
       trOpeningStartsAt = null;
       console.log(
-        `382 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = null`
+        `410 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = null`
       );
 
       // 4. tend TD counting
@@ -411,7 +417,7 @@ function patcher(str, originalOpts) {
         // finished when ending of the current table is reached. It's because
         // TD column count is per table, not per row.
         console.log(
-          `392 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = false`
+          `420 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = false`
         );
       }
 
@@ -433,7 +439,7 @@ function patcher(str, originalOpts) {
       // 1. set the marker
       trOpeningEndsAt = i;
       console.log(
-        `414 SET ${`\u001b[${33}m${`trOpeningEndsAt`}\u001b[${39}m`} = ${trOpeningEndsAt}`
+        `442 SET ${`\u001b[${33}m${`trOpeningEndsAt`}\u001b[${39}m`} = ${trOpeningEndsAt}`
       );
       // 2. Find out, is it content between TR's or between TABLE and TR (different
       // markers need to be referenced)
@@ -447,7 +453,7 @@ function patcher(str, originalOpts) {
           ).trim().length !== 0
         ) {
           console.log(
-            `428 PUSH [${tableTagEndsAt +
+            `456 PUSH [${tableTagEndsAt +
               1}, ${trOpeningStartsAt}] to type1Gaps`
           );
           type1Gaps.push(
@@ -460,7 +466,7 @@ function patcher(str, originalOpts) {
         }
         // reset the markers so that further closing brackets aren't flagged up
         // as false positives:
-        console.log(`441 SET trOpeningStartsAt = null; tableTagEndsAt = null`);
+        console.log(`469 SET trOpeningStartsAt = null; tableTagEndsAt = null`);
         trOpeningStartsAt = null;
         tableTagEndsAt = null;
       } else if (trClosingEndsAt !== null) {
@@ -470,7 +476,7 @@ function patcher(str, originalOpts) {
           ).trim().length !== 0
         ) {
           console.log(
-            `451 PUSH [${trClosingEndsAt +
+            `479 PUSH [${trClosingEndsAt +
               1}, ${trOpeningStartsAt}, ${deleteAllKindsOfComments(
               str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
             ).trim()}] to type1Gaps[]`
@@ -486,14 +492,14 @@ function patcher(str, originalOpts) {
         // wipe the trClosingEndsAt because we captured the range and it won't
         // be needed:
         trClosingEndsAt = null;
-        console.log(`467 SET trClosingEndsAt = null`);
+        console.log(`495 SET trClosingEndsAt = null`);
       }
 
       // 3. if the countTds is not on, enable it
       if (!countTds && countVal === null) {
         countTds = true;
         console.log(
-          `474 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = true`
+          `502 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -507,6 +513,7 @@ function patcher(str, originalOpts) {
       !isLetter(str[i + 3])
     ) {
       // 1. maybe there was some code between this TR and TR before?
+      console.log(`516 within catch the beginning of the <tr clauses`);
       if (
         trClosingEndsAt !== null &&
         tableTagEndsAt === null &&
@@ -514,7 +521,7 @@ function patcher(str, originalOpts) {
           .length !== 0
       ) {
         console.log(
-          `495 PUSH [${trClosingEndsAt + 1}, ${i}, "${deleteAllKindsOfComments(
+          `524 PUSH [${trClosingEndsAt + 1}, ${i}, "${deleteAllKindsOfComments(
             str.slice(trClosingEndsAt + 1, i)
           ).trim()}"] to type1Gaps[]`
         );
@@ -526,13 +533,13 @@ function patcher(str, originalOpts) {
         // wipe marker to prevent new false additions:
         trClosingEndsAt = null;
         console.log(
-          `507 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
+          `536 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
         );
       }
       // 2. mark the beginning of TR
       trOpeningStartsAt = i;
       console.log(
-        `513 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = ${trOpeningStartsAt}`
+        `542 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = ${trOpeningStartsAt}`
       );
     }
 
@@ -545,14 +552,14 @@ function patcher(str, originalOpts) {
     ) {
       tableTagEndsAt = i;
       console.log(
-        `526 SET ${`\u001b[${33}m${`tableTagEndsAt`}\u001b[${39}m`} = ${tableTagEndsAt}`
+        `555 SET ${`\u001b[${33}m${`tableTagEndsAt`}\u001b[${39}m`} = ${tableTagEndsAt}`
       );
 
       // start assembling tableColumnCount
       if (!(isArr(tableColumnCount) && tableColumnCount.length)) {
         tableColumnCount.push(tableTagStartsAt);
         console.log(
-          `533 PUSH ${tableTagStartsAt} to tableColumnCount=${JSON.stringify(
+          `562 PUSH ${tableTagStartsAt} to tableColumnCount=${JSON.stringify(
             tableColumnCount,
             null,
             0
@@ -565,7 +572,7 @@ function patcher(str, originalOpts) {
       // clause won't activate any more, at least until new table tag opening..
       tableTagStartsAt = null;
       console.log(
-        `546 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
+        `575 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
       );
     }
 
@@ -582,14 +589,14 @@ function patcher(str, originalOpts) {
     ) {
       tableTagStartsAt = i;
       console.log(
-        `563 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
+        `592 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
       );
     }
 
     console.log("---------");
 
     console.log(
-      `570 ${
+      `599 ${
         tableTagStartsAt
           ? `${`\u001b[${90}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}; `
           : ""
@@ -635,7 +642,7 @@ function patcher(str, originalOpts) {
     //   )}`
     // );
     console.log(
-      `616 ${
+      `645 ${
         type1Gaps.current()
           ? `${`\u001b[${90}m${`type1Gaps`}\u001b[${39}m`} = ${JSON.stringify(
               type1Gaps.current(),
@@ -670,21 +677,26 @@ function patcher(str, originalOpts) {
       }`
     );
     console.log(
-      `651 ${`\u001b[${90}m${`countVal`}\u001b[${39}m`} = ${countVal}; ${`\u001b[${90}m${`countTds`}\u001b[${39}m`} = ${countTds}; ${`\u001b[${90}m${`centeredTdsDetected`}\u001b[${39}m`} = ${centeredTdsDetected}`
+      `680 ${`\u001b[${90}m${`countVal`}\u001b[${39}m`} = ${countVal}; ${`\u001b[${90}m${`countTds`}\u001b[${39}m`} = ${countTds}; ${`\u001b[${90}m${`centeredTdsDetected`}\u001b[${39}m`} = ${centeredTdsDetected}`
     );
     console.log(
-      `654 ${`\u001b[${90}m${`tableColumnCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `683 ${`\u001b[${90}m${`tableColumnCount`}\u001b[${39}m`} = ${JSON.stringify(
         tableColumnCount,
         null,
         0
       )}`
     );
     console.log(
-      `661 ${`\u001b[${90}m${`tableColumnCounts`}\u001b[${39}m`} = ${JSON.stringify(
+      `690 ${`\u001b[${90}m${`tableColumnCounts`}\u001b[${39}m`} = ${JSON.stringify(
         tableColumnCounts,
         null,
         0
       )}`
+    );
+    console.log(
+      `697 ${`\u001b[${90}m${`quotes`}\u001b[${39}m`} = ${`\u001b[${
+        quotes ? 32 : 21
+      }m${JSON.stringify(quotes, null, 0)}\u001b[${39}m`}`
     );
   }
 
@@ -716,7 +728,7 @@ function patcher(str, originalOpts) {
   const resRanges = new Ranges();
 
   if (type1Gaps.current()) {
-    console.log(`697 type #1 gaps found, let's process them`);
+    console.log(`731 type #1 gaps found, let's process them`);
     resRanges.push(
       type1Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
@@ -761,11 +773,11 @@ function patcher(str, originalOpts) {
       })
     );
     console.log(
-      `739 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
+      `776 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
     );
   }
   if (type2Gaps.current()) {
-    console.log(`743 type #2 gaps found, let's process them`);
+    console.log(`780 type #2 gaps found, let's process them`);
     resRanges.push(
       type2Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
@@ -810,11 +822,11 @@ function patcher(str, originalOpts) {
       })
     );
     console.log(
-      `785 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
+      `825 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
     );
   }
   if (type3Gaps.current()) {
-    console.log(`789 type #3 gaps found, let's process them`);
+    console.log(`829 type #3 gaps found, let's process them`);
     resRanges.push(
       type3Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
@@ -829,11 +841,11 @@ function patcher(str, originalOpts) {
       })
     );
     console.log(
-      `804 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
+      `844 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
     );
   }
   if (type4Gaps.current()) {
-    console.log(`808 type #4 gaps found, let's process them`);
+    console.log(`848 type #4 gaps found, let's process them`);
     resRanges.push(
       type4Gaps.current().map(range => {
         if (typeof range[2] === "string" && range[2].length > 0) {
@@ -844,17 +856,17 @@ function patcher(str, originalOpts) {
       })
     );
     console.log(
-      `819 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
+      `859 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
     );
   }
 
   if (resRanges.current()) {
     const finalRes = rangesApply(str, resRanges.current());
-    console.log(`825 RETURN ${finalRes}`);
+    console.log(`865 RETURN ${finalRes}`);
     return finalRes;
   }
 
-  console.log(`829 RETURN ${str}`);
+  console.log(`869 RETURN ${str}`);
   return str;
 }
 

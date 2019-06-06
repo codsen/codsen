@@ -262,6 +262,26 @@ zzz
   );
 });
 
+test(`01.09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`, t => {
+  t.deepEqual(
+    processThis(`<table>
+<tr><td>a</td></tr>
+{{ 0 }}
+<tr><td>'</td></tr>
+{{ 1 }}
+<tr><td>s</td></tr>
+</table>`),
+    tiny(`<table>
+<tr><td>a</td></tr>
+<tr><td>{{ 0 }}</td></tr>
+<tr><td>'</td></tr>
+<tr><td>{{ 1 }}</td></tr>
+<tr><td>s</td></tr>
+</table>`),
+    "01.09"
+  );
+});
+
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 
@@ -534,11 +554,11 @@ test(`05.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}
 // 06. checking API bits
 // -----------------------------------------------------------------------------
 
-test(`06.01 - ${`\u001b[${32}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
+test(`06.01 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
   t.true(typeof defaults === "object", "06.01.01");
   t.true(Object.keys(defaults).length > 0, "06.01.02");
 });
 
-test(`06.02 - ${`\u001b[${32}m${`API bits`}\u001b[${39}m`} - defaults`, t => {
+test(`06.02 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`, t => {
   t.regex(version, /\d*\.\d*\.\d*/, "06.02.01");
 });
