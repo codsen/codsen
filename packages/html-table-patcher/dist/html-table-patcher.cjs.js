@@ -51,6 +51,7 @@ function patcher(str, originalOpts) {
   var tdOpeningStartsAt = null;
   var tdClosingEndsAt = null;
   var trClosingEndsAt = null;
+  var donothingUntil = null;
   var countTds = false;
   var countVal = null;
   var centeredTdsDetected = false;
@@ -62,6 +63,15 @@ function patcher(str, originalOpts) {
   var tableColumnCounts = [];
   var tableColumnCount = [];
   outerLoop: for (var i = 0, len = str.length; i < len; i++) {
+    if (donothingUntil) {
+      if (str.slice(i).startsWith(donothingUntil)) {
+        i += donothingUntil.length - 1;
+        donothingUntil = null;
+        continue;
+      } else {
+        continue;
+      }
+    }
     if (str[i] === "<" && str[i + 1] === "!" && str[i + 2] === "-" && str[i + 3] === "-") {
       for (var y = i; y < len; y++) {
         if (str[y] === "-" && str[y + 1] === "-" && str[y + 2] === ">" || str[y + 1] === undefined) {
@@ -183,7 +193,11 @@ function patcher(str, originalOpts) {
       tableTagStartsAt = null;
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "t" && str[i + 2] === "a" && str[i + 3] === "b" && str[i + 4] === "l" && str[i + 5] === "e" && !isLetter(str[i + 6])) {
-      tableTagStartsAt = i;
+      if (!countTds && countVal === null) {
+        tableTagStartsAt = i;
+      } else {
+        donothingUntil = "</table";
+      }
     }
   }
   if (!type1Gaps.current() && !type2Gaps.current() && !type3Gaps.current() && !type4Gaps.current()) {

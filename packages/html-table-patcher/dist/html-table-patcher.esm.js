@@ -52,6 +52,7 @@ function patcher(str, originalOpts) {
   let tdOpeningStartsAt = null;
   let tdClosingEndsAt = null;
   let trClosingEndsAt = null;
+  let donothingUntil = null;
   let countTds = false;
   let countVal = null;
   let centeredTdsDetected = false;
@@ -63,6 +64,15 @@ function patcher(str, originalOpts) {
   const tableColumnCounts = [];
   let tableColumnCount = [];
   outerLoop: for (let i = 0, len = str.length; i < len; i++) {
+    if (donothingUntil) {
+      if (str.slice(i).startsWith(donothingUntil)) {
+        i += donothingUntil.length - 1;
+        donothingUntil = null;
+        continue;
+      } else {
+        continue;
+      }
+    }
     if (
       str[i] === "<" &&
       str[i + 1] === "!" &&
@@ -331,7 +341,11 @@ function patcher(str, originalOpts) {
       str[i + 5] === "e" &&
       !isLetter(str[i + 6])
     ) {
-      tableTagStartsAt = i;
+      if (!countTds && countVal === null) {
+        tableTagStartsAt = i;
+      } else {
+        donothingUntil = "</table";
+      }
     }
   }
   if (

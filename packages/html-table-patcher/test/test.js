@@ -309,6 +309,64 @@ test(`01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
+test(`01.11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`, t => {
+  t.deepEqual(
+    processThis(
+      `<table>
+{{ 0 }}
+<tr><td>a</td></tr>
+{{ 1 }}
+<tr><td>b</td></tr>
+{{ 2 }}
+<tr><td>c</td></tr>
+{{ 3 }}
+</table>`,
+      {
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
+      }
+    ),
+    tiny(`<table>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 0 }}</td></tr>
+<tr><td>a</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 1 }}</td></tr>
+<tr><td>b</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 2 }}</td></tr>
+<tr><td>c</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 3 }}</td></tr>
+</table>`),
+    "01.11"
+  );
+});
+
+test(`01.12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`, t => {
+  t.deepEqual(
+    processThis(
+      `<table><tr><td></td></tr>
+1
+<tr><td>
+  <table><tr><td>.</td></tr></table>
+</td></tr>
+2
+<tr><td></td></tr></table>`,
+      {
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
+      }
+    ),
+    tiny(`<table><tr><td></td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">1</td></tr>
+<tr><td>
+  <table><tr><td>.</td></tr></table>
+</td></tr>
+<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">2</td></tr>
+<tr><td></td></tr></table>`),
+    "01.12"
+  );
+});
+
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 
