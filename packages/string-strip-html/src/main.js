@@ -289,9 +289,7 @@ function stripHtml(str, originalOpts) {
               )}`
             );
             console.log(
-              `0292 ABOUT TO PUSH RANGE: [${
-                rangedOpeningTags[y].lastOpeningBracketAt
-              }, ${i}]`
+              `0292 ABOUT TO PUSH RANGE: [${rangedOpeningTags[y].lastOpeningBracketAt}, ${i}]`
             );
             if (punctuation.includes(str[i])) {
               rangesToDelete.push(
@@ -824,9 +822,7 @@ function stripHtml(str, originalOpts) {
       } else if (!tag.quotes && tag.nameStarts) {
         // 1. if it's opening marker, record the type and location of quotes
         console.log(
-          `0827 SET tag.quotes = {}, tag.quotes.value = ${
-            str[i]
-          }, tag.quotes.start = ${i}`
+          `0827 SET tag.quotes = {}, tag.quotes.value = ${str[i]}, tag.quotes.start = ${i}`
         );
         tag.quotes = {};
         tag.quotes.value = str[i];
@@ -927,9 +923,7 @@ function stripHtml(str, originalOpts) {
           tag.lastClosingBracketAt || endingRangeIndex
         );
         console.log(
-          `0930 \u001b[${33}m${`SUBMIT RANGE #3: [${
-            tag.leftOuterWhitespace
-          }, ${endingRangeIndex}, "${whiteSpaceCompensation}"]`}\u001b[${39}m`
+          `0930 \u001b[${33}m${`SUBMIT RANGE #3: [${tag.leftOuterWhitespace}, ${endingRangeIndex}, "${whiteSpaceCompensation}"]`}\u001b[${39}m`
         );
         rangesToDelete.push(
           tag.leftOuterWhitespace,
@@ -1374,9 +1368,7 @@ function stripHtml(str, originalOpts) {
           calculateHrefToBeInserted();
 
           console.log(
-            `1377 \u001b[${33}m${`SUBMIT RANGE #2: [${
-              tag.leftOuterWhitespace
-            }, ${endingRangeIndex}, "${whiteSpaceCompensation}" + "${stringToInsertAfter}" + "${whiteSpaceCompensation}"]`}\u001b[${39}m`
+            `1377 \u001b[${33}m${`SUBMIT RANGE #2: [${tag.leftOuterWhitespace}, ${endingRangeIndex}, "${whiteSpaceCompensation}" + "${stringToInsertAfter}" + "${whiteSpaceCompensation}"]`}\u001b[${39}m`
           );
 
           rangesToDelete.push(
@@ -1429,9 +1421,7 @@ function stripHtml(str, originalOpts) {
               i
             );
             console.log(
-              `1432 PUSH range [${
-                tag.leftOuterWhitespace
-              }, ${i}, "${whiteSpaceCompensation}"]`
+              `1432 PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`
             );
             rangesToDelete.push(
               tag.leftOuterWhitespace,
@@ -1555,9 +1545,7 @@ function stripHtml(str, originalOpts) {
                   closingFoundAt
                 );
                 console.log(
-                  `1558 PUSH range [${
-                    tag.leftOuterWhitespace
-                  }, ${rangeEnd}, "${whiteSpaceCompensation}"]`
+                  `1558 PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`
                 );
                 rangesToDelete.push(
                   tag.leftOuterWhitespace,

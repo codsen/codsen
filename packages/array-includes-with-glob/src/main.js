@@ -47,9 +47,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     opts.arrayVsArrayAllMustBeFound !== "all"
   ) {
     throw new Error(
-      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${
-        opts.arrayVsArrayAllMustBeFound
-      }. It must be equal to either "any" or "all".`
+      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${opts.arrayVsArrayAllMustBeFound}. It must be equal to either "any" or "all".`
     );
   }
 

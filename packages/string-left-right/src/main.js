@@ -209,9 +209,7 @@ function seq(direction, str, idx, opts, args) {
   // where we need to repeat same step (hungrily matched character) few times.
   while (i < args.length) {
     console.log(
-      `212 ${`\u001b[${34}m${`███████████████████████████████████████ seq() looping ${
-        args[i]
-      }`}\u001b[${39}m`}`
+      `212 ${`\u001b[${34}m${`███████████████████████████████████████ seq() looping ${args[i]}`}\u001b[${39}m`}`
     );
     if (!isStr(args[i]) || !args[i].length) {
       console.log(
@@ -225,9 +223,7 @@ function seq(direction, str, idx, opts, args) {
       continue;
     }
     console.log(
-      `228 ${`\u001b[${36}m${`============= args[${i}]=${
-        args[i]
-      }`}\u001b[${39}m`}`
+      `228 ${`\u001b[${36}m${`============= args[${i}]=${args[i]}`}\u001b[${39}m`}`
     );
     const { value, optional, hungry } = x(args[i]);
     console.log(

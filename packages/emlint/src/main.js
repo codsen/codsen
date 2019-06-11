@@ -308,9 +308,9 @@ function lint(str, originalOpts) {
     if (whereTo !== "raw" && whereTo !== "tag") {
       retObj.applicableRules[issueObj.name] = true;
       console.log(
-        `0311 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`retObj.applicableRules.${
-          issueObj.name
-        }`}\u001b[${39}m`} = ${retObj.applicableRules[issueObj.name]}`
+        `0311 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`retObj.applicableRules.${issueObj.name}`}\u001b[${39}m`} = ${
+          retObj.applicableRules[issueObj.name]
+        }`
       );
     } else {
       console.log(`0316 didn't put "${issueObj.name}" in applicableRules`);
@@ -645,9 +645,7 @@ function lint(str, originalOpts) {
       // 7. take care of issues at rawIssueStaging:
       if (rawIssueStaging.length) {
         console.log(
-          `0648 let's process all ${
-            rawIssueStaging.length
-          } raw character issues at staging`
+          `0648 let's process all ${rawIssueStaging.length} raw character issues at staging`
         );
         rawIssueStaging.forEach(issueObj => {
           if (issueObj.position[0][0] < leftChomp) {
@@ -1557,9 +1555,7 @@ function lint(str, originalOpts) {
                     `1557 ${log(
                       "push",
                       "tag-attribute-closing-quotation-mark-missing",
-                      `${`[[${closingQuotePeek}, ${closingQuotePeek}, ${`${
-                        str[i]
-                      }${compensation}`}]]`}`
+                      `${`[[${closingQuotePeek}, ${closingQuotePeek}, ${`${str[i]}${compensation}`}]]`}`
                     )}`
                   );
                 }
@@ -1643,9 +1639,7 @@ function lint(str, originalOpts) {
                   `1643 ${log(
                     "push",
                     "tag-missing-space-before-attribute",
-                    `${`[[${logAttr.attrNameStartAt}, ${
-                      logAttr.attrNameStartAt
-                    }, " "]]`}`
+                    `${`[[${logAttr.attrNameStartAt}, ${logAttr.attrNameStartAt}, " "]]`}`
                   )}`
                 );
               }
@@ -1932,9 +1926,7 @@ function lint(str, originalOpts) {
                 dealBrakerCharacters.includes(str[y])
               ) {
                 console.log(
-                  `1935 \u001b[${36}m${`break ("${
-                    str[y]
-                  }" is a bad character)`}\u001b[${39}m`
+                  `1935 \u001b[${36}m${`break ("${str[y]}" is a bad character)`}\u001b[${39}m`
                 );
                 break;
               }
@@ -2238,9 +2230,7 @@ function lint(str, originalOpts) {
                 `2238 ${log(
                   "push",
                   "tag-attribute-closing-quotation-mark-missing",
-                  `${`[[${finalClosingQuotesShouldBeAt}, ${finalClosingQuotesShouldBeAt}, ${
-                    logAttr.attrOpeningQuote.val
-                  }]]`}`
+                  `${`[[${finalClosingQuotesShouldBeAt}, ${finalClosingQuotesShouldBeAt}, ${logAttr.attrOpeningQuote.val}]]`}`
                 )}`
               );
 
@@ -2852,9 +2842,7 @@ function lint(str, originalOpts) {
           // if this line end is within ESP tag, it's an error
           if (logEspTag.headStartAt !== null) {
             console.log(
-              `2855 ISSUE WILL BE RAISED BECAUSE logEspTag.headStartAt = ${
-                logEspTag.headStartAt
-              }`
+              `2855 ISSUE WILL BE RAISED BECAUSE logEspTag.headStartAt = ${logEspTag.headStartAt}`
             );
             submit({
               name: "esp-line-break-within-templating-tag",
@@ -3683,9 +3671,7 @@ function lint(str, originalOpts) {
           // 3. take care of issues at rawIssueStaging:
           if (rawIssueStaging.length) {
             console.log(
-              `3686 let's process all ${
-                rawIssueStaging.length
-              } raw character issues at staging`
+              `3686 let's process all ${rawIssueStaging.length} raw character issues at staging`
             );
             rawIssueStaging.forEach(issueObj => {
               if (issueObj.position[0][0] < logTag.tagStartAt) {

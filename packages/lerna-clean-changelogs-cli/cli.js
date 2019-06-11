@@ -193,9 +193,7 @@ thePromise.then(received => {
       // some files were written
       if (counter.ignored && counter.ignored.length) {
         // some files were written, but there were some skipped/ignored
-        writtenAndSkippedMsg = `${counter.good.length} updated, ${
-          counter.ignored.length
-        } skipped`;
+        writtenAndSkippedMsg = `${counter.good.length} updated, ${counter.ignored.length} skipped`;
       } else {
         // only written files, no skipped/ignored
         if (counter.good.length === 1) {

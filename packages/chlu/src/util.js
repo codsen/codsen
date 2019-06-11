@@ -331,13 +331,9 @@ function getSetFooterLink(str, o = {}) {
     return res;
   }
   if (o.type === "github") {
-    return `[${res.version}]: https://github.com/${res.user}/${
-      res.project
-    }/compare/v${res.versBefore}...v${res.versAfter}`;
+    return `[${res.version}]: https://github.com/${res.user}/${res.project}/compare/v${res.versBefore}...v${res.versAfter}`;
   } else if (o.type === "bitbucket") {
-    return `[${res.version}]: https://bitbucket.org/${res.user}/${
-      res.project
-    }/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
+    return `[${res.version}]: https://bitbucket.org/${res.user}/${res.project}/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
   }
 }
 

@@ -219,7 +219,7 @@ function collapse(str, originalOpts) {
           whiteSpaceWithinTagEndsAt = null;
         }
         if (str[i] === ">") {
-          count = resetCounts(count);
+          count = resetCounts();
           bracketJustFound = true;
           if (stateWithinTag) {
             preliminaryIndexesToDelete.wipe();
@@ -258,7 +258,7 @@ function collapse(str, originalOpts) {
             }
             tagMatched = false;
           }
-          count = resetCounts(count);
+          count = resetCounts();
         } else if (stateWithinTag && str[i] === "/") {
           whiteSpaceWithinTagEndsAt = i;
         } else if (stateWithinTag && !tagMatched) {

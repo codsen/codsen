@@ -40,9 +40,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
     for (let i = from; i < to; i++) {
       console.log(
-        `0043 ${`\u001b[${36}m${`resemblesNumericEntity() loop: str[${i}] = "${
-          str[i]
-        }"`}\u001b[${39}m`}`
+        `0043 ${`\u001b[${36}m${`resemblesNumericEntity() loop: str[${i}] = "${str[i]}"`}\u001b[${39}m`}`
       );
       if (str[i].trim().length) {
         charTrimmed += str[i];
@@ -819,9 +817,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             ? right(str, letterSeqStartAt)
             : null;
           console.log(
-            `0822 firstChar = str[${firstChar}] = ${
-              str[firstChar]
-            }; secondChar = str[${secondChar}] = ${str[secondChar]}`
+            `0822 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
           );
           // we'll tap the "entStartsWith" from npm package "all-named-html-entities"
           // which gives a plain object of named entities, all grouped by first
@@ -1325,9 +1321,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 ? right(str, letterSeqStartAt)
                 : null;
               console.log(
-                `1328 firstChar = str[${firstChar}] = ${
-                  str[firstChar]
-                }; secondChar = str[${secondChar}] = ${str[secondChar]}`
+                `1328 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
               );
 
               let tempEnt;
@@ -1561,9 +1555,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   } else {
                     // case is wrong
                     console.log(
-                      `1564 entity ${
-                        situation.charTrimmed
-                      } not found case-wise stricly`
+                      `1564 entity ${situation.charTrimmed} not found case-wise stricly`
                     );
                     issue = "bad-named-html-entity-malformed";
                     console.log(
@@ -1925,9 +1917,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         );
         if (nextAmpOnTheRight) {
           console.log(
-            `1928 ${`\u001b[${90}m${`confirmed another amp; on the right of index ${
-              singleAmpOnTheRight.rightmostChar
-            }`}\u001b[${39}m`}`
+            `1928 ${`\u001b[${90}m${`confirmed another amp; on the right of index ${singleAmpOnTheRight.rightmostChar}`}\u001b[${39}m`}`
           );
 
           toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;

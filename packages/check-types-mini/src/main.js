@@ -297,9 +297,7 @@ function checkTypesMini(
     } else {
       // it's an error because both schema and reference don't exist
       throw new TypeError(
-        `${opts.msg}: Both ${
-          opts.optsVarName
-        }.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`
+        `${opts.msg}: Both ${opts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`
       );
     }
   }
@@ -362,9 +360,7 @@ function checkTypesMini(
       current = key;
     }
     console.log(
-      `365 \u001b[${36}m${`traversing: ██ ${
-        innerObj.path
-      } ██ ===========================`}\u001b[${39}m ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${key}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${`\u001b[${35}m${JSON.stringify(
+      `365 \u001b[${36}m${`traversing: ██ ${innerObj.path} ██ ===========================`}\u001b[${39}m ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${key}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${`\u001b[${35}m${JSON.stringify(
         val,
         null,
         0

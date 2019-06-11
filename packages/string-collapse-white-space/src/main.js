@@ -300,15 +300,11 @@ function collapse(str, originalOpts) {
               str[i - 1] !== "/")
           ) {
             console.log(
-              `303: count.spacesBetweenLetterChunks was ${
-                count.spacesBetweenLetterChunks
-              }`
+              `303: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`
             );
             count.spacesBetweenLetterChunks += 1;
             console.log(
-              `309: count.spacesBetweenLetterChunks became ${
-                count.spacesBetweenLetterChunks
-              }`
+              `309: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`
             );
           } else {
             // loop backwards and check, is the first non-space char being "<".
@@ -318,15 +314,11 @@ function collapse(str, originalOpts) {
                   bail = true;
                 } else if (str[y] !== "/") {
                   console.log(
-                    `321: count.spacesBetweenLetterChunks was ${
-                      count.spacesBetweenLetterChunks
-                    }`
+                    `321: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`
                   );
                   count.spacesBetweenLetterChunks += i - y;
                   console.log(
-                    `327: count.spacesBetweenLetterChunks became ${
-                      count.spacesBetweenLetterChunks
-                    }`
+                    `327: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`
                   );
                 }
                 console.log("332 BREAK");

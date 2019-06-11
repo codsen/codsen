@@ -42,9 +42,7 @@ function padStart(str, targetLength, padString) {
 
   if (str.length >= targetLength) {
     console.log(
-      `045 str.length = ${
-        str.length
-      } >= targetLength = ${targetLength}, SO RETURNING:\nstr = ${str}`
+      `045 str.length = ${str.length} >= targetLength = ${targetLength}, SO RETURNING:\nstr = ${str}`
     );
     return str;
   }

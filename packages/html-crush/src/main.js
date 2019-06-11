@@ -1143,9 +1143,7 @@ function crush(str, originalOpts) {
             // ██ 1.
             //
             console.log(
-              `1146 ${`\u001b[${36}m${`██ LIMIT (${
-                opts.lineLengthLimit
-              }) EXCEEDED`}\u001b[${39}m`} char break on left`
+              `1146 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} char break on left`
             );
             // if really exceeded, not on limit, commit stage which will shorten
             // the string and maybe we'll be within the limit range again
@@ -1228,9 +1226,7 @@ function crush(str, originalOpts) {
             // ██ 2.
             //
             console.log(
-              `1231 ${`\u001b[${36}m${`██ LIMIT (${
-                opts.lineLengthLimit
-              }) EXCEEDED`}\u001b[${39}m`} char break on right`
+              `1231 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} char break on right`
             );
             if (
               stageFrom !== null &&
@@ -1250,17 +1246,13 @@ function crush(str, originalOpts) {
             // ██ 3.
             //
             console.log(
-              `1253 ${`\u001b[${36}m${`██ LIMIT (${
-                opts.lineLengthLimit
-              }) EXCEEDED`}\u001b[${39}m`} whitespace as breaking point`
+              `1253 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} whitespace as breaking point`
             );
           } else if (!str[i + 1]) {
             // ██ 4.
             //
             console.log(
-              `1261 ${`\u001b[${36}m${`██ LIMIT (${
-                opts.lineLengthLimit
-              }) EXCEEDED`}\u001b[${39}m`} EOL is next`
+              `1261 ${`\u001b[${36}m${`██ LIMIT (${opts.lineLengthLimit}) EXCEEDED`}\u001b[${39}m`} EOL is next`
             );
             // if we reached the end of string, check what's in stage
             if (

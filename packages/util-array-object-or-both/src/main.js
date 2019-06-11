@@ -76,9 +76,7 @@ function arrObjOrBoth(str, originalOpts) {
     return "any";
   }
   throw new TypeError(
-    `${opts.msg}The ${
-      opts.optsVarName
-    } was customised to an unrecognised value: ${str}. Please check it against the API documentation.`
+    `${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`
   );
 }
 

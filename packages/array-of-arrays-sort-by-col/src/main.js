@@ -93,9 +93,7 @@ function sortBySubarray(arr, axis = 0) {
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] > arr2[axis])
       ) {
         console.log(
-          `096 return 1 - \u001b[${32}m${`${
-            arr2[axis]
-          } goes first, SWAP`}\u001b[${39}m`
+          `096 return 1 - \u001b[${32}m${`${arr2[axis]} goes first, SWAP`}\u001b[${39}m`
         );
         return 1;
       }
@@ -104,9 +102,7 @@ function sortBySubarray(arr, axis = 0) {
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis])
       ) {
         console.log(
-          `107 return -1 - \u001b[${32}m${`${
-            arr1[axis]
-          } goes first, ALL STAYS AS IS`}\u001b[${39}m`
+          `107 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
         );
         return -1;
       }

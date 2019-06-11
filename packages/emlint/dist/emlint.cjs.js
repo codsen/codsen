@@ -968,7 +968,7 @@ function onlyTheseLeadToThat(str) {
     }
   };
   for (var i = 0, len = str.length; i < len; i++) {
-    var _ret = _loop(i, len);
+    var _ret = _loop(i);
     if (_typeof(_ret) === "object") return _ret.v;
   }
 }

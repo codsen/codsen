@@ -343,9 +343,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
   for (let i = opts.fromIndex, len = str.length; i < len; i++) {
     const firstCharsIndex = str[i].charCodeAt(0);
     console.log(
-      `---------------------------------------> ${
-        str[i]
-      } i=${i} (#${firstCharsIndex})`
+      `---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`
     );
     if (
       firstCharsIndex <= headsAndTailsFirstCharIndexesRange[1] &&

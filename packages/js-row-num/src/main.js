@@ -196,9 +196,7 @@ function fixRowNums(str, originalOpts) {
 
         // answer: at "numbersSequenceEndsAt".
         console.log(
-          `199 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${
-            str[numbersSequenceEndsAt]
-          }`}\u001b[${39}m`
+          `199 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${str[numbersSequenceEndsAt]}`}\u001b[${39}m`
         );
 
         // We're at the next character where digits end. That is:

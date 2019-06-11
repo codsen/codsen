@@ -120,9 +120,7 @@ function groupStr(originalArr, originalOpts) {
         // finally, bump the count:
         compiledObj[wildcarded].count++;
         console.log(
-          `123 BUMP compiledObj[wildcarded].count is now = ${
-            compiledObj[wildcarded].count
-          }`
+          `123 BUMP compiledObj[wildcarded].count is now = ${compiledObj[wildcarded].count}`
         );
       } else {
         compiledObj[wildcarded] = {

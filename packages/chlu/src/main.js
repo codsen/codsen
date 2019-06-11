@@ -168,9 +168,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       packageJson.type !== "bitbucket"
     ) {
       throw new Error(
-        `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${
-          packageJson.type
-        }`
+        `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${packageJson.type}`
       );
     }
   }
@@ -273,9 +271,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             assumedPackageProject = arr[i + 2];
           } else {
             throw new Error(
-              `chlu/main.js: [THROW_ID_03] We could not extract user and package from the footer link: "${
-                footerLinks[0].content
-              }"`
+              `chlu/main.js: [THROW_ID_03] We could not extract user and package from the footer link: "${footerLinks[0].content}"`
             );
           }
         }

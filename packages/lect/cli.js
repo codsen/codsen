@@ -1455,9 +1455,7 @@ function step6() {
           !objectPath.has(pack, `lect.badges.${name}`) ||
           pack.lect.badges[name]
         ) {
-          return `${totalConcatenatedString}[![${
-            badge[name].alt
-          }][${name}-img]][${name}-url]\n`;
+          return `${totalConcatenatedString}[![${badge[name].alt}][${name}-img]][${name}-url]\n`;
         }
         return res;
       }, "")
@@ -1514,9 +1512,7 @@ function step6() {
               const slug = slugify(customBadges[key].alt);
               // no need to check, do any of the existing slugs match it
               // because the head links would have thrown already
-              res += `[${slug}-img]: ${customBadges[key].img}\n[${slug}-url]: ${
-                customBadges[key].url
-              }\n\n`;
+              res += `[${slug}-img]: ${customBadges[key].img}\n[${slug}-url]: ${customBadges[key].url}\n\n`;
             }
           });
         }
@@ -1550,9 +1546,7 @@ function step6() {
           !objectPath.has(pack, `lect.badges.${name}`) ||
           pack.lect.badges[name]
         ) {
-          return `${res}[${name}-img]: ${badge[name].img}\n[${name}-url]: ${
-            badge[name].url
-          }\n\n`;
+          return `${res}[${name}-img]: ${badge[name].img}\n[${name}-url]: ${badge[name].url}\n\n`;
         }
         return res;
       }, "")

@@ -952,9 +952,7 @@ function comb(str, opts) {
           for (let z = i + 1; z < len; z++) {
             totalCounter++;
             console.log(
-              `0924 \u001b[${36}m${`str[${z}] = ${
-                str[z]
-              }`}\u001b[${39}m; ${`\u001b[${33}m${`secondaryStopper`}\u001b[${39}m`} = ${secondaryStopper}`
+              `0924 \u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m; ${`\u001b[${33}m${`secondaryStopper`}\u001b[${39}m`} = ${secondaryStopper}`
             );
 
             // ------------------------------------------------------------------

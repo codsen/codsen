@@ -2126,9 +2126,7 @@ function findClosingQuote(str, idx = 0) {
           // the quote is missing and there is no space after equal character
           console.log("");
           console.log(
-            `2129 it's not the expected quote but ${
-              str[whatFollowsEq]
-            } at index ${whatFollowsEq}`
+            `2129 it's not the expected quote but ${str[whatFollowsEq]} at index ${whatFollowsEq}`
           );
           // for example, we have:
           // <a bcd=ef ghj=kl mno=pqrs>

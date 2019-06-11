@@ -198,9 +198,7 @@ function compare(bo, so, originalOpts) {
           if (!opts.verboseWhenMismatches) {
             return false;
           }
-          return `The given object has key ${
-            sKeys[i]
-          } which the other-one does not have.`;
+          return `The given object has key ${sKeys[i]} which the other-one does not have.`;
         } // so wildcards are on and sKeys[i] contains a wildcard
         else if (
           Object.keys(b).some(bKey =>
@@ -213,9 +211,7 @@ function compare(bo, so, originalOpts) {
         if (!opts.verboseWhenMismatches) {
           return false;
         }
-        return `The given object has key ${
-          sKeys[i]
-        } which the other-one does not have.`;
+        return `The given object has key ${sKeys[i]} which the other-one does not have.`;
       }
       if (b[sKeys[i]] !== undefined && !isTheTypeLegit(b[sKeys[i]])) {
         throw new TypeError(
