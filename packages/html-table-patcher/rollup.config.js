@@ -1,3 +1,4 @@
+import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -29,6 +30,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        builtins(),
         resolve(),
         json(),
         commonjs(),
@@ -44,11 +46,17 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["html-comment-regex", "ranges-apply", "ranges-push"],
+      external: [
+        "dom-serializer",
+        "domutils",
+        "html-comment-regex",
+        "htmlparser2"
+      ],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         babel(),
         cleanup(),
@@ -62,11 +70,17 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["html-comment-regex", "ranges-apply", "ranges-push"],
+      external: [
+        "dom-serializer",
+        "domutils",
+        "html-comment-regex",
+        "htmlparser2"
+      ],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         cleanup(),
         license({

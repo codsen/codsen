@@ -1,9 +1,19 @@
 import test from "ava";
 import { patcher, defaults, version } from "../dist/html-table-patcher.esm";
-import tiny from "tinyhtml";
+import { crush } from "html-crush";
 
 function processThis(str, opts) {
-  return tiny(patcher(str, opts));
+  return crush(patcher(str, opts), {
+    lineLengthLimit: 0,
+    removeLineBreaks: true
+  }).result.replace(/\s*\n\s*/gm, "");
+}
+
+function tiny(something) {
+  return crush(something, {
+    lineLengthLimit: 0,
+    removeLineBreaks: true
+  }).result.replace(/\s*\n\s*/gm, "");
 }
 
 // 01. type #1 - code between two TR's or TR and TABLE
@@ -98,16 +108,16 @@ zzz
   );
 });
 
-test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - unfinished comment`, t => {
+test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`, t => {
   t.deepEqual(
     processThis(`<table>
   zzz
-  <tr><!--
+  <!--<tr>
     <td>
       something
     </td>
     zzz
-  </tr>
+  </tr>-->
 </table>`),
     tiny(`<table>
   <tr>
@@ -115,12 +125,12 @@ test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
       zzz
     </td>
   </tr>
-  <tr><!--
+  <!--<tr>
     <td>
       something
     </td>
     zzz
-  </tr>
+  </tr>-->
 </table>`),
     "01.04 - notice comment is never closed, yet wrapping occurs before it"
   );
@@ -134,7 +144,7 @@ test(`01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
       something
     </td>
   </tr>
-  zzz<!--yyyy-->
+  zzz
   <tr>
     <td>
       else
@@ -176,7 +186,11 @@ test(`01.06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   </tr>
 </table>`),
     tiny(`<table>
-  <tr><td colspan="2">xyz</td></tr>
+  <tr>
+    <td colspan="2">
+      xyz
+    </td>
+  </tr>
   <tr>
     <td>
       abc
@@ -293,16 +307,18 @@ test(`01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 <tr><td>s</td></tr>
 </table>`,
       {
-        cssStylesContent:
-          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-        alwaysCenter: true
+        generalOpts: {
+          cssStylesContent:
+            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+          alwaysCenter: true
+        }
       }
     ),
     tiny(`<table>
 <tr><td>a</td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 0 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 0 }}</td></tr>
 <tr><td>'</td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 1 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 1 }}</td></tr>
 <tr><td>s</td></tr>
 </table>`),
     "01.10"
@@ -322,19 +338,21 @@ test(`01.11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 {{ 3 }}
 </table>`,
       {
-        cssStylesContent:
-          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-        alwaysCenter: true
+        generalOpts: {
+          cssStylesContent:
+            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+          alwaysCenter: true
+        }
       }
     ),
     tiny(`<table>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 0 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 0 }}</td></tr>
 <tr><td>a</td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 1 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 1 }}</td></tr>
 <tr><td>b</td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 2 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 2 }}</td></tr>
 <tr><td>c</td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">{{ 3 }}</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 3 }}</td></tr>
 </table>`),
     "01.11"
   );
@@ -351,26 +369,94 @@ test(`01.12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 2
 <tr><td></td></tr></table>`,
       {
-        cssStylesContent:
-          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-        alwaysCenter: true
+        generalOpts: {
+          cssStylesContent:
+            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+          alwaysCenter: true
+        }
       }
     ),
     tiny(`<table><tr><td></td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">1</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">1</td></tr>
 <tr><td>
   <table><tr><td>.</td></tr></table>
 </td></tr>
-<tr><td style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;" align="center">2</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
     "01.12"
+  );
+});
+
+test(`01.13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, t => {
+  t.deepEqual(
+    processThis(
+      `<table><tr><td></td></tr>
+1
+<tr><td>
+<table></table>
+</td></tr>
+2
+<tr><td></td></tr></table>`,
+      {
+        generalOpts: {
+          cssStylesContent:
+            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+          alwaysCenter: true
+        }
+      }
+    ),
+    tiny(`<table><tr><td></td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">1</td></tr>
+<tr><td>
+<table></table>
+</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
+<tr><td></td></tr></table>`),
+    "01.13"
+  );
+});
+
+test(`01.14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, t => {
+  t.deepEqual(
+    processThis(
+      `<table><tr><td></td></tr>
+1
+<tr><td>
+<table><tr><td>
+<table><tr><td>a</td></tr></table>
+<table><tr><td>b</td></tr></table>
+<table><tr><td>c</td></tr></table>
+</td></tr></table>
+</td></tr>
+2
+<tr><td></td></tr></table>`,
+      {
+        generalOpts: {
+          cssStylesContent:
+            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+          alwaysCenter: true
+        }
+      }
+    ),
+    tiny(`<table><tr><td></td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">1</td></tr>
+<tr><td>
+<table><tr><td>
+<table><tr><td>a</td></tr></table>
+<table><tr><td>b</td></tr></table>
+<table><tr><td>c</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
+<tr><td></td></tr></table>`),
+    "01.14"
   );
 });
 
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - first TD after TR`, t => {
+test(`02.01 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - first TD after TR`, t => {
   t.deepEqual(
     processThis(`<table>
   <tr>
@@ -396,7 +482,7 @@ test(`02.01 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
-test(`02.02 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - colspan=2`, t => {
+test(`02.02 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - colspan=2`, t => {
   t.deepEqual(
     processThis(`<table>
   <tr>
@@ -428,7 +514,7 @@ test(`02.02 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
-test(`02.03 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - align="center", one TD`, t => {
+test(`02.03 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center", one TD`, t => {
   t.deepEqual(
     processThis(`<table>
   <tr>
@@ -454,7 +540,7 @@ test(`02.03 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
-test(`02.04 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TD`}\u001b[${39}m`} - align="center" on one of two TD's`, t => {
+test(`02.04 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center" on one of two TD's`, t => {
   t.deepEqual(
     processThis(`<table>
   <tr>
@@ -489,7 +575,7 @@ test(`02.04 - ${`\u001b[${35}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 // 03. type #3 - code between TD and TD
 // -----------------------------------------------------------------------------
 
-test(`03.01 - ${`\u001b[${31}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TD and TD`}\u001b[${39}m`} - between two TD's`, t => {
+test(`03.01 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`, t => {
   t.deepEqual(
     processThis(`<table>
   <tr>
@@ -523,7 +609,7 @@ test(`03.01 - ${`\u001b[${31}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
-test(`03.02 - ${`\u001b[${31}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TD and TD`}\u001b[${39}m`} - 3 places`, t => {
+test(`03.02 - ${`\u001b[${32}m${`type 3`}\u001b[${39}m`}${`\u001b[${33}m${` - code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`, t => {
   t.deepEqual(
     processThis(`<table>
 <tr>
@@ -623,17 +709,6 @@ test(`05.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}
 </tr><!--zzz<tr></tr><tr></tr><table>zzz</table>yyy-->
 </table><!--zzz\nyyy-->`;
   t.deepEqual(patcher(str3), str3, "05.01.03 - comments include line breaks");
-});
-
-test(`05.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - doctype`, t => {
-  const str1 = `<!DOCTYPE html>$*%(*$&%(£&$(($£&))))<4873874795 html>lslhflsjhdfljshdlh&£^R*^$*&^@*&$^@£$*@^$*@&$^`;
-  t.deepEqual(patcher(str1), str1, "05.02.01");
-
-  const str2 = `<!DOCTYPE html>@£(&$\n^@£^\n$^ )<!DOCTYPE html>\n$*%(*$&\n%(£&$((\n$£&))))<4873874795 html>\nlslhflsjhdfljshdlh&£\n^R*^$*&^@*&$^@£$\n*@^$*@&$^`;
-  t.deepEqual(patcher(str2), str2, "05.02.02");
-
-  const str3 = `\n\n\n>£$<>@<>@\n£<$>@<£>$<>£<___£($\n(@£&$*&_>\n<!DOCTYPE html>@£(&$^@£^$^ )\n<!DOCTYPE html>$*%(*$&%(£\n&$(($£&))))<4873874795 html>lslhflsjhdfljshdlh&£^R*^$*&^@*&$\n^@£$*@^$*@&$^`;
-  t.deepEqual(patcher(str3), str3, "05.02.03");
 });
 
 // 06. checking API bits

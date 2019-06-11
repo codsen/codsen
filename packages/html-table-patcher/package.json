@@ -151,7 +151,10 @@
     },
     "various": {
       "devDependencies": [
-        "tinyhtml"
+        "html-crush",
+        "object-delete-key",
+        "rollup-plugin-node-builtins",
+        "json-stringify-safe"
       ],
       "travisVersionsOverride": []
     }
@@ -164,9 +167,10 @@
     "sourceMap": false
   },
   "dependencies": {
+    "dom-serializer": "^0.1.1",
+    "domutils": "^1.7.0",
     "html-comment-regex": "^1.1.2",
-    "ranges-apply": "^3.0.15",
-    "ranges-push": "^3.1.2"
+    "htmlparser2": "^3.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -181,9 +185,12 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
+    "html-crush": "^1.2.0",
     "js-row-num-cli": "^1.5.22",
+    "json-stringify-safe": "^5.0.1",
     "lect": "^0.6.0",
     "nyc": "^14.1.1",
+    "object-delete-key": "^1.8.24",
     "prettier": "^1.17.1",
     "rollup": "^1.13.1",
     "rollup-plugin-ascii": "^0.0.3",
@@ -192,9 +199,9 @@
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^0.8.1",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^5.0.0",
-    "tinyhtml": "^0.0.72"
+    "rollup-plugin-terser": "^5.0.0"
   }
 }

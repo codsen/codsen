@@ -1,39 +1,36 @@
-import rangesApply from "ranges-apply";
-import Ranges from "ranges-push";
-import htmlCommentRegex from "html-comment-regex";
+import htmlparser from "htmlparser2";
+import domUtils from "domutils";
+import render from "dom-serializer";
 import { version } from "../package.json";
-const isArr = Array.isArray;
+const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;
 
-function isLetter(str) {
-  return (
-    typeof str === "string" &&
-    str.length === 1 &&
-    str.toUpperCase() !== str.toLowerCase()
-  );
-}
 function isStr(something) {
   return typeof something === "string";
 }
-
-function deleteAllKindsOfComments(str) {
-  if (isStr(str)) {
-    return str.replace(htmlCommentRegex, "");
-  }
-  return str;
-}
-
-// opts
 const defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
 
-function patcher(str, originalOpts) {
-  // quick ending
-  if (typeof str !== "string" || str.length === 0) {
-    return str;
+const traverse = (nodes = [], cb) => {
+  if (!nodes.length) {
+    return;
   }
-  const opts = Object.assign({}, defaults, originalOpts);
+  nodes.forEach(node => {
+    cb(node);
+    traverse(node.children, cb);
+  });
+};
+
+const patcher = (
+  html,
+  { parser = {}, serializer = {}, generalOpts = {} } = {}
+) => {
+  if (typeof html !== "string" || html.length === 0) {
+    return html;
+  }
+
+  const opts = Object.assign({}, defaults, generalOpts);
   if (
     opts.cssStylesContent &&
     (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)
@@ -41,921 +38,300 @@ function patcher(str, originalOpts) {
     opts.cssStylesContent = undefined;
   }
 
-  let tableTagStartsAt = null;
-  let tableTagEndsAt = null;
-
-  let trOpeningStartsAt = null;
-  let trOpeningEndsAt = null;
-  let tdOpeningStartsAt = null;
-  const tdOpeningEndsAt = null;
-
-  let tdClosingStartsAt = null;
-  let tdClosingEndsAt = null;
-  let trClosingEndsAt = null;
-
-  let donothingUntil = null;
-
-  // this variable is true for the first encountered TR and is open until
-  // that TR closes. We count TD's and also colspan values.
-  let countTds = false;
-
-  // td count itself
-  let countVal = null;
-
-  // detects, are there align="center" among counted TDs
-  let centeredTdsDetected = false;
-
-  let quotes = null;
-
-  // gaps between TR's or TABLE AND TR (either closing or opening, both)
-  const type1Gaps = new Ranges();
-
-  // gaps between opening TR and opening TD
-  const type2Gaps = new Ranges();
-
-  // gaps between closing TD and another opening TD
-  const type3Gaps = new Ranges();
-
-  // gaps between closing TD and closing TR
-  const type4Gaps = new Ranges();
-
-  // we'll record table tag ranges and column count.
-  // For example, [0, 25, 2] would mean that table which starts at index 0 and
-  // ends at index 25 has two columns. It will be used later when wrapping
-  // content with new rows, when setting colspan's.
-  const tableColumnCounts = [];
-  let tableColumnCount = [];
-
-  console.log(
-    `090 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
-      null,
-      4
-    )}`
-  );
-
-  //
-  //                         .----------------.
-  //                        | .--------------. |
-  //                        | |     __       | |
-  //                        | |    /  |      | |
-  //                        | |    `| |      | |
-  //                        | |     | |      | |
-  //                        | |    _| |_     | |
-  //                        | |   |_____|    | |
-  //                        | |              | |
-  //                        | '--------------' |
-  //                         '----------------'
-  //
-  //        1. scan the input and identify what needs to be wrapped
-  //
-
-  outerLoop: for (let i = 0, len = str.length; i < len; i++) {
-    console.log(
-      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${`\u001b[${31}m${
-        str[i].trim() === ""
-          ? str[i] === null
-            ? "null"
-            : str[i] === "\n"
-            ? "line break"
-            : str[i] === "\t"
-            ? "tab"
-            : "space"
-          : str[i]
-      }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`
-    );
-
-    if (donothingUntil) {
-      if (str.slice(i).startsWith(donothingUntil)) {
-        // if it's a match, disable it
-
-        // 1. offset i
-        i += donothingUntil.length - 1;
-
-        // 2. reset marker
-        donothingUntil = null;
-        console.log(
-          `138 ${`\u001b[${32}m${`STOP`}\u001b[${39}m`} donothingUntil = null; i now = ${i} then CONTINUE`
-        );
-        continue;
-      } else {
-        // if it's not a match, skip
-        console.log(
-          `144 SKIP until ${JSON.stringify(donothingUntil, null, 0)} is met`
-        );
-        continue;
-      }
-    }
-
-    // catch HTML comments, so that we don't process the commented-out code
+  const dom = htmlparser.parseDOM(html, parser);
+  traverse(dom, node => {
     if (
-      str[i] === "<" &&
-      str[i + 1] === "!" &&
-      str[i + 2] === "-" &&
-      str[i + 3] === "-"
+      node.type === "text" &&
+      node["parent"] &&
+      node["parent"].type === "tag" &&
+      node["parent"].name === "table" &&
+      isStr(node.data) &&
+      node.data.trim().length
     ) {
-      // if an opening comment was detected, traverse until the closing
-      for (let y = i; y < len; y++) {
-        if (
-          (str[y] === "-" && str[y + 1] === "-" && str[y + 2] === ">") ||
-          str[y + 1] === undefined
-        ) {
-          // 1. offset the index, so we "jump over" those commented-out characters
-          i = y + 2;
-          // 2. break, jumping via the label straight into outer loop's next iteration:
-          continue outerLoop;
-        }
-      }
-    }
+      let colspan = 1;
+      let centered = !!opts.alwaysCenter;
 
-    // catch being within some quotes.
-    // this ensures some cheeky characters within quotes (like URL's) don't
-    // terminate the tag or otherwise mess things up.
-    if (
-      (str[i] === "'" || str[i] === '"') &&
-      (str[i - 1] === "=" || (str[i - 1] === " " && str[i - 2] === "="))
-    ) {
-      console.log(`178 within quotes clauses`);
-      if (!quotes) {
-        quotes = {
-          type: str[i],
-          startedAt: i
-        };
-        console.log(
-          `185 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
-            quotes,
-            null,
-            4
-          )}`
-        );
-      }
-    }
-    // stop within quotes
-    if (quotes && str[i] === quotes.type) {
-      quotes = null;
-      console.log(
-        `197 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${quotes}`
-      );
-    }
+      // 1. calculate the colspan (if needed at all, that is, colspan > 1)
+      const siblings = getSiblings(node);
 
-    // catch the closing TD tag:
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "/" &&
-      str[i + 2] === "t" &&
-      str[i + 3] === "d"
-    ) {
-      // 1. set the marker
-      tdClosingStartsAt = i;
-      console.log(
-        `212 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
-      );
-      // 2. set the closing as well:
-      if (str[i + 3] === ">") {
-        tdClosingEndsAt = i + 3;
-      } else {
-        // WTF?
-        for (let y = i + 3; y < len; y++) {
-          if (str[y] === ">") {
-            tdClosingEndsAt = y;
-            console.log(
-              `223 SET ${`\u001b[${33}m${`tdClosingEndsAt`}\u001b[${39}m`} = ${tdClosingEndsAt}`
-            );
-            i = y;
-            console.log(`226 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
-            console.log("227 THEN CONTINUE OUTER");
-            continue outerLoop;
+      // Loop through all siblings and look for the first TR.
+      // If such exists, count its TD's. If more than two, Bob's your uncle,
+      // here's the colspan value.
+      for (let i = 0, len = siblings.length; i < len; i++) {
+        if (siblings[i].type === "tag" && siblings[i].name === "tr") {
+          const tdcount = getChildren(siblings[i]).reduce((acc, node) => {
+            if (node.name === "td" && node.type === "tag") {
+              if (
+                !centered &&
+                node.attribs &&
+                ((node.attribs.align && node.attribs.align === "center") ||
+                  (node.attribs.style &&
+                    node.attribs.style.match(/text-align:\s*center/gi).length))
+              ) {
+                centered = true;
+              }
+              return acc + 1;
+            }
+            return acc;
+          }, 0);
+          if (tdcount && tdcount > 1) {
+            colspan = tdcount;
           }
+          break;
         }
       }
-    }
 
-    // catch the ending of an opening TD tag:
-    if (
-      !quotes &&
-      str[i] === ">" &&
-      tdOpeningStartsAt !== null &&
-      tdOpeningStartsAt < i &&
-      tableTagStartsAt === null &&
-      tableTagEndsAt < i &&
-      trOpeningStartsAt === null &&
-      trOpeningEndsAt < i
-    ) {
-      console.log(
-        `246 \u001b[${31}m${`ENDING OF AN OPENING TD TAG`}\u001b[${39}m`
-      );
-      // 1. catch align="center" if applicable, set "centeredTdsDetected"
-      if (
-        countTds &&
-        (str.slice(tdOpeningStartsAt, i).includes('align="center"') ||
-          str.slice(tdOpeningStartsAt, i).match(/text-align:\s*center/gi))
-      ) {
-        centeredTdsDetected = true;
-        console.log(
-          `256 SET ${`\u001b[${33}m${`centeredTdsDetected`}\u001b[${39}m`} = ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
-        );
-      }
-
-      // 2. reset the openingStarts marker because otherwise it will cause
-      // false flags later on other closing brackets
-      tdOpeningStartsAt = null;
-    }
-
-    // catch the opening TD tag:
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "t" &&
-      str[i + 2] === "d" &&
-      !isLetter(str[i + 3])
-    ) {
-      // 1. set the marker
-      tdOpeningStartsAt = i;
-      console.log(
-        `276 SET ${`\u001b[${33}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}`
-      );
-      // 2. maybe there's content between last closing TD or opening TR and this?
-
-      if (
-        // if TR was in front and there's some code in-between that and this tag
-        trOpeningEndsAt !== null &&
-        (tdClosingEndsAt === null || tdClosingEndsAt < trOpeningEndsAt)
-      ) {
-        if (
-          deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim()
-            .length !== 0
-        ) {
-          console.log(`289 PUSH [${trOpeningEndsAt + 1}, ${i}] to type2Gaps`);
-          type2Gaps.push(
-            trOpeningEndsAt + 1,
-            i,
-            deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim()
-          );
+      // 2. append TR with a nested TD.
+      // create a blank TR:
+      const replacementTr = {
+        type: "tag",
+        name: "tr",
+        children: []
+      };
+      const replacementTd = {
+        type: "tag",
+        name: "td",
+        children: [node]
+      };
+      if (colspan && colspan > 1) {
+        if (!replacementTd["attribs"]) {
+          replacementTd["attribs"] = {};
         }
-      } else if (
-        // if TD was in front and there's some code in-between that and this tag
-        tdClosingEndsAt !== null &&
-        (trClosingEndsAt === null || tdClosingEndsAt > trClosingEndsAt)
-      ) {
+        replacementTd["attribs"].colspan = colspan;
+      }
+      if (centered) {
+        if (!replacementTd["attribs"]) {
+          replacementTd["attribs"] = {};
+        }
+        replacementTd["attribs"].align = "center";
+      }
+      if (isStr(opts.cssStylesContent) && opts.cssStylesContent.trim().length) {
+        replacementTd["attribs"].style = opts.cssStylesContent;
+      }
+      const linebreak = {
+        type: "text",
+        data: "\n"
+      };
+      appendChild(replacementTr, replacementTd);
+      appendChild(replacementTr, linebreak);
+      replaceElement(node, replacementTr);
+    } else if (
+      node.type === "tag" &&
+      node.name === "table" &&
+      node.children &&
+      node.children.some(
+        node =>
+          node.type === "tag" &&
+          node.name === "tr" &&
+          node.children &&
+          node.children.some(
+            childNode =>
+              childNode.type === "text" &&
+              isStr(childNode.data) &&
+              childNode.data.trim().length
+          )
+      )
+    ) {
+      // type 2 - <tr>zzz<td>... ; ...</td>zzz<td>... - content around TD tags
+      //
+      // filter all TABLES which have TR's which have non-whitespace text nodes.
+
+      let centered = !!opts.alwaysCenter;
+
+      const newChildren = [];
+      node.children.forEach(oneOfNodes => {
+        // 1. if it's whitespace text node, let it pass:
         if (
-          deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
-            .length !== 0
+          oneOfNodes.type === "text" &&
+          isStr(oneOfNodes.data) &&
+          !oneOfNodes.data.trim().length
         ) {
-          // 1.
-          console.log(`306 PUSH [${tdClosingEndsAt + 1}, ${i}] to type3Gaps`);
-          type3Gaps.push(
-            tdClosingEndsAt + 1,
-            i,
-            deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
-          );
-          // 2. turn off countTds
-          // Imagine, we have <table>
-          // <tr>
-          // x
-          // <td>1</td>
-          // y
-          // <td>2</td>
-          // z
-          // </tr>
-          // </table>
+          newChildren.push(oneOfNodes);
+        }
+        // 2. if it's TR, process its children and push separate TR for each
+        // text node
+        if (oneOfNodes.type === "tag" && oneOfNodes.name === "tr") {
+          // PART 2-1.
+          // ███████████████████████████████████████
+
+          // Count how many TD's within this TR are consecutive. That will be colspan
+          // value we'll append on each newly wrapped TR's TD.
+
+          // For example, consider this:
           //
-          // and we need to count how many columns does this table have, in order
-          // to set colspans if needed.
-          // Now, we count all TD's within first TR. But any non-tag contents
-          // ("y") should terminate the counting because they will be wrapped
-          // separately, in a new TR.
-          // If we didn't reset countTds here, example above would get reported
-          // as having 2 columns.
-          if (countTds) {
-            countTds = false;
-            console.log(`332 SET countTds = false`);
-          }
-        }
-      }
+          // <table>
+          //   <tr>
+          //     x
+          //     <td> <---- TD #1
+          //       1
+          //     </td>
+          //     <td> <---- TD #2
+          //       2
+          //     </td>
+          //   </tr>
+          // </table>
 
-      // 3. bump the counter
-      if (countTds) {
-        if (countVal === null) {
-          countVal = 1;
-        } else {
-          countVal++;
-        }
-        console.log(
-          `345 BUMP ${`\u001b[${33}m${`countVal`}\u001b[${39}m`} now = ${countVal}`
-        );
-      }
-    }
+          // this would get patched to:
 
-    // catch the closing table tag:
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "/" &&
-      str[i + 2] === "t" &&
-      str[i + 3] === "a" &&
-      str[i + 4] === "b" &&
-      str[i + 5] === "l" &&
-      str[i + 6] === "e" &&
-      str[i + 7] === ">"
-    ) {
-      // we don't even need to record the marker, we will capture the range
-      // anyway, it's single-occurence only (unlike TR endings which can be
-      // also used to capture content between TR tags)
-      if (
-        deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
-          .length !== 0
-      ) {
-        console.log(`369 PUSH [${trClosingEndsAt + 1}, ${i}] to type1Gaps`);
-        type1Gaps.push(
-          trClosingEndsAt + 1,
-          i,
-          deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
-        );
-      }
+          // <table>
+          //   <tr>
+          //     <td colspan="2">  <---- colspan="2" because there were two consecutive TD's
+          //       x
+          //     </td>
+          //   </tr>
+          //   <tr>
+          //     <td>
+          //       1
+          //     </td>
+          //     <td>
+          //       2
+          //     </td>
+          //   </tr>
+          // </table>
 
-      // reset tableColumnCount
-      if (tableColumnCount) {
-        // 1. if anything was captured in countVal (TD's counted), push it into
-        // tableColumnCount, along ending index of the table.
-        // We'll end up with array of:
-        // [
-        //    table's starting index,
-        //    table's ending index,
-        //    table's column (TD) count
-        // ]
-        if (countVal !== null) {
-          tableColumnCounts.push([
-            tableColumnCount[0],
-            i + 7,
-            countVal,
-            centeredTdsDetected
-          ]);
-          console.log(
-            `395 PUSH [${tableColumnCount[0]}, ${i +
-              7}, ${countVal}, ${centeredTdsDetected}]`
-          );
-        }
-
-        // 2. reset
-        console.log(
-          `402 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tableColumnCount, countTds & countVal`
-        );
-        tableColumnCount = [];
-        countTds = false;
-        countVal = null;
-        centeredTdsDetected = false;
-      }
-    }
-
-    // catch the beginning+ending of the closing </tr>
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "/" &&
-      str[i + 2] === "t" &&
-      str[i + 3] === "r" &&
-      str[i + 4] === ">"
-    ) {
-      // 1. maybe there was some code in front of this tag, after the last </td>?
-      if (
-        tdClosingEndsAt !== null &&
-        deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
-          .length !== 0
-      ) {
-        console.log(`426 PUSH [${tdClosingEndsAt + 1}, ${i}] to type4Gaps`);
-        type4Gaps.push(
-          tdClosingEndsAt + 1,
-          i,
-          deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
-        );
-      }
-
-      // 2. set the ending marker
-      trClosingEndsAt = i + 4;
-      console.log(
-        `437 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
-      );
-      // 3. wipe the opening marker so that "ending of the opening" will not
-      // activate afterwards (we've got a closing bracket):
-      trOpeningStartsAt = null;
-      console.log(
-        `443 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = null`
-      );
-
-      // 4. tend TD counting
-      if (countTds) {
-        countTds = false;
-        // but keep tableColumnCount[] in current state, its assembly will be
-        // finished when ending of the current table is reached. It's because
-        // TD column count is per table, not per row.
-        console.log(
-          `453 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = false`
-        );
-      }
-
-      // 5. offset the index head so that we don't traverse already-explored
-      // next 4 characters:
-      i += 4;
-      continue;
-    }
-
-    // catch ending of an opening <tr
-    if (
-      !quotes &&
-      str[i] === ">" &&
-      trOpeningStartsAt !== null &&
-      trOpeningStartsAt < i &&
-      tableTagStartsAt === null &&
-      tableTagEndsAt < i
-    ) {
-      // 1. set the marker
-      trOpeningEndsAt = i;
-      console.log(
-        `475 SET ${`\u001b[${33}m${`trOpeningEndsAt`}\u001b[${39}m`} = ${trOpeningEndsAt}`
-      );
-      // 2. Find out, is it content between TR's or between TABLE and TR (different
-      // markers need to be referenced)
-      if (tableTagEndsAt !== null) {
-        // check, were there non-whitespace characters between the end of the
-        // opening table's tag and the beginning of this <tr>. If so, make a note
-        // of this range.
-        if (
-          deleteAllKindsOfComments(
-            str.slice(tableTagEndsAt + 1, trOpeningStartsAt)
-          ).trim().length !== 0
-        ) {
-          console.log(
-            `489 PUSH [${tableTagEndsAt +
-              1}, ${trOpeningStartsAt}] to type1Gaps`
-          );
-          type1Gaps.push(
-            tableTagEndsAt + 1,
-            trOpeningStartsAt,
-            deleteAllKindsOfComments(
-              str.slice(tableTagEndsAt + 1, trOpeningStartsAt)
-            ).trim()
-          );
-        }
-        // reset the markers so that further closing brackets aren't flagged up
-        // as false positives:
-        console.log(`502 SET trOpeningStartsAt = null; tableTagEndsAt = null`);
-        trOpeningStartsAt = null;
-        tableTagEndsAt = null;
-      } else if (trClosingEndsAt !== null) {
-        if (
-          deleteAllKindsOfComments(
-            str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
-          ).trim().length !== 0
-        ) {
-          console.log(
-            `512 PUSH [${trClosingEndsAt +
-              1}, ${trOpeningStartsAt}, ${deleteAllKindsOfComments(
-              str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
-            ).trim()}] to type1Gaps[]`
-          );
-          type1Gaps.push(
-            trClosingEndsAt + 1,
-            trOpeningStartsAt,
-            deleteAllKindsOfComments(
-              str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
-            ).trim()
-          );
-        }
-        // wipe the trClosingEndsAt because we captured the range and it won't
-        // be needed:
-        trClosingEndsAt = null;
-        console.log(`528 SET trClosingEndsAt = null`);
-      }
-
-      // 3. if the countTds is not on, enable it
-      if (!countTds && countVal === null) {
-        countTds = true;
-        console.log(
-          `535 SET ${`\u001b[${33}m${`countTds`}\u001b[${39}m`} = true`
-        );
-      }
-    }
-
-    // catch the beginning of the <tr
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "t" &&
-      str[i + 2] === "r" &&
-      !isLetter(str[i + 3])
-    ) {
-      // 1. maybe there was some code between this TR and TR before?
-      console.log(`549 within catch the beginning of the <tr clauses`);
-      if (
-        trClosingEndsAt !== null &&
-        tableTagEndsAt === null &&
-        deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
-          .length !== 0
-      ) {
-        console.log(
-          `557 PUSH [${trClosingEndsAt + 1}, ${i}, "${deleteAllKindsOfComments(
-            str.slice(trClosingEndsAt + 1, i)
-          ).trim()}"] to type1Gaps[]`
-        );
-        type1Gaps.push(
-          trClosingEndsAt + 1,
-          i,
-          deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
-        );
-        // wipe marker to prevent new false additions:
-        trClosingEndsAt = null;
-        console.log(
-          `569 SET ${`\u001b[${33}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}`
-        );
-      }
-      // 2. mark the beginning of TR
-      trOpeningStartsAt = i;
-      console.log(
-        `575 SET ${`\u001b[${33}m${`trOpeningStartsAt`}\u001b[${39}m`} = ${trOpeningStartsAt}`
-      );
-    }
-
-    // catch ending of the opening table tag
-    if (
-      !quotes &&
-      str[i] === ">" &&
-      tableTagStartsAt !== null &&
-      tableTagStartsAt < i
-    ) {
-      tableTagEndsAt = i;
-      console.log(
-        `588 SET ${`\u001b[${33}m${`tableTagEndsAt`}\u001b[${39}m`} = ${tableTagEndsAt}`
-      );
-
-      // start assembling tableColumnCount
-      if (!(isArr(tableColumnCount) && tableColumnCount.length)) {
-        tableColumnCount.push(tableTagStartsAt);
-        console.log(
-          `595 PUSH ${tableTagStartsAt} to tableColumnCount=${JSON.stringify(
-            tableColumnCount,
-            null,
-            0
-          )}`
-        );
-      }
-
-      // in order not to trigger this again and again, let's wipe the
-      // "tableTagStartsAt" - it's not needed anyway and without it, this catch
-      // clause won't activate any more, at least until new table tag opening..
-      tableTagStartsAt = null;
-      console.log(
-        `608 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
-      );
-    }
-
-    // catch beginning of the <table
-    if (
-      !quotes &&
-      str[i] === "<" &&
-      str[i + 1] === "t" &&
-      str[i + 2] === "a" &&
-      str[i + 3] === "b" &&
-      str[i + 4] === "l" &&
-      str[i + 5] === "e" &&
-      !isLetter(str[i + 6])
-    ) {
-      if (!countTds && countVal === null) {
-        tableTagStartsAt = i;
-        console.log(
-          `626 SET ${`\u001b[${33}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}`
-        );
-      } else {
-        donothingUntil = "</table";
-        console.log(
-          `631 SET donothingUntil = ${JSON.stringify(donothingUntil, null, 0)}`
-        );
-      }
-    }
-
-    console.log("---------");
-
-    console.log(
-      `639 ${
-        tableTagStartsAt
-          ? `${`\u001b[${90}m${`tableTagStartsAt`}\u001b[${39}m`} = ${tableTagStartsAt}; `
-          : ""
-      }${
-        tableTagEndsAt
-          ? `${`\u001b[${90}m${`tableTagEndsAt`}\u001b[${39}m`} = ${tableTagEndsAt}; `
-          : ""
-      }${
-        trOpeningStartsAt
-          ? `${`\u001b[${90}m${`trOpeningStartsAt`}\u001b[${39}m`} = ${trOpeningStartsAt}; `
-          : ""
-      }${
-        trOpeningEndsAt
-          ? `${`\u001b[${90}m${`trOpeningEndsAt`}\u001b[${39}m`} = ${trOpeningEndsAt}; `
-          : ""
-      }${
-        tdOpeningStartsAt
-          ? `${`\u001b[${90}m${`tdOpeningStartsAt`}\u001b[${39}m`} = ${tdOpeningStartsAt}; `
-          : ""
-      }${
-        tdOpeningEndsAt
-          ? `${`\u001b[${90}m${`tdOpeningEndsAt`}\u001b[${39}m`} = ${tdOpeningEndsAt}; `
-          : ""
-      }${
-        tdClosingStartsAt
-          ? `${`\u001b[${90}m${`tdClosingStartsAt`}\u001b[${39}m`} = ${tdClosingStartsAt}; `
-          : ""
-      }${
-        tdClosingEndsAt
-          ? `${`\u001b[${90}m${`tdClosingEndsAt`}\u001b[${39}m`} = ${tdClosingEndsAt}; `
-          : ""
-      }${
-        trClosingEndsAt
-          ? `${`\u001b[${90}m${`trClosingEndsAt`}\u001b[${39}m`} = ${trClosingEndsAt}; `
-          : ""
-      }`
-    );
-    // console.log(
-    //   `${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
-    //     quotes,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    console.log(
-      `685 ${
-        type1Gaps.current()
-          ? `${`\u001b[${90}m${`type1Gaps`}\u001b[${39}m`} = ${JSON.stringify(
-              type1Gaps.current(),
-              null,
-              0
-            )}`
-          : ""
-      }${
-        type2Gaps.current()
-          ? `${`\u001b[${90}m${`type2Gaps`}\u001b[${39}m`} = ${JSON.stringify(
-              type2Gaps.current(),
-              null,
-              0
-            )}`
-          : ""
-      }${
-        type3Gaps.current()
-          ? `${`\u001b[${90}m${`type3Gaps`}\u001b[${39}m`} = ${JSON.stringify(
-              type3Gaps.current(),
-              null,
-              0
-            )}`
-          : ""
-      }${
-        type4Gaps.current()
-          ? `${`\u001b[${90}m${`type4Gaps`}\u001b[${39}m`} = ${JSON.stringify(
-              type4Gaps.current(),
-              null,
-              0
-            )}`
-          : ""
-      }`
-    );
-    console.log(
-      `720 ${`\u001b[${90}m${`countVal`}\u001b[${39}m`} = ${countVal}; ${`\u001b[${90}m${`countTds`}\u001b[${39}m`} = ${countTds}; ${`\u001b[${90}m${`centeredTdsDetected`}\u001b[${39}m`} = ${centeredTdsDetected}`
-    );
-    console.log(
-      `723 ${`\u001b[${90}m${`tableColumnCount`}\u001b[${39}m`} = ${JSON.stringify(
-        tableColumnCount,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `730 ${`\u001b[${90}m${`tableColumnCounts`}\u001b[${39}m`} = ${JSON.stringify(
-        tableColumnCounts,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `737 ${`\u001b[${90}m${`quotes`}\u001b[${39}m`} = ${`\u001b[${
-        quotes ? 32 : 21
-      }m${JSON.stringify(quotes, null, 0)}\u001b[${39}m`}`
-    );
-  }
-
-  //                             .----------------.
-  //                            | .--------------. |
-  //                            | |    _____     | |
-  //                            | |   / ___ `.   | |
-  //                            | |  |_/___) |   | |
-  //                            | |   .'____.'   | |
-  //                            | |  / /____     | |
-  //                            | |  |_______|   | |
-  //                            | |              | |
-  //                            | '--------------' |
-  //                             '----------------'
-  //
-  //                    2. insert the necessary TR's and TD's
-  //
-
-  // early ending:
-  if (
-    !type1Gaps.current() &&
-    !type2Gaps.current() &&
-    !type3Gaps.current() &&
-    !type4Gaps.current()
-  ) {
-    return str;
-  }
-
-  const resRanges = new Ranges();
-
-  if (type1Gaps.current()) {
-    console.log(`771 type #1 gaps found, let's process them`);
-    resRanges.push(
-      type1Gaps.current().map(range => {
-        if (typeof range[2] === "string" && range[2].length > 0) {
-          console.log(`775`);
-          let attributesToAdd = "";
-          let tempColspanValIfFound;
-          let addAlignCenter = false;
-          if (
-            isArr(tableColumnCounts) &&
-            tableColumnCounts.length &&
-            tableColumnCounts.some(refRange => {
-              if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
-                // if TD count is 2 or more, grab it
-                if (refRange[2] !== 1) {
-                  tempColspanValIfFound = refRange[2];
-                }
-                // if any of TD's was centered, center all wrapping too
-                if (refRange[3]) {
-                  addAlignCenter = refRange[3];
-                }
-                return true;
+          let consecutiveTDs = 0;
+          let lastWasTd = false;
+          oneOfNodes.children.forEach(oneOfSubNodes => {
+            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
+              // 1. check for centered'ness
+              if (
+                !centered &&
+                oneOfSubNodes.attribs &&
+                ((oneOfSubNodes.attribs.align &&
+                  oneOfSubNodes.attribs.align === "center") ||
+                  (oneOfSubNodes.attribs.style &&
+                    oneOfSubNodes.attribs.style.match(/text-align:\s*center/gi)
+                      .length))
+              ) {
+                centered = true;
               }
-              return false;
-            })
-          ) {
-            console.log(`797`);
-            if (tempColspanValIfFound) {
-              attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
-            }
-            if (opts.cssStylesContent) {
-              attributesToAdd += ` style="${opts.cssStylesContent}"`;
-            }
-            if (opts.alwaysCenter || addAlignCenter) {
-              attributesToAdd += ` align="center"`;
-            }
-            console.log(
-              `808 FINAL attributesToAdd = ${JSON.stringify(
-                attributesToAdd,
-                null,
-                0
-              )}`
-            );
-          }
-          return [
-            range[0],
-            range[1],
-            `<tr><td${attributesToAdd}>${range[2].trim()}</td></tr>`
-          ];
-        }
-        return range;
-      })
-    );
-    console.log(
-      `825 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
-    );
-  }
-  if (type2Gaps.current()) {
-    console.log(`829 type #2 gaps found, let's process them`);
-    resRanges.push(
-      type2Gaps.current().map(range => {
-        if (typeof range[2] === "string" && range[2].length > 0) {
-          let attributesToAdd = "";
-          let tempColspanValIfFound;
-          let addAlignCenter = false;
-          if (
-            isArr(tableColumnCounts) &&
-            tableColumnCounts.length &&
-            tableColumnCounts.some(refRange => {
-              if (range[0] >= refRange[0] && range[0] <= refRange[1]) {
-                // if TD count is 2 or more, grab it
-                if (refRange[2] !== 1) {
-                  tempColspanValIfFound = refRange[2];
-                }
-                // if any of TD's was centered, center all wrapping too
-                if (refRange[3]) {
-                  addAlignCenter = refRange[3];
-                }
-                return true;
+
+              // 2. count TD consecutive'ness
+              if (!lastWasTd) {
+                lastWasTd = true;
+              } else {
+                consecutiveTDs++;
               }
-              return false;
-            })
-          ) {
-            if (tempColspanValIfFound) {
-              attributesToAdd += ` colspan="${tempColspanValIfFound}"`;
+            } else if (
+              lastWasTd &&
+              (oneOfSubNodes.type !== "text" ||
+                (isStr(oneOfSubNodes.data) && oneOfSubNodes.data.trim().length))
+            ) {
+              lastWasTd = false;
             }
-            if (opts.cssStylesContent) {
-              attributesToAdd += ` style="${opts.cssStylesContent}"`;
-            }
-            if (opts.alwaysCenter || addAlignCenter) {
-              attributesToAdd += ` align="center"`;
-            }
-            console.log(
-              `864 FINAL attributesToAdd = ${JSON.stringify(
-                attributesToAdd,
-                null,
-                0
-              )}`
-            );
-          }
-          return [
-            range[0],
-            range[1],
-            `<td${attributesToAdd}>${range[2].trim()}</td></tr>\n<tr>`
-          ];
-        }
-        return range;
-      })
-    );
-    console.log(
-      `881 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
-    );
-  }
-  if (type3Gaps.current()) {
-    console.log(`885 type #3 gaps found, let's process them`);
-    resRanges.push(
-      type3Gaps.current().map(range => {
-        if (typeof range[2] === "string" && range[2].length > 0) {
-          // type #3 doesn't ever need colspans because whole row is added
-          let attributesToAdd = "";
-          if (opts.alwaysCenter) {
-            attributesToAdd += ` align="center"`;
-          }
-          if (opts.cssStylesContent) {
-            attributesToAdd += ` style="${opts.cssStylesContent}"`;
-          }
-          console.log(
-            `898 FINAL attributesToAdd = ${JSON.stringify(
-              attributesToAdd,
-              null,
-              0
-            )}`
-          );
-          return [
-            range[0],
-            range[1],
-            `</tr>\n<tr><td${attributesToAdd}>${range[2].trim()}</td></tr><tr>`
-          ];
-        }
-        return range;
-      })
-    );
-    console.log(
-      `914 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
-    );
-  }
-  if (type4Gaps.current()) {
-    console.log(`918 type #4 gaps found, let's process them`);
-    resRanges.push(
-      type4Gaps.current().map(range => {
-        if (typeof range[2] === "string" && range[2].length > 0) {
-          // type #4 also doesn't ever need colspans
-          let attributesToAdd = "";
-          if (opts.alwaysCenter) {
-            attributesToAdd += ` align="center"`;
-          }
-          if (opts.cssStylesContent) {
-            attributesToAdd += ` style="${opts.cssStylesContent}"`;
-          }
-          console.log(
-            `931 FINAL attributesToAdd = ${JSON.stringify(
-              attributesToAdd,
-              null,
-              0
-            )}`
-          );
-          return [
-            range[0],
-            range[1],
-            `</tr><tr><td${attributesToAdd}>${range[2].trim()}</td>`
-          ];
-        }
-        return range;
-      })
-    );
-    console.log(
-      `947 new resRanges = ${JSON.stringify(resRanges.current(), null, 4)}`
-    );
-  }
+          });
 
-  if (resRanges.current()) {
-    const finalRes = rangesApply(str, resRanges.current());
-    console.log(`953 RETURN ${finalRes}`);
-    return finalRes;
-  }
+          // PART 2-2.
+          // ███████████████████████████████████████
 
-  console.log(`957 RETURN ${str}`);
-  return str;
-}
+          // push each text node or chunk of consecutive TD's into separate
+          // TR's and replace this TR with those TR's.
+
+          lastWasTd = false;
+
+          // We gather consecutive TD's or whitespace into staging.
+          // Reaching the end or a first non-TD and non-whitespace node submits
+          // everything what was staged under a separate TR, this TR goes into
+          // "newChildren" array.
+          let staging = [];
+
+          oneOfNodes.children.forEach(oneOfSubNodes => {
+            if (oneOfSubNodes.type === "tag" && oneOfSubNodes.name === "td") {
+              // if it's a TD, submit it
+
+              if (!lastWasTd) {
+                lastWasTd = true;
+              }
+              // push the current node into staging:
+              staging.push(oneOfSubNodes);
+            } else if (
+              oneOfSubNodes.type === "text" &&
+              isStr(oneOfSubNodes.data)
+            ) {
+              if (!oneOfSubNodes.data.trim().length) {
+                // if it's whitespace, stage it
+                staging.push(oneOfSubNodes);
+              } else {
+                lastWasTd = false;
+                // release stage contents
+                if (staging.length) {
+                  newChildren.push({
+                    type: "tag",
+                    name: "tr",
+                    children: Array.from(staging)
+                  });
+                  staging = [];
+                }
+
+                // push raw text within TR > TD > this-text-node
+                const replacementTr = {
+                  type: "tag",
+                  name: "tr",
+                  children: []
+                };
+                const replacementTd = {
+                  type: "tag",
+                  name: "td",
+                  children: [oneOfSubNodes]
+                };
+                if (consecutiveTDs > 0) {
+                  if (!replacementTd.attribs) {
+                    replacementTd.attribs = {};
+                  }
+                  replacementTd.attribs.colspan = String(consecutiveTDs + 1);
+                }
+                if (centered) {
+                  if (!replacementTd["attribs"]) {
+                    replacementTd["attribs"] = {};
+                  }
+                  replacementTd["attribs"].align = "center";
+                }
+                if (
+                  isStr(opts.cssStylesContent) &&
+                  opts.cssStylesContent.trim().length
+                ) {
+                  replacementTd["attribs"].style = opts.cssStylesContent;
+                }
+                appendChild(replacementTr, replacementTd);
+                newChildren.push(replacementTr);
+
+                // reset stage
+                staging = [];
+              }
+            } else {
+              lastWasTd = false;
+              // Wrap this TD with a new TR and push into the new CHILDREN array
+              newChildren.push({
+                type: "tag",
+                name: "tr",
+                children: Array.from(staging)
+              });
+
+              // 2. Wipe stage
+              staging = [];
+
+              // 3. Push current node to stage
+              staging.push(oneOfSubNodes);
+            }
+          });
+
+          if (staging.length) {
+            // if there's anything in staging after the loop, push and wipe
+            newChildren.push({
+              type: "tag",
+              name: "tr",
+              children: Array.from(staging)
+            });
+            // wipe
+            staging = [];
+          }
+        }
+      });
+
+      node.children = newChildren;
+    }
+  });
+  return render(dom, serializer);
+};
 
 export { patcher, defaults, version };
