@@ -7,9 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
  */
 
-import htmlparser from 'htmlparser2';
+import parser from 'html-dom-parser';
 import domUtils from 'domutils';
-import render from 'dom-serializer';
+import renderer from 'dom-serializer';
 
 var version = "1.0.15";
 
@@ -17,12 +17,13 @@ const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;
 function isStr(something) {
   return typeof something === "string";
 }
+const isArr = Array.isArray;
 const defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
 const traverse = (nodes = [], cb) => {
-  if (!nodes.length) {
+  if (!isArr(nodes) || !nodes.length) {
     return;
   }
   nodes.forEach(node => {
@@ -30,10 +31,7 @@ const traverse = (nodes = [], cb) => {
     traverse(node.children, cb);
   });
 };
-const patcher = (
-  html,
-  { parser = {}, serializer = {}, generalOpts = {} } = {}
-) => {
+const patcher = (html, generalOpts) => {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
@@ -44,7 +42,7 @@ const patcher = (
   ) {
     opts.cssStylesContent = undefined;
   }
-  const dom = htmlparser.parseDOM(html, parser);
+  const dom = parser(html);
   traverse(dom, node => {
     if (
       node.type === "text" &&
@@ -57,27 +55,31 @@ const patcher = (
       let colspan = 1;
       let centered = !!opts.alwaysCenter;
       const siblings = getSiblings(node);
-      for (let i = 0, len = siblings.length; i < len; i++) {
-        if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-          const tdcount = getChildren(siblings[i]).reduce((acc, node) => {
-            if (node.name === "td" && node.type === "tag") {
-              if (
-                !centered &&
-                node.attribs &&
-                ((node.attribs.align && node.attribs.align === "center") ||
-                  (node.attribs.style &&
-                    node.attribs.style.match(/text-align:\s*center/gi).length))
-              ) {
-                centered = true;
+      if (isArr(siblings) && siblings.length) {
+        for (let i = 0, len = siblings.length; i < len; i++) {
+          if (siblings[i].type === "tag" && siblings[i].name === "tr") {
+            const tdcount = getChildren(siblings[i]).reduce((acc, node) => {
+              if (node.name === "td" && node.type === "tag") {
+                if (
+                  !centered &&
+                  node.attribs &&
+                  ((node.attribs.align && node.attribs.align === "center") ||
+                    (isStr(node.attribs.style) &&
+                      node.attribs.style.match(/text-align:\s*center/gi) &&
+                      node.attribs.style.match(/text-align:\s*center/gi)
+                        .length))
+                ) {
+                  centered = true;
+                }
+                return acc + 1;
               }
-              return acc + 1;
+              return acc;
+            }, 0);
+            if (tdcount && tdcount > 1) {
+              colspan = tdcount;
             }
-            return acc;
-          }, 0);
-          if (tdcount && tdcount > 1) {
-            colspan = tdcount;
+            break;
           }
-          break;
         }
       }
       const replacementTr = {
@@ -248,7 +250,7 @@ const patcher = (
       node.children = newChildren;
     }
   });
-  return render(dom, serializer);
+  return renderer(dom);
 };
 
 export { defaults, patcher, version };

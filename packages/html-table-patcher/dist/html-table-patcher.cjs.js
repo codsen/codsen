@@ -13,9 +13,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var htmlparser = _interopDefault(require('htmlparser2'));
+var parser = _interopDefault(require('html-dom-parser'));
 var domUtils = _interopDefault(require('domutils'));
-var render = _interopDefault(require('dom-serializer'));
+var renderer = _interopDefault(require('dom-serializer'));
 
 var version = "1.0.15";
 
@@ -26,6 +26,7 @@ var replaceElement = domUtils.replaceElement,
 function isStr(something) {
   return typeof something === "string";
 }
+var isArr = Array.isArray;
 var defaults = {
   cssStylesContent: "",
   alwaysCenter: false
@@ -33,7 +34,7 @@ var defaults = {
 var traverse = function traverse() {
   var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var cb = arguments.length > 1 ? arguments[1] : undefined;
-  if (!nodes.length) {
+  if (!isArr(nodes) || !nodes.length) {
     return;
   }
   nodes.forEach(function (node) {
@@ -41,14 +42,7 @@ var traverse = function traverse() {
     traverse(node.children, cb);
   });
 };
-var patcher = function patcher(html) {
-  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-      _ref$parser = _ref.parser,
-      parser = _ref$parser === void 0 ? {} : _ref$parser,
-      _ref$serializer = _ref.serializer,
-      serializer = _ref$serializer === void 0 ? {} : _ref$serializer,
-      _ref$generalOpts = _ref.generalOpts,
-      generalOpts = _ref$generalOpts === void 0 ? {} : _ref$generalOpts;
+var patcher = function patcher(html, generalOpts) {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
@@ -56,28 +50,30 @@ var patcher = function patcher(html) {
   if (opts.cssStylesContent && (!isStr(opts.cssStylesContent) || !opts.cssStylesContent.trim().length)) {
     opts.cssStylesContent = undefined;
   }
-  var dom = htmlparser.parseDOM(html, parser);
+  var dom = parser(html);
   traverse(dom, function (node) {
     if (node.type === "text" && node["parent"] && node["parent"].type === "tag" && node["parent"].name === "table" && isStr(node.data) && node.data.trim().length) {
       (function () {
         var colspan = 1;
         var centered = !!opts.alwaysCenter;
         var siblings = getSiblings(node);
-        for (var i = 0, len = siblings.length; i < len; i++) {
-          if (siblings[i].type === "tag" && siblings[i].name === "tr") {
-            var tdcount = getChildren(siblings[i]).reduce(function (acc, node) {
-              if (node.name === "td" && node.type === "tag") {
-                if (!centered && node.attribs && (node.attribs.align && node.attribs.align === "center" || node.attribs.style && node.attribs.style.match(/text-align:\s*center/gi).length)) {
-                  centered = true;
+        if (isArr(siblings) && siblings.length) {
+          for (var i = 0, len = siblings.length; i < len; i++) {
+            if (siblings[i].type === "tag" && siblings[i].name === "tr") {
+              var tdcount = getChildren(siblings[i]).reduce(function (acc, node) {
+                if (node.name === "td" && node.type === "tag") {
+                  if (!centered && node.attribs && (node.attribs.align && node.attribs.align === "center" || isStr(node.attribs.style) && node.attribs.style.match(/text-align:\s*center/gi) && node.attribs.style.match(/text-align:\s*center/gi).length)) {
+                    centered = true;
+                  }
+                  return acc + 1;
                 }
-                return acc + 1;
+                return acc;
+              }, 0);
+              if (tdcount && tdcount > 1) {
+                colspan = tdcount;
               }
-              return acc;
-            }, 0);
-            if (tdcount && tdcount > 1) {
-              colspan = tdcount;
+              break;
             }
-            break;
           }
         }
         var replacementTr = {
@@ -215,7 +211,7 @@ var patcher = function patcher(html) {
       node.children = newChildren;
     }
   });
-  return render(dom, serializer);
+  return renderer(dom);
 };
 
 exports.defaults = defaults;

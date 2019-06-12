@@ -307,11 +307,9 @@ test(`01.10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 <tr><td>s</td></tr>
 </table>`,
       {
-        generalOpts: {
-          cssStylesContent:
-            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
-        }
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
       }
     ),
     tiny(`<table>
@@ -338,11 +336,9 @@ test(`01.11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 {{ 3 }}
 </table>`,
       {
-        generalOpts: {
-          cssStylesContent:
-            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
-        }
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
       }
     ),
     tiny(`<table>
@@ -369,11 +365,9 @@ test(`01.12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 2
 <tr><td></td></tr></table>`,
       {
-        generalOpts: {
-          cssStylesContent:
-            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
-        }
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
       }
     ),
     tiny(`<table><tr><td></td></tr>
@@ -398,11 +392,9 @@ test(`01.13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 2
 <tr><td></td></tr></table>`,
       {
-        generalOpts: {
-          cssStylesContent:
-            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
-        }
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
       }
     ),
     tiny(`<table><tr><td></td></tr>
@@ -431,11 +423,9 @@ test(`01.14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 2
 <tr><td></td></tr></table>`,
       {
-        generalOpts: {
-          cssStylesContent:
-            "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-          alwaysCenter: true
-        }
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true
       }
     ),
     tiny(`<table><tr><td></td></tr>

@@ -53,7 +53,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-table-patcher.cjs.js` | 8 KB   |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-table-patcher.esm.js` | 8 KB   |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-table-patcher.umd.js` | 189 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-table-patcher.umd.js` | 105 KB |
 
 **[⬆ back to top](#)**
 
@@ -85,8 +85,8 @@ import { patcher, defaults, version } from "html-table-patcher";
 const result = patcher("<table>1<tr><td>zzz</td></tr></table>");
 console.log(`result = "${result}"`);
 // => "<table><tr><td>1</td></tr><tr><td>zzz</td></tr></table>"
-console.log(`current version of the API is: ${version}`);
-// => current version of the API is: 1.0.15
+console.log(`current version of the API is: v${version}`);
+// => current version of the API is: v1.0.15
 console.log(`default settings are:\n${defaults}`);
 // =>
 // {
@@ -120,35 +120,24 @@ Main function, `patcher(str[, opts])`, takes two input arguments and returns a s
 
 **[⬆ back to top](#)**
 
-### patcher() Options API
+### `patcher` options
 
-| Options Object's key | The type of its value | Default                                     | Description                                             |
-| -------------------- | --------------------- | ------------------------------------------- | ------------------------------------------------------- |
-| {                    |                       |                                             |
-| `parser`             | function              | `undefined`                                 | Pass a custom parser, compatible with `htmlparser2`     |
-| `serializer`         | function              | `undefined`                                 | Pass a custom serializer, compatible with `htmlparser2` |
-| `generalOpts`        | plain object          | key `defaults` key in exported plaib object | See below                                               |
-| }                    |                       |                                             |
-
-**[⬆ back to top](#)**
-
-### `patcher` options, `generalOpts`
-
-Put options under function's second input argument, in a plain object, as a key `generalOpts` whose value is another plain object, as per defaults:
+Put options under function's second input argument, in a plain object, as per defaults:
 
 ```js
 import { patcher, defaults, version } from "html-table-patcher";
-const result = patcher("<table>1<tr><td>zzz</td></tr></table>", {
-  generalOpts: {
+const result = patcher(
+  "<table>1<tr><td>zzz</td></tr></table>",
+  { // <---- options object
     cssStylesContent: "",
     alwaysCenter: false
   }
-});
+);
 ```
 
-Here's the generalOpts value object's API:
+Here's the options object's API:
 
-| `generalOpts` key  | Value's type | Default value       | Description                                                                                            |
+| Options Object's key  | Value's type | Default value       | Description                                                                                            |
 | ------------------ | ------------ | ------------------- | ------------------------------------------------------------------------------------------------------ |
 | {                  |              |                     |
 | `cssStylesContent` | string       | `""` (empty string) | Whatever you put here, will end up on every newly-added TD's inline `style` tag's value                |
@@ -164,6 +153,8 @@ We parse using `htmlparser2` and use `domutils` to patch a new DOM which we late
 ## Using the GUI tap
 
 When developing features, it's handy to have a GUI to be able to test multiple variations of input, quickly. Using unit tests is slow because you edit unit test's input, plus output is via unit test runner which is not perfect.
+
+We set up a rudimentary front-end GUI. To run it, run the server from the root of this package, for example, using `serve` CLI (https://www.npmjs.com/package/serve). After you fire up the server, for example `http://localhost:9000`, navigate to folder `tap/`, for example, `http://localhost:9000/tap`. This will serve the `tap/index.html` from package's folder. It is wired up to consume the live UMD build from `dist/` folder, so it's handy to test new features.
 
 **[⬆ back to top](#)**
 

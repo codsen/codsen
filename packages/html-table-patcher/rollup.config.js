@@ -1,3 +1,4 @@
+import globals from "rollup-plugin-node-globals";
 import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
@@ -30,6 +31,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        globals(),
         builtins(),
         resolve(),
         json(),
@@ -50,7 +52,7 @@ export default commandLineArgs => {
         "dom-serializer",
         "domutils",
         "html-comment-regex",
-        "htmlparser2"
+        "html-dom-parser"
       ],
       plugins: [
         strip({
@@ -74,7 +76,7 @@ export default commandLineArgs => {
         "dom-serializer",
         "domutils",
         "html-comment-regex",
-        "htmlparser2"
+        "html-dom-parser"
       ],
       plugins: [
         strip({
