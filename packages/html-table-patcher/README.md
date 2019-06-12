@@ -15,8 +15,6 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [features](#features)
-- [upcoming features](#upcoming-features)
 - [API](#api)
 - [The algorithm](#the-algorithm)
 - [Using the GUI tap](#using-the-gui-tap)
@@ -30,7 +28,7 @@ npm i html-table-patcher
 ```
 
 ```js
-const { patcher, version } = require("html-table-patcher");
+const { patcher, defaults, version } = require("html-table-patcher");
 
 var res1 = patcher(`<table width="100%">
   zzz
@@ -71,41 +69,49 @@ This library takes _string_ (hopefully some HTML) and outputs patched up _string
 
 **[⬆ back to top](#)**
 
-## features
-
-- non-parsing - accepts any HTML, broken, mixed programming languages — anything
-- wraps the code between TABLE and TR tags or between two TR tags with TR+TD
-- correctly tackles tables with multiple columns (uses `colspan` on TD's it adds)
-
-**[⬆ back to top](#)**
-
-## upcoming features
-
-- automatic whitespace detection
-- ignoring HTML comments between tags
-
 ## API
 
-This package exports a plain objects with two keys: `{ patcher, version }`.
+This package exports a plain objects with three keys: `{ patcher, defaults, version }`.
 
 The first-one has a value which is the main function.
-The second-one is the version taken straight from `package.json`
+The second-one is the defaults (plain) object.
+The third-one is the version taken straight from `package.json`
 
 For example:
 
 ```js
 // import ES6 style, if you want to consume this package as an ES module:
-import { patcher, version } from "html-table-patcher";
+import { patcher, defaults, version } from "html-table-patcher";
 const result = patcher("<table>1<tr><td>zzz</td></tr></table>");
 console.log(`result = "${result}"`);
 // => "<table><tr><td>1</td></tr><tr><td>zzz</td></tr></table>"
+console.log(`current version of the API is: ${version}`);
+// => current version of the API is: 1.0.15
+console.log(`default settings are:\n${defaults}`);
+// =>
+// {
+//   "cssStylesContent": "",
+//   "alwaysCenter": false
+// }
+```
+
+You can import whole package as a single variable and call its methods:
+
+```js
+// for example, using CommonJs require():
+const tablePatcher = require("html-table-patcher");
+// now that you have "tablePatcher", call its methods:
+console.log(`tablePatcher.version = ${tablePatcher.version}`);
+// => "1.0.15"
+console.log(tablePatcher.patcher("<table><tr>zzz<td>a</td></tr></table>"));
+// => "<table>..."
 ```
 
 **[⬆ back to top](#)**
 
 ### patcher() API
 
-Main function, `patcher(str[, opts])`, takes two input arguments and returns a string or zero or more length.
+Main function, `patcher(str[, opts])`, takes two input arguments and returns a string of zero or more characters in length.
 
 | Input argument | Key value's type | Obligatory? | Description                                        |
 | -------------- | ---------------- | ----------- | -------------------------------------------------- |
@@ -116,21 +122,44 @@ Main function, `patcher(str[, opts])`, takes two input arguments and returns a s
 
 ### patcher() Options API
 
-| Options Object's key | The type of its value | Default    | Description                                                      |
-| -------------------- | --------------------- | ---------- | ---------------------------------------------------------------- |
-| {                    |                       |            |
-| `inlineCSSContents`  | string                | "" (empty) | If you want to apply any inline CSS style, put its contents here |
-| }                    |                       |            |
+| Options Object's key | The type of its value | Default                                     | Description                                             |
+| -------------------- | --------------------- | ------------------------------------------- | ------------------------------------------------------- |
+| {                    |                       |                                             |
+| `parser`             | function              | `undefined`                                 | Pass a custom parser, compatible with `htmlparser2`     |
+| `serializer`         | function              | `undefined`                                 | Pass a custom serializer, compatible with `htmlparser2` |
+| `generalOpts`        | plain object          | key `defaults` key in exported plaib object | See below                                               |
+| }                    |                       |                                             |
+
+**[⬆ back to top](#)**
+
+### `patcher` options, `generalOpts`
+
+Put options under function's second input argument, in a plain object, as a key `generalOpts` whose value is another plain object, as per defaults:
+
+```js
+import { patcher, defaults, version } from "html-table-patcher";
+const result = patcher("<table>1<tr><td>zzz</td></tr></table>", {
+  generalOpts: {
+    cssStylesContent: "",
+    alwaysCenter: false
+  }
+});
+```
+
+Here's the generalOpts value object's API:
+
+| `generalOpts` key  | Value's type | Default value       | Description                                                                                            |
+| ------------------ | ------------ | ------------------- | ------------------------------------------------------------------------------------------------------ |
+| {                  |              |                     |
+| `cssStylesContent` | string       | `""` (empty string) | Whatever you put here, will end up on every newly-added TD's inline `style` tag's value                |
+| `alwaysCenter`     | boolean      | `false`             | Every newly-added TD should have its contents centered (via an inline `align="center"` HTML attribute) |
+| }                  |              |                     |
 
 **[⬆ back to top](#)**
 
 ## The algorithm
 
-This library does not use any parser. It traverses the input string, makes notes where relevant tags start and end, count the `<td>`'s per-row and wraps any code between `<table>` and `<tr>` with new rows with a correct `colspan` value. That's why we can aim to support any programming or templating languages embedded within the input HTML.
-
-It should work on any ESP code (from MailChimp to Cheetah to Salesforce Marketing Cloud) or back-end programming language (from Jinja to Nunjucks to Java JSP's).
-
-**[⬆ back to top](#)**
+We parse using `htmlparser2` and use `domutils` to patch a new DOM which we later render using `dom-serializer`.
 
 ## Using the GUI tap
 
