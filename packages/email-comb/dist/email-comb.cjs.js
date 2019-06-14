@@ -126,6 +126,7 @@ function comb(str, opts) {
   var checkingInsideCurlyBraces;
   var insideCurlyBraces;
   var beingCurrentlyAt;
+  var uglified;
   var bodyItsTheFirstClassOrId;
   var bogusHTMLComment;
   var ruleChunkStartedAt;
@@ -1151,8 +1152,15 @@ function comb(str, opts) {
       }))).sort();
       allClassesAndIdsWithinHeadFinal = pullAll(pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
       if (isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
-        allClassesAndIdsWithinHeadFinal = allClassesAndIdsWithinHeadFinal.concat(allClassesAndIdsWithinBodyThatWereWhitelisted);
+        allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
+          if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
+            allClassesAndIdsWithinHeadFinal.push(classOrId);
+          }
+        });
       }
+      uglified = opts.uglify ? Array.from(allClassesAndIdsWithinHeadFinal).map(function (name) {
+        return [name, "".concat(name.startsWith(".") ? "." : "#").concat(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(name)))];
+      }) : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current());
       } else {
@@ -1230,7 +1238,8 @@ function comb(str, opts) {
       nonIndentationsWhitespaceLength: Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0),
       nonIndentationsTakeUpPercentageOfOriginal: len && Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0) ? Math.round(Math.max(nonIndentationsWhitespaceLength, 0) * 100 / len) : 0,
       commentsLength: commentsLength,
-      commentsTakeUpPercentageOfOriginal: len && commentsLength ? Math.round(commentsLength * 100 / len) : 0
+      commentsTakeUpPercentageOfOriginal: len && commentsLength ? Math.round(commentsLength * 100 / len) : 0,
+      uglified: uglified
     },
     result: str,
     allInHead: allClassesAndIdsWithinHead,

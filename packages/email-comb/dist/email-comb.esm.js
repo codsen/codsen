@@ -86,6 +86,7 @@ function comb(str, opts) {
   let checkingInsideCurlyBraces;
   let insideCurlyBraces;
   let beingCurrentlyAt;
+  let uglified;
   let bodyItsTheFirstClassOrId;
   let bogusHTMLComment;
   let ruleChunkStartedAt;
@@ -1557,10 +1558,20 @@ function comb(str, opts) {
         isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) &&
         allClassesAndIdsWithinBodyThatWereWhitelisted.length
       ) {
-        allClassesAndIdsWithinHeadFinal = allClassesAndIdsWithinHeadFinal.concat(
-          allClassesAndIdsWithinBodyThatWereWhitelisted
-        );
+        allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(classOrId => {
+          if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
+            allClassesAndIdsWithinHeadFinal.push(classOrId);
+          }
+        });
       }
+      uglified = opts.uglify
+        ? Array.from(allClassesAndIdsWithinHeadFinal).map(name => [
+            name,
+            `${name.startsWith(".") ? "." : "#"}${generateShortname(
+              allClassesAndIdsWithinHeadFinal.indexOf(name)
+            )}`
+          ])
+        : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current());
       } else {
@@ -1661,7 +1672,8 @@ function comb(str, opts) {
           : 0,
       commentsLength,
       commentsTakeUpPercentageOfOriginal:
-        len && commentsLength ? Math.round((commentsLength * 100) / len) : 0
+        len && commentsLength ? Math.round((commentsLength * 100) / len) : 0,
+      uglified
     },
     result: str,
     allInHead: allClassesAndIdsWithinHead,

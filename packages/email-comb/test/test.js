@@ -5589,10 +5589,52 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
     actual,
     "12.02.01 - uglify is off"
   );
-  t.is(
-    comb(actual, { uglify: true }).result,
-    intended,
-    "12.02.02 - uglify is on"
+
+  const res = comb(actual, { uglify: true });
+  console.log(
+    `1 ${`\u001b[${33}m${`res.log.uglify`}\u001b[${39}m`} = ${JSON.stringify(
+      res.log.uglify,
+      null,
+      4
+    )}`
+  );
+  t.is(res.result, intended, "12.02.02 - uglify is on");
+
+  t.deepEqual(
+    res.log.uglified,
+    [
+      [".aaa01", ".a"],
+      [".aaa02", ".b"],
+      [".aaa03", ".c"],
+      [".aaa04", ".d"],
+      [".aaa05", ".e"],
+      [".aaa06", ".f"],
+      [".aaa07", ".g"],
+      [".aaa08", ".h"],
+      [".aaa09", ".i"],
+      [".aaa10", ".j"],
+      [".aaa11", ".k"],
+      [".aaa12", ".l"],
+      [".aaa13", ".m"],
+      [".aaa14", ".n"],
+      [".aaa15", ".o"],
+      [".aaa16", ".p"],
+      [".aaa17", ".q"],
+      [".aaa18", ".r"],
+      [".aaa19", ".s"],
+      [".aaa20", ".t"],
+      [".aaa21", ".u"],
+      [".aaa22", ".v"],
+      [".aaa23", ".w"],
+      [".aaa24", ".x"],
+      [".aaa25", ".y"],
+      [".aaa26", ".z"],
+      [".aaa27", ".aa"],
+      [".aaa28", ".ab"],
+      [".aaa29", ".ac"],
+      [".aaa30", ".ad"]
+    ],
+    "12.02.03"
   );
 });
 
