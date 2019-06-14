@@ -32,11 +32,11 @@
     <div id="app">
       <div class="w50p fl">
         put HTML below:
-        <textarea rows="10" v-model="text1" placeholder="put some HTML here"></textarea>
+        <textarea id="ta1" rows="10" v-model="text1" placeholder="put some HTML here"></textarea>
       </div>
       <div class="w50p fr">
         here's the patched HTML:
-        <textarea class="" rows="10" v-model="text2" readonly></textarea>
+        <textarea id="ta2" class="" rows="10" v-model="text2" readonly></textarea>
       </div>
       <br>
       <div>
@@ -51,8 +51,15 @@
     <script src="../dist/html-table-patcher.umd.js"></script>
     <script>
     const { patcher } = htmlTablePatcher;
-    window.Event = new Vue();
+    const ta1 = document.getElementById("ta1");
+    // Localstorage bits
+    let myStorage;
+    if (window && window.localStorage) {
+      myStorage = window.localStorage;
+    }
 
+    // Vue bits
+    window.Event = new Vue();
     new Vue({
     el: '#app',
     data: {
@@ -70,8 +77,39 @@
       preview: function () {
         return this.checked ? this.text2 : this.text1
       }
+    },
+    mounted: function () {
+      console.log(`082 mounted`);
+      // upon mounting, retrieve the existing local storage value, if set
+      this.$nextTick(function () {
+        // Code that will run only after the entire view has been rendered
+        if (myStorage && myStorage.getItem("patcher")) {
+          console.log(`086 checking storage`)
+          const retrievedVal = JSON.parse(myStorage.getItem("patcher"));
+          ta1.value = retrievedVal;
+          this.text1 = retrievedVal.val;
+          this.checked = retrievedVal.checked;
+        }
+      })
+    },
+    watch: {
+      text1: function (newVal) {
+        if (myStorage) {
+          myStorage.setItem("patcher", JSON.stringify({
+            val: newVal,
+            checked: this.checked
+          }, null, 0))
+        }
+      },
+      checked: function (newVal) {
+        if (myStorage) {
+          myStorage.setItem("patcher", JSON.stringify({
+            val: this.text1,
+            checked: newVal
+          }, null, 0))
+        }
+      }
     }
-
     });
     </script>
   </body>
