@@ -5883,7 +5883,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   t.true(counter > 50, "13.01.04 - counter called");
 });
 
-test(`13.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, t => {
+test(`13.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`, t => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -6122,6 +6122,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach(perc => t.true(compareTo.includes(perc)));
+  t.is(gather.length, 86 - 21);
 
   // t.deepEqual(gather, compareTo, "13.03");
 });
