@@ -47,8 +47,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-crush.cjs.js` | 24 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 25 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 58 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 26 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 59 KB |
 
 **[⬆ back to top](#)**
 
@@ -155,15 +155,17 @@ The function exported under key `crush` will return **a plain object** where you
 
 ### Optional Options Object
 
-| Options Object's key | The type of its value                   | Default     | Description                                                                                                                                                                                                                                                                          |
-| -------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| {                    |                                         |             |
-| `lineLengthLimit`    | number                                  | `500`       | When removing line breaks, what is the maximum line length to keep. Relevant only when `opts.removeLineBreaks` is on                                                                                                                                                                 |
-| `removeIndentations` | Boolean                                 | `true`      | Should we remove indentations? The default is, yes.                                                                                                                                                                                                                                  |
-| `removeLineBreaks`   | Boolean                                 | `false`     | Should we remove the line breaks? The default answer is, no. Enabling it automatically enables `opts.removeIndentations`.                                                                                                                                                            |
-| `reportProgressFunc` | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
-| `breakToTheLeftOf`   | `array` of zero or more strings         | `see below` | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
-| }                    |                                         |             |
+| Options Object's key     | The type of its value                   | Default     | Description                                                                                                                                                                                                                                                                          |
+| ------------------------ | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| {                        |                                         |             |
+| `lineLengthLimit`        | number                                  | `500`       | When removing line breaks, what is the maximum line length to keep. Relevant only when `opts.removeLineBreaks` is on                                                                                                                                                                 |
+| `removeIndentations`     | Boolean                                 | `true`      | Should we remove indentations? The default is, yes.                                                                                                                                                                                                                                  |
+| `removeLineBreaks`       | Boolean                                 | `false`     | Should we remove the line breaks? The default answer is, no. Enabling it automatically enables `opts.removeIndentations`.                                                                                                                                                            |
+| `reportProgressFunc`     | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
+| `reportProgressFuncFrom` | Natural number                          | `0`         | Default is zero percent but you can squeeze reporting percentages to start from a different number                                                                                                                                                                                   |
+| `reportProgressFuncTo`   | Natural number                          | `100`       | Default is 100 percent but you can squeeze reporting percentages to go up to a different number                                                                                                                                                                                      |
+| `breakToTheLeftOf`       | `array` of zero or more strings         | `see below` | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
+| }                        |                                         |             |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
 
@@ -283,7 +285,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/html-crush
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
-[cov-img]: https://img.shields.io/badge/coverage-95.36%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-95.41%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/html-crush

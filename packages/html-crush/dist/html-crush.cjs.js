@@ -13,7 +13,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var applySlices = _interopDefault(require('ranges-apply'));
 var Slices = _interopDefault(require('ranges-push'));
@@ -103,6 +102,8 @@ var defaults = {
   removeIndentations: true,
   removeLineBreaks: false,
   reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
   breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif"]
 };
 function isStr(something) {
@@ -134,13 +135,6 @@ function crush(str, originalOpts) {
     }
   }
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "html-minify-noparse: [THROW_ID_04*]",
-    schema: {
-      reportProgressFunc: ["false", "null", "function"],
-      breakToTheLeftOf: ["false", "null", "array"]
-    }
-  });
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
@@ -177,6 +171,11 @@ function crush(str, originalOpts) {
   var beginningOfAFile = true;
   var len = str.length;
   var midLen = Math.floor(len / 2);
+  var leavePercForLastStage = 0.01;
+  var ceil;
+  if (opts.reportProgressFunc) {
+    ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+  }
   var currentPercentageDone;
   var lastPercentage = 0;
   if (len) {
@@ -184,10 +183,10 @@ function crush(str, originalOpts) {
       if (opts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
           if (_i === midLen) {
-            opts.reportProgressFunc(50);
+            opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
           }
         } else if (len >= 2000) {
-          currentPercentageDone = Math.floor(_i / len * 98);
+          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * ceil);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
@@ -501,9 +500,10 @@ function crush(str, originalOpts) {
       }
     }
     if (finalIndexesToDelete.current()) {
-      var res = applySlices(str, finalIndexesToDelete.current(), function (percDone) {
+      var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
+      var res = applySlices(str, finalIndexesToDelete.current(), function (applyPercDone) {
         if (opts.reportProgressFunc && len >= 2000) {
-          currentPercentageDone = 98 + Math.floor(percDone / 50);
+          currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
