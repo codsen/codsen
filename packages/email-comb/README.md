@@ -53,9 +53,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 54 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 55 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 75 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 56 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 57 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 76 KB |
 
 **[⬆ back to top](#)**
 
@@ -145,6 +145,9 @@ Optionally, you can pass the Optional Options Object as a second argument:
 | `uglify`                                         | Boolean                                   | `false`             | n/a                                                            | Will rename all class and id names to be few characters-long. This might reduce your file size by another kilobyte.                                                                                              |
 | `removeHTMLComments`                             | Boolean                                   | `true`              | n/a                                                            | When enabled, all HTML comments (`<!--` to `-->`) will be removed                                                                                                                                                |
 | `doNotRemoveHTMLCommentsWhoseOpeningTagContains` | Array of zero or more insensitive strings | `["[if", "[endif"]` | n/a                                                            | Email code often contains Outlook or IE conditional comments which you probably don't want to remove. Whatever strings you list here, if comment's opening tag will contain these, that tag will not be removed. |
+| `reportProgressFunc` | Function or something falsey | `null` | n/a                                                            | If supplied, it will ping the function you assign passing current percentage done (natural number) as an input argument |
+| `reportProgressFuncFrom` | Natural number | `0` | n/a                                                            | By default, percentages are reported from 0 to 100. This value overrides this starting percentage value. |
+| `reportProgressFuncTo` | Natural number | `100` | n/a                                                            | By default, percentages are reported from 0 to 100. This value overrides this ending percentage value. |
 
 Here are all options in one place in case you need to copy the whole thing:
 
@@ -154,7 +157,10 @@ Here are all options in one place in case you need to copy the whole thing:
   backend: [], // for example, [{ heads: "{{", tails: "}}" }, { heads: "{%", tails: "%}" }]
   uglify: false,
   removeHTMLComments: true,
-  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
 }
 ```
 
@@ -450,7 +456,7 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [node-url]: https://www.npmjs.com/package/email-comb
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
-[cov-img]: https://img.shields.io/badge/coverage-97.04%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-97.12%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb

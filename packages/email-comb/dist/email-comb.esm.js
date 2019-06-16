@@ -40,7 +40,9 @@ const defaults = {
   uglify: false,
   removeHTMLComments: true,
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
-  reportProgressFunc: null
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
 };
 function comb(str, opts) {
   const start = Date.now();
@@ -232,6 +234,17 @@ function comb(str, opts) {
     allTails = opts.backend.map(headsAndTailsObj => headsAndTailsObj.tails);
   }
   const len = str.length;
+  const leavePercForLastStage = 0.06;
+  let ceil;
+  if (opts.reportProgressFunc) {
+    ceil = Math.floor(
+      (opts.reportProgressFuncTo -
+        (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+          leavePercForLastStage -
+        opts.reportProgressFuncFrom) /
+        2
+    );
+  }
   let trailingLinebreakLengthCorrection = 0;
   if (!str.length || !"\r\n".includes(str[str.length - 1])) {
     trailingLinebreakLengthCorrection = 1;
@@ -293,11 +306,17 @@ function comb(str, opts) {
       if (opts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
           if (round === 1 && i === 0) {
-            opts.reportProgressFunc(50);
+            opts.reportProgressFunc(
+              Math.floor(
+                (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2
+              )
+            );
           }
         } else if (len >= 2000) {
           currentPercentageDone =
-            Math.floor((i / len) * 47) + (round === 1 ? 0 : 47);
+            opts.reportProgressFuncFrom +
+            Math.floor((i / len) * ceil) +
+            (round === 1 ? 0 : ceil);
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
             opts.reportProgressFunc(currentPercentageDone);
@@ -1601,20 +1620,45 @@ function comb(str, opts) {
     str = applySlices(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
+  const startingPercentageDone =
+    opts.reportProgressFuncTo -
+    (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+      leavePercForLastStage;
   if (opts.reportProgressFunc && len >= 2000) {
-    opts.reportProgressFunc(95);
+    currentPercentageDone = Math.floor(
+      startingPercentageDone +
+        (opts.reportProgressFuncTo - startingPercentageDone) / 5
+    );
+    if (currentPercentageDone !== lastPercentage) {
+      lastPercentage = currentPercentageDone;
+      opts.reportProgressFunc(currentPercentageDone);
+    }
   }
   while (regexEmptyMediaQuery.test(str)) {
     str = str.replace(regexEmptyMediaQuery, "");
     totalCounter += str.length;
   }
   if (opts.reportProgressFunc && len >= 2000) {
-    opts.reportProgressFunc(96);
+    currentPercentageDone = Math.floor(
+      startingPercentageDone +
+        ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 2
+    );
+    if (currentPercentageDone !== lastPercentage) {
+      lastPercentage = currentPercentageDone;
+      opts.reportProgressFunc(currentPercentageDone);
+    }
   }
   str = str.replace(regexEmptyStyleTag, "\n");
   totalCounter += str.length;
   if (opts.reportProgressFunc && len >= 2000) {
-    opts.reportProgressFunc(97);
+    currentPercentageDone = Math.floor(
+      startingPercentageDone +
+        ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 3
+    );
+    if (currentPercentageDone !== lastPercentage) {
+      lastPercentage = currentPercentageDone;
+      opts.reportProgressFunc(currentPercentageDone);
+    }
   }
   let tempLen = str.length;
   str = str.replace(emptyCondCommentRegex(), "");
@@ -1623,7 +1667,14 @@ function comb(str, opts) {
     commentsLength += str.length - tempLen;
   }
   if (opts.reportProgressFunc && len >= 2000) {
-    opts.reportProgressFunc(98);
+    currentPercentageDone = Math.floor(
+      startingPercentageDone +
+        ((opts.reportProgressFuncTo - startingPercentageDone) / 5) * 4
+    );
+    if (currentPercentageDone !== lastPercentage) {
+      lastPercentage = currentPercentageDone;
+      opts.reportProgressFunc(currentPercentageDone);
+    }
   }
   tempLen = str.length;
   str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
@@ -1632,7 +1683,14 @@ function comb(str, opts) {
   }
   totalCounter += str.length;
   if (opts.reportProgressFunc && len >= 2000) {
-    opts.reportProgressFunc(99);
+    currentPercentageDone = Math.floor(
+      startingPercentageDone +
+        (opts.reportProgressFuncTo - startingPercentageDone)
+    );
+    if (currentPercentageDone !== lastPercentage) {
+      lastPercentage = currentPercentageDone;
+      opts.reportProgressFunc(currentPercentageDone);
+    }
   }
   if (str.length) {
     if (
