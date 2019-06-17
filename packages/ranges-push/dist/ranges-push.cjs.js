@@ -15,7 +15,6 @@ var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
@@ -100,9 +99,6 @@ function () {
       limitLinebreaksCount: 1
     };
     var opts = Object.assign({}, defaults, originalOpts);
-    checkTypes(opts, defaults, {
-      msg: "ranges-push: [THROW_ID_02*]"
-    });
     this.opts = opts;
   }
   _createClass(Ranges, [{

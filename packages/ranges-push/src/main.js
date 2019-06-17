@@ -2,7 +2,6 @@ import isInt from "is-natural-number";
 import isNumStr from "is-natural-number-string";
 import ordinal from "ordinal-number-suffix";
 import mergeRanges from "ranges-merge";
-import checkTypes from "check-types-mini";
 import collapseLeadingWhitespace from "string-collapse-leading-whitespace";
 import clone from "lodash.clonedeep";
 
@@ -39,9 +38,6 @@ class Ranges {
       limitLinebreaksCount: 1
     };
     const opts = Object.assign({}, defaults, originalOpts);
-    checkTypes(opts, defaults, {
-      msg: "ranges-push: [THROW_ID_02*]"
-    });
     // so it's correct, let's get it in:
     this.opts = opts;
   }
