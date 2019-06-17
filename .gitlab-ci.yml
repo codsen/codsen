@@ -40,7 +40,7 @@ deploy:
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
     - echo '█████████████████████████████ 6 █████████████████████████████'
-    - npx lerna version --conventional-commits --no-commit-hooks --yes --no-push
+    - npx lerna version --conventional-commits --amend --no-commit-hooks --yes
     - echo '█████████████████████████████ 7 █████████████████████████████'
     - npx lerna-clean-changelogs-cli '**'
     - echo '█████████████████████████████ 8 █████████████████████████████'
