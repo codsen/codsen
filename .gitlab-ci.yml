@@ -39,18 +39,21 @@ deploy:
     - git add readme.md
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
-    - npm run pub:vers
     - echo '█████████████████████████████ 6 █████████████████████████████'
+    - npx lerna version --conventional-commits --no-commit-hooks --yes --no-push
+    - echo '█████████████████████████████ 7 █████████████████████████████'
+    - npx lerna-clean-changelogs-cli '**'
+    - echo '█████████████████████████████ 8 █████████████████████████████'
     - git status
     - git add packages
     - git add readme.md
-    - echo '█████████████████████████████ 7 █████████████████████████████'
-    - git status
-    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
-    - echo '█████████████████████████████ 8 █████████████████████████████'
-    - git status
-    - npm run republish
     - echo '█████████████████████████████ 9 █████████████████████████████'
     - git status
+    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
+    - echo '█████████████████████████████ 10 █████████████████████████████'
+    - git status
+    - npm run republish
+    - echo '█████████████████████████████ 11 █████████████████████████████'
+    - git status
     - git push origin master
-    - echo '█████████████████████████████ 10 █████████████████████████████ - done'
+    - echo '█████████████████████████████ 12 █████████████████████████████ - done'
