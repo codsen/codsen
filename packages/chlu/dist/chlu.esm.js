@@ -277,13 +277,9 @@ function getSetFooterLink(str, o = {}) {
     return res;
   }
   if (o.type === "github") {
-    return `[${res.version}]: https://github.com/${res.user}/${
-      res.project
-    }/compare/v${res.versBefore}...v${res.versAfter}`;
+    return `[${res.version}]: https://github.com/${res.user}/${res.project}/compare/v${res.versBefore}...v${res.versAfter}`;
   } else if (o.type === "bitbucket") {
-    return `[${res.version}]: https://bitbucket.org/${res.user}/${
-      res.project
-    }/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
+    return `[${res.version}]: https://bitbucket.org/${res.user}/${res.project}/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
   }
 }
 function versionSort(a, b) {
@@ -384,9 +380,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       packageJson.type !== "bitbucket"
     ) {
       throw new Error(
-        `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${
-          packageJson.type
-        }`
+        `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${packageJson.type}`
       );
     }
   }
@@ -444,9 +438,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             assumedPackageProject = arr[i + 2];
           } else {
             throw new Error(
-              `chlu/main.js: [THROW_ID_03] We could not extract user and package from the footer link: "${
-                footerLinks[0].content
-              }"`
+              `chlu/main.js: [THROW_ID_03] We could not extract user and package from the footer link: "${footerLinks[0].content}"`
             );
           }
         }

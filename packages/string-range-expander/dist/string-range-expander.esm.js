@@ -66,9 +66,7 @@ function expander(originalOpts) {
     originalOpts.from !== originalOpts.to
   ) {
     throw new Error(
-      `string-range-expander: [THROW_ID_05] The given input string opts.str ("${
-        originalOpts.str
-      }") must contain the character at index "from" ("${originalOpts.from}")`
+      `string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`
     );
   }
   if (!originalOpts.str[originalOpts.to - 1]) {
@@ -81,9 +79,7 @@ function expander(originalOpts) {
   }
   if (originalOpts.from > originalOpts.to) {
     throw new Error(
-      `string-range-expander: [THROW_ID_07] The given "from" index, "${
-        originalOpts.from
-      }" is greater than "to" index, "${originalOpts.to}". That's wrong!`
+      `string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`
     );
   }
   if (

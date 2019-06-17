@@ -5591,13 +5591,6 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
   );
 
   const res = comb(actual, { uglify: true });
-  console.log(
-    `1 ${`\u001b[${33}m${`res.log.uglify`}\u001b[${39}m`} = ${JSON.stringify(
-      res.log.uglify,
-      null,
-      4
-    )}`
-  );
   t.is(res.result, intended, "12.02.02 - uglify is on");
 
   t.deepEqual(

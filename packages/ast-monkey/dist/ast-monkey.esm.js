@@ -158,9 +158,7 @@ function get(input, opts) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
-          opts.index
-        }`
+        `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${opts.index}`
       );
     }
   }
@@ -171,9 +169,7 @@ function get(input, opts) {
   });
   if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
-        opts.index
-      }`
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${opts.index}`
     );
   }
   return monkey(input, Object.assign({}, opts, { mode: "get" }));
@@ -190,16 +186,12 @@ function set(input, opts) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: ${
-          opts.index
-        }`
+        `ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: ${opts.index}`
       );
     }
   } else if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
-        opts.index
-      }`
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${opts.index}`
     );
   }
   if (existy(opts.key) && !notUndef(opts.val)) {
@@ -223,17 +215,13 @@ function drop(input, opts) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: ${
-          opts.index
-        }`
+        `ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: ${opts.index}`
       );
     }
   }
   if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
-        opts.index
-      }`
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${opts.index}`
     );
   }
   checkTypes(opts, null, {

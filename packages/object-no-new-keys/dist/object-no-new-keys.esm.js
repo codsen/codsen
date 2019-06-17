@@ -32,9 +32,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   }
   if (optsOuter.mode !== 1 && optsOuter.mode !== 2) {
     throw new TypeError(
-      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, "${
-        optsOuter.mode
-      }" while it should be either natural number 1 or 2.`
+      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, "${optsOuter.mode}" while it should be either natural number 1 or 2.`
     );
   }
   checkTypes(optsOuter, defaults, {

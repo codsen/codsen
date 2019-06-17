@@ -178,9 +178,7 @@ function checkTypesMini(
       }
     } else {
       throw new TypeError(
-        `${opts.msg}: Both ${
-          opts.optsVarName
-        }.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`
+        `${opts.msg}: Both ${opts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`
       );
     }
   }

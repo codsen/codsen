@@ -100,9 +100,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
     }
   } else if (!opts.relaxedApi) {
     throw new Error(
-      `string-match-left-right/marchForward(): [THROW_ID_102] second argument, fromIndexInclusive is ${fromIndexInclusive} beyond the input string length, ${
-        str.length
-      }.`
+      `string-match-left-right/marchForward(): [THROW_ID_102] second argument, fromIndexInclusive is ${fromIndexInclusive} beyond the input string length, ${str.length}.`
     );
   } else {
     return false;
@@ -217,9 +215,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     })
   ) {
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${
-        culpritsVal.length
-      } (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
+      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
     );
   }
   if (!isStr(str)) {
