@@ -49,11 +49,11 @@ deploy:
     - git add readme.md
     - echo '█████████████████████████████ 9 █████████████████████████████'
     - git status
-    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
+    - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - echo '█████████████████████████████ 10 █████████████████████████████'
     - git status
     - npm run republish
     - echo '█████████████████████████████ 11 █████████████████████████████'
     - git status
-    - git push origin master
+    - git push origin master --force
     - echo '█████████████████████████████ 12 █████████████████████████████ - done'
