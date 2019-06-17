@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 87 npm libraries 📦📦📦
+    A lerna monorepo for our 88 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -15,7 +15,7 @@ We coded up and maintain a few npm packages:
 - [String Processing Libraries](#-26-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-20-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-21-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -164,7 +164,7 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#-codsen-)**
 
-## 🛠️ 20 Miscellaneous Libraries
+## 🛠️ 21 Miscellaneous Libraries
 
 | Library's name | Purpose | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -182,6 +182,7 @@ You use them in the Terminal (command line), for example:
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Non-parsing, email template-oriented linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
+| [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 | [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |

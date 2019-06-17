@@ -44,7 +44,7 @@
         <input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked ? "enabled" : "disabled" }}</label>
       </div>
-      <iframe :srcdoc="preview" width="98%" height="1500"></iframe>
+      <iframe sandbox :srcdoc="preview" width="98%" height="1500"></iframe>
     </div>
 
     <script src="vue.js"></script>

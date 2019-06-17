@@ -166,7 +166,7 @@
     "chlu": "^3.7.24",
     "fs-extra": "^8.0.1",
     "meow": "^5.0.0",
-    "simple-git": "^1.113.0",
+    "simple-git": "^1.115.0",
     "update-notifier": "^3.0.0",
     "write-file-atomic": "^3.0.0"
   },
@@ -177,7 +177,7 @@
     "ava": "^2.1.0",
     "babel-plugin-istanbul": "^5.1.4",
     "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-ava": "^7.1.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-no-unsanitized": "^3.0.2",
