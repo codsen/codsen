@@ -86,6 +86,9 @@ if (cli.flags) {
           let updatedThisDep = false;
           const singleDepName = keys[y];
           const singleDepValue = contents.dependencies[keys[y]];
+          if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
+            continue;
+          }
           if (db.hasOwnProperty(singleDepName)) {
             if (
               contents.dependencies[singleDepName] !== `^${db[singleDepName]}`
@@ -160,10 +163,14 @@ if (cli.flags) {
           let updatedThisDep = false;
           const singleDepName = keys[y];
           const singleDepValue = contents.devDependencies[keys[y]];
+          if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
+            continue;
+          }
           if (db.hasOwnProperty(singleDepName)) {
             if (
               contents.devDependencies[singleDepName] !==
-              `^${db[singleDepName]}`
+                `^${db[singleDepName]}` &&
+              singleDepName !== "lerna"
             ) {
               contents.devDependencies[singleDepName] = `^${db[singleDepName]}`;
               wrote = true;

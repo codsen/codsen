@@ -14,9 +14,12 @@
 ## Table of Contents
 
 - [Install](#install)
-- [The Problem](#the-problem)
-- [The Solution](#the-solution)
-- [Extras](#extras)
+- [Purpose](#purpose)
+- [Opinionated part 1](#opinionated-part-1)
+- [Opinionated part 2](#opinionated-part-2)
+- [Opinionated part 3](#opinionated-part-3)
+- [Conclusion](#conclusion)
+- [All Extras](#all-extras)
 - [Ingredients](#ingredients)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -34,41 +37,44 @@ Alternatively, you can also run it without installing, using `npx update-version
 
 **[⬆ back to top](#)**
 
-## The Problem
+## Purpose
 
-**Problem #1.**
-
-Updating all dependencies in `package.json` to the latest, especially in monorepos.
-
-You can't use [`npm-check-updates`](https://www.npmjs.com/package/npm-check-updates) for monorepos.
-
-For the record, `update-versions` is better than `npm-check-updates` for normal repos because we use npm's native [`pacote`](https://www.npmjs.com/package/pacote) to query the latest versions while `npm-check-updates` does not.
-
-**Problem #2.**
-
-Enforcing all dependencies are prefixed with `^`, no matter what comes from `package.json`.
-
-Lerna will not properly bootstrap the dependencies if those are not in `^x.y.z`
+This package reads package.json, either in root (normal repo) or in each monorepo packages root (Lerna monorepo), pings npm (using [pacote](https://www.npmjs.com/package/pacote)) and sets that version on particular dependency.
 
 **[⬆ back to top](#)**
 
-## The Solution
+## Opinionated part 1
 
-If it's called within a "normal" repository with single program and single `package.json` in the root, it will update that `package.json`.
+Lerna `bootstrap` will not work properly if each dependency is not prefixed with `^`, as in `^x.y.z`. It's hard to manually enforce that all monorepo packages should have all dependencies in this format. `update-versions` will force this format.
 
-If it's called within a root of Lerna monorepo, it will detect all package locations, smartly ping all dependencies (both normal and `devDependencies`) using npm's [`pacote`](https://www.npmjs.com/package/pacote) and update the versions in package.json.
+Two exceptions:
 
-By _smartly_ we mean:
-
-- Operations are all asynchronous.
-- npm is called once per unique dependency, results are cached. The more repetition among dependency bouquet, the faster job will be done.
-- If there are no updates — no `package.json` is written (only read that happened earlier).
-- It's automated and doesn't even need to read your lerna config to find all packages.
-- Algorithm skips all folders at or within `node_modules`.
+1. if dependency is called "lerna" (because of https://github.com/lerna/lerna/issues/2117 which is still happening)
+2. its dependency's value starts with `file:`
 
 **[⬆ back to top](#)**
 
-## Extras
+## Opinionated part 2
+
+It is hard to ensure that all `package.json` files are sorted in correct order. For that we use `format-package` to automatically format each `package.json` file. It's like [Prettier](https://prettier.io) but for `package.json` key order.
+
+**[⬆ back to top](#)**
+
+## Opinionated part 3
+
+If any dependency is listed on both `dependencies` and `devDependencies`, it will be removed from the latter list.
+
+## Conclusion
+
+Because of the features mentioned above, this package is slower than alternatives, `yarn` or `npm-check-updates` or whatever.
+
+I prefer slower but single tool instead of faster but multiple.
+
+If you don't like something above, don't use `update-versions`.
+
+**[⬆ back to top](#)**
+
+## All Extras
 
 - Each `package.json` is [sorted](https://www.npmjs.com/package/format-package) considering classic `package.json` key order (dependencies at the bottom etc.)
 - Any `gitHead` keys will be removed from all `package.json`. `gitHead` are bad and happen when `lerna publish` goes wrong.

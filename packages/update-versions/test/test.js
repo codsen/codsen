@@ -61,7 +61,7 @@ const packBefore = {
   dependencies: {},
   devDependencies: {
     "@pectin/cli": "^3.0.1",
-    commitizen: "^3.0.5",
+    commitizen: "*", // notice glob flag asterisk
     slfjdlkjglkdflgjdlkjljf: "^1.0.0",
     "cz-conventional-changelog": "^2.1.0",
     eslint: "^5.12.1",
@@ -70,7 +70,6 @@ const packBefore = {
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     husky: "latest", // notice "latest" is not legal in Lerna
-    lerna: "*", // notice glob flag asterisk
     prettier: "1.16.1" // notice there's no ^
   }
 };
@@ -156,18 +155,18 @@ test.serial("01 - monorepo", async t => {
       // lib1:
       t.regex(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
       t.regex(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[0].devDependencies.lerna, /\^\d+\.\d+\.\d+/);
+      t.regex(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
       t.regex(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
       // lib2:
       t.regex(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
       t.regex(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.lerna, /\^\d+\.\d+\.\d+/);
+      t.regex(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
       t.regex(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
 
       // lib3 in node_modules should be intact:
       t.is(contents[2].dependencies["check-types-mini"], "*");
       t.is(contents[2].devDependencies.husky, "latest");
-      t.is(contents[2].devDependencies.lerna, "*");
+      t.is(contents[2].devDependencies.commitizen, "*");
       t.is(contents[2].devDependencies.prettier, "1.16.1");
 
       // root package.json:
@@ -230,13 +229,13 @@ test.serial("02 - normal repo", async t => {
       // node_modules/lib3/package.json:
       t.is(contents[0].dependencies["check-types-mini"], "*");
       t.is(contents[0].devDependencies.husky, "latest");
-      t.is(contents[0].devDependencies.lerna, "*");
+      t.is(contents[0].devDependencies.commitizen, "*");
       t.is(contents[0].devDependencies.prettier, "1.16.1");
 
       // root package.json:
       t.regex(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
       t.regex(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.lerna, /\^\d+\.\d+\.\d+/);
+      t.regex(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
       t.regex(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
     })
     .catch(err => t.fail(err));
@@ -249,8 +248,8 @@ test.serial(
 
     // 0. We need to add redundant deps onto normal deps key in package.json:
     const tweakedContents = clone(test2FileContents);
-    tweakedContents[1].dependencies.lerna = "*";
-    // it will contain lerna on both deps and dev deps
+    tweakedContents[1].dependencies.commitizen = "*";
+    // it will contain commitizen on both deps and dev deps
 
     // 1. create folders:
     fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
@@ -294,8 +293,10 @@ test.serial(
       .then(contents => {
         // array comes in, but each JSON inside in unparsed and in string format:
         contents = contents.map(arr => JSON.parse(arr));
-        // root package.json devdeps should not contain the lerna:
-        t.true(!Object.keys(contents[1].devDependencies).includes("lerna"));
+        // root package.json devdeps should not contain the commitizen:
+        t.true(
+          !Object.keys(contents[1].devDependencies).includes("commitizen")
+        );
       })
       .catch(err => t.fail(err));
   }
