@@ -9,7 +9,6 @@
 
 import Slices from 'ranges-push';
 import applySlices from 'ranges-apply';
-import checkTypes from 'check-types-mini';
 
 function existy(x) {
   return x != null;
@@ -55,7 +54,6 @@ function fixRowNums(str, originalOpts) {
   ) {
     opts.padStart = 0;
   }
-  checkTypes(opts, defaults, { msg: "js-row-num: [THROW_ID_04*]" });
   const finalIndexesToDelete = new Slices();
   let i;
   const len = str.length;

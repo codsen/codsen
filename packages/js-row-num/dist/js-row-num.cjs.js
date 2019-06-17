@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var Slices = _interopDefault(require('ranges-push'));
 var applySlices = _interopDefault(require('ranges-apply'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 
 function existy(x) {
   return x != null;
@@ -55,9 +54,6 @@ function fixRowNums(str, originalOpts) {
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
     opts.padStart = 0;
   }
-  checkTypes(opts, defaults, {
-    msg: "js-row-num: [THROW_ID_04*]"
-  });
   var finalIndexesToDelete = new Slices();
   var i;
   var len = str.length;
