@@ -1,6 +1,6 @@
 # json-sort-cli
 
-> Command line app to deep sort JSON files, also dot-files as long as they are valid JSON
+> Command line app to deep sort JSON files, retains package.json special key order
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -65,21 +65,25 @@ Put either short or long version of a desired flag, before or after the path or 
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is, it does not matter is it's a plain object within array within array within a plain object - all objects no matter how deep, will be detected and sorted.
+It **sorts JSON files deeply**.
+
+That is, it does not matter is it's a plain object within array within array within a plain object - all objects no matter how deep, will be detected and sorted.
+
+If this tool processes any `package.json` files, it will first deep-sort alphabetically, then use `format-package` ([npm](https://www.npmjs.com/package/format-package)) to arrange keys according to a commonly agreed format — `name` at the top, depedencies at the bottom etc.
 
 This is a parsing-type application, so written files are also **prettified** — tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
-Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) and [sorted-object](https://www.npmjs.com/package/sorted-object).
+Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse), [sorted-object](https://www.npmjs.com/package/sorted-object), [format-package](https://www.npmjs.com/package/format-package).
 
 **[⬆ back to top](#)**
 
 ### Extra features
 
-If you pass a folder name, for example, `jsonsort templates`, it will catch all JSON files in folder `templates`. Sometimes, config [dot files](https://en.wikipedia.org/wiki/Dot-file) can be in JSON format, for example, `.eslintrc` or `.bithoundrc`. When such files are encountered, CLI app will first attempt to JSON-parse them, and, if successful, will sort them. If parsing fails, they'll be listed among failed files.
-
-If a file is a broken JSON file with errors in the markup, it won't cause an error on the whole pipeline — other, healthy files from the batch will still be sorted OK. A broken file will be listed among failed files.
-
-System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
+* `package.json` are first deep-sorted alphabetically, then using `format-package` ([npm](https://www.npmjs.com/package/format-package))
+* Works on dot files, as long as they are parse-able as JSON
+* Can process a set of files in folder (use wildcards for example, `jsonsort "**/packages/*/data/*.json"`)
+* Broken JSON files don't stop the process, other healthy files from batch are still sorted. Notifies user.
+* System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
 
 **[⬆ back to top](#)**
 

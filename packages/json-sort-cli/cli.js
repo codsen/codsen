@@ -14,6 +14,7 @@ const pReduce = require("p-reduce");
 const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
+const format = require("format-package");
 const isArr = Array.isArray;
 
 function isStr(something) {
@@ -67,7 +68,8 @@ const badFiles = [
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function readSortAndWriteOverFile(oneOfPaths, sortArrays) {
+// function readSortAndWriteOverFile(oneOfPaths, sortArrays) {
+function readSortAndWriteOverFile(oneOfPaths) {
   // console.log("\n\n\n\n==========\n\n\n\n");
   // console.log(
   //   `073 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
@@ -123,38 +125,44 @@ function readSortAndWriteOverFile(oneOfPaths, sortArrays) {
         result = parsedJson;
       }
 
-      return fs
-        .writeJson(
-          oneOfPaths,
-          traverse(result, (key, val) => {
-            const current = val !== undefined ? val : key;
-            if (isObj(current)) {
-              return sortObject(current);
-            } else if (
-              cli.flags.a &&
-              isArr(current) &&
-              current.length > 1 &&
-              current.every(isStr)
-            ) {
-              // alphabetical sort
-              return current.sort((a, b) => a.localeCompare(b));
+      return Promise.resolve(
+        path.basename(oneOfPaths) === "package.json"
+          ? format(result).then(str => JSON.parse(str))
+          : result
+      ).then(obj =>
+        fs
+          .writeJson(
+            oneOfPaths,
+            traverse(obj, (key, val) => {
+              const current = val !== undefined ? val : key;
+              if (isObj(current)) {
+                return sortObject(current);
+              } else if (
+                cli.flags.a &&
+                isArr(current) &&
+                current.length > 1 &&
+                current.every(isStr)
+              ) {
+                // alphabetical sort
+                return current.sort((a, b) => a.localeCompare(b));
+              }
+              return current;
+            }),
+            {
+              spaces: cli.flags.t ? "\t" : 2
             }
-            return current;
-          }),
-          {
-            spaces: cli.flags.t ? "\t" : 2
-          }
-        )
-        .then(() => {
-          if (!cli.flags.s) {
-            log(
-              `${chalk.grey(
-                "✨ json-sort-cli: "
-              )}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
-            );
-          }
-          return true;
-        });
+          )
+          .then(() => {
+            if (!cli.flags.s) {
+              log(
+                `${chalk.grey(
+                  "✨ json-sort-cli: "
+                )}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+              );
+            }
+            return true;
+          })
+      );
     })
     .catch(err => {
       `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;

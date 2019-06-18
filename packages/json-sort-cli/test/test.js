@@ -23,7 +23,8 @@ import pack from "../package.json";
 // │   └── .somethinginyml
 // ├── test2/
 // │   └── file4.json
-// └── file5.json
+// ├── file5.json
+// └── package.json
 
 // File contents:
 // -----------------------------------------------------------------------------
@@ -63,6 +64,25 @@ const testFileContents = [
   {
     // file5.json
     package: true
+  },
+  {
+    // package.json
+    author: {
+      email: "roy@codsen.com",
+      name: "Roy Revelt",
+      url: "codsen.com"
+    },
+    devDependencies: {
+      n: "0.0.3",
+      m: "0.0.2"
+    },
+    dependencies: {
+      z: "0.0.2",
+      a: "0.0.1"
+    },
+    license: "MIT",
+    name: "tralala",
+    version: "99.88.77"
   }
 ];
 
@@ -101,6 +121,25 @@ const sortedTestFileContents = [
   // file5.json
   `{
   "package": true
+}`,
+  // package.json
+  `{
+  "name": "tralala",
+  "version": "99.88.77",
+  "license": "MIT",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "dependencies": {
+    "a": "0.0.1",
+    "z": "0.0.2"
+  },
+  "devDependencies": {
+    "m": "0.0.2",
+    "n": "0.0.3"
+  }
 }`
 ];
 
@@ -109,7 +148,8 @@ const testFilePaths = [
   "test1/.sneakyrc",
   "test1/folder1/file3.json",
   "test2/file4.json",
-  "file5.json"
+  "file5.json",
+  "package.json"
 ];
 
 const sortedTabbedTestFileContents = [
@@ -147,6 +187,24 @@ const sortedTabbedTestFileContents = [
   // file5.json
   `{
 \t"package": true
+}`,
+  `{
+\t"name": "tralala",
+\t"version": "99.88.77",
+\t"license": "MIT",
+\t"author": {
+\t\t"email": "roy@codsen.com",
+\t\t"name": "Roy Revelt",
+\t\t"url": "codsen.com"
+\t},
+\t"dependencies": {
+\t\t"a": "0.0.1",
+\t\t"z": "0.0.2"
+\t},
+\t"devDependencies": {
+\t\t"m": "0.0.2",
+\t\t"n": "0.0.3"
+\t}
 }`
 ];
 
@@ -483,7 +541,7 @@ test.serial("01.04 - silent mode", async t => {
     )
     .then(() => execa("./cli.js", [tempFolder, "-s"]))
     .then(receivedStdOut => {
-      t.regex(receivedStdOut.stdout, /5 files sorted/);
+      t.regex(receivedStdOut.stdout, /6 files sorted/);
       t.notRegex(receivedStdOut.stdout, /OK/);
       return pMap(testFilePaths, oneOfPaths =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
