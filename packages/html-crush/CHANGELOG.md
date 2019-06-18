@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.2.0...html-crush@1.3.0) (2019-06-18)
+
+
+### Features
+
+* opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([4ebf439](https://gitlab.com/codsen/codsen/commit/4ebf439))
+* Re-distribute the ratio of progress reported during main and final tasks ([1e80408](https://gitlab.com/codsen/codsen/commit/1e80408))
+
+
+
+
+
 ## 1.2.0 (2019-06-01)
 
 ### Features

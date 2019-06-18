@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.8.24",
+  "version": "5.8.25",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -170,8 +170,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.24",
-    "lect": "^0.7.1",
+    "js-row-num-cli": "^1.5.25",
+    "lect": "^0.7.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",

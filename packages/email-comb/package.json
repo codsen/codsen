@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {
@@ -178,19 +178,19 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.24",
-    "ast-is-empty": "^1.9.24",
+    "array-pull-all-with-glob": "^4.12.25",
+    "ast-is-empty": "^1.9.25",
     "lodash.intersection": "^4.4.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^2.0.0",
-    "ranges-apply": "^3.0.15",
-    "ranges-push": "^3.1.2",
-    "regex-empty-conditional-comments": "^1.8.24",
-    "string-extract-class-names": "^5.8.24",
-    "string-match-left-right": "^3.10.24",
-    "string-range-expander": "^1.10.24"
+    "ranges-apply": "^3.0.16",
+    "ranges-push": "^3.2.0",
+    "regex-empty-conditional-comments": "^1.8.25",
+    "string-extract-class-names": "^5.8.25",
+    "string-match-left-right": "^3.10.25",
+    "string-range-expander": "^1.10.25"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -205,8 +205,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.24",
-    "lect": "^0.7.1",
+    "js-row-num-cli": "^1.5.25",
+    "lect": "^0.7.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",
