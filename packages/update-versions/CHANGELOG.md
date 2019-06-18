@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.5.0](https://gitlab.com/codsen/codsen/compare/update-versions@1.4.4...update-versions@1.5.0) (2019-06-18)
-
+## 1.5.0 (2019-06-18)
 
 ### Features
 
-* Support file: dependency sources and tweak readme and skip Lerna ([cfbaca4](https://gitlab.com/codsen/codsen/commit/cfbaca4))
-
-
-
-
+- Support file: dependency sources and tweak readme and skip Lerna ([cfbaca4](https://gitlab.com/codsen/codsen/commit/cfbaca4))
 
 ## 1.4.0 (2019-04-06)
 

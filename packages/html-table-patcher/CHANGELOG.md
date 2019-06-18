@@ -3,24 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.1.0](https://gitlab.com/codsen/codsen/compare/html-table-patcher@1.0.15...html-table-patcher@1.1.0) (2019-06-18)
-
+## 1.1.0 (2019-06-18)
 
 ### Features
 
-* Adds basic level of colspans ([75308e6](https://gitlab.com/codsen/codsen/commit/75308e6))
-* Complete recode using parsing ([0e31c43](https://gitlab.com/codsen/codsen/commit/0e31c43))
-* GUI with wired up UMD tap ([e1e0648](https://gitlab.com/codsen/codsen/commit/e1e0648))
-* Harden the API and tap the html-dom-parser as parser instead because former broke Rollup UMD b ([f27ac6d](https://gitlab.com/codsen/codsen/commit/f27ac6d))
-* Implement localstorage so that all textboxes are not wiped after a refresh ([73eb682](https://gitlab.com/codsen/codsen/commit/73eb682))
-* opts.cssStylesContent ([58b6a4f](https://gitlab.com/codsen/codsen/commit/58b6a4f))
-* Precautions against children tables nested at deeper levels ([ced7d36](https://gitlab.com/codsen/codsen/commit/ced7d36))
-* Tap's styling ([6487e7b](https://gitlab.com/codsen/codsen/commit/6487e7b))
-* Tighten the quotes detection clauses ([a25774e](https://gitlab.com/codsen/codsen/commit/a25774e))
-
-
-
-
+- Adds basic level of colspans ([75308e6](https://gitlab.com/codsen/codsen/commit/75308e6))
+- Complete recode using parsing ([0e31c43](https://gitlab.com/codsen/codsen/commit/0e31c43))
+- GUI with wired up UMD tap ([e1e0648](https://gitlab.com/codsen/codsen/commit/e1e0648))
+- Harden the API and tap the html-dom-parser as parser instead because former broke Rollup UMD b ([f27ac6d](https://gitlab.com/codsen/codsen/commit/f27ac6d))
+- opts.cssStylesContent ([58b6a4f](https://gitlab.com/codsen/codsen/commit/58b6a4f))
+- Precautions against children tables nested at deeper levels ([ced7d36](https://gitlab.com/codsen/codsen/commit/ced7d36))
+- Tap's styling ([6487e7b](https://gitlab.com/codsen/codsen/commit/6487e7b))
+- Tighten the quotes detection clauses ([a25774e](https://gitlab.com/codsen/codsen/commit/a25774e))
 
 ## 0.5.0 (2019-01-20)
 

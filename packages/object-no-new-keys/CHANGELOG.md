@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.25](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.7.24...object-no-new-keys@2.7.25) (2019-06-18)
-
-**Note:** Version bump only for package object-no-new-keys
-
-
-
-
-
 ## 2.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
