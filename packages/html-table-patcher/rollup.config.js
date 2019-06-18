@@ -1,4 +1,3 @@
-import globals from "rollup-plugin-node-globals";
 import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
@@ -31,7 +30,6 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        globals(),
         builtins(),
         resolve(),
         json(),
