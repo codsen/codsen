@@ -1347,6 +1347,117 @@ test(`02.18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is dele
   t.is(m("<a>\n<b>", { removeLineBreaks: true }).result, "<a><b>", "02.18");
 });
 
+test(`02.19 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking to the right of style tag`, t => {
+  const source = `<html>
+  <head>
+    <style type="text/css">
+      .used-1 {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="used-1">
+      <tr>
+        <td>
+          text
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+`;
+
+  const res1 = `<html>
+<head>
+<style type="text/css">
+.used-1{display:block;}
+</style>
+</head>
+<body>
+<table class="used-1"><tr><td> text
+</td></tr></table>
+</body>
+</html>
+`;
+
+  const res2 = `<html>
+<head><style type="text/css">.used-1{display:block;}
+</style>
+</head>
+<body>
+<table class="used-1"><tr><td> text
+</td></tr></table>
+</body>
+</html>
+`;
+
+  const res3 = `<html>
+<head><style type="text/css">.used-1{display:block;}</style>
+</head>
+<body>
+<table class="used-1"><tr><td> text
+</td></tr></table>
+</body>
+</html>
+`;
+
+  t.is(m(source, { removeLineBreaks: true }).result, res1, "02.19.01");
+  t.is(
+    m(source, {
+      removeLineBreaks: true,
+      breakToTheLeftOf: [
+        "</td",
+        "<html",
+        "</html",
+        "<head",
+        "</head",
+        "<meta",
+        "<link",
+        "<table",
+        "<script",
+        "</script",
+        "<!DOCTYPE",
+        "</style", // <---- no opening <style ! only closing !
+        "<title",
+        "<body",
+        "@media",
+        "</body",
+        "<!--[if",
+        "<!--<![endif"
+      ]
+    }).result,
+    res2,
+    "02.19.02"
+  );
+  t.is(
+    m(source, {
+      removeLineBreaks: true,
+      breakToTheLeftOf: [
+        "</td",
+        "<html",
+        "</html",
+        "<head",
+        "</head",
+        "<meta",
+        "<link",
+        "<table",
+        "<script",
+        "</script",
+        "<!DOCTYPE",
+        "<title", // <---- no opening/closing style tag!
+        "<body",
+        "@media",
+        "</body",
+        "<!--[if",
+        "<!--<![endif"
+      ]
+    }).result,
+    res3,
+    "02.19.03"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 

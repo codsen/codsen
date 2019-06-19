@@ -31,6 +31,7 @@ const defaults = {
     "<head",
     "</head",
     "<meta",
+    "<link",
     "<table",
     "<script",
     "</script",
@@ -403,6 +404,14 @@ function crush(str, originalOpts) {
         !isLetter(str[i + 6])
       ) {
         withinStyleTag = true;
+        if (
+          (opts.removeLineBreaks || opts.removeIndentations) &&
+          opts.breakToTheLeftOf.includes("<style") &&
+          str.slice(i + 6, i + 23) === ` type="text/css">` &&
+          str[i + 24]
+        ) {
+          finalIndexesToDelete.push(i + 23, i + 23, "\n");
+        }
       }
       if (
         !doNothing &&
@@ -496,7 +505,15 @@ function crush(str, originalOpts) {
                   str[i + 9] === "t") ||
                 (withinInlineStyle &&
                   (str[whitespaceStartedAt - 1] === "'" ||
-                    str[whitespaceStartedAt - 1] === '"'))
+                    str[whitespaceStartedAt - 1] === '"')) ||
+                (str[whitespaceStartedAt - 1] === "}" &&
+                  str[i] === "<" &&
+                  str[i + 1] === "/" &&
+                  str[i + 2] === "s" &&
+                  str[i + 3] === "t" &&
+                  str[i + 4] === "y" &&
+                  str[i + 5] === "l" &&
+                  str[i + 6] === "e")
               ) {
                 whatToAdd = "";
               }
