@@ -2017,7 +2017,7 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
   t.deepEqual(actualUglified, intendedUglified, "01.47.02");
 });
 
-test("01.48 - removes comments from style blocks", t => {
+test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments", t => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -2031,6 +2031,7 @@ test("01.48 - removes comments from style blocks", t => {
 </style>
 </head>
 < body>
+<!-- zzz -->
 <table id="     real-id-1    body-only-id-1    " class="     body-only-class-1 " width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -2048,7 +2049,7 @@ test("01.48 - removes comments from style blocks", t => {
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+  const cssAndHtmlCommentsRemoved = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2075,7 +2076,128 @@ test("01.48 - removes comments from style blocks", t => {
 </body>
 </html>
 `;
-  t.deepEqual(comb(source).result, intended, "01.48");
+  const htmlRemovedCssNot = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dummy HTML</title>
+<style type="text/css">
+  .real-class-1:active, whatever[lang|en]{width:100% !important;}
+  /* some comments */
+  #real-id-1:hover{width:100% !important;} /* some more comments */
+</style>
+</head>
+<body>
+<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="real-class-1">
+            Dummy content.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+`;
+  const cssRemovedHtmlNot = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dummy HTML</title>
+<style type="text/css">
+  .real-class-1:active, whatever[lang|en]{width:100% !important;}
+  #real-id-1:hover{width:100% !important;}
+</style>
+</head>
+<body>
+<!-- zzz -->
+<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="real-class-1">
+            Dummy content.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+`;
+  const neitherCssNorHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dummy HTML</title>
+<style type="text/css">
+  .real-class-1:active, whatever[lang|en]{width:100% !important;}
+  /* some comments */
+  #real-id-1:hover{width:100% !important;} /* some more comments */
+</style>
+</head>
+<body>
+<!-- zzz -->
+<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="real-class-1">
+            Dummy content.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+`;
+  t.deepEqual(
+    comb(source).result,
+    cssAndHtmlCommentsRemoved,
+    "01.48.01 - defaults"
+  );
+  t.deepEqual(
+    comb(source, { removeCSSComments: true }).result,
+    cssAndHtmlCommentsRemoved,
+    "01.48.02 - hardcoded defaults"
+  );
+  t.deepEqual(
+    comb(source, { removeCSSComments: false }).result,
+    htmlRemovedCssNot,
+    "01.48.03 - off"
+  );
+
+  t.deepEqual(
+    comb(source, { removeCSSComments: true, removeHTMLComments: true }).result,
+    cssAndHtmlCommentsRemoved,
+    "01.48.04 - html on, css on"
+  );
+  t.deepEqual(
+    comb(source, { removeCSSComments: false, removeHTMLComments: true }).result,
+    htmlRemovedCssNot,
+    "01.48.05 - html on, css off"
+  );
+  t.deepEqual(
+    comb(source, { removeCSSComments: true, removeHTMLComments: false }).result,
+    cssRemovedHtmlNot,
+    "01.48.06 - html off, css on"
+  );
+  t.deepEqual(
+    comb(source, { removeCSSComments: false, removeHTMLComments: false })
+      .result,
+    neitherCssNorHtml,
+    "01.48.07 - html off, css off"
+  );
 });
 
 test("01.49 - false real class is commented-out and therefore gets removed", t => {

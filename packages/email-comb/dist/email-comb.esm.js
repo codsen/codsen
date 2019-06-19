@@ -39,6 +39,7 @@ const defaults = {
   backend: [],
   uglify: false,
   removeHTMLComments: true,
+  removeCSSComments: true,
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -378,7 +379,7 @@ function comb(str, opts) {
           doNothing = false;
         } else if (matchRightIncl(str, i, doNothingUntil)) {
           if (commentStartedAt !== null) {
-            if (round === 1) {
+            if (round === 1 && opts.removeCSSComments) {
               const lineBreakPresentOnTheLeft = matchLeft(
                 str,
                 commentStartedAt,
@@ -449,31 +450,6 @@ function comb(str, opts) {
         checkingInsideCurlyBraces = false;
         styleEndedAt = i - 1;
         ruleChunkStartedAt = null;
-      }
-      if (
-        round === 1 &&
-        commentStartedAt !== null &&
-        str[i] === "*" &&
-        str[i + 1] === "/"
-      ) {
-        let deleteUpTo = i + 2;
-        if (
-          str[i + 2] === "\n" ||
-          (str[i + 2] === "\r" && str[i + 3] !== "\n")
-        ) {
-          deleteUpTo = i + 3;
-        } else if (str[i + 2] === "\r" && str[i + 3] === "\n") {
-          deleteUpTo = i + 4;
-        }
-        const calculatedRange = expander({
-          str,
-          from: commentStartedAt,
-          to: deleteUpTo,
-          wipeAllWhitespaceOnLeft: true
-        });
-        finalIndexesToDelete.push(...calculatedRange);
-        commentStartedAt = null;
-        doNothing = false;
       }
       if (
         round === 1 &&

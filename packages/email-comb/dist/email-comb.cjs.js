@@ -79,6 +79,7 @@ var defaults = {
   backend: [],
   uglify: false,
   removeHTMLComments: true,
+  removeCSSComments: true,
   doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -330,7 +331,7 @@ function comb(str, opts) {
           doNothing = false;
         } else if (stringMatchLeftRight.matchRightIncl(str, i, doNothingUntil)) {
           if (commentStartedAt !== null) {
-            if (round === 1) {
+            if (round === 1 && opts.removeCSSComments) {
               var lineBreakPresentOnTheLeft = stringMatchLeftRight.matchLeft(str, commentStartedAt, ["\r\n", "\n", "\r"]);
               var startingIndex = commentStartedAt;
               if (lineBreakPresentOnTheLeft) {
@@ -367,23 +368,6 @@ function comb(str, opts) {
         checkingInsideCurlyBraces = false;
         styleEndedAt = i - 1;
         ruleChunkStartedAt = null;
-      }
-      if (round === 1 && commentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
-        var deleteUpTo = i + 2;
-        if (str[i + 2] === "\n" || str[i + 2] === "\r" && str[i + 3] !== "\n") {
-          deleteUpTo = i + 3;
-        } else if (str[i + 2] === "\r" && str[i + 3] === "\n") {
-          deleteUpTo = i + 4;
-        }
-        var calculatedRange = expander({
-          str: str,
-          from: commentStartedAt,
-          to: deleteUpTo,
-          wipeAllWhitespaceOnLeft: true
-        });
-        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
-        commentStartedAt = null;
-        doNothing = false;
       }
       if (round === 1 && (stateWithinHeadStyles || stateWithinBody) && str[i] === "/" && str[i + 1] === "*" && !commentStartedAt) {
         commentStartedAt = i;
@@ -594,16 +578,16 @@ function comb(str, opts) {
               headSelectorChunkStartedAt = null;
             } else if (round === 2) {
               if (!headWholeLineCanBeDeleted && lastKeptChunksCommaAt !== null && onlyDeletedChunksFollow) {
-                var _deleteUpTo = lastKeptChunksCommaAt + 1;
+                var deleteUpTo = lastKeptChunksCommaAt + 1;
                 if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
                   for (var _y4 = lastKeptChunksCommaAt + 1; _y4 < len; _y4++) {
                     if (str[_y4].trim().length) {
-                      _deleteUpTo = _y4;
+                      deleteUpTo = _y4;
                       break;
                     }
                   }
                 }
-                finalIndexesToDelete.push(lastKeptChunksCommaAt, _deleteUpTo);
+                finalIndexesToDelete.push(lastKeptChunksCommaAt, deleteUpTo);
                 lastKeptChunksCommaAt = null;
                 onlyDeletedChunksFollow = false;
               }
@@ -657,14 +641,14 @@ function comb(str, opts) {
             if (str[i + 6] === '"' || str[i + 6] === "'") {
               valuesStart = i + 7;
             } else if (str[i + 6] && (!str[i + 6].trim().length || "/>".includes(str[i + 6]))) {
-              var _calculatedRange = expander({
+              var calculatedRange = expander({
                 str: str,
                 from: i,
                 to: i + 6,
                 ifRightSideIncludesThisThenCropTightly: "/>",
                 wipeAllWhitespaceOnLeft: true
               });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
             }
           } else if (str[i + 5].trim().length === 0) {
             for (var _y6 = i + 5; _y6 < len; _y6++) {
@@ -692,14 +676,14 @@ function comb(str, opts) {
                   }
                 } else {
                   if (round === 1) {
-                    var _calculatedRange2 = expander({
+                    var _calculatedRange = expander({
                       str: str,
                       from: i,
                       to: _y6 - 1,
                       ifRightSideIncludesThisThenCropTightly: "/>",
                       wipeAllWhitespaceOnLeft: true
                     });
-                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
+                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
                   }
                 }
                 break;
@@ -725,14 +709,14 @@ function comb(str, opts) {
             if (str[i + 3] === '"' || str[i + 3] === "'") {
               _valuesStart = i + 4;
             } else if (str[i + 3] && (!str[i + 3].trim().length || "/>".includes(str[i + 3]))) {
-              var _calculatedRange3 = expander({
+              var _calculatedRange2 = expander({
                 str: str,
                 from: i,
                 to: i + 3,
                 ifRightSideIncludesThisThenCropTightly: "/>",
                 wipeAllWhitespaceOnLeft: true
               });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
             }
           } else if (str[i + 2].trim().length === 0) {
             for (var _y7 = i + 2; _y7 < len; _y7++) {
@@ -760,14 +744,14 @@ function comb(str, opts) {
                   }
                 } else {
                   if (round === 1) {
-                    var _calculatedRange4 = expander({
+                    var _calculatedRange3 = expander({
                       str: str,
                       from: i,
                       to: _y7 - 1,
                       ifRightSideIncludesThisThenCropTightly: "/>",
                       wipeAllWhitespaceOnLeft: true
                     });
-                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange4));
+                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
                   }
                 }
                 break;
@@ -792,14 +776,14 @@ function comb(str, opts) {
             doNothing = true;
             bodyClassOrIdCanBeDeleted = false;
             if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-              var _calculatedRange5 = expander({
+              var _calculatedRange4 = expander({
                 str: str,
                 from: whitespaceStartedAt,
                 to: i,
                 ifLeftSideIncludesThisThenCropTightly: "\"'",
                 ifRightSideIncludesThisThenCropTightly: "\"'"
               });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange5));
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange4));
               whitespaceStartedAt = null;
             } else if (whitespaceStartedAt) {
               whitespaceStartedAt = null;
@@ -947,14 +931,14 @@ function comb(str, opts) {
             doNothing = true;
             bodyClassOrIdCanBeDeleted = false;
             if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-              var _calculatedRange6 = expander({
+              var _calculatedRange5 = expander({
                 str: str,
                 from: whitespaceStartedAt,
                 to: i,
                 ifLeftSideIncludesThisThenCropTightly: "\"'",
                 ifRightSideIncludesThisThenCropTightly: "\"'"
               });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange6));
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange5));
               whitespaceStartedAt = null;
             } else if (whitespaceStartedAt) {
               whitespaceStartedAt = null;
@@ -990,6 +974,20 @@ function comb(str, opts) {
         }
         if (commentStartedAt !== null && str[i] === ">") {
           if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
+            var _calculatedRange6 = expander({
+              str: str,
+              from: commentStartedAt,
+              to: i + 1,
+              wipeAllWhitespaceOnLeft: true,
+              addSingleSpaceToPreventAccidentalConcatenation: true
+            });
+            if (opts.removeHTMLComments && canDelete) {
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange6));
+            }
+            commentsLength += _calculatedRange6[1] - _calculatedRange6[0];
+            commentStartedAt = null;
+            bogusHTMLComment = undefined;
+          } else if (bogusHTMLComment) {
             var _calculatedRange7 = expander({
               str: str,
               from: commentStartedAt,
@@ -1001,20 +999,6 @@ function comb(str, opts) {
               finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange7));
             }
             commentsLength += _calculatedRange7[1] - _calculatedRange7[0];
-            commentStartedAt = null;
-            bogusHTMLComment = undefined;
-          } else if (bogusHTMLComment) {
-            var _calculatedRange8 = expander({
-              str: str,
-              from: commentStartedAt,
-              to: i + 1,
-              wipeAllWhitespaceOnLeft: true,
-              addSingleSpaceToPreventAccidentalConcatenation: true
-            });
-            if (opts.removeHTMLComments && canDelete) {
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange8));
-            }
-            commentsLength += _calculatedRange8[1] - _calculatedRange8[0];
             commentStartedAt = null;
             bogusHTMLComment = undefined;
           }
