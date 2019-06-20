@@ -163,10 +163,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chlu": "^3.7.24",
+    "chlu": "^3.7.25",
     "fs-extra": "^8.0.1",
     "meow": "^5.0.0",
-    "simple-git": "^1.115.0",
+    "simple-git": "^1.116.0",
     "update-notifier": "^3.0.0",
     "write-file-atomic": "^3.0.0"
   },
@@ -184,8 +184,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^1.0.0",
-    "js-row-num-cli": "^1.5.24",
-    "lect": "^0.7.1",
+    "js-row-num-cli": "^1.5.25",
+    "lect": "^0.7.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

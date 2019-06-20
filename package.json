@@ -52,9 +52,9 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^2.4.1",
-    "lect": "^0.7.1",
+    "lect": "^0.7.2",
     "lerna": "3.13.0",
-    "lerna-clean-changelogs-cli": "^1.2.15",
+    "lerna-clean-changelogs-cli": "^1.2.16",
     "npm-watch": "^0.6.0",
     "prettier": "^1.18.2"
   }

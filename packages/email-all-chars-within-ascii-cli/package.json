@@ -161,10 +161,10 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "email-all-chars-within-ascii": "^2.9.24",
+    "email-all-chars-within-ascii": "^2.9.25",
     "fs-extra": "^8.0.1",
     "globby": "^9.2.0",
-    "inquirer": "^6.3.1",
+    "inquirer": "^6.4.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^5.0.0",
@@ -184,8 +184,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^1.0.0",
-    "js-row-num-cli": "^1.5.24",
-    "lect": "^0.7.1",
+    "js-row-num-cli": "^1.5.25",
+    "lect": "^0.7.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

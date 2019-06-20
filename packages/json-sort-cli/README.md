@@ -79,11 +79,11 @@ Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.
 
 ### Extra features
 
-* `package.json` are first deep-sorted alphabetically, then using `format-package` ([npm](https://www.npmjs.com/package/format-package))
-* Works on dot files, as long as they are parse-able as JSON
-* Can process a set of files in folder (use wildcards for example, `jsonsort "**/packages/*/data/*.json"`)
-* Broken JSON files don't stop the process, other healthy files from batch are still sorted. Notifies user.
-* System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
+- `package.json` are first deep-sorted alphabetically, then using `format-package` ([npm](https://www.npmjs.com/package/format-package))
+- Works on dot files, as long as they are parse-able as JSON
+- Can process a set of files in folder (use wildcards for example, `jsonsort "**/packages/*/data/*.json"`)
+- Broken JSON files don't stop the process, other healthy files from batch are still sorted. Notifies user.
+- System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
 
 **[⬆ back to top](#)**
 
