@@ -308,9 +308,9 @@ test("01.12 - removes unused classes and uglifies at the same time", t => {
 `;
   const intendedUglified = `<head>
 <style>
-  #a, .b, .c { w:1; }
+  #o, .i, .k { w:1; }
 </style>
-<body class="b"><br class="c" id="a">
+<body class="i"><br class="k" id="o">
 </body>
 `;
   const intendedNotUglified = `<head>
@@ -553,17 +553,17 @@ test("01.18 - removes classes and id's from HTML5 - uglifies", t => {
   <meta charset="UTF-8">
   <title>Dummy HTML</title>
   <style type="text/css">
-    .b.c:active, whatever[lang|en]{width:100% !important;}
-    #a:hover{width:100% !important;}
+    .s.p:active, whatever[lang|en]{width:100% !important;}
+    #z:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id='a' width='100%' border='0' cellpadding='0' cellspacing='0'>
+  <table id='z' width='100%' border='0' cellpadding='0' cellspacing='0'>
     <tr>
       <td>
         <table width='100%' border='0' cellpadding='0' cellspacing='0'>
           <tr>
-            <td class='b c'>
+            <td class='s p'>
               Dummy content.
             </td>
           </tr>
@@ -1991,17 +1991,17 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
   <meta charset="UTF-8">
   <title>Dummy HTML</title>
   <style type="text/css">
-    .b:active, whatever[lang|en]{width:100% !important;}
-    #a:hover{width:100% !important;}
+    .s:active, whatever[lang|en]{width:100% !important;}
+    #z:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id="a" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <table id="z" width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td class="b">
+            <td class="s">
               Dummy content.
             </td>
           </tr>
@@ -2582,12 +2582,12 @@ test("01.56 - retains media queries", t => {
 
   const uglified = `<head>
 <style>
-.c{a:1;}
-@media screen and (max-width: 600px){.a .b{max-width:100%;}
+.w{a:1;}
+@media screen and (max-width: 600px){.i .t{max-width:100%;}
 }
 </style>
 </head>
-<body><a class="c a b">z</a>
+<body><a class="w i t">z</a>
 </body>
 `;
 
@@ -2832,20 +2832,20 @@ test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t 
   const intendedUglified = `<html>
 <head>
 <style>
-#a:hover{z}
+#z:hover{z}
 </style>
 <!--[if mso]>
 <style>
-.b, .b table { display: block; }
+.s, .s table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="a" width="100%">
+  <table id="z" width="100%">
     <tr>
       <td>
         <table width="100%">
           <tr>
-            <td class="b">
+            <td class="s">
               Dummy content.
             </td>
           </tr>
@@ -2922,11 +2922,11 @@ test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", 
   const intendedUglified = `<html>
 <head>
 <style>
-#a:hover{z}
+#z:hover{z}
 </style>
 </head>
 <body>
-  <table id="a" width="100%">
+  <table id="z" width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -3019,20 +3019,20 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
   const intendedUglified = `<html>
 <head>
 <style>
-#a:hover{z}
+#z:hover{z}
 </style>
 <!--[if mso]>
 <style>
-.b table { display: block; }
+.s table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="a" width="100%">
+  <table id="z" width="100%">
     <tr>
       <td>
         <table width="100%">
           <tr>
-            <td class="b">
+            <td class="s">
               Dummy content.
             </td>
           </tr>
@@ -3071,11 +3071,11 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
   const intendedAllCommentsDeletedUglified = `<html>
 <head>
 <style>
-#a:hover{z}
+#z:hover{z}
 </style>
 </head>
 <body>
-  <table id="a" width="100%">
+  <table id="z" width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -5208,6 +5208,21 @@ test("11.01 - removes HTML comments - healthy code", t => {
 </body>
 `;
 
+  const uglified = `<style>
+  .i {b:2;}
+</style>
+<body class="i">
+</body>
+`;
+
+  const uglifiedWithComments = `<style>
+  .i {b:2;}
+</style>
+<body class="i">
+<!-- zzz -->
+</body>
+`;
+
   t.is(comb(source).result, intended, "11.01.01");
   t.is(
     comb(source, { removeHTMLComments: true }).result,
@@ -5221,17 +5236,17 @@ test("11.01 - removes HTML comments - healthy code", t => {
     comb(source, {
       uglify: true
     }).result,
-    intended,
+    uglified,
     "11.01.04"
   );
   t.is(
     comb(source, { removeHTMLComments: true, uglify: true }).result,
-    intended,
+    uglified,
     "11.01.05 - hardcoded default"
   );
   t.is(
     comb(source, { removeHTMLComments: false, uglify: true }).result,
-    source,
+    uglifiedWithComments,
     "11.01.06"
   );
 });
@@ -5578,9 +5593,9 @@ test("12.01 - uglify - ignores", t => {
 
   const baselineUglified = `<head>
 <style>
-.a { w:1; }
+.h { w:1; }
 </style>
-<body class="a"><br>
+<body class="h"><br>
 </body>
 `;
 
@@ -5594,22 +5609,22 @@ test("12.01 - uglify - ignores", t => {
 
   const ignoresUglified = `<head>
 <style>
-.a { w:1; }
+.h { w:1; }
 </style>
-<body class="a"><br class="b">
+<body class="h"><br class="zzz2">
 </body>
 `;
 
   t.is(
     comb(source, { uglify: false }).result,
     baseline,
-    "12.12.01 - default settings (no uglify, no ignores)"
+    "12.01.01 - default settings (no uglify, no ignores)"
   );
 
   t.is(
     comb(source, { uglify: true }).result,
     baselineUglified,
-    "12.12.02 - uglified, no ignores"
+    "12.01.02 - uglified, no ignores"
   );
 
   t.is(
@@ -5618,7 +5633,7 @@ test("12.01 - uglify - ignores", t => {
       whitelist: ".zzz*"
     }).result,
     ignores,
-    "12.12.03 - no uglify, with ignores"
+    "12.01.03 - no uglify, with ignores"
   );
 
   t.is(
@@ -5627,7 +5642,7 @@ test("12.01 - uglify - ignores", t => {
       whitelist: ".zzz*"
     }).result,
     ignoresUglified,
-    "12.12.04 - uglified + with ignores"
+    "12.01.04 - uglified + with ignores"
   );
 });
 
@@ -5671,38 +5686,38 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
 
   const intended = `<head>
 <style>
-.a,
-.b,
-.c,
-.d,
-.e,
-.f,
-.g,
-.h,
-.i,
-.j,
-.k,
 .l,
-.m,
-.n,
-.o,
-.p,
+.e,
 .q,
-.r,
-.s,
-.t,
-.u,
-.v,
-.w,
-.x,
-.y,
 .z,
-.aa,
-.ab,
-.ac,
-.ad { w:1; }
+.w,
+.f,
+.k,
+.p,
+.i,
+.g,
+.mm,
+.kn,
+.ko,
+.ip,
+.kq,
+.xi,
+.sj,
+.kk,
+.ll,
+.lm,
+.ln,
+.mo,
+.dp,
+.dq,
+.in,
+.jj,
+.jo,
+.wt,
+.sg,
+.pp { w:1; }
 </style>
-<body class="a b c d e f g h i j k l m n o p q r s t u v w x y z aa ab ac ad">
+<body class="l e q z w f k p i g mm kn ko ip kq xi sj kk ll lm ln mo dp dq in jj jo wt sg pp">
 </body>
 `;
 
@@ -5718,36 +5733,36 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
   t.deepEqual(
     res.log.uglified,
     [
-      [".aaa01", ".a"],
-      [".aaa02", ".b"],
-      [".aaa03", ".c"],
-      [".aaa04", ".d"],
-      [".aaa05", ".e"],
+      [".aaa01", ".l"],
+      [".aaa02", ".e"],
+      [".aaa03", ".q"],
+      [".aaa04", ".z"],
+      [".aaa05", ".w"],
       [".aaa06", ".f"],
-      [".aaa07", ".g"],
-      [".aaa08", ".h"],
+      [".aaa07", ".k"],
+      [".aaa08", ".p"],
       [".aaa09", ".i"],
-      [".aaa10", ".j"],
-      [".aaa11", ".k"],
-      [".aaa12", ".l"],
-      [".aaa13", ".m"],
-      [".aaa14", ".n"],
-      [".aaa15", ".o"],
-      [".aaa16", ".p"],
-      [".aaa17", ".q"],
-      [".aaa18", ".r"],
-      [".aaa19", ".s"],
-      [".aaa20", ".t"],
-      [".aaa21", ".u"],
-      [".aaa22", ".v"],
-      [".aaa23", ".w"],
-      [".aaa24", ".x"],
-      [".aaa25", ".y"],
-      [".aaa26", ".z"],
-      [".aaa27", ".aa"],
-      [".aaa28", ".ab"],
-      [".aaa29", ".ac"],
-      [".aaa30", ".ad"]
+      [".aaa10", ".g"],
+      [".aaa11", ".mm"],
+      [".aaa12", ".kn"],
+      [".aaa13", ".ko"],
+      [".aaa14", ".ip"],
+      [".aaa15", ".kq"],
+      [".aaa16", ".xi"],
+      [".aaa17", ".sj"],
+      [".aaa18", ".kk"],
+      [".aaa19", ".ll"],
+      [".aaa20", ".lm"],
+      [".aaa21", ".ln"],
+      [".aaa22", ".mo"],
+      [".aaa23", ".dp"],
+      [".aaa24", ".dq"],
+      [".aaa25", ".in"],
+      [".aaa26", ".jj"],
+      [".aaa27", ".jo"],
+      [".aaa28", ".wt"],
+      [".aaa29", ".sg"],
+      [".aaa30", ".pp"]
     ],
     "12.02.03"
   );
@@ -5764,7 +5779,7 @@ test("12.03 - uglify - style tag within Outlook conditionals, used CSS", t => {
 </style>
 <![endif]-->
 </head>
-<body id="#outlook">
+<body id="outlook">
 <a class="myclass">
 `;
   const intended = `<html>
@@ -5777,21 +5792,21 @@ test("12.03 - uglify - style tag within Outlook conditionals, used CSS", t => {
 </style>
 <![endif]-->
 </head>
-<body id="#outlook">
+<body id="outlook">
 <a class="myclass">
 `;
   const uglified = `<html>
 <head>
 <!--[if mso]>
 <style>
-  #a a {padding: 0;}
-  .b {color: blue}
+  #p a {padding: 0;}
+  .w {color: blue}
   td {padding: 0}
 </style>
 <![endif]-->
 </head>
-<body id="#a">
-<a class="b">
+<body id="p">
+<a class="w">
 `;
 
   t.is(
@@ -5821,17 +5836,29 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
 </style>
 <![endif]-->
 </head>
-<body><a>
+<body id="outlook"><a>
 `;
   const intended = `<html>
 <head>
 <!--[if mso]>
 <style>
+  #outlook a {padding: 0;}
   td {padding: 0}
 </style>
 <![endif]-->
 </head>
-<body><a>
+<body id="outlook"><a>
+`;
+  const uglified = `<html>
+<head>
+<!--[if mso]>
+<style>
+  #p a {padding: 0;}
+  td {padding: 0}
+</style>
+<![endif]-->
+</head>
+<body id="p"><a>
 `;
   const ignored = `<html>
 <head>
@@ -5843,7 +5870,7 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
 </style>
 <![endif]-->
 </head>
-<body><a>
+<body id="outlook"><a>
 `;
 
   t.is(
@@ -5857,7 +5884,7 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
     comb(source, {
       uglify: true
     }).result,
-    intended,
+    uglified,
     "12.04.02"
   );
   // now ignores are set, so deletion is prevented:
@@ -5876,6 +5903,60 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
     }).result,
     ignored,
     "12.04.04"
+  );
+});
+
+test("12.05 - uglify - ignores on used id's", t => {
+  const source = `<html>
+<head>
+<style>
+#mn a {z}
+</style>
+</head>
+<body id="mn"><a>
+`;
+  t.is(
+    comb(source, {
+      uglify: true,
+      whitelist: ["#mn", ".op"]
+    }).result,
+    source,
+    "12.05.01"
+  );
+  t.is(
+    comb(source, {
+      uglify: true,
+      whitelist: ["#mn"]
+    }).result,
+    source,
+    "12.05.02"
+  );
+});
+
+test("12.06 - uglify - ignores on used classes", t => {
+  const source = `<html>
+<head>
+<style>
+.mn a {z}
+</style>
+</head>
+<body class="mn"><a>
+`;
+  t.is(
+    comb(source, {
+      uglify: true,
+      whitelist: [".mn", ".op"]
+    }).result,
+    source,
+    "12.06.01"
+  );
+  t.is(
+    comb(source, {
+      uglify: true,
+      whitelist: [".mn"]
+    }).result,
+    source,
+    "12.06.02"
   );
 });
 
@@ -6071,6 +6152,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6093,10 +6175,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6104,6 +6188,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6113,24 +6198,29 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6138,6 +6228,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6145,6 +6236,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6153,7 +6245,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6165,6 +6259,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6179,6 +6274,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6200,6 +6296,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6220,6 +6317,57 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       {
         reportProgressFunc: countingFunction,
@@ -6232,14 +6380,16 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   // 2. check the counter variable:
   const compareTo = [];
   for (let i = 21; i < 87; i++) {
-    compareTo.push(i);
+    if (i !== 81) {
+      compareTo.push(i);
+    }
   }
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach(perc => t.true(compareTo.includes(perc)));
   t.is(gather.length, 86 - 21);
 
-  // t.deepEqual(gather, compareTo, "13.03");
+  t.deepEqual(gather, compareTo, "13.03");
 });
 
 // ============================================================

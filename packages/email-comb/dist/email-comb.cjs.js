@@ -19,6 +19,7 @@ var pullAllWithGlob = _interopDefault(require('array-pull-all-with-glob'));
 var extract = _interopDefault(require('string-extract-class-names'));
 var intersection = _interopDefault(require('lodash.intersection'));
 var expander = _interopDefault(require('string-range-expander'));
+var stringUglify = require('string-uglify');
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var applySlices = _interopDefault(require('ranges-apply'));
 var pullAll = _interopDefault(require('lodash.pullall'));
@@ -59,16 +60,6 @@ function _iterableToArray(iter) {
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-function generateShortname(seed) {
-  var library = "abcdefghijklmnopqrstuvwxyz";
-  var libraryLength = 26;
-  var prefix = "";
-  if (seed >= libraryLength) {
-    prefix = generateShortname(Math.floor(seed / libraryLength) - 1);
-  }
-  return prefix + library[seed % libraryLength];
 }
 
 var version = "3.0.2";
@@ -130,6 +121,7 @@ function comb(str, opts) {
   var insideCurlyBraces;
   var beingCurrentlyAt;
   var uglified;
+  var allClassesAndIdsWithinHeadFinalUglified;
   var bodyItsTheFirstClassOrId;
   var bogusHTMLComment;
   var ruleChunkStartedAt;
@@ -481,8 +473,8 @@ function comb(str, opts) {
               selectorChunkCanBeDeleted = true;
               onlyDeletedChunksFollow = true;
             } else if (round === 2 && !selectorChunkCanBeDeleted) {
-              if (opts.uglify && (!isArr(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length) && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)))) {
-                currentChunksMinifiedSelectors.push(singleSelectorStartedAt + 1, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)));
+              if (opts.uglify && (!isArr(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
+                currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
               }
               if (chr === ",") {
                 lastKeptChunksCommaAt = i;
@@ -828,8 +820,8 @@ function comb(str, opts) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange));
           } else {
             bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))))) {
-              finalIndexesToDelete.push(bodyClass.valueStart, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))));
+            if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+              finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
             }
           }
         }
@@ -854,8 +846,8 @@ function comb(str, opts) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange));
           } else {
             bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))))) {
-              finalIndexesToDelete.push(bodyId.valueStart, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))));
+            if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
+              finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
             }
           }
         }
@@ -1150,8 +1142,11 @@ function comb(str, opts) {
           }
         });
       }
-      uglified = opts.uglify ? Array.from(allClassesAndIdsWithinHeadFinal).map(function (name) {
-        return [name, "".concat(name.startsWith(".") ? "." : "#").concat(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(name)))];
+      if (opts.uglify) {
+        allClassesAndIdsWithinHeadFinalUglified = stringUglify.uglifyArr(allClassesAndIdsWithinHeadFinal);
+      }
+      uglified = opts.uglify ? allClassesAndIdsWithinHeadFinal.map(function (name, id) {
+        return [name, allClassesAndIdsWithinHeadFinalUglified[id]];
       }) : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current());

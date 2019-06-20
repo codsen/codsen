@@ -149,8 +149,7 @@
     },
     "licence": {
       "extras": [
-        "",
-        "Adapted a `generateShortname()` function from:\nhttps://github.com/cazzer/gulp-selectors/blob/master/lib/utils/generate-shortname.js\nMIT License (MIT) Copyright © 2014 Caleb Brewer"
+        ""
       ]
     },
     "npmignore": {
@@ -190,7 +189,8 @@
     "regex-empty-conditional-comments": "^1.8.25",
     "string-extract-class-names": "^5.8.25",
     "string-match-left-right": "^3.10.25",
-    "string-range-expander": "^1.10.25"
+    "string-range-expander": "^1.10.25",
+    "string-uglify": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

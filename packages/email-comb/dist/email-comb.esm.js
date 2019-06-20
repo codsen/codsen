@@ -13,6 +13,7 @@ import pullAllWithGlob from 'array-pull-all-with-glob';
 import extract from 'string-extract-class-names';
 import intersection from 'lodash.intersection';
 import expander from 'string-range-expander';
+import { uglifyArr } from 'string-uglify';
 import isObj from 'lodash.isplainobject';
 import applySlices from 'ranges-apply';
 import pullAll from 'lodash.pullall';
@@ -20,16 +21,6 @@ import isEmpty from 'ast-is-empty';
 import Slices from 'ranges-push';
 import uniq from 'lodash.uniq';
 import matcher from 'matcher';
-
-function generateShortname(seed) {
-  const library = "abcdefghijklmnopqrstuvwxyz";
-  const libraryLength = 26;
-  let prefix = "";
-  if (seed >= libraryLength) {
-    prefix = generateShortname(Math.floor(seed / libraryLength) - 1);
-  }
-  return prefix + library[seed % libraryLength];
-}
 
 var version = "3.0.2";
 
@@ -90,6 +81,7 @@ function comb(str, opts) {
   let insideCurlyBraces;
   let beingCurrentlyAt;
   let uglified;
+  let allClassesAndIdsWithinHeadFinalUglified;
   let bodyItsTheFirstClassOrId;
   let bogusHTMLComment;
   let ruleChunkStartedAt;
@@ -621,19 +613,14 @@ function comb(str, opts) {
                 opts.uglify &&
                 (!isArr(opts.whitelist) ||
                   !opts.whitelist.length ||
-                  !matcher([singleSelector], opts.whitelist).length) &&
-                isStr(
-                  generateShortname(
-                    allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
-                  )
-                )
+                  !matcher([singleSelector], opts.whitelist).length)
               ) {
                 currentChunksMinifiedSelectors.push(
-                  singleSelectorStartedAt + 1,
+                  singleSelectorStartedAt,
                   i,
-                  generateShortname(
+                  allClassesAndIdsWithinHeadFinalUglified[
                     allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
-                  )
+                  ]
                 );
               }
               if (chr === ",") {
@@ -1062,18 +1049,18 @@ function comb(str, opts) {
             bodyClassOrIdCanBeDeleted = false;
             if (
               opts.uglify &&
-              isStr(
-                generateShortname(
-                  allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
-                )
+              !(
+                isArr(opts.whitelist) &&
+                opts.whitelist.length &&
+                matcher([`.${carvedClass}`], opts.whitelist).length
               )
             ) {
               finalIndexesToDelete.push(
                 bodyClass.valueStart,
                 i,
-                generateShortname(
+                allClassesAndIdsWithinHeadFinalUglified[
                   allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
-                )
+                ].slice(1)
               );
             }
           }
@@ -1115,18 +1102,18 @@ function comb(str, opts) {
             bodyClassOrIdCanBeDeleted = false;
             if (
               opts.uglify &&
-              isStr(
-                generateShortname(
-                  allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
-                )
+              !(
+                isArr(opts.whitelist) &&
+                opts.whitelist.length &&
+                matcher([`#${carvedId}`], opts.whitelist).length
               )
             ) {
               finalIndexesToDelete.push(
                 bodyId.valueStart,
                 i,
-                generateShortname(
+                allClassesAndIdsWithinHeadFinalUglified[
                   allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
-                )
+                ].slice(1)
               );
             }
           }
@@ -1559,12 +1546,15 @@ function comb(str, opts) {
           }
         });
       }
+      if (opts.uglify) {
+        allClassesAndIdsWithinHeadFinalUglified = uglifyArr(
+          allClassesAndIdsWithinHeadFinal
+        );
+      }
       uglified = opts.uglify
-        ? Array.from(allClassesAndIdsWithinHeadFinal).map(name => [
+        ? allClassesAndIdsWithinHeadFinal.map((name, id) => [
             name,
-            `${name.startsWith(".") ? "." : "#"}${generateShortname(
-              allClassesAndIdsWithinHeadFinal.indexOf(name)
-            )}`
+            allClassesAndIdsWithinHeadFinalUglified[id]
           ])
         : null;
       if (finalIndexesToDelete.current()) {

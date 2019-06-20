@@ -59,7 +59,8 @@ export default commandLineArgs => {
         "regex-empty-conditional-comments",
         "string-extract-class-names",
         "string-match-left-right",
-        "string-range-expander"
+        "string-range-expander",
+        "string-uglify"
       ],
       plugins: [
         strip({
@@ -92,7 +93,8 @@ export default commandLineArgs => {
         "regex-empty-conditional-comments",
         "string-extract-class-names",
         "string-match-left-right",
-        "string-range-expander"
+        "string-range-expander",
+        "string-uglify"
       ],
       plugins: [
         strip({
@@ -104,22 +106,6 @@ export default commandLineArgs => {
         license({
           banner: licensePiece
         })
-      ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: [],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        builtins(),
-        resolve(),
-        json(),
-        cleanup()
       ]
     }
   ];
