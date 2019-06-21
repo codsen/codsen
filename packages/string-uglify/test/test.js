@@ -24,18 +24,19 @@ test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-function makeRandomArr(len = 500) {
+function makeRandomArr(len = 500, dotshashes = true) {
   const randomArr = [];
-  for (let i = 0; i < len; i++) {
+  while (randomArr.length !== len) {
     const randStrLen = rand(1, 20);
-    let str = "";
+    let str = dotshashes ? `${Math.random() > 0.3 ? "." : "#"}` : "";
     for (let y = 0; y < randStrLen; y++) {
-      str += `${Math.random() > 0.3 ? "." : "#"}${letters[rand(0, 25)]}`;
+      str += `${letters[rand(0, 25)]}`;
     }
     if (!randomArr.includes(str)) {
       randomArr.push(str);
     }
   }
+
   return randomArr;
 }
 
@@ -61,8 +62,10 @@ test(`04 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates uglifie
 });
 
 test(`05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique elements array`, t => {
-  // all 5000 are unique
-  const generated = uglifyArr(makeRandomArr(5000));
+  // all are unique
+  const length = 1000;
+  const generated = uglifyArr(makeRandomArr(length));
+  t.is(generated.length, length);
   generated.forEach((name1, index1) =>
     t.false(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
@@ -75,4 +78,70 @@ test(`06 - ${`\u001b[${31}m${`wrong cases`}\u001b[${39}m`} - bypasses for everyt
   t.is(uglifyArr(true), true, "06.01");
   t.is(uglifyArr("z"), "z", "06.02");
   t.is(uglifyArr(1), 1, "06.03");
+});
+
+// -----------------------------------------------------------------------------
+// aims
+// -----------------------------------------------------------------------------
+
+const howMany = 5000;
+test(`07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`, t => {
+  // generate two arrays: {howMany}-long random class/id names array and clone of it
+  // where there's extra thing on top.
+  const randArr1 = makeRandomArr(howMany);
+  const randArr2 = [".something"].concat(randArr1);
+  t.is(randArr1.length, howMany);
+  t.is(randArr2.length, howMany + 1);
+  // alphabet has 26 letters so two position uglified names should cover at
+  // least 26 * 36 = 936 variations and should definitely accommodate 500
+  // uglified class/id names.
+  const generated1 = uglifyArr(randArr1);
+  const generated2 = uglifyArr(randArr2);
+  generated2.shift();
+
+  let counter = 0;
+  generated1.forEach(key => {
+    if (!generated2.includes(key)) {
+      counter++;
+    }
+  });
+  // console.log(
+  //   `${`\u001b[${33}m${`differs`}\u001b[${39}m`}: ${JSON.stringify(
+  //     counter,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  t.true(
+    counter < generated2.length * 0.001,
+    "07 - less than 1% of classes/id's affected "
+  );
+});
+
+test(`08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`, t => {
+  const randArr1 = makeRandomArr(1);
+
+  for (let i = 0; i < 100; i++) {
+    randArr1.push(randArr1[0]);
+  }
+  const generated = uglifyArr(randArr1);
+  t.is(generated.length, randArr1.length);
+  generated.forEach((val, i) => {
+    // all values are repeated on both:
+    t.is(generated[i], generated[0]);
+    t.is(randArr1[i], randArr1[0]);
+  });
+});
+
+test(`09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`, t => {
+  // all are still unique
+  const length = 1000;
+  const generated = uglifyArr(makeRandomArr(length, false));
+  t.is(generated.length, length);
+  generated.forEach((name1, index1) =>
+    t.false(
+      generated.some((name2, index2) => name1 === name2 && index1 !== index2),
+      `${name1} is not unique`
+    )
+  );
 });

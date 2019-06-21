@@ -19,8 +19,6 @@
 - [Idea](#idea)
 - [Usage](#usage)
 - [API](#api)
-- [Example - treating the image alt attributes - Gulp and stream-tapping](#example---treating-the-image-alt-attributes---gulp-and-stream-tapping)
-- [Can we use `lodash.deburr` instead?](#can-we-use-lodashdeburr-instead)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -41,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-uglify.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-uglify.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-uglify.umd.js` | 2 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-uglify.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-uglify.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-uglify.umd.js` | 1 KB |
 
 **[⬆ back to top](#)**
 
@@ -75,10 +73,10 @@ This library uglifies an array of class or id names relying only on letter value
 ```js
 const { uglifyArr } = require("string-uglify");
 const names = [
-    ".module-promo-all",
-    ".module-promo-main",
-    ".module-promo-second",
-    "#zzz"
+  ".module-promo-all",
+  ".module-promo-main",
+  ".module-promo-second",
+  "#zzz"
 ];
 const res = uglifyArr(names);
 console.log("res = " + JSON.stringify(res1, null, 0));
@@ -112,6 +110,8 @@ If you feed input without dots/hashes, `["name1", "name2", "name3"]`, output wil
 
 See usage example above.
 
+**[⬆ back to top](#)**
+
 ### uglifyById()
 
 Input — two arguments: array and natural number (id).
@@ -121,6 +121,8 @@ Output - uglified string (string from position "id").
 uglifyById() is less efficient when called many times because each time it processes the whole array using `uglifyArr()`, then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
 
 See usage example above.
+
+**[⬆ back to top](#)**
 
 ### version
 
@@ -149,7 +151,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-uglify
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
-[cov-img]: https://img.shields.io/badge/coverage-98.18%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-uglify
