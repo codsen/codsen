@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.7.25",
+  "version": "1.7.26",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
@@ -165,7 +165,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.25",
+    "ast-contains-only-empty-space": "^1.8.26",
     "lodash.isplainobject": "^4.0.6",
     "lodash.isstring": "^4.0.1"
   },
@@ -182,8 +182,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.25",
-    "lect": "^0.7.2",
+    "js-row-num-cli": "^1.5.26",
+    "lect": "^0.7.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",

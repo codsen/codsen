@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "3.7.25",
+  "version": "3.7.26",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "license": "MIT",
   "engines": {
@@ -163,7 +163,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.21",
+    "check-types-mini": "^5.7.22",
     "lodash.toarray": "^4.4.0"
   },
   "devDependencies": {
@@ -179,8 +179,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.25",
-    "lect": "^0.7.2",
+    "js-row-num-cli": "^1.5.26",
+    "lect": "^0.7.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",

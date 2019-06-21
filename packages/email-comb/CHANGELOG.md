@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.1.0...email-comb@3.2.0) (2019-06-21)
+
+
+### Features
+
+* opts.removeCSSComments ([b848d1c](https://gitlab.com/codsen/codsen/commit/b848d1c))
+* Uglification based on class/id characters but not class/id position in the reference array ([c839977](https://gitlab.com/codsen/codsen/commit/c839977))
+
+
+
+
+
 ## 3.1.0 (2019-06-18)
 
 ### Features

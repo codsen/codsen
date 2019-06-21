@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "5.0.16",
+  "version": "5.0.17",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
   "license": "MIT",
   "engines": {
@@ -160,11 +160,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.21",
+    "check-types-mini": "^5.7.22",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.16",
-    "ranges-push": "^3.2.0",
-    "string-match-left-right": "^3.10.25"
+    "ranges-apply": "^3.0.17",
+    "ranges-push": "^3.2.1",
+    "string-match-left-right": "^3.10.26"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -179,8 +179,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.25",
-    "lect": "^0.7.2",
+    "js-row-num-cli": "^1.5.26",
+    "lect": "^0.7.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.15.6",

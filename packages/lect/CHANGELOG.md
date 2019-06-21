@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.3](https://gitlab.com/codsen/codsen/compare/lect@0.7.2...lect@0.7.3) (2019-06-21)
+
+**Note:** Version bump only for package lect
+
+
+
+
+
 ## 0.7.0 (2019-06-01)
 
 ### Bug Fixes
