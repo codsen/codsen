@@ -17,3 +17,4 @@ coverage
 yarn.lock
 lerna-debug.log
 .npmrc
+*.lerna_backup
