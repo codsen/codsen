@@ -2,7 +2,7 @@
 
 # string-uglify
 
-> Uglify - generate short unique names for sets of strings
+> Uglify - generate unique short names for sets of strings
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -58,15 +58,15 @@ Such algorithm seems easy, here's one implementation of it: https://github.com/c
 
 The problem with such algorithms is that there **all uglified class/id names are sensitive to their position in the source array**.
 
-For example, when we add another class, `.module-promo-all`, it shifts 
+For example, when we add another class, `.module-promo-all`, it shifts
 
 `.module-promo-all` -> `.a` (takes top position)
 `.module-promo-main` -> `.b` (previously was `.a`)
 `.module-promo-second` -> `.c` (previously was `.b`)
 
-As a result, if you use such uglification, smallest addition or removal to any classes/id's will cause ripple effect throughout the whole document and there will be git diffs (changes) everywhere.
+As a result, if you use such uglification, smallest addition or removal to any classes/id's will cause a ripple effect throughout the whole document, and there will be git diffs (changes) everywhere.
 
-This library uglifies an array of class or id names relying only on letter values and their sequences. There is no reliance on position of a class/id in the source array.
+This library uglifies an array of class or id names relying only on letter values and their sequences. There is no reliance on the position of a class/id in the source array.
 
 **[⬆ back to top](#)**
 
@@ -75,10 +75,10 @@ This library uglifies an array of class or id names relying only on letter value
 ```js
 const { uglifyArr } = require("string-uglify");
 const names = [
-	".module-promo-all",
-	".module-promo-main",
-	".module-promo-second",
-	"#zzz"
+    ".module-promo-all",
+    ".module-promo-main",
+    ".module-promo-second",
+    "#zzz"
 ];
 const res = uglifyArr(names);
 console.log("res = " + JSON.stringify(res1, null, 0));
@@ -102,9 +102,9 @@ const { uglifyArr, uglifyById, version } = require("string-uglify");
 
 ### uglifyArr()
 
-**Input** — anything. If it's not an array it will be instantly returned back. If it's array, array is returned. If it's array of one or more string, it will return array of that many uglified strings.
+**Input** — anything. If it's not an array, it will be instantly returned. If it's array, an array is returned. If it's an array of one or more string, it will return an array of that many uglified strings.
 
-**Output** - same thing as in the **input**, if it's non-empty array of strings, those strings will be uglified.
+**Output** - same thing as in the **input**, if it's a non-empty array of strings, those strings will be uglified.
 
 If you feed strings with dots/hashes, `[".class1", "#id2", ".class2", "#id9"]` output will have same dots/hashes, for example, `[".m", "#b", ".r", "#aa"]`.
 
@@ -118,7 +118,7 @@ Input — two arguments: array and natural number (id).
 
 Output - uglified string (string from position "id").
 
-uglifyById() is less efficient when called many times because each time it processes whole array using `uglifyArr()`, then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
+uglifyById() is less efficient when called many times because each time it processes the whole array using `uglifyArr()`, then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
 
 See usage example above.
 
