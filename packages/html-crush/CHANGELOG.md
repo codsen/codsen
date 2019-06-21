@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.4.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.3.0...html-crush@1.4.0) (2019-06-21)
-
+## 1.4.0 (2019-06-21)
 
 ### Features
 
-* Break to the right of opening style tag if breaking on the left is turned on ([67ca84a](https://gitlab.com/codsen/codsen/commit/67ca84a))
-
-
-
-
+- Break to the right of opening style tag if breaking on the left is turned on ([67ca84a](https://gitlab.com/codsen/codsen/commit/67ca84a))
 
 ## 1.3.0 (2019-06-18)
 
