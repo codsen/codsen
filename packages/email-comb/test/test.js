@@ -306,14 +306,10 @@ test("01.12 - removes unused classes and uglifies at the same time", t => {
 <body class="xx"><br class="yy" id="xx">
 </body>
 `;
-  const intendedUglified = `<head>
-<style>
-  #o, .i, .k { w:1; }
-</style>
-<body class="i"><br class="k" id="o">
-</body>
-`;
-  const intendedNotUglified = `<head>
+
+  // one and two character-long names are just left as they were!
+  // in this test both uglified and non-uglified result looks the same
+  const intended = `<head>
 <style>
   #xx, .xx, .yy { w:1; }
 </style>
@@ -325,41 +321,29 @@ test("01.12 - removes unused classes and uglifies at the same time", t => {
   const actualNotUglified = comb(source, { uglify: false }).result;
   const actual2 = comb(source, { uglify: 1 }).result;
 
-  t.is(replaceToN(actual), replaceToN(intendedUglified), "01.12.01");
-  t.is(replaceToRN(actual), replaceToRN(intendedUglified), "01.12.02");
-  t.is(replaceToR(actual), replaceToR(intendedUglified), "01.12.03");
+  t.is(replaceToN(actual), replaceToN(intended), "01.12.01");
+  t.is(replaceToRN(actual), replaceToRN(intended), "01.12.02");
+  t.is(replaceToR(actual), replaceToR(intended), "01.12.03");
 
   // uglify option given as number:
-  t.is(replaceToN(actual2), replaceToN(intendedUglified), "01.12.04");
-  t.is(replaceToRN(actual2), replaceToRN(intendedUglified), "01.12.05");
-  t.is(replaceToR(actual2), replaceToR(intendedUglified), "01.12.06");
+  t.is(replaceToN(actual2), replaceToN(intended), "01.12.04");
+  t.is(replaceToRN(actual2), replaceToRN(intended), "01.12.05");
+  t.is(replaceToR(actual2), replaceToR(intended), "01.12.06");
 
   // not uglified:
-  t.is(
-    replaceToN(actualNotUglified),
-    replaceToN(intendedNotUglified),
-    "01.12.07"
-  );
-  t.is(
-    replaceToRN(actualNotUglified),
-    replaceToRN(intendedNotUglified),
-    "01.12.08"
-  );
-  t.is(
-    replaceToR(actualNotUglified),
-    replaceToR(intendedNotUglified),
-    "01.12.09"
-  );
+  t.is(replaceToN(actualNotUglified), replaceToN(intended), "01.12.07");
+  t.is(replaceToRN(actualNotUglified), replaceToRN(intended), "01.12.08");
+  t.is(replaceToR(actualNotUglified), replaceToR(intended), "01.12.09");
 
   // uglification disabled:
   const actual3 = comb(source, { uglify: false }).result;
-  t.is(actual3, intendedNotUglified, "01.12.10");
+  t.is(actual3, intended, "01.12.10");
 
   const actual4 = comb(source, { uglify: 0 }).result;
-  t.is(actual4, intendedNotUglified, "01.12.11");
+  t.is(actual4, intended, "01.12.11");
 
   const actual5 = comb(source, { uglify: 1 }).result;
-  t.is(actual5, intendedUglified, "01.12.12");
+  t.is(actual5, intended, "01.12.12");
 });
 
 test("01.13 - adhoc #1", t => {
@@ -553,17 +537,17 @@ test("01.18 - removes classes and id's from HTML5 - uglifies", t => {
   <meta charset="UTF-8">
   <title>Dummy HTML</title>
   <style type="text/css">
-    .s.p:active, whatever[lang|en]{width:100% !important;}
-    #z:hover{width:100% !important;}
+    .vx.wy:active, whatever[lang|en]{width:100% !important;}
+    #th:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id='z' width='100%' border='0' cellpadding='0' cellspacing='0'>
+  <table id='th' width='100%' border='0' cellpadding='0' cellspacing='0'>
     <tr>
       <td>
         <table width='100%' border='0' cellpadding='0' cellspacing='0'>
           <tr>
-            <td class='s p'>
+            <td class='vx wy'>
               Dummy content.
             </td>
           </tr>
@@ -1991,17 +1975,17 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
   <meta charset="UTF-8">
   <title>Dummy HTML</title>
   <style type="text/css">
-    .s:active, whatever[lang|en]{width:100% !important;}
-    #z:hover{width:100% !important;}
+    .vx:active, whatever[lang|en]{width:100% !important;}
+    #th:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id="z" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <table id="th" width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td class="s">
+            <td class="vx">
               Dummy content.
             </td>
           </tr>
@@ -2580,17 +2564,6 @@ test("01.56 - retains media queries", t => {
 </body>
 `;
 
-  const uglified = `<head>
-<style>
-.w{a:1;}
-@media screen and (max-width: 600px){.i .t{max-width:100%;}
-}
-</style>
-</head>
-<body><a class="w i t">z</a>
-</body>
-`;
-
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains set
   t.is(
     comb(source, {
@@ -2616,7 +2589,7 @@ test("01.56 - retains media queries", t => {
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
     }).result,
-    uglified,
+    source,
     "01.56.03"
   );
   t.is(
@@ -2625,7 +2598,7 @@ test("01.56 - retains media queries", t => {
       removeHTMLComments: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
     }).result,
-    uglified,
+    source,
     "01.56.04"
   );
 
@@ -2654,7 +2627,7 @@ test("01.56 - retains media queries", t => {
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
     }).result,
-    uglified,
+    source,
     "01.56.07"
   );
   t.is(
@@ -2663,7 +2636,7 @@ test("01.56 - retains media queries", t => {
       removeHTMLComments: true,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
     }).result,
-    uglified,
+    source,
     "01.56.08"
   );
 });
@@ -2832,20 +2805,20 @@ test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t 
   const intendedUglified = `<html>
 <head>
 <style>
-#z:hover{z}
+#th:hover{z}
 </style>
 <!--[if mso]>
 <style>
-.s, .s table { display: block; }
+.vx, .vx table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="z" width="100%">
+  <table id="th" width="100%">
     <tr>
       <td>
         <table width="100%">
           <tr>
-            <td class="s">
+            <td class="vx">
               Dummy content.
             </td>
           </tr>
@@ -2922,11 +2895,11 @@ test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", 
   const intendedUglified = `<html>
 <head>
 <style>
-#z:hover{z}
+#th:hover{z}
 </style>
 </head>
 <body>
-  <table id="z" width="100%">
+  <table id="th" width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -3019,20 +2992,20 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
   const intendedUglified = `<html>
 <head>
 <style>
-#z:hover{z}
+#th:hover{z}
 </style>
 <!--[if mso]>
 <style>
-.s table { display: block; }
+.vx table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="z" width="100%">
+  <table id="th" width="100%">
     <tr>
       <td>
         <table width="100%">
           <tr>
-            <td class="s">
+            <td class="vx">
               Dummy content.
             </td>
           </tr>
@@ -3071,11 +3044,11 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
   const intendedAllCommentsDeletedUglified = `<html>
 <head>
 <style>
-#z:hover{z}
+#th:hover{z}
 </style>
 </head>
 <body>
-  <table id="z" width="100%">
+  <table id="th" width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -5209,16 +5182,16 @@ test("11.01 - removes HTML comments - healthy code", t => {
 `;
 
   const uglified = `<style>
-  .i {b:2;}
+  .a {b:2;}
 </style>
-<body class="i">
+<body class="a">
 </body>
 `;
 
   const uglifiedWithComments = `<style>
-  .i {b:2;}
+  .a {b:2;}
 </style>
-<body class="i">
+<body class="a">
 <!-- zzz -->
 </body>
 `;
@@ -5593,9 +5566,9 @@ test("12.01 - uglify - ignores", t => {
 
   const baselineUglified = `<head>
 <style>
-.h { w:1; }
+.cq { w:1; }
 </style>
-<body class="h"><br>
+<body class="cq"><br>
 </body>
 `;
 
@@ -5609,9 +5582,9 @@ test("12.01 - uglify - ignores", t => {
 
   const ignoresUglified = `<head>
 <style>
-.h { w:1; }
+.cq { w:1; }
 </style>
-<body class="h"><br class="zzz2">
+<body class="cq"><br class="zzz2">
 </body>
 `;
 
@@ -5686,38 +5659,38 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
 
   const intended = `<head>
 <style>
-.l,
-.e,
-.q,
-.z,
-.w,
-.f,
-.k,
-.p,
-.i,
-.g,
-.mm,
-.kn,
-.ko,
-.ip,
-.kq,
-.xi,
-.sj,
-.kk,
-.ll,
-.lm,
-.ln,
-.mo,
-.dp,
-.dq,
-.in,
-.jj,
-.jo,
-.wt,
-.sg,
-.pp { w:1; }
+.sc,
+.td,
+.ue,
+.vf,
+.wg,
+.xh,
+.yi,
+.zj,
+.ak,
+.sce,
+.tdj,
+.ueq,
+.vfz,
+.wga,
+.xhn,
+.yi2,
+.zjj,
+.akk,
+.bl,
+.tdjs,
+.ueq6,
+.vfzo,
+.wgaa,
+.xhn0,
+.yi2u,
+.zjjs,
+.akku,
+.blw,
+.cm,
+.ueq6m { w:1; }
 </style>
-<body class="l e q z w f k p i g mm kn ko ip kq xi sj kk ll lm ln mo dp dq in jj jo wt sg pp">
+<body class="sc td ue vf wg xh yi zj ak sce tdj ueq vfz wga xhn yi2 zjj akk bl tdjs ueq6 vfzo wgaa xhn0 yi2u zjjs akku blw cm ueq6m">
 </body>
 `;
 
@@ -5733,36 +5706,36 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
   t.deepEqual(
     res.log.uglified,
     [
-      [".aaa01", ".l"],
-      [".aaa02", ".e"],
-      [".aaa03", ".q"],
-      [".aaa04", ".z"],
-      [".aaa05", ".w"],
-      [".aaa06", ".f"],
-      [".aaa07", ".k"],
-      [".aaa08", ".p"],
-      [".aaa09", ".i"],
-      [".aaa10", ".g"],
-      [".aaa11", ".mm"],
-      [".aaa12", ".kn"],
-      [".aaa13", ".ko"],
-      [".aaa14", ".ip"],
-      [".aaa15", ".kq"],
-      [".aaa16", ".xi"],
-      [".aaa17", ".sj"],
-      [".aaa18", ".kk"],
-      [".aaa19", ".ll"],
-      [".aaa20", ".lm"],
-      [".aaa21", ".ln"],
-      [".aaa22", ".mo"],
-      [".aaa23", ".dp"],
-      [".aaa24", ".dq"],
-      [".aaa25", ".in"],
-      [".aaa26", ".jj"],
-      [".aaa27", ".jo"],
-      [".aaa28", ".wt"],
-      [".aaa29", ".sg"],
-      [".aaa30", ".pp"]
+      [".aaa01", ".sc"],
+      [".aaa02", ".td"],
+      [".aaa03", ".ue"],
+      [".aaa04", ".vf"],
+      [".aaa05", ".wg"],
+      [".aaa06", ".xh"],
+      [".aaa07", ".yi"],
+      [".aaa08", ".zj"],
+      [".aaa09", ".ak"],
+      [".aaa10", ".sce"],
+      [".aaa11", ".tdj"],
+      [".aaa12", ".ueq"],
+      [".aaa13", ".vfz"],
+      [".aaa14", ".wga"],
+      [".aaa15", ".xhn"],
+      [".aaa16", ".yi2"],
+      [".aaa17", ".zjj"],
+      [".aaa18", ".akk"],
+      [".aaa19", ".bl"],
+      [".aaa20", ".tdjs"],
+      [".aaa21", ".ueq6"],
+      [".aaa22", ".vfzo"],
+      [".aaa23", ".wgaa"],
+      [".aaa24", ".xhn0"],
+      [".aaa25", ".yi2u"],
+      [".aaa26", ".zjjs"],
+      [".aaa27", ".akku"],
+      [".aaa28", ".blw"],
+      [".aaa29", ".cm"],
+      [".aaa30", ".ueq6m"]
     ],
     "12.02.03"
   );
@@ -5799,14 +5772,14 @@ test("12.03 - uglify - style tag within Outlook conditionals, used CSS", t => {
 <head>
 <!--[if mso]>
 <style>
-  #p a {padding: 0;}
-  .w {color: blue}
+  #ky a {padding: 0;}
+  .es {color: blue}
   td {padding: 0}
 </style>
 <![endif]-->
 </head>
-<body id="p">
-<a class="w">
+<body id="ky">
+<a class="es">
 `;
 
   t.is(
@@ -5853,12 +5826,12 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
 <head>
 <!--[if mso]>
 <style>
-  #p a {padding: 0;}
+  #ky a {padding: 0;}
   td {padding: 0}
 </style>
 <![endif]-->
 </head>
-<body id="p"><a>
+<body id="ky"><a>
 `;
   const ignored = `<html>
 <head>
