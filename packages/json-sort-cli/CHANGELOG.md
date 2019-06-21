@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.13.0 (2019-06-18)
+
+### Features
+
+- Sorts package.json keeping recommended key order ([edb7f1d](https://gitlab.com/codsen/codsen/commit/edb7f1d))
+
 ## 1.12.0 (2019-04-10)
 
 ### Features

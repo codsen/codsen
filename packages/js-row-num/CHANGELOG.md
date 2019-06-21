@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.0 (2019-06-18)
+
+### Features
+
+- Remove check-types-mini dependency to make it more efficient ([c36ce2f](https://gitlab.com/codsen/codsen/commit/c36ce2f))
+
 ## 2.2.0 (2019-06-01)
 
 ### Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.0 (2019-06-18)
+
+### Features
+
+- Remove check-types-mini for perf reasons and also to reduce Lerna ECYCLE warnings ([50be5d8](https://gitlab.com/codsen/codsen/commit/50be5d8))
+
 ## 3.1.0 (2019-06-01)
 
 ### Features

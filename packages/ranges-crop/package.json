@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "engines": {

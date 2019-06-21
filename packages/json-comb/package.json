@@ -1,6 +1,6 @@
 {
   "name": "json-comb",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Command line app to manage sets of JSON files",
   "license": "MIT",
   "engines": {

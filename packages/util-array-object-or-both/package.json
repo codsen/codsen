@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "2.7.24",
+  "version": "2.7.25",
   "description": "Validate and normalise user choice: array, object or both?",
   "license": "MIT",
   "engines": {

@@ -1,6 +1,6 @@
 /**
  * string-uglify
- * Uglify - generate short unique names for sets of strings
+ * Uglify - generate unique short names for sets of strings
  * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

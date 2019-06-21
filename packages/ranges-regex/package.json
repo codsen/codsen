@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Perform a regex search on string and get a ranges array of findings (or null)",
   "license": "MIT",
   "engines": {

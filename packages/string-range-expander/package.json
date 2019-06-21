@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.10.24",
+  "version": "1.10.25",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {

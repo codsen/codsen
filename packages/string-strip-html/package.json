@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "description": "Strips HTML tags from strings. Detects legit unencoded brackets.",
   "license": "MIT",
   "engines": {
