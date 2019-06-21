@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 88 npm libraries 📦📦📦
+    A lerna monorepo for our 89 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -12,7 +12,7 @@ We coded up and maintain a few npm packages:
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-12-range-libraries)
-- [String Processing Libraries](#-26-string-processing-libraries)
+- [String Processing Libraries](#-27-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
 - [Miscellaneous Libraries](#%EF%B8%8F-21-miscellaneous-libraries)
@@ -77,7 +77,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#-codsen-)**
 
-## 🎻 26 String Processing Libraries
+## 🎻 27 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -108,6 +108,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-remove-thousand-separators`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) | Detects and removes thousand separators (dot/comma/quote/space) from string-type digits | [![string-remove-thousand-separators on npm](https://img.shields.io/npm/v/string-remove-thousand-separators.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-thousand-separators) | [packages/string-remove-thousand-separators](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) |
 | [`string-split-by-whitespace`](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) | Split string into array by chunks of whitespace | [![string-split-by-whitespace on npm](https://img.shields.io/npm/v/string-split-by-whitespace.svg?style=flat-square)](https://www.npmjs.com/package/string-split-by-whitespace) | [packages/string-split-by-whitespace](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) |
 | [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but trims only spaces | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
+| [`string-uglify`](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) | Uglify — generate unique short names for sets of strings | [![string-uglify on npm](https://img.shields.io/npm/v/string-uglify.svg?style=flat-square)](https://www.npmjs.com/package/string-uglify) | [packages/string-uglify](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) |
 | [`string-unfancy`](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) | Replace all fancy dashes, quotes etc with their simpler equivalents | [![string-unfancy on npm](https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square)](https://www.npmjs.com/package/string-unfancy) | [packages/string-unfancy](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) |
 
 **[⬆ back to top](#-codsen-)**
