@@ -46,15 +46,15 @@
     "@pectin/cli": "^3.0.1",
     "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^2.4.1",
-    "lect": "^0.7.2",
+    "lect": "^0.7.3",
     "lerna": "3.13.0",
-    "lerna-clean-changelogs-cli": "^1.2.16",
+    "lerna-clean-changelogs-cli": "^1.2.17",
     "npm-watch": "^0.6.0",
     "prettier": "^1.18.2"
   }
