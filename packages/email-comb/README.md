@@ -1,10 +1,10 @@
-<p align="center">
-  <img alt="EmailComb" src="email-comb/media/repo_logo.png" width="480">
-</p>
+<p><center>
+  <img alt="EmailComb" src="packages/email-comb/media/repo_logo.png" width="480" align="center">
+</center></p>
 
-<p align="center">
+<p><center>
   Remove unused CSS from email templates
-</p>
+</center></p>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
