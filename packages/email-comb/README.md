@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  Remove unused CSS from email templates
+  <p>Remove unused CSS from email templates</p>
 </div>
 
 [![Minimum Node version required][node-img]][node-url]
