@@ -2,10 +2,9 @@
   <img alt="EmailComb" src="packages/email-comb/media/repo_logo.png" width="480" align="center">
 </div>
 
-<div align="center">
-  <p>Remove unused CSS from email templates</p>
-</div>
+<div align="center"><p>Remove unused CSS from email templates</p></div>
 
+<div align="center"><p>
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -15,8 +14,9 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
+</p></div>
 
-- Online web app: [EmailComb](https://emailcomb.com)
+<div align="center"><p>Online web app: [https://EmailComb.com](https://emailcomb.com)</p></div>
 
 ## Table of Contents
 
