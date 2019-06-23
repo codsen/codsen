@@ -1,5 +1,3 @@
-![](https://glcdn.githack.com/codsen/codsen/raw/master/packages/string-uglify/media/logo.png)
-
 # string-uglify
 
 > Uglify - generate unique short names for sets of strings
@@ -17,8 +15,11 @@
 
 - [Install](#install)
 - [Idea](#idea)
+- [Main feature - it's not position-sensitive](#main-feature---its-not-position-sensitive)
+- [Other features](#other-features)
 - [Usage](#usage)
 - [API](#api)
+- [uglification vs. minification](#uglification-vs-minification)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -47,24 +48,33 @@ Here's what you'll get:
 
 ## Idea
 
-Uglification is turning class or id names into shortest-possible ones:
+This library takes array of strings and uglifies them:
 
-`.module-promo-main` -> `.a`
-`.module-promo-second` -> `.b`
+```js
+[".module", ".class1", ".class2"];
+```
 
-Such algorithm seems easy, here's one implementation of it: https://github.com/cazzer/gulp-selectors/blob/master/lib/utils/generate-shortname.js
+into something like:
 
-The problem with such algorithms is that there **all uglified class/id names are sensitive to their position in the source array**.
+```js
+[".g", ".j5", ".s9"];
+```
 
-For example, when we add another class, `.module-promo-all`, it shifts
+## Main feature - it's not position-sensitive
 
-`.module-promo-all` -> `.a` (takes top position)
-`.module-promo-main` -> `.b` (previously was `.a`)
-`.module-promo-second` -> `.c` (previously was `.b`)
+Uglified names are generated from the original string's characters and their positions. If you add, remove or shuffle strings in the input array, up to 0.1% of the uglified values might change.
 
-As a result, if you use such uglification, smallest addition or removal to any classes/id's will cause a ripple effect throughout the whole document, and there will be git diffs (changes) everywhere.
+The alternative algorithm would be to pick the values by their order in the reference array. The first name gets `a`, second gets `b`, 27th name gets `aa`, 28th gets `ab` and so on. While such alternative is faster, it's sensitive to the reference array's changes. One newly added class will change the names of everything generated so far.
 
-This library uglifies an array of class or id names relying only on letter values and their sequences. There is no reliance on the position of a class/id in the source array.
+But this uglification library is very little prone to positional changes in the reference array.
+
+**[⬆ back to top](#)**
+
+## Other features
+
+- Its API is friendly - no errors are thrown, wrong inputs won't give you results. An empty array is fine.
+- Put dots and hashes (`.a` and `#a`) or don't. If you are minifying only classes or only id's you might omit dot or hash.
+- Input reference strings array does not have to contain unique entries. It's just inefficient to have duplicates so you should aim to avoid that.
 
 **[⬆ back to top](#)**
 
@@ -72,6 +82,8 @@ This library uglifies an array of class or id names relying only on letter value
 
 ```js
 const { uglifyArr } = require("string-uglify");
+// notice we put dots and hashes for classes and id's but algorithm will work
+// fine too if you won't.
 const names = [
   ".module-promo-all",
   ".module-promo-main",
@@ -82,7 +94,7 @@ const res = uglifyArr(names);
 console.log("res = " + JSON.stringify(res1, null, 0));
 // => [".m', ".b", ".r", #a]
 
-// uglify only particular id:
+// uglify a particular id number:
 const res2 = uglifyById(names, 3);
 console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => "#a"
@@ -98,35 +110,62 @@ When you `require`/`import`, you get three things:
 const { uglifyArr, uglifyById, version } = require("string-uglify");
 ```
 
-### uglifyArr()
+### uglifyArr() - returns copy of a given array with each string uglified
 
-**Input** — anything. If it's not an array, it will be instantly returned. If it's array, an array is returned. If it's an array of one or more string, it will return an array of that many uglified strings.
+**Input** — anything.
+If it's not an array, the same thing will be instantly returned.
+If it's array, an array is returned.
+If it's an array of one or more strings, it will return an array of that many uglified strings.
 
-**Output** - same thing as in the **input**, if it's a non-empty array of strings, those strings will be uglified.
+**Output** - same type as **input**.
+If it's a non-empty array of strings, those strings will be uglified.
 
-If you feed strings with dots/hashes, `[".class1", "#id2", ".class2", "#id9"]` output will have same dots/hashes, for example, `[".m", "#b", ".r", "#aa"]`.
+If you feed strings **with** dots/hashes, `[".class1", "#id2", ".class2", "#id9"]` output will have same dots/hashes, for example, `[".m", "#b", ".r", "#aa"]`.
 
-If you feed input without dots/hashes, `["name1", "name2", "name3"]`, output will be without dots/hashes. For example, `["m", "b", "r", "aa"]`.
+If you feed input **without** dots/hashes, `["name1", "name2", "name3"]`, output will be without dots/hashes. For example, `["m", "b", "r", "aa"]`.
 
-See usage example above.
+See the usage example above.
 
 **[⬆ back to top](#)**
 
-### uglifyById()
+### uglifyById() - copied and uglifies array and returns uglified element by requested id
 
-Input — two arguments: array and natural number (id).
+Input — two arguments: array and natural number index.
 
 Output - uglified string (string from position "id").
 
-uglifyById() is less efficient when called many times because each time it processes the whole array using `uglifyArr()`, then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
+uglifyById() is less efficient when called many times because each time it processes the whole array using `uglifyArr()` and then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
 
-See usage example above.
+See the usage example above.
 
 **[⬆ back to top](#)**
 
 ### version
 
 It outputs the _semver_ string straight from `package.json`'s "version" key's value.
+
+For example:
+
+```js
+const { version } = require("string-uglify");
+console.log(`string-uglify from npm has version: ${version}`);
+// string-uglify from npm has version: 1.1.0
+```
+
+**[⬆ back to top](#)**
+
+## uglification vs minification
+
+Some people use the term "minification" and "uglification" interchangeably, but that's two different things.
+
+**Uglification**: `.class1 { display: block; }` &rarr; `.fj { display: block; }` (rename class or id names to be shorter)
+**Minification**: `.class1 { display: block; }` &rarr; `.class1{display:block}` (in CSS case, remove all the white space and sometimes last semicolon)
+
+This library won't minify.
+
+If you _need_ an HTML/CSS minification tool, consider [html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush) from yours truly.
+
+**[⬆ back to top](#)**
 
 ## Contributing
 
