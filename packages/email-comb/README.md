@@ -1,6 +1,10 @@
-# email-comb
+<p align="center">
+  <img alt="EmailComb" src="email-comb/media/repo_logo.png" width="480">
+</p>
 
-> Remove unused CSS from email templates
+<p align="center">
+  Remove unused CSS from email templates
+</p>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -13,7 +17,6 @@
 [![MIT License][license-img]][license-url]
 
 - Online web app: [EmailComb](https://emailcomb.com)
-- Gulp plugin (ideally, don't use it, tap the stream directly (see instructions and code samples below): [gulp-email-comb](https://www.npmjs.com/package/gulp-email-comb)
 
 ## Table of Contents
 
