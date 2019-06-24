@@ -14,7 +14,6 @@ function dir_command {
     #This example command implements doing git status for folder
     cd $1
     jrn
-    lect
     npm run format
     cd ..
 }

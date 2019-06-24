@@ -102,7 +102,7 @@ function sortBySubarray(arr, axis = 0) {
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis])
       ) {
         console.log(
-          `107 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
+          `105 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
         );
         return -1;
       }
@@ -134,7 +134,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis - i])) {
             if (arr1[axis - i] < arr2[axis - i]) {
               console.log(
-                `141 return -1 - \u001b[${32}m${`${
+                `137 return -1 - \u001b[${32}m${`${
                   arr1[axis - 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -142,7 +142,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis - i] > arr2[axis - i]) {
               console.log(
-                `149 return 1 - \u001b[${32}m${`${
+                `145 return 1 - \u001b[${32}m${`${
                   arr2[axis - 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -150,7 +150,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `157 return -1 - \u001b[${32}m${`${
+              `153 return -1 - \u001b[${32}m${`${
                 arr1[axis - 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -161,7 +161,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis - i])) {
             console.log(
-              `168 return 1 - \u001b[${32}m${`${
+              `164 return 1 - \u001b[${32}m${`${
                 arr2[axis - 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -179,7 +179,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis + i])) {
             if (arr1[axis + i] < arr2[axis + i]) {
               console.log(
-                `186 return -1 - \u001b[${32}m${`${
+                `182 return -1 - \u001b[${32}m${`${
                   arr1[axis + 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -187,7 +187,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis + i] > arr2[axis + i]) {
               console.log(
-                `194 return 1 - \u001b[${32}m${`${
+                `190 return 1 - \u001b[${32}m${`${
                   arr2[axis + 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -195,7 +195,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `202 return -1 - \u001b[${32}m${`${
+              `198 return -1 - \u001b[${32}m${`${
                 arr1[axis + 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -206,7 +206,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis + i])) {
             console.log(
-              `213 return 1 - \u001b[${32}m${`${
+              `209 return 1 - \u001b[${32}m${`${
                 arr2[axis + 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -217,7 +217,7 @@ function sortBySubarray(arr, axis = 0) {
     }
 
     // 3. if by now any of returns hasn't happened yet, these two rows are equal
-    console.log(`224 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
+    console.log(`220 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
     return 0;
   });
 

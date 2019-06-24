@@ -65,7 +65,7 @@ const {
   contributionTypes
 } = require("./util");
 
-const DEBUG = 1;
+const DEBUG = 0;
 
 const log = console.log;
 const isArr = Array.isArray;
@@ -983,7 +983,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
-    // console.log(`1011 lect: processing ${key}`);
+    // console.log(`0986 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
@@ -994,7 +994,7 @@ async function writePackageJson(receivedPackageJsonObj) {
       (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
-      // console.log(`1022 lect: we'll delete key "${key}" from dev dependencies`);
+      // console.log(`0997 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       lectrcDevDeps.hasOwnProperty(key) &&
@@ -1002,7 +1002,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     ) {
       // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-      // console.log(`1030 lect: ${key} stays ${pack.devDependencies[key]}`);
+      // console.log(`1005 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
     // console.log("\n-------\n");
   });
@@ -1017,7 +1017,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1045 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1020 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1062,7 +1062,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1105 lect cli: key to write hard =${key}`);
+        // console.log(`1065 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1174,7 +1174,7 @@ async function step10() {
             .manifest(dep)
             .then(pkg => pkg.version);
           // console.log(
-          //   `1222 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `1177 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
           //     retrievedVersion,
           //     null,
           //     4
@@ -1610,27 +1610,27 @@ function step6() {
 
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
-      // if (DEBUG) {
-      //   console.log(`1659 clause #1`);
-      // }
+      if (DEBUG) {
+        console.log(`1614 clause #1`);
+      }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
           ? "\n\n"
           : ""
       }`;
-      // if (DEBUG) {
-      //   console.log(
-      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-      //   );
-      // }
+      if (DEBUG) {
+        console.log(
+          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+        );
+      }
     } else if (
       !firstHeadingIsDone &&
       typeof readmePiece !== "string" &&
       readmePiece.heading.startsWith("# ")
     ) {
-      // if (DEBUG) {
-      //   console.log(`1677 clause #2`);
-      // }
+      if (DEBUG) {
+        console.log(`1632 clause #2`);
+      }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
       // if package's name does not contain hyphens, capitalise the first letter
@@ -1659,24 +1659,24 @@ function step6() {
           pack.description
         }${topBadgesString.length > 0 ? `\n\n${topBadgesString.trim()}` : ""}`;
         firstHeadingIsDone = true;
-        // if (DEBUG) {
-        //   console.log(
-        //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        //   );
-        // }
+        if (DEBUG) {
+          console.log(
+            `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+          );
+        }
       }
       content += `${
         extractStringUnderBadges(readmePiece.restofit).length > 0 ? "\n\n" : ""
-      }${extractStringUnderBadges(readmePiece.restofit)}`;
-      // if (DEBUG) {
-      //   console.log(
-      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-      //   );
-      // }
+      }${extractStringUnderBadges(readmePiece.restofit)}\n\n`;
+      if (DEBUG) {
+        console.log(
+          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+        );
+      }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
-      // if (DEBUG) {
-      //   console.log(`1723 clause #3`);
-      // }
+      if (DEBUG) {
+        console.log(`1680 clause #3`);
+      }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
       if (!firstHeadingIsDone) {
@@ -1728,11 +1728,11 @@ function step6() {
       content += `${readmePiece.heading.trim()}${
         bodyContent.trim().length > 0 ? `\n\n${bodyContent.trim()}` : ""
       }${addBackToTopLinks ? btt : ""}\n\n`;
-      // if (DEBUG) {
-      //   console.log(
-      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-      //   );
-      // }
+      if (DEBUG) {
+        console.log(
+          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+        );
+      }
     }
   });
 

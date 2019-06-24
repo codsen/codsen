@@ -359,7 +359,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
         }
       }
       console.log(
-        `364 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`
+        `362 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`
       );
       if (matchedHeads) {
         if (!oneHeadFound) {
@@ -368,14 +368,14 @@ function strFindHeadsTails(str, heads, tails, opts) {
           tempResObj.headsStartAt = i;
           tempResObj.headsEndAt = i + matchedHeads.length;
           oneHeadFound = true;
-          console.log("373 head pushed");
+          console.log("371 head pushed");
           // offset the index so the characters of the confirmed heads can't be "reused"
           // again for subsequent, false detections:
           i += matchedHeads.length - 1;
           if (tailSuspicionRaised) {
             tailSuspicionRaised = false;
             console.log(
-              `380 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`
+              `378 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`
             );
           }
           continue;
@@ -401,7 +401,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       }
       const matchedTails = matchRightIncl(str, i, tails);
       console.log(
-        `406 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`
+        `404 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`
       );
 
       if (
@@ -438,7 +438,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           res.push(tempResObj);
           tempResObj = {};
           oneHeadFound = false;
-          console.log("443 tail pushed");
+          console.log("441 tail pushed");
           // same for tails, offset the index to prevent partial, erroneous detections:
           i += matchedTails.length - 1;
           continue;
@@ -450,19 +450,19 @@ function strFindHeadsTails(str, heads, tails, opts) {
             i,
             i + matchedTails.length
           )}) starting at character with index number "${i}" but there were no heads preceding it. That's very naughty!`;
-          console.log(`455 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`);
+          console.log(`453 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`);
         }
       }
     }
 
     // closing, global checks:
 
-    console.log(`462 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
+    console.log(`460 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
     // if it's the last character and some heads were found but no tails:
     if (opts.throwWhenSomethingWrongIsDetected && i === len - 1) {
-      console.log("465");
+      console.log("463");
       if (Object.keys(tempResObj).length !== 0) {
-        console.log("467");
+        console.log("465");
         throw new TypeError(
           `${opts.source}${
             s ? ": [THROW_ID_22]" : ""
@@ -476,12 +476,12 @@ function strFindHeadsTails(str, heads, tails, opts) {
           )})!`
         );
       } else if (tailSuspicionRaised) {
-        console.log("481");
+        console.log("479");
         throw new Error(tailSuspicionRaised);
       }
     }
   }
-  console.log(`486 final res = ${JSON.stringify(res, null, 4)}`);
+  console.log(`484 final res = ${JSON.stringify(res, null, 4)}`);
   return res;
 }
 

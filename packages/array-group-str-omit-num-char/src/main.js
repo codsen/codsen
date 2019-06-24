@@ -128,7 +128,7 @@ function groupStr(originalArr, originalOpts) {
           elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks)
         };
         console.log(
-          `133 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
+          `131 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
             compiledObj[wildcarded],
             null,
             4
@@ -140,7 +140,7 @@ function groupStr(originalArr, originalOpts) {
 
   console.log();
   console.log(
-    `145 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
+    `143 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
       compiledObj,
       null,
       4
@@ -153,7 +153,7 @@ function groupStr(originalArr, originalOpts) {
       `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`
     );
     console.log(
-      `158 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`
+      `156 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`
     );
     // here were restore the values which were replaced with wildcards where
     // those values were identical across the whole set. That's the whole point
@@ -178,7 +178,7 @@ function groupStr(originalArr, originalOpts) {
         val => val !== false
       )
     ) {
-      console.log(`183 ██ PREP ${key}`);
+      console.log(`181 ██ PREP ${key}`);
 
       // we'll compile ranges array and replace all wildcards in one go using https://www.npmjs.com/package/ranges-apply
       const rangesArr = [];
@@ -192,7 +192,7 @@ function groupStr(originalArr, originalOpts) {
         z++
       ) {
         console.log(z === 0 ? "" : "\n-------------\n");
-        console.log(`197 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
+        console.log(`195 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
         nThIndex = newKey.indexOf(
           opts.wildcard,
           nThIndex + opts.wildcard.length

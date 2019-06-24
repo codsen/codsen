@@ -302,7 +302,7 @@ function checkTypesMini(
     }
   }
 
-  console.log("307:");
+  console.log("305:");
   console.log(
     shouldWeCheckTheOpts
       ? `\u001b[${32}m${`\n\n██████████████████████████████████████████████████████████████████████████████
@@ -314,7 +314,7 @@ function checkTypesMini(
   // or value-as-array separately, if opts.enforceStrictKeyset is on. Root level
   // was checked in step 1. above. What's left is deeper levels.
   console.log(
-    `319 ${`\u001b[${33}m${`LET'S CHECK obj`}\u001b[${39}m`} = ${JSON.stringify(
+    `317 ${`\u001b[${33}m${`LET'S CHECK obj`}\u001b[${39}m`} = ${JSON.stringify(
       obj,
       null,
       4
@@ -348,7 +348,7 @@ function checkTypesMini(
 
   const ignoredPathsArr = [];
 
-  console.log(`353 TRAVERSAL STARTS`);
+  console.log(`351 TRAVERSAL STARTS`);
   traverse(obj, (key, val, innerObj) => {
     // innerObj.path
     console.log(`\n${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(39)}\n`);
@@ -360,7 +360,7 @@ function checkTypesMini(
       current = key;
     }
     console.log(
-      `365 \u001b[${36}m${`traversing: ██ ${innerObj.path} ██ ===========================`}\u001b[${39}m ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${key}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${`\u001b[${35}m${JSON.stringify(
+      `363 \u001b[${36}m${`traversing: ██ ${innerObj.path} ██ ===========================`}\u001b[${39}m ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${key}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${`\u001b[${35}m${JSON.stringify(
         val,
         null,
         0
@@ -375,14 +375,14 @@ function checkTypesMini(
     // If schema exists, types defined there will be used to compare against:
 
     console.log(
-      `382 ${`\u001b[${33}m${`opts.schema`}\u001b[${39}m`} = ${JSON.stringify(
+      `378 ${`\u001b[${33}m${`opts.schema`}\u001b[${39}m`} = ${JSON.stringify(
         opts.schema,
         null,
         4
       )}`
     );
     console.log(
-      `389 currently, ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
+      `385 currently, ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
         ignoredPathsArr,
         null,
         4
@@ -396,7 +396,7 @@ function checkTypesMini(
       ignoredPathsArr.some(path => innerObj.path.startsWith(path))
     ) {
       console.log(
-        `403 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT'S A CHILD OF IGNORED PATH`}\u001b[${39}m`
+        `399 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT'S A CHILD OF IGNORED PATH`}\u001b[${39}m`
       );
       return current;
     }
@@ -409,7 +409,7 @@ function checkTypesMini(
       )
     ) {
       console.log(
-        `416 \u001b[${32}m${`SKIP THIS PATH BECAUSE ITS KEY (${objKey}), IS AMONG IGNORED (${JSON.stringify(
+        `412 \u001b[${32}m${`SKIP THIS PATH BECAUSE ITS KEY (${objKey}), IS AMONG IGNORED (${JSON.stringify(
           opts.ignoreKeys,
           null,
           4
@@ -418,7 +418,7 @@ function checkTypesMini(
       return current;
     }
     console.log(
-      `425 key "${objKey}" was not skipped because it was not matcher-matched against ${JSON.stringify(
+      `421 key "${objKey}" was not skipped because it was not matcher-matched against ${JSON.stringify(
         escapeRegExp(opts.ignoreKeys),
         null,
         4
@@ -432,7 +432,7 @@ function checkTypesMini(
       )
     ) {
       console.log(
-        `439 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT (${
+        `435 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT (${
           innerObj.path
         }), IS AMONG IGNORED (${JSON.stringify(
           opts.ignorePaths,
@@ -443,7 +443,7 @@ function checkTypesMini(
       return current;
     }
     console.log(
-      `450 path was not skipped because ${
+      `446 path was not skipped because ${
         innerObj.path
       } was not matcher-matched against ${JSON.stringify(
         opts.ignorePaths,
@@ -460,7 +460,7 @@ function checkTypesMini(
 
     // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
     console.log(
-      `467: \n${`${`${`\u001b[${33}m${`██`}\u001b[${39}m`}${`\u001b[${31}m${`██`}\u001b[${39}m`}`}`.repeat(
+      `463: \n${`${`${`\u001b[${33}m${`██`}\u001b[${39}m`}${`\u001b[${31}m${`██`}\u001b[${39}m`}`}`.repeat(
         10
       )}\n`
     );
@@ -515,7 +515,7 @@ function checkTypesMini(
       optsSchemaHasThisPathDefined = true;
     } else {
       console.log(
-        `522 optsSchemaHasThisPathDefined was not set because objectPath reported that "${JSON.stringify(
+        `518 optsSchemaHasThisPathDefined was not set because objectPath reported that "${JSON.stringify(
           objectPath.get(innerObj.path),
           null,
           4
@@ -563,7 +563,7 @@ function checkTypesMini(
       !refHasThisPathDefined
     ) {
       console.log(
-        `\u001b[${31}m${`570 0. nothing to match against.`}\u001b[${39}m`
+        `\u001b[${31}m${`566 0. nothing to match against.`}\u001b[${39}m`
       );
       throw new TypeError(
         `${opts.msg}: ${opts.optsVarName}.${
@@ -583,13 +583,13 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       );
     } else if (optsSchemaHasThisPathDefined) {
       console.log(
-        `\u001b[${31}m${`590 I. matching against schema.`}\u001b[${39}m`
+        `\u001b[${31}m${`586 I. matching against schema.`}\u001b[${39}m`
       );
       // step 1. Fetch the current keys' schema and normalise it - it's an array
       // which holds strings. Those strings have to be lowercased. It also can
       // be raw null/undefined, which would be arrayified and turned into string.
       console.log(
-        `596 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
+        `592 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
           objectPath.get(opts.schema, innerObj.path),
           null,
           4
@@ -599,7 +599,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         .map(String)
         .map(el => el.toLowerCase());
       console.log(
-        `606 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
+        `602 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
           currentKeysSchema,
           null,
           4
@@ -616,7 +616,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         // in granular fashion: as just "true" or just "false".
 
         console.log(
-          `623 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
+          `619 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
             currentKeysSchema,
             null,
             4
@@ -630,13 +630,13 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
             !currentKeysSchema.includes(String(current)) &&
             !currentKeysSchema.includes("boolean"))
         ) {
-          console.log("637 I. matching against schema.");
+          console.log("633 I. matching against schema.");
           // new in v.2.2
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
           // If it is, then iterate through the array, checking does each value conform to the
           // types listed in that key's schema entry.
           if (isArr(current) && opts.acceptArrays) {
-            console.log("643 1-1: check acceptArrays");
+            console.log("639 1-1: check acceptArrays");
             // check each key:
             for (let i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
@@ -658,7 +658,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
               }
             }
           } else {
-            console.log("665 1-2: matching against schema");
+            console.log("661 1-2: matching against schema");
             // only then do throw...
             throw new TypeError(
               `${opts.msg}: ${opts.optsVarName}.${
@@ -679,7 +679,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         }
       } else {
         console.log(
-          `686 names were blanket: ${JSON.stringify(
+          `682 names were blanket: ${JSON.stringify(
             intersection(currentKeysSchema, NAMESFORANYTYPE),
             null,
             4
@@ -687,7 +687,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         );
         ignoredPathsArr.push(innerObj.path);
         console.log(
-          `694 ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `690 ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
             ignoredPathsArr,
             null,
             4
@@ -696,17 +696,17 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       }
     } else if (refHasThisPathDefined) {
       console.log(
-        `\u001b[${31}m${`703 II. matching against ref.`}\u001b[${39}m`
+        `\u001b[${31}m${`699 II. matching against ref.`}\u001b[${39}m`
       );
       console.log(
-        `* 706 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+        `* 702 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
           4
         )} (type ${typ(current).toLowerCase()})`
       );
       console.log(
-        `* 713 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
+        `* 709 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
           objectPath.get(ref, innerObj.path),
           null,
           4
@@ -719,7 +719,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         isArr(current) &&
         !opts.acceptArraysIgnore.includes(key)
       ) {
-        console.log("726 2-1: check accept arrays");
+        console.log("722 2-1: check accept arrays");
         const allMatch = current.every(
           el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
         );
@@ -733,7 +733,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           );
         }
       } else if (typ(current) !== typ(compareTo)) {
-        console.log("740 - 2-2: match against ref");
+        console.log("736 - 2-2: match against ref");
         throw new TypeError(
           `${opts.msg}: ${opts.optsVarName}.${
             innerObj.path
@@ -747,14 +747,14 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         );
       }
     } else {
-      console.log("754 do nothing");
+      console.log("750 do nothing");
     }
 
-    console.log(`757 return: ${JSON.stringify(current, null, 4)}`);
+    console.log(`753 return: ${JSON.stringify(current, null, 4)}`);
     return current;
   });
   console.log(
-    `761 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
+    `757 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
       39
     )} TRAVERSAL ENDS\n\n\n`
   );

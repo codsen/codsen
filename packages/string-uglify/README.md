@@ -19,7 +19,7 @@
 - [Other features](#other-features)
 - [Usage](#usage)
 - [API](#api)
-- [uglification vs. minification](#uglification-vs-minification)
+- [uglification vs minification](#uglification-vs-minification)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
