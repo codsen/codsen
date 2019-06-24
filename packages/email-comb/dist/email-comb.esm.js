@@ -1552,10 +1552,17 @@ function comb(str, opts) {
         );
       }
       uglified = opts.uglify
-        ? allClassesAndIdsWithinHeadFinal.map((name, id) => [
-            name,
-            allClassesAndIdsWithinHeadFinalUglified[id]
-          ])
+        ? allClassesAndIdsWithinHeadFinal
+            .map((name, id) => [
+              name,
+              allClassesAndIdsWithinHeadFinalUglified[id]
+            ])
+            .filter(
+              arr =>
+                !opts.whitelist.some(whitelistVal =>
+                  matcher.isMatch(arr[0], whitelistVal)
+                )
+            )
         : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current());

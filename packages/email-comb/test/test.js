@@ -5933,6 +5933,64 @@ test("12.06 - uglify - ignores on used classes", t => {
   );
 });
 
+test("12.07 - ignored values don't appear among uglified legend entries", t => {
+  const actual = comb(
+    `<html lang="en">
+<head>
+<style type="text/css">
+  @media only screen {
+    .serif {font-family: 'Merriweather', Georgia, serif!important;}
+    .sans-serif {font-family: 'Open Sans', Arial, sans-serif!important;}
+  }
+  #outlook a {padding: 0;}
+</style>
+</head>
+<body class="serif">
+zzz
+</body>
+</html>
+`,
+    {
+      whitelist: [
+        "#outlook",
+        ".ExternalClass",
+        ".module-*",
+        ".Mso*",
+        ".ReadMsgBody",
+        ".yshortcuts"
+      ],
+      uglify: true
+    }
+  );
+
+  const intended = `<html lang="en">
+<head>
+<style type="text/css">
+  @media only screen {
+    .serif {font-family: 'Merriweather', Georgia, serif!important;}
+  }
+  #outlook a {padding: 0;}
+</style>
+</head>
+<body class="serif">
+zzz
+</body>
+</html>
+`;
+
+  // whatever uglified class is named, it's there, Merriweather font is kept:
+  t.true(actual.result.includes("Merriweather"), "12.07.01");
+
+  // also, the result contains whitelisted entries...
+  t.true(intended.includes("#outlook"), "12.07.02");
+
+  // ... and uglified legend doesn't contain it
+  t.false(actual.log.uglified.includes("#outlook"), "12.07.03");
+
+  // but there's "serif" uglified value in the uglification legend:
+  t.is(actual.log.uglified.length, 1, "12.07.04");
+});
+
 // ============================================================
 // 13. opts.reportProgressFunc
 // ============================================================

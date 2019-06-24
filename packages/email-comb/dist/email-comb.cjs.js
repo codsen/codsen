@@ -1147,6 +1147,10 @@ function comb(str, opts) {
       }
       uglified = opts.uglify ? allClassesAndIdsWithinHeadFinal.map(function (name, id) {
         return [name, allClassesAndIdsWithinHeadFinalUglified[id]];
+      }).filter(function (arr) {
+        return !opts.whitelist.some(function (whitelistVal) {
+          return matcher.isMatch(arr[0], whitelistVal);
+        });
       }) : null;
       if (finalIndexesToDelete.current()) {
         round1RangesClone = Array.from(finalIndexesToDelete.current());
