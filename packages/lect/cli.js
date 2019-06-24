@@ -971,12 +971,19 @@ async function writePackageJson(receivedPackageJsonObj) {
   // instead, pack's version is taken and written to .lectrc.json
 
   const packDevDeps = pack.devDependencies;
-  // const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
+  // if (DEBUG) {
+  //   console.log(`0975 packDevDeps.ava = ${packDevDeps.ava}`);
+  //   const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
+  // }
   const lectrcDevDeps = lectrc.package.devDependencies;
-  // console.log(`${`\u001b[${33}m${`968 lect: packDevDeps`}\u001b[${39}m`} = ${JSON.stringify(packDevDeps, null, 4)}`);
-  // console.log(`${`\u001b[${33}m${`969 lect: lectrcDevDeps`}\u001b[${39}m`} = ${JSON.stringify(lectrcDevDeps, null, 4)}`);
+  // if (DEBUG) {
+  //   console.log(`0980 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
+  // }
+
+  // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
+    // console.log(`1011 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
@@ -987,31 +994,17 @@ async function writePackageJson(receivedPackageJsonObj) {
       (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
-      // console.log(`0990 lect: we'll delete key "${key}" from dev dependencies`);
+      // console.log(`1022 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       lectrcDevDeps.hasOwnProperty(key) &&
-      receivedPackageJsonObj.devDependencies.hasOwnProperty(key) &&
-      lectrc.package.devDependencies[key] &&
-      pack.devDependencies[key] &&
-      semverCompare(
-        String(lectrc.package.devDependencies[key].match(semverRegex())),
-        String(pack.devDependencies[key].match(semverRegex()))
-      ) === -1
+      packDevDeps.hasOwnProperty(key)
     ) {
-      // === 1 means first arg is more than second, when semantic versions are compared
-      // console.log(`1003 lect: key ${key}, current version in lectrc is outdated`);
-      // console.log(`1004 lect: we'll update lectrc version for devdep ${key} to ${pack.devDependencies[key]}`);
+      // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-
-      // console.log(`1007 lect: key ${key} #1 = ${String(lectrc.package.devDependencies[key].match(semverRegex()))}; #2 = ${receivedPackageJsonObj.devDependencies[key].match(semverRegex())}; #3 = ${pack.devDependencies[key].match(semverRegex())}`)
-      // const temp = semverCompare(
-      //   String(lectrc.package.devDependencies[key].match(semverRegex())),
-      //   String(pack.devDependencies[key].match(semverRegex()))
-      // ); // === 1
-      // console.log(`1012 lect: ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`);
+      // console.log(`1030 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
-    // console.log('\n-------\n')
+    // console.log("\n-------\n");
   });
 
   Object.keys(lectrcDevDeps).forEach(key => {
@@ -1024,7 +1017,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1027 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1045 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1069,7 +1062,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1072 lect cli: key to write hard =${key}`);
+        // console.log(`1105 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1079,7 +1072,8 @@ async function writePackageJson(receivedPackageJsonObj) {
     });
   }
 
-  //
+  // don't touch the config parts
+  receivedPackageJsonObj.lect = pack.lect;
 
   pack = receivedPackageJsonObj;
 
@@ -1180,7 +1174,7 @@ async function step10() {
             .manifest(dep)
             .then(pkg => pkg.version);
           // console.log(
-          //   `1183 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `1222 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
           //     retrievedVersion,
           //     null,
           //     4
@@ -1582,27 +1576,27 @@ function step6() {
   let existingContributorsBackup = null;
 
   readmeData.forEach((readmePiece, indx) => {
-    if (DEBUG) {
-      console.log(
-        `${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-      );
-    }
-    if (DEBUG) {
-      console.log(
-        `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
-      );
-    }
-    if (DEBUG) {
-      console.log(
-        readmePiece.restofit && readmePiece.restofit.length
-          ? `readmePiece.restofit.length = ${JSON.stringify(
-              readmePiece.restofit.length,
-              null,
-              4
-            )}`
-          : ""
-      );
-    }
+    // if (DEBUG) {
+    //   console.log(
+    //     `${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    //   );
+    // }
+    // if (DEBUG) {
+    //   console.log(
+    //     `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
+    //   );
+    // }
+    // if (DEBUG) {
+    //   console.log(
+    //     readmePiece.restofit && readmePiece.restofit.length
+    //       ? `readmePiece.restofit.length = ${JSON.stringify(
+    //           readmePiece.restofit.length,
+    //           null,
+    //           4
+    //         )}`
+    //       : ""
+    //   );
+    // }
 
     // Back up existing contributors content if such exists.
     // If interwebs were not reachable, we'll stick that back in.
@@ -1616,27 +1610,27 @@ function step6() {
 
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
-      if (DEBUG) {
-        console.log(`1615 clause #1`);
-      }
+      // if (DEBUG) {
+      //   console.log(`1659 clause #1`);
+      // }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
           ? "\n\n"
           : ""
       }`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
-      }
+      // if (DEBUG) {
+      //   console.log(
+      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+      //   );
+      // }
     } else if (
       !firstHeadingIsDone &&
       typeof readmePiece !== "string" &&
       readmePiece.heading.startsWith("# ")
     ) {
-      if (DEBUG) {
-        console.log(`1628 clause #2`);
-      }
+      // if (DEBUG) {
+      //   console.log(`1677 clause #2`);
+      // }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
       // if package's name does not contain hyphens, capitalise the first letter
@@ -1665,24 +1659,24 @@ function step6() {
           pack.description
         }${topBadgesString.length > 0 ? `\n\n${topBadgesString.trim()}` : ""}`;
         firstHeadingIsDone = true;
-        if (DEBUG) {
-          console.log(
-            `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-          );
-        }
+        // if (DEBUG) {
+        //   console.log(
+        //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+        //   );
+        // }
       }
       content += `${
         extractStringUnderBadges(readmePiece.restofit).length > 0 ? "\n\n" : ""
       }${extractStringUnderBadges(readmePiece.restofit)}`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
-      }
+      // if (DEBUG) {
+      //   console.log(
+      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+      //   );
+      // }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
-      if (DEBUG) {
-        console.log(`1659 clause #3`);
-      }
+      // if (DEBUG) {
+      //   console.log(`1723 clause #3`);
+      // }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
       if (!firstHeadingIsDone) {
@@ -1734,11 +1728,11 @@ function step6() {
       content += `${readmePiece.heading.trim()}${
         bodyContent.trim().length > 0 ? `\n\n${bodyContent.trim()}` : ""
       }${addBackToTopLinks ? btt : ""}\n\n`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
-      }
+      // if (DEBUG) {
+      //   console.log(
+      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+      //   );
+      // }
     }
   });
 
