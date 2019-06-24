@@ -1,6 +1,6 @@
 {
   "name": "string-uglify",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Uglify - generate unique short names for sets of strings",
   "license": "MIT",
   "engines": {
@@ -180,8 +180,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.26",
-    "lect": "^0.7.3",
+    "js-row-num-cli": "^1.5.27",
+    "lect": "^0.7.4",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.16.2",

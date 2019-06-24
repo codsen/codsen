@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "3.0.17",
+  "version": "3.0.18",
   "description": "Detect and (recursively) remove head and tail wrappings around the input string",
   "license": "MIT",
   "engines": {
@@ -167,11 +167,11 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.10.26",
-    "check-types-mini": "^5.7.22",
+    "check-types-mini": "^5.7.23",
     "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.0.17",
     "ranges-push": "^3.2.1",
-    "string-match-left-right": "^3.10.26",
+    "string-match-left-right": "^3.10.27",
     "string-trim-spaces-only": "^2.7.26"
   },
   "devDependencies": {
@@ -187,8 +187,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.26",
-    "lect": "^0.7.3",
+    "js-row-num-cli": "^1.5.27",
+    "lect": "^0.7.4",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.16.2",

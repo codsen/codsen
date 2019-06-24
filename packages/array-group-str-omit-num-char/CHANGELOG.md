@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://gitlab.com/codsen/codsen/compare/array-group-str-omit-num-char@2.0.17...array-group-str-omit-num-char@2.0.18) (2019-06-24)
+
+**Note:** Version bump only for package array-group-str-omit-num-char
+
+
+
+
+
 ## 1.3.0 (2018-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

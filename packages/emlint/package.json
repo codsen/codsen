@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Non-parsing, email template-oriented linter",
   "license": "MIT",
   "engines": {
@@ -169,12 +169,12 @@
   "dependencies": {
     "all-named-html-entities": "^1.1.4",
     "arrayiffy-if-string": "^3.10.26",
-    "check-types-mini": "^5.7.22",
+    "check-types-mini": "^5.7.23",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "ranges-merge": "^4.2.4",
-    "string-fix-broken-named-entities": "^2.3.4",
-    "string-left-right": "^2.2.6"
+    "string-fix-broken-named-entities": "^2.3.5",
+    "string-left-right": "^2.2.7"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -190,8 +190,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.26",
-    "lect": "^0.7.3",
+    "js-row-num-cli": "^1.5.27",
+    "lect": "^0.7.4",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "ranges-apply": "^3.0.17",
