@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.2.2...email-comb@3.3.0) (2019-06-25)
+
+
+### Features
+
+* Output object's new keys countBeforeCleaning and countAfterCleaning ([55b13e7](https://gitlab.com/codsen/codsen/commit/55b13e7))
+* Uglification legend does not mention entries which were not uglified because of being whitelis ([b6bacfc](https://gitlab.com/codsen/codsen/commit/b6bacfc))
+
+
+
+
+
 ## 3.2.0 (2019-06-21)
 
 ### Features
