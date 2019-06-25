@@ -31,7 +31,7 @@ var defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
-var traverse = function traverse() {
+function traverse() {
   var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var cb = arguments.length > 1 ? arguments[1] : undefined;
   if (!isArr(nodes) || !nodes.length) {
@@ -41,8 +41,8 @@ var traverse = function traverse() {
     cb(node);
     traverse(node.children, cb);
   });
-};
-var patcher = function patcher(html, generalOpts) {
+}
+function patcher(html, generalOpts) {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
@@ -212,7 +212,7 @@ var patcher = function patcher(html, generalOpts) {
     }
   });
   return renderer(dom);
-};
+}
 
 exports.defaults = defaults;
 exports.patcher = patcher;

@@ -22,7 +22,7 @@ const defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
-const traverse = (nodes = [], cb) => {
+function traverse(nodes = [], cb) {
   if (!isArr(nodes) || !nodes.length) {
     return;
   }
@@ -30,8 +30,8 @@ const traverse = (nodes = [], cb) => {
     cb(node);
     traverse(node.children, cb);
   });
-};
-const patcher = (html, generalOpts) => {
+}
+function patcher(html, generalOpts) {
   if (typeof html !== "string" || html.length === 0) {
     return html;
   }
@@ -251,6 +251,6 @@ const patcher = (html, generalOpts) => {
     }
   });
   return renderer(dom);
-};
+}
 
 export { defaults, patcher, version };
