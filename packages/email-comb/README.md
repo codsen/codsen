@@ -85,7 +85,7 @@ STRENGTHS:
 
 WEAKNESSES:
 
-- Increased risk of bugs compared to cleaners that use parsing because, essentially, we work on input as text. This library is used by some top UK brands and agencies and is well-tested.
+- Increased risk of bugs compared to cleaners that use parsing because, essentially, we work on input as text. Having said that, EmailComb is used by some top UK brands and agencies and is well-tested.
 - Custom algorithm narrows the possible contributors' pool (compared to the competition who use PostCSS)
 - **Does not support external stylesheets** or JS injecting more classes (because it's an email development-oriented tool)
 
@@ -101,9 +101,9 @@ COMPETITORS (ALL WEB DEVELOPMENT-ORIENTED):
 
 This package exports a plain object: `{ comb, defaults, version }`.
 
-Its key "comb" has a value which is the main function, `comb()`.
-Its key "defaults" has a value, a plain object, which is defaults of the main function.
-Its key "version" is a string, for example, "2.0.12" and mirrors same key `package.json`.
+Its key `comb` has a value which is the main function, you will call it `comb()`.
+Its key `defaults` has a value, a plain object, which is defaults of the main function.
+Its key `version` is a string, for example, "2.0.12" and mirrors same key `package.json`.
 
 ```js
 comb(str, [options]);
@@ -169,7 +169,7 @@ Here are all options in one place in case you need to copy the whole thing:
 
 ### API - Output
 
-For example, output could look like this:
+For example, **output** could look like this:
 
 ```json5
 {
