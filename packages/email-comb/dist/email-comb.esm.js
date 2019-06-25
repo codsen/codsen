@@ -82,6 +82,8 @@ function comb(str, opts) {
   let beingCurrentlyAt;
   let uglified;
   let allClassesAndIdsWithinHeadFinalUglified;
+  let countAfterCleaning;
+  let countBeforeCleaning;
   let bodyItsTheFirstClassOrId;
   let bogusHTMLComment;
   let ruleChunkStartedAt;
@@ -1455,6 +1457,7 @@ function comb(str, opts) {
       allClassesAndIdsWithinHead = uniq(
         headSelectorsArr.reduce((arr, el) => arr.concat(extract(el)), [])
       ).sort();
+      countBeforeCleaning = allClassesAndIdsWithinHead.length;
       const preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       let deletedFromHeadArr = [];
       for (let y = 0, len2 = preppedHeadSelectorsArr.length; y < len2; y++) {
@@ -1551,6 +1554,7 @@ function comb(str, opts) {
           allClassesAndIdsWithinHeadFinal
         );
       }
+      countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
       uglified = opts.uglify
         ? allClassesAndIdsWithinHeadFinal
             .map((name, id) => [
@@ -1707,6 +1711,8 @@ function comb(str, opts) {
       uglified
     },
     result: str,
+    countAfterCleaning,
+    countBeforeCleaning,
     allInHead: allClassesAndIdsWithinHead,
     allInBody: allClassesAndIdsWithinBody,
     deletedFromHead: headCssToDelete.sort(),

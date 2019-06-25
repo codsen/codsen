@@ -85,6 +85,8 @@ function comb(str, opts) {
   let beingCurrentlyAt;
   let uglified;
   let allClassesAndIdsWithinHeadFinalUglified;
+  let countAfterCleaning;
+  let countBeforeCleaning;
 
   // this flag is on just for the first class or id value on the class/id within body
   // we use it to check leading whitespace, not to waste resources on 2nd class/id
@@ -3113,6 +3115,8 @@ ${`\u001b[${90}m${`commentStartedAt`}\u001b[${39}m = ${commentStartedAt}`};
         headSelectorsArr.reduce((arr, el) => arr.concat(extract(el)), [])
       ).sort();
 
+      countBeforeCleaning = allClassesAndIdsWithinHead.length;
+
       console.log(
         `${`\u001b[${33}m${`1238 AFTER TRAVERSAL,\nallClassesAndIdsWithinHead`}\u001b[${39}m`} = ${JSON.stringify(
           allClassesAndIdsWithinHead,
@@ -3352,6 +3356,8 @@ ${`\u001b[${90}m${`commentStartedAt`}\u001b[${39}m = ${commentStartedAt}`};
           allClassesAndIdsWithinHeadFinal
         );
       }
+
+      countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
 
       uglified = opts.uglify
         ? allClassesAndIdsWithinHeadFinal
@@ -3689,6 +3695,8 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
       uglified
     },
     result: str,
+    countAfterCleaning,
+    countBeforeCleaning,
     allInHead: allClassesAndIdsWithinHead,
     allInBody: allClassesAndIdsWithinBody,
     deletedFromHead: headCssToDelete.sort(),

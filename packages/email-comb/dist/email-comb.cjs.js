@@ -122,6 +122,8 @@ function comb(str, opts) {
   var beingCurrentlyAt;
   var uglified;
   var allClassesAndIdsWithinHeadFinalUglified;
+  var countAfterCleaning;
+  var countBeforeCleaning;
   var bodyItsTheFirstClassOrId;
   var bogusHTMLComment;
   var ruleChunkStartedAt;
@@ -1079,6 +1081,7 @@ function comb(str, opts) {
       allClassesAndIdsWithinHead = uniq(headSelectorsArr.reduce(function (arr, el) {
         return arr.concat(extract(el));
       }, [])).sort();
+      countBeforeCleaning = allClassesAndIdsWithinHead.length;
       var preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       var deletedFromHeadArr = [];
       for (var _y8 = 0, len2 = preppedHeadSelectorsArr.length; _y8 < len2; _y8++) {
@@ -1145,6 +1148,7 @@ function comb(str, opts) {
       if (opts.uglify) {
         allClassesAndIdsWithinHeadFinalUglified = stringUglify.uglifyArr(allClassesAndIdsWithinHeadFinal);
       }
+      countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
       uglified = opts.uglify ? allClassesAndIdsWithinHeadFinal.map(function (name, id) {
         return [name, allClassesAndIdsWithinHeadFinalUglified[id]];
       }).filter(function (arr) {
@@ -1255,6 +1259,8 @@ function comb(str, opts) {
       uglified: uglified
     },
     result: str,
+    countAfterCleaning: countAfterCleaning,
+    countBeforeCleaning: countBeforeCleaning,
     allInHead: allClassesAndIdsWithinHead,
     allInBody: allClassesAndIdsWithinBody,
     deletedFromHead: headCssToDelete.sort(),

@@ -169,36 +169,47 @@ Here are all options in one place in case you need to copy the whole thing:
 
 ### API - Output
 
-A **plain object** is returned. It will have the following keys:
-
-| Key               | Its value's type | Description                                                              |
-| ----------------- | ---------------- | ------------------------------------------------------------------------ |
-| `log`             | Plain object     | Various information about performed operations                           |
-| `result`          | String           | A string containing cleaned HTML                                         |
-| `allInHead`       | Array            | Deduped and sorted array of all classes and `id`'s between `<head>` tags |
-| `allInBody`       | Array            | Deduped and sorted array of all classes and `id`'s between `<body>` tags |
-| `deletedFromHead` | Array            | Array of classes/id's that were deleted inside `<head>` _at least once_^ |
-| `deletedFromBody` | Array            | Array of classes/id's that were deleted inside `<body>` _at least once_^ |
-
-^ Some legit, used classes/id's might be "sandwiched" with unused-ones (like `.head-only.real-class`) and deleted in some `<style>` tags, but not in all. That's a rare case, added back in `v1.12`.
-
-For example, log key would contain:
+For example, output could look like this:
 
 ```json5
 {
-  timeTakenInMiliseconds: 55,
-  traversedTotalCharacters: 504,
-  traversedTimesInputLength: 4.24,
-  originalLength: 118,
-  cleanedLength: 87,
-  bytesSaved: 32,
-  percentageReducedOfOriginal: 27,
-  nonIndentationsWhitespaceLength: 9,
-  nonIndentationsTakeUpPercentageOfOriginal: 8,
-  commentsLength: 10,
-  commentsTakeUpPercentageOfOriginal: 1
+  log: {
+    timeTakenInMiliseconds: 55,
+    traversedTotalCharacters: 504,
+    traversedTimesInputLength: 4.24,
+    originalLength: 118,
+    cleanedLength: 87,
+    bytesSaved: 32,
+    percentageReducedOfOriginal: 27,
+    nonIndentationsWhitespaceLength: 9,
+    nonIndentationsTakeUpPercentageOfOriginal: 8,
+    commentsLength: 10,
+    commentsTakeUpPercentageOfOriginal: 1
+  },
+  result: "<html>...",
+  countAfterCleaning: 3,
+  countBeforeCleaning: 15,
+  allInHead: allClassesAndIdsWithinHead,
+  allInBody: allClassesAndIdsWithinBody,
+  deletedFromHead: [".unused1", ".unused2"],
+  deletedFromBody: [".unused1", ".unused1", "#unused1"]
 }
 ```
+
+A **plain object** is returned. It will have the following keys:
+
+| Key                   | Its value's type | Description                                                              |
+| --------------------- | ---------------- | ------------------------------------------------------------------------ |
+| `log`                 | Plain object     | Various information about performed operations                           |
+| `result`              | String           | A string containing cleaned HTML                                         |
+| `countBeforeCleaning` | Number           | How many unique classes and id's were in total before cleaning           |
+| `countAfterCleaning`  | Number           | How many unique classes and id's were in total after cleaning            |
+| `allInHead`           | Array            | Deduped and sorted array of all classes and `id`'s between `<head>` tags |
+| `allInBody`           | Array            | Deduped and sorted array of all classes and `id`'s between `<body>` tags |
+| `deletedFromHead`     | Array            | Array of classes/id's that were deleted inside `<head>` _at least once_^ |
+| `deletedFromBody`     | Array            | Array of classes/id's that were deleted inside `<body>` _at least once_^ |
+
+^ Some legit, used classes/id's might be "sandwiched" with unused-ones (like `.head-only.real-class`) and deleted in some `<style>` tags, but not in all. That's a rare case, added back in `v1.12`.
 
 **[⬆ back to top](#)**
 
@@ -453,7 +464,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/email-comb
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
-[cov-img]: https://img.shields.io/badge/coverage-98.37%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-98.38%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb
