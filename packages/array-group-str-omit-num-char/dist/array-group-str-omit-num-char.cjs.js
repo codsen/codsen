@@ -11,29 +11,15 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var uniq = _interopDefault(require('lodash.uniq'));
 var rangesApply = _interopDefault(require('ranges-apply'));
-
-function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
 
 var isArr = Array.isArray;
 function groupStr(originalArr, originalOpts) {
   if (!isArr(originalArr)) {
-    throw new Error("array-group-str-omit-num-char: [THROW_ID_01] the first input argument must be an array!");
+    return originalArr;
+  } else if (!originalArr.length) {
+    return {};
   }
   var opts;
   var defaults = {
@@ -41,14 +27,7 @@ function groupStr(originalArr, originalOpts) {
     dedupePlease: true
   };
   if (originalOpts != null) {
-    if (!isObj(originalOpts)) {
-      throw new Error("array-group-str-omit-num-char: [THROW_ID_02] the second input argument, options object must be a plain object! It was given as ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-    } else {
-      opts = Object.assign({}, defaults, originalOpts);
-      checkTypes(opts, defaults, {
-        msg: "array-group-str-omit-num-char: [THROW_ID_03*]"
-      });
-    }
+    opts = Object.assign({}, defaults, originalOpts);
   } else {
     opts = Object.assign({}, defaults);
   }

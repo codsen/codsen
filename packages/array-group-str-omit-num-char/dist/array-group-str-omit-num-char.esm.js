@@ -7,17 +7,15 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char
  */
 
-import checkTypes from 'check-types-mini';
-import isObj from 'lodash.isplainobject';
 import uniq from 'lodash.uniq';
 import rangesApply from 'ranges-apply';
 
 const isArr = Array.isArray;
 function groupStr(originalArr, originalOpts) {
   if (!isArr(originalArr)) {
-    throw new Error(
-      "array-group-str-omit-num-char: [THROW_ID_01] the first input argument must be an array!"
-    );
+    return originalArr;
+  } else if (!originalArr.length) {
+    return {};
   }
   let opts;
   const defaults = {
@@ -25,20 +23,7 @@ function groupStr(originalArr, originalOpts) {
     dedupePlease: true
   };
   if (originalOpts != null) {
-    if (!isObj(originalOpts)) {
-      throw new Error(
-        `array-group-str-omit-num-char: [THROW_ID_02] the second input argument, options object must be a plain object! It was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(
-          originalOpts,
-          null,
-          4
-        )}`
-      );
-    } else {
-      opts = Object.assign({}, defaults, originalOpts);
-      checkTypes(opts, defaults, {
-        msg: "array-group-str-omit-num-char: [THROW_ID_03*]"
-      });
-    }
+    opts = Object.assign({}, defaults, originalOpts);
   } else {
     opts = Object.assign({}, defaults);
   }

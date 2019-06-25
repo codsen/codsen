@@ -6,76 +6,43 @@ import group from "../dist/array-group-str-omit-num-char.esm";
 // ==============
 
 test("00.01 - throws when the first argument is not array", t => {
-  const error1 = t.throws(() => {
-    group();
-  });
-  t.regex(error1.message, /THROW_ID_01/);
-});
-
-test("00.02 - throws when the second argument, opts is not a plain object", t => {
-  const error1 = t.throws(() => {
-    group(["aaa", "bbb"], true);
-  });
-  t.regex(error1.message, /THROW_ID_02/);
-
-  const error2 = t.throws(() => {
-    group(["aaa", "bbb"], 1);
-  });
-  t.regex(error2.message, /THROW_ID_02/);
-
-  const error3 = t.throws(() => {
-    group(["aaa", "bbb"], []);
-  });
-  t.regex(error3.message, /THROW_ID_02/);
-
-  // but does not throw if it's null, undefined or empty object:
-
-  t.deepEqual(group(["aaa", "bbb"], null), {
-    aaa: 1,
-    bbb: 1
-  });
-
-  t.deepEqual(group(["aaa", "bbb"], undefined), {
-    aaa: 1,
-    bbb: 1
-  });
-
-  t.deepEqual(group(["aaa", "bbb"], {}), {
-    aaa: 1,
-    bbb: 1
-  });
-});
-
-test("00.03 - throws when opts values are of a wrong type or opts contain rogue keys", t => {
-  // wrong value type:
-  const error1 = t.throws(() => {
-    group(["aaa", "bbb"], {
-      wildcard: true
-    });
-  });
-  t.regex(error1.message, /THROW_ID_03/);
-
-  // rogue opts key:
-  const error2 = t.throws(() => {
-    group(["aaa", "bbb"], {
-      wildcard: "*",
-      tralala: true
-    });
-  });
-  t.regex(error2.message, /THROW_ID_03/);
-
-  // custom wildcard
-  const error3 = t.throws(() => {
-    group(["aaa", "bbb"], {
-      wildcard: "z",
-      tralala: true
-    });
-  });
-  t.regex(error3.message, /THROW_ID_03/);
-});
-
-test("00.04 - empty array input", t => {
+  t.is(group(), undefined, "00.01");
   t.deepEqual(group([]), {}, "00.04");
+});
+
+test("00.02 - second argument can be faulty, opts is simply reset", t => {
+  t.deepEqual(
+    group(["aaa", "bbb"], true),
+    {
+      aaa: 1,
+      bbb: 1
+    },
+    "00.02.01"
+  );
+  t.deepEqual(
+    group(["aaa", "bbb"], null),
+    {
+      aaa: 1,
+      bbb: 1
+    },
+    "00.02.02"
+  );
+  t.deepEqual(
+    group(["aaa", "bbb"], undefined),
+    {
+      aaa: 1,
+      bbb: 1
+    },
+    "00.02.03"
+  );
+  t.deepEqual(
+    group(["aaa", "bbb"], {}),
+    {
+      aaa: 1,
+      bbb: 1
+    },
+    "00.02.04"
+  );
 });
 
 // =======

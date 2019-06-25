@@ -1,5 +1,3 @@
-import checkTypes from "check-types-mini";
-import isObj from "lodash.isplainobject";
 import uniq from "lodash.uniq";
 import rangesApply from "ranges-apply";
 
@@ -7,9 +5,10 @@ const isArr = Array.isArray;
 
 function groupStr(originalArr, originalOpts) {
   if (!isArr(originalArr)) {
-    throw new Error(
-      "array-group-str-omit-num-char: [THROW_ID_01] the first input argument must be an array!"
-    );
+    return originalArr;
+  } else if (!originalArr.length) {
+    // quick ending
+    return {};
   }
 
   let opts;
@@ -19,25 +18,9 @@ function groupStr(originalArr, originalOpts) {
   };
   // deliberate != below, we check for undefined and null:
   if (originalOpts != null) {
-    if (!isObj(originalOpts)) {
-      throw new Error(
-        `array-group-str-omit-num-char: [THROW_ID_02] the second input argument, options object must be a plain object! It was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(
-          originalOpts,
-          null,
-          4
-        )}`
-      );
-    } else {
-      opts = Object.assign({}, defaults, originalOpts);
-      // finally, check types (only applicable in this case, where opts were given)
-      checkTypes(opts, defaults, {
-        msg: "array-group-str-omit-num-char: [THROW_ID_03*]"
-      });
-    }
+    opts = Object.assign({}, defaults, originalOpts);
   } else {
-    // so opts were given null or undefined - just clone defaults
     opts = Object.assign({}, defaults);
-    // no need to check opts' types in check-types-mini - that would be waste of resources
   }
 
   let arr;
