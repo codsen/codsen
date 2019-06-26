@@ -45,13 +45,13 @@
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+    "perf": "node perf/check",
     "prepare": "npm run build",
     "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
     "unittest": "./node_modules/.bin/nyc ava && npm run coverage && npm run perf",
-    "version": "npm run build && git add .",
-    "perf": "node perf/check"
+    "version": "npm run build && git add ."
   },
   "husky": {
     "hooks": {

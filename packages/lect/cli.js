@@ -1148,7 +1148,7 @@ async function step10() {
     // delete "files" because that's too big of a liability
     objectPath.del(finalThing, "files");
 
-    // also, remove any of the builds if they don't exist is "pack"
+    // also, remove any of the builds if they don't exist in "pack"
     // that's necessary because we might have done checks on previous steps
     // and removed entries for missing build files etc.
     if (!objectPath.has(pack, "main")) {
@@ -1182,6 +1182,17 @@ async function step10() {
           // );
           finalThing.devDependencies[dep] = `^${retrievedVersion}`;
         }
+      }
+    }
+    if (objectPath.has(finalThing, "devDependencies.benchmark")) {
+      objectPath.set(finalThing, "scripts.perf", "node perf/check");
+
+      if (!finalThing.scripts.unittest.includes("perf")) {
+        objectPath.set(
+          finalThing,
+          "scripts.unittest",
+          "./node_modules/.bin/nyc ava && npm run coverage && npm run perf"
+        );
       }
     }
 

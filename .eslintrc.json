@@ -21,6 +21,7 @@
       "error",
       {
         "devDependencies": [
+          "perf/**/*.*",
           "**/*test.js",
           "test/**/*.*",
           "rollup.config.js"
