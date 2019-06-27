@@ -43,7 +43,7 @@ function groupStr(originalArr, originalOpts) {
       };
     } else {
       const wildcarded = arr[i].replace(/\d+/gm, opts.wildcard);
-      if (compiledObj.hasOwnProperty(wildcarded)) {
+      if (Object.prototype.hasOwnProperty.call(compiledObj, wildcarded)) {
         digitChunks.forEach((digitsChunkStr, i) => {
           if (
             compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i] &&
