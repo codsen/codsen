@@ -96,9 +96,9 @@ test(`13 - notEmailFriendly is set`, t => {
 });
 
 test(`14 - uncertain list is set`, t => {
-  t.true(uncertain.hasOwnProperty("Alpha"));
-  t.true(uncertain.hasOwnProperty("alpha"));
-  t.true(uncertain.hasOwnProperty("amp"));
-  t.true(uncertain.hasOwnProperty("And"));
-  t.true(uncertain.hasOwnProperty("and"));
+  t.true(!!uncertain.Alpha);
+  t.true(!!uncertain.alpha);
+  t.true(!!uncertain.amp);
+  t.true(!!uncertain.And);
+  t.true(!!uncertain.and);
 });
