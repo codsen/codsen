@@ -21,9 +21,11 @@ const suite = new Benchmark.Suite({
 const heads = `${`\u001b[${90}m${`${name} perf/check.js:`}\u001b[${39}m`} ⚡️`;
 
 suite
-  .add("t1", () =>
-    i(["something", "anything", "everything"], ["*thing", "zzz"])
-  )
+  .add("t1", () => {
+    i(["something", "anything", "everything"], ["anything", "zzz"], {
+      arrayVsArrayAllMustBeFound: "any"
+    });
+  })
   .on("complete", function() {
     const optsPerSec = this[0].hz;
     // console.log(`${heads} ops/sec.: ${optsPerSec}`);
