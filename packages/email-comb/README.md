@@ -48,15 +48,13 @@ or
 import { comb, defaults, version } from "email-comb";
 ```
 
-Name the function as `comb` or any way you like because we're using `export default`.
-
 Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-comb.cjs.js` | 55 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-comb.esm.js` | 57 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 77 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-comb.umd.js` | 78 KB |
 
 **[⬆ back to top](#)**
 
@@ -66,34 +64,36 @@ Here's what you'll get:
 
 STRENGTHS:
 
-- Aimed at Email development workflows
+- Aimed at Email development but works everywhere where CSS is contained within the same file
 - Accepts HTML **mixed** with other templating/programming languages
 - Works on broken or incomplete or invalid HTML/XHTML code
 - Works on both classes and id's
 - Optionally uglifies the class or id names
 - The algorithm will cope with style tags inside the `body` tag or multiple style tags
-- Strips CSS and HTML comments; recognises Outlook conditional comments
+- Can strip CSS and HTML comments; recognises Outlook conditional comments (both "_if-Outlook_" and "_if-not-Outlook_")
 - Has email-specific features like [removing](https://www.npmjs.com/package/regex-empty-conditional-comments) empty Outlook conditional comments
-- Faster than parsing cleaners - algorithm completes cleaning in two input (string) traversals
 - Attempts to fix some code issues, for example, remove space in `< body` (which would otherwise break in Chrome)
 - API contains no file I/O operations or anything front-end-related — it's "string-in, string-out"
 - All dependencies are either our own or Lodash's or Mr Sindre Sorhus'
 - CommonJS, ES Modules and UMD builds available, published to npm and available to consume via CDN's like unpkg.com
 - Complete console logging set and retained in the source (which is automatically removed from builds)
 - Modern setup: ava pointing at ES Modules build, Rollup bundling the builds, coverage high, prettier and ESLint in place
-- Lets you improve the algorithm precision by letting it know how do templating variables look
+- It's not opinionated - it won't W3C-validate, enforce `DOCTYPE`'s or add any new code to your code. Some parsers, for example, just can't stand an HTML without a DOCTYPE.
 
 WEAKNESSES:
 
-- Increased risk of bugs compared to cleaners that use parsing because, essentially, we work on input as text. Having said that, EmailComb is used by some top UK brands and agencies and is well-tested.
-- Custom algorithm narrows the possible contributors' pool (compared to the competition who use PostCSS)
+- If you give a broken input, it will be processed too — usually bad code breaks parsers and that's how you find out that your code is bad. But in theory, linters are solutions for this, so it might be a _strength_.
 - **Does not support external stylesheets** or JS injecting more classes (because it's an email development-oriented tool)
 
-COMPETITORS (ALL WEB DEVELOPMENT-ORIENTED):
+COMPETITORS:
+
+We believe EmailComb is superior to all web-development-oriented unused CSS removal tools out there:
 
 - [purgecss](https://github.com/FullHuman/purgecss)
 - [purifycss](https://github.com/purifycss/purifycss)
 - [uncss](https://github.com/uncss/uncss)
+
+Try yourselves.
 
 **[⬆ back to top](#)**
 
@@ -115,7 +115,7 @@ comb(str, [options]);
 
 | Input argument | Type         | Obligatory? | Description                               |
 | -------------- | ------------ | ----------- | ----------------------------------------- |
-| str            | String       | yes         | HTML code as string                       |
+| str            | String       | yes         | Your HTML file contents, as string        |
 | options        | Plain object | no          | Any options, as a plain object, see below |
 
 For example,
@@ -196,7 +196,7 @@ For example, **output** could look like this:
 }
 ```
 
-A **plain object** is returned. It will have the following keys:
+So a **plain object** is returned. It will have the following keys:
 
 | Key                   | Its value's type | Description                                                              |
 | --------------------- | ---------------- | ------------------------------------------------------------------------ |
@@ -209,7 +209,7 @@ A **plain object** is returned. It will have the following keys:
 | `deletedFromHead`     | Array            | Array of classes/id's that were deleted inside `<head>` _at least once_^ |
 | `deletedFromBody`     | Array            | Array of classes/id's that were deleted inside `<body>` _at least once_^ |
 
-^ Some legit, used classes/id's might be "sandwiched" with unused-ones (like `.head-only.real-class`) and deleted in some `<style>` tags, but not in all. That's a rare case, added back in `v1.12`.
+^ To be very precise, if class or id name was deleted at once, it gets in this list. Mind you, some used classes or id's can be sandwiched with unused (`.used.unused`) and end up removed in some instances and get reported here, but it does not mean they were removed completely as species.
 
 **[⬆ back to top](#)**
 
