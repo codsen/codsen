@@ -98,7 +98,7 @@ test.serial(
     // CLI will complain no files could be found
     t.regex(stdOutContents.stdout, /no changelogs found/);
 
-    await execa.shell(`rm -rf ${path.join(__dirname, "../temp")}`);
+    await execa.command(`rm -rf ${path.resolve(__dirname, "../temp")}`);
   }
 );
 
@@ -119,12 +119,14 @@ test.serial(
     const processedFileContents = fs
       .writeFile(path.join(tempFolder, "changelog.md"), changelog1)
       .then(() =>
-        execa.shell(
+        execa(
           `cd ${tempFolder} && ${path.join(
             __dirname,
-            "../",
-            "cli.js"
-          )} changelog.md`
+            "../"
+          )}/cli.js CHANGELOG.md`,
+          {
+            shell: true
+          }
         )
       )
       .then(execasMsg => {
@@ -136,11 +138,10 @@ test.serial(
         return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
       })
       .then(received =>
-        execa
-          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-          .then(() => received)
-      )
-      .catch(err => t.fail(err));
+        execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+          shell: true
+        }).then(() => received)
+      );
 
     t.deepEqual(await processedFileContents, changelog1Fixed);
   }
@@ -186,8 +187,11 @@ test.serial(
         )
       )
       .then(() =>
-        execa.shell(
-          `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "**"`
+        execa(
+          `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "**"`,
+          {
+            shell: true
+          }
         )
       )
       .then(execasMsg =>
@@ -197,7 +201,11 @@ test.serial(
           "02.02.01 - prints a message that all went OK"
         )
       )
-      .then(() => execa.shell(`rm -rf ${path.join(__dirname, "../temp")}`))
+      .then(() =>
+        execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+          shell: true
+        })
+      )
       .catch(err => t.fail(err));
   }
 );
