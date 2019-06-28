@@ -15,7 +15,91 @@ function uglifyById(refArr, idNum) {
 function uglifyArr(arr) {
   const letters = "abcdefghijklmnopqrstuvwxyz";
   const lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
-  // const twoLetterVariations = 936; // 26 x 36
+
+  const singleClasses = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
+  const singleIds = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
+  const singleNameonly = {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false,
+    h: false,
+    i: false,
+    j: false,
+    k: false,
+    l: false,
+    m: false,
+    n: false,
+    o: false,
+    p: false,
+    q: false,
+    r: false,
+    s: false,
+    t: false,
+    u: false,
+    v: false,
+    w: false,
+    x: false,
+    y: false,
+    z: false
+  };
 
   // final array we'll assemble and eventually return
   const res = [];
@@ -24,14 +108,6 @@ function uglifyArr(arr) {
   if (!isArr(arr) || !arr.length) {
     return arr;
   }
-
-  // const untouched = [];
-  // const singleCounts = [];
-  // const doubleCounts = [];
-  // const tripleCounts = [];
-  // const quadrupleCounts = [];
-  // const longerCounts = [];
-  // let maxLen = "";
 
   for (let id = 0, len = arr.length; id < len; id++) {
     // insurance against duplicate reference array values
@@ -51,31 +127,39 @@ function uglifyArr(arr) {
       (`.#`.includes(arr[id][0]) && arr[id].length < 4) ||
       (!`.#`.includes(arr[id][0]) && arr[id].length < 3)
     ) {
-      // class/id name is good as it is
-
-      // if (arr[id].length === 1) {
-      //   singleCounts.push(arr[id]);
-      // } else if (arr[id].length === 2) {
-      //   doubleCounts.push(arr[id]);
-      // } else if (arr[id].length === 3) {
-      //   tripleCounts.push(arr[id]);
-      // }
-      if (!res.includes(arr[id])) {
-        res.push(arr[id]);
-        // untouched.push(arr[id]);
+      const val = arr[id];
+      if (!res.includes(val)) {
+        res.push(val);
+        if (
+          val.startsWith(".") &&
+          val.length === 2 &&
+          !singleClasses[val.slice(1)]
+        ) {
+          singleClasses[val.slice(1)] = true;
+        } else if (
+          val.startsWith("#") &&
+          val.length === 2 &&
+          !singleIds[val.slice(1)]
+        ) {
+          singleIds[val.slice(1)] = true;
+        } else if (
+          !val.startsWith(".") &&
+          !val.startsWith("#") &&
+          val.length === 1 &&
+          !singleNameonly[val]
+        ) {
+          singleNameonly[val] = true;
+        }
         continue;
       }
     }
 
-    const generated = `${prefix}${letters[codePointSum % letters.length]}${
+    let generated = `${prefix}${letters[codePointSum % letters.length]}${
       lettersAndNumbers[codePointSum % lettersAndNumbers.length]
     }`;
 
-    if (!res.includes(generated)) {
-      // tripleCounts.push(generated);
-      res.push(generated);
-    } else {
-      // add more charactets:
+    if (res.includes(generated)) {
+      // add more characters:
       let soFarWeveGot = generated;
       let counter = 0;
 
@@ -113,61 +197,123 @@ function uglifyArr(arr) {
               lettersAndNumbers.length
           ];
       }
-      // if (maxLen.length < soFarWeveGot.length) {
-      //   maxLen = soFarWeveGot;
-      // }
+      generated = soFarWeveGot;
+    }
 
-      // if (soFarWeveGot.length === 1) {
-      //   singleCounts.push(soFarWeveGot);
-      // } else if (soFarWeveGot.length === 2) {
-      //   doubleCounts.push(soFarWeveGot);
-      // } else if (soFarWeveGot.length === 3) {
-      //   tripleCounts.push(soFarWeveGot);
-      // } else if (soFarWeveGot.length === 4) {
-      //   quadrupleCounts.push(soFarWeveGot);
-      // } else {
-      //   longerCounts.push(soFarWeveGot);
-      // }
-      res.push(soFarWeveGot);
+    res.push(generated);
+    if (
+      generated.startsWith(".") &&
+      generated.length === 2 &&
+      !singleClasses[generated.slice(1)]
+    ) {
+      singleClasses[generated.slice(1)] = true;
+    } else if (
+      generated.startsWith("#") &&
+      generated.length === 2 &&
+      !singleIds[generated.slice(1)]
+    ) {
+      singleIds[generated.slice(1)] = true;
+    } else if (
+      !generated.startsWith(".") &&
+      !generated.startsWith("#") &&
+      generated.length === 1 &&
+      !singleNameonly[generated]
+    ) {
+      singleNameonly[generated] = true;
     }
   }
 
-  // console.log(
-  //   `136 FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-  //     res.length,
-  //     null,
-  //     4
-  //   )} (${res.length});\n\nfirst 20 singles: ${JSON.stringify(
-  //     singleCounts.filter((val, i) => i < 20),
-  //     null,
-  //     0
-  //   )};\n\nfirst 20 doubles: ${JSON.stringify(
-  //     doubleCounts.filter((val, i) => i < 20),
-  //     null,
-  //     0
-  //   )};\n\nfirst 20 triples: ${JSON.stringify(
-  //     tripleCounts.filter((val, i) => i < 20),
-  //     null,
-  //     0
-  //   )} (${tripleCounts.length});\n\nfirst 20 quadruples: ${JSON.stringify(
-  //     quadrupleCounts.filter((val, i) => i < 20),
-  //     null,
-  //     0
-  //   )} (${quadrupleCounts.length});\n\nfirst 20 longer: ${JSON.stringify(
-  //     longerCounts.filter((val, i) => i < 20),
-  //     null,
-  //     0
-  //   )} (${longerCounts.length})\n\nuntouched: ${JSON.stringify(
-  //     untouched,
-  //     null,
-  //     0
-  //   )}(${untouched.length})\n\nmaxLen: ${maxLen} (${maxLen.length})`
-  // );
+  console.log(
+    `227 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+      singleClasses,
+      null,
+      4
+    )}\n${`\u001b[${33}m${`singleIds`}\u001b[${39}m`} = ${JSON.stringify(
+      singleIds,
+      null,
+      4
+    )}\n${`\u001b[${33}m${`singleNameonly`}\u001b[${39}m`} = ${JSON.stringify(
+      singleNameonly,
+      null,
+      4
+    )}`
+  );
+
+  // loop through all uglified values again and if the one letter name that
+  // matches current name's first letter (considering it might be id, class or
+  // just name), shorten that value up to that single letter.
+  for (let i = 0, len = res.length; i < len; i++) {
+    console.log("----------------------------------------");
+    console.log(
+      `248 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+    );
+    if (res[i].startsWith(".")) {
+      // if particular class name starts with a letter which hasn't been taken
+      if (!singleClasses[res[i].slice(1, 2)]) {
+        singleClasses[res[i].slice(1, 2)] = res[i];
+        console.log(
+          `255 shortened ${`\u001b[${33}m${
+            res[i]
+          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+            0,
+            2
+          )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
+            i
+          ].slice(1, 2)}]`}\u001b[${39}m`} = ${
+            singleClasses[res[i].slice(1, 2)]
+          }`
+        );
+        res[i] = res[i].slice(0, 2);
+      } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
+        console.log(
+          `269 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+            0,
+            2
+          )}`
+        );
+        // This means, particular class name was repeated in the list and
+        // was shortened. We must shorten it to the same value.
+        res[i] = res[i].slice(0, 2);
+      }
+    } else if (res[i].startsWith("#")) {
+      if (!singleIds[res[i].slice(1, 2)]) {
+        singleIds[res[i].slice(1, 2)] = res[i];
+        console.log(
+          `282 shortened ${`\u001b[${33}m${
+            res[i]
+          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+            0,
+            2
+          )}\u001b[${39}m`};`
+        );
+        res[i] = res[i].slice(0, 2);
+      } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
+        // This means, particular id name was repeated in the list and
+        // was shortened. We must shorten it to the same value.
+        res[i] = res[i].slice(0, 2);
+      }
+    } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
+      if (!singleNameonly[res[i].slice(0, 1)]) {
+        singleNameonly[res[i].slice(0, 1)] = res[i];
+        console.log(
+          `299 shortened ${`\u001b[${33}m${
+            res[i]
+          }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+            0,
+            1
+          )}\u001b[${39}m`}`
+        );
+        res[i] = res[i].slice(0, 1);
+      } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {
+        // This means, particular id name was repeated in the list and
+        // was shortened. We must shorten it to the same value.
+        res[i] = res[i].slice(0, 1);
+      }
+    }
+  }
 
   return res;
 }
 
 // main export
 export { uglifyById, uglifyArr, version };
-
-// word => [0,25]-[0,35]

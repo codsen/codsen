@@ -145,3 +145,97 @@ test(`09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don
     )
   );
 });
+
+test(`10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`, t => {
+  t.deepEqual(
+    uglifyArr([
+      ".class1",
+      ".class1",
+      ".class1",
+      ".class2",
+      ".class3",
+      ".class4",
+      ".class5",
+      ".class6",
+      ".class7",
+      ".class8",
+      ".class9",
+      ".class10"
+    ]),
+    [".f", ".f", ".f", ".g", ".h", ".i", ".j", ".k", ".l", ".m", ".n", ".b"],
+    "10"
+  );
+});
+
+test(`11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`, t => {
+  t.deepEqual(
+    uglifyArr([
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz",
+      "zzz"
+    ]),
+    ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+    "11"
+  );
+});
+
+test(`12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter name, repeating, cross-type`, t => {
+  t.deepEqual(
+    uglifyArr([
+      "a",
+      "a",
+      "a",
+      "#a",
+      "#a",
+      "#a",
+      ".a",
+      ".a",
+      ".a",
+      ".ab",
+      "#ab",
+      "ab",
+      ".ab",
+      "#ab",
+      "ab",
+      "aaa",
+      ".aaa",
+      "#aaa",
+      "bbb",
+      ".bbb",
+      "#bbk"
+    ]),
+    [
+      "a",
+      "a",
+      "a",
+      "#a",
+      "#a",
+      "#a",
+      ".a",
+      ".a",
+      ".a",
+      ".ab",
+      "#ab",
+      "ab",
+      ".ab",
+      "#ab",
+      "ab",
+      "f",
+      ".z",
+      "#o",
+      "i",
+      ".c",
+      "#ao" // <---------- notice it does not take #a because #a is already taken
+    ],
+    "12"
+  );
+});
