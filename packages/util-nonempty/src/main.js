@@ -23,4 +23,4 @@ function nonEmpty(input) {
   return false;
 }
 
-export { nonEmpty as default };
+export default nonEmpty;

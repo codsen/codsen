@@ -341,13 +341,13 @@ const prettifiedContents = `{
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-test.serial("01.01 - default sort, called on the whole folder", async t => {
+test("01.01 - default sort, called on the whole folder", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -389,7 +389,8 @@ test.serial("01.01 - default sort, called on the whole folder", async t => {
     )
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -397,10 +398,10 @@ test.serial("01.01 - default sort, called on the whole folder", async t => {
   t.deepEqual(await processedFileContents, sortedTestFileContents);
 });
 
-test.serial("01.02 - sort, -t (tabs) mode", async t => {
+test("01.02 - sort, -t (tabs) mode", async t => {
   // 1. fetch us an empty, random, temporary folder:
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
   fs.ensureDirSync(path.join(tempFolder, "test1"));
@@ -431,22 +432,21 @@ test.serial("01.02 - sort, -t (tabs) mode", async t => {
       );
     })
     .then(received =>
-      execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-        .then(() => received)
+      // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+      execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
     )
     .catch(err => t.fail(err));
 
   t.deepEqual(await processedFileContents, sortedTabbedTestFileContents);
 });
 
-test.serial("01.03 - sort, there's a broken JSON among files", async t => {
+test("01.03 - sort, there's a broken JSON among files", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -492,7 +492,8 @@ test.serial("01.03 - sort, there's a broken JSON among files", async t => {
     })
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -500,13 +501,13 @@ test.serial("01.03 - sort, there's a broken JSON among files", async t => {
   t.deepEqual(await processedFileContents, sortedTestFileContents);
 });
 
-test.serial("01.04 - silent mode", async t => {
+test("01.04 - silent mode", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -553,7 +554,8 @@ test.serial("01.04 - silent mode", async t => {
     })
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -561,8 +563,9 @@ test.serial("01.04 - silent mode", async t => {
   t.deepEqual(await processedFileContents, sortedTestFileContents);
 });
 
-test.serial("01.05 - fixes minified dotfiles in JSON format", async t => {
-  const tempFolder = "temp";
+test("01.05 - fixes minified dotfiles in JSON format", async t => {
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   const pathOfTheTestfile = path.join(tempFolder, ".eslintrc.json");
 
@@ -572,7 +575,8 @@ test.serial("01.05 - fixes minified dotfiles in JSON format", async t => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -580,7 +584,7 @@ test.serial("01.05 - fixes minified dotfiles in JSON format", async t => {
   t.deepEqual(await processedFileContents, prettifiedContents);
 });
 
-test.serial("01.06 - topmost level is array", async t => {
+test("01.06 - topmost level is array", async t => {
   const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -607,7 +611,8 @@ test.serial("01.06 - topmost level is array", async t => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -627,30 +632,30 @@ test.serial("01.06 - topmost level is array", async t => {
   );
 });
 
-test.serial(
-  "01.07 - when asked, sorts arrays which contain only strings",
-  async t => {
-    const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+test("01.07 - when asked, sorts arrays which contain only strings", async t => {
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-    const processedFileContents = fs
-      .writeFile(
-        pathOfTheTestfile,
-        JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
-      )
-      .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
-      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-      .then(received =>
-        execa
-          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-          .then(() => received)
-      )
-      .catch(err => t.fail(err));
+  const processedFileContents = fs
+    .writeFile(
+      pathOfTheTestfile,
+      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
+    )
+    .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
 
-    t.deepEqual(
-      await processedFileContents,
-      `[
+  t.deepEqual(
+    await processedFileContents,
+    `[
   "a",
   "A",
   "m",
@@ -658,37 +663,36 @@ test.serial(
   "z",
   "Z"
 ]\n`
-    );
-  }
-);
+  );
+});
 
-test.serial(
-  "01.08 - when not asked, does not sort arrays which contain only strings",
-  async t => {
-    const tempFolder = "temp";
-    fs.ensureDirSync(path.resolve(tempFolder));
-    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
-    const sourceArr = ["Z", "A", "z", "m", "M", "a"];
+test("01.08 - when not asked, does not sort arrays which contain only strings", async t => {
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+  const sourceArr = ["Z", "A", "z", "m", "M", "a"];
 
-    const processedFileContents = fs
-      .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
-      .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-      .then(received =>
-        execa
-          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-          .then(() => received)
-      )
-      .catch(err => t.fail(err));
-    t.deepEqual(
-      await processedFileContents,
-      `${JSON.stringify(sourceArr, null, 2)}\n`
-    );
-  }
-);
+  const processedFileContents = fs
+    .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
+    .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+  t.deepEqual(
+    await processedFileContents,
+    `${JSON.stringify(sourceArr, null, 2)}\n`
+  );
+});
 
-test.serial("01.09 - array in deeper levels sorted (upon request)", async t => {
-  const tempFolder = "temp";
+test("01.09 - array in deeper levels sorted (upon request)", async t => {
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
@@ -714,7 +718,8 @@ test.serial("01.09 - array in deeper levels sorted (upon request)", async t => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then(received =>
       execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
         .then(() => received)
     )
     .catch(err => t.fail(err));
@@ -738,7 +743,7 @@ test.serial("01.09 - array in deeper levels sorted (upon request)", async t => {
   );
 });
 
-test.serial("01.10 - version output mode", async t => {
+test("01.10 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.is(reportedVersion1.stdout, pack.version);
 
@@ -746,7 +751,7 @@ test.serial("01.10 - version output mode", async t => {
   t.is(reportedVersion2.stdout, pack.version);
 });
 
-test.serial("01.11 - help output mode", async t => {
+test("01.11 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.regex(reportedVersion1.stdout, /Usage/);
   t.regex(reportedVersion1.stdout, /Options/);
@@ -758,7 +763,7 @@ test.serial("01.11 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Example/);
 });
 
-test.serial("01.12 - no files found in the given directory", async t => {
+test("01.12 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";

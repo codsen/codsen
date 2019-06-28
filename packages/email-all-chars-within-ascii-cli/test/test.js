@@ -25,8 +25,9 @@ test("01.01 - called upon a single file which is healthy", async t => {
   // via the shell command (so it's "current"), then call CLI from CLI's location,
   // the "__dirname", along with all attributes.
 
-  const stdOutContents = await execa.shell(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`
+  const stdOutContents = await execa(
+    `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+    { shell: true }
   );
   t.regex(stdOutContents.stdout, /ALL OK/);
 });
@@ -46,8 +47,9 @@ test("01.02 - called upon a single file which contains non-ASCII symbol", async 
   // 3. call the the CLI
 
   const error1 = await t.throwsAsync(() =>
-    execa.shell(
-      `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`
+    execa(
+      `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+      { shell: true }
     )
   );
 
@@ -81,8 +83,9 @@ test("01.05 - no files found in the given directory", async t => {
 
   // CLI will complain no files could be found
   const error1 = await t.throwsAsync(() =>
-    execa.shell(
-      `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`
+    execa(
+      `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+      { shell: true }
     )
   );
 

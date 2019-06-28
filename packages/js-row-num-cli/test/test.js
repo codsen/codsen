@@ -23,7 +23,9 @@ test("01.01 - there are no usable files at all", async t => {
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), "zzz")
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        shell: true
+      })
     )
     .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
     .catch(err => t.fail(err));
@@ -61,7 +63,9 @@ test("01.02 - cli.js in the root", async t => {
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        shell: true
+      })
     )
     .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
     .catch(err => t.fail(err));
@@ -100,9 +104,9 @@ test("01.03 - pad override", async t => {
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
-      execa.shell(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 2`
-      )
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 2`, {
+        shell: true
+      })
     )
     .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
     .catch(err => t.fail(err));
@@ -143,11 +147,12 @@ test("01.04 - one file called with glob, another not processed", async t => {
       () => fs.writeFile(path.join(tempFolder, "file2.js"), originalFile) // <---- we write second file here
     )
     .then(() =>
-      execa.shell(
+      execa(
         `cd ${tempFolder} && ${path.join(
           __dirname,
           "../"
-        )}/cli.js -p 4 file1.js`
+        )}/cli.js -p 4 file1.js`,
+        { shell: true }
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "file1.js"), "utf8"))
@@ -195,8 +200,9 @@ test("01.05 - two files processed by calling glob with wildcard", async t => {
       () => fs.writeFile(path.join(tempFolder, "file2.js"), originalFile) // <---- we write second file here
     )
     .then(() =>
-      execa.shell(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 4 "*.js"`
+      execa(
+        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 4 "*.js"`,
+        { shell: true }
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "file1.js"), "utf8"))

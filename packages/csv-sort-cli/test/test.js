@@ -18,7 +18,7 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-test.serial("01.01 - there are no usable files at all", async t => {
+test("01.01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
 
@@ -51,10 +51,8 @@ test.serial("01.01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-test.serial(
-  "01.02 - only changelog present in the root - default (not --loud)",
-  async t => {
-    const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
+test("01.02 - only changelog present in the root - default (not --loud)", async t => {
+  const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
 123456,Bought table,10,,940
@@ -62,45 +60,44 @@ test.serial(
 123456,Bought chairs,20,,980
 `;
 
-    const intendedCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance
+  const intendedCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance
 123456,Client #1 payment,,1000,1940
 123456,Bought table,10,,940
 123456,Bought carpet,30,,950
 123456,Bought chairs,20,,980
 123456,Bought pens,10,,1000`;
 
-    // 1. fetch us an empty, random, temporary folder:
+  // 1. fetch us an empty, random, temporary folder:
 
-    // Re-route the test files into `temp/` folder instead for easier access when
-    // troubleshooting. Just comment out one of two:
-    const tempFolder = tempy.directory();
-    // const tempFolder = "temp";
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
-    // 2. write CSV, process it and read the new file
-    const newlyGeneratedCsvFile = fs
-      .writeFile(path.join(tempFolder, "testfile.csv"), originalCSV)
-      .then(() =>
-        execa(
-          `cd ${tempFolder} && ${path.join(
-            __dirname,
-            "../"
-          )}/cli.js testfile.csv`,
-          { shell: true }
-        )
+  // 2. write CSV, process it and read the new file
+  const newlyGeneratedCsvFile = fs
+    .writeFile(path.join(tempFolder, "testfile.csv"), originalCSV)
+    .then(() =>
+      execa(
+        `cd ${tempFolder} && ${path.join(
+          __dirname,
+          "../"
+        )}/cli.js testfile.csv`,
+        { shell: true }
       )
-      .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
-      .catch(err => t.fail(err));
+    )
+    .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
+    .catch(err => t.fail(err));
 
-    t.deepEqual(await newlyGeneratedCsvFile, intendedCSV);
+  t.deepEqual(await newlyGeneratedCsvFile, intendedCSV);
 
-    // 3. check, is original file intact
-    const originalCsvFile = fs.readFile(
-      path.join(tempFolder, "testfile.csv"),
-      "utf8"
-    );
-    t.deepEqual(await originalCsvFile, originalCSV);
-  }
-);
+  // 3. check, is original file intact
+  const originalCsvFile = fs.readFile(
+    path.join(tempFolder, "testfile.csv"),
+    "utf8"
+  );
+  t.deepEqual(await originalCsvFile, originalCSV);
+});
 
 //                                  *
 //                                  *

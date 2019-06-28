@@ -26,8 +26,8 @@ const clone = require("lodash.clonedeep");
 const partition = require("lodash.partition");
 const uniq = require("lodash.uniq");
 const camelCase = require("lodash.camelcase");
-const semverRegex = require("semver-regex");
-const semverCompare = require("semver-compare");
+// const semverRegex = require("semver-regex");
+// const semverCompare = require("semver-compare");
 // const bSlug = require("bitbucket-slug");
 const GithubSlugger = require("github-slugger");
 const slugger = new GithubSlugger();
@@ -822,6 +822,7 @@ function step11() {
 
 // second part
 async function writePackageJson(receivedPackageJsonObj) {
+  const backupPerfScript = pack.scripts.perf;
   if (
     (objectPath.has(lectrc, "various.addBlanks") && lectrc.various.addBlanks) ||
     (objectPath.has(pack, "lect.addBlanks") && pack.lect.addBlanks)
@@ -972,37 +973,37 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   const packDevDeps = pack.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0975 packDevDeps.ava = ${packDevDeps.ava}`);
+  //   console.log(`0976 packDevDeps.ava = ${packDevDeps.ava}`);
   //   const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
   // }
   const lectrcDevDeps = lectrc.package.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0980 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
+  //   console.log(`0981 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
   // }
 
   // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
-    // console.log(`0986 lect: processing ${key}`);
+    // console.log(`0987 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
     if (
-      !lectrcDevDeps.hasOwnProperty(key) &&
+      !Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
       (!isArr(pack.lect.various.devDependencies) ||
         !pack.lect.various.devDependencies.includes(key)) &&
       (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
-      // console.log(`0997 lect: we'll delete key "${key}" from dev dependencies`);
+      // console.log(`0998 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
-      lectrcDevDeps.hasOwnProperty(key) &&
-      packDevDeps.hasOwnProperty(key)
+      Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
+      Object.prototype.hasOwnProperty.call(packDevDeps, key)
     ) {
       // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-      // console.log(`1005 lect: ${key} stays ${pack.devDependencies[key]}`);
+      // console.log(`1006 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
     // console.log("\n-------\n");
   });
@@ -1013,11 +1014,11 @@ async function writePackageJson(receivedPackageJsonObj) {
     // Ensure it's not a CLI app or it is but it's not rollup-
     // dependency
     if (
-      (!packDevDeps.hasOwnProperty(key) &&
+      (!Object.prototype.hasOwnProperty.call(packDevDeps, key) &&
         !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1020 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1021 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1062,7 +1063,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1065 lect cli: key to write hard =${key}`);
+        // console.log(`1066 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1075,7 +1076,12 @@ async function writePackageJson(receivedPackageJsonObj) {
   // don't touch the config parts
   receivedPackageJsonObj.lect = pack.lect;
 
+  if (receivedPackageJsonObj.bin) {
+    objectPath.del(receivedPackageJsonObj, "devDependencies.benchmark");
+  }
+
   pack = receivedPackageJsonObj;
+  // pack.scripts.perf = backupPerfScript;
 
   step11();
 }
@@ -1174,7 +1180,7 @@ async function step10() {
             .manifest(dep)
             .then(pkg => pkg.version);
           // console.log(
-          //   `1177 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `1183 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
           //     retrievedVersion,
           //     null,
           //     4
@@ -1184,18 +1190,6 @@ async function step10() {
         }
       }
     }
-    if (objectPath.has(finalThing, "devDependencies.benchmark")) {
-      objectPath.set(finalThing, "scripts.perf", "node perf/check");
-
-      if (!finalThing.scripts.unittest.includes("perf")) {
-        objectPath.set(
-          finalThing,
-          "scripts.unittest",
-          "./node_modules/.bin/nyc ava && npm run coverage && npm run perf"
-        );
-      }
-    }
-
     // then write out whole thing:
     writePackageJson(finalThing);
   } else {
@@ -1622,7 +1616,7 @@ function step6() {
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
       if (DEBUG) {
-        console.log(`1614 clause #1`);
+        console.log(`1619 clause #1`);
       }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
@@ -1640,7 +1634,7 @@ function step6() {
       readmePiece.heading.startsWith("# ")
     ) {
       if (DEBUG) {
-        console.log(`1632 clause #2`);
+        console.log(`1637 clause #2`);
       }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
@@ -1686,7 +1680,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1680 clause #3`);
+        console.log(`1683 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

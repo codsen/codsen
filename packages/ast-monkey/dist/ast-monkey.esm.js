@@ -40,7 +40,7 @@ function monkey(inputOriginal, opts) {
     },
     opts
   );
-  if (opts.mode === "info") ;
+  if ( opts.mode === "info") ;
   const data = { count: 0, gatherPath: [], finding: null };
   const findings = [];
   let ko = false;
@@ -51,8 +51,8 @@ function monkey(inputOriginal, opts) {
   if (!existy(opts.key) && notUndef(opts.val)) {
     vo = true;
   }
-  if (opts.mode === "info") ;
-  if (opts.mode === "info") ;
+  if ( opts.mode === "info") ;
+  if ( opts.mode === "info") ;
   if (
     opts.mode === "arrayFirstOnly" &&
     Array.isArray(input) &&
@@ -63,12 +63,12 @@ function monkey(inputOriginal, opts) {
   input = traverse(input, (key, val, innerObj) => {
     let temp;
     data.count += 1;
-    if (opts.mode === "info") ;
-    if (opts.mode === "info") ;
-    if (opts.mode === "info") ;
+    if ( opts.mode === "info") ;
+    if ( opts.mode === "info") ;
+    if ( opts.mode === "info") ;
     data.gatherPath.length = innerObj.depth;
     data.gatherPath.push(data.count);
-    if (opts.mode === "info") ;
+    if ( opts.mode === "info") ;
     if (opts.mode === "get") {
       if (data.count === opts.index) {
         if (notUndef(val)) {
@@ -104,7 +104,7 @@ function monkey(inputOriginal, opts) {
         return val !== undefined ? val : key;
       }
     }
-    if (opts.mode === "info") ;
+    if ( opts.mode === "info") ;
     if (opts.mode === "set" && data.count === opts.index) {
       return opts.val;
     } else if (opts.mode === "drop" && data.count === opts.index) {

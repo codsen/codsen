@@ -404,8 +404,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             ? right(str, letterSeqStartAt)
             : null;
           if (
-            entStartsWith.hasOwnProperty(str[firstChar]) &&
-            entStartsWith[str[firstChar]].hasOwnProperty(str[secondChar])
+            Object.prototype.hasOwnProperty.call(
+              entStartsWith,
+              str[firstChar]
+            ) &&
+            Object.prototype.hasOwnProperty.call(
+              entStartsWith[str[firstChar]],
+              str[secondChar]
+            )
           ) {
             let tempEnt;
             let tempRes;
@@ -458,8 +464,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           const secondToLast = lastChar ? left(str, lastChar) : null;
           if (
             secondToLast !== null &&
-            entEndsWith.hasOwnProperty(str[lastChar]) &&
-            entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast])
+            Object.prototype.hasOwnProperty.call(entEndsWith, str[lastChar]) &&
+            Object.prototype.hasOwnProperty.call(
+              entEndsWith[str[lastChar]],
+              str[secondToLast]
+            )
           ) {
             let tempEnt;
             let tempRes;
@@ -589,7 +598,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 : null;
               let tempEnt;
               if (
-                brokenNamedEntities.hasOwnProperty(
+                Object.prototype.hasOwnProperty.call(
+                  brokenNamedEntities,
                   situation.charTrimmed.toLowerCase()
                 )
               ) {
@@ -613,12 +623,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValDecoded: decodedEntity
                 });
               } else if (
-                entStartsWithCaseInsensitive.hasOwnProperty(
+                Object.prototype.hasOwnProperty.call(
+                  entStartsWithCaseInsensitive,
                   str[firstChar].toLowerCase()
                 ) &&
-                entStartsWithCaseInsensitive[
-                  str[firstChar].toLowerCase()
-                ].hasOwnProperty(str[secondChar].toLowerCase())
+                Object.prototype.hasOwnProperty.call(
+                  entStartsWithCaseInsensitive[str[firstChar].toLowerCase()],
+                  str[secondChar].toLowerCase()
+                )
               ) {
                 let tempRes;
                 let matchedEntity = entStartsWithCaseInsensitive[
@@ -661,8 +673,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     continue;
                   }
                   if (
-                    entStartsWith.hasOwnProperty(str[firstChar]) &&
-                    entStartsWith[str[firstChar]].hasOwnProperty(
+                    Object.prototype.hasOwnProperty.call(
+                      entStartsWith,
+                      str[firstChar]
+                    ) &&
+                    Object.prototype.hasOwnProperty.call(
+                      entStartsWith[str[firstChar]],
                       str[secondChar]
                     ) &&
                     entStartsWith[str[firstChar]][str[secondChar]].includes(
@@ -848,8 +864,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         let matchedTemp;
         if (
           secondCharThatFollows &&
-          entStartsWith.hasOwnProperty(str[firstCharThatFollows]) &&
-          entStartsWith[str[firstCharThatFollows]].hasOwnProperty(
+          Object.prototype.hasOwnProperty.call(
+            entStartsWith,
+            str[firstCharThatFollows]
+          ) &&
+          Object.prototype.hasOwnProperty.call(
+            entStartsWith[str[firstCharThatFollows]],
             str[secondCharThatFollows]
           ) &&
           entStartsWith[str[firstCharThatFollows]][

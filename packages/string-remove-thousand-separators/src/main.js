@@ -1,5 +1,3 @@
-/* eslint security/detect-object-injection:0 */
-
 import replaceSlicesArr from "ranges-apply";
 import Slices from "ranges-push";
 import isObj from "lodash.isplainobject";
@@ -171,4 +169,4 @@ function remSep(str, originalOpts) {
   return res;
 }
 
-export { remSep as default };
+export default remSep;

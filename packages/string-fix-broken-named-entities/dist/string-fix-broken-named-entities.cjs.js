@@ -282,7 +282,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           var firstChar = letterSeqStartAt;
           var secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
-          if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstChar]) && allNamedHtmlEntities.entStartsWith[str[firstChar]].hasOwnProperty(str[secondChar])) {
+          if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[firstChar]], str[secondChar])) {
             var tempEnt;
             var tempRes;
             var temp1 = allNamedHtmlEntities.entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
@@ -316,7 +316,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[whatsOnTheLeft] !== "&" && str[whatsEvenMoreToTheLeft] !== "&" && str[i] === ";") {
           var lastChar = stringLeftRight.left(str, i);
           var secondToLast = lastChar ? stringLeftRight.left(str, lastChar) : null;
-          if (secondToLast !== null && allNamedHtmlEntities.entEndsWith.hasOwnProperty(str[lastChar]) && allNamedHtmlEntities.entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast])) {
+          if (secondToLast !== null && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entEndsWith, str[lastChar]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entEndsWith[str[lastChar]], str[secondToLast])) {
             var _tempEnt;
             var _tempRes;
             var _temp2 = allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
@@ -401,7 +401,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               var _firstChar = letterSeqStartAt;
               var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
               var _tempEnt2;
-              if (allNamedHtmlEntities.brokenNamedEntities.hasOwnProperty(situation.charTrimmed.toLowerCase())) {
+              if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
                 _tempEnt2 = situation.charTrimmed;
                 var _decodedEntity2 = allNamedHtmlEntities.decode("&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"));
                 rangesArr2.push({
@@ -412,7 +412,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeValEncoded: "&".concat(allNamedHtmlEntities.brokenNamedEntities[situation.charTrimmed.toLowerCase()], ";"),
                   rangeValDecoded: _decodedEntity2
                 });
-              } else if (allNamedHtmlEntities.entStartsWithCaseInsensitive.hasOwnProperty(str[_firstChar].toLowerCase()) && allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()].hasOwnProperty(str[_secondChar].toLowerCase())) {
+              } else if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWithCaseInsensitive, str[_firstChar].toLowerCase()) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()], str[_secondChar].toLowerCase())) {
                 var _tempRes2;
                 var matchedEntity = allNamedHtmlEntities.entStartsWithCaseInsensitive[str[_firstChar].toLowerCase()][str[_secondChar].toLowerCase()].reduce(function (gatheredSoFar, oneOfKnownEntities) {
                   var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1, {
@@ -441,7 +441,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     letterSeqStartAt = null;
                     return "continue";
                   }
-                  if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[_firstChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]].hasOwnProperty(str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(situation.charTrimmed)) {
+                  if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[_firstChar2]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[_firstChar2]], str[_secondChar2]) && allNamedHtmlEntities.entStartsWith[str[_firstChar2]][str[_secondChar2]].includes(situation.charTrimmed)) {
                     entitysValue = situation.charTrimmed;
                     if (i - whatsOnTheLeft - 1 === _tempEnt2.length) {
                       if (opts.decode) {
@@ -568,7 +568,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
         var secondCharThatFollows = firstCharThatFollows ? stringLeftRight.right(str, firstCharThatFollows) : null;
         var matchedTemp;
-        if (secondCharThatFollows && allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]].hasOwnProperty(str[secondCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
+        if (secondCharThatFollows && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[firstCharThatFollows]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]], str[secondCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
           var matchEntityOnTheRight = stringLeftRight.rightSeq.apply(void 0, [str, toDeleteAllAmpEndHere - 1].concat(_toConsumableArray(entity.slice(""))));
           if (matchEntityOnTheRight) {
             matchedTemp = entity;

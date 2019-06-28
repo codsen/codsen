@@ -1923,7 +1923,7 @@ function lint(str, originalOpts) {
       retObj.applicableRules[issueObj.name] = true;
     }
     if (
-      !opts.rules.hasOwnProperty(issueObj.name) ||
+      !Object.prototype.hasOwnProperty.call(opts.rules, issueObj.name) ||
       opts.rules[issueObj.name]
     ) {
       if (whereTo === "raw") {
@@ -2198,7 +2198,10 @@ function lint(str, originalOpts) {
         if (str.slice(logEspTag.headStartAt, i + 1) !== "--") {
           logEspTag.headEndAt = i + 1;
           logEspTag.headVal = str.slice(logEspTag.headStartAt, i + 1);
-          logEspTag.recognised = knownESPTags.hasOwnProperty(logEspTag.headVal);
+          logEspTag.recognised = Object.prototype.hasOwnProperty.call(
+            knownESPTags,
+            logEspTag.headVal
+          );
         }
       }
     }
@@ -2224,7 +2227,10 @@ function lint(str, originalOpts) {
         logEspTag.headEndAt = i + 1;
         logEspTag.headVal = str[i];
         logEspTag.type = "function-based";
-        logEspTag.recognised = knownESPTags.hasOwnProperty(str[i]);
+        logEspTag.recognised = Object.prototype.hasOwnProperty.call(
+          knownESPTags,
+          str[i]
+        );
       }
       if (
         logEspTag.headStartAt !== null &&

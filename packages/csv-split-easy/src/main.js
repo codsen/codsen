@@ -1,4 +1,4 @@
-/* eslint security/detect-object-injection:0, no-param-reassign:0 */
+/* eslint no-param-reassign:0 */
 
 import remSep from "string-remove-thousand-separators";
 import checkTypes from "check-types-mini";
@@ -216,4 +216,4 @@ function splitEasy(str, originalOpts) {
   return resArray;
 }
 
-export { splitEasy as default };
+export default splitEasy;

@@ -9,4 +9,4 @@ function arrayiffyString(something) {
   return something;
 }
 
-export { arrayiffyString as default };
+export default arrayiffyString;

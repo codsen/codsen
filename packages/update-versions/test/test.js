@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import path from "path";
 import test from "ava";
 import execa from "execa";
+import tempy from "tempy";
 import pMap from "p-map";
 import pack from "../package.json";
 import clone from "lodash.clonedeep";
@@ -104,8 +105,8 @@ const test2FileContents = [packTest12Lib3, rootPack];
 // Unit tests
 // -----------------------------------------------------------------------------
 
-test.serial("01 - monorepo", async t => {
-  const tempFolder = "temp";
+test("01 - monorepo", async t => {
+  const tempFolder = tempy.directory();
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
@@ -123,7 +124,9 @@ test.serial("01 - monorepo", async t => {
     )
   )
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        shell: true
+      })
     )
     .then(received => {
       if (
@@ -144,9 +147,9 @@ test.serial("01 - monorepo", async t => {
       })
     )
     .then(received =>
-      execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-        .then(() => received)
+      execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+        () => received
+      )
     )
     .then(contents => {
       // array comes in, but each JSON inside in unparsed and in string format:
@@ -180,8 +183,8 @@ test.serial("01 - monorepo", async t => {
     .catch(err => t.fail(err));
 });
 
-test.serial("02 - normal repo", async t => {
-  const tempFolder = "temp";
+test("02 - normal repo", async t => {
+  const tempFolder = tempy.directory();
 
   // 1. create folders:
   fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
@@ -196,7 +199,9 @@ test.serial("02 - normal repo", async t => {
     )
   )
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        shell: true
+      })
     )
     .then(received => {
       if (
@@ -218,9 +223,9 @@ test.serial("02 - normal repo", async t => {
       );
     })
     .then(received =>
-      execa
-        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-        .then(() => received)
+      execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+        () => received
+      )
     )
     .then(contents => {
       // array comes in, but each JSON inside in unparsed and in string format:
@@ -241,68 +246,65 @@ test.serial("02 - normal repo", async t => {
     .catch(err => t.fail(err));
 });
 
-test.serial(
-  "03 - deletes deps from devdeps if they are among normal deps",
-  async t => {
-    const tempFolder = "temp";
+test("03 - deletes deps from devdeps if they are among normal deps", async t => {
+  const tempFolder = tempy.directory();
 
-    // 0. We need to add redundant deps onto normal deps key in package.json:
-    const tweakedContents = clone(test2FileContents);
-    tweakedContents[1].dependencies.commitizen = "*";
-    // it will contain commitizen on both deps and dev deps
+  // 0. We need to add redundant deps onto normal deps key in package.json:
+  const tweakedContents = clone(test2FileContents);
+  tweakedContents[1].dependencies.commitizen = "*";
+  // it will contain commitizen on both deps and dev deps
 
-    // 1. create folders:
-    fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  // 1. create folders:
+  fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
-    // asynchronously write all test files
+  // asynchronously write all test files
 
-    await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-      fs.writeJson(
-        path.join(tempFolder, oneOfTestFilePaths),
-        tweakedContents[testIndex],
-        { spaces: 2 }
+  await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
+    fs.writeJson(
+      path.join(tempFolder, oneOfTestFilePaths),
+      tweakedContents[testIndex],
+      { spaces: 2 }
+    )
+  )
+    .then(() =>
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+        shell: true
+      })
+    )
+    .then(received => {
+      if (
+        received &&
+        received.stdout &&
+        received.stdout.includes("FetchError")
+      ) {
+        t.fail("Internet is down");
+      }
+    })
+    .then(() =>
+      pMap(test2FilePaths, oneOfPaths =>
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
-      .then(() =>
-        execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
-      )
-      .then(received => {
-        if (
-          received &&
-          received.stdout &&
-          received.stdout.includes("FetchError")
-        ) {
-          t.fail("Internet is down");
-        }
-      })
-      .then(() =>
-        pMap(test2FilePaths, oneOfPaths =>
-          fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
-        )
-      )
-      .then(contentsArray => {
-        return pMap(contentsArray, oneOfArrays =>
-          JSON.stringify(oneOfArrays, null, "\t")
-        );
-      })
-      .then(received =>
-        execa
-          .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
-          .then(() => received)
-      )
-      .then(contents => {
-        // array comes in, but each JSON inside in unparsed and in string format:
-        contents = contents.map(arr => JSON.parse(arr));
-        // root package.json devdeps should not contain the commitizen:
-        t.true(
-          !Object.keys(contents[1].devDependencies).includes("commitizen")
-        );
-      })
-      .catch(err => t.fail(err));
-  }
-);
+    .then(contentsArray => {
+      return pMap(contentsArray, oneOfArrays =>
+        JSON.stringify(oneOfArrays, null, "\t")
+      );
+    })
+    .then(received =>
+      execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+        shell: true
+      }).then(() => received)
+    )
+    .then(contents => {
+      // array comes in, but each JSON inside in unparsed and in string format:
+      contents = contents.map(arr => JSON.parse(arr));
+      // root package.json devdeps should not contain the commitizen:
+      t.true(!Object.keys(contents[1].devDependencies).includes("commitizen"));
+    })
+    .catch(err => t.fail(err));
+});
 
-test.serial("91 - version output mode", async t => {
+test("92 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.is(reportedVersion1.stdout, pack.version);
 
@@ -310,7 +312,7 @@ test.serial("91 - version output mode", async t => {
   t.is(reportedVersion2.stdout, pack.version);
 });
 
-test.serial("91 - help output mode", async t => {
+test("91 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.regex(reportedVersion1.stdout, /Usage/);
   t.regex(reportedVersion1.stdout, /Options/);
@@ -320,18 +322,26 @@ test.serial("91 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Options/);
 });
 
-test.serial("93 - no files found in the given directory", async t => {
-  const tempFolder = "temp";
+test("93 - no files found in the given directory", async t => {
+  const tempFolder = tempy.directory();
   // create folder:
   fs.ensureDirSync(path.resolve(tempFolder));
 
   // call execa on that empty folder
-  const stdOutContents = await execa.shell(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`
+  const stdOutContents = await execa(
+    `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`,
+    { shell: true }
   );
+  // console.log(
+  //   `${`\u001b[${33}m${`stdOutContents`}\u001b[${39}m`} = ${JSON.stringify(
+  //     stdOutContents,
+  //     null,
+  //     4
+  //   )}`
+  // );
   // CLI should exit with a non-error code zero:
-  t.is(stdOutContents.code, 0);
+  t.is(stdOutContents.exitCode, 0);
 
   // delete folder:
-  await execa.shell(`rm -rf ${path.join(__dirname, "../temp")}`);
+  await execa.command(`rm -rf ${path.join(__dirname, "../temp")}`);
 });

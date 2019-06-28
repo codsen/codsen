@@ -13,6 +13,7 @@
 
 .nyc_output
 coverage
+perf
 src
 t-util
 tap

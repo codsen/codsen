@@ -53,6 +53,7 @@
       {
         "devDependencies": [
           "**/*test.js",
+          "perf/**/*.*",
           "test/**/*.*",
           "test-util/**/*.*",
           "t-util/**/*.*",
