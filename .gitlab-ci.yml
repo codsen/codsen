@@ -29,7 +29,7 @@ deploy:
     - npm run bootstrap
     - echo '█████████████████████████████ 3 █████████████████████████████'
     - git status
-    - npm run all:test:only
+    - npm run test:only
     - echo '█████████████████████████████ 4 █████████████████████████████'
     - git status
     - npm run readme:generate
