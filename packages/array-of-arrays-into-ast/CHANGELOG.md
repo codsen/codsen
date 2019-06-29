@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://gitlab.com/codsen/codsen/compare/array-of-arrays-into-ast@1.8.27...array-of-arrays-into-ast@1.9.0) (2019-06-29)
+
+
+### Features
+
+* Add perf checking, recording and historic comparison ([173308e](https://gitlab.com/codsen/codsen/commit/173308e))
+
+
+
+
+
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

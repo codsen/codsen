@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
@@ -9,7 +9,7 @@
 
 import split from 'split-lines';
 
-var version = "1.0.0";
+var version = "1.0.1";
 
 function prepLine(str) {
   const split = str.split("|");

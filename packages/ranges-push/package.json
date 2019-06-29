@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Manage the array of ranges referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
@@ -167,8 +167,8 @@
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^4.2.4",
-    "string-collapse-leading-whitespace": "^1.12.26"
+    "ranges-merge": "^4.2.5",
+    "string-collapse-leading-whitespace": "^1.12.27"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -184,8 +184,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.27",
-    "lect": "^0.7.4",
+    "js-row-num-cli": "^1.5.28",
+    "lect": "^0.7.5",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.16.3",

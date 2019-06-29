@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/codsen/codsen/compare/string-uglify@1.1.1...string-uglify@1.2.0) (2019-06-29)
+
+
+### Features
+
+* Uglifies to single letter names by shortening to first letter ([02cb90b](https://gitlab.com/codsen/codsen/commit/02cb90b))
+
+
+
+
+
 ## 1.1.0 (2019-06-22)
 
 ### Features

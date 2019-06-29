@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://gitlab.com/codsen/codsen/compare/ast-compare@1.11.26...ast-compare@1.12.0) (2019-06-29)
+
+
+### Features
+
+* Add perf measurement, recording and historical comparison ([8266d21](https://gitlab.com/codsen/codsen/commit/8266d21))
+
+
+
+
+
 ## 1.11.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

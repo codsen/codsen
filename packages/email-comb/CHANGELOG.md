@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.3.0...email-comb@3.4.0) (2019-06-29)
+
+
+### Features
+
+* Add perf measurement, comparing and recording ([44f7a9e](https://gitlab.com/codsen/codsen/commit/44f7a9e))
+
+
+
+
+
 ## 3.3.0 (2019-06-25)
 
 ### Features
