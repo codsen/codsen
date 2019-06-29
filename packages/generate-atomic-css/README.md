@@ -14,7 +14,6 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Idea](#idea)
 - [API](#api)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -27,9 +26,9 @@ npm i generate-atomic-css
 
 ```js
 // consume via a CommonJS require:
-const splitByWhitespace = require("generate-atomic-css");
+const { generateAtomicCss, version } = require("generate-atomic-css");
 // or as an ES Module:
-import splitByWhitespace from "generate-atomic-css";
+import { generateAtomicCss, version } from "generate-atomic-css";
 ```
 
 Here's what you'll get:
@@ -42,127 +41,9 @@ Here's what you'll get:
 
 **[⬆ back to top](#)**
 
-## Idea
-
-```js
-const splitByWhitespace = require("generate-atomic-css");
-
-const res1 = splitByWhitespace("aaa bbb");
-console.log("res1 = " + JSON.stringify(res1, null, 4));
-// => ['aaa', 'bbb']
-
-const res2 = splitByWhitespace("\n\n\n\n  aaa \t\t\t bbb  \n\n\n");
-console.log("res2 = " + JSON.stringify(res2, null, 4));
-// => ['aaa', 'bbb']
-```
-
-**[⬆ back to top](#)**
-
 ## API
 
-```js
-splitByWhitespace(str, [opts]);
-```
-
-### API - Input
-
-| Input argument | Type         | Obligatory? | Description                                       |
-| -------------- | ------------ | ----------- | ------------------------------------------------- |
-| `str`          | String       | yes         | Source string upon which to perform the operation |
-| `opts`         | Plain object | no          | Optional Options Object, see below for its API    |
-
-**[⬆ back to top](#)**
-
-### An Optional Options Object
-
-| Optional Options Object's key | Type of its value                  | Default | Description                                                                                                                                                                 |
-| ----------------------------- | ---------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                             |                                    |         |
-| `ignoreRanges`                | Array of zero or more range arrays | `[]`    | Feed zero or more string slice ranges, arrays of two natural number indexes, like `[[1, 5], [6, 10]]`. Algorithm will not include these string index ranges in the results. |
-| }                             |                                    |         |
-
-The `opts.ignoreRanges` can be an empty array, but if it contains anything else then arrays inside, error will be thrown.
-
-**[⬆ back to top](#)**
-
-### `opts.ignoreRanges`
-
-It works like cropping the ranges. The characters in those ranges will not be included in the result.
-
-For example, use library [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
-
-```js
-const input = "some interesting {{text}} {% and %} {{ some more }} text.";
-const headsAndTails = strFindHeadsTails(
-  input,
-  ["{{", "{%"],
-  ["}}", "%}"]
-).reduce((acc, curr) => {
-  acc.push([curr.headsStartAt, curr.headsEndAt]);
-  acc.push([curr.tailsStartAt, curr.tailsEndAt]);
-  return acc;
-}, []);
-const res1 = split(input, {
-  ignoreRanges: headsAndTails
-});
-console.log(`res1 = ${JSON.stringify(res1, null, 4)}`);
-// => ['some', 'interesting', 'text', 'and', 'some', 'more', 'text.']
-```
-
-Equally, you can ignore whole variables, from _heads_ to _tails_, including variable's names:
-
-```js
-const input = "some interesting {{text}} {% and %} {{ some more }} text.";
-const wholeVariables = strFindHeadsTails(
-  input,
-  ["{{", "{%"],
-  ["}}", "%}"]
-).reduce((acc, curr) => {
-  acc.push([curr.headsStartAt, curr.tailsEndAt]);
-  return acc;
-}, []);
-const res2 = split(input, {
-  ignoreRanges: wholeVariables
-});
-// => ['some', 'interesting', 'text.']
-```
-
-We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) output, which is in format (index numbers are only examples):
-
-```js
-[
-  {
-    headsStartAt: ...,
-    headsEndAt: ...,
-    tailsStartAt: ...,
-    tailsEndAt: ...,
-  },
-  ...
-]
-```
-
-and with the help of `array.reduce` we turn it into our format:
-
-(first example with `res1`)
-
-```js
-[
-  [headsStartAt, headsEndAt],
-  [tailsStartAt, tailsEndAt],
-  ...
-]
-```
-
-(second example with `res2`)
-
-```js
-[
-  [headsStartAt, tailsEndAt],
-  ...
-]
-```
-
-**[⬆ back to top](#)**
+Work in progress
 
 ## Contributing
 
