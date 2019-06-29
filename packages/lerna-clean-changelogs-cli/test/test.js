@@ -114,7 +114,7 @@ test(`02.01 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed direct
         `cd ${tempFolder} && ${path.join(
           __dirname,
           "../"
-        )}/cli.js CHANGELOG.md`,
+        )}/cli.js changelog.md`,
         {
           shell: true
         }
