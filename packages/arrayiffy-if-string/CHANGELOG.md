@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.11.0](https://gitlab.com/codsen/codsen/compare/arrayiffy-if-string@3.10.26...arrayiffy-if-string@3.11.0) (2019-06-29)
-
+## 3.11.0 (2019-06-29)
 
 ### Features
 
-* Add perf measurement, recording and historical comparison ([1e70e2a](https://gitlab.com/codsen/codsen/commit/1e70e2a))
-
-
-
-
+- Add perf measurement, recording and historical comparison ([1e70e2a](https://gitlab.com/codsen/codsen/commit/1e70e2a))
 
 ## 3.10.0 (2019-01-20)
 

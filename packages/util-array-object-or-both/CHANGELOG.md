@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.27](https://gitlab.com/codsen/codsen/compare/util-array-object-or-both@2.7.26...util-array-object-or-both@2.7.27) (2019-06-29)
-
-**Note:** Version bump only for package util-array-object-or-both
-
-
-
-
-
 ## 2.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
