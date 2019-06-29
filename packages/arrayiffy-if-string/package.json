@@ -1,6 +1,6 @@
 {
   "name": "arrayiffy-if-string",
-  "version": "3.10.26",
+  "version": "3.11.0",
   "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
   "license": "MIT",
   "engines": {
@@ -174,8 +174,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.27",
-    "lect": "^0.7.4",
+    "js-row-num-cli": "^1.5.28",
+    "lect": "^0.7.5",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.16.3",
