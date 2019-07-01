@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="EmailComb" src="packages/email-comb/media/repo_logo.png" width="480" align="center">
+  <img alt="EmailComb" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/email-comb/media/repo_logo.png" width="480" align="center">
 </div>
 
 <div align="center"><p>Remove unused CSS from email templates</p></div>
@@ -14,7 +14,7 @@
 [![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
-<div align="center"><p>Online web app: [https://EmailComb.com](https://emailcomb.com)</p></div>
+<div align="center"><p>Online web app: <a href="https://EmailComb.com">https://EmailComb.com</a></p></div>
 
 ## Table of Contents
 
