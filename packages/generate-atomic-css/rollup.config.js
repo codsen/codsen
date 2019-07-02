@@ -44,7 +44,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["split-lines"],
+      external: ["split-lines", "string-left-right", "string-trim-spaces-only"],
       plugins: [
         strip({
           sourceMap: false
@@ -62,7 +62,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["split-lines"],
+      external: ["split-lines", "string-left-right", "string-trim-spaces-only"],
       plugins: [
         strip({
           sourceMap: false
@@ -72,6 +72,21 @@ export default commandLineArgs => {
         license({
           banner: licensePiece
         })
+      ]
+    },
+
+    // util.js build:
+    {
+      input: "src/util.js",
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: ["split-lines"],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        resolve(),
+        json(),
+        cleanup()
       ]
     }
   ];

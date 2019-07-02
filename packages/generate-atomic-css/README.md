@@ -26,18 +26,18 @@ npm i generate-atomic-css
 
 ```js
 // consume via a CommonJS require:
-const { generateAtomicCss, version } = require("generate-atomic-css");
+const { genAtomic, version } = require("generate-atomic-css");
 // or as an ES Module:
-import { generateAtomicCss, version } from "generate-atomic-css";
+import { genAtomic, version } from "generate-atomic-css";
 ```
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                              | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 2 KB |
+| Type                                                                                                    | Key in `package.json` | Path                              | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 12 KB |
 
 **[⬆ back to top](#)**
 

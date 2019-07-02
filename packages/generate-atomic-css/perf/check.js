@@ -6,7 +6,7 @@ const callerDir = path.resolve(".");
 const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 
 // setup
-const { generateAtomicCss } = require("../");
+const { genAtomic } = require("../");
 const source = `111
 222
 /*
@@ -21,7 +21,7 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS
 333
 444
 `;
-const testme = () => generateAtomicCss(source);
+const testme = () => genAtomic(source);
 
 // action
 runPerf(testme, callerDir);
