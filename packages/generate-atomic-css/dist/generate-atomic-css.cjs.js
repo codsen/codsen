@@ -32,7 +32,6 @@ function _typeof(obj) {
 
 var version = "1.0.1";
 
-var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -68,17 +67,12 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   var res = "";
   var subsetRange = subsetTo - subsetFrom;
-  var _loop = function _loop(i) {
+  for (var i = from; i <= to; i++) {
     var newStr = split[0];
     var threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    var threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     var threeDollarRegex = /\$\$\$/g;
-    var findingsThreeDollarWithUnits = newStr.match(threeDollarRegexWithUnits);
-    if (isArr(findingsThreeDollarWithUnits) && findingsThreeDollarWithUnits.length && i === from && i === 0) {
-      findingsThreeDollarWithUnits.forEach(function (valFound) {
-        newStr = newStr.replace(valFound, "".concat(i).padStart(valFound.length - 3 + String(to).length, " "));
-      });
-    }
-    res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegex, i)).trimEnd();
+    res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegexWithUnits, "".concat(i).concat(i === 0 ? "" : "$1").padStart(String(to).length + "$1".length)).replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
     if (typeof progressFn === "function") {
       currentPercentageDone = subsetFrom + Math.floor(i / (to - from) * subsetRange);
       if (currentPercentageDone !== lastPercentage) {
@@ -86,9 +80,6 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
         progressFn(currentPercentageDone);
       }
     }
-  };
-  for (var i = from; i <= to; i++) {
-    _loop(i);
   }
   return res;
 }
@@ -127,25 +118,20 @@ function genAtomic(str, originalOpts) {
   }
   var extractedConfig;
   if (opts.configOverride) {
-    console.log("042 config calc - case #1");
     extractedConfig = opts.configOverride;
   } else if (str.includes(CONFIGHEAD) && str.includes(CONFIGTAIL)) {
-    console.log("045 config calc - case #2");
     if (str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)) {
       throw new Error("generate-atomic-css: [THROW_ID_02] Config heads are after config tails!");
     }
     extractedConfig = str.slice(str.indexOf(CONFIGHEAD) + CONFIGHEAD.length, str.indexOf(CONFIGTAIL));
   } else if (str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && str.includes(CONTENTHEAD)) {
-    console.log("060 config calc - case #3");
     if (str.indexOf(CONFIGHEAD) > str.indexOf(CONTENTHEAD)) {
       throw new Error("generate-atomic-css: [THROW_ID_03] Config heads are after content heads!");
     }
     extractedConfig = str.slice(str.indexOf(CONFIGHEAD) + CONFIGHEAD.length, str.indexOf(CONTENTHEAD));
   } else {
-    console.log("071 config calc - case #4");
     extractedConfig = str;
   }
-  console.log("075 ".concat("\x1B[".concat(33, "m", "extractedConfig", "\x1B[", 39, "m"), " = ", JSON.stringify(extractedConfig, null, 4)));
   var frontPart = "";
   var endPart = "";
   if (opts.includeConfig || opts.includeHeadsAndTails) {
@@ -157,7 +143,6 @@ function genAtomic(str, originalOpts) {
   }
   if (str.includes(CONFIGHEAD)) {
     var matchedOpeningCSSCommentOnTheLeft = stringLeftRight.leftSeq(str, str.indexOf(CONFIGHEAD), "/", "*");
-    console.log("118 ".concat("\x1B[".concat(33, "m", "matchedOpeningCSSCommentOnTheLeft", "\x1B[", 39, "m"), " = ", JSON.stringify(matchedOpeningCSSCommentOnTheLeft, null, 4)));
     if (matchedOpeningCSSCommentOnTheLeft && matchedOpeningCSSCommentOnTheLeft.leftmostChar) {
       if (stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar)) {
         frontPart = "".concat(str.slice(0, stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1), "\n").concat(frontPart);
@@ -166,7 +151,6 @@ function genAtomic(str, originalOpts) {
   }
   if (str.includes(CONTENTTAIL)) {
     var matchedClosingCSSCommentOnTheRight = stringLeftRight.rightSeq(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length, "*", "/");
-    console.log("150 ".concat("\x1B[".concat(33, "m", "matchedClosingCSSCommentOnTheRight", "\x1B[", 39, "m"), " = ", JSON.stringify(matchedClosingCSSCommentOnTheRight, null, 4)));
     if (matchedClosingCSSCommentOnTheRight && matchedClosingCSSCommentOnTheRight.rightmostChar && stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)) {
       endPart = "".concat(endPart, "\n").concat(str.slice(stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)));
     }

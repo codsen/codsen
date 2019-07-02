@@ -12,7 +12,6 @@ import split from 'split-lines';
 
 var version = "1.0.1";
 
-const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -51,29 +50,20 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   let res = "";
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
-    let newStr = split[0];
+    const newStr = split[0];
     const threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
-    const findingsThreeDollarWithUnits = newStr.match(
-      threeDollarRegexWithUnits
-    );
-    if (
-      isArr(findingsThreeDollarWithUnits) &&
-      findingsThreeDollarWithUnits.length &&
-      i === from &&
-      i === 0
-    ) {
-      findingsThreeDollarWithUnits.forEach(valFound => {
-        newStr = newStr.replace(
-          valFound,
-          `${i}`.padStart(valFound.length - 3 + String(to).length, " ")
-        );
-      });
-    }
-    res += `${i === from ? "" : "\n"}${newStr.replace(
-      threeDollarRegex,
-      i
-    )}`.trimEnd();
+    res += `${i === from ? "" : "\n"}${newStr
+      .replace(
+        threeDollarRegexWithUnits,
+        `${i}${i === 0 ? "" : "$1"}`.padStart(String(to).length + "$1".length)
+      )
+      .replace(
+        threeDollarFollowedByWhitespaceRegex,
+        `${i}`.padEnd(String(to).length)
+      )
+      .replace(threeDollarRegex, i)}`.trimEnd();
     if (typeof progressFn === "function") {
       currentPercentageDone =
         subsetFrom + Math.floor((i / (to - from)) * subsetRange);
@@ -132,10 +122,8 @@ function genAtomic(str, originalOpts) {
   }
   let extractedConfig;
   if (opts.configOverride) {
-    console.log(`042 config calc - case #1`);
     extractedConfig = opts.configOverride;
   } else if (str.includes(CONFIGHEAD) && str.includes(CONFIGTAIL)) {
-    console.log(`045 config calc - case #2`);
     if (str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)) {
       throw new Error(
         `generate-atomic-css: [THROW_ID_02] Config heads are after config tails!`
@@ -150,7 +138,6 @@ function genAtomic(str, originalOpts) {
     !str.includes(CONFIGTAIL) &&
     str.includes(CONTENTHEAD)
   ) {
-    console.log(`060 config calc - case #3`);
     if (str.indexOf(CONFIGHEAD) > str.indexOf(CONTENTHEAD)) {
       throw new Error(
         `generate-atomic-css: [THROW_ID_03] Config heads are after content heads!`
@@ -161,16 +148,8 @@ function genAtomic(str, originalOpts) {
       str.indexOf(CONTENTHEAD)
     );
   } else {
-    console.log(`071 config calc - case #4`);
     extractedConfig = str;
   }
-  console.log(
-    `075 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`} = ${JSON.stringify(
-      extractedConfig,
-      null,
-      4
-    )}`
-  );
   let frontPart = "";
   let endPart = "";
   if (opts.includeConfig || opts.includeHeadsAndTails) {
@@ -186,13 +165,6 @@ function genAtomic(str, originalOpts) {
       str.indexOf(CONFIGHEAD),
       "/",
       "*"
-    );
-    console.log(
-      `118 ${`\u001b[${33}m${`matchedOpeningCSSCommentOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
-        matchedOpeningCSSCommentOnTheLeft,
-        null,
-        4
-      )}`
     );
     if (
       matchedOpeningCSSCommentOnTheLeft &&
@@ -212,13 +184,6 @@ function genAtomic(str, originalOpts) {
       str.indexOf(CONTENTTAIL) + CONTENTTAIL.length,
       "*",
       "/"
-    );
-    console.log(
-      `150 ${`\u001b[${33}m${`matchedClosingCSSCommentOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
-        matchedClosingCSSCommentOnTheRight,
-        null,
-        4
-      )}`
     );
     if (
       matchedClosingCSSCommentOnTheRight &&

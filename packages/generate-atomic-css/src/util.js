@@ -66,49 +66,58 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
     //   )}`
     // );
 
-    let newStr = split[0];
+    const newStr = split[0];
 
     const threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
 
-    // 1. first process three dollar sequences with units:
-    const findingsThreeDollarWithUnits = newStr.match(
-      threeDollarRegexWithUnits
-    );
-    if (
-      isArr(findingsThreeDollarWithUnits) &&
-      findingsThreeDollarWithUnits.length &&
-      i === from &&
-      i === 0
-    ) {
-      // console.log(
-      //   `085 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
-      //     findingsThreeDollarWithUnits,
-      //     null,
-      //     4
-      //   )}`
-      // );
-      // take care of padding zeros:
-      findingsThreeDollarWithUnits.forEach(valFound => {
-        newStr = newStr.replace(
-          valFound,
-          `${i}`.padStart(valFound.length - 3 + String(to).length, " ")
-        );
-      });
-    }
+    // // 1. first process three dollar sequences with units:
+    // const findingsThreeDollarWithUnits = newStr.match(
+    //   threeDollarRegexWithUnits
+    // );
+    // if (
+    //   isArr(findingsThreeDollarWithUnits) &&
+    //   findingsThreeDollarWithUnits.length &&
+    //   i === from &&
+    //   i === 0
+    // ) {
+    //   // console.log(
+    //   //   `086 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
+    //   //     findingsThreeDollarWithUnits,
+    //   //     null,
+    //   //     4
+    //   //   )}`
+    //   // );
+    //   // take care of padding zeros:
+    //   findingsThreeDollarWithUnits.forEach(valFound => {
+    //     newStr = newStr.replace(
+    //       valFound,
+    //       `${i}`.padStart(valFound.length - 3 + String(to).length, " ")
+    //     );
+    //   });
+    // }
 
     // console.log(
-    //   `101 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `102 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
     //     newStr,
     //     null,
     //     4
     //   )}`
     // );
 
-    res += `${i === from ? "" : "\n"}${newStr.replace(
-      threeDollarRegex,
-      i
-    )}`.trimEnd();
+    // first replace with padding (when whitespace or curlies follow), then
+    // replace what's left simply replacing the number
+    res += `${i === from ? "" : "\n"}${newStr
+      .replace(
+        threeDollarRegexWithUnits,
+        `${i}${i === 0 ? "" : "$1"}`.padStart(String(to).length + "$1".length)
+      )
+      .replace(
+        threeDollarFollowedByWhitespaceRegex,
+        `${i}`.padEnd(String(to).length)
+      )
+      .replace(threeDollarRegex, i)}`.trimEnd();
 
     // res += `${i === from ? "" : "\n"}${
     //   i === from && i === 0
@@ -119,7 +128,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
     //     : split[0].replace(/\$\$\$/g, i)
     // }`.trimEnd();
 
-    // console.log(`122 prepLine(): new res = "${res}"`);
+    // console.log(`131 prepLine(): new res = "${res}"`);
 
     if (typeof progressFn === "function") {
       currentPercentageDone =
@@ -131,8 +140,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
       }
     }
   }
-  // console.log(`134 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
-  // console.log(`135 prepLine(): about to return res="${res}"`);
+  // console.log(`143 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
+  // console.log(`144 prepLine(): about to return res="${res}"`);
   return res;
 }
 
@@ -162,7 +171,7 @@ export { prepLine, prepConfig };
 //     progressFrom +
 //     Math.floor((i / arr.length) * Math.floor(progressTo - progressFrom));
 //   console.log(
-//     `165 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+//     `174 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
 //       currentPercentageDone,
 //       null,
 //       4
@@ -172,7 +181,7 @@ export { prepLine, prepConfig };
 //   if (currentPercentageDone !== lastPercentage) {
 //     lastPercentage = currentPercentageDone;
 //     console.log(
-//       `175 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
+//       `184 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
 //     );
 //     progressFn(currentPercentageDone);
 //   }

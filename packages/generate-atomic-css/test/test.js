@@ -95,7 +95,7 @@ test(`03.01 - ${`\u001b[${33}m${`no config, no heads/tails`}\u001b[${39}m`} - de
     includeHeadsAndTails: false
   });
   t.is(generated.trim().split("\n").length, 501, "03.01.01");
-  t.true(generated.includes("padding-top: 0 !important", "03.01.02"));
+  t.true(generated.includes("padding-top:     0 !important", "03.01.02"));
   t.true(generated.includes("padding-top: 500px !important", "03.01.03"));
   t.true(
     generated.includes(".pt401 { padding-top: 401px !important; }", "03.01.04")
@@ -112,24 +112,25 @@ test(`03.02 - ${`\u001b[${33}m${`no config, no heads/tails`}\u001b[${39}m`} - mi
 .pt$$$ { padding-top: $$$px !important; }|5
 .pr$$$ { padding-right: $$$px !important; }|5
 .pb$$$ { padding-bottom: $$$px !important; }|5`.trim();
-  const ref = `.pt0 { padding-top: 0 !important; }
+  const ref = `.pt0 { padding-top:   0 !important; }
 .pt1 { padding-top: 1px !important; }
 .pt2 { padding-top: 2px !important; }
 .pt3 { padding-top: 3px !important; }
 .pt4 { padding-top: 4px !important; }
 .pt5 { padding-top: 5px !important; }
-.pr0 { padding-right: 0 !important; }
+.pr0 { padding-right:   0 !important; }
 .pr1 { padding-right: 1px !important; }
 .pr2 { padding-right: 2px !important; }
 .pr3 { padding-right: 3px !important; }
 .pr4 { padding-right: 4px !important; }
 .pr5 { padding-right: 5px !important; }
-.pb0 { padding-bottom: 0 !important; }
+.pb0 { padding-bottom:   0 !important; }
 .pb1 { padding-bottom: 1px !important; }
 .pb2 { padding-bottom: 2px !important; }
 .pb3 { padding-bottom: 3px !important; }
 .pb4 { padding-bottom: 4px !important; }
-.pb5 { padding-bottom: 5px !important; }`;
+.pb5 { padding-bottom: 5px !important; }
+`;
   const generated1 = genAtomic(source1, {
     includeConfig: false,
     includeHeadsAndTails: false
@@ -148,24 +149,25 @@ test(`03.03 - ${`\u001b[${33}m${`no config, no heads/tails`}\u001b[${39}m`} - mi
 | .pt$$$ { padding-top: $$$px !important; } |5|10|
 |.pr$$$ { padding-right: $$$px !important; } | 5|10
 .pb$$$ { padding-bottom: $$$px !important; } | 5 | 10 |`.trim();
-  const ref = ` .pt5 { padding-top: 5px !important; }
- .pt6 { padding-top: 6px !important; }
- .pt7 { padding-top: 7px !important; }
- .pt8 { padding-top: 8px !important; }
- .pt9 { padding-top: 9px !important; }
+  const ref = ` .pt5  { padding-top:  5px !important; }
+ .pt6  { padding-top:  6px !important; }
+ .pt7  { padding-top:  7px !important; }
+ .pt8  { padding-top:  8px !important; }
+ .pt9  { padding-top:  9px !important; }
  .pt10 { padding-top: 10px !important; }
-.pr5 { padding-right: 5px !important; }
-.pr6 { padding-right: 6px !important; }
-.pr7 { padding-right: 7px !important; }
-.pr8 { padding-right: 8px !important; }
-.pr9 { padding-right: 9px !important; }
+.pr5  { padding-right:  5px !important; }
+.pr6  { padding-right:  6px !important; }
+.pr7  { padding-right:  7px !important; }
+.pr8  { padding-right:  8px !important; }
+.pr9  { padding-right:  9px !important; }
 .pr10 { padding-right: 10px !important; }
-.pb5 { padding-bottom: 5px !important; }
-.pb6 { padding-bottom: 6px !important; }
-.pb7 { padding-bottom: 7px !important; }
-.pb8 { padding-bottom: 8px !important; }
-.pb9 { padding-bottom: 9px !important; }
-.pb10 { padding-bottom: 10px !important; }`;
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+`;
   const generated = genAtomic(source, {
     includeConfig: false,
     includeHeadsAndTails: false
@@ -184,8 +186,8 @@ test(`04.01 - ${`\u001b[${34}m${`no config, only heads/tails`}\u001b[${39}m`} - 
     includeConfig: false,
     includeHeadsAndTails: true
   });
-  t.is(generated.split("\n").length, 501, "04.01.01");
-  t.true(generated.includes("padding-top: 0 !important", "04.01.02"));
+  t.is(generated.split("\n").length, 504, "04.01.01");
+  t.true(generated.includes("padding-top:     0 !important", "04.01.02"));
   t.true(generated.includes("padding-top: 500px !important", "04.01.03"));
   t.true(
     generated.includes(".pt401 { padding-top: 401px !important; }", "04.01.04")
@@ -204,24 +206,25 @@ test(`04.02 - ${`\u001b[${34}m${`no config, only heads/tails`}\u001b[${39}m`} - 
 .pt$$$ { padding-top: $$$px !important; }|5
 .pr$$$ { padding-right: $$$px !important; }|5
 .pb$$$ { padding-bottom: $$$px !important; }|5`.trim();
-  const ref = `.pt0 { padding-top: 0 !important; }
+  const ref = `.pt0 { padding-top:   0 !important; }
 .pt1 { padding-top: 1px !important; }
 .pt2 { padding-top: 2px !important; }
 .pt3 { padding-top: 3px !important; }
 .pt4 { padding-top: 4px !important; }
 .pt5 { padding-top: 5px !important; }
-.pr0 { padding-right: 0 !important; }
+.pr0 { padding-right:   0 !important; }
 .pr1 { padding-right: 1px !important; }
 .pr2 { padding-right: 2px !important; }
 .pr3 { padding-right: 3px !important; }
 .pr4 { padding-right: 4px !important; }
 .pr5 { padding-right: 5px !important; }
-.pb0 { padding-bottom: 0 !important; }
+.pb0 { padding-bottom:   0 !important; }
 .pb1 { padding-bottom: 1px !important; }
 .pb2 { padding-bottom: 2px !important; }
 .pb3 { padding-bottom: 3px !important; }
 .pb4 { padding-bottom: 4px !important; }
-.pb5 { padding-bottom: 5px !important; }`;
+.pb5 { padding-bottom: 5px !important; }
+`;
   const generated1 = genAtomic(source1, {
     includeConfig: false,
     includeHeadsAndTails: true
@@ -242,24 +245,25 @@ test(`04.03 - ${`\u001b[${34}m${`no config, only heads/tails`}\u001b[${39}m`} - 
 | .pt$$$ { padding-top: $$$px !important; } |5|10|
 |.pr$$$ { padding-right: $$$px !important; } | 5|10
 .pb$$$ { padding-bottom: $$$px !important; } | 5 | 10 |`.trim();
-  const ref = ` .pt5 { padding-top: 5px !important; }
- .pt6 { padding-top: 6px !important; }
- .pt7 { padding-top: 7px !important; }
- .pt8 { padding-top: 8px !important; }
- .pt9 { padding-top: 9px !important; }
+  const ref = ` .pt5  { padding-top:  5px !important; }
+ .pt6  { padding-top:  6px !important; }
+ .pt7  { padding-top:  7px !important; }
+ .pt8  { padding-top:  8px !important; }
+ .pt9  { padding-top:  9px !important; }
  .pt10 { padding-top: 10px !important; }
-.pr5 { padding-right: 5px !important; }
-.pr6 { padding-right: 6px !important; }
-.pr7 { padding-right: 7px !important; }
-.pr8 { padding-right: 8px !important; }
-.pr9 { padding-right: 9px !important; }
+.pr5  { padding-right:  5px !important; }
+.pr6  { padding-right:  6px !important; }
+.pr7  { padding-right:  7px !important; }
+.pr8  { padding-right:  8px !important; }
+.pr9  { padding-right:  9px !important; }
 .pr10 { padding-right: 10px !important; }
-.pb5 { padding-bottom: 5px !important; }
-.pb6 { padding-bottom: 6px !important; }
-.pb7 { padding-bottom: 7px !important; }
-.pb8 { padding-bottom: 8px !important; }
-.pb9 { padding-bottom: 9px !important; }
-.pb10 { padding-bottom: 10px !important; }`;
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+`;
   const generated = genAtomic(source, {
     includeConfig: false,
     includeHeadsAndTails: true
@@ -316,9 +320,9 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   const ref = `/* zzz */
 
 /* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
-.pb5  { padding-bottom:  5px !important; }
-.pb6  { padding-bottom:  6px !important; }
-.pb7  { padding-bottom:  7px !important; }
+.pb5 { padding-bottom: 5px !important; }
+.pb6 { padding-bottom: 6px !important; }
+.pb7 { padding-bottom: 7px !important; }
 
 .mt0 { margin-top:   0 !important; }
 .mt1 { margin-top: 1px !important; }
@@ -345,9 +349,9 @@ test(`04.06 - ${`\u001b[${34}m${`no config, only heads/tails`}\u001b[${39}m`} - 
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */`;
   const ref = `/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
-.pb5  { padding-bottom:  5px !important; }
-.pb6  { padding-bottom:  6px !important; }
-.pb7  { padding-bottom:  7px !important; }
+.pb5 { padding-bottom: 5px !important; }
+.pb6 { padding-bottom: 6px !important; }
+.pb7 { padding-bottom: 7px !important; }
 
 .mt0 { margin-top:   0 !important; }
 .mt1 { margin-top: 1px !important; }
@@ -501,23 +505,23 @@ test(`05.03 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m
 ${source}
 ${CONFIGTAIL}
 ${CONTENTHEAD} */
- .pt5 { padding-top: 5px !important; }
- .pt6 { padding-top: 6px !important; }
- .pt7 { padding-top: 7px !important; }
- .pt8 { padding-top: 8px !important; }
- .pt9 { padding-top: 9px !important; }
+ .pt5  { padding-top:  5px !important; }
+ .pt6  { padding-top:  6px !important; }
+ .pt7  { padding-top:  7px !important; }
+ .pt8  { padding-top:  8px !important; }
+ .pt9  { padding-top:  9px !important; }
  .pt10 { padding-top: 10px !important; }
-.pr5 { padding-right: 5px !important; }
-.pr6 { padding-right: 6px !important; }
-.pr7 { padding-right: 7px !important; }
-.pr8 { padding-right: 8px !important; }
-.pr9 { padding-right: 9px !important; }
+.pr5  { padding-right:  5px !important; }
+.pr6  { padding-right:  6px !important; }
+.pr7  { padding-right:  7px !important; }
+.pr8  { padding-right:  8px !important; }
+.pr9  { padding-right:  9px !important; }
 .pr10 { padding-right: 10px !important; }
-.pb5 { padding-bottom: 5px !important; }
-.pb6 { padding-bottom: 6px !important; }
-.pb7 { padding-bottom: 7px !important; }
-.pb8 { padding-bottom: 8px !important; }
-.pb9 { padding-bottom: 9px !important; }
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
 .pb10 { padding-bottom: 10px !important; }
 /* ${CONTENTTAIL} */
 `;
