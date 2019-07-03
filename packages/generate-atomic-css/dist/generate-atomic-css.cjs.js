@@ -32,6 +32,7 @@ function _typeof(obj) {
 
 var version = "1.0.1";
 
+var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -67,12 +68,20 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   var res = "";
   var subsetRange = subsetTo - subsetFrom;
-  for (var i = from; i <= to; i++) {
+  var _loop = function _loop(i) {
     var newStr = split[0];
-    var threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    var threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
+    var unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     var threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     var threeDollarRegex = /\$\$\$/g;
-    res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegexWithUnits, "".concat(i).concat(i === 0 ? "" : "$1").padStart(String(to).length + "$1".length)).replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
+    var findingsThreeDollarWithUnits = newStr.match(threeDollarRegexWithUnits);
+    if (isArr(findingsThreeDollarWithUnits) && findingsThreeDollarWithUnits.length
+    ) {
+        findingsThreeDollarWithUnits.forEach(function (valFound) {
+          newStr = newStr.replace(valFound, "".concat(i).concat(i === 0 ? "" : unitsOnly.exec(valFound)[0]).padStart(valFound.length - 3 + String(to).length));
+        });
+      }
+    res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(subsetFrom + i / (to - from) * subsetRange);
       if (currentPercentageDone !== lastPercentage) {
@@ -80,6 +89,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
         progressFn(currentPercentageDone);
       }
     }
+  };
+  for (var i = from; i <= to; i++) {
+    _loop(i);
   }
   return res;
 }

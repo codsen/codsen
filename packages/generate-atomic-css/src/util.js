@@ -54,65 +54,76 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   // console.log(`\n\n`);
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
-    // console.log("\n\n");
-    // console.log(
-    //   `059 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`} i = ${`\u001b[${31}m${i}\u001b[${39}m`}`
-    // );
-    // console.log(
-    //   `062 ${`\u001b[${33}m${`split[0]`}\u001b[${39}m`} = ${JSON.stringify(
-    //     split[0],
-    //     null,
-    //     4
-    //   )}`
-    // );
+    console.log("\n\n");
+    console.log(
+      `059 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`} i = ${`\u001b[${31}m${i}\u001b[${39}m`}`
+    );
+    console.log(
+      `062 ${`\u001b[${33}m${`split[0]`}\u001b[${39}m`} = ${JSON.stringify(
+        split[0],
+        null,
+        4
+      )}`
+    );
 
-    const newStr = split[0];
+    let newStr = split[0];
 
-    const threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    const threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
+    const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
 
     // // 1. first process three dollar sequences with units:
-    // const findingsThreeDollarWithUnits = newStr.match(
-    //   threeDollarRegexWithUnits
-    // );
-    // if (
-    //   isArr(findingsThreeDollarWithUnits) &&
-    //   findingsThreeDollarWithUnits.length &&
-    //   i === from &&
-    //   i === 0
-    // ) {
-    //   // console.log(
-    //   //   `086 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
-    //   //     findingsThreeDollarWithUnits,
-    //   //     null,
-    //   //     4
-    //   //   )}`
-    //   // );
-    //   // take care of padding zeros:
-    //   findingsThreeDollarWithUnits.forEach(valFound => {
-    //     newStr = newStr.replace(
-    //       valFound,
-    //       `${i}`.padStart(valFound.length - 3 + String(to).length, " ")
-    //     );
-    //   });
-    // }
+    const findingsThreeDollarWithUnits = newStr.match(
+      threeDollarRegexWithUnits
+    );
+    console.log(
+      `081 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
+        findingsThreeDollarWithUnits,
+        null,
+        4
+      )}`
+    );
+    if (
+      isArr(findingsThreeDollarWithUnits) &&
+      findingsThreeDollarWithUnits.length // &&
+      // i === from &&
+      // i === 0
+    ) {
+      console.log(
+        `094 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
+          findingsThreeDollarWithUnits,
+          null,
+          4
+        )}`
+      );
+      // take care of padding zeros:
+      findingsThreeDollarWithUnits.forEach(valFound => {
+        newStr = newStr.replace(
+          valFound,
+          `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
+            valFound.length - 3 + String(to).length
+          )
+        );
+      });
+    }
 
-    // console.log(
-    //   `102 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
-    //     newStr,
-    //     null,
-    //     4
-    //   )}`
-    // );
+    console.log(
+      `112 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
+        newStr,
+        null,
+        4
+      )}`
+    );
+
+    // .replace(
+    //   threeDollarRegexWithUnits,
+    //   `${i}${i === 0 ? "" : "$2"}`.padStart(String(to).length + "$1".length)
+    // )
 
     // first replace with padding (when whitespace or curlies follow), then
     // replace what's left simply replacing the number
     res += `${i === from ? "" : "\n"}${newStr
-      .replace(
-        threeDollarRegexWithUnits,
-        `${i}${i === 0 ? "" : "$1"}`.padStart(String(to).length + "$1".length)
-      )
       .replace(
         threeDollarFollowedByWhitespaceRegex,
         `${i}`.padEnd(String(to).length)
@@ -128,7 +139,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
     //     : split[0].replace(/\$\$\$/g, i)
     // }`.trimEnd();
 
-    // console.log(`131 prepLine(): new res = "${res}"`);
+    // console.log(`142 prepLine(): new res = "${res}"`);
 
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(
@@ -141,8 +152,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
       }
     }
   }
-  // console.log(`144 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
-  // console.log(`145 prepLine(): about to return res="${res}"`);
+  // console.log(`155 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
+  // console.log(`156 prepLine(): about to return res="${res}"`);
   return res;
 }
 
@@ -172,7 +183,7 @@ export { prepLine, prepConfig, isStr };
 //     progressFrom +
 //     Math.floor((i / arr.length) * Math.floor(progressTo - progressFrom));
 //   console.log(
-//     `175 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+//     `186 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
 //       currentPercentageDone,
 //       null,
 //       4
@@ -182,7 +193,7 @@ export { prepLine, prepConfig, isStr };
 //   if (currentPercentageDone !== lastPercentage) {
 //     lastPercentage = currentPercentageDone;
 //     console.log(
-//       `185 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
+//       `196 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
 //     );
 //     progressFn(currentPercentageDone);
 //   }

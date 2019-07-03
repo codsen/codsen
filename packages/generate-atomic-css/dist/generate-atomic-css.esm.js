@@ -12,6 +12,7 @@ import split from 'split-lines';
 
 var version = "1.0.1";
 
+const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -50,15 +51,28 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   let res = "";
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
-    const newStr = split[0];
-    const threeDollarRegexWithUnits = /\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
+    let newStr = split[0];
+    const threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
+    const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
+    const findingsThreeDollarWithUnits = newStr.match(
+      threeDollarRegexWithUnits
+    );
+    if (
+      isArr(findingsThreeDollarWithUnits) &&
+      findingsThreeDollarWithUnits.length
+    ) {
+      findingsThreeDollarWithUnits.forEach(valFound => {
+        newStr = newStr.replace(
+          valFound,
+          `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
+            valFound.length - 3 + String(to).length
+          )
+        );
+      });
+    }
     res += `${i === from ? "" : "\n"}${newStr
-      .replace(
-        threeDollarRegexWithUnits,
-        `${i}${i === 0 ? "" : "$1"}`.padStart(String(to).length + "$1".length)
-      )
       .replace(
         threeDollarFollowedByWhitespaceRegex,
         `${i}`.padEnd(String(to).length)
