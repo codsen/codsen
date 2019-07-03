@@ -238,7 +238,7 @@ function genAtomic(str, originalOpts) {
   }
   console.log("--------------------------------------------------");
   console.log(
-    `241 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+    `241 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
   );
 
   // tackle config
@@ -246,7 +246,7 @@ function genAtomic(str, originalOpts) {
     frontPart = `/* ${CONFIGHEAD}\n${extractedConfig.trim()}\n${CONFIGTAIL}\n${frontPart}`;
     console.log("--------------------------------------------------");
     console.log(
-      `249 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+      `249 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
 
@@ -284,11 +284,16 @@ function genAtomic(str, originalOpts) {
         // add that content at the top:
         frontPart = `${str.slice(
           0,
-          left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1
-        )}\n${frontPart}`;
+          matchedOpeningCSSCommentOnTheLeft.leftmostChar
+        )}${
+          frontPart.trim().startsWith("/*") ||
+          (!opts.includeConfig && !opts.includeHeadsAndTails)
+            ? ""
+            : "/* "
+        }${frontPart}`;
         console.log("--------------------------------------------------");
         console.log(
-          `291 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+          `296 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
         );
       }
     }
@@ -297,25 +302,28 @@ function genAtomic(str, originalOpts) {
     frontPart = `/* ${frontPart}`;
     console.log("--------------------------------------------------");
     console.log(
-      `300 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+      `305 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
+  console.log(
+    `309 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+  );
 
   console.log(
-    `305 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+    `313 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
       rawContentAbove,
       null,
       4
     )}`
   );
   if (isStr(rawContentAbove)) {
-    console.log(`312 tackle pending rawContentAbove`);
+    console.log(`320 tackle pending rawContentAbove`);
     // precaution if rawContentAbove starts but not ends with CSS comment
     if (
       rawContentAbove.trim().startsWith("/*") &&
       !rawContentAbove.trim().endsWith("*/")
     ) {
-      console.log(`318 add closing CSS comment block to rawContentAbove`);
+      console.log(`326 add closing CSS comment block to rawContentAbove`);
       rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
         left(rawContentAbove, rawContentAbove.length) + 1
       )}`;
@@ -330,7 +338,7 @@ function genAtomic(str, originalOpts) {
     }${frontPart}`;
     console.log("--------------------------------------------------");
     console.log(
-      `333 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+      `341 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
 
@@ -345,41 +353,46 @@ function genAtomic(str, originalOpts) {
       "/"
     );
     console.log(
-      `348 ${`\u001b[${33}m${`matchedClosingCSSCommentOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
+      `356 ${`\u001b[${33}m${`matchedClosingCSSCommentOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
         matchedClosingCSSCommentOnTheRight,
         null,
         4
       )}`
     );
 
+    console.log(
+      `364 right(str, ${
+        matchedClosingCSSCommentOnTheRight.rightmostChar
+      }) = ${right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)}`
+    );
     if (
       matchedClosingCSSCommentOnTheRight &&
       matchedClosingCSSCommentOnTheRight.rightmostChar &&
       right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)
     ) {
       // add that content at the bottom:
-      endPart = `${endPart}\n${str.slice(
-        right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)
+      endPart = `${endPart}${str.slice(
+        matchedClosingCSSCommentOnTheRight.rightmostChar + 1
       )}`;
       console.log("--------------------------------------------------");
       console.log(
-        `366 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+        `379 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
       );
     }
   }
 
   console.log("--------------------------------------------------");
   console.log(
-    `373 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n${endPart}\n\n`
+    `386 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
   );
 
   function trimIfNeeded(str) {
     // if config and heads/tails are turned off, don't trim
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-      console.log(`379 didn't trim`);
+      console.log(`392 didn't trim`);
       return str;
     }
-    console.log(`382 trim`);
+    console.log(`395 trim`);
     return str.trim();
   }
 
@@ -389,12 +402,12 @@ function genAtomic(str, originalOpts) {
       opts.reportProgressFunc,
       opts.reportProgressFuncFrom,
       opts.reportProgressFuncTo,
-      opts.includeConfig || opts.includeHeadsAndTails
+      true // opts.includeConfig || opts.includeHeadsAndTails
     )}${endPart}`
   )}\n`;
 
   console.log(
-    `397\n\n\nFINAL RES:
+    `411\n\n\nFINAL RES:
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}
 ${finalRes}
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}

@@ -35,9 +35,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 5 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 4 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 12 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 10 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 16 KB |
 
 **[⬆ back to top](#)**
 

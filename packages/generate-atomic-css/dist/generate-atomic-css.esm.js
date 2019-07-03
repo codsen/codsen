@@ -266,8 +266,13 @@ function genAtomic(str, originalOpts) {
       if (left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) !== null) {
         frontPart = `${str.slice(
           0,
-          left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1
-        )}\n${frontPart}`;
+          matchedOpeningCSSCommentOnTheLeft.leftmostChar
+        )}${
+          frontPart.trim().startsWith("/*") ||
+          (!opts.includeConfig && !opts.includeHeadsAndTails)
+            ? ""
+            : "/* "
+        }${frontPart}`;
       }
     }
   } else if (opts.includeHeadsAndTails && !frontPart.trim().startsWith("/*")) {
@@ -302,8 +307,8 @@ function genAtomic(str, originalOpts) {
       matchedClosingCSSCommentOnTheRight.rightmostChar &&
       right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)
     ) {
-      endPart = `${endPart}\n${str.slice(
-        right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)
+      endPart = `${endPart}${str.slice(
+        matchedClosingCSSCommentOnTheRight.rightmostChar + 1
       )}`;
     }
   }
@@ -319,7 +324,7 @@ function genAtomic(str, originalOpts) {
       opts.reportProgressFunc,
       opts.reportProgressFuncFrom,
       opts.reportProgressFuncTo,
-      opts.includeConfig || opts.includeHeadsAndTails
+      true
     )}${endPart}`
   )}\n`;
   return finalRes;

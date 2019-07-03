@@ -212,7 +212,7 @@ function genAtomic(str, originalOpts) {
     var matchedOpeningCSSCommentOnTheLeft = stringLeftRight.leftSeq(str, str.indexOf(CONFIGHEAD), "/", "*");
     if (matchedOpeningCSSCommentOnTheLeft && matchedOpeningCSSCommentOnTheLeft.leftmostChar) {
       if (stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) !== null) {
-        frontPart = "".concat(str.slice(0, stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1), "\n").concat(frontPart);
+        frontPart = "".concat(str.slice(0, matchedOpeningCSSCommentOnTheLeft.leftmostChar)).concat(frontPart.trim().startsWith("/*") || !opts.includeConfig && !opts.includeHeadsAndTails ? "" : "/* ").concat(frontPart);
       }
     }
   } else if (opts.includeHeadsAndTails && !frontPart.trim().startsWith("/*")) {
@@ -227,7 +227,7 @@ function genAtomic(str, originalOpts) {
   if (str.includes(CONTENTTAIL)) {
     var matchedClosingCSSCommentOnTheRight = stringLeftRight.rightSeq(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length, "*", "/");
     if (matchedClosingCSSCommentOnTheRight && matchedClosingCSSCommentOnTheRight.rightmostChar && stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)) {
-      endPart = "".concat(endPart, "\n").concat(str.slice(stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)));
+      endPart = "".concat(endPart).concat(str.slice(matchedClosingCSSCommentOnTheRight.rightmostChar + 1));
     }
   }
   function trimIfNeeded(str) {
@@ -236,7 +236,8 @@ function genAtomic(str, originalOpts) {
     }
     return str.trim();
   }
-  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, opts.includeConfig || opts.includeHeadsAndTails)).concat(endPart)), "\n");
+  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true
+  )).concat(endPart)), "\n");
   return finalRes;
 }
 

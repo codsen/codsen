@@ -44,7 +44,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["split-lines", "string-left-right", "string-trim-spaces-only"],
+      external: ["split-lines", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -62,7 +62,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["split-lines", "string-left-right", "string-trim-spaces-only"],
+      external: ["split-lines", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
