@@ -37,6 +37,10 @@ function isStr(something) {
   return typeof something === "string";
 }
 function trimBlankLinesFromLinesArray(lineArr) {
+  var trim = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  if (!trim) {
+    return lineArr;
+  }
   var copyArr = Array.from(lineArr);
   if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
@@ -96,9 +100,10 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   return res;
 }
 function prepConfig(str, progressFn, progressFrom, progressTo) {
+  var trim = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
   return trimBlankLinesFromLinesArray(split(str).map(function (rowStr, i, arr) {
     return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1)) : rowStr;
-  })).join("\n");
+  }), trim).join("\n");
 }
 
 var headsAndTails = {
@@ -206,7 +211,7 @@ function genAtomic(str, originalOpts) {
   if (str.includes(CONFIGHEAD)) {
     var matchedOpeningCSSCommentOnTheLeft = stringLeftRight.leftSeq(str, str.indexOf(CONFIGHEAD), "/", "*");
     if (matchedOpeningCSSCommentOnTheLeft && matchedOpeningCSSCommentOnTheLeft.leftmostChar) {
-      if (stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar)) {
+      if (stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) !== null) {
         frontPart = "".concat(str.slice(0, stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1), "\n").concat(frontPart);
       }
     }
@@ -225,7 +230,13 @@ function genAtomic(str, originalOpts) {
       endPart = "".concat(endPart, "\n").concat(str.slice(stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)));
     }
   }
-  var finalRes = "".concat("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo)).concat(endPart).trimEnd(), "\n");
+  function trimIfNeeded(str) {
+    if (!opts.includeConfig && !opts.includeHeadsAndTails) {
+      return str;
+    }
+    return str.trim();
+  }
+  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, opts.includeConfig || opts.includeHeadsAndTails)).concat(endPart)), "\n");
   return finalRes;
 }
 

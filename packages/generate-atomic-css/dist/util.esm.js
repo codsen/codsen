@@ -4,7 +4,10 @@ const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
-function trimBlankLinesFromLinesArray(lineArr) {
+function trimBlankLinesFromLinesArray(lineArr, trim = true) {
+  if (!trim) {
+    return lineArr;
+  }
   const copyArr = Array.from(lineArr);
   if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
@@ -78,7 +81,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   return res;
 }
-function prepConfig(str, progressFn, progressFrom, progressTo) {
+function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
   return trimBlankLinesFromLinesArray(
     split(str).map((rowStr, i, arr) =>
       rowStr.includes("$$$")
@@ -89,7 +92,8 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
             progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1)
           )
         : rowStr
-    )
+    ),
+    trim
   ).join("\n");
 }
 

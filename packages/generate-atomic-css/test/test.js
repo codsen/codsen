@@ -801,6 +801,7 @@ ${CONTENTHEAD} */
 test.todo(
   "05.06 - no config present, only content heads/tails, no old CSS, content on bottom"
 );
+
 test.todo(
   "05.07 - no config present, only content heads/tails, no old CSS, content wrapped around"
 );
@@ -870,9 +871,128 @@ test.todo("08.02 - generates from opts override, old CSS config present");
 // 09. full set present but neither config requested nor heads/tails requested
 // -----------------------------------------------------------------------------
 
-test.todo("09.01 - generates from old CSS config");
+test(`09.01 - ${`\u001b[${33}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #1`, t => {
+  const source = `a
 
-test.todo("09.02 - generates from opts override, old CSS config present");
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10
+
+.mt$$$ { margin-top: $$$px !important; } | 1
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+
+tralala
+
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: false
+    }),
+    `a
+
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+
+z
+`,
+    "09.01"
+  );
+});
+
+test(`09.02 - ${`\u001b[${33}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #2`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10
+
+.mt$$$ { margin-top: $$$px !important; } | 1
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+
+tralala
+
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: true
+    }),
+    `a
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z
+`,
+    "09.02"
+  );
+});
+
+test(`09.03 - ${`\u001b[${33}m${`config present, not requested (neither tails)`}\u001b[${39}m`} - case #3`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10
+
+.mt$$$ { margin-top: $$$px !important; } | 1
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+
+tralala
+
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: true,
+      includeHeadsAndTails: false
+    }),
+    `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10
+
+.mt$$$ { margin-top: $$$px !important; } | 1
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb5  { padding-bottom:  5px !important; }
+.pb6  { padding-bottom:  6px !important; }
+.pb7  { padding-bottom:  7px !important; }
+.pb8  { padding-bottom:  8px !important; }
+.pb9  { padding-bottom:  9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z
+`,
+    "09.03"
+  );
+});
 
 // -----------------------------------------------------------------------------
 // 10. opts.configOverride

@@ -16,7 +16,10 @@ const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
-function trimBlankLinesFromLinesArray(lineArr) {
+function trimBlankLinesFromLinesArray(lineArr, trim = true) {
+  if (!trim) {
+    return lineArr;
+  }
   const copyArr = Array.from(lineArr);
   if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
@@ -90,7 +93,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   return res;
 }
-function prepConfig(str, progressFn, progressFrom, progressTo) {
+function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
   return trimBlankLinesFromLinesArray(
     split(str).map((rowStr, i, arr) =>
       rowStr.includes("$$$")
@@ -101,7 +104,8 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
             progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1)
           )
         : rowStr
-    )
+    ),
+    trim
   ).join("\n");
 }
 
@@ -259,7 +263,7 @@ function genAtomic(str, originalOpts) {
       matchedOpeningCSSCommentOnTheLeft &&
       matchedOpeningCSSCommentOnTheLeft.leftmostChar
     ) {
-      if (left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar)) {
+      if (left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) !== null) {
         frontPart = `${str.slice(
           0,
           left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) + 1
@@ -303,12 +307,21 @@ function genAtomic(str, originalOpts) {
       )}`;
     }
   }
-  const finalRes = `${`${frontPart}${prepConfig(
-    extractedConfig,
-    opts.reportProgressFunc,
-    opts.reportProgressFuncFrom,
-    opts.reportProgressFuncTo
-  )}${endPart}`.trimEnd()}\n`;
+  function trimIfNeeded(str) {
+    if (!opts.includeConfig && !opts.includeHeadsAndTails) {
+      return str;
+    }
+    return str.trim();
+  }
+  const finalRes = `${trimIfNeeded(
+    `${frontPart}${prepConfig(
+      extractedConfig,
+      opts.reportProgressFunc,
+      opts.reportProgressFuncFrom,
+      opts.reportProgressFuncTo,
+      opts.includeConfig || opts.includeHeadsAndTails
+    )}${endPart}`
+  )}\n`;
   return finalRes;
 }
 
