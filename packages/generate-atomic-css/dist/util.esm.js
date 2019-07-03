@@ -93,4 +93,4 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
   ).join("\n");
 }
 
-export { isStr, prepConfig, prepLine };
+export { isArr, isStr, prepConfig, prepLine };

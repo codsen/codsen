@@ -135,6 +135,12 @@ function genAtomic(str, originalOpts) {
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
+  if (
+    (!opts.configOverride && !str.includes("$$$")) ||
+    (isStr(opts.configOverride) && !opts.configOverride.includes("$$$"))
+  ) {
+    return str;
+  }
   let frontPart = "";
   let endPart = "";
   let rawContentAbove = "";
@@ -207,9 +213,30 @@ function genAtomic(str, originalOpts) {
     const contentTailsRegex = new RegExp(
       `(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`
     );
+    let stopFiltering = false;
+    const gatheredLinesAboveTopmostConfigLine = [];
     extractedConfig = str
+      .split("\n")
+      .filter(rowStr => {
+        if (stopFiltering) {
+          return true;
+        }
+        if (!rowStr.includes("$$$")) {
+          gatheredLinesAboveTopmostConfigLine.push(rowStr);
+          return false;
+        }
+        stopFiltering = true;
+        return true;
+      })
+      .join("\n")
       .replace(contentHeadsRegex, "")
       .replace(contentTailsRegex, "");
+    if (
+      isArr(gatheredLinesAboveTopmostConfigLine) &&
+      gatheredLinesAboveTopmostConfigLine.length
+    ) {
+      rawContentAbove = gatheredLinesAboveTopmostConfigLine.join("\n");
+    }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return "";

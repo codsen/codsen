@@ -177,7 +177,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
   ).join("\n");
 }
 
-export { prepLine, prepConfig, isStr };
+export { prepLine, prepConfig, isStr, isArr };
 
 //   currentPercentageDone =
 //     progressFrom +

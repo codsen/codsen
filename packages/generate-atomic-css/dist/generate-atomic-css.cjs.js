@@ -128,6 +128,9 @@ function genAtomic(str, originalOpts) {
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
+  if (!opts.configOverride && !str.includes("$$$") || isStr(opts.configOverride) && !opts.configOverride.includes("$$$")) {
+    return str;
+  }
   var frontPart = "";
   var endPart = "";
   var rawContentAbove = "";
@@ -173,7 +176,22 @@ function genAtomic(str, originalOpts) {
   } else {
     var contentHeadsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTHEAD, "(\\s*\\*\\s*\\/)*"));
     var contentTailsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTTAIL, "(\\s*\\*\\s*\\/)*"));
-    extractedConfig = str.replace(contentHeadsRegex, "").replace(contentTailsRegex, "");
+    var stopFiltering = false;
+    var gatheredLinesAboveTopmostConfigLine = [];
+    extractedConfig = str.split("\n").filter(function (rowStr) {
+      if (stopFiltering) {
+        return true;
+      }
+      if (!rowStr.includes("$$$")) {
+        gatheredLinesAboveTopmostConfigLine.push(rowStr);
+        return false;
+      }
+      stopFiltering = true;
+      return true;
+    }).join("\n").replace(contentHeadsRegex, "").replace(contentTailsRegex, "");
+    if (isArr(gatheredLinesAboveTopmostConfigLine) && gatheredLinesAboveTopmostConfigLine.length) {
+      rawContentAbove = gatheredLinesAboveTopmostConfigLine.join("\n");
+    }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return "";
