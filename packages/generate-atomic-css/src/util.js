@@ -131,8 +131,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
     // console.log(`131 prepLine(): new res = "${res}"`);
 
     if (typeof progressFn === "function") {
-      currentPercentageDone =
-        subsetFrom + Math.floor((i / (to - from)) * subsetRange);
+      currentPercentageDone = Math.floor(
+        subsetFrom + (i / (to - from)) * subsetRange
+      );
 
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;
@@ -140,8 +141,8 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
       }
     }
   }
-  // console.log(`143 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
-  // console.log(`144 prepLine(): about to return res="${res}"`);
+  // console.log(`144 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`}\n`);
+  // console.log(`145 prepLine(): about to return res="${res}"`);
   return res;
 }
 
@@ -165,13 +166,13 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
   ).join("\n");
 }
 
-export { prepLine, prepConfig };
+export { prepLine, prepConfig, isStr };
 
 //   currentPercentageDone =
 //     progressFrom +
 //     Math.floor((i / arr.length) * Math.floor(progressTo - progressFrom));
 //   console.log(
-//     `174 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+//     `175 prepConfig(): ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
 //       currentPercentageDone,
 //       null,
 //       4
@@ -181,7 +182,7 @@ export { prepLine, prepConfig };
 //   if (currentPercentageDone !== lastPercentage) {
 //     lastPercentage = currentPercentageDone;
 //     console.log(
-//       `184 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
+//       `185 prepConfig(): reporting ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${`\u001b[${35}m${currentPercentageDone}\u001b[${39}m`}`
 //     );
 //     progressFn(currentPercentageDone);
 //   }

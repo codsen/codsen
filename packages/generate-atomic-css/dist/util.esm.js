@@ -53,8 +53,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
       )
       .replace(threeDollarRegex, i)}`.trimEnd();
     if (typeof progressFn === "function") {
-      currentPercentageDone =
-        subsetFrom + Math.floor((i / (to - from)) * subsetRange);
+      currentPercentageDone = Math.floor(
+        subsetFrom + (i / (to - from)) * subsetRange
+      );
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;
         progressFn(currentPercentageDone);
@@ -78,4 +79,4 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
   ).join("\n");
 }
 
-export { prepConfig, prepLine };
+export { isStr, prepConfig, prepLine };

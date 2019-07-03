@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
  */
 
-import { leftSeq, left, rightSeq, right } from 'string-left-right';
+import { left, leftSeq, rightSeq, right } from 'string-left-right';
 import split from 'split-lines';
 
 var version = "1.0.1";
@@ -65,8 +65,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
       )
       .replace(threeDollarRegex, i)}`.trimEnd();
     if (typeof progressFn === "function") {
-      currentPercentageDone =
-        subsetFrom + Math.floor((i / (to - from)) * subsetRange);
+      currentPercentageDone = Math.floor(
+        subsetFrom + (i / (to - from)) * subsetRange
+      );
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;
         progressFn(currentPercentageDone);
@@ -120,11 +121,18 @@ function genAtomic(str, originalOpts) {
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
+  let frontPart = "";
+  let endPart = "";
+  let rawContentAbove = "";
   let extractedConfig;
   if (opts.configOverride) {
     extractedConfig = opts.configOverride;
   } else if (str.includes(CONFIGHEAD) && str.includes(CONFIGTAIL)) {
-    if (str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)) {
+    if (
+      str.indexOf(CONFIGTAIL) !== -1 &&
+      str.indexOf(CONTENTHEAD) !== -1 &&
+      str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)
+    ) {
       throw new Error(
         `generate-atomic-css: [THROW_ID_02] Config heads are after config tails!`
       );
@@ -133,6 +141,9 @@ function genAtomic(str, originalOpts) {
       str.indexOf(CONFIGHEAD) + CONFIGHEAD.length,
       str.indexOf(CONFIGTAIL)
     );
+    if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
+      return "";
+    }
   } else if (
     str.includes(CONFIGHEAD) &&
     !str.includes(CONFIGTAIL) &&
@@ -147,11 +158,48 @@ function genAtomic(str, originalOpts) {
       str.indexOf(CONFIGHEAD) + CONFIGHEAD.length,
       str.indexOf(CONTENTHEAD)
     );
-  } else {
+  } else if (
+    !str.includes(CONFIGHEAD) &&
+    !str.includes(CONFIGTAIL) &&
+    (str.includes(CONTENTHEAD) || str.includes(CONTENTTAIL))
+  ) {
     extractedConfig = str;
+    if (extractedConfig.includes(CONTENTHEAD)) {
+      if (left(str, extractedConfig.indexOf(CONTENTHEAD))) {
+        let sliceTo = extractedConfig.indexOf(CONTENTHEAD);
+        if (leftSeq(str, sliceTo, "/", "*")) {
+          sliceTo = leftSeq(str, sliceTo, "/", "*").leftmostChar;
+        }
+        rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
+      }
+      let sliceFrom = extractedConfig.indexOf(CONTENTHEAD) + CONTENTHEAD.length;
+      if (rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
+        sliceFrom =
+          rightSeq(extractedConfig, sliceFrom - 1, "*", "/").rightmostChar + 1;
+      }
+      extractedConfig = extractedConfig.slice(sliceFrom).trim();
+    }
+    if (extractedConfig.includes(CONTENTTAIL)) {
+      let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
+      if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
+        sliceTo = leftSeq(extractedConfig, sliceTo, "/", "*").leftmostChar;
+      }
+      extractedConfig = extractedConfig.slice(0, sliceTo).trim();
+    }
+  } else {
+    const contentHeadsRegex = new RegExp(
+      `(\\/\\s*\\*\\s*)*${CONTENTHEAD}(\\s*\\*\\s*\\/)*`
+    );
+    const contentTailsRegex = new RegExp(
+      `(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`
+    );
+    extractedConfig = str
+      .replace(contentHeadsRegex, "")
+      .replace(contentTailsRegex, "");
   }
-  let frontPart = "";
-  let endPart = "";
+  if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
+    return "";
+  }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
     frontPart = `${CONTENTHEAD} */\n`;
     endPart = `\n/* ${CONTENTTAIL} */`;
@@ -177,6 +225,25 @@ function genAtomic(str, originalOpts) {
         )}\n${frontPart}`;
       }
     }
+  } else if (opts.includeHeadsAndTails && !frontPart.trim().startsWith("/*")) {
+    frontPart = `/* ${frontPart}`;
+  }
+  if (isStr(rawContentAbove)) {
+    if (
+      rawContentAbove.trim().startsWith("/*") &&
+      !rawContentAbove.trim().endsWith("*/")
+    ) {
+      rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
+        left(rawContentAbove, rawContentAbove.length) + 1
+      )}`;
+    }
+    frontPart = `${rawContentAbove}${
+      isStr(rawContentAbove) &&
+      rawContentAbove.trim().length &&
+      !rawContentAbove.endsWith("\n")
+        ? "\n"
+        : ""
+    }${frontPart}`;
   }
   if (str.includes(CONTENTTAIL)) {
     const matchedClosingCSSCommentOnTheRight = rightSeq(
@@ -195,12 +262,13 @@ function genAtomic(str, originalOpts) {
       )}`;
     }
   }
-  return `${`${frontPart}${prepConfig(
+  const finalRes = `${`${frontPart}${prepConfig(
     extractedConfig,
     opts.reportProgressFunc,
     opts.reportProgressFuncFrom,
     opts.reportProgressFuncTo
   )}${endPart}`.trimEnd()}\n`;
+  return finalRes;
 }
 
 export { genAtomic, headsAndTails, version };
