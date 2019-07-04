@@ -406,14 +406,6 @@ function genAtomic(str, originalOpts) {
     }`;
   }
   if (isStr(rawContentAbove)) {
-    if (
-      rawContentAbove.trim().startsWith("/*") &&
-      !rawContentAbove.trim().endsWith("*/")
-    ) {
-      rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
-        left(rawContentAbove, rawContentAbove.length) + 1
-      )}`;
-    }
     frontPart = `${rawContentAbove}${frontPart}`;
   }
   if (isStr(rawContentBelow)) {

@@ -406,7 +406,7 @@ ${CONTENTHEAD} */
 
   // ---------------------------------------------------------------------------
 
-  const ref = `/* zzz */
+  const ref = `/* zzz
 
 /* ${CONTENTHEAD} */
 .pb5 { padding-bottom: 5px !important; }
@@ -1333,6 +1333,46 @@ lala
 `,
 
     "05.09"
+  );
+});
+
+test(`05.10 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - above there are comments followed by content`, t => {
+  t.deepEqual(
+    genAtomic(
+      `/* tra */
+
+<table>
+.pb$$$ { padding-bottom: $$$px !important; } | 1 | 2
+
+.mt$$$ { margin-top: $$$px !important; } | 2
+
+lala`,
+      {
+        includeConfig: true,
+        includeHeadsAndTails: true
+      }
+    ),
+    `/* tra */
+
+<table>
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pb$$$ { padding-bottom: $$$px !important; } | 1 | 2
+
+.mt$$$ { margin-top: $$$px !important; } | 2
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+.mt2 { margin-top: 2px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+lala
+`,
+
+    "05.10"
   );
 });
 

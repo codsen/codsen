@@ -314,10 +314,6 @@ function genAtomic(str, originalOpts) {
     endPart = "".concat(endPart).concat(str[_sliceFrom2] && stringLeftRight.right(str, _sliceFrom2 - 1) ? str.slice(_sliceFrom2) : "");
   }
   if (isStr(rawContentAbove)) {
-    if (rawContentAbove.trim().startsWith("/*") && !rawContentAbove.trim().endsWith("*/")) {
-      rawContentAbove = "".concat(rawContentAbove.trim(), " */").concat(rawContentAbove.slice(stringLeftRight.left(rawContentAbove, rawContentAbove.length) + 1
-      ));
-    }
     frontPart = "".concat(rawContentAbove).concat(frontPart);
   }
   if (isStr(rawContentBelow)) {

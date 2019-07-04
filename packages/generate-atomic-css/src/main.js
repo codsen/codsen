@@ -563,15 +563,15 @@ function genAtomic(str, originalOpts) {
   if (isStr(rawContentAbove)) {
     console.log(`564 tackle pending rawContentAbove`);
     // precaution if rawContentAbove starts but not ends with CSS comment
-    if (
-      rawContentAbove.trim().startsWith("/*") &&
-      !rawContentAbove.trim().endsWith("*/")
-    ) {
-      console.log(`570 add closing CSS comment block to rawContentAbove`);
-      rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
-        left(rawContentAbove, rawContentAbove.length) + 1 // grab any trailing whitespace
-      )}`;
-    }
+    // if (
+    //   rawContentAbove.trim().startsWith("/*") &&
+    //   !rawContentAbove.trim().endsWith("*/")
+    // ) {
+    //   console.log(`570 add closing CSS comment block to rawContentAbove`);
+    //   rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
+    //     left(rawContentAbove, rawContentAbove.length) + 1 // grab any trailing whitespace
+    //   )}`;
+    // }
 
     frontPart = `${rawContentAbove}${frontPart}`;
     console.log("--------------------------------------------------");
