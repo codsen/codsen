@@ -158,6 +158,7 @@ function genAtomic(str, originalOpts) {
   let frontPart = "";
   let endPart = "";
   let rawContentAbove = "";
+  let rawContentBelow = "";
   let extractedConfig;
   if (opts.configOverride) {
     extractedConfig = opts.configOverride;
@@ -229,27 +230,34 @@ function genAtomic(str, originalOpts) {
     );
     let stopFiltering = false;
     const gatheredLinesAboveTopmostConfigLine = [];
-    extractedConfig = str
-      .split("\n")
-      .filter(rowStr => {
-        if (stopFiltering) {
-          return true;
-        }
-        if (!rowStr.includes("$$$")) {
-          gatheredLinesAboveTopmostConfigLine.push(rowStr);
-          return false;
-        }
-        stopFiltering = true;
+    const gatheredLinesBelowLastConfigLine = [];
+    const configLines = str.split("\n").filter(rowStr => {
+      if (stopFiltering) {
         return true;
-      })
+      }
+      if (!rowStr.includes("$$$")) {
+        gatheredLinesAboveTopmostConfigLine.push(rowStr);
+        return false;
+      }
+      stopFiltering = true;
+      return true;
+    });
+    for (let i = configLines.length; i--; ) {
+      if (!configLines[i].includes("$$$")) {
+        gatheredLinesBelowLastConfigLine.unshift(configLines.pop());
+      } else {
+        break;
+      }
+    }
+    extractedConfig = configLines
       .join("\n")
       .replace(contentHeadsRegex, "")
       .replace(contentTailsRegex, "");
-    if (
-      isArr(gatheredLinesAboveTopmostConfigLine) &&
-      gatheredLinesAboveTopmostConfigLine.length
-    ) {
-      rawContentAbove = gatheredLinesAboveTopmostConfigLine.join("\n");
+    if (gatheredLinesAboveTopmostConfigLine.length) {
+      rawContentAbove = `${gatheredLinesAboveTopmostConfigLine.join("\n")}\n`;
+    }
+    if (gatheredLinesBelowLastConfigLine.length) {
+      rawContentBelow = `\n${gatheredLinesBelowLastConfigLine.join("\n")}`;
     }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
@@ -297,13 +305,7 @@ function genAtomic(str, originalOpts) {
         left(rawContentAbove, rawContentAbove.length) + 1
       )}`;
     }
-    frontPart = `${rawContentAbove}${
-      isStr(rawContentAbove) &&
-      rawContentAbove.trim().length &&
-      !rawContentAbove.endsWith("\n")
-        ? "\n"
-        : ""
-    }${frontPart}`;
+    frontPart = `${rawContentAbove}${frontPart}`;
   }
   if (str.includes(CONTENTTAIL)) {
     const matchedClosingCSSCommentOnTheRight = rightSeq(
@@ -321,6 +323,23 @@ function genAtomic(str, originalOpts) {
         matchedClosingCSSCommentOnTheRight.rightmostChar + 1
       )}`;
     }
+  }
+  if (isStr(rawContentBelow)) {
+    if (
+      rawContentBelow.trim().endsWith("/*") &&
+      !rawContentBelow.trim().startsWith("*/")
+    ) {
+      let frontPart = "";
+      if (
+        isStr(rawContentBelow) &&
+        rawContentBelow[0] &&
+        !rawContentBelow[0].trim().length
+      ) {
+        frontPart = rawContentBelow.slice(0, right(rawContentBelow, 0));
+      }
+      rawContentBelow = `${frontPart}/* ${rawContentBelow.trim()}`;
+    }
+    endPart = `${endPart}${rawContentBelow}`;
   }
   function trimIfNeeded(str) {
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {

@@ -139,6 +139,7 @@ function genAtomic(str, originalOpts) {
   var frontPart = "";
   var endPart = "";
   var rawContentAbove = "";
+  var rawContentBelow = "";
   var extractedConfig;
   if (opts.configOverride) {
     extractedConfig = opts.configOverride;
@@ -183,7 +184,8 @@ function genAtomic(str, originalOpts) {
     var contentTailsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTTAIL, "(\\s*\\*\\s*\\/)*"));
     var stopFiltering = false;
     var gatheredLinesAboveTopmostConfigLine = [];
-    extractedConfig = str.split("\n").filter(function (rowStr) {
+    var gatheredLinesBelowLastConfigLine = [];
+    var configLines = str.split("\n").filter(function (rowStr) {
       if (stopFiltering) {
         return true;
       }
@@ -193,9 +195,20 @@ function genAtomic(str, originalOpts) {
       }
       stopFiltering = true;
       return true;
-    }).join("\n").replace(contentHeadsRegex, "").replace(contentTailsRegex, "");
-    if (isArr(gatheredLinesAboveTopmostConfigLine) && gatheredLinesAboveTopmostConfigLine.length) {
-      rawContentAbove = gatheredLinesAboveTopmostConfigLine.join("\n");
+    });
+    for (var i = configLines.length; i--;) {
+      if (!configLines[i].includes("$$$")) {
+        gatheredLinesBelowLastConfigLine.unshift(configLines.pop());
+      } else {
+        break;
+      }
+    }
+    extractedConfig = configLines.join("\n").replace(contentHeadsRegex, "").replace(contentTailsRegex, "");
+    if (gatheredLinesAboveTopmostConfigLine.length) {
+      rawContentAbove = "".concat(gatheredLinesAboveTopmostConfigLine.join("\n"), "\n");
+    }
+    if (gatheredLinesBelowLastConfigLine.length) {
+      rawContentBelow = "\n".concat(gatheredLinesBelowLastConfigLine.join("\n"));
     }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
@@ -220,15 +233,26 @@ function genAtomic(str, originalOpts) {
   }
   if (isStr(rawContentAbove)) {
     if (rawContentAbove.trim().startsWith("/*") && !rawContentAbove.trim().endsWith("*/")) {
-      rawContentAbove = "".concat(rawContentAbove.trim(), " */").concat(rawContentAbove.slice(stringLeftRight.left(rawContentAbove, rawContentAbove.length) + 1));
+      rawContentAbove = "".concat(rawContentAbove.trim(), " */").concat(rawContentAbove.slice(stringLeftRight.left(rawContentAbove, rawContentAbove.length) + 1
+      ));
     }
-    frontPart = "".concat(rawContentAbove).concat(isStr(rawContentAbove) && rawContentAbove.trim().length && !rawContentAbove.endsWith("\n") ? "\n" : "").concat(frontPart);
+    frontPart = "".concat(rawContentAbove).concat(frontPart);
   }
   if (str.includes(CONTENTTAIL)) {
     var matchedClosingCSSCommentOnTheRight = stringLeftRight.rightSeq(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length, "*", "/");
     if (matchedClosingCSSCommentOnTheRight && matchedClosingCSSCommentOnTheRight.rightmostChar && stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)) {
       endPart = "".concat(endPart).concat(str.slice(matchedClosingCSSCommentOnTheRight.rightmostChar + 1));
     }
+  }
+  if (isStr(rawContentBelow)) {
+    if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
+      var _frontPart = "";
+      if (isStr(rawContentBelow) && rawContentBelow[0] && !rawContentBelow[0].trim().length) {
+        _frontPart = rawContentBelow.slice(0, stringLeftRight.right(rawContentBelow, 0));
+      }
+      rawContentBelow = "".concat(_frontPart, "/* ").concat(rawContentBelow.trim());
+    }
+    endPart = "".concat(endPart).concat(rawContentBelow);
   }
   function trimIfNeeded(str) {
     if (!opts.includeConfig && !opts.includeHeadsAndTails) {
