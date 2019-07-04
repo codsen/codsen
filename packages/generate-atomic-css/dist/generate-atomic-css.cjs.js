@@ -113,6 +113,12 @@ var headsAndTails = {
   CONTENTTAIL: "GENERATE-ATOMIC-CSS-CONTENT-ENDS"
 };
 function genAtomic(str, originalOpts) {
+  function trimIfNeeded(str) {
+    if (!opts.includeConfig && !opts.includeHeadsAndTails) {
+      return str;
+    }
+    return str.trim();
+  }
   if (typeof str !== "string") {
     throw new Error("generate-atomic-css: [THROW_ID_01] First input argument must be a string! It was given as \"".concat(JSON.stringify(str, null, 4), "\" (type ").concat(_typeof(str), ")"));
   }
@@ -147,7 +153,15 @@ function genAtomic(str, originalOpts) {
     if (str.indexOf(CONFIGTAIL) !== -1 && str.indexOf(CONTENTHEAD) !== -1 && str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)) {
       throw new Error("generate-atomic-css: [THROW_ID_02] Config heads are after config tails!");
     }
-    extractedConfig = str.slice(str.indexOf(CONFIGHEAD) + CONFIGHEAD.length, str.indexOf(CONFIGTAIL));
+    var sliceFrom = str.indexOf(CONFIGHEAD) + CONFIGHEAD.length;
+    var sliceTo = str.indexOf(CONFIGTAIL);
+    if (str[stringLeftRight.right(str, sliceFrom)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, sliceFrom))] === "/") {
+      sliceFrom = stringLeftRight.right(str, stringLeftRight.right(str, sliceFrom)) + 1;
+    }
+    if (str[stringLeftRight.left(str, sliceTo)] === "*" && str[stringLeftRight.left(str, stringLeftRight.left(str, sliceTo))] === "/") {
+      sliceTo = stringLeftRight.left(str, stringLeftRight.left(str, sliceTo));
+    }
+    extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       return "";
     }
@@ -160,25 +174,71 @@ function genAtomic(str, originalOpts) {
     extractedConfig = str;
     if (extractedConfig.includes(CONTENTHEAD)) {
       if (stringLeftRight.left(str, extractedConfig.indexOf(CONTENTHEAD))) {
-        var sliceTo = extractedConfig.indexOf(CONTENTHEAD);
-        if (stringLeftRight.leftSeq(str, sliceTo, "/", "*")) {
-          sliceTo = stringLeftRight.leftSeq(str, sliceTo, "/", "*").leftmostChar;
+        var _sliceTo2 = extractedConfig.indexOf(CONTENTHEAD);
+        if (stringLeftRight.leftSeq(str, _sliceTo2, "/", "*")) {
+          _sliceTo2 = stringLeftRight.leftSeq(str, _sliceTo2, "/", "*").leftmostChar;
         }
-        rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
+        rawContentAbove = _sliceTo2 === 0 ? "" : str.slice(0, _sliceTo2);
       }
-      var sliceFrom = extractedConfig.indexOf(CONTENTHEAD) + CONTENTHEAD.length;
-      if (stringLeftRight.rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
-        sliceFrom = stringLeftRight.rightSeq(extractedConfig, sliceFrom - 1, "*", "/").rightmostChar + 1;
+      var _sliceFrom = extractedConfig.indexOf(CONTENTHEAD) + CONTENTHEAD.length;
+      if (stringLeftRight.rightSeq(extractedConfig, _sliceFrom - 1, "*", "/")) {
+        _sliceFrom = stringLeftRight.rightSeq(extractedConfig, _sliceFrom - 1, "*", "/").rightmostChar + 1;
       }
-      extractedConfig = extractedConfig.slice(sliceFrom).trim();
+      var _sliceTo = null;
+      if (str.includes(CONTENTTAIL)) {
+        _sliceTo = str.indexOf(CONTENTTAIL);
+        if (str[stringLeftRight.left(str, _sliceTo)] === "*" && str[stringLeftRight.left(str, stringLeftRight.left(str, _sliceTo))] === "/") {
+          _sliceTo = stringLeftRight.left(str, stringLeftRight.left(str, _sliceTo));
+        }
+        var contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (str[stringLeftRight.right(str, contentAfterStartsAt)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt))] === "/") {
+          contentAfterStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt)) + 1;
+        }
+        if (stringLeftRight.right(str, contentAfterStartsAt)) {
+          rawContentBelow = str.slice(contentAfterStartsAt);
+        }
+      }
+      if (_sliceTo) {
+        extractedConfig = extractedConfig.slice(_sliceFrom, _sliceTo).trim();
+      } else {
+        extractedConfig = extractedConfig.slice(_sliceFrom).trim();
+      }
     }
-    if (extractedConfig.includes(CONTENTTAIL)) {
-      var _sliceTo = extractedConfig.indexOf(CONTENTTAIL);
-      if (stringLeftRight.leftSeq(extractedConfig, _sliceTo, "/", "*")) {
-        _sliceTo = stringLeftRight.leftSeq(extractedConfig, _sliceTo, "/", "*").leftmostChar;
+    else if (extractedConfig.includes(CONTENTTAIL)) {
+        var contentInFront = [];
+        var stopFilteringAndPassAllLines = false;
+        extractedConfig = extractedConfig.split("\n").filter(function (rowStr) {
+          if (!rowStr.includes("$$$") && !stopFilteringAndPassAllLines) {
+            if (!stopFilteringAndPassAllLines) {
+              contentInFront.push(rowStr);
+            }
+            return false;
+          }
+          if (!stopFilteringAndPassAllLines) {
+            stopFilteringAndPassAllLines = true;
+            return true;
+          }
+          return true;
+        }).join("\n");
+        var _sliceTo3 = extractedConfig.indexOf(CONTENTTAIL);
+        if (stringLeftRight.leftSeq(extractedConfig, _sliceTo3, "/", "*")) {
+          _sliceTo3 = stringLeftRight.leftSeq(extractedConfig, _sliceTo3, "/", "*").leftmostChar;
+        }
+        extractedConfig = extractedConfig.slice(0, _sliceTo3).trim();
+        if (contentInFront.length) {
+          rawContentAbove = "".concat(contentInFront.join("\n"), "\n");
+        }
+        var _contentAfterStartsAt;
+        if (stringLeftRight.right(str, str.indexOf(CONTENTTAIL))) {
+          _contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+          if (str[stringLeftRight.right(str, _contentAfterStartsAt)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, _contentAfterStartsAt))] === "/") {
+            _contentAfterStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, _contentAfterStartsAt)) + 1;
+            if (stringLeftRight.right(str, _contentAfterStartsAt)) {
+              rawContentBelow = str.slice(_contentAfterStartsAt);
+            }
+          }
+        }
       }
-      extractedConfig = extractedConfig.slice(0, _sliceTo).trim();
-    }
   } else {
     var contentHeadsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTHEAD, "(\\s*\\*\\s*\\/)*"));
     var contentTailsRegex = new RegExp("(\\/\\s*\\*\\s*)*".concat(CONTENTTAIL, "(\\s*\\*\\s*\\/)*"));
@@ -216,20 +276,40 @@ function genAtomic(str, originalOpts) {
   }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
     frontPart = "".concat(CONTENTHEAD, " */\n");
+    if (!opts.includeConfig) {
+      frontPart = "/* ".concat(frontPart);
+    }
     endPart = "\n/* ".concat(CONTENTTAIL, " */");
   }
   if (opts.includeConfig) {
     frontPart = "/* ".concat(CONFIGHEAD, "\n").concat(extractedConfig.trim(), "\n").concat(CONFIGTAIL, "\n").concat(frontPart);
   }
   if (str.includes(CONFIGHEAD)) {
-    var matchedOpeningCSSCommentOnTheLeft = stringLeftRight.leftSeq(str, str.indexOf(CONFIGHEAD), "/", "*");
-    if (matchedOpeningCSSCommentOnTheLeft && matchedOpeningCSSCommentOnTheLeft.leftmostChar) {
-      if (stringLeftRight.left(str, matchedOpeningCSSCommentOnTheLeft.leftmostChar) !== null) {
-        frontPart = "".concat(str.slice(0, matchedOpeningCSSCommentOnTheLeft.leftmostChar)).concat(frontPart.trim().startsWith("/*") || !opts.includeConfig && !opts.includeHeadsAndTails ? "" : "/* ").concat(frontPart);
+    if (stringLeftRight.left(str, str.indexOf(CONFIGHEAD))) {
+      var sliceUpTo = str.indexOf(CONFIGHEAD);
+      if (str[stringLeftRight.left(str, sliceUpTo)] === "*" && str[stringLeftRight.left(str, stringLeftRight.left(str, sliceUpTo))] === "/") {
+        sliceUpTo = stringLeftRight.left(str, stringLeftRight.left(str, sliceUpTo));
+      }
+      frontPart = "".concat(str.slice(0, sliceUpTo)).concat(frontPart.trim().startsWith("/*") ? "" : "/* ").concat(frontPart);
+    }
+  }
+  if (str.includes(CONFIGTAIL) && stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) {
+    var _sliceFrom2 = str.indexOf(CONFIGTAIL) + CONFIGTAIL.length;
+    if (str[stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length))] === "/") {
+      _sliceFrom2 = stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) + 1;
+    }
+    while (str.slice(_sliceFrom2).trim().startsWith(CONTENTHEAD) || str.slice(_sliceFrom2).trim().startsWith(CONTENTTAIL) || str.slice(_sliceFrom2).trim().startsWith("*/")) {
+      if (str.slice(_sliceFrom2).trim().startsWith(CONTENTHEAD)) {
+        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) - 1 + CONTENTHEAD.length;
+      }
+      if (str.slice(_sliceFrom2).trim().startsWith(CONTENTTAIL)) {
+        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) - 1 + CONTENTTAIL.length;
+      }
+      if (str.slice(_sliceFrom2).trim().startsWith("*/")) {
+        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) + 2;
       }
     }
-  } else if (opts.includeHeadsAndTails && !frontPart.trim().startsWith("/*")) {
-    frontPart = "/* ".concat(frontPart);
+    endPart = "".concat(endPart).concat(str.slice(_sliceFrom2));
   }
   if (isStr(rawContentAbove)) {
     if (rawContentAbove.trim().startsWith("/*") && !rawContentAbove.trim().endsWith("*/")) {
@@ -237,12 +317,6 @@ function genAtomic(str, originalOpts) {
       ));
     }
     frontPart = "".concat(rawContentAbove).concat(frontPart);
-  }
-  if (str.includes(CONTENTTAIL)) {
-    var matchedClosingCSSCommentOnTheRight = stringLeftRight.rightSeq(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length, "*", "/");
-    if (matchedClosingCSSCommentOnTheRight && matchedClosingCSSCommentOnTheRight.rightmostChar && stringLeftRight.right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)) {
-      endPart = "".concat(endPart).concat(str.slice(matchedClosingCSSCommentOnTheRight.rightmostChar + 1));
-    }
   }
   if (isStr(rawContentBelow)) {
     if (rawContentBelow.trim().endsWith("/*") && !rawContentBelow.trim().startsWith("*/")) {
@@ -253,12 +327,6 @@ function genAtomic(str, originalOpts) {
       rawContentBelow = "".concat(_frontPart, "/* ").concat(rawContentBelow.trim());
     }
     endPart = "".concat(endPart).concat(rawContentBelow);
-  }
-  function trimIfNeeded(str) {
-    if (!opts.includeConfig && !opts.includeHeadsAndTails) {
-      return str;
-    }
-    return str.trim();
   }
   var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true
   )).concat(endPart)), "\n");

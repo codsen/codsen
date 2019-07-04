@@ -126,9 +126,7 @@ test(`02.03 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty conte
 | .pt$$$ { padding-top: $$$px !important; }|0|3|
 
 | .mt$$$ { margin-top: $$$px !important; }|0|3|
-GENERATE-ATOMIC-CSS-CONFIG-ENDS
-GENERATE-ATOMIC-CSS-CONTENT-STARTS
-GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */
 333
 444
 `),
@@ -834,6 +832,146 @@ lala
 `,
 
     "04.16"
+  );
+});
+
+test(`04.19 - ${`\u001b[${35}m${`config present no config requested`}\u001b[${39}m`} - comments surrounding`, t => {
+  t.deepEqual(
+    genAtomic(
+      `/* tra */
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS */
+.pb$$$ { padding-bottom: $$$px !important; } | 1 | 2
+
+.mt$$$ { margin-top: $$$px !important; } | 2
+/* GENERATE-ATOMIC-CSS-CONFIG-ENDS
+
+/* lala */`,
+      {
+        includeConfig: false,
+        includeHeadsAndTails: true
+      }
+    ),
+    `/* tra */
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+.mt2 { margin-top: 2px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+/* lala */
+`,
+
+    "04.19"
+  );
+});
+
+test(`04.20 - ${`\u001b[${35}m${`content tails present no config requested`}\u001b[${39}m`} - comments surrounding`, t => {
+  t.deepEqual(
+    genAtomic(
+      `/* tra */
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb$$$ { padding-bottom: $$$px !important; } | 1 | 2
+
+.mt$$$ { margin-top: $$$px !important; } | 2
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS
+
+/* lala */`,
+      {
+        includeConfig: false,
+        includeHeadsAndTails: true
+      }
+    ),
+    `/* tra */
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+.mt2 { margin-top: 2px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+/* lala */
+`,
+
+    "04.20"
+  );
+});
+
+test(`04.21 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - but no heads tails incoming, capped upper`, t => {
+  const source = `a
+.pt$$$ { padding-top: $$$px !important; }|0|5
+.pr$$$ { padding-right: $$$px !important; }|0|5
+.pb$$$ { padding-bottom: $$$px !important; }|0|5
+b`;
+  const ref = `a
+/* ${CONTENTHEAD} */
+.pt0 { padding-top:   0 !important; }
+.pt1 { padding-top: 1px !important; }
+.pt2 { padding-top: 2px !important; }
+.pt3 { padding-top: 3px !important; }
+.pt4 { padding-top: 4px !important; }
+.pt5 { padding-top: 5px !important; }
+.pr0 { padding-right:   0 !important; }
+.pr1 { padding-right: 1px !important; }
+.pr2 { padding-right: 2px !important; }
+.pr3 { padding-right: 3px !important; }
+.pr4 { padding-right: 4px !important; }
+.pr5 { padding-right: 5px !important; }
+.pb0 { padding-bottom:   0 !important; }
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+.pb3 { padding-bottom: 3px !important; }
+.pb4 { padding-bottom: 4px !important; }
+.pb5 { padding-bottom: 5px !important; }
+/* ${CONTENTTAIL} */
+b
+`;
+  const generated = genAtomic(source, {
+    includeConfig: false,
+    includeHeadsAndTails: true
+  });
+  t.is(generated, ref, "04.21");
+});
+
+test(`04.22 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - head missing`, t => {
+  t.deepEqual(
+    genAtomic(
+      `tra
+
+.pb$$$ { padding-bottom: $$$px !important; } | 1 | 2
+
+.mt$$$ { margin-top: $$$px !important; } | 2
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+lala`,
+      {
+        includeConfig: false,
+        includeHeadsAndTails: true
+      }
+    ),
+    `tra
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+
+.mt0 { margin-top:   0 !important; }
+.mt1 { margin-top: 1px !important; }
+.mt2 { margin-top: 2px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+lala
+`,
+
+    "04.22"
   );
 });
 
