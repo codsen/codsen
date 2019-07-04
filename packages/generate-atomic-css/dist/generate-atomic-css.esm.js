@@ -379,7 +379,7 @@ function genAtomic(str, originalOpts) {
       sliceFrom =
         right(str, right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) + 1;
     }
-    if (str.slice(right(str, sliceFrom)).startsWith(CONTENTHEAD)) {
+    if (str.slice(right(str, sliceFrom - 1)).startsWith(CONTENTHEAD)) {
       const contentHeadsStartAt = right(str, sliceFrom);
       sliceFrom = contentHeadsStartAt + CONTENTHEAD.length;
       if (

@@ -482,7 +482,7 @@ function genAtomic(str, originalOpts) {
     }
 
     // in clean code case, opening head of content follows so let's check for it
-    if (str.slice(right(str, sliceFrom)).startsWith(CONTENTHEAD)) {
+    if (str.slice(right(str, sliceFrom - 1)).startsWith(CONTENTHEAD)) {
       const contentHeadsStartAt = right(str, sliceFrom);
       sliceFrom = contentHeadsStartAt + CONTENTHEAD.length;
       console.log(

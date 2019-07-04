@@ -298,7 +298,7 @@ function genAtomic(str, originalOpts) {
     if (str[stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length))] === "/") {
       _sliceFrom2 = stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) + 1;
     }
-    if (str.slice(stringLeftRight.right(str, _sliceFrom2)).startsWith(CONTENTHEAD)) {
+    if (str.slice(stringLeftRight.right(str, _sliceFrom2 - 1)).startsWith(CONTENTHEAD)) {
       var contentHeadsStartAt = stringLeftRight.right(str, _sliceFrom2);
       _sliceFrom2 = contentHeadsStartAt + CONTENTHEAD.length;
       if (str[stringLeftRight.right(str, _sliceFrom2 - 1)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, _sliceFrom2 - 1))] === "/") {
