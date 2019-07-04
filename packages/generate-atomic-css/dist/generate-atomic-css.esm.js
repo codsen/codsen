@@ -241,11 +241,11 @@ function genAtomic(str, originalOpts) {
         let contentAfterStartsAt =
           str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
         if (
-          str[right(str, contentAfterStartsAt)] === "*" &&
-          str[right(str, right(str, contentAfterStartsAt))] === "/"
+          str[right(str, contentAfterStartsAt - 1)] === "*" &&
+          str[right(str, right(str, contentAfterStartsAt - 1))] === "/"
         ) {
           contentAfterStartsAt =
-            right(str, right(str, contentAfterStartsAt)) + 1;
+            right(str, right(str, contentAfterStartsAt - 1)) + 1;
         }
         if (right(str, contentAfterStartsAt)) {
           rawContentBelow = str.slice(contentAfterStartsAt);
@@ -285,7 +285,7 @@ function genAtomic(str, originalOpts) {
         rawContentAbove = `${contentInFront.join("\n")}\n`;
       }
       let contentAfterStartsAt;
-      if (right(str, str.indexOf(CONTENTTAIL))) {
+      if (right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
         contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
         if (
           str[right(str, contentAfterStartsAt)] === "*" &&

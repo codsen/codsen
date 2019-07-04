@@ -191,8 +191,8 @@ function genAtomic(str, originalOpts) {
           _sliceTo = stringLeftRight.left(str, stringLeftRight.left(str, _sliceTo));
         }
         var contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
-        if (str[stringLeftRight.right(str, contentAfterStartsAt)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt))] === "/") {
-          contentAfterStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt)) + 1;
+        if (str[stringLeftRight.right(str, contentAfterStartsAt - 1)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt - 1))] === "/") {
+          contentAfterStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, contentAfterStartsAt - 1)) + 1;
         }
         if (stringLeftRight.right(str, contentAfterStartsAt)) {
           rawContentBelow = str.slice(contentAfterStartsAt);
@@ -229,7 +229,7 @@ function genAtomic(str, originalOpts) {
           rawContentAbove = "".concat(contentInFront.join("\n"), "\n");
         }
         var _contentAfterStartsAt;
-        if (stringLeftRight.right(str, str.indexOf(CONTENTTAIL))) {
+        if (stringLeftRight.right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
           _contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
           if (str[stringLeftRight.right(str, _contentAfterStartsAt)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, _contentAfterStartsAt))] === "/") {
             _contentAfterStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, _contentAfterStartsAt)) + 1;
