@@ -298,18 +298,20 @@ function genAtomic(str, originalOpts) {
     if (str[stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length))] === "/") {
       _sliceFrom2 = stringLeftRight.right(str, stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) + 1;
     }
-    while (str.slice(_sliceFrom2).trim().startsWith(CONTENTHEAD) || str.slice(_sliceFrom2).trim().startsWith(CONTENTTAIL) || str.slice(_sliceFrom2).trim().startsWith("*/")) {
-      if (str.slice(_sliceFrom2).trim().startsWith(CONTENTHEAD)) {
-        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) - 1 + CONTENTHEAD.length;
+    if (str.slice(stringLeftRight.right(str, _sliceFrom2)).startsWith(CONTENTHEAD)) {
+      var contentHeadsStartAt = stringLeftRight.right(str, _sliceFrom2);
+      _sliceFrom2 = contentHeadsStartAt + CONTENTHEAD.length;
+      if (str[stringLeftRight.right(str, _sliceFrom2 - 1)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, _sliceFrom2 - 1))] === "/") {
+        _sliceFrom2 = stringLeftRight.right(str, stringLeftRight.right(str, _sliceFrom2 - 1)) + 1;
       }
-      if (str.slice(_sliceFrom2).trim().startsWith(CONTENTTAIL)) {
-        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) - 1 + CONTENTTAIL.length;
-      }
-      if (str.slice(_sliceFrom2).trim().startsWith("*/")) {
-        _sliceFrom2 = stringLeftRight.right(str, _sliceFrom2) + 2;
+      if (str.includes(CONTENTTAIL)) {
+        _sliceFrom2 = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (str[stringLeftRight.right(str, _sliceFrom2)] === "*" && str[stringLeftRight.right(str, stringLeftRight.right(str, _sliceFrom2))] === "/") {
+          _sliceFrom2 = stringLeftRight.right(str, stringLeftRight.right(str, _sliceFrom2)) + 1;
+        }
       }
     }
-    endPart = "".concat(endPart).concat(str.slice(_sliceFrom2));
+    endPart = "".concat(endPart).concat(str[_sliceFrom2] && stringLeftRight.right(str, _sliceFrom2 - 1) ? str.slice(_sliceFrom2) : "");
   }
   if (isStr(rawContentAbove)) {
     if (rawContentAbove.trim().startsWith("/*") && !rawContentAbove.trim().endsWith("*/")) {

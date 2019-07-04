@@ -1082,8 +1082,41 @@ ${CONTENTHEAD} */
 
   t.is(generated1, ref1, "05.02.01");
   t.is(generated2, ref2, "05.02.02");
+});
 
-  // second cycle should not change anything since it's the same config
+test(`05.02-2 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`, t => {
+  const ref1 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pt$$$ { padding-top: $$$px !important; }|0|5
+.pr$$$ { padding-right: $$$px !important; }|0|5
+.pb$$$ { padding-bottom: $$$px !important; }|0|5
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pt0 { padding-top:   0 !important; }
+.pt1 { padding-top: 1px !important; }
+.pt2 { padding-top: 2px !important; }
+.pt3 { padding-top: 3px !important; }
+.pt4 { padding-top: 4px !important; }
+.pt5 { padding-top: 5px !important; }
+.pr0 { padding-right:   0 !important; }
+.pr1 { padding-right: 1px !important; }
+.pr2 { padding-right: 2px !important; }
+.pr3 { padding-right: 3px !important; }
+.pr4 { padding-right: 4px !important; }
+.pr5 { padding-right: 5px !important; }
+.pb0 { padding-bottom:   0 !important; }
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+.pb3 { padding-bottom: 3px !important; }
+.pb4 { padding-bottom: 4px !important; }
+.pb5 { padding-bottom: 5px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+`;
+  const generated1 = genAtomic(ref1, {
+    includeConfig: true,
+    includeHeadsAndTails: true
+  });
+
+  t.is(generated1, ref1, "05.02.01");
   t.is(
     generated1,
     genAtomic(generated1, {
@@ -1092,6 +1125,40 @@ ${CONTENTHEAD} */
     }),
     "05.02.03"
   );
+});
+
+test(`05.02-3 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, capped upper - second cycle`, t => {
+  const ref2 = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pt$$$ { padding-top: $$$px !important; }|5
+.pr$$$ { padding-right: $$$px !important; }|5
+.pb$$$ { padding-bottom: $$$px !important; }|5
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.pt0 { padding-top:   0 !important; }
+.pt1 { padding-top: 1px !important; }
+.pt2 { padding-top: 2px !important; }
+.pt3 { padding-top: 3px !important; }
+.pt4 { padding-top: 4px !important; }
+.pt5 { padding-top: 5px !important; }
+.pr0 { padding-right:   0 !important; }
+.pr1 { padding-right: 1px !important; }
+.pr2 { padding-right: 2px !important; }
+.pr3 { padding-right: 3px !important; }
+.pr4 { padding-right: 4px !important; }
+.pr5 { padding-right: 5px !important; }
+.pb0 { padding-bottom:   0 !important; }
+.pb1 { padding-bottom: 1px !important; }
+.pb2 { padding-bottom: 2px !important; }
+.pb3 { padding-bottom: 3px !important; }
+.pb4 { padding-bottom: 4px !important; }
+.pb5 { padding-bottom: 5px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+`;
+  const generated2 = genAtomic(ref2, {
+    includeConfig: true,
+    includeHeadsAndTails: true
+  });
+  t.is(generated2, ref2, "05.02.02");
   t.is(
     generated2,
     genAtomic(generated2, {

@@ -379,46 +379,28 @@ function genAtomic(str, originalOpts) {
       sliceFrom =
         right(str, right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) + 1;
     }
-    while (
-      str
-        .slice(sliceFrom)
-        .trim()
-        .startsWith(CONTENTHEAD) ||
-      str
-        .slice(sliceFrom)
-        .trim()
-        .startsWith(CONTENTTAIL) ||
-      str
-        .slice(sliceFrom)
-        .trim()
-        .startsWith("*/")
-    ) {
+    if (str.slice(right(str, sliceFrom)).startsWith(CONTENTHEAD)) {
+      const contentHeadsStartAt = right(str, sliceFrom);
+      sliceFrom = contentHeadsStartAt + CONTENTHEAD.length;
       if (
-        str
-          .slice(sliceFrom)
-          .trim()
-          .startsWith(CONTENTHEAD)
+        str[right(str, sliceFrom - 1)] === "*" &&
+        str[right(str, right(str, sliceFrom - 1))] === "/"
       ) {
-        sliceFrom = right(str, sliceFrom) - 1 + CONTENTHEAD.length;
+        sliceFrom = right(str, right(str, sliceFrom - 1)) + 1;
       }
-      if (
-        str
-          .slice(sliceFrom)
-          .trim()
-          .startsWith(CONTENTTAIL)
-      ) {
-        sliceFrom = right(str, sliceFrom) - 1 + CONTENTTAIL.length;
-      }
-      if (
-        str
-          .slice(sliceFrom)
-          .trim()
-          .startsWith("*/")
-      ) {
-        sliceFrom = right(str, sliceFrom) + 2;
+      if (str.includes(CONTENTTAIL)) {
+        sliceFrom = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (
+          str[right(str, sliceFrom)] === "*" &&
+          str[right(str, right(str, sliceFrom))] === "/"
+        ) {
+          sliceFrom = right(str, right(str, sliceFrom)) + 1;
+        }
       }
     }
-    endPart = `${endPart}${str.slice(sliceFrom)}`;
+    endPart = `${endPart}${
+      str[sliceFrom] && right(str, sliceFrom - 1) ? str.slice(sliceFrom) : ""
+    }`;
   }
   if (isStr(rawContentAbove)) {
     if (
