@@ -471,17 +471,16 @@ test(`04.06 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[$
 });
 
 test(`04.07 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - blank content heads/tails`, t => {
+  const contents = `\t\n\n \t\t\t   \t`;
   const input = `
-${CONTENTHEAD}
-\t\n\n \t\t\t   \t
-${CONTENTTAIL}
+${CONTENTHEAD}${contents}${CONTENTTAIL}
 `;
   t.is(
     genAtomic(input, {
       includeConfig: false,
       includeHeadsAndTails: false
     }),
-    input,
+    "",
     "04.07.01"
   );
   t.is(
@@ -489,7 +488,7 @@ ${CONTENTTAIL}
       includeConfig: false,
       includeHeadsAndTails: true
     }),
-    input,
+    "",
     "04.07.02"
   );
   t.is(
@@ -497,7 +496,7 @@ ${CONTENTTAIL}
       includeConfig: true,
       includeHeadsAndTails: false
     }),
-    input,
+    "",
     "04.07.03"
   );
   t.is(
@@ -505,7 +504,7 @@ ${CONTENTTAIL}
       includeConfig: true,
       includeHeadsAndTails: true
     }),
-    input,
+    "",
     "04.07.04"
   );
 });
@@ -521,7 +520,7 @@ ${CONTENTTAIL}
       includeConfig: false,
       includeHeadsAndTails: false
     }),
-    input,
+    "",
     "04.08.01"
   );
   t.is(
@@ -529,7 +528,7 @@ ${CONTENTTAIL}
       includeConfig: false,
       includeHeadsAndTails: true
     }),
-    input,
+    "",
     "04.08.02"
   );
   t.is(
@@ -537,7 +536,7 @@ ${CONTENTTAIL}
       includeConfig: true,
       includeHeadsAndTails: false
     }),
-    input,
+    "",
     "04.08.03"
   );
   t.is(
@@ -545,7 +544,7 @@ ${CONTENTTAIL}
       includeConfig: true,
       includeHeadsAndTails: true
     }),
-    input,
+    "",
     "04.08.04"
   );
 });
@@ -998,7 +997,129 @@ z
 // 10. opts.configOverride
 // -----------------------------------------------------------------------------
 
-test.todo("10.01 - opts.configOverride");
+test(`10.01 - ${`\u001b[${33}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - control`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+zzz
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+yyy
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: false
+    }),
+    `a
+
+zzz
+
+z
+`,
+    "10.01"
+  );
+});
+
+test(`10.02 - ${`\u001b[${33}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config/tails off`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+zzz
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+yyy
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: false,
+      configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+    }),
+    `a
+
+.mt0 { margin-top:   0; }
+.mt1 { margin-top: 1px; }
+.mt2 { margin-top: 2px; }
+.mt3 { margin-top: 3px; }
+
+z
+`,
+    "10.02"
+  );
+});
+
+test(`10.03 - ${`\u001b[${33}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - only tails on`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+zzz
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+yyy
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: true,
+      configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+    }),
+    `a
+
+/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.mt0 { margin-top:   0; }
+.mt1 { margin-top: 1px; }
+.mt2 { margin-top: 2px; }
+.mt3 { margin-top: 3px; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z
+`,
+    "10.03"
+  );
+});
+
+test(`10.04 - ${`\u001b[${33}m${`config override`}\u001b[${39}m`} - no $$$ anywhere (both in override and existing) - config & tails on`, t => {
+  const source = `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+zzz
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+yyy
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z`;
+
+  // notice how override gets written into top config section:
+  t.is(
+    genAtomic(source, {
+      includeConfig: true,
+      configOverride: `.mt$$$ { margin-top: $$$px; }|3`
+    }),
+    `a
+
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.mt$$$ { margin-top: $$$px; }|3
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+.mt0 { margin-top:   0; }
+.mt1 { margin-top: 1px; }
+.mt2 { margin-top: 2px; }
+.mt3 { margin-top: 3px; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+
+z
+`,
+    "10.04"
+  );
+});
 
 // -----------------------------------------------------------------------------
 // 99. API bits

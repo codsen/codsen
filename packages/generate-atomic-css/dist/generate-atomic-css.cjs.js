@@ -133,7 +133,7 @@ function genAtomic(str, originalOpts) {
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
-  if (!opts.configOverride && !str.includes("$$$") || isStr(opts.configOverride) && !opts.configOverride.includes("$$$")) {
+  if (!opts.configOverride && !str.includes("$$$") && !str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && !str.includes(CONTENTHEAD) && !str.includes(CONTENTTAIL) || isStr(opts.configOverride) && !opts.configOverride.includes("$$$") && !opts.configOverride.includes(CONFIGHEAD) && !opts.configOverride.includes(CONFIGTAIL) && !opts.configOverride.includes(CONTENTHEAD) && !opts.configOverride.includes(CONTENTTAIL)) {
     return str;
   }
   var frontPart = "";
