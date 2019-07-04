@@ -290,7 +290,7 @@ function genAtomic(str, originalOpts) {
       if (str[stringLeftRight.left(str, sliceUpTo)] === "*" && str[stringLeftRight.left(str, stringLeftRight.left(str, sliceUpTo))] === "/") {
         sliceUpTo = stringLeftRight.left(str, stringLeftRight.left(str, sliceUpTo));
       }
-      frontPart = "".concat(str.slice(0, sliceUpTo)).concat(frontPart.trim().startsWith("/*") ? "" : "/* ").concat(frontPart);
+      frontPart = "".concat(str.slice(0, sliceUpTo)).concat(str[stringLeftRight.right(str, sliceUpTo - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, sliceUpTo - 1))] === "*" ? "" : "/* ").concat(frontPart);
     }
   }
   if (str.includes(CONFIGTAIL) && stringLeftRight.right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length)) {

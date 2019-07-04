@@ -361,7 +361,10 @@ function genAtomic(str, originalOpts) {
         sliceUpTo = left(str, left(str, sliceUpTo));
       }
       frontPart = `${str.slice(0, sliceUpTo)}${
-        frontPart.trim().startsWith("/*") ? "" : "/* "
+        str[right(str, sliceUpTo - 1)] === "/" &&
+        str[right(str, right(str, sliceUpTo - 1))] === "*"
+          ? ""
+          : "/* "
       }${frontPart}`;
     }
   }

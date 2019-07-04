@@ -1309,7 +1309,7 @@ test(`05.09 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m
 
 lala`,
       {
-        includeConfig: false,
+        includeConfig: true,
         includeHeadsAndTails: true
       }
     ),
