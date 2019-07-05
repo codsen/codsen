@@ -28,7 +28,7 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   return copyArr;
 }
 
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   let currentPercentageDone;
   let lastPercentage = 0;
 
@@ -77,58 +77,71 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
     const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
-
-    // // 1. first process three dollar sequences with units:
-    const findingsThreeDollarWithUnits = newStr.match(
-      threeDollarRegexWithUnits
-    );
-    console.log(
-      `085 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
-        findingsThreeDollarWithUnits,
-        null,
-        4
-      )}`
-    );
-    if (
-      isArr(findingsThreeDollarWithUnits) &&
-      findingsThreeDollarWithUnits.length // &&
-      // i === from &&
-      // i === 0
-    ) {
+    if (pad) {
+      // // 1. first process three dollar sequences with units:
+      const findingsThreeDollarWithUnits = newStr.match(
+        threeDollarRegexWithUnits
+      );
       console.log(
-        `098 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
+        `085 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
           findingsThreeDollarWithUnits,
           null,
           4
         )}`
       );
-      // take care of padding zeros:
-      findingsThreeDollarWithUnits.forEach(valFound => {
-        newStr = newStr.replace(
-          valFound,
-          `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
-            valFound.length - 3 + String(to).length
-          )
+      if (
+        isArr(findingsThreeDollarWithUnits) &&
+        findingsThreeDollarWithUnits.length // &&
+        // i === from &&
+        // i === 0
+      ) {
+        console.log(
+          `098 ${`\u001b[${33}m${`findingsThreeDollarWithUnits`}\u001b[${39}m`} = ${JSON.stringify(
+            findingsThreeDollarWithUnits,
+            null,
+            4
+          )}`
         );
-      });
+        // take care of padding zeros:
+        findingsThreeDollarWithUnits.forEach(valFound => {
+          newStr = newStr.replace(
+            valFound,
+            `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
+              valFound.length - 3 + String(to).length
+            )
+          );
+        });
+      }
+
+      console.log(
+        `116 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
+          newStr,
+          null,
+          4
+        )}`
+      );
+
+      // first replace with padding (when whitespace or curlies follow), then
+      // replace what's left simply replacing the number
+      res += `${i === from ? "" : "\n"}${newStr
+        .replace(
+          threeDollarFollowedByWhitespaceRegex,
+          `${i}`.padEnd(String(to).length)
+        )
+        .replace(threeDollarRegex, i)}`.trimEnd();
+    } else {
+      // just replace $$$ with i
+      if (i === 0) {
+        res += `${i === from ? "" : "\n"}${newStr
+          .replace(threeDollarRegexWithUnits, i)
+          .replace(threeDollarRegex, i)
+          .trimEnd()}`;
+      } else {
+        res += `${i === from ? "" : "\n"}${newStr
+          .replace(threeDollarRegex, i)
+          .trimEnd()}`;
+      }
     }
-
-    console.log(
-      `116 assembled ${`\u001b[${33}m${`newStr`}\u001b[${39}m`} = ${JSON.stringify(
-        newStr,
-        null,
-        4
-      )}`
-    );
-
-    // first replace with padding (when whitespace or curlies follow), then
-    // replace what's left simply replacing the number
-    res += `${i === from ? "" : "\n"}${newStr
-      .replace(
-        threeDollarFollowedByWhitespaceRegex,
-        `${i}`.padEnd(String(to).length)
-      )
-      .replace(threeDollarRegex, i)}`.trimEnd();
 
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(
@@ -152,7 +165,8 @@ function prepConfig(
   progressFrom,
   progressTo,
   trim = true,
-  generatedCount
+  generatedCount,
+  pad
 ) {
   // all rows will report the progress from progressFrom to progressTo.
   // For example, defaults 0 to 100.
@@ -167,7 +181,8 @@ function prepConfig(
             progressFn,
             progressFrom + ((progressTo - progressFrom) / arr.length) * i,
             progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
-            generatedCount
+            generatedCount,
+            pad
           )
         : rowStr
     ),

@@ -47,36 +47,56 @@ test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, t => {
 
 test(`02.01 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`, t => {
   const source = "zzz";
-  t.is(
+  t.deepEqual(
     genAtomic(source, {
       includeConfig: true,
       includeHeadsAndTails: true
-    }).result,
-    source,
+    }),
+    {
+      result: source,
+      log: {
+        count: 0
+      }
+    },
     "02.01.01"
   );
-  t.is(
+  t.deepEqual(
     genAtomic(source, {
       includeConfig: true,
       includeHeadsAndTails: false
-    }).result,
-    source,
+    }),
+    {
+      result: source,
+      log: {
+        count: 0
+      }
+    },
     "02.01.02"
   );
-  t.is(
+  t.deepEqual(
     genAtomic(source, {
       includeConfig: false,
       includeHeadsAndTails: true
-    }).result,
-    source,
+    }),
+    {
+      result: source,
+      log: {
+        count: 0
+      }
+    },
     "02.01.03"
   );
-  t.is(
+  t.deepEqual(
     genAtomic(source, {
       includeConfig: false,
       includeHeadsAndTails: false
-    }).result,
-    source,
+    }),
+    {
+      result: source,
+      log: {
+        count: 0
+      }
+    },
     "02.01.04"
   );
 });
@@ -152,6 +172,46 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 444
 `,
     "02.03"
+  );
+});
+
+test(`02.04 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content, no pad`, t => {
+  t.deepEqual(
+    genAtomic(
+      `111
+222
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+| .pt$$$ { padding-top: $$$px !important; }|0|3|
+
+| .mt$$$ { margin-top: $$$px !important; }|0|3|
+GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */
+333
+444
+`,
+      { pad: false }
+    ).result,
+    `111
+222
+/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+| .pt$$$ { padding-top: $$$px !important; }|0|3|
+
+| .mt$$$ { margin-top: $$$px !important; }|0|3|
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+ .pt0 { padding-top: 0 !important; }
+ .pt1 { padding-top: 1px !important; }
+ .pt2 { padding-top: 2px !important; }
+ .pt3 { padding-top: 3px !important; }
+
+ .mt0 { margin-top: 0 !important; }
+ .mt1 { margin-top: 1px !important; }
+ .mt2 { margin-top: 2px !important; }
+ .mt3 { margin-top: 3px !important; }
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+333
+444
+`,
+    "02.04"
   );
 });
 
@@ -1456,6 +1516,56 @@ lala
 `,
 
     "05.11"
+  );
+});
+
+test(`05.12 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - but no heads tails incoming, fully custom range, no pad`, t => {
+  const source = `
+| .pt$$$ { padding-top: $$$px !important; } |5|10|
+|.pr$$$ { padding-right: $$$px !important; } | 5|10
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10 |
+`.trim();
+  const ref = `/* ${CONFIGHEAD}
+${source}
+${CONFIGTAIL}
+${CONTENTHEAD} */
+ .pt5 { padding-top: 5px !important; }
+ .pt6 { padding-top: 6px !important; }
+ .pt7 { padding-top: 7px !important; }
+ .pt8 { padding-top: 8px !important; }
+ .pt9 { padding-top: 9px !important; }
+ .pt10 { padding-top: 10px !important; }
+.pr5 { padding-right: 5px !important; }
+.pr6 { padding-right: 6px !important; }
+.pr7 { padding-right: 7px !important; }
+.pr8 { padding-right: 8px !important; }
+.pr9 { padding-right: 9px !important; }
+.pr10 { padding-right: 10px !important; }
+.pb5 { padding-bottom: 5px !important; }
+.pb6 { padding-bottom: 6px !important; }
+.pb7 { padding-bottom: 7px !important; }
+.pb8 { padding-bottom: 8px !important; }
+.pb9 { padding-bottom: 9px !important; }
+.pb10 { padding-bottom: 10px !important; }
+/* ${CONTENTTAIL} */
+`;
+  const generated = genAtomic(source, {
+    includeConfig: true,
+    includeHeadsAndTails: true,
+    pad: false
+  }).result;
+
+  t.is(generated, ref, "05.12.01");
+
+  // second cycle should not change anything since it's the same config
+  t.is(
+    generated,
+    genAtomic(generated, {
+      includeConfig: true,
+      includeHeadsAndTails: true,
+      pad: false
+    }).result,
+    "05.12.02"
   );
 });
 

@@ -25,7 +25,7 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   let currentPercentageDone;
   let lastPercentage = 0;
   const split = str.split("|").filter(val => val.length);
@@ -48,28 +48,41 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
     const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     const threeDollarRegex = /\$\$\$/g;
-    const findingsThreeDollarWithUnits = newStr.match(
-      threeDollarRegexWithUnits
-    );
-    if (
-      isArr(findingsThreeDollarWithUnits) &&
-      findingsThreeDollarWithUnits.length
-    ) {
-      findingsThreeDollarWithUnits.forEach(valFound => {
-        newStr = newStr.replace(
-          valFound,
-          `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
-            valFound.length - 3 + String(to).length
-          )
-        );
-      });
+    if (pad) {
+      const findingsThreeDollarWithUnits = newStr.match(
+        threeDollarRegexWithUnits
+      );
+      if (
+        isArr(findingsThreeDollarWithUnits) &&
+        findingsThreeDollarWithUnits.length
+      ) {
+        findingsThreeDollarWithUnits.forEach(valFound => {
+          newStr = newStr.replace(
+            valFound,
+            `${i}${i === 0 ? "" : unitsOnly.exec(valFound)[0]}`.padStart(
+              valFound.length - 3 + String(to).length
+            )
+          );
+        });
+      }
+      res += `${i === from ? "" : "\n"}${newStr
+        .replace(
+          threeDollarFollowedByWhitespaceRegex,
+          `${i}`.padEnd(String(to).length)
+        )
+        .replace(threeDollarRegex, i)}`.trimEnd();
+    } else {
+      if (i === 0) {
+        res += `${i === from ? "" : "\n"}${newStr
+          .replace(threeDollarRegexWithUnits, i)
+          .replace(threeDollarRegex, i)
+          .trimEnd()}`;
+      } else {
+        res += `${i === from ? "" : "\n"}${newStr
+          .replace(threeDollarRegex, i)
+          .trimEnd()}`;
+      }
     }
-    res += `${i === from ? "" : "\n"}${newStr
-      .replace(
-        threeDollarFollowedByWhitespaceRegex,
-        `${i}`.padEnd(String(to).length)
-      )
-      .replace(threeDollarRegex, i)}`.trimEnd();
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(
         subsetFrom + (i / (to - from)) * subsetRange
@@ -88,7 +101,8 @@ function prepConfig(
   progressFrom,
   progressTo,
   trim = true,
-  generatedCount
+  generatedCount,
+  pad
 ) {
   return trimBlankLinesFromLinesArray(
     split(str).map((rowStr, i, arr) =>
@@ -98,7 +112,8 @@ function prepConfig(
             progressFn,
             progressFrom + ((progressTo - progressFrom) / arr.length) * i,
             progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
-            generatedCount
+            generatedCount,
+            pad
           )
         : rowStr
     ),

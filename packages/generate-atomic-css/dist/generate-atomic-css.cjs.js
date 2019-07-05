@@ -54,7 +54,7 @@ function trimBlankLinesFromLinesArray(lineArr) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   var currentPercentageDone;
   var lastPercentage = 0;
   var split = str.split("|").filter(function (val) {
@@ -79,14 +79,22 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
     var unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
     var threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
     var threeDollarRegex = /\$\$\$/g;
-    var findingsThreeDollarWithUnits = newStr.match(threeDollarRegexWithUnits);
-    if (isArr(findingsThreeDollarWithUnits) && findingsThreeDollarWithUnits.length
-    ) {
-        findingsThreeDollarWithUnits.forEach(function (valFound) {
-          newStr = newStr.replace(valFound, "".concat(i).concat(i === 0 ? "" : unitsOnly.exec(valFound)[0]).padStart(valFound.length - 3 + String(to).length));
-        });
+    if (pad) {
+      var findingsThreeDollarWithUnits = newStr.match(threeDollarRegexWithUnits);
+      if (isArr(findingsThreeDollarWithUnits) && findingsThreeDollarWithUnits.length
+      ) {
+          findingsThreeDollarWithUnits.forEach(function (valFound) {
+            newStr = newStr.replace(valFound, "".concat(i).concat(i === 0 ? "" : unitsOnly.exec(valFound)[0]).padStart(valFound.length - 3 + String(to).length));
+          });
+        }
+      res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
+    } else {
+      if (i === 0) {
+        res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegexWithUnits, i).replace(threeDollarRegex, i).trimEnd());
+      } else {
+        res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegex, i).trimEnd());
       }
-    res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
+    }
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(subsetFrom + i / (to - from) * subsetRange);
       if (currentPercentageDone !== lastPercentage) {
@@ -103,8 +111,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
 function prepConfig(str, progressFn, progressFrom, progressTo) {
   var trim = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
   var generatedCount = arguments.length > 5 ? arguments[5] : undefined;
+  var pad = arguments.length > 6 ? arguments[6] : undefined;
   return trimBlankLinesFromLinesArray(split(str).map(function (rowStr, i, arr) {
-    return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount) : rowStr;
+    return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount, pad) : rowStr;
   }), trim).join("\n");
 }
 
@@ -147,7 +156,7 @@ function genAtomic(str, originalOpts) {
   if (!opts.configOverride && !str.includes("$$$") && !str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && !str.includes(CONTENTHEAD) && !str.includes(CONTENTTAIL) || isStr(opts.configOverride) && !opts.configOverride.includes("$$$") && !opts.configOverride.includes(CONFIGHEAD) && !opts.configOverride.includes(CONFIGTAIL) && !opts.configOverride.includes(CONTENTHEAD) && !opts.configOverride.includes(CONTENTTAIL)) {
     return {
       log: {
-        generatedCount: 0
+        count: 0
       },
       result: str
     };
@@ -175,7 +184,7 @@ function genAtomic(str, originalOpts) {
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       return {
         log: {
-          generatedCount: 0
+          count: 0
         },
         result: ""
       };
@@ -289,7 +298,7 @@ function genAtomic(str, originalOpts) {
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return {
       log: {
-        generatedCount: 0
+        count: 0
       },
       result: ""
     };
@@ -347,7 +356,7 @@ function genAtomic(str, originalOpts) {
     endPart = "".concat(endPart).concat(rawContentBelow);
   }
   var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true,
-  generatedCount)).concat(endPart)), "\n");
+  generatedCount, opts.pad)).concat(endPart)), "\n");
   return {
     log: {
       count: generatedCount.count

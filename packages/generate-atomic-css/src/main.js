@@ -67,7 +67,7 @@ function genAtomic(str, originalOpts) {
     console.log(`064 quick ending, no $$$ found, returning input str`);
     return {
       log: {
-        generatedCount: 0
+        count: 0
       },
       result: str
     };
@@ -120,7 +120,7 @@ function genAtomic(str, originalOpts) {
       console.log(`return empty`);
       return {
         log: {
-          generatedCount: 0
+          count: 0
         },
         result: ""
       };
@@ -401,7 +401,7 @@ function genAtomic(str, originalOpts) {
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
     return {
       log: {
-        generatedCount: 0
+        count: 0
       },
       result: ""
     };
@@ -632,7 +632,8 @@ function genAtomic(str, originalOpts) {
       opts.reportProgressFuncFrom,
       opts.reportProgressFuncTo,
       true, // opts.includeConfig || opts.includeHeadsAndTails
-      generatedCount
+      generatedCount,
+      opts.pad
     )}${endPart}`
   )}\n`;
 
