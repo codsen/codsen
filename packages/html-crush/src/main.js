@@ -184,6 +184,7 @@ function crush(str, originalOpts) {
   const midLen = Math.floor(len / 2);
   const leavePercForLastStage = 0.01; // in range of [0, 1]
 
+  // ceil - total range which is allocated to the main processing
   let ceil;
   if (opts.reportProgressFunc) {
     ceil = Math.floor(

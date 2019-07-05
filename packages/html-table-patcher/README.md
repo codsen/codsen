@@ -49,11 +49,11 @@ console.log("res1 = " + res1);
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-table-patcher.cjs.js` | 8 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-table-patcher.esm.js` | 8 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-table-patcher.umd.js` | 105 KB
+| Type                                                                                                    | Key in `package.json` | Path                             | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-table-patcher.cjs.js` | 8 KB   |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-table-patcher.esm.js` | 8 KB   |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-table-patcher.umd.js` | 105 KB |
 
 **[⬆ back to top](#)**
 
