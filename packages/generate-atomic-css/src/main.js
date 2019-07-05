@@ -1,6 +1,6 @@
 import { version } from "../package.json";
 import { left, right, leftSeq, rightSeq } from "string-left-right";
-import { prepConfig, isStr, isArr } from "./util";
+import { prepConfig, isStr } from "./util";
 const headsAndTails = {
   CONFIGHEAD: "GENERATE-ATOMIC-CSS-CONFIG-STARTS",
   CONFIGTAIL: "GENERATE-ATOMIC-CSS-CONFIG-ENDS",
@@ -39,6 +39,9 @@ function genAtomic(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100
   };
+  const generatedCount = {
+    count: 0
+  };
 
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
@@ -62,7 +65,12 @@ function genAtomic(str, originalOpts) {
       !opts.configOverride.includes(CONTENTTAIL))
   ) {
     console.log(`064 quick ending, no $$$ found, returning input str`);
-    return str;
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: str
+    };
   }
 
   // either insert the generated CSS in between placeholders or just return the
@@ -110,7 +118,12 @@ function genAtomic(str, originalOpts) {
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       console.log(`return empty`);
-      return "";
+      return {
+        log: {
+          generatedCount: 0
+        },
+        result: ""
+      };
     }
     console.log(`extractedConfig.trim() = "${extractedConfig.trim()}"`);
   } else if (
@@ -386,17 +399,13 @@ function genAtomic(str, originalOpts) {
   );
 
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-    return "";
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: ""
+    };
   }
-
-  // rightSeq use example:
-
-  // rightSeq("abcdefghijklmnop", 2, "d"),
-  // {
-  //   gaps: [],
-  //   leftmostChar: 3,
-  //   rightmostChar: 3
-  // }
 
   if (opts.includeConfig || opts.includeHeadsAndTails) {
     // wrap with content heads:
@@ -562,16 +571,6 @@ function genAtomic(str, originalOpts) {
 
   if (isStr(rawContentAbove)) {
     console.log(`564 tackle pending rawContentAbove`);
-    // precaution if rawContentAbove starts but not ends with CSS comment
-    // if (
-    //   rawContentAbove.trim().startsWith("/*") &&
-    //   !rawContentAbove.trim().endsWith("*/")
-    // ) {
-    //   console.log(`570 add closing CSS comment block to rawContentAbove`);
-    //   rawContentAbove = `${rawContentAbove.trim()} */${rawContentAbove.slice(
-    //     left(rawContentAbove, rawContentAbove.length) + 1 // grab any trailing whitespace
-    //   )}`;
-    // }
 
     frontPart = `${rawContentAbove}${frontPart}`;
     console.log("--------------------------------------------------");
@@ -579,45 +578,6 @@ function genAtomic(str, originalOpts) {
       `579 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
     );
   }
-
-  // maybe there was some content below?
-  // if (str.includes(CONTENTTAIL)) {
-  //   // CSS closing comment will follow our CONTENTTAIL, so we need to find
-  //   // where exactly to cut off what follows that comment
-  //   const matchedClosingCSSCommentOnTheRight = rightSeq(
-  //     str,
-  //     str.indexOf(CONTENTTAIL) + CONTENTTAIL.length,
-  //     "*",
-  //     "/"
-  //   );
-  //   console.log(
-  //     `594 ${`\u001b[${33}m${`matchedClosingCSSCommentOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
-  //       matchedClosingCSSCommentOnTheRight,
-  //       null,
-  //       4
-  //     )}`
-  //   );
-  //
-  //   console.log(
-  //     `602 right(str, ${
-  //       matchedClosingCSSCommentOnTheRight.rightmostChar
-  //     }) = ${right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)}`
-  //   );
-  //   if (
-  //     matchedClosingCSSCommentOnTheRight &&
-  //     matchedClosingCSSCommentOnTheRight.rightmostChar &&
-  //     right(str, matchedClosingCSSCommentOnTheRight.rightmostChar)
-  //   ) {
-  //     // add that content at the bottom:
-  //     endPart = `${endPart}${str.slice(
-  //       matchedClosingCSSCommentOnTheRight.rightmostChar + 1
-  //     )}`;
-  //     console.log("--------------------------------------------------");
-  //     console.log(
-  //       `617 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
-  //     );
-  //   }
-  // }
 
   if (isStr(rawContentBelow)) {
     console.log(
@@ -671,7 +631,8 @@ function genAtomic(str, originalOpts) {
       opts.reportProgressFunc,
       opts.reportProgressFuncFrom,
       opts.reportProgressFuncTo,
-      true // opts.includeConfig || opts.includeHeadsAndTails
+      true, // opts.includeConfig || opts.includeHeadsAndTails
+      generatedCount
     )}${endPart}`
   )}\n`;
 
@@ -685,7 +646,10 @@ ${`\u001b[${36}m${`████████████████████�
 `
   );
 
-  return finalRes;
+  return {
+    log: { count: generatedCount.count },
+    result: finalRes
+  };
 }
 
 export { genAtomic, version, headsAndTails };

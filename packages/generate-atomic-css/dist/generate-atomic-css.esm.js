@@ -37,7 +37,7 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
   let currentPercentageDone;
   let lastPercentage = 0;
   const split = str.split("|").filter(val => val.length);
@@ -54,6 +54,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   let res = "";
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
+    generatedCount.count++;
     let newStr = split[0];
     const threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
     const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
@@ -93,7 +94,14 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   return res;
 }
-function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
+function prepConfig(
+  str,
+  progressFn,
+  progressFrom,
+  progressTo,
+  trim = true,
+  generatedCount
+) {
   return trimBlankLinesFromLinesArray(
     split(str).map((rowStr, i, arr) =>
       rowStr.includes("$$$")
@@ -101,7 +109,8 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
             rowStr,
             progressFn,
             progressFrom + ((progressTo - progressFrom) / arr.length) * i,
-            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1)
+            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
+            generatedCount
           )
         : rowStr
     ),
@@ -141,6 +150,9 @@ function genAtomic(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100
   };
+  const generatedCount = {
+    count: 0
+  };
   const opts = Object.assign({}, defaults, originalOpts);
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
@@ -159,7 +171,12 @@ function genAtomic(str, originalOpts) {
       !opts.configOverride.includes(CONTENTHEAD) &&
       !opts.configOverride.includes(CONTENTTAIL))
   ) {
-    return str;
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: str
+    };
   }
   let frontPart = "";
   let endPart = "";
@@ -194,7 +211,12 @@ function genAtomic(str, originalOpts) {
     }
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-      return "";
+      return {
+        log: {
+          generatedCount: 0
+        },
+        result: ""
+      };
     }
   } else if (
     str.includes(CONFIGHEAD) &&
@@ -339,7 +361,12 @@ function genAtomic(str, originalOpts) {
     }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-    return "";
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: ""
+    };
   }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
     frontPart = `${CONTENTHEAD} */\n`;
@@ -431,10 +458,14 @@ function genAtomic(str, originalOpts) {
       opts.reportProgressFunc,
       opts.reportProgressFuncFrom,
       opts.reportProgressFuncTo,
-      true
+      true,
+      generatedCount
     )}${endPart}`
   )}\n`;
-  return finalRes;
+  return {
+    log: { count: generatedCount.count },
+    result: finalRes
+  };
 }
 
 export { genAtomic, headsAndTails, version };

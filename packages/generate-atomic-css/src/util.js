@@ -28,7 +28,7 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   return copyArr;
 }
 
-function prepLine(str, progressFn, subsetFrom, subsetTo) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
   let currentPercentageDone;
   let lastPercentage = 0;
 
@@ -58,6 +58,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   // console.log(`\n\n`);
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
+    generatedCount.count++;
     console.log("\n\n");
     console.log(
       `063 ${`\u001b[${36}m${`-----------`}\u001b[${39}m`} i = ${`\u001b[${31}m${i}\u001b[${39}m`}`
@@ -145,7 +146,14 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   return res;
 }
 
-function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
+function prepConfig(
+  str,
+  progressFn,
+  progressFrom,
+  progressTo,
+  trim = true,
+  generatedCount
+) {
   // all rows will report the progress from progressFrom to progressTo.
   // For example, defaults 0 to 100.
   // If there are for example 5 rows, each row will iterate through
@@ -158,7 +166,8 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
             rowStr,
             progressFn,
             progressFrom + ((progressTo - progressFrom) / arr.length) * i,
-            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1)
+            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
+            generatedCount
           )
         : rowStr
     ),

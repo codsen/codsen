@@ -54,7 +54,7 @@ function trimBlankLinesFromLinesArray(lineArr) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
   var currentPercentageDone;
   var lastPercentage = 0;
   var split = str.split("|").filter(function (val) {
@@ -73,6 +73,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   var res = "";
   var subsetRange = subsetTo - subsetFrom;
   var _loop = function _loop(i) {
+    generatedCount.count++;
     var newStr = split[0];
     var threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
     var unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
@@ -101,8 +102,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
 }
 function prepConfig(str, progressFn, progressFrom, progressTo) {
   var trim = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+  var generatedCount = arguments.length > 5 ? arguments[5] : undefined;
   return trimBlankLinesFromLinesArray(split(str).map(function (rowStr, i, arr) {
-    return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1)) : rowStr;
+    return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount) : rowStr;
   }), trim).join("\n");
 }
 
@@ -135,12 +137,20 @@ function genAtomic(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100
   };
+  var generatedCount = {
+    count: 0
+  };
   var opts = Object.assign({}, defaults, originalOpts);
   if (opts.includeConfig && !opts.includeHeadsAndTails) {
     opts.includeHeadsAndTails = true;
   }
   if (!opts.configOverride && !str.includes("$$$") && !str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && !str.includes(CONTENTHEAD) && !str.includes(CONTENTTAIL) || isStr(opts.configOverride) && !opts.configOverride.includes("$$$") && !opts.configOverride.includes(CONFIGHEAD) && !opts.configOverride.includes(CONFIGTAIL) && !opts.configOverride.includes(CONTENTHEAD) && !opts.configOverride.includes(CONTENTTAIL)) {
-    return str;
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: str
+    };
   }
   var frontPart = "";
   var endPart = "";
@@ -163,7 +173,12 @@ function genAtomic(str, originalOpts) {
     }
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-      return "";
+      return {
+        log: {
+          generatedCount: 0
+        },
+        result: ""
+      };
     }
   } else if (str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && str.includes(CONTENTHEAD)) {
     if (str.indexOf(CONFIGHEAD) > str.indexOf(CONTENTHEAD)) {
@@ -272,7 +287,12 @@ function genAtomic(str, originalOpts) {
     }
   }
   if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-    return "";
+    return {
+      log: {
+        generatedCount: 0
+      },
+      result: ""
+    };
   }
   if (opts.includeConfig || opts.includeHeadsAndTails) {
     frontPart = "".concat(CONTENTHEAD, " */\n");
@@ -326,9 +346,14 @@ function genAtomic(str, originalOpts) {
     }
     endPart = "".concat(endPart).concat(rawContentBelow);
   }
-  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true
-  )).concat(endPart)), "\n");
-  return finalRes;
+  var finalRes = "".concat(trimIfNeeded("".concat(frontPart).concat(prepConfig(extractedConfig, opts.reportProgressFunc, opts.reportProgressFuncFrom, opts.reportProgressFuncTo, true,
+  generatedCount)).concat(endPart)), "\n");
+  return {
+    log: {
+      count: generatedCount.count
+    },
+    result: finalRes
+  };
 }
 
 exports.genAtomic = genAtomic;

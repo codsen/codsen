@@ -25,7 +25,7 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo) {
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount) {
   let currentPercentageDone;
   let lastPercentage = 0;
   const split = str.split("|").filter(val => val.length);
@@ -42,6 +42,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   let res = "";
   const subsetRange = subsetTo - subsetFrom;
   for (let i = from; i <= to; i++) {
+    generatedCount.count++;
     let newStr = split[0];
     const threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
     const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
@@ -81,7 +82,14 @@ function prepLine(str, progressFn, subsetFrom, subsetTo) {
   }
   return res;
 }
-function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
+function prepConfig(
+  str,
+  progressFn,
+  progressFrom,
+  progressTo,
+  trim = true,
+  generatedCount
+) {
   return trimBlankLinesFromLinesArray(
     split(str).map((rowStr, i, arr) =>
       rowStr.includes("$$$")
@@ -89,7 +97,8 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim = true) {
             rowStr,
             progressFn,
             progressFrom + ((progressTo - progressFrom) / arr.length) * i,
-            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1)
+            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
+            generatedCount
           )
         : rowStr
     ),
