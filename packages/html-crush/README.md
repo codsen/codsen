@@ -13,7 +13,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-<div align="center"><p>Online web app: <a href="https://htmlcrush.com">https://htmlcrush.com</a></p></div>
+<div align="center"><p>Online web app: <a href="https://htmlcrush.com">htmlcrush.com</a></p></div>
 
 ## Table of Contents
 
