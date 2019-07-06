@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "2.9.27",
+  "version": "2.9.28",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.24",
+    "check-types-mini": "^5.7.25",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -179,8 +179,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.28",
-    "lect": "^0.7.5",
+    "js-row-num-cli": "^1.5.29",
+    "lect": "^0.7.6",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.16.6",
