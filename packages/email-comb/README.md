@@ -14,7 +14,7 @@
 [![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
-<div align="center"><p>Online web app: <a href="https://EmailComb.com">https://EmailComb.com</a></p></div>
+<div align="center"><p>Online web app: <a href="https://EmailComb.com">emailcomb.com</a></p></div>
 
 ## Table of Contents
 
