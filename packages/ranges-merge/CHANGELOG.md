@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.2.6](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.2.5...ranges-merge@4.2.6) (2019-07-06)
-
-**Note:** Version bump only for package ranges-merge
-
-
-
-
-
 ## 4.2.0 (2019-06-01)
 
 ### Features

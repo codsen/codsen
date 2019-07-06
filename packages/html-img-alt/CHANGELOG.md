@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.4.6](https://gitlab.com/codsen/codsen/compare/html-img-alt@1.4.5...html-img-alt@1.4.6) (2019-07-06)
-
-**Note:** Version bump only for package html-img-alt
-
-
-
-
-
 ## 1.4.0 (2019-06-01)
 
 ### Features
