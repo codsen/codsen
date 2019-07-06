@@ -1,6 +1,8 @@
-# html-crush
+<div align="center">
+  <img alt="HTML Crush" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/html-crush/media/repo_logo.png" width="480" align="center">
+</div>
 
-> Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+<div align="center"><p>Minifies HTML/CSS: valid or broken, pure or mixed with other languages</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -11,7 +13,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-**Online web app:** [htmlcrush.com](https://htmlcrush.com)
+<div align="center"><p>Online web app: <a href="https://htmlcrush.com">https://htmlcrush.com</a></p></div>
 
 ## Table of Contents
 
