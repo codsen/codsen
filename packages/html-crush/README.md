@@ -100,14 +100,7 @@ This program:
 
 - Does not parse the input — input can be (X)HTML or whatever or mixed with whatever
 - Equally, the input can be with HTML errors, broken HTML, incomplete HTML or not-quite-HTML or whatever
-- Mailchimp, Responsys, Exact Target, Campaign Monitor tags in your HTML - all fine - it will minify it
-
-In short, we prioritise the support of broken or mixed-HTML support over both:
-
-1. minification amount (Kangax [html-minifier](https://www.npmjs.com/package/html-minifier) will compress more);
-2. speed
-
-The price we pay is, we are not able to detect an invalid HTML/CSS/JS.
+- Mailchimp, Responsys, Exact Target, Campaign Monitor tags in your HTML - all fine
 
 As a side priority, this application also takes into consideration **human-friendliness**:
 
