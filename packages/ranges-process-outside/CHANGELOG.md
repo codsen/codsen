@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://gitlab.com/codsen/codsen/compare/ranges-process-outside@2.1.5...ranges-process-outside@2.1.6) (2019-07-06)
+
+**Note:** Version bump only for package ranges-process-outside
+
+
+
+
+
 ## 2.1.0 (2019-06-01)
 
 ### Features
