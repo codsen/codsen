@@ -205,36 +205,6 @@ If you set it to a function, that function will be fed a natural number string, 
 
 Now, it's up to you how to distinguish "in progress" results and the final result. I use a random string, which is unlikely to happen in the input and I append that secret random string in front of the percentage being passed. Then, front-end checks did result that came through have a secret random string in front or not. If so, it's progress. If not, it's a final result.
 
-## Competition
-
-This library has its strengths and weaknesses.
-
-**STRENGTHS:**
-
-- We accept any source: broken HTML, HTML mixed whatever programming language, no HTML at all, incomplete HTML and so on, because we process it as a string, we don't parse it
-- We're faster than parsing libraries because there's a single loop over the input (as string) and the job's done
-
-**WEAKNESSES:**
-
-- More prone to bugs compared to parsing libraries.
-- This library is newer, so less battle-tested and less-famous has fewer maintainers.
-
-**IN GENERAL,**
-
-- When **parsing** libraries break, they'll cause errors and won't give you result at all.
-- **Non-parsing** libraries will never break and will always give you a result, only in failure cases it will be erroneous.
-
-also,
-
-- With **parsing** libraries, you worry about how to fix the errors in the code to please the parser.
-- With **non-parsing** libraries, you worry, is the result not messed up (because the tool won't tell if things went wrong and it's up to you to judge the result).
-
----
-
-In general, when you want to minify **a mixed source code** like HTML template which contains ESP templating code (or other back-end code), you've pretty much got **no choice**: either this library or nothing. Web development-oriented libraries are all _parsing_.
-
-**[⬆ back to top](#)**
-
 ## Non-deterministic unit tests
 
 This library has usual unit tests written for `ava`, with coverage tracked by `nyc`.
