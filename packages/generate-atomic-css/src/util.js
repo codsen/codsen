@@ -1,10 +1,6 @@
 import split from "split-lines";
 import { right } from "string-left-right";
 const isArr = Array.isArray;
-const threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
-const unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
-const threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
-const threeDollarRegex = /\$\$\$/g;
 
 function isStr(something) {
   return typeof something === "string";
