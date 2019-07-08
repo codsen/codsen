@@ -44,7 +44,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["split-lines", "string-left-right"],
+      external: ["ranges-apply", "split-lines", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -62,7 +62,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["split-lines", "string-left-right"],
+      external: ["ranges-apply", "split-lines", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -79,7 +79,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["split-lines"],
+      external: ["split-lines", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -97,6 +97,8 @@ export default commandLineArgs => {
     finalConfig.forEach((singleConfigVal, i) => {
       finalConfig[i].plugins.shift();
     });
+    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+    delete commandLineArgs.dev;
   }
   return finalConfig;
 };

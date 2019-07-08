@@ -32,10 +32,11 @@ function _typeof(obj) {
 
 var version = "1.1.0";
 
-var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
+var units = ["px", "em", "%", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vmin", "vmax"];
+var padLeftIfTheresOnTheLeft = [":"];
 function trimBlankLinesFromLinesArray(lineArr) {
   var trim = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   if (!trim) {
@@ -45,56 +46,114 @@ function trimBlankLinesFromLinesArray(lineArr) {
   if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
       copyArr.shift();
-    } while (!copyArr[0].trim().length);
+    } while (isStr(copyArr[0]) && !copyArr[0].trim().length);
   }
   if (copyArr.length && isStr(copyArr[copyArr.length - 1]) && !copyArr[copyArr.length - 1].trim().length) {
     do {
       copyArr.pop();
-    } while (!copyArr[copyArr.length - 1].trim().length);
+    } while (copyArr && copyArr[copyArr.length - 1] && !copyArr[copyArr.length - 1].trim().length);
   }
   return copyArr;
 }
 function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   var currentPercentageDone;
   var lastPercentage = 0;
-  var split = str.split("|").filter(function (val) {
-    return val.length;
-  });
   var from = 0;
   var to = 500;
-  if (split[1]) {
-    if (split[2]) {
-      from = Number.parseInt(split[1].trim());
-      to = Number.parseInt(split[2].trim());
-    } else {
-      to = Number.parseInt(split[1].trim());
-    }
-  }
-  var res = "";
-  var subsetRange = subsetTo - subsetFrom;
-  var _loop = function _loop(i) {
-    generatedCount.count++;
-    var newStr = split[0];
-    var threeDollarRegexWithUnits = /(\$\$\$(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax))/g;
-    var unitsOnly = /(px|em|%|rem|cm|mm|in|pt|pc|ex|ch|vw|vmin|vmax)/g;
-    var threeDollarFollowedByWhitespaceRegex = /\$\$\$(?=[{ ])/g;
-    var threeDollarRegex = /\$\$\$/g;
-    if (pad) {
-      var findingsThreeDollarWithUnits = newStr.match(threeDollarRegexWithUnits);
-      if (isArr(findingsThreeDollarWithUnits) && findingsThreeDollarWithUnits.length
-      ) {
-          findingsThreeDollarWithUnits.forEach(function (valFound) {
-            newStr = newStr.replace(valFound, "".concat(i).concat(i === 0 ? "" : unitsOnly.exec(valFound)[0]).padStart(valFound.length - 3 + String(to).length));
-          });
+  var source = str;
+  if (str.lastIndexOf("}") > 0) {
+    if (str.slice(str.lastIndexOf("}") + 1).includes("|")) {
+      var tempArr = str.slice(str.lastIndexOf("}") + 1).split("|").filter(function (val) {
+        return val.trim().length;
+      }).map(function (val) {
+        return val.trim();
+      }).filter(function (val) {
+        return String(val).split("").every(function (_char) {
+          return /\d/g.test(_char);
+        });
+      });
+      if (tempArr.length === 1) {
+        to = Number.parseInt(tempArr[0], 10);
+      } else if (tempArr.length > 1) {
+        from = Number.parseInt(tempArr[0], 10);
+        to = Number.parseInt(tempArr[1], 10);
+      }
+      source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
+      if (source.trim().startsWith("|")) {
+        while (source.trim().startsWith("|")) {
+          source = source.trimStart().slice(1);
         }
-      res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarFollowedByWhitespaceRegex, "".concat(i).padEnd(String(to).length)).replace(threeDollarRegex, i)).trimEnd();
-    } else {
-      if (i === 0) {
-        res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegexWithUnits, i).replace(threeDollarRegex, i).trimEnd());
-      } else {
-        res += "".concat(i === from ? "" : "\n").concat(newStr.replace(threeDollarRegex, i).trimEnd());
       }
     }
+  }
+  var subsetRange = subsetTo - subsetFrom;
+  var res = "";
+  var _loop = function _loop(i) {
+    var debtPaddingLen = 0;
+    var startPoint = 0;
+    var _loop2 = function _loop2(y, len) {
+      var charcode = source[y].charCodeAt(0);
+      if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
+        var restOfStr = source.slice(y + 1);
+        var unitFound;
+        if (i === 0 && units.some(function (unit) {
+          if (restOfStr.startsWith(unit)) {
+            unitFound = unit;
+            return true;
+          }
+        }) && (source[stringLeftRight.right(source, y + unitFound.length)] === "{" || !source[y + unitFound.length + 1].trim().length)) {
+          res += "".concat(source.slice(startPoint, y - 2)).concat(pad ? String(i).padStart(String(to).length - String(i).length + unitFound.length + 1) : i);
+          startPoint = y + 1 + (unitFound ? unitFound.length : 0);
+        } else {
+          var unitThatFollow;
+          units.some(function (unit) {
+            if (source.slice(y + 1).startsWith(unit)) {
+              unitThatFollow = unit;
+              return true;
+            }
+          });
+          if (!source[y - 3].trim().length || padLeftIfTheresOnTheLeft.some(function (val) {
+            return source.slice(startPoint, y - 2).endsWith(val);
+          })) {
+            res += "".concat(source.slice(startPoint, y - 2)).concat(pad ? String(i).padStart(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
+          } else if (!source[y + 1].trim().length || source[stringLeftRight.right(source, y)] === "{") {
+            res += "".concat(source.slice(startPoint, y - 2)).concat(pad ? String(i).padEnd(String(to).length + (i === 0 && unitThatFollow ? unitThatFollow.length : 0)) : i);
+          } else {
+            res += "".concat(source.slice(startPoint, y - 2)).concat(i);
+            if (pad) {
+              debtPaddingLen = String(to).length - String(i).length;
+            }
+          }
+          startPoint = y + 1;
+        }
+      }
+      if (source[y] === "{" && pad) {
+        if (debtPaddingLen) {
+          res += "".concat(source.slice(startPoint, y)).concat(" ".repeat(debtPaddingLen));
+          startPoint = y;
+          debtPaddingLen = 0;
+        }
+      }
+      if (!source[y + 1]) {
+        var _unitFound;
+        var _restOfStr = source.slice(startPoint);
+        if (i === 0 && units.some(function (unit) {
+          if (_restOfStr.startsWith(unit)) {
+            _unitFound = unit;
+            return true;
+          }
+        })) {
+          res += "".concat(source.slice(startPoint + _unitFound.length));
+        } else {
+          res += "".concat(source.slice(startPoint));
+        }
+        res += "".concat(i !== to ? "\n" : "");
+      }
+    };
+    for (var y = 0, len = source.length; y < len; y++) {
+      _loop2(y);
+    }
+    generatedCount.count++;
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(subsetFrom + i / (to - from) * subsetRange);
       if (currentPercentageDone !== lastPercentage) {

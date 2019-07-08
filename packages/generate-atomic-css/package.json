@@ -163,6 +163,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "ranges-apply": "^3.0.19",
     "split-lines": "^2.0.0",
     "string-left-right": "^2.2.9"
   },
