@@ -51,7 +51,7 @@ test("01.01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-test("01.02 - only changelog present in the root - default (not --loud)", async t => {
+test("01.02 - sorts a file", async t => {
   const originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950

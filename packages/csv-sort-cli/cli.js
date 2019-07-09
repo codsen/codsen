@@ -139,7 +139,10 @@ if (Object.keys(cli.flags).length !== 0) {
   state.toDoList = uniq(state.toDoList);
 }
 
-if (Object.keys(cli.flags) !== 0 && hasOwnProperty(cli.flags, "overwrite")) {
+if (
+  Object.keys(cli.flags).length !== 0 &&
+  hasOwnProperty(cli.flags, "overwrite")
+) {
   // variables that can be misinterpreted as falsey, yet the flag still be in
   // for example, in "csvsort -o false simples.csv simples2.csv",
   // the cli.flags.overwrite === false (WTF?)
