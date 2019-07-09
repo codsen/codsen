@@ -47,37 +47,88 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   }
   return copyArr;
 }
-function extractFromToSource(str, fromDefault, toDefault) {
+function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
   let from = fromDefault;
   let to = toDefault;
   let source = str;
-  if (str.lastIndexOf("}") > 0) {
-    if (str.slice(str.lastIndexOf("}") + 1).includes("|")) {
-      const tempArr = str
-        .slice(str.lastIndexOf("}") + 1)
-        .split("|")
-        .filter(val => val.trim().length)
-        .map(val => val.trim())
-        .filter(val =>
-          String(val)
-            .split("")
-            .every(char => /\d/g.test(char))
-        );
-      if (tempArr.length === 1) {
-        to = Number.parseInt(tempArr[0], 10);
-      } else if (tempArr.length > 1) {
-        from = Number.parseInt(tempArr[0], 10);
-        to = Number.parseInt(tempArr[1], 10);
+  let tempArr;
+  if (
+    str.lastIndexOf("}") > 0 &&
+    str.slice(str.lastIndexOf("}") + 1).includes("|")
+  ) {
+    tempArr = str
+      .slice(str.lastIndexOf("}") + 1)
+      .split("|")
+      .filter(val => val.trim().length)
+      .map(val => val.trim())
+      .filter(val =>
+        String(val)
+          .split("")
+          .every(char => /\d/g.test(char))
+      );
+  } else if (str.includes("|")) {
+    tempArr = str
+      .split("|")
+      .filter(val => val.trim().length)
+      .map(val => val.trim())
+      .filter(val =>
+        String(val)
+          .split("")
+          .every(char => /\d/g.test(char))
+      );
+  }
+  if (isArr(tempArr)) {
+    if (tempArr.length === 1) {
+      to = Number.parseInt(tempArr[0], 10);
+    } else if (tempArr.length > 1) {
+      from = Number.parseInt(tempArr[0], 10);
+      to = Number.parseInt(tempArr[1], 10);
+    }
+  }
+  if (
+    str.lastIndexOf("}") > 0 &&
+    str.slice(str.lastIndexOf("}") + 1).includes("|")
+  ) {
+    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
+    if (source.trim().startsWith("|")) {
+      while (source.trim().startsWith("|")) {
+        source = source.trimStart().slice(1);
       }
-      source = str
-        .slice(0, str.indexOf("|", str.lastIndexOf("}") + 1))
-        .trimEnd();
-      if (source.trim().startsWith("|")) {
-        while (source.trim().startsWith("|")) {
-          source = source.trimStart().slice(1);
+    }
+  } else {
+    let lastPipeWasAt = null;
+    let firstNonPipeNonWhitespaceCharMet = false;
+    let startFrom = 0;
+    let endTo = str.length;
+    let onlyDigitsAndWhitespaceBeenMet = null;
+    for (let i = 0, len = str.length; i < len; i++) {
+      if ("0123456789".includes(str[i])) {
+        if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
+          onlyDigitsAndWhitespaceBeenMet = true;
+        }
+      } else {
+        if (str[i] !== "|" && str[i].trim().length) {
+          onlyDigitsAndWhitespaceBeenMet = false;
+        }
+      }
+      if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
+        endTo = lastPipeWasAt;
+      }
+      if (str[i] === "|") {
+        if (onlyDigitsAndWhitespaceBeenMet) {
+          endTo = lastPipeWasAt;
+          break;
+        }
+        lastPipeWasAt = i;
+        onlyDigitsAndWhitespaceBeenMet = null;
+      } else if (!firstNonPipeNonWhitespaceCharMet && str[i].trim().length) {
+        firstNonPipeNonWhitespaceCharMet = true;
+        if (lastPipeWasAt !== null) {
+          startFrom = lastPipeWasAt + 1;
         }
       }
     }
+    source = str.slice(startFrom, endTo).trimEnd();
   }
   return [from, to, source];
 }

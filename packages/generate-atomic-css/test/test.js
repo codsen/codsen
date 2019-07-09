@@ -2,7 +2,8 @@ import test from "ava";
 import {
   genAtomic,
   version,
-  headsAndTails
+  headsAndTails,
+  extractFromToSource
 } from "../dist/generate-atomic-css.esm";
 
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
@@ -1913,7 +1914,231 @@ z
 });
 
 // -----------------------------------------------------------------------------
-// 99. API bits
+// 98. API bits - extractFromToSource
+// -----------------------------------------------------------------------------
+
+test(`98.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 1 arg`, t => {
+  t.deepEqual(extractFromToSource("mt|10"), [0, 10, "mt"], "98.01.01");
+  t.deepEqual(extractFromToSource("mt|10|"), [0, 10, "mt"], "98.01.02");
+  t.deepEqual(extractFromToSource("|mt|10|"), [0, 10, "mt"], "98.01.03");
+  t.deepEqual(extractFromToSource("| mt | 10 |"), [0, 10, " mt"], "98.01.04");
+  t.deepEqual(extractFromToSource(" | mt | 10 | "), [0, 10, " mt"], "98.01.05");
+  t.deepEqual(extractFromToSource(" | mt| 0 "), [0, 0, " mt"], "98.01.06");
+  t.deepEqual(extractFromToSource(" |||| mt| 0 "), [0, 0, " mt"], "98.01.06");
+});
+
+test(`98.02 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 2 args`, t => {
+  t.deepEqual(extractFromToSource("mt|2|10"), [2, 10, "mt"], "98.02.01");
+  t.deepEqual(extractFromToSource("mt|2|10|"), [2, 10, "mt"], "98.02.02");
+  t.deepEqual(extractFromToSource("|mt|2|10|"), [2, 10, "mt"], "98.02.03");
+  t.deepEqual(extractFromToSource(" mt | 2 | 10 "), [2, 10, " mt"], "98.02.04");
+  t.deepEqual(
+    extractFromToSource(" mt | 2 | 10 |"),
+    [2, 10, " mt"],
+    "98.02.05"
+  );
+  t.deepEqual(
+    extractFromToSource("| mt | 2 | 10 |"),
+    [2, 10, " mt"],
+    "98.02.06"
+  );
+  t.deepEqual(
+    extractFromToSource(" | mt | 2 | 10 | "),
+    [2, 10, " mt"],
+    "98.02.07"
+  );
+  t.deepEqual(
+    extractFromToSource("  mt| 2| 10|\n"),
+    [2, 10, "  mt"],
+    "98.02.08"
+  );
+  t.deepEqual(
+    extractFromToSource("||| |  mt| 2| 10|\n"),
+    [2, 10, "  mt"],
+    "98.02.09"
+  );
+});
+
+test(`98.03 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`, t => {
+  // takes first two digits
+  t.deepEqual(extractFromToSource("mt|2|10|0"), [2, 10, "mt"], "98.03.01");
+  t.deepEqual(extractFromToSource("mt|2|10|0|"), [2, 10, "mt"], "98.03.02");
+  t.deepEqual(extractFromToSource("|mt|2|10|0|"), [2, 10, "mt"], "98.03.03");
+  t.deepEqual(extractFromToSource("||||mt|2|10|0|"), [2, 10, "mt"], "98.03.04");
+});
+
+test(`98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args - taster`, t => {
+  t.deepEqual(
+    extractFromToSource("mt[lang|=en]|2"),
+    [0, 2, "mt[lang|=en]"],
+    "98.04.01"
+  );
+});
+
+test(`98.04 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`, t => {
+  t.deepEqual(
+    extractFromToSource("mt[lang|=en]|2|10"),
+    [2, 10, "mt[lang|=en]"],
+    "98.04.02"
+  );
+  t.deepEqual(
+    extractFromToSource(".mt[lang|=en]|2|"),
+    [0, 2, ".mt[lang|=en]"],
+    "98.04.03"
+  );
+  t.deepEqual(
+    extractFromToSource(".mt[lang|=en]|2|10|"),
+    [2, 10, ".mt[lang|=en]"],
+    "98.04.04"
+  );
+  t.deepEqual(
+    extractFromToSource("mt[lang|=en] | 2 | 10 | 0"),
+    [2, 10, "mt[lang|=en]"],
+    "98.04.05"
+  );
+  t.deepEqual(
+    extractFromToSource("mt[lang|=en] | 2 | 10 | a"),
+    [2, 10, "mt[lang|=en]"],
+    "98.04.06"
+  );
+  t.deepEqual(
+    extractFromToSource("|mt[lang|=en] | 2 | 10 | a"),
+    [2, 10, "mt[lang|=en]"],
+    "98.04.07"
+  );
+  t.deepEqual(
+    extractFromToSource("||||mt[lang|=en] | 2 | 10 | a"),
+    [2, 10, "mt[lang|=en]"],
+    "98.04.08"
+  );
+});
+
+test(`98.05 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 1 arg`, t => {
+  t.deepEqual(
+    extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 10"),
+    [0, 10, ".mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.01"
+  );
+  t.deepEqual(
+    extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10"),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.02"
+  );
+  t.deepEqual(
+    extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 "),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.03"
+  );
+  t.deepEqual(
+    extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 |"),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.04"
+  );
+  t.deepEqual(
+    extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 | "),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.05"
+  );
+  t.deepEqual(
+    extractFromToSource("|   .mt$$$ { margin-top: $$$px !important; } | 10 | "),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.06"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "||||   .mt$$$ { margin-top: $$$px !important; } | 10 | "
+    ),
+    [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
+    "98.05.07"
+  );
+});
+
+test(`98.06 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 2 arg`, t => {
+  t.deepEqual(
+    extractFromToSource(".mt$$$ { margin-top: $$$px !important; }|2|10"),
+    [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.01"
+  );
+  t.deepEqual(
+    extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 2 | 10 "),
+    [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.02"
+  );
+  t.deepEqual(
+    extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 2 | 10 |"),
+    [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.03"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | "
+    ),
+    [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.04"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
+    ),
+    [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.05"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
+    ),
+    [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.06"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "|| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a |"
+    ),
+    [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
+    "98.06.07"
+  );
+});
+
+test(`98.07 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - pipe in CSS`, t => {
+  t.deepEqual(
+    extractFromToSource(
+      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|10"
+    ),
+    [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
+    "98.07.01"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|2|10"
+    ),
+    [2, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
+    "98.07.02"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "|.mt$$$[lang|=en] { margin-top: $$$px !important; }|10|"
+    ),
+    [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
+    "98.07.03"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
+    ),
+    [2, 10, " .mt$$$[lang|=en] { margin-top: $$$px !important; }"],
+    "98.07.04"
+  );
+  t.deepEqual(
+    extractFromToSource(
+      "|||| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
+    ),
+    [2, 10, " .mt$$$[lang|=en] { margin-top: $$$px !important; }"],
+    "98.07.05"
+  );
+});
+
+// -----------------------------------------------------------------------------
+// 99. API bits - the others
 // -----------------------------------------------------------------------------
 
 test(`99.01 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - version is exported`, t => {

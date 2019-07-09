@@ -70,6 +70,7 @@ function _nonIterableRest() {
 
 var version = "1.1.0";
 
+var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -93,34 +94,83 @@ function trimBlankLinesFromLinesArray(lineArr) {
   }
   return copyArr;
 }
-function extractFromToSource(str, fromDefault, toDefault) {
+function extractFromToSource(str) {
+  var fromDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var toDefault = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
   var from = fromDefault;
   var to = toDefault;
   var source = str;
-  if (str.lastIndexOf("}") > 0) {
-    if (str.slice(str.lastIndexOf("}") + 1).includes("|")) {
-      var tempArr = str.slice(str.lastIndexOf("}") + 1).split("|").filter(function (val) {
-        return val.trim().length;
-      }).map(function (val) {
-        return val.trim();
-      }).filter(function (val) {
-        return String(val).split("").every(function (_char) {
-          return /\d/g.test(_char);
-        });
+  var tempArr;
+  if (str.lastIndexOf("}") > 0 && str.slice(str.lastIndexOf("}") + 1).includes("|")) {
+    tempArr = str.slice(str.lastIndexOf("}") + 1).split("|").filter(function (val) {
+      return val.trim().length;
+    }).map(function (val) {
+      return val.trim();
+    }).filter(function (val) {
+      return String(val).split("").every(function (_char) {
+        return /\d/g.test(_char);
       });
-      if (tempArr.length === 1) {
-        to = Number.parseInt(tempArr[0], 10);
-      } else if (tempArr.length > 1) {
-        from = Number.parseInt(tempArr[0], 10);
-        to = Number.parseInt(tempArr[1], 10);
+    });
+  } else if (str.includes("|")) {
+    tempArr = str.split("|").filter(function (val) {
+      return val.trim().length;
+    }).map(function (val) {
+      return val.trim();
+    }).filter(function (val) {
+      return String(val).split("").every(function (_char2) {
+        return /\d/g.test(_char2);
+      });
+    });
+  }
+  if (isArr(tempArr)) {
+    if (tempArr.length === 1) {
+      to = Number.parseInt(tempArr[0], 10);
+    } else if (tempArr.length > 1) {
+      from = Number.parseInt(tempArr[0], 10);
+      to = Number.parseInt(tempArr[1], 10);
+    }
+  }
+  if (str.lastIndexOf("}") > 0 && str.slice(str.lastIndexOf("}") + 1).includes("|")) {
+    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
+    if (source.trim().startsWith("|")) {
+      while (source.trim().startsWith("|")) {
+        source = source.trimStart().slice(1);
       }
-      source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
-      if (source.trim().startsWith("|")) {
-        while (source.trim().startsWith("|")) {
-          source = source.trimStart().slice(1);
+    }
+  } else {
+    var lastPipeWasAt = null;
+    var firstNonPipeNonWhitespaceCharMet = false;
+    var startFrom = 0;
+    var endTo = str.length;
+    var onlyDigitsAndWhitespaceBeenMet = null;
+    for (var i = 0, len = str.length; i < len; i++) {
+      if ("0123456789".includes(str[i])) {
+        if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
+          onlyDigitsAndWhitespaceBeenMet = true;
+        }
+      } else {
+        if (str[i] !== "|" && str[i].trim().length) {
+          onlyDigitsAndWhitespaceBeenMet = false;
+        }
+      }
+      if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
+        endTo = lastPipeWasAt;
+      }
+      if (str[i] === "|") {
+        if (onlyDigitsAndWhitespaceBeenMet) {
+          endTo = lastPipeWasAt;
+          break;
+        }
+        lastPipeWasAt = i;
+        onlyDigitsAndWhitespaceBeenMet = null;
+      } else if (!firstNonPipeNonWhitespaceCharMet && str[i].trim().length) {
+        firstNonPipeNonWhitespaceCharMet = true;
+        if (lastPipeWasAt !== null) {
+          startFrom = lastPipeWasAt + 1;
         }
       }
     }
+    source = str.slice(startFrom, endTo).trimEnd();
   }
   return [from, to, source];
 }
