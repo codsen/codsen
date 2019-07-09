@@ -1,6 +1,6 @@
 import { version } from "../package.json";
 import { left, right, leftSeq, rightSeq } from "string-left-right";
-import { prepConfig, isStr } from "./util";
+import { prepConfig, isStr, extractFromToSource } from "./util";
 const headsAndTails = {
   CONFIGHEAD: "GENERATE-ATOMIC-CSS-CONFIG-STARTS",
   CONFIGTAIL: "GENERATE-ATOMIC-CSS-CONFIG-ENDS",
@@ -653,4 +653,4 @@ ${`\u001b[${36}m${`████████████████████�
   };
 }
 
-export { genAtomic, version, headsAndTails };
+export { genAtomic, version, headsAndTails, extractFromToSource };

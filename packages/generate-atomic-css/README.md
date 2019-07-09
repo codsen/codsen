@@ -19,6 +19,7 @@
 - [genAtomic() - output API](#genatomic---output-api)
 - [version](#version)
 - [headsAndTails](#headsandtails)
+- [extractFromToSource()](#extractfromtosource)
 - [Idea](#idea)
 - [Config](#config)
 - [Contributing](#contributing)
@@ -32,16 +33,26 @@ npm i generate-atomic-css
 
 ```js
 // consume via a CommonJS require:
-const { genAtomic, version, headsAndTails } = require("generate-atomic-css");
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} = require("generate-atomic-css");
 // or as an ES Module:
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 ```
 
 Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 18 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/generate-atomic-css.cjs.js` | 19 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/generate-atomic-css.esm.js` | 17 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/generate-atomic-css.umd.js` | 19 KB |
 
@@ -52,16 +63,27 @@ Here's what you'll get:
 Three methods are exported:
 
 ```js
-const { genAtomic, version, headsAndTails } = require("generate-atomic-css");
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} = require("generate-atomic-css");
 // or
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 ```
 
-| Name          | What it does                                                   |
-| ------------- | -------------------------------------------------------------- |
-| genAtomic     | It's the main function which generates CSS                     |
-| version       | Exports version from package.json, for example, string `1.0.1` |
-| headsAndTails | Exports a plain object with all heads and tails                |
+| Name                | What it does                                                     |
+| ------------------- | ---------------------------------------------------------------- |
+| genAtomic           | It's the main function which generates CSS                       |
+| version             | Exports version from package.json, for example, string `1.0.1`   |
+| headsAndTails       | Exports a plain object with all heads and tails                  |
+| extractFromToSource | Extracts "from" and "to" from source in rows, separated by pipes |
 
 **[⬆ back to top](#)**
 
@@ -74,7 +96,12 @@ It's a function, takes two arguments: input string and optional options object:
 For example:
 
 ```js
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 const source = `a
 
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -163,7 +190,12 @@ For example, here's the format of the main function's output:
 You tap the result like this:
 
 ```js
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 const source = `.mt$$$ { margin-top: $$$px; }|3`;
 const { log, result } = genAtomic(source, {
   includeConfig: true
@@ -181,7 +213,12 @@ console.log(`result:\n${result}`);
 It's a string and it comes straight from `package.json`. For example:
 
 ```js
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 console.log(`version = v${version}`);
 // => version = v1.0.1
 ```
@@ -204,16 +241,69 @@ It's a plain object, its main purpose is to serve as a single source of truth fo
 For example,
 
 ```js
-import { genAtomic, version, headsAndTails } from "generate-atomic-css";
+import {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} from "generate-atomic-css";
 console.log(`headsAndTails.CONTENTTAIL = ${headsAndTails.CONTENTTAIL}`);
 // => headsAndTails.CONTENTTAIL = GENERATE-ATOMIC-CSS-CONTENT-ENDS
 ```
 
 **[⬆ back to top](#)**
 
+## extractFromToSource()
+
+It's an internal function which reads the source line, for example:
+
+```js
+.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10
+```
+
+and separates "from" (`5` above) and "to" (`10` above) values from the rest of the string (`.pb$$$ { padding-bottom: $$$px !important; }`).
+
+The challenging part is that pipes can be wrapping the line from outside, plus, if there is only one number at the end of the line, it is "to" value.
+
+```
+| .mt$$$ { margin-top: $$$px !important; } | 1 |
+```
+
+Here's an example how to use `extractFromToSource()`:
+
+```js
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} = require("generate-atomic-css");
+const input1 = `.pb$$$ { padding-bottom: $$$px !important; } | 5 | 10`;
+const input2 = `.mt$$$ { margin-top: $$$px !important; } | 1`;
+
+// second and third input argument are default "from" and default "to" values:
+const [from1, to1, source1] = extractFromToSource(input1, 0, 500);
+console.log(`from = ${from1}`);
+// from = 5
+console.log(`to = ${to1}`);
+// from = 10
+console.log(`source = "${source1}"`);
+// source = ".pb$$$ { padding-bottom: $$$px !important; }"
+
+const [from2, to2, source2] = extractFromToSource(input2, 0, 100);
+console.log(`from = ${from2}`);
+// from = 0 <--- default
+console.log(`to = ${to2}`);
+// from = 1 <--- comes from pipe, "} | 1`;"
+console.log(`source = "${source2}"`);
+// source = ".mt$$$ { margin-top: $$$px !important; }"
+```
+
+**[⬆ back to top](#)**
+
 ## Idea
 
-At the simplest operation, you can turn off heads/tails (set `opts.includeHeadsAndTails` to `false`) and config (set `opts.includeConfig` to `false`).
+On a basic level, you can turn off heads/tails (set `opts.includeHeadsAndTails` to `false`) and config (set `opts.includeConfig` to `false`).
 
 Each line which contains `$$$` will be repeated, from default `0` to `500` or within the range you set:
 
@@ -352,7 +442,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/generate-atomic-css
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
-[cov-img]: https://img.shields.io/badge/coverage-93.51%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-93.56%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/generate-atomic-css

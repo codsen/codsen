@@ -52,28 +52,11 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   return copyArr;
 }
 
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
-  //
-  //
-  //
-  //                PART I. Extract from, to and source values
-  //
-  //
-  //
-
-  let currentPercentageDone;
-  let lastPercentage = 0;
-  console.log(`\n\n\n\n\n`);
-  console.log(`071 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
-  console.log(
-    `073 util: prepLine(): str: ${`\u001b[${35}m${str}\u001b[${39}m`}`
-  );
-
-  // we need to extract the "from" and to "values"
-  // the separator is vertical pipe, which is a legit CSS selector
-
-  let from = 0;
-  let to = 500;
+// takes string for example, .mt$$$ { margin-top: $$$px; }|3
+// and extracts the parts after the pipe
+function extractFromToSource(str, fromDefault, toDefault) {
+  let from = fromDefault;
+  let to = toDefault;
   let source = str;
 
   if (str.lastIndexOf("}") > 0) {
@@ -116,8 +99,33 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       }
     }
   }
+  return [from, to, source];
+}
+
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
+  //
+  //
+  //
+  //                PART I. Extract from, to and source values
+  //
+  //
+  //
+
+  let currentPercentageDone;
+  let lastPercentage = 0;
+  console.log(`\n\n\n\n\n`);
+  console.log(`071 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
   console.log(
-    `124 ${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `073 util: prepLine(): str: ${`\u001b[${35}m${str}\u001b[${39}m`}`
+  );
+
+  // we need to extract the "from" and to "values"
+  // the separator is vertical pipe, which is a legit CSS selector
+
+  const [from, to, source] = extractFromToSource(str, 0, 500);
+
+  console.log(
+    `124 ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}\n${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n`
   );
 
   //
@@ -374,4 +382,4 @@ function prepConfig(
   ).join("\n");
 }
 
-export { prepLine, prepConfig, isStr, isArr };
+export { prepLine, prepConfig, isStr, isArr, extractFromToSource };

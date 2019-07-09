@@ -47,11 +47,9 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
-  let currentPercentageDone;
-  let lastPercentage = 0;
-  let from = 0;
-  let to = 500;
+function extractFromToSource(str, fromDefault, toDefault) {
+  let from = fromDefault;
+  let to = toDefault;
   let source = str;
   if (str.lastIndexOf("}") > 0) {
     if (str.slice(str.lastIndexOf("}") + 1).includes("|")) {
@@ -81,6 +79,12 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       }
     }
   }
+  return [from, to, source];
+}
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
+  let currentPercentageDone;
+  let lastPercentage = 0;
+  const [from, to, source] = extractFromToSource(str, 0, 500);
   const subsetRange = subsetTo - subsetFrom;
   let res = "";
   for (let i = from; i <= to; i++) {
@@ -218,4 +222,4 @@ function prepConfig(
   ).join("\n");
 }
 
-export { isArr, isStr, prepConfig, prepLine };
+export { extractFromToSource, isArr, isStr, prepConfig, prepLine };

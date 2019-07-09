@@ -30,6 +30,44 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 var version = "1.1.0";
 
 function isStr(something) {
@@ -55,11 +93,9 @@ function trimBlankLinesFromLinesArray(lineArr) {
   }
   return copyArr;
 }
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
-  var currentPercentageDone;
-  var lastPercentage = 0;
-  var from = 0;
-  var to = 500;
+function extractFromToSource(str, fromDefault, toDefault) {
+  var from = fromDefault;
+  var to = toDefault;
   var source = str;
   if (str.lastIndexOf("}") > 0) {
     if (str.slice(str.lastIndexOf("}") + 1).includes("|")) {
@@ -86,6 +122,16 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
       }
     }
   }
+  return [from, to, source];
+}
+function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
+  var currentPercentageDone;
+  var lastPercentage = 0;
+  var _extractFromToSource = extractFromToSource(str, 0, 500),
+      _extractFromToSource2 = _slicedToArray(_extractFromToSource, 3),
+      from = _extractFromToSource2[0],
+      to = _extractFromToSource2[1],
+      source = _extractFromToSource2[2];
   var subsetRange = subsetTo - subsetFrom;
   var res = "";
   var _loop = function _loop(i) {
@@ -424,6 +470,7 @@ function genAtomic(str, originalOpts) {
   };
 }
 
+exports.extractFromToSource = extractFromToSource;
 exports.genAtomic = genAtomic;
 exports.headsAndTails = headsAndTails;
 exports.version = version;
