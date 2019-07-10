@@ -7,10 +7,10 @@ import expander from "string-range-expander";
 import { uglifyArr } from "string-uglify";
 import { version } from "../package.json";
 import isObj from "lodash.isplainobject";
-import applySlices from "ranges-apply";
+import applyRanges from "ranges-apply";
 import pullAll from "lodash.pullall";
 import isEmpty from "ast-is-empty";
-import Slices from "ranges-push";
+import Ranges from "ranges-push";
 import uniq from "lodash.uniq";
 import matcher from "matcher";
 const isArr = Array.isArray;
@@ -28,9 +28,9 @@ const defaults = {
 
 function comb(str, opts) {
   const start = Date.now();
-  const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
-  const currentChunksMinifiedSelectors = new Slices();
-  const lineBreaksToDelete = new Slices();
+  const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
+  const currentChunksMinifiedSelectors = new Ranges();
+  const lineBreaksToDelete = new Ranges();
 
   // TODO: badChars is also used, maybe characterSuitableForNames() is redundant?
   function characterSuitableForNames(char) {
@@ -3541,7 +3541,7 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
     )}`
   );
   if (str.length && finalIndexesToDelete.current()) {
-    str = applySlices(str, finalIndexesToDelete.current());
+    str = applyRanges(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
 
