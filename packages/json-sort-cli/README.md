@@ -9,7 +9,9 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-![example](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/json-sort-cli/media/quicktest.gif)
+<div align="center">
+  <img alt="example" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/json-sort-cli/media/quicktest.gif" width="760" align="center">
+</div>
 
 ## Table of Contents
 
@@ -29,7 +31,7 @@ npm i -g json-sort-cli
 - then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
 
 ```bash
-$ jsonsort file1.csv "folder1/folder2/**/*.*" folder3 -s
+$ jsonsort file1.json "folder1/folder2/**/*.*" folder3 -s
 $ jsonsort * -t -n -s
 $ jsonsort yourspecialfolder -s
 

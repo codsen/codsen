@@ -36,7 +36,7 @@ const cli = meow(
     -s, --silent        Does not show the result per-file, only totals in the end
     -h, --help          Shows this help
     -v, --version       Shows the version of your json-sort-cli
-    -a, --arrays        Sort arrays if they contain only more than string
+    -a, --arrays        Also sort any arrays if they contain only string elements
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
