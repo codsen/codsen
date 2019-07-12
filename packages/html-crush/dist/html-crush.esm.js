@@ -12,6 +12,7 @@ import applySlices from 'ranges-apply';
 import Slices from 'ranges-push';
 import { matchRightIncl } from 'string-match-left-right';
 import expand from 'string-range-expander';
+import { left } from 'string-left-right';
 
 var version = "1.5.1";
 
@@ -573,7 +574,6 @@ function crush(str, originalOpts) {
           if (!nonWhitespaceCharMet) {
             nonWhitespaceCharMet = true;
           }
-          continue;
         } else {
           if (beginningOfAFile) {
             beginningOfAFile = false;
@@ -596,7 +596,8 @@ function crush(str, originalOpts) {
       ) {
         if (
           breakToTheLeftOfFirstLetters.length &&
-          matchRightIncl(str, i, opts.breakToTheLeftOf)
+          matchRightIncl(str, i, opts.breakToTheLeftOf) &&
+          left(str, i) !== null
         ) {
           finalIndexesToDelete.push(i, i, "\n");
           stageFrom = null;

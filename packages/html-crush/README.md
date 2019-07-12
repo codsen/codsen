@@ -23,7 +23,6 @@
 - [Features](#features)
 - [API - Input](#api---input)
 - [API - Output](#api---output)
-- [Competition](#competition)
 - [Non-deterministic unit tests](#non-deterministic-unit-tests)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -48,9 +47,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-crush.cjs.js` | 24 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 26 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 59 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-crush.cjs.js` | 43 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 45 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 92 KB |
 
 **[⬆ back to top](#)**
 

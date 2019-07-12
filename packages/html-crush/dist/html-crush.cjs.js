@@ -18,6 +18,7 @@ var applySlices = _interopDefault(require('ranges-apply'));
 var Slices = _interopDefault(require('ranges-push'));
 var stringMatchLeftRight = require('string-match-left-right');
 var expand = _interopDefault(require('string-range-expander'));
+var stringLeftRight = require('string-left-right');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -384,7 +385,6 @@ function crush(str, originalOpts) {
           if (!nonWhitespaceCharMet) {
             nonWhitespaceCharMet = true;
           }
-          continue;
         } else {
           if (beginningOfAFile) {
             beginningOfAFile = false;
@@ -398,7 +398,7 @@ function crush(str, originalOpts) {
         }
       }
       if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
-        if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
+        if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;
           stageTo = null;

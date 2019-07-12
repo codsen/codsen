@@ -1,3 +1,5 @@
+// avaonly
+
 import "@babel/polyfill";
 import test from "ava";
 import { crush as m, defaults, version } from "../dist/html-crush.esm";
@@ -2358,6 +2360,29 @@ test(`08.06 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - lead
     }).result,
     `<a href='zzz' style='font-size:1px;'>`,
     "08.06"
+  );
+});
+
+// 09. Inline tags
+// -----------------------------------------------------------------------------
+
+test(`09.01 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #1`, t => {
+  t.deepEqual(
+    m(`<sup style="">word, here`, {
+      removeLineBreaks: true
+    }).result,
+    `<sup style="">word, here`,
+    "09.01"
+  );
+});
+
+test(`09.02 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #2`, t => {
+  t.deepEqual(
+    m(`<sup style=" ">word, here`, {
+      removeLineBreaks: true
+    }).result,
+    `<sup style="">word, here`,
+    "09.02"
   );
 });
 

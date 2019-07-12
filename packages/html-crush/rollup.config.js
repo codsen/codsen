@@ -51,7 +51,8 @@ export default commandLineArgs => {
         "ranges-apply",
         "ranges-push",
         "string-match-left-right",
-        "string-range-expander"
+        "string-range-expander",
+        "string-left-right"
       ],
       plugins: [
         strip({
@@ -76,7 +77,8 @@ export default commandLineArgs => {
         "ranges-apply",
         "ranges-push",
         "string-match-left-right",
-        "string-range-expander"
+        "string-range-expander",
+        "string-left-right"
       ],
       plugins: [
         strip({
@@ -98,6 +100,8 @@ export default commandLineArgs => {
     finalConfig.forEach((singleConfigVal, i) => {
       finalConfig[i].plugins.shift();
     });
+    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+    delete commandLineArgs.dev;
   }
   return finalConfig;
 };
