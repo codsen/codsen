@@ -1,10 +1,16 @@
 import split from 'split-lines';
-import { right } from 'string-left-right';
+import { right, left, leftSeq, rightSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
+const headsAndTails = {
+  CONFIGHEAD: "GENERATE-ATOMIC-CSS-CONFIG-STARTS",
+  CONFIGTAIL: "GENERATE-ATOMIC-CSS-CONFIG-ENDS",
+  CONTENTHEAD: "GENERATE-ATOMIC-CSS-CONTENT-STARTS",
+  CONTENTTAIL: "GENERATE-ATOMIC-CSS-CONTENT-ENDS"
+};
 const units = [
   "px",
   "em",
@@ -21,7 +27,197 @@ const units = [
   "vmin",
   "vmax"
 ];
+const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 const padLeftIfTheresOnTheLeft = [":"];
+function extractConfig(str) {
+  let extractedConfig = str;
+  let rawContentAbove = "";
+  let rawContentBelow = "";
+  if (str.includes(CONFIGHEAD) && str.includes(CONFIGTAIL)) {
+    if (
+      str.indexOf(CONFIGTAIL) !== -1 &&
+      str.indexOf(CONTENTHEAD) !== -1 &&
+      str.indexOf(CONFIGTAIL) > str.indexOf(CONTENTHEAD)
+    ) {
+      throw new Error(
+        `generate-atomic-css: [THROW_ID_02] Config heads are after config tails!`
+      );
+    }
+    let sliceFrom = str.indexOf(CONFIGHEAD) + CONFIGHEAD.length;
+    let sliceTo = str.indexOf(CONFIGTAIL);
+    if (
+      str[right(str, sliceFrom)] === "*" &&
+      str[right(str, right(str, sliceFrom))] === "/"
+    ) {
+      sliceFrom = right(str, right(str, sliceFrom)) + 1;
+    }
+    if (
+      str[left(str, sliceTo)] === "*" &&
+      str[left(str, left(str, sliceTo))] === "/"
+    ) {
+      sliceTo = left(str, left(str, sliceTo));
+    }
+    extractedConfig = str.slice(sliceFrom, sliceTo).trim();
+    if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
+      return {
+        log: {
+          count: 0
+        },
+        result: ""
+      };
+    }
+  } else if (
+    str.includes(CONFIGHEAD) &&
+    !str.includes(CONFIGTAIL) &&
+    str.includes(CONTENTHEAD)
+  ) {
+    if (str.indexOf(CONFIGHEAD) > str.indexOf(CONTENTHEAD)) {
+      throw new Error(
+        `generate-atomic-css: [THROW_ID_03] Config heads are after content heads!`
+      );
+    }
+    extractedConfig = str.slice(
+      str.indexOf(CONFIGHEAD) + CONFIGHEAD.length,
+      str.indexOf(CONTENTHEAD)
+    );
+  } else if (
+    !str.includes(CONFIGHEAD) &&
+    !str.includes(CONFIGTAIL) &&
+    (str.includes(CONTENTHEAD) || str.includes(CONTENTTAIL))
+  ) {
+    extractedConfig = str;
+    if (extractedConfig.includes(CONTENTHEAD)) {
+      if (left(str, extractedConfig.indexOf(CONTENTHEAD))) {
+        let sliceTo = extractedConfig.indexOf(CONTENTHEAD);
+        if (leftSeq(str, sliceTo, "/", "*")) {
+          sliceTo = leftSeq(str, sliceTo, "/", "*").leftmostChar;
+        }
+        rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
+      }
+      let sliceFrom = extractedConfig.indexOf(CONTENTHEAD) + CONTENTHEAD.length;
+      if (rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
+        sliceFrom =
+          rightSeq(extractedConfig, sliceFrom - 1, "*", "/").rightmostChar + 1;
+      }
+      let sliceTo = null;
+      if (str.includes(CONTENTTAIL)) {
+        sliceTo = str.indexOf(CONTENTTAIL);
+        if (
+          str[left(str, sliceTo)] === "*" &&
+          str[left(str, left(str, sliceTo))] === "/"
+        ) {
+          sliceTo = left(str, left(str, sliceTo));
+        }
+        let contentAfterStartsAt =
+          str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (
+          str[right(str, contentAfterStartsAt - 1)] === "*" &&
+          str[right(str, right(str, contentAfterStartsAt - 1))] === "/"
+        ) {
+          contentAfterStartsAt =
+            right(str, right(str, contentAfterStartsAt - 1)) + 1;
+        }
+        if (right(str, contentAfterStartsAt)) {
+          rawContentBelow = str.slice(contentAfterStartsAt);
+        }
+      }
+      if (sliceTo) {
+        extractedConfig = extractedConfig.slice(sliceFrom, sliceTo).trim();
+      } else {
+        extractedConfig = extractedConfig.slice(sliceFrom).trim();
+      }
+    }
+    else if (extractedConfig.includes(CONTENTTAIL)) {
+      const contentInFront = [];
+      let stopFilteringAndPassAllLines = false;
+      extractedConfig = extractedConfig
+        .split("\n")
+        .filter(rowStr => {
+          if (!rowStr.includes("$$$") && !stopFilteringAndPassAllLines) {
+            if (!stopFilteringAndPassAllLines) {
+              contentInFront.push(rowStr);
+            }
+            return false;
+          }
+          if (!stopFilteringAndPassAllLines) {
+            stopFilteringAndPassAllLines = true;
+            return true;
+          }
+          return true;
+        })
+        .join("\n");
+      let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
+      if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
+        sliceTo = leftSeq(extractedConfig, sliceTo, "/", "*").leftmostChar;
+      }
+      extractedConfig = extractedConfig.slice(0, sliceTo).trim();
+      if (contentInFront.length) {
+        rawContentAbove = `${contentInFront.join("\n")}\n`;
+      }
+      let contentAfterStartsAt;
+      if (right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
+        contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
+        if (
+          str[right(str, contentAfterStartsAt)] === "*" &&
+          str[right(str, right(str, contentAfterStartsAt))] === "/"
+        ) {
+          contentAfterStartsAt =
+            right(str, right(str, contentAfterStartsAt)) + 1;
+          if (right(str, contentAfterStartsAt)) {
+            rawContentBelow = str.slice(contentAfterStartsAt);
+          }
+        }
+      }
+    }
+  } else {
+    const contentHeadsRegex = new RegExp(
+      `(\\/\\s*\\*\\s*)*${CONTENTHEAD}(\\s*\\*\\s*\\/)*`
+    );
+    const contentTailsRegex = new RegExp(
+      `(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`
+    );
+    let stopFiltering = false;
+    const gatheredLinesAboveTopmostConfigLine = [];
+    const gatheredLinesBelowLastConfigLine = [];
+    const configLines = str.split("\n").filter(rowStr => {
+      if (stopFiltering) {
+        return true;
+      }
+      if (
+        !rowStr.includes("$$$") &&
+        !rowStr.includes("{") &&
+        !rowStr.includes(":")
+      ) {
+        gatheredLinesAboveTopmostConfigLine.push(rowStr);
+        return false;
+      }
+      stopFiltering = true;
+      return true;
+    });
+    for (let i = configLines.length; i--; ) {
+      if (
+        !configLines[i].includes("$$$") &&
+        !configLines[i].includes("{") &&
+        !configLines[i].includes(":")
+      ) {
+        gatheredLinesBelowLastConfigLine.unshift(configLines.pop());
+      } else {
+        break;
+      }
+    }
+    extractedConfig = configLines
+      .join("\n")
+      .replace(contentHeadsRegex, "")
+      .replace(contentTailsRegex, "");
+    if (gatheredLinesAboveTopmostConfigLine.length) {
+      rawContentAbove = `${gatheredLinesAboveTopmostConfigLine.join("\n")}\n`;
+    }
+    if (gatheredLinesBelowLastConfigLine.length) {
+      rawContentBelow = `\n${gatheredLinesBelowLastConfigLine.join("\n")}`;
+    }
+  }
+  return [extractedConfig, rawContentAbove, rawContentBelow];
+}
 function trimBlankLinesFromLinesArray(lineArr, trim = true) {
   if (!trim) {
     return lineArr;
@@ -176,10 +372,22 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           if (
             !source[y - 3].trim().length ||
             padLeftIfTheresOnTheLeft.some(val =>
-              source.slice(startPoint, y - 2).endsWith(val)
+              source
+                .slice(startPoint, y - 2)
+                .trim()
+                .endsWith(val)
             )
           ) {
-            res += `${source.slice(startPoint, y - 2)}${
+            let temp = 0;
+            if (i === 0) {
+              units.some(unit => {
+                if (`${source.slice(startPoint, y - 2)}`.startsWith(unit)) {
+                  temp = unit.length;
+                }
+                return true;
+              });
+            }
+            res += `${source.slice(startPoint + temp, y - 2)}${
               pad
                 ? String(i).padStart(
                     String(to).length +
@@ -247,6 +455,12 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   }
   return res;
 }
+function bump(str, thingToBump) {
+  if (/\.\w/g.test(str)) {
+    thingToBump.count++;
+  }
+  return str;
+}
 function prepConfig(
   str,
   progressFn,
@@ -267,10 +481,10 @@ function prepConfig(
             generatedCount,
             pad
           )
-        : rowStr
+        : bump(rowStr, generatedCount)
     ),
     trim
   ).join("\n");
 }
 
-export { extractFromToSource, isArr, isStr, prepConfig, prepLine };
+export { extractConfig, extractFromToSource, headsAndTails, isArr, isStr, prepConfig, prepLine };
