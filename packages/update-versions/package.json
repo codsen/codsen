@@ -170,23 +170,23 @@
     "sourceMap": false
   },
   "dependencies": {
-    "format-package": "^5.0.0",
+    "format-package": "^5.1.0",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-symbols": "^3.0.0",
     "log-update": "^3.2.0",
     "meow": "^5.0.0",
-    "pacote": "^9.5.1",
+    "pacote": "^9.5.2",
     "path": "^0.12.7",
     "update-notifier": "^3.0.1",
     "write-json-file": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
-    "ava": "^2.1.0",
+    "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.1.4",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
@@ -200,7 +200,7 @@
     "lect": "^0.7.6",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
-    "p-map": "^2.1.0",
+    "p-map": "^3.0.0",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"
   }

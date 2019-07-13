@@ -15,10 +15,10 @@ import intersection from 'lodash.intersection';
 import expander from 'string-range-expander';
 import { uglifyArr } from 'string-uglify';
 import isObj from 'lodash.isplainobject';
-import applySlices from 'ranges-apply';
+import applyRanges from 'ranges-apply';
 import pullAll from 'lodash.pullall';
 import isEmpty from 'ast-is-empty';
-import Slices from 'ranges-push';
+import Ranges from 'ranges-push';
 import uniq from 'lodash.uniq';
 import matcher from 'matcher';
 
@@ -38,9 +38,9 @@ const defaults = {
 };
 function comb(str, opts) {
   const start = Date.now();
-  const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
-  const currentChunksMinifiedSelectors = new Slices();
-  const lineBreaksToDelete = new Slices();
+  const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
+  const currentChunksMinifiedSelectors = new Ranges();
+  const lineBreaksToDelete = new Ranges();
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
   }
@@ -1594,7 +1594,7 @@ function comb(str, opts) {
   }
   finalIndexesToDelete.push(lineBreaksToDelete.current());
   if (str.length && finalIndexesToDelete.current()) {
-    str = applySlices(str, finalIndexesToDelete.current());
+    str = applyRanges(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
   const startingPercentageDone =

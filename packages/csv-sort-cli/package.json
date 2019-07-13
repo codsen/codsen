@@ -169,15 +169,15 @@
     "chalk": "^2.4.2",
     "csv-sort": "^3.0.19",
     "globby": "^10.0.1",
-    "inquirer": "^6.4.1",
+    "inquirer": "^6.5.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^5.0.0",
     "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.2",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
     "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.1.4",

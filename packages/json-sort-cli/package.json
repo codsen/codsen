@@ -163,7 +163,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^1.11.24",
     "chalk": "^2.4.2",
-    "format-package": "^5.0.0",
+    "format-package": "^5.1.0",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
@@ -174,8 +174,8 @@
     "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.2",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
     "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.1.4",
@@ -190,7 +190,7 @@
     "js-row-num-cli": "^1.5.29",
     "lect": "^0.7.6",
     "nyc": "^14.1.1",
-    "p-map": "^2.1.0",
+    "p-map": "^3.0.0",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"
   }

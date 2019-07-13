@@ -1,6 +1,12 @@
-# js-row-num-cli
+<div align="center">
+  <h1>js-row-num-cli</h1>
+</div>
 
-> Update all row numbers in all console.logs in JS code
+<div align="center">
+  <p><img alt="js-row-num-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/js-row-num-cli/media/update-console-log-row-number.gif" width="864" align="center"></p>
+</div>
+
+<div align="center"><p>Update all row numbers in all console.logs in JS code</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -8,6 +14,8 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
+
+<div align="center"><p>API: <a href="https://www.npmjs.com/package/js-row-num" target="_blank">js-row-num</a></p></div>
 
 ## Table of Contents
 

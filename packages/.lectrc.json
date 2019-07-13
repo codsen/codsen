@@ -318,10 +318,10 @@
 			"verbose": true
 		},
 		"devDependencies": {
-			"@babel/core": "^7.5.0",
-			"@babel/preset-env": "^7.5.0",
+			"@babel/core": "^7.5.4",
+			"@babel/preset-env": "^7.5.4",
 			"@babel/register": "^7.4.4",
-			"ava": "^2.1.0",
+			"ava": "^2.2.0",
 			"babel-plugin-istanbul": "^5.1.4",
 			"benchmark": "^2.1.4",
 			"eslint": "^6.0.1",
@@ -331,8 +331,8 @@
 			"eslint-plugin-no-unsanitized": "^3.0.2",
 			"eslint-plugin-prettier": "^3.1.0",
 			"esm": "^3.2.25",
-			"js-row-num-cli": "^1.5.28",
-			"lect": "^0.7.5",
+			"js-row-num-cli": "^1.5.29",
+			"lect": "^0.7.6",
 			"nyc": "^14.1.1",
 			"prettier": "^1.18.2",
 			"rollup": "^1.16.6",
@@ -394,7 +394,7 @@
 			"lint": "./node_modules/.bin/eslint **/*.js --fix",
 			"prettier": "prettier '*.{js,css,scss,vue,md}' --write",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/nyc ava && npm run coverage"
+			"unittest": "./node_modules/.bin/ava"
 		},
 		"rollup": {
 			"build": "rm -rf dist && rollup -c",

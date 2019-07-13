@@ -21,10 +21,10 @@ var intersection = _interopDefault(require('lodash.intersection'));
 var expander = _interopDefault(require('string-range-expander'));
 var stringUglify = require('string-uglify');
 var isObj = _interopDefault(require('lodash.isplainobject'));
-var applySlices = _interopDefault(require('ranges-apply'));
+var applyRanges = _interopDefault(require('ranges-apply'));
 var pullAll = _interopDefault(require('lodash.pullall'));
 var isEmpty = _interopDefault(require('ast-is-empty'));
-var Slices = _interopDefault(require('ranges-push'));
+var Ranges = _interopDefault(require('ranges-push'));
 var uniq = _interopDefault(require('lodash.uniq'));
 var matcher = _interopDefault(require('matcher'));
 
@@ -78,11 +78,11 @@ var defaults = {
 };
 function comb(str, opts) {
   var start = Date.now();
-  var finalIndexesToDelete = new Slices({
+  var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true
   });
-  var currentChunksMinifiedSelectors = new Slices();
-  var lineBreaksToDelete = new Slices();
+  var currentChunksMinifiedSelectors = new Ranges();
+  var lineBreaksToDelete = new Ranges();
   function characterSuitableForNames(_char) {
     return /[-_A-Za-z0-9]/.test(_char);
   }
@@ -1179,7 +1179,7 @@ function comb(str, opts) {
   }
   finalIndexesToDelete.push(lineBreaksToDelete.current());
   if (str.length && finalIndexesToDelete.current()) {
-    str = applySlices(str, finalIndexesToDelete.current());
+    str = applyRanges(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
   var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;

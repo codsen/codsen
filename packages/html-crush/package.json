@@ -206,7 +206,7 @@
     "lect": "^0.7.6",
     "node-fetch": "^2.6.0",
     "nyc": "^14.1.1",
-    "p-map": "^2.1.0",
+    "p-map": "^3.0.0",
     "prettier": "^1.18.2",
     "rollup": "^1.16.7",
     "rollup-plugin-ascii": "^0.0.3",
