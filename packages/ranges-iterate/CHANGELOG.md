@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.7](https://gitlab.com/codsen/codsen/compare/ranges-iterate@1.1.6...ranges-iterate@1.1.7) (2019-07-15)
-
-**Note:** Version bump only for package ranges-iterate
-
-
-
-
-
 ## 1.1.0 (2019-06-01)
 
 ### Features

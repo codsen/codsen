@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.5.29](https://gitlab.com/codsen/codsen/compare/json-comb-core@6.5.28...json-comb-core@6.5.29) (2019-07-15)
-
-**Note:** Version bump only for package json-comb-core
-
-
-
-
-
 ## 6.5.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

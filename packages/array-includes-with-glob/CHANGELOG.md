@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.12.2](https://gitlab.com/codsen/codsen/compare/array-includes-with-glob@2.12.1...array-includes-with-glob@2.12.2) (2019-07-15)
-
-**Note:** Version bump only for package array-includes-with-glob
-
-
-
-
-
 ## 2.12.0 (2019-06-29)
 
 ### Features
