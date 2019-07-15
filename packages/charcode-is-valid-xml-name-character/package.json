@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.10.28",
+  "version": "1.10.29",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "license": "MIT",
   "engines": {
@@ -169,7 +169,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.14.6"
+    "ranges-is-index-within": "^1.14.7"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -185,8 +185,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.29",
-    "lect": "^0.7.6",
+    "js-row-num-cli": "^1.5.30",
+    "lect": "^0.7.7",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.5.1...html-crush@1.6.0) (2019-07-15)
+
+
+### Bug Fixes
+
+* Fix the rare cases where state of being within style tag was not terminated properly ([fefc206](https://gitlab.com/codsen/codsen/commit/fefc206)), closes [#11](https://gitlab.com/codsen/codsen/issues/11)
+
+
+### Features
+
+* Inline tag recognition and proper spacing ([ad97faf](https://gitlab.com/codsen/codsen/commit/ad97faf))
+* WIP - only 4 failing - minding the inline tags ([7275e38](https://gitlab.com/codsen/codsen/commit/7275e38))
+
+
+
+
+
 ## 1.5.0 (2019-06-29)
 
 ### Features

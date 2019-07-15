@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.29](https://gitlab.com/codsen/codsen/compare/string-extract-class-names@5.8.28...string-extract-class-names@5.8.29) (2019-07-15)
+
+**Note:** Version bump only for package string-extract-class-names
+
+
+
+
+
 ## 5.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
