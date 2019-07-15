@@ -81,8 +81,22 @@ test(`01.01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - deletes trailing
     m(" <a> \n <b> ", {
       removeLineBreaks: true
     }).result,
-    "<a><b>",
+    "<a> <b>",
     "01.01.01"
+  );
+  t.deepEqual(
+    m(" <a>\n<b> ", {
+      removeLineBreaks: true
+    }).result,
+    "<a>\n<b>",
+    "01.01.02"
+  );
+  t.deepEqual(
+    m(" <section> \n <article> ", {
+      removeLineBreaks: true
+    }).result,
+    "<section><article>",
+    "01.01.03"
   );
 });
 
@@ -91,7 +105,7 @@ test(`01.02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - retains trailing
     m(" <a> \n <b> \n", {
       removeLineBreaks: true
     }).result,
-    "<a><b>\n",
+    "<a> <b>\n",
     "01.02.01"
   );
 });
@@ -181,19 +195,35 @@ test(`01.11 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wip
       lineLengthLimit: 8,
       removeLineBreaks: true
     }).result,
-    "<a><b>\n<c>",
-    "01.11"
+    "<a> <b>\n<c>",
+    "01.11.01 - inline tags"
+  );
+  t.deepEqual(
+    m("    \n    <x>\n\n   <y>\n  <z>", {
+      lineLengthLimit: 8,
+      removeLineBreaks: true
+    }).result,
+    "<x><y>\n<z>",
+    "01.11.02 - not inline tags"
   );
 });
 
 test(`01.12 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting`, t => {
   t.deepEqual(
     m("  <a>\n     <b>\n   c </b>\n   </a>", {
+      lineLengthLimit: 9,
+      removeLineBreaks: true
+    }).result,
+    "<a> <b> c\n</b></a>",
+    "01.12.01"
+  );
+  t.deepEqual(
+    m("  <x>\n     <y>\n   c </y>\n   </x>", {
       lineLengthLimit: 8,
       removeLineBreaks: true
     }).result,
-    "<a><b> c\n</b></a>",
-    "01.12"
+    "<x><y> c\n</y></x>",
+    "01.12.02 - not inline tags"
   );
 });
 
@@ -206,12 +236,27 @@ test(`01.13 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - more tags and li
      </a>
        <a>`,
       {
+        lineLengthLimit: 9,
+        removeLineBreaks: true
+      }
+    ).result,
+    "<a> <b> c\n</b></a>\n<a>",
+    "01.13.01 - inline tags"
+  );
+  t.deepEqual(
+    m(
+      `  <x>
+       <y>
+     c </y>
+   </x>
+       <x>`,
+      {
         lineLengthLimit: 8,
         removeLineBreaks: true
       }
     ).result,
-    "<a><b> c\n</b></a>\n<a>",
-    "01.13"
+    "<x><y> c\n</y></x>\n<x>",
+    "01.13.02 - non-inline tags"
   );
 });
 
@@ -275,11 +320,18 @@ test(`01.19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence 
 
 test(`01.20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with character`, t => {
   t.deepEqual(
-    m(" <a> \n <b>\n\n\n<c>", {
+    m(" <x> \n <y>\n\n\n<z>", {
       removeLineBreaks: true
     }).result,
-    "<a><b><c>",
-    "01.20"
+    "<x><y><z>",
+    "01.20.01"
+  );
+  t.deepEqual(
+    m(" <a> \n <b>\n\n\n<i>\n\n\n<c>", {
+      removeLineBreaks: true
+    }).result,
+    "<a> <b> <i><c>",
+    "01.20.02"
   );
 });
 
@@ -293,33 +345,33 @@ test(`02.01 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - nothing to minify`, t =>
 
 test(`02.02 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - minimal string of few words`, t => {
   const source = ` \t
-<a>\t\t
-  <b>\t
+<x>\t\t
+  <y>\t
     c\t
-  </b>\t
-</a>\t
+  </y>\t
+</x>\t
 \t
 `;
 
   t.deepEqual(
     m(source, { removeLineBreaks: true }).result,
-    "<a><b> c </b></a>\n",
+    "<x><y> c </y></x>\n",
     "02.02.01 - defaults: remove both indentations and linebreaks"
   );
 
   t.deepEqual(
     m(source, { removeLineBreaks: true, removeIndentations: false }).result,
-    "<a><b> c </b></a>\n",
+    "<x><y> c </y></x>\n",
     "02.02.02 - disabling indentation removal while keeping linebreak removal is futile"
   );
 
   t.is(
     m(source, { removeLineBreaks: false, removeIndentations: true }).result,
-    `<a>
-<b>
+    `<x>
+<y>
 c
-</b>
-</a>
+</y>
+</x>
 `,
     "02.02.03 - only remove indentations"
   );
@@ -327,25 +379,25 @@ c
   t.is(
     m(source, { removeLineBreaks: false, removeIndentations: false }).result,
     `
-<a>
-  <b>
+<x>
+  <y>
     c
-  </b>
-</a>
+  </y>
+</x>
 `,
     "02.02.04 - all off so only trims leading whitespace"
   );
 
   t.is(
     m(source, { removeLineBreaks: true, removeIndentations: true }).result,
-    `<a><b> c </b></a>
+    `<x><y> c </y></x>
 `,
     "02.02.05 - line breaks on"
   );
 
   t.is(
     m(source, { removeLineBreaks: true, removeIndentations: false }).result,
-    `<a><b> c </b></a>
+    `<x><y> c </y></x>
 `,
     "02.02.06 - line breaks on"
   );
@@ -354,61 +406,61 @@ c
 test(`02.03 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - trailing linebreaks (or their absence) at the EOF are respected`, t => {
   // removeLineBreaks: true
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>\n", { removeLineBreaks: true }).result,
-    "<a><b> c </b></a>\n",
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: true }).result,
+    "<x><y> c </y></x>\n",
     "02.03.01 - default settings, single trailing line breaks at EOF"
   );
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>\n\n", { removeLineBreaks: true })
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: true })
       .result,
-    "<a><b> c </b></a>\n",
+    "<x><y> c </y></x>\n",
     "02.03.02 - default settings, double trailing line breaks at EOF"
   );
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>", { removeLineBreaks: true }).result,
-    "<a><b> c </b></a>",
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: true }).result,
+    "<x><y> c </y></x>",
     "02.03.03 - default settings, no trailing line breaks at EOF"
   );
 
   // removeLineBreaks: false
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>\n", { removeLineBreaks: false })
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: false })
       .result,
-    "<a>\n<b>\nc\n</b>\n</a>\n",
+    "<x>\n<y>\nc\n</y>\n</x>\n",
     "02.03.04 - default settings, single trailing line breaks at EOF"
   );
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>\n\n", { removeLineBreaks: false })
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: false })
       .result,
-    "<a>\n<b>\nc\n</b>\n</a>\n",
+    "<x>\n<y>\nc\n</y>\n</x>\n",
     "02.03.05 - default settings, double trailing line breaks at EOF"
   );
   t.is(
-    m("\n<a>\n  <b>\n    c\n  </b>\n</a>", { removeLineBreaks: false }).result,
-    "<a>\n<b>\nc\n</b>\n</a>",
+    m("\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: false }).result,
+    "<x>\n<y>\nc\n</y>\n</x>",
     "02.03.06 - default settings, no trailing line breaks at EOF"
   );
 });
 
 test(`02.04 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - opts.lineLengthLimit`, t => {
   // the following piece of HTML will render as having spaces between C's:
-  const original = `  <a>
-     <b>
-   c </b>
-   </a>
-     <a>
-     <b>
-   c </b>
-   </a>
-     <a>
-     <b>
-   c </b>
-   </a>\n`;
+  const original = `  <x>
+     <y>
+   c </y>
+ </x>
+     <x>
+     <y>
+   c </y>
+ </x>
+     <x>
+     <y>
+   c </y>
+ </x>\n`;
 
   // the following piece of HTML will render without spaces between C's:
-  const wrong = "<a><b>c</b></a><a><b>c</b></a><a><b>c</b></a>\n";
+  const wrong = "<x><y>c</y></x><x><y>c</y></x><x><y>c</y></x>\n";
 
-  const minified = "<a><b> c </b></a><a><b> c </b></a><a><b> c </b></a>\n";
+  const minified = "<x><y> c </y></x><x><y> c </y></x><x><y> c </y></x>\n";
 
   t.is(
     m(original, { removeLineBreaks: true }).result,
@@ -418,12 +470,12 @@ test(`02.04 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - opts.lineLengthLimit`, t
   t.is(strip(original), strip(minified), "02.04.02");
   t.not(strip(original), strip(wrong), "02.04.03");
 
-  const minified8 = `<a><b> c
-</b></a>
-<a><b> c
-</b></a>
-<a><b> c
-</b></a>
+  const minified8 = `<x><y> c
+</y></x>
+<x><y> c
+</y></x>
+<x><y> c
+</y></x>
 `;
   t.is(
     m(original, {
@@ -1346,7 +1398,18 @@ test(`02.17 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is not 
 });
 
 test(`02.18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is deleted though`, t => {
-  t.is(m("<a>\n<b>", { removeLineBreaks: true }).result, "<a><b>", "02.18");
+  t.is(m("<x>\n<y>", { removeLineBreaks: true }).result, "<x><y>", "02.18.01");
+  t.is(m("<a>\n<y>", { removeLineBreaks: true }).result, "<a><y>", "02.18.02");
+  t.is(
+    m("<x>\n<a>", { removeLineBreaks: true }).result,
+    "<x>\n<a>",
+    "02.18.03"
+  );
+  t.is(
+    m("<a>\n<b>", { removeLineBreaks: true }).result,
+    "<a>\n<b>",
+    "02.18.04"
+  );
 });
 
 test(`02.19 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking to the right of style tag`, t => {
@@ -1836,6 +1899,7 @@ test(`05.01 - ${`\u001b[${32}m${`API's defaults`}\u001b[${39}m`} - plain object 
   t.deepEqual(
     Object.keys(defaults).sort(),
     [
+      "mindTheInlineTags",
       "lineLengthLimit",
       "removeIndentations",
       "removeLineBreaks",
@@ -1857,81 +1921,81 @@ test(`05.02 - ${`\u001b[${32}m${`API's defaults`}\u001b[${39}m`} - plain object 
 
 test(`06.01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks based on breakpoints (no whitespace involved)`, t => {
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: false
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.01 - no linebreak removal"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.02 - default line break removal"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true,
-      breakToTheLeftOf: ["<b"]
+      breakToTheLeftOf: ["<n"]
     }).result,
-    `<a>\n<b><c>`,
+    `<m>\n<n><o>`,
     "06.01.03 - break in the middle, once"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true,
-      breakToTheLeftOf: ["<b", "<c"]
+      breakToTheLeftOf: ["<n", "<o"]
     }).result,
-    `<a>\n<b>\n<c>`,
+    `<m>\n<n>\n<o>`,
     "06.01.04 - break twice"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true,
-      breakToTheLeftOf: ["<a", "<b", "<c"]
+      breakToTheLeftOf: ["<z", "<n", "<o"]
     }).result,
-    `<a>\n<b>\n<c>`,
+    `<m>\n<n>\n<o>`,
     "06.01.05 - don't break in front"
   );
   t.deepEqual(
-    m(`\n   \t   \t   <a><b><c>`, {
+    m(`\n   \t   \t   <m><n><o>`, {
       removeLineBreaks: true,
-      breakToTheLeftOf: ["<a", "<b", "<c"]
+      breakToTheLeftOf: ["<m", "<n", "<o"]
     }).result,
-    `<a>\n<b>\n<c>`,
+    `<m>\n<n>\n<o>`,
     "06.01.06 - don't break in front"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true,
       breakToTheLeftOf: ["<x", "<y", "<z"]
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.07"
   );
   t.deepEqual(
-    m(`<a><b><c>`, {
+    m(`<m><n><o>`, {
       removeLineBreaks: true,
       breakToTheLeftOf: []
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.08"
   );
   t.deepEqual(
-    m(`\n<a>\n  <b>\n  <c>`, {
+    m(`\n<m>\n  <n>\n  <o>`, {
       removeLineBreaks: true,
       breakToTheLeftOf: ["<x", "<y", "<z"]
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.09"
   );
   t.deepEqual(
-    m(`   \t\n  <a>   <b> \n\t     <c>`, {
+    m(`   \t\n  <m>   <n> \n\t     <o>`, {
       removeLineBreaks: true,
       breakToTheLeftOf: []
     }).result,
-    `<a><b><c>`,
+    `<m><n><o>`,
     "06.01.10"
   );
 });
@@ -2006,8 +2070,16 @@ test(`06.02 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks
       removeLineBreaks: true,
       breakToTheLeftOf: ["<x", "y"]
     }).result,
-    `<a><b><c>`,
+    `<a>\n<b><c>`,
     "06.02.09 - nothing in given breakpoints is useful"
+  );
+  t.deepEqual(
+    m(`<m>\n<n><o>`, {
+      removeLineBreaks: true,
+      breakToTheLeftOf: ["<x", "y"]
+    }).result,
+    `<m><n><o>`,
+    "06.02.10"
   );
 });
 
@@ -2296,10 +2368,18 @@ test(`08.01 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - one 
   );
   t.deepEqual(
     m(input1, {
+      removeLineBreaks: true,
+      lineLengthLimit: 0
+    }).result,
+    `<a style="a:100%;b:c-d;">`,
+    "08.01.02"
+  );
+  t.deepEqual(
+    m(input1, {
       removeLineBreaks: false
     }).result,
     indentationsOnly,
-    "08.01.02 - indentations are removed on default settings"
+    "08.01.03 - indentations are removed on default settings"
   );
   t.deepEqual(
     m(input1, {
@@ -2307,7 +2387,7 @@ test(`08.01 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - one 
       removeIndentations: false
     }).result,
     input1,
-    "08.01.03 - indentations off"
+    "08.01.04 - indentations off"
   );
 });
 
@@ -2386,6 +2466,644 @@ test(`09.02 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #2`
   );
 });
 
+test(`09.03 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans with space - space retained`, t => {
+  t.deepEqual(
+    m(`<span>a</span> <span>b</span>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span>a</span> <span>b</span>`,
+    "09.03"
+  );
+});
+
+test(`09.04 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans without space - fine`, t => {
+  t.deepEqual(
+    m(`<span>a</span><span>b</span>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span>a</span><span>b</span>`,
+    "09.04"
+  );
+});
+
+test(`09.06 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - inside tag`, t => {
+  t.deepEqual(
+    m(`</b >`, {
+      removeLineBreaks: true
+    }).result,
+    `</b>`,
+    "09.06"
+  );
+});
+
+test(`09.07 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - nameless attr`, t => {
+  t.deepEqual(
+    m(`x<a b="c" >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a b="c">y`,
+    "09.07.01"
+  );
+  t.deepEqual(
+    m(`x<a b="c" />y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a b="c"/>y`,
+    "09.07.02"
+  );
+});
+
+test(`09.08 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style attr`, t => {
+  t.deepEqual(
+    m(`x<span style="a: b;" >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<span style="a:b;">y`,
+    "09.08.01"
+  );
+  t.deepEqual(
+    m(`x<span style="a: b;" >y`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 0
+    }).result,
+    `x<span style="a:b;">y`,
+    "09.08.02"
+  );
+});
+
+test(`09.09 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans`, t => {
+  t.deepEqual(
+    m(`<span style="abc: def;" >a</span> <span style="abc: def;" >b</span>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span style="abc:def;">a</span> <span style="abc:def;">b</span>`,
+    "09.09.01"
+  );
+  t.deepEqual(
+    m(`<span style="abc: def;" />a</span> <span style="abc: def;" />b</span>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span style="abc:def;"/>a</span> <span style="abc:def;"/>b</span>`,
+    "09.09.02"
+  );
+  t.deepEqual(
+    m(`<span style="abc: def;" />a</span> <span style="abc: def;" />b</span>`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 0
+    }).result,
+    `<span style="abc:def;"/>a</span> <span style="abc:def;"/>b</span>`,
+    "09.09.03"
+  );
+});
+
+test(`09.10 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - span + sup`, t => {
+  t.deepEqual(
+    m(`<span style="abc: def;">a</span> <sup>1</sup>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span style="abc:def;">a</span> <sup>1</sup>`,
+    "09.10.01"
+  );
+  t.deepEqual(
+    m(`<span style="abc: def;">a</span> <sup>1</sup>`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 0
+    }).result,
+    `<span style="abc:def;">a</span> <sup>1</sup>`,
+    "09.10.02"
+  );
+});
+
+test(`09.11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - won't line break between two inline tags`, t => {
+  for (let i = 1; i < 37; i++) {
+    t.deepEqual(
+      m(`<span>a</span><span style="z">b</span>`, {
+        lineLengthLimit: i,
+        removeLineBreaks: true
+      }).result,
+      `<span>a</span><span\nstyle="z">b</span>`,
+      `09.11.0${i} - limit = ${i}`
+    );
+  }
+});
+
+test(`09.12 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`, t => {
+  t.deepEqual(
+    m(`<div><span>a</span><span style="z">b</span></div>`, {
+      lineLengthLimit: 24,
+      removeLineBreaks: true
+    }).result,
+    `<div><span>a</span><span\nstyle="z">b</span>\n</div>`,
+    "09.12"
+  );
+});
+
+test(`09.13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed #1`, t => {
+  t.deepEqual(
+    m(`<div>a</div><span>b</span>`, {
+      lineLengthLimit: 15, // <--- asking to break after /div
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<span>b</span>`,
+    "09.13"
+  );
+});
+
+test(`09.14 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, #2`, t => {
+  t.deepEqual(
+    m(`<span>a</span><div>b</div>`, {
+      lineLengthLimit: 15, // <--- asking to break after div
+      removeLineBreaks: true
+    }).result,
+    `<span>a</span>\n<div>b</div>`,
+    "09.14"
+  );
+});
+
+test(`09.15 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #1`, t => {
+  t.deepEqual(
+    m(`<span>a</span> <div>b</div>`, {
+      lineLengthLimit: 15,
+      removeLineBreaks: true
+    }).result,
+    `<span>a</span>\n<div>b</div>`,
+    "09.15"
+  );
+});
+
+test(`09.16 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #2`, t => {
+  t.deepEqual(
+    m(`<div>a</div> <span>b</span>`, {
+      lineLengthLimit: 12,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<span>b</span>`,
+    "09.16.01"
+  );
+  t.deepEqual(
+    m(`<div>a</div> <span>b</span>`, {
+      lineLengthLimit: 13,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<span>b</span>`,
+    "09.16.02"
+  );
+  t.deepEqual(
+    m(`<div>a</div> <span>b</span>`, {
+      lineLengthLimit: 14,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<span>b</span>`,
+    "09.16.03"
+  );
+  t.deepEqual(
+    m(`<div>a</div> <span>b</span>`, {
+      lineLengthLimit: 15,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<span>b</span>`,
+    "09.16.04"
+  );
+});
+
+test(`09.17 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - space between inline tags`, t => {
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 6,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.01"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 7,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.02"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 8,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.03"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 9,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.04"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 10,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.05"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 11,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.06"
+  );
+  t.deepEqual(
+    m(`<b>x</b> <i>y</i>`, {
+      lineLengthLimit: 12,
+      removeLineBreaks: true
+    }).result,
+    `<b>x</b>\n<i>y</i>`,
+    "09.17.07"
+  );
+});
+
+test(`09.18 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - excessive whitespace between inline tags #1`, t => {
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i> <sup>b</sup>`,
+    "09.18.01"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 6,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.02"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 7,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.03"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 8,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.04"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 9,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.05"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 10,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.06"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 12,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.07"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 13,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.08"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 14,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.09"
+  );
+  t.deepEqual(
+    m(`<i>a</i>     <sup>b</sup>`, {
+      lineLengthLimit: 15,
+      removeLineBreaks: true
+    }).result,
+    `<i>a</i>\n<sup>b</sup>`,
+    "09.18.10"
+  );
+});
+
+test(`09.19 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - excessive whitespace between inline tags #2`, t => {
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div><sup>b</sup>`,
+    "09.19.01"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 10,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.02"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 11,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.03"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 12,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.04"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 13,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.05"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 14,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.06"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 15,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.07"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 16,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.08"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 17,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.09"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 18,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.10"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 19,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.11"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 20,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.12"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 24,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.19.13"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 25,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div> <sup>b</sup>`,
+    "09.19.14"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 99,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div> <sup>b</sup>`,
+    "09.19.15"
+  );
+});
+
+test(`09.20 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - multiple wrapped inline tags`, t => {
+  const source = `<span><a href="z"><b>a</b><i>b</i><a><span>`;
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: false
+    }).result,
+    source,
+    "09.20.01"
+  );
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: true
+    }).result,
+    source,
+    "09.20.02"
+  );
+  for (let i = 0; i < 50; i++) {
+    t.deepEqual(
+      m(source, {
+        lineLengthLimit: i,
+        removeLineBreaks: true
+      }).result,
+      source,
+      `09.20.03* - lineLengthLimit: i = ${i}`
+    );
+  }
+});
+
+test(`09.21 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - first tag name letters resemble legit inline tags`, t => {
+  t.deepEqual(
+    m(`<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
+      removeLineBreaks: true
+    }).result,
+    `<az>123</az><by>456</by><see>789</see><in></in>`,
+    "09.21.01"
+  );
+  t.deepEqual(
+    m(`<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
+      removeLineBreaks: true,
+      lineLengthLimit: 0
+    }).result,
+    `<az>123</az><by>456</by><see>789</see><in></in>`,
+    "09.21.02"
+  );
+});
+
+test(`09.22 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - spanner is not span`, t => {
+  t.deepEqual(
+    m(`<span>1</span> <span>2</span> <span>3</span>`, {
+      removeLineBreaks: true
+    }).result,
+    `<span>1</span> <span>2</span> <span>3</span>`,
+    "09.22.01"
+  );
+  t.deepEqual(
+    m(`<spanner>1</spanner> <spanner>2</spanner> <spanner>3</spanner>`, {
+      removeLineBreaks: true
+    }).result,
+    `<spanner>1</spanner><spanner>2</spanner><spanner>3</spanner>`,
+    "09.22.02"
+  );
+  t.deepEqual(
+    m(`<spa n="m">1</spa> <spa n="m">2</spa> <spa n="m">3</spa>`, {
+      removeLineBreaks: true
+    }).result,
+    `<spa n="m">1</spa><spa n="m">2</spa><spa n="m">3</spa>`,
+    "09.22.03 - insurance against whitespace-hungry matching components"
+  );
+});
+
+// 10. whitespace around tag brackets, inside tag
+// -----------------------------------------------------------------------------
+
+test(`10.01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitespace before closing bracket on opening tag`, t => {
+  t.deepEqual(
+    m(`x<a >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a>y`,
+    "10.01"
+  );
+});
+
+test(`10.02 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - div - block level`, t => {
+  t.deepEqual(
+    m(`x<div >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<div>y`,
+    "10.02"
+  );
+});
+
+test(`10.03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inline tag`, t => {
+  t.deepEqual(
+    m(`x<a >y`, {
+      removeLineBreaks: false
+    }).result,
+    `x<a >y`,
+    "10.03"
+  );
+});
+
+test(`10.04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeLineBreaks = off`, t => {
+  t.deepEqual(
+    m(`x<div >y`, {
+      removeLineBreaks: false
+    }).result,
+    `x<div >y`,
+    "10.04"
+  );
+});
+
+test(`10.05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, inline tag`, t => {
+  t.deepEqual(
+    m(`x<a >y`, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    `x<a >y`,
+    "10.05"
+  );
+});
+
+test(`10.06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, block level tag`, t => {
+  t.deepEqual(
+    m(`x<div >y`, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    `x<div >y`,
+    "10.06"
+  );
+});
+
+test(`10.07 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - before closing slash`, t => {
+  t.deepEqual(
+    m(`x<a />y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a/>y`,
+    "10.07"
+  );
+});
+
+test(`10.08 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - after closing slash`, t => {
+  t.deepEqual(
+    m(`x<a/ >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a/>y`,
+    "10.08"
+  );
+});
+
+test(`10.09 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash`, t => {
+  t.deepEqual(
+    m(`x<a / >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a/>y`,
+    "10.09"
+  );
+});
+
+test(`10.10 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash - non inline tag`, t => {
+  t.deepEqual(
+    m(`x<div / >y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<div/>y`,
+    "10.10"
+  );
+});
+
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
 
@@ -2419,7 +3137,7 @@ xmlns:o="urn:schemas-microsoft-com:office:office">
 <meta name="viewport" zzz`;
   const output = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!--<![endif]--><meta name="format-detection" content="telephone=no" /><meta name="viewport" zzz`;
+xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"/><!--<![endif]--><meta name="format-detection" content="telephone=no"/><meta name="viewport" zzz`;
   t.deepEqual(
     m(input, {
       removeLineBreaks: true,
@@ -2436,14 +3154,44 @@ test(`99.04 - ${`\u001b[${90}m${`adhoc 4`}\u001b[${39}m`} - result's keyset is c
 
 test(`99.05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`, t => {
   t.deepEqual(
-    m("\u00A0<a>\n\u00A0\u00A0<b>\u00A0", { removeLineBreaks: true }).result,
-    "<a><b>",
+    m("\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: true }).result,
+    "<x><y>",
     "99.05.01"
   );
   t.deepEqual(
-    m("\u00A0<a>\n\u00A0\u00A0<b>\u00A0", { removeLineBreaks: false }).result,
-    "<a>\n<b>",
+    m("\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: false }).result,
+    "<x>\n<y>",
     "99.05.02"
+  );
+  t.deepEqual(
+    m("\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: true }).result,
+    "<x/><y/>",
+    "99.05.03"
+  );
+  t.deepEqual(
+    m("\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: false }).result,
+    "<x/>\n<y/>",
+    "99.05.04"
+  );
+  t.deepEqual(
+    m("\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true }).result,
+    "<x/></y>",
+    "99.05.05"
+  );
+  t.deepEqual(
+    m("\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false }).result,
+    "<x/>\n</y>",
+    "99.05.06"
+  );
+  t.deepEqual(
+    m("\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true }).result,
+    "</x></y>",
+    "99.05.07"
+  );
+  t.deepEqual(
+    m("\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false }).result,
+    "</x>\n</y>",
+    "99.05.08"
   );
 });
 
@@ -2470,20 +3218,20 @@ test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
 });
 
 test(`99.07 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - line length control`, t => {
-  const input = `<a>
-<b>
-<c>
-<d>
-<e
-f
-g>
-<h>
-<i>
-<j>
-<j klm`;
-  const output = `<a><b><c><d><e
-f
-g><h><i><j><j klm`;
+  const input = `<m>
+<n>
+<o>
+<p>
+<x
+y
+z>
+<t>
+<x>
+<y>
+<z klm`;
+  const output = `<m><n><o><p><x
+y
+z><t><x><y><z klm`;
   t.deepEqual(
     m(input, {
       lineLengthLimit: 20,
@@ -2503,5 +3251,4 @@ g><h><i><j><j klm`;
 //           ▀   ▌ ▌  ▐ ▌
 //               ▌ ▌  ▐ ▌
 //               █ █  ▐▌█
-//        BUGS LISTEN! STAY AWAY!
-//           O              O
+//               BUGS LISTEN! STAY AWAY!

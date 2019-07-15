@@ -10,9 +10,9 @@
 import isObj from 'lodash.isplainobject';
 import applySlices from 'ranges-apply';
 import Slices from 'ranges-push';
-import { matchRightIncl } from 'string-match-left-right';
+import { matchRightIncl, matchRight } from 'string-match-left-right';
 import expand from 'string-range-expander';
-import { left } from 'string-left-right';
+import { right, left } from 'string-left-right';
 
 var version = "1.5.1";
 
@@ -45,6 +45,63 @@ const defaults = {
     "</body",
     "<!--[if",
     "<!--<![endif"
+  ],
+  mindTheInlineTags: [
+    "a",
+    "abbr",
+    "acronym",
+    "audio",
+    "b",
+    "bdi",
+    "bdo",
+    "big",
+    "br",
+    "button",
+    "canvas",
+    "cite",
+    "code",
+    "data",
+    "datalist",
+    "del",
+    "dfn",
+    "em",
+    "embed",
+    "i",
+    "iframe",
+    "img",
+    "input",
+    "ins",
+    "kbd",
+    "label",
+    "map",
+    "mark",
+    "meter",
+    "noscript",
+    "object",
+    "output",
+    "picture",
+    "progress",
+    "q",
+    "ruby",
+    "s",
+    "samp",
+    "script",
+    "select",
+    "slot",
+    "small",
+    "span",
+    "strong",
+    "sub",
+    "sup",
+    "svg",
+    "template",
+    "textarea",
+    "time",
+    "u",
+    "tt",
+    "var",
+    "video",
+    "wbr"
   ]
 };
 function isStr(something) {
@@ -132,6 +189,8 @@ function crush(str, originalOpts) {
   let stageFrom = null;
   let stageTo = null;
   let stageAdd = null;
+  let tagName = null;
+  let tagNameStartsAt = null;
   const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
   const CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
   const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
@@ -343,6 +402,23 @@ function crush(str, originalOpts) {
         lastLinebreak = null;
       }
       if (
+        tagNameStartsAt !== null &&
+        tagName === null &&
+        !/\w/.test(str[i])
+      ) {
+        tagName = str.slice(tagNameStartsAt, i);
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        !withinInlineStyle &&
+        str[i - 1] === "<" &&
+        /\w/.test(str[i]) &&
+        tagNameStartsAt === null
+      ) {
+        tagNameStartsAt = i;
+      }
+      if (
         !doNothing &&
         (withinStyleTag || withinInlineStyle) &&
         styleCommentStartedAt !== null &&
@@ -483,6 +559,11 @@ function crush(str, originalOpts) {
               }
               let whatToAdd = " ";
               if (
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                })
+              ) ; else if (
                 (str[whitespaceStartedAt - 1] &&
                   DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(
                     str[whitespaceStartedAt - 1]
@@ -514,7 +595,9 @@ function crush(str, originalOpts) {
                   str[i + 3] === "t" &&
                   str[i + 4] === "y" &&
                   str[i + 5] === "l" &&
-                  str[i + 6] === "e")
+                  str[i + 6] === "e") ||
+                str[i] === ">" ||
+                (str[i] === "/" && str[right(str, i)] === ">")
               ) {
                 whatToAdd = "";
               }
@@ -533,7 +616,9 @@ function crush(str, originalOpts) {
               } else {
                 if (
                   countCharactersPerLine >= opts.lineLengthLimit ||
-                  !str[i + 1]
+                  !str[i + 1] ||
+                  str[i] === ">" ||
+                  (str[i] === "/" && str[right(str, i)] === ">")
                 ) {
                   if (
                     countCharactersPerLine > opts.lineLengthLimit ||
@@ -610,55 +695,98 @@ function crush(str, originalOpts) {
           countCharactersPerLine <= opts.lineLengthLimit
         ) {
           if (
-            (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+            !str[i + 1] ||
+            ((CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
               !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
-            (str[i - 1] &&
-              CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1])) ||
-            !str[i].trim().length ||
-            !str[i + 1]
+              CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
+              !str[i].trim().length)
           ) {
-            if (
-              stageFrom !== null &&
-              stageTo !== null &&
-              (stageFrom !== stageTo || (stageAdd && stageAdd.length))
-            ) {
-              let whatToAdd = stageAdd;
+            {
+              if (
+                stageFrom !== null &&
+                stageTo !== null &&
+                (stageFrom !== stageTo || (stageAdd && stageAdd.length))
+              ) {
+                let whatToAdd = stageAdd;
+                if (
+                  str[i].trim().length &&
+                  str[i + 1] &&
+                  str[i + 1].trim().length &&
+                  countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
+                    opts.lineLengthLimit
+                ) {
+                  whatToAdd = "\n";
+                }
+                if (
+                  countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
+                    opts.lineLengthLimit ||
+                  !(whatToAdd === " " && stageTo === stageFrom + 1)
+                ) {
+                  finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+                } else {
+                  countCharactersPerLine -= lastLinebreak;
+                }
+              }
               if (
                 str[i].trim().length &&
-                str[i + 1] &&
-                str[i + 1].trim().length &&
-                countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
-                  opts.lineLengthLimit
+                (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
+                  (str[i - 1] &&
+                    CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
+                !(
+                  str[i] === "<" &&
+                  matchRight(str, i, opts.mindTheInlineTags, {
+                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  })
+                ) &&
+                !(
+                  str[i] === "<" &&
+                  matchRight(str, i, opts.mindTheInlineTags, {
+                    trimCharsBeforeMatching: "/",
+                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  })
+                )
               ) {
-                whatToAdd = "\n";
-              }
-              if (
-                countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
-                  opts.lineLengthLimit ||
-                !(whatToAdd === " " && stageTo === stageFrom + 1)
+                stageFrom = i;
+                stageTo = i;
+                stageAdd = null;
+              } else if (
+                styleCommentStartedAt === null &&
+                stageFrom !== null &&
+                (withinInlineStyle ||
+                  !opts.mindTheInlineTags ||
+                  !isArr(opts.mindTheInlineTags) ||
+                  (isArr(opts.mindTheInlineTags.length) &&
+                    !opts.mindTheInlineTags.length) ||
+                  !isStr(tagName) ||
+                  (isArr(opts.mindTheInlineTags) &&
+                    opts.mindTheInlineTags.length &&
+                    isStr(tagName) &&
+                    !opts.mindTheInlineTags.includes(tagName))) &&
+                !(
+                  str[i] === "<" &&
+                  matchRight(str, i, opts.mindTheInlineTags, {
+                    trimCharsBeforeMatching: "/",
+                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  })
+                )
               ) {
-                finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
-              } else {
-                countCharactersPerLine -= lastLinebreak;
+                stageFrom = null;
+                stageTo = null;
+                stageAdd = null;
               }
-            }
-            if (
-              str[i].trim().length &&
-              (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
-                (str[i - 1] &&
-                  CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1])))
-            ) {
-              stageFrom = i;
-              stageTo = i;
-              stageAdd = null;
-            } else if (styleCommentStartedAt === null) {
-              stageFrom = null;
-              stageTo = null;
-              stageAdd = null;
             }
           }
         } else if (opts.lineLengthLimit) {
-          if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) {
+          if (
+            CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+            !(
+              str[i] === "<" &&
+              matchRight(str, i, opts.mindTheInlineTags, {
+                trimCharsBeforeMatching: "/",
+                cb: nextChar => !nextChar || !/\w/.test(nextChar)
+              })
+            )
+          ) {
             if (
               stageFrom !== null &&
               stageTo !== null &&
@@ -691,15 +819,19 @@ function crush(str, originalOpts) {
               countCharactersPerLine = 0;
             }
           } else if (
-            str[i - 1] &&
-            CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1])
+            str[i + 1] &&
+            CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) &&
+            isStr(tagName) &&
+            isArr(opts.mindTheInlineTags) &&
+            opts.mindTheInlineTags.length &&
+            !opts.mindTheInlineTags.includes(tagName)
           ) {
             if (
               stageFrom !== null &&
               stageTo !== null &&
               (stageFrom !== stageTo || (stageAdd && stageAdd.length))
             ) ; else {
-              finalIndexesToDelete.push(i, i, "\n");
+              finalIndexesToDelete.push(i + 1, i + 1, "\n");
               countCharactersPerLine = 0;
             }
           } else if (!str[i].trim().length) ; else if (!str[i + 1]) {
@@ -722,7 +854,8 @@ function crush(str, originalOpts) {
         stageFrom !== null &&
         stageTo !== null &&
         !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) &&
-        !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])
+        !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+        !"/".includes(str[i])
       ) {
         if (
           !(
@@ -798,6 +931,16 @@ function crush(str, originalOpts) {
         str[withinInlineStyle] === str[i]
       ) {
         withinInlineStyle = null;
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        !withinInlineStyle &&
+        tagNameStartsAt !== null &&
+        str[i] === ">"
+      ) {
+        tagNameStartsAt = null;
+        tagName = null;
       }
     }
     if (finalIndexesToDelete.current()) {
