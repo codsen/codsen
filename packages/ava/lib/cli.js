@@ -1,6 +1,5 @@
 const path = require("path");
 const del = require("del");
-const updateNotifier = require("update-notifier");
 const figures = require("figures");
 const arrify = require("arrify");
 const meow = require("meow");
@@ -133,7 +132,6 @@ exports.run = async () => {
     }
   );
 
-  updateNotifier({ pkg: cli.pkg }).notify();
   const chalk = require("./chalk").set({ enabled: cli.flags.color });
 
   if (confError) {
