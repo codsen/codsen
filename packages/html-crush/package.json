@@ -208,7 +208,7 @@
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",
     "prettier": "^1.18.2",
-    "rollup": "^1.16.7",
+    "rollup": "^1.16.6",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-cleanup": "^3.1.1",
@@ -218,6 +218,6 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^5.1.1"
+    "rollup-plugin-terser": "^5.1.0"
   }
 }

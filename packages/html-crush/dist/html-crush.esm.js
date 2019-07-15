@@ -191,6 +191,7 @@ function crush(str, originalOpts) {
   let stageAdd = null;
   let tagName = null;
   let tagNameStartsAt = null;
+  let leftTagName = null;
   const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
   const CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
   const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
@@ -413,10 +414,16 @@ function crush(str, originalOpts) {
         !withinStyleTag &&
         !withinInlineStyle &&
         str[i - 1] === "<" &&
-        /\w/.test(str[i]) &&
         tagNameStartsAt === null
       ) {
-        tagNameStartsAt = i;
+        if (/\w/.test(str[i])) {
+          tagNameStartsAt = i;
+        } else if (
+          str[right(str, i - 1)] === "/" &&
+          /\w/.test(str[right(str, right(str, i - 1))])
+        ) {
+          tagNameStartsAt = right(str, right(str, i - 1));
+        }
       }
       if (
         !doNothing &&
@@ -701,79 +708,79 @@ function crush(str, originalOpts) {
               CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
               !str[i].trim().length)
           ) {
-            {
-              if (
-                stageFrom !== null &&
-                stageTo !== null &&
-                (stageFrom !== stageTo || (stageAdd && stageAdd.length))
-              ) {
-                let whatToAdd = stageAdd;
-                if (
-                  str[i].trim().length &&
-                  str[i + 1] &&
-                  str[i + 1].trim().length &&
-                  countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
-                    opts.lineLengthLimit
-                ) {
-                  whatToAdd = "\n";
-                }
-                if (
-                  countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
-                    opts.lineLengthLimit ||
-                  !(whatToAdd === " " && stageTo === stageFrom + 1)
-                ) {
-                  finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
-                } else {
-                  countCharactersPerLine -= lastLinebreak;
-                }
-              }
+            if (
+              stageFrom !== null &&
+              stageTo !== null &&
+              (stageFrom !== stageTo || (stageAdd && stageAdd.length))
+            ) {
+              let whatToAdd = stageAdd;
               if (
                 str[i].trim().length &&
-                (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
-                  (str[i - 1] &&
-                    CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
-                !(
+                str[i + 1] &&
+                str[i + 1].trim().length &&
+                countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
+                  opts.lineLengthLimit
+              ) {
+                whatToAdd = "\n";
+              }
+              if (
+                countCharactersPerLine + (whatToAdd ? whatToAdd.length : 0) >
+                  opts.lineLengthLimit ||
+                !(whatToAdd === " " && stageTo === stageFrom + 1)
+              ) {
+                finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+              } else {
+                countCharactersPerLine -= lastLinebreak;
+              }
+            }
+            if (
+              str[i].trim().length &&
+              (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
+                (str[i - 1] &&
+                  CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
+              ((isStr(leftTagName) &&
+                !opts.mindTheInlineTags.includes(tagName)) ||
+                (!(
                   str[i] === "<" &&
                   matchRight(str, i, opts.mindTheInlineTags, {
                     cb: nextChar => !nextChar || !/\w/.test(nextChar)
                   })
                 ) &&
-                !(
-                  str[i] === "<" &&
-                  matchRight(str, i, opts.mindTheInlineTags, {
-                    trimCharsBeforeMatching: "/",
-                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                  })
-                )
-              ) {
-                stageFrom = i;
-                stageTo = i;
-                stageAdd = null;
-              } else if (
-                styleCommentStartedAt === null &&
-                stageFrom !== null &&
-                (withinInlineStyle ||
-                  !opts.mindTheInlineTags ||
-                  !isArr(opts.mindTheInlineTags) ||
-                  (isArr(opts.mindTheInlineTags.length) &&
-                    !opts.mindTheInlineTags.length) ||
-                  !isStr(tagName) ||
-                  (isArr(opts.mindTheInlineTags) &&
-                    opts.mindTheInlineTags.length &&
-                    isStr(tagName) &&
-                    !opts.mindTheInlineTags.includes(tagName))) &&
-                !(
-                  str[i] === "<" &&
-                  matchRight(str, i, opts.mindTheInlineTags, {
-                    trimCharsBeforeMatching: "/",
-                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                  })
-                )
-              ) {
-                stageFrom = null;
-                stageTo = null;
-                stageAdd = null;
-              }
+                  !(
+                    str[i] === "<" &&
+                    matchRight(str, i, opts.mindTheInlineTags, {
+                      trimCharsBeforeMatching: "/",
+                      cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                    })
+                  )))
+            ) {
+              stageFrom = i;
+              stageTo = i;
+              stageAdd = null;
+            } else if (
+              styleCommentStartedAt === null &&
+              stageFrom !== null &&
+              (withinInlineStyle ||
+                !opts.mindTheInlineTags ||
+                !isArr(opts.mindTheInlineTags) ||
+                (isArr(opts.mindTheInlineTags.length) &&
+                  !opts.mindTheInlineTags.length) ||
+                !isStr(tagName) ||
+                (isArr(opts.mindTheInlineTags) &&
+                  opts.mindTheInlineTags.length &&
+                  isStr(tagName) &&
+                  !opts.mindTheInlineTags.includes(tagName))) &&
+              !(
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  trimCharsBeforeMatching: "/",
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                })
+              )
+            ) {
+              stageFrom = null;
+              stageTo = null;
+              stageAdd = null;
             }
           }
         } else if (opts.lineLengthLimit) {
@@ -872,6 +879,9 @@ function crush(str, originalOpts) {
           ) {
             whatToAdd = stageAdd;
           }
+          if (whatToAdd === "\n" && !str[stageFrom - 1].trim().length) {
+            stageFrom = left(str, stageFrom) + 1;
+          }
           finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
           countCharactersPerLine = i - stageTo;
           if (str[i].length) {
@@ -939,8 +949,14 @@ function crush(str, originalOpts) {
         tagNameStartsAt !== null &&
         str[i] === ">"
       ) {
+        if (str[right(str, i)] === "<") {
+          leftTagName = tagName;
+        }
         tagNameStartsAt = null;
         tagName = null;
+      }
+      if (str[i] === "<" && leftTagName !== null) {
+        leftTagName = null;
       }
     }
     if (finalIndexesToDelete.current()) {

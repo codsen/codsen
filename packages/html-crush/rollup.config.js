@@ -50,9 +50,9 @@ export default commandLineArgs => {
         "lodash.isplainobject",
         "ranges-apply",
         "ranges-push",
+        "string-left-right",
         "string-match-left-right",
-        "string-range-expander",
-        "string-left-right"
+        "string-range-expander"
       ],
       plugins: [
         strip({
@@ -76,9 +76,9 @@ export default commandLineArgs => {
         "lodash.isplainobject",
         "ranges-apply",
         "ranges-push",
+        "string-left-right",
         "string-match-left-right",
-        "string-range-expander",
-        "string-left-right"
+        "string-range-expander"
       ],
       plugins: [
         strip({
