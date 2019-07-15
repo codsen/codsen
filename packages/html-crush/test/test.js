@@ -2574,31 +2574,29 @@ test(`09.10 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - span + sup`, t =
   );
 });
 
-// TODO
-// test(`09.11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - won't line break between two inline tags`, t => {
-//   for (let i = 1; i < 37; i++) {
-//     t.deepEqual(
-//       m(`<span>a</span><span style="z">b</span>`, {
-//         lineLengthLimit: i,
-//         removeLineBreaks: true
-//       }).result,
-//       `<span>a</span><span\nstyle="z">b</span>`,
-//       `09.11.0${i} - limit = ${i}`
-//     );
-//   }
-// });
+test(`09.11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - won't line break between two inline tags`, t => {
+  for (let i = 1; i < 37; i++) {
+    t.deepEqual(
+      m(`<span>a</span><span style="z">b</span>`, {
+        lineLengthLimit: i,
+        removeLineBreaks: true
+      }).result,
+      `<span>a</span><span\nstyle="z">b</span>`,
+      `09.11.0${i} - limit = ${i}`
+    );
+  }
+});
 
-// TODO
-// test(`09.12 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`, t => {
-//   t.deepEqual(
-//     m(`<i><span>a</span><span style="z">b</span></i>`, {
-//       lineLengthLimit: 22,
-//       removeLineBreaks: true
-//     }).result,
-//     `<i><span>a</span><span\nstyle="z">b</span>\n</i>`,
-//     "09.12"
-//   );
-// });
+test(`09.12 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`, t => {
+  t.deepEqual(
+    m(`<i><span>a</span><span style="z">b</span></i>`, {
+      lineLengthLimit: 22,
+      removeLineBreaks: true
+    }).result,
+    `<i><span>a</span><span\nstyle="z">b</span></i>`,
+    "09.12"
+  );
+});
 
 test(`09.13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed #1`, t => {
   t.deepEqual(
@@ -2606,7 +2604,7 @@ test(`09.13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break 
       lineLengthLimit: 9, // <--- asking to break after /i
       removeLineBreaks: true
     }).result,
-    `<i>a</i>\n<span>b</span>`,
+    `<i>a</i><span>b</span>`,
     "09.13.01"
   );
   t.deepEqual(
@@ -2850,76 +2848,74 @@ test(`09.19 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup`, t 
   );
 });
 
-// TODO
-// test(`09.20 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`, t => {
-//   t.deepEqual(
-//     m(`<div>a</div>     <sup>b</sup>`, {
-//       lineLengthLimit: 10,
-//       removeLineBreaks: true
-//     }).result,
-//     `<div>a</div>\n<sup>b</sup>`,
-//     "09.20"
-//   );
-// });
+test(`09.20 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`, t => {
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 10,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div>\n<sup>b</sup>`,
+    "09.20"
+  );
+});
 
-// TODO
-// test(`09.21 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`, t => {
-//   for (let i = 10; i < 25; i++) {
-//     t.deepEqual(
-//       m(`<div>a</div>     <sup>b</sup>`, {
-//         lineLengthLimit: i,
-//         removeLineBreaks: true
-//       }).result,
-//       `<div>a</div>\n<sup>b</sup>`,
-//       `09.21.01 - limit = ${i}`
-//     );
-//   }
-//   t.deepEqual(
-//     m(`<div>a</div>     <sup>b</sup>`, {
-//       lineLengthLimit: 99,
-//       removeLineBreaks: true
-//     }).result,
-//     `<div>a</div> <sup>b</sup>`,
-//     "09.21.02"
-//   );
-//   t.deepEqual(
-//     m(`<div>a</div>     <sup>b</sup>`, {
-//       lineLengthLimit: 0,
-//       removeLineBreaks: true
-//     }).result,
-//     `<div>a</div> <sup>b</sup>`,
-//     "09.21.03"
-//   );
-// });
+test(`09.21 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`, t => {
+  for (let i = 10; i < 25; i++) {
+    t.deepEqual(
+      m(`<div>a</div>     <sup>b</sup>`, {
+        lineLengthLimit: i,
+        removeLineBreaks: true
+      }).result,
+      `<div>a</div>\n<sup>b</sup>`,
+      `09.21.01 - limit = ${i}`
+    );
+  }
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 99,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div> <sup>b</sup>`,
+    "09.21.02"
+  );
+  t.deepEqual(
+    m(`<div>a</div>     <sup>b</sup>`, {
+      lineLengthLimit: 0,
+      removeLineBreaks: true
+    }).result,
+    `<div>a</div> <sup>b</sup>`,
+    "09.21.03"
+  );
+});
 
-// TODO
-// test(`09.22 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - multiple wrapped inline tags`, t => {
-//   const source = `<span><a href="z"><b>a</b><i>b</i><a><span>`;
-//   t.deepEqual(
-//     m(source, {
-//       removeLineBreaks: false
-//     }).result,
-//     source,
-//     "09.22.01"
-//   );
-//   t.deepEqual(
-//     m(source, {
-//       removeLineBreaks: true
-//     }).result,
-//     source,
-//     "09.22.02"
-//   );
-//   for (let i = 0; i < 50; i++) {
-//     t.deepEqual(
-//       m(source, {
-//         lineLengthLimit: i,
-//         removeLineBreaks: true
-//       }).result,
-//       source,
-//       `09.22.03* - lineLengthLimit: i = ${i}`
-//     );
-//   }
-// });
+test(`09.22 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - multiple wrapped inline tags`, t => {
+  const source = `<span><a href="z"><b>a</b><i>b</i><a><span>`;
+  const res = `<span><a\nhref="z"><b>a</b><i>b</i><a><span>`;
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: false
+    }).result,
+    source,
+    "09.22.01"
+  );
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: true
+    }).result,
+    source,
+    "09.22.02"
+  );
+  for (let i = 1; i < 42; i++) {
+    t.deepEqual(
+      m(source, {
+        lineLengthLimit: i,
+        removeLineBreaks: true
+      }).result,
+      res,
+      `09.22.03* - lineLengthLimit: i = ${i}`
+    );
+  }
+});
 
 test(`09.23 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - first tag name letters resemble legit inline tags`, t => {
   t.deepEqual(

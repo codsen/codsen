@@ -738,8 +738,8 @@ function crush(str, originalOpts) {
               (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
                 (str[i - 1] &&
                   CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
-              ((isStr(leftTagName) &&
-                !opts.mindTheInlineTags.includes(tagName)) ||
+              (isStr(leftTagName) &&
+                !opts.mindTheInlineTags.includes(tagName) &&
                 (!(
                   str[i] === "<" &&
                   matchRight(str, i, opts.mindTheInlineTags, {

@@ -437,7 +437,7 @@ function crush(str, originalOpts) {
                 countCharactersPerLine -= lastLinebreak;
               }
             }
-            if (str[_i].trim().length && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && (isStr(leftTagName) && !opts.mindTheInlineTags.includes(tagName) || !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
+            if (str[_i].trim().length && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[_i - 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i - 1])) && isStr(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
               }
@@ -446,7 +446,7 @@ function crush(str, originalOpts) {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
               }
-            })))) {
+            }))) {
               stageFrom = _i;
               stageTo = _i;
               stageAdd = null;
