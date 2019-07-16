@@ -13,9 +13,15 @@
     "*.js"
   ],
   "scripts": {
+    "coverage": "exit 0",
+    "dev": "exit 0",
+    "format": "exit 0",
+    "lect": "lect",
+    "lint": "exit 0",
+    "prettier": "exit 0",
     "test": "exit 0",
     "test:tap": "tap --no-esm",
-    "prettier": "prettier '*.{js,css,scss,vue,md}' --write"
+    "unittest": "exit 0"
   },
   "tap": {
     "browser": false,
