@@ -117,7 +117,7 @@
     "write-file-atomic": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.6.2",
+    "@types/node": "^12.6.3",
     "cli-table3": "^0.5.1",
     "codecov": "^3.5.0",
     "delay": "^4.3.0",
