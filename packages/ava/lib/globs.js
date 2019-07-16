@@ -120,7 +120,7 @@ const hasExtension = (extensions, file) =>
 
 exports.hasExtension = hasExtension;
 
-const findFiles = async (cwd, patterns) => {
+const findFiles = async (cwd, patterns, dev) => {
   const files = await globby(patterns, {
     absolute: true,
     braceExpansion: true,
@@ -138,7 +138,7 @@ const findFiles = async (cwd, patterns) => {
     stats: false,
     unique: true
   }).then(filesArr => {
-    if (Array.isArray(filesArr) && filesArr.length > 1) {
+    if (dev && Array.isArray(filesArr) && filesArr.length > 1) {
       for (let i = filesArr.length; i--; ) {
         const filesContents = fs.readFileSync(filesArr[i], "utf8");
         if (
@@ -166,14 +166,16 @@ async function findHelpersAndTests({
   cwd,
   extensions,
   testPatterns,
-  helperPatterns
+  helperPatterns,
+  dev
 }) {
+  // console.log(`172 ava/globs.js: dev = ${dev}`);
   // Search for tests concurrently with finding helpers.
-  const findingTests = findFiles(cwd, testPatterns);
+  const findingTests = findFiles(cwd, testPatterns, dev);
 
   const uniqueHelpers = new Set();
   if (helperPatterns.length > 0) {
-    for (const file of await findFiles(cwd, helperPatterns)) {
+    for (const file of await findFiles(cwd, helperPatterns, dev)) {
       if (!hasExtension(extensions, file)) {
         continue;
       }
@@ -201,11 +203,17 @@ async function findHelpersAndTests({
 
 exports.findHelpersAndTests = findHelpersAndTests;
 
-async function findTests({ cwd, extensions, testPatterns, helperPatterns }) {
+async function findTests({
+  cwd,
+  extensions,
+  testPatterns,
+  helperPatterns,
+  dev
+}) {
   const rejectHelpers = helperPatterns.length > 0;
 
   const tests = [];
-  for (const file of await findFiles(cwd, testPatterns)) {
+  for (const file of await findFiles(cwd, testPatterns, dev)) {
     if (
       !hasExtension(extensions, file) ||
       path.basename(file).startsWith("_")

@@ -8,10 +8,6 @@
     "node": ">=8.9.4 <9 || >=10.0.0 <11 || >=12.0.0"
   },
   "bin": "cli.js",
-  "files": [
-    "lib",
-    "*.js"
-  ],
   "scripts": {
     "coverage": "exit 0",
     "dev": "exit 0",

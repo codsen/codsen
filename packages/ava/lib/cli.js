@@ -45,7 +45,9 @@ exports.run = async () => {
 		  ava [<file> ...]
 
 		Options
-		  --watch, -w             Re-run tests when tests and source files change
+      --dev, -d               Dev mode - avaonly functionality enabled
+
+      --watch, -w             Re-run tests when tests and source files change
 		  --match, -m             Only run tests with matching title (Can be repeated)
 		  --update-snapshots, -u  Update snapshots
 		  --fail-fast             Stop after first test failure
@@ -108,6 +110,11 @@ exports.run = async () => {
           type: "boolean",
           alias: "v",
           default: conf.verbose
+        },
+        dev: {
+          type: "boolean",
+          alias: "d",
+          default: false
         },
         tap: {
           type: "boolean",
@@ -253,6 +260,7 @@ exports.run = async () => {
     color: conf.color,
     compileEnhancements: conf.compileEnhancements !== false,
     concurrency: conf.concurrency ? parseInt(conf.concurrency, 10) : 0,
+    dev: !!cli.flags.dev,
     extensions,
     failFast: conf.failFast,
     failWithoutAssertions: conf.failWithoutAssertions !== false,
