@@ -1,0 +1,195 @@
+{
+  "name": "generate-atomic-css-cli",
+  "version": "1.0.0",
+  "description": "Generates and updates all HTML templates' atomic CSS",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "keywords": [
+    "atomic",
+    "css",
+    "generate",
+    "update",
+    "render",
+    "create",
+    "refresh",
+    "email",
+    "template",
+    "marketing",
+    "mailing",
+    "development",
+    "tool",
+    "cli",
+    "cli-app"
+  ],
+  "bin": {
+    "gac": "cli.js"
+  },
+  "scripts": {
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "echo\"\"",
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "lect": "lect",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "./node_modules/.bin/ava"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "timeout": "99m",
+    "verbose": true
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": false,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "generate-atomic-css": "^1.2.0",
+    "globby": "^10.0.1",
+    "is-d": "^1.0.0",
+    "meow": "^5.0.0",
+    "p-reduce": "^2.1.0",
+    "update-notifier": "^3.0.1",
+    "write-file-atomic": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "ava": "^2.2.0",
+    "babel-plugin-istanbul": "^5.1.4",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-ava": "^7.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "esm": "^3.2.25",
+    "execa": "^2.0.3",
+    "js-row-num-cli": "^1.5.30",
+    "lect": "^0.7.7",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "tempy": "^0.3.0"
+  }
+}
