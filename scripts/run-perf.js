@@ -68,24 +68,24 @@ function runPerf(cb, callerDir) {
       //                                 \|/
       //                                  V
       const optsPerSec = this[0].hz;
-      // console.log(`${heads} ops/sec.: ${optsPerSec}`);
-
       // historicalData = {};
-      if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
-        historicalData[version] = optsPerSec;
-        historicalData["lastPublished"] = optsPerSec;
-      }
-      historicalData["lastRan"] = historicalData[version];
-      fs.writeFile(
-        path.resolve(callerDir, "./perf/historical.json"),
-        JSON.stringify(historicalData, null, 4),
-        err => {
-          if (err) {
-            throw err;
-          }
-          console.log(`${heads}✅ historical.json written`);
+      if (optsPerSec) {
+        if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
+          historicalData[version] = optsPerSec;
+          historicalData["lastPublished"] = optsPerSec;
         }
-      );
+        historicalData["lastRan"] = historicalData[version];
+        fs.writeFile(
+          path.resolve(callerDir, "./perf/historical.json"),
+          JSON.stringify(historicalData, null, 4),
+          err => {
+            if (err) {
+              throw err;
+            }
+            console.log(`${heads}✅ historical.json written`);
+          }
+        );
+      }
 
       // evaluation:
       // -----------------------------------------------------------------------
@@ -94,7 +94,7 @@ function runPerf(cb, callerDir) {
         perc(
           Math.abs(historicalData.lastRan - optsPerSec),
           historicalData.lastRan
-        ) <= 1
+        ) <= 2
       ) {
         console.log(
           `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(

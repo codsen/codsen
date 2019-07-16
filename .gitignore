@@ -18,3 +18,5 @@ yarn.lock
 lerna-debug.log
 .npmrc
 *.lerna_backup
+/packages/ava/.nyc_output
+/packages/ava/coverage

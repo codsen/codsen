@@ -38,6 +38,8 @@ const stringLibsList = [
 ];
 const cliAppsList = ["lect", "update-versions"];
 
+const ignoreList = ["ava"];
+
 // FUNCTIONS
 // =========
 
@@ -105,7 +107,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !objectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib)
+    !filteredCliAppsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredCliAppsList.push(lib);
   }
@@ -117,7 +120,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !objectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib)
+    !filteredCliAppsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredCliAppsList.push(lib);
   }
@@ -136,7 +140,8 @@ allPackages.forEach(lib => {
     !objectLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredRangeLibsList.includes(lib)
+    !filteredRangeLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredRangeLibsList.push(lib);
   }
@@ -148,7 +153,8 @@ allPackages.forEach(lib => {
     !objectLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredRangeLibsList.includes(lib)
+    !filteredRangeLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredRangeLibsList.push(lib);
   }
@@ -167,7 +173,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !objectLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredStringLibsList.includes(lib)
+    !filteredStringLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredStringLibsList.push(lib);
   }
@@ -181,7 +188,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !objectLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredStringLibsList.includes(lib)
+    !filteredStringLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredStringLibsList.push(lib);
   }
@@ -200,7 +208,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredObjectLibsList.includes(lib)
+    !filteredObjectLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredObjectLibsList.push(lib);
   }
@@ -214,7 +223,8 @@ allPackages.forEach(lib => {
     !rangeLibsList.includes(lib) &&
     !stringLibsList.includes(lib) &&
     !cliAppsList.includes(lib) &&
-    !filteredObjectLibsList.includes(lib)
+    !filteredObjectLibsList.includes(lib) &&
+    !ignoreList.includes(lib)
   ) {
     filteredObjectLibsList.push(lib);
   }
@@ -228,7 +238,8 @@ const filteredOtherLibsList = allPackages.filter(
     !filteredRangeLibsList.includes(lib) &&
     !filteredStringLibsList.includes(lib) &&
     !filteredObjectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib)
+    !filteredCliAppsList.includes(lib) &&
+    !ignoreList.includes(lib)
 );
 
 // ASSEMBLE THE TEMPLATE
@@ -236,7 +247,8 @@ const filteredOtherLibsList = allPackages.filter(
 
 const template = `# Codsen
 
-    A lerna monorepo for our ${allPackages.length} npm libraries 📦📦📦
+    A lerna monorepo for our ${allPackages.length -
+      ignoreList.length} npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 

@@ -39,7 +39,7 @@
     "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
+    "unittest": "./node_modules/.bin/ava"
   },
   "husky": {
     "hooks": {

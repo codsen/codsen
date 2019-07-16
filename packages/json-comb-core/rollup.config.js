@@ -110,6 +110,8 @@ export default commandLineArgs => {
     finalConfig.forEach((singleConfigVal, i) => {
       finalConfig[i].plugins.shift();
     });
+    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+    delete commandLineArgs.dev;
   }
   return finalConfig;
 };
