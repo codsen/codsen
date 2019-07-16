@@ -2275,6 +2275,18 @@ if (cli.flags.init) {
     }
   });
 } else {
+  // quickly read package.json and bail early if needed
+  try {
+    if (JSON.parse(fs.readFileSync("package.json", "utf8")).private) {
+      log(
+        `${chalk.green(logSymbols.success, "private package, lect skipped")}`
+      );
+      process.exit();
+    }
+  } catch (e) {
+    console.log(`error reading package.json: ${e}`);
+  }
+
   // log(`${chalk.white("\nSTEP 0 - Get the readme name and contents")}`);
   checkOneOfNames(0); // will start from 0-th index of readmeNames[]
 }
