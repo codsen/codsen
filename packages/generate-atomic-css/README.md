@@ -11,6 +11,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+Other siblings of this package:
+
+- CLI for it: [generate-atomic-css-cli on npm](https://www.npmjs.com/package/generate-atomic-css-cli), [generate-atomic-css-cli on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli)
+
 ## Table of Contents
 
 - [Install](#install)
