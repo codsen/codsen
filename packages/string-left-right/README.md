@@ -47,32 +47,35 @@ Here's what you'll get:
 
 ```js
 const { left, right } = require("string-left-right");
-const res = left("abc   def", 6);
-console.log("res = " + res);
-// => res = 2
+// let's get the closest non-whitespace letter to the left of "d"
+const str = "abc   def";
+const res = left(str, 6); // 6th index marks letter "d"
+console.log(`next non-whitespace character to the left of ${str[6]} (index 6) is ${str[left(str, 6)]} (index ${left(str, 6)})`);
+// => next non-whitespace character to the left of d (index 6) is c (index 2)
 ```
 
 ## API
 
-Both exported functions have the same API
+Both exported functions have the same API. When you require/import this package, you get a plain object. That object has two methods - in other words, functions, assigned to a keys "left" and "right".
 
 **left(str, \[, idx])**
+
 **right(str, \[, idx])**
 
-The first input argument is a string, the optional second (marked by brackets above) is offset index.
+On both, the first input argument is a string, the optional second (marked by brackets above) is an offset index.
 
-### API - left() or right() functions
+### API - `left()` and `right()` Input
 
 | Input argument | Key value's type | Obligatory? | Description                                                                    |
 | -------------- | ---------------- | ----------- | ------------------------------------------------------------------------------ |
 | `str`          | String           | yes         | String which we will process                                                   |
 | `idx`          | (natural) number | no          | Default is zero (beginning of a string), but you can point to any string index |
 
-The API is deliberately very forgiving; it never throws; if the result can't be determined, it returns `null`.
+The API is deliberately very forgiving; it never _throws_; if the result can't be determined, it returns `null`.
 
 **[⬆ back to top](#)**
 
-### API - Function's Output
+### API - `left()` and `right()` Output
 
 The output is either **natural number index**, pointing to the nearest non-whitespace character on either side or `null`.
 
