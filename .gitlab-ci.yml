@@ -44,6 +44,7 @@ deploy:
     - git status
     - git add packages
     - git add readme.md
+    - git rm packages/ava/CHANGELOG.md
     - echo '█████████████████████████████ 7 █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
