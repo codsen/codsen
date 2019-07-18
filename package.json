@@ -45,7 +45,7 @@
   "devDependencies": {
     "@pectin/cli": "^3.0.1",
     "benchmark": "^2.1.4",
-    "commitizen": "^3.1.1",
+    "commitizen": "^3.1.2",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",

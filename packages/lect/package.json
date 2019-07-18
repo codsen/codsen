@@ -194,7 +194,7 @@
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
-    "pacote": "^9.5.2",
+    "pacote": "^9.5.4",
     "pify": "^4.0.1",
     "replace-string": "^3.0.0",
     "request": "^2.88.0",
@@ -206,9 +206,9 @@
     "write-json-file": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/register": "^7.4.4",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
     "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.1.4",
     "eslint": "^6.0.1",
