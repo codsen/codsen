@@ -8,6 +8,49 @@ import {
 
 const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 
+const allOptsVariations = [
+  {
+    includeConfig: true,
+    includeHeadsAndTails: true,
+    pad: true
+  },
+  {
+    includeConfig: true,
+    includeHeadsAndTails: true,
+    pad: false
+  },
+  {
+    includeConfig: true,
+    includeHeadsAndTails: false,
+    pad: true
+  },
+  {
+    includeConfig: false,
+    includeHeadsAndTails: true,
+    pad: true
+  },
+  {
+    includeConfig: false,
+    includeHeadsAndTails: false,
+    pad: true
+  },
+  {
+    includeConfig: false,
+    includeHeadsAndTails: true,
+    pad: false
+  },
+  {
+    includeConfig: true,
+    includeHeadsAndTails: false,
+    pad: false
+  },
+  {
+    includeConfig: false,
+    includeHeadsAndTails: false,
+    pad: false
+  }
+];
+
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
@@ -2469,27 +2512,166 @@ ${CONTENTHEAD} */
   );
 });
 
-test(`08.04 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count`, t => {
-  const content = `
+test(`08.04 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last`, t => {
+  const content1 = `
+.zzz1 { yyy: 0 auto !important }
+.zzz2 { yyy: 0 auto !important }
+.zzz3 { yyy: 0 auto !important }
 .p$$$ { padding: $$$px !important } | 1
+`.trim();
+  const content2 = `
+  .p$$$ { padding: $$$px !important } | 1
 .zzz1 { yyy: 0 auto !important }
 .zzz2 { yyy: 0 auto !important }
 .zzz3 { yyy: 0 auto !important }
 `.trim();
+  const content3 = `
+.zzz1 { yyy: 0 auto !important }
+.zzz2 { yyy: 0 auto !important }
+.p$$$ { padding: $$$px !important } | 1
+.zzz3 { yyy: 0 auto !important }
+`.trim();
 
-  t.is(
-    genAtomic(
-      `/* ${CONFIGHEAD}
-${content}
+  allOptsVariations.forEach((setOfOpts, i) => {
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+${content1}
 ${CONFIGTAIL}
 ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
-`
-    ).log.count,
-    5,
-    "08.04"
-  );
+`,
+        setOfOpts
+      ).log.count,
+      5,
+      `08.04.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+${content2}
+${CONFIGTAIL}
+${CONTENTHEAD} */
+zzz
+/* ${CONTENTTAIL} */
+`,
+        setOfOpts
+      ).log.count,
+      5,
+      `08.04.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+${content3}
+${CONFIGTAIL}
+${CONTENTHEAD} */
+zzz
+/* ${CONTENTTAIL} */
+`,
+        setOfOpts
+      ).log.count,
+      5,
+      `08.04.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+  });
+
+  //
+});
+
+test(`08.05 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - reports 5 generated - log/count - dollars last - content via opts.configOverride`, t => {
+  const content1 = `
+.zzz1 { yyy: 0 auto !important }
+.zzz2 { yyy: 0 auto !important }
+.zzz3 { yyy: 0 auto !important }
+.p$$$ { padding: $$$px !important } | 1
+`.trim();
+  const content2 = `
+  .p$$$ { padding: $$$px !important } | 1
+.zzz1 { yyy: 0 auto !important }
+.zzz2 { yyy: 0 auto !important }
+.zzz3 { yyy: 0 auto !important }
+`.trim();
+  const content3 = `
+.zzz1 { yyy: 0 auto !important }
+.zzz2 { yyy: 0 auto !important }
+.p$$$ { padding: $$$px !important } | 1
+.zzz3 { yyy: 0 auto !important }
+`.trim();
+
+  allOptsVariations.forEach((setOfOpts, i) => {
+    t.is(
+      genAtomic(
+        `zzz`,
+        Object.assign({}, setOfOpts, { configOverride: content1 })
+      ).log.count,
+      5,
+      `08.05.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+.tralala { $$$ }
+${CONFIGTAIL}
+${CONTENTHEAD} */
+replace me
+/* ${CONTENTTAIL} */
+`,
+        Object.assign({}, setOfOpts, { configOverride: content1 })
+      ).log.count,
+      5,
+      `08.05.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+
+    // content2
+    t.is(
+      genAtomic(
+        `zzz`,
+        Object.assign({}, setOfOpts, { configOverride: content2 })
+      ).log.count,
+      5,
+      `08.05.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+.tralala { $$$ }
+${CONFIGTAIL}
+${CONTENTHEAD} */
+replace me
+/* ${CONTENTTAIL} */
+`,
+        Object.assign({}, setOfOpts, { configOverride: content2 })
+      ).log.count,
+      5,
+      `08.05.4${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+
+    // content3
+    t.is(
+      genAtomic(
+        `zzz`,
+        Object.assign({}, setOfOpts, { configOverride: content3 })
+      ).log.count,
+      5,
+      `08.05.5${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+    t.is(
+      genAtomic(
+        `/* ${CONFIGHEAD}
+.tralala { $$$ }
+${CONFIGTAIL}
+${CONTENTHEAD} */
+replace me
+/* ${CONTENTTAIL} */
+`,
+        Object.assign({}, setOfOpts, { configOverride: content3 })
+      ).log.count,
+      5,
+      `08.05.6${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------
