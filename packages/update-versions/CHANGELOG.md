@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.6](https://gitlab.com/codsen/codsen/compare/update-versions@1.5.5...update-versions@1.5.6) (2019-07-19)
+
+**Note:** Version bump only for package update-versions
+
+
+
+
+
 ## [1.5.5](https://gitlab.com/codsen/codsen/compare/update-versions@1.5.4...update-versions@1.5.5) (2019-07-19)
 
 **Note:** Version bump only for package update-versions

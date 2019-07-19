@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.31](https://gitlab.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@1.10.30...email-all-chars-within-ascii-cli@1.10.31) (2019-07-19)
+
+**Note:** Version bump only for package email-all-chars-within-ascii-cli
+
+
+
+
+
 ## [1.10.30](https://gitlab.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@1.10.29...email-all-chars-within-ascii-cli@1.10.30) (2019-07-19)
 
 **Note:** Version bump only for package email-all-chars-within-ascii-cli

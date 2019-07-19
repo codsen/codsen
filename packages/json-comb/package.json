@@ -1,6 +1,6 @@
 {
   "name": "json-comb",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Command line app to manage sets of JSON files",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,7 @@
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
-    "json-comb-core": "^6.5.30",
+    "json-comb-core": "^6.5.31",
     "meow": "^5.0.0",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
@@ -176,7 +176,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.1",
+    "ava": "^2.2.2",
     "babel-plugin-istanbul": "^5.1.4",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
@@ -186,8 +186,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.3",
-    "js-row-num-cli": "^1.5.31",
-    "lect": "^0.8.0",
+    "js-row-num-cli": "^1.5.32",
+    "lect": "^0.8.1",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

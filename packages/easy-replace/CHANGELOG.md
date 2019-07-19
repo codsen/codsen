@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.31](https://gitlab.com/codsen/codsen/compare/easy-replace@3.7.30...easy-replace@3.7.31) (2019-07-19)
+
+**Note:** Version bump only for package easy-replace
+
+
+
+
+
 ## [3.7.30](https://gitlab.com/codsen/codsen/compare/easy-replace@3.7.29...easy-replace@3.7.30) (2019-07-19)
 
 **Note:** Version bump only for package easy-replace

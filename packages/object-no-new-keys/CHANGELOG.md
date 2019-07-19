@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.31](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.7.30...object-no-new-keys@2.7.31) (2019-07-19)
+
+**Note:** Version bump only for package object-no-new-keys
+
+
+
+
+
 ## [2.7.30](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.7.29...object-no-new-keys@2.7.30) (2019-07-19)
 
 **Note:** Version bump only for package object-no-new-keys

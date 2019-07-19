@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "1.13.6",
+  "version": "1.13.7",
   "description": "Command line app to deep sort JSON files, retains package.json special key order",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.26",
+    "ast-monkey-traverse": "^1.11.27",
     "chalk": "^2.4.2",
     "format-package": "^5.1.0",
     "fs-extra": "^8.1.0",
@@ -177,7 +177,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.1",
+    "ava": "^2.2.2",
     "babel-plugin-istanbul": "^5.1.4",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
@@ -187,8 +187,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.3",
-    "js-row-num-cli": "^1.5.31",
-    "lect": "^0.8.0",
+    "js-row-num-cli": "^1.5.32",
+    "lect": "^0.8.1",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",
     "prettier": "^1.18.2",

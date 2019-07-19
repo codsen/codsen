@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "3.0.22",
+  "version": "3.0.23",
   "description": "Detect and (recursively) remove head and tail wrappings around the input string",
   "license": "MIT",
   "engines": {
@@ -167,19 +167,19 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.3",
-    "check-types-mini": "^5.7.27",
+    "arrayiffy-if-string": "^3.11.4",
+    "check-types-mini": "^5.7.28",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.21",
-    "ranges-push": "^3.2.5",
-    "string-match-left-right": "^3.10.31",
-    "string-trim-spaces-only": "^2.7.30"
+    "ranges-apply": "^3.0.22",
+    "ranges-push": "^3.2.6",
+    "string-match-left-right": "^3.10.32",
+    "string-trim-spaces-only": "^2.7.31"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.1",
+    "ava": "^2.2.2",
     "babel-plugin-istanbul": "^5.1.4",
     "benchmark": "^2.1.4",
     "eslint": "^6.0.1",
@@ -189,8 +189,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.31",
-    "lect": "^0.8.0",
+    "js-row-num-cli": "^1.5.32",
+    "lect": "^0.8.1",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",

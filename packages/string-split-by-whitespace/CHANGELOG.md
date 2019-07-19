@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.32](https://gitlab.com/codsen/codsen/compare/string-split-by-whitespace@1.6.31...string-split-by-whitespace@1.6.32) (2019-07-19)
+
+**Note:** Version bump only for package string-split-by-whitespace
+
+
+
+
+
 ## [1.6.31](https://gitlab.com/codsen/codsen/compare/string-split-by-whitespace@1.6.30...string-split-by-whitespace@1.6.31) (2019-07-19)
 
 **Note:** Version bump only for package string-split-by-whitespace
