@@ -3,22 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.11.31](https://gitlab.com/codsen/codsen/compare/object-boolean-combinations@2.11.30...object-boolean-combinations@2.11.31) (2019-07-19)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-
-
-
-
-## [2.11.30](https://gitlab.com/codsen/codsen/compare/object-boolean-combinations@2.11.29...object-boolean-combinations@2.11.30) (2019-07-19)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-
-
-
-
 ## 2.11.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

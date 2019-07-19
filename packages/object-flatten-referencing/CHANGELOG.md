@@ -3,22 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.10.31](https://gitlab.com/codsen/codsen/compare/object-flatten-referencing@4.10.30...object-flatten-referencing@4.10.31) (2019-07-19)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-
-
-
-
-## [4.10.30](https://gitlab.com/codsen/codsen/compare/object-flatten-referencing@4.10.29...object-flatten-referencing@4.10.30) (2019-07-19)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-
-
-
-
 ## 4.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
