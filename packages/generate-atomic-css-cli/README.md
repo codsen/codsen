@@ -27,7 +27,7 @@ Other siblings of this package:
 npm i -g generate-atomic-css-cli
 ```
 
-then, call it typing `jsrownum` or `jrn` in your terminal, like this:
+then, call it typing `gac` in your terminal, like this:
 
 ```bash
 gac "index.html"
