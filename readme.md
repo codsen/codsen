@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 90 npm libraries 📦📦📦
+    A lerna monorepo for our 91 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -14,12 +14,12 @@ We coded up and maintain a few npm packages:
 - [Range Libraries](#-12-range-libraries)
 - [String Processing Libraries](#-27-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
-- [CLI Apps](#%EF%B8%8F-8-cli-apps)
+- [CLI Apps](#%EF%B8%8F-9-cli-apps)
 - [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🚢 Flagship Libraries
 
@@ -30,7 +30,7 @@ We coded up and maintain a few npm packages:
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🎯 12 Range Libraries
 
@@ -75,7 +75,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 | [`ranges-process-outside`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) | Iterate through string and optionally a given ranges as if they were one | [![ranges-process-outside on npm](https://img.shields.io/npm/v/ranges-process-outside.svg?style=flat-square)](https://www.npmjs.com/package/ranges-process-outside) | [packages/ranges-process-outside](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) |
 | [`ranges-regex`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) | Perform a regex search on string and get a ranges array of findings (or null) | [![ranges-regex on npm](https://img.shields.io/npm/v/ranges-regex.svg?style=flat-square)](https://www.npmjs.com/package/ranges-regex) | [packages/ranges-regex](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) |
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🎻 27 String Processing Libraries
 
@@ -111,7 +111,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-uglify`](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) | Uglify — generate unique short names for sets of strings | [![string-uglify on npm](https://img.shields.io/npm/v/string-uglify.svg?style=flat-square)](https://www.npmjs.com/package/string-uglify) | [packages/string-uglify](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) |
 | [`string-unfancy`](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) | Replace all fancy dashes, quotes etc with their simpler equivalents | [![string-unfancy on npm](https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square)](https://www.npmjs.com/package/string-unfancy) | [packages/string-unfancy](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) |
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🔮 20 Object Processing Libraries
 
@@ -142,9 +142,9 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) |
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
-## ✂️ 8 CLI Apps
+## ✂️ 9 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -159,11 +159,12 @@ You use them in the Terminal (command line), for example:
 | [`chlu-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu-cli on npm](https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square)](https://www.npmjs.com/package/chlu-cli) | [packages/chlu-cli](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) |
 | [`csv-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) |
 | [`email-all-chars-within-ascii-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/) | Command line app to scan email templates, are all their characters within ASCII range | [![email-all-chars-within-ascii-cli on npm](https://img.shields.io/npm/v/email-all-chars-within-ascii-cli.svg?style=flat-square)](https://www.npmjs.com/package/email-all-chars-within-ascii-cli) | [packages/email-all-chars-within-ascii-cli](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/) |
+| [`generate-atomic-css-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli/) | Generates and updates all HTML templates' atomic CSS | [![generate-atomic-css-cli on npm](https://img.shields.io/npm/v/generate-atomic-css-cli.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css-cli) | [packages/generate-atomic-css-cli](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli/) |
 | [`js-row-num-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) | Update all row numbers in all console.logs in JS code | [![js-row-num-cli on npm](https://img.shields.io/npm/v/js-row-num-cli.svg?style=flat-square)](https://www.npmjs.com/package/js-row-num-cli) | [packages/js-row-num-cli](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) |
 | [`json-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, retains package.json special key order | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) |
 | [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🛠️ 22 Miscellaneous Libraries
 
@@ -192,7 +193,7 @@ You use them in the Terminal (command line), for example:
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |
 | [`util-nonempty`](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) |
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 🤝 Contributing
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here>).
@@ -204,7 +205,7 @@ In monorepo, npm libraries are located in `packages/` folder. Inside, the source
 
 The npm script within each package's `package.json` "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
 
 ## 💼 Licence
 
@@ -212,4 +213,4 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-**[⬆ back to top](#-codsen-)**
+**[⬆ back to top](#codsen)**
