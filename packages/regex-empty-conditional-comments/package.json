@@ -1,6 +1,6 @@
 {
   "name": "regex-empty-conditional-comments",
-  "version": "1.8.29",
+  "version": "1.8.30",
   "description": "Regular expression for matching HTML empty conditional comments",
   "license": "MIT",
   "engines": {
@@ -168,7 +168,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.0",
+    "ava": "^2.2.1",
     "babel-plugin-istanbul": "^5.1.4",
     "benchmark": "^2.1.4",
     "eslint": "^6.0.1",
@@ -178,8 +178,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.30",
-    "lect": "^0.7.7",
+    "js-row-num-cli": "^1.5.31",
+    "lect": "^0.8.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",
