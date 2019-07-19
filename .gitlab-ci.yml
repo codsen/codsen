@@ -42,9 +42,9 @@ deploy:
     - npm run pub:vers
     - echo '█████████████████████████████ 6 █████████████████████████████'
     - git status
+    - git rm -f packages/ava/CHANGELOG.md
     - git add packages
     - git add readme.md
-    - git rm packages/ava/CHANGELOG.md
     - echo '█████████████████████████████ 7 █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
