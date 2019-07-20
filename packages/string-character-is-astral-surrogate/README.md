@@ -60,6 +60,7 @@ I need to be able to identify **surrogates separately** to be able to cover case
 In itself, this library is very simple, two functions:
 
 **isHighSurrogate (char)**
+
 **isLowSurrogate (char)**
 
 It reads the character at first index (the first Unicode code point) and evaluates its `charcode`. That's it. If there are more characters they are ignored.
