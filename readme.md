@@ -23,7 +23,7 @@ We coded up and maintain a few npm packages:
 
 ## 🚢 Flagship Libraries
 
-| Library's name | Purpose |Web app | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | Web app | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ------- | ----------- | ----------------------- |
 | [`email-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) | Remove unused CSS from email templates | [emailcomb.com](https://emailcomb.com) | [![email-comb on npm](https://img.shields.io/npm/v/email-comb.svg?style=flat-square)](https://www.npmjs.com/package/email-comb) | [packages/email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) |
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |

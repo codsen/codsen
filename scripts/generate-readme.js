@@ -74,7 +74,7 @@ function row(lib, webApp) {
 
 function topRow(webapp) {
   return `| Library's name | Purpose |${
-    webapp ? "Web app |" : ""
+    webapp ? " Web app |" : ""
   } the_link_to_npm | Source code in monorepo |
 | -------------- | ------- |${
     webapp ? " ------- |" : ""
@@ -378,6 +378,7 @@ fs.writeFile(
     .replace("like \\_.includes", "like `_.includes`")
     .replace("like \\_.pullAll", "like `_.pullAll`")
     .replace("tried to use this package", "tried to use a package")
+    .replace("the_link_to_npm", "The&nbsp;link&nbsp;to npm")
     .replace(
       "The npm script",
       "The npm script within each package's `package.json`"
