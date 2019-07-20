@@ -11,6 +11,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+Other siblings of this package:
+
+- CLI for it: `chlu-cli` [on npm](https://www.npmjs.com/package/chlu-cli), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)
+
 ## Table of Contents
 
 - [Install](#install)

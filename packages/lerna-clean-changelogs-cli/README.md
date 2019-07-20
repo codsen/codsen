@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API of this package ("string-in, string-out" function): [lerna-clean-changelogs](https://www.npmjs.com/package/lerna-clean-changelogs)
+- API for it: `lerna-clean-changelogs` [on npm](https://www.npmjs.com/package/lerna-clean-changelogs), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs)
 
 ## Table of Contents
 

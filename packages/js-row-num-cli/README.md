@@ -15,7 +15,9 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-<div align="center"><p>API: <a href="https://www.npmjs.com/package/js-row-num" target="_blank">js-row-num</a></p></div>
+Other siblings of this package:
+
+- API for it: `js-row-num` [on npm](https://www.npmjs.com/package/js-row-num), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num)
 
 ## Table of Contents
 

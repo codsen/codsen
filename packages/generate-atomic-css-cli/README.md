@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API for it: [generate-atomic-css on npm](https://www.npmjs.com/package/generate-atomic-css), [generate-atomic-css on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css)
+- API for it: `generate-atomic-css` [on npm](https://www.npmjs.com/package/generate-atomic-css), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css)
 
 ## Table of Contents
 

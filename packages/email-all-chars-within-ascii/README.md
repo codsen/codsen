@@ -13,7 +13,7 @@
 
 Other siblings of this package:
 
-- CLI, command-line version: [email-all-chars-within-ascii-cli](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli)
+- CLI for it: `email-all-chars-within-ascii-cli` [on npm](https://www.npmjs.com/package/email-all-chars-within-ascii-cli), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli)
 
 ## Table of Contents
 

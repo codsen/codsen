@@ -11,6 +11,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+Other siblings of this package:
+
+- API for it: `chlu` [on npm](https://www.npmjs.com/package/chlu), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu)
+
 ## Table of Contents
 
 - [Install globally](#install-globally)

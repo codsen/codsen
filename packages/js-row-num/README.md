@@ -11,6 +11,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+Other siblings of this package:
+
+- CLI for it: `js-row-num-cli` [on npm](https://www.npmjs.com/package/js-row-num-cli), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli)
+
 ## Table of Contents
 
 - [Install](#install)

@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API for it: [csv-sort on npm](https://www.npmjs.com/package/csv-sort), [csv-sort on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort)
+- API for it: `csv-sort` [on npm](https://www.npmjs.com/package/csv-sort), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort)
 
 ## Table of Contents
 

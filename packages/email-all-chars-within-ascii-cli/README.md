@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API for it: [email-all-chars-within-ascii](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii)
+- API for it: `email-all-chars-within-ascii` [on npm](https://www.npmjs.com/package/email-all-chars-within-ascii), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii)
 
 ## TLDR; Usage
 

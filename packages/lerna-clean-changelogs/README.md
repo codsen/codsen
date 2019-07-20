@@ -13,7 +13,7 @@
 
 Other siblings of this package:
 
-- CLI (command-line app) version: [lerna-clean-changelogs-cli](https://www.npmjs.com/package/lerna-clean-changelogs-cli)
+- CLI for it: `lerna-clean-changelogs-cli` [on npm](https://www.npmjs.com/package/lerna-clean-changelogs-cli), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli)
 
 ## Table of Contents
 
