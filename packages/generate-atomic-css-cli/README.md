@@ -37,8 +37,11 @@ gac "modules/css/*/*.scss"
 
 ## How it works
 
-You place secret placeholders and program wipes everything between content head and tail markers, while taking instructions from config.
-Three dollar signs `$$$` get expanded into list, default being 0 - 500 but you can customise with pipes:
+You place special placeholders for config ("config heads" and "config tails"), then also placeholders for content ("content heads" and "content tails").
+
+Config will be read from between config heads and tails, expanded into multiple lines as you requested and result will be placed instead of existing content between content heads and content tails.
+
+In config, `$$$` means dynamic value, default 0-500 but you can customise the range appending pipes at the end of the line:
 
 ```
 a
@@ -82,9 +85,11 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 z
 ```
 
-As you see, pipes `|` mean from-to inclusive values, one value means "upto", two values mean "from" and "upto".
+As you see, pipes are inclusive values, one value means "upto", two values mean "from" and "upto".
 
 You can use this CLI to generate/update any file: HTML, CSS or SCSS or whatever. Just put the placeholders and job will be done.
+
+Usually config is within CSS comments block.
 
 ⚡️⚡️⚡️⚡️🔥🔥🔥🍻🍻🍻🍻🤩🤩💪🏼💪🏼💪🏼💪🏼💪🏼👊🏼👊🏼👊🏼👊🏼💥💥💥💥⚡️⚡️🌟🌟🌟🌟⚡️🍺🍺💪🏼💪🏼
 
