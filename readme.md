@@ -60,7 +60,7 @@ Performing string processing only once is better for both **performance** reason
 
 If you think, strings are immutable in JavaScript — each change of a string means rewriting it in a computer memory. Let's say you want to add a letter and delete the same letter in a string which consists of a thousand characters. Both actions cancel each other out. However, if you do the string edits sequentially, you write a thousand characters to memory two times, after every amend. On the other hand, if you use _ranges_ approach, you'd only [create a new record](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) in the computer memory, housing a couple of arrays, each consisting of couple index numbers. When you [process the ranges](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply), they would cancel each other out, and we would not write anything to the memory at all. Now, if you scale this — longer strings, more amends, and done many times — you'll soon feel the difference in performance.
 
-| Library's name | Purpose | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`ranges-push`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) | Manage the array of ranges referencing the index ranges within the string | [![ranges-push on npm](https://img.shields.io/npm/v/ranges-push.svg?style=flat-square)](https://www.npmjs.com/package/ranges-push) | [packages/ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) |
 | [`ranges-apply`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) | Take an array of string slice ranges, delete/replace the string according to them | [![ranges-apply on npm](https://img.shields.io/npm/v/ranges-apply.svg?style=flat-square)](https://www.npmjs.com/package/ranges-apply) | [packages/ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) |
@@ -81,7 +81,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
-| Library's name | Purpose | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
 | [`easy-replace`](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) | Replace strings with optional lookarounds, but without regexes | [![easy-replace on npm](https://img.shields.io/npm/v/easy-replace.svg?style=flat-square)](https://www.npmjs.com/package/easy-replace) | [packages/easy-replace](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) |
@@ -119,7 +119,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 
 "`ast-`" in the library's name below just emphasises that it really works on nested objects (so-called Abstract Syntax Trees that come from parsed things).
 
-| Library's name | Purpose | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`ast-monkey`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/) | Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects) | [![ast-monkey on npm](https://img.shields.io/npm/v/ast-monkey.svg?style=flat-square)](https://www.npmjs.com/package/ast-monkey) | [packages/ast-monkey](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/) |
 | [`ast-monkey-traverse`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/) | Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects) | [![ast-monkey-traverse on npm](https://img.shields.io/npm/v/ast-monkey-traverse.svg?style=flat-square)](https://www.npmjs.com/package/ast-monkey-traverse) | [packages/ast-monkey-traverse](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/) |
@@ -152,7 +152,7 @@ You use them in the Terminal (command line), for example:
 
 ![CLI app](packages/email-all-chars-within-ascii-cli/media/mov2.gif)
 
-| Library's name | Purpose | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`lect`](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) | Maintenance automation for Readme's and, optionally, other project files | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) |
 | [`update-versions`](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) |
@@ -168,7 +168,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ 22 Miscellaneous Libraries
 
-| Library's name | Purpose | the_link_to_npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`all-named-html-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) | Array of all named HTML entities | [![all-named-html-entities on npm](https://img.shields.io/npm/v/all-named-html-entities.svg?style=flat-square)](https://www.npmjs.com/package/all-named-html-entities) | [packages/all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) |
 | [`array-group-str-omit-num-char`](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) | Groups array of strings by omitting number characters | [![array-group-str-omit-num-char on npm](https://img.shields.io/npm/v/array-group-str-omit-num-char.svg?style=flat-square)](https://www.npmjs.com/package/array-group-str-omit-num-char) | [packages/array-group-str-omit-num-char](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) |
