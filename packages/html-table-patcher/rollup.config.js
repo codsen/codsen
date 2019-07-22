@@ -31,8 +31,8 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        globals(),
         builtins(),
+        globals(),
         resolve(),
         json(),
         commonjs(),
@@ -59,6 +59,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
+        globals(),
         json(),
         babel(),
         cleanup(),
@@ -83,6 +84,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
+        globals(),
         json(),
         cleanup(),
         license({
