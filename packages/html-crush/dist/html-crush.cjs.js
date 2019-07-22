@@ -432,7 +432,9 @@ function crush(str, originalOpts) {
                 _whatToAdd = "\n";
               }
               if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
-                finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+                if (!(str[stageFrom - 1] === "}" && str[stageTo] === "{")) {
+                  finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+                }
               } else {
                 countCharactersPerLine -= lastLinebreak;
               }

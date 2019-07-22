@@ -1523,6 +1523,16 @@ test(`02.19 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking to the right of
   );
 });
 
+test(`02.20 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - doesn't delete whitespace with linebreaks between curlies`, t => {
+  const source = "{% a %}\n\n\n{% a %}";
+  t.is(m(source, { removeLineBreaks: true }).result, source, "02.20.01");
+  t.is(
+    m(source, { removeLineBreaks: false }).result,
+    "{% a %}\n{% a %}",
+    "02.20.02"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 

@@ -728,7 +728,9 @@ function crush(str, originalOpts) {
                   opts.lineLengthLimit ||
                 !(whatToAdd === " " && stageTo === stageFrom + 1)
               ) {
-                finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+                if (!(str[stageFrom - 1] === "}" && str[stageTo] === "{")) {
+                  finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+                }
               } else {
                 countCharactersPerLine -= lastLinebreak;
               }
