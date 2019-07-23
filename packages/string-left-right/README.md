@@ -50,9 +50,15 @@ const { left, right } = require("string-left-right");
 // let's get the closest non-whitespace letter to the left of "d"
 const str = "abc   def";
 const res = left(str, 6); // 6th index marks letter "d"
-console.log(`next non-whitespace character to the left of ${str[6]} (index 6) is ${str[left(str, 6)]} (index ${left(str, 6)})`);
+console.log(
+  `next non-whitespace character to the left of ${str[6]} (index 6) is ${
+    str[left(str, 6)]
+  } (index ${left(str, 6)})`
+);
 // => next non-whitespace character to the left of d (index 6) is c (index 2)
 ```
+
+**[⬆ back to top](#)**
 
 ## API
 
@@ -63,6 +69,8 @@ Both exported functions have the same API. When you require/import this package,
 **right(str, \[, idx])**
 
 On both, the first input argument is a string, the optional second (marked by brackets above) is an offset index.
+
+**[⬆ back to top](#)**
 
 ### API - `left()` and `right()` Input
 

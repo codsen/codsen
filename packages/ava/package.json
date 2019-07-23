@@ -87,7 +87,7 @@
     "is-observable": "^2.0.0",
     "is-plain-object": "^3.0.0",
     "is-promise": "^2.1.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "loud-rejection": "^2.1.0",
     "make-dir": "^3.0.0",
     "matcher": "^2.0.0",
