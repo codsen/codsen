@@ -208,7 +208,7 @@ function extractConfig(str) {
     for (let i = configLines.length; i--; ) {
       if (
         !configLines[i].includes("$$$") &&
-        !configLines[i].includes("{") &&
+        !configLines[i].includes("}") &&
         !configLines[i].includes(":")
       ) {
         gatheredLinesBelowLastConfigLine.unshift(configLines.pop());

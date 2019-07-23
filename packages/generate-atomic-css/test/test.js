@@ -2674,6 +2674,72 @@ replace me
   });
 });
 
+test(`08.06 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - two levels of curlies wrapping the source`, t => {
+  const source = `@media screen and (max-width: 650px) {
+  .w$$$p { width: $$$% !important }|0|2
+}`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: true,
+      includeHeadsAndTails: true
+    }).result,
+    `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+@media screen and (max-width: 650px) {
+  .w$$$p { width: $$$% !important }|0|2
+}
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+@media screen and (max-width: 650px) {
+  .w0p { width:  0 !important }
+  .w1p { width: 1% !important }
+  .w2p { width: 2% !important }
+}
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+`,
+    "08.06"
+  );
+});
+
+test(`08.07 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - only content heads/tails`, t => {
+  const source = `@media screen and (max-width: 650px) {
+  .w$$$p { width: $$$% !important }|0|2
+}`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: true
+    }).result,
+    `/* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
+@media screen and (max-width: 650px) {
+  .w0p { width:  0 !important }
+  .w1p { width: 1% !important }
+  .w2p { width: 2% !important }
+}
+/* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
+`,
+    "08.07"
+  );
+});
+
+test(`08.08 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - no heads/tails`, t => {
+  const source = `@media screen and (max-width: 650px) {
+  .w$$$p { width: $$$% !important }|0|2
+}`;
+  t.is(
+    genAtomic(source, {
+      includeConfig: false,
+      includeHeadsAndTails: false
+    }).result,
+    `@media screen and (max-width: 650px) {
+  .w0p { width:  0 !important }
+  .w1p { width: 1% !important }
+  .w2p { width: 2% !important }
+}
+`,
+    "08.08"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 98. API bits - extractFromToSource
 // -----------------------------------------------------------------------------

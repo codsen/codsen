@@ -203,7 +203,7 @@ function extractConfig(str) {
       return true;
     });
     for (var i = configLines.length; i--;) {
-      if (!configLines[i].includes("$$$") && !configLines[i].includes("{") && !configLines[i].includes(":")) {
+      if (!configLines[i].includes("$$$") && !configLines[i].includes("}") && !configLines[i].includes(":")) {
         gatheredLinesBelowLastConfigLine.unshift(configLines.pop());
       } else {
         break;
