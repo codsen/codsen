@@ -395,6 +395,10 @@ function step13() {
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
         : ""
+    }${
+      pack.devDependencies["rollup-plugin-node-globals"]
+        ? ",\n        globals()"
+        : ""
     },
         resolve()${
           pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
@@ -421,6 +425,10 @@ function step13() {
         })${rollupPluginsStrToInsert}${
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
+        : ""
+    }${
+      pack.devDependencies["rollup-plugin-node-globals"]
+        ? ",\n        globals()"
         : ""
     },
         resolve()${
@@ -461,8 +469,12 @@ function step13() {
             ? ",\n        builtins()"
             : ""
         }${
-      pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
-    }${
+      isObj(pack) &&
+      pack.devDependencies &&
+      pack.devDependencies["rollup-plugin-node-globals"]
+        ? ",\n        globals()"
+        : ""
+    }${pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""}${
       rollupPluginsStrToInsert ? `,\n        ${rollupPluginsStrToInsert}` : ""
     },
         babel(),
@@ -497,8 +509,12 @@ function step13() {
             ? ",\n        builtins()"
             : ""
         }${
-      pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
-    }${rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""},
+      pack.devDependencies["rollup-plugin-node-globals"]
+        ? ",\n        globals()"
+        : ""
+    }${pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""}${
+      rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""
+    },
         cleanup(),
         license({
           banner: licensePiece
@@ -512,6 +528,10 @@ function step13() {
   }${
     pack.devDependencies["rollup-plugin-node-builtins"]
       ? `import builtins from "rollup-plugin-node-builtins";\n`
+      : ""
+  }${
+    pack.devDependencies["rollup-plugin-node-globals"]
+      ? `import globals from "rollup-plugin-node-globals";\n`
       : ""
   }import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
