@@ -131,7 +131,7 @@
     "signal-exit": "^3.0.2",
     "sinon": "^7.3.2",
     "source-map-fixtures": "^2.1.0",
-    "tap": "^14.4.2",
+    "tap": "^14.4.3",
     "temp-write": "^4.0.0",
     "touch": "^3.1.0",
     "zen-observable": "^0.8.14"
