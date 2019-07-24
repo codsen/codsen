@@ -29,12 +29,19 @@ npm i emlint
 ```
 
 ```js
-const { emlint, version } = require("emlint");
-// or:
-import { emlint, version } from "emlint";
+// 1. consume via a require():
+const { lint, version } = require("emlint");
+//
+// 2. or as an ES Module:
+import { lint, version } from "emlint";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/emlint/dist/emlint.umd.js"></script>;
+// then, you get a global variable "emlint" which you consume like this:
+const { lint, version } = emlint;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                 | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ------ |

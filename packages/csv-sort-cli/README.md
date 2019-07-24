@@ -15,20 +15,38 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install globally, call `csvsort` on a file](#install-globally-call-csvsort-on-a-file)
-- [or, omit the file's name, it will let you pick a CSV:](#or-omit-the-files-name-it-will-let-you-pick-a-csv)
+- [Install](#install)
+- [Call on a file](#call-on-a-file)
+- [Or omit the file's name](#or-omit-the-files-name)
 - [What it does exactly](#what-it-does-exactly)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally, call `csvsort` on a file
+## Install
 
 ```bash
-$ npm i -g csv-sort-cli
+npm i -g csv-sort-cli
 ```
 
-- then, either call `csvsort` (or `sortcsv`) appending your file name (with or without `-o`/`--overwrite` flag):
+```js
+// 1. consume via a require():
+const  = require("csv-sort-cli");
+//
+// 2. or as an ES Module:
+import  from "csv-sort-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/csv-sort-cli/dist/csv-sort-cli.umd.js"></script>
+// then, you get a global variable "csvSortCli" which you consume like this:
+const  = csvSortCli;
+```
+
+**[⬆ back to top](#)**
+
+## Call on a file
+
+Call `csvsort` (or `sortcsv`) appending your file name (with or without `-o`/`--overwrite` flag):
 
 ```bash
 $ csvsort YOURFILE.csv
@@ -47,7 +65,9 @@ $ csvsort --help
 
 **[⬆ back to top](#)**
 
-## or, omit the file's name, it will let you pick a CSV:
+## Or omit the file's name
+
+It will let you pick a CSV:
 
 ```bash
 $ csvsort # omit the file's name, but you can include -o/--overwrite flag

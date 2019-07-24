@@ -22,6 +22,7 @@
     "build:just": "lerna run build --bail",
     "cm": "git-cz -n",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
+    "format": "lerna run format",
     "lect": "make run-lect",
     "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "publish": "FORCE_COLOR=1 lerna version --conventional-commits --yes && lernacleanchangelog '**' && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",

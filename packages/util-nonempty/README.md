@@ -25,17 +25,22 @@
 npm i util-nonempty
 ```
 
-```js
-// consume as a CommonJS require:
-const nonEmpty = require("util-nonempty");
-// or as ES module:
-import nonEmpty from "util-nonempty";
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`nonEmpty`" you can name the consumed function however you want.
 
-// then call as a function, pass it anything:
-console.log(nonEmpty("a"));
+```js
+// 1. consume via a require():
+const nonEmpty = require("util-nonempty");
+//
+// 2. or as an ES Module:
+import nonEmpty from "util-nonempty";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/util-nonempty/dist/util-nonempty.umd.js"></script>;
+// then, you get a global variable "utilNonempty" which you consume like this:
+const nonEmpty = utilNonempty;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ------ |

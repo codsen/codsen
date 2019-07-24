@@ -25,14 +25,22 @@
 npm i string-split-by-whitespace
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`splitByW`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
-const splitByWhitespace = require("string-split-by-whitespace");
-// or as an ES Module:
-import splitByWhitespace from "string-split-by-whitespace";
+// 1. consume via a require():
+const splitByW = require("string-split-by-whitespace");
+//
+// 2. or as an ES Module:
+import splitByW from "string-split-by-whitespace";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-split-by-whitespace/dist/string-split-by-whitespace.umd.js"></script>;
+// then, you get a global variable "stringSplitByWhitespace" which you consume like this:
+const splitByW = stringSplitByWhitespace;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
@@ -45,13 +53,13 @@ Here's what you'll get:
 ## Idea
 
 ```js
-const splitByWhitespace = require("string-split-by-whitespace");
+const splitByW = require("string-split-by-whitespace");
 
-const res1 = splitByWhitespace("aaa bbb");
+const res1 = splitByW("aaa bbb");
 console.log("res1 = " + JSON.stringify(res1, null, 4));
 // => ['aaa', 'bbb']
 
-const res2 = splitByWhitespace("\n\n\n\n  aaa \t\t\t bbb  \n\n\n");
+const res2 = splitByW("\n\n\n\n  aaa \t\t\t bbb  \n\n\n");
 console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => ['aaa', 'bbb']
 ```
@@ -61,7 +69,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 ## API
 
 ```js
-splitByWhitespace(str, [opts]);
+splitByW(str, [opts]);
 ```
 
 ### API - Input

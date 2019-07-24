@@ -28,10 +28,8 @@
 npm i ast-monkey
 ```
 
-Then, consume either in CommonJS format (`require`) or as an ES Module (`import`):
-
 ```js
-// as CommonJS require:
+// 1. consume via a require():
 const {
   find,
   get,
@@ -42,8 +40,8 @@ const {
   arrayFirstOnly,
   traverse
 } = require("ast-monkey");
-
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import {
   find,
   get,
@@ -54,9 +52,14 @@ import {
   arrayFirstOnly,
   traverse
 } from "ast-monkey";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ast-monkey/dist/ast-monkey.umd.js"></script>;
+// then, you get a global variable "astMonkey" which you consume like this:
+const { find, get, set, drop, info, del, arrayFirstOnly, traverse } = astMonkey;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |

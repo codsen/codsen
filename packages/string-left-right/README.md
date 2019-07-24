@@ -27,13 +27,40 @@ npm i string-left-right
 ```
 
 ```js
-// consume via a CommonJS require:
-const { left, right } = require("string-left-right");
-// or as an ES Module:
-import { left, right } from "string-left-right";
+// 1. consume via a require():
+const {
+  left,
+  right,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight
+} = require("string-left-right");
+//
+// 2. or as an ES Module:
+import {
+  left,
+  right,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight
+} from "string-left-right";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-left-right/dist/string-left-right.umd.js"></script>;
+// then, you get a global variable "stringLeftRight" which you consume like this:
+const {
+  left,
+  right,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight
+} = stringLeftRight;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |

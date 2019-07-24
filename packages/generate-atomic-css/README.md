@@ -36,23 +36,34 @@ npm i generate-atomic-css
 ```
 
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const {
   genAtomic,
   version,
   headsAndTails,
   extractFromToSource
 } = require("generate-atomic-css");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import {
   genAtomic,
   version,
   headsAndTails,
   extractFromToSource
 } from "generate-atomic-css";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/generate-atomic-css/dist/generate-atomic-css.umd.js"></script>;
+// then, you get a global variable "generateAtomicCss" which you consume like this:
+const {
+  genAtomic,
+  version,
+  headsAndTails,
+  extractFromToSource
+} = generateAtomicCss;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |

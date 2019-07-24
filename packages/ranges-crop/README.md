@@ -17,14 +17,22 @@
 npm i ranges-crop
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rangesCrop`" you can name the consumed function however you want.
+
 ```js
-// consume as CommonJS require:
+// 1. consume via a require():
 const rangesCrop = require("ranges-crop");
-// or as a native ES module:
+//
+// 2. or as an ES Module:
 import rangesCrop from "ranges-crop";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ranges-crop/dist/ranges-crop.umd.js"></script>;
+// then, you get a global variable "rangesCrop" which you consume like this:
+const rangesCrop = rangesCrop;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |

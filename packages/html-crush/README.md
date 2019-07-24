@@ -33,17 +33,20 @@
 npm i html-crush
 ```
 
-then,
-
 ```js
-// import using CommonJS require():
+// 1. consume via a require():
 const { crush, defaults, version } = require("html-crush");
-
-// or import as an ES Module, using "import":
+//
+// 2. or as an ES Module:
 import { crush, defaults, version } from "html-crush";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js"></script>;
+// then, you get a global variable "htmlCrush" which you consume like this:
+const { crush, defaults, version } = htmlCrush;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |

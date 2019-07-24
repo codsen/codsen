@@ -66,7 +66,22 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 npm i string-collapse-white-space
 ```
 
-Here's what you'll get:
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`collapse`" you can name the consumed function however you want.
+
+```js
+// 1. consume via a require():
+const collapse = require("string-collapse-white-space");
+//
+// 2. or as an ES Module:
+import collapse from "string-collapse-white-space";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-collapse-white-space/dist/string-collapse-white-space.umd.js"></script>;
+// then, you get a global variable "stringCollapseWhiteSpace" which you consume like this:
+const collapse = stringCollapseWhiteSpace;
+```
+
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ----- |

@@ -27,14 +27,22 @@
 npm i object-flatten-referencing
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`ofr`" you can name the consumed function however you want.
+
 ```js
-// consume via CommonJS require():
+// 1. consume via a require():
 const ofr = require("object-flatten-referencing");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import ofr from "object-flatten-referencing";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/object-flatten-referencing/dist/object-flatten-referencing.umd.js"></script>;
+// then, you get a global variable "objectFlattenReferencing" which you consume like this:
+const ofr = objectFlattenReferencing;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |

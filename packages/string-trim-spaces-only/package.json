@@ -146,6 +146,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "trimSpaces",
     "various": {
       "back_to_top": {
         "enabled": true,

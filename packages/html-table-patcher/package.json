@@ -150,6 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ patcher, defaults, version }",
     "various": {
       "devDependencies": [
         "html-crush",

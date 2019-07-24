@@ -13,21 +13,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i string-remove-thousand-separators
 ```
 
-```js
-// consume as a CommonJS require:
-const remSep = require("string-remove-thousand-separators");
-// or as an ES Module:
-import remSep from "string-remove-thousand-separators";
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`remSep`" you can name the consumed function however you want.
 
-// feed a numeric string to it:
-let res = remSep("100,000.01"); // => 100000.01
+```js
+// 1. consume via a require():
+const remSep = require("string-remove-thousand-separators");
+//
+// 2. or as an ES Module:
+import remSep from "string-remove-thousand-separators";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-remove-thousand-separators/dist/string-remove-thousand-separators.umd.js"></script>;
+// then, you get a global variable "stringRemoveThousandSeparators" which you consume like this:
+const remSep = stringRemoveThousandSeparators;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------------- | ----- |
@@ -37,9 +42,19 @@ Here's what you'll get:
 
 **[⬆ back to top](#)**
 
+## Use it
+
+```js
+const remSep = require("string-remove-thousand-separators");
+let res = remSep("100,000.01");
+console.log(res);
+// => 100000.01
+```
+
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [Purpose](#purpose)
 - [Examples](#examples)
 - [API](#api)

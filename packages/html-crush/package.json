@@ -156,6 +156,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ crush, defaults, version }",
     "various": {
       "back_to_top": {
         "enabled": true,

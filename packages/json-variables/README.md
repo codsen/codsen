@@ -26,14 +26,22 @@
 npm i json-variables
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`jsonVariables`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require():
+// 1. consume via a require():
 const jsonVariables = require("json-variables");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import jsonVariables from "json-variables";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js"></script>;
+// then, you get a global variable "jsonVariables" which you consume like this:
+const jsonVariables = jsonVariables;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |

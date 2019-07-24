@@ -148,6 +148,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "objectNoNewKeys",
     "various": {
       "back_to_top": {
         "enabled": true,

@@ -150,6 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "splitByW",
     "various": {
       "back_to_top": {
         "enabled": true,

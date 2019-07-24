@@ -22,18 +22,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i object-all-values-equal-to
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`allValuesEqualToWrapper`" you can name the consumed function however you want.
+
 ```js
-// consume as a CommonJS require:
-const allValuesEqualTo = require("object-all-values-equal-to");
-// or as an ES Module:
-import allValuesEqualTo from "object-all-values-equal-to";
+// 1. consume via a require():
+const allValuesEqualToWrapper = require("object-all-values-equal-to");
+//
+// 2. or as an ES Module:
+import allValuesEqualToWrapper from "object-all-values-equal-to";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/object-all-values-equal-to/dist/object-all-values-equal-to.umd.js"></script>;
+// then, you get a global variable "objectAllValuesEqualTo" which you consume like this:
+const allValuesEqualToWrapper = objectAllValuesEqualTo;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |

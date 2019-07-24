@@ -12,17 +12,33 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [What it does](#what-it-does)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
 ## Install
 
-Install globally because this is a CLI app:
-
 ```bash
 npm i -g email-homey
 ```
+
+```js
+// 1. consume via a require():
+const  = require("email-homey");
+//
+// 2. or as an ES Module:
+import  from "email-homey";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/email-homey/dist/email-homey.umd.js"></script>
+// then, you get a global variable "emailHomey" which you consume like this:
+const  = emailHomey;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
 
 Once installed, call it in the root of your templates projects:
 

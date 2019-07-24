@@ -25,16 +25,22 @@
 npm i ast-is-empty
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`isEmpty`" you can name the consumed function however you want.
+
 ```js
-// consume as CommonJS require:
+// 1. consume via a require():
 const isEmpty = require("ast-is-empty");
-// or as a ES Module:
+//
+// 2. or as an ES Module:
 import isEmpty from "ast-is-empty";
-// then, for example, feed a parsed HTML tree into it:
-console.log(isEmpty(htmlAstObj));
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ast-is-empty/dist/ast-is-empty.umd.js"></script>;
+// then, you get a global variable "astIsEmpty" which you consume like this:
+const isEmpty = astIsEmpty;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---- |
@@ -96,14 +102,15 @@ Functions are not considered to be empty and this library will return `null` if 
 
 ## API
 
-Anything-in, Boolean-out.
+Default function is exported.
+Its API is "Anything-in, Boolean-out".
 Also, when inappropriate things are given that don't belong to AST's, `null`-out.
 
 ```js
 isEmpty(
   input // AST tree, or object or array or whatever. Can be deeply-nested.
 );
-// => true||false
+// => true||false||null
 ```
 
 **[⬆ back to top](#)**

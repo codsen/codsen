@@ -25,8 +25,6 @@ _If you have any difficulties with the output of this plugin, please use the [em
 
 ## Install
 
-Install using npm:
-
 ```bash
 npm i gulp-email-remove-unused-css
 ```

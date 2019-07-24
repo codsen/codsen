@@ -31,7 +31,22 @@ Other siblings of this package:
 npm i csv-sort
 ```
 
-Here's what you'll get:
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`csvSort`" you can name the consumed function however you want.
+
+```js
+// 1. consume via a require():
+const csvSort = require("csv-sort");
+//
+// 2. or as an ES Module:
+import csvSort from "csv-sort";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/csv-sort/dist/csv-sort.umd.js"></script>;
+// then, you get a global variable "csvSort" which you consume like this:
+const csvSort = csvSort;
+```
+
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                   | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------- | ----- |

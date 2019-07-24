@@ -152,6 +152,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ lint, version }",
     "various": {
       "devDependencies": [
         "browser-sync",

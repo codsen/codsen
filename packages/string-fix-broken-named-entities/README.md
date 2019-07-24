@@ -33,14 +33,22 @@
 npm i string-fix-broken-named-entities
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`fixEnt`" you can name the consumed function however you want.
+
 ```js
-// consume via a require():
-const fix = require("string-fix-broken-named-entities");
-// or as a ES Module:
-import fix from "string-fix-broken-named-entities";
+// 1. consume via a require():
+const fixEnt = require("string-fix-broken-named-entities");
+//
+// 2. or as an ES Module:
+import fixEnt from "string-fix-broken-named-entities";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-fix-broken-named-entities/dist/string-fix-broken-named-entities.umd.js"></script>;
+// then, you get a global variable "stringFixBrokenNamedEntities" which you consume like this:
+const fixEnt = stringFixBrokenNamedEntities;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ------ |
@@ -89,13 +97,13 @@ Now, this library produces either ranges array or `null`. Latter is deliberate s
 import Ranges from "ranges-push"; // you get a JS class
 import rangesApply from "ranges-apply"; // you get a JS class
 let rangesToDelete = new Ranges(); // create a new container
-import fix from "string-fix-broken-named-entities"; // import this library :)
+import fixEnt from "string-fix-broken-named-entities"; // import this library :)
 
 // define some broken HTML:
 const brokenStr = "x &nbbbsp; y";
 
 // push output (if any) straight to our ranges container:
-rangesToDelete.push(fix(brokenStr));
+rangesToDelete.push(fixEnt(brokenStr));
 // PS. The .push() above is custom method, not a Array.push(). It's named the same way because it's familiar and acts the same way. There is array underneath the Class actually, its helper functions are doing all the cleaning/sorting when values are pushed into a real, internal array.
 
 // to retrieve the current state of ranges class, use .current() method:
@@ -187,8 +195,8 @@ The concept is, you pass a function in option object's key `cb`. That function w
 For example, to solve the example above, we would do:
 
 ```js
-const fix = require("string-fix-broken-named-entities");
-const res = fix("zzznbsp;zzznbsp;", {
+const fixEnt = require("string-fix-broken-named-entities");
+const res = fixEnt("zzznbsp;zzznbsp;", {
   cb: oodles => {
     // "oodles" or whatever you name it, is a plain object.
     // Grab any content from any of its keys, for example:
@@ -274,7 +282,7 @@ It's hard to show minimal worker application here but at least here's how the pi
 let count = 0;
 
 // call application as normal, pass opts.progressFn:
-const result = fix(
+const result = fixEnt(
   "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
   {
     progressFn: percentageDone => {

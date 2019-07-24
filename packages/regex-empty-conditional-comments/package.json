@@ -148,6 +148,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "emptyCondCommentRegex",
     "various": {
       "back_to_top": {
         "enabled": true,

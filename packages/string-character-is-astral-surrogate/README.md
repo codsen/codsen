@@ -27,19 +27,25 @@ npm i string-character-is-astral-surrogate
 ```
 
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const {
   isHighSurrogate,
   isLowSurrogate
 } = require("string-character-is-astral-surrogate");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import {
   isHighSurrogate,
   isLowSurrogate
 } from "string-character-is-astral-surrogate";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-character-is-astral-surrogate/dist/string-character-is-astral-surrogate.umd.js"></script>;
+// then, you get a global variable "stringCharacterIsAstralSurrogate" which you consume like this:
+const { isHighSurrogate, isLowSurrogate } = stringCharacterIsAstralSurrogate;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                               | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |

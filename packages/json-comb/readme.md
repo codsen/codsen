@@ -11,20 +11,38 @@
 
 ## Table of Contents
 
-- [Install globally, call anywhere](#install-globally-call-anywhere)
+- [Install](#install)
+- [Use it](#use-it)
 - [API - flags](#api---flags)
 - [Normalise](#normalise)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally, call anywhere
+## Install
 
 ```bash
 npm i -g json-comb
 ```
 
-- then, call `jsoncomb` in the terminal with list of a file or folder paths, using globs, for example:
+```js
+// 1. consume via a require():
+const  = require("json-comb");
+//
+// 2. or as an ES Module:
+import  from "json-comb";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/json-comb/dist/json-comb.umd.js"></script>
+// then, you get a global variable "jsonComb" which you consume like this:
+const  = jsonComb;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call `jsoncomb` in the terminal with list of a file or folder paths, using globs, for example:
 
 ```bash
 $ jsoncomb --normalise "index.json"

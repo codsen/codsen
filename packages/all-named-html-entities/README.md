@@ -27,13 +27,55 @@ npm i all-named-html-entities
 ```
 
 ```js
-// consume via a require():
-const { all, entStartsWith, entEndsWith } = require("all-named-html-entities");
-// or as a ES Module:
-import { all, entStartsWith, entEndsWith } from "all-named-html-entities";
+// 1. consume via a require():
+const {
+  allNamedEntities,
+  entStartsWith,
+  entEndsWith,
+  entStartsWithCaseInsensitive,
+  entEndsWithCaseInsensitive,
+  brokenNamedEntities,
+  decode,
+  minLength,
+  maxLength,
+  notEmailFriendly,
+  uncertain
+} = require("all-named-html-entities");
+//
+// 2. or as an ES Module:
+import {
+  allNamedEntities,
+  entStartsWith,
+  entEndsWith,
+  entStartsWithCaseInsensitive,
+  entEndsWithCaseInsensitive,
+  brokenNamedEntities,
+  decode,
+  minLength,
+  maxLength,
+  notEmailFriendly,
+  uncertain
+} from "all-named-html-entities";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/all-named-html-entities/dist/all-named-html-entities.umd.js"></script>;
+// then, you get a global variable "allNamedHtmlEntities" which you consume like this:
+const {
+  allNamedEntities,
+  entStartsWith,
+  entEndsWith,
+  entStartsWithCaseInsensitive,
+  entEndsWithCaseInsensitive,
+  brokenNamedEntities,
+  decode,
+  minLength,
+  maxLength,
+  notEmailFriendly,
+  uncertain
+} = allNamedHtmlEntities;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                  | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ------ |

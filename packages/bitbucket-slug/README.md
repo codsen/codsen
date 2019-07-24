@@ -27,19 +27,22 @@
 npm i bitbucket-slug
 ```
 
-then,
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`bSlug`" you can name the consumed function however you want.
 
 ```js
+// 1. consume via a require():
 const bSlug = require("bitbucket-slug");
-```
-
-or
-
-```js
+//
+// 2. or as an ES Module:
 import bSlug from "bitbucket-slug";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/bitbucket-slug/dist/bitbucket-slug.umd.js"></script>;
+// then, you get a global variable "bitbucketSlug" which you consume like this:
+const bSlug = bitbucketSlug;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |

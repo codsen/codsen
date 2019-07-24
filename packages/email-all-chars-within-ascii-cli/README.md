@@ -33,6 +33,7 @@ Call on multiple files all at once:
 
 - [TLDR; Usage](#tldr-usage)
 - [Install](#install)
+- [Use it](#use-it)
 - [Idea](#idea)
 - [Practical use](#practical-use)
 - [Contributing](#contributing)
@@ -44,11 +45,28 @@ Call on multiple files all at once:
 npm i -g email-all-chars-within-ascii-cli
 ```
 
-Then, call it by a name:
+```js
+// 1. consume via a require():
+const  = require("email-all-chars-within-ascii-cli");
+//
+// 2. or as an ES Module:
+import  from "email-all-chars-within-ascii-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/email-all-chars-within-ascii-cli/dist/email-all-chars-within-ascii-cli.umd.js"></script>
+// then, you get a global variable "emailAllCharsWithinAsciiCli" which you consume like this:
+const  = emailAllCharsWithinAsciiCli;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call it on a file:
 
 `withinascii YOURFILE.html` or
 
-`tinaturner YOURFILE.html`
+`tinaturner "templates/YOURFILE.html"`
 
 Whichever is easier for you to remember.
 

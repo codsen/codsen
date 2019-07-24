@@ -16,6 +16,7 @@ Other siblings of this package:
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [Purpose](#purpose)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
@@ -23,13 +24,28 @@ Other siblings of this package:
 
 ## Install
 
-This is a CLI application so install it globally:
-
 ```bash
 npm i -g lerna-clean-changelogs-cli
 ```
 
-then call it one of two ways:
+```js
+// 1. consume via a require():
+const  = require("lerna-clean-changelogs-cli");
+//
+// 2. or as an ES Module:
+import  from "lerna-clean-changelogs-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/lerna-clean-changelogs-cli/dist/lerna-clean-changelogs-cli.umd.js"></script>
+// then, you get a global variable "lernaCleanChangelogsCli" which you consume like this:
+const  = lernaCleanChangelogsCli;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call it one of two ways:
 
 ```bash
 $ lcc
@@ -37,8 +53,6 @@ $ lernacleanchangelog
 ```
 
 PS. That dollar sign above just means it's a terminal. Never type that dollar sign!
-
-**[⬆ back to top](#)**
 
 ## Purpose
 

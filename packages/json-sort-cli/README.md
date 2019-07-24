@@ -15,20 +15,38 @@
 
 ## Table of Contents
 
-- [Install globally, call anywhere](#install-globally-call-anywhere)
+- [Install](#install)
+- [Use it](#use-it)
 - [API - flags](#api---flags)
 - [What it does exactly](#what-it-does-exactly)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally, call anywhere
+## Install
 
 ```bash
 npm i -g json-sort-cli
 ```
 
-- then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
+```js
+// 1. consume via a require():
+const  = require("json-sort-cli");
+//
+// 2. or as an ES Module:
+import  from "json-sort-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/json-sort-cli/dist/json-sort-cli.umd.js"></script>
+// then, you get a global variable "jsonSortCli" which you consume like this:
+const  = jsonSortCli;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
 
 ```bash
 $ jsonsort file1.json "folder1/folder2/**/*.*" folder3 -s

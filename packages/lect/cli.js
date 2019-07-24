@@ -54,15 +54,12 @@ const arrayiffy = require("arrayiffy-if-string");
 const {
   resolveVars,
   removeRecognisedLintingBadges,
-  replaceNpmInstallRow,
-  replaceNpxRow,
   piecesHeadingIsNotAmongExcluded,
   extractStringUnderBadges,
-  replaceRollupInfoTableAndItsHeader,
   parseReadme,
-  // getUserInfo,
   standardiseBools,
-  contributionTypes
+  contributionTypes,
+  assembleRollupInfoTable
 } = require("./util");
 
 const DEBUG = 0;
@@ -1732,24 +1729,78 @@ function step6() {
           })
           .map(({ fullTitle, slug }) => `- [${fullTitle}](#${slug})`)
           .join("\n");
-      }
-
-      if (
+      } else if (
         addBackToTopLinks &&
         readmePiece.heading.startsWith("##") &&
         readmePiece.restofit.length > 200 &&
-        !readmePiece.heading.toLowerCase().includes("table of contents") &&
         readmePiece.restofit.trim().length > 10
       ) {
         btt = `\n\n${backToTop}`;
       }
+
+      // find out is default exported
+      let sourceContainsDefaultExport = false;
+      if (!objectPath.has(pack, "bin")) {
+        try {
+          sourceContainsDefaultExport = fs
+            .readFileSync("src/main.js", "utf8")
+            .includes("export default");
+        } catch (e) {
+          sourceContainsDefaultExport = false;
+        }
+      }
+
       let bodyContent = readmePiece.restofit;
       if (trim(readmePiece.heading, "# ").toLowerCase() === "install") {
-        const prep = replaceRollupInfoTableAndItsHeader(
-          replaceNpmInstallRow(replaceNpxRow(bodyContent, pack), pack),
-          pack,
-          lectrc
-        );
+        const consumedName = pack.lect.req
+          ? pack.lect.req
+          : sourceContainsDefaultExport
+          ? camelCase(pack.name)
+          : !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
+          ? process.exit(1)
+          : "";
+        const prep = `
+\`\`\`bash
+npm i ${objectPath.has(pack, "bin") ? "-g " : ""}${pack.name}
+\`\`\`
+${
+  !pack.name.startsWith("gulp-") && sourceContainsDefaultExport
+    ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" you can name the consumed function however you want.\n`
+    : ""
+}${
+          !pack.name.startsWith("gulp-")
+            ? `\n\`\`\`js
+// 1. consume via a require():
+const ${consumedName} = require("${pack.name}");
+//
+// 2. or as an ES Module:
+import ${consumedName} from "${pack.name}";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/${pack.name}/dist/${
+                pack.name
+              }.umd.js"></script>
+// then, you get a global variable "${camelCase(
+                pack.name
+              )}" which you consume like this:
+const ${consumedName} = ${camelCase(pack.name)};
+\`\`\``
+            : ""
+        }${
+          !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
+            ? `\n\nThis package has three builds in \`dist/\` folder:\n\n${assembleRollupInfoTable(
+                pack,
+                lectrc
+              )}`
+            : ""
+        }
+        `.trim();
+
+        // const prep = replaceRollupInfoTableAndItsHeader(
+        //   replaceNpmInstallRow(replaceNpxRow(bodyContent, pack), pack),
+        //   pack,
+        //   lectrc
+        // );
         bodyContent = `${prep}`;
       }
       content += `${readmePiece.heading.trim()}${

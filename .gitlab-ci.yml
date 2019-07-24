@@ -42,7 +42,7 @@ deploy:
     - npm run pub:vers
     - echo '█████████████████████████████ 6 █████████████████████████████'
     - git status
-    - git rm -f packages/ava/CHANGELOG.md
+    - git rm -f packages/ava/CHANGELOG.md || true
     - git add packages
     - git add readme.md
     - echo '█████████████████████████████ 7 █████████████████████████████'

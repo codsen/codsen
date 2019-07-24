@@ -151,6 +151,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "fixEnt",
     "various": {
       "back_to_top": {
         "enabled": true,

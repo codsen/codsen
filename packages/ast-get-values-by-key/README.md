@@ -22,11 +22,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i ast-get-values-by-key
 ```
 
-Here's what you'll get:
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`getAllValuesByKey`" you can name the consumed function however you want.
+
+```js
+// 1. consume via a require():
+const getAllValuesByKey = require("ast-get-values-by-key");
+//
+// 2. or as an ES Module:
+import getAllValuesByKey from "ast-get-values-by-key";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ast-get-values-by-key/dist/ast-get-values-by-key.umd.js"></script>;
+// then, you get a global variable "astGetValuesByKey" which you consume like this:
+const getAllValuesByKey = astGetValuesByKey;
+```
+
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |

@@ -170,6 +170,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "mergeAdvanced",
     "various": {
       "back_to_top": {
         "enabled": true,

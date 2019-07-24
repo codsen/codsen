@@ -147,6 +147,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "allValuesEqualToWrapper",
     "various": {
       "back_to_top": {
         "enabled": true,

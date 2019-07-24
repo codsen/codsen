@@ -14,6 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Example](#example)
 - [Purpose](#purpose)
 - [API](#api)
 - [Under the hood](#under-the-hood)
@@ -22,16 +23,39 @@
 
 ## Install
 
-```sh
+```bash
 npm i detect-is-it-html-or-xhtml
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`detectIsItHTMLOrXhtml`" you can name the consumed function however you want.
+
 ```js
-// consume using a CommonJS require:
+// 1. consume via a require():
+const detectIsItHTMLOrXhtml = require("detect-is-it-html-or-xhtml");
+//
+// 2. or as an ES Module:
+import detectIsItHTMLOrXhtml from "detect-is-it-html-or-xhtml";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/detect-is-it-html-or-xhtml/dist/detect-is-it-html-or-xhtml.umd.js"></script>;
+// then, you get a global variable "detectIsItHtmlOrXhtml" which you consume like this:
+const detectIsItHTMLOrXhtml = detectIsItHtmlOrXhtml;
+```
+
+This package has three builds in `dist/` folder:
+
+| Type                                                                                                    | Key in `package.json` | Path                                     | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detect-is-it-html-or-xhtml.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detect-is-it-html-or-xhtml.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detect-is-it-html-or-xhtml.umd.js` | 1 KB |
+
+**[⬆ back to top](#)**
+
+## Example
+
+```js
 const detect = require("detect-is-it-html-or-xhtml");
-// or as a native ES Module:
-import detect from "detect-is-it-html-or-xhtml";
-// then, pass it a string containing HTML:
 console.log(
   detect(
     '<img src="some.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>'
@@ -39,14 +63,6 @@ console.log(
 );
 // => 'xhtml'
 ```
-
-Here's what you'll get:
-
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detect-is-it-html-or-xhtml.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detect-is-it-html-or-xhtml.esm.js` | 2 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detect-is-it-html-or-xhtml.umd.js` | 1 KB |
 
 **[⬆ back to top](#)**
 

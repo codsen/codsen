@@ -17,14 +17,22 @@
 npm i ranges-iterate
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`iterate`" you can name the consumed function however you want.
+
 ```js
-// consume as CommonJS require:
-const rangesSort = require("ranges-iterate");
-// or as a native ES module:
-import rangesSort from "ranges-iterate";
+// 1. consume via a require():
+const iterate = require("ranges-iterate");
+//
+// 2. or as an ES Module:
+import iterate from "ranges-iterate";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ranges-iterate/dist/ranges-iterate.umd.js"></script>;
+// then, you get a global variable "rangesIterate" which you consume like this:
+const iterate = rangesIterate;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---- |
@@ -70,7 +78,18 @@ Practically, this means, you can stack the ranges and still avoid mutating input
 
 ## For example
 
-<!-- TODO -->
+```js
+iterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
+  // console.log(
+  //   `84t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+  // );
+  pinged += val;
+  t.is(i, index);
+  index++;
+});
+```
+
+**[⬆ back to top](#)**
 
 ## Contributing
 

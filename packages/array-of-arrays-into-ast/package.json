@@ -149,6 +149,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "generateAst",
     "various": {
       "back_to_top": {
         "enabled": true,

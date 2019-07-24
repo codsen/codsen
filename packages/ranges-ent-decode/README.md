@@ -13,18 +13,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i ranges-ent-decode
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`decode`" you can name the consumed function however you want.
+
 ```js
-// consume as a CommonJS require:
+// 1. consume via a require():
 const decode = require("ranges-ent-decode");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import decode from "ranges-ent-decode";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ranges-ent-decode/dist/ranges-ent-decode.umd.js"></script>;
+// then, you get a global variable "rangesEntDecode" which you consume like this:
+const decode = rangesEntDecode;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |

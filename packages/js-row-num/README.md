@@ -32,14 +32,22 @@ Other siblings of this package:
 npm i js-row-num
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`fixRowNums`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const fixRowNums = require("js-row-num");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import fixRowNums from "js-row-num";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/js-row-num/dist/js-row-num.umd.js"></script>;
+// then, you get a global variable "jsRowNum" which you consume like this:
+const fixRowNums = jsRowNum;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |

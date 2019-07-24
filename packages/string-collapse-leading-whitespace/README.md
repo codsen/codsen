@@ -28,14 +28,22 @@
 npm i string-collapse-leading-whitespace
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`collapseLeadingWhitespace`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const collapseLeadingWhitespace = require("string-collapse-leading-whitespace");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import collapseLeadingWhitespace from "string-collapse-leading-whitespace";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-collapse-leading-whitespace/dist/string-collapse-leading-whitespace.umd.js"></script>;
+// then, you get a global variable "stringCollapseLeadingWhitespace" which you consume like this:
+const collapseLeadingWhitespace = stringCollapseLeadingWhitespace;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                             | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------ | ------ |

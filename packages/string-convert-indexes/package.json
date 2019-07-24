@@ -145,6 +145,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ nativeToUnicode, unicodeToNative }",
     "various": {
       "back_to_top": {
         "enabled": true,

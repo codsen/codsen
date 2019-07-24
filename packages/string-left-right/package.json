@@ -150,6 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ left, right, leftSeq, rightSeq, chompLeft, chompRight }",
     "various": {
       "back_to_top": {
         "enabled": true,

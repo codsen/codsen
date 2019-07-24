@@ -26,14 +26,22 @@
 npm i ast-contains-only-empty-space
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`containsOnlyEmptySpace`" you can name the consumed function however you want.
+
 ```js
-// consume via CommonJS require():
+// 1. consume via a require():
 const containsOnlyEmptySpace = require("ast-contains-only-empty-space");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import containsOnlyEmptySpace from "ast-contains-only-empty-space";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ast-contains-only-empty-space/dist/ast-contains-only-empty-space.umd.js"></script>;
+// then, you get a global variable "astContainsOnlyEmptySpace" which you consume like this:
+const containsOnlyEmptySpace = astContainsOnlyEmptySpace;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |

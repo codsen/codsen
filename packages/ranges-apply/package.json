@@ -146,6 +146,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "replaceSlicesArr",
     "various": {
       "back_to_top": {
         "enabled": true,

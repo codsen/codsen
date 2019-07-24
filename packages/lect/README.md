@@ -16,7 +16,7 @@
 - [The Idea](#the-idea)
 - [Readme automation](#readme-automation)
 - [Config — .lectrc.json](#config--lectrcjson)
-- [Install](#install)
+- [Installation](#installation)
 - [Readme - Badges](#readme---badges)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -65,7 +65,7 @@ There are three different ways to manage readme.
 
 Lect will use a separate config file one level higher than the `package.json` of the package's root.
 
-## Install
+## Installation
 
 ### Step 1
 

@@ -27,14 +27,22 @@
 npm i easy-replace
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`er`" you can name the consumed function however you want.
+
 ```js
-// consume via CommonJS require:
+// 1. consume via a require():
 const er = require("easy-replace");
-// or as native ES Module:
+//
+// 2. or as an ES Module:
 import er from "easy-replace";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/easy-replace/dist/easy-replace.umd.js"></script>;
+// then, you get a global variable "easyReplace" which you consume like this:
+const er = easyReplace;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |

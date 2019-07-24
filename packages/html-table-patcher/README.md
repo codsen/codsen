@@ -28,26 +28,19 @@ npm i html-table-patcher
 ```
 
 ```js
+// 1. consume via a require():
 const { patcher, defaults, version } = require("html-table-patcher");
-
-var res1 = patcher(`<table width="100%">
-  zzz
-  <tr>
-    <td>
-      something
-    </td>
-  </tr>
-</table>`);
-console.log("res1 = " + res1);
-// res1 = <table width="100%"><tr><td>zzz</td></tr><tr>
-//     <td>
-//       something
-//     </td>
-//   </tr>
-// </table>
+//
+// 2. or as an ES Module:
+import { patcher, defaults, version } from "html-table-patcher";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/html-table-patcher/dist/html-table-patcher.umd.js"></script>;
+// then, you get a global variable "htmlTablePatcher" which you consume like this:
+const { patcher, defaults, version } = htmlTablePatcher;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                             | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ------ |

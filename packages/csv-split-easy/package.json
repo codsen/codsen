@@ -157,6 +157,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "splitEasy",
     "various": {
       "back_to_top": {
         "enabled": false,

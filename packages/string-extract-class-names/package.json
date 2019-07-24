@@ -142,6 +142,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "extract",
     "various": {
       "back_to_top": {
         "enabled": true,

@@ -156,6 +156,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "bSlug",
     "various": {
       "back_to_top": {
         "enabled": true,

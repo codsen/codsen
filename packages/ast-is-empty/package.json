@@ -155,6 +155,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "isEmpty",
     "various": {
       "back_to_top": {
         "enabled": true,

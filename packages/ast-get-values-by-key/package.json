@@ -152,6 +152,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "getAllValuesByKey",
     "various": {
       "back_to_top": {
         "enabled": true,

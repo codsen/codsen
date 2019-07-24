@@ -26,18 +26,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i object-merge-advanced
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`mergeAdvanced`" you can name the consumed function however you want.
+
 ```js
-// consume via CommonJS require():
+// 1. consume via a require():
 const mergeAdvanced = require("object-merge-advanced");
-// or import as an ES module:
+//
+// 2. or as an ES Module:
 import mergeAdvanced from "object-merge-advanced";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/object-merge-advanced/dist/object-merge-advanced.umd.js"></script>;
+// then, you get a global variable "objectMergeAdvanced" which you consume like this:
+const mergeAdvanced = objectMergeAdvanced;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |

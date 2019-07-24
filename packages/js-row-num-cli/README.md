@@ -21,7 +21,8 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install globally or npx-it](#install-globally-or-npx-it)
+- [Install](#install)
+- [Use it](#use-it)
 - [TLDR](#tldr)
 - [What it does](#what-it-does)
 - [A nifty setup idea](#a-nifty-setup-idea)
@@ -29,13 +30,30 @@ Other siblings of this package:
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally or npx-it
+## Install
 
 ```bash
 npm i -g js-row-num-cli
 ```
 
-then, call it typing `jsrownum` or `jrn` in your terminal, like this:
+```js
+// 1. consume via a require():
+const  = require("js-row-num-cli");
+//
+// 2. or as an ES Module:
+import  from "js-row-num-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/js-row-num-cli/dist/js-row-num-cli.umd.js"></script>
+// then, you get a global variable "jsRowNumCli" which you consume like this:
+const  = jsRowNumCli;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call it typing `jsrownum` or `jrn` in your terminal, like this:
 
 ```bash
 jsrownum

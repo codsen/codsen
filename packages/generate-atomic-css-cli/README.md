@@ -15,23 +15,41 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install globally or npx-it](#install-globally-or-npx-it)
+- [Install](#install)
+- [Use it](#use-it)
 - [How it works](#how-it-works)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally or npx-it
+## Install
 
 ```bash
 npm i -g generate-atomic-css-cli
 ```
 
-then, call it typing `gac` in your terminal, like this:
+```js
+// 1. consume via a require():
+const  = require("generate-atomic-css-cli");
+//
+// 2. or as an ES Module:
+import  from "generate-atomic-css-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/generate-atomic-css-cli/dist/generate-atomic-css-cli.umd.js"></script>
+// then, you get a global variable "generateAtomicCssCli" which you consume like this:
+const  = generateAtomicCssCli;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call it typing `gac` in your terminal, like this:
 
 ```bash
 gac "index.html"
-# or
+# or with wildcards:
 gac "modules/css/*/*.scss"
 ```
 

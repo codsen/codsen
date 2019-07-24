@@ -150,6 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "fillMissingKeysWrapper",
     "various": {
       "back_to_top": {
         "enabled": true,

@@ -13,25 +13,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i string-strip-html
 ```
 
-```js
-// consume as a CommonJS require:
-const stripHtml = require("string-strip-html");
-// or as an ES Module:
-import stripHtml from "string-strip-html";
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`stripHtml`" you can name the consumed function however you want.
 
-// it does not assume the output must be always HTML and detects legit brackets:
-console.log(stripHtml("a < b and c > d")); // => 'a < b and c > d'
-// leaves content between tags:
-console.log(stripHtml("Some text <b>and</b> text.")); // => 'Some text and text.'
-// adds spaces to prevent accidental string concatenation
-console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
+```js
+// 1. consume via a require():
+const stripHtml = require("string-strip-html");
+//
+// 2. or as an ES Module:
+import stripHtml from "string-strip-html";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js"></script>;
+// then, you get a global variable "stringStripHtml" which you consume like this:
+const stripHtml = stringStripHtml;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
@@ -41,9 +42,24 @@ Here's what you'll get:
 
 **[⬆ back to top](#)**
 
+## Use it
+
+```js
+const stripHtml = require("string-strip-html");
+// it does not assume the output must be always HTML and detects legit brackets:
+console.log(stripHtml("a < b and c > d")); // => 'a < b and c > d'
+// leaves content between tags:
+console.log(stripHtml("Some text <b>and</b> text.")); // => 'Some text and text.'
+// adds spaces to prevent accidental string concatenation
+console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
+```
+
+**[⬆ back to top](#)**
+
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [Purpose](#purpose)
 - [Features](#features)
 - [API](#api)

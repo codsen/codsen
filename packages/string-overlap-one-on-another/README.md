@@ -26,14 +26,22 @@
 npm i string-overlap-one-on-another
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`overlap`" you can name the consumed function however you want.
+
 ```js
-// consume via a require():
+// 1. consume via a require():
 const overlap = require("string-overlap-one-on-another");
-// or as a ES Module:
+//
+// 2. or as an ES Module:
 import overlap from "string-overlap-one-on-another";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-overlap-one-on-another/dist/string-overlap-one-on-another.umd.js"></script>;
+// then, you get a global variable "stringOverlapOneOnAnother" which you consume like this:
+const overlap = stringOverlapOneOnAnother;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |

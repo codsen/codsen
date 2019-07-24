@@ -142,6 +142,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "arrayiffyString",
     "various": {
       "back_to_top": {
         "enabled": true,

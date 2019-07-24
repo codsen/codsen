@@ -147,6 +147,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "flattenAllArrays",
     "various": {
       "back_to_top": {
         "enabled": true,

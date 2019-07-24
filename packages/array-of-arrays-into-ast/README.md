@@ -17,14 +17,22 @@
 npm i array-of-arrays-into-ast
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`generateAst`" you can name the consumed function however you want.
+
 ```js
-// consume as CommonJS require():
+// 1. consume via a require():
 const generateAst = require("array-of-arrays-into-ast");
-// or as ES Module:
+//
+// 2. or as an ES Module:
 import generateAst from "array-of-arrays-into-ast";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/array-of-arrays-into-ast/dist/array-of-arrays-into-ast.umd.js"></script>;
+// then, you get a global variable "arrayOfArraysIntoAst" which you consume like this:
+const generateAst = arrayOfArraysIntoAst;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |

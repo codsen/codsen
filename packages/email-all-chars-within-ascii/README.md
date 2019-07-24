@@ -31,7 +31,22 @@ Other siblings of this package:
 npm i email-all-chars-within-ascii
 ```
 
-Here's what you'll get:
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`within`" you can name the consumed function however you want.
+
+```js
+// 1. consume via a require():
+const within = require("email-all-chars-within-ascii");
+//
+// 2. or as an ES Module:
+import within from "email-all-chars-within-ascii";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/email-all-chars-within-ascii/dist/email-all-chars-within-ascii.umd.js"></script>;
+// then, you get a global variable "emailAllCharsWithinAscii" which you consume like this:
+const within = emailAllCharsWithinAscii;
+```
+
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------ | ----- |

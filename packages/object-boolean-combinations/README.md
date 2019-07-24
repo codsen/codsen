@@ -23,18 +23,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i object-boolean-combinations
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`objectBooleanCombinations`" you can name the consumed function however you want.
+
 ```js
-// consume as a CommonJS require:
+// 1. consume via a require():
 const objectBooleanCombinations = require("object-boolean-combinations");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import objectBooleanCombinations from "object-boolean-combinations";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/object-boolean-combinations/dist/object-boolean-combinations.umd.js"></script>;
+// then, you get a global variable "objectBooleanCombinations" which you consume like this:
+const objectBooleanCombinations = objectBooleanCombinations;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ----- |

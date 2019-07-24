@@ -53,16 +53,22 @@ let res = yourFunction(1, { placeholderEnabled: "zzz" }); // <---  notice opts k
 npm i check-types-mini
 ```
 
-Consume:
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`checkTypes`" you can name the consumed function however you want.
 
 ```js
-// as CommonJS require:
+// 1. consume via a require():
 const checkTypes = require("check-types-mini");
-// or native source directly, as an ES Module:
+//
+// 2. or as an ES Module:
 import checkTypes from "check-types-mini";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/check-types-mini/dist/check-types-mini.umd.js"></script>;
+// then, you get a global variable "checkTypesMini" which you consume like this:
+const checkTypes = checkTypesMini;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |

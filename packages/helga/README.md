@@ -27,13 +27,19 @@ npm i helga
 ```
 
 ```js
-// consume via a CommonJS require:
-const { helga } = require("helga");
-// or as an ES Module:
-import { helga } from "helga";
+// 1. consume via a require():
+const { helga, defaults, version } = require("helga");
+//
+// 2. or as an ES Module:
+import { helga, defaults, version } from "helga";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/helga/dist/helga.umd.js"></script>;
+// then, you get a global variable "helga" which you consume like this:
+const { helga, defaults, version } = helga;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- | ------ |

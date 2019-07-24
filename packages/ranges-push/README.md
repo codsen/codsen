@@ -14,6 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [The Idea](#the-idea)
 - [API](#api)
 - [In my case](#in-my-case)
@@ -26,12 +27,32 @@
 npm i ranges-push
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`Ranges`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const Ranges = require("ranges-push");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import Ranges from "ranges-push";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ranges-push/dist/ranges-push.umd.js"></script>;
+// then, you get a global variable "rangesPush" which you consume like this:
+const Ranges = rangesPush;
 ```
+
+This package has three builds in `dist/` folder:
+
+| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 36 KB |
+
+**[⬆ back to top](#)**
+
+## Use it
 
 ```js
 const Ranges = require("ranges-push");
@@ -44,14 +65,6 @@ ranges.add(10, 20);
 console.log(ranges.current());
 // => [ [1, 4], [10, 20] ]
 ```
-
-Here's what you'll get:
-
-| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 36 KB |
 
 **[⬆ back to top](#)**
 

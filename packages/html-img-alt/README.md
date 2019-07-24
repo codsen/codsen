@@ -16,6 +16,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
+- [For example,](#for-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -25,14 +26,22 @@
 npm i html-img-alt
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`alts`" you can name the consumed function however you want.
+
 ```js
+// 1. consume via a require():
+const alts = require("html-img-alt");
+//
+// 2. or as an ES Module:
 import alts from "html-img-alt";
-var res = alts('zzz<img        alt="123" >zzz');
-console.log("res = " + res);
-// => 'res = zzz<img alt="123" >zzz'
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/html-img-alt/dist/html-img-alt.umd.js"></script>;
+// then, you get a global variable "htmlImgAlt" which you consume like this:
+const alts = htmlImgAlt;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ------ |
@@ -80,6 +89,15 @@ String-in, string-out. You can pass in the optional options object:
 | }                       |         |             |         |
 
 **[⬆ back to top](#)**
+
+## For example,
+
+```js
+import alts from "html-img-alt";
+var res = alts('zzz<img        alt="123" >zzz');
+console.log("res = " + res);
+// => 'res = zzz<img alt="123" >zzz'
+```
 
 ## Contributing
 

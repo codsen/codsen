@@ -36,19 +36,20 @@
 npm i email-comb
 ```
 
-then,
-
 ```js
+// 1. consume via a require():
 const { comb, defaults, version } = require("email-comb");
-```
-
-or
-
-```js
+//
+// 2. or as an ES Module:
 import { comb, defaults, version } from "email-comb";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js"></script>;
+// then, you get a global variable "emailComb" which you consume like this:
+const { comb, defaults, version } = emailComb;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |

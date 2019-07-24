@@ -147,6 +147,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "er",
     "various": {
       "back_to_top": {
         "enabled": true,

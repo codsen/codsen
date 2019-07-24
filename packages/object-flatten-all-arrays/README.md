@@ -22,18 +22,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i object-flatten-all-arrays
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`flattenAllArrays`" you can name the consumed function however you want.
+
 ```js
-// consume as a CommonJS require:
+// 1. consume via a require():
 const flattenAllArrays = require("object-flatten-all-arrays");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import flattenAllArrays from "object-flatten-all-arrays";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/object-flatten-all-arrays/dist/object-flatten-all-arrays.umd.js"></script>;
+// then, you get a global variable "objectFlattenAllArrays" which you consume like this:
+const flattenAllArrays = objectFlattenAllArrays;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                    | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |

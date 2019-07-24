@@ -30,16 +30,22 @@
 npm i string-unfancy
 ```
 
-> or, if you work with image `alt` attributes, check out [html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt) which uses `string-unfancy`.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`unfancy`" you can name the consumed function however you want.
 
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const unfancy = require("string-unfancy");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import unfancy from "string-unfancy";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-unfancy/dist/string-unfancy.umd.js"></script>;
+// then, you get a global variable "stringUnfancy" which you consume like this:
+const unfancy = stringUnfancy;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |

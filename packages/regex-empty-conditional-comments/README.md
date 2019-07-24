@@ -20,18 +20,26 @@
 
 ## Install
 
-```
+```bash
 npm i regex-empty-conditional-comments
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`emptyCondCommentRegex`" you can name the consumed function however you want.
+
 ```js
-// consume as a CommonJS require:
+// 1. consume via a require():
 const emptyCondCommentRegex = require("regex-empty-conditional-comments");
-// or in ES Modules:
+//
+// 2. or as an ES Module:
 import emptyCondCommentRegex from "regex-empty-conditional-comments";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/regex-empty-conditional-comments/dist/regex-empty-conditional-comments.umd.js"></script>;
+// then, you get a global variable "regexEmptyConditionalComments" which you consume like this:
+const emptyCondCommentRegex = regexEmptyConditionalComments;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |

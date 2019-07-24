@@ -33,7 +33,7 @@ npm i json-comb-core
 ```
 
 ```js
-// consume as a CommonJS require:
+// 1. consume via a require():
 const {
   getKeysetSync,
   getKeyset,
@@ -43,8 +43,8 @@ const {
   noNewKeysSync,
   findUnusedSync
 } = require("json-comb-core");
-
-// or as a ES Module:
+//
+// 2. or as an ES Module:
 import {
   getKeysetSync,
   getKeyset,
@@ -54,9 +54,22 @@ import {
   noNewKeysSync,
   findUnusedSync
 } from "json-comb-core";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/json-comb-core/dist/json-comb-core.umd.js"></script>;
+// then, you get a global variable "jsonCombCore" which you consume like this:
+const {
+  getKeysetSync,
+  getKeyset,
+  enforceKeyset,
+  enforceKeysetSync,
+  sortAllObjectsSync,
+  noNewKeysSync,
+  findUnusedSync
+} = jsonCombCore;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |

@@ -30,13 +30,19 @@ npm i string-uglify
 ```
 
 ```js
-// consume via a CommonJS require:
-const { uglifyArr, uglifyById, version } = require("string-uglify");
-// or as an ES Module:
-import { uglifyArr, uglifyById, version } from "string-uglify";
+// 1. consume via a require():
+const { uglifyById, uglifyArr, version } = require("string-uglify");
+//
+// 2. or as an ES Module:
+import { uglifyById, uglifyArr, version } from "string-uglify";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-uglify/dist/string-uglify.umd.js"></script>;
+// then, you get a global variable "stringUglify" which you consume like this:
+const { uglifyById, uglifyArr, version } = stringUglify;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ---- |

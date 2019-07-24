@@ -17,18 +17,36 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install globally](#install-globally)
+- [Install](#install)
+- [How it works](#how-it-works)
 - [What it does](#what-it-does)
 - [A nifty setup idea](#a-nifty-setup-idea)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Install globally
+## Install
 
 ```bash
 npm i -g chlu-cli
 ```
+
+```js
+// 1. consume via a require():
+const  = require("chlu-cli");
+//
+// 2. or as an ES Module:
+import  from "chlu-cli";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/chlu-cli/dist/chlu-cli.umd.js"></script>
+// then, you get a global variable "chluCli" which you consume like this:
+const  = chluCli;
+```
+
+**[⬆ back to top](#)**
+
+## How it works
 
 This is a CLI app. Once installed, call it in the root folder where your `changelog.md` sits:
 

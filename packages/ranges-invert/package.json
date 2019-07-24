@@ -141,6 +141,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "rangesInvert",
     "various": {
       "back_to_top": {
         "enabled": true,

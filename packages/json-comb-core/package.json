@@ -148,6 +148,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{\n  getKeysetSync,\n  getKeyset,\n  enforceKeyset,\n  enforceKeysetSync,\n  sortAllObjectsSync,\n  noNewKeysSync,\n  findUnusedSync\n}",
     "various": {
       "back_to_top": {
         "enabled": true,

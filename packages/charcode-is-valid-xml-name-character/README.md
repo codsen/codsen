@@ -27,20 +27,34 @@ npm i charcode-is-valid-xml-name-character
 ```
 
 ```js
-// consume via a CommonJS require:
+// 1. consume via a require():
 const {
   isProduction4,
-  isProduction4a
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards
 } = require("charcode-is-valid-xml-name-character");
-
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import {
   isProduction4,
-  isProduction4a
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards
 } from "charcode-is-valid-xml-name-character";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/charcode-is-valid-xml-name-character/dist/charcode-is-valid-xml-name-character.umd.js"></script>;
+// then, you get a global variable "charcodeIsValidXmlNameCharacter" which you consume like this:
+const {
+  isProduction4,
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards
+} = charcodeIsValidXmlNameCharacter;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                               | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |

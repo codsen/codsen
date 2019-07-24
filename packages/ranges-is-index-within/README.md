@@ -17,14 +17,22 @@
 npm i ranges-is-index-within
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`isIndexWithin`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
-const rangesIsIndexWithin = require("ranges-is-index-within");
-// or as an ES Module:
-import rangesIsIndexWithin from "ranges-is-index-within";
+// 1. consume via a require():
+const isIndexWithin = require("ranges-is-index-within");
+//
+// 2. or as an ES Module:
+import isIndexWithin from "ranges-is-index-within";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ranges-is-index-within/dist/ranges-is-index-within.umd.js"></script>;
+// then, you get a global variable "rangesIsIndexWithin" which you consume like this:
+const isIndexWithin = rangesIsIndexWithin;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
@@ -112,8 +120,8 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 Simple encoding using default settings:
 
 ```js
-const rangesIsIndexWithin = require("ranges-is-index-within");
-let res1 = rangesIsIndexWithin(79, [
+const isIndexWithin = require("ranges-is-index-within");
+let res1 = isIndexWithin(79, [
   [5, 10],
   [15, 20],
   [25, 30],
@@ -131,7 +139,7 @@ let res1 = rangesIsIndexWithin(79, [
 console.log(res1);
 // > true
 
-let res2 = rangesIsIndexWithin(31, [
+let res2 = isIndexWithin(31, [
   [5, 10],
   [15, 20],
   [25, 30], // <-- "false" because "31" falls in between this and next range. It's not within.
@@ -149,7 +157,7 @@ let res2 = rangesIsIndexWithin(31, [
 console.log(res2);
 // > false
 
-let res3 = rangesIsIndexWithin(
+let res3 = isIndexWithin(
   30,
   [
     [5, 10],
@@ -171,7 +179,7 @@ let res3 = rangesIsIndexWithin(
 console.log(res3);
 // > true
 
-let res4 = rangesIsIndexWithin(
+let res4 = isIndexWithin(
   30,
   [
     [5, 10],

@@ -145,6 +145,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "sortBySubarray",
     "various": {
       "back_to_top": {
         "enabled": true,

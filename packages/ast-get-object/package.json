@@ -152,6 +152,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "getObj",
     "various": {
       "back_to_top": {
         "enabled": true,

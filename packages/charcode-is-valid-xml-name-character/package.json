@@ -152,6 +152,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards }",
     "various": {
       "back_to_top": {
         "enabled": true,

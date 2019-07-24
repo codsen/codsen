@@ -154,6 +154,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "{ find, get, set, drop, info, del, arrayFirstOnly, traverse }",
     "various": {
       "back_to_top": {
         "enabled": true,

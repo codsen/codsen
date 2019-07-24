@@ -25,14 +25,22 @@
 npm i string-range-expander
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`expander`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require:
-const expand = require("string-range-expander");
-// or as an ES Module:
-import expand from "string-range-expander";
+// 1. consume via a require():
+const expander = require("string-range-expander");
+//
+// 2. or as an ES Module:
+import expander from "string-range-expander";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/string-range-expander/dist/string-range-expander.umd.js"></script>;
+// then, you get a global variable "stringRangeExpander" which you consume like this:
+const expander = stringRangeExpander;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |

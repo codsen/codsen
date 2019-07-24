@@ -24,18 +24,26 @@
 
 ## Install
 
-```sh
+```bash
 npm i color-shorthand-hex-to-six-digit
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`conv`" you can name the consumed function however you want.
+
 ```js
-// consume as CommonJS require():
+// 1. consume via a require():
 const conv = require("color-shorthand-hex-to-six-digit");
-// or as an ES Module:
+//
+// 2. or as an ES Module:
 import conv from "color-shorthand-hex-to-six-digit";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/color-shorthand-hex-to-six-digit/dist/color-shorthand-hex-to-six-digit.umd.js"></script>;
+// then, you get a global variable "colorShorthandHexToSixDigit" which you consume like this:
+const conv = colorShorthandHexToSixDigit;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |

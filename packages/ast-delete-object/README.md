@@ -29,14 +29,22 @@
 npm i ast-delete-object
 ```
 
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`deleteObj`" you can name the consumed function however you want.
+
 ```js
-// consume via a CommonJS require():
+// 1. consume via a require():
 const deleteObj = require("ast-delete-object");
-// or import as an ES Module:
+//
+// 2. or as an ES Module:
 import deleteObj from "ast-delete-object";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/ast-delete-object/dist/ast-delete-object.umd.js"></script>;
+// then, you get a global variable "astDeleteObject" which you consume like this:
+const deleteObj = astDeleteObject;
 ```
 
-Here's what you'll get:
+This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |

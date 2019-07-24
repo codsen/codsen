@@ -179,9 +179,6 @@ function extractStringUnderBadges(str) {
 
 function assembleRollupInfoTable(pack, lectrc) {
   let rollupTable = "";
-  if (objectPath.has(lectrc, "rollup.infoTitle")) {
-    rollupTable += `${lectrc.rollup.infoTitle.trim()}\n\n`;
-  }
   rollupTable +=
     "Type            | Key in `package.json` | Path  | Size\r\n----------------|-----------------------|-------|--------";
   if (objectPath.has(pack, "main")) {

@@ -14,6 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Use it](#use-it)
 - [Purpose](#purpose)
 - [Opinionated part 1](#opinionated-part-1)
 - [Opinionated part 2](#opinionated-part-2)
@@ -26,7 +27,28 @@
 
 ## Install
 
-`npm i -g update-versions`, then call it typing:
+```bash
+npm i -g update-versions
+```
+
+```js
+// 1. consume via a require():
+const  = require("update-versions");
+//
+// 2. or as an ES Module:
+import  from "update-versions";
+//
+// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+<script src="https://cdn.jsdelivr.net/npm/update-versions/dist/update-versions.umd.js"></script>
+// then, you get a global variable "updateVersions" which you consume like this:
+const  = updateVersions;
+```
+
+**[⬆ back to top](#)**
+
+## Use it
+
+Once installed, call it typing:
 
 `upd`
 
@@ -39,7 +61,13 @@ Alternatively, you can also run it without installing, using `npx update-version
 
 ## Purpose
 
-This package reads package.json, either in root (normal repo) or in each monorepo packages root (Lerna monorepo), pings npm (using [pacote](https://www.npmjs.com/package/pacote)) and sets that version on particular dependency.
+It is aimed specifically to monorepos or setups where you want to often update all dependency versions to latest, if needed, patch bugs right away, and do it often and courageously:
+
+- Update all dependencies according to npm
+- Replace `*` with `^x.x.x` automatically
+- Replace all dependency version ranges without `^` to have `^`
+
+This CLI is a good idea in Lerna monorepos full of owned npm packages (where you bump versions often and effortlessly) but a bad idea in React SPA's (where single minor update might break many things and updating dependencies is a big, complex deal).
 
 **[⬆ back to top](#)**
 
