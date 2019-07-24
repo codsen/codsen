@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.3](https://gitlab.com/codsen/codsen/compare/generate-atomic-css@1.2.2...generate-atomic-css@1.2.3) (2019-07-24)
-
+## 1.2.3 (2019-07-24)
 
 ### Bug Fixes
 
-* closing curlies were not recognised if they were placed on a new line - fixed now ([c81eb14](https://gitlab.com/codsen/codsen/commit/c81eb14))
-
-
-
-
+- closing curlies were not recognised if they were placed on a new line - fixed now ([c81eb14](https://gitlab.com/codsen/codsen/commit/c81eb14))
 
 ## 1.2.0 (2019-07-15)
 

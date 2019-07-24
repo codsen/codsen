@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.7.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.6.2...html-crush@1.7.0) (2019-07-24)
-
+## 1.7.0 (2019-07-24)
 
 ### Features
 
-* Don't delete whitespace between closing curly brace and opening curly brace ([ef5efaa](https://gitlab.com/codsen/codsen/commit/ef5efaa))
-
-
-
-
+- Don't delete whitespace between closing curly brace and opening curly brace ([ef5efaa](https://gitlab.com/codsen/codsen/commit/ef5efaa))
 
 ## 1.6.0 (2019-07-15)
 
