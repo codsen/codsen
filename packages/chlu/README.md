@@ -28,19 +28,29 @@ Other siblings of this package:
 npm i chlu
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`chlu`" you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`chluLib`" you can name the consumed function however you want.
+
+1. consume via a `require()`:
 
 ```js
-// 1. consume via a require():
-const chlu = require("chlu");
-//
-// 2. or as an ES Module:
-import chlu from "chlu";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
-<script src="https://cdn.jsdelivr.net/npm/chlu/dist/chlu.umd.js"></script>;
+const chluLib = require("chlu");
+```
+
+2. or as an ES Module:
+
+```js
+import chluLib from "chlu";
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/chlu/dist/chlu.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "chlu" which you consume like this:
-const chlu = chlu;
+const chluLib = chlu;
 ```
 
 This package has three builds in `dist/` folder:

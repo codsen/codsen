@@ -28,15 +28,25 @@
 npm i emlint
 ```
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const { lint, version } = require("emlint");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import { lint, version } from "emlint";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
-<script src="https://cdn.jsdelivr.net/npm/emlint/dist/emlint.umd.js"></script>;
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/emlint/dist/emlint.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "emlint" which you consume like this:
 const { lint, version } = emlint;
 ```

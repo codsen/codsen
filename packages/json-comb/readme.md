@@ -25,15 +25,25 @@
 npm i -g json-comb
 ```
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const  = require("json-comb");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import  from "json-comb";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
 <script src="https://cdn.jsdelivr.net/npm/json-comb/dist/json-comb.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "jsonComb" which you consume like this:
 const  = jsonComb;
 ```

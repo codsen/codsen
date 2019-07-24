@@ -19,15 +19,25 @@ npm i ranges-process-outside
 
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`processOutside`" you can name the consumed function however you want.
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const processOutside = require("ranges-process-outside");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import processOutside from "ranges-process-outside";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
-<script src="https://cdn.jsdelivr.net/npm/ranges-process-outside/dist/ranges-process-outside.umd.js"></script>;
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/ranges-process-outside/dist/ranges-process-outside.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "rangesProcessOutside" which you consume like this:
 const processOutside = rangesProcessOutside;
 ```

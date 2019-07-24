@@ -31,15 +31,25 @@ Other siblings of this package:
 npm i -g chlu-cli
 ```
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const  = require("chlu-cli");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import  from "chlu-cli";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
 <script src="https://cdn.jsdelivr.net/npm/chlu-cli/dist/chlu-cli.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "chluCli" which you consume like this:
 const  = chluCli;
 ```

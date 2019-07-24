@@ -150,7 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "chlu",
+    "req": "chluLib",
     "various": {
       "back_to_top": {
         "enabled": true,

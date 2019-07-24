@@ -27,15 +27,25 @@ npm i string-split-by-whitespace
 
 The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`splitByW`" you can name the consumed function however you want.
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const splitByW = require("string-split-by-whitespace");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import splitByW from "string-split-by-whitespace";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
-<script src="https://cdn.jsdelivr.net/npm/string-split-by-whitespace/dist/string-split-by-whitespace.umd.js"></script>;
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/string-split-by-whitespace/dist/string-split-by-whitespace.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "stringSplitByWhitespace" which you consume like this:
 const splitByW = stringSplitByWhitespace;
 ```

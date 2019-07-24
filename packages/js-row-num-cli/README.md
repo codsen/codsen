@@ -36,15 +36,25 @@ Other siblings of this package:
 npm i -g js-row-num-cli
 ```
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const  = require("js-row-num-cli");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import  from "js-row-num-cli";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
 <script src="https://cdn.jsdelivr.net/npm/js-row-num-cli/dist/js-row-num-cli.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "jsRowNumCli" which you consume like this:
 const  = jsRowNumCli;
 ```

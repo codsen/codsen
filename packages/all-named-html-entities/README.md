@@ -26,8 +26,9 @@
 npm i all-named-html-entities
 ```
 
+1. consume via a `require()`:
+
 ```js
-// 1. consume via a require():
 const {
   allNamedEntities,
   entStartsWith,
@@ -41,8 +42,11 @@ const {
   notEmailFriendly,
   uncertain
 } = require("all-named-html-entities");
-//
-// 2. or as an ES Module:
+```
+
+2. or as an ES Module:
+
+```js
 import {
   allNamedEntities,
   entStartsWith,
@@ -56,9 +60,15 @@ import {
   notEmailFriendly,
   uncertain
 } from "all-named-html-entities";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
-<script src="https://cdn.jsdelivr.net/npm/all-named-html-entities/dist/all-named-html-entities.umd.js"></script>;
+```
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/all-named-html-entities/dist/all-named-html-entities.umd.js"></script>
+```
+
+```js
 // then, you get a global variable "allNamedHtmlEntities" which you consume like this:
 const {
   allNamedEntities,
