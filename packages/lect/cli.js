@@ -1759,6 +1759,14 @@ function step6() {
           : !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
           ? process.exit(1)
           : "";
+
+        // insurance
+        if (consumedName === pack.name) {
+          console.log(
+            `\n\n\n${`\u001b[${31}m${`lect error: `}\u001b[${39}m`}${`\u001b[${33}m${`consumedName === pack.name === ${pack.name}`}\u001b[${39}m`}\n\n\n`
+          );
+          return process.exit(1);
+        }
         const prep = `
 \`\`\`bash
 npm i ${objectPath.has(pack, "bin") ? "-g " : ""}${pack.name}
@@ -1769,17 +1777,25 @@ ${
     : ""
 }${
           !pack.name.startsWith("gulp-")
-            ? `\n\`\`\`js
-// 1. consume via a require():
+            ? `\n1. consume via a \`require()\`:\n\n\`\`\`js
 const ${consumedName} = require("${pack.name}");
-//
-// 2. or as an ES Module:
+\`\`\`
+
+2. or as an ES Module:
+
+\`\`\`js
 import ${consumedName} from "${pack.name}";
-//
-// 3. or for web pages, as a production-ready minified script file, straight from CDN:
+\`\`\`
+
+3. or for web pages, as a production-ready minified script file, straight from CDN:
+
+\`\`\`html
 <script src="https://cdn.jsdelivr.net/npm/${pack.name}/dist/${
                 pack.name
               }.umd.js"></script>
+\`\`\`
+
+\`\`\`js
 // then, you get a global variable "${camelCase(
                 pack.name
               )}" which you consume like this:
