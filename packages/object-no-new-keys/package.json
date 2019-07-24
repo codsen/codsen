@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "2.7.31",
+  "version": "2.7.32",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.28",
+    "check-types-mini": "^5.7.29",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -183,8 +183,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.32",
-    "lect": "^0.8.1",
+    "js-row-num-cli": "^1.5.33",
+    "lect": "^0.9.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",

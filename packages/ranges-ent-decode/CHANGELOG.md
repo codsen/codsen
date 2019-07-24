@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.23](https://gitlab.com/codsen/codsen/compare/ranges-ent-decode@2.0.22...ranges-ent-decode@2.0.23) (2019-07-24)
+
+**Note:** Version bump only for package ranges-ent-decode
+
+
+
+
+
 ## 1.4.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://gitlab.com/codsen/codsen/compare/html-table-patcher@1.1.8...html-table-patcher@1.1.9) (2019-07-24)
+
+
+### Bug Fixes
+
+* Add missing node globals, necessary for UMD build ([b917068](https://gitlab.com/codsen/codsen/commit/b917068))
+* Rollup globals plugin was missing in builds which errorred out the UMD builds ([2f8ee25](https://gitlab.com/codsen/codsen/commit/2f8ee25))
+
+
+
+
+
 ## 1.1.0 (2019-06-18)
 
 ### Features

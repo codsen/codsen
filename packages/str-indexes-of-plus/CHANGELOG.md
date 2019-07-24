@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.32](https://gitlab.com/codsen/codsen/compare/str-indexes-of-plus@2.9.31...str-indexes-of-plus@2.9.32) (2019-07-24)
+
+**Note:** Version bump only for package str-indexes-of-plus
+
+
+
+
+
 ## 2.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

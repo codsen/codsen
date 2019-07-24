@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://gitlab.com/codsen/codsen/compare/lect@0.8.1...lect@0.9.0) (2019-07-24)
+
+
+### Features
+
+* add insurance against consumed variable name matching package's name ([414a52f](https://gitlab.com/codsen/codsen/commit/414a52f))
+* When generating rollup config, add node globals if they're requested in devdependencies in pac ([1ec2e6a](https://gitlab.com/codsen/codsen/commit/1ec2e6a))
+
+
+
+
+
 ## 0.8.0 (2019-07-19)
 
 ### Features
