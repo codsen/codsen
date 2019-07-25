@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "2.3.11",
+  "version": "2.3.13",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "license": "MIT",
   "engines": {
@@ -169,10 +169,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "all-named-html-entities": "^1.1.10",
+    "all-named-html-entities": "^1.1.12",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "string-left-right": "^2.2.13"
+    "string-left-right": "^2.2.15"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -188,8 +188,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.33",
-    "lect": "^0.9.0",
+    "js-row-num-cli": "^1.5.35",
+    "lect": "^0.9.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",

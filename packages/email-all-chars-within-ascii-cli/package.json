@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii-cli",
-  "version": "1.10.32",
+  "version": "1.10.34",
   "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "email-all-chars-within-ascii": "^2.9.32",
+    "email-all-chars-within-ascii": "^2.9.34",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "inquirer": "^6.5.0",
@@ -184,8 +184,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.3",
-    "js-row-num-cli": "^1.5.33",
-    "lect": "^0.9.0",
+    "js-row-num-cli": "^1.5.35",
+    "lect": "^0.9.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"
