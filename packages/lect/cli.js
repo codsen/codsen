@@ -109,8 +109,8 @@ let addBackToTopLinks = true; // should we add back-to-top anchor links under se
 
 // a dozen of possible readme file names
 const readmeNames = [
-  "readme.md", // normal
-  "README.md", // wrong but common, all caps
+  "README.md", // all caps
+  "readme.md", // wrong
   "Readme.md", // first capital
   "readMe.md", // strange - some dev got carried away typing camel case all day
   "ReadMe.md", // just cheeky
@@ -1773,21 +1773,21 @@ npm i ${objectPath.has(pack, "bin") ? "-g " : ""}${pack.name}
 \`\`\`
 ${
   !pack.name.startsWith("gulp-") && sourceContainsDefaultExport
-    ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" you can name the consumed function however you want.\n`
+    ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" below, you can name the consumed function however you want.\n`
     : ""
 }${
           !pack.name.startsWith("gulp-")
-            ? `\n1. consume via a \`require()\`:\n\n\`\`\`js
+            ? `\nConsume via a \`require()\`:\n\n\`\`\`js
 const ${consumedName} = require("${pack.name}");
 \`\`\`
 
-2. or as an ES Module:
+or as an ES Module:
 
 \`\`\`js
 import ${consumedName} from "${pack.name}";
 \`\`\`
 
-3. or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file, straight from CDN:
 
 \`\`\`html
 <script src="https://cdn.jsdelivr.net/npm/${pack.name}/dist/${
@@ -1941,7 +1941,7 @@ const ${consumedName} = ${camelCase(pack.name)};
     // }
   }
 
-  writeFileAtomic("readme.md", content, err => {
+  writeFileAtomic("README.md", content, err => {
     if (err) {
       throw new Error(`${chalk.red(logSymbols.error, err)}`);
     }
