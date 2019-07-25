@@ -26,32 +26,29 @@ deploy:
     - git checkout master
     - echo '█████████████████████████████ 2 █████████████████████████████'
     - git status
-    - npm run bootstrap
+    - npm run fresh
     - echo '█████████████████████████████ 3 █████████████████████████████'
     - git status
-    - npm run test:only
-    - echo '█████████████████████████████ 4 █████████████████████████████'
-    - git status
     - npm run readme:generate
-    - echo '█████████████████████████████ 5 █████████████████████████████'
+    - echo '█████████████████████████████ 4 █████████████████████████████'
     - git status
     - git add packages
     - git add readme.md
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
     - npm run pub:vers
-    - echo '█████████████████████████████ 6 █████████████████████████████'
+    - echo '█████████████████████████████ 5 █████████████████████████████'
     - git status
     - git rm -f packages/ava/CHANGELOG.md || true
     - git add packages
     - git add readme.md
-    - echo '█████████████████████████████ 7 █████████████████████████████'
+    - echo '█████████████████████████████ 6 █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
-    - echo '█████████████████████████████ 8 █████████████████████████████'
+    - echo '█████████████████████████████ 7 █████████████████████████████'
     - git status
     - npm run republish
-    - echo '█████████████████████████████ 9 █████████████████████████████'
+    - echo '█████████████████████████████ 8 █████████████████████████████'
     - git status
     - git push origin master
-    - echo '█████████████████████████████ 10 █████████████████████████████ - done'
+    - echo '█████████████████████████████ 9 █████████████████████████████ - done'
