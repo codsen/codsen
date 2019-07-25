@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.25](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.0.24...ranges-apply@3.0.25) (2019-07-25)
-
-**Note:** Version bump only for package ranges-apply
-
-
-
-
-
-## [3.0.24](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.0.23...ranges-apply@3.0.24) (2019-07-25)
-
-**Note:** Version bump only for package ranges-apply
-
 ## 2.12.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

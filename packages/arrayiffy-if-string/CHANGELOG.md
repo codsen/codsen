@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.11.7](https://gitlab.com/codsen/codsen/compare/arrayiffy-if-string@3.11.6...arrayiffy-if-string@3.11.7) (2019-07-25)
-
-**Note:** Version bump only for package arrayiffy-if-string
-
-
-
-
-
-## [3.11.6](https://gitlab.com/codsen/codsen/compare/arrayiffy-if-string@3.11.5...arrayiffy-if-string@3.11.6) (2019-07-25)
-
-**Note:** Version bump only for package arrayiffy-if-string
-
 ## 3.11.0 (2019-06-29)
 
 ### Features

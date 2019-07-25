@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.2.9](https://gitlab.com/codsen/codsen/compare/ranges-push@3.2.8...ranges-push@3.2.9) (2019-07-25)
-
-**Note:** Version bump only for package ranges-push
-
-
-
-
-
-## [3.2.8](https://gitlab.com/codsen/codsen/compare/ranges-push@3.2.7...ranges-push@3.2.8) (2019-07-25)
-
-**Note:** Version bump only for package ranges-push
-
 ## 3.2.0 (2019-06-18)
 
 ### Features

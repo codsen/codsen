@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.1.12](https://gitlab.com/codsen/codsen/compare/ranges-invert@2.1.11...ranges-invert@2.1.12) (2019-07-25)
-
-**Note:** Version bump only for package ranges-invert
-
-
-
-
-
-## [2.1.11](https://gitlab.com/codsen/codsen/compare/ranges-invert@2.1.10...ranges-invert@2.1.11) (2019-07-25)
-
-**Note:** Version bump only for package ranges-invert
-
 ## 2.1.0 (2019-06-01)
 
 ### Features

@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.4](https://gitlab.com/codsen/codsen/compare/generate-atomic-css-cli@1.1.3...generate-atomic-css-cli@1.1.4) (2019-07-25)
-
-**Note:** Version bump only for package generate-atomic-css-cli
-
-
-
-
-
-## [1.1.3](https://gitlab.com/codsen/codsen/compare/generate-atomic-css-cli@1.1.2...generate-atomic-css-cli@1.1.3) (2019-07-25)
-
-**Note:** Version bump only for package generate-atomic-css-cli
-
 ## 1.1.0 (2019-07-19)
 
 ### Features
