@@ -78,7 +78,7 @@ But this uglification library is very little prone to positional changes in the 
 
 ## Other features
 
-- Its API is friendly - no errors are thrown, wrong inputs won't give you results. An empty array is fine.
+- Its API is friendly — no errors are thrown — if inputs are wrong, they are simply returned back. An empty array as input is fine.
 - Put dots and hashes (`.a` and `#a`) or don't. If you are minifying only classes or only id's you might omit dot or hash.
 - Input reference strings array does not have to contain unique entries. It's just inefficient to have duplicates so you should aim to avoid that.
 
@@ -138,7 +138,7 @@ See the usage example above.
 
 Input — two arguments: array and natural number index.
 
-Output - uglified string (string from position "id").
+Output — uglified string (string from position "id").
 
 uglifyById() is less efficient when called many times because each time it processes the whole array using `uglifyArr()` and then gives you the id you requested. You should aim to avoid using `uglifyById()` and instead uglify the whole array, assign the result to a variable and query the element you need from it.
 
