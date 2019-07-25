@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 ## 1.1.9 (2019-07-24)
 
 ### Bug Fixes

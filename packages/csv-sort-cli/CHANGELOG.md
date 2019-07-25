@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 ## 1.9.29 (2019-07-15)
 
 ### Bug Fixes

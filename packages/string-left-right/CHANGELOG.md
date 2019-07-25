@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-left-right
 
-
-
-
-
 ## 2.2.0 (2019-04-06)
 
 ### Features

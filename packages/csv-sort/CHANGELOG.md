@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-sort
 
-
-
-
-
 ## 2.7.0 (2019-02-26)
 
 ### Features

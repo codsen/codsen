@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package check-types-mini
 
-
-
-
-
 ## 5.7.0 (2019-01-31)
 
 ### Features

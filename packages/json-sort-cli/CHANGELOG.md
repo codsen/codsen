@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 ## 1.13.0 (2019-06-18)
 
 ### Features

@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package lerna-clean-changelogs-cli
 
-
-
-
-
 ## 1.2.0 (2019-03-04)
 
 ### Features

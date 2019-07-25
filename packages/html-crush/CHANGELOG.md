@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package html-crush
 
-
-
-
-
 ## 1.7.0 (2019-07-24)
 
 ### Features

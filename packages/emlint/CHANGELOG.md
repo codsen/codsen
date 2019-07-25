@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package emlint
 
-
-
-
-
 ## 1.5.0 (2019-06-01)
 
 ### Features

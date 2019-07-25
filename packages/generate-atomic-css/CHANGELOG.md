@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package generate-atomic-css
 
-
-
-
-
 ## 1.2.3 (2019-07-24)
 
 ### Bug Fixes

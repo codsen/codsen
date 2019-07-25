@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 ## 1.14.0 (2019-06-01)
 
 ### Features

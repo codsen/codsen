@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 ## 2.2.0 (2018-12-26)
 
 ### Features
