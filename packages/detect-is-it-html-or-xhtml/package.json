@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "3.9.33",
+  "version": "3.9.34",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "license": "MIT",
   "engines": {
@@ -181,8 +181,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.34",
-    "lect": "^0.9.1",
+    "js-row-num-cli": "^1.5.35",
+    "lect": "^0.9.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",

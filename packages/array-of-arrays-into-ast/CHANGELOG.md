@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.7](https://gitlab.com/codsen/codsen/compare/array-of-arrays-into-ast@1.9.6...array-of-arrays-into-ast@1.9.7) (2019-07-25)
+
+**Note:** Version bump only for package array-of-arrays-into-ast
+
+
+
+
+
 ## [1.9.6](https://gitlab.com/codsen/codsen/compare/array-of-arrays-into-ast@1.9.5...array-of-arrays-into-ast@1.9.6) (2019-07-25)
 
 **Note:** Version bump only for package array-of-arrays-into-ast

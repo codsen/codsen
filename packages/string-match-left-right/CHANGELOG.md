@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.35](https://gitlab.com/codsen/codsen/compare/string-match-left-right@3.10.34...string-match-left-right@3.10.35) (2019-07-25)
+
+**Note:** Version bump only for package string-match-left-right
+
+
+
+
+
 ## [3.10.34](https://gitlab.com/codsen/codsen/compare/string-match-left-right@3.10.33...string-match-left-right@3.10.34) (2019-07-25)
 
 **Note:** Version bump only for package string-match-left-right

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.13](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.3.12...string-fix-broken-named-entities@2.3.13) (2019-07-25)
+
+**Note:** Version bump only for package string-fix-broken-named-entities
+
+
+
+
+
 ## [2.3.12](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.3.11...string-fix-broken-named-entities@2.3.12) (2019-07-25)
 
 **Note:** Version bump only for package string-fix-broken-named-entities

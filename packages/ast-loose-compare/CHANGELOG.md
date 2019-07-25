@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.34](https://gitlab.com/codsen/codsen/compare/ast-loose-compare@1.7.33...ast-loose-compare@1.7.34) (2019-07-25)
+
+**Note:** Version bump only for package ast-loose-compare
+
+
+
+
+
 ## [1.7.33](https://gitlab.com/codsen/codsen/compare/ast-loose-compare@1.7.32...ast-loose-compare@1.7.33) (2019-07-25)
 
 **Note:** Version bump only for package ast-loose-compare
