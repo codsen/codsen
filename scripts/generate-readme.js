@@ -372,7 +372,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 `;
 
 fs.writeFile(
-  "readme.md",
+  "README.md",
   template
     .replace("Like String.trim()", "Like `String.trim()`")
     .replace("like \\_.includes", "like `_.includes`")
