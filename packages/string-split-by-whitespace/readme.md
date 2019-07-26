@@ -39,14 +39,14 @@ or as an ES Module:
 import splitByW from "string-split-by-whitespace";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/string-split-by-whitespace/dist/string-split-by-whitespace.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "stringSplitByWhitespace" which you consume like this:
+// in which case you get a global variable "stringSplitByWhitespace" which you consume like this:
 const splitByW = stringSplitByWhitespace;
 ```
 

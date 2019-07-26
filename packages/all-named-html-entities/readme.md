@@ -62,14 +62,14 @@ import {
 } from "all-named-html-entities";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/all-named-html-entities/dist/all-named-html-entities.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "allNamedHtmlEntities" which you consume like this:
+// in which case you get a global variable "allNamedHtmlEntities" which you consume like this:
 const {
   allNamedEntities,
   entStartsWith,

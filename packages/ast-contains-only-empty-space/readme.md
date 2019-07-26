@@ -40,14 +40,14 @@ or as an ES Module:
 import containsOnlyEmptySpace from "ast-contains-only-empty-space";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/ast-contains-only-empty-space/dist/ast-contains-only-empty-space.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "astContainsOnlyEmptySpace" which you consume like this:
+// in which case you get a global variable "astContainsOnlyEmptySpace" which you consume like this:
 const containsOnlyEmptySpace = astContainsOnlyEmptySpace;
 ```
 

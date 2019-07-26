@@ -40,14 +40,14 @@ or as an ES Module:
 import alts from "html-img-alt";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/html-img-alt/dist/html-img-alt.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "htmlImgAlt" which you consume like this:
+// in which case you get a global variable "htmlImgAlt" which you consume like this:
 const alts = htmlImgAlt;
 ```
 

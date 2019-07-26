@@ -39,14 +39,14 @@ or as an ES Module:
 import { patcher, defaults, version } from "html-table-patcher";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/html-table-patcher/dist/html-table-patcher.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "htmlTablePatcher" which you consume like this:
+// in which case you get a global variable "htmlTablePatcher" which you consume like this:
 const { patcher, defaults, version } = htmlTablePatcher;
 ```
 

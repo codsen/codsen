@@ -40,14 +40,14 @@ or as an ES Module:
 import setAllValuesTo from "object-set-all-values-to";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/object-set-all-values-to/dist/object-set-all-values-to.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "objectSetAllValuesTo" which you consume like this:
+// in which case you get a global variable "objectSetAllValuesTo" which you consume like this:
 const setAllValuesTo = objectSetAllValuesTo;
 ```
 

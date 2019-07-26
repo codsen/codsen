@@ -41,14 +41,14 @@ or as an ES Module:
 import Ranges from "ranges-push";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/ranges-push/dist/ranges-push.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "rangesPush" which you consume like this:
+// in which case you get a global variable "rangesPush" which you consume like this:
 const Ranges = rangesPush;
 ```
 

@@ -44,14 +44,14 @@ or as an ES Module:
 import unfancy from "string-unfancy";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/string-unfancy/dist/string-unfancy.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "stringUnfancy" which you consume like this:
+// in which case you get a global variable "stringUnfancy" which you consume like this:
 const unfancy = stringUnfancy;
 ```
 

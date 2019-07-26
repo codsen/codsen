@@ -41,14 +41,14 @@ or as an ES Module:
 import ofr from "object-flatten-referencing";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/object-flatten-referencing/dist/object-flatten-referencing.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "objectFlattenReferencing" which you consume like this:
+// in which case you get a global variable "objectFlattenReferencing" which you consume like this:
 const ofr = objectFlattenReferencing;
 ```
 

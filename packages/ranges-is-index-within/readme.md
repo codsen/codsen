@@ -31,14 +31,14 @@ or as an ES Module:
 import isIndexWithin from "ranges-is-index-within";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/ranges-is-index-within/dist/ranges-is-index-within.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "rangesIsIndexWithin" which you consume like this:
+// in which case you get a global variable "rangesIsIndexWithin" which you consume like this:
 const isIndexWithin = rangesIsIndexWithin;
 ```
 

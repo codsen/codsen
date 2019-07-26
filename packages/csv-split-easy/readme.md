@@ -41,14 +41,14 @@ or as an ES Module:
 import splitEasy from "csv-split-easy";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/csv-split-easy/dist/csv-split-easy.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "csvSplitEasy" which you consume like this:
+// in which case you get a global variable "csvSplitEasy" which you consume like this:
 const splitEasy = csvSplitEasy;
 ```
 

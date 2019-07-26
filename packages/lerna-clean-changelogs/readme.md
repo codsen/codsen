@@ -46,14 +46,14 @@ or as an ES Module:
 import c from "lerna-clean-changelogs";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/lerna-clean-changelogs/dist/lerna-clean-changelogs.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "lernaCleanChangelogs" which you consume like this:
+// in which case you get a global variable "lernaCleanChangelogs" which you consume like this:
 const c = lernaCleanChangelogs;
 ```
 

@@ -40,14 +40,14 @@ or as an ES Module:
 import allValuesEqualToWrapper from "object-all-values-equal-to";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/object-all-values-equal-to/dist/object-all-values-equal-to.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "objectAllValuesEqualTo" which you consume like this:
+// in which case you get a global variable "objectAllValuesEqualTo" which you consume like this:
 const allValuesEqualToWrapper = objectAllValuesEqualTo;
 ```
 

@@ -31,14 +31,14 @@ or as an ES Module:
 import groupStr from "array-group-str-omit-num-char";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/array-group-str-omit-num-char/dist/array-group-str-omit-num-char.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "arrayGroupStrOmitNumChar" which you consume like this:
+// in which case you get a global variable "arrayGroupStrOmitNumChar" which you consume like this:
 const groupStr = arrayGroupStrOmitNumChar;
 ```
 

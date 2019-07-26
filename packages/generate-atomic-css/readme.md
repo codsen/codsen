@@ -57,14 +57,14 @@ import {
 } from "generate-atomic-css";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/generate-atomic-css/dist/generate-atomic-css.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "generateAtomicCss" which you consume like this:
+// in which case you get a global variable "generateAtomicCss" which you consume like this:
 const {
   genAtomic,
   version,

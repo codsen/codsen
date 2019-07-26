@@ -60,14 +60,14 @@ import {
 } from "json-comb-core";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/json-comb-core/dist/json-comb-core.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "jsonCombCore" which you consume like this:
+// in which case you get a global variable "jsonCombCore" which you consume like this:
 const {
   getKeysetSync,
   getKeyset,

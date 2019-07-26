@@ -38,14 +38,14 @@ or as an ES Module:
 import emptyCondCommentRegex from "regex-empty-conditional-comments";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/regex-empty-conditional-comments/dist/regex-empty-conditional-comments.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "regexEmptyConditionalComments" which you consume like this:
+// in which case you get a global variable "regexEmptyConditionalComments" which you consume like this:
 const emptyCondCommentRegex = regexEmptyConditionalComments;
 ```
 

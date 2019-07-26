@@ -31,14 +31,14 @@ or as an ES Module:
 import generateAst from "array-of-arrays-into-ast";
 ```
 
-or for web pages, as a production-ready minified script file, straight from CDN:
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/array-of-arrays-into-ast/dist/array-of-arrays-into-ast.umd.js"></script>
 ```
 
 ```js
-// then, you get a global variable "arrayOfArraysIntoAst" which you consume like this:
+// in which case you get a global variable "arrayOfArraysIntoAst" which you consume like this:
 const generateAst = arrayOfArraysIntoAst;
 ```
 
