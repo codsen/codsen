@@ -13,22 +13,15 @@
 
 ## Table of Contents
 
-- [string-uglify](#string-uglify)
-  - [Table of Contents](#table-of-contents)
-  - [Install](#install)
-  - [Idea](#idea)
-  - [Main feature - it's not position-sensitive](#main-feature---its-not-position-sensitive)
-    - [Basic algorithm](#basic-algorithm)
-    - [Our algorithm](#our-algorithm)
-  - [Other features](#other-features)
-  - [Usage](#usage)
-  - [API](#api)
-    - [uglifyArr() - returns copy of a given array with each string uglified](#uglifyarr---returns-copy-of-a-given-array-with-each-string-uglified)
-    - [uglifyById() - copied and uglifies array and returns uglified element by requested id](#uglifybyid---copied-and-uglifies-array-and-returns-uglified-element-by-requested-id)
-    - [version](#version)
-  - [uglification vs minification](#uglification-vs-minification)
-  - [Contributing](#contributing)
-  - [Licence](#licence)
+- [Install](#install)
+- [Idea](#idea)
+- [Main feature - it's not position-sensitive](#main-feature---its-not-position-sensitive)
+- [Other features](#other-features)
+- [Usage](#usage)
+- [API](#api)
+- [uglification vs minification](#uglification-vs-minification)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 
@@ -91,9 +84,11 @@ A basic uglification algorithm looks like this: take an array of class/id names,
 
 Problem with this algorithm is that when you add or remove some classes from code, all others "below" in the list get shifted — their names change.
 
-Practically, this means, if you add a single new class high-enough, there will be code changes *all over the file*.
+Practically, this means, if you add a single new class high-enough, there will be code changes _all over the file_.
 
 Besides being simple, the second strength of this algorithm is that length-wise, class/id names are the shortest possible.
+
+**[⬆ back to top](#)**
 
 ### Our algorithm
 
