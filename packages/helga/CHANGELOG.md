@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.10](https://gitlab.com/codsen/codsen/compare/helga@1.1.9...helga@1.1.10) (2019-07-29)
-
-**Note:** Version bump only for package helga
-
-
-
-
-
 ## 1.1.0 (2019-06-18)
 
 ### Features

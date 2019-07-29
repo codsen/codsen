@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.7.3](https://gitlab.com/codsen/codsen/compare/html-crush@1.7.2...html-crush@1.7.3) (2019-07-29)
-
-**Note:** Version bump only for package html-crush
-
-
-
-
-
 ## 1.7.0 (2019-07-24)
 
 ### Features
