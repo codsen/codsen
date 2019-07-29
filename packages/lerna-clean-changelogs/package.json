@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs",
-  "version": "1.3.25",
+  "version": "1.3.26",
   "description": "Cleans all the crap from Lerna and Conventional Commits-generated changelogs",
   "license": "MIT",
   "engines": {
@@ -182,8 +182,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.35",
-    "lect": "^0.9.2",
+    "js-row-num-cli": "^1.5.36",
+    "lect": "^0.9.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.17.0",
