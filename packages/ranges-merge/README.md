@@ -95,7 +95,7 @@ rangesMerge([
 
 ## API
 
-**rangesMerge(arrOfRanges\[, opts])** — in other words, this library gives you a _function_, and you must feed _an array_ into its first argument and also if you wish, you can feed a second argument, a function (bracket in `[, opts]` means "optional").
+**rangesMerge(arrOfRanges\[, opts])** — in other words, this library gives you a _function_, and you must feed _an array_ into its first argument and also if you wish, you can feed a second argument, a plain object (bracket in `[, opts]` means "optional").
 
 It returns a new array of zero or more arrays, with ranges merged (where applicable). Original input is not mutated.
 

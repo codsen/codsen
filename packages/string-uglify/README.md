@@ -13,15 +13,22 @@
 
 ## Table of Contents
 
-- [Install](#install)
-- [Idea](#idea)
-- [Main feature - it's not position-sensitive](#main-feature---its-not-position-sensitive)
-- [Other features](#other-features)
-- [Usage](#usage)
-- [API](#api)
-- [uglification vs minification](#uglification-vs-minification)
-- [Contributing](#contributing)
-- [Licence](#licence)
+- [string-uglify](#string-uglify)
+  - [Table of Contents](#table-of-contents)
+  - [Install](#install)
+  - [Idea](#idea)
+  - [Main feature - it's not position-sensitive](#main-feature---its-not-position-sensitive)
+    - [Basic algorithm](#basic-algorithm)
+    - [Our algorithm](#our-algorithm)
+  - [Other features](#other-features)
+  - [Usage](#usage)
+  - [API](#api)
+    - [uglifyArr() - returns copy of a given array with each string uglified](#uglifyarr---returns-copy-of-a-given-array-with-each-string-uglified)
+    - [uglifyById() - copied and uglifies array and returns uglified element by requested id](#uglifybyid---copied-and-uglifies-array-and-returns-uglified-element-by-requested-id)
+    - [version](#version)
+  - [uglification vs minification](#uglification-vs-minification)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## Install
 
@@ -78,11 +85,27 @@ into something like:
 
 ## Main feature - it's not position-sensitive
 
-Uglified names are generated from the original string's characters and their positions. If you add, remove or shuffle strings in the input array, up to 0.1% of the uglified values might change.
+### Basic algorithm
 
-The alternative algorithm would be to pick the values by their order in the reference array. The first name gets `a`, second gets `b`, 27th name gets `aa`, 28th gets `ab` and so on. While such alternative is faster, it's sensitive to the reference array's changes. One newly added class will change the names of everything generated so far.
+A basic uglification algorithm looks like this: take an array of class/id names, first-one gets name `a`, second `b`. After 26 letters are depleted, the next name gets `aa` and so on.
 
-But this uglification library is very little prone to positional changes in the reference array.
+Problem with this algorithm is that when you add or remove some classes from code, all others "below" in the list get shifted — their names change.
+
+Practically, this means, if you add a single new class high-enough, there will be code changes *all over the file*.
+
+Besides being simple, the second strength of this algorithm is that length-wise, class/id names are the shortest possible.
+
+### Our algorithm
+
+This program generates uglified names differently. It uses a special formula to turn the unique sequence of letters and their positions into another, unique combination of two or more letters.
+
+In this approach, if you add, remove or shuffle strings in the input array, up to 0.1% of the uglified values might change.
+
+The drawback of this algorithm is that class/id names start at two-characters length and if that combination is taken, get three-character (or, with increasingly lesser probability, longer) names.
+
+Single-letter names are assigned during the cleanup phase: existing single-character names are left untouched, the remaining pool of letters is distributed the following way.
+
+We scan the list of uglified result names and check their first letter. If that letter is not taken, that name gets shortened to one letter.
 
 **[⬆ back to top](#)**
 
@@ -175,6 +198,7 @@ console.log(`string-uglify from npm has version: ${version}`);
 Some people use the term "minification" and "uglification" interchangeably, but that's two different things.
 
 **Uglification**: `.class1 { display: block; }` &rarr; `.fj { display: block; }` (rename class or id names to be shorter)
+
 **Minification**: `.class1 { display: block; }` &rarr; `.class1{display:block}` (in CSS case, remove all the white space and sometimes last semicolon)
 
 This library won't minify.
