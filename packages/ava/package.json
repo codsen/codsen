@@ -80,7 +80,7 @@
     "get-port": "^5.0.0",
     "globby": "^10.0.1",
     "ignore-by-default": "^1.0.1",
-    "import-local": "^3.0.1",
+    "import-local": "^3.0.2",
     "indent-string": "^4.0.0",
     "is-ci": "^2.0.0",
     "is-error": "^2.2.2",
