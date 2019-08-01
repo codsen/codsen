@@ -124,6 +124,7 @@ function comb(str, opts) {
   var allClassesAndIdsWithinHeadFinalUglified;
   var countAfterCleaning;
   var countBeforeCleaning;
+  var curliesDepth = 0;
   var bodyItsTheFirstClassOrId;
   var bogusHTMLComment;
   var ruleChunkStartedAt;
@@ -431,7 +432,7 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && stateWithinHeadStyles && insideCurlyBraces && checkingInsideCurlyBraces && chr === "}" && !currentlyWithinQuotes) {
+      if (!doNothing && stateWithinHeadStyles && insideCurlyBraces && checkingInsideCurlyBraces && chr === "}" && !currentlyWithinQuotes && !curliesDepth) {
         insideCurlyBraces = false;
         if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
           finalIndexesToDelete.push(ruleChunkStartedAt, i + 1);
@@ -1016,10 +1017,17 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && chr === "{" && checkingInsideCurlyBraces && !insideCurlyBraces) {
-        insideCurlyBraces = true;
-        if (whitespaceStartedAt !== null && (str.slice(whitespaceStartedAt, i).includes("\n") || str.slice(whitespaceStartedAt, i).includes("\r"))) {
-          finalIndexesToDelete.push(whitespaceStartedAt, i);
+      if (chr === "}" && curliesDepth) {
+        curliesDepth--;
+      }
+      if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
+        if (!insideCurlyBraces) {
+          insideCurlyBraces = true;
+          if (whitespaceStartedAt !== null && (str.slice(whitespaceStartedAt, i).includes("\n") || str.slice(whitespaceStartedAt, i).includes("\r"))) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        } else {
+          curliesDepth++;
         }
       }
       if (!doNothing) {

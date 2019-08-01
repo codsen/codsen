@@ -3230,6 +3230,37 @@ u+.a .jb{uvw}
   t.is(actual1, intended1, "01.67");
 });
 
+test("01.68 - double curlies around values", t => {
+  const actual1 = comb(`<style>
+.used-1 {
+display: {{ abc.de_fg | hi_jk: 10 }};
+}
+#unused-2 {
+height: {{ abc.de_fg | hi_jk: 10 }};
+}
+</style>
+</head>
+<body id="unused-3">
+<table class="unused-4 used-1">
+<tr>
+<td class="unused-5 unused-6">
+text`).result;
+  const intended1 = `<style>
+.used-1 {
+display: {{ abc.de_fg | hi_jk: 10 }};
+}
+</style>
+</head>
+<body>
+<table class="used-1">
+<tr>
+<td>
+text
+`;
+
+  t.is(actual1, intended1, "01.67");
+});
+
 //
 //
 //                                                             222222222222222

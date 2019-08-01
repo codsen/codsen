@@ -84,6 +84,7 @@ function comb(str, opts) {
   let allClassesAndIdsWithinHeadFinalUglified;
   let countAfterCleaning;
   let countBeforeCleaning;
+  let curliesDepth = 0;
   let bodyItsTheFirstClassOrId;
   let bogusHTMLComment;
   let ruleChunkStartedAt;
@@ -552,7 +553,8 @@ function comb(str, opts) {
         insideCurlyBraces &&
         checkingInsideCurlyBraces &&
         chr === "}" &&
-        !currentlyWithinQuotes
+        !currentlyWithinQuotes &&
+        !curliesDepth
       ) {
         insideCurlyBraces = false;
         if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
@@ -1363,19 +1365,21 @@ function comb(str, opts) {
           }
         }
       }
-      if (
-        !doNothing &&
-        chr === "{" &&
-        checkingInsideCurlyBraces &&
-        !insideCurlyBraces
-      ) {
-        insideCurlyBraces = true;
-        if (
-          whitespaceStartedAt !== null &&
-          (str.slice(whitespaceStartedAt, i).includes("\n") ||
-            str.slice(whitespaceStartedAt, i).includes("\r"))
-        ) {
-          finalIndexesToDelete.push(whitespaceStartedAt, i);
+      if (chr === "}" && curliesDepth) {
+        curliesDepth--;
+      }
+      if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
+        if (!insideCurlyBraces) {
+          insideCurlyBraces = true;
+          if (
+            whitespaceStartedAt !== null &&
+            (str.slice(whitespaceStartedAt, i).includes("\n") ||
+              str.slice(whitespaceStartedAt, i).includes("\r"))
+          ) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        } else {
+          curliesDepth++;
         }
       }
       if (!doNothing) {
