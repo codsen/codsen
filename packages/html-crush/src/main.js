@@ -114,11 +114,11 @@ function crush(str, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
-        "html-minify-noparse: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
+        "html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
       );
     } else {
       throw new Error(
-        `html-minify-noparse: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
+        `html-crush: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
           str,
           null,
           4
@@ -129,7 +129,7 @@ function crush(str, originalOpts) {
 
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new Error(
-      `html-minify-noparse: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
+      `html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
         null,
         4
@@ -145,7 +145,7 @@ function crush(str, originalOpts) {
     for (let z = 0, len = originalOpts.breakToTheLeftOf.length; z < len; z++) {
       if (!isStr(originalOpts.breakToTheLeftOf[z])) {
         throw new TypeError(
-          `html-minify-noparse: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof originalOpts
+          `html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof originalOpts
             .breakToTheLeftOf[z]}" and is equal to:\n${JSON.stringify(
             originalOpts.breakToTheLeftOf[z],
             null,
@@ -158,7 +158,7 @@ function crush(str, originalOpts) {
 
   const opts = Object.assign({}, defaults, originalOpts);
   // checkTypes(opts, defaults, {
-  //   msg: "html-minify-noparse: [THROW_ID_04*]",
+  //   msg: "html-crush: [THROW_ID_04*]",
   //   schema: {
   //     reportProgressFunc: ["false", "null", "function"],
   //     breakToTheLeftOf: ["false", "null", "array"]

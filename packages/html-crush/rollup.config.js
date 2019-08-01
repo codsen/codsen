@@ -37,7 +37,8 @@ export default commandLineArgs => {
         babel(),
         terser(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     },
@@ -63,7 +64,8 @@ export default commandLineArgs => {
         babel(),
         cleanup(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     },
@@ -88,7 +90,8 @@ export default commandLineArgs => {
         json(),
         cleanup(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     }
