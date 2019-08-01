@@ -35,7 +35,8 @@ export default commandLineArgs => {
         babel(),
         terser(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     },
@@ -44,7 +45,9 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [""],
+      external: [
+        ""
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -53,7 +56,8 @@ export default commandLineArgs => {
         babel(),
         cleanup(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     },
@@ -62,7 +66,9 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [""],
+      external: [
+        ""
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -70,7 +76,8 @@ export default commandLineArgs => {
         json(),
         cleanup(),
         license({
-          banner: licensePiece
+          banner: licensePiece,
+          commentStyle: "ignored"
         })
       ]
     }
