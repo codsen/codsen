@@ -68,7 +68,7 @@ PS. That dollar sign above just means it's a terminal. Never type that dollar si
 
 This application performs the following cleaning steps on all encountered `changelog.md`'s:
 
-1. It removes bump-only changelog entries that `conventional-changelog` generates. There can be many reasons For example:
+1. It removes bump-only changelog entries that `conventional-changelog` generates. For example:
 
    ```
    **Note:** Version bump only for package ranges-apply
@@ -88,7 +88,7 @@ This application performs the following cleaning steps on all encountered `chang
    ## 2.9.1 (2018-12-27)
    ```
 
-   We need to do that because those links don't work on BitBucket and, generally, are _a noise_.
+   Diff links that changelog generator produces are not universal between GitLab, GitHub and BitBucket and sometimes there are bugs in them.
 
 3. Remove `h1` headings and turn them into `h2`, with the exception of the first, main heading of the changelog.
 
@@ -104,11 +104,11 @@ This application performs the following cleaning steps on all encountered `chang
    ## 2.0.0 (2018-12-27)
    ```
 
-   (notice how a second hash character added, beside link being removed)
+   (notice how a second `#` character is added, beside link being removed)
 
 ---
 
-We might add more cleaning features in later releases.
+More features will follow.
 
 **[⬆ back to top](#)**
 
