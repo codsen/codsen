@@ -232,6 +232,21 @@ test(`02.03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left subs
   );
 });
 
+test.only(`02.04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, t => {
+  t.is(
+    matchLeftIncl("abcdef", 3, ["abcd"], {
+      cb: (char, theRemainderOfTheString, index) => {
+        t.is(char, undefined, "04.04.01");
+        t.is(theRemainderOfTheString, "", "04.04.02");
+        t.is(index, undefined, "04.04.03");
+        return true;
+      }
+    }),
+    "abcd",
+    "02.04"
+  );
+});
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
@@ -318,6 +333,21 @@ test(`04.03 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simp
     matchRightIncl("abcdef", 2, ["JFHG", "URR", "C"], { i: true }),
     "C",
     "04.03.04"
+  );
+});
+
+test(`04.04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, t => {
+  t.is(
+    matchRightIncl("abcdef", 3, ["def"], {
+      cb: (char, theRemainderOfTheString, index) => {
+        t.is(char, undefined, "04.04.01");
+        t.is(theRemainderOfTheString, "", "04.04.02");
+        t.is(index, 6, "04.04.03");
+        return true;
+      }
+    }),
+    "def",
+    "04.04"
   );
 });
 
