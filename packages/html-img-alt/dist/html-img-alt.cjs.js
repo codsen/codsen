@@ -1,4 +1,4 @@
-/**
+/** 
  * html-img-alt
  * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
  * Version: 1.4.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

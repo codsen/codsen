@@ -1,4 +1,4 @@
-/**
+/** 
  * object-boolean-combinations
  * Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
  * Version: 2.11.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations
  */
-
 import intersection from 'lodash.intersection';
 import pull from 'lodash.pull';
 import isObject from 'lodash.isplainobject';

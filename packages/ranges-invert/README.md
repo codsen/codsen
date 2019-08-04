@@ -17,18 +17,18 @@
 npm i ranges-invert
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rangesInvert`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`invert`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const rangesInvert = require("ranges-invert");
+const invert = require("ranges-invert");
 ```
 
 or as an ES Module:
 
 ```js
-import rangesInvert from "ranges-invert";
+import invert from "ranges-invert";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -39,7 +39,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "rangesInvert" which you consume like this:
-const rangesInvert = rangesInvert;
+const invert = rangesInvert;
 ```
 
 This package has three builds in `dist/` folder:

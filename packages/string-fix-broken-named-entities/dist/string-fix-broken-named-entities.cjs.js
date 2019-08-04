@@ -1,4 +1,4 @@
-/**
+/** 
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
  * Version: 2.3.14
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

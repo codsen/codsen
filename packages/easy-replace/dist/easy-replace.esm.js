@@ -1,4 +1,4 @@
-/**
+/** 
  * easy-replace
  * Replace strings with optional lookarounds, but without regexes
  * Version: 3.7.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace
  */
-
 import toArray from 'lodash.toarray';
 import checkTypes from 'check-types-mini';
 

@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-merge
  * Merge and sort arrays which mean string slice ranges
  * Version: 4.2.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
  */
-
 import sortRanges from 'ranges-sort';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';

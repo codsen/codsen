@@ -1,4 +1,4 @@
-/**
+/** 
  * object-merge-advanced
  * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
  * Version: 10.10.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
  */
-
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import includes from 'array-includes-with-glob';

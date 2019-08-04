@@ -1,4 +1,4 @@
-/**
+/** 
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
  * Version: 7.9.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
  */
-
 import clone from 'lodash.clonedeep';
 import merge from 'object-merge-advanced';
 import checkTypes from 'check-types-mini';

@@ -17,18 +17,18 @@
 npm i array-includes-with-glob
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`arrayIncludesWithGlob`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`includesWithGlob`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const arrayIncludesWithGlob = require("array-includes-with-glob");
+const includesWithGlob = require("array-includes-with-glob");
 ```
 
 or as an ES Module:
 
 ```js
-import arrayIncludesWithGlob from "array-includes-with-glob";
+import includesWithGlob from "array-includes-with-glob";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -39,7 +39,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "arrayIncludesWithGlob" which you consume like this:
-const arrayIncludesWithGlob = arrayIncludesWithGlob;
+const includesWithGlob = arrayIncludesWithGlob;
 ```
 
 This package has three builds in `dist/` folder:

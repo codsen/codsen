@@ -1,4 +1,4 @@
-/**
+/** 
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
  * Version: 1.7.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

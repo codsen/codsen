@@ -1,4 +1,4 @@
-/**
+/** 
  * bitbucket-slug
  * Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.
  * Version: 1.9.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/bitbucket-slug
  */
-
 import deburr from 'lodash.deburr';
 import ent from 'ent';
 

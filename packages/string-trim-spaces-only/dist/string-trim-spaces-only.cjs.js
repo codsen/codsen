@@ -1,4 +1,4 @@
-/**
+/** 
  * string-trim-spaces-only
  * Like String.trim() but trims only spaces
  * Version: 2.7.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

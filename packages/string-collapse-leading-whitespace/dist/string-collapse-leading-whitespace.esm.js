@@ -1,4 +1,4 @@
-/**
+/** 
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
  * Version: 1.12.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
  */
-
 function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
   let limitLinebreaksCount;
   if (

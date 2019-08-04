@@ -3,7 +3,7 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
-import license from "rollup-plugin-license";
+import banner from "rollup-plugin-banner";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import json from "rollup-plugin-json";
@@ -36,9 +36,7 @@ export default commandLineArgs => {
         commonjs(),
         babel(),
         terser(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     },
 
@@ -63,9 +61,7 @@ export default commandLineArgs => {
         json(),
         babel(),
         cleanup(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     },
 
@@ -89,9 +85,7 @@ export default commandLineArgs => {
         builtins(),
         json(),
         cleanup(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     }
   ];

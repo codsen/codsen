@@ -1,4 +1,4 @@
-/**
+/** 
  * charcode-is-valid-xml-name-character
  * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
  * Version: 1.10.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

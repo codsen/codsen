@@ -11,6 +11,8 @@
 
 # folders:
 
+.nyc_output
+coverage
 test
 
 # files:

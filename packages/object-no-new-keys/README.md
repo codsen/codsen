@@ -28,18 +28,18 @@
 npm i object-no-new-keys
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`objectNoNewKeys`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`nnk`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const objectNoNewKeys = require("object-no-new-keys");
+const nnk = require("object-no-new-keys");
 ```
 
 or as an ES Module:
 
 ```js
-import objectNoNewKeys from "object-no-new-keys";
+import nnk from "object-no-new-keys";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -50,7 +50,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "objectNoNewKeys" which you consume like this:
-const objectNoNewKeys = objectNoNewKeys;
+const nnk = objectNoNewKeys;
 ```
 
 This package has three builds in `dist/` folder:
@@ -77,7 +77,7 @@ Personally, I use this library to look for any rogue keys in email template cont
 
 ## API
 
-**objectNoNewKeys(input, reference\[, opts])**
+**nnk(input, reference\[, opts])**
 
 Returns zero or more long array of the paths to each key/element in the `input` which does not exist in `reference`.
 

@@ -1,4 +1,4 @@
-/**
+/** 
  * js-row-num
  * Update all row numbers in all console.logs in JS code
  * Version: 2.3.11
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

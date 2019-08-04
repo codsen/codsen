@@ -1,4 +1,4 @@
-/**
+/** 
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
  * Version: 1.1.12
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

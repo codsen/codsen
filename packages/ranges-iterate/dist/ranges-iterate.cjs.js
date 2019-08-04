@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-iterate
  * Iterate a string and any changes within already existing ranges
  * Version: 1.1.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-iterate
  */
-
 'use strict';
 
 function _typeof(obj) {

@@ -150,6 +150,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "req": "includesWithGlob",
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -175,7 +176,7 @@
     "execa": "^2.0.3",
     "filesize": "^4.1.2",
     "find-file-recursively-up": "^1.1.2",
-    "format-package": "^5.1.0",
+    "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
     "get-pkg-repo": "^4.1.0",
     "github-slugger": "^1.2.1",
@@ -203,7 +204,7 @@
     "split-lines": "^2.0.0",
     "update-notifier": "^3.0.1",
     "write-file-atomic": "^3.0.0",
-    "write-json-file": "^4.1.1"
+    "write-json-file": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

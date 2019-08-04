@@ -1,4 +1,4 @@
-/**
+/** 
  * all-named-html-entities
  * Array of all named HTML entities
  * Version: 1.1.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

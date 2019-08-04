@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-is-index-within
  * Efficiently checks if index is within any of the given ranges
  * Version: 1.14.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
  */
-
 const isArr = Array.isArray;
 function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   const defaults = {

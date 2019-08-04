@@ -17,18 +17,18 @@
 npm i ranges-crop
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rangesCrop`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`crop`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const rangesCrop = require("ranges-crop");
+const crop = require("ranges-crop");
 ```
 
 or as an ES Module:
 
 ```js
-import rangesCrop from "ranges-crop";
+import crop from "ranges-crop";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -39,7 +39,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "rangesCrop" which you consume like this:
-const rangesCrop = rangesCrop;
+const crop = rangesCrop;
 ```
 
 This package has three builds in `dist/` folder:
@@ -80,7 +80,7 @@ That's what this library does - it takes an **array of ranges** and the **length
 
 ## API
 
-**rangesCrop(arr, strLen)**
+**crop(arr, strLen)**
 
 | Input argument | Type                         | Obligatory? | Description                                                                                                                                                                                                                 |
 | -------------- | ---------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

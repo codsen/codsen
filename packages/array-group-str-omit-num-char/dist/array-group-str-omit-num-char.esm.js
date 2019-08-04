@@ -1,4 +1,4 @@
-/**
+/** 
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
  * Version: 2.1.8
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char
  */
-
 import uniq from 'lodash.uniq';
 import rangesApply from 'ranges-apply';
 

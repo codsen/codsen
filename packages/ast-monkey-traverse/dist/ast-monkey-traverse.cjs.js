@@ -1,4 +1,4 @@
-/**
+/** 
  * ast-monkey-traverse
  * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
  * Version: 1.11.31
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

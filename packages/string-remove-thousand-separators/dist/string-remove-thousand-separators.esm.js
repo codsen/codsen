@@ -1,4 +1,4 @@
-/**
+/** 
  * string-remove-thousand-separators
  * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
  * Version: 3.0.26
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
  */
-
 import replaceSlicesArr from 'ranges-apply';
 import Slices from 'ranges-push';
 import isObj from 'lodash.isplainobject';

@@ -1,4 +1,4 @@
-/**
+/** 
  * check-types-mini
  * Check the types of your options object's values after user has customised them
  * Version: 5.7.32
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
  */
-
 import typ from 'type-detect';
 import pullAll from 'lodash.pullall';
 import traverse from 'ast-monkey-traverse';

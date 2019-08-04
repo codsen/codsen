@@ -1,4 +1,4 @@
-/**
+/** 
  * string-match-left-right
  * Do substrings match what's on the left or right of a given index?
  * Version: 3.10.36
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
  */
-
 import isNaturalNumber from 'is-natural-number';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';

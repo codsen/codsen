@@ -17,18 +17,18 @@
 npm i ranges-sort
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rangesSort`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rsort`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const rangesSort = require("ranges-sort");
+const rsort = require("ranges-sort");
 ```
 
 or as an ES Module:
 
 ```js
-import rangesSort from "ranges-sort";
+import rsort from "ranges-sort";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -39,7 +39,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "rangesSort" which you consume like this:
-const rangesSort = rangesSort;
+const rsort = rangesSort;
 ```
 
 This package has three builds in `dist/` folder:
@@ -91,7 +91,7 @@ The purpose of _range sorting_ is to make life easier for other range-processing
 
 ## API
 
-**rangesSort(arr[, opts])** — in other words, this library gives you a _function_ and you must feed an array into its first argument and also if you wish, you can feed a second argument, the _Optional Options Object_ (bracket in `[, opts]` means "optional").
+**rsort(arr[, opts])** — in other words, this library gives you a _function_ and you must feed an array into its first argument and also if you wish, you can feed a second argument, the _Optional Options Object_ (bracket in `[, opts]` means "optional").
 
 | Input argument | Type         | Obligatory? | Description                                                                  |
 | -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |

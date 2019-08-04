@@ -1,4 +1,4 @@
-/**
+/** 
  * string-character-is-astral-surrogate
  * Tells, is given character a part of astral character, specifically, a high and low surrogate
  * Version: 1.10.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-character-is-astral-surrogate
  */
-
 function isHighSurrogate(something) {
   if (typeof something === "string") {
     if (something.length === 0) {

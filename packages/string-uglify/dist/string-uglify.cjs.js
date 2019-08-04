@@ -1,4 +1,4 @@
-/**
+/** 
  * string-uglify
  * Uglify - generate unique short names for sets of strings
  * Version: 1.2.8
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

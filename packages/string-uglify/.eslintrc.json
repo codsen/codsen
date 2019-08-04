@@ -52,12 +52,14 @@
       "error",
       {
         "devDependencies": [
+          "gulpfile.js",
           "**/*test.js",
           "perf/**/*.*",
           "test/**/*.*",
           "test-util/**/*.*",
           "t-util/**/*.*",
-          "rollup.config.js"
+          "rollup.config.js",
+          "**/scripts/**/*.*"
         ]
       }
     ],

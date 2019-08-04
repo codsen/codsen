@@ -1,4 +1,4 @@
-/**
+/** 
  * ast-delete-object
  * Delete all plain objects that contain a certain key/value pair
  * Version: 1.8.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

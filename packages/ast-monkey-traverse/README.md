@@ -27,18 +27,18 @@
 npm i ast-monkey-traverse
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`astMonkeyTraverse`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`traverse`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const astMonkeyTraverse = require("ast-monkey-traverse");
+const traverse = require("ast-monkey-traverse");
 ```
 
 or as an ES Module:
 
 ```js
-import astMonkeyTraverse from "ast-monkey-traverse";
+import traverse from "ast-monkey-traverse";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -49,7 +49,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "astMonkeyTraverse" which you consume like this:
-const astMonkeyTraverse = astMonkeyTraverse;
+const traverse = astMonkeyTraverse;
 ```
 
 This package has three builds in `dist/` folder:

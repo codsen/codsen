@@ -1,4 +1,4 @@
-/**
+/** 
  * array-pull-all-with-glob
  * pullAllWithGlob - like _.pullAll but pulling stronger, with globs
  * Version: 4.12.36
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-pull-all-with-glob
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

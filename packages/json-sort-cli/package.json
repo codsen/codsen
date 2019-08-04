@@ -163,7 +163,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^1.11.31",
     "chalk": "^2.4.2",
-    "format-package": "^5.1.0",
+    "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",

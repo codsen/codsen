@@ -1,5 +1,5 @@
 import isObj from "lodash.isplainobject";
-import applySlices from "ranges-apply";
+import applyRanges from "ranges-apply";
 import Slices from "ranges-push";
 import { version } from "../package.json";
 import { matchRight, matchRightIncl } from "string-match-left-right";
@@ -1810,7 +1810,7 @@ function crush(str, originalOpts) {
         )}`
       );
 
-      const res = applySlices(
+      const res = applyRanges(
         str,
         finalIndexesToDelete.current(),
         applyPercDone => {

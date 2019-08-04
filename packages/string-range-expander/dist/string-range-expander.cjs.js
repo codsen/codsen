@@ -1,4 +1,4 @@
-/**
+/** 
  * string-range-expander
  * Expands string index ranges within whitespace boundaries until letters are met
  * Version: 1.10.36
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

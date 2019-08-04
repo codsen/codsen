@@ -27,18 +27,18 @@
 npm i object-boolean-combinations
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`objectBooleanCombinations`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`combinations`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const objectBooleanCombinations = require("object-boolean-combinations");
+const combinations = require("object-boolean-combinations");
 ```
 
 or as an ES Module:
 
 ```js
-import objectBooleanCombinations from "object-boolean-combinations";
+import combinations from "object-boolean-combinations";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -49,7 +49,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "objectBooleanCombinations" which you consume like this:
-const objectBooleanCombinations = objectBooleanCombinations;
+const combinations = objectBooleanCombinations;
 ```
 
 This package has three builds in `dist/` folder:
@@ -67,8 +67,8 @@ This package has three builds in `dist/` folder:
 It consumes a plain object, takes its keys (values don't matter) and produces an array with every possible combination of each key's Boolean^ value. If you have _n_ keys, you'll get `2^n` objects in the resulting array.
 
 ```js
-const objectBooleanCombinations = require("object-boolean-combinations");
-const test = objectBooleanCombinations({ a: "whatever" });
+const combinations = require("object-boolean-combinations");
+const test = combinations({ a: "whatever" });
 console.log(`test = ${JSON.stringify(test, null, 4)}`);
 // => [
 //      {a: 0},
@@ -87,7 +87,7 @@ Sometimes, you don't want all the combinations, you might want to "pin" certain 
 ## API
 
 ```javascript
-objectBooleanCombinations(inputObject, [overrideObject]);
+combinations(inputObject, [overrideObject]);
 ```
 
 ### API - Input
@@ -104,8 +104,8 @@ objectBooleanCombinations(inputObject, [overrideObject]);
 Sometimes you want to override the object keys, for example, in the a settings object, I want to override all `a` and `b` keys to be only `true` (`1`). This reduces the object combinations from `2^3 = 8` to: `2^(3-2) = 2^1 = 2`:
 
 ```js
-const objectBooleanCombinations = require("object-boolean-combinations");
-const test = objectBooleanCombinations(
+const combinations = require("object-boolean-combinations");
+const test = combinations(
   { a: 0, b: 0, c: 0 },
   { a: 1, b: 1 } // <----- Override. These values will be on all combinations.
 );
@@ -131,7 +131,7 @@ Here's an AVA test, which uses `objectBooleanCombinations()` to create a combina
 
 ```js
 test("encode entities - pound sign", t => {
-  objectBooleanCombinations(sampleObj, {
+  combinations(sampleObj, {
     convertEntities: true
   }).forEach(function(elem) {
     t.is(

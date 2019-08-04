@@ -1,4 +1,4 @@
-/**
+/** 
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  * Version: 1.7.3
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

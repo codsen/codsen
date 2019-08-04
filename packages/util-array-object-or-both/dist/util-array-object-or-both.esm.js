@@ -1,4 +1,4 @@
-/**
+/** 
  * util-array-object-or-both
  * Validate and normalise user choice: array, object or both?
  * Version: 2.7.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
  */
-
 import includes from 'lodash.includes';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';

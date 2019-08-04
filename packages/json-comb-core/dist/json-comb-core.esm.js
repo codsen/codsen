@@ -1,4 +1,4 @@
-/**
+/** 
  * json-comb-core
  * The inner core of json-comb
  * Version: 6.5.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
  */
-
 import setAllValuesTo from 'object-set-all-values-to';
 import flattenAllArrays from 'object-flatten-all-arrays';
 import mergeAdvanced from 'object-merge-advanced';

@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-apply
  * Take an array of string slice ranges, delete/replace the string according to them
  * Version: 3.0.26
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
  */
-
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import ordinal from 'ordinal-number-suffix';

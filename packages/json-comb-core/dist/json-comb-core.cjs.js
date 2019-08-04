@@ -1,4 +1,4 @@
-/**
+/** 
  * json-comb-core
  * The inner core of json-comb
  * Version: 6.5.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

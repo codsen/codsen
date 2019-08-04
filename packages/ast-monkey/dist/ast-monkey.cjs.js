@@ -1,4 +1,4 @@
-/**
+/** 
  * ast-monkey
  * Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
  * Version: 7.10.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

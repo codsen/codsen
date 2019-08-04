@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-merge
  * Merge and sort arrays which mean string slice ranges
  * Version: 4.2.13
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

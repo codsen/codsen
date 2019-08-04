@@ -1,4 +1,4 @@
-/**
+/** 
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
  * Version: 2.9.35
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

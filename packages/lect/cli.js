@@ -251,11 +251,11 @@ async function step14(receivedPack) {
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
-  // console.log(`0257 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
+  // console.log(`0254 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
 
   if (isObj(lectrc) && Object.keys(lectrc).length) {
-    // console.log(`0260 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
-    // console.log(`0261 lect: path=${path.resolve("../.lectrc.json")}`);
+    // console.log(`0257 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
+    // console.log(`0258 lect: path=${path.resolve("../.lectrc.json")}`);
 
     await writeJsonFile(path.resolve("../.lectrc.json"), lectrc)
       .then(() => {
@@ -434,9 +434,7 @@ function step13() {
         commonjs(),
         babel(),
         terser(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     },
 `;
@@ -476,9 +474,7 @@ function step13() {
     },
         babel(),
         cleanup(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     },
 `;
@@ -513,9 +509,7 @@ function step13() {
       rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""
     },
         cleanup(),
-        license({
-          banner: licensePiece
-        })
+        banner(licensePiece)
       ]
     }`;
   }
@@ -534,7 +528,7 @@ function step13() {
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
-import license from "rollup-plugin-license";
+import banner from "rollup-plugin-banner";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 ${
@@ -992,18 +986,18 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   const packDevDeps = pack.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0976 packDevDeps.ava = ${packDevDeps.ava}`);
+  //   console.log(`0989 packDevDeps.ava = ${packDevDeps.ava}`);
   //   const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
   // }
   const lectrcDevDeps = lectrc.package.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0981 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
+  //   console.log(`0994 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
   // }
 
   // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
-    // console.log(`0987 lect: processing ${key}`);
+    // console.log(`1000 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
@@ -1014,7 +1008,7 @@ async function writePackageJson(receivedPackageJsonObj) {
       (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
-      // console.log(`0998 lect: we'll delete key "${key}" from dev dependencies`);
+      // console.log(`1011 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1022,7 +1016,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     ) {
       // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-      // console.log(`1006 lect: ${key} stays ${pack.devDependencies[key]}`);
+      // console.log(`1019 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
     // console.log("\n-------\n");
   });
@@ -1037,7 +1031,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1021 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1034 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1082,7 +1076,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1066 lect cli: key to write hard =${key}`);
+        // console.log(`1079 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1199,7 +1193,7 @@ async function step10() {
             .manifest(dep)
             .then(pkg => pkg.version);
           // console.log(
-          //   `1183 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `1196 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
           //     retrievedVersion,
           //     null,
           //     4
@@ -1635,7 +1629,7 @@ function step6() {
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
       if (DEBUG) {
-        console.log(`1619 clause #1`);
+        console.log(`1632 clause #1`);
       }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
@@ -1653,7 +1647,7 @@ function step6() {
       readmePiece.heading.startsWith("# ")
     ) {
       if (DEBUG) {
-        console.log(`1637 clause #2`);
+        console.log(`1650 clause #2`);
       }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
@@ -1699,7 +1693,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1683 clause #3`);
+        console.log(`1696 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1748,6 +1742,12 @@ function step6() {
         } catch (e) {
           sourceContainsDefaultExport = false;
         }
+      }
+
+      if (pack.lect.req === camelCase(pack.name)) {
+        throw new Error(
+          `lect(): [THROW_ID_02] ${`\u001b[${31}m${`UMD build's variable name (package.json/lect.req) is the same as camelised package's name! ("${pack.lect.req}")`}\u001b[${39}m`}`
+        );
       }
 
       let bodyContent = readmePiece.restofit;

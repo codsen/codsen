@@ -1,4 +1,4 @@
-/**
+/** 
  * emlint
  * Non-parsing, email template-oriented linter
  * Version: 1.5.14
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

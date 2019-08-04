@@ -1,4 +1,4 @@
-/**
+/** 
  * generate-atomic-css
  * Generate Atomic CSS
  * Version: 1.2.6
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
  */
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

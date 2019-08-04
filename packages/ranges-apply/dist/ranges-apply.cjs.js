@@ -1,4 +1,4 @@
-/**
+/** 
  * ranges-apply
  * Take an array of string slice ranges, delete/replace the string according to them
  * Version: 3.0.26
@@ -6,7 +6,6 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
  */
-
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
