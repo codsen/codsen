@@ -232,7 +232,7 @@ test(`02.03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left subs
   );
 });
 
-test.only(`02.04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, t => {
+test(`02.04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, t => {
   t.is(
     matchLeftIncl("abcdef", 3, ["abcd"], {
       cb: (char, theRemainderOfTheString, index) => {
@@ -1133,8 +1133,8 @@ test(`07.04 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${36}m${"mar
       trimCharsBeforeMatching: [" "],
       cb: (char, theRemainderOfTheString, index) => {
         t.is(char, undefined, "07.04.04");
-        t.is(theRemainderOfTheString, undefined, "07.04.05");
-        t.is(index, undefined, "07.04.06");
+        t.is(theRemainderOfTheString, "", "07.04.05");
+        t.is(index, 10, "07.04.06");
         return true;
       }
     }),
@@ -1598,7 +1598,7 @@ test(`07.07 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"tri
       {
         cb: (char, theRemainderOfTheString, index) => {
           t.is(char, undefined, "07.07.27");
-          t.is(theRemainderOfTheString, undefined, "07.07.28");
+          t.is(theRemainderOfTheString, "", "07.07.28");
           t.is(index, undefined, "07.07.29");
           return true;
         }
@@ -1746,15 +1746,15 @@ test(`07.08 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"tri
       ["\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
       {
         cb: (char, theRemainderOfTheString, index) => {
-          t.is(char, undefined, "07.07.27");
-          t.is(theRemainderOfTheString, undefined, "07.07.28");
-          t.is(index, undefined, "07.07.29");
+          t.is(char, undefined, "07.08.27");
+          t.is(theRemainderOfTheString, "", "07.08.28");
+          t.is(index, 6, "07.08.29");
           return true;
         }
       }
     ),
     "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-    "07.07.26*"
+    "07.08.26*"
   );
 
   t.is(
@@ -1765,8 +1765,8 @@ test(`07.08 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"tri
       {
         cb: (char, theRemainderOfTheString, index) => {
           t.is(char, undefined, "07.07.31");
-          t.is(theRemainderOfTheString, undefined, "07.07.32");
-          t.is(index, undefined, "07.07.33");
+          t.is(theRemainderOfTheString, "", "07.07.32");
+          t.is(index, 6, "07.07.33");
           return true;
         }
       }

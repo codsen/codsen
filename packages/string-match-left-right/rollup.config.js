@@ -44,7 +44,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "arrayiffy-if-string",
-        "check-types-mini",
         "is-natural-number",
         "lodash.isfunction",
         "lodash.isplainobject",
@@ -67,7 +66,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "arrayiffy-if-string",
-        "check-types-mini",
         "is-natural-number",
         "lodash.isfunction",
         "lodash.isplainobject",
