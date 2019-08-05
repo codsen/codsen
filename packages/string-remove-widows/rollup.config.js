@@ -44,7 +44,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "lodash.isplainobject",
-        "ranges-apply"
+        "ranges-apply",
+        "ranges-push",
+        "string-left-right",
+        "string-match-left-right"
       ],
       plugins: [
         strip({
@@ -63,7 +66,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "lodash.isplainobject",
-        "ranges-apply"
+        "ranges-apply",
+        "ranges-push",
+        "string-left-right",
+        "string-match-left-right"
       ],
       plugins: [
         strip({

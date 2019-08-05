@@ -170,7 +170,10 @@
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.26"
+    "ranges-apply": "^3.0.26",
+    "ranges-push": "^3.2.10",
+    "string-left-right": "^2.2.16",
+    "string-match-left-right": "^3.10.36"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -195,7 +198,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.0",
     "rollup-plugin-cleanup": "^3.1.1",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.2",

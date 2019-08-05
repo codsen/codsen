@@ -14,6 +14,43 @@ const encodedMdashHtml = "&mdash;";
 const encodedMdashCss = ""; // TODO
 const encodedMdashJs = ""; // TODO
 
+const headsAndTailsJinja = [
+  {
+    heads: "{{",
+    tails: "}}"
+  },
+  {
+    heads: ["{% if", "{%- if"],
+    tails: ["{% endif", "{%- endif"]
+  },
+  {
+    heads: ["{% for", "{%- for"],
+    tails: ["{% endfor", "{%- endfor"]
+  },
+  {
+    heads: ["{%", "{%-"],
+    tails: ["%}", "-%}"]
+  },
+  {
+    heads: "{#",
+    tails: "#}"
+  }
+];
+
+const headsAndTailsHugo = [
+  {
+    heads: "{{",
+    tails: "}}"
+  }
+];
+
+const headsAndTailsHexo = [
+  {
+    heads: ["<%", "<%=", "<%-"],
+    tails: ["%>", "=%>", "-%>"]
+  }
+];
+
 // finally,
 export {
   rawnbsp,
@@ -27,5 +64,8 @@ export {
   rawMdash,
   encodedMdashHtml,
   encodedMdashCss,
-  encodedMdashJs
+  encodedMdashJs,
+  headsAndTailsJinja,
+  headsAndTailsHugo,
+  headsAndTailsHexo
 };
