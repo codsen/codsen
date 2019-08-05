@@ -95,9 +95,19 @@ function () {
     _classCallCheck(this, Ranges);
     var defaults = {
       limitToBeAddedWhitespace: false,
-      limitLinebreaksCount: 1
+      limitLinebreaksCount: 1,
+      mergeType: 1
     };
     var opts = Object.assign({}, defaults, originalOpts);
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
+      }
+    }
     this.opts = opts;
   }
   _createClass(Ranges, [{
@@ -168,7 +178,7 @@ function () {
         if (existy(this.slices) && isArr(this.last()) && from === this.last()[1]) {
           this.last()[1] = to;
           if (this.last()[2] !== null && existy(addVal)) {
-            var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 ? this.last()[2] + addVal : addVal;
+            var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
             if (this.opts.limitToBeAddedWhitespace) {
               calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
             }
@@ -180,7 +190,8 @@ function () {
           if (!this.slices) {
             this.slices = [];
           }
-          this.slices.push(addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to]);
+          var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+          this.slices.push(whatToPush);
         }
       } else {
         if (!isInt(from, {
@@ -205,7 +216,9 @@ function () {
     value: function current() {
       var _this2 = this;
       if (this.slices != null) {
-        this.slices = mergeRanges(this.slices);
+        this.slices = mergeRanges(this.slices, {
+          mergeType: this.opts.mergeType
+        });
         if (this.opts.limitToBeAddedWhitespace) {
           return this.slices.map(function (val) {
             if (existy(val[2])) {

@@ -35,16 +35,37 @@ class Ranges {
     // validation first:
     const defaults = {
       limitToBeAddedWhitespace: false,
-      limitLinebreaksCount: 1
+      limitLinebreaksCount: 1,
+      mergeType: 1
     };
     const opts = Object.assign({}, defaults, originalOpts);
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error(
+          `ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
+            opts.mergeType,
+            null,
+            4
+          )}`
+        );
+      }
+    }
     // so it's correct, let's get it in:
+    console.log(
+      `059 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
+    );
     this.opts = opts;
   }
 
   // A D D ()
   // ========
   add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
+    console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
+    console.log(`068 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called`);
     if (etc.length > 0) {
       throw new TypeError(
         `ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(
@@ -59,6 +80,7 @@ class Ranges {
       originalTo === undefined &&
       addVal === undefined
     ) {
+      console.log(`083 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} blank`);
       return; // do nothing about it
     }
     const from = isNumStr(originalFrom, { includeZero: true })
@@ -70,6 +92,9 @@ class Ranges {
 
     // validation
     if (isArr(originalFrom) && !existy(originalTo)) {
+      console.log(
+        `096 ${`\u001b[${33}m${`CASE 1`}\u001b[${39}m`} - output of slices array might be given`
+      );
       // This means output of slices array might be given.
       // But validate that first.
       let culpritId;
@@ -137,6 +162,9 @@ class Ranges {
       isInt(from, { includeZero: true }) &&
       isInt(to, { includeZero: true })
     ) {
+      console.log(
+        `166 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
+      );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal)) {
         throw new TypeError(
@@ -153,13 +181,18 @@ class Ranges {
         isArr(this.last()) &&
         from === this.last()[1]
       ) {
+        console.log(
+          `185 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
+        );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to;
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
         if (this.last()[2] !== null && existy(addVal)) {
           let calculatedVal =
-            existy(this.last()[2]) && this.last()[2].length > 0
+            existy(this.last()[2]) &&
+            this.last()[2].length > 0 &&
+            (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)
               ? this.last()[2] + addVal
               : addVal;
           if (this.opts.limitToBeAddedWhitespace) {
@@ -174,10 +207,13 @@ class Ranges {
           }
         }
       } else {
+        console.log(
+          `211 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
+        );
         if (!this.slices) {
           this.slices = [];
         }
-        this.slices.push(
+        const whatToPush =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
             ? [
                 from,
@@ -189,10 +225,14 @@ class Ranges {
                     )
                   : addVal
               ]
-            : [from, to]
-        );
+            : [from, to];
+        console.log(`229 PUSH whatToPush = "${whatToPush}"`);
+        this.slices.push(whatToPush);
       }
     } else {
+      console.log(
+        `234 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
+      );
       // Error somewhere!
       // Let's find out where.
 
@@ -229,7 +269,9 @@ class Ranges {
   current() {
     if (this.slices != null) {
       // != is intentional
-      this.slices = mergeRanges(this.slices);
+      this.slices = mergeRanges(this.slices, {
+        mergeType: this.opts.mergeType
+      });
       if (this.opts.limitToBeAddedWhitespace) {
         return this.slices.map(val => {
           if (existy(val[2])) {

@@ -461,6 +461,30 @@ test("03.16  -  ADD() - null is pushed", t => {
   t.is(ranges1.current(), null, "03.16.02");
 });
 
+test("03.17  -  ADD() - clashing third argument, mergeType === 1", t => {
+  const ranges1 = new Ranges();
+  ranges1.add(0, 5, "a");
+  ranges1.add(0, 5, "b");
+  t.deepEqual(ranges1.current(), [[0, 5, "ab"]], "03.17.01");
+
+  // hardcoded default:
+  const ranges2 = new Ranges({
+    mergeType: 1
+  });
+  ranges2.add(0, 5, "a");
+  ranges2.add(0, 5, "b");
+  t.deepEqual(ranges2.current(), [[0, 5, "ab"]], "03.17.02");
+});
+
+test("03.18  -  ADD() - clashing third argument, mergeType === 2", t => {
+  const ranges = new Ranges({
+    mergeType: 2
+  });
+  ranges.add(0, 5, "a");
+  ranges.add(0, 5, "b");
+  t.deepEqual(ranges.current(), [[0, 5, "b"]], "03.18");
+});
+
 // -----------------------------------------------------------------------------
 // 04. current()
 // -----------------------------------------------------------------------------

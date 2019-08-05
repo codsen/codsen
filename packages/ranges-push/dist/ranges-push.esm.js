@@ -35,9 +35,25 @@ class Ranges {
   constructor(originalOpts) {
     const defaults = {
       limitToBeAddedWhitespace: false,
-      limitLinebreaksCount: 1
+      limitLinebreaksCount: 1,
+      mergeType: 1
     };
     const opts = Object.assign({}, defaults, originalOpts);
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error(
+          `ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
+            opts.mergeType,
+            null,
+            4
+          )}`
+        );
+      }
+    }
     this.opts = opts;
   }
   add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
@@ -141,7 +157,9 @@ class Ranges {
         this.last()[1] = to;
         if (this.last()[2] !== null && existy(addVal)) {
           let calculatedVal =
-            existy(this.last()[2]) && this.last()[2].length > 0
+            existy(this.last()[2]) &&
+            this.last()[2].length > 0 &&
+            (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)
               ? this.last()[2] + addVal
               : addVal;
           if (this.opts.limitToBeAddedWhitespace) {
@@ -158,7 +176,7 @@ class Ranges {
         if (!this.slices) {
           this.slices = [];
         }
-        this.slices.push(
+        const whatToPush =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
             ? [
                 from,
@@ -170,8 +188,8 @@ class Ranges {
                     )
                   : addVal
               ]
-            : [from, to]
-        );
+            : [from, to];
+        this.slices.push(whatToPush);
       }
     } else {
       if (!isInt(from, { includeZero: true })) {
@@ -198,7 +216,9 @@ class Ranges {
   }
   current() {
     if (this.slices != null) {
-      this.slices = mergeRanges(this.slices);
+      this.slices = mergeRanges(this.slices, {
+        mergeType: this.opts.mergeType
+      });
       if (this.opts.limitToBeAddedWhitespace) {
         return this.slices.map(val => {
           if (existy(val[2])) {

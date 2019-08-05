@@ -17,6 +17,7 @@
 - [Use it](#use-it)
 - [The Idea](#the-idea)
 - [API](#api)
+- [`opts.mergeType`](#optsmergetype)
 - [In my case](#in-my-case)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -58,7 +59,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 10 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 36 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 37 KB |
 
 **[⬆ back to top](#)**
 
@@ -111,6 +112,7 @@ const Ranges = require("ranges-push");
 let ranges = new Ranges();
 // or, with Optional Options Object:
 let ranges = new Ranges({ limitToBeAddedWhitespace: true });
+let ranges = new Ranges({ mergeType: 2 });
 ```
 
 The `ranges` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
@@ -126,6 +128,7 @@ You can also provide an Optional Options Object when creating the class:
 | {                          |                   |         |
 | `limitToBeAddedWhitespace` | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases). Same applies when we have a string, surrounded by whitespace. That whitespace will be replaced with space or line break.                                                                                                                                                                                                                                                    |
 | `limitLinebreaksCount`     | Number            | `1`     | By default, if whole input is whitespace or there's leading/trailing whitespace and that whitespace contains at least one line break, whole whitespace will be turned into a single linebreak. That's because default maximum is set to `1`. If you set it to `2`, if `opts.limitToBeAddedWhitespace` is on and there are no linebreaks in the whitespace, it will be turned into a single space. If there's one linebreak within whitespace, it will be turned into single line break. If there are two linebreaks, it will be turned into two consecutive linebreaks. More linebreaks will still yield the number you set, in this case, `2`. |
+| `mergeType`                | Number            | `1`     | Default mode, `1` is concatenate clashing values, but alternative mode `2` is newer value overwrites older. See detailed explanation [below](#optsmergetype)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | }                          |                   |         |
 
 The Optional Options Object is validated by [check-types-mini](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
@@ -135,11 +138,47 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 ```js
 {
   limitToBeAddedWhitespace: false,
-  limitLinebreaksCount: 1
+  limitLinebreaksCount: 1,
+  mergeType: 1
 }
 ```
 
 You then interact with your newly-created ranges class by calling its _methods_:
+
+**[⬆ back to top](#)**
+
+## `opts.mergeType`
+
+When merging, ranges are sorted first. Then, pairs starting from the end of the sorted array are merged. Last two becomes one, last two becomes one and so on.
+
+The challenge is, what to do with values to add, third range array's element.
+
+For example,
+
+```js
+const range1 = [1, 2, "a"];
+const range2 = [1, 2, "b"];
+```
+
+The above ranges are "saying": replace characters in a string from index `1` to `2` with `"a"`, replace characters in string from index `1` to `2` with `"b"`.
+
+Do we end up with `"ab"` or `"b"` or something else?
+
+`opts.mergeType` let's you customise this behaviour:
+
+- In default mode, opts.mergeType === `1`, clashing "to insert" values will always be concatenated (`"ab"` in example above)
+- In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** — the latter value overrides the former (`"b"` in example above).
+
+In all other aspects, `opts.mergeType` modes `1` and `2` are the same.
+
+Practically, you activate the mode when you create the class:
+
+```js
+const Ranges = require("ranges-push");
+let rangesArr = new Ranges({ mergeType: 2 });
+```
+
+From there on, when you push to `rangesArr`, clashing values will be resolved according to "mergeType" rules.
 
 **[⬆ back to top](#)**
 
@@ -280,7 +319,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ranges-push
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
-[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-93.33%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-push
