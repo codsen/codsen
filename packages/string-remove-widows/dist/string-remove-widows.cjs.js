@@ -16,6 +16,7 @@ var apply = _interopDefault(require('ranges-apply'));
 var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var arrayiffyIfStr = _interopDefault(require('arrayiffy-if-string'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -37,6 +38,14 @@ var rawnbsp = "\xA0";
 var encodedNbspHtml = "&nbsp;";
 var encodedNbspCss = "\\00A0";
 var encodedNbspJs = "\\u00A0";
+var rawNdash = "\u2013";
+var encodedNdashHtml = "&ndash;";
+var encodedNdashCss = "\\2013";
+var encodedNdashJs = "\\u2013";
+var rawMdash = "\u2014";
+var encodedMdashHtml = "&mdash;";
+var encodedMdashCss = "\\2014";
+var encodedMdashJs = "\\u2014";
 var headsAndTailsJinja = [{
   heads: "{{",
   tails: "}}"
@@ -72,7 +81,7 @@ var defaultOpts = {
   minWordCount: 4,
   minCharLen: 50,
   reportProgressFunc: null,
-  ignore: ["jinja"]
+  ignore: []
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -130,9 +139,10 @@ function removeWidows(str, originalOpts) {
     opts.hyphens = true;
     delete opts.dashes;
   }
-  if (!opts.ignore || !isArr(opts.ignore)) {
+  if (!opts.ignore || !isArr(opts.ignore) && !isStr(opts.ignore)) {
     opts.ignore = [];
   } else {
+    opts.ignore = arrayiffyIfStr(opts.ignore);
     if (opts.ignore.some(function (val) {
       return isStr(val);
     })) {
@@ -172,6 +182,7 @@ function removeWidows(str, originalOpts) {
         if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
           return str.startsWith(oneOfHeads, _i);
         }) || isStr(valObj.heads) && str.startsWith(valObj.heads, _i)) {
+          wordCount++;
           doNothingUntil = opts.ignore[y].tails;
           i = _i;
           return true;
@@ -198,11 +209,21 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && _i && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
       lastWhitespaceEndedAt = _i;
     }
+    if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs))) {
+      if (str[_i - 1] && !str[_i - 1].trim().length && str[stringLeftRight.left(str, _i)]) {
+        push(stringLeftRight.left(str, _i) + 1, _i);
+      }
+    }
     if (!doNothingUntil && (str[_i] === "&" && str[_i + 1] === "n" && str[_i + 2] === "b" && str[_i + 3] === "s" && str[_i + 4] === "p" && str[_i + 5] === ";" || str[_i] === "&" && str[_i + 1] === "#" && str[_i + 2] === "1" && str[_i + 3] === "6" && str[_i + 4] === "0" && str[_i + 5] === ";")) {
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 6;
       if (str[_i + 6] && str[_i + 6].trim().length) {
         bumpWordCountAt = _i + 6;
+      }
+      if (!opts.convertEntities) {
+        rangesArr.push(_i, _i + 6, rawnbsp);
+      } else if (opts.language === "css" || opts.language === "js") {
+        rangesArr.push(_i, _i + 6, opts.language === "css" ? encodedNbspCss : encodedNbspJs);
       }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3] && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
@@ -211,6 +232,11 @@ function removeWidows(str, originalOpts) {
       if (str[_i + 5] && str[_i + 5].trim().length) {
         bumpWordCountAt = _i + 5;
       }
+      if (!opts.convertEntities) {
+        rangesArr.push(_i, _i + 5, rawnbsp);
+      } else if (opts.language === "html" || opts.language === "js") {
+        rangesArr.push(_i, _i + 5, opts.language === "html" ? encodedNbspHtml : encodedNbspJs);
+      }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] && str[_i + 1].toLowerCase() === "u" && str[_i + 2] === "0" && str[_i + 3] === "0" && str[_i + 4] && str[_i + 4].toUpperCase() === "A" && str[_i + 5] === "0") {
       lastEncodedNbspStartedAt = _i;
@@ -218,12 +244,20 @@ function removeWidows(str, originalOpts) {
       if (str[_i + 6] && str[_i + 6].trim().length) {
         bumpWordCountAt = _i + 6;
       }
+      if (!opts.convertEntities) {
+        rangesArr.push(_i, _i + 6, rawnbsp);
+      } else if (opts.language === "html" || opts.language === "css") {
+        rangesArr.push(_i, _i + 6, opts.language === "html" ? encodedNbspHtml : encodedNbspCss);
+      }
     }
     if (!doNothingUntil && str[_i] === rawnbsp) {
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 1;
       if (str[_i + 2] && str[_i + 2].trim().length) {
         bumpWordCountAt = _i + 2;
+      }
+      if (opts.convertEntities) {
+        rangesArr.push(_i, _i + 1, opts.language === "css" ? encodedNbspCss : opts.language === "js" ? encodedNbspJs : encodedNbspHtml);
       }
     }
     if (!doNothingUntil && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
@@ -261,7 +295,7 @@ function removeWidows(str, originalOpts) {
     if (opts.UKPostcodes && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
       push(_i, stringLeftRight.right(str, _i));
     }
-    if (!doNothingUntil && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length)) {
+    if (!doNothingUntil && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[stringLeftRight.right(str, _i)]) && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("br") && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("hr")) {
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
       lastWhitespaceStartedAt = _i;
@@ -291,7 +325,10 @@ function removeWidows(str, originalOpts) {
               trimBeforeMatching: true,
               cb: function cb(_char, theRemainderOfTheString, index) {
                 if (index) {
-                  _i = index;
+                  _i = index - 1;
+                  if (str[_i + 1] && str[_i + 1].trim().length) {
+                    wordCount++;
+                  }
                 }
                 i = _i;
                 return true;

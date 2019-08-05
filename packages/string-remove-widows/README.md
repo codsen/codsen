@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -54,11 +55,11 @@ const { removeWidows, defaultOpts, version } = stringRemoveWidows;
 
 This package has three builds in `dist/` folder:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-remove-widows.cjs.js` | 19 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-widows.esm.js` | 18 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-widows.umd.js` | 50 KB
+| Type                                                                                                    | Key in `package.json` | Path                               | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-widows.cjs.js` | 14 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-widows.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 46 KB |
 
 **[⬆ back to top](#)**
 
@@ -130,17 +131,33 @@ convertEntities
 hyphens
 language
 
-| Options Object's key | The type of its value | Default | Description                                                                                                   |
-| -------------------- | --------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| {                    |                       |         |                                                                                                               |
-| `convertEntities`    | boolean               | `true`  | If it's `false`, raw non-breaking space is inserted. If `true`, encoded in particular language (default HTML) |
-| }                    |                       |         |                                                                                                               |
+| Options Object's key            | The type of its value                   | Default | Description                                                                                                    |
+| ------------------------------- | --------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------- |
+| {                               |                                         |         |                                                                                                                |
+| `removeWidowPreventionMeasures` | boolean                                 | `false` | If it's `true`, it will replace all widow word nbsp locations, with a single space                             |
+| `convertEntities`               | boolean                                 | `true`  | If it's `false`, raw non-breaking space is inserted. If `true`, encoded in particular language (default HTML)  |
+| `language`                      | string                                  | `html`  | Choose out of `html`, `css` or `js` — non-breaking spaces will be encoded in this language                     |
+| `UKPostcodes`                   | boolean                                 | `false` | If enabled, every whitespace between two parts of UK postcodes will be replaced with non-breaking space        |
+| `hyphens`                       | boolean                                 | `true`  | Whitespace in front of dashes (`-`), n-dashes (`–`) or m-dashes (`—`) will be replaced with non-breaking space |
+| `minWordCount`                  | natural number                          | `4`     | Minimum word count on a paragraph to trigger widow removal                                                     |
+| `minCharLen`                    | natural number                          | `50`    | Minimum non-whitespace character count on a paragraph to trigger widow removal                                 |
+| `reportProgressFunc`            | function or `null`                      | `null`  | If function is given, it will be pinged a natural number, for each percentage-done (in first arg.)             |
+| `ignore`                        | array of zero or more strings OR string | `[]`    | List templating languages whose heads/tails will be recognised and skipped                                     |
+| }                               |                                         |         |                                                                                                                |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
 
 ```js
 {
-  convertEntities: true;
+  removeWidowPreventionMeasures: false, // if enabled this function overrides everything else
+  convertEntities: true, // encode?
+  language: "html", // encode in what? [html, css, js]
+  UKPostcodes: false, // replace space in UK postcodes?
+  hyphens: true, // replace space with non-breaking space in front of dash
+  minWordCount: 4, // if there are less words than this in chunk, skip
+  minCharLen: 50, // if there are less characters than this in chunk, skip
+  reportProgressFunc: null, // reporting progress function
+  ignore: [] // list zero or more templating languages: "jinja", "hugo", "hexo"
 }
 ```
 
@@ -195,23 +212,23 @@ In life, anything professional (as opposed to amateur) means _an excess_. Profes
 
 In this program, we aim at professional use — all the features you might ever need, API decoupled from DOM operations (or whatever), distributions for all platforms (UMD script for web page, CommonJS and ESModules for modern builds with treeshaking etc). Here's how it compares to alternatives from npm:
 
-|                                                              | [`string-remove-widows`](https://www.npmjs.com/package/string-remove-widows)                                                               | [`widow-js`](https://www.npmjs.com/package/widow-js)                                                               | [`@simmo/widower`](https://www.npmjs.com/package/@simmo/widower)                                                               |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| npm link                                                     | [![npm link](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [![npm link](https://img.shields.io/npm/v/widow-js.svg?style=flat-square)](https://www.npmjs.com/package/widow-js) | [![npm link](https://img.shields.io/npm/v/@simmo/widower.svg?style=flat-square)](https://www.npmjs.com/package/@simmo/widower) |
-| Can both add and remove `nbsp`s                              | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Option to choose between raw, HTML, CSS or JS-encoded `nbsp` | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Can replace spaces in front of hyphens, n- and m-dashes      | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+|                                                                      | [`string-remove-widows`](https://www.npmjs.com/package/string-remove-widows)                                                               | [`widow-js`](https://www.npmjs.com/package/widow-js)                                                               | [`@simmo/widower`](https://www.npmjs.com/package/@simmo/widower)                                                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| npm link                                                             | [![npm link](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [![npm link](https://img.shields.io/npm/v/widow-js.svg?style=flat-square)](https://www.npmjs.com/package/widow-js) | [![npm link](https://img.shields.io/npm/v/@simmo/widower.svg?style=flat-square)](https://www.npmjs.com/package/@simmo/widower) |
+| Can both add and remove `nbsp`s                                      | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Option to choose between raw, HTML, CSS or JS-encoded `nbsp`         | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Can replace spaces in front of hyphens, n- and m-dashes              | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
 | Does not mangle different types of line endings (`LF`, `CRLF`, `CR`) | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Customiseable minimal word count threshold                   | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Customiseable minimal character count threshold              | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Progress reporting function for web worker webapps           | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Reports string index ranges of what was done | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Replaces two spaces or a tab | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Decoupled API^                                               | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
-| CommonJS build                                               | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
-| ES Modules build                                             | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| UMD build for browser                                        | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Licence                                                      | MIT                                                                                                                                        | ISC                                                                                                                | MIT                                                                                                                            |
+| Customiseable minimal word count threshold                           | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
+| Customiseable minimal character count threshold                      | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Progress reporting function for web worker webapps                   | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Reports string index ranges of what was done                         | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Replaces two spaces or a tab                                         | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Decoupled API^                                                       | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
+| CommonJS build                                                       | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
+| ES Modules build                                                     | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| UMD build for browser                                                | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
+| Licence                                                              | MIT                                                                                                                                        | ISC                                                                                                                | MIT                                                                                                                            |
 
 ^ A _decoupled_ API means that at its core, program is a function "_string-in, string-out_" and is not coupled with DOM, file I/O, network or other unrelated operations. This makes it easier to test and create many other applications **on top** of a decoupled API.
 
@@ -242,6 +259,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-remove-widows
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
+[cov-img]: https://img.shields.io/badge/coverage-87.44%25-brightgreen.svg?style=flat-square
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-remove-widows
 [downloads-img]: https://img.shields.io/npm/dm/string-remove-widows.svg?style=flat-square

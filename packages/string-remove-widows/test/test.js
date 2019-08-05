@@ -46,11 +46,12 @@ test(`00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, t 
 
 // test.only(`deleteme`, t => {
 //   t.is(
-//     removeWidows("This very long text SW1A 1AA.", {
-//       UKPostcodes: true
+//     removeWidows("aaa bbb&nbsp;ccc ddd", {
+//       language: "css",
+//       convertEntities: true
 //     }).res,
-//     "This very long text SW1A&nbsp;1AA.",
-//     "06.03.03"
+//     `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
+//     "02.11.03"
 //   );
 // });
 
@@ -480,34 +481,15 @@ test(`02.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - with trailin
 });
 
 test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`, t => {
-  t.is(
-    removeWidows(
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    ).res,
+  const sources = [
     "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "02.05.01 - there's right slash following them"
-  );
-  t.is(
-    removeWidows(
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    ).res,
     "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "02.05.02 - there's a known tag before them"
-  );
-  t.is(
-    removeWidows(
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    ).res,
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "02.05.03 - hr tag, xhtml style"
-  );
-  t.is(
-    removeWidows(
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    ).res,
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "02.05.04 - hr tag, html style"
-  );
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ];
+  sources.forEach((str, idx) => {
+    t.is(removeWidows(str).res, str, `02.05.0${1 + idx}`);
+  });
 });
 
 test(`02.07 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`, t => {
@@ -539,7 +521,7 @@ test(`02.08 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touc
     removeWidows("aaa bbb&nbsp;ccc&#160;ddd", {
       convertEntities: false
     }).res,
-    `aaa bbb&nbsp;ccc${rawnbsp}ddd`,
+    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
     "02.08.02"
   );
 });
@@ -556,12 +538,12 @@ test(`02.09 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
     removeWidows("aaa bbb ccc  ddd", {
       convertEntities: false
     }).res,
-    `aaa bbb&nbsp;ccc${rawnbsp}ddd`,
+    `aaa bbb ccc${rawnbsp}ddd`,
     "02.09.02"
   );
 });
 
-test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`, t => {
+test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`, t => {
   t.is(
     removeWidows("aaa bbb ccc\tddd", {
       convertEntities: true
@@ -573,8 +555,69 @@ test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`,
     removeWidows("aaa bbb ccc\tddd", {
       convertEntities: false
     }).res,
-    `aaa bbb&nbsp;ccc${rawnbsp}ddd`,
+    `aaa bbb ccc${rawnbsp}ddd`,
     "02.10.02"
+  );
+});
+
+test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
+  // existing, neighbour nbsp's get converted
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      convertEntities: true
+    }).res,
+    "aaa bbb&nbsp;ccc&nbsp;ddd",
+    "02.11.01"
+  );
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      convertEntities: false
+    }).res,
+    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
+    "02.11.02"
+  );
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      language: "css",
+      convertEntities: true
+    }).res,
+    `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
+    "02.11.03"
+  );
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      language: "js",
+      convertEntities: true
+    }).res,
+    `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`,
+    "02.11.04"
+  );
+
+  // removeWidowPreventionMeasures
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      removeWidowPreventionMeasures: true,
+      convertEntities: false
+    }).res,
+    `aaa bbb${rawnbsp}ccc ddd`,
+    "02.11.05"
+  );
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      removeWidowPreventionMeasures: true,
+      convertEntities: true
+    }).res,
+    `aaa bbb${encodedNbspHtml}ccc ddd`,
+    "02.11.06"
+  );
+  t.is(
+    removeWidows("aaa bbb&nbsp;ccc ddd", {
+      removeWidowPreventionMeasures: true,
+      convertEntities: true,
+      language: "css"
+    }).res,
+    `aaa bbb${encodedNbspCss}ccc ddd`,
+    "02.11.07"
   );
 });
 
@@ -718,17 +761,32 @@ test(`05.01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
     "Something here and there and then, {% if something else and also another thing %}"
   ];
   vals.forEach((val, i) => {
-    t.is(removeWidows(val).res, val, `05.01.0${1 + i} - templating chunks`);
+    t.is(
+      removeWidows(val, {
+        ignore: "jinja"
+      }).res,
+      val,
+      `05.01.0${1 + i} - templating chunks`
+    );
   });
 });
 
 test(`05.02 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`, t => {
+  const source =
+    "{% if something else and also another thing %}tralala {% endif %}some text here";
+  const res =
+    "{% if something else and also another thing %}tralala {% endif %}some text&nbsp;here";
   t.is(
-    removeWidows(
-      "{% if something else and also another thing %} some text here"
-    ).res,
-    "{% if something else and also another thing %} some text&nbsp;here",
+    removeWidows(source).res,
+    res,
     "05.02.01 - words under threshold outside templating chunk which completes the threshold"
+  );
+  t.is(
+    removeWidows(source, {
+      ignore: "jinja"
+    }).res,
+    res,
+    "05.02.02"
   );
 });
 
@@ -739,7 +797,8 @@ test(`05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
         `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.`,
         {
           convertEntities: false,
-          language
+          language,
+          ignore: ["jinja"]
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
@@ -750,7 +809,32 @@ test(`05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
         `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
         {
           convertEntities: true,
-          language
+          language,
+          ignore: ["jinja"]
+        }
+      ).res,
+      `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
+      `05.03.0${2 + i} - min word count threshold + ignore jinja combo`
+    );
+    t.is(
+      removeWidows(
+        `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.`,
+        {
+          convertEntities: false,
+          language,
+          ignore: "jinja"
+        }
+      ).res,
+      `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
+      `05.03.0${1 + i} - min word count threshold + ignore jinja combo`
+    );
+    t.is(
+      removeWidows(
+        `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
+        {
+          convertEntities: true,
+          language,
+          ignore: "jinja"
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
@@ -1008,7 +1092,7 @@ test(`06.07 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
       UKPostcodes: false,
       convertEntities: false
     }).res,
-    `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
+    `Some text SW1A 1AA and some more${rawnbsp}text.`,
     "06.07.01"
   );
   t.is(

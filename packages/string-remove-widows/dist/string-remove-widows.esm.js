@@ -10,6 +10,7 @@ import apply from 'ranges-apply';
 import { left, right } from 'string-left-right';
 import { matchRightIncl } from 'string-match-left-right';
 import isObj from 'lodash.isplainobject';
+import arrayiffyIfStr from 'arrayiffy-if-string';
 
 var version = "1.0.0";
 
@@ -17,6 +18,14 @@ const rawnbsp = "\u00A0";
 const encodedNbspHtml = "&nbsp;";
 const encodedNbspCss = "\\00A0";
 const encodedNbspJs = "\\u00A0";
+const rawNdash = "\u2013";
+const encodedNdashHtml = "&ndash;";
+const encodedNdashCss = "\\2013";
+const encodedNdashJs = "\\u2013";
+const rawMdash = "\u2014";
+const encodedMdashHtml = "&mdash;";
+const encodedMdashCss = "\\2014";
+const encodedMdashJs = "\\u2014";
 const headsAndTailsJinja = [
   {
     heads: "{{",
@@ -62,7 +71,7 @@ const defaultOpts = {
   minWordCount: 4,
   minCharLen: 50,
   reportProgressFunc: null,
-  ignore: ["jinja"]
+  ignore: []
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -132,9 +141,10 @@ function removeWidows(str, originalOpts) {
     opts.hyphens = true;
     delete opts.dashes;
   }
-  if (!opts.ignore || !isArr(opts.ignore)) {
+  if (!opts.ignore || (!isArr(opts.ignore) && !isStr(opts.ignore))) {
     opts.ignore = [];
   } else {
+    opts.ignore = arrayiffyIfStr(opts.ignore);
     if (opts.ignore.some(val => isStr(val))) {
       let temp = [];
       opts.ignore = opts.ignore.filter(val => {
@@ -176,6 +186,7 @@ function removeWidows(str, originalOpts) {
             valObj.heads.some(oneOfHeads => str.startsWith(oneOfHeads, i))) ||
           (isStr(valObj.heads) && str.startsWith(valObj.heads, i))
         ) {
+          wordCount++;
           doNothingUntil = opts.ignore[y].tails;
           return true;
         }
@@ -213,6 +224,23 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
+      opts.hyphens &&
+      (str[i] === "-" ||
+        str[i] === rawMdash ||
+        str[i] === rawNdash ||
+        str.slice(i).startsWith(encodedNdashHtml) ||
+        str.slice(i).startsWith(encodedNdashCss) ||
+        str.slice(i).startsWith(encodedNdashJs) ||
+        str.slice(i).startsWith(encodedMdashHtml) ||
+        str.slice(i).startsWith(encodedMdashCss) ||
+        str.slice(i).startsWith(encodedMdashJs))
+    ) {
+      if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
+        push(left(str, i) + 1, i);
+      }
+    }
+    if (
+      !doNothingUntil &&
       ((str[i] === "&" &&
         str[i + 1] === "n" &&
         str[i + 2] === "b" &&
@@ -231,6 +259,15 @@ function removeWidows(str, originalOpts) {
       if (str[i + 6] && str[i + 6].trim().length) {
         bumpWordCountAt = i + 6;
       }
+      if (!opts.convertEntities) {
+        rangesArr.push(i, i + 6, rawnbsp);
+      } else if (opts.language === "css" || opts.language === "js") {
+        rangesArr.push(
+          i,
+          i + 6,
+          opts.language === "css" ? encodedNbspCss : encodedNbspJs
+        );
+      }
     }
     if (
       !doNothingUntil &&
@@ -245,6 +282,15 @@ function removeWidows(str, originalOpts) {
       lastEncodedNbspEndedAt = i + 5;
       if (str[i + 5] && str[i + 5].trim().length) {
         bumpWordCountAt = i + 5;
+      }
+      if (!opts.convertEntities) {
+        rangesArr.push(i, i + 5, rawnbsp);
+      } else if (opts.language === "html" || opts.language === "js") {
+        rangesArr.push(
+          i,
+          i + 5,
+          opts.language === "html" ? encodedNbspHtml : encodedNbspJs
+        );
       }
     }
     if (
@@ -263,12 +309,32 @@ function removeWidows(str, originalOpts) {
       if (str[i + 6] && str[i + 6].trim().length) {
         bumpWordCountAt = i + 6;
       }
+      if (!opts.convertEntities) {
+        rangesArr.push(i, i + 6, rawnbsp);
+      } else if (opts.language === "html" || opts.language === "css") {
+        rangesArr.push(
+          i,
+          i + 6,
+          opts.language === "html" ? encodedNbspHtml : encodedNbspCss
+        );
+      }
     }
     if (!doNothingUntil && str[i] === rawnbsp) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 1;
       if (str[i + 2] && str[i + 2].trim().length) {
         bumpWordCountAt = i + 2;
+      }
+      if (opts.convertEntities) {
+        rangesArr.push(
+          i,
+          i + 1,
+          opts.language === "css"
+            ? encodedNbspCss
+            : opts.language === "js"
+            ? encodedNbspJs
+            : encodedNbspHtml
+        );
       }
     }
     if (
@@ -354,7 +420,10 @@ function removeWidows(str, originalOpts) {
       str[i - 1].trim().length &&
       (lastWhitespaceStartedAt === undefined ||
         (str[lastWhitespaceStartedAt - 1] &&
-          str[lastWhitespaceStartedAt - 1].trim().length))
+          str[lastWhitespaceStartedAt - 1].trim().length)) &&
+      !"/>".includes(str[right(str, i)]) &&
+      !str.slice(0, left(str, i) + 1).endsWith("br") &&
+      !str.slice(0, left(str, i) + 1).endsWith("hr")
     ) {
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
@@ -393,7 +462,10 @@ function removeWidows(str, originalOpts) {
               trimBeforeMatching: true,
               cb: (char, theRemainderOfTheString, index) => {
                 if (index) {
-                  i = index;
+                  i = index - 1;
+                  if (str[i + 1] && str[i + 1].trim().length) {
+                    wordCount++;
+                  }
                 }
                 return true;
               }

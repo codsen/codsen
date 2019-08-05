@@ -43,6 +43,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "arrayiffy-if-string",
         "lodash.isplainobject",
         "ranges-apply",
         "ranges-push",
@@ -65,6 +66,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "arrayiffy-if-string",
         "lodash.isplainobject",
         "ranges-apply",
         "ranges-push",
@@ -84,12 +86,8 @@ export default commandLineArgs => {
     // util.js build:
     {
       input: "src/util.js",
-      output: [
-        { file: "dist/util.esm.js", format: "es" },
-      ],
-      external: [
-        
-      ],
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: [],
       plugins: [
         strip({
           sourceMap: false
