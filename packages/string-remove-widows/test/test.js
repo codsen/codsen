@@ -153,7 +153,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.03.0${1 + i} - ${language} - ${
+        `01.03.0${1 + i + idx} - ${language} - ${
           eolTypes[idx]
         } - convertEntities=true`
       );
@@ -167,7 +167,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.03.0${2 + i} - ${language} - ${
+        `01.03.0${2 + i + idx} - ${language} - ${
           eolTypes[idx]
         } - convertEntities=false`
       );
@@ -183,7 +183,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.03.0${3 + i} - ${language} - ${eolTypes[idx]}`
+        `01.03.0${3 + i + idx} - ${language} - ${eolTypes[idx]}`
       );
       t.is(
         removeWidows(
@@ -195,7 +195,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.03.0${4 + i} - ${language} - ${eolTypes[idx]}`
+        `01.03.0${4 + i + idx} - ${language} - ${eolTypes[idx]}`
       );
 
       // opts.removeWidowPreventionMeasures=on
@@ -210,7 +210,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.03.0${5 + i} - ${language} - ${
+        `01.03.0${5 + i + idx} - ${language} - ${
           eolTypes[idx]
         } - convertEntities=false`
       );
@@ -224,7 +224,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.03.0${6 + i} - ${language} - ${
+        `01.03.0${6 + i + idx} - ${language} - ${
           eolTypes[idx]
         } - convertEntities=true`
       );
@@ -340,7 +340,10 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
             }
           ).res,
           `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-          `01.06.0${1 + i} - requested lang. ${language} - existing lang. ${
+          `01.06.0${1 +
+            i +
+            idx +
+            z} - requested lang. ${language} - existing lang. ${
             languages[z]
           } - ${eolTypes[idx]}`
         );
@@ -355,7 +358,10 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
             }
           ).res,
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-          `01.06.0${2 + i} - requested lang. ${language} - existing lang. ${
+          `01.06.0${2 +
+            i +
+            idx +
+            z} - requested lang. ${language} - existing lang. ${
             languages[z]
           } - ${eolTypes[idx]}`
         );
@@ -1259,7 +1265,53 @@ test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
 // opts.removeWidowPreventionMeasures
 // -----------------------------------------------------------------------------
 
-// TODO
+test(`07.01 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - baseline`, t => {
+  t.is(
+    removeWidows(
+      `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+      {
+        convertEntities: true
+      }
+    ).res,
+    `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est&nbsp;laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est&nbsp;laborum.`,
+    "07.01"
+  );
+});
+
+test(`07.02 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in without nbsp's`, t => {
+  t.is(
+    removeWidows(
+      `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+      {
+        removeWidowPreventionMeasures: true,
+        convertEntities: true
+      }
+    ).res,
+    `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+    "07.02"
+  );
+});
+
+test(`07.03 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in with nbsp's`, t => {
+  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+    languages.forEach((language, i) => {
+      t.is(
+        removeWidows(
+          `Lorem${encodedNbsps[i]}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbsps[i]}laborum.${eolType}${eolType}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbsps[i]}laborum.`,
+          {
+            removeWidowPreventionMeasures: true,
+            convertEntities: true,
+            language
+          }
+        ).res,
+        `Lorem${encodedNbsps[i]}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.${eolType}${eolType}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+        `07.03.0${1 + i + idx} - ${language} - ${
+          eolTypes[idx]
+        } - convertEntities=true`
+      );
+    });
+  });
+});
 
 // -----------------------------------------------------------------------------
 // 08. opts.minWordCount
@@ -1334,13 +1386,13 @@ test(`08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is
 // 09. opts.minCharCount
 // -----------------------------------------------------------------------------
 
-test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = zero`, t => {
+test(`09.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = zero`, t => {
   t.is(
     removeWidows("aaa bbb", {
       minCharCount: 0
     }).res,
     `aaa bbb`,
-    "08.01.01 - default word count 4 kicks in and makes program skip this"
+    "09.01.01 - default word count 4 kicks in and makes program skip this"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1348,7 +1400,7 @@ test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.01.02"
+    "09.01.02"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1356,7 +1408,7 @@ test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.01.03"
+    "09.01.03"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1364,7 +1416,7 @@ test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.01.04"
+    "09.01.04"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1372,7 +1424,7 @@ test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa bbb`,
-    "08.01.05"
+    "09.01.05"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1380,17 +1432,17 @@ test(`08.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa bbb`,
-    "08.01.06"
+    "09.01.06"
   );
 });
 
-test(`08.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = falsey`, t => {
+test(`09.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = falsey`, t => {
   t.is(
     removeWidows("aaa bbb", {
       minCharCount: false
     }).res,
     `aaa bbb`,
-    "08.02.01"
+    "09.02.01"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1398,7 +1450,7 @@ test(`08.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.02.02"
+    "09.02.02"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1406,7 +1458,7 @@ test(`08.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: false
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.02.03"
+    "09.02.03"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1414,7 +1466,7 @@ test(`08.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: null
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.02.04"
+    "09.02.04"
   );
   t.is(
     removeWidows("aaa bbb", {
@@ -1422,7 +1474,7 @@ test(`08.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCh
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.02.05"
+    "09.02.05"
   );
 });
 
