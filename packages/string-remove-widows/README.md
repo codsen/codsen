@@ -59,7 +59,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-widows.cjs.js` | 14 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-widows.esm.js` | 14 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 46 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 47 KB |
 
 **[⬆ back to top](#)**
 
@@ -127,10 +127,6 @@ const { removeWidows, version } = require("string-remove-widows");
 
 ### Optional Options Object
 
-convertEntities
-hyphens
-language
-
 | Options Object's key            | The type of its value                   | Default | Description                                                                                                    |
 | ------------------------------- | --------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------- |
 | {                               |                                         |         |                                                                                                                |
@@ -140,7 +136,7 @@ language
 | `UKPostcodes`                   | boolean                                 | `false` | If enabled, every whitespace between two parts of UK postcodes will be replaced with non-breaking space        |
 | `hyphens`                       | boolean                                 | `true`  | Whitespace in front of dashes (`-`), n-dashes (`–`) or m-dashes (`—`) will be replaced with non-breaking space |
 | `minWordCount`                  | natural number                          | `4`     | Minimum word count on a paragraph to trigger widow removal                                                     |
-| `minCharLen`                    | natural number                          | `50`    | Minimum non-whitespace character count on a paragraph to trigger widow removal                                 |
+| `minCharCount`                  | natural number                          | `50`    | Minimum non-whitespace character count on a paragraph to trigger widow removal                                 |
 | `reportProgressFunc`            | function or `null`                      | `null`  | If function is given, it will be pinged a natural number, for each percentage-done (in first arg.)             |
 | `ignore`                        | array of zero or more strings OR string | `[]`    | List templating languages whose heads/tails will be recognised and skipped                                     |
 | }                               |                                         |         |                                                                                                                |
@@ -155,7 +151,7 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
   UKPostcodes: false, // replace space in UK postcodes?
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
-  minCharLen: 50, // if there are less characters than this in chunk, skip
+  minCharCount: 50, // if there are less characters than this in chunk, skip
   reportProgressFunc: null, // reporting progress function
   ignore: [] // list zero or more templating languages: "jinja", "hugo", "hexo"
 }
@@ -259,7 +255,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-remove-widows
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
-[cov-img]: https://img.shields.io/badge/coverage-87.44%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-87.62%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-remove-widows

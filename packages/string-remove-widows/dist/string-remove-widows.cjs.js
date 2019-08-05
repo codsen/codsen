@@ -79,7 +79,7 @@ var defaultOpts = {
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharLen: 50,
+  minCharCount: 50,
   reportProgressFunc: null,
   ignore: []
 };
@@ -126,6 +126,7 @@ function removeWidows(str, originalOpts) {
   var currentPercentageDone;
   var lastPercentage = 0;
   var wordCount;
+  var charCount;
   var secondToLastWhitespaceStartedAt;
   var secondToLastWhitespaceEndedAt;
   var lastWhitespaceStartedAt;
@@ -168,6 +169,7 @@ function removeWidows(str, originalOpts) {
   }
   function resetAll() {
     wordCount = 0;
+    charCount = 0;
     secondToLastWhitespaceStartedAt = undefined;
     secondToLastWhitespaceEndedAt = undefined;
     lastWhitespaceStartedAt = undefined;
@@ -208,6 +210,9 @@ function removeWidows(str, originalOpts) {
     }
     if (!doNothingUntil && _i && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
       lastWhitespaceEndedAt = _i;
+    }
+    if (!doNothingUntil && str[_i].trim().length) {
+      charCount++;
     }
     if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs))) {
       if (str[_i - 1] && !str[_i - 1].trim().length && str[stringLeftRight.left(str, _i)]) {
@@ -264,7 +269,7 @@ function removeWidows(str, originalOpts) {
       wordCount++;
     }
     if (!doNothingUntil && (!str[_i + 1] || str[_i] === "\n" && str[_i + 1] === "\n" || str[_i] === "\r" && str[_i + 1] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n" && str[_i + 2] === "\r" && str[_i + 3] === "\n" || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))) {
-      if (!opts.minWordCount || wordCount >= opts.minWordCount) {
+      if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
         var finalStart;
         var finalEnd;
         if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {

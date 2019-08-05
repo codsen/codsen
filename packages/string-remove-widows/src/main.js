@@ -30,7 +30,7 @@ const defaultOpts = {
   UKPostcodes: false, // replace space in UK postcodes?
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
-  minCharLen: 50, // if there are less characters than this in chunk, skip
+  minCharCount: 50, // if there are less characters than this in chunk, skip
   reportProgressFunc: null, // reporting progress function
   ignore: []
 };
@@ -104,6 +104,7 @@ function removeWidows(str, originalOpts) {
   let currentPercentageDone;
   let lastPercentage = 0;
   let wordCount; // counted per-chunk (paragraph)
+  let charCount; // counted per-character, per chunk (paragraph)
 
   let secondToLastWhitespaceStartedAt; // necessary to support whitespace at line ends
   let secondToLastWhitespaceEndedAt; // necessary to support whitespace at line ends
@@ -173,6 +174,7 @@ function removeWidows(str, originalOpts) {
 
   function resetAll() {
     wordCount = 0;
+    charCount = 0;
     secondToLastWhitespaceStartedAt = undefined;
     secondToLastWhitespaceEndedAt = undefined;
     lastWhitespaceStartedAt = undefined;
@@ -280,6 +282,10 @@ function removeWidows(str, originalOpts) {
       console.log(
         `279 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceEndedAt`}\u001b[${39}m`} = ${lastWhitespaceEndedAt}`
       );
+    }
+
+    if (!doNothingUntil && str[i].trim().length) {
+      charCount++;
     }
 
     //
@@ -532,7 +538,10 @@ function removeWidows(str, originalOpts) {
         `529 ${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`
       );
 
-      if (!opts.minWordCount || wordCount >= opts.minWordCount) {
+      if (
+        (!opts.minWordCount || wordCount >= opts.minWordCount) &&
+        (!opts.minCharCount || charCount >= opts.minCharCount)
+      ) {
         let finalStart;
         let finalEnd;
 
@@ -784,7 +793,7 @@ function removeWidows(str, originalOpts) {
       `${`\u001b[${90}m${`234 last encoded nbsp: [${lastEncodedNbspStartedAt}, ${lastEncodedNbspEndedAt}]`}\u001b[${39}m`}`
     );
     console.log(
-      `${`\u001b[${90}m${`237 word count ${wordCount}`}\u001b[${39}m`}${
+      `${`\u001b[${90}m${`237 word count ${wordCount}; char count ${charCount}`}\u001b[${39}m`}${
         bumpWordCountAt
           ? `${`\u001b[${90}m${`;`}\u001b[${39}m`}${`\u001b[${90}m${` bumpWordCountAt = ${bumpWordCountAt}`}\u001b[${39}m`}`
           : ""

@@ -69,7 +69,7 @@ const defaultOpts = {
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharLen: 50,
+  minCharCount: 50,
   reportProgressFunc: null,
   ignore: []
 };
@@ -128,6 +128,7 @@ function removeWidows(str, originalOpts) {
   let currentPercentageDone;
   let lastPercentage = 0;
   let wordCount;
+  let charCount;
   let secondToLastWhitespaceStartedAt;
   let secondToLastWhitespaceEndedAt;
   let lastWhitespaceStartedAt;
@@ -170,6 +171,7 @@ function removeWidows(str, originalOpts) {
   }
   function resetAll() {
     wordCount = 0;
+    charCount = 0;
     secondToLastWhitespaceStartedAt = undefined;
     secondToLastWhitespaceEndedAt = undefined;
     lastWhitespaceStartedAt = undefined;
@@ -221,6 +223,9 @@ function removeWidows(str, originalOpts) {
       (!str[i - 1] || (str[i - 1] && !str[i - 1].trim().length))
     ) {
       lastWhitespaceEndedAt = i;
+    }
+    if (!doNothingUntil && str[i].trim().length) {
+      charCount++;
     }
     if (
       !doNothingUntil &&
@@ -359,7 +364,10 @@ function removeWidows(str, originalOpts) {
           str[i - 1] &&
           punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)])))
     ) {
-      if (!opts.minWordCount || wordCount >= opts.minWordCount) {
+      if (
+        (!opts.minWordCount || wordCount >= opts.minWordCount) &&
+        (!opts.minCharCount || charCount >= opts.minCharCount)
+      ) {
         let finalStart;
         let finalEnd;
         if (
