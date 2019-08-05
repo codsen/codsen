@@ -70,8 +70,10 @@ const defaultOpts = {
   hyphens: true,
   minWordCount: 4,
   minCharCount: 50,
+  ignore: [],
   reportProgressFunc: null,
-  ignore: []
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -120,11 +122,11 @@ function removeWidows(str, originalOpts) {
   }
   const isArr = Array.isArray;
   const len = str.length;
-  const midLen = Math.floor(len / 2);
   const rangesArr = new Ranges({ mergeType: 2 });
   const punctuationCharsToConsiderWidowIssue = ["."];
   const postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
   const postcodeRegexEnd = /^[0-9][A-Z]{2}/;
+  const leavePercForLastStage = 0.06;
   let currentPercentageDone;
   let lastPercentage = 0;
   let wordCount;
@@ -169,6 +171,15 @@ function removeWidows(str, originalOpts) {
       }
     }
   }
+  let ceil;
+  if (opts.reportProgressFunc) {
+    ceil = Math.floor(
+      opts.reportProgressFuncTo -
+        (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+          leavePercForLastStage -
+        opts.reportProgressFuncFrom
+    );
+  }
   function resetAll() {
     wordCount = 0;
     charCount = 0;
@@ -180,7 +191,7 @@ function removeWidows(str, originalOpts) {
     lastEncodedNbspEndedAt = undefined;
   }
   resetAll();
-  for (let i = 0, len = str.length; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some((valObj, y) => {
         if (
@@ -199,21 +210,11 @@ function removeWidows(str, originalOpts) {
       bumpWordCountAt = undefined;
     }
     if (typeof opts.reportProgressFunc === "function") {
-      if (len > 1000 && len < 2000) {
-        if (i === midLen) {
-          opts.reportProgressFunc(
-            Math.floor(
-              (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2
-            )
-          );
-        }
-      } else if (len >= 2000) {
-        currentPercentageDone =
-          opts.reportProgressFuncFrom + Math.floor(i / len);
-        if (currentPercentageDone !== lastPercentage) {
-          lastPercentage = currentPercentageDone;
-          opts.reportProgressFunc(currentPercentageDone);
-        }
+      currentPercentageDone =
+        opts.reportProgressFuncFrom + Math.floor((i / len) * ceil);
+      if (currentPercentageDone !== lastPercentage) {
+        lastPercentage = currentPercentageDone;
+        opts.reportProgressFunc(currentPercentageDone);
       }
     }
     if (
@@ -484,7 +485,25 @@ function removeWidows(str, originalOpts) {
     }
   }
   return {
-    res: apply(str, rangesArr.current()),
+    res: apply(
+      str,
+      rangesArr.current(),
+      opts.reportProgressFunc
+        ? incomingPerc => {
+            currentPercentageDone = Math.floor(
+              (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+                (1 - leavePercForLastStage) +
+                (incomingPerc / 100) *
+                  (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
+                  leavePercForLastStage
+            );
+            if (currentPercentageDone !== lastPercentage) {
+              lastPercentage = currentPercentageDone;
+              opts.reportProgressFunc(currentPercentageDone);
+            }
+          }
+        : null
+    ),
     ranges: rangesArr.current(),
     log: {
       timeTakenInMiliseconds: Date.now() - start

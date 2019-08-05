@@ -80,8 +80,10 @@ var defaultOpts = {
   hyphens: true,
   minWordCount: 4,
   minCharCount: 50,
+  ignore: [],
   reportProgressFunc: null,
-  ignore: []
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -116,13 +118,13 @@ function removeWidows(str, originalOpts) {
   }
   var isArr = Array.isArray;
   var len = str.length;
-  var midLen = Math.floor(len / 2);
   var rangesArr = new Ranges({
     mergeType: 2
   });
   var punctuationCharsToConsiderWidowIssue = ["."];
   var postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
   var postcodeRegexEnd = /^[0-9][A-Z]{2}/;
+  var leavePercForLastStage = 0.06;
   var currentPercentageDone;
   var lastPercentage = 0;
   var wordCount;
@@ -167,6 +169,10 @@ function removeWidows(str, originalOpts) {
       }
     }
   }
+  var ceil;
+  if (opts.reportProgressFunc) {
+    ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+  }
   function resetAll() {
     wordCount = 0;
     charCount = 0;
@@ -178,7 +184,7 @@ function removeWidows(str, originalOpts) {
     lastEncodedNbspEndedAt = undefined;
   }
   resetAll();
-  var _loop = function _loop(_i, _len) {
+  var _loop = function _loop(_i) {
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some(function (valObj, y) {
         if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
@@ -196,16 +202,10 @@ function removeWidows(str, originalOpts) {
       bumpWordCountAt = undefined;
     }
     if (typeof opts.reportProgressFunc === "function") {
-      if (_len > 1000 && _len < 2000) {
-        if (_i === midLen) {
-          opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
-        }
-      } else if (_len >= 2000) {
-        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / _len);
-        if (currentPercentageDone !== lastPercentage) {
-          lastPercentage = currentPercentageDone;
-          opts.reportProgressFunc(currentPercentageDone);
-        }
+      currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * ceil);
+      if (currentPercentageDone !== lastPercentage) {
+        lastPercentage = currentPercentageDone;
+        opts.reportProgressFunc(currentPercentageDone);
       }
     }
     if (!doNothingUntil && _i && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
@@ -345,11 +345,17 @@ function removeWidows(str, originalOpts) {
     }
     i = _i;
   };
-  for (var i = 0, _len = str.length; i < _len; i++) {
-    _loop(i, _len);
+  for (var i = 0; i < len; i++) {
+    _loop(i);
   }
   return {
-    res: apply(str, rangesArr.current()),
+    res: apply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
+      currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
+      if (currentPercentageDone !== lastPercentage) {
+        lastPercentage = currentPercentageDone;
+        opts.reportProgressFunc(currentPercentageDone);
+      }
+    } : null),
     ranges: rangesArr.current(),
     log: {
       timeTakenInMiliseconds: Date.now() - start
