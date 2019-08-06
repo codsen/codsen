@@ -3215,7 +3215,9 @@ z><t><x><y><z klm`;
 
 test(`99.08 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - nunjucks`, t => {
   t.deepEqual(
-    m("{%- length > 1 or length > 2 -%}").result,
+    m("{%- length > 1 or length > 2 -%}", {
+      removeLineBreaks: true
+    }).result,
     "{%- length > 1 or length > 2 -%}",
     "99.08"
   );

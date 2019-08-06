@@ -566,10 +566,13 @@ function crush(str, originalOpts) {
               }
               let whatToAdd = " ";
               if (
-                str[i] === "<" &&
-                matchRight(str, i, opts.mindTheInlineTags, {
-                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                })
+                (str[i] === "<" &&
+                  matchRight(str, i, opts.mindTheInlineTags, {
+                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                  })) ||
+                ("<>".includes(str[i]) &&
+                  ("0123456789".includes(str[right(str, i)]) ||
+                    "0123456789".includes(str[left(str, i)])))
               ) ; else if (
                 (str[whitespaceStartedAt - 1] &&
                   DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(
