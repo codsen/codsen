@@ -26,12 +26,12 @@ import arrayiffyIfStr from "arrayiffy-if-string";
 const defaultOpts = {
   removeWidowPreventionMeasures: false,
   convertEntities: true, // encode?
-  language: "html", // encode in what? [html, css, js]
+  targetLanguage: "html", // encode in what? [html, css, js]
   UKPostcodes: false, // replace space in UK postcodes?
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
-  minCharCount: 50, // if there are less characters than this in chunk, skip
-  ignore: [],
+  minCharCount: 20, // if there are less characters than this in chunk, skip
+  ignore: [], // put {heads: "{{", tails: "}}"} or presents: "jinja", "nunjucks", "hugo", "hexo"
   reportProgressFunc: null, // reporting progress function
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
@@ -45,10 +45,10 @@ function removeWidows(str, originalOpts) {
       finalWhatToInsert = " ";
     } else if (opts.convertEntities) {
       finalWhatToInsert = encodedNbspHtml;
-      if (isStr(opts.language)) {
-        if (opts.language.trim().toLowerCase() === "css") {
+      if (isStr(opts.targetLanguage)) {
+        if (opts.targetLanguage.trim().toLowerCase() === "css") {
           finalWhatToInsert = encodedNbspCss;
-        } else if (opts.language.trim().toLowerCase() === "js") {
+        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
           finalWhatToInsert = encodedNbspJs;
         }
       }
@@ -382,15 +382,18 @@ function removeWidows(str, originalOpts) {
           `382 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
             6}, "${rawnbsp}"]`
         );
-      } else if (opts.language === "css" || opts.language === "js") {
+      } else if (
+        opts.targetLanguage === "css" ||
+        opts.targetLanguage === "js"
+      ) {
         rangesArr.push(
           i,
           i + 6,
-          opts.language === "css" ? encodedNbspCss : encodedNbspJs
+          opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
         );
         console.log(
           `392 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
-            opts.language === "css" ? encodedNbspCss : encodedNbspJs
+            opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
           }"]`
         );
       }
@@ -426,15 +429,18 @@ function removeWidows(str, originalOpts) {
           `426 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
             5}, "${rawnbsp}"]`
         );
-      } else if (opts.language === "html" || opts.language === "js") {
+      } else if (
+        opts.targetLanguage === "html" ||
+        opts.targetLanguage === "js"
+      ) {
         rangesArr.push(
           i,
           i + 5,
-          opts.language === "html" ? encodedNbspHtml : encodedNbspJs
+          opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
         );
         console.log(
           `436 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 5}, "${
-            opts.language === "html" ? encodedNbspHtml : encodedNbspJs
+            opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
           }"]`
         );
       }
@@ -472,15 +478,18 @@ function removeWidows(str, originalOpts) {
           `472 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
             6}, "${rawnbsp}"]`
         );
-      } else if (opts.language === "html" || opts.language === "css") {
+      } else if (
+        opts.targetLanguage === "html" ||
+        opts.targetLanguage === "css"
+      ) {
         rangesArr.push(
           i,
           i + 6,
-          opts.language === "html" ? encodedNbspHtml : encodedNbspCss
+          opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss
         );
         console.log(
           `482 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
-            opts.language === "html" ? encodedNbspHtml : encodedNbspCss
+            opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss
           }"]`
         );
       }
@@ -506,17 +515,17 @@ function removeWidows(str, originalOpts) {
         rangesArr.push(
           i,
           i + 1,
-          opts.language === "css"
+          opts.targetLanguage === "css"
             ? encodedNbspCss
-            : opts.language === "js"
+            : opts.targetLanguage === "js"
             ? encodedNbspJs
             : encodedNbspHtml
         );
         console.log(
           `516 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}, "${
-            opts.language === "css"
+            opts.targetLanguage === "css"
               ? encodedNbspCss
-              : opts.language === "js"
+              : opts.targetLanguage === "js"
               ? encodedNbspJs
               : encodedNbspHtml
           }"]`

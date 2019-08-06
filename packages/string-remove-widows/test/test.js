@@ -639,7 +639,7 @@ test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non
   );
   t.is(
     removeWidows("aaa bbb&nbsp;ccc ddd", {
-      language: "css",
+      targetLanguage: "css",
       convertEntities: true,
       minCharCount: 5
     }).res,
@@ -648,7 +648,7 @@ test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non
   );
   t.is(
     removeWidows("aaa bbb&nbsp;ccc ddd", {
-      language: "js",
+      targetLanguage: "js",
       convertEntities: true,
       minCharCount: 5
     }).res,
@@ -679,7 +679,7 @@ test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non
     removeWidows("aaa bbb&nbsp;ccc ddd", {
       removeWidowPreventionMeasures: true,
       convertEntities: true,
-      language: "css",
+      targetLanguage: "css",
       minCharCount: 5
     }).res,
     `aaa bbb${encodedNbspCss}ccc ddd`,
@@ -956,7 +956,7 @@ test(`06.01 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: true,
       convertEntities: true,
-      language: "css",
+      targetLanguage: "css",
       minCharCount: 5
     }).res,
     `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`,
@@ -1012,7 +1012,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   // language === "js"
   t.is(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: false,
       minCharCount: 5
     }).res,
@@ -1021,7 +1021,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   );
   t.is(
     removeWidows("Postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: false,
       minCharCount: 5
     }).res,
@@ -1030,7 +1030,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   );
   t.is(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: true,
       minCharCount: 5
     }).res,
@@ -1039,7 +1039,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   );
   t.is(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
@@ -1049,7 +1049,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   );
   t.is(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: true,
       convertEntities: false,
       removeWidowPreventionMeasures: true,
@@ -1060,7 +1060,7 @@ test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a
   );
   t.is(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      language: "js",
+      targetLanguage: "js",
       UKPostcodes: true,
       convertEntities: false,
       removeWidowPreventionMeasures: true,
@@ -1331,7 +1331,7 @@ test(`08.01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWo
 test(`08.02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`, t => {
   t.is(
     removeWidows("aaa bbb", {
-      language: "css",
+      targetLanguage: "css",
       minWordCount: null,
       minCharCount: 5
     }).res,
@@ -1340,7 +1340,7 @@ test(`08.02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWo
   );
   t.is(
     removeWidows("aaa bbb", {
-      language: "css",
+      targetLanguage: "css",
       minWordCount: false,
       minCharCount: 5
     }).res,
