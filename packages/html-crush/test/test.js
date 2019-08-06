@@ -2978,7 +2978,21 @@ test(`10.01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitesp
       removeLineBreaks: true
     }).result,
     `x<a>y`,
-    "10.01"
+    "10.01.01"
+  );
+  t.deepEqual(
+    m(`x<a > y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a> y`,
+    "10.01.02"
+  );
+  t.deepEqual(
+    m(`x<a>y`, {
+      removeLineBreaks: true
+    }).result,
+    `x<a>y`,
+    "10.01.03"
   );
 });
 
@@ -2997,7 +3011,7 @@ test(`10.03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inl
     m(`x<a >y`, {
       removeLineBreaks: false
     }).result,
-    `x<a >y`,
+    `x<a>y`,
     "10.03"
   );
 });
@@ -3007,7 +3021,7 @@ test(`10.04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeL
     m(`x<div >y`, {
       removeLineBreaks: false
     }).result,
-    `x<div >y`,
+    `x<div>y`,
     "10.04"
   );
 });
@@ -3018,7 +3032,7 @@ test(`10.05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opt
       removeLineBreaks: false,
       removeIndentations: false
     }).result,
-    `x<a >y`,
+    `x<a>y`,
     "10.05"
   );
 });
@@ -3029,7 +3043,7 @@ test(`10.06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opt
       removeLineBreaks: false,
       removeIndentations: false
     }).result,
-    `x<div >y`,
+    `x<div>y`,
     "10.06"
   );
 });

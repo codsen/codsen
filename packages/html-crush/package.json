@@ -39,6 +39,7 @@
   "module": "dist/html-crush.esm.js",
   "browser": "dist/html-crush.umd.js",
   "scripts": {
+    "ava": "ava -d",
     "build": "rm -rf dist && rollup -c",
     "coverage": "nyc report --reporter=json-summary",
     "dev": "rm -rf dist && rollup -c --dev --silent",

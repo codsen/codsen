@@ -408,6 +408,22 @@ function crush(str, originalOpts) {
         !/\w/.test(str[i])
       ) {
         tagName = str.slice(tagNameStartsAt, i);
+        if (str[right(str, i - 1)] === ">" && !str[i].trim().length) {
+          finalIndexesToDelete.push(i, right(str, i));
+        } else if (
+          str[right(str, i - 1)] === "/" &&
+          str[right(str, right(str, i - 1))] === ">"
+        ) {
+          if (!str[i].trim().length) {
+            finalIndexesToDelete.push(i, right(str, i));
+          }
+          if (str[right(str, i - 1) + 1] !== ">") {
+            finalIndexesToDelete.push(
+              right(str, i - 1) + 1,
+              right(str, right(str, i - 1) + 1)
+            );
+          }
+        }
       }
       if (
         !doNothing &&
@@ -566,13 +582,10 @@ function crush(str, originalOpts) {
               }
               let whatToAdd = " ";
               if (
-                (str[i] === "<" &&
-                  matchRight(str, i, opts.mindTheInlineTags, {
-                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                  })) ||
-                ("<>".includes(str[i]) &&
-                  ("0123456789".includes(str[right(str, i)]) ||
-                    "0123456789".includes(str[left(str, i)])))
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                })
               ) ; else if (
                 (str[whitespaceStartedAt - 1] &&
                   DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(
@@ -606,10 +619,21 @@ function crush(str, originalOpts) {
                   str[i + 4] === "y" &&
                   str[i + 5] === "l" &&
                   str[i + 6] === "e") ||
-                str[i] === ">" ||
-                (str[i] === "/" && str[right(str, i)] === ">")
+                ((str[i] === ">" &&
+                  (`'"`.includes(str[left(str, i)]) ||
+                    str[right(str, i)] === "<")) ||
+                  (str[i] === "/" && str[right(str, i)] === ">"))
               ) {
                 whatToAdd = "";
+                if (
+                  str[i] === "/" &&
+                  str[right(str, i)] === ">" &&
+                  right(str, i) > i + 1
+                ) {
+                  finalIndexesToDelete.push(i + 1, right(str, i));
+                  countCharactersPerLine =
+                    countCharactersPerLine - (right(str, i) - i + 1);
+                }
               }
               if (whatToAdd && whatToAdd.length) {
                 countCharactersPerLine++;

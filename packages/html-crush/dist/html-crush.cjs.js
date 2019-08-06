@@ -281,6 +281,16 @@ function crush(str, originalOpts) {
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
       ) {
           tagName = str.slice(tagNameStartsAt, _i);
+          if (str[stringLeftRight.right(str, _i - 1)] === ">" && !str[_i].trim().length) {
+            finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
+          } else if (str[stringLeftRight.right(str, _i - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, _i - 1))] === ">") {
+            if (!str[_i].trim().length) {
+              finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
+            }
+            if (str[stringLeftRight.right(str, _i - 1) + 1] !== ">") {
+              finalIndexesToDelete.push(stringLeftRight.right(str, _i - 1) + 1, stringLeftRight.right(str, stringLeftRight.right(str, _i - 1) + 1));
+            }
+          }
         }
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str[_i - 1] === "<" && tagNameStartsAt === null) {
         if (/\w/.test(str[_i])) {
@@ -365,12 +375,18 @@ function crush(str, originalOpts) {
                 continue;
               }
               var whatToAdd = " ";
-              if (str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
+              if (
+              str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
                 }
-              }) || "<>".includes(str[_i]) && ("0123456789".includes(str[stringLeftRight.right(str, _i)]) || "0123456789".includes(str[stringLeftRight.left(str, _i)]))) ; else if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"') || str[whitespaceStartedAt - 1] === "}" && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
+              })
+              ) ; else if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"') || str[whitespaceStartedAt - 1] === "}" && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" || str[_i] === ">" && ("'\"".includes(str[stringLeftRight.left(str, _i)]) || str[stringLeftRight.right(str, _i)] === "<") || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
                 whatToAdd = "";
+                if (str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">" && stringLeftRight.right(str, _i) > _i + 1) {
+                  finalIndexesToDelete.push(_i + 1, stringLeftRight.right(str, _i));
+                  countCharactersPerLine = countCharactersPerLine - (stringLeftRight.right(str, _i) - _i + 1);
+                }
               }
               if (whatToAdd && whatToAdd.length) {
                 countCharactersPerLine++;
