@@ -1,4 +1,4 @@
-/** 
+/**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  * Version: 1.7.3
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
  */
+
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -13,7 +14,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var isObj = _interopDefault(require('lodash.isplainobject'));
-var applySlices = _interopDefault(require('ranges-apply'));
+var applyRanges = _interopDefault(require('ranges-apply'));
 var Slices = _interopDefault(require('ranges-push'));
 var stringMatchLeftRight = require('string-match-left-right');
 var expand = _interopDefault(require('string-range-expander'));
@@ -556,7 +557,7 @@ function crush(str, originalOpts) {
     }
     if (finalIndexesToDelete.current()) {
       var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
-      var res = applySlices(str, finalIndexesToDelete.current(), function (applyPercDone) {
+      var res = applyRanges(str, finalIndexesToDelete.current(), function (applyPercDone) {
         if (opts.reportProgressFunc && len >= 2000) {
           currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
           if (currentPercentageDone !== lastPercentage) {

@@ -1,4 +1,4 @@
-/** 
+/**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  * Version: 1.7.3
@@ -6,8 +6,9 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
  */
+
 import isObj from 'lodash.isplainobject';
-import applySlices from 'ranges-apply';
+import applyRanges from 'ranges-apply';
 import Slices from 'ranges-push';
 import { matchRightIncl, matchRight } from 'string-match-left-right';
 import expand from 'string-range-expander';
@@ -965,7 +966,7 @@ function crush(str, originalOpts) {
         opts.reportProgressFuncTo -
         (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
           leavePercForLastStage;
-      const res = applySlices(
+      const res = applyRanges(
         str,
         finalIndexesToDelete.current(),
         applyPercDone => {
