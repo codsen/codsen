@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
  * Version: 2.0.26
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

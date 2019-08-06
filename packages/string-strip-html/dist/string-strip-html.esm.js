@@ -1,4 +1,4 @@
-/** 
+/**
  * string-strip-html
  * Strips HTML tags from strings. Detects legit unencoded brackets.
  * Version: 4.0.27
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
  */
+
 import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
 import isObj from 'lodash.isplainobject';

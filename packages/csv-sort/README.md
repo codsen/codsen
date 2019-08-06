@@ -31,18 +31,18 @@ Other siblings of this package:
 npm i csv-sort
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`csvSort`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`cSort`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const csvSort = require("csv-sort");
+const cSort = require("csv-sort");
 ```
 
 or as an ES Module:
 
 ```js
-import csvSort from "csv-sort";
+import cSort from "csv-sort";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -53,7 +53,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "csvSort" which you consume like this:
-const csvSort = csvSort;
+const cSort = csvSort;
 ```
 
 This package has three builds in `dist/` folder:
@@ -62,7 +62,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-sort.cjs.js` | 13 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 14 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 50 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 51 KB |
 
 **[⬆ back to top](#)**
 
@@ -92,14 +92,14 @@ In later releases I would like to be able to recognise and fix any offset column
 ## Usage
 
 ```js
-const csvSort = require("csv-sort");
+const cSort = require("csv-sort");
 const input = `123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
 123456,Bought table,10,,940
 123456,Bought pens,10,,1000
 123456,Bought chairs,20,,980
 `;
-const { res } = csvSort(input)
+const { res } = cSort(input)
   .join(",")
   .join("\n");
 console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);

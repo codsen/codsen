@@ -1,4 +1,4 @@
-/** 
+/**
  * string-left-right
  * Look what's to the left or the right of a given index within a string
  * Version: 2.2.16
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
  */
+
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

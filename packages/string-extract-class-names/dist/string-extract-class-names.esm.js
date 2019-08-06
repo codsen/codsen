@@ -1,4 +1,4 @@
-/** 
+/**
  * string-extract-class-names
  * Extract class (or id) name from a string
  * Version: 5.8.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
  */
+
 function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;

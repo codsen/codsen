@@ -1,4 +1,4 @@
-/** 
+/**
  * array-of-arrays-sort-by-col
  * sort array of arrays by column, rippling the sorting outwards from that column
  * Version: 2.11.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-invert
  * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
  * Version: 2.1.13
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
  */
+
 import isNatNum from 'is-natural-number';
 import ordinalSuffix from 'ordinal-number-suffix';
 import checkTypes from 'check-types-mini';

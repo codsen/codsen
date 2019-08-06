@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
  * Version: 1.8.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object
  */
+
 import compare from 'ast-compare';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';

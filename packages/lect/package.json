@@ -1,7 +1,7 @@
 {
   "name": "lect",
   "version": "0.9.3",
-  "description": "Maintenance automation for Readme's and, optionally, other project files",
+  "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
@@ -37,6 +37,7 @@
     "lect": "cli.js"
   },
   "scripts": {
+    "ava": "ava -d",
     "coverage": "nyc report --reporter=json-summary",
     "dev": "echo\"\"",
     "format": "npm run lect && npm run prettier && npm run lint",

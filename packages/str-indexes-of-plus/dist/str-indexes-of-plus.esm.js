@@ -1,4 +1,4 @@
-/** 
+/**
  * str-indexes-of-plus
  * Search for a string in another string. Get array of indexes. Full Unicode support.
  * Version: 2.9.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
  */
+
 import toArr from 'lodash.toarray';
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';

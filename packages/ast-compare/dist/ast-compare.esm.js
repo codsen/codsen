@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
  * Version: 1.12.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
  */
+
 import clone from 'lodash.clonedeep';
 import pullAll from 'lodash.pullall';
 import typeDetect from 'type-detect';

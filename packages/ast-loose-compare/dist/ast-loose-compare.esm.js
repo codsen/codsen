@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
  * Version: 1.7.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
  */
+
 import empty from 'ast-contains-only-empty-space';
 import isString from 'lodash.isstring';
 import isPlainObject from 'lodash.isplainobject';

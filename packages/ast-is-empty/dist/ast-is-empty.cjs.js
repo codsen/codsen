@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
  * Version: 1.9.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

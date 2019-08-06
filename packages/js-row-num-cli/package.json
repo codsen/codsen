@@ -35,6 +35,7 @@
     "jsrownum": "cli.js"
   },
   "scripts": {
+    "ava": "ava -d",
     "coverage": "nyc report --reporter=json-summary",
     "dev": "echo\"\"",
     "format": "npm run lect && npm run prettier && npm run lint",

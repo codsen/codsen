@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
  * Version: 1.12.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

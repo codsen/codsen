@@ -1,4 +1,4 @@
-/** 
+/**
  * string-overlap-one-on-another
  * Lay one string on top of another, with an optional offset
  * Version: 1.5.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

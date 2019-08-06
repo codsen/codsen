@@ -1,6 +1,8 @@
-# Lect
+<div align="center">
+  <img alt="lect" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lect/media/repo_logo.png" width="480" align="center">
+</div>
 
-> Maintenance automation for Readme's and, optionally, other project files
+<div align="center"><p>Maintenance CLI for internal consumption</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -28,7 +30,7 @@ Opinionated npm library maintenance CLI app.
 - Take readme, replace what can be replaced, programmatically, from config file and package.json.
 - Generate and replace `rollup.config.json`
 - Generate and replace `.npmignore`
-- Create or delete arbitrary files, as per config file
+- Create or delete arbitrary files, as per config file, `.lectrc.json` which sits in monorepo package root and controls all packages
 - Manage dependencies, maintainers and whatnot in package.json
 
 That's for starters.
@@ -38,6 +40,8 @@ That's for starters.
 ## Great Wisdom or Great Foolishness
 
 Using somebody else's config/automation files is usually a sign of _great or wisdom_ or a _great incompetence_. It is very very unlikely that a _real, serious and capable developer_ would take on _other real, serious and capable developer_'s automation script and plugged many npm libraries into it. Unrealistic. The _other real, serious and capable developer_ will either have his own tool, or will not be capable of operating one. That's the paradox and it's valid on many other areas of life.
+
+But this is an open-source CLI and you can still use it, fork it or take pieces of it.
 
 **[⬆ back to top](#)**
 
@@ -53,11 +57,11 @@ Conceptually, it will try to update as many different files in repository as it 
 
 ## Readme automation
 
-There are three different ways to manage readme.
+There are three different ways to manage a readme.
 
 1. Not properly do it: readme is not taken care of, short, not friendly and so on.
 2. **Readme templates**. They are based on template-per readme. Influential people like [Jon Schlinkert](https://www.npmjs.com/~jonschlinkert) choose that approach. But this leads to faceless, brief, often obtuse and even condescending readmes. Plus, the Problem is beyond readme — the whole package maintenance should be automated and readme updating should be viewed from the perspective of npm package maintenance operation. No offsense Jon.
-3. **No template-per-readme approach**. Lect uses this. The idea is, readme is its own template. We can recognise and replace chunks inside of it, without the need of a separate template for each readme.
+3. **No template-per-readme approach**. Lect uses this. The idea is, readme is its own template. We can recognise and replace chunks inside of it, without the need of a separate template for each readme. This approach gives me both freedom to manually fill in the chapters and also automation/data-refreshing for common chapters (such as "Install").
 
 **[⬆ back to top](#)**
 

@@ -1,4 +1,4 @@
-/** 
+/**
  * string-unfancy
  * Replace all fancy dashes, quotes etc with their simpler equivalents
  * Version: 3.9.34
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

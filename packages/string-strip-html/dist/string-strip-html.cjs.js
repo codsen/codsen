@@ -1,4 +1,4 @@
-/** 
+/**
  * string-strip-html
  * Strips HTML tags from strings. Detects legit unencoded brackets.
  * Version: 4.0.27
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

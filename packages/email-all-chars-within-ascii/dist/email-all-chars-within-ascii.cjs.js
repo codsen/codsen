@@ -1,4 +1,4 @@
-/** 
+/**
  * email-all-chars-within-ascii
  * Scans all characters within a string and checks are they within ASCII range
  * Version: 2.9.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

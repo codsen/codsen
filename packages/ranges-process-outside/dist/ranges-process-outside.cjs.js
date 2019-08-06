@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-process-outside
  * Iterate through string and optionally a given ranges as if they were one
  * Version: 2.1.13
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

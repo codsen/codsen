@@ -1,4 +1,4 @@
-/** 
+/**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
  * Version: 3.0.27
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
  */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import arrayiffy from 'arrayiffy-if-string';

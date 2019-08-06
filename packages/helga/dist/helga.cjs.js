@@ -1,4 +1,4 @@
-/** 
+/**
  * helga
  * Your next best friend when editing complex nested code
  * Version: 1.1.10
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/helga
  */
+
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

@@ -1,4 +1,4 @@
-/** 
+/**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
  * Version: 1.6.36
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
  */
+
 import checkTypes from 'check-types-mini';
 import within from 'ranges-is-index-within';
 

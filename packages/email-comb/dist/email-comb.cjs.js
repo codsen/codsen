@@ -1,4 +1,4 @@
-/** 
+/**
  * email-comb
  * Remove unused CSS from email templates
  * Version: 3.4.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
  */
+
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

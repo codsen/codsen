@@ -1,4 +1,4 @@
-/** 
+/**
  * ast-contains-only-empty-space
  * Returns Boolean depending if passed AST contain only empty space
  * Version: 1.8.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
  */
+
 import trim from 'lodash.trim';
 import isObj from 'lodash.isplainobject';
 import traverse from 'ast-monkey-traverse';

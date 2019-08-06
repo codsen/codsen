@@ -1,4 +1,4 @@
-/** 
+/**
  * color-shorthand-hex-to-six-digit
  * Convert shorthand hex color codes into full
  * Version: 2.10.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit
  */
+
 import r from 'hex-color-regex';
 import isPlainObject from 'lodash.isplainobject';
 import isString from 'lodash.isstring';

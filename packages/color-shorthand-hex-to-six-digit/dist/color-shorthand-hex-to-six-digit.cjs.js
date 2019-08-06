@@ -1,4 +1,4 @@
-/** 
+/**
  * color-shorthand-hex-to-six-digit
  * Convert shorthand hex color codes into full
  * Version: 2.10.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

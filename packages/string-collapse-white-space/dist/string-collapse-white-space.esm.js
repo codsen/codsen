@@ -1,4 +1,4 @@
-/** 
+/**
  * string-collapse-white-space
  * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
  * Version: 5.0.27
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
  */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import replaceSlicesArr from 'ranges-apply';

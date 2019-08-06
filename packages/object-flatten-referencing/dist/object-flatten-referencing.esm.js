@@ -1,4 +1,4 @@
-/** 
+/**
  * object-flatten-referencing
  * Flatten complex nested objects according to a reference objects
  * Version: 4.10.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-referencing
  */
+
 import typ from 'type-detect';
 import clone from 'lodash.clonedeep';
 import search from 'str-indexes-of-plus';

@@ -72,25 +72,28 @@ This library takes a string and removes [widow words](https://en.wikipedia.org/w
 Some text with many words on one&nbsp;line.
 ```
 
+Also, optionally, it can replace spaces in front of dashes and between two parts of UK postcodes.
+
 **[⬆ back to top](#)**
 
 ## Features
 
 - Not just adds but if want, **removes** widow word prevention measures
-- Recognises existing measures and if found, skips operation (on that paragraph)
-- Option to encode non-breaking space in various ways (character-encode for HTML, CSS or JS strings)
 - Tackles both paragraphs and single lines
+- Recognises existing measures and if found, skips operation
+- Option to encode for HTML, CSS or JS strings or put a raw non-breaking space
 - Does not mangle the [line endings](https://stackoverflow.com/a/1552775/3943954) (Mac `LF`, Old style `CR` or Windows style `CR LF`)
 - Customiseable minimum amount of words per line/paragraph to trigger widow word removal
 - Can be used in different stages of the workflow: before HTML/CSS/JS-encoding or after
 - Optionally replaces spaces with non-breaking spaces in front of all kinds of **dashes**
 - Optionally replaces spaces with non-breaking spaces within **UK postcodes**
+- Optionally it can skip content between templating tags, for example Nunjucks `{{` and `}}` — presets are given for Jinja, Nunjucks, Liquid, Hexo and Hugo
 
 **[⬆ back to top](#)**
 
 ## API features
 
-- This program is a "string-in — string-out" style function — decoupled from DOM, web pages or UI or CLI or terminal or file system
+- This program is a "string-in — string-out" style function — decoupled from DOM, web pages or UI or CLI or terminal or file system. Build those on top on this program.
 - This program delivers 3 builds: _UMD_ (for websites), _CommonJS_ (for Node applications) and _ES Modules_ (for modern Node applications and evergreen browsers too)
 
 This program is used by [detergent.js](https://www.npmjs.com/package/detergent).
@@ -105,11 +108,19 @@ const { removeWidows } = require("string-remove-widows");
 
 ## API
 
-When you `require`/`import`, you get two things:
+When you `require`/`import`, you get three things:
 
 ```js
-const { removeWidows, version } = require("string-remove-widows");
+const { removeWidows, defaultOpts, version } = require("string-remove-widows");
 ```
+
+`removeWidows` is a function which does all the work.
+
+`defaultOpts` is a plain object, all the default options
+
+`version` is a semver string like `1.0.0` brought straight from `package.json`
+
+**[⬆ back to top](#)**
 
 ### API - `removeWidows()` Input
 
@@ -188,11 +199,11 @@ for example here's how the output could look like:
 
 ## More about `opts.targetLanguage`
 
-Not all text ends up in HTML. As you know, you can inject the content via CSS pseudo attributes and also text might end up in JavaScript code.
+Not all text ends up in HTML. As you know, you can inject the content via CSS pseudo attributes and also text might prepared to be pasted into JSON.
 
 This program allows you customise the target encoding for chosen language: `html`, `css` or `js`
 
-Here's HTML with HTML-encoded non-breaking space:
+Here's an HTML with HTML-encoded non-breaking space:
 
 ```html
 Some raw text in a very long&nbsp;line.
@@ -202,7 +213,7 @@ Here's CSS with CSS-encoded non-breaking space:
 
 ```css
 span:before {
-  content: "\00A0";
+  content: "no\00A0wrapping";
 }
 ```
 
@@ -212,7 +223,7 @@ Here's JavaScript with JS-encoded non-breaking space:
 alert("The hex \u00A0 renders as HTML entity &#160;");
 ```
 
-Here's how to set it:
+For example, a minimal application would look like this:
 
 ```js
 const { removeWidows } = require("string-remove-widows");

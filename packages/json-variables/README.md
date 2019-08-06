@@ -26,18 +26,18 @@
 npm i json-variables
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`jsonVariables`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`jVar`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const jsonVariables = require("json-variables");
+const jVar = require("json-variables");
 ```
 
 or as an ES Module:
 
 ```js
-import jsonVariables from "json-variables";
+import jVar from "json-variables";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -48,7 +48,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "jsonVariables" which you consume like this:
-const jsonVariables = jsonVariables;
+const jVar = jsonVariables;
 ```
 
 This package has three builds in `dist/` folder:
@@ -57,7 +57,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 20 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 20 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 68 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 69 KB |
 
 **[⬆ back to top](#)**
 
@@ -77,9 +77,13 @@ I know, these architectural mistakes look no-brainers _now_ but trust me, they w
 
 ## API
 
-**jsonVariables (inputObj, \[options])**
+**jVar(inputObj, \[options])**
+
+In other words, the main export is a function which takes two input arguments, `inputObj` and optional `options` (marked above by square brackets).
 
 Returns a plain object with all variables resolved.
+
+**[⬆ back to top](#)**
 
 #### inputObj
 
@@ -141,7 +145,7 @@ Check this:
 
 ```js
 const jv = require("json-variables");
-var res = jv({
+var res = jVar({
   a: "some text %%_var1_%% more text %%_var2_%%",
   b: "something",
   var1: "value1",
@@ -160,7 +164,7 @@ You can declare your way to mark variables, your own _heads_ and _tails_. For ex
 
 ```js
 const jv = require("json-variables");
-var res = jv(
+var res = jVar(
   {
     a: "some text {var1} more text {var2}",
     b: "something",
@@ -185,7 +189,7 @@ You can also wrap all resolved variables with strings, a new pair of _heads_ and
 
 ```js
 const jv = require("json-variables");
-var res = jv(
+var res = jVar(
   {
     a: "some text %%_var1_%% more text %%_var2_%%",
     b: "something",
@@ -211,7 +215,7 @@ If variables reference keys which have values that reference other keys, that's 
 
 ```js
 const jv = require("json-variables");
-var res = jv({
+var res = jVar({
   a: "%%_b_%%",
   b: "%%_c_%%",
   c: "%%_d_%%",
@@ -226,7 +230,7 @@ This one's OK:
 
 ```js
 const jv = require("json-variables");
-var res = jv({
+var res = jVar({
   a: "%%_b_%%",
   b: "%%_c_%%",
   c: "%%_d_%%",
@@ -247,7 +251,7 @@ Variables can also reference deeper levels within objects and arrays — just pu
 
 ```js
 const jv = require("json-variables");
-var res = jv(
+var res = jVar(
   {
     a: "some text %%_var1.key1_%% more text %%_var2.key2_%%",
     b: "something",
@@ -305,7 +309,7 @@ To set this up, you can rely on my default way of naming data keys (appending `_
 
 ```js
 const jv = require("json-variables");
-var res = jv({
+var res = jVar({
   a: "some text %%_var1_%% more text %%_var3_%%.",
   a_data: {
     var1: "value1",
@@ -328,7 +332,7 @@ Data container keys can also contain objects or arrays. Just query the whole pat
 
 ```js
 const jv = require("json-variables");
-var res = jv({
+var res = jVar({
   a: "some text %%_var1.key1.key2.key3_%% more text %%_var3_%%.",
   a_data: {
     var1: { key1: { key2: { key3: "value1" } } },
@@ -355,7 +359,7 @@ You can ignore the wrapping on any keys by supplying their name patterns in the 
 
 ```js
 const jv = require("json-variables");
-var res = jv(
+var res = jVar(
   {
     a: "%%_b_%%",
     b: "%%_c_%%",
@@ -496,7 +500,7 @@ When `opts.resolveToFalseIfAnyValuesContainBool` and `opts.resolveToBoolIfAnyVal
 Observe:
 
 ```js
-var res = jv({
+var res = jVar({
   a: "zzz %%_b_%% zzz",
   b: true
 });
@@ -508,7 +512,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 ```
 
 ```js
-var res = jv(
+var res = jVar(
   {
     a: "zzz %%_b_%% zzz",
     b: true

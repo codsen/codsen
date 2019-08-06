@@ -60,7 +60,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
         } else {
           throw new Error(
             `ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
-              opts.progressFn,
+              opts.mergeType,
               null,
               4
             )}`

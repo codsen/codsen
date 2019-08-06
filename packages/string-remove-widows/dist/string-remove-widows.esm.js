@@ -1,4 +1,4 @@
-/** 
+/**
  * string-remove-widows
  * Helps to prevent widow words in text
  * Version: 1.0.0
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
  */
+
 import apply from 'ranges-apply';
 import { left, right } from 'string-left-right';
 import { matchRightIncl } from 'string-match-left-right';
@@ -65,11 +66,11 @@ const Ranges = require("ranges-push");
 const defaultOpts = {
   removeWidowPreventionMeasures: false,
   convertEntities: true,
-  language: "html",
+  targetLanguage: "html",
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharCount: 50,
+  minCharCount: 20,
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -82,10 +83,10 @@ function removeWidows(str, originalOpts) {
       finalWhatToInsert = " ";
     } else if (opts.convertEntities) {
       finalWhatToInsert = encodedNbspHtml;
-      if (isStr(opts.language)) {
-        if (opts.language.trim().toLowerCase() === "css") {
+      if (isStr(opts.targetLanguage)) {
+        if (opts.targetLanguage.trim().toLowerCase() === "css") {
           finalWhatToInsert = encodedNbspCss;
-        } else if (opts.language.trim().toLowerCase() === "js") {
+        } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
           finalWhatToInsert = encodedNbspJs;
         }
       }
@@ -267,11 +268,14 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 6, rawnbsp);
-      } else if (opts.language === "css" || opts.language === "js") {
+      } else if (
+        opts.targetLanguage === "css" ||
+        opts.targetLanguage === "js"
+      ) {
         rangesArr.push(
           i,
           i + 6,
-          opts.language === "css" ? encodedNbspCss : encodedNbspJs
+          opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
         );
       }
     }
@@ -291,11 +295,14 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 5, rawnbsp);
-      } else if (opts.language === "html" || opts.language === "js") {
+      } else if (
+        opts.targetLanguage === "html" ||
+        opts.targetLanguage === "js"
+      ) {
         rangesArr.push(
           i,
           i + 5,
-          opts.language === "html" ? encodedNbspHtml : encodedNbspJs
+          opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
         );
       }
     }
@@ -317,11 +324,14 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 6, rawnbsp);
-      } else if (opts.language === "html" || opts.language === "css") {
+      } else if (
+        opts.targetLanguage === "html" ||
+        opts.targetLanguage === "css"
+      ) {
         rangesArr.push(
           i,
           i + 6,
-          opts.language === "html" ? encodedNbspHtml : encodedNbspCss
+          opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss
         );
       }
     }
@@ -335,9 +345,9 @@ function removeWidows(str, originalOpts) {
         rangesArr.push(
           i,
           i + 1,
-          opts.language === "css"
+          opts.targetLanguage === "css"
             ? encodedNbspCss
-            : opts.language === "js"
+            : opts.targetLanguage === "js"
             ? encodedNbspJs
             : encodedNbspHtml
         );

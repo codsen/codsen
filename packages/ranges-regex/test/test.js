@@ -101,7 +101,7 @@ test(`01.01 - crops out few ranges outside the strlen`, t => {
   );
 });
 
-test(`01.02 - crops out few ranges outside the strlen`, t => {
+test(`01.02 - nothing found`, t => {
   t.deepEqual(rare(/def/g, ""), null, "01.02.01");
   t.deepEqual(rare(/def/g, "", "yo"), null, "01.02.02");
   t.deepEqual(rare(/def/g, "", null), null, "01.02.03");

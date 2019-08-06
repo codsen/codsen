@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-push
  * Manage the array of ranges referencing the index ranges within the string
  * Version: 3.2.10
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
  */
+
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import ordinal from 'ordinal-number-suffix';

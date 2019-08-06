@@ -1,4 +1,4 @@
-/** 
+/**
  * array-of-arrays-into-ast
  * turns an array of arrays of data into a nested tree of plain objects
  * Version: 1.9.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

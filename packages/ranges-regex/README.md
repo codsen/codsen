@@ -17,18 +17,18 @@
 npm i ranges-regex
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`rangesRegex`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`raReg`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const rangesRegex = require("ranges-regex");
+const raReg = require("ranges-regex");
 ```
 
 or as an ES Module:
 
 ```js
-import rangesRegex from "ranges-regex";
+import raReg from "ranges-regex";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -39,7 +39,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "rangesRegex" which you consume like this:
-const rangesRegex = rangesRegex;
+const raReg = rangesRegex;
 ```
 
 This package has three builds in `dist/` folder:
@@ -73,7 +73,7 @@ Similarly to `String.prototype.match()`, a no results case will yield `null`.
 
 ## API
 
-**rangesRegex(regexp, str, \[replacement])**
+**raReg(regexp, str, \[replacement])**
 
 | Input argument | Type               | Obligatory? | Description                                                                                       |
 | -------------- | ------------------ | ----------- | ------------------------------------------------------------------------------------------------- |
@@ -95,11 +95,11 @@ Nothing to find:
 
 ```js
 // nothing to find:
-console.log(rare(/yyy/g, "zzzzzzzz"));
+console.log(raReg(/yyy/g, "zzzzzzzz"));
 // => null
 
 // stick `null` to add onto every of the findings:
-const res = rare(/def/g, "abcdefghij_abcdefghij", null);
+const res = raReg(/def/g, "abcdefghij_abcdefghij", null);
 console.log(JSON.stringify(res, null, 4));
 // => [[3, 6, null], [14, 17, null]]
 ```

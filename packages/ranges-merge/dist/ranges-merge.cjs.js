@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-merge
  * Merge and sort arrays which mean string slice ranges
  * Version: 4.2.13
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -55,7 +56,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
         } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
           opts.mergeType = 2;
         } else {
-          throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
+          throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
         }
       }
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {

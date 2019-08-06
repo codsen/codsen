@@ -1,4 +1,4 @@
-/** 
+/**
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
  * Version: 2.3.14
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
+
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import { entStartsWith, uncertain, decode, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';

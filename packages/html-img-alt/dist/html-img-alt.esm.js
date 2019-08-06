@@ -1,4 +1,4 @@
-/** 
+/**
  * html-img-alt
  * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
  * Version: 1.4.13
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
  */
+
 import unfancy from 'string-unfancy';
 import apply from 'ranges-apply';
 import Ranges from 'ranges-push';

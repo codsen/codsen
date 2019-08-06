@@ -1,4 +1,4 @@
-/** 
+/**
  * emlint
  * Non-parsing, email template-oriented linter
  * Version: 1.5.14
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
+
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import arrayiffy from 'arrayiffy-if-string';
 import checkTypes from 'check-types-mini';

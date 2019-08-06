@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-iterate
  * Iterate a string and any changes within already existing ranges
  * Version: 1.1.13
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-iterate
  */
+
 const isArr = Array.isArray;
 function rangesIterate(str, originalRanges, cb, offset = 0) {
   if (typeof str !== "string") {

@@ -1,4 +1,4 @@
-/** 
+/**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
  * Version: 3.7.36
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
  */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

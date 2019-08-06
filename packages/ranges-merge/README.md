@@ -182,7 +182,7 @@ Do we end up with `"ab"` or `"b"` or something else?
 `opts.mergeType` let's you customise this behaviour:
 
 - In default mode, opts.mergeType === `1`, clashing "to insert" values will always be concatenated (`"ab"` in example above)
-- In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** latter value overrides the former (`"b"` in example above).
+- In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** — the latter value overrides the former (`"b"` in example above).
 
 In all other aspects, `opts.mergeType` modes `1` and `2` are the same.
 

@@ -1,4 +1,4 @@
-/** 
+/**
  * ranges-ent-decode
  * Decode HTML entities recursively, get string index ranges of what needs to be replaced where
  * Version: 2.0.26
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode
  */
+
 import he from 'he';
 import mergeRanges from 'ranges-merge';
 import isObj from 'lodash.isplainobject';

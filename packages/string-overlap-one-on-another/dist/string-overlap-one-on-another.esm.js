@@ -1,4 +1,4 @@
-/** 
+/**
  * string-overlap-one-on-another
  * Lay one string on top of another, with an optional offset
  * Version: 1.5.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another
  */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import isNatNum from 'is-natural-number';

@@ -1,4 +1,4 @@
-/** 
+/**
  * email-all-chars-within-ascii
  * Scans all characters within a string and checks are they within ASCII range
  * Version: 2.9.35
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
  */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 

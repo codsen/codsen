@@ -1,4 +1,4 @@
-/** 
+/**
  * email-comb
  * Remove unused CSS from email templates
  * Version: 3.4.8
@@ -6,6 +6,7 @@
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
  */
+
 import { matchRightIncl, matchLeft, matchRight } from 'string-match-left-right';
 import emptyCondCommentRegex from 'regex-empty-conditional-comments';
 import pullAllWithGlob from 'array-pull-all-with-glob';
