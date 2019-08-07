@@ -1,6 +1,6 @@
 # string-remove-widows
 
-> Helps to prevent widow words in text
+> Helps to prevent widow words in a text
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -82,19 +82,19 @@ Also, optionally, it can replace spaces in front of dashes and between two parts
 - Tackles both paragraphs and single lines
 - Recognises existing measures and if found, skips operation
 - Option to encode for HTML, CSS or JS strings or put a raw non-breaking space
-- Does not mangle the [line endings](https://stackoverflow.com/a/1552775/3943954) (Mac `LF`, Old style `CR` or Windows style `CR LF`)
-- Customiseable minimum amount of words per line/paragraph to trigger widow word removal
+- Does not mangle the [line endings](https://stackoverflow.com/a/1552775/3943954) (Mac `LF`, Old style `CR` or Windows-style `CR LF`)
+- A customisable minimum amount of words per line/paragraph to trigger widow word removal
 - Can be used in different stages of the workflow: before HTML/CSS/JS-encoding or after
 - Optionally replaces spaces with non-breaking spaces in front of all kinds of **dashes**
 - Optionally replaces spaces with non-breaking spaces within **UK postcodes**
-- Optionally it can skip content between templating tags, for example Nunjucks `{{` and `}}` — presets are given for Jinja, Nunjucks, Liquid, Hexo and Hugo
+- Optionally it can skip content between templating tags, for example, Nunjucks `{{` and `}}` — presets are given for Jinja, Nunjucks, Liquid, Hexo and Hugo
 
 **[⬆ back to top](#)**
 
 ## API features
 
-- This program is a "string-in — string-out" style function — decoupled from DOM, web pages or UI or CLI or terminal or file system. Build those on top on this program.
-- This program delivers 3 builds: _UMD_ (for websites), _CommonJS_ (for Node applications) and _ES Modules_ (for modern Node applications and evergreen browsers too)
+- This program is a "string-in — string-out" style function — decoupled from DOM, web pages or UI or CLI or terminal or file system. Build those on top of this program.
+- This program delivers three builds: _UMD_ (for websites), _CommonJS_ (for Node applications) and _ES Modules_ (for modern Node applications and evergreen browsers too)
 
 This program is used by [detergent.js](https://www.npmjs.com/package/detergent).
 
@@ -116,15 +116,15 @@ const { removeWidows, defaultOpts, version } = require("string-remove-widows");
 
 `removeWidows` is a function which does all the work.
 
-`defaultOpts` is a plain object, all the default options
+`defaultOpts` is a plain object, all the default options.
 
-`version` is a semver string like `1.0.0` brought straight from `package.json`
+`version` is a semver string like `1.0.0` brought straight from `package.json`.
 
 **[⬆ back to top](#)**
 
 ### API - `removeWidows()` Input
 
-`removeWidows` is a function, its API is the following:
+`removeWidows` is a function; its API is the following:
 
 | Input argument | Key value's type | Obligatory? | Description                  |
 | -------------- | ---------------- | ----------- | ---------------------------- |
@@ -181,7 +181,7 @@ Function `removeWidows` returns a plain object; you pick the values from it:
 | `ranges`                 | Array of zero or more ranges (arrays) | Calculated ranges used to produce the `res` |
 | `log`                    | Plain object                          | See its format below                        |
 
-for example here's how the output could look like:
+for example, here's how the output could look like:
 
 ```js
 {
@@ -199,9 +199,9 @@ for example here's how the output could look like:
 
 ## More about `opts.targetLanguage`
 
-Not all text ends up in HTML. As you know, you can inject the content via CSS pseudo attributes and also text might prepared to be pasted into JSON.
+Not all text ends up in HTML. As you know, you can inject the content via CSS pseudo attributes and also text might be prepared to be pasted into JSON.
 
-This program allows you customise the target encoding for chosen language: `html`, `css` or `js`
+This program allows you to customise the target encoding for chosen language: `html`, `css` or `js`.
 
 Here's an HTML with HTML-encoded non-breaking space:
 
@@ -209,18 +209,18 @@ Here's an HTML with HTML-encoded non-breaking space:
 Some raw text in a very long&nbsp;line.
 ```
 
-Here's CSS with CSS-encoded non-breaking space:
+Here's CSS analogue:
 
 ```css
 span:before {
-  content: "no\00A0wrapping";
+  content: "Some raw text in a very long\00A0line.";
 }
 ```
 
-Here's JavaScript with JS-encoded non-breaking space:
+Here's JavaScript analogue:
 
 ```js
-alert("The hex \u00A0 renders as HTML entity &#160;");
+alert("Some raw text in a very long\u00A0line.");
 ```
 
 For example, a minimal application would look like this:
@@ -228,12 +228,12 @@ For example, a minimal application would look like this:
 ```js
 const { removeWidows } = require("string-remove-widows");
 // second input argument is a plain object, the Optional Options Object:
-const result = removeWidows("Here is a very long line of text", {
+const result = removeWidows("Some raw text in a very long line.", {
   targetLanguage: "css"
 });
 // now the widow words will be prevented considering that content will go to CSS content:
 console.log(result);
-// => "Here is a very long line of\00A0text"
+// => "Some raw text in a very long\00A0line."
 ```
 
 **[⬆ back to top](#)**
@@ -248,7 +248,7 @@ For example, this Nunjucks snippet:
 Hi{% if data.firstName %} data.firstName{% endif %}!
 ```
 
-We intend to either say `Hi John!` to customer John or just `Hi!` if we don't know customer's name.
+We intend to either say `Hi John!` to customer John or just `Hi!` if we don't know the customer's name.
 
 But if we run widow words removal on this piece of text, **we don't want** `&nbsp;` inserted into the middle of `endif`:
 
@@ -308,42 +308,42 @@ In life, anything _professional_ (as opposed to _amateur_) means _an excess_.
 
 📝 Professional preparing of marketing materials — websites and email templates — is also somewhat full of excesses. Millions of emails sent, hundreds of pages managed, thousands of products listed. The more features your tool has, the more capabilities you have.
 
-For example, you might need to copy some text from _PSD_, clean invisible characters, encode it in CSS, prevent widow words and paste it into pseudo element in a .SCSS file. That's one click on [Detergent.io](https://detergent.io) and the **widow word prevention part** would be done by this program.
+For example, you might need to copy some text from _PSD_, clean invisible characters, encode it in CSS, prevent widow words and paste it into pseudo-element in a .SCSS file. That's one click on [Detergent.io](https://detergent.io) and the **widow word prevention part** would be done by this program.
 
 Supporting CSS and JS encoding besides only HTML is one of many features of this program which distinguishes it from the competition:
 
-|                                                                                        | This program, <br> [`string-remove-widows`](https://www.npmjs.com/package/string-remove-widows)                                            | [`widow-js`](https://www.npmjs.com/package/widow-js)                                                               | [`@simmo/widower`](https://www.npmjs.com/package/@simmo/widower)                                                               |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-|                                                                                        | [![npm link](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [![npm link](https://img.shields.io/npm/v/widow-js.svg?style=flat-square)](https://www.npmjs.com/package/widow-js) | [![npm link](https://img.shields.io/npm/v/@simmo/widower.svg?style=flat-square)](https://www.npmjs.com/package/@simmo/widower) |
-| Can both add and remove `nbsp`s                                                        | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Option to choose between raw, HTML, CSS or JS-encoded `nbsp`s                          | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Can replace spaces in front of hyphens, n- and m-dashes                                | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Can prepare UK postcodes                                                               | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Does not mangle different types of line endings (`LF`, `CRLF`, `CR`)                   | ✅                                                                                                                                         | ✅                                                                                                                 | ✅                                                                                                                             |
-| Customiseable minimal word count threshold                                             | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Customiseable minimal character count threshold                                        | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Progress reporting function for web worker webapps                                     | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Reports string index ranges of what was done                                           | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Non-breaking space location's whitespace does not necessarily has to be a single space | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Presets for Jinja, Nunjucks, Liquid, Hugo and Hexo templating languages                | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| Decoupled API^                                                                         | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
-| CommonJS build                                                                         | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
-| ES Modules build                                                                       | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
-| UMD build for browser                                                                  | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Can process live DOM of a web page                                                     | ❌                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
-| Licence                                                                                | MIT                                                                                                                                        | ISC                                                                                                                | MIT                                                                                                                            |
+|                                                                                         | This program, <br> [`string-remove-widows`](https://www.npmjs.com/package/string-remove-widows)                                            | [`widow-js`](https://www.npmjs.com/package/widow-js)                                                               | [`@simmo/widower`](https://www.npmjs.com/package/@simmo/widower)                                                               |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+|                                                                                         | [![npm link](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [![npm link](https://img.shields.io/npm/v/widow-js.svg?style=flat-square)](https://www.npmjs.com/package/widow-js) | [![npm link](https://img.shields.io/npm/v/@simmo/widower.svg?style=flat-square)](https://www.npmjs.com/package/@simmo/widower) |
+| Can both add and remove `nbsp`s                                                         | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Option to choose between raw, HTML, CSS or JS-encoded `nbsp`s                           | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Can replace spaces in front of hyphens, n- and m-dashes                                 | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Can prepare UK postcodes                                                                | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Does not mangle different types of line endings (`LF`, `CRLF`, `CR`)                    | ✅                                                                                                                                         | ✅                                                                                                                 | ✅                                                                                                                             |
+| Customisable minimal word count threshold                                               | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
+| Customisable minimal character count threshold                                          | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Progress reporting function for web worker web apps                                     | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Reports string index ranges of what was done                                            | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Non-breaking space location's whitespace does not necessarily have to be a single space | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Presets for Jinja, Nunjucks, Liquid, Hugo and Hexo templating languages                 | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| Decoupled API^                                                                          | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
+| CommonJS build                                                                          | ✅                                                                                                                                         | ❌                                                                                                                 | ✅                                                                                                                             |
+| ES Modules build                                                                        | ✅                                                                                                                                         | ❌                                                                                                                 | ❌                                                                                                                             |
+| UMD build for browser                                                                   | ✅                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
+| Can process live DOM of a web page                                                      | ❌                                                                                                                                         | ✅                                                                                                                 | ❌                                                                                                                             |
+| Licence                                                                                 | MIT                                                                                                                                        | ISC                                                                                                                | MIT                                                                                                                            |
 
-^ A _decoupled_ API means that at its core, program is a function "_string-in, string-out_" and is not coupled with DOM, file I/O, network or other unrelated operations. This makes it easier to test and create many other applications **on top** of a decoupled API.
+^ A _decoupled_ API means that at its core, the program is a function "_string-in, string-out_" and is not coupled with DOM, file I/O, network or other unrelated operations. Such API makes it easier to test and create many different applications **on top** of a decoupled API.
 
-For example, our competitor [widow.js](https://www.npmjs.com/package/widow-js) has two coupled parts: 1. API which does string-in, string-out, and 2. DOM processing functions. This could have been two npm libraries. In the end, people who don't need DOM operations can't use it.
+For example, our competitor [widow.js](https://www.npmjs.com/package/widow-js) has two coupled parts: 1. API which does string-in, string-out, and 2. DOM processing functions. It could have been two npm libraries. In the end, people who don't need DOM operations can't use it.
 
 One decoupled, "_string-in, string-out_" library like `string-remove-widows` might power all these at once:
 
+- Web page DOM-manipulation library
 - a CLI application to process files or piped streams
 - an Express REST endpoint on a server,
 - a serverless lambda on AWS,
 - an Electron desktop program
-- DOM-manipulation library
 
 **[⬆ back to top](#)**
 

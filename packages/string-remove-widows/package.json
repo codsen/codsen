@@ -1,7 +1,7 @@
 {
   "name": "string-remove-widows",
   "version": "1.0.0",
-  "description": "Helps to prevent widow words in text",
+  "description": "Helps to prevent widow words in a text",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
