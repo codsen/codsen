@@ -1,6 +1,6 @@
 /**
  * string-remove-widows
- * Helps to prevent widow words in text
+ * Helps to prevent widow words in a text
  * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

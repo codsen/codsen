@@ -1,0 +1,66 @@
+{
+  "private": "true",
+  "author": {
+    "name": "Felix Boehm",
+    "email": "me@feedic.com"
+  },
+  "bugs": {
+    "url": "https://github.com/FB55/domutils/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "dom-serializer": "0",
+    "domelementtype": "1"
+  },
+  "deprecated": false,
+  "description": "utilities for working with htmlparser2's dom",
+  "devDependencies": {
+    "domhandler": "2",
+    "htmlparser2": "~3.9.2",
+    "jshint": "~2.9.4",
+    "mocha": "~3.2.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "homepage": "https://github.com/FB55/domutils#readme",
+  "jshintConfig": {
+    "proto": true,
+    "unused": true,
+    "eqnull": true,
+    "undef": true,
+    "quotmark": "double",
+    "eqeqeq": true,
+    "trailing": true,
+    "node": true,
+    "globals": {
+      "describe": true,
+      "it": true,
+      "beforeEach": true
+    }
+  },
+  "keywords": [
+    "dom",
+    "htmlparser2"
+  ],
+  "license": "BSD-2-Clause",
+  "main": "index.js",
+  "name": "domutils",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FB55/domutils.git"
+  },
+  "scripts": {
+    "originaltest": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js",
+    "coverage": "exit 0",
+    "dev": "exit 0",
+    "format": "exit 0",
+    "lect": "lect",
+    "lint": "exit 0",
+    "prettier": "exit 0",
+    "test": "exit 0",
+    "test:tap": "tap --no-esm",
+    "unittest": "exit 0"
+  },
+  "version": "1.7.0"
+}
