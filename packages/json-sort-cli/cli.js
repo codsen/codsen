@@ -37,6 +37,7 @@ const cli = meow(
     -h, --help          Shows this help
     -v, --version       Shows the version of your json-sort-cli
     -a, --arrays        Also sort any arrays if they contain only string elements
+    -p, --pack          Exclude all package.json files
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
@@ -47,7 +48,8 @@ const cli = meow(
       n: "nodemodules",
       t: "tabs",
       s: "silent",
-      a: "arrays"
+      a: "arrays",
+      p: "pack"
     }
   }
 );
@@ -126,7 +128,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       }
 
       return Promise.resolve(
-        path.basename(oneOfPaths) === "package.json"
+        !cli.flags.p && path.basename(oneOfPaths) === "package.json"
           ? format(result).then(str => JSON.parse(str))
           : result
       ).then(obj =>
@@ -260,6 +262,11 @@ globby(input, { dot: true })
             !oneOfPaths.includes("node_modules") &&
             !oneOfPaths.includes("package-lock.json")
         )
+      : res
+  )
+  .then(res =>
+    cli.flags.p
+      ? res.filter(oneOfPaths => !oneOfPaths.includes("package.json"))
       : res
   )
   .then(paths => {

@@ -83,6 +83,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | `-a`  | `--arrays`      | Also sort any arrays if they contain only string elements         |
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
+| `-p`  | `--pack`        | Skip all `package.json` files           |
 
 Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these commands below are the same:
 
@@ -99,7 +100,7 @@ It **sorts JSON files deeply**.
 
 That is, it does not matter is it's a plain object within array within array within a plain object - all objects no matter how deep, will be detected and sorted.
 
-If this tool processes any `package.json` files, it will first deep-sort alphabetically, then use `format-package` ([npm](https://www.npmjs.com/package/format-package)) to arrange keys according to a commonly agreed format — `name` at the top, depedencies at the bottom etc.
+If this tool processes any `package.json` files (put `-p` to disable this), it will first deep-sort alphabetically, then use `format-package` ([npm](https://www.npmjs.com/package/format-package)) to arrange keys according to a commonly agreed format — `name` at the top, depedencies at the bottom etc.
 
 This is a parsing-type application, so written files are also **prettified** — tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
@@ -109,7 +110,7 @@ Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.
 
 ### Extra features
 
-- `package.json` are first deep-sorted alphabetically, then using `format-package` ([npm](https://www.npmjs.com/package/format-package))
+- `package.json` are first deep-sorted alphabetically, then using `format-package` ([npm](https://www.npmjs.com/package/format-package)) (on by default, but put `-p` to disable this)
 - Works on dot files, as long as they are parse-able as JSON
 - Can process a set of files in folder (use wildcards for example, `jsonsort "**/packages/*/data/*.json"`)
 - Broken JSON files don't stop the process, other healthy files from batch are still sorted. Notifies user.

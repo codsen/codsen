@@ -776,3 +776,68 @@ test("01.12 - no files found in the given directory", async t => {
     /The inputs don't lead to any json files! Exiting./
   );
 });
+
+test("01.13 - package.json is sorted by default", async t => {
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "package.json");
+
+  const processedFileContents = fs
+    .writeFile(
+      pathOfTheTestfile,
+      `{
+  "dependencies": {
+    "ast-monkey-traverse": "^1.11.31"
+  },
+  "name": "tester"
+}`
+    )
+    .then(() => execa("./cli.js", [tempFolder, "package.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+
+  t.deepEqual(
+    await processedFileContents,
+    `{
+  "name": "tester",
+  "dependencies": {
+    "ast-monkey-traverse": "^1.11.31"
+  }
+}\n`
+  );
+});
+
+test("01.14 - package.json is not sorted under -p flag", async t => {
+  const tempFolder = tempy.directory();
+  const source = `{
+  "dependencies": {
+    "ast-monkey-traverse": "^1.11.31"
+  },
+  "name": "tester"
+}
+`;
+  // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, "package.json");
+
+  const processedFileContents = fs
+    .writeFile(pathOfTheTestfile, source)
+    .then(() => execa("./cli.js", [tempFolder, "-p", "package.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .command(`rm -rf ${tempFolder}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+
+  t.deepEqual(await processedFileContents, source);
+});
