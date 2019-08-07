@@ -3,10 +3,12 @@ import { patcher, defaults, version } from "../dist/html-table-patcher.esm";
 import { crush } from "html-crush";
 
 function processThis(str, opts) {
-  return crush(patcher(str, opts), {
-    lineLengthLimit: 0,
-    removeLineBreaks: true
-  }).result.replace(/\s*\n\s*/gm, "");
+  const res =
+    crush(patcher(str, opts), {
+      lineLengthLimit: 0,
+      removeLineBreaks: true
+    }).result || "";
+  return res.replace(/\s*\n\s*/gm, "");
 }
 
 function tiny(something) {

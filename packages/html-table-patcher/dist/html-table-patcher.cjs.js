@@ -90,7 +90,7 @@ function patcher(html, generalOpts) {
           if (!replacementTd["attribs"]) {
             replacementTd["attribs"] = {};
           }
-          replacementTd["attribs"].colspan = colspan;
+          replacementTd["attribs"].colspan = String(colspan);
         }
         if (centered) {
           if (!replacementTd["attribs"]) {
