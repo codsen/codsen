@@ -3179,7 +3179,7 @@ test(`99.05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
   );
 });
 
-test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`, t => {
+test(`99.06 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - raw non-breaking spaces`, t => {
   const chunk = "    <script >   >]] > < div>";
   const res = "<script >   >]] > < div>";
   t.deepEqual(m(chunk, { removeLineBreaks: true }).result, res, "99.06.01");
@@ -3201,7 +3201,7 @@ test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
   );
 });
 
-test(`99.07 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - line length control`, t => {
+test(`99.07 - ${`\u001b[${90}m${`adhoc 7`}\u001b[${39}m`} - line length control`, t => {
   const input = `<m>
 <n>
 <o>
@@ -3227,13 +3227,25 @@ z><t><x><y><z klm`;
   );
 });
 
-test(`99.08 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - nunjucks`, t => {
+test(`99.08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, t => {
   t.deepEqual(
     m("{%- length > 1 or length > 2 -%}", {
       removeLineBreaks: true
     }).result,
     "{%- length > 1 or length > 2 -%}",
     "99.08"
+  );
+});
+
+test(`99.09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, t => {
+  const source =
+    '{%- if (((not a.b) and (a.b | c("d") | e > 1)) or ((a.b) and (a.f | c("d") | e > 2))) -%}';
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: true
+    }).result,
+    source,
+    "99.09"
   );
 });
 
