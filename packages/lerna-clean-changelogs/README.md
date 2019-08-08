@@ -69,6 +69,10 @@ This package has three builds in `dist/` folder:
 
 ## Idea
 
+<div align="center">
+  <img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center">
+</div>
+
 This is a string-in, string-out application which cleans strings, which hopefully are changelog file contents. We could say it is a low-level API for other cleaning tools: websites, CLI apps and whatnot.
 
 If you want a ready-to-use _cleaning tool_, consider the sibling CLI application of this package (which is driven by this very package) — [lerna-clean-changelogs-cli](https://www.npmjs.com/package/lerna-clean-changelogs-cli). Install it globally:
