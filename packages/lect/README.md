@@ -39,7 +39,7 @@ That's for starters.
 
 ## Great Wisdom or Great Foolishness
 
-Using somebody else's config/automation files is usually a sign of _great or wisdom_ or a _great incompetence_. It is very very unlikely that a _real, serious and capable developer_ would take on _other real, serious and capable developer_'s automation script and plugged many npm libraries into it. Unrealistic. The _other real, serious and capable developer_ will either have his own tool, or will not be capable of operating one. That's the paradox and it's valid on many other areas of life.
+Using somebody else's config/automation files is usually a sign of _great wisdom_ or a _great incompetence_. It is very very unlikely that a _real, serious and capable developer_ would take on _other real, serious and capable developer_'s automation script and plugged many npm libraries into it. Unrealistic. The _other real, serious and capable developer_ will either have his own tool, or will not be capable of operating one. That's the paradox and it's valid on many other areas of life.
 
 But this is an open-source CLI and you can still use it, fork it or take pieces of it.
 

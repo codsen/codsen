@@ -52,6 +52,9 @@
     <script src="ranges-apply.umd.js"></script>
     <!-- <script src="https://unpkg.com/emlint"></script> -->
     <script>
+    function isStr(something) {
+      return typeof something === "string";
+    }
     const {lint, version} = emlint;
     const myStorage = window.localStorage;
     window.Event = new Vue();
@@ -65,6 +68,8 @@
         const retrieved = myStorage.getItem("emlint")
         if (typeof retrieved === "string" && retrieved.length) {
           this.text1 = retrieved;
+        } else {
+          this.text1 = "";
         };
         this.$refs.in.focus();
       },
@@ -96,16 +101,23 @@
             return rangesApply(this.text1, this.res.fix);
           }
           console.log('067 returning empty string');
-          return this.text1
+          return isStr(this.text1) && this.text1.length ? this.text1 : ""
         }
       },
       watch: {
         text1: function () {
           // console.log(`${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
-          const calculatedRes = lint(this.text1);
+          let calculatedRes = "";
+          if (isStr(this.text1) && this.text1.length) {
+            calculatedRes = lint(this.text1);
+          }
           // console.log(`${`\u001b[${33}m${`calculatedRes`}\u001b[${39}m`} = ${JSON.stringify(calculatedRes, null, 4)}`);
           this.res = calculatedRes;
-          myStorage.setItem("emlint", this.text1)
+          if (isStr(this.text1) && this.text1.length) {
+            myStorage.setItem("emlint", this.text1)
+          } else {
+            myStorage.setItem("emlint", "")
+          }
         }
       }
     });
