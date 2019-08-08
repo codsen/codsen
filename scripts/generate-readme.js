@@ -38,7 +38,7 @@ const stringLibsList = [
 ];
 const cliAppsList = ["lect", "update-versions"];
 
-const ignoreList = ["ava"];
+const ignoreList = ["ava", "domutils"];
 
 // FUNCTIONS
 // =========

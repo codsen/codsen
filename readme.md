@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 93 npm libraries 📦📦📦
+    A lerna monorepo for our 92 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -15,7 +15,7 @@ We coded up and maintain a few npm packages:
 - [String Processing Libraries](#-28-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-9-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-23-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -167,7 +167,7 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ 23 Miscellaneous Libraries
+## 🛠️ 22 Miscellaneous Libraries
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -182,7 +182,6 @@ You use them in the Terminal (command line), for example:
 | [`check-types-mini`](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) | Check the types of your options object's values after user has customised them | [![check-types-mini on npm](https://img.shields.io/npm/v/check-types-mini.svg?style=flat-square)](https://www.npmjs.com/package/check-types-mini) | [packages/check-types-mini](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) |
 | [`chlu`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu on npm](https://img.shields.io/npm/v/chlu.svg?style=flat-square)](https://www.npmjs.com/package/chlu) | [packages/chlu](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) |
 | [`color-shorthand-hex-to-six-digit`](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) |
-| [`domutils`](https://gitlab.com/codsen/codsen/tree/master/packages/domutils/) | utilities for working with htmlparser2's dom | [![domutils on npm](https://img.shields.io/npm/v/domutils.svg?style=flat-square)](https://www.npmjs.com/package/domutils) | [packages/domutils](https://gitlab.com/codsen/codsen/tree/master/packages/domutils/) |
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Non-parsing, email template-oriented linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |
