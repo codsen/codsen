@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 91 npm libraries 📦📦📦
+    A lerna monorepo for our 93 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -12,10 +12,10 @@ We coded up and maintain a few npm packages:
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-12-range-libraries)
-- [String Processing Libraries](#-27-string-processing-libraries)
+- [String Processing Libraries](#-28-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-9-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-23-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -77,7 +77,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#codsen)**
 
-## 🎻 27 String Processing Libraries
+## 🎻 28 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -106,6 +106,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-overlap-one-on-another`](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) | Lay one string on top of another, with an optional offset | [![string-overlap-one-on-another on npm](https://img.shields.io/npm/v/string-overlap-one-on-another.svg?style=flat-square)](https://www.npmjs.com/package/string-overlap-one-on-another) | [packages/string-overlap-one-on-another](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) |
 | [`string-remove-duplicate-heads-tails`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) | Detect and (recursively) remove head and tail wrappings around the input string | [![string-remove-duplicate-heads-tails on npm](https://img.shields.io/npm/v/string-remove-duplicate-heads-tails.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-duplicate-heads-tails) | [packages/string-remove-duplicate-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) |
 | [`string-remove-thousand-separators`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) | Detects and removes thousand separators (dot/comma/quote/space) from string-type digits | [![string-remove-thousand-separators on npm](https://img.shields.io/npm/v/string-remove-thousand-separators.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-thousand-separators) | [packages/string-remove-thousand-separators](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) |
+| [`string-remove-widows`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) | Helps to prevent widow words in a text | [![string-remove-widows on npm](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [packages/string-remove-widows](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) |
 | [`string-split-by-whitespace`](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) | Split string into array by chunks of whitespace | [![string-split-by-whitespace on npm](https://img.shields.io/npm/v/string-split-by-whitespace.svg?style=flat-square)](https://www.npmjs.com/package/string-split-by-whitespace) | [packages/string-split-by-whitespace](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) |
 | [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but trims only spaces | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
 | [`string-uglify`](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) | Uglify — generate unique short names for sets of strings | [![string-uglify on npm](https://img.shields.io/npm/v/string-uglify.svg?style=flat-square)](https://www.npmjs.com/package/string-uglify) | [packages/string-uglify](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) |
@@ -154,7 +155,7 @@ You use them in the Terminal (command line), for example:
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
-| [`lect`](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) | Maintenance automation for Readme's and, optionally, other project files | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) |
+| [`lect`](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) | Maintenance CLI for internal consumption | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) |
 | [`update-versions`](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) |
 | [`chlu-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu-cli on npm](https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square)](https://www.npmjs.com/package/chlu-cli) | [packages/chlu-cli](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) |
 | [`csv-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) |
@@ -166,7 +167,7 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ 22 Miscellaneous Libraries
+## 🛠️ 23 Miscellaneous Libraries
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -181,6 +182,7 @@ You use them in the Terminal (command line), for example:
 | [`check-types-mini`](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) | Check the types of your options object's values after user has customised them | [![check-types-mini on npm](https://img.shields.io/npm/v/check-types-mini.svg?style=flat-square)](https://www.npmjs.com/package/check-types-mini) | [packages/check-types-mini](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) |
 | [`chlu`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu on npm](https://img.shields.io/npm/v/chlu.svg?style=flat-square)](https://www.npmjs.com/package/chlu) | [packages/chlu](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) |
 | [`color-shorthand-hex-to-six-digit`](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) |
+| [`domutils`](https://gitlab.com/codsen/codsen/tree/master/packages/domutils/) | utilities for working with htmlparser2's dom | [![domutils on npm](https://img.shields.io/npm/v/domutils.svg?style=flat-square)](https://www.npmjs.com/package/domutils) | [packages/domutils](https://gitlab.com/codsen/codsen/tree/master/packages/domutils/) |
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Non-parsing, email template-oriented linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |

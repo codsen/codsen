@@ -83,7 +83,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | `-a`  | `--arrays`      | Also sort any arrays if they contain only string elements         |
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
-| `-p`  | `--pack`        | Skip all `package.json` files           |
+| `-p`  | `--pack`        | Skip all `package.json` files                                     |
 
 Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these commands below are the same:
 
