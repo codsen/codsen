@@ -66,6 +66,10 @@ PS. That dollar sign above just means it's a terminal. Never type that dollar si
 
 ## Purpose
 
+<div align="center">
+  <img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center">
+</div>
+
 This application performs the following cleaning steps on all encountered `changelog.md`'s:
 
 1. It removes bump-only changelog entries that `conventional-changelog` generates. For example:
