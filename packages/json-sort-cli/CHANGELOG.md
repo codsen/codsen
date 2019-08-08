@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.14.0](https://gitlab.com/codsen/codsen/compare/json-sort-cli@1.13.10...json-sort-cli@1.14.0) (2019-08-08)
-
+## 1.14.0 (2019-08-08)
 
 ### Features
 
-* skip all package.json files if -p/--pack flag is given ([0e7d5e1](https://gitlab.com/codsen/codsen/commit/0e7d5e1)), closes [#13](https://gitlab.com/codsen/codsen/issues/13)
-
-
-
-
+- skip all package.json files if -p/--pack flag is given ([0e7d5e1](https://gitlab.com/codsen/codsen/commit/0e7d5e1)), closes [#13](https://gitlab.com/codsen/codsen/issues/13)
 
 ## 1.13.0 (2019-06-18)
 

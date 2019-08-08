@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.5.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.4.8...email-comb@3.5.0) (2019-08-08)
-
+## 3.5.0 (2019-08-08)
 
 ### Features
 
-* support for liquid template engine double curlies as CSS style values in head CSS ([819df36](https://gitlab.com/codsen/codsen/commit/819df36))
-
-
-
-
+- support for liquid template engine double curlies as CSS style values in head CSS ([819df36](https://gitlab.com/codsen/codsen/commit/819df36))
 
 ## 3.4.0 (2019-06-29)
 

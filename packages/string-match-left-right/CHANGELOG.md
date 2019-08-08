@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.11.0](https://gitlab.com/codsen/codsen/compare/string-match-left-right@3.10.36...string-match-left-right@3.11.0) (2019-08-08)
-
+## 3.11.0 (2019-08-08)
 
 ### Features
 
-* second callback's argument returns empty string when EOL is reached (previously - undefined) ([b480821](https://gitlab.com/codsen/codsen/commit/b480821))
-
-
-
-
+- second callback's argument returns empty string when EOL is reached (previously - undefined) ([b480821](https://gitlab.com/codsen/codsen/commit/b480821))
 
 ## 3.10.0 (2019-01-20)
 
