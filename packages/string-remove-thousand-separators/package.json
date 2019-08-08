@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "3.0.26",
+  "version": "3.0.27",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "license": "MIT",
   "engines": {
@@ -166,18 +166,18 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.32",
+    "check-types-mini": "^5.7.33",
     "is-numeric": "^0.0.9",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
-    "ranges-apply": "^3.0.26",
-    "ranges-push": "^3.2.10"
+    "ranges-apply": "^3.0.27",
+    "ranges-push": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.0",
+    "ava": "^2.2.3",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.1.0",
@@ -187,8 +187,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.36",
-    "lect": "^0.9.3",
+    "js-row-num-cli": "^1.5.37",
+    "lect": "^0.9.4",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.19.3",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.13](https://gitlab.com/codsen/codsen/compare/html-table-patcher@1.1.12...html-table-patcher@1.1.13) (2019-08-08)
+
+
+### Bug Fixes
+
+* fix breaking unit test, colspan number should be string not number ([ee381ee](https://gitlab.com/codsen/codsen/commit/ee381ee))
+
+
+
+
+
 ## 1.1.9 (2019-07-24)
 
 ### Bug Fixes

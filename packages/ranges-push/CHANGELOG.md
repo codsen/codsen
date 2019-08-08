@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://gitlab.com/codsen/codsen/compare/ranges-push@3.2.10...ranges-push@3.3.0) (2019-08-08)
+
+
+### Features
+
+* opts.mergeType ([7efa4db](https://gitlab.com/codsen/codsen/commit/7efa4db))
+
+
+
+
+
 ## 3.2.0 (2019-06-18)
 
 ### Features

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.7.3...html-crush@1.8.0) (2019-08-08)
+
+
+### Bug Fixes
+
+* previously inner tag whitespace removal was too lax, risking false positives ([ab59492](https://gitlab.com/codsen/codsen/commit/ab59492))
+* update the program's name on throw error reports ([abd093a](https://gitlab.com/codsen/codsen/commit/abd093a))
+
+
+### Features
+
+* don't minify whitespace around brackets if there is a number on either side ([21ea2ff](https://gitlab.com/codsen/codsen/commit/21ea2ff))
+
+
+
+
+
 ## 1.7.0 (2019-07-24)
 
 ### Features

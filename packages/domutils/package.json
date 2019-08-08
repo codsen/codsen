@@ -62,5 +62,5 @@
     "test:tap": "tap --no-esm",
     "unittest": "exit 0"
   },
-  "version": "1.7.0"
+  "version": "1.7.1"
 }
