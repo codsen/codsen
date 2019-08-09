@@ -1761,6 +1761,41 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
+    if (!doNothingUntil && logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && !isLatinLetter(str[_i])) {
+      logTag.tagNameEndAt = _i;
+      logTag.tagName = str.slice(logTag.tagNameStartAt, _i);
+      logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
+      if (charIsQuote$1(str[_i]) || str[_i] === "=") {
+        var addSpace;
+        var strayCharsEndAt = _i + 1;
+        if (str[_i + 1].trim().length) {
+          if (charIsQuote$1(str[_i + 1]) || str[_i + 1] === "=") {
+            for (var y = _i + 1; y < len; y++) {
+              if (!charIsQuote$1(str[y]) && str[y] !== "=") {
+                if (str[y].trim().length) {
+                  addSpace = true;
+                  strayCharsEndAt = y;
+                }
+                break;
+              }
+            }
+          } else {
+            addSpace = true;
+          }
+        }
+        if (addSpace) {
+          submit({
+            name: "tag-stray-character",
+            position: [[_i, strayCharsEndAt, " "]]
+          });
+        } else {
+          submit({
+            name: "tag-stray-character",
+            position: [[_i, strayCharsEndAt]]
+          });
+        }
+      }
+    }
     if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars.includes(str[_i + 1])) {
       doNothingUntil = _i + 1;
     }
@@ -1918,12 +1953,12 @@ function lint(str, originalOpts) {
         }
         if (str[_i - 1]) {
           if (charIsQuote$1(str[_i - 1])) {
-            for (var y = _i - 1; y--;) {
-              if (!charIsQuote$1(str[y])) {
-                if (!str[y].trim().length) {
+            for (var _y = _i - 1; _y--;) {
+              if (!charIsQuote$1(str[_y])) {
+                if (!str[_y].trim().length) {
                   submit({
                     name: "tag-stray-character",
-                    position: [[y + 1, _i]]
+                    position: [[_y + 1, _i]]
                   });
                 }
                 break;
@@ -1980,8 +2015,8 @@ function lint(str, originalOpts) {
               logAttr.attrValueStartAt = _i + 1;
               logAttr.attrValueEndAt = closingQuotePeek;
               logAttr.attrEndAt = closingQuotePeek;
-              for (var _y = _i + 1; _y < closingQuotePeek; _y++) {
-                var newIssue = encodeChar$1(str, _y);
+              for (var _y2 = _i + 1; _y2 < closingQuotePeek; _y2++) {
+                var newIssue = encodeChar$1(str, _y2);
                 if (newIssue) {
                   tagIssueStaging.push(newIssue);
                 }
@@ -2059,16 +2094,16 @@ function lint(str, originalOpts) {
             logAttr.attrValueStartAt = _i;
             withinQuotes = _i;
             var innerTagEndsAt = null;
-            for (var _y2 = _i; _y2 < len; _y2++) {
-              if (str[_y2] === ">" && (str[stringLeftRight.left(str, _y2)] !== "/" && withinTagInnerspace$1(str, _y2) || str[stringLeftRight.left(str, _y2)] === "/")) {
-                var leftAt = stringLeftRight.left(str, _y2);
-                innerTagEndsAt = _y2;
+            for (var _y3 = _i; _y3 < len; _y3++) {
+              if (str[_y3] === ">" && (str[stringLeftRight.left(str, _y3)] !== "/" && withinTagInnerspace$1(str, _y3) || str[stringLeftRight.left(str, _y3)] === "/")) {
+                var leftAt = stringLeftRight.left(str, _y3);
+                innerTagEndsAt = _y3;
                 if (str[leftAt] === "/") {
                   innerTagEndsAt = leftAt;
                 }
               }
               var dealBrakerCharacters = "=<";
-              if (innerTagEndsAt !== null && dealBrakerCharacters.includes(str[_y2])) {
+              if (innerTagEndsAt !== null && dealBrakerCharacters.includes(str[_y3])) {
                 break;
               }
             }
@@ -2176,9 +2211,9 @@ function lint(str, originalOpts) {
             var start = logAttr.attrStartAt;
             var _temp6 = stringLeftRight.right(str, _i);
             if (str[_i] === "/" && _temp6 && str[_temp6] === ">" || str[_i] === ">") {
-              for (var _y3 = logAttr.attrStartAt; _y3--;) {
-                if (str[_y3].trim().length) {
-                  start = _y3 + 1;
+              for (var _y4 = logAttr.attrStartAt; _y4--;) {
+                if (str[_y4].trim().length) {
+                  start = _y4 + 1;
                   break;
                 }
               }
@@ -2596,41 +2631,6 @@ function lint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = _i;
     }
-    if (!doNothingUntil && logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && !isLatinLetter(str[_i]) && str[_i] !== "<" && str[_i] !== "/") {
-      logTag.tagNameEndAt = _i;
-      logTag.tagName = str.slice(logTag.tagNameStartAt, _i);
-      logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
-      if (charIsQuote$1(str[_i]) || str[_i] === "=") {
-        var addSpace;
-        var strayCharsEndAt = _i + 1;
-        if (str[_i + 1].trim().length) {
-          if (charIsQuote$1(str[_i + 1]) || str[_i + 1] === "=") {
-            for (var _y4 = _i + 1; _y4 < len; _y4++) {
-              if (!charIsQuote$1(str[_y4]) && str[_y4] !== "=") {
-                if (str[_y4].trim().length) {
-                  addSpace = true;
-                  strayCharsEndAt = _y4;
-                }
-                break;
-              }
-            }
-          } else {
-            addSpace = true;
-          }
-        }
-        if (addSpace) {
-          submit({
-            name: "tag-stray-character",
-            position: [[_i, strayCharsEndAt, " "]]
-          });
-        } else {
-          submit({
-            name: "tag-stray-character",
-            position: [[_i, strayCharsEndAt]]
-          });
-        }
-      }
-    }
     if (!doNothingUntil && logTag.tagStartAt !== null && logTag.tagNameStartAt === null && isLatinLetter(str[_i]) && logTag.tagStartAt < _i) {
       logTag.tagNameStartAt = _i;
       if (logTag.closing === null) {
@@ -2658,9 +2658,9 @@ function lint(str, originalOpts) {
       if (logTag.tagStartAt === null) {
         logTag.tagStartAt = _i;
       } else if (tagOnTheRight$1(str, _i)) {
-        if (logTag.tagStartAt !== null && logTag.attributes.length && logTag.attributes.some(function (attrObj) {
+        if (logTag.tagStartAt !== null && (logTag.attributes.length && logTag.attributes.some(function (attrObj) {
           return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
-        })) {
+        }) || isStr$1(logTag.tagName) && knownHTMLTags.includes(logTag.tagName) && stringLeftRight.right(str, logTag.tagNameEndAt - 1) === _i)) {
           var lastNonWhitespaceOnLeft = stringLeftRight.left(str, _i);
           if (str[lastNonWhitespaceOnLeft] === ">") {
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;

@@ -2139,6 +2139,46 @@ function lint(str, originalOpts) {
       withinQuotesEndAt = null;
     }
     if (
+      !doNothingUntil &&
+      logTag.tagNameStartAt !== null &&
+      logTag.tagNameEndAt === null &&
+      !isLatinLetter(str[i])
+    ) {
+      logTag.tagNameEndAt = i;
+      logTag.tagName = str.slice(logTag.tagNameStartAt, i);
+      logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
+      if (charIsQuote$1(str[i]) || str[i] === "=") {
+        let addSpace;
+        let strayCharsEndAt = i + 1;
+        if (str[i + 1].trim().length) {
+          if (charIsQuote$1(str[i + 1]) || str[i + 1] === "=") {
+            for (let y = i + 1; y < len; y++) {
+              if (!charIsQuote$1(str[y]) && str[y] !== "=") {
+                if (str[y].trim().length) {
+                  addSpace = true;
+                  strayCharsEndAt = y;
+                }
+                break;
+              }
+            }
+          } else {
+            addSpace = true;
+          }
+        }
+        if (addSpace) {
+          submit({
+            name: "tag-stray-character",
+            position: [[i, strayCharsEndAt, " "]]
+          });
+        } else {
+          submit({
+            name: "tag-stray-character",
+            position: [[i, strayCharsEndAt]]
+          });
+        }
+      }
+    }
+    if (
       doNothingUntil &&
       doNothingUntilReason === "esp" &&
       logEspTag.tailStartAt &&
@@ -3264,48 +3304,6 @@ function lint(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
-      logTag.tagNameStartAt !== null &&
-      logTag.tagNameEndAt === null &&
-      !isLatinLetter(str[i]) &&
-      str[i] !== "<" &&
-      str[i] !== "/"
-    ) {
-      logTag.tagNameEndAt = i;
-      logTag.tagName = str.slice(logTag.tagNameStartAt, i);
-      logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
-      if (charIsQuote$1(str[i]) || str[i] === "=") {
-        let addSpace;
-        let strayCharsEndAt = i + 1;
-        if (str[i + 1].trim().length) {
-          if (charIsQuote$1(str[i + 1]) || str[i + 1] === "=") {
-            for (let y = i + 1; y < len; y++) {
-              if (!charIsQuote$1(str[y]) && str[y] !== "=") {
-                if (str[y].trim().length) {
-                  addSpace = true;
-                  strayCharsEndAt = y;
-                }
-                break;
-              }
-            }
-          } else {
-            addSpace = true;
-          }
-        }
-        if (addSpace) {
-          submit({
-            name: "tag-stray-character",
-            position: [[i, strayCharsEndAt, " "]]
-          });
-        } else {
-          submit({
-            name: "tag-stray-character",
-            position: [[i, strayCharsEndAt]]
-          });
-        }
-      }
-    }
-    if (
-      !doNothingUntil &&
       logTag.tagStartAt !== null &&
       logTag.tagNameStartAt === null &&
       isLatinLetter(str[i]) &&
@@ -3353,12 +3351,15 @@ function lint(str, originalOpts) {
       } else if (tagOnTheRight$1(str, i)) {
         if (
           logTag.tagStartAt !== null &&
-          logTag.attributes.length &&
-          logTag.attributes.some(
-            attrObj =>
-              attrObj.attrEqualAt !== null &&
-              attrObj.attrOpeningQuote.pos !== null
-          )
+          ((logTag.attributes.length &&
+            logTag.attributes.some(
+              attrObj =>
+                attrObj.attrEqualAt !== null &&
+                attrObj.attrOpeningQuote.pos !== null
+            )) ||
+            (isStr$1(logTag.tagName) &&
+              knownHTMLTags.includes(logTag.tagName) &&
+              right(str, logTag.tagNameEndAt - 1) === i))
         ) {
           const lastNonWhitespaceOnLeft = left(str, i);
           if (str[lastNonWhitespaceOnLeft] === ">") {

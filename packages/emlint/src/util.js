@@ -2137,12 +2137,12 @@ function findClosingQuote(str, idx = 0) {
           let temp;
           for (let y = i; y--; ) {
             console.log(
-              `2142 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
+              `2140 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
             );
             if (!str[y].trim().length) {
               temp = left(str, y);
               console.log(
-                `2147 (util/findClosingQuote) ${log(
+                `2145 (util/findClosingQuote) ${log(
                   "set",
                   "temp",
                   temp
@@ -2153,12 +2153,12 @@ function findClosingQuote(str, idx = 0) {
           }
           if (charIsQuote(temp)) {
             console.log(
-              `2158 (util/findClosingQuote) ${log("return", "temp", temp)}`
+              `2156 (util/findClosingQuote) ${log("return", "temp", temp)}`
             );
             return temp;
           }
           console.log(
-            `2163 (util/findClosingQuote) ${log(
+            `2161 (util/findClosingQuote) ${log(
               "return",
               "temp + 1",
               temp + 1
@@ -2169,10 +2169,10 @@ function findClosingQuote(str, idx = 0) {
       } else if (str[i] !== "/") {
         // 1. catch <
         if (str[i] === "<" && tagOnTheRight(str, i)) {
-          console.log(`2174 ██ tag on the right`);
+          console.log(`2172 ██ tag on the right`);
           if (lastClosingBracketAt !== null) {
             console.log(
-              `2177 (util/findClosingQuote) ${log(
+              `2175 (util/findClosingQuote) ${log(
                 "return",
                 "lastClosingBracketAt",
                 lastClosingBracketAt
@@ -2186,7 +2186,7 @@ function findClosingQuote(str, idx = 0) {
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `2191 (util/findClosingQuote) ${log(
+            `2189 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -2198,7 +2198,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `2203 (util/findClosingQuote) ${log(
+      `2201 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt
@@ -2305,7 +2305,7 @@ function pingEspTag(str, espTagObj, submit) {
           position: [[espTagObj.startAt, espTagObj.endAt]]
         });
         console.log(
-          `2310 util.js: ${log(
+          `2308 util.js: ${log(
             "push",
             "esp-more-opening-parentheses-than-closing",
             `${`[[${espTagObj.startAt}, ${espTagObj.endAt}]]`}`
@@ -2322,7 +2322,7 @@ function pingEspTag(str, espTagObj, submit) {
           position: [[espTagObj.startAt, espTagObj.endAt]]
         });
         console.log(
-          `2327 util.js: ${log(
+          `2325 util.js: ${log(
             "push",
             "esp-more-closing-parentheses-than-opening",
             `${`[[${espTagObj.startAt}, ${espTagObj.endAt}]]`}`

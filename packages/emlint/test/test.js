@@ -2,7 +2,7 @@ import test from "ava";
 import { lint } from "../dist/emlint.esm";
 import { c, c2, getUniqueIssueNames } from "../t-util/util";
 
-// avanotonly
+// avaonly
 
 // 00. Insurance
 // -----------------------------------------------------------------------------
@@ -1855,6 +1855,26 @@ test(`21.06 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - 
     ["tag-missing-closing-bracket"],
     t
   ));
+
+test(`21.07 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - three tags, one closing bracket missing`, t =>
+  c(`<table><tr<td>`, `<table><tr><td>`, ["tag-missing-closing-bracket"], t));
+
+test(`21.08 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - two tags, one less than sign`, t =>
+  c(
+    `<table>a < b<td>`,
+    `<table>a &lt; b<td>`,
+    ["bad-character-unencoded-opening-bracket"],
+    t
+  ));
+
+test(`21.09 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - two tags, clean nunjucks conditional in the middle`, t =>
+  c(`<table>{% if a > b %}<td>`, `<table>{% if a > b %}<td>`, [], t));
+
+test(`21.10 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - two tags, clean nunjucks conditional in the middle`, t =>
+  c(`<table>{% if a < b %}<td>`, `<table>{% if a < b %}<td>`, [], t));
+
+test(`21.11 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - two tags, comment bracket`, t =>
+  c(`<table><!--<td>`, `<table><!--<td>`, [], t));
 
 // 22. Both quotes missing around attributes
 // -----------------------------------------------------------------------------
