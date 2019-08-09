@@ -1,6 +1,12 @@
-# lerna-clean-changelogs-cli
+<div align="center">
+  <h1>lerna-clean-changelogs-cli</h1>
+</div>
 
-> CLI application to cleanse the lerna-generated changelogs
+<div align="center">
+  <p><img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center"></p>
+</div>
+
+<div align="center"><p>CLI application to cleanse the lerna-generated changelogs</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -65,10 +71,6 @@ $ lernacleanchangelog
 PS. That dollar sign above just means it's a terminal. Never type that dollar sign!
 
 ## Purpose
-
-<div align="center">
-  <img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center">
-</div>
 
 This application performs the following cleaning steps on all encountered `changelog.md`'s:
 

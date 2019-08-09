@@ -1,6 +1,12 @@
-# lerna-clean-changelogs
+<div align="center">
+  <h1>lerna-clean-changelogs</h1>
+</div>
 
-> Cleans all the crap from Lerna and Conventional Commits-generated changelogs
+<div align="center">
+  <p><img alt="lerna-clean-changelogs" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs/media/deleted.png" width="480" align="center"></p>
+</div>
+
+<div align="center"><p>Cleans all the crap from Lerna and Conventional Commits-generated changelogs</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -68,10 +74,6 @@ This package has three builds in `dist/` folder:
 **[⬆ back to top](#)**
 
 ## Idea
-
-<div align="center">
-  <img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center">
-</div>
 
 This is a string-in, string-out application which cleans strings, which hopefully are changelog file contents. We could say it is a low-level API for other cleaning tools: websites, CLI apps and whatnot.
 
