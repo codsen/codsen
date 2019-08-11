@@ -143,6 +143,8 @@ const packageJsonlectKeyDefaults = {
     contributors: true,
     license: true
   },
+  cliSpecialKeyword: "",
+  cliSpecialKeywordInstructions: "",
   contribution_types: contributionTypes,
   contributors: [
     {
@@ -1767,17 +1769,51 @@ function step6() {
           );
           return process.exit(1);
         }
-        const prep = `
+        let prep = `
 \`\`\`bash
 npm i ${objectPath.has(pack, "bin") ? "-g " : ""}${pack.name}
 \`\`\`
-${
-  !pack.name.startsWith("gulp-") && sourceContainsDefaultExport
-    ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" below, you can name the consumed function however you want.\n`
-    : ""
-}${
-          !pack.name.startsWith("gulp-")
-            ? `\nConsume via a \`require()\`:\n\n\`\`\`js
+`;
+
+        if (objectPath.has(pack, "bin")) {
+          // if it's a CLI
+          prep += `\nThen, call it from the command line using ${
+            Object.keys(pack.bin).length > 1
+              ? "one of the following keywords"
+              : "keyword"
+          }:\n\n\`\`\`bash`;
+          Object.keys(pack.bin).forEach(key => {
+            if (
+              !(
+                pack &&
+                pack.lect &&
+                pack.lect.cliSpecialKeyword &&
+                pack.lect.cliSpecialKeyword === key
+              )
+            ) {
+              // ignore "special" fancy CLI call names:
+              prep += `\n${key}`;
+            }
+          });
+          prep += `\n\`\`\``;
+          if (pack && pack.lect && pack.lect.cliSpecialKeyword) {
+            prep += `\n\nAs a last resort, if your memory would fail, the alternative keyword is: \`${
+              pack.lect.cliSpecialKeyword
+            }\`${
+              pack.lect.cliSpecialKeywordInstructions
+                ? ` — ${pack.lect.cliSpecialKeywordInstructions}`
+                : ""
+            }`;
+          }
+        } else {
+          // if it's a normal package
+          prep += `${
+            !pack.name.startsWith("gulp-") && sourceContainsDefaultExport
+              ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" below, you can name the consumed function however you want.\n`
+              : ""
+          }${
+            !pack.name.startsWith("gulp-")
+              ? `\nConsume via a \`require()\`:\n\n\`\`\`js
 const ${consumedName} = require("${pack.name}");
 \`\`\`
 
@@ -1791,26 +1827,27 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 \`\`\`html
 <script src="https://cdn.jsdelivr.net/npm/${pack.name}/dist/${
-                pack.name
-              }.umd.js"></script>
+                  pack.name
+                }.umd.js"></script>
 \`\`\`
 
 \`\`\`js
 // in which case you get a global variable "${camelCase(
-                pack.name
-              )}" which you consume like this:
+                  pack.name
+                )}" which you consume like this:
 const ${consumedName} = ${camelCase(pack.name)};
 \`\`\``
-            : ""
-        }${
-          !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
-            ? `\n\nThis package has three builds in \`dist/\` folder:\n\n${assembleRollupInfoTable(
-                pack,
-                lectrc
-              )}`
-            : ""
+              : ""
+          }${
+            !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
+              ? `\n\nThis package has three builds in \`dist/\` folder:\n\n${assembleRollupInfoTable(
+                  pack,
+                  lectrc
+                )}`
+              : ""
+          }
+          `.trim();
         }
-        `.trim();
 
         // const prep = replaceRollupInfoTableAndItsHeader(
         //   replaceNpmInstallRow(replaceNpxRow(bodyContent, pack), pack),
@@ -2270,17 +2307,15 @@ function step1() {
   //     "\nSTEP 1 - Attempt to read coverage/coverage-summary.json"
   //   )}`
   // );
-  fs.readFile("coverage/coverage-summary.json", "utf8", (err, content) => {
-    if (err) {
-      log(
-        `${chalk.red(
-          logSymbols.error,
-          `couldn't read coverage/coverage-summary.json!\n${err}`
-        )}`
-      );
-      showCoverageBadge = false;
-    } else {
-      // console.log(`received coverage:\n${JSON.stringify(content, null, 4)}`);
+
+  try {
+    fs.statSync(path.resolve("coverage", "coverage-summary.json"));
+    const content = fs.readFileSync(
+      path.resolve("coverage", "coverage-summary.json"),
+      "utf8"
+    );
+    // console.log(`received coverage:\n${JSON.stringify(content, null, 4)}`);
+    if (content) {
       try {
         coverageValues = JSON.parse(content);
         if (
@@ -2292,18 +2327,23 @@ function step1() {
           showCoverageBadge = false;
           log(`${chalk.yellow(logSymbols.info, `skipping coverage`)}`);
         }
-      } catch (e) {
+      } catch (e1) {
         showCoverageBadge = false;
         log(
           `${chalk.yellow(
             logSymbols.info,
-            `did read coverage/coverage-summary.json but could not parse!\n${e}`
+            `did read coverage/coverage-summary.json but could not parse!\n${e1}`
           )}`
         );
       }
+    } else {
+      showCoverageBadge = false;
     }
-  });
-  step2();
+  } catch (e) {
+    showCoverageBadge = false;
+  } finally {
+    step2();
+  }
 }
 
 // -----------------------------------------------------------------------------
