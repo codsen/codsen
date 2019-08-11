@@ -7,10 +7,11 @@ const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
 // LIST OVERRIDES
 // ==============
 
-const flagshipLibsList = ["email-comb", "html-crush"];
+const flagshipLibsList = ["email-comb", "html-crush", "detergent"];
 const webApps = {
   "email-comb": "emailcomb.com",
-  "html-crush": "htmlcrush.com"
+  "html-crush": "htmlcrush.com",
+  detergent: "detergent.io"
 };
 const rangeLibsList = [
   "ranges-push",
@@ -36,9 +37,21 @@ const stringLibsList = [
   "html-table-patcher",
   "js-row-num"
 ];
-const cliAppsList = ["lect", "update-versions"];
+const cliAppsList = [
+  "json-comb",
+  "update-versions",
+  "lerna-clean-changelogs-cli",
+  "lerna-link-dep",
+  "lect"
+];
+const lernaLibsList = [
+  "lerna-clean-changelogs-cli",
+  "lerna-link-dep",
+  "update-versions"
+];
 
-const ignoreList = ["ava", "domutils"];
+// note for future self - use package.json "private" key instead:
+const ignoreList = [];
 
 // FUNCTIONS
 // =========
@@ -84,9 +97,33 @@ function topRow(webapp) {
 // READ ALL LIBS
 // =============
 
-const allPackages = fs.readdirSync(path.resolve("packages")).filter(file => {
-  return fs.statSync(path.join("packages/", file)).isDirectory();
-});
+const allPackages = fs
+  .readdirSync(path.resolve("packages"))
+  .filter(
+    packageName =>
+      typeof packageName === "string" &&
+      packageName.length &&
+      fs.statSync(path.join("packages", packageName)).isDirectory() &&
+      fs.statSync(path.join("packages", packageName, "package.json")) &&
+      !JSON.parse(
+        fs.readFileSync(
+          path.join("packages", packageName, "package.json"),
+          "utf8"
+        )
+      ).private
+  );
+
+function noListsInclude(lib) {
+  return [
+    cliAppsList,
+    flagshipLibsList,
+    rangeLibsList,
+    objectLibsList,
+    stringLibsList,
+    cliAppsList,
+    lernaLibsList
+  ].every(arr2 => !arr2.includes(lib));
+}
 
 // COMPILE LISTS
 // =============
@@ -96,150 +133,106 @@ const allPackages = fs.readdirSync(path.resolve("packages")).filter(file => {
 
 // -------------------------------------
 
-const filteredCliAppsList = Array.from(cliAppsList).filter(lib =>
-  allPackages.includes(lib)
-);
-allPackages.forEach(lib => {
-  if (
-    cliAppsList.length &&
-    cliAppsList.includes(lib) &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredCliAppsList.push(lib);
-  }
-});
-allPackages.forEach(lib => {
-  if (
-    lib.endsWith("-cli") &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredCliAppsList.push(lib);
-  }
-});
+const filteredCliAppsList = Array.from(cliAppsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(lib => lib.endsWith("-cli") && noListsInclude(lib))
+  );
 
 // -------------------------------------
 
-const filteredRangeLibsList = Array.from(rangeLibsList).filter(lib =>
-  allPackages.includes(lib)
+const filteredRangeLibsList = Array.from(rangeLibsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(lib => lib.startsWith("ranges-") && noListsInclude(lib))
+  );
+console.log(
+  `${`\u001b[${33}m${`filteredRangeLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+    filteredRangeLibsList,
+    null,
+    4
+  )}`
 );
-allPackages.forEach(lib => {
-  if (
-    rangeLibsList.length &&
-    rangeLibsList.includes(lib) &&
-    !flagshipLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredRangeLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredRangeLibsList.push(lib);
-  }
-});
-allPackages.forEach(lib => {
-  if (
-    lib.startsWith("ranges-") &&
-    !flagshipLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredRangeLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredRangeLibsList.push(lib);
-  }
-});
 
 // -------------------------------------
 
-const filteredStringLibsList = Array.from(stringLibsList).filter(lib =>
-  allPackages.includes(lib)
+const filteredStringLibsList = Array.from(stringLibsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(
+      lib =>
+        (lib.startsWith("string-") ||
+          lib.startsWith("str-") ||
+          lib.startsWith("csv-")) &&
+        noListsInclude(lib)
+    )
+  );
+console.log(
+  `${`\u001b[${33}m${`filteredStringLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+    filteredStringLibsList,
+    null,
+    4
+  )}`
 );
-allPackages.forEach(lib => {
-  if (
-    stringLibsList.length &&
-    stringLibsList.includes(lib) &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredStringLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredStringLibsList.push(lib);
-  }
-});
-allPackages.forEach(lib => {
-  if (
-    (lib.startsWith("string-") ||
-      lib.startsWith("str-") ||
-      lib.startsWith("csv-")) &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !objectLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredStringLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredStringLibsList.push(lib);
-  }
-});
 
 // -------------------------------------
 
-const filteredObjectLibsList = Array.from(objectLibsList).filter(lib =>
-  allPackages.includes(lib)
+const filteredObjectLibsList = Array.from(objectLibsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(
+      lib =>
+        (lib.startsWith("object-") ||
+          lib.startsWith("obj-") ||
+          lib.startsWith("ast-")) &&
+        noListsInclude(lib)
+    )
+  );
+console.log(
+  `${`\u001b[${33}m${`filteredObjectLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+    filteredObjectLibsList,
+    null,
+    4
+  )}`
 );
-allPackages.forEach(lib => {
-  if (
-    objectLibsList.length &&
-    objectLibsList.includes(lib) &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredObjectLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredObjectLibsList.push(lib);
-  }
-});
-allPackages.forEach(lib => {
-  if (
-    (lib.startsWith("object-") ||
-      lib.startsWith("obj-") ||
-      lib.startsWith("ast-")) &&
-    !flagshipLibsList.includes(lib) &&
-    !rangeLibsList.includes(lib) &&
-    !stringLibsList.includes(lib) &&
-    !cliAppsList.includes(lib) &&
-    !filteredObjectLibsList.includes(lib) &&
-    !ignoreList.includes(lib)
-  ) {
-    filteredObjectLibsList.push(lib);
-  }
-});
+
+// -------------------------------------
+
+const filteredLernaLibsList = Array.from(lernaLibsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(
+      lib =>
+        lib.startsWith("lerna-") &&
+        noListsInclude(lib) &&
+        lib !== "lerna-clean-changelogs"
+    )
+  );
+console.log(
+  `${`\u001b[${33}m${`filteredLernaLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+    filteredLernaLibsList,
+    null,
+    4
+  )}`
+);
 
 // -------------------------------------
 
 const filteredOtherLibsList = allPackages.filter(
   lib =>
     !flagshipLibsList.includes(lib) &&
+    !filteredCliAppsList.includes(lib) &&
     !filteredRangeLibsList.includes(lib) &&
     !filteredStringLibsList.includes(lib) &&
     !filteredObjectLibsList.includes(lib) &&
-    !filteredCliAppsList.includes(lib) &&
-    !ignoreList.includes(lib)
+    !filteredLernaLibsList.includes(lib)
+);
+console.log(
+  `${`\u001b[${33}m${`filteredOtherLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+    filteredOtherLibsList,
+    null,
+    4
+  )}`
 );
 
 // ASSEMBLE THE TEMPLATE
@@ -266,6 +259,7 @@ We coded up and maintain a few npm packages:
 - [Object Processing Libraries](#-${
   filteredObjectLibsList.length
 }-object-processing-libraries)
+- [Lerna Libraries](#-${filteredLernaLibsList.length}-lerna-libraries)
 - [CLI Apps](#%EF%B8%8F-${filteredCliAppsList.length}-cli-apps)
 - [Miscellaneous Libraries](#%EF%B8%8F-${
   filteredOtherLibsList.length
@@ -334,6 +328,17 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ na
 
 ${topRow()}
 ${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
+
+**[⬆ back to top](#codsen)**
+
+## 🐉 ${filteredLernaLibsList.length} Lerna Libraries
+
+While maintaining this very monorepo we found that some essential tools were missing, so we created them!
+
+If you also use Lerna monorepos, check these out:
+
+${topRow()}
+${filteredLernaLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
