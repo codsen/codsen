@@ -146,13 +146,13 @@ const filteredRangeLibsList = Array.from(rangeLibsList)
   .concat(
     allPackages.filter(lib => lib.startsWith("ranges-") && noListsInclude(lib))
   );
-console.log(
-  `${`\u001b[${33}m${`filteredRangeLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-    filteredRangeLibsList,
-    null,
-    4
-  )}`
-);
+// console.log(
+//   `${`\u001b[${33}m${`filteredRangeLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredRangeLibsList,
+//     null,
+//     4
+//   )}`
+// );
 
 // -------------------------------------
 
@@ -167,13 +167,13 @@ const filteredStringLibsList = Array.from(stringLibsList)
         noListsInclude(lib)
     )
   );
-console.log(
-  `${`\u001b[${33}m${`filteredStringLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-    filteredStringLibsList,
-    null,
-    4
-  )}`
-);
+// console.log(
+//   `${`\u001b[${33}m${`filteredStringLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredStringLibsList,
+//     null,
+//     4
+//   )}`
+// );
 
 // -------------------------------------
 
@@ -188,13 +188,13 @@ const filteredObjectLibsList = Array.from(objectLibsList)
         noListsInclude(lib)
     )
   );
-console.log(
-  `${`\u001b[${33}m${`filteredObjectLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-    filteredObjectLibsList,
-    null,
-    4
-  )}`
-);
+// console.log(
+//   `${`\u001b[${33}m${`filteredObjectLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredObjectLibsList,
+//     null,
+//     4
+//   )}`
+// );
 
 // -------------------------------------
 
@@ -208,13 +208,13 @@ const filteredLernaLibsList = Array.from(lernaLibsList)
         lib !== "lerna-clean-changelogs"
     )
   );
-console.log(
-  `${`\u001b[${33}m${`filteredLernaLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-    filteredLernaLibsList,
-    null,
-    4
-  )}`
-);
+// console.log(
+//   `${`\u001b[${33}m${`filteredLernaLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredLernaLibsList,
+//     null,
+//     4
+//   )}`
+// );
 
 // -------------------------------------
 
@@ -227,13 +227,13 @@ const filteredOtherLibsList = allPackages.filter(
     !filteredObjectLibsList.includes(lib) &&
     !filteredLernaLibsList.includes(lib)
 );
-console.log(
-  `${`\u001b[${33}m${`filteredOtherLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-    filteredOtherLibsList,
-    null,
-    4
-  )}`
-);
+// console.log(
+//   `${`\u001b[${33}m${`filteredOtherLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredOtherLibsList,
+//     null,
+//     4
+//   )}`
+// );
 
 // ASSEMBLE THE TEMPLATE
 // =====================
