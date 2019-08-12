@@ -1,0 +1,197 @@
+{
+  "name": "lerna-link-dep",
+  "version": "1.0.0",
+  "description": "CLI to symlink a local package to the current package in Lerna monorepo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "keywords": [
+    "add",
+    "link",
+    "symlink",
+    "dependencies",
+    "monorepo",
+    "lerna",
+    "cli",
+    "tool",
+    "utility",
+    "command-line",
+    "deps",
+    "devdeps",
+    "devdependencies",
+    "ln",
+    "ln -s"
+  ],
+  "bin": {
+    "deplink": "cli.js",
+    "johnnydepp": "cli.js",
+    "linkdep": "cli.js"
+  },
+  "scripts": {
+    "ava": "ava -d",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "echo\"\"",
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "lect": "lect",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "./node_modules/.bin/ava"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "timeout": "99m",
+    "verbose": true
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": false,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "cliSpecialKeyword": "johnnydepp",
+    "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.\n\nlink dep\n\nlink dep\n\nlink dep\n\nyou want to link a dependency\n\nlink dep\n\nlink dep\n\nlink dep\n\nOK, you should memorised this by now",
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [
+        "fs-extra"
+      ],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "execa": "^2.0.3",
+    "meow": "^5.0.0",
+    "update-notifier": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "ava": "^2.2.3",
+    "babel-plugin-istanbul": "^5.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-ava": "^7.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "esm": "^3.2.25",
+    "fs-extra": "^8.1.0",
+    "js-row-num-cli": "^1.5.37",
+    "lect": "^0.9.4",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "tempy": "^0.3.0"
+  }
+}
