@@ -39,8 +39,8 @@
     "ts": false
   },
   "dependencies": {
-    "@ava/babel-preset-stage-4": "^3.0.0",
-    "@ava/babel-preset-transform-test-files": "^5.0.0",
+    "@ava/babel-preset-stage-4": "^4.0.0",
+    "@ava/babel-preset-transform-test-files": "^6.0.0",
     "@babel/core": "^7.5.5",
     "@babel/generator": "^7.5.5",
     "@babel/plugin-syntax-async-generators": "^7.2.0",
@@ -117,7 +117,7 @@
     "write-file-atomic": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^12.6.9",
+    "@types/node": "^12.7.1",
     "cli-table3": "^0.5.1",
     "codecov": "^3.5.0",
     "delay": "^4.3.0",
@@ -126,10 +126,10 @@
     "git-branch": "^2.0.1",
     "has-ansi": "^3.0.0",
     "lolex": "^4.2.0",
-    "proxyquire": "^2.1.1",
+    "proxyquire": "^2.1.2",
     "replace-string": "^3.0.0",
     "signal-exit": "^3.0.2",
-    "sinon": "^7.3.2",
+    "sinon": "^7.4.1",
     "source-map-fixtures": "^2.1.0",
     "tap": "^14.6.1",
     "temp-write": "^4.0.0",

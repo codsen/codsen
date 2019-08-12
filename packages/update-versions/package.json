@@ -178,7 +178,7 @@
     "log-symbols": "^3.0.0",
     "log-update": "^3.2.0",
     "meow": "^5.0.0",
-    "pacote": "^9.5.4",
+    "pacote": "^9.5.5",
     "path": "^0.12.7",
     "update-notifier": "^3.0.1",
     "write-json-file": "^4.2.0"
@@ -187,7 +187,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.3",
+    "ava": "^2.2.0",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",

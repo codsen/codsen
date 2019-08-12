@@ -1,66 +1,66 @@
 {
+  "name": "domutils",
+  "version": "1.7.1",
+  "description": "utilities for working with htmlparser2's dom",
+  "license": "BSD-2-Clause",
   "private": "true",
-  "author": {
-    "name": "Felix Boehm",
-    "email": "me@feedic.com"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FB55/domutils.git"
   },
   "bugs": {
     "url": "https://github.com/FB55/domutils/issues"
   },
-  "bundleDependencies": false,
-  "dependencies": {
-    "dom-serializer": "0",
-    "domelementtype": "1"
-  },
-  "deprecated": false,
-  "description": "utilities for working with htmlparser2's dom",
-  "devDependencies": {
-    "domhandler": "2",
-    "htmlparser2": "~3.9.2",
-    "jshint": "~2.9.4",
-    "mocha": "~3.2.0"
-  },
-  "directories": {
-    "test": "tests"
-  },
   "homepage": "https://github.com/FB55/domutils#readme",
-  "jshintConfig": {
-    "proto": true,
-    "unused": true,
-    "eqnull": true,
-    "undef": true,
-    "quotmark": "double",
-    "eqeqeq": true,
-    "trailing": true,
-    "node": true,
-    "globals": {
-      "describe": true,
-      "it": true,
-      "beforeEach": true
-    }
+  "author": {
+    "email": "me@feedic.com",
+    "name": "Felix Boehm"
   },
   "keywords": [
     "dom",
     "htmlparser2"
   ],
-  "license": "BSD-2-Clause",
   "main": "index.js",
-  "name": "domutils",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/FB55/domutils.git"
+  "directories": {
+    "test": "tests"
   },
   "scripts": {
-    "originaltest": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js",
     "coverage": "exit 0",
     "dev": "exit 0",
     "format": "exit 0",
     "lect": "lect",
     "lint": "exit 0",
+    "originaltest": "mocha test/tests/**.js && jshint index.js test/**/*.js lib/*.js",
     "prettier": "exit 0",
     "test": "exit 0",
     "test:tap": "tap --no-esm",
     "unittest": "exit 0"
   },
-  "version": "1.7.1"
+  "bundleDependencies": false,
+  "deprecated": false,
+  "jshintConfig": {
+    "eqeqeq": true,
+    "eqnull": true,
+    "globals": {
+      "beforeEach": true,
+      "describe": true,
+      "it": true
+    },
+    "node": true,
+    "proto": true,
+    "quotmark": "double",
+    "trailing": true,
+    "undef": true,
+    "unused": true
+  },
+  "dependencies": {
+    "dom-serializer": "^0.2.1",
+    "domelementtype": "1"
+  },
+  "devDependencies": {
+    "domhandler": "2",
+    "htmlparser2": "3.9.2",
+    "jshint": "^2.10.2",
+    "mocha": "^3.2.0"
+  }
 }
