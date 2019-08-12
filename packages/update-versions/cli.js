@@ -25,7 +25,7 @@ const cli = meow(
 
   Options:
     -h, --help          Shows this help
-    -v, --version       Shows the version of your update-versions
+    -v, --version       Shows the current installed version
 `
 );
 updateNotifier({ pkg: cli.pkg }).notify();

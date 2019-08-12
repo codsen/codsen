@@ -76,6 +76,8 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "cliSpecialKeyword": "tinaturner",
+    "cliSpecialKeywordInstructions": "",
     "contribution_types": [
       "Blogposts",
       "Bug reports",

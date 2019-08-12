@@ -25,30 +25,11 @@
 npm i -g json-comb
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using keyword:
 
-```js
-const  = require("json-comb");
+```bash
+jsoncomb
 ```
-
-or as an ES Module:
-
-```js
-import  from "json-comb";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/json-comb/dist/json-comb.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "jsonComb" which you consume like this:
-const  = jsonComb;
-```
-
-**[⬆ back to top](#)**
 
 ## Use it
 

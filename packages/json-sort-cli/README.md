@@ -29,30 +29,12 @@
 npm i -g json-sort-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using one of the following keywords:
 
-```js
-const  = require("json-sort-cli");
+```bash
+jsonsort
+sortjson
 ```
-
-or as an ES Module:
-
-```js
-import  from "json-sort-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/json-sort-cli/dist/json-sort-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "jsonSortCli" which you consume like this:
-const  = jsonSortCli;
-```
-
-**[⬆ back to top](#)**
 
 ## Use it
 

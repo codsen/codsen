@@ -42,7 +42,7 @@ const cli = meow(
 
   Options
     -h, --help          Shows this help
-    -v, --version       Shows the version of your lerna-clean-changelogs-cli
+    -v, --version       Shows the current version
 `
 );
 updateNotifier({ pkg: cli.pkg }).notify();

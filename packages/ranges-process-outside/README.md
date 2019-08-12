@@ -52,56 +52,6 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
-## Table of Contents
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-## Purpose
-
-This program iterates over inverted ranges. First, it inverts given ranges and then, calls the callback function (which you supply) with index of every character in those inverted ranges.
-
-## API
-
-**processOutside(str, originalRanges, cb, [skipChecks])**
-
-Bracket around 4th input argument above means it's optional.
-
-| Input argument   | Type                                                         | Obligatory? | Description                       |
-| ---------------- | ------------------------------------------------------------ | ----------- | --------------------------------- |
-| `str`            | Array of zero or more arrays                                 | yes         | String you work upon              |
-| `originalRanges` | Array of zero or more arrays, OR, `null` (absence of arrays) | yes         | Ranges you have                   |
-| `cb`             | Function                                                     | yes         | Callback function                 |
-| `skipChecks`     | Boolean                                                      | no          | Should checks be performed or not |
-
-**Output**: undefined. Only callback is called zero or more times. If/when callback function is called, its first input argument receives string index, one or more times.
-
-For example:
-
-```js
-// tap the library:
-const rangesProcessOutside = require("ranges-process-outside");
-// (name it anyway you want, function was exported as "default")
-
-// define an empty array which we'll soon fill:
-const gathered = [];
-
-// call our function:
-rangesProcessOutside("abcdefghij", [[1, 5]], i => {
-  const value = i; // or shorter, const {value} = obj;
-  // push this value into our array:
-  console.log("received: " + i);
-  gathered.push(i);
-});
-console.log("gathered = " + JSON.stringify(gathered, null, 0));
-// => [0, 5, 6, 7, 8, 9]
-```
-
-**[⬆ back to top](#)**
-
 ## Contributing
 
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=ranges-process-outside%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aranges-process-outside%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).

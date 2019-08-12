@@ -79,6 +79,8 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "cliSpecialKeyword": "",
+    "cliSpecialKeywordInstructions": "",
     "contribution_types": [
       "Blogposts",
       "Bug reports",

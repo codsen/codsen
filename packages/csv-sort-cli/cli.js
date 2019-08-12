@@ -17,6 +17,7 @@ const path = require("path");
 const updateNotifier = require("update-notifier");
 const pullAll = require("lodash.pullall");
 const uniq = require("lodash.uniq");
+import { name } from "../package.json";
 
 const isArr = Array.isArray;
 
@@ -33,7 +34,7 @@ const cli = meow(
   Options
     -o, --overwrite   Will overwrite the target file instead
     -h, --help        Shows this help
-    -v, --version     Shows the version of your csv-sort-cli
+    -v, --version     Shows the version of your ${name}
 
   Example
     Just call it in the root, where your csv file is located

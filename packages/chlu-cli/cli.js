@@ -9,7 +9,7 @@ const writeFileAtomic = require("write-file-atomic");
 const git = require("simple-git/promise");
 const { promisify } = require("util");
 
-const pack = "./package.json";
+const { pack } = "./package.json";
 const changeLogFile = "./changelog.md";
 const updateNotifier = require("update-notifier");
 

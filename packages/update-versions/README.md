@@ -14,7 +14,6 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Use it](#use-it)
 - [Purpose](#purpose)
 - [Opinionated part 1](#opinionated-part-1)
 - [Opinionated part 2](#opinionated-part-2)
@@ -31,47 +30,21 @@
 npm i -g update-versions
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using keyword:
 
-```js
-const  = require("update-versions");
+```bash
+upd
 ```
-
-or as an ES Module:
-
-```js
-import  from "update-versions";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/update-versions/dist/update-versions.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "updateVersions" which you consume like this:
-const  = updateVersions;
-```
-
-**[⬆ back to top](#)**
-
-## Use it
-
-Once installed, call it typing:
-
-`upd`
-
-This is a CLI (command line) application, that's why you install it with `-g` flag.
-Alternatively, you can also run it without installing, using `npx update-versions`:
-
-`npx update-versions`
-
-**[⬆ back to top](#)**
 
 ## Purpose
 
-It is aimed specifically to monorepos or setups where you want to often update all dependency versions to latest, if needed, patch bugs right away, and do it often and courageously:
+This is a very opinionated CLI to keep dependencies in monorepos up-to-date.
+
+It is aimed specifically at monorepos full of npm packages (as opposed to React component monorepos and similar).
+
+It assumed you'll always want to update all dependencies to the latest and patch any bugs right away.
+
+This CLI will:
 
 - Update all dependencies according to npm
 - Replace `*` with `^x.x.x` automatically

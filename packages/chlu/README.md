@@ -18,7 +18,6 @@ Other siblings of this package:
 ## Table of Contents
 
 - [Install](#install)
-- [What it does](#what-it-does)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -59,17 +58,6 @@ This package has three builds in `dist/` folder:
 | -------------------------------------------------------------------------------------------------- | --------------------- | ------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`     | `main`                | `dist/chlu.cjs.js` | 19 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/chlu.esm.js` | 19 KB |
-
-**[⬆ back to top](#)**
-
-## What it does
-
-`chlu` stands for CHangeLog Update. This library is the API for `chlu-cli` ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)) which you should install with a `-g` flag. You probably should check it _instead_ ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)).
-
-Diff links are useful for new starters in programming — they allow to see how the particular feature was implemented and _learn_.
-Diff links are useful for regular consumers of npm libraries — they give more reassurance that the library is really maintained and provide a glimpse about its quality.
-
-When I saw the diff links for the first time in somebody's CHANGELOG, I told myself, I must get one too. However, diff links are a pain to maintain, hence this library. Make sure you install `chlu-cli` ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)) though. This one is just an API for it.
 
 **[⬆ back to top](#)**
 

@@ -15,6 +15,7 @@ const path = require("path");
 const updateNotifier = require("update-notifier");
 const pullAll = require("lodash.pullall");
 const uniq = require("lodash.uniq");
+import { name } from "../package.json";
 
 const isArr = Array.isArray;
 
@@ -28,7 +29,7 @@ const cli = meow(`
 
   Options
     -h, --help        Shows this help
-    -v, --version     Shows the version of your email-all-chars-within-ascii-cli
+    -v, --version     Shows the version of your ${name}
 
   Instructions
     Just call it in the folder where your file is located or provide a path

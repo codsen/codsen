@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 92 npm libraries 📦📦📦
+    A lerna monorepo for our 94 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -14,8 +14,9 @@ We coded up and maintain a few npm packages:
 - [Range Libraries](#-12-range-libraries)
 - [String Processing Libraries](#-28-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
-- [CLI Apps](#%EF%B8%8F-9-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
+- [Lerna Libraries](#-3-lerna-libraries)
+- [CLI Apps](#%EF%B8%8F-11-cli-apps)
+- [Miscellaneous Libraries](#%EF%B8%8F-21-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -27,6 +28,7 @@ We coded up and maintain a few npm packages:
 | -------------- | ------- | ------- | ----------- | ----------------------- |
 | [`email-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) | Remove unused CSS from email templates | [emailcomb.com](https://emailcomb.com) | [![email-comb on npm](https://img.shields.io/npm/v/email-comb.svg?style=flat-square)](https://www.npmjs.com/package/email-comb) | [packages/email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) |
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
+| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
@@ -145,7 +147,21 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 
 **[⬆ back to top](#codsen)**
 
-## ✂️ 9 CLI Apps
+## 🐉 3 Lerna Libraries
+
+While maintaining this very monorepo we found that some essential tools were missing, so we created them!
+
+If you also use Lerna monorepos, check these out:
+
+| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| -------------- | ------- | ----------- | ----------------------- |
+| [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
+| [`lerna-link-dep`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) | CLI to symlink a local package to the current package in Lerna monorepo | [![lerna-link-dep on npm](https://img.shields.io/npm/v/lerna-link-dep.svg?style=flat-square)](https://www.npmjs.com/package/lerna-link-dep) | [packages/lerna-link-dep](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) |
+| [`update-versions`](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) |
+
+**[⬆ back to top](#codsen)**
+
+## ✂️ 11 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -155,19 +171,21 @@ You use them in the Terminal (command line), for example:
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
-| [`lect`](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) | Maintenance CLI for internal consumption | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) |
+| [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`update-versions`](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) |
+| [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
+| [`lerna-link-dep`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) | CLI to symlink a local package to the current package in Lerna monorepo | [![lerna-link-dep on npm](https://img.shields.io/npm/v/lerna-link-dep.svg?style=flat-square)](https://www.npmjs.com/package/lerna-link-dep) | [packages/lerna-link-dep](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) |
+| [`lect`](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) | Maintenance CLI for internal consumption | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://gitlab.com/codsen/codsen/tree/master/packages/lect/) |
 | [`chlu-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu-cli on npm](https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square)](https://www.npmjs.com/package/chlu-cli) | [packages/chlu-cli](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/) |
 | [`csv-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) |
 | [`email-all-chars-within-ascii-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/) | Command line app to scan email templates, are all their characters within ASCII range | [![email-all-chars-within-ascii-cli on npm](https://img.shields.io/npm/v/email-all-chars-within-ascii-cli.svg?style=flat-square)](https://www.npmjs.com/package/email-all-chars-within-ascii-cli) | [packages/email-all-chars-within-ascii-cli](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/) |
 | [`generate-atomic-css-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli/) | Generates and updates all HTML templates' atomic CSS | [![generate-atomic-css-cli on npm](https://img.shields.io/npm/v/generate-atomic-css-cli.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css-cli) | [packages/generate-atomic-css-cli](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css-cli/) |
 | [`js-row-num-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) | Update all row numbers in all console.logs in JS code | [![js-row-num-cli on npm](https://img.shields.io/npm/v/js-row-num-cli.svg?style=flat-square)](https://www.npmjs.com/package/js-row-num-cli) | [packages/js-row-num-cli](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) |
 | [`json-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, retains package.json special key order | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) |
-| [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ 22 Miscellaneous Libraries
+## 🛠️ 21 Miscellaneous Libraries
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -188,7 +206,6 @@ You use them in the Terminal (command line), for example:
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
 | [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
-| [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |

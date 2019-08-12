@@ -45,30 +45,13 @@ Call on multiple files all at once:
 npm i -g email-all-chars-within-ascii-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using one of the following keywords:
 
-```js
-const  = require("email-all-chars-within-ascii-cli");
+```bash
+withinascii
 ```
 
-or as an ES Module:
-
-```js
-import  from "email-all-chars-within-ascii-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/email-all-chars-within-ascii-cli/dist/email-all-chars-within-ascii-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "emailAllCharsWithinAsciiCli" which you consume like this:
-const  = emailAllCharsWithinAsciiCli;
-```
-
-**[⬆ back to top](#)**
+As a last resort, if your memory would fail, the alternative keyword is: `tinaturner`
 
 ## Use it
 

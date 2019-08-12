@@ -14,8 +14,6 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Idea](#idea)
-- [API](#api)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -59,28 +57,6 @@ This package has three builds in `dist/` folder:
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-split-by-whitespace.umd.js` | 28 KB |
 
 **[⬆ back to top](#)**
-
-## Idea
-
-```js
-const splitByW = require("string-split-by-whitespace");
-
-const res1 = splitByW("aaa bbb");
-console.log("res1 = " + JSON.stringify(res1, null, 4));
-// => ['aaa', 'bbb']
-
-const res2 = splitByW("\n\n\n\n  aaa \t\t\t bbb  \n\n\n");
-console.log("res2 = " + JSON.stringify(res2, null, 4));
-// => ['aaa', 'bbb']
-```
-
-**[⬆ back to top](#)**
-
-## API
-
-```js
-splitByW(str, [opts]);
-```
 
 ### API - Input
 

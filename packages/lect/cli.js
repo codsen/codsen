@@ -4,13 +4,11 @@
 
 // -----------------------------------------------------------------------------
 // SETUP
-const meow = require("meow");
 const fs = require("fs-extra");
 const writeFileAtomic = require("write-file-atomic");
 const writeJsonFile = require("write-json-file");
 const path = require("path");
 const logSymbols = require("log-symbols");
-const updateNotifier = require("update-notifier");
 const chalk = require("chalk");
 // const getPkgRepo = require("get-pkg-repo");
 const objectPath = require("object-path");
@@ -37,7 +35,7 @@ const replace = require("replace-string");
 const inquirer = require("inquirer");
 // const matcher = require('matcher')
 const {
-  initNpmIgnore,
+  // initNpmIgnore,
   npmWillTakeCareOfThese,
   encodeDot,
   decodeDot
@@ -73,24 +71,6 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
-const meowConf = `
-  Usage
-    $ chlu
-
-  Options
-    --loud, -l  Will not perform all operations silently
-    --init, -i  Sets up Lect: creates config in the root, helps with settings
-
-  Example
-    Just call it in the root, where your package.json is located
-`;
-const cli = meow(meowConf, {
-  alias: {
-    l: "loud",
-    i: "init"
-  }
-});
-updateNotifier({ pkg: cli.pkg }).notify();
 
 // -----------------------------------------------------------------------------
 // 0. STUFF WE READ
@@ -837,7 +817,7 @@ function step11() {
 
 // second part
 async function writePackageJson(receivedPackageJsonObj) {
-  const backupPerfScript = pack.scripts.perf;
+  // const backupPerfScript = pack.scripts.perf;
   if (
     (objectPath.has(lectrc, "various.addBlanks") && lectrc.various.addBlanks) ||
     (objectPath.has(pack, "lect.addBlanks") && pack.lect.addBlanks)
@@ -1596,27 +1576,21 @@ function step6() {
   let existingContributorsBackup = null;
 
   readmeData.forEach((readmePiece, indx) => {
-    // if (DEBUG) {
-    //   console.log(
-    //     `${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-    //   );
-    // }
-    // if (DEBUG) {
-    //   console.log(
-    //     `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
-    //   );
-    // }
-    // if (DEBUG) {
-    //   console.log(
-    //     readmePiece.restofit && readmePiece.restofit.length
-    //       ? `readmePiece.restofit.length = ${JSON.stringify(
-    //           readmePiece.restofit.length,
-    //           null,
-    //           4
-    //         )}`
-    //       : ""
-    //   );
-    // }
+    // console.log(
+    //   `1580 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    // );
+    // console.log(
+    //   `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
+    // );
+    // console.log(
+    //   readmePiece.restofit && readmePiece.restofit.length
+    //     ? `readmePiece.restofit.length = ${JSON.stringify(
+    //         readmePiece.restofit.length,
+    //         null,
+    //         4
+    //       )}`
+    //     : ""
+    // );
 
     // Back up existing contributors content if such exists.
     // If interwebs were not reachable, we'll stick that back in.
@@ -1866,6 +1840,7 @@ const ${consumedName} = ${camelCase(pack.name)};
       }
     }
   });
+  // console.log(`1843 lect()`);
 
   // contributing module
   content += `${
@@ -2380,40 +2355,41 @@ function checkOneOfNames(i) {
 }
 
 // START:
-
-if (cli.flags.init) {
-  if (DEBUG) {
-    console.log("INIT MODE");
+// quickly read package.json and bail early if needed
+try {
+  if (JSON.parse(fs.readFileSync("package.json", "utf8")).private) {
+    log(`${chalk.green(logSymbols.success, "private package, lect skipped")}`);
+    process.exit();
   }
-  fs.access("package.json", fs.constants.F_OK, err => {
-    if (err) {
-      // GOOD, no package.json
-      // CALL INIT
-      initNpmIgnore();
-    } else {
-      // BAD, there's package.json in the root so it's probably false root!
-      log(
-        `${chalk.red(
-          logSymbols.error,
-          "Computer discovered package.json in this folder's root. Real root folder should contain projects, not be a project!"
-        )}`
-      );
-      process.exit(1);
-    }
-  });
-} else {
-  // quickly read package.json and bail early if needed
-  try {
-    if (JSON.parse(fs.readFileSync("package.json", "utf8")).private) {
-      log(
-        `${chalk.green(logSymbols.success, "private package, lect skipped")}`
-      );
-      process.exit();
-    }
-  } catch (e) {
-    console.log(`error reading package.json: ${e}`);
-  }
-
-  // log(`${chalk.white("\nSTEP 0 - Get the readme name and contents")}`);
-  checkOneOfNames(0); // will start from 0-th index of readmeNames[]
+} catch (e) {
+  console.log(`error reading package.json: ${e}`);
 }
+
+// log(`${chalk.white("\nSTEP 0 - Get the readme name and contents")}`);
+checkOneOfNames(0); // will start from 0-th index of readmeNames[]
+
+// -----------------------------------------------------------------------------
+
+// if (cli.flags.init) {
+//   if (DEBUG) {
+//     console.log("INIT MODE");
+//   }
+//   fs.access("package.json", fs.constants.F_OK, err => {
+//     if (err) {
+//       // GOOD, no package.json
+//       // CALL INIT
+//       initNpmIgnore();
+//     } else {
+//       // BAD, there's package.json in the root so it's probably false root!
+//       log(
+//         `${chalk.red(
+//           logSymbols.error,
+//           "Computer discovered package.json in this folder's root. Real root folder should contain projects, not be a project!"
+//         )}`
+//       );
+//       process.exit(1);
+//     }
+//   });
+// } else {
+//
+// }

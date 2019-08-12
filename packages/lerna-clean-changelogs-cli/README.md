@@ -34,30 +34,12 @@ Other siblings of this package:
 npm i -g lerna-clean-changelogs-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using one of the following keywords:
 
-```js
-const  = require("lerna-clean-changelogs-cli");
+```bash
+lcc
+lernacleanchangelog
 ```
-
-or as an ES Module:
-
-```js
-import  from "lerna-clean-changelogs-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/lerna-clean-changelogs-cli/dist/lerna-clean-changelogs-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "lernaCleanChangelogsCli" which you consume like this:
-const  = lernaCleanChangelogsCli;
-```
-
-**[⬆ back to top](#)**
 
 ## Use it
 

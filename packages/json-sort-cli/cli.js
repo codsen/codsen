@@ -35,7 +35,7 @@ const cli = meow(
     -t, --tabs          Use tabs for JSON file indentation
     -s, --silent        Does not show the result per-file, only totals in the end
     -h, --help          Shows this help
-    -v, --version       Shows the version of your json-sort-cli
+    -v, --version       Shows the current version
     -a, --arrays        Also sort any arrays if they contain only string elements
     -p, --pack          Exclude all package.json files
 

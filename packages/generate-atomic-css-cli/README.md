@@ -28,30 +28,11 @@ Other siblings of this package:
 npm i -g generate-atomic-css-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using keyword:
 
-```js
-const  = require("generate-atomic-css-cli");
+```bash
+gac
 ```
-
-or as an ES Module:
-
-```js
-import  from "generate-atomic-css-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/generate-atomic-css-cli/dist/generate-atomic-css-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "generateAtomicCssCli" which you consume like this:
-const  = generateAtomicCssCli;
-```
-
-**[⬆ back to top](#)**
 
 ## Use it
 

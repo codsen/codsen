@@ -36,30 +36,12 @@ Other siblings of this package:
 npm i -g js-row-num-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using one of the following keywords:
 
-```js
-const  = require("js-row-num-cli");
+```bash
+jrn
+jsrownum
 ```
-
-or as an ES Module:
-
-```js
-import  from "js-row-num-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/js-row-num-cli/dist/js-row-num-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "jsRowNumCli" which you consume like this:
-const  = jsRowNumCli;
-```
-
-**[⬆ back to top](#)**
 
 ## Use it
 

@@ -29,27 +29,11 @@ Other siblings of this package:
 npm i -g csv-sort-cli
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using one of the following keywords:
 
-```js
-const  = require("csv-sort-cli");
-```
-
-or as an ES Module:
-
-```js
-import  from "csv-sort-cli";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/csv-sort-cli/dist/csv-sort-cli.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "csvSortCli" which you consume like this:
-const  = csvSortCli;
+```bash
+csvsort
+sortcsv
 ```
 
 **[⬆ back to top](#)**
