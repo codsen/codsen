@@ -383,7 +383,7 @@ fs.writeFile(
     .replace("like \\_.includes", "like `_.includes`")
     .replace("like \\_.pullAll", "like `_.pullAll`")
     .replace("tried to use this package", "tried to use a package")
-    .replace(/the_link_to_npm/g, "The&nbsp;link&nbsp;to npm")
+    .replace(/the_link_to_npm/g, "The&nbsp;link&nbsp;to&nbsp;npm")
     .replace(
       "The npm script",
       "The npm script within each package's `package.json`"

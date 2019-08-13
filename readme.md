@@ -24,11 +24,11 @@ We coded up and maintain a few npm packages:
 
 ## 🚢 Flagship Libraries
 
-| Library's name | Purpose | Web app | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | Web app | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ------- | ----------- | ----------------------- |
 | [`email-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) | Remove unused CSS from email templates | [emailcomb.com](https://emailcomb.com) | [![email-comb on npm](https://img.shields.io/npm/v/email-comb.svg?style=flat-square)](https://www.npmjs.com/package/email-comb) | [packages/email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) |
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
-| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
+| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | Text cleaning and preparation tool | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
@@ -62,7 +62,7 @@ Performing string processing only once is better for both **performance** reason
 
 If you think, strings are immutable in JavaScript — each change of a string means rewriting it in a computer memory. Let's say you want to add a letter and delete the same letter in a string which consists of a thousand characters. Both actions cancel each other out. However, if you do the string edits sequentially, you write a thousand characters to memory two times, after every amend. On the other hand, if you use _ranges_ approach, you'd only [create a new record](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) in the computer memory, housing a couple of arrays, each consisting of couple index numbers. When you [process the ranges](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply), they would cancel each other out, and we would not write anything to the memory at all. Now, if you scale this — longer strings, more amends, and done many times — you'll soon feel the difference in performance.
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`ranges-push`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) | Manage the array of ranges referencing the index ranges within the string | [![ranges-push on npm](https://img.shields.io/npm/v/ranges-push.svg?style=flat-square)](https://www.npmjs.com/package/ranges-push) | [packages/ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) |
 | [`ranges-apply`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) | Take an array of string slice ranges, delete/replace the string according to them | [![ranges-apply on npm](https://img.shields.io/npm/v/ranges-apply.svg?style=flat-square)](https://www.npmjs.com/package/ranges-apply) | [packages/ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) |
@@ -83,7 +83,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
 | [`easy-replace`](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) | Replace strings with optional lookarounds, but without regexes | [![easy-replace on npm](https://img.shields.io/npm/v/easy-replace.svg?style=flat-square)](https://www.npmjs.com/package/easy-replace) | [packages/easy-replace](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) |
@@ -122,7 +122,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 
 "`ast-`" in the library's name below just emphasises that it really works on nested objects (so-called Abstract Syntax Trees that come from parsed things).
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`ast-monkey`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/) | Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects) | [![ast-monkey on npm](https://img.shields.io/npm/v/ast-monkey.svg?style=flat-square)](https://www.npmjs.com/package/ast-monkey) | [packages/ast-monkey](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/) |
 | [`ast-monkey-traverse`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/) | Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects) | [![ast-monkey-traverse on npm](https://img.shields.io/npm/v/ast-monkey-traverse.svg?style=flat-square)](https://www.npmjs.com/package/ast-monkey-traverse) | [packages/ast-monkey-traverse](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/) |
@@ -153,7 +153,7 @@ While maintaining this very monorepo we found that some essential tools were mis
 
 If you also use Lerna monorepos, check these out:
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
 | [`lerna-link-dep`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) | CLI to symlink a local package to the current package in Lerna monorepo | [![lerna-link-dep on npm](https://img.shields.io/npm/v/lerna-link-dep.svg?style=flat-square)](https://www.npmjs.com/package/lerna-link-dep) | [packages/lerna-link-dep](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep/) |
@@ -169,7 +169,7 @@ You use them in the Terminal (command line), for example:
 
 ![CLI app](packages/email-all-chars-within-ascii-cli/media/mov2.gif)
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`json-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) | Command line app to manage sets of JSON files | [![json-comb on npm](https://img.shields.io/npm/v/json-comb.svg?style=flat-square)](https://www.npmjs.com/package/json-comb) | [packages/json-comb](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb/) |
 | [`update-versions`](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://gitlab.com/codsen/codsen/tree/master/packages/update-versions/) |
@@ -187,7 +187,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ 21 Miscellaneous Libraries
 
-| Library's name | Purpose | The&nbsp;link&nbsp;to npm | Source code in monorepo |
+| Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`all-named-html-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) | Array of all named HTML entities | [![all-named-html-entities on npm](https://img.shields.io/npm/v/all-named-html-entities.svg?style=flat-square)](https://www.npmjs.com/package/all-named-html-entities) | [packages/all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) |
 | [`array-group-str-omit-num-char`](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) | Groups array of strings by omitting number characters | [![array-group-str-omit-num-char on npm](https://img.shields.io/npm/v/array-group-str-omit-num-char.svg?style=flat-square)](https://www.npmjs.com/package/array-group-str-omit-num-char) | [packages/array-group-str-omit-num-char](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) |
