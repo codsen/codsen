@@ -13,6 +13,7 @@ const aPackageJson = `{
 
 const bPackageJson = `{
   "name": "b",
+  "version": "1.0.0",
   "main": "dist/b.cjs.js",
   "module": "dist/b.esm.js",
   "browser": "dist/b.umd.js"
@@ -20,6 +21,7 @@ const bPackageJson = `{
 
 const cPackageJson = `{
   "name": "c",
+  "version": "2.0.0",
   "bin": {
     "launchc": "cli.js",
     "claunch": "cli.js"
@@ -71,7 +73,6 @@ test(`01.01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package doe
     .then(execasMsg => {
       t.regex(execasMsg.stdout, /ERROR_01/, "01.01.01");
       t.regex(execasMsg.stdout, /not found!/, "01.01.02");
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -96,7 +97,60 @@ test(`01.01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package doe
 //                                  *
 //                                  *
 
-test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_02)`, async t => {
+test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`, async t => {
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  // const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  fs.ensureDirSync(path.resolve(tempFolder));
+  fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
+  fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
+
+  //
+
+  const cleanupMsg = await fs
+    .writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+    .then(() =>
+      execa(
+        `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
+          __dirname,
+          "../",
+          "cli.js"
+        )} b`,
+        {
+          shell: true
+        }
+      )
+    )
+    .then(execasMsg => {
+      t.regex(execasMsg.stdout, /ERROR_02/, "01.02.01");
+      t.regex(execasMsg.stdout, /package.json/, "01.02.02");
+      t.regex(execasMsg.stdout, /doesn't exist/, "01.02.03");
+    })
+    .then(() =>
+      execa.command(`rm -rf ${tempFolder}`, {
+        shell: true
+      })
+    );
+
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.02.04");
+});
+
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//
+//                                01.03
+//
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+
+test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -122,10 +176,9 @@ test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's pac
       )
     )
     .then(execasMsg => {
-      t.regex(execasMsg.stdout, /ERROR_02/, "01.02.01");
-      t.regex(execasMsg.stdout, /package.json/, "01.02.02");
-      t.regex(execasMsg.stdout, /doesn't exist/, "01.02.03");
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+      t.regex(execasMsg.stdout, /ERROR_03/, "01.03.01");
+      t.regex(execasMsg.stdout, /package.json/, "01.03.02");
+      t.regex(execasMsg.stdout, /doesn't exist/, "01.03.03");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -133,7 +186,7 @@ test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's pac
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "01.02.04");
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.03.04");
 });
 
 //                                  *
@@ -142,7 +195,7 @@ test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's pac
 //                                  *
 //                                  *
 //
-//                                01.03
+//                                01.04
 //
 //                                  *
 //                                  *
@@ -150,7 +203,7 @@ test(`01.02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's pac
 //                                  *
 //                                  *
 
-test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_03)`, async t => {
+test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -189,9 +242,8 @@ test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink a
       )
     )
     .then(execasMsg => {
-      t.regex(execasMsg.stdout, /ERROR_03/, "01.03.01");
-      t.regex(execasMsg.stdout, /symlink already exists/, "01.03.02");
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+      t.regex(execasMsg.stdout, /ERROR_05/, "01.04.01");
+      t.regex(execasMsg.stdout, /symlink already exists/, "01.04.02");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -199,7 +251,7 @@ test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink a
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "01.03.03");
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.04.03");
 });
 
 //                                  *
@@ -208,7 +260,7 @@ test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink a
 //                                  *
 //                                  *
 //
-//                                01.04
+//                                01.05
 //
 //                                  *
 //                                  *
@@ -216,7 +268,7 @@ test(`01.03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink a
 //                                  *
 //                                  *
 
-test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_04)`, async t => {
+test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -245,14 +297,13 @@ test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to
       )
     )
     .then(execasMsg => {
-      t.regex(execasMsg.stdout, /ERROR_04/, "01.04.01");
-      t.regex(execasMsg.stdout, /package.json/, "01.04.02");
+      t.regex(execasMsg.stdout, /ERROR_06/, "01.05.01");
+      t.regex(execasMsg.stdout, /package.json/, "01.05.02");
       t.regex(
         execasMsg.stdout,
         /Something went wrong trying to read/,
-        "01.04.03"
+        "01.05.03"
       );
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -260,7 +311,7 @@ test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "01.04.04");
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.05.04");
 });
 
 //                                  *
@@ -269,7 +320,7 @@ test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to
 //                                  *
 //                                  *
 //
-//                                01.05
+//                                01.06
 //
 //                                  *
 //                                  *
@@ -277,7 +328,7 @@ test(`01.04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to
 //                                  *
 //                                  *
 
-test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_06)`, async t => {
+test(`01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -320,11 +371,10 @@ test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of 
       )
     )
     .then(execasMsg => {
-      t.regex(execasMsg.stdout, /ERROR_06/, "01.05.01");
-      t.regex(execasMsg.stdout, /launchc already exists/, "01.05.02");
-      t.regex(execasMsg.stdout, /Success!/, "01.05.03");
-      t.regex(execasMsg.stdout, /was linked/, "01.05.04");
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+      t.regex(execasMsg.stdout, /ERROR_08/, "01.06.01");
+      t.regex(execasMsg.stdout, /launchc already exists/, "01.06.02");
+      t.regex(execasMsg.stdout, /Success!/, "01.06.03");
+      t.regex(execasMsg.stdout, /was linked/, "01.06.04");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -332,7 +382,7 @@ test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of 
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "01.05.04");
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.06.04");
 });
 
 //                                  *
@@ -341,7 +391,7 @@ test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of 
 //                                  *
 //                                  *
 //
-//                                01.06
+//                                01.07
 //
 //                                  *
 //                                  *
@@ -349,7 +399,7 @@ test(`01.05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of 
 //                                  *
 //                                  *
 
-test(`01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_08)`, async t => {
+test(`01.07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -381,10 +431,9 @@ test(`01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no m
       )
     )
     .then(execasMsg => {
-      t.regex(execasMsg.stdout, /ERROR_08/, "01.06.01");
-      t.regex(execasMsg.stdout, /package.json/, "01.06.02");
-      t.regex(execasMsg.stdout, /didn't have any of the keys/, "01.06.03");
-      // return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+      t.regex(execasMsg.stdout, /ERROR_10/, "01.07.01");
+      t.regex(execasMsg.stdout, /package.json/, "01.07.02");
+      t.regex(execasMsg.stdout, /didn't have any of the keys/, "01.07.03");
     })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
@@ -392,7 +441,7 @@ test(`01.06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no m
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "01.06.04");
+  t.deepEqual(cleanupMsg.exitCode, 0, "01.07.04");
 });
 
 //                                  *
@@ -442,20 +491,24 @@ test(`02.01 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links nor
       t.regex(execasMsg.stdout, /b/, "02.01.02");
       t.regex(execasMsg.stdout, /linked!/, "02.01.03");
     })
+    .then(() => fs.readJson(path.join(tempFolder, "a", "package.json")))
+    .then(packageContents => {
+      t.is(packageContents.dependencies.b, "^1.0.0", "02.01.04");
+    })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
         shell: true
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "02.01.04");
+  t.deepEqual(cleanupMsg.exitCode, 0, "02.01.05");
 });
 
 test(`02.02 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  const tempFolder = "temp";
-  // const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  const tempFolder = tempy.directory();
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules/.bin/"));
   fs.ensureDirSync(path.resolve(tempFolder, "c", "node_modules"));
@@ -488,11 +541,62 @@ test(`02.02 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI
       t.regex(execasMsg.stdout, /launchc/, "02.02.03");
       t.regex(execasMsg.stdout, /linked!/, "02.02.04");
     })
+    .then(() => fs.readJson(path.join(tempFolder, "a", "package.json"), "utf8"))
+    .then(packageContents => {
+      t.is(packageContents.dependencies.c, "^2.0.0", "02.02.05");
+    })
     .then(() =>
       execa.command(`rm -rf ${tempFolder}`, {
         shell: true
       })
     );
 
-  t.deepEqual(cleanupMsg.exitCode, 0, "02.02.05");
+  t.deepEqual(cleanupMsg.exitCode, 0, "02.02.06");
+});
+
+test(`02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies`, async t => {
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  // const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  fs.ensureDirSync(path.resolve(tempFolder));
+  fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
+  fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
+
+  //
+
+  const cleanupMsg = await fs
+    .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
+    .then(() =>
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+    )
+    .then(() =>
+      execa(
+        `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
+          __dirname,
+          "../",
+          "cli.js"
+        )} b -d`,
+        {
+          shell: true
+        }
+      )
+    )
+    .then(execasMsg => {
+      t.regex(execasMsg.stdout, /Success/, "02.03.01");
+      t.regex(execasMsg.stdout, /b/, "02.03.02");
+      t.regex(execasMsg.stdout, /linked!/, "02.03.03");
+    })
+    .then(() => fs.readJson(path.join(tempFolder, "a", "package.json")))
+    .then(packageContents => {
+      t.is(packageContents.dependencies, undefined, "02.03.04");
+      t.is(packageContents.devDependencies.b, "^1.0.0", "02.03.05");
+    })
+    .then(() =>
+      execa.command(`rm -rf ${tempFolder}`, {
+        shell: true
+      })
+    );
+
+  t.deepEqual(cleanupMsg.exitCode, 0, "02.03.06");
 });

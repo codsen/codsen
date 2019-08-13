@@ -66,6 +66,13 @@ deplink "detergent"
 
 That's it. Symlink is created from `<monorepo root>/packages/object-all-values-equal-to/node_modules/detergent` pointing to `<monorepo root>/packages/object-all-values-equal-to/node_modules/detergent`
 
+**PS.** If the linked dependency is not in package.json yet, it will be added among `dependencies`. If you want it added to `devDependencies` instead, add `-d` or `--dev` flag when calling the CLI, for example,
+
+```bash
+deplink "detergent" -d
+deplink "detergent" --dev
+```
+
 🍻🍺💪🏼💥🍻👍🏻
 
 **[⬆ back to top](#)**
@@ -139,6 +146,7 @@ Well, now those days are gone, we have a simple dependency linker at last.
 
 Only the finest ~dependencies~ ingredients are used in this CLI:
 
+- [`fs-extra`](https://www.npmjs.com/package/fs-extra) - for promise-based I/O
 - [`execa`](https://www.npmjs.com/package/execa) - to run shell processes, the `ln -s` part
 - [`meow`](https://www.npmjs.com/package/meow) - to bootstrap the CLI
 - [`update-notifier`](https://www.npmjs.com/package/update-notifier) - to remind users if currently installed CLI is outdated

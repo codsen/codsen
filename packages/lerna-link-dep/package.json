@@ -171,6 +171,7 @@
   },
   "dependencies": {
     "execa": "^2.0.3",
+    "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "update-notifier": "^3.0.1"
   },

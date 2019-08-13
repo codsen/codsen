@@ -5,8 +5,8 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-const fs = require("fs");
 const { log } = console;
+const fs = require("fs-extra");
 const meow = require("meow");
 const path = require("path");
 const updateNotifier = require("update-notifier");
@@ -21,12 +21,18 @@ const cli = meow(
     $ deplink detergent
 
   Options
+    -d, --dev           Adds dependency as devDependency in package.json
     -h, --help          Shows this help
     -v, --version       Shows the current installed version
 
   The package you requested must be in a neighbour folder to the
   one you're at currently.
-`
+`,
+  {
+    alias: {
+      d: "dev"
+    }
+  }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
 
@@ -68,7 +74,10 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
 
   // contents of package.json of the new requested package will be put here
   // the main consideration is different actions depending is it a CLI or normal dep
-  let packageJsonContents;
+  let requestedPackageJsonContents;
+
+  // also contents of the asker package's package.json:
+  let askerPackageJsonContents;
 
   let check;
   try {
@@ -83,11 +92,29 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
   }
 
   if (check && check.isDirectory()) {
+    // check the existence of package.json in the asking folder
+    // -------------------------------------------------------------------------
+    try {
+      fs.statSync(path.resolve("package.json"));
+    } catch (e) {
+      console.log(
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_02] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
+          __dirname,
+          "../",
+          cli.input[i],
+          "package.json"
+        )}\u001b[${39}m`}`
+      );
+      continue;
+    }
+
+    // check the existence of package.json within the requested package's folder
+    // -------------------------------------------------------------------------
     try {
       fs.statSync(path.resolve("../", cli.input[i], "package.json"));
     } catch (e) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_02] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_03] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
           __dirname,
           "../",
           cli.input[i],
@@ -106,17 +133,38 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     //   )}\u001b[${39}m`}`
     // );
 
+    // read the asker package's package.json:
+    // -------------------------------------------------------------------------
+
     try {
-      packageJsonContents = JSON.parse(
-        fs.readFileSync(
-          path.resolve("../", cli.input[i], "package.json"),
-          "utf8"
-        )
+      askerPackageJsonContents = fs.readJsonSync(
+        path.resolve("package.json"),
+        "utf8"
       );
+    } catch (e1) {
+      console.log(
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_04] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+          "package.json"
+        )}\n\n${`\u001b[${31}m${`error:`}\u001b[${39}m`}\n${e1}`
+      );
+      continue;
+    }
+
+    // read the requested package's package.json:
+    // -------------------------------------------------------------------------
+    try {
+      requestedPackageJsonContents = fs.readJsonSync(
+        path.resolve("../", cli.input[i], "package.json"),
+        "utf8"
+      );
+
       // if it's normal dep:
       if (
-        typeof packageJsonContents === "object" &&
-        Object.prototype.hasOwnProperty.call(packageJsonContents, "main")
+        typeof requestedPackageJsonContents === "object" &&
+        Object.prototype.hasOwnProperty.call(
+          requestedPackageJsonContents,
+          "main"
+        )
       ) {
         isNormalDep = true;
 
@@ -124,7 +172,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         try {
           if (fs.statSync(path.resolve("./", "node_modules", cli.input[i]))) {
             console.log(
-              `${messagePrefix} ${`\u001b[${33}m${`[ERROR_03] Skipped! A symlink already exists:`}\u001b[${39}m`}\n${`\u001b[${90}m${path.resolve(
+              `${messagePrefix} ${`\u001b[${33}m${`[ERROR_05] Skipped! A symlink already exists:`}\u001b[${39}m`}\n${`\u001b[${90}m${path.resolve(
                 "./",
                 "node_modules",
                 cli.input[i]
@@ -137,15 +185,18 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
 
       // if it'a a CLI:
       if (
-        typeof packageJsonContents === "object" &&
-        Object.prototype.hasOwnProperty.call(packageJsonContents, "bin") &&
-        Object.keys(packageJsonContents.bin).length
+        typeof requestedPackageJsonContents === "object" &&
+        Object.prototype.hasOwnProperty.call(
+          requestedPackageJsonContents,
+          "bin"
+        ) &&
+        Object.keys(requestedPackageJsonContents.bin).length
       ) {
-        isCLI = Object.keys(packageJsonContents.bin);
+        isCLI = Object.keys(requestedPackageJsonContents.bin);
       }
     } catch (e1) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_04] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_06] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
           __dirname,
           "../",
           cli.input[i],
@@ -155,6 +206,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       continue;
     }
 
+    // create symlinks:
+    // -------------------------------------------------------------------------
     if (isNormalDep) {
       // run the query using execa:
       try {
@@ -180,7 +233,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         );
       } catch (err) {
         console.log(
-          `${messagePrefix} ${`\u001b[${31}m${`[ERROR_05] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${err}`
+          `${messagePrefix} ${`\u001b[${31}m${`[ERROR_07] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${err}`
         );
         continue;
       }
@@ -201,7 +254,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             fs.statSync(path.resolve("./", "node_modules", ".bin", binName))
           ) {
             console.log(
-              `${messagePrefix} ${`\u001b[${33}m${`[ERROR_06] Skipped! A symlink ${path.resolve(
+              `${messagePrefix} ${`\u001b[${33}m${`[ERROR_08] Skipped! A symlink ${path.resolve(
                 "./",
                 "node_modules",
                 ".bin",
@@ -218,14 +271,14 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           //   `COMMAND:\n\nln -s\n${path.resolve(
           //     "../",
           //     cli.input[i],
-          //     packageJsonContents.bin[binName]
+          //     requestedPackageJsonContents.bin[binName]
           //   )}\n${path.resolve("./", "node_modules", ".bin", binName)}`
           // );
           execa.sync(
             `ln -s ${path.resolve(
               "../",
               cli.input[i],
-              packageJsonContents.bin[binName]
+              requestedPackageJsonContents.bin[binName]
             )} ${path.resolve("./", "node_modules", ".bin", binName)}`,
             {
               shell: true
@@ -244,19 +297,70 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           );
         } catch (e2) {
           console.log(
-            `${messagePrefix} ${`\u001b[${31}m${`[ERROR_07] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${e2}`
+            `${messagePrefix} ${`\u001b[${31}m${`[ERROR_09] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${e2}`
           );
         }
       }
     } else if (!isNormalDep && !isCLI.length) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_08] The package.json of the package "${cli.input[i]}" didn't have any of the keys: "main", "module", "browser" or "bin"`}\u001b[${39}m`}`
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_10] The package.json of the package "${cli.input[i]}" didn't have any of the keys: "main", "module", "browser" or "bin"`}\u001b[${39}m`}`
       );
       continue;
     }
+
+    // if this point was reached, symlink was created successfully.
+    // add entry in the asker's package.json
+
+    //
+    // write the asker package's package.json:
+    // -------------------------------------------------------------------------
+    if (
+      (isNormalDep || isCLI.length) &&
+      ((cli.flags.d &&
+        (!askerPackageJsonContents.devDependencies ||
+          !askerPackageJsonContents.devDependencies[cli.input[i]])) ||
+        (!cli.flags.d &&
+          (!askerPackageJsonContents.dependencies ||
+            !askerPackageJsonContents.dependencies[cli.input[i]])))
+    ) {
+      try {
+        if (cli.flags.d) {
+          // user wants dev dep added in package.json
+          if (!askerPackageJsonContents.devDependencies) {
+            askerPackageJsonContents.devDependencies = {};
+          }
+          askerPackageJsonContents.devDependencies[
+            cli.input[i]
+          ] = `^${requestedPackageJsonContents.version}`;
+          fs.writeJsonSync(
+            path.resolve("package.json"),
+            askerPackageJsonContents
+          );
+        } else {
+          // user wants normal dep added in package.json
+          if (!askerPackageJsonContents.dependencies) {
+            askerPackageJsonContents.dependencies = {};
+          }
+          askerPackageJsonContents.dependencies[
+            cli.input[i]
+          ] = `^${requestedPackageJsonContents.version}`;
+          fs.writeJsonSync(
+            path.resolve("package.json"),
+            askerPackageJsonContents
+          );
+        }
+      } catch (e1) {
+        console.log(
+          `${messagePrefix} ${`\u001b[${31}m${`[ERROR_11] Something went wrong trying to write package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+            "package.json"
+          )}\n\n${`\u001b[${31}m${`error:`}\u001b[${39}m`}\n${e1}`
+        );
+        continue;
+      }
+    }
   } else {
     console.log(
-      `${messagePrefix} ${`\u001b[${31}m${`[ERROR_09] Error! A package with name "`}\u001b[${39}m`}${`\u001b[${33}m${
+      `${messagePrefix} ${`\u001b[${31}m${`[ERROR_12] Error! A package with name "`}\u001b[${39}m`}${`\u001b[${33}m${
         cli.input[i]
       }\u001b[${39}m`}${`\u001b[${31}m${`" not found!`}\u001b[${39}m`}`
     );
