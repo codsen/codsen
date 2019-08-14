@@ -46,7 +46,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-contains-only-empty-space",
-        "chlu-cli",
         "dehumanize-date",
         "easy-replace",
         "emoji-regex",
@@ -80,7 +79,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "ast-contains-only-empty-space",
-        "chlu-cli",
         "dehumanize-date",
         "easy-replace",
         "emoji-regex",
