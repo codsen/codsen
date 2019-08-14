@@ -17,7 +17,7 @@ const path = require("path");
 const updateNotifier = require("update-notifier");
 const pullAll = require("lodash.pullall");
 const uniq = require("lodash.uniq");
-import { name } from "../package.json";
+const { name } = require("./package.json");
 
 const isArr = Array.isArray;
 

@@ -36,8 +36,6 @@ csvsort
 sortcsv
 ```
 
-**[⬆ back to top](#)**
-
 ## Call on a file
 
 Call `csvsort` (or `sortcsv`) appending your file name (with or without `-o`/`--overwrite` flag):
