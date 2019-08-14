@@ -1,5 +1,3 @@
-![](https://glcdn.githack.com/codsen/codsen/raw/master/packages/helga/media/logo.png)
-
 # Helga
 
 > Your next best friend when editing complex nested code
