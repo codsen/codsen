@@ -7,7 +7,7 @@ const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
 // LIST OVERRIDES
 // ==============
 
-const flagshipLibsList = ["email-comb", "html-crush"];
+const flagshipLibsList = ["email-comb", "html-crush", "detergent"];
 const webApps = {
   "email-comb": "emailcomb.com",
   "html-crush": "htmlcrush.com",
@@ -130,6 +130,12 @@ function noListsInclude(lib) {
 
 // we want to retain the order of libraries as listed in overrides above, so
 // we can't use a simple array.filter
+
+// -------------------------------------
+
+const filteredFlagshipAppsList = Array.from(flagshipLibsList).filter(lib =>
+  allPackages.includes(lib)
+);
 
 // -------------------------------------
 
@@ -272,7 +278,7 @@ We coded up and maintain a few npm packages:
 ## 🚢 Flagship Libraries
 
 ${topRow(true)}
-${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
+${filteredFlagshipAppsList.map(lib => row(lib, true)).join("\n")}
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
