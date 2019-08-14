@@ -20,6 +20,7 @@ import tempy from "tempy";
 
 test("01.01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
+  fs.ensureDirSync(path.resolve(tempFolder));
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "file.md"), "zzz")
     .then(() =>
@@ -158,6 +159,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   // troubleshooting. Just comment out one of two:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. asynchronously write all test files
   const processedFileContents = fs
@@ -327,12 +329,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   // troubleshooting. Just comment out one of two:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. asynchronously write all test files
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
     .then(() =>
-      fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson)
+      fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
+        spaces: 2
+      })
     )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
@@ -470,6 +475,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   // troubleshooting. Just comment out one of two:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. asynchronously write all test files
   const processedFileContents = fs
@@ -640,12 +646,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   // troubleshooting. Just comment out one of two:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. asynchronously write all test files
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
     .then(() =>
-      fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson)
+      fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
+        spaces: 2
+      })
     )
     .then(() =>
       execa(

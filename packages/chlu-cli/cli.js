@@ -2,16 +2,14 @@
 
 /* eslint no-console:0 */
 
-const meow = require("meow");
-const chlu = require("chlu");
-const fs = require("fs-extra");
 const writeFileAtomic = require("write-file-atomic");
+const updateNotifier = require("update-notifier");
 const git = require("simple-git/promise");
 const { promisify } = require("util");
-
-const { pack } = "./package.json";
-const changeLogFile = "./changelog.md";
-const updateNotifier = require("update-notifier");
+const chlu = require("chlu");
+const fs = require("fs-extra");
+const path = require("path");
+const meow = require("meow");
 
 const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ chlu: "}\u001b[${39}m`;
@@ -52,14 +50,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
 
   let changelogData;
   try {
-    changelogData = await fs.readFile(changeLogFile, "utf8");
-    // console.log(
-    //   `057 CHLU CLI: ${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
-    //     changelogData,
-    //     null,
-    //     4
-    //   )}`
-    // );
+    changelogData = await fs.readFile(path.resolve("./changelog.md"), "utf8");
   } catch (e) {
     log(
       `${messagePrefix}[ID_1] Alas! We couldn't fetch the changelog.md:\n${e}`
@@ -71,7 +62,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
 
   let packageData = null;
   try {
-    packageData = await fs.readJson(pack);
+    packageData = await fs.readJson(path.resolve("package.json"));
   } catch (e) {
     if (cli.flags.loud) {
       log(
@@ -79,13 +70,6 @@ updateNotifier({ pkg: cli.pkg }).notify();
       );
     }
   }
-  // console.log(
-  //   `083 CHLU CLI: ${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
-  //     packageData,
-  //     null,
-  //     4
-  //   )}`
-  // );
 
   //                                3.
 
@@ -102,18 +86,10 @@ updateNotifier({ pkg: cli.pkg }).notify();
       );
     }
   }
-  // console.log(
-  //   `106 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gitData,
-  //     null,
-  //     4
-  //   )}`
-  // );
 
   //                                4.
 
   try {
-    // console.log(`116 chlu-cli: typeof packageData = ${typeof packageData}`);
     const contentToWrite = chlu(changelogData, gitData, packageData);
     // insurance against writing empty file:
     if (
@@ -123,7 +99,10 @@ updateNotifier({ pkg: cli.pkg }).notify();
     ) {
       process.exit(0);
     }
-    await promisify(writeFileAtomic)(changeLogFile, contentToWrite).then(() => {
+    await promisify(writeFileAtomic)(
+      path.resolve("./changelog.md"),
+      contentToWrite
+    ).then(() => {
       if (cli.flags.loud) {
         log(`${messagePrefix} ${`\u001b[${32}m${`OK.`}\u001b[${39}m`}`);
       }
