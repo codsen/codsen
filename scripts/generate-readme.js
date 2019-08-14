@@ -7,7 +7,7 @@ const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
 // LIST OVERRIDES
 // ==============
 
-const flagshipLibsList = ["email-comb", "html-crush", "detergent"];
+const flagshipLibsList = ["email-comb", "html-crush"];
 const webApps = {
   "email-comb": "emailcomb.com",
   "html-crush": "htmlcrush.com",
