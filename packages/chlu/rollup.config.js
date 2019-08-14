@@ -18,12 +18,35 @@ Homepage: ${pkg.homepage}`;
 
 export default commandLineArgs => {
   const finalConfig = [
+    // browser-friendly UMD build
+    {
+      input: "src/main.js",
+      output: {
+        file: pkg.browser,
+        format: "umd",
+        name: "chlu"
+      },
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        builtins(),
+        resolve(),
+        json(),
+        commonjs(),
+        babel(),
+        terser(),
+        banner(licensePiece)
+      ]
+    },
+
     // CommonJS build (for Node)
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-contains-only-empty-space",
+        "chlu-cli",
         "dehumanize-date",
         "easy-replace",
         "emoji-regex",
@@ -57,6 +80,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "ast-contains-only-empty-space",
+        "chlu-cli",
         "dehumanize-date",
         "easy-replace",
         "emoji-regex",

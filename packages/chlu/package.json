@@ -30,6 +30,7 @@
   ],
   "main": "dist/chlu.cjs.js",
   "module": "dist/chlu.esm.js",
+  "browser": "dist/chlu.umd.js",
   "scripts": {
     "ava": "ava -d",
     "build": "rm -rf dist && rollup -c",
@@ -173,6 +174,7 @@
   },
   "dependencies": {
     "ast-contains-only-empty-space": "^1.8.36",
+    "chlu-cli": "^1.16.37",
     "dehumanize-date": "^2.6.2",
     "easy-replace": "^3.7.36",
     "emoji-regex": "^8.0.0",
