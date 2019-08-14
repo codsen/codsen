@@ -8,7 +8,7 @@
  */
 
 import parser from 'html-dom-parser';
-import domUtils from 'domutils';
+import domUtils from 'domutils-bastardised';
 import renderer from 'dom-serializer';
 
 var version = "1.1.13";

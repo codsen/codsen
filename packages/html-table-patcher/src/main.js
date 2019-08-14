@@ -1,5 +1,5 @@
 import parser from "html-dom-parser";
-import domUtils from "domutils";
+import domUtils from "domutils-bastardised";
 import renderer from "dom-serializer";
 import { version } from "../package.json";
 const { replaceElement, appendChild, getSiblings, getChildren } = domUtils;

@@ -48,7 +48,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "dom-serializer",
-        "domutils",
+        "domutils-bastardised",
         "html-comment-regex",
         "html-dom-parser"
       ],
@@ -71,7 +71,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "dom-serializer",
-        "domutils",
+        "domutils-bastardised",
         "html-comment-regex",
         "html-dom-parser"
       ],

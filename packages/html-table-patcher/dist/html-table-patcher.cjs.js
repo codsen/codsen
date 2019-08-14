@@ -14,7 +14,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var parser = _interopDefault(require('html-dom-parser'));
-var domUtils = _interopDefault(require('domutils'));
+var domUtils = _interopDefault(require('domutils-bastardised'));
 var renderer = _interopDefault(require('dom-serializer'));
 
 var version = "1.1.13";
