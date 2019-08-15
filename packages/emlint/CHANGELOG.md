@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://gitlab.com/codsen/codsen/compare/emlint@1.5.15...emlint@1.6.0) (2019-08-15)
+
+
+### Features
+
+* recognise tags with no attributes and with missing closing bracket ([08fe678](https://gitlab.com/codsen/codsen/commit/08fe678))
+
+
+
+
+
 ## 1.5.0 (2019-06-01)
 
 ### Features

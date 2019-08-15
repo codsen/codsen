@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.28](https://gitlab.com/codsen/codsen/compare/lerna-clean-changelogs@1.3.27...lerna-clean-changelogs@1.3.28) (2019-08-15)
+
+**Note:** Version bump only for package lerna-clean-changelogs
+
+
+
+
+
 ## 1.2.0 (2019-02-01)
 
 ### Features

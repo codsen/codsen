@@ -1,6 +1,6 @@
 {
   "name": "string-unfancy",
-  "version": "3.9.35",
+  "version": "3.9.36",
   "description": "Replace all fancy dashes, quotes etc with their simpler equivalents",
   "license": "MIT",
   "engines": {
@@ -185,8 +185,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.37",
-    "lect": "^0.9.4",
+    "js-row-num-cli": "^1.5.38",
+    "lect": "^0.9.5",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.19.4",

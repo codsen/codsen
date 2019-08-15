@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
@@ -197,8 +197,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.3",
-    "js-row-num-cli": "^1.5.37",
-    "lect": "^0.9.4",
+    "js-row-num-cli": "^1.5.38",
+    "lect": "^0.9.5",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",

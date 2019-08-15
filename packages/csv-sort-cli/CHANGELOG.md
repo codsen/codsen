@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.37](https://gitlab.com/codsen/codsen/compare/csv-sort-cli@1.9.36...csv-sort-cli@1.9.37) (2019-08-15)
+
+
+### Bug Fixes
+
+* fix failing unit test ([c46da2e](https://gitlab.com/codsen/codsen/commit/c46da2e))
+
+
+
+
+
 ## 1.9.29 (2019-07-15)
 
 ### Bug Fixes
