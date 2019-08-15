@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.7.38](https://gitlab.com/codsen/codsen/compare/chlu@3.7.37...chlu@3.7.38) (2019-08-15)
-
+## 3.7.38 (2019-08-15)
 
 ### Bug Fixes
 
-* remove accidentally added chlu-cli from deps ([d671eb9](https://gitlab.com/codsen/codsen/commit/d671eb9))
-
-
-
-
+- remove accidentally added chlu-cli from deps ([d671eb9](https://gitlab.com/codsen/codsen/commit/d671eb9))
 
 ## 3.7.0 (2019-01-20)
 

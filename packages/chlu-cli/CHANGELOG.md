@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.16.38](https://gitlab.com/codsen/codsen/compare/chlu-cli@1.16.37...chlu-cli@1.16.38) (2019-08-15)
-
+## 1.16.38 (2019-08-15)
 
 ### Bug Fixes
 
-* fix the CLI to make it read package.json files properly ([6caaffc](https://gitlab.com/codsen/codsen/commit/6caaffc))
-
-
-
-
+- fix the CLI to make it read package.json files properly ([6caaffc](https://gitlab.com/codsen/codsen/commit/6caaffc))
 
 ## 1.16.0 (2019-01-20)
 
