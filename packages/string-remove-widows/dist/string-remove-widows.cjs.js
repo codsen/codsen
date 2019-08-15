@@ -80,7 +80,7 @@ var defaultOpts = {
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharCount: 20,
+  minCharCount: 0,
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,

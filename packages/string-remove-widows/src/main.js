@@ -30,7 +30,7 @@ const defaultOpts = {
   UKPostcodes: false, // replace space in UK postcodes?
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
-  minCharCount: 20, // if there are less characters than this in chunk, skip
+  minCharCount: 0, // if there are less characters than this in chunk, skip
   ignore: [], // put {heads: "{{", tails: "}}"} or presents: "jinja", "nunjucks", "hugo", "hexo"
   reportProgressFunc: null, // reporting progress function
   reportProgressFuncFrom: 0,
