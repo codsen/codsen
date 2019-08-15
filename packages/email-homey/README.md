@@ -23,27 +23,10 @@
 npm i -g email-homey
 ```
 
-Consume via a `require()`:
+Then, call it from the command line using keyword:
 
-```js
-const  = require("email-homey");
-```
-
-or as an ES Module:
-
-```js
-import  from "email-homey";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/email-homey/dist/email-homey.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "emailHomey" which you consume like this:
-const  = emailHomey;
+```bash
+homey
 ```
 
 **[⬆ back to top](#)**
