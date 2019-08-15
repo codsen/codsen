@@ -44,17 +44,6 @@ test(`00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, t 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-// test.only(`deleteme`, t => {
-//   t.is(
-//     removeWidows("aaa bbb ccc ddd", {
-//       convertEntities: true,
-//       minCharCount: 5
-//     }).res,
-//     `aaa bbb ccc${encodedNbspHtml}ddd`,
-//     "01.00.01"
-//   );
-// });
-
 test(`01.00 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`, t => {
   t.is(
     removeWidows("aaa bbb ccc ddd", {
@@ -744,6 +733,23 @@ test(`03.01 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - in front of dashes`,
         ).res,
         `Here is a very long line of text ${oneOfDashes} not too long${encodedNbsps[i]}though`,
         `03.01.04 - ${oneOfDashes} - ${targetLanguage}`
+      );
+    });
+  });
+});
+
+test(`03.02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus where currency follows`, t => {
+  [rawMdash, rawNdash, "-"].forEach((oneOfDashes, y) => {
+    languages.forEach((targetLanguage, i) => {
+      t.is(
+        removeWidows(`Discount: ${oneOfDashes}&pound;10.00`, {
+          convertEntities: false,
+          hyphens: true,
+          targetLanguage,
+          minCharCount: 5
+        }).res,
+        `Discount: ${oneOfDashes}&pound;10.00`,
+        `03.01.0${i + y} - ${oneOfDashes} - ${targetLanguage}`
       );
     });
   });

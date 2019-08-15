@@ -70,7 +70,7 @@ const defaultOpts = {
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharCount: 0,
+  minCharCount: 5,
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -240,7 +240,9 @@ function removeWidows(str, originalOpts) {
         str.slice(i).startsWith(encodedNdashJs) ||
         str.slice(i).startsWith(encodedMdashHtml) ||
         str.slice(i).startsWith(encodedMdashCss) ||
-        str.slice(i).startsWith(encodedMdashJs))
+        str.slice(i).startsWith(encodedMdashJs)) &&
+      str[i + 1] &&
+      !str[i + 1].trim().length
     ) {
       if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
         push(left(str, i) + 1, i);

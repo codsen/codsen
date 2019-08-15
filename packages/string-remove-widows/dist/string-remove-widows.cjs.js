@@ -80,7 +80,7 @@ var defaultOpts = {
   UKPostcodes: false,
   hyphens: true,
   minWordCount: 4,
-  minCharCount: 0,
+  minCharCount: 5,
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -215,7 +215,7 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[_i].trim().length) {
       charCount++;
     }
-    if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs))) {
+    if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && !str[_i + 1].trim().length) {
       if (str[_i - 1] && !str[_i - 1].trim().length && str[stringLeftRight.left(str, _i)]) {
         push(stringLeftRight.left(str, _i) + 1, _i);
       }
