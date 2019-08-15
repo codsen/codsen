@@ -53,6 +53,8 @@ withinascii
 
 As a last resort, if your memory would fail, the alternative keyword is: `tinaturner`
 
+**[⬆ back to top](#)**
+
 ## Use it
 
 Once installed, call it on a file:
