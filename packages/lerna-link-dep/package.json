@@ -84,7 +84,7 @@
       "vulnerabilities": true
     },
     "cliSpecialKeyword": "johnnydepp",
-    "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.\n\nlink dep\n\nlink dep\n\nlink dep\n\nyou want to link a dependency\n\nlink dep\n\nlink dep\n\nlink dep\n\nOK, you should memorised this by now",
+    "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.",
     "contribution_types": [
       "Blogposts",
       "Bug reports",

@@ -35,22 +35,6 @@ linkdep
 
 As a last resort, if your memory would fail, the alternative keyword is: `johnnydepp` — remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.
 
-link dep
-
-link dep
-
-link dep
-
-you want to link a dependency
-
-link dep
-
-link dep
-
-link dep
-
-OK, you should memorised this by now
-
 **[⬆ back to top](#)**
 
 ## TLDR
@@ -64,7 +48,7 @@ Git clone monorepo, navigate to the root of the package "object-all-values-equal
 deplink "detergent"
 ```
 
-That's it. Symlink is created from `<monorepo root>/packages/object-all-values-equal-to/node_modules/detergent` pointing to `<monorepo root>/packages/object-all-values-equal-to/node_modules/detergent`
+That's it. Symlink is created from `<monorepo root>/packages/object-all-values-equal-to/node_modules/detergent` pointing to `<monorepo root>/packages/detergent`
 
 **PS.** If the linked dependency is not in package.json yet, it will be added among `dependencies`. If you want it added to `devDependencies` instead, add `-d` or `--dev` flag when calling the CLI, for example,
 
