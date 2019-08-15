@@ -749,9 +749,24 @@ test(`03.02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus wher
           minCharCount: 5
         }).res,
         `Discount: ${oneOfDashes}&pound;10.00`,
-        `03.01.0${i + y} - ${oneOfDashes} - ${targetLanguage}`
+        `03.02.0${i + y} - ${oneOfDashes} - ${targetLanguage}`
       );
     });
+  });
+});
+
+test(`03.03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with &nbsp; and double space`, t => {
+  languages.forEach((targetLanguage, i) => {
+    t.is(
+      removeWidows(`HOORAY  &mdash;  IT&rsquo;S HERE`, {
+        convertEntities: true,
+        hyphens: true,
+        targetLanguage,
+        minCharCount: 5
+      }).res,
+      `HOORAY${encodedNbsps[i]}&mdash;  IT&rsquo;S${encodedNbsps[i]}HERE`,
+      `03.03.0${i} - ${targetLanguage}`
+    );
   });
 });
 

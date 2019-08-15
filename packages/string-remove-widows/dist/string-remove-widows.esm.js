@@ -92,6 +92,9 @@ function removeWidows(str, originalOpts) {
       }
     }
     rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+    console.log(
+      `058 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${finalStart}, ${finalEnd}, "${finalWhatToInsert}"]`
+    );
   }
   function isStr(something) {
     return typeof something === "string";
@@ -180,6 +183,13 @@ function removeWidows(str, originalOpts) {
           leavePercForLastStage -
         opts.reportProgressFuncFrom
     );
+    console.log(
+      `185 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
+        ceil,
+        null,
+        4
+      )}`
+    );
   }
   function resetAll() {
     wordCount = 0;
@@ -192,7 +202,19 @@ function removeWidows(str, originalOpts) {
     lastEncodedNbspEndedAt = undefined;
   }
   resetAll();
+  console.log(
+    `216 ${`\u001b[${32}m${`USING`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   for (let i = 0; i < len; i++) {
+    console.log(
+      `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
+      }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+    );
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some((valObj, y) => {
         if (
@@ -200,8 +222,14 @@ function removeWidows(str, originalOpts) {
             valObj.heads.some(oneOfHeads => str.startsWith(oneOfHeads, i))) ||
           (isStr(valObj.heads) && str.startsWith(valObj.heads, i))
         ) {
+          console.log(
+            `252 ${`\u001b[${31}m${`heads detected!`}\u001b[${39}m`}`
+          );
           wordCount++;
           doNothingUntil = opts.ignore[y].tails;
+          console.log(
+            `257 ${`\u001b[${90}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
+          );
           return true;
         }
       });
@@ -209,6 +237,9 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === i) {
       wordCount++;
       bumpWordCountAt = undefined;
+      console.log(
+        `270 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}; ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${bumpWordCountAt}`
+      );
     }
     if (typeof opts.reportProgressFunc === "function") {
       currentPercentageDone =
@@ -225,6 +256,9 @@ function removeWidows(str, originalOpts) {
       (!str[i - 1] || (str[i - 1] && !str[i - 1].trim().length))
     ) {
       lastWhitespaceEndedAt = i;
+      console.log(
+        `302 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceEndedAt`}\u001b[${39}m`} = ${lastWhitespaceEndedAt}`
+      );
     }
     if (!doNothingUntil && str[i].trim().length) {
       charCount++;
@@ -242,11 +276,15 @@ function removeWidows(str, originalOpts) {
         str.slice(i).startsWith(encodedMdashCss) ||
         str.slice(i).startsWith(encodedMdashJs)) &&
       str[i + 1] &&
-      !str[i + 1].trim().length
+      (!str[i + 1].trim().length || str[i] === "&")
     ) {
+      console.log(`344 dash starts here`);
       if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
         push(left(str, i) + 1, i);
+        console.log(`347 push [${left(str, i) + 1}, ${i}]`);
       }
+    } else {
+      console.log(`350 ELSE didn't catch the dash`);
     }
     if (
       !doNothingUntil &&
@@ -263,13 +301,21 @@ function removeWidows(str, originalOpts) {
           str[i + 4] === "0" &&
           str[i + 5] === ";"))
     ) {
+      console.log(`369 HTML-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
+      console.log(
+        `373 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`
+      );
       if (str[i + 6] && str[i + 6].trim().length) {
         bumpWordCountAt = i + 6;
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 6, rawnbsp);
+        console.log(
+          `386 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
+            6}, "${rawnbsp}"]`
+        );
       } else if (
         opts.targetLanguage === "css" ||
         opts.targetLanguage === "js"
@@ -278,6 +324,11 @@ function removeWidows(str, originalOpts) {
           i,
           i + 6,
           opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
+        );
+        console.log(
+          `399 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
+            opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
+          }"]`
         );
       }
     }
@@ -290,13 +341,21 @@ function removeWidows(str, originalOpts) {
       str[i + 3].toUpperCase() === "A" &&
       str[i + 4] === "0"
     ) {
+      console.log(`416 CSS-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 5;
+      console.log(
+        `420 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`
+      );
       if (str[i + 5] && str[i + 5].trim().length) {
         bumpWordCountAt = i + 5;
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 5, rawnbsp);
+        console.log(
+          `433 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
+            5}, "${rawnbsp}"]`
+        );
       } else if (
         opts.targetLanguage === "html" ||
         opts.targetLanguage === "js"
@@ -305,6 +364,11 @@ function removeWidows(str, originalOpts) {
           i,
           i + 5,
           opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
+        );
+        console.log(
+          `446 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 5}, "${
+            opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
+          }"]`
         );
       }
     }
@@ -319,13 +383,21 @@ function removeWidows(str, originalOpts) {
       str[i + 4].toUpperCase() === "A" &&
       str[i + 5] === "0"
     ) {
+      console.log(`465 JS-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
+      console.log(
+        `469 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`
+      );
       if (str[i + 6] && str[i + 6].trim().length) {
         bumpWordCountAt = i + 6;
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 6, rawnbsp);
+        console.log(
+          `482 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
+            6}, "${rawnbsp}"]`
+        );
       } else if (
         opts.targetLanguage === "html" ||
         opts.targetLanguage === "css"
@@ -335,11 +407,20 @@ function removeWidows(str, originalOpts) {
           i + 6,
           opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss
         );
+        console.log(
+          `495 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
+            opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss
+          }"]`
+        );
       }
     }
     if (!doNothingUntil && str[i] === rawnbsp) {
+      console.log(`504 raw unencoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 1;
+      console.log(
+        `508 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`
+      );
       if (str[i + 2] && str[i + 2].trim().length) {
         bumpWordCountAt = i + 2;
       }
@@ -353,6 +434,15 @@ function removeWidows(str, originalOpts) {
             ? encodedNbspJs
             : encodedNbspHtml
         );
+        console.log(
+          `529 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}, "${
+            opts.targetLanguage === "css"
+              ? encodedNbspCss
+              : opts.targetLanguage === "js"
+              ? encodedNbspJs
+              : encodedNbspHtml
+          }"]`
+        );
       }
     }
     if (
@@ -361,6 +451,9 @@ function removeWidows(str, originalOpts) {
       (!str[i - 1] || !str[i - 1].trim().length)
     ) {
       wordCount++;
+      console.log(
+        `549 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}`
+      );
     }
     if (
       !doNothingUntil &&
@@ -377,6 +470,9 @@ function removeWidows(str, originalOpts) {
           str[i - 1] &&
           punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)])))
     ) {
+      console.log(
+        `570 ${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`
+      );
       if (
         (!opts.minWordCount || wordCount >= opts.minWordCount) &&
         (!opts.minCharCount || charCount >= opts.minCharCount)
@@ -389,6 +485,7 @@ function removeWidows(str, originalOpts) {
           lastEncodedNbspStartedAt !== undefined &&
           lastEncodedNbspEndedAt !== undefined
         ) {
+          console.log(`587`);
           if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
             finalStart = lastWhitespaceStartedAt;
             finalEnd = lastWhitespaceEndedAt;
@@ -400,12 +497,14 @@ function removeWidows(str, originalOpts) {
           lastWhitespaceStartedAt !== undefined &&
           lastWhitespaceEndedAt !== undefined
         ) {
+          console.log(`599`);
           finalStart = lastWhitespaceStartedAt;
           finalEnd = lastWhitespaceEndedAt;
         } else if (
           lastEncodedNbspStartedAt !== undefined &&
           lastEncodedNbspEndedAt !== undefined
         ) {
+          console.log(`606`);
           finalStart = lastEncodedNbspStartedAt;
           finalEnd = lastEncodedNbspEndedAt;
         }
@@ -414,14 +513,17 @@ function removeWidows(str, originalOpts) {
           secondToLastWhitespaceStartedAt &&
           secondToLastWhitespaceEndedAt
         ) {
+          console.log(`619`);
           finalStart = secondToLastWhitespaceStartedAt;
           finalEnd = secondToLastWhitespaceEndedAt;
         }
+        console.log(`624 finalStart = ${finalStart}; finalEnd = ${finalEnd}`);
         if (finalStart && finalEnd) {
           push(finalStart, finalEnd);
         }
       }
       resetAll();
+      console.log(`632 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
     }
     if (
       opts.UKPostcodes &&
@@ -432,6 +534,7 @@ function removeWidows(str, originalOpts) {
       str[right(str, i)] &&
       postcodeRegexEnd.test(str.slice(right(str, i)))
     ) {
+      console.log(`646 POSTCODE caught: [${i}, ${right(str, i)}]`);
       push(i, right(str, i));
     }
     if (
@@ -450,12 +553,45 @@ function removeWidows(str, originalOpts) {
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
       lastWhitespaceStartedAt = i;
       lastWhitespaceEndedAt = undefined;
+      console.log(
+        `696 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`secondToLastWhitespaceStartedAt`}\u001b[${39}m`} = ${secondToLastWhitespaceStartedAt};${" ".repeat(
+          String(secondToLastWhitespaceStartedAt).length <
+            String(lastWhitespaceStartedAt).length
+            ? Math.max(
+                String(secondToLastWhitespaceStartedAt).length,
+                String(lastWhitespaceStartedAt).length
+              ) -
+                Math.min(
+                  String(secondToLastWhitespaceStartedAt).length,
+                  String(lastWhitespaceStartedAt).length
+                )
+            : 0
+        )} ${`\u001b[${33}m${`secondToLastWhitespaceEndedAt`}\u001b[${39}m`} = ${secondToLastWhitespaceEndedAt};`
+      );
+      console.log(
+        `711 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceStartedAt`}\u001b[${39}m`}         = ${lastWhitespaceStartedAt};${" ".repeat(
+          String(secondToLastWhitespaceStartedAt).length >
+            String(lastWhitespaceStartedAt).length
+            ? Math.max(
+                String(secondToLastWhitespaceStartedAt).length,
+                String(lastWhitespaceStartedAt).length
+              ) -
+                Math.min(
+                  String(secondToLastWhitespaceStartedAt).length,
+                  String(lastWhitespaceStartedAt).length
+                )
+            : 0
+        )} ${`\u001b[${33}m${`lastWhitespaceEndedAt`}\u001b[${39}m`}         = ${lastWhitespaceEndedAt};`
+      );
       if (
         lastEncodedNbspStartedAt !== undefined ||
         lastEncodedNbspEndedAt !== undefined
       ) {
         lastEncodedNbspStartedAt = undefined;
         lastEncodedNbspEndedAt = undefined;
+        console.log(
+          `734 ${`\u001b[${90}m${`RESET`}\u001b[${39}m`} lastEncodedNbspStartedAt, lastEncodedNbspEndedAt`
+        );
       }
     }
     let tempTailFinding;
@@ -476,16 +612,35 @@ function removeWidows(str, originalOpts) {
           }))
       ) {
         doNothingUntil = undefined;
+        console.log(
+          `759 RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`}`
+        );
+        console.log(
+          `762 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} i: ${`\u001b[${33}m${i}\u001b[${39}m`}=>${`\u001b[${33}m${i +
+            tempTailFinding.length}\u001b[${39}m`}`
+        );
         i += tempTailFinding.length;
+        console.log(
+          `772 \u001b[${32}m${`██`}\u001b[${39}m we're at i=${i}, to the right is: ${str.slice(
+            i
+          )}`
+        );
         if (isArr(opts.ignore) && opts.ignore.length && str[i + 1]) {
           opts.ignore.some(oneOfHeadsTailsObjs => {
             return matchRightIncl(str, i, oneOfHeadsTailsObjs.tails, {
               trimBeforeMatching: true,
               cb: (char, theRemainderOfTheString, index) => {
                 if (index) {
+                  console.log(`793 RECEIVED by CB() index = ${index}`);
                   i = index - 1;
+                  console.log(
+                    `796 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i - 1}`
+                  );
                   if (str[i + 1] && str[i + 1].trim().length) {
                     wordCount++;
+                    console.log(
+                      `801 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} wordCount now = ${wordCount}`
+                    );
                   }
                 }
                 return true;
@@ -495,6 +650,40 @@ function removeWidows(str, originalOpts) {
         }
       }
     }
+    console.log(
+      `    \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`
+    );
+    console.log(
+      `${`\u001b[${90}m${`231 second-to-last whitespace: [${secondToLastWhitespaceStartedAt}, ${secondToLastWhitespaceEndedAt}]`}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`231 last whitespace: [${lastWhitespaceStartedAt}, ${lastWhitespaceEndedAt}]`}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`234 last encoded nbsp: [${lastEncodedNbspStartedAt}, ${lastEncodedNbspEndedAt}]`}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`237 word count ${wordCount}; char count ${charCount}`}\u001b[${39}m`}${
+        bumpWordCountAt
+          ? `${`\u001b[${90}m${`;`}\u001b[${39}m`}${`\u001b[${90}m${` bumpWordCountAt = ${bumpWordCountAt}`}\u001b[${39}m`}`
+          : ""
+      }`
+    );
+    console.log(
+      `${`\u001b[${90}m${`516 rangesArr: ${JSON.stringify(
+        rangesArr.current(),
+        null,
+        0
+      )}`}\u001b[${39}m`}${
+        doNothingUntil
+          ? `\n${`\u001b[${31}m${`doNothingUntil = ${JSON.stringify(
+              doNothingUntil,
+              null,
+              0
+            )}`}\u001b[${39}m`}`
+          : ""
+      }`
+    );
   }
   return {
     res: apply(
@@ -508,6 +697,13 @@ function removeWidows(str, originalOpts) {
                 (incomingPerc / 100) *
                   (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
                   leavePercForLastStage
+            );
+            console.log(
+              `870 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+                currentPercentageDone,
+                null,
+                4
+              )}`
             );
             if (currentPercentageDone !== lastPercentage) {
               lastPercentage = currentPercentageDone;
