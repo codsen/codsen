@@ -161,7 +161,8 @@
   },
   "dependencies": {
     "ranges-crop": "^2.0.28",
-    "ranges-invert": "^2.1.15"
+    "ranges-invert": "^2.1.15",
+    "runes": "^0.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

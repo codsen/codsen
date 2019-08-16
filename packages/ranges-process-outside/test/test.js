@@ -1,5 +1,6 @@
 import test from "ava";
 import p from "../dist/ranges-process-outside.esm";
+const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 
 // ==============================
 // 0. THROWS
@@ -217,15 +218,42 @@ test(`01.14 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - ranges not cover s
   t.deepEqual(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "01.14");
 });
 
+test(`01.15 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`, t => {
+  const gather = [];
+  p(
+    `abcdef\uD834\uDF06ij`,
+    [[0, 5]],
+    (idxFrom, idxTo) => {
+      gather.push([idxFrom, idxTo]);
+    },
+    false // skip=false so checks are on
+  );
+  t.deepEqual(gather, [[5, 6], [6, 8], [8, 9], [9, 10]], "01.15");
+});
+
+test(`01.16 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`, t => {
+  t.is(femaleWhiteSleuthEmoji.length, 7, "01.16 - sanity check");
+  const gather = [];
+  p(
+    `abcdef${femaleWhiteSleuthEmoji}ij`,
+    [[0, 5]],
+    (idxFrom, idxTo) => {
+      gather.push([idxFrom, idxTo]);
+    },
+    false // skip=false so checks are on
+  );
+  t.deepEqual(gather, [[5, 6], [6, 13], [13, 14], [14, 15]], "01.16.02");
+});
+
 // ==============================
 // 02. Index offsets
 // ==============================
 
 test(`02.01 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 5`, t => {
   const gather = [];
-  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
-    gather.push(idx);
-    if (idx === 5) {
+  p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
+    gather.push(idxFrom);
+    if (idxFrom === 5) {
       offsetBy(1);
     }
   });
@@ -234,9 +262,9 @@ test(`02.01 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index
 
 test(`02.02 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index 6`, t => {
   const gather = [];
-  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
-    gather.push(idx);
-    if (idx === 6) {
+  p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
+    gather.push(idxFrom);
+    if (idxFrom === 6) {
       offsetBy(1);
     }
   });
@@ -245,11 +273,11 @@ test(`02.02 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - offset once at index
 
 test(`02.03 - ${`\u001b[${35}m${`offsets`}\u001b[${39}m`} - sequential offsets`, t => {
   const gather = [];
-  p("abcdefghij", [[1, 5]], (idx, offsetBy) => {
-    if (idx === 5 || idx === 6) {
+  p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
+    if (idxFrom === 5 || idxFrom === 6) {
       offsetBy(1);
     } else {
-      gather.push(idx);
+      gather.push(idxFrom);
     }
   });
   t.deepEqual(gather, [0, 7, 8, 9], "02.03");

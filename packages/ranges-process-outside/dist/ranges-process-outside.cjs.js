@@ -13,6 +13,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var invert = _interopDefault(require('ranges-invert'));
 var crop = _interopDefault(require('ranges-crop'));
+var runes = _interopDefault(require('runes'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -85,17 +86,21 @@ function processOutside(str, originalRanges, cb) {
   if (!isFunction(cb)) {
     throw new Error("ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n".concat(JSON.stringify(cb, null, 4), " (type ").concat(_typeof(cb), ")"));
   }
-  function iterator(arrOfArrays) {
+  function iterator(str, arrOfArrays) {
     arrOfArrays.forEach(function (_ref) {
       var _ref2 = _slicedToArray(_ref, 2),
           fromIdx = _ref2[0],
           toIdx = _ref2[1];
       for (var i = fromIdx; i < toIdx; i++) {
-        cb(i, function (offsetValue) {
+        var charLength = runes(str.slice(i))[0].length;
+        cb(i, i + charLength, function (offsetValue) {
           if (offsetValue != null) {
             i += offsetValue;
           }
         });
+        if (charLength && charLength > 1) {
+          i += charLength - 1;
+        }
       }
     });
   }
@@ -103,9 +108,9 @@ function processOutside(str, originalRanges, cb) {
     var temp = crop(invert(skipChecks ? originalRanges : originalRanges, str.length, {
       skipChecks: !!skipChecks
     }), str.length);
-    iterator(temp);
+    iterator(str, temp);
   } else {
-    iterator([[0, str.length]]);
+    iterator(str, [[0, str.length]]);
   }
 }
 

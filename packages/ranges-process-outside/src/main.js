@@ -1,5 +1,6 @@
 import invert from "ranges-invert";
 import crop from "ranges-crop";
+import runes from "runes";
 
 const isArr = Array.isArray;
 
@@ -52,21 +53,45 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
 
   // separate the iterator because it might be called with inverted ranges or
   // with separately calculated "everything" if the ranges are empty/falsey
-  function iterator(arrOfArrays) {
+  function iterator(str, arrOfArrays) {
     console.log(
-      `057 iterator called with ${JSON.stringify(arrOfArrays, null, 4)}`
+      `058 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
+    );
+    console.log(
+      `061 ${`\u001b[${36}m${`loop [${JSON.stringify(
+        arrOfArrays,
+        null,
+        0
+      )}]`}\u001b[${39}m`}`
     );
     arrOfArrays.forEach(([fromIdx, toIdx]) => {
-      console.log(`060 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      console.log(
+        `069 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+      );
+      console.log(`071 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        console.log(`062 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
-        cb(i, offsetValue => {
+        console.log(`073 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        const charLength = runes(str.slice(i))[0].length;
+
+        console.log(`076 charLength = ${charLength}`);
+        cb(i, i + charLength, offsetValue => {
           if (offsetValue != null) {
+            console.log(`079 offset i by "${offsetValue}" requested`);
+            console.log(`080 old i = ${i}`);
             i += offsetValue;
+            console.log(`082 new i = ${i}`);
           }
         });
+        if (charLength && charLength > 1) {
+          console.log(`086 old i = ${i}`);
+          i += charLength - 1;
+          console.log(`088 new i = ${i}`);
+        }
       }
     });
+    console.log(
+      `093 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+    );
   }
 
   if (originalRanges && originalRanges.length) {
@@ -78,17 +103,17 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       str.length
     );
     console.log(
-      `081 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `106 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
-        4
+        0
       )}`
     );
 
-    iterator(temp);
+    iterator(str, temp);
   } else {
     // otherwise, run callback on everything
-    iterator([[0, str.length]]);
+    iterator(str, [[0, str.length]]);
   }
 }
 

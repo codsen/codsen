@@ -9,6 +9,7 @@
 
 import invert from 'ranges-invert';
 import crop from 'ranges-crop';
+import runes from 'runes';
 
 const isArr = Array.isArray;
 function processOutside(str, originalRanges, cb, skipChecks = false) {
@@ -51,14 +52,18 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       )} (type ${typeof cb})`
     );
   }
-  function iterator(arrOfArrays) {
+  function iterator(str, arrOfArrays) {
     arrOfArrays.forEach(([fromIdx, toIdx]) => {
       for (let i = fromIdx; i < toIdx; i++) {
-        cb(i, offsetValue => {
+        const charLength = runes(str.slice(i))[0].length;
+        cb(i, i + charLength, offsetValue => {
           if (offsetValue != null) {
             i += offsetValue;
           }
         });
+        if (charLength && charLength > 1) {
+          i += charLength - 1;
+        }
       }
     });
   }
@@ -69,9 +74,9 @@ function processOutside(str, originalRanges, cb, skipChecks = false) {
       }),
       str.length
     );
-    iterator(temp);
+    iterator(str, temp);
   } else {
-    iterator([[0, str.length]]);
+    iterator(str, [[0, str.length]]);
   }
 }
 
