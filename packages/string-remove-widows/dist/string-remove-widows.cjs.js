@@ -102,7 +102,6 @@ function removeWidows(str, originalOpts) {
       }
     }
     rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
-    console.log("058 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", finalStart, ", ").concat(finalEnd, ", \"").concat(finalWhatToInsert, "\"]"));
   }
   function isStr(something) {
     return typeof something === "string";
@@ -174,7 +173,6 @@ function removeWidows(str, originalOpts) {
   var ceil;
   if (opts.reportProgressFunc) {
     ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
-    console.log("185 ".concat("\x1B[".concat(33, "m", "ceil", "\x1B[", 39, "m"), " = ", JSON.stringify(ceil, null, 4)));
   }
   function resetAll() {
     wordCount = 0;
@@ -187,18 +185,14 @@ function removeWidows(str, originalOpts) {
     lastEncodedNbspEndedAt = undefined;
   }
   resetAll();
-  console.log("216 ".concat("\x1B[".concat(32, "m", "USING", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
   var _loop = function _loop(_i) {
-    console.log("\n\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(_i, " ] = ").concat(str[_i].trim().length ? str[_i] : JSON.stringify(str[_i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n"));
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some(function (valObj, y) {
         if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
           return str.startsWith(oneOfHeads, _i);
         }) || isStr(valObj.heads) && str.startsWith(valObj.heads, _i)) {
-          console.log("252 ".concat("\x1B[".concat(31, "m", "heads detected!", "\x1B[", 39, "m")));
           wordCount++;
           doNothingUntil = opts.ignore[y].tails;
-          console.log("257 ".concat("\x1B[".concat(90, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "doNothingUntil", "\x1B[", 39, "m"), " = ", doNothingUntil));
           i = _i;
           return true;
         }
@@ -207,7 +201,6 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === _i) {
       wordCount++;
       bumpWordCountAt = undefined;
-      console.log("270 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "wordCount", "\x1B[", 39, "m"), " = ", wordCount, "; ", "\x1B[".concat(33, "m", "bumpWordCountAt", "\x1B[", 39, "m"), " = ").concat(bumpWordCountAt));
     }
     if (typeof opts.reportProgressFunc === "function") {
       currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * ceil);
@@ -218,92 +211,69 @@ function removeWidows(str, originalOpts) {
     }
     if (!doNothingUntil && _i && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
       lastWhitespaceEndedAt = _i;
-      console.log("302 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastWhitespaceEndedAt", "\x1B[", 39, "m"), " = ", lastWhitespaceEndedAt));
     }
     if (!doNothingUntil && str[_i].trim().length) {
       charCount++;
     }
     if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim().length || str[_i] === "&")) {
-      console.log("344 dash starts here");
       if (str[_i - 1] && !str[_i - 1].trim().length && str[stringLeftRight.left(str, _i)]) {
         push(stringLeftRight.left(str, _i) + 1, _i);
-        console.log("347 push [".concat(stringLeftRight.left(str, _i) + 1, ", ").concat(_i, "]"));
       }
-    } else {
-      console.log("350 ELSE didn't catch the dash");
     }
     if (!doNothingUntil && (str[_i] === "&" && str[_i + 1] === "n" && str[_i + 2] === "b" && str[_i + 3] === "s" && str[_i + 4] === "p" && str[_i + 5] === ";" || str[_i] === "&" && str[_i + 1] === "#" && str[_i + 2] === "1" && str[_i + 3] === "6" && str[_i + 4] === "0" && str[_i + 5] === ";")) {
-      console.log("369 HTML-encoded NBSP caught!");
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 6;
-      console.log("373 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastEncodedNbspStartedAt", "\x1B[", 39, "m"), " = ", lastEncodedNbspStartedAt, "; ", "\x1B[".concat(33, "m", "lastEncodedNbspEndedAt", "\x1B[", 39, "m"), " = ").concat(lastEncodedNbspEndedAt));
       if (str[_i + 6] && str[_i + 6].trim().length) {
         bumpWordCountAt = _i + 6;
       }
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 6, rawnbsp);
-        console.log("386 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 6, ", \"").concat(rawnbsp, "\"]"));
       } else if (opts.targetLanguage === "css" || opts.targetLanguage === "js") {
         rangesArr.push(_i, _i + 6, opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs);
-        console.log("399 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 6, ", \"").concat(opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs, "\"]"));
       }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3] && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
-      console.log("416 CSS-encoded NBSP caught!");
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 5;
-      console.log("420 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastEncodedNbspStartedAt", "\x1B[", 39, "m"), " = ", lastEncodedNbspStartedAt, "; ", "\x1B[".concat(33, "m", "lastEncodedNbspEndedAt", "\x1B[", 39, "m"), " = ").concat(lastEncodedNbspEndedAt));
       if (str[_i + 5] && str[_i + 5].trim().length) {
         bumpWordCountAt = _i + 5;
       }
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 5, rawnbsp);
-        console.log("433 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 5, ", \"").concat(rawnbsp, "\"]"));
       } else if (opts.targetLanguage === "html" || opts.targetLanguage === "js") {
         rangesArr.push(_i, _i + 5, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs);
-        console.log("446 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 5, ", \"").concat(opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs, "\"]"));
       }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] && str[_i + 1].toLowerCase() === "u" && str[_i + 2] === "0" && str[_i + 3] === "0" && str[_i + 4] && str[_i + 4].toUpperCase() === "A" && str[_i + 5] === "0") {
-      console.log("465 JS-encoded NBSP caught!");
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 6;
-      console.log("469 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastEncodedNbspStartedAt", "\x1B[", 39, "m"), " = ", lastEncodedNbspStartedAt, "; ", "\x1B[".concat(33, "m", "lastEncodedNbspEndedAt", "\x1B[", 39, "m"), " = ").concat(lastEncodedNbspEndedAt));
       if (str[_i + 6] && str[_i + 6].trim().length) {
         bumpWordCountAt = _i + 6;
       }
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 6, rawnbsp);
-        console.log("482 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 6, ", \"").concat(rawnbsp, "\"]"));
       } else if (opts.targetLanguage === "html" || opts.targetLanguage === "css") {
         rangesArr.push(_i, _i + 6, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss);
-        console.log("495 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 6, ", \"").concat(opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspCss, "\"]"));
       }
     }
     if (!doNothingUntil && str[_i] === rawnbsp) {
-      console.log("504 raw unencoded NBSP caught!");
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 1;
-      console.log("508 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastEncodedNbspStartedAt", "\x1B[", 39, "m"), " = ", lastEncodedNbspStartedAt, "; ", "\x1B[".concat(33, "m", "lastEncodedNbspEndedAt", "\x1B[", 39, "m"), " = ").concat(lastEncodedNbspEndedAt));
       if (str[_i + 2] && str[_i + 2].trim().length) {
         bumpWordCountAt = _i + 2;
       }
       if (opts.convertEntities) {
         rangesArr.push(_i, _i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
-        console.log("529 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", _i, ", ").concat(_i + 1, ", \"").concat(opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml, "\"]"));
       }
     }
     if (!doNothingUntil && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
       wordCount++;
-      console.log("549 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "wordCount", "\x1B[", 39, "m"), " = ", wordCount));
     }
     if (!doNothingUntil && (!str[_i + 1] || str[_i] === "\n" && str[_i + 1] === "\n" || str[_i] === "\r" && str[_i + 1] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n" && str[_i + 2] === "\r" && str[_i + 3] === "\n" || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))) {
-      console.log("570 ".concat("\x1B[".concat(32, "m", "\u2588\u2588", "\x1B[", 39, "m"), " PARAGRAPH ENDING!"));
       if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
         var finalStart;
         var finalEnd;
         if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-          console.log("587");
           if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
             finalStart = lastWhitespaceStartedAt;
             finalEnd = lastWhitespaceEndedAt;
@@ -312,29 +282,23 @@ function removeWidows(str, originalOpts) {
             finalEnd = lastEncodedNbspEndedAt;
           }
         } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
-          console.log("599");
           finalStart = lastWhitespaceStartedAt;
           finalEnd = lastWhitespaceEndedAt;
         } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-          console.log("606");
           finalStart = lastEncodedNbspStartedAt;
           finalEnd = lastEncodedNbspEndedAt;
         }
         if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
-          console.log("619");
           finalStart = secondToLastWhitespaceStartedAt;
           finalEnd = secondToLastWhitespaceEndedAt;
         }
-        console.log("624 finalStart = ".concat(finalStart, "; finalEnd = ").concat(finalEnd));
         if (finalStart && finalEnd) {
           push(finalStart, finalEnd);
         }
       }
       resetAll();
-      console.log("632 ".concat("\x1B[".concat(31, "m", "RESET", "\x1B[", 39, "m")));
     }
     if (opts.UKPostcodes && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
-      console.log("646 POSTCODE caught: [".concat(_i, ", ").concat(stringLeftRight.right(str, _i), "]"));
       push(_i, stringLeftRight.right(str, _i));
     }
     if (!doNothingUntil && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[stringLeftRight.right(str, _i)]) && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("br") && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("hr")) {
@@ -342,12 +306,9 @@ function removeWidows(str, originalOpts) {
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
       lastWhitespaceStartedAt = _i;
       lastWhitespaceEndedAt = undefined;
-      console.log("696 ".concat("\x1B[".concat(32, "m", "SET 2", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "secondToLastWhitespaceStartedAt", "\x1B[", 39, "m"), " = ", secondToLastWhitespaceStartedAt, ";").concat(" ".repeat(String(secondToLastWhitespaceStartedAt).length < String(lastWhitespaceStartedAt).length ? Math.max(String(secondToLastWhitespaceStartedAt).length, String(lastWhitespaceStartedAt).length) - Math.min(String(secondToLastWhitespaceStartedAt).length, String(lastWhitespaceStartedAt).length) : 0), " ", "\x1B[".concat(33, "m", "secondToLastWhitespaceEndedAt", "\x1B[", 39, "m"), " = ").concat(secondToLastWhitespaceEndedAt, ";"));
-      console.log("711 ".concat("\x1B[".concat(32, "m", "SET 2", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "lastWhitespaceStartedAt", "\x1B[", 39, "m"), "         = ", lastWhitespaceStartedAt, ";").concat(" ".repeat(String(secondToLastWhitespaceStartedAt).length > String(lastWhitespaceStartedAt).length ? Math.max(String(secondToLastWhitespaceStartedAt).length, String(lastWhitespaceStartedAt).length) - Math.min(String(secondToLastWhitespaceStartedAt).length, String(lastWhitespaceStartedAt).length) : 0), " ", "\x1B[".concat(33, "m", "lastWhitespaceEndedAt", "\x1B[", 39, "m"), "         = ").concat(lastWhitespaceEndedAt, ";"));
       if (lastEncodedNbspStartedAt !== undefined || lastEncodedNbspEndedAt !== undefined) {
         lastEncodedNbspStartedAt = undefined;
         lastEncodedNbspEndedAt = undefined;
-        console.log("734 ".concat("\x1B[".concat(90, "m", "RESET", "\x1B[", 39, "m"), " lastEncodedNbspStartedAt, lastEncodedNbspEndedAt"));
       }
     }
     var tempTailFinding = void 0;
@@ -362,10 +323,7 @@ function removeWidows(str, originalOpts) {
         }
       }))) {
         doNothingUntil = undefined;
-        console.log("759 RESET ".concat("\x1B[".concat(33, "m", "doNothingUntil", "\x1B[", 39, "m")));
-        console.log("762 ".concat("\x1B[".concat(32, "m", "BUMP", "\x1B[", 39, "m"), " i: ", "\x1B[".concat(33, "m", _i, "\x1B[", 39, "m"), "=>", "\x1B[".concat(33, "m", _i + tempTailFinding.length, "\x1B[", 39, "m")));
         _i += tempTailFinding.length;
-        console.log("772 \x1B[".concat(32, "m", "\u2588\u2588", "\x1B[", 39, "m we're at i=", _i, ", to the right is: ").concat(str.slice(_i)));
         if (isArr(opts.ignore) && opts.ignore.length && str[_i + 1]) {
           opts.ignore.some(function (oneOfHeadsTailsObjs) {
             i = _i;
@@ -373,12 +331,9 @@ function removeWidows(str, originalOpts) {
               trimBeforeMatching: true,
               cb: function cb(_char, theRemainderOfTheString, index) {
                 if (index) {
-                  console.log("793 RECEIVED by CB() index = ".concat(index));
                   _i = index - 1;
-                  console.log("796 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " i = ", _i - 1));
                   if (str[_i + 1] && str[_i + 1].trim().length) {
                     wordCount++;
-                    console.log("801 ".concat("\x1B[".concat(32, "m", "BUMP", "\x1B[", 39, "m"), " wordCount now = ", wordCount));
                   }
                 }
                 i = _i;
@@ -389,12 +344,6 @@ function removeWidows(str, originalOpts) {
         }
       }
     }
-    console.log("    \x1B[".concat(90, "m", "\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 END \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588", "\x1B[", 39, "m"));
-    console.log("".concat("\x1B[".concat(90, "m", "231 second-to-last whitespace: [".concat(secondToLastWhitespaceStartedAt, ", ").concat(secondToLastWhitespaceEndedAt, "]"), "\x1B[", 39, "m")));
-    console.log("".concat("\x1B[".concat(90, "m", "231 last whitespace: [".concat(lastWhitespaceStartedAt, ", ").concat(lastWhitespaceEndedAt, "]"), "\x1B[", 39, "m")));
-    console.log("".concat("\x1B[".concat(90, "m", "234 last encoded nbsp: [".concat(lastEncodedNbspStartedAt, ", ").concat(lastEncodedNbspEndedAt, "]"), "\x1B[", 39, "m")));
-    console.log("".concat("\x1B[".concat(90, "m", "237 word count ".concat(wordCount, "; char count ").concat(charCount), "\x1B[", 39, "m"), bumpWordCountAt ? "".concat("\x1B[".concat(90, "m", ";", "\x1B[", 39, "m"), "\x1B[".concat(90, "m", " bumpWordCountAt = ".concat(bumpWordCountAt), "\x1B[", 39, "m")) : ""));
-    console.log("".concat("\x1B[".concat(90, "m", "516 rangesArr: ".concat(JSON.stringify(rangesArr.current(), null, 0)), "\x1B[", 39, "m"), doNothingUntil ? "\n".concat("\x1B[".concat(31, "m", "doNothingUntil = ".concat(JSON.stringify(doNothingUntil, null, 0)), "\x1B[", 39, "m")) : ""));
     i = _i;
   };
   for (var i = 0; i < len; i++) {
@@ -403,7 +352,6 @@ function removeWidows(str, originalOpts) {
   return {
     res: apply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
       currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
-      console.log("870 ".concat("\x1B[".concat(33, "m", "currentPercentageDone", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPercentageDone, null, 4)));
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;
         opts.reportProgressFunc(currentPercentageDone);
