@@ -21,11 +21,11 @@ const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ js-row-num-cli: "}\u001b[${39}m`;
 
 const locationsArr = [
-  "./src/main.js",
+  "./src/*.js",
+  "./test/*.js",
   "./main.js",
   "./cli.js",
-  "./index.js",
-  "./src/index.js"
+  "./index.js"
 ];
 
 const cli = meow(
