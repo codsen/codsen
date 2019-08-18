@@ -29,8 +29,6 @@ Then, call it from the command line using keyword:
 homey
 ```
 
-**[⬆ back to top](#)**
-
 ## Use it
 
 Once installed, call it in the root of your templates projects:
