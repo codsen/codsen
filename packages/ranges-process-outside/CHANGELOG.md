@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.2.0](https://gitlab.com/codsen/codsen/compare/ranges-process-outside@2.1.15...ranges-process-outside@2.2.0) (2019-08-18)
-
+## 2.2.0 (2019-08-18)
 
 ### Features
 
-* support for emoji ([825fae5](https://gitlab.com/codsen/codsen/commit/825fae5))
-
-
-
-
+- support for emoji ([825fae5](https://gitlab.com/codsen/codsen/commit/825fae5))
 
 ## 2.1.0 (2019-06-01)
 

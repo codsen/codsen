@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.30](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@5.0.29...string-collapse-white-space@5.0.30) (2019-08-18)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-
-
-
-
 ## 4.5.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
