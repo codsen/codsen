@@ -305,3 +305,8 @@ test(`31 - ogham space mark`, t =>
 
 test(`32 - raw copyright character`, t =>
   c("a\xA9b", `a&copy;b`, "bad-character-unencoded-char-outside-ascii", t));
+
+// it's not encoding to &Barwed; which is not email-friendly - instead,
+// numeric equivalent is used &#x2306;
+test(`33 - raw email pattern entity character "Barwed"`, t =>
+  c("a\u2306b", `a&#x2306;b`, "bad-character-unencoded-char-outside-ascii", t));
