@@ -2355,7 +2355,7 @@ function encode(str, mode = "html") {
         emailPatternNumericEntities[encoded.slice(1, encoded.length - 1)]
       };`;
       console.log(
-        `2371 util.js "${encoded.slice(
+        `2358 util.js "${encoded.slice(
           1,
           encoded.length - 1
         )}" is email-pattern positive, we'll turn it into "${

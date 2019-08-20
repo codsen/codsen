@@ -4,6 +4,11 @@
     "excerpt": "malformed CDATA tag",
     "scope": "html"
   },
+  "bad-named-html-entity-not-email-friendly": {
+    "description": "HTML named entity is not email template-friendly, use numeric",
+    "excerpt": "should be numeric entity",
+    "scope": "html"
+  },
   "bad-named-html-entity-malformed-nbsp": {
     "description": "HTML named entity &nbsp; (a non-breaking space) is malformed",
     "excerpt": "malformed &nbsp;",

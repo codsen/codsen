@@ -2,6 +2,7 @@
 
 import { c, c2 } from "../t-util/util";
 import test from "ava";
+import emailPatternNumericEntities from "../src/emailPatternNumericEntities.json";
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;
@@ -214,3 +215,33 @@ test(`03.15 - ${`\u001b[${36}m${`missing semicol`}\u001b[${39}m`} - minimal line
 
 test(`03.16 - ${`\u001b[${36}m${`missing semicol`}\u001b[${39}m`} - minimal linebreaked, named, zwnj`, t =>
   c(`x\n&zwnj\ny`, `x\n&zwnj;\ny`, "bad-named-html-entity-malformed-zwnj", t));
+
+// 04. raw & outside ASCII into named/numeric conversion
+// -----------------------------------------------------------------------------
+
+test(`04.01 - raw copyright character`, t =>
+  c("a\xA9b", `a&copy;b`, "bad-character-unencoded-char-outside-ascii", t));
+
+// it's not encoding to &Barwed; which is not email-friendly - instead,
+// numeric equivalent is used &#x2306;
+test(`04.02 - raw email pattern entity character "Barwed"`, t =>
+  c("a\u2306b", `a&#x2306;b`, "bad-character-unencoded-char-outside-ascii", t));
+
+// 05. email-pattern encoding enforced
+// -----------------------------------------------------------------------------
+
+test.only(`05.01 - email-pattern encoding enforced - &AMP;`, t =>
+  c(`a&AMP;b`, `a&#x26;b`, "bad-named-html-entity-not-email-friendly", t));
+
+test(`05.02 - email-pattern encoding enforced - enforcing all ${
+  Object.keys(emailPatternNumericEntities).length
+} named HTML entities in email-friendly numeric format`, t => {
+  Object.keys(emailPatternNumericEntities).forEach(namedEntName => {
+    c(
+      `a&${namedEntName};b`,
+      `a&${emailPatternNumericEntities[namedEntName]};b`,
+      "bad-named-html-entity-not-email-friendly",
+      t
+    );
+  });
+});
