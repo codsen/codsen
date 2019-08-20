@@ -301,7 +301,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               tempEnt = _temp.tempEnt;
               tempRes = _temp.tempRes;
             }
-            if (tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(tempEnt) || (allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent === true || allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
+            if (tempEnt && (!Object.keys(allNamedHtmlEntities.uncertain).includes(tempEnt) || !str[tempRes.rightmostChar + 1] || ["&"].includes(str[tempRes.rightmostChar + 1]) || (allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent === true || allNamedHtmlEntities.uncertain[tempEnt].addSemiIfAmpPresent && (!str[tempRes.rightmostChar + 1] || !str[tempRes.rightmostChar + 1].trim().length)) && str[tempRes.leftmostChar - 1] === "&")) {
               var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-malformed-".concat(tempEnt),

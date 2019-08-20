@@ -438,6 +438,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
+                (!str[tempRes.rightmostChar + 1] ||
+                  ["&"].includes(str[tempRes.rightmostChar + 1])) ||
                 ((uncertain[tempEnt].addSemiIfAmpPresent === true ||
                   (uncertain[tempEnt].addSemiIfAmpPresent &&
                     (!str[tempRes.rightmostChar + 1] ||
