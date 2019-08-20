@@ -1,7 +1,7 @@
 /**
  * all-named-html-entities
  * Array of all named HTML entities
- * Version: 1.1.15
+ * Version: 1.1.16
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities

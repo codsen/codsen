@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "3.0.28",
+  "version": "3.0.29",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "license": "MIT",
   "engines": {
@@ -171,7 +171,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "csv-split-easy": "^3.0.28",
+    "csv-split-easy": "^3.0.29",
     "currency.js": "^1.2.2",
     "is-numeric": "^0.0.9",
     "lodash.pull": "^4.1.0",
@@ -191,8 +191,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.38",
-    "lect": "^0.9.5",
+    "js-row-num-cli": "^1.5.39",
+    "lect": "^0.9.6",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.19.4",
