@@ -9,11 +9,11 @@
 
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import arrayiffy from 'arrayiffy-if-string';
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import merge from 'ranges-merge';
 import { right, left, rightSeq, leftSeq, chompLeft, chompRight } from 'string-left-right';
+import he from 'he';
 
 var knownBooleanHTMLAttributes = [
 	"async",
@@ -1715,6 +1715,13 @@ function pingEspTag(str, espTagObj, submit) {
     }
   }
 }
+function encode(str, mode = "html") {
+  if (mode === "html") {
+    return he.encode(str, {
+      useNamedReferences: true
+    });
+  }
+}
 
 var util = /*#__PURE__*/Object.freeze({
   charSuitableForAttrName: charSuitableForAttrName,
@@ -1738,6 +1745,7 @@ var util = /*#__PURE__*/Object.freeze({
   firstChar: firstChar,
   isTagChar: isTagChar,
   lastChar: lastChar,
+  encode: encode,
   isStr: isStr,
   isNum: isNum,
   flip: flip,
@@ -1754,6 +1762,7 @@ const {
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
   pingEspTag: pingEspTag$1,
+  encode: encode$1,
   isStr: isStr$1,
   flip: flip$1,
   log: log$1
@@ -1780,16 +1789,6 @@ function lint(str, originalOpts) {
   if (originalOpts) {
     if (isObj(originalOpts)) {
       opts = Object.assign({}, defaults, originalOpts);
-      checkTypes(opts, defaults, {
-        enforceStrictKeyset: true,
-        msg: "emlint: [THROW_ID_03*]",
-        ignorePaths: "rules.*",
-        schema: {
-          rules: ["string", "object", "false", "null", "undefined"],
-          style: ["object", "null", "undefined"],
-          "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
-        }
-      });
       if (opts.style && isStr$1(opts.style.line_endings_CR_LF_CRLF)) {
         if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
           if (opts.style.line_endings_CR_LF_CRLF !== "CR") {
@@ -3266,6 +3265,11 @@ function lint(str, originalOpts) {
           position: [[i, i + 1]]
         });
       }
+    } else if (charcode >= 128 && !doNothingUntil) {
+      submit({
+        name: "bad-character-unencoded-char-outside-ascii",
+        position: [[i, i + 1, encode$1(str.slice(i, i + 1))]]
+      });
     }
     if (
       !doNothingUntil &&

@@ -22,17 +22,7 @@ test(`00.02 - ${`\u001b[${33}m${`arg. validation`}\u001b[${39}m`} - 2nd input ar
 });
 
 test(`00.03 - ${`\u001b[${33}m${`arg. validation`}\u001b[${39}m`} - opts.line_endings_CR_LF_CRLF wrong`, t => {
-  // 1. easy error - wrong type (not string/falsey)
-  const error1 = t.throws(() => {
-    lint("zzz", {
-      style: {
-        line_endings_CR_LF_CRLF: true
-      }
-    });
-  });
-  t.regex(error1.message, /THROW_ID_03\*/);
-
-  // 2. more difficult error - wrong type (not string/falsey)
+  // more difficult error - wrong type (not string/falsey)
   const error2 = t.throws(() => {
     lint("zzz", {
       style: {

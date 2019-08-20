@@ -45,7 +45,7 @@ export default commandLineArgs => {
       external: [
         "all-named-html-entities",
         "arrayiffy-if-string",
-        "check-types-mini",
+        "he",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -70,7 +70,7 @@ export default commandLineArgs => {
       external: [
         "all-named-html-entities",
         "arrayiffy-if-string",
-        "check-types-mini",
+        "he",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -91,7 +91,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["string-left-right"],
+      external: ["he", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false

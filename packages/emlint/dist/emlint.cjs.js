@@ -15,11 +15,11 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var merge = _interopDefault(require('ranges-merge'));
 var stringLeftRight = require('string-left-right');
+var he = _interopDefault(require('he'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -1489,6 +1489,14 @@ function pingEspTag(str, espTagObj, submit) {
     }
   }
 }
+function encode(str) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "html";
+  if (mode === "html") {
+    return he.encode(str, {
+      useNamedReferences: true
+    });
+  }
+}
 
 var isArr$1 = Array.isArray;
 var attributeOnTheRight$1 = attributeOnTheRight,
@@ -1499,6 +1507,7 @@ var attributeOnTheRight$1 = attributeOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
     pingEspTag$1 = pingEspTag,
+    encode$1 = encode,
     isStr$1 = isStr,
     flip$1 = flip;
 function lint(str, originalOpts) {
@@ -1516,16 +1525,6 @@ function lint(str, originalOpts) {
   if (originalOpts) {
     if (isObj(originalOpts)) {
       opts = Object.assign({}, defaults, originalOpts);
-      checkTypes(opts, defaults, {
-        enforceStrictKeyset: true,
-        msg: "emlint: [THROW_ID_03*]",
-        ignorePaths: "rules.*",
-        schema: {
-          rules: ["string", "object", "false", "null", "undefined"],
-          style: ["object", "null", "undefined"],
-          "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
-        }
-      });
       if (opts.style && isStr$1(opts.style.line_endings_CR_LF_CRLF)) {
         if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
           if (opts.style.line_endings_CR_LF_CRLF !== "CR") {
@@ -2609,6 +2608,11 @@ function lint(str, originalOpts) {
           position: [[_i, _i + 1]]
         });
       }
+    } else if (charcode >= 128 && !doNothingUntil) {
+      submit({
+        name: "bad-character-unencoded-char-outside-ascii",
+        position: [[_i, _i + 1, encode$1(str.slice(_i, _i + 1))]]
+      });
     }
     if (!doNothingUntil && logWhitespace.startAt !== null && str[_i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[stringLeftRight.right(str, _i)]))) {

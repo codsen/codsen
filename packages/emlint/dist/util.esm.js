@@ -1,4 +1,5 @@
 import { right, left } from 'string-left-right';
+import he from 'he';
 
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
@@ -837,5 +838,12 @@ function pingEspTag(str, espTagObj, submit) {
     }
   }
 }
+function encode(str, mode = "html") {
+  if (mode === "html") {
+    return he.encode(str, {
+      useNamedReferences: true
+    });
+  }
+}
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encode, encodeChar, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };
