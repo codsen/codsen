@@ -206,7 +206,7 @@ For example, here's the format of the main function's output:
 ```js
 {
   log: {
-    generatedCount: 1000
+    count: 1000
   },
   result: "<bunch of generated CSS>"
 }
@@ -225,7 +225,7 @@ const source = `.mt$$$ { margin-top: $$$px; }|3`;
 const { log, result } = genAtomic(source, {
   includeConfig: true
 });
-console.log(`total generated classes and id's: ${log.generatedCount}`);
+console.log(`total generated classes and id's: ${log.count}`);
 // => 4
 console.log(`result:\n${result}`);
 // => <bunch of generated CSS>

@@ -311,16 +311,16 @@ function step13() {
     allFilesInSrc = fs
       .readdirSync("src")
       .filter(file => {
-        return fs.statSync(path.join("src", file)).isFile();
+        return (
+          fs.statSync(path.join("src", file)).isFile() &&
+          (!objectPath.get(pack, "lect.various.rollupIgnoreFilesForDist") ||
+            (isArr(pack.lect.various.rollupIgnoreFilesForDist) &&
+              !pack.lect.various.rollupIgnoreFilesForDist.includes(file)) ||
+            (isStr(pack.lect.various.rollupIgnoreFilesForDist) &&
+              pack.lect.various.rollupIgnoreFilesForDist !== file))
+        );
       })
       .filter(file => file !== "main.js" && file.endsWith(".js"));
-    // console.log(
-    //   `${`\u001b[${33}m${`allFilesInSrc`}\u001b[${39}m`} = ${JSON.stringify(
-    //     allFilesInSrc,
-    //     null,
-    //     4
-    //   )}`
-    // );
   } catch (err) {
     step14(pack);
     return;
@@ -1604,27 +1604,27 @@ function step6() {
 
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
-      if (DEBUG) {
-        console.log(`1632 clause #1`);
-      }
+      // if (DEBUG) {
+      //   console.log(`1632 clause #1`);
+      // }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
           ? "\n\n"
           : ""
       }`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
-      }
+      // if (DEBUG) {
+      //   console.log(
+      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
+      //   );
+      // }
     } else if (
       !firstHeadingIsDone &&
       typeof readmePiece !== "string" &&
       readmePiece.heading.startsWith("# ")
     ) {
-      if (DEBUG) {
-        console.log(`1650 clause #2`);
-      }
+      // if (DEBUG) {
+      //   console.log(`1650 clause #2`);
+      // }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
       // if package's name does not contain hyphens, capitalise the first letter

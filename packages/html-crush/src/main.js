@@ -290,7 +290,9 @@ function crush(str, originalOpts) {
       // ███████████████████████████████████████
       console.log(
         `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
-          str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
+          str[i] && str[i].trim().length
+            ? str[i]
+            : JSON.stringify(str[i], null, 0)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
       );
 
