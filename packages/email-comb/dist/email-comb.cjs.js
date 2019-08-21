@@ -632,9 +632,13 @@ function comb(str, opts) {
       if (!doNothing && stateWithinBody && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
       ) {
           var valuesStart = void 0;
+          var quoteless = false;
           if (str[i + 5] === "=") {
             if (str[i + 6] === '"' || str[i + 6] === "'") {
               valuesStart = i + 7;
+            } else if (characterSuitableForNames(str[i + 6])) {
+              valuesStart = i + 6;
+              quoteless = true;
             } else if (str[i + 6] && (!str[i + 6].trim().length || "/>".includes(str[i + 6]))) {
               var calculatedRange = expander({
                 str: str,
@@ -688,6 +692,7 @@ function comb(str, opts) {
           if (valuesStart) {
             bodyClass = resetBodyClassOrId({
               valuesStart: valuesStart,
+              quoteless: quoteless,
               nameStart: i
             });
             if (round === 1) {
@@ -700,9 +705,13 @@ function comb(str, opts) {
       if (!doNothing && bodyStartedAt !== null && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1])
       ) {
           var _valuesStart = void 0;
+          var _quoteless = false;
           if (str[i + 2] === "=") {
             if (str[i + 3] === '"' || str[i + 3] === "'") {
               _valuesStart = i + 4;
+            } else if (characterSuitableForNames(str[i + 3])) {
+              _valuesStart = i + 3;
+              _quoteless = true;
             } else if (str[i + 3] && (!str[i + 3].trim().length || "/>".includes(str[i + 3]))) {
               var _calculatedRange2 = expander({
                 str: str,
@@ -756,6 +765,7 @@ function comb(str, opts) {
           if (_valuesStart) {
             bodyId = resetBodyClassOrId({
               valuesStart: _valuesStart,
+              quoteless: _quoteless,
               nameStart: i
             });
             if (round === 1) {
@@ -792,6 +802,9 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
           if (round === 1) {
+            if (bodyClass.quoteless) {
+              finalIndexesToDelete.push(i, i, "\"");
+            }
             if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && str.slice(bodyClass.valuesStart, i).trim().length === 0 && bodyClass.valuesStart < i) {
               finalIndexesToDelete.push(bodyClass.valuesStart, i);
               nonIndentationsWhitespaceLength += i - bodyClass.valuesStart;
@@ -807,6 +820,11 @@ function comb(str, opts) {
         var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
         if (round === 1) {
           bodyClassesArr.push(".".concat(carvedClass));
+          if (bodyClass.quoteless) {
+            if (!"\"'".includes(str[i])) {
+              finalIndexesToDelete.push(i, i, "\"");
+            }
+          }
         } else {
           if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
             var expandedRange = expander({
@@ -817,10 +835,11 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "\"'",
               wipeAllWhitespaceOnLeft: true
             });
+            var whatToInsert = "";
             if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
-              expandedRange[0] += 1;
+              whatToInsert = " ";
             }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange));
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
           } else {
             bodyClassOrIdCanBeDeleted = false;
             if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
@@ -834,6 +853,11 @@ function comb(str, opts) {
         var carvedId = str.slice(bodyId.valueStart, i);
         if (round === 1) {
           bodyIdsArr.push("#".concat(carvedId));
+          if (bodyId.quoteless) {
+            if (!"\"'".includes(str[i])) {
+              finalIndexesToDelete.push(i, i, "\"");
+            }
+          }
         } else {
           if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
             var _expandedRange = expander({
@@ -856,8 +880,7 @@ function comb(str, opts) {
         }
         bodyId.valueStart = null;
       }
-      if (!doNothing && bodyClass.valuesStart != null && (chr === "'" || chr === '"') &&
-      i >= bodyClass.valuesStart) {
+      if (!doNothing && bodyClass.valuesStart != null && (!bodyClass.quoteless && (chr === "'" || chr === '"') || bodyClass.quoteless && !characterSuitableForNames(str[i])) && i >= bodyClass.valuesStart) {
         if (i === bodyClass.valuesStart) {
           if (round === 1) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
@@ -877,10 +900,12 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
-            if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim().length && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange2[0], allHeads) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange2[1], allTails))) {
-              _expandedRange2[0] += 1;
-            }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange2));
+            var _whatToInsert = "";
+            if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim().length && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim().length && !"/>".includes(str[_expandedRange2[1]])
+            ) {
+                _whatToInsert = " ";
+              }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange2).concat([_whatToInsert]));
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
@@ -888,8 +913,7 @@ function comb(str, opts) {
         }
         bodyClass = resetBodyClassOrId();
       }
-      if (!doNothing && bodyId.valuesStart !== null && (chr === "'" || chr === '"') &&
-      i >= bodyId.valuesStart) {
+      if (!doNothing && bodyId.valuesStart !== null && (!bodyId.quoteless && (chr === "'" || chr === '"') || bodyId.quoteless && !characterSuitableForNames(str[i])) && i >= bodyId.valuesStart) {
         if (i === bodyId.valuesStart) {
           if (round === 1) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
@@ -909,10 +933,12 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
-            if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim().length && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange3[0], allHeads) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange3[1], allTails))) {
-              _expandedRange3[0] += 1;
-            }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange3));
+            var _whatToInsert2 = "";
+            if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim().length && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim().length && !"/>".includes(str[_expandedRange3[1]])
+            ) {
+                _whatToInsert2 = " ";
+              }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange3).concat([_whatToInsert2]));
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
@@ -947,6 +973,9 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
           if (round === 1) {
+            if (bodyId.quoteless) {
+              finalIndexesToDelete.push(i, i, "\"");
+            }
             if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && str.slice(bodyId.valuesStart, i).trim().length === 0 && bodyId.valuesStart < i) {
               finalIndexesToDelete.push(bodyId.valuesStart, i);
               nonIndentationsWhitespaceLength += i - bodyId.valuesStart;

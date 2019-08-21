@@ -6473,3 +6473,238 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 });
 
 // ============================================================
+// 14. web-dev style-minified templates - quoteless attributes
+// ============================================================
+
+test(`14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, quoteless attr is the last`, t => {
+  const actual = comb(`<head>
+<style>
+  .aa {z:1;}
+</style>
+</head>
+<body><a class=aa>z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  .aa {z:1;}
+</style>
+</head>
+<body><a class="aa">z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.01");
+});
+
+test(`14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, just patches up`, t => {
+  const actual = comb(`<head>
+<style>
+  .aa {z:1;}
+</style>
+</head>
+<body><a class=aa href=zzz>z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  .aa {z:1;}
+</style>
+</head>
+<body><a class="aa" href=zzz>z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.02");
+});
+
+test(`14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - removed`, t => {
+  const actual = comb(`<head>
+<style>
+  .aa-1 {z:2;}
+</style>
+</head>
+<body class="aa-1"><a class=bb-2 >z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  .aa-1 {z:2;}
+</style>
+</head>
+<body class="aa-1"><a>z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.03");
+});
+
+test(`14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, quoteless attr is the last`, t => {
+  const actual = comb(`<head>
+<style>
+  #aa {z:1;}
+</style>
+</head>
+<body><a id=aa>z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  #aa {z:1;}
+</style>
+</head>
+<body><a id="aa">z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.04");
+});
+
+test(`14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, just patches up`, t => {
+  const actual = comb(`<head>
+<style>
+  #aa {z:1;}
+</style>
+</head>
+<body><a id=aa href=zzz>z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  #aa {z:1;}
+</style>
+</head>
+<body><a id="aa" href=zzz>z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.05");
+});
+
+test(`14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`, t => {
+  const actual = comb(`<head>
+<style>
+  #aa-1 {z:2;}
+</style>
+</head>
+<body id="aa-1"><a id="bb-2">z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  #aa-1 {z:2;}
+</style>
+</head>
+<body id="aa-1"><a>z</a>
+</body>
+`;
+
+  t.is(actual, intended, "14.06");
+});
+
+test(`14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`, t => {
+  const actual = comb(`<head>
+<style>
+  .aa-1 {z:2;}
+</style>
+</head>
+<body class=aa-1><a class=bb-2 >z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  .aa-1 {z:2;}
+</style>
+</head>
+<body class="aa-1"><a>z</a>
+</body>
+`;
+  t.is(actual, intended, "14.07");
+});
+
+test(`14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`, t => {
+  const actual = comb(`<head>
+<style>
+  #aa-1 {z:2;}
+</style>
+</head>
+<body id=aa-1><a id=bb-2 >z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  #aa-1 {z:2;}
+</style>
+</head>
+<body id="aa-1"><a>z</a>
+</body>
+`;
+  t.is(actual, intended, "14.08");
+});
+
+test(`14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - underscores`, t => {
+  const actual = comb(`<head>
+<style>
+  .aa_1 {z:2;}
+</style>
+</head>
+<body class=aa_1><a class=bb_2 >z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  .aa_1 {z:2;}
+</style>
+</head>
+<body class="aa_1"><a>z</a>
+</body>
+`;
+  t.is(actual, intended, "14.09");
+});
+
+test(`14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one removed, one retainer quoteless neighbour - underscores`, t => {
+  const actual = comb(`<head>
+<style>
+  #aa_1 {z:2;}
+</style>
+</head>
+<body id=aa_1><a id=bb_2 >z</a>
+</body>
+`).result;
+
+  const intended = `<head>
+<style>
+  #aa_1 {z:2;}
+</style>
+</head>
+<body id="aa_1"><a>z</a>
+</body>
+`;
+  t.is(actual, intended, "14.10");
+});
+
+test(`14.11 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whitespace control`, t => {
+  const actual = comb(`<html>
+<head>
+</head>
+<body id=unused-1 align="center">
+<table class=unused-2 align="center">
+`).result;
+
+  const intended = `<html>
+<head>
+</head>
+<body align="center">
+<table align="center">
+`;
+  t.is(actual, intended, "14.11");
+});

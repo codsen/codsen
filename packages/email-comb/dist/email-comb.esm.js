@@ -821,9 +821,13 @@ function comb(str, opts) {
         badChars.includes(str[i - 1])
       ) {
         let valuesStart;
+        let quoteless = false;
         if (str[i + 5] === "=") {
           if (str[i + 6] === '"' || str[i + 6] === "'") {
             valuesStart = i + 7;
+          } else if (characterSuitableForNames(str[i + 6])) {
+            valuesStart = i + 6;
+            quoteless = true;
           } else if (
             str[i + 6] &&
             (!str[i + 6].trim().length || "/>".includes(str[i + 6]))
@@ -880,6 +884,7 @@ function comb(str, opts) {
         if (valuesStart) {
           bodyClass = resetBodyClassOrId({
             valuesStart,
+            quoteless,
             nameStart: i
           });
           if (round === 1) {
@@ -897,9 +902,13 @@ function comb(str, opts) {
         badChars.includes(str[i - 1])
       ) {
         let valuesStart;
+        let quoteless = false;
         if (str[i + 2] === "=") {
           if (str[i + 3] === '"' || str[i + 3] === "'") {
             valuesStart = i + 4;
+          } else if (characterSuitableForNames(str[i + 3])) {
+            valuesStart = i + 3;
+            quoteless = true;
           } else if (
             str[i + 3] &&
             (!str[i + 3].trim().length || "/>".includes(str[i + 3]))
@@ -956,6 +965,7 @@ function comb(str, opts) {
         if (valuesStart) {
           bodyId = resetBodyClassOrId({
             valuesStart,
+            quoteless,
             nameStart: i
           });
           if (round === 1) {
@@ -995,6 +1005,9 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
           if (round === 1) {
+            if (bodyClass.quoteless) {
+              finalIndexesToDelete.push(i, i, `"`);
+            }
             if (
               bodyItsTheFirstClassOrId &&
               bodyClass.valuesStart !== null &&
@@ -1024,6 +1037,11 @@ function comb(str, opts) {
         const carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
         if (round === 1) {
           bodyClassesArr.push(`.${carvedClass}`);
+          if (bodyClass.quoteless) {
+            if (!`"'`.includes(str[i])) {
+              finalIndexesToDelete.push(i, i, `"`);
+            }
+          }
         } else {
           if (
             bodyClass.valueStart != null &&
@@ -1037,6 +1055,7 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: `"'`,
               wipeAllWhitespaceOnLeft: true
             });
+            let whatToInsert = "";
             if (
               str[expandedRange[0] - 1] &&
               str[expandedRange[0] - 1].trim().length &&
@@ -1046,9 +1065,9 @@ function comb(str, opts) {
               ((allHeads && matchLeft(str, expandedRange[0], allTails)) ||
                 (allTails && matchRightIncl(str, expandedRange[1], allHeads)))
             ) {
-              expandedRange[0] += 1;
+              whatToInsert = " ";
             }
-            finalIndexesToDelete.push(...expandedRange);
+            finalIndexesToDelete.push(...expandedRange, whatToInsert);
           } else {
             bodyClassOrIdCanBeDeleted = false;
             if (
@@ -1081,6 +1100,11 @@ function comb(str, opts) {
         const carvedId = str.slice(bodyId.valueStart, i);
         if (round === 1) {
           bodyIdsArr.push(`#${carvedId}`);
+          if (bodyId.quoteless) {
+            if (!`"'`.includes(str[i])) {
+              finalIndexesToDelete.push(i, i, `"`);
+            }
+          }
         } else {
           if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
             const expandedRange = expander({
@@ -1127,7 +1151,8 @@ function comb(str, opts) {
       if (
         !doNothing &&
         bodyClass.valuesStart != null &&
-        (chr === "'" || chr === '"') &&
+        ((!bodyClass.quoteless && (chr === "'" || chr === '"')) ||
+          (bodyClass.quoteless && !characterSuitableForNames(str[i]))) &&
         i >= bodyClass.valuesStart
       ) {
         if (i === bodyClass.valuesStart) {
@@ -1151,18 +1176,17 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
+            let whatToInsert = "";
             if (
               str[expandedRange[0] - 1] &&
               str[expandedRange[0] - 1].trim().length &&
               str[expandedRange[1]] &&
               str[expandedRange[1]].trim().length &&
-              (allHeads || allTails) &&
-              ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
-                (allTails && matchRightIncl(str, expandedRange[1], allTails)))
+              !"/>".includes(str[expandedRange[1]])
             ) {
-              expandedRange[0] += 1;
+              whatToInsert = " ";
             }
-            finalIndexesToDelete.push(...expandedRange);
+            finalIndexesToDelete.push(...expandedRange, whatToInsert);
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
@@ -1173,7 +1197,8 @@ function comb(str, opts) {
       if (
         !doNothing &&
         bodyId.valuesStart !== null &&
-        (chr === "'" || chr === '"') &&
+        ((!bodyId.quoteless && (chr === "'" || chr === '"')) ||
+          (bodyId.quoteless && !characterSuitableForNames(str[i]))) &&
         i >= bodyId.valuesStart
       ) {
         if (i === bodyId.valuesStart) {
@@ -1197,18 +1222,17 @@ function comb(str, opts) {
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
+            let whatToInsert = "";
             if (
               str[expandedRange[0] - 1] &&
               str[expandedRange[0] - 1].trim().length &&
               str[expandedRange[1]] &&
               str[expandedRange[1]].trim().length &&
-              (allHeads || allTails) &&
-              ((allHeads && matchLeft(str, expandedRange[0], allHeads)) ||
-                (allTails && matchRightIncl(str, expandedRange[1], allTails)))
+              !"/>".includes(str[expandedRange[1]])
             ) {
-              expandedRange[0] += 1;
+              whatToInsert = " ";
             }
-            finalIndexesToDelete.push(...expandedRange);
+            finalIndexesToDelete.push(...expandedRange, whatToInsert);
           }
           if (whitespaceStartedAt !== null) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
@@ -1246,6 +1270,9 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
           if (round === 1) {
+            if (bodyId.quoteless) {
+              finalIndexesToDelete.push(i, i, `"`);
+            }
             if (
               bodyItsTheFirstClassOrId &&
               bodyId.valuesStart !== null &&
