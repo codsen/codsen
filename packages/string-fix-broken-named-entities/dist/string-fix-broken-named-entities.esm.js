@@ -254,6 +254,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   let doNothingUntil = null;
   let letterSeqStartAt = null;
   let brokenNumericEntityStartAt = null;
+  const falsePositivesArr = ["&nspar;"];
   outerloop: for (let i = 0; i < len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
@@ -350,7 +351,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (opts.entityCatcherCb) {
         opts.entityCatcherCb(beginningOfTheRange, i);
       }
-      if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
+      if (
+        !falsePositivesArr.some(val =>
+          str.slice(beginningOfTheRange).startsWith(val)
+        ) &&
+        str.slice(beginningOfTheRange, i) !== "&nbsp;"
+      ) {
         rangesArr2.push({
           ruleName: "bad-named-html-entity-malformed-nbsp",
           entityName: "nbsp",

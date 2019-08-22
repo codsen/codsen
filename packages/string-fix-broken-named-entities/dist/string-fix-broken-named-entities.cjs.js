@@ -216,6 +216,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var doNothingUntil = null;
   var letterSeqStartAt = null;
   var brokenNumericEntityStartAt = null;
+  var falsePositivesArr = ["&nspar;"];
   var _loop = function _loop(i) {
     if (opts.progressFn) {
       percentageDone = Math.floor(counter / len * 100);
@@ -246,7 +247,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (opts.entityCatcherCb) {
         opts.entityCatcherCb(beginningOfTheRange, i);
       }
-      if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
+      if (!falsePositivesArr.some(function (val) {
+        return str.slice(beginningOfTheRange).startsWith(val);
+      }) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
         rangesArr2.push({
           ruleName: "bad-named-html-entity-malformed-nbsp",
           entityName: "nbsp",

@@ -1005,6 +1005,12 @@ test(`02.111 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - missing semicolon gets
   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "02.111");
 });
 
+test(`02.112 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`false positive`}\u001b[${39}m - &nspar;`, t => {
+  const source = "a&nspar;b";
+  t.deepEqual(fix(source), [], "02.112.01");
+  t.deepEqual(fix(source, { cb }), [], "02.112.02 - cb");
+});
+
 // -----------------------------------------------------------------------------
 // 03. nothing to fix
 // -----------------------------------------------------------------------------
