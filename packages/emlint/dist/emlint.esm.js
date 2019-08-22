@@ -4811,7 +4811,6 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
   let r6_3 = false;
   let r7_1 = false;
   for (let i = idx, len = str.length; i < len; i++) {
-    const charcode = str[i].charCodeAt(0);
     if (!str[i].trim().length) {
       if (quotes.last) {
         quotes.precedes = true;

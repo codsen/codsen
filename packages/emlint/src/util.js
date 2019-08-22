@@ -134,14 +134,14 @@ function onlyTheseLeadToThat(
   let lastRes = false;
 
   for (let i = 0, len = str.length; i < len; i++) {
-    console.log(`0137 str[${i}] = ${str[i]}`);
+    // console.log(`0137 str[${i}] = ${str[i]}`);
     // catch breaking character; run given char. through breaking validators
     if (breakingCharValidatorFuncArr.some(func => func(str[i], i))) {
       if (!terminatorCharValidatorFuncArr) {
         // not greedy
-        console.log(
-          `0143 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${i}`}\u001b[${39}m`}`
-        );
+        // console.log(
+        //   `0143 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${i}`}\u001b[${39}m`}`
+        // );
         return i;
       }
       // ELSE, greedy cases:
@@ -154,9 +154,9 @@ function onlyTheseLeadToThat(
       lastRes &&
       terminatorCharValidatorFuncArr.some(func => func(str[i], i))
     ) {
-      console.log(
-        `0158 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${lastRes}`}\u001b[${39}m`}`
-      );
+      // console.log(
+      //   `0158 util/onlyTheseLeadToThat: ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${31}m${`return ${lastRes}`}\u001b[${39}m`}`
+      // );
       return lastRes;
     }
 
@@ -165,9 +165,9 @@ function onlyTheseLeadToThat(
       !charWePassValidatorFuncArr.some(func => func(str[i], i)) &&
       !breakingCharValidatorFuncArr.some(func => func(str[i], i))
     ) {
-      console.log(
-        `0169 util/onlyTheseLeadToThat: ${`\u001b[${31}m${`██`}\u001b[${39}m`} return ${`\u001b[${31}m${`false`}\u001b[${39}m`}`
-      );
+      // console.log(
+      //   `0169 util/onlyTheseLeadToThat: ${`\u001b[${31}m${`██`}\u001b[${39}m`} return ${`\u001b[${31}m${`false`}\u001b[${39}m`}`
+      // );
       return false;
     }
   }
@@ -320,8 +320,8 @@ function log(...pairs) {
 // For example, if you have a string "ab", a is index zero, b is index 1. Something being located "at
 // index 1" would mean that exact meant location is to the left of "b", between "a" and "b".
 function withinTagInnerspace(str, idx, closingQuotePos) {
-  console.log("\n\n\n\n\n");
-  console.log(`0324 withinTagInnerspace() called, idx = ${idx}`);
+  // console.log("\n\n\n\n\n");
+  // console.log(`0324 withinTagInnerspace() called, idx = ${idx}`);
   if (typeof idx !== "number") {
     if (idx == null) {
       idx = 0;
@@ -397,22 +397,22 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     // logging
     // -------------------------------------------------------------------------
 
-    const charcode = str[i].charCodeAt(0);
-    console.log(
-      `${`\u001b[${
-        closingQuotePos != null ? 35 : 36
-      }m${`=`}\u001b[${39}m\u001b[${
-        closingQuotePos != null ? 33 : 34
-      }m${`=`}\u001b[${39}m`.repeat(15)} \u001b[${31}m${`str[ ${i} ] = ${
-        str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
-      }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} ${`\u001b[${
-        closingQuotePos != null ? 35 : 36
-      }m${`=`}\u001b[${39}m\u001b[${
-        closingQuotePos != null ? 33 : 34
-      }m${`=`}\u001b[${39}m`.repeat(15)}${
-        closingQuotePos != null ? " RECURSION" : ""
-      }`
-    );
+    // const charcode = str[i].charCodeAt(0);
+    // console.log(
+    //   `${`\u001b[${
+    //     closingQuotePos != null ? 35 : 36
+    //   }m${`=`}\u001b[${39}m\u001b[${
+    //     closingQuotePos != null ? 33 : 34
+    //   }m${`=`}\u001b[${39}m`.repeat(15)} \u001b[${31}m${`str[ ${i} ] = ${
+    //     str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
+    //   }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} ${`\u001b[${
+    //     closingQuotePos != null ? 35 : 36
+    //   }m${`=`}\u001b[${39}m\u001b[${
+    //     closingQuotePos != null ? 33 : 34
+    //   }m${`=`}\u001b[${39}m`.repeat(15)}${
+    //     closingQuotePos != null ? " RECURSION" : ""
+    //   }`
+    // );
 
     // action
     // -------------------------------------------------------------------------
@@ -559,13 +559,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       str[i] === "/" &&
       ">".includes(str[right(str, i)])
     ) {
-      console.log(
-        `0563 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "return",
-          "true"
-        )}`
-      );
-      console.log("\n\n\n\n\n\n");
+      // console.log(
+      //   `0563 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "return",
+      //     "true"
+      //   )}`
+      // );
+      // console.log("\n\n\n\n\n\n");
       return true;
     }
 
@@ -579,13 +579,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     // r3_1 - closing bracket
     if (!quotes.within && beginningOfAString && str[i] === ">" && !r3_1) {
       r3_1 = true;
-      console.log(
-        `0583 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "r3_1",
-          r3_1
-        )}`
-      );
+      // console.log(
+      //   `0583 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "set",
+      //     "r3_1",
+      //     r3_1
+      //   )}`
+      // );
 
       // if there's string ending on the right or the rest of the string doesn't
       // contain any quotes, that's a tag ending, just the attribute was missing
@@ -598,23 +598,23 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         // quick ending, we have something like:
         // <img alt=>
         //          ^ <---- we're here, at closing bracket, further there's EOF
-        console.log(
-          `0602 EOF detected ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "return",
-            "true"
-          )}`
-        );
-        console.log("\n\n\n\n\n\n");
+        // console.log(
+        //   `0602 EOF detected ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "return",
+        //     "true"
+        //   )}`
+        // );
+        // console.log("\n\n\n\n\n\n");
         return true;
       } else if (str[right(str, i)] === "<") {
         // nobody puts "><" within attribute values
-        console.log(
-          `0612 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "return",
-            "true"
-          )}`
-        );
-        console.log("\n\n\n\n\n\n");
+        // console.log(
+        //   `0612 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "return",
+        //     "true"
+        //   )}`
+        // );
+        // console.log("\n\n\n\n\n\n");
         return true;
       }
     }
@@ -623,22 +623,22 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r3_1 && !r3_2 && str[i].trim().length && !isTagChar(str[i])) {
       if (str[i] === "<") {
         r3_2 = true;
-        console.log(
-          `0627 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r3_2",
-            r3_2
-          )}`
-        );
+        // console.log(
+        //   `0627 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r3_2",
+        //     r3_2
+        //   )}`
+        // );
       } else {
         r3_1 = false;
-        console.log(
-          `0636 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r3_1",
-            r3_1
-          )}`
-        );
+        // console.log(
+        //   `0636 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r3_1",
+        //     r3_1
+        //   )}`
+        // );
       }
     }
 
@@ -646,25 +646,25 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r3_2 && !r3_3 && str[i].trim().length) {
       if (charSuitableForTagName(str[i]) || str[i] === "/") {
         r3_3 = true;
-        console.log(
-          `0650 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r3_3",
-            r3_3
-          )}`
-        );
+        // console.log(
+        //   `0650 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r3_3",
+        //     r3_3
+        //   )}`
+        // );
       } else {
         r3_1 = false;
         r3_2 = false;
-        console.log(
-          `0660 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r3_1",
-            r3_1,
-            "r3_2",
-            r3_2
-          )}`
-        );
+        // console.log(
+        //   `0660 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r3_1",
+        //     r3_1,
+        //     "r3_2",
+        //     r3_2
+        //   )}`
+        // );
       }
     }
 
@@ -681,43 +681,43 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         "<>".includes(str[i]) ||
         (str[i] === "/" && "<>".includes(right(str, i)))
       ) {
-        console.log(
-          `0685 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "return",
-            "true"
-          )}`
-        );
-        console.log("\n\n\n\n\n\n");
+        // console.log(
+        //   `0685 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "return",
+        //     "true"
+        //   )}`
+        // );
+        // console.log("\n\n\n\n\n\n");
         return true;
       } else if (`='"`.includes(str[i])) {
         // this looks like an attribute, so freak out and wipe all r3_*
         r3_1 = false;
         r3_2 = false;
         r3_3 = false;
-        console.log(
-          `0698 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r3_1",
-            r3_1,
-            "r3_2",
-            r3_2,
-            "r3_3",
-            r3_3
-          )}`
-        );
+        // console.log(
+        //   `0698 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r3_1",
+        //     r3_1,
+        //     "r3_2",
+        //     r3_2,
+        //     "r3_3",
+        //     r3_3
+        //   )}`
+        // );
       }
     }
 
     // r3_4 - if a space follows
     else if (r3_3 && !r3_4 && !str[i].trim().length) {
       r3_4 = true;
-      console.log(
-        `0715 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "r3_4",
-          r3_4
-        )}`
-      );
+      // console.log(
+      //   `0715 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "set",
+      //     "r3_4",
+      //     r3_4
+      //   )}`
+      // );
     }
 
     // r3_5 - if an attribute's name follows
@@ -725,31 +725,31 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (charSuitableForAttrName(str[i])) {
         // if it seems an attribute name starts
         r3_5 = true;
-        console.log(
-          `0729 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r3_5",
-            r3_5
-          )}`
-        );
+        // console.log(
+        //   `0729 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r3_5",
+        //     r3_5
+        //   )}`
+        // );
       } else {
         r3_1 = false;
         r3_2 = false;
         r3_3 = false;
         r3_4 = false;
-        console.log(
-          `0741 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r3_1",
-            r3_1,
-            "r3_2",
-            r3_2,
-            "r3_3",
-            r3_3,
-            "r3_4",
-            r3_4
-          )}`
-        );
+        // console.log(
+        //   `0741 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r3_1",
+        //     r3_1,
+        //     "r3_2",
+        //     r3_2,
+        //     "r3_3",
+        //     r3_3,
+        //     "r3_4",
+        //     r3_4
+        //   )}`
+        // );
       }
     }
 
@@ -757,13 +757,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     // quote of any king (messed up attr), it's confirmed to be a tag there
     else if (r3_5) {
       if (!str[i].trim().length || str[i] === "=" || charIsQuote(str[i])) {
-        console.log(
-          `0761 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "return",
-            "true"
-          )}`
-        );
-        console.log("\n\n\n\n\n\n");
+        // console.log(
+        //   `0761 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "return",
+        //     "true"
+        //   )}`
+        // );
+        // console.log("\n\n\n\n\n\n");
         return true;
       }
     }
@@ -787,13 +787,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))
     ) {
       r2_1 = true;
-      console.log(
-        `0791 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "r2_1",
-          r2_1
-        )}`
-      );
+      // console.log(
+      //   `0791 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "set",
+      //     "r2_1",
+      //     r2_1
+      //   )}`
+      // );
     }
 
     // r2_2 - equal that follows the attribute's name
@@ -806,13 +806,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       // if it's equal, activate r2_2, otherwise, wipe all preceding clauses (r2_1)
       if (str[i] === "=") {
         r2_2 = true;
-        console.log(
-          `0810 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r2_2",
-            r2_2
-          )}`
-        );
+        // console.log(
+        //   `0810 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r2_2",
+        //     r2_2
+        //   )}`
+        // );
       } else if (
         str[i] === ">" ||
         (str[i] === "/" && str[right(str, i)] === ">")
@@ -828,34 +828,34 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           // as in: " nobr>", right side of <td nobr> for example.
           r3_1 = true;
           r2_1 = false;
-          console.log(
-            `0832 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-              "set",
-              "r2_1",
-              r2_1,
-              "r3_1",
-              r3_1
-            )}`
-          );
+          // console.log(
+          //   `0832 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          //     "set",
+          //     "r2_1",
+          //     r2_1,
+          //     "r3_1",
+          //     r3_1
+          //   )}`
+          // );
         } else {
-          console.log(
-            `0842 ${`\u001b[${32}m${`██ R2.1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-              "return",
-              "true"
-            )}`
-          );
-          console.log("\n\n\n\n\n\n");
+          // console.log(
+          //   `0842 ${`\u001b[${32}m${`██ R2.1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          //     "return",
+          //     "true"
+          //   )}`
+          // );
+          // console.log("\n\n\n\n\n\n");
           return true;
         }
       } else {
         r2_1 = false;
-        console.log(
-          `0853 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r2_1",
-            r2_1
-          )}`
-        );
+        // console.log(
+        //   `0853 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r2_1",
+        //     r2_1
+        //   )}`
+        // );
       }
     }
 
@@ -863,25 +863,25 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (!r2_3 && r2_2 && str[i].trim().length) {
       if (`'"`.includes(str[i])) {
         r2_3 = true;
-        console.log(
-          `0867 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r2_3",
-            r2_3
-          )}`
-        );
+        // console.log(
+        //   `0867 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r2_3",
+        //     r2_3
+        //   )}`
+        // );
       } else {
         r2_1 = false;
         r2_2 = false;
-        console.log(
-          `0877 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r2_1",
-            r2_1,
-            "r2_2",
-            r2_2
-          )}`
-        );
+        // console.log(
+        //   `0877 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "reset",
+        //     "r2_1",
+        //     r2_1,
+        //     "r2_2",
+        //     r2_2
+        //   )}`
+        // );
       }
     }
 
@@ -889,18 +889,18 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     else if (r2_3 && charIsQuote(str[i])) {
       if (str[i] === str[quotes.at]) {
         r2_4 = true;
-        console.log(
-          `0893 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r2_4",
-            r2_4
-          )}`
-        );
+        // console.log(
+        //   `0893 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        //     "set",
+        //     "r2_4",
+        //     r2_4
+        //   )}`
+        // );
       } else {
         // check, is this a recursion and closing quote is given as a message
         // from the future
         if (closingQuotePos != null && closingQuotePos === i) {
-          console.log("0903 recursion, this is the index the future indicated");
+          // console.log("0903 recursion, this is the index the future indicated");
           // it's a recursion
 
           // - if quotes are single-opening, double-closing or double-opening,
@@ -921,13 +921,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
             // we'll forgive this mishap and let this recursive run continue:
 
             r2_4 = true;
-            console.log(
-              `0925 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-                "set",
-                "r2_4",
-                r2_4
-              )}`
-            );
+            // console.log(
+            //   `0925 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            //     "set",
+            //     "r2_4",
+            //     r2_4
+            //   )}`
+            // );
           } else if (
             isStr(str[quotes.at]) &&
             `\u2018\u2019`.includes(str[quotes.at]) &&
@@ -935,13 +935,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           ) {
             // Single curly quotes. Fine.
             r2_4 = true;
-            console.log(
-              `0939 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-                "set",
-                "r2_4",
-                r2_4
-              )}`
-            );
+            // console.log(
+            //   `0939 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            //     "set",
+            //     "r2_4",
+            //     r2_4
+            //   )}`
+            // );
           } else if (
             isStr(str[quotes.at]) &&
             `\u201C\u201D`.includes(str[quotes.at]) &&
@@ -949,13 +949,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           ) {
             // Double curly quotes. Fine too.
             r2_4 = true;
-            console.log(
-              `0953 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-                "set",
-                "r2_4",
-                r2_4
-              )}`
-            );
+            // console.log(
+            //   `0953 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            //     "set",
+            //     "r2_4",
+            //     r2_4
+            //   )}`
+            // );
           }
         } else if (
           closingQuotePos == null &&
