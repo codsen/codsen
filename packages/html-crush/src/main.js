@@ -34,7 +34,8 @@ const defaults = {
     "@media",
     "</body",
     "<!--[if",
-    "<!--<![endif"
+    "<!--<![endif",
+    "<![endif]"
   ],
   mindTheInlineTags: [
     "a",
