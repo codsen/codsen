@@ -2,7 +2,7 @@
 
 import { c, c2 } from "../t-util/util";
 import test from "ava";
-import emailPatternNumericEntities from "../src/emailPatternNumericEntities.json";
+import { notEmailFriendly } from "all-named-html-entities";
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;
@@ -231,12 +231,12 @@ test(`04.02 - raw email pattern entity character "Barwed"`, t =>
 // -----------------------------------------------------------------------------
 
 test(`05.00 - email-pattern encoding enforced - enforcing all ${
-  Object.keys(emailPatternNumericEntities).length
+  Object.keys(notEmailFriendly).length
 } named HTML entities in email-friendly numeric format`, t => {
-  Object.keys(emailPatternNumericEntities).forEach(namedEntName => {
+  Object.keys(notEmailFriendly).forEach(namedEntName => {
     c(
       `a&${namedEntName};b`,
-      `a&${emailPatternNumericEntities[namedEntName]};b`,
+      `a&${notEmailFriendly[namedEntName]};b`,
       "bad-named-html-entity-not-email-friendly",
       t
     );

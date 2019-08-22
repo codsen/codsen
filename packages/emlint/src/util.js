@@ -1,6 +1,6 @@
+import { notEmailFriendly } from "all-named-html-entities";
 import { left, right } from "string-left-right";
 import he from "he";
-import emailPatternNumericEntities from "./emailPatternNumericEntities.json";
 
 const isArr = Array.isArray;
 
@@ -2349,21 +2349,19 @@ function encode(str, mode = "html") {
       encoded.length &&
       encoded.startsWith("&") &&
       encoded.endsWith(";") &&
-      typeof emailPatternNumericEntities === "object" &&
+      typeof notEmailFriendly === "object" &&
       Object.prototype.hasOwnProperty.call(
-        emailPatternNumericEntities,
+        notEmailFriendly,
         encoded.slice(1, encoded.length - 1)
       )
     ) {
-      encoded = `&${
-        emailPatternNumericEntities[encoded.slice(1, encoded.length - 1)]
-      };`;
+      encoded = `&${notEmailFriendly[encoded.slice(1, encoded.length - 1)]};`;
       console.log(
-        `2362 util.js "${encoded.slice(
+        `2360 util.js "${encoded.slice(
           1,
           encoded.length - 1
         )}" is email-pattern positive, we'll turn it into "${
-          emailPatternNumericEntities[encoded.slice(1, encoded.length - 1)]
+          notEmailFriendly[encoded.slice(1, encoded.length - 1)]
         }" instead`
       );
     }

@@ -91,11 +91,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: [
-        "./emailPatternNumericEntities.json",
-        "he",
-        "string-left-right"
-      ],
+      external: ["all-named-html-entities", "he", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false

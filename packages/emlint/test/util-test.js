@@ -19,7 +19,7 @@ import {
   isTagChar,
   isStr,
   log
-} from "../src/util";
+} from "../dist/util.esm";
 
 test(`01 - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
   // R1 - xhtml tag ending that follows straight away
