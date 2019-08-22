@@ -473,7 +473,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
   let brokenNumericEntityStartAt = null;
 
-  const falsePositivesArr = ["&nspar;", "&prnsim;"];
+  const falsePositivesArr = ["&nspar;", "&prnsim;", "&subplus;"];
 
   //                                      |
   //                                      |
