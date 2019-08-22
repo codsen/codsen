@@ -254,7 +254,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   let doNothingUntil = null;
   let letterSeqStartAt = null;
   let brokenNumericEntityStartAt = null;
-  const falsePositivesArr = ["&nspar;"];
+  const falsePositivesArr = ["&nspar;", "&prnsim;"];
   outerloop: for (let i = 0; i < len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
