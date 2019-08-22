@@ -1,23 +1,25 @@
+// avanotonly
+
 import test from "ava";
 import {
-  charSuitableForTagName,
   charSuitableForAttrName,
-  charIsQuote,
-  isTagChar,
-  isUppercaseLetter,
-  isLowercase,
-  isStr,
+  charSuitableForTagName,
   lowAsciiCharacterNames,
-  c1CharacterNames,
-  log,
-  isLatinLetter,
-  withinTagInnerspace,
   attributeOnTheRight,
+  onlyTheseLeadToThat,
+  withinTagInnerspace,
+  isUppercaseLetter,
   findClosingQuote,
-  encodeChar,
+  c1CharacterNames,
   tagOnTheRight,
-  onlyTheseLeadToThat
-} from "../dist/util.esm";
+  isLatinLetter,
+  isLowercase,
+  charIsQuote,
+  encodeChar,
+  isTagChar,
+  isStr,
+  log
+} from "../src/util";
 
 test(`01 - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
   // R1 - xhtml tag ending that follows straight away

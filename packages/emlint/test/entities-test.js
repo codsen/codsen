@@ -230,10 +230,7 @@ test(`04.02 - raw email pattern entity character "Barwed"`, t =>
 // 05. email-pattern encoding enforced
 // -----------------------------------------------------------------------------
 
-test.only(`05.01 - email-pattern encoding enforced - &AMP;`, t =>
-  c(`a&AMP;b`, `a&#x26;b`, "bad-named-html-entity-not-email-friendly", t));
-
-test(`05.02 - email-pattern encoding enforced - enforcing all ${
+test(`05.00 - email-pattern encoding enforced - enforcing all ${
   Object.keys(emailPatternNumericEntities).length
 } named HTML entities in email-friendly numeric format`, t => {
   Object.keys(emailPatternNumericEntities).forEach(namedEntName => {
@@ -245,3 +242,29 @@ test(`05.02 - email-pattern encoding enforced - enforcing all ${
     );
   });
 });
+
+test(`05.01 - email-pattern encoding enforced - &AMP;`, t =>
+  c(`a&AMP;b`, `a&amp;b`, "bad-named-html-entity-not-email-friendly", t));
+
+test(`05.02 - email-pattern encoding enforced - &blk12;`, t =>
+  c(`a&blk12;b`, `a&#x2592;b`, "bad-named-html-entity-not-email-friendly", t));
+
+test(`05.03 - email-pattern encoding enforced - &nspar;`, t =>
+  c(`a&nspar;b`, `a&#x2226;b`, "bad-named-html-entity-not-email-friendly", t));
+
+test(`05.04 - something resembling HTML entity, without semicol`, t =>
+  c(`abc &zz def`, `abc &amp;zz def`, "bad-character-unencoded-ampersand", t));
+
+test(`05.05 - just unencoded ampersand`, t =>
+  c(`abc & def`, `abc &amp; def`, "bad-character-unencoded-ampersand", t));
+
+test(`05.06 - email-pattern encoding enforced - &precnsim;`, t =>
+  c(
+    `a&precnsim;b`,
+    `a&#x22E8;b`,
+    "bad-named-html-entity-not-email-friendly",
+    t
+  ));
+
+test(`05.07 - email-pattern encoding enforced - &prnsim;`, t =>
+  c(`a&prnsim;b`, `a&#x22E8;b`, "bad-named-html-entity-not-email-friendly", t));
