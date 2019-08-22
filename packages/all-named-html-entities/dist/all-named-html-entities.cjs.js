@@ -15621,7 +15621,7 @@ var endsWithCaseInsensitive = {
 	z: z$3
 };
 
-var AMP$1 = "#x26";
+var AMP$1 = "amp";
 var Abreve$1 = "#x102";
 var Acy$1 = "#x410";
 var Afr$1 = "#x1D504";
