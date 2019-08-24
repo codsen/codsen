@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.3](https://gitlab.com/codsen/codsen/compare/html-crush@1.8.2...html-crush@1.8.3) (2019-08-24)
-
+## 1.8.3 (2019-08-24)
 
 ### Bug Fixes
 
-* adding one more breaking point for insurance, thanks Mark Robbins ([b21651b](https://gitlab.com/codsen/codsen/commit/b21651b))
-
-
-
-
+- adding one more breaking point for insurance, thanks Mark Robbins ([b21651b](https://gitlab.com/codsen/codsen/commit/b21651b))
 
 ## 1.8.0 (2019-08-08)
 

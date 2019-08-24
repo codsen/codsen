@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.39](https://gitlab.com/codsen/codsen/compare/string-overlap-one-on-another@1.5.38...string-overlap-one-on-another@1.5.39) (2019-08-24)
-
-**Note:** Version bump only for package string-overlap-one-on-another
-
-
-
-
-
 ## 1.5.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

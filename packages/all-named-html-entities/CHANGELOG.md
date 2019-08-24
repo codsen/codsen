@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://gitlab.com/codsen/codsen/compare/all-named-html-entities@1.1.16...all-named-html-entities@1.2.0) (2019-08-24)
-
+## 1.2.0 (2019-08-24)
 
 ### Features
 
-* generate the list of non-email-friendly entities from scratch ([971e8a8](https://gitlab.com/codsen/codsen/commit/971e8a8))
-
-
-
-
+- generate the list of non-email-friendly entities from scratch ([971e8a8](https://gitlab.com/codsen/codsen/commit/971e8a8))
 
 ## 1.1.0 (2019-06-01)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.1.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@4.0.30...string-strip-html@4.1.0) (2019-08-24)
-
+## 4.1.0 (2019-08-24)
 
 ### Features
 
-* implement callback interface, opts.cb() ([79bc8dc](https://gitlab.com/codsen/codsen/commit/79bc8dc))
-
-
-
-
+- implement callback interface, opts.cb() ([79bc8dc](https://gitlab.com/codsen/codsen/commit/79bc8dc))
 
 ## 3.5.0 (2019-01-20)
 
