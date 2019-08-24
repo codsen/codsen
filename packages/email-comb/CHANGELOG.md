@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.5.2...email-comb@3.6.0) (2019-08-24)
+
+
+### Features
+
+* support quoteless attributes that come out of other minifiers ([9129fad](https://gitlab.com/codsen/codsen/commit/9129fad))
+
+
+
+
+
 ## 3.5.0 (2019-08-08)
 
 ### Features

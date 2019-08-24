@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.30](https://gitlab.com/codsen/codsen/compare/csv-sort@3.0.29...csv-sort@3.0.30) (2019-08-24)
+
+**Note:** Version bump only for package csv-sort
+
+
+
+
+
 ## 2.7.0 (2019-02-26)
 
 ### Features

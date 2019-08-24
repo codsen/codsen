@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.35](https://gitlab.com/codsen/codsen/compare/ast-monkey-traverse@1.11.34...ast-monkey-traverse@1.11.35) (2019-08-24)
+
+**Note:** Version bump only for package ast-monkey-traverse
+
+
+
+
+
 ## 1.11.0 (2019-01-31)
 
 ### Features

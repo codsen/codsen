@@ -1,6 +1,6 @@
 {
   "name": "bitbucket-slug",
-  "version": "1.9.38",
+  "version": "1.9.39",
   "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.",
   "license": "MIT",
   "engines": {
@@ -195,8 +195,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.39",
-    "lect": "^0.9.6",
+    "js-row-num-cli": "^1.5.40",
+    "lect": "^0.9.7",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.20.0",

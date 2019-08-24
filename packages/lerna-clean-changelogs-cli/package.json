@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "1.2.29",
+  "version": "1.2.30",
   "description": "CLI application to cleanse the lerna-generated changelogs",
   "license": "MIT",
   "engines": {
@@ -169,7 +169,7 @@
     "chalk": "^2.4.2",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
-    "lerna-clean-changelogs": "^1.3.29",
+    "lerna-clean-changelogs": "^1.3.30",
     "meow": "^5.0.0",
     "p-filter": "^2.1.0",
     "p-reduce": "^2.1.0",
@@ -190,8 +190,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.4",
-    "js-row-num-cli": "^1.5.39",
-    "lect": "^0.9.6",
+    "js-row-num-cli": "^1.5.40",
+    "lect": "^0.9.7",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",
     "prettier": "^1.18.2",

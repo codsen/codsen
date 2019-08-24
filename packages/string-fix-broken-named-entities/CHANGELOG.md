@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.3.17...string-fix-broken-named-entities@2.4.0) (2019-08-24)
+
+
+### Bug Fixes
+
+* fix &prnsim to be recognised correctly ([fd4df75](https://gitlab.com/codsen/codsen/commit/fd4df75))
+* further named entity recognition fixes ([feef62b](https://gitlab.com/codsen/codsen/commit/feef62b))
+* recognise false positive &nspar and also wire up false-positive array to be checked ([c5d2d2d](https://gitlab.com/codsen/codsen/commit/c5d2d2d))
+
+
+### Features
+
+* improved recognition of sandwitched named html entities without semicolons ([4aa96f7](https://gitlab.com/codsen/codsen/commit/4aa96f7))
+
+
+
+
+
 ## 2.3.0 (2019-06-01)
 
 ### Features
