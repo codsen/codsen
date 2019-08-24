@@ -16,8 +16,8 @@ var Ranges = _interopDefault(require('ranges-push'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var trim = _interopDefault(require('lodash.trim'));
 var without = _interopDefault(require('lodash.without'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var ent = _interopDefault(require('ent'));
+var stringLeftRight = require('string-left-right');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -139,10 +139,23 @@ function stripHtml(str, originalOpts) {
         for (var y = rangedOpeningTags.length; y--;) {
           if (rangedOpeningTags[y].name === tag.name) {
             if (punctuation.includes(str[i])) {
-              rangesToDelete.push(rangedOpeningTags[y].lastOpeningBracketAt, i, null
-              );
+              opts.cb({
+                tag: tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i,
+                insert: null,
+                rangesArr: rangesToDelete,
+                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
+              });
             } else {
-              rangesToDelete.push(rangedOpeningTags[y].lastOpeningBracketAt, i);
+              opts.cb({
+                tag: tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i,
+                insert: "",
+                rangesArr: rangesToDelete,
+                proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, ""]
+              });
             }
             rangedOpeningTags.splice(y, 1);
             break;
@@ -226,7 +239,8 @@ function stripHtml(str, originalOpts) {
       putOnNewLine: false,
       wrapHeads: "",
       wrapTails: ""
-    }
+    },
+    cb: null
   };
   var opts = Object.assign({}, defaults, originalOpts);
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
@@ -261,12 +275,6 @@ function stripHtml(str, originalOpts) {
   if (!opts.dumpLinkHrefsNearby || isObj(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
-  checkTypes(opts, defaults, {
-    msg: "string-strip-html/stripHtml(): [THROW_ID_05*]",
-    schema: {
-      stripTogetherWithTheirContents: ["array", "null", "undefined"]
-    }
-  });
   if (!isArr(opts.stripTogetherWithTheirContents)) {
     opts.stripTogetherWithTheirContents = [];
   }
@@ -280,6 +288,13 @@ function stripHtml(str, originalOpts) {
     return true;
   })) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
+  }
+  if (!opts.cb) {
+    opts.cb = function (_ref) {
+      var rangesArr = _ref.rangesArr,
+          proposedReturn = _ref.proposedReturn;
+      rangesArr.push.apply(rangesArr, _toConsumableArray(proposedReturn));
+    };
   }
   var rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
@@ -329,7 +344,14 @@ function stripHtml(str, originalOpts) {
                     }
                   }
                 }
-                rangesToDelete.push(startingPoint, deleteUpTo, whiteSpaceCompensation);
+                opts.cb({
+                  tag: tag,
+                  deleteFrom: startingPoint,
+                  deleteTo: deleteUpTo,
+                  insert: whiteSpaceCompensation,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [startingPoint, deleteUpTo, whiteSpaceCompensation]
+                });
               }
               return "break";
             }();
@@ -394,7 +416,17 @@ function stripHtml(str, originalOpts) {
           endingRangeIndex = i;
         }
         var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt || endingRangeIndex);
-        rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, whiteSpaceCompensation);
+        if (!stringLeftRight.left(str, tag.leftOuterWhitespace) || !stringLeftRight.right(str, endingRangeIndex - 1)) {
+          whiteSpaceCompensation = "";
+        }
+        opts.cb({
+          tag: tag,
+          deleteFrom: tag.leftOuterWhitespace,
+          deleteTo: endingRangeIndex,
+          insert: whiteSpaceCompensation,
+          rangesArr: rangesToDelete,
+          proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, whiteSpaceCompensation]
+        });
         treatRangedTags(i);
         tag = {};
         attrObj = {};
@@ -490,7 +522,14 @@ function stripHtml(str, originalOpts) {
             if (definitelyTagNames.concat(singleLetterTags).includes(tagName) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length)) {
               calculateHrefToBeInserted();
               var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
-              rangesToDelete.push(tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation));
+              opts.cb({
+                tag: tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i + 1,
+                insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
+                rangesArr: rangesToDelete,
+                proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
+              });
               resetHrefMarkers();
               treatRangedTags(i);
             } else {
@@ -512,7 +551,18 @@ function stripHtml(str, originalOpts) {
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted();
-          rangesToDelete.push(tag.leftOuterWhitespace, _endingRangeIndex, "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2));
+          var insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2);
+          if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, _endingRangeIndex - 1)) {
+            insert = "";
+          }
+          opts.cb({
+            tag: tag,
+            deleteFrom: tag.leftOuterWhitespace,
+            deleteTo: _endingRangeIndex,
+            insert: insert,
+            rangesArr: rangesToDelete,
+            proposedReturn: [tag.leftOuterWhitespace, _endingRangeIndex, insert]
+          });
           resetHrefMarkers();
           treatRangedTags(i);
         } else {
@@ -530,7 +580,14 @@ function stripHtml(str, originalOpts) {
         if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
           if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
             var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
-            rangesToDelete.push(tag.leftOuterWhitespace, i, _whiteSpaceCompensation3);
+            opts.cb({
+              tag: tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i,
+              insert: _whiteSpaceCompensation3,
+              rangesArr: rangesToDelete,
+              proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
+            });
             treatRangedTags(i);
             tag = {};
             attrObj = {};
@@ -570,7 +627,14 @@ function stripHtml(str, originalOpts) {
                   rangeEnd += 1;
                 }
                 var _whiteSpaceCompensation4 = calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
-                rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, _whiteSpaceCompensation4);
+                opts.cb({
+                  tag: tag,
+                  deleteFrom: tag.leftOuterWhitespace,
+                  deleteTo: rangeEnd,
+                  insert: _whiteSpaceCompensation4,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [tag.leftOuterWhitespace, rangeEnd, _whiteSpaceCompensation4]
+                });
                 i = _y - 1;
                 if (str[_y] === ">") {
                   i = _y;

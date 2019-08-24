@@ -2076,11 +2076,10 @@ test("08.01 - opts.trimOnlySpaces", t => {
     "08.01.04"
   );
 
-  // unencoded non-breaking spaces - no HTML at all
   t.deepEqual(stripHtml("\xa0 <article> \xa0"), "", "08.01.05");
   t.deepEqual(
     stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }),
-    "\xa0 \xa0",
+    "\xa0\xa0",
     "08.01.06"
   );
   t.deepEqual(
@@ -2091,7 +2090,7 @@ test("08.01 - opts.trimOnlySpaces", t => {
   t.deepEqual(stripHtml(" \xa0 <article> \xa0 "), "", "08.01.08");
   t.deepEqual(
     stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }),
-    "\xa0 \xa0",
+    "\xa0\xa0",
     "08.01.09"
   );
 
@@ -2114,12 +2113,12 @@ test("08.01 - opts.trimOnlySpaces", t => {
   t.deepEqual(stripHtml("\t\r\n <article> \t\r\n"), "", "08.01.12");
   t.deepEqual(
     stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }),
-    "\t\r\n \t\r\n",
+    "\t\r\n\t\r\n",
     "08.01.13"
   );
   t.deepEqual(
     stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }),
-    "\t \r \n \t \r \n",
+    "\t \r \n\t \r \n",
     "08.01.14"
   );
 
@@ -2617,93 +2616,123 @@ test("10.02 - opts.onlyStripTags + opts.ignoreTags combo", t => {
 });
 
 // ==============================
-// throws
+// opts.cb
 // ==============================
 
-test("99.01 - missing/wrong type input args", t => {
-  t.throws(() => {
-    stripHtml();
-  });
-  t.throws(() => {
-    stripHtml(null);
-  });
-  t.throws(() => {
-    stripHtml(1);
-  });
-  t.throws(() => {
-    stripHtml(undefined);
-  });
-  t.throws(() => {
-    stripHtml(true);
-  });
-  t.notThrows(() => {
-    stripHtml("");
-  });
-  t.notThrows(() => {
-    stripHtml("zzz");
-  });
-  // opts:
-  t.throws(() => {
-    stripHtml("zzz", "aaa");
-  });
-  t.throws(() => {
-    stripHtml("zzz", 1);
-  });
-  t.throws(() => {
-    stripHtml("zzz", true);
-  });
+test("11.01 - opts.cb - baseline, no ranges requested", t => {
+  // baseline, notice dirty whitespace:
+  t.deepEqual(
+    stripHtml(`<div style="display: inline !important;" >abc</ div>`, {
+      returnRangesOnly: false
+    }),
+    "abc",
+    "11.01"
+  );
 });
 
-test("99.02 - rogue keys in opts", t => {
-  t.throws(() => {
-    stripHtml("aaa", { zzz: true });
-  });
+test("11.02 - opts.cb - baseline, ranges requested", t => {
+  t.deepEqual(
+    stripHtml("<div >abc</ div>", {
+      returnRangesOnly: true
+    }),
+    [[0, 6], [9, 16]],
+    "11.02"
+  );
 });
 
-test("99.03 - opts.dumpLinkHrefsNearby", t => {
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: true } });
-  });
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: false } });
-  });
-  t.throws(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: "1" });
-  });
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: 0 }); // fine as well
-  });
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: false }); // falsey values are OK
-  });
-  t.throws(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: true }); // Bool true is not OK - should be a plain object instead
-  });
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: null }); // null's falsey
-  });
-  t.throws(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: 999 }); // will throw
-  });
-  t.notThrows(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: {} }); // fine too
-  });
-  t.throws(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: { zzz: true } }); // rogue key
-  });
-  t.throws(() => {
-    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: "yes" } }); // wrong type, should be Bool
-  });
+test("11.03 - opts.cb - replace hr with tralala", t => {
+  const cb = ({
+    // tag,
+    deleteFrom,
+    deleteTo,
+    // insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push(deleteFrom, deleteTo, "<tralala>");
+  };
+  t.deepEqual(stripHtml("abc<hr>def", { cb }), "abc<tralala>def", "11.03.01");
+  t.deepEqual(
+    stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
+    [[3, 7, "<tralala>"]],
+    "11.03.02"
+  );
 });
 
-test("99.04 - non-string among whole tags to delete", t => {
-  t.throws(() => {
-    stripHtml("aaa", { stripTogetherWithTheirContents: true });
-  });
-  t.throws(() => {
-    stripHtml("aaa", { stripTogetherWithTheirContents: [true] });
-  });
-  t.throws(() => {
-    stripHtml("aaa", { stripTogetherWithTheirContents: ["style", 1, null] });
-  });
+test("11.04 - opts.cb - replace div with tralala", t => {
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    // insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push(
+      deleteFrom,
+      deleteTo,
+      `<${tag.slashPresent ? "/" : ""}tralala>`
+    );
+  };
+  t.deepEqual(
+    stripHtml("<div >abc</ div>", { cb }),
+    "<tralala>abc</tralala>",
+    "11.04.01"
+  );
+  t.deepEqual(
+    stripHtml("<div >abc</ div>", {
+      returnRangesOnly: true,
+      cb
+    }),
+    [[0, 6, "<tralala>"], [9, 16, "</tralala>"]],
+    "11.04.02"
+  );
+});
+
+test("11.05 - opts.cb - replace only hr", t => {
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    // insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    if (tag.name === "hr") {
+      rangesArr.push(
+        deleteFrom,
+        deleteTo,
+        `<${tag.slashPresent ? "/" : ""}tralala>`
+      );
+    }
+  };
+  t.deepEqual(
+    stripHtml("abc<hr>def<span>ghi</span>jkl", { cb }),
+    "abc<tralala>def<span>ghi</span>jkl",
+    "11.05.01"
+  );
+  t.deepEqual(
+    stripHtml("abc<hr>def<span>ghi</span>jkl", { returnRangesOnly: true, cb }),
+    [[3, 7, "<tralala>"]],
+    "11.05.02"
+  );
+});
+
+test("11.06 - opts.cb - readme example one", t => {
+  const cb = ({
+    // tag,
+    deleteFrom,
+    deleteTo,
+    insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push(deleteFrom, deleteTo, insert);
+  };
+  t.deepEqual(stripHtml("abc<hr>def", { cb }), "abc def", "11.06.01");
+  t.deepEqual(
+    stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
+    [[3, 7, " "]],
+    "11.06.02"
+  );
 });

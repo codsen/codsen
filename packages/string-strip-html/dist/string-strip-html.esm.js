@@ -12,8 +12,8 @@ import Ranges from 'ranges-push';
 import isObj from 'lodash.isplainobject';
 import trim from 'lodash.trim';
 import without from 'lodash.without';
-import checkTypes from 'check-types-mini';
 import ent from 'ent';
+import { left, right } from 'string-left-right';
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
@@ -217,13 +217,31 @@ function stripHtml(str, originalOpts) {
         for (let y = rangedOpeningTags.length; y--; ) {
           if (rangedOpeningTags[y].name === tag.name) {
             if (punctuation.includes(str[i])) {
-              rangesToDelete.push(
-                rangedOpeningTags[y].lastOpeningBracketAt,
-                i,
-                null
-              );
+              opts.cb({
+                tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i,
+                insert: null,
+                rangesArr: rangesToDelete,
+                proposedReturn: [
+                  rangedOpeningTags[y].lastOpeningBracketAt,
+                  i,
+                  null
+                ]
+              });
             } else {
-              rangesToDelete.push(rangedOpeningTags[y].lastOpeningBracketAt, i);
+              opts.cb({
+                tag,
+                deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
+                deleteTo: i,
+                insert: "",
+                rangesArr: rangesToDelete,
+                proposedReturn: [
+                  rangedOpeningTags[y].lastOpeningBracketAt,
+                  i,
+                  ""
+                ]
+              });
             }
             rangedOpeningTags.splice(y, 1);
             break;
@@ -333,7 +351,8 @@ function stripHtml(str, originalOpts) {
       putOnNewLine: false,
       wrapHeads: "",
       wrapTails: ""
-    }
+    },
+    cb: null
   };
   const opts = Object.assign({}, defaults, originalOpts);
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
@@ -392,12 +411,6 @@ function stripHtml(str, originalOpts) {
   ) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
-  checkTypes(opts, defaults, {
-    msg: "string-strip-html/stripHtml(): [THROW_ID_05*]",
-    schema: {
-      stripTogetherWithTheirContents: ["array", "null", "undefined"]
-    }
-  });
   if (!isArr(opts.stripTogetherWithTheirContents)) {
     opts.stripTogetherWithTheirContents = [];
   }
@@ -422,6 +435,11 @@ function stripHtml(str, originalOpts) {
         somethingCaught.el
       } which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`
     );
+  }
+  if (!opts.cb) {
+    opts.cb = ({ rangesArr, proposedReturn }) => {
+      rangesArr.push(...proposedReturn);
+    };
   }
   const rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
@@ -496,11 +514,18 @@ function stripHtml(str, originalOpts) {
                   }
                 }
               }
-              rangesToDelete.push(
-                startingPoint,
-                deleteUpTo,
-                whiteSpaceCompensation
-              );
+              opts.cb({
+                tag,
+                deleteFrom: startingPoint,
+                deleteTo: deleteUpTo,
+                insert: whiteSpaceCompensation,
+                rangesArr: rangesToDelete,
+                proposedReturn: [
+                  startingPoint,
+                  deleteUpTo,
+                  whiteSpaceCompensation
+                ]
+              });
             }
             break;
           }
@@ -608,7 +633,7 @@ function stripHtml(str, originalOpts) {
         if (str[i] === "<") {
           endingRangeIndex = i;
         }
-        const whiteSpaceCompensation = calculateWhitespaceToInsert(
+        let whiteSpaceCompensation = calculateWhitespaceToInsert(
           str,
           i,
           tag.leftOuterWhitespace,
@@ -616,11 +641,24 @@ function stripHtml(str, originalOpts) {
           tag.lastOpeningBracketAt,
           tag.lastClosingBracketAt || endingRangeIndex
         );
-        rangesToDelete.push(
-          tag.leftOuterWhitespace,
-          endingRangeIndex,
-          whiteSpaceCompensation
-        );
+        if (
+          !left(str, tag.leftOuterWhitespace) ||
+          !right(str, endingRangeIndex - 1)
+        ) {
+          whiteSpaceCompensation = "";
+        }
+        opts.cb({
+          tag,
+          deleteFrom: tag.leftOuterWhitespace,
+          deleteTo: endingRangeIndex,
+          insert: whiteSpaceCompensation,
+          rangesArr: rangesToDelete,
+          proposedReturn: [
+            tag.leftOuterWhitespace,
+            endingRangeIndex,
+            whiteSpaceCompensation
+          ]
+        });
         treatRangedTags(i);
         tag = {};
         attrObj = {};
@@ -791,11 +829,18 @@ function stripHtml(str, originalOpts) {
                 tag.lastOpeningBracketAt,
                 tag.lastClosingBracketAt
               );
-              rangesToDelete.push(
-                tag.leftOuterWhitespace,
-                i + 1,
-                `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
-              );
+              opts.cb({
+                tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i + 1,
+                insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+                rangesArr: rangesToDelete,
+                proposedReturn: [
+                  tag.leftOuterWhitespace,
+                  i + 1,
+                  `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
+                ]
+              });
               resetHrefMarkers();
               treatRangedTags(i);
             } else {
@@ -837,11 +882,21 @@ function stripHtml(str, originalOpts) {
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted();
-          rangesToDelete.push(
-            tag.leftOuterWhitespace,
-            endingRangeIndex,
-            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
-          );
+          let insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`;
+          if (
+            tag.leftOuterWhitespace === 0 ||
+            !right(str, endingRangeIndex - 1)
+          ) {
+            insert = "";
+          }
+          opts.cb({
+            tag,
+            deleteFrom: tag.leftOuterWhitespace,
+            deleteTo: endingRangeIndex,
+            insert,
+            rangesArr: rangesToDelete,
+            proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
+          });
           resetHrefMarkers();
           treatRangedTags(i);
         } else {
@@ -871,11 +926,18 @@ function stripHtml(str, originalOpts) {
               tag.lastOpeningBracketAt,
               i
             );
-            rangesToDelete.push(
-              tag.leftOuterWhitespace,
-              i,
-              whiteSpaceCompensation
-            );
+            opts.cb({
+              tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i,
+              insert: whiteSpaceCompensation,
+              rangesArr: rangesToDelete,
+              proposedReturn: [
+                tag.leftOuterWhitespace,
+                i,
+                whiteSpaceCompensation
+              ]
+            });
             treatRangedTags(i);
             tag = {};
             attrObj = {};
@@ -950,11 +1012,18 @@ function stripHtml(str, originalOpts) {
                   tag.lastOpeningBracketAt,
                   closingFoundAt
                 );
-                rangesToDelete.push(
-                  tag.leftOuterWhitespace,
-                  rangeEnd,
-                  whiteSpaceCompensation
-                );
+                opts.cb({
+                  tag,
+                  deleteFrom: tag.leftOuterWhitespace,
+                  deleteTo: rangeEnd,
+                  insert: whiteSpaceCompensation,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [
+                    tag.leftOuterWhitespace,
+                    rangeEnd,
+                    whiteSpaceCompensation
+                  ]
+                });
                 i = y - 1;
                 if (str[y] === ">") {
                   i = y;

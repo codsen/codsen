@@ -46,9 +46,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 28 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 30 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 118 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 31 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 32 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 119 KB |
 
 **[⬆ back to top](#)**
 
@@ -115,16 +115,16 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 ### Optional Options Object
 
-| An Optional Options Object's key | Type of its value                                    | Default                      | Description                                                                                                                                                          |
-| -------------------------------- | ---------------------------------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| An Optional Options Object's key | Type of its value                                    | Default                      | Description                                                                                                                                                            |
+| -------------------------------- | ---------------------------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                |                                                      |                              |
-| `ignoreTags`                     | Array of zero or more strings                        | `[]`                         | These tags will not be removed                                                                                                                                       |
-| `onlyStripTags`                  | Array of zero or more strings                        | `[]`                         | If one or more tag names are given here, only these tags will be stripped, nothing else                                                                              |
-| `stripTogetherWithTheirContents` | Array of zero or more strings, or _something falsey_ | `['script', 'style', 'xml']` | These tags will be removed from opening tag up to closing tag, including content in-between opening and closing tags. Set it to something _falsey_ to turn it off.   |
-| `skipHtmlDecoding`               | Boolean                                              | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. You can turn it off here if you don't need it.  |
-| `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://bitbucket.org/account/user/codsen/projects/RNG) |
-| `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                             |
-| `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                     |
+| `ignoreTags`                     | Array of zero or more strings                        | `[]`                         | These tags will not be removed                                                                                                                                         |
+| `onlyStripTags`                  | Array of zero or more strings                        | `[]`                         | If one or more tag names are given here, only these tags will be stripped, nothing else                                                                                |
+| `stripTogetherWithTheirContents` | Array of zero or more strings, or _something falsey_ | `['script', 'style', 'xml']` | These tags will be removed from the opening tag up to closing tag, including content in-between opening and closing tags. Set it to something _falsey_ to turn it off. |
+| `skipHtmlDecoding`               | Boolean                                              | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. You can turn it off here if you don't need it.    |
+| `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://bitbucket.org/account/user/codsen/projects/RNG)   |
+| `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                               |
+| `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                       |
 | }                                |                                                      |                              |
 
 **[⬆ back to top](#)**
@@ -140,11 +140,9 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 **[⬆ back to top](#)**
 
-### Validation
+### Opts Validation
 
-The Optional Options Object is validated by `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
-
----
+The Optional Options Object is not validated; please take care of what values and of what type you pass.
 
 Here is the Optional Options Object in one place (in case you ever want to copy it whole):
 
@@ -179,13 +177,13 @@ A string of zero or more characters, with all HTML entities (both _named_, like 
 
 If you construct development tools, different libraries perform separate steps, and it's inefficient to transform the input string during each step. It's better to keep a _note_ what needs to be done, supplementing or editing notes along the pipeline. Finally, when the end is reached, _notes_ are used to process the result string.
 
-Notes can be stored as _ranges_ - it's a fancy name for arrays of three arguments: `beginIndex`, `endIndex` and `whatToInsert`. First two correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first two arguments. The third argument signifies what will be put in place of this string slice: if it's `undefined` (missing argument) or empty string — that slice will be deleted. If it's a string, its value will be placed instead of deleted slice.
+Notes can be stored as _ranges_ - it's a fancy name for arrays of three arguments: `beginIndex`, `endIndex` and `whatToInsert`. First two correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first two arguments. The third argument signifies what will be put in place of this string slice: if it's `undefined` (missing argument) or empty string — that slice will be deleted. If it's a string, its value will be placed instead of a deleted slice.
 
 All our [_range_- class libraries](https://bitbucket.org/account/user/codsen/projects/RNG) adhere to this spec.
 
 Now, `string-strip-html` can also return ranges instead of a final string.
 
-**PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge is to put _correct_ ranges that mean intended string pieces.
+**PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge to put _correct_ ranges that mean intended string pieces.
 
 **[⬆ back to top](#)**
 
@@ -267,11 +265,106 @@ This feature is off by default; you need to turn it on, passing options object w
 
 ### `opts.onlyStripTags`
 
-Sometimes you want to strip only certain HTML tag or tags. It would be impractical to ignore all other known HTML tags and leave those you want. Option `opts.onlyStripTags` allows to invert the setting: whatever tags you list will be the only tags removed.
+Sometimes you want to strip only certain HTML tag or tags. It would be impractical to ignore all other known HTML tags and leave those you want. Option `opts.onlyStripTags` allows inverting the setting: whatever tags you list will be the only tags removed.
 
 `opts.onlyStripTags` is an array. When a program starts, it will filter out any empty strings and strings that can be `String.trim()`'ed to zero-length string. It's necessary because a presence on just one string in `opts.onlyStripTags` will switch this application to `delete-only-these` mode and it would be bad if empty, falsey or whitespace string value would accidentally cause it.
 
 This option can work in combination with `opts.ignoreTags`. Any tags listed in `opts.ignoreTags` will be removed from the tags, listed in `opts.onlyStripTags`. If there was one or more tag listed in `opts.onlyStripTags`, the `delete-only-these` mode will be on and will be respected, even if there will be no tags to remove because all were excluded in `opts.onlyStripTags`.
+
+**[⬆ back to top](#)**
+
+### `opts.cb`
+
+Sometimes you want more control over the program: maybe you want to strip only certain tags and write your own custom conditions, maybe you want to do something extra on tags which are being ignored, for example, fix whitespace within them?
+
+You can get this level of control using `opts.cb`. In options object, under key's `cb` value, put a function. Whenever this program wants to do something, it will call your function, `Array.forEach(key => {})`-style. Instead of `key` you get a plain object with the following keys:
+
+```js
+const cb = ({
+  tag,
+  deleteFrom,
+  deleteTo,
+  insert,
+  rangesArr,
+  proposedReturn
+}) => {
+  // default action which does nothing different from normal, non-callback operation
+  rangesArr.push(deleteFrom, deleteTo, insert);
+  // you might want to do something different, depending on "tag" contents.
+};
+const result = stripHtml("abc<hr>def", { cb });
+```
+
+The `tag` key contains all the internal data for the particular tag which is being removed. Feel free to `console.log(JSON.stringify(tag, null, 4))` it and tap its contents.
+
+**[⬆ back to top](#)**
+
+### cb() example one
+
+The point of this callback interface is to pass the action of pushing of ranges to a user, as opposed to a program. The program will suggest you what it would push to final ranges array, but it's up to you to perform the pushing.
+
+Below, the program "does nothing", that is, you push what it proposes, "proposedReturn" array:
+
+```js
+const cb = ({
+  tag,
+  deleteFrom,
+  deleteTo,
+  insert,
+  rangesArr,
+  proposedReturn
+}) => {
+  rangesArr.push(deleteFrom, deleteTo, insert);
+};
+const res1 = stripHtml("abc<hr>def", { cb });
+console.log(res1);
+// => "abc def"
+
+// you can request ranges instead:
+const res2 = stripHtml("abc<hr>def", { returnRangesOnly: true, cb });
+console.log(res2);
+// => [[3, 7, " "]]
+```
+
+**[⬆ back to top](#)**
+
+### cb() example two
+
+In the example below, we are going to use one of the keys of the `tag`, the `tag.slashPresent` which tells is there a closing slash on this tag or not.
+
+For example, considering input with some rogue whitspace, `<div >abc</ div>`, replace all `div` with `tralala`, minding the closing slash:
+
+```js
+const stripHtml = require("string-strip-html");
+// define a callback as a separate variable if you are going to use it multiple times:
+const cb = ({
+  tag,
+  deleteFrom,
+  deleteTo,
+  // insert,
+  rangesArr
+  // proposedReturn
+}) => {
+  rangesArr.push(
+    deleteFrom,
+    deleteTo,
+    `<${tag.slashPresent ? "/" : ""}tralala>`
+  );
+};
+const res1 = stripHtml("<div >abc</ div>", { cb });
+console.log(`res1 = "${res1}"`);
+// res1 = "<tralala>abc</tralala>"
+
+const res2 = stripHtml("<div >abc</ div>", {
+  returnRangesOnly: true,
+  cb
+});
+console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
+// res2 = [
+//   [0, 6, "<tralala>"],
+//   [9, 16, "</tralala>"]
+// ]
+```
 
 **[⬆ back to top](#)**
 
@@ -281,7 +374,7 @@ Some HTML tag stripping libraries _assume_ that the input is always valid HTML a
 
 But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) for example?
 
-For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **pasting the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection or cross-site scripting. Notice there's even spaces around brackets! Even Chrome will interpret `a < b and c > d` as text. I believe we should not delete `a < b and c > d` from a text when stripping the HTML. However, [other](https://www.npmjs.com/package/striptags) [HTML](https://www.npmjs.com/package/strip-html-tags) [stripping](https://www.npmjs.com/package/htmlstrip-native) libraries find excuses to think differently.
+For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **pasting the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection or cross-site scripting. Notice there are even spaces around brackets! Even Chrome will interpret `a < b and c > d` as text. I believe we should not delete `a < b and c > d` from a text when stripping the HTML. However, [other](https://www.npmjs.com/package/striptags) [HTML](https://www.npmjs.com/package/strip-html-tags) [stripping](https://www.npmjs.com/package/htmlstrip-native) libraries find excuses to think differently.
 
 This library does not assume anything, and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on the other hand, will strip `a < b and c > d` into `a d`.
 
@@ -328,7 +421,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-strip-html
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
-[cov-img]: https://img.shields.io/badge/coverage-93.14%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.72%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-strip-html

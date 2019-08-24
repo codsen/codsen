@@ -45,13 +45,13 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "check-types-mini",
         "ent",
         "lodash.isplainobject",
         "lodash.trim",
         "lodash.without",
         "ranges-apply",
-        "ranges-push"
+        "ranges-push",
+        "string-left-right"
       ],
       plugins: [
         strip({
@@ -70,13 +70,13 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "check-types-mini",
         "ent",
         "lodash.isplainobject",
         "lodash.trim",
         "lodash.without",
         "ranges-apply",
-        "ranges-push"
+        "ranges-push",
+        "string-left-right"
       ],
       plugins: [
         strip({

@@ -169,13 +169,13 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.35",
     "ent": "^2.2.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
     "ranges-apply": "^3.0.29",
-    "ranges-push": "^3.3.2"
+    "ranges-push": "^3.3.2",
+    "string-left-right": "^2.2.19"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
