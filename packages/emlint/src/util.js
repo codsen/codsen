@@ -1,4 +1,4 @@
-import { notEmailFriendly } from "all-named-html-entities";
+import { notEmailFriendly } from "html-entities-not-email-friendly";
 import { left, right } from "string-left-right";
 import he from "he";
 

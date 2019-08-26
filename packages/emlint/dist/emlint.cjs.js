@@ -13,8 +13,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
-var allNamedHtmlEntities = require('all-named-html-entities');
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
@@ -1503,8 +1503,8 @@ function encode(str) {
     var encoded = he.encode(str, {
       useNamedReferences: true
     });
-    if (typeof encoded === "string" && encoded.length && encoded.startsWith("&") && encoded.endsWith(";") && _typeof(allNamedHtmlEntities.notEmailFriendly) === "object" && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.notEmailFriendly, encoded.slice(1, encoded.length - 1))) {
-      encoded = "&".concat(allNamedHtmlEntities.notEmailFriendly[encoded.slice(1, encoded.length - 1)], ";");
+    if (typeof encoded === "string" && encoded.length && encoded.startsWith("&") && encoded.endsWith(";") && _typeof(htmlEntitiesNotEmailFriendly.notEmailFriendly) === "object" && Object.prototype.hasOwnProperty.call(htmlEntitiesNotEmailFriendly.notEmailFriendly, encoded.slice(1, encoded.length - 1))) {
+      encoded = "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[encoded.slice(1, encoded.length - 1)], ";");
     }
     return encoded;
   }
@@ -2634,10 +2634,10 @@ function lint(str, originalOpts) {
     }
     if (isArr$1(ampersandStage) && ampersandStage.length && _i > ampersandStage[ampersandStage.length - 1] && !characterSuitableForNames$1(str[_i])) {
       if (str[_i] === ";") {
-        if (Object.keys(allNamedHtmlEntities.notEmailFriendly).includes(str.slice(ampersandStage[ampersandStage.length - 1] + 1, _i))) {
+        if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(str.slice(ampersandStage[ampersandStage.length - 1] + 1, _i))) {
           submit({
             name: "bad-named-html-entity-not-email-friendly",
-            position: [[ampersandStage[ampersandStage.length - 1] + 1, _i, allNamedHtmlEntities.notEmailFriendly[str.slice(ampersandStage[ampersandStage.length - 1] + 1, _i)]]]
+            position: [[ampersandStage[ampersandStage.length - 1] + 1, _i, htmlEntitiesNotEmailFriendly.notEmailFriendly[str.slice(ampersandStage[ampersandStage.length - 1] + 1, _i)]]]
           });
         }
       } else {

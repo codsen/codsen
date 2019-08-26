@@ -43,9 +43,9 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "all-named-html-entities",
         "arrayiffy-if-string",
         "he",
+        "html-entities-not-email-friendly",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -68,9 +68,9 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "all-named-html-entities",
         "arrayiffy-if-string",
         "he",
+        "html-entities-not-email-friendly",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -91,7 +91,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["all-named-html-entities", "he", "string-left-right"],
+      external: ["he", "html-entities-not-email-friendly", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false

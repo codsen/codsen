@@ -2,7 +2,7 @@
 
 import { c, c2 } from "../t-util/util";
 import test from "ava";
-import { notEmailFriendly } from "all-named-html-entities";
+import { notEmailFriendly } from "html-entities-not-email-friendly";
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;

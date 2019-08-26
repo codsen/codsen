@@ -7,8 +7,8 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
+import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
-import { notEmailFriendly } from 'all-named-html-entities';
 import arrayiffy from 'arrayiffy-if-string';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';

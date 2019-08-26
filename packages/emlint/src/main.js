@@ -1,6 +1,6 @@
 import knownBooleanHTMLAttributes from "./knownBooleanHTMLAttributes.json";
+import { notEmailFriendly } from "html-entities-not-email-friendly";
 import fixBrokenEntities from "string-fix-broken-named-entities";
-import { notEmailFriendly } from "all-named-html-entities";
 import errorsCharacters from "./errors-characters.json";
 import knownHTMLTags from "./knownHTMLTags.json";
 import knownESPTags from "./knownESPTags.json";
