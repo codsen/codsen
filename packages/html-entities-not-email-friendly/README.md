@@ -111,7 +111,7 @@ notEmailFriendlyMaxLength
 
 ## API - `notEmailFriendly`
 
-`notEmailFriendly` looks like this:
+Exported `notEmailFriendly` is a plain object looks like this:
 
 ```js
 {
@@ -121,17 +121,24 @@ notEmailFriendlyMaxLength
 }
 ```
 
+The key is named HTML entity's name, the value is what value should be used instead (decoded or numeric HTML entity).
+
 For example, here's how to use it:
 
 ```js
+// consume:
 const { notEmailFriendly } = require("all-named-html-entities");
+// list them all:
+Object.keys(notEmailFriendly).forEach((entName, i) => {
+  console.log(`${i} entity: &${entName};`)
+})
 ```
 
 **[⬆ back to top](#)**
 
 ## API - `notEmailFriendlyMinLength`
 
-Returns natural number `2` — the length of the shortest entity names in the list. For example, `&LT;`, `&GT;` or `&Re;` (two letter names).
+Returns natural number `2` — the length of the shortest entity names in the list. For example, `&LT;`, `&GT;` or `&Re;` (two-letter names).
 
 We are not counting ampersand `&` and semicolon `;`.
 
@@ -141,7 +148,7 @@ These lengths can help to optimise some algorithms — if you know that there ha
 
 ## API — `notEmailFriendlyMaxLength`
 
-Returnd a natural number `31` — the length of the longest entities in the list. For example, `&CounterClockwiseContourIntegral;` has length of `31`.
+Returnd a natural number `31` — the length of the longest entities in the list. For example, `&CounterClockwiseContourIntegral;` has a length of `31`.
 
 We are not counting ampersand `&` and semicolon `;`.
 
