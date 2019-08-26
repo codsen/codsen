@@ -121,9 +121,9 @@ Exported `notEmailFriendly` is a plain object looks like this:
 }
 ```
 
-The key is named HTML entity's name, the value is what value should be used instead (decoded or numeric HTML entity).
+The key is named after the HTML entity's name, the value is what value should be used instead (decoded or numeric HTML entity).
 
-For example, here's how to use it:
+For example, below we log all the entities:
 
 ```js
 // consume:
