@@ -89,13 +89,13 @@ It exports a JSON file, here are a few lines of it:
 }
 ```
 
-Amperands and semicolons are missing in the exported object. For example, "bad" named HTML entity would be `&Abreve;` and its correct version would be `&#x102;`.
+Ampersands and semicolons are missing in the exported object. For example, "bad" named HTML entity would be `&Abreve;` and its correct version would be `&#x102;`.
 
 **[⬆ back to top](#)**
 
 ## API
 
-This package exports a plain object with 3 keys:
+This package exports a plain object with three keys:
 
 notEmailFriendly,
 notEmailFriendlyMinLength,
@@ -103,7 +103,7 @@ notEmailFriendlyMaxLength
 
 | Key's name                  | Key's value's type | Purpose                                                                                    |
 | --------------------------- | ------------------ | ------------------------------------------------------------------------------------------ |
-| `notEmailFriendly`          | plain object       | all named HTML entities, key is entity's name, value is raw decoded entity. 2125 in total. |
+| `notEmailFriendly`          | plain object       | all named HTML entities, the key is an entity's name; value is a raw decoded entity. 2125 in total. |
 | `notEmailFriendlyMinLength` | natural number     | the string length of the shortest of all entities                                          |
 | `notEmailFriendlyMaxLength` | natural number     | the string length of the longest of all entities                                           |
 
@@ -121,7 +121,7 @@ Exported `notEmailFriendly` is a plain object looks like this:
 }
 ```
 
-The key is named after the HTML entity's name, the value is what value should be used instead (decoded or numeric HTML entity).
+The key is named after the HTML entity's name; the value is what value should be used instead (decoded or numeric HTML entity).
 
 For example, below we log all the entities:
 
@@ -148,7 +148,7 @@ These lengths can help to optimise some algorithms — if you know that there ha
 
 ## API — `notEmailFriendlyMaxLength`
 
-Returnd a natural number `31` — the length of the longest entities in the list. For example, `&CounterClockwiseContourIntegral;` has a length of `31`.
+Returns a natural number `31` — the length of the longest entities in the list. For example, `&CounterClockwiseContourIntegral;` has a length of `31`.
 
 We are not counting ampersand `&` and semicolon `;`.
 
