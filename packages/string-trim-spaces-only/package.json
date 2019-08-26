@@ -1,6 +1,6 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "2.7.39",
+  "version": "2.7.40",
   "description": "Like String.trim() but trims only spaces",
   "license": "MIT",
   "engines": {
@@ -165,13 +165,13 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.36"
+    "check-types-mini": "^5.7.37"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "ava": "^2.2.3",
+    "ava": "^2.2.4",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.2.2",
@@ -181,8 +181,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.40",
-    "lect": "^0.9.7",
+    "js-row-num-cli": "^1.5.41",
+    "lect": "^0.9.8",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.20.2",
