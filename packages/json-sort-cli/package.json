@@ -162,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.34",
+    "ast-monkey-traverse": "^1.11.35",
     "chalk": "^2.4.2",
     "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
@@ -180,7 +180,7 @@
     "@babel/register": "^7.5.5",
     "ava": "^2.2.3",
     "babel-plugin-istanbul": "^5.2.0",
-    "eslint": "^6.2.1",
+    "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-ava": "^8.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -188,8 +188,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.4",
-    "js-row-num-cli": "^1.5.39",
-    "lect": "^0.9.6",
+    "js-row-num-cli": "^1.5.40",
+    "lect": "^0.9.7",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",
     "prettier": "^1.18.2",
