@@ -9,7 +9,6 @@ import {
   decode,
   minLength,
   maxLength,
-  notEmailFriendly,
   uncertain
 } from "../dist/all-named-html-entities.esm";
 
@@ -91,11 +90,7 @@ test(`12 - allNamedEntities checks`, t => {
   t.true(Object.keys(allNamedEntities).length > 0);
 });
 
-test(`13 - notEmailFriendly is set`, t => {
-  t.true(notEmailFriendly.Abreve === "#x102");
-});
-
-test(`14 - uncertain list is set`, t => {
+test(`13 - uncertain list is set`, t => {
   t.true(!!uncertain.Alpha);
   t.true(!!uncertain.alpha);
   t.true(!!uncertain.amp);

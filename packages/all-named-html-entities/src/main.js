@@ -7,7 +7,6 @@ import entEndsWith from "./endsWith.json";
 import entStartsWithCaseInsensitive from "./startsWithCaseInsensitive.json";
 import entEndsWithCaseInsensitive from "./endsWithCaseInsensitive.json";
 
-import notEmailFriendly from "./notEmailFriendly.json";
 import uncertain from "./uncertain.json";
 
 // -----------------------------------------------------------------------------
@@ -127,6 +126,5 @@ export {
   decode,
   minLength,
   maxLength,
-  notEmailFriendly,
   uncertain
 };
