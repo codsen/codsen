@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 93 npm libraries 📦📦📦
+    A lerna monorepo for our 94 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -16,7 +16,7 @@ We coded up and maintain a few npm packages:
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [Lerna Libraries](#-3-lerna-libraries)
 - [CLI Apps](#%EF%B8%8F-11-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-21-miscellaneous-libraries)
+- [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -184,11 +184,11 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ 21 Miscellaneous Libraries
+## 🛠️ 22 Miscellaneous Libraries
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
-| [`all-named-html-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) | Array of all named HTML entities | [![all-named-html-entities on npm](https://img.shields.io/npm/v/all-named-html-entities.svg?style=flat-square)](https://www.npmjs.com/package/all-named-html-entities) | [packages/all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) |
+| [`all-named-html-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) | List of all named HTML entities | [![all-named-html-entities on npm](https://img.shields.io/npm/v/all-named-html-entities.svg?style=flat-square)](https://www.npmjs.com/package/all-named-html-entities) | [packages/all-named-html-entities](https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities/) |
 | [`array-group-str-omit-num-char`](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) | Groups array of strings by omitting number characters | [![array-group-str-omit-num-char on npm](https://img.shields.io/npm/v/array-group-str-omit-num-char.svg?style=flat-square)](https://www.npmjs.com/package/array-group-str-omit-num-char) | [packages/array-group-str-omit-num-char](https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char/) |
 | [`array-includes-with-glob`](https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob/) | like `_.includes` but with wildcards | [![array-includes-with-glob on npm](https://img.shields.io/npm/v/array-includes-with-glob.svg?style=flat-square)](https://www.npmjs.com/package/array-includes-with-glob) | [packages/array-includes-with-glob](https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob/) |
 | [`array-of-arrays-into-ast`](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast/) | turns an array of arrays of data into a nested tree of plain objects | [![array-of-arrays-into-ast on npm](https://img.shields.io/npm/v/array-of-arrays-into-ast.svg?style=flat-square)](https://www.npmjs.com/package/array-of-arrays-into-ast) | [packages/array-of-arrays-into-ast](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast/) |
@@ -204,6 +204,7 @@ You use them in the Terminal (command line), for example:
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
 | [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
+| [`html-entities-not-email-friendly`](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) | All HTML entities which are not email template friendly | [![html-entities-not-email-friendly on npm](https://img.shields.io/npm/v/html-entities-not-email-friendly.svg?style=flat-square)](https://www.npmjs.com/package/html-entities-not-email-friendly) | [packages/html-entities-not-email-friendly](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) |
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |
