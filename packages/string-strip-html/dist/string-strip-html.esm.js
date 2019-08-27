@@ -538,7 +538,7 @@ function stripHtml(str, originalOpts) {
       tag.lastOpeningBracketAt !== undefined &&
       tag.lastClosingBracketAt === undefined
     ) {
-      tag.slashPresent = true;
+      tag.slashPresent = i;
     }
     if (
       tag.nameStarts &&

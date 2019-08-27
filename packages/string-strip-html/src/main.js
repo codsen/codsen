@@ -776,7 +776,7 @@ function stripHtml(str, originalOpts) {
       console.log(
         `0777 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`
       );
-      tag.slashPresent = true;
+      tag.slashPresent = i;
     }
 
     // catch punctuation, present after alleged tag start:

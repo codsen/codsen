@@ -361,7 +361,7 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && tag.lastOpeningBracketAt !== undefined && tag.lastClosingBracketAt === undefined) {
-      tag.slashPresent = true;
+      tag.slashPresent = i;
     }
     if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.includes(str[i]) && !attrObj.equalsAt && tag.attributes && tag.attributes.length === 0 && !tag.lastClosingBracketAt
     ) {
