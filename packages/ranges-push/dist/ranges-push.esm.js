@@ -9,7 +9,6 @@
 
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
-import ordinal from 'ordinal-number-suffix';
 import mergeRanges from 'ranges-merge';
 import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
 import clone from 'lodash.clonedeep';
@@ -21,13 +20,6 @@ const isArr = Array.isArray;
 const isNum = Number.isInteger;
 function isStr(something) {
   return typeof something === "string";
-}
-function mandatory(i) {
-  throw new Error(
-    `ranges-push/Ranges/add(): [THROW_ID_01] Missing ${ordinal(
-      i
-    )} input parameter!`
-  );
 }
 function prepNumStr(str) {
   return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
@@ -57,7 +49,7 @@ class Ranges {
     }
     this.opts = opts;
   }
-  add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
+  add(originalFrom, originalTo, addVal, ...etc) {
     if (etc.length > 0) {
       throw new TypeError(
         `ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(
@@ -69,6 +61,49 @@ class Ranges {
     }
     if (!existy(originalFrom) && !existy(originalTo)) {
       return;
+    } else if (existy(originalFrom) && !existy(originalTo)) {
+      if (isArr(originalFrom)) {
+        if (originalFrom.length) {
+          if (originalFrom.some(el => isArr(el))) {
+            originalFrom.forEach(thing => {
+              if (isArr(thing)) {
+                this.add(...thing);
+              }
+            });
+            return;
+          } else if (
+            originalFrom.length > 1 &&
+            isNum(prepNumStr(originalFrom[0])) &&
+            isNum(prepNumStr(originalFrom[1]))
+          ) {
+            this.add(...originalFrom);
+          }
+        }
+        return;
+      }
+      throw new TypeError(
+        `ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(
+          originalFrom,
+          null,
+          0
+        )}) but second-one, "to" is not (${JSON.stringify(
+          originalTo,
+          null,
+          0
+        )})`
+      );
+    } else if (!existy(originalFrom) && existy(originalTo)) {
+      throw new TypeError(
+        `ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(
+          originalTo,
+          null,
+          0
+        )}) but first-one, "from" is not (${JSON.stringify(
+          originalFrom,
+          null,
+          0
+        )})`
+      );
     }
     const from = isNumStr(originalFrom, { includeZero: true })
       ? parseInt(originalFrom, 10)
@@ -76,68 +111,14 @@ class Ranges {
     const to = isNumStr(originalTo, { includeZero: true })
       ? parseInt(originalTo, 10)
       : originalTo;
-    if (isArr(originalFrom) && !existy(originalTo)) {
-      let culpritId;
-      let culpritVal;
-      if (originalFrom.length > 0) {
-        if (
-          originalFrom.every((thing, index) => {
-            if (isArr(thing)) {
-              return true;
-            }
-            culpritId = index;
-            culpritVal = thing;
-            return false;
-          })
-        ) {
-          originalFrom.forEach((arr, idx) => {
-            if (isInt(prepNumStr(arr[0]), { includeZero: true })) {
-              if (isInt(prepNumStr(arr[1]), { includeZero: true })) {
-                if (!existy(arr[2]) || isStr(arr[2])) {
-                  this.add(...arr);
-                } else {
-                  throw new TypeError(
-                    `ranges-push/Ranges/add(): [THROW_ID_04] The ${ordinal(
-                      idx
-                    )} ranges array's "to add" value is not string but ${typeof arr[2]}! It's equal to: ${
-                      arr[2]
-                    }.`
-                  );
-                }
-              } else {
-                throw new TypeError(
-                  `ranges-push/Ranges/add(): [THROW_ID_05] The ${ordinal(
-                    idx
-                  )} ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ${
-                    arr[1]
-                  }.`
-                );
-              }
-            } else {
-              throw new TypeError(
-                `ranges-push/Ranges/add(): [THROW_ID_06] The ${ordinal(
-                  idx
-                )} ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ${
-                  arr[0]
-                }.`
-              );
-            }
-          });
-        } else {
-          throw new TypeError(
-            `ranges-push/Ranges/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ${culpritId} we have ${typeof culpritVal}-type value:\n${JSON.stringify(
-              culpritVal,
-              null,
-              4
-            )}.`
-          );
-        }
-      }
-    } else if (
+    if (isNum(addVal)) {
+      addVal = String(addVal);
+    }
+    if (
       isInt(from, { includeZero: true }) &&
       isInt(to, { includeZero: true })
     ) {
-      if (existy(addVal) && !isStr(addVal)) {
+      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError(
           `ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
             addVal,
@@ -152,6 +133,7 @@ class Ranges {
         from === this.last()[1]
       ) {
         this.last()[1] = to;
+        if (this.last()[2] === null || addVal === null) ;
         if (this.last()[2] !== null && existy(addVal)) {
           let calculatedVal =
             existy(this.last()[2]) &&

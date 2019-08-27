@@ -46,7 +46,6 @@ export default commandLineArgs => {
         "is-natural-number",
         "is-natural-number-string",
         "lodash.clonedeep",
-        "ordinal-number-suffix",
         "ranges-merge",
         "string-collapse-leading-whitespace"
       ],
@@ -69,7 +68,6 @@ export default commandLineArgs => {
         "is-natural-number",
         "is-natural-number-string",
         "lodash.clonedeep",
-        "ordinal-number-suffix",
         "ranges-merge",
         "string-collapse-leading-whitespace"
       ],

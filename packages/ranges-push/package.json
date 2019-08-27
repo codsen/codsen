@@ -168,7 +168,6 @@
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "ordinal-number-suffix": "^0.1.2",
     "ranges-merge": "^4.2.18",
     "string-collapse-leading-whitespace": "^1.12.40"
   },

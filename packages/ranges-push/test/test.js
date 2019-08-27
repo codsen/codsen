@@ -7,201 +7,245 @@ import Ranges from "../dist/ranges-push.esm";
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01.01  -  ADD() - wrong inputs", t => {
+test("01.01  -  ADD() - empty call", t => {
   // missing
-  const err01 = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.add();
-  });
-  t.truthy(err01.message.includes("THROW_ID_01"));
+  const ranges = new Ranges();
+  ranges.add();
+  t.is(ranges.current(), null, "01.01");
+});
 
-  const err02 = t.throws(() => {
+test("01.02  -  ADD() - two hardcoded undefined args", t => {
+  const ranges = new Ranges();
+  ranges.add(undefined, undefined);
+  t.is(ranges.current(), null, "01.02");
+});
+
+test("01.03  -  ADD() - three hardcoded undefined args", t => {
+  const ranges = new Ranges();
+  ranges.add(undefined, undefined, undefined);
+  t.is(ranges.current(), null, "01.03");
+});
+
+test("01.04  -  ADD() - two null args", t => {
+  const ranges = new Ranges();
+  ranges.add(null, null);
+  t.is(ranges.current(), null, "01.04");
+});
+
+test("01.05  -  ADD() - three null args", t => {
+  const ranges = new Ranges();
+  ranges.add(null, null, null);
+  t.is(ranges.current(), null, "01.05");
+});
+
+test("01.06  -  ADD() - wrong input args", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add("a");
   });
-  t.truthy(err02.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_12/);
+});
 
-  // wrong types
-  const err03 = t.throws(() => {
+test("01.07  -  ADD() - wrong types", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add("a", "a");
   });
-  t.truthy(err03.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
-  const err04 = t.throws(() => {
+test("01.08  -  ADD() - wrong types", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add(1, "a");
   });
-  t.truthy(err04.message.includes("THROW_ID_10"));
+  t.regex(err.message, /THROW_ID_10/);
+});
 
-  const err05 = t.throws(() => {
+test("01.09  -  ADD() - wrong types", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add("a", 1);
   });
-  t.truthy(err05.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
+test("01.10  -  ADD() - wrong input args", t => {
   t.notThrows(() => {
     const ranges = new Ranges();
     ranges.add(1, 1);
   });
+});
 
-  // hardcoded undefined
-  const err06 = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.add(undefined, 1);
-  });
-  t.truthy(err06.message.includes("THROW_ID_01"));
-
+test("01.11  -  ADD() - wrong input args", t => {
   // numbers but not natural integers
-  const err07 = t.throws(() => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add(1.2, 1);
   });
-  t.truthy(err07.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
-  const err08 = t.throws(() => {
+test("01.12  -  ADD() - wrong input args", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add(1, 1.3);
   });
-  t.truthy(err08.message.includes("THROW_ID_10"));
+  t.regex(err.message, /THROW_ID_10/);
 });
 
-test("01.02  -  ADD() - third input arg is not string", t => {
-  const err = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.add(1, 2, 3);
-  });
-  t.truthy(err.message.includes("THROW_ID_08"));
+test("01.13  -  ADD() - third input arg is not string", t => {
+  const ranges = new Ranges();
+  ranges.add(1, 2, 3);
+  t.deepEqual(ranges.current(), [[1, 2, "3"]], "01.13");
 });
 
-test("01.03  -  ADD() - overloading", t => {
+test("01.14  -  ADD() - overloading", t => {
   const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add(1, 2, "aaa", 1);
   });
-  t.truthy(err.message.includes("THROW_ID_03"));
+  t.regex(err.message, /THROW_ID_03/);
 });
 
-test("01.04  -  PUSH() - wrong inputs", t => {
-  // missing
-  const err01 = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.push();
-  });
-  t.truthy(err01.message.includes("THROW_ID_01"));
-
-  const err02 = t.throws(() => {
+test("01.15  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push("a");
   });
-  t.truthy(err02.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_12/);
+});
 
-  // wrong types
-  const err03 = t.throws(() => {
+test("01.16  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push("a", "a");
   });
-  t.truthy(err03.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
-  const err04 = t.throws(() => {
+test("01.17  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push(1, "a");
   });
-  t.truthy(err04.message.includes("THROW_ID_10"));
+  t.regex(err.message, /THROW_ID_10/);
+});
 
-  const err05 = t.throws(() => {
+test("01.18  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push("a", 1);
   });
-  t.truthy(err05.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
+test("01.19  -  PUSH() - wrong inputs", t => {
   t.notThrows(() => {
     const ranges = new Ranges();
     ranges.push(1, 1);
   });
+});
 
-  // hardcoded undefined
-  const err06 = t.throws(() => {
+test("01.20  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push(undefined, 1);
   });
-  t.truthy(err06.message.includes("THROW_ID_01"));
+  t.regex(err.message, /THROW_ID_13/);
+});
 
-  // numbers but not natural integers
-  const err07 = t.throws(() => {
+test("01.21  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
+    const ranges = new Ranges();
+    ranges.push(null, 1);
+  });
+  t.regex(err.message, /THROW_ID_13/);
+});
+
+test("01.22  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
+    const ranges = new Ranges();
+    ranges.push(1, undefined);
+  });
+  t.regex(err.message, /THROW_ID_12/);
+});
+
+test("01.23  -  PUSH() - wrong inputs", t => {
+  const err = t.throws(() => {
+    const ranges = new Ranges();
+    ranges.push(1, null);
+  });
+  t.regex(err.message, /THROW_ID_12/);
+});
+
+test("01.24  -  PUSH() - numbers but not natural integers", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push(1.2, 1);
   });
-  t.truthy(err07.message.includes("THROW_ID_09"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
-  const err08 = t.throws(() => {
+test("01.25  -  PUSH() - numbers but not natural integers", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.push(1, 1.3);
   });
-  t.truthy(err08.message.includes("THROW_ID_10"));
+  t.regex(err.message, /THROW_ID_10/);
 });
 
-test("01.05  -  PUSH() - third input arg is not string", t => {
+test("01.26  -  ADD() - first argument is .current() output of ranges", t => {
+  const ranges = new Ranges();
+  ranges.add([[1, 2, 3]]);
+  t.deepEqual(ranges.current(), [[1, 2, "3"]], "01.26");
+});
+
+test("01.27  -  ADD() - first argument is .current() output of ranges", t => {
   const err = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.push(1, 2, 3);
-  });
-  t.truthy(err.message.includes("THROW_ID_08"));
-});
-
-test("01.06  -  PUSH() - overloading", t => {
-  const err = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.push(1, 2, "aaa", 1);
-  });
-  t.truthy(err.message.includes("THROW_ID_03"));
-});
-
-test("01.07  -  ADD() - first argument is .current() output of ranges", t => {
-  const err01 = t.throws(() => {
-    const ranges = new Ranges();
-    ranges.add([[1, 2, 3]]);
-  });
-  t.truthy(err01.message.includes("THROW_ID_04"));
-
-  const err02 = t.throws(() => {
     const ranges = new Ranges();
     ranges.add([[1, 2, "z", 1]]);
   });
-  t.truthy(err02.message.includes("THROW_ID_03"));
+  t.regex(err.message, /THROW_ID_03/);
+});
 
-  const err03 = t.throws(() => {
+test("01.28  -  ADD() - first argument is .current() output of ranges", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add([[1, "z"]]);
   });
-  t.truthy(err03.message.includes("THROW_ID_05"));
+  t.regex(err.message, /THROW_ID_10/);
+});
 
-  const err04 = t.throws(() => {
+test("01.29  -  ADD() - first argument is .current() output of ranges", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add([["z", 1]]);
   });
-  t.truthy(err04.message.includes("THROW_ID_06"));
+  t.regex(err.message, /THROW_ID_09/);
+});
 
-  const err05 = t.throws(() => {
+test("01.30  -  ADD() - first argument is .current() output of ranges", t => {
+  const err = t.throws(() => {
     const ranges = new Ranges();
     ranges.add([["z", 1], 1]);
   });
-  t.truthy(err05.message.includes("THROW_ID_07"));
+  t.regex(err.message, /THROW_ID_09/);
 });
 
-test("01.08  -  ADD() - null being pushed", t => {
+test("01.31  -  ADD() - null being pushed", t => {
   const ranges1 = new Ranges();
   const ranges2 = new Ranges();
   t.deepEqual(
     ranges1.current(),
     null,
-    "01.08 - part1 - result about-to-be-pushed is really null"
+    "01.31.01 - part1 - result about-to-be-pushed is really null"
   );
   ranges2.push(ranges1.current());
   t.deepEqual(
     ranges2.current(),
     null,
-    "01.08 - part2 - does not throw when null is pushed"
+    "01.31.02 - part2 - does not throw when null is pushed"
   );
 });
 

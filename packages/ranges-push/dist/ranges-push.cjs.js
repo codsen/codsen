@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
-var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
 var clone = _interopDefault(require('lodash.clonedeep'));
@@ -82,9 +81,6 @@ var isNum = Number.isInteger;
 function isStr(something) {
   return typeof something === "string";
 }
-function mandatory(i) {
-  throw new Error("ranges-push/Ranges/add(): [THROW_ID_01] Missing ".concat(ordinal(i), " input parameter!"));
-}
 function prepNumStr(str) {
   return isNumStr(str, {
     includeZero: true
@@ -113,11 +109,8 @@ function () {
   }
   _createClass(Ranges, [{
     key: "add",
-    value: function add() {
+    value: function add(originalFrom, originalTo, addVal) {
       var _this = this;
-      var originalFrom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
-      var originalTo = arguments.length > 1 ? arguments[1] : undefined;
-      var addVal = arguments.length > 2 ? arguments[2] : undefined;
       for (var _len = arguments.length, etc = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
         etc[_key - 3] = arguments[_key];
       }
@@ -126,6 +119,27 @@ function () {
       }
       if (!existy(originalFrom) && !existy(originalTo)) {
         return;
+      } else if (existy(originalFrom) && !existy(originalTo)) {
+        if (isArr(originalFrom)) {
+          if (originalFrom.length) {
+            if (originalFrom.some(function (el) {
+              return isArr(el);
+            })) {
+              originalFrom.forEach(function (thing) {
+                if (isArr(thing)) {
+                  _this.add.apply(_this, _toConsumableArray(thing));
+                }
+              });
+              return;
+            } else if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+              this.add.apply(this, _toConsumableArray(originalFrom));
+            }
+          }
+          return;
+        }
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (".concat(JSON.stringify(originalFrom, null, 0), ") but second-one, \"to\" is not (").concat(JSON.stringify(originalTo, null, 0), ")"));
+      } else if (!existy(originalFrom) && existy(originalTo)) {
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
       }
       var from = isNumStr(originalFrom, {
         includeZero: true
@@ -133,51 +147,20 @@ function () {
       var to = isNumStr(originalTo, {
         includeZero: true
       }) ? parseInt(originalTo, 10) : originalTo;
-      if (isArr(originalFrom) && !existy(originalTo)) {
-        var culpritId;
-        var culpritVal;
-        if (originalFrom.length > 0) {
-          if (originalFrom.every(function (thing, index) {
-            if (isArr(thing)) {
-              return true;
-            }
-            culpritId = index;
-            culpritVal = thing;
-            return false;
-          })) {
-            originalFrom.forEach(function (arr, idx) {
-              if (isInt(prepNumStr(arr[0]), {
-                includeZero: true
-              })) {
-                if (isInt(prepNumStr(arr[1]), {
-                  includeZero: true
-                })) {
-                  if (!existy(arr[2]) || isStr(arr[2])) {
-                    _this.add.apply(_this, _toConsumableArray(arr));
-                  } else {
-                    throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_04] The ".concat(ordinal(idx), " ranges array's \"to add\" value is not string but ").concat(_typeof(arr[2]), "! It's equal to: ").concat(arr[2], "."));
-                  }
-                } else {
-                  throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_05] The ".concat(ordinal(idx), " ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ").concat(arr[1], "."));
-                }
-              } else {
-                throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_06] The ".concat(ordinal(idx), " ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ").concat(arr[0], "."));
-              }
-            });
-          } else {
-            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ".concat(culpritId, " we have ").concat(_typeof(culpritVal), "-type value:\n").concat(JSON.stringify(culpritVal, null, 4), "."));
-          }
-        }
-      } else if (isInt(from, {
+      if (isNum(addVal)) {
+        addVal = String(addVal);
+      }
+      if (isInt(from, {
         includeZero: true
       }) && isInt(to, {
         includeZero: true
       })) {
-        if (existy(addVal) && !isStr(addVal)) {
+        if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
         }
         if (existy(this.slices) && isArr(this.last()) && from === this.last()[1]) {
           this.last()[1] = to;
+          if (this.last()[2] === null || addVal === null) ;
           if (this.last()[2] !== null && existy(addVal)) {
             var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
             if (this.opts.limitToBeAddedWhitespace) {
