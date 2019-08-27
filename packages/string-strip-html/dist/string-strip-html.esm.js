@@ -617,6 +617,14 @@ function stripHtml(str, originalOpts) {
         (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
         (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))
       ) {
+        opts.cb({
+          tag,
+          deleteFrom: null,
+          deleteTo: null,
+          insert: null,
+          rangesArr: rangesToDelete,
+          proposedReturn: []
+        });
         tag = {};
         attrObj = {};
         continue;

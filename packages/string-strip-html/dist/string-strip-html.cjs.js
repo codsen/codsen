@@ -401,6 +401,14 @@ function stripHtml(str, originalOpts) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
       if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+        opts.cb({
+          tag: tag,
+          deleteFrom: null,
+          deleteTo: null,
+          insert: null,
+          rangesArr: rangesToDelete,
+          proposedReturn: []
+        });
         tag = {};
         attrObj = {};
         continue;

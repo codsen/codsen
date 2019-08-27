@@ -2736,3 +2736,43 @@ test("11.06 - opts.cb - readme example one", t => {
     "11.06.02"
   );
 });
+
+test("11.07 - opts.cb - ignored tags are also being pinged, with null values", t => {
+  const capturedTags = [];
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push(deleteFrom, deleteTo, insert);
+    capturedTags.push(tag.name);
+  };
+  const res = stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] });
+  t.deepEqual(res, "abc<hr>def ghi", "11.07.01");
+  t.deepEqual(capturedTags, ["hr", "br"], "11.07.02");
+});
+
+test("11.08 - opts.cb - ignored tags are also being pinged, with null values", t => {
+  const capturedTags = [];
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    insert,
+    rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push(deleteFrom, deleteTo, insert);
+    capturedTags.push(tag.name);
+  };
+  const res = stripHtml("abc<hr>def<br>ghi", {
+    returnRangesOnly: true,
+    cb,
+    ignoreTags: ["hr"]
+  });
+  t.deepEqual(res, [[10, 14, " "]], "11.08.01");
+  t.deepEqual(capturedTags, ["hr", "br"], "11.08.02");
+});
