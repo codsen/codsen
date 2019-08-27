@@ -69,7 +69,7 @@ function isStr(something) {
 
 // Looks what's the first non-whitespace character to the right of index "idx"
 // on string "str". Returns index of that first non-whitespace character.
-function right(str, idx) {
+function rightMain(str, idx, stopAtNewlines) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -78,20 +78,42 @@ function right(str, idx) {
   }
   if (!str[idx + 1]) {
     return null;
-  } else if (str[idx + 1] && str[idx + 1].trim().length) {
+  } else if (
+    str[idx + 1] &&
+    ((!stopAtNewlines && str[idx + 1].trim().length) ||
+      (stopAtNewlines &&
+        (str[idx + 1].trim().length || "\n\r".includes(str[idx + 1]))))
+  ) {
     // best case scenario - next character is non-whitespace:
     return idx + 1;
-  } else if (str[idx + 2] && str[idx + 2].trim().length) {
+  } else if (
+    str[idx + 2] &&
+    ((!stopAtNewlines && str[idx + 2].trim().length) ||
+      (stopAtNewlines &&
+        (str[idx + 2].trim().length || "\n\r".includes(str[idx + 2]))))
+  ) {
     // second best case scenario - second next character is non-whitespace:
     return idx + 2;
   }
   // worst case scenario - traverse forwards
   for (let i = idx + 1, len = str.length; i < len; i++) {
-    if (str[i].trim().length) {
+    if (
+      str[i] &&
+      ((!stopAtNewlines && str[i].trim().length) ||
+        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+    ) {
       return i;
     }
   }
   return null;
+}
+
+function right(str, idx) {
+  return rightMain(str, idx, false);
+}
+
+function rightStopAtNewLines(str, idx) {
+  return rightMain(str, idx, true);
 }
 
 //
@@ -116,7 +138,7 @@ function right(str, idx) {
 //
 
 // Finds the index of the first non-whitespace character on the left
-function left(str, idx) {
+function leftMain(str, idx, stopAtNewlines) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -125,20 +147,42 @@ function left(str, idx) {
   }
   if (idx < 1) {
     return null;
-  } else if (str[idx - 1] && str[idx - 1].trim().length) {
+  } else if (
+    str[idx - 1] &&
+    ((!stopAtNewlines && str[idx - 1].trim().length) ||
+      (stopAtNewlines &&
+        (str[idx - 1].trim().length || "\n\r".includes(str[idx - 1]))))
+  ) {
     // best case scenario - next character is non-whitespace:
     return idx - 1;
-  } else if (str[idx - 2] && str[idx - 2].trim().length) {
+  } else if (
+    str[idx - 2] &&
+    ((!stopAtNewlines && str[idx - 2].trim().length) ||
+      (stopAtNewlines &&
+        (str[idx - 2].trim().length || "\n\r".includes(str[idx - 2]))))
+  ) {
     // second best case scenario - second next character is non-whitespace:
     return idx - 2;
   }
   // worst case scenario - traverse backwards
   for (let i = idx; i--; ) {
-    if (str[i] && str[i].trim().length) {
+    if (
+      str[i] &&
+      ((!stopAtNewlines && str[i].trim().length) ||
+        (stopAtNewlines && (str[i].trim().length || "\n\r".includes(str[i]))))
+    ) {
       return i;
     }
   }
   return null;
+}
+
+function left(str, idx) {
+  return leftMain(str, idx, false);
+}
+
+function leftStopAtNewLines(str, idx) {
+  return leftMain(str, idx, true);
 }
 
 //
@@ -895,4 +939,13 @@ function chompRight(str, idx, ...args) {
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-export { left, right, leftSeq, rightSeq, chompLeft, chompRight };
+export {
+  left,
+  leftStopAtNewLines,
+  right,
+  rightStopAtNewLines,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight
+};

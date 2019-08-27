@@ -151,7 +151,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "{ left, right, leftSeq, rightSeq, chompLeft, chompRight }",
+    "req": "{ left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines }",
     "various": {
       "back_to_top": {
         "enabled": true,

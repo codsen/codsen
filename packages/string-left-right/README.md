@@ -15,7 +15,8 @@
 
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
+- [API - left() and right()](#api---left-and-right)
+- [API - leftStopAtNewLines() and rightStopAtNewLines()](#api---leftstopatnewlines-and-rightstopatnewlines)
 - [More complex lookups](#more-complex-lookups)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -35,7 +36,9 @@ const {
   leftSeq,
   rightSeq,
   chompLeft,
-  chompRight
+  chompRight,
+  leftStopAtNewLines,
+  rightStopAtNewLines
 } = require("string-left-right");
 ```
 
@@ -48,7 +51,9 @@ import {
   leftSeq,
   rightSeq,
   chompLeft,
-  chompRight
+  chompRight,
+  leftStopAtNewLines,
+  rightStopAtNewLines
 } from "string-left-right";
 ```
 
@@ -66,7 +71,9 @@ const {
   leftSeq,
   rightSeq,
   chompLeft,
-  chompRight
+  chompRight,
+  leftStopAtNewLines,
+  rightStopAtNewLines
 } = stringLeftRight;
 ```
 
@@ -74,8 +81,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 11 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 10 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 12 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 11 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-left-right.umd.js` | 15 KB |
 
 **[⬆ back to top](#)**
@@ -97,32 +104,60 @@ console.log(
 
 **[⬆ back to top](#)**
 
-## API
+## API - left() and right()
 
-Both exported functions have the same API. When you require/import this package, you get a plain object. That object has two methods - in other words, functions, assigned to a keys "left" and "right".
+Both exported functions have the same API.
 
 **left(str, \[, idx])**
 
 **right(str, \[, idx])**
 
-On both, the first input argument is a string, the optional second (marked by brackets above) is an offset index.
+On both, the first input argument is a string, the optional second (marked by brackets above) is a starting index. We "look" to the left or to the right of that index, then report a first non-whitespace character's index on that side. In absence, we return `null`.
 
-**[⬆ back to top](#)**
+For example,
 
-### API - `left()` and `right()` Input
-
-| Input argument | Key value's type | Obligatory? | Description                                                                    |
-| -------------- | ---------------- | ----------- | ------------------------------------------------------------------------------ |
-| `str`          | String           | yes         | String which we will process                                                   |
-| `idx`          | (natural) number | no          | Default is zero (beginning of a string), but you can point to any string index |
-
-The API is deliberately very forgiving; it never _throws_; if the result can't be determined, it returns `null`.
-
-**[⬆ back to top](#)**
-
-### API - `left()` and `right()` Output
+```js
+const { left } = require("string-left-right");
+// we start at index 2, which is character "b".
+const res = left("a b", 2);
+// the first non-whitespace character to the left of "b" is "a", at index 0:
+console.log(res);
+// => 0
+```
 
 The output is either **natural number index**, pointing to the nearest non-whitespace character on either side or `null`.
+
+**[⬆ back to top](#)**
+
+## API - leftStopAtNewLines() and rightStopAtNewLines()
+
+Both exported functions have the same API.
+
+**leftStopAtNewLines(str, \[, idx])**
+
+**rightStopAtNewLines(str, \[, idx])**
+
+On both, the first input argument is a string, the optional second (marked by brackets above) is a starting index.
+
+Both functions are same as `left()`/`right()`, except that besides non-whitespace characters, they also stop at CR and LF, line break characters.
+
+For example,
+
+```js
+const { right, rightStopAtNewLines } = require("string-left-right");
+const str = "a \n\n\nb";
+// right() does not stop at whitespace characters and linebreaks are
+// whitespace characters:
+const res1 = right(str, 0);
+// rightStopAtNewLines() will also stop at line break characters:
+const res2 = rightStopAtNewLines(str, 0);
+console.log(`res1 = ${res1}; res2 = ${res2}`);
+// res1 = 5; res2 = 2
+```
+
+PS. While you type Mac line ending LF as two characters, backwards slash and "n" - `\n` - it counts as one character.
+
+**[⬆ back to top](#)**
 
 ## More complex lookups
 
@@ -153,7 +188,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-left-right
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-[cov-img]: https://img.shields.io/badge/coverage-96.81%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-96.88%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-left-right

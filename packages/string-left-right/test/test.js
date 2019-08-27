@@ -1,7 +1,9 @@
 import test from "ava";
 import {
   left,
+  leftStopAtNewLines,
   right,
+  rightStopAtNewLines,
   leftSeq,
   rightSeq,
   chompLeft,
@@ -800,6 +802,89 @@ test(`05.16 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`hung
     0,
     "05.16"
   );
+});
+
+// 06. leftStopAtNewLines()
+// -----------------------------------------------------------------------------
+
+test(`06.01 - \u001b[${35}m${`leftStopAtNewLines`}\u001b[${39}m - null result cases`, t => {
+  t.is(leftStopAtNewLines("abc"), null, "06.01.01 - assumed default");
+  t.is(leftStopAtNewLines("abc", 0), null, "06.01.02 - hardcoded default");
+  t.is(leftStopAtNewLines("abc", null), null, "06.01.03 - hardcoded default");
+  t.is(leftStopAtNewLines("abc", 4), 2, "06.01.04 - at string.length + 1");
+  t.is(
+    leftStopAtNewLines("abc", 9),
+    2,
+    "06.01.05 - outside of the string.length"
+  );
+  t.is(leftStopAtNewLines(""), null, "06.01.06");
+  t.is(leftStopAtNewLines("", 0), null, "06.01.07");
+  t.is(leftStopAtNewLines("", null), null, "06.01.08");
+  t.is(leftStopAtNewLines("", undefined), null, "06.01.09");
+  t.is(leftStopAtNewLines("", 1), null, "06.01.10");
+});
+
+test(`06.02 - \u001b[${35}m${`leftStopAtNewLines`}\u001b[${39}m - normal use`, t => {
+  t.false(!!leftStopAtNewLines(""), "06.02.01");
+  t.false(!!leftStopAtNewLines("a"), "06.02.02");
+  t.is(leftStopAtNewLines("ab", 1), 0, "06.02.03");
+  t.is(leftStopAtNewLines("a b", 2), 0, "06.02.04");
+
+  t.is(leftStopAtNewLines("a \n\n\nb", 5), 4, "06.02.05");
+  t.is(leftStopAtNewLines("a \n\n\n b", 6), 4, "06.02.06");
+  t.is(leftStopAtNewLines("a \r\r\r b", 6), 4, "06.02.07");
+  t.is(leftStopAtNewLines("a\n\rb", 3), 2, "06.02.08");
+  t.is(leftStopAtNewLines("a\n\r b", 4), 2, "06.02.09");
+
+  t.is(leftStopAtNewLines("\n\n\n\n", 4), 3, "06.02.10");
+  t.is(leftStopAtNewLines("\n\n\n\n", 3), 2, "06.02.11");
+  t.is(leftStopAtNewLines("\n\n\n\n", 2), 1, "06.02.12");
+  t.is(leftStopAtNewLines("\n\n\n\n", 1), 0, "06.02.13");
+  t.is(leftStopAtNewLines("\n\n\n\n", 0), null, "06.02.14");
+});
+
+// 07. rightStopAtNewLines()
+// -----------------------------------------------------------------------------
+
+test(`07.01 - \u001b[${36}m${`rirightStopAtNewLinesght`}\u001b[${39}m - calling at string length`, t => {
+  t.is(rightStopAtNewLines(""), null, "07.01.01");
+  t.is(rightStopAtNewLines("", null), null, "07.01.02");
+  t.is(rightStopAtNewLines("", undefined), null, "07.01.03");
+  t.is(rightStopAtNewLines("", 0), null, "07.01.04");
+  t.is(rightStopAtNewLines("", 1), null, "07.01.05");
+  t.is(rightStopAtNewLines("", 99), null, "07.01.06");
+  t.is(rightStopAtNewLines("abc", 3), null, "07.01.07");
+  t.is(rightStopAtNewLines("abc", 99), null, "07.01.08");
+});
+
+test(`07.02 - \u001b[${36}m${`rightStopAtNewLines`}\u001b[${39}m - normal use`, t => {
+  t.false(!!rightStopAtNewLines(""), "07.02.01");
+  t.false(!!rightStopAtNewLines("a"), "07.02.02");
+
+  // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
+  t.is(rightStopAtNewLines("ab"), 1, "07.02.03");
+
+  // 2nd input arg was omitted so starting index is zero, which is "a".
+  // Now, to the right of it, there's a space, index 1, next non-whitespace char
+  // is b which is index 2.
+  t.is(rightStopAtNewLines("a b"), 2, "07.02.04");
+  t.is(rightStopAtNewLines("a b", 0), 2, "07.02.05");
+  t.is(rightStopAtNewLines("a b", 1), 2, "07.02.06");
+  t.is(rightStopAtNewLines("a b", 2), null, "07.02.07");
+
+  t.is(rightStopAtNewLines("a \n\n\nb"), 2, "07.02.08");
+  t.is(rightStopAtNewLines("a \n\n\nb", 0), 2, "07.02.09");
+  t.is(rightStopAtNewLines("a \n\n\nb", 1), 2, "07.02.10");
+  t.is(rightStopAtNewLines("a \n\n\nb", 2), 3, "07.02.11");
+  t.is(rightStopAtNewLines("a \n\n\nb", 3), 4, "07.02.12");
+  t.is(rightStopAtNewLines("a \n\n\nb", 4), 5, "07.02.13");
+  t.is(rightStopAtNewLines("a \n\n\nb", 5), null, "07.02.14");
+  t.is(rightStopAtNewLines("a \n\n\n\n"), 2, "07.02.15");
+  t.is(rightStopAtNewLines("a  "), null, "07.02.16");
+  t.is(rightStopAtNewLines("a  ", 0), null, "07.02.17");
+  t.is(rightStopAtNewLines("a  ", 1), null, "07.02.18");
+  t.is(rightStopAtNewLines("a  ", 2), null, "07.02.19");
+  t.is(rightStopAtNewLines("a  ", 3), null, "07.02.20");
 });
 
 // -----------------------------------------------------------------------------
