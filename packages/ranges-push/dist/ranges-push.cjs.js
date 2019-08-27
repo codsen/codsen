@@ -124,7 +124,7 @@ function () {
       if (etc.length > 0) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
       }
-      if (originalFrom === null && originalTo === undefined && addVal === undefined) {
+      if (!existy(originalFrom) && !existy(originalTo)) {
         return;
       }
       var from = isNumStr(originalFrom, {

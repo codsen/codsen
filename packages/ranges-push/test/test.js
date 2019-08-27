@@ -307,6 +307,21 @@ test("02.12  -  PUSH() - adds two overlapping ranges", t => {
   t.deepEqual(ranges.current(), [[0, 9]], "02.12");
 });
 
+test("02.13  -  PUSH() - nulls, empty result", t => {
+  const ranges = new Ranges();
+  ranges.push(null, null); // two
+  ranges.push(null, null, null); // three
+  t.deepEqual(ranges.current(), null, "02.13");
+});
+
+test("02.14  -  PUSH() - nulls, previous result retained", t => {
+  const ranges = new Ranges();
+  ranges.push(0, 5);
+  ranges.push(null, null); // two
+  ranges.push(null, null, null); // three
+  t.deepEqual(ranges.current(), [[0, 5]], "02.14");
+});
+
 // -----------------------------------------------------------------------------
 // 03. adding with third argument, various cases
 // -----------------------------------------------------------------------------

@@ -67,11 +67,7 @@ class Ranges {
         )}`
       );
     }
-    if (
-      originalFrom === null &&
-      originalTo === undefined &&
-      addVal === undefined
-    ) {
+    if (!existy(originalFrom) && !existy(originalTo)) {
       return;
     }
     const from = isNumStr(originalFrom, { includeZero: true })

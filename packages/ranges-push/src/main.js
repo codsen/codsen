@@ -75,11 +75,8 @@ class Ranges {
         )}`
       );
     }
-    if (
-      originalFrom === null &&
-      originalTo === undefined &&
-      addVal === undefined
-    ) {
+
+    if (!existy(originalFrom) && !existy(originalTo)) {
       console.log(`083 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} blank`);
       return; // do nothing about it
     }
