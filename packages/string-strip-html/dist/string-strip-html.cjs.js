@@ -196,6 +196,9 @@ function stripHtml(str, originalOpts) {
       stringToInsertAfter = "".concat(lineBreaks).concat(hrefDump.hrefValue).concat(lineBreaks);
     }
   }
+  function characterSuitableForNames(_char2) {
+    return /[-_A-Za-z0-9]/.test(_char2);
+  }
   if (typeof str !== "string") {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   }
@@ -397,52 +400,27 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || str[i] === "/" || str[i] === "<" || str[i] === ">" || str[i].trim().length !== 0 && str[i + 1] === undefined)) {
+    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
-      if (str[i] === ">") {
-        tag.lastClosingBracketAt = i;
-      } else if (str[stringLeftRight.right(str, i)] === ">") {
-        tag.lastClosingBracketAt = stringLeftRight.right(str, i);
-      }
-      if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
-        opts.cb({
-          tag: tag,
-          deleteFrom: null,
-          deleteTo: null,
-          insert: null,
-          rangesArr: rangesToDelete,
-          proposedReturn: []
-        });
-        tag = {};
-        attrObj = {};
-        continue;
-      }
       if (str[tag.nameStarts - 1] !== "!" &&
       tag.name.replace(/-/g, "").length === 0) {
         tag = {};
         continue;
       }
-      if (!tag.onlyPlausible && (str[i + 1] === undefined || str[i] === "<")) {
-        var endingRangeIndex = i + 1;
-        if (str[i] === "<") {
-          endingRangeIndex = i;
-        }
-        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt || endingRangeIndex);
-        if (!stringLeftRight.left(str, tag.leftOuterWhitespace) || !stringLeftRight.right(str, endingRangeIndex - 1)) {
-          whiteSpaceCompensation = "";
-        }
+      if (str[i] === "<") {
+        calculateHrefToBeInserted();
+        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
         opts.cb({
           tag: tag,
           deleteFrom: tag.leftOuterWhitespace,
-          deleteTo: endingRangeIndex,
-          insert: whiteSpaceCompensation,
+          deleteTo: i,
+          insert: "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation),
           rangesArr: rangesToDelete,
-          proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, whiteSpaceCompensation]
+          proposedReturn: [tag.leftOuterWhitespace, i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
         });
+        resetHrefMarkers();
         treatRangedTags(i);
-        tag = {};
-        attrObj = {};
       }
     }
     if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
@@ -524,48 +502,55 @@ function stripHtml(str, originalOpts) {
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
         if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (
-        str[i + 1] === undefined || str[i + 1] === "<")) {
-          if (str[i + 1] === undefined) {
-            var tagName = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
-            if (opts.ignoreTags.includes(tagName)) {
-              tag = {};
-              attrObj = {};
-              continue;
-            }
-            if (definitelyTagNames.concat(singleLetterTags).includes(tagName) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length)) {
-              calculateHrefToBeInserted();
-              var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
-              opts.cb({
-                tag: tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i + 1,
-                insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
-                rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
-              });
-              resetHrefMarkers();
-              treatRangedTags(i);
-            } else {
-              continue;
-            }
+        str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
+          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+          if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.includes(tag.name)) {
+            tag = {};
+            attrObj = {};
+            continue;
+          }
+          if (definitelyTagNames.concat(singleLetterTags).includes(tag.name) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+            calculateHrefToBeInserted();
+            var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+            opts.cb({
+              tag: tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i + 1,
+              insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
+              rangesArr: rangesToDelete,
+              proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
+            });
+            resetHrefMarkers();
+            treatRangedTags(i);
           }
         }
       } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
-        var _endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
-        if (opts.trimOnlySpaces && _endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
-          _endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+        var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+        if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+          endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
         }
-        if (!tag.onlyPlausible ||
+        if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
+          opts.cb({
+            tag: tag,
+            deleteFrom: null,
+            deleteTo: null,
+            insert: null,
+            rangesArr: rangesToDelete,
+            proposedReturn: []
+          });
+          tag = {};
+          attrObj = {};
+        } else if (!tag.onlyPlausible ||
         tag.attributes.length === 0 && tag.name && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) ||
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
         })) {
-          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, _endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted();
           var insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2);
-          if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, _endingRangeIndex - 1)) {
+          if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, endingRangeIndex - 1)) {
             insert = "";
           }
           if (insert && insert.length > 1 && !insert.trim().length && !insert.includes("\n") && !insert.includes("\r")) {
@@ -574,10 +559,10 @@ function stripHtml(str, originalOpts) {
           opts.cb({
             tag: tag,
             deleteFrom: tag.leftOuterWhitespace,
-            deleteTo: _endingRangeIndex,
+            deleteTo: endingRangeIndex,
             insert: insert,
             rangesArr: rangesToDelete,
-            proposedReturn: [tag.leftOuterWhitespace, _endingRangeIndex, insert]
+            proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
           });
           resetHrefMarkers();
           treatRangedTags(i);
@@ -590,7 +575,7 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (str[i] === "<" && str[i - 1] !== "<") {
-      if (str[i + 1] === ">") {
+      if (str[stringLeftRight.right(str, i)] === ">") {
         continue;
       } else {
         if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {

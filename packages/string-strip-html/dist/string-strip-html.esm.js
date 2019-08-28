@@ -13,7 +13,7 @@ import isObj from 'lodash.isplainobject';
 import trim from 'lodash.trim';
 import without from 'lodash.without';
 import ent from 'ent';
-import { right, left } from 'string-left-right';
+import { right } from 'string-left-right';
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
@@ -291,6 +291,9 @@ function stripHtml(str, originalOpts) {
       const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
       stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
     }
+  }
+  function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
   }
   if (typeof str !== "string") {
     throw new TypeError(
@@ -601,11 +604,7 @@ function stripHtml(str, originalOpts) {
     if (
       tag.nameStarts !== undefined &&
       tag.nameEnds === undefined &&
-      (str[i].trim().length === 0 ||
-        str[i] === "/" ||
-        str[i] === "<" ||
-        str[i] === ">" ||
-        (str[i].trim().length !== 0 && str[i + 1] === undefined))
+      (str[i].trim().length === 0 || !characterSuitableForNames(str[i]))
     ) {
       tag.nameEnds = i;
       tag.name = str.slice(
@@ -613,27 +612,6 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds +
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
-      if (str[i] === ">") {
-        tag.lastClosingBracketAt = i;
-      } else if (str[right(str, i)] === ">") {
-        tag.lastClosingBracketAt = right(str, i);
-      }
-      if (
-        (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
-        (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))
-      ) {
-        opts.cb({
-          tag,
-          deleteFrom: null,
-          deleteTo: null,
-          insert: null,
-          rangesArr: rangesToDelete,
-          proposedReturn: []
-        });
-        tag = {};
-        attrObj = {};
-        continue;
-      }
       if (
         str[tag.nameStarts - 1] !== "!" &&
         tag.name.replace(/-/g, "").length === 0
@@ -641,40 +619,30 @@ function stripHtml(str, originalOpts) {
         tag = {};
         continue;
       }
-      if (!tag.onlyPlausible && (str[i + 1] === undefined || str[i] === "<")) {
-        let endingRangeIndex = i + 1;
-        if (str[i] === "<") {
-          endingRangeIndex = i;
-        }
-        let whiteSpaceCompensation = calculateWhitespaceToInsert(
+      if (str[i] === "<") {
+        calculateHrefToBeInserted();
+        const whiteSpaceCompensation = calculateWhitespaceToInsert(
           str,
           i,
           tag.leftOuterWhitespace,
-          endingRangeIndex,
+          i,
           tag.lastOpeningBracketAt,
-          tag.lastClosingBracketAt || endingRangeIndex
+          i
         );
-        if (
-          !left(str, tag.leftOuterWhitespace) ||
-          !right(str, endingRangeIndex - 1)
-        ) {
-          whiteSpaceCompensation = "";
-        }
         opts.cb({
           tag,
           deleteFrom: tag.leftOuterWhitespace,
-          deleteTo: endingRangeIndex,
-          insert: whiteSpaceCompensation,
+          deleteTo: i,
+          insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
           rangesArr: rangesToDelete,
           proposedReturn: [
             tag.leftOuterWhitespace,
-            endingRangeIndex,
-            whiteSpaceCompensation
+            i,
+            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
           ]
         });
+        resetHrefMarkers();
         treatRangedTags(i);
-        tag = {};
-        attrObj = {};
       }
     }
     if (
@@ -817,48 +785,49 @@ function stripHtml(str, originalOpts) {
         if (
           tag.lastOpeningBracketAt < i &&
           str[i] !== "<" &&
-          (str[i + 1] === undefined || str[i + 1] === "<")
+          (str[i + 1] === undefined || str[i + 1] === "<") &&
+          tag.nameContainsLetters
         ) {
-          if (str[i + 1] === undefined) {
-            const tagName = str
-              .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
-              .toLowerCase();
-            if (opts.ignoreTags.includes(tagName)) {
-              tag = {};
-              attrObj = {};
-              continue;
-            }
-            if (
-              definitelyTagNames.concat(singleLetterTags).includes(tagName) &&
+          tag.name = str
+            .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
+            .toLowerCase();
+          if (
+            opts.ignoreTags.includes(tag.name) ||
+            (tag.onlyPlausible && !definitelyTagNames.includes(tag.name))
+          ) {
+            tag = {};
+            attrObj = {};
+            continue;
+          }
+          if (
+            (definitelyTagNames.concat(singleLetterTags).includes(tag.name) &&
               (tag.onlyPlausible === false ||
-                (tag.onlyPlausible === true && tag.attributes.length))
-            ) {
-              calculateHrefToBeInserted();
-              const whiteSpaceCompensation = calculateWhitespaceToInsert(
-                str,
-                i,
+                (tag.onlyPlausible === true && tag.attributes.length))) ||
+            str[i + 1] === undefined
+          ) {
+            calculateHrefToBeInserted();
+            const whiteSpaceCompensation = calculateWhitespaceToInsert(
+              str,
+              i,
+              tag.leftOuterWhitespace,
+              i + 1,
+              tag.lastOpeningBracketAt,
+              tag.lastClosingBracketAt
+            );
+            opts.cb({
+              tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: i + 1,
+              insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+              rangesArr: rangesToDelete,
+              proposedReturn: [
                 tag.leftOuterWhitespace,
                 i + 1,
-                tag.lastOpeningBracketAt,
-                tag.lastClosingBracketAt
-              );
-              opts.cb({
-                tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i + 1,
-                insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-                rangesArr: rangesToDelete,
-                proposedReturn: [
-                  tag.leftOuterWhitespace,
-                  i + 1,
-                  `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
-                ]
-              });
-              resetHrefMarkers();
-              treatRangedTags(i);
-            } else {
-              continue;
-            }
+                `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
+              ]
+            });
+            resetHrefMarkers();
+            treatRangedTags(i);
           }
         }
       } else if (
@@ -875,6 +844,20 @@ function stripHtml(str, originalOpts) {
           endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
         }
         if (
+          (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
+          (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))
+        ) {
+          opts.cb({
+            tag,
+            deleteFrom: null,
+            deleteTo: null,
+            insert: null,
+            rangesArr: rangesToDelete,
+            proposedReturn: []
+          });
+          tag = {};
+          attrObj = {};
+        } else if (
           !tag.onlyPlausible ||
           ((tag.attributes.length === 0 &&
             tag.name &&
@@ -930,7 +913,7 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (str[i] === "<" && str[i - 1] !== "<") {
-      if (str[i + 1] === ">") {
+      if (str[right(str, i)] === ">") {
         continue;
       } else {
         if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
