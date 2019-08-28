@@ -897,6 +897,15 @@ function stripHtml(str, originalOpts) {
           ) {
             insert = "";
           }
+          if (
+            insert &&
+            insert.length > 1 &&
+            !insert.trim().length &&
+            !insert.includes("\n") &&
+            !insert.includes("\r")
+          ) {
+            insert = " ";
+          }
           opts.cb({
             tag,
             deleteFrom: tag.leftOuterWhitespace,

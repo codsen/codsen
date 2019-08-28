@@ -2776,3 +2776,44 @@ test("11.08 - opts.cb - ignored tags are also being pinged, with null values", t
   t.deepEqual(res, [[10, 14, " "]], "11.08.01");
   t.deepEqual(capturedTags, ["hr", "br"], "11.08.02");
 });
+
+test("11.09 - opts.cb - cb.tag contents are right", t => {
+  const capturedTags = [];
+  const rangesArr = [];
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    insert
+    // rangesArr
+    // proposedReturn
+  }) => {
+    rangesArr.push([deleteFrom, deleteTo, insert]);
+    capturedTags.push(tag);
+  };
+
+  // notice there's no assigning to a variable, we just rely on a callback:
+  stripHtml("a<br/>b", {
+    cb
+  });
+
+  t.deepEqual(rangesArr, [[1, 6, " "]], "11.09.01");
+  t.deepEqual(
+    capturedTags,
+    [
+      {
+        attributes: [],
+        lastClosingBracketAt: 5,
+        lastOpeningBracketAt: 1,
+        slashPresent: 4,
+        leftOuterWhitespace: 1,
+        onlyPlausible: false,
+        nameStarts: 2,
+        nameContainsLetters: true,
+        nameEnds: 4,
+        name: "br"
+      }
+    ],
+    "11.09.02"
+  );
+});
