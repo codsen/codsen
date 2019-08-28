@@ -13,7 +13,7 @@ import isObj from 'lodash.isplainobject';
 import trim from 'lodash.trim';
 import without from 'lodash.without';
 import ent from 'ent';
-import { left, right } from 'string-left-right';
+import { right, left } from 'string-left-right';
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
@@ -613,6 +613,11 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds +
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
+      if (str[i] === ">") {
+        tag.lastClosingBracketAt = i;
+      } else if (str[right(str, i)] === ">") {
+        tag.lastClosingBracketAt = right(str, i);
+      }
       if (
         (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
         (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))

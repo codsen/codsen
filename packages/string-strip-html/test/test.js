@@ -2779,25 +2779,35 @@ test("11.08 - opts.cb - ignored tags are also being pinged, with null values", t
 
 test("11.09 - opts.cb - cb.tag contents are right", t => {
   const capturedTags = [];
-  const rangesArr = [];
+  // const rangesArr = [];
   const cb = ({
-    tag,
-    deleteFrom,
-    deleteTo,
-    insert
+    tag
+    // deleteFrom,
+    // deleteTo,
+    // insert
     // rangesArr
     // proposedReturn
   }) => {
-    rangesArr.push([deleteFrom, deleteTo, insert]);
     capturedTags.push(tag);
   };
 
   // notice there's no assigning to a variable, we just rely on a callback:
   stripHtml("a<br/>b", {
-    cb
+    cb,
+    ignoreTags: ["b", "strong", "i", "em", "br", "sup"],
+    onlyStripTags: [],
+    stripTogetherWithTheirContents: ["script", "style", "xml"],
+    skipHtmlDecoding: true,
+    returnRangesOnly: true,
+    trimOnlySpaces: true,
+    dumpLinkHrefsNearby: {
+      enabled: false,
+      putOnNewLine: false,
+      wrapHeads: "",
+      wrapTails: ""
+    }
   });
 
-  t.deepEqual(rangesArr, [[1, 6, " "]], "11.09.01");
   t.deepEqual(
     capturedTags,
     [
@@ -2814,6 +2824,6 @@ test("11.09 - opts.cb - cb.tag contents are right", t => {
         name: "br"
       }
     ],
-    "11.09.02"
+    "11.09"
   );
 });

@@ -400,6 +400,11 @@ function stripHtml(str, originalOpts) {
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || str[i] === "/" || str[i] === "<" || str[i] === ">" || str[i].trim().length !== 0 && str[i + 1] === undefined)) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+      if (str[i] === ">") {
+        tag.lastClosingBracketAt = i;
+      } else if (str[stringLeftRight.right(str, i)] === ">") {
+        tag.lastClosingBracketAt = stringLeftRight.right(str, i);
+      }
       if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
         opts.cb({
           tag: tag,
