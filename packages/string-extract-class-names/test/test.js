@@ -1357,6 +1357,29 @@ test("03.06 - old bracket notation - ids that need trimming", t => {
   t.deepEqual(e(`td[id=' abc-def ']`), ["#abc-def"], "03.06.04");
 });
 
+test("03.07 - old bracket notation - empty values", t => {
+  // .
+  t.deepEqual(e(`td[class=']`), [], "03.07.01");
+  t.deepEqual(e(`td[class='']`), [], "03.07.02");
+  t.deepEqual(e(`td[class="]`), [], "03.07.03");
+  t.deepEqual(e(`td[class=""]`), [], "03.07.04");
+
+  t.deepEqual(e(`td [ class= ' ]`), [], "03.07.05");
+  t.deepEqual(e(`td [ class= '' ]`), [], "03.07.06");
+  t.deepEqual(e(`td [ class= " ]`), [], "03.07.07");
+  t.deepEqual(e(`td [ class= "" ]`), [], "03.07.08");
+  // #
+  t.deepEqual(e(`td[id=']`), [], "03.07.09");
+  t.deepEqual(e(`td[id='']`), [], "03.07.10");
+  t.deepEqual(e(`td[id="]`), [], "03.07.11");
+  t.deepEqual(e(`td[id=""]`), [], "03.07.12");
+
+  t.deepEqual(e(`td [ id= ' ]`), [], "03.07.13");
+  t.deepEqual(e(`td [ id= '' ]`), [], "03.07.14");
+  t.deepEqual(e(`td [ id= " ]`), [], "03.07.15");
+  t.deepEqual(e(`td [ id= "" ]`), [], "03.07.16");
+});
+
 // ==============================
 // Precautions
 // ==============================
