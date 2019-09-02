@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import applyRanges from 'ranges-apply';
 import Slices from 'ranges-push';
-import { matchRightIncl, matchRight } from 'string-match-left-right';
+import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import expand from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
@@ -717,7 +717,8 @@ function crush(str, originalOpts) {
         if (
           breakToTheLeftOfFirstLetters.length &&
           matchRightIncl(str, i, opts.breakToTheLeftOf) &&
-          left(str, i) !== null
+          left(str, i) !== null &&
+          (!str.slice(i).startsWith("<![endif]") || !matchLeft(str, i, "<!--"))
         ) {
           finalIndexesToDelete.push(i, i, "\n");
           stageFrom = null;

@@ -60,7 +60,7 @@ test(`08.01-0${
           }% size savings)`
         );
         console.log(
-          `08.0${rowNum + 1}.03 - ${
+          `063.0${rowNum + 1}.03 - ${
             websiteArr[1]
           } - only indentations removed: ${
             minifiedResult1.log.percentageReducedOfOriginal
@@ -90,14 +90,14 @@ test(`08.01-0${
           }% size savings)`
         );
         console.log(
-          `08.0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
+          `093.0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
             minifiedResult2.log.percentageReducedOfOriginal
           }% size savings`
         );
       })
       .catch(err => {
         console.log(
-          `08.0${rowNum + 1}.xx - ${
+          `100.0${rowNum + 1}.xx - ${
             websiteArr[1]
           } - ${`\u001b[${31}m${`could not fetch the web page! Moving on...`}\u001b[${39}m`}`
         );

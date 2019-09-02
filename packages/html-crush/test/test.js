@@ -335,6 +335,17 @@ test(`01.20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with c
   );
 });
 
+test(`01.21 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - comments`, t => {
+  const src = `<!--<![endif]-->`;
+  t.deepEqual(
+    m(src, {
+      removeLineBreaks: true
+    }).result,
+    src,
+    "01.21.01"
+  );
+});
+
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
@@ -492,7 +503,7 @@ test(`02.04 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - opts.lineLengthLimit`, t
     .result.split("\n")
     .forEach((line, i) => {
       // console.log(
-      //   `156: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `0506: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
       //     line,
       //     null,
       //     4
@@ -505,7 +516,7 @@ test(`02.04 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - opts.lineLengthLimit`, t
 
   minified8.split("\n").forEach((line, i) => {
     // console.log(
-    //   `167: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `0519: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
     //     line,
     //     null,
     //     4

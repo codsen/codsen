@@ -433,7 +433,7 @@ function crush(str, originalOpts) {
         }
       }
       if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
-        if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null) {
+        if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !stringMatchLeftRight.matchLeft(str, _i, "<!--"))) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;
           stageTo = null;
