@@ -7,6 +7,8 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
  */
 
+import { left, right } from 'string-left-right';
+
 function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;
@@ -36,24 +38,71 @@ function stringExtractClassNames(input, returnRangesInstead) {
     );
   }
   const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
+  let stateCurrentlyIs;
+  function isLatinLetter(char) {
+    return (
+      typeof char === "string" &&
+      char.length === 1 &&
+      ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+        (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+    );
+  }
   let selectorStartsAt = null;
   const result = [];
   for (let i = 0, len = input.length; i < len; i++) {
     if (
       selectorStartsAt !== null &&
+      i >= selectorStartsAt &&
       (badChars.includes(input[i]) || input[i].trim().length === 0)
     ) {
       if (i > selectorStartsAt + 1) {
         if (returnRangesInstead) {
           result.push([selectorStartsAt, i]);
         } else {
-          result.push(input.slice(selectorStartsAt, i));
+          result.push(
+            `${stateCurrentlyIs || ""}${input.slice(selectorStartsAt, i)}`
+          );
+        }
+        if (stateCurrentlyIs) {
+          stateCurrentlyIs = undefined;
         }
       }
       selectorStartsAt = null;
     }
     if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
       selectorStartsAt = i;
+    }
+    if (
+      input.slice(i).startsWith("class") &&
+      input[left(input, i)] === "[" &&
+      input[right(input, i + 4)] === "="
+    ) {
+      if (isLatinLetter(input[right(input, right(input, i + 4))])) {
+        selectorStartsAt = right(input, right(input, i + 4));
+      } else if (`'"`.includes(input[right(input, right(input, i + 4))])) {
+        if (
+          isLatinLetter(input[right(input, right(input, right(input, i + 4)))])
+        ) {
+          selectorStartsAt = right(input, right(input, right(input, i + 4)));
+        }
+      }
+      stateCurrentlyIs = ".";
+    }
+    if (
+      input.slice(i).startsWith("id") &&
+      input[left(input, i)] === "[" &&
+      input[right(input, i + 1)] === "="
+    ) {
+      if (isLatinLetter(input[right(input, right(input, i + 1))])) {
+        selectorStartsAt = right(input, right(input, i + 1));
+      } else if (`'"`.includes(input[right(input, right(input, i + 1))])) {
+        if (
+          isLatinLetter(input[right(input, right(input, right(input, i + 1)))])
+        ) {
+          selectorStartsAt = right(input, right(input, right(input, i + 1)));
+        }
+      }
+      stateCurrentlyIs = "#";
     }
     if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
       if (returnRangesInstead) {

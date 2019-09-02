@@ -1323,6 +1323,40 @@ test("03.02 - classes recognised after brackets", t => {
   );
 });
 
+test("03.03 - old bracket notation - classes", t => {
+  t.deepEqual(e("td[class=rr]"), [".rr"], "03.03.01");
+  t.deepEqual(e("td [ class = rr ]"), [".rr"], "03.03.02");
+  t.deepEqual(e("td [ class = abc-def ]"), [".abc-def"], "03.03.03");
+  t.deepEqual(e(`td [ class = "abc-def" ]`), [".abc-def"], "03.03.04");
+  t.deepEqual(e(`td [ class = 'abc-def' ]`), [".abc-def"], "03.03.05");
+  t.deepEqual(e(`td[class="abc-def"]`), [".abc-def"], "03.03.06");
+  t.deepEqual(e(`td[class='abc-def']`), [".abc-def"], "03.03.07");
+});
+
+test("03.04 - old bracket notation - classes that need trimming", t => {
+  t.deepEqual(e(`td [ class = " abc-def " ]`), [".abc-def"], "03.04.01");
+  t.deepEqual(e(`td [ class = ' abc-def ' ]`), [".abc-def"], "03.04.02");
+  t.deepEqual(e(`td[class=" abc-def "]`), [".abc-def"], "03.04.03");
+  t.deepEqual(e(`td[class=' abc-def ']`), [".abc-def"], "03.04.04");
+});
+
+test("03.05 - old bracket notation - ids", t => {
+  t.deepEqual(e("td[id=rr]"), ["#rr"], "03.05.01");
+  t.deepEqual(e("td [ id = rr ]"), ["#rr"], "03.05.02");
+  t.deepEqual(e("td [ id = abc-def ]"), ["#abc-def"], "03.05.03");
+  t.deepEqual(e(`td [ id = "abc-def" ]`), ["#abc-def"], "03.05.04");
+  t.deepEqual(e(`td [ id = 'abc-def' ]`), ["#abc-def"], "03.05.05");
+  t.deepEqual(e(`td[id="abc-def"]`), ["#abc-def"], "03.05.06");
+  t.deepEqual(e(`td[id='abc-def']`), ["#abc-def"], "03.05.07");
+});
+
+test("03.06 - old bracket notation - ids that need trimming", t => {
+  t.deepEqual(e(`td [ id = " abc-def " ]`), ["#abc-def"], "03.06.01");
+  t.deepEqual(e(`td [ id = ' abc-def ' ]`), ["#abc-def"], "03.06.02");
+  t.deepEqual(e(`td[id=" abc-def "]`), ["#abc-def"], "03.06.03");
+  t.deepEqual(e(`td[id=' abc-def ']`), ["#abc-def"], "03.06.04");
+});
+
 // ==============================
 // Precautions
 // ==============================

@@ -9,6 +9,8 @@
 
 'use strict';
 
+var stringLeftRight = require('string-left-right');
+
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -38,21 +40,48 @@ function stringExtractClassNames(input, returnRangesInstead) {
     throw new TypeError("string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
   }
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
+  var stateCurrentlyIs;
+  function isLatinLetter(_char) {
+    return typeof _char === "string" && _char.length === 1 && (_char.charCodeAt(0) > 64 && _char.charCodeAt(0) < 91 || _char.charCodeAt(0) > 96 && _char.charCodeAt(0) < 123);
+  }
   var selectorStartsAt = null;
   var result = [];
   for (var i = 0, len = input.length; i < len; i++) {
-    if (selectorStartsAt !== null && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
+    if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
       if (i > selectorStartsAt + 1) {
         if (returnRangesInstead) {
           result.push([selectorStartsAt, i]);
         } else {
-          result.push(input.slice(selectorStartsAt, i));
+          result.push("".concat(stateCurrentlyIs || "").concat(input.slice(selectorStartsAt, i)));
+        }
+        if (stateCurrentlyIs) {
+          stateCurrentlyIs = undefined;
         }
       }
       selectorStartsAt = null;
     }
     if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
       selectorStartsAt = i;
+    }
+    if (input.slice(i).startsWith("class") && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 4)] === "=") {
+      if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))])) {
+        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 4));
+      } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))])) {
+        if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 4)))])) {
+          selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 4)));
+        }
+      }
+      stateCurrentlyIs = ".";
+    }
+    if (input.slice(i).startsWith("id") && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 1)] === "=") {
+      if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))])) {
+        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 1));
+      } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))])) {
+        if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 1)))])) {
+          selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 1)));
+        }
+      }
+      stateCurrentlyIs = "#";
     }
     if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
       if (returnRangesInstead) {

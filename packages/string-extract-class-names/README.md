@@ -44,11 +44,11 @@ const extract = stringExtractClassNames;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-class-names.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-class-names.esm.js` | 2 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-extract-class-names.umd.js` | 1 KB |
+| Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-class-names.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-class-names.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-extract-class-names.umd.js` | 11 KB |
 
 **[⬆ back to top](#)**
 
