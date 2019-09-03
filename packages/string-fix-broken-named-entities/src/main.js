@@ -5,7 +5,6 @@ import {
   entStartsWith,
   entEndsWith,
   entStartsWithCaseInsensitive,
-  // entEndsWithCaseInsensitive,
   brokenNamedEntities,
   decode,
   maxLength,
