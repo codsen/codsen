@@ -192,6 +192,7 @@
     "ranges-push": "^3.3.4",
     "regex-empty-conditional-comments": "^1.8.40",
     "string-extract-class-names": "^5.8.40",
+    "string-left-right": "^2.2.21",
     "string-match-left-right": "^3.11.4",
     "string-range-expander": "^1.10.41",
     "string-uglify": "^1.2.13"

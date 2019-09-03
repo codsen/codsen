@@ -19,6 +19,7 @@ var pullAllWithGlob = _interopDefault(require('array-pull-all-with-glob'));
 var extract = _interopDefault(require('string-extract-class-names'));
 var intersection = _interopDefault(require('lodash.intersection'));
 var expander = _interopDefault(require('string-range-expander'));
+var stringLeftRight = require('string-left-right');
 var stringUglify = require('string-uglify');
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var applyRanges = _interopDefault(require('ranges-apply'));
@@ -103,6 +104,9 @@ function comb(str, opts) {
       nameStart: null
     }, initObj);
   }
+  function isLatinLetter(_char2) {
+    return typeof _char2 === "string" && _char2.length === 1 && (_char2.charCodeAt(0) > 64 && _char2.charCodeAt(0) < 91 || _char2.charCodeAt(0) > 96 && _char2.charCodeAt(0) < 123);
+  }
   var i;
   var prevailingEOL;
   var styleStartedAt;
@@ -131,6 +135,7 @@ function comb(str, opts) {
   var headSelectorChunkStartedAt;
   var selectorChunkCanBeDeleted = false;
   var singleSelectorStartedAt;
+  var singleSelectorType;
   var headWholeLineCanBeDeleted;
   var lastKeptChunksCommaAt = null;
   var onlyDeletedChunksFollow = false;
@@ -140,6 +145,7 @@ function comb(str, opts) {
   var commentsLength = 0;
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
+  var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`\t\n";
   var atRulesWhichMightWrapStyles = ["media", "supports", "document"];
   var atRulesWhichNeedToBeIgnored = ["font-feature-values", "counter-style", "namespace", "font-face", "keyframes", "viewport", "charset", "import", "page"];
@@ -227,7 +233,7 @@ function comb(str, opts) {
   var allClassesAndIdsWithinBody;
   var headSelectorsCountClone;
   var currentPercentageDone;
-  var stateWithinHeadStyles;
+  var stateWithinStyleTag;
   var currentlyWithinQuotes;
   var whitespaceStartedAt;
   var bodyClassesToDelete;
@@ -256,7 +262,7 @@ function comb(str, opts) {
     singleSelectorStartedAt = null;
     bodyId = resetBodyClassOrId();
     commentNearlyStartedAt = null;
-    stateWithinHeadStyles = false;
+    stateWithinStyleTag = false;
     lastKeptChunksCommaAt = null;
     currentlyWithinQuotes = null;
     whitespaceStartedAt = null;
@@ -303,14 +309,14 @@ function comb(str, opts) {
           endingsCount.r++;
         }
       }
-      if (stateWithinHeadStyles !== true && (
+      if (stateWithinStyleTag !== true && (
       styleEndedAt === null && styleStartedAt !== null && i >= styleStartedAt ||
       styleStartedAt !== null && styleEndedAt !== null && styleStartedAt > styleEndedAt && styleStartedAt < i)) {
-        stateWithinHeadStyles = true;
+        stateWithinStyleTag = true;
         stateWithinBody = false;
       } else if (stateWithinBody !== true && bodyStartedAt !== null && (styleStartedAt === null || styleStartedAt < i) && (styleEndedAt === null || styleEndedAt < i)) {
         stateWithinBody = true;
-        stateWithinHeadStyles = false;
+        stateWithinStyleTag = false;
       }
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
         if (insideCurlyBraces) {
@@ -350,6 +356,9 @@ function comb(str, opts) {
       }
       if (!doNothing && str[i] === "<" && str[i + 1] === "s" && str[i + 2] === "t" && str[i + 3] === "y" && str[i + 4] === "l" && str[i + 5] === "e") {
         checkingInsideCurlyBraces = true;
+        if (!stateWithinStyleTag) {
+          stateWithinStyleTag = true;
+        }
         for (var y = i; y < len; y++) {
           totalCounter++;
           if (str[y] === ">") {
@@ -359,19 +368,22 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && stateWithinHeadStyles && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "s" && str[i + 3] === "t" && str[i + 4] === "y" && str[i + 5] === "l" && str[i + 6] === "e") {
-        checkingInsideCurlyBraces = false;
+      if (!doNothing && stateWithinStyleTag && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "s" && str[i + 3] === "t" && str[i + 4] === "y" && str[i + 5] === "l" && str[i + 6] === "e") {
         styleEndedAt = i - 1;
         ruleChunkStartedAt = null;
+        checkingInsideCurlyBraces = false;
+        if (stateWithinStyleTag) {
+          stateWithinStyleTag = false;
+        }
       }
-      if (round === 1 && (stateWithinHeadStyles || stateWithinBody) && str[i] === "/" && str[i + 1] === "*" && !commentStartedAt) {
+      if (round === 1 && (stateWithinStyleTag || stateWithinBody) && str[i] === "/" && str[i + 1] === "*" && !commentStartedAt) {
         commentStartedAt = i;
         doNothing = true;
         doNothingUntil = "*/";
         i++;
         continue stepouter;
       }
-      if (!doNothing && stateWithinHeadStyles && str[i] === "@") {
+      if (!doNothing && stateWithinStyleTag && str[i] === "@") {
         if (whitespaceStartedAt) {
           whitespaceStartedAt = null;
         }
@@ -380,7 +392,7 @@ function comb(str, opts) {
           var temp = void 0;
           if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim().length && stringMatchLeftRight.matchRight(str, i + matchedAtTagsName.length + 1, ";", {
             trimBeforeMatching: true,
-            cb: function cb(_char2, theRemainderOfTheString, index) {
+            cb: function cb(_char3, theRemainderOfTheString, index) {
               temp = index;
               return true;
             }
@@ -432,11 +444,11 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && stateWithinHeadStyles && insideCurlyBraces && checkingInsideCurlyBraces && chr === "}" && !currentlyWithinQuotes && !curliesDepth) {
-        insideCurlyBraces = false;
+      if (!doNothing && stateWithinStyleTag && insideCurlyBraces && checkingInsideCurlyBraces && chr === "}" && !currentlyWithinQuotes && !curliesDepth) {
         if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
           finalIndexesToDelete.push(ruleChunkStartedAt, i + 1);
         }
+        insideCurlyBraces = false;
         if (ruleChunkStartedAt) {
           ruleChunkStartedAt = i + 1;
         }
@@ -453,6 +465,22 @@ function comb(str, opts) {
         if (singleSelectorStartedAt === null) {
           if (chr === "." || chr === "#") {
             singleSelectorStartedAt = i;
+          } else if (stringMatchLeftRight.matchLeft(str, i, "[class=")) {
+            if (isLatinLetter(chr)) {
+              singleSelectorStartedAt = i;
+              singleSelectorType = ".";
+            } else if ("\"'".includes(chr) && isLatinLetter(str[stringLeftRight.right(str, i)])) {
+              singleSelectorStartedAt = stringLeftRight.right(str, i);
+              singleSelectorType = ".";
+            }
+          } else if (stringMatchLeftRight.matchLeft(str, i, "[id=")) {
+            if (isLatinLetter(chr)) {
+              singleSelectorStartedAt = i;
+              singleSelectorType = "#";
+            } else if ("\"'".includes(chr) && isLatinLetter(str[stringLeftRight.right(str, i)])) {
+              singleSelectorStartedAt = stringLeftRight.right(str, i);
+              singleSelectorType = "#";
+            }
           } else if (chr.trim().length !== 0) {
             if (chr === "}") {
               ruleChunkStartedAt = i + 1;
@@ -472,6 +500,10 @@ function comb(str, opts) {
         } else {
           if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
             var singleSelector = str.slice(singleSelectorStartedAt, i);
+            if (singleSelectorType) {
+              singleSelector = "".concat(singleSelectorType).concat(singleSelector);
+              singleSelectorType = undefined;
+            }
             if (round === 2 && !selectorChunkCanBeDeleted && headCssToDelete.includes(singleSelector)) {
               selectorChunkCanBeDeleted = true;
               onlyDeletedChunksFollow = true;
@@ -537,7 +569,7 @@ function comb(str, opts) {
                   }
                 } else if (stringMatchLeftRight.matchLeft(str, fromIndex, "{", {
                   trimBeforeMatching: true,
-                  cb: function cb(_char3, theRemainderOfTheString, index) {
+                  cb: function cb(_char4, theRemainderOfTheString, index) {
                     tempFindingIndex = index;
                     return true;
                   }
@@ -590,7 +622,7 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && !stateWithinHeadStyles && stateWithinBody && str[i] === "/" && stringMatchLeftRight.matchRight(str, i, "body", {
+      if (!doNothing && !stateWithinStyleTag && stateWithinBody && str[i] === "/" && stringMatchLeftRight.matchRight(str, i, "body", {
         trimBeforeMatching: true,
         i: true
       }) && stringMatchLeftRight.matchLeft(str, i, "<", {
@@ -602,9 +634,9 @@ function comb(str, opts) {
       if (!doNothing && str[i] === "<" && stringMatchLeftRight.matchRight(str, i, "body", {
         i: true,
         trimBeforeMatching: true,
-        cb: function cb(_char4, theRemainderOfTheString, index) {
+        cb: function cb(_char5, theRemainderOfTheString, index) {
           if (round === 1) {
-            if (_char4 !== undefined && (_char4.trim() === "" || _char4 === ">")) {
+            if (_char5 !== undefined && (_char5.trim() === "" || _char5 === ">")) {
               if (index - i > 5) {
                 finalIndexesToDelete.push(i, index, "<body");
                 nonIndentationsWhitespaceLength += index - i - 5;
@@ -625,11 +657,11 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && stateWithinBody && str[i] === "s" && str[i + 1] === "t" && str[i + 2] === "y" && str[i + 3] === "l" && str[i + 4] === "e" && str[i + 5] === "=" && badChars.includes(str[i - 1])
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && str[i] === "s" && str[i + 1] === "t" && str[i + 2] === "y" && str[i + 3] === "l" && str[i + 4] === "e" && str[i + 5] === "=" && badChars.includes(str[i - 1])
       ) {
           if ("\"'".includes(str[i + 6])) ;
         }
-      if (!doNothing && stateWithinBody && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
       ) {
           var valuesStart = void 0;
           var quoteless = false;
@@ -1086,14 +1118,14 @@ function comb(str, opts) {
           return val.includes("ie");
         })) && stringMatchLeftRight.matchRight(str, i, "<!--", {
           trimBeforeMatching: true,
-          cb: function cb(_char5, theRemainderOfTheString, index) {
+          cb: function cb(_char6, theRemainderOfTheString, index) {
             _temp2 = index;
             return true;
           }
         })) {
           if (stringMatchLeftRight.matchRight(str, _temp2 - 1, "-->", {
             trimBeforeMatching: true,
-            cb: function cb(_char6, theRemainderOfTheString, index) {
+            cb: function cb(_char7, theRemainderOfTheString, index) {
               _temp2 = index;
               return true;
             }
@@ -1228,8 +1260,9 @@ function comb(str, opts) {
       opts.reportProgressFunc(currentPercentageDone);
     }
   }
-  while (regexEmptyMediaQuery.test(str)) {
+  while (regexEmptyMediaQuery.test(str) || regexEmptyUnclosedMediaQuery.test(str)) {
     str = str.replace(regexEmptyMediaQuery, "");
+    str = str.replace(regexEmptyUnclosedMediaQuery, "");
     totalCounter += str.length;
   }
   if (opts.reportProgressFunc && len >= 2000) {

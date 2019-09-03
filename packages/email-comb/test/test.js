@@ -3258,7 +3258,7 @@ display: {{ abc.de_fg | hi_jk: 10 }};
 text
 `;
 
-  t.is(actual1, intended1, "01.67");
+  t.is(actual1, intended1, "01.68");
 });
 
 //
@@ -3632,6 +3632,31 @@ test("03.04 - removes classes and id's from HTML even if it's heavily messed up"
     intended,
     "03.04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
   );
+});
+
+test("03.05 - missing last @media curlie", t => {
+  const source = `<head>
+<style type="text/css">
+@namespace url(z);
+@media (max-width: 600px) {
+  .xx[z] {a:1;}
+
+</style>
+</head>
+<body  class="  zz  "><a   class="yy zz">z</a>
+</body>
+`;
+
+  const intended = `<head>
+<style type="text/css">
+@namespace url(z);
+</style>
+</head>
+<body><a>z</a>
+</body>
+`;
+
+  t.is(comb(source).result, intended, "03.05");
 });
 
 // ==============================
@@ -5210,6 +5235,35 @@ test("10.10 - does not mangle different-type line endings", t => {
   t.is(comb(source3).result, source3, "10.10.03");
 });
 
+test("10.11 - dirty code #1", t => {
+  const actual = comb(`<body>
+
+<style>
+
+@media screen {
+td[class=rr] { zzz }
+
+</style>
+
+
+<td class="a" align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
+<style>
+td[class=rr] { font-family: 'GillSans', Gill Sans, Gill Sans MT, Arial, sans-serif !important; font-size: 13px!important; line-height: 13px!important;letter-spacing:1px !important}
+td[class=jj] { font-family: 'GillSans', Gill Sans, Gill Sans MT, Arial, sans-serif !important; font-size: 13px!important; line-height: 13px!important; letter-spacing: 0.5px !important}
+@media screen {
+.z {
+float:left !important;}
+}
+
+</style>`).result;
+
+  const intended = `<body>
+<td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
+`;
+
+  t.is(actual, intended, "10.11");
+});
+
 // ============================================================
 // 11. HTML Comment removal
 // ============================================================
@@ -5596,7 +5650,7 @@ test("11.17 - outer trims - doctype with leading space", t => {
 // 12. opts.uglify
 // ============================================================
 
-test("12.01 - uglify - ignores", t => {
+test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
   const source = `<head>
 <style>
 .abc { w:1; }
@@ -5668,7 +5722,7 @@ test("12.01 - uglify - ignores", t => {
   );
 });
 
-test("12.02 - uglify - class name exceeds library's length (all 26 letters used up)", t => {
+test(`12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`, t => {
   const actual = `<head>
 <style>
 .aaa01,
@@ -5790,7 +5844,7 @@ test("12.02 - uglify - class name exceeds library's length (all 26 letters used 
   );
 });
 
-test("12.03 - uglify - style tag within Outlook conditionals, used CSS", t => {
+test(`12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`, t => {
   const source = `<html>
 <head>
 <!--[if mso]>
@@ -5847,7 +5901,7 @@ test("12.03 - uglify - style tag within Outlook conditionals, used CSS", t => {
   );
 });
 
-test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => {
+test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`, t => {
   const source = `<html>
 <head>
 <!--[if mso]>
@@ -5928,7 +5982,7 @@ test("12.04 - uglify - style tag within Outlook conditionals, unused CSS", t => 
   );
 });
 
-test("12.05 - uglify - ignores on used id's", t => {
+test(`12.05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`, t => {
   const source = `<html>
 <head>
 <style>
@@ -5955,7 +6009,7 @@ test("12.05 - uglify - ignores on used id's", t => {
   );
 });
 
-test("12.06 - uglify - ignores on used classes", t => {
+test(`12.06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`, t => {
   const source = `<html>
 <head>
 <style>
@@ -5982,7 +6036,7 @@ test("12.06 - uglify - ignores on used classes", t => {
   );
 });
 
-test("12.07 - ignored values don't appear among uglified legend entries", t => {
+test(`12.07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`, t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -6707,4 +6761,54 @@ test(`14.11 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whit
 <table align="center">
 `;
   t.is(actual, intended, "14.11");
+});
+
+// ============================================================
+// 15 bracket notation
+// ============================================================
+
+test(`15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, t => {
+  const source = `<head>
+<style type="text/css">
+  a[class="used"]{x:1;}
+  b[class="unused1"]{y:2;}
+</style>
+</head>
+<body class="used"><a class="used unused2">z</a>
+</body>
+`;
+
+  const intended = `<head>
+<style type="text/css">
+  a[class="used"]{x:1;}
+</style>
+</head>
+<body class="used"><a class="used">z</a>
+</body>
+`;
+
+  t.is(comb(source).result, intended, "15.01");
+});
+
+test(`15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`, t => {
+  const source = `<head>
+<style type="text/css">
+  a[id="used"]{x:1;}
+  b[id="unused1"]{y:2;}
+</style>
+</head>
+<body id="used"><a id="used unused2">z</a>
+</body>
+`;
+
+  const intended = `<head>
+<style type="text/css">
+  a[id="used"]{x:1;}
+</style>
+</head>
+<body id="used"><a id="used">z</a>
+</body>
+`;
+
+  t.is(comb(source).result, intended, "15.02");
 });

@@ -56,6 +56,7 @@ export default commandLineArgs => {
         "ranges-push",
         "regex-empty-conditional-comments",
         "string-extract-class-names",
+        "string-left-right",
         "string-match-left-right",
         "string-range-expander",
         "string-uglify"
@@ -88,6 +89,7 @@ export default commandLineArgs => {
         "ranges-push",
         "regex-empty-conditional-comments",
         "string-extract-class-names",
+        "string-left-right",
         "string-match-left-right",
         "string-range-expander",
         "string-uglify"
