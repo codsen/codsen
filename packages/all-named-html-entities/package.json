@@ -33,9 +33,9 @@
   "browser": "dist/all-named-html-entities.umd.js",
   "scripts": {
     "ava": "ava -d",
-    "build": "rm -rf dist && rollup -c",
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=json-summary",
-    "dev": "rm -rf dist && rollup -c --dev --silent",
+    "dev": "rollup -c --dev --silent",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",

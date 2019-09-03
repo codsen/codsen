@@ -101,11 +101,11 @@ notEmailFriendly,
 notEmailFriendlyMinLength,
 notEmailFriendlyMaxLength
 
-| Key's name                  | Key's value's type | Purpose                                                                                    |
-| --------------------------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| Key's name                  | Key's value's type | Purpose                                                                                             |
+| --------------------------- | ------------------ | --------------------------------------------------------------------------------------------------- |
 | `notEmailFriendly`          | plain object       | all named HTML entities, the key is an entity's name; value is a raw decoded entity. 2125 in total. |
-| `notEmailFriendlyMinLength` | natural number     | the string length of the shortest of all entities                                          |
-| `notEmailFriendlyMaxLength` | natural number     | the string length of the longest of all entities                                           |
+| `notEmailFriendlyMinLength` | natural number     | the string length of the shortest of all entities                                                   |
+| `notEmailFriendlyMaxLength` | natural number     | the string length of the longest of all entities                                                    |
 
 **[⬆ back to top](#)**
 
@@ -130,8 +130,8 @@ For example, below we log all the entities:
 const { notEmailFriendly } = require("all-named-html-entities");
 // list them all:
 Object.keys(notEmailFriendly).forEach((entName, i) => {
-  console.log(`${i} entity: &${entName};`)
-})
+  console.log(`${i} entity: &${entName};`);
+});
 ```
 
 **[⬆ back to top](#)**
