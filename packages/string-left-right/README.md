@@ -106,13 +106,17 @@ console.log(
 
 ## API - left() and right()
 
-Both exported functions have the same API.
+Both exported functions have the same API:
 
 **left(str, \[, idx])**
 
 **right(str, \[, idx])**
 
 On both, the first input argument is a string, the optional second (marked by brackets above) is a starting index. We "look" to the left or to the right of that index, then report a first non-whitespace character's index on that side. In absence, we return `null`.
+
+The determinator for whitespace is truthy `string.trim().length` - the trimmed string must have length; otherwise, it's a whitespace.
+
+These functions allow you to locate the first non-whitespace character on left or right.
 
 For example,
 
@@ -125,9 +129,88 @@ console.log(res);
 // => 0
 ```
 
-The output is either **natural number index**, pointing to the nearest non-whitespace character on either side or `null`.
+The output is either **natural number index**, pointing to the nearest non-whitespace character on either side or `null` (if the string ends further, for example).
 
 **[⬆ back to top](#)**
+
+## API - chompLeft() and chompRight()
+
+These two allow you to "chomp" multiple instances of a set of characters, possibly spaced out with whitespace.
+
+For example, imagine you have this string:
+
+```
+text x  y xyyyyxxxx       x x x x x yyyy y y y .
+```
+
+Imagine, you are "located" at the index of ".", `47`. In this case, `chompLeft()` lets you "jump" over x's and y's and locate the index of a second "t" in "text", `3`.
+
+Both exported functions have the same API:
+
+**chompLeft(str, idx, \[opts], char1, char2, char3...)**
+
+**chompRight(str, idx, \[opts], char1, char2, char3...)**
+
+You can pass a plain object - options - as the third argument, or you can omit it.
+
+For example:
+
+```js
+const { chompLeft } = require("string-left-right");
+const res1 = chompLeft("a  b c b c  x y", 12, "b", "c");
+console.log(`res1`);
+// => 2
+
+// the default mode is 0 and it's omitted, so above example is the same as:
+const res2 = chompLeft("a  b c b c  x y", 12, { mode: 0 }, "b", "c");
+console.log(`res2`);
+// => 2
+```
+
+## API - chompLeft() and chompRight() modes
+
+You can pass an options object as a third argument before characters to match.
+
+Modes:
+
+* `0` - leave single space if possible
+* `1` - stop at first space, leave whitespace alone
+* `2` - aggressively chomp all whitespace except newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
+* `3` - aggressively chomp all whitespace including newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
+
+For example:
+
+```js
+const { chompLeft } = require("string-left-right");
+const res1 = chompLeft("a\n  b c b c  x y", 13, "b", "c")
+console.log(res1);
+// => 2
+// the default chomp stopped when it reached line break character. It didn't leave a space because it's not a non-whitespace character. If it were not a line break but a letter, it would have stopped one space short of it.
+
+// passing default { mode: 0 } is the same result:
+const res2 = chompLeft("a\n  b c b c  x y", { mode: 0 }, 13, "b", "c")
+console.log(res2);
+// => 2
+
+// mode 1 - stops at first space met, in this case at first "b"
+const res3 = chompLeft("a\n  b c b c  x y", 12, { mode: "1" }, "b", "c")
+console.log(res3);
+// => 4
+// PS. "\n" counts as length of one
+
+// mode 2 - chomps all whitespace except newlines
+// in this case it stops to the right of \n, index 2:
+const res4 = chompLeft("a\n  b c b c  x y", 12, { mode: "2" }, "b", "c")
+// => 2
+
+// mode 3 - hungriest of all whitespace chomps - chomps until it meets
+// edge of a string or non-whitespace character (one which String.trim()'s
+// to non-zero length character):
+const res5 = chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c")
+// => 1
+```
+
+The `chompRight()` works the same way, just towards the right side of a given index.
 
 ## API - leftStopAtNewLines() and rightStopAtNewLines()
 
@@ -139,7 +222,7 @@ Both exported functions have the same API.
 
 On both, the first input argument is a string, the optional second (marked by brackets above) is a starting index.
 
-Both functions are same as `left()`/`right()`, except that besides non-whitespace characters, they also stop at CR and LF, line break characters.
+Both functions are the same as `left()`/`right()`, except that besides non-whitespace characters, they also stop at CR and LF, line break characters.
 
 For example,
 
