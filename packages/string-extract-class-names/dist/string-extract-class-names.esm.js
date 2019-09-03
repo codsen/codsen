@@ -73,7 +73,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       selectorStartsAt = i;
     }
     if (
-      input.slice(i).startsWith("class") &&
+      input.startsWith("class", i) &&
       input[left(input, i)] === "[" &&
       input[right(input, i + 4)] === "="
     ) {
@@ -89,7 +89,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       stateCurrentlyIs = ".";
     }
     if (
-      input.slice(i).startsWith("id") &&
+      input.startsWith("id", i) &&
       input[left(input, i)] === "[" &&
       input[right(input, i + 1)] === "="
     ) {

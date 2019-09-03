@@ -117,7 +117,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
 
     // catch zzz[class=]
     if (
-      input.slice(i).startsWith("class") &&
+      input.startsWith("class", i) &&
       input[left(input, i)] === "[" &&
       input[right(input, i + 4)] === "="
     ) {
@@ -139,7 +139,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
 
     // catch zzz[id=]
     if (
-      input.slice(i).startsWith("id") &&
+      input.startsWith("id", i) &&
       input[left(input, i)] === "[" &&
       input[right(input, i + 1)] === "="
     ) {

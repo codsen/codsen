@@ -63,7 +63,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
     if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
       selectorStartsAt = i;
     }
-    if (input.slice(i).startsWith("class") && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 4)] === "=") {
+    if (input.startsWith("class", i) && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 4)] === "=") {
       if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))])) {
         selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 4));
       } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))])) {
@@ -73,7 +73,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       }
       stateCurrentlyIs = ".";
     }
-    if (input.slice(i).startsWith("id") && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 1)] === "=") {
+    if (input.startsWith("id", i) && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 1)] === "=") {
       if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))])) {
         selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 1));
       } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))])) {
