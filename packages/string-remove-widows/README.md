@@ -21,6 +21,7 @@
 - [API](#api)
 - [More about `opts.targetLanguage`](#more-about-optstargetlanguage)
 - [More about `opts.ignore`](#more-about-optsignore)
+- [opts.tagRanges](#optstagranges)
 - [Compared to competition on npm](#compared-to-competition-on-npm)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -58,9 +59,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                               | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-widows.cjs.js` | 15 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-widows.esm.js` | 15 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 47 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-widows.cjs.js` | 16 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-widows.esm.js` | 17 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-widows.umd.js` | 48 KB |
 
 **[⬆ back to top](#)**
 
@@ -149,6 +150,7 @@ const { removeWidows, defaultOpts, version } = require("string-remove-widows");
 | `reportProgressFunc`            | function or `null`                                                        | `null`  | If function is given, it will be pinged a natural number, for each percentage-done (in its first input argument) |
 | `reportProgressFuncFrom`        | natural number or `0`                                                     | `0`     | Normally `reportProgressFunc()` reports percentages starting from zero, but you can set it to a custom value     |
 | `reportProgressFuncTo`          | natural number                                                            | `100`   | Normally `reportProgressFunc()` reports percentages up to `100`, but you can set it to a custom value            |
+| `tagRanges`                     | array of zero or more arrays                                              | `[]`    | If you know where the HTML tags are, provide string index ranges here                                            |
 | }                               |                                                                           |         |                                                                                                                  |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
@@ -162,10 +164,11 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
   minCharCount: 20, // if there are less characters than this in chunk, skip
-  ignore: [] // list zero or more templating languages: "jinja", "hugo", "hexo"
+  ignore: [], // list zero or more templating languages: "jinja", "hugo", "hexo"
   reportProgressFunc: null, // reporting progress function
   reportProgressFuncFrom: 0, // reporting percentages from this number
   reportProgressFuncTo: 100, // reporting percentages up to this number
+  tagRanges: []
 }
 ```
 
@@ -298,6 +301,36 @@ const result = removeWidows("Here is a very long line of text", {
 
 **[⬆ back to top](#)**
 
+## opts.tagRanges
+
+Sometimes input string can contain HTML tags. We didn't go that far as to code up full HTML tag recognition, more so that such thing would duplicate already existing libraries, namely, `string-strip-html` ([npm](https://www.npmjs.com/package/string-strip-html), [monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html)).
+
+`opts.tagRanges` accepts known HTML tag ranges (or, in fact, any "black spots" to skip):
+
+```js
+const strip = require("string-strip-html");
+const { removeWidows } = require("string-remove-widows");
+
+const input = `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`;
+// first, gung-ho approach - no tag locations provided:
+const res1 = removeWidows(input).res;
+console.log(res1);
+// => something in front here <a style="display: block;">x</a> <b style="display:&nbsp;block;">y</b>
+//                                                                               ^^^^^^
+//                                      notice how non-breaking space is wrongly put inside the tag
+//
+// but, if you provide the tag ranges, program works correctly:
+const tagRanges = stripHtml(input, { returnRangesOnly: true });
+console.log(JSON.stringify(knownHTMLTagRanges, null, 4));
+// => [[24, 51], [52, 56], [57, 84], [85, 89]]
+// now, plug the tag ranges into opts.tagRanges:
+const res2 = removeWidows(input, { tagRanges }).res;
+console.log(res2);
+// => something in front here <a style="display: block;">x</a>&nbsp;<b style="display: block;">y</b>
+```
+
+**[⬆ back to top](#)**
+
 ## Compared to competition on npm
 
 In life, anything _professional_ (as opposed to _amateur_) means _an excess_.
@@ -306,7 +339,7 @@ In life, anything _professional_ (as opposed to _amateur_) means _an excess_.
 
 👨‍🍳 Professional cooking — making 50 three-course dinners _at once_ — mildly speaking, _excessive_ — by "normal peoples" kitchen standards and so on.
 
-📝 Professional preparing of marketing materials — websites and email templates — is also somewhat full of excesses. Millions of emails sent, hundreds of pages managed, thousands of products listed. The more features your tool has, the more capabilities you have.
+📝 Professional preparing of marketing materials — websites and email templates — is also somewhat full of excesses. Millions of emails sent, hundreds of web pages managed, thousands of products listed. The more features your tool has, the more capabilities you have.
 
 For example, you might need to copy some text from _PSD_, clean invisible characters, encode it in CSS, prevent widow words and paste it into pseudo-element in a .SCSS file. That's one click on [Detergent.io](https://detergent.io) and the **widow word prevention part** would be done by this program.
 
@@ -370,7 +403,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-remove-widows
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
-[cov-img]: https://img.shields.io/badge/coverage-91.67%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-91.94%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-remove-widows

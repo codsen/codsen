@@ -71,6 +71,7 @@ var headsAndTailsHexo = [{
   heads: ["<%", "<%=", "<%-"],
   tails: ["%>", "=%>", "-%>"]
 }];
+var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
 
 var Ranges = require("ranges-push");
 var defaultOpts = {
@@ -84,7 +85,8 @@ var defaultOpts = {
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
+  reportProgressFuncTo: 100,
+  tagRanges: []
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -209,10 +211,10 @@ function removeWidows(str, originalOpts) {
         opts.reportProgressFunc(currentPercentageDone);
       }
     }
-    if (!doNothingUntil && _i && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
+    if (!doNothingUntil && _i && str[_i] && str[_i].trim().length && (!str[_i - 1] || str[_i - 1] && !str[_i - 1].trim().length)) {
       lastWhitespaceEndedAt = _i;
     }
-    if (!doNothingUntil && str[_i].trim().length) {
+    if (!doNothingUntil && str[_i] && str[_i].trim().length) {
       charCount++;
     }
     if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim().length || str[_i] === "&")) {
@@ -266,7 +268,7 @@ function removeWidows(str, originalOpts) {
         rangesArr.push(_i, _i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
       }
     }
-    if (!doNothingUntil && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
+    if (!doNothingUntil && str[_i] && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
       wordCount++;
     }
     if (!doNothingUntil && (!str[_i + 1] || str[_i] === "\n" && str[_i + 1] === "\n" || str[_i] === "\r" && str[_i + 1] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n" && str[_i + 2] === "\r" && str[_i + 3] === "\n" || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))) {
@@ -298,10 +300,12 @@ function removeWidows(str, originalOpts) {
       }
       resetAll();
     }
-    if (opts.UKPostcodes && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
+    if (opts.UKPostcodes && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
       push(_i, stringLeftRight.right(str, _i));
     }
-    if (!doNothingUntil && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[stringLeftRight.right(str, _i)]) && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("br") && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("hr")) {
+    if (!doNothingUntil && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[stringLeftRight.right(str, _i)]) && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("br") && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("hr") && !(str[stringLeftRight.left(str, _i)] === "<" && knownHTMLTags.some(function (tag) {
+      return str.startsWith(tag, stringLeftRight.right(str, _i));
+    }))) {
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
       lastWhitespaceStartedAt = _i;
@@ -344,9 +348,16 @@ function removeWidows(str, originalOpts) {
         }
       }
     }
+    if (isArr(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(function (rangeArr) {
+      if (_i >= rangeArr[0] && _i <= rangeArr[1] && rangeArr[1] - 1 > _i) {
+        _i = rangeArr[1] - 1;
+        i = _i;
+        return true;
+      }
+    })) ;
     i = _i;
   };
-  for (var i = 0; i < len; i++) {
+  for (var i = 0; i <= len; i++) {
     _loop(i);
   }
   return {

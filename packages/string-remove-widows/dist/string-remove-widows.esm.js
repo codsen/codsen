@@ -61,6 +61,122 @@ const headsAndTailsHexo = [
     tails: ["%>", "=%>", "-%>"]
   }
 ];
+const knownHTMLTags = [
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "base",
+  "bdi",
+  "bdo",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "center",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "doctype",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "keygen",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "math",
+  "menu",
+  "menuitem",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "param",
+  "picture",
+  "pre",
+  "progress",
+  "rb",
+  "rp",
+  "rt",
+  "rtc",
+  "ruby",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "slot",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "svg",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "xml"
+];
 
 const Ranges = require("ranges-push");
 const defaultOpts = {
@@ -74,7 +190,8 @@ const defaultOpts = {
   ignore: [],
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
+  reportProgressFuncTo: 100,
+  tagRanges: []
 };
 function removeWidows(str, originalOpts) {
   function push(finalStart, finalEnd) {
@@ -192,7 +309,7 @@ function removeWidows(str, originalOpts) {
     lastEncodedNbspEndedAt = undefined;
   }
   resetAll();
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i <= len; i++) {
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some((valObj, y) => {
         if (
@@ -221,12 +338,13 @@ function removeWidows(str, originalOpts) {
     if (
       !doNothingUntil &&
       i &&
+      str[i] &&
       str[i].trim().length &&
       (!str[i - 1] || (str[i - 1] && !str[i - 1].trim().length))
     ) {
       lastWhitespaceEndedAt = i;
     }
-    if (!doNothingUntil && str[i].trim().length) {
+    if (!doNothingUntil && str[i] && str[i].trim().length) {
       charCount++;
     }
     if (
@@ -357,6 +475,7 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
+      str[i] &&
       str[i].trim().length &&
       (!str[i - 1] || !str[i - 1].trim().length)
     ) {
@@ -425,6 +544,7 @@ function removeWidows(str, originalOpts) {
     }
     if (
       opts.UKPostcodes &&
+      str[i] &&
       !str[i].trim().length &&
       str[i - 1] &&
       str[i - 1].trim().length &&
@@ -436,6 +556,7 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
+      str[i] &&
       !str[i].trim().length &&
       str[i - 1] &&
       str[i - 1].trim().length &&
@@ -444,7 +565,11 @@ function removeWidows(str, originalOpts) {
           str[lastWhitespaceStartedAt - 1].trim().length)) &&
       !"/>".includes(str[right(str, i)]) &&
       !str.slice(0, left(str, i) + 1).endsWith("br") &&
-      !str.slice(0, left(str, i) + 1).endsWith("hr")
+      !str.slice(0, left(str, i) + 1).endsWith("hr") &&
+      !(
+        str[left(str, i)] === "<" &&
+        knownHTMLTags.some(tag => str.startsWith(tag, right(str, i)))
+      )
     ) {
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
@@ -495,6 +620,16 @@ function removeWidows(str, originalOpts) {
         }
       }
     }
+    if (
+      isArr(opts.tagRanges) &&
+      opts.tagRanges.length &&
+      opts.tagRanges.some(rangeArr => {
+        if (i >= rangeArr[0] && i <= rangeArr[1] && rangeArr[1] - 1 > i) {
+          i = rangeArr[1] - 1;
+          return true;
+        }
+      })
+    ) ;
   }
   return {
     res: apply(

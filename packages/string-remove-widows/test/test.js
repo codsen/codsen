@@ -445,6 +445,20 @@ test(`01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch em
   });
 });
 
+test(`01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`, t => {
+  const source = "aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd";
+  t.is(
+    removeWidows(source, {
+      convertEntities: true,
+      targetLanguage: "html",
+      UKPostcodes: true,
+      hyphens: true
+    }).res,
+    source,
+    "01.09"
+  );
+});
+
 // 02 - opts.convertEntities
 // -----------------------------------------------------------------------------
 
@@ -1643,6 +1657,40 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   gather.forEach(perc =>
     t.true(compareTo.includes(perc), `checking: ${perc}%`)
   );
-  t.is(gather.length, 86 - 21);
+  t.is(gather.length, 86 - 21 + 1);
   // t.deepEqual(gather, compareTo, "10.02")
+});
+
+// 11 - opts.tagRanges
+// -----------------------------------------------------------------------------
+
+test(`11.01 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known tag ranges and ignores everything`, t => {
+  const source = `<a href="zzz" target="_blank" style="font-size: 10px; line-height: 14px;">`;
+  t.is(
+    removeWidows(source, {
+      tagRanges: [[0, 74]]
+    }).res,
+    source,
+    "11.01 - everything ignored because everything is a tag"
+  );
+});
+
+test(`11.02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`, t => {
+  t.is(
+    removeWidows(
+      `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`
+    ).res,
+    `something in front here <a style="display: block;">x</a> <b style="display:&nbsp;block;">y</b>`,
+    "11.02.01 - default behaviour"
+  );
+  t.is(
+    removeWidows(
+      `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`,
+      {
+        tagRanges: [[24, 51], [52, 56], [57, 84], [85, 89]]
+      }
+    ).res,
+    `something in front here <a style="display: block;">x</a>&nbsp;<b style="display: block;">y</b>`,
+    "11.02 - tags skipped"
+  );
 });
