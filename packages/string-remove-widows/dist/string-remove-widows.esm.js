@@ -483,7 +483,7 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
-      (!str[i + 1] ||
+      (!str[i] ||
         ((str[i] === "\n" && str[i + 1] === "\n") ||
           (str[i] === "\r" && str[i + 1] === "\r") ||
           (str[i] === "\r" &&
@@ -619,6 +619,10 @@ function removeWidows(str, originalOpts) {
           });
         }
       }
+    }
+    if (str[i] && `\r\n`.includes(str[i])) {
+      wordCount = 0;
+      charCount = 0;
     }
     if (
       isArr(opts.tagRanges) &&

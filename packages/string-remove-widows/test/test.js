@@ -459,6 +459,34 @@ test(`01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break wi
   );
 });
 
+test(`01.10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp after line breaks`, t => {
+  const source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
+  t.is(
+    removeWidows(source, {
+      convertEntities: true,
+      targetLanguage: "html",
+      UKPostcodes: true,
+      hyphens: true
+    }).res,
+    source,
+    "01.10"
+  );
+});
+
+test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and spaces`, t => {
+  const source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
+  t.is(
+    removeWidows(source, {
+      convertEntities: true,
+      targetLanguage: "html",
+      UKPostcodes: true,
+      hyphens: true
+    }).res,
+    source,
+    "01.11"
+  );
+});
+
 // 02 - opts.convertEntities
 // -----------------------------------------------------------------------------
 
