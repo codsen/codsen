@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "4.12.41",
+  "version": "4.12.42",
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "license": "MIT",
   "engines": {
@@ -170,7 +170,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.37",
+    "check-types-mini": "^5.7.38",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^2.0.0"
   },
@@ -188,8 +188,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.41",
-    "lect": "^0.9.8",
+    "js-row-num-cli": "^1.5.42",
+    "lect": "^0.9.9",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.20.3",

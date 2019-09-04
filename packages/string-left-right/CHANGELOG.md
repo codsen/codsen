@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://gitlab.com/codsen/codsen/compare/string-left-right@2.2.21...string-left-right@2.3.0) (2019-09-04)
+
+
+### Features
+
+* two new methods: rightStopAtNewLines() and leftStopAtNewLines() ([cfb7557](https://gitlab.com/codsen/codsen/commit/cfb7557))
+
+
+
+
+
 ## 2.2.0 (2019-04-06)
 
 ### Features

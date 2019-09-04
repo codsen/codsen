@@ -1,7 +1,7 @@
 /**
  * emlint
  * Non-parsing, email template-oriented linter
- * Version: 1.7.1
+ * Version: 1.7.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -882,7 +882,7 @@ var errorsRules = {
 }
 };
 
-var version = "1.7.1";
+var version = "1.7.2";
 
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [

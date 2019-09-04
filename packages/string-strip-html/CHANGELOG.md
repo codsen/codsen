@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@4.1.1...string-strip-html@4.2.0) (2019-09-04)
+
+
+### Features
+
+* add previously missing tag.lastClosingBracketAt on ignored tags ([f35e595](https://gitlab.com/codsen/codsen/commit/f35e595))
+* make the callback (opts.cb) ping the ignored tags too ([d9302e7](https://gitlab.com/codsen/codsen/commit/d9302e7))
+* report tag.slashPresent as index of the slash, not as a boolean ([96ce6c8](https://gitlab.com/codsen/codsen/commit/96ce6c8))
+
+
+
+
+
 ## 4.1.0 (2019-08-24)
 
 ### Features

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.32](https://gitlab.com/codsen/codsen/compare/csv-split-easy@3.0.31...csv-split-easy@3.0.32) (2019-09-04)
+
+**Note:** Version bump only for package csv-split-easy
+
+
+
+
+
 ## 2.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
