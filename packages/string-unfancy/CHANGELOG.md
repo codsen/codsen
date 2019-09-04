@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.9.40](https://gitlab.com/codsen/codsen/compare/string-unfancy@3.9.39...string-unfancy@3.9.40) (2019-09-04)
-
-**Note:** Version bump only for package string-unfancy
-
-
-
-
-
 ## 3.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

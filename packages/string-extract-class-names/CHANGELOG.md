@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.9.0](https://gitlab.com/codsen/codsen/compare/string-extract-class-names@5.8.40...string-extract-class-names@5.9.0) (2019-09-04)
-
+## 5.9.0 (2019-09-04)
 
 ### Features
 
-* extract class and id names from bracket notation ([11032db](https://gitlab.com/codsen/codsen/commit/11032db))
-
-
-
-
+- extract class and id names from bracket notation ([11032db](https://gitlab.com/codsen/codsen/commit/11032db))
 
 ## 5.8.0 (2019-01-20)
 

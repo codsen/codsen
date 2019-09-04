@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.41](https://gitlab.com/codsen/codsen/compare/string-trim-spaces-only@2.7.40...string-trim-spaces-only@2.7.41) (2019-09-04)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-
-
-
-
 ## 2.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

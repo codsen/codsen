@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.5](https://gitlab.com/codsen/codsen/compare/html-crush@1.8.4...html-crush@1.8.5) (2019-09-04)
-
+## 1.8.5 (2019-09-04)
 
 ### Bug Fixes
 
-* stop breaking <!--<![endif]--> into two parts, in front of <![endif] ([af421c7](https://gitlab.com/codsen/codsen/commit/af421c7))
-
-
-
-
+- stop breaking <!--<![endif]--> into two parts, in front of <![endif] ([af421c7](https://gitlab.com/codsen/codsen/commit/af421c7))
 
 ## 1.8.3 (2019-08-24)
 
