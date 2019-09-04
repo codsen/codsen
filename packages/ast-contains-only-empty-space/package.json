@@ -1,6 +1,6 @@
 {
   "name": "ast-contains-only-empty-space",
-  "version": "1.8.40",
+  "version": "1.8.41",
   "description": "Returns Boolean depending if passed AST contain only empty space",
   "license": "MIT",
   "engines": {
@@ -170,7 +170,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.36",
+    "ast-monkey-traverse": "^1.11.37",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1"
   },
@@ -188,8 +188,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.41",
-    "lect": "^0.9.8",
+    "js-row-num-cli": "^1.5.42",
+    "lect": "^0.9.9",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.20.3",

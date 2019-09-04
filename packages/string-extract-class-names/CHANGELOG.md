@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.9.0 (2019-09-04)
+
+### Features
+
+- extract class and id names from bracket notation ([11032db](https://gitlab.com/codsen/codsen/commit/11032db))
+
 ## 5.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

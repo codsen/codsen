@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "2.1.18",
+  "version": "2.1.19",
   "description": "Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]",
   "license": "MIT",
   "engines": {
@@ -160,11 +160,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.37",
+    "check-types-mini": "^5.7.38",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-crop": "^2.0.31",
-    "ranges-merge": "^4.2.18"
+    "ranges-crop": "^2.0.32",
+    "ranges-merge": "^4.2.19"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -180,8 +180,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.41",
-    "lect": "^0.9.8",
+    "js-row-num-cli": "^1.5.42",
+    "lect": "^0.9.9",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.20.3",
