@@ -1,7 +1,7 @@
 {
   "name": "string-trim-spaces-only",
   "version": "2.7.41",
-  "description": "Like String.trim() but trims only spaces",
+  "description": "Like String.trim() but you can choose granularly what to trim",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
