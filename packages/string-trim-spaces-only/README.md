@@ -102,11 +102,29 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 ### Optional Options Object
 
-| An Optional Options Object's key | Type of its value | Default | Description                                                                                       |
-| -------------------------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------- |
+| An Optional Options Object's key | Type of its value | Default | Description                                                     |
+| -------------------------------- | ----------------- | ------- | --------------------------------------------------------------- |
 | {                                |                   |         |
-| `classicTrim`                    | Boolean           | `false` | If it's set to `true`, trimming becomes the same as `String.trim()`. Use it when you need ranges. |
+| `classicTrim`                    | Boolean           | `false` | If set to `true`, trimming becomes the same as `String.trim()`. |
+| `cr`                             | Boolean           | `false` | Should we trim the carriage returns (CR)                        |
+| `lf`                             | Boolean           | `false` | Should we trim the line breaks (LF)                             |
+| `tab`                            | Boolean           | `false` | Should we trim tabs                                             |
+| `space`                          | Boolean           | `true`  | Should we trim spaces                                           |
+| `nbsp`                           | Boolean           | `false` | Should we trim raw non-breaking spaces                          |
 | }                                |                   |         |
+
+Here is the default options object in one place:
+
+```js
+{
+  classicTrim: false,
+  cr: false,
+  lf: false,
+  tab: false,
+  space: true,
+  nbsp: false
+}
+```
 
 **[⬆ back to top](#)**
 
@@ -117,7 +135,7 @@ Since `v.2`, the output is a plain object:
 | Key name | Key value's type                  | Description                                                             |
 | -------- | --------------------------------- | ----------------------------------------------------------------------- |
 | {        |                                   |                                                                         |
-| `res`    | String or zero or more characters | Resulting string, what was left after trimming spaces from the input.   |
+| `res`    | String or zero or more characters | Result string after trimming.                                           |
 | `ranges` | Array of zero or more arrays      | If we trimmed anything, each slice range will be added into this array. |
 | }        |                                   |                                                                         |
 
