@@ -37,7 +37,7 @@
   },
   "angst": {
     "addAmpIfSemiPresent": false,
-    "addSemiIfAmpPresent": "edge only"
+    "addSemiIfAmpPresent": true
   },
   "ap": {
     "addAmpIfSemiPresent": false,
@@ -53,11 +53,11 @@
   },
   "Aring": {
     "addAmpIfSemiPresent": false,
-    "addSemiIfAmpPresent": "edge only"
+    "addSemiIfAmpPresent": true
   },
   "aring": {
     "addAmpIfSemiPresent": false,
-    "addSemiIfAmpPresent": "edge only"
+    "addSemiIfAmpPresent": true
   },
   "Ascr": {
     "addAmpIfSemiPresent": false,

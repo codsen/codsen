@@ -15655,7 +15655,7 @@ var angle$1 = {
 };
 var angst$1 = {
 	addAmpIfSemiPresent: false,
-	addSemiIfAmpPresent: "edge only"
+	addSemiIfAmpPresent: true
 };
 var ap$1 = {
 	addAmpIfSemiPresent: false,
@@ -15671,11 +15671,11 @@ var approx$1 = {
 };
 var Aring$1 = {
 	addAmpIfSemiPresent: false,
-	addSemiIfAmpPresent: "edge only"
+	addSemiIfAmpPresent: true
 };
 var aring$1 = {
 	addAmpIfSemiPresent: false,
-	addSemiIfAmpPresent: "edge only"
+	addSemiIfAmpPresent: true
 };
 var Ascr$1 = {
 	addAmpIfSemiPresent: false,
