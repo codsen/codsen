@@ -47,7 +47,7 @@ test("03 - larger set", t => {
   );
 });
 
-test.only("04 - letters follow tightly", t => {
+test("04 - letters follow tightly", t => {
   t.deepEqual(
     fix("aaa&ang&angst&ang&angstaaa"),
     [

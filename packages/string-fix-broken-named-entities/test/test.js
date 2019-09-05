@@ -1150,7 +1150,7 @@ test(`04.002 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${
 test(`04.003 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&angsttext&angsttext"),
-    [],
+    [[4, 10, "&angst;"], [14, 20, "&angst;"]],
     "04.003.01 - spaces are obligatory"
   );
   t.deepEqual(fix("text&angst"), [[4, 10, "&angst;"]], "04.003.02");
@@ -1253,7 +1253,7 @@ test(`04.015 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${
   );
   t.deepEqual(
     fix("text&angsttext&angsttext", { decode: true }),
-    [],
+    [[4, 10, "\xC5"], [14, 20, "\xC5"]],
     "04.015.03"
   );
 });
