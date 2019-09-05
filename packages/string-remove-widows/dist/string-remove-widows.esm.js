@@ -266,7 +266,11 @@ function removeWidows(str, originalOpts) {
     opts.ignore = [];
   } else {
     opts.ignore = arrayiffyIfStr(opts.ignore);
-    if (opts.ignore.some(val => isStr(val))) {
+    if (opts.ignore.includes("all")) {
+      opts.ignore = opts.ignore.concat(
+        headsAndTailsJinja.concat(headsAndTailsHexo)
+      );
+    } else if (opts.ignore.some(val => isStr(val))) {
       let temp = [];
       opts.ignore = opts.ignore.filter(val => {
         if (isStr(val) && val.length) {

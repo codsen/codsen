@@ -32,7 +32,7 @@ const defaultOpts = {
   hyphens: true, // replace space with non-breaking space in front of dash
   minWordCount: 4, // if there are less words than this in chunk, skip
   minCharCount: 5, // if there are less characters than this in chunk, skip
-  ignore: [], // put {heads: "{{", tails: "}}"} or presents: "jinja", "nunjucks", "hugo", "hexo"
+  ignore: [], // put {heads: "{{", tails: "}}"} or presets: "jinja", "nunjucks", "hugo", "hexo"
   reportProgressFunc: null, // reporting progress function
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -143,7 +143,12 @@ function removeWidows(str, originalOpts) {
     opts.ignore = [];
   } else {
     opts.ignore = arrayiffyIfStr(opts.ignore);
-    if (opts.ignore.some(val => isStr(val))) {
+    if (opts.ignore.includes("all")) {
+      // hugo heads tails and included in jinja's list, so can be omitted
+      opts.ignore = opts.ignore.concat(
+        headsAndTailsJinja.concat(headsAndTailsHexo)
+      );
+    } else if (opts.ignore.some(val => isStr(val))) {
       // if some values are strings, we need to either remove them or expand them
       // from string to recognised list of heads/tails
       let temp = [];

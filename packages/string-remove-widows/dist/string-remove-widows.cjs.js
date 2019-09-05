@@ -149,7 +149,9 @@ function removeWidows(str, originalOpts) {
     opts.ignore = [];
   } else {
     opts.ignore = arrayiffyIfStr(opts.ignore);
-    if (opts.ignore.some(function (val) {
+    if (opts.ignore.includes("all")) {
+      opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
+    } else if (opts.ignore.some(function (val) {
       return isStr(val);
     })) {
       var temp = [];
