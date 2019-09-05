@@ -484,12 +484,7 @@ function removeWidows(str, originalOpts) {
     if (
       !doNothingUntil &&
       (!str[i] ||
-        ((str[i] === "\n" && str[i + 1] === "\n") ||
-          (str[i] === "\r" && str[i + 1] === "\r") ||
-          (str[i] === "\r" &&
-            str[i + 1] === "\n" &&
-            str[i + 2] === "\r" &&
-            str[i + 3] === "\n")) ||
+        `\r\n`.includes(str[i]) ||
         ((str[i] === "\n" ||
           str[i] === "\r" ||
           (str[i] === "\r" && str[i + 1] === "\n")) &&

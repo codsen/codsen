@@ -15,25 +15,25 @@ import {
   // encodedMdashJs
 } from "../dist/util.esm";
 
-const languages = ["html", "css", "js"];
+const languages = ["html`, `css`, `js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
-const eolTypes = ["LF", "CR", "CRLF"];
+const eolTypes = ["LF`, `CR`, `CRLF"];
 
 // -----------------------------------------------------------------------------
 // 00. api bits
 // -----------------------------------------------------------------------------
 
 test(`00.01 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported removeWidows() is a function`, t => {
-  t.is(typeof removeWidows, "function", "00.01");
+  t.is(typeof removeWidows, `function`, `00.01`);
 });
 
 test(`00.02 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, t => {
-  t.is(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "00.02");
+  t.is(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, `00.02`);
 });
 
 test(`00.03 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - sanity check`, t => {
-  t.is(rawnbsp, "\u00A0", "00.03.01");
-  t.is(encodedNbspHtml, "&nbsp;", "00.03.02");
+  t.is(rawnbsp, `\u00A0`, `00.03.01`);
+  t.is(encodedNbspHtml, `${encodedNbspHtml}`, `00.03.02`);
 });
 
 test(`00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, t => {
@@ -46,27 +46,27 @@ test(`00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, t 
 
 test(`01.00 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd", {
+    removeWidows(`aaa bbb ccc ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "01.00.01"
+    `01.00.01`
   );
   t.is(
-    removeWidows("aaa bbb ccc  ddd", {
+    removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "01.00.02 - two spaces"
+    `01.00.02 - two spaces`
   );
 });
 
 test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, no full stop`, t => {
   languages.forEach((targetLanguage, i) => {
     t.is(
-      removeWidows("aaa bbb ccc ddd", {
+      removeWidows(`aaa bbb ccc ddd`, {
         convertEntities: true,
         targetLanguage,
         minCharCount: 5
@@ -75,7 +75,7 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
       `01.01.0${1 + i} - ${targetLanguage}`
     );
     // t.is(
-    //   removeWidows("aaa bbb ccc ddd", {
+    //   removeWidows(`aaa bbb ccc ddd`, {
     //     convertEntities: false,
     //     targetLanguage,
     //     minCharCount: 5
@@ -84,7 +84,7 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
     //   `01.01.0${2 + i} - ${targetLanguage}`
     // );
     // t.is(
-    //   removeWidows("aaa bbb ccc ddd", {
+    //   removeWidows(`aaa bbb ccc ddd`, {
     //     removeWidowPreventionMeasures: true,
     //     convertEntities: false,
     //     targetLanguage,
@@ -99,7 +99,7 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
 test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, full stop`, t => {
   languages.forEach((targetLanguage, i) => {
     t.is(
-      removeWidows("Aaa bbb ccc ddd.", {
+      removeWidows(`Aaa bbb ccc ddd.`, {
         convertEntities: true,
         targetLanguage,
         minCharCount: 5
@@ -108,7 +108,7 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
       `01.02.0${1 + i} - ${targetLanguage}`
     );
     t.is(
-      removeWidows("Aaa bbb ccc ddd.", {
+      removeWidows(`Aaa bbb ccc ddd.`, {
         convertEntities: false,
         targetLanguage,
         minCharCount: 5
@@ -117,7 +117,7 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
       `01.02.0${2 + i} - ${targetLanguage}`
     );
     t.is(
-      removeWidows("Aaa bbb ccc ddd.", {
+      removeWidows(`Aaa bbb ccc ddd.`, {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
         targetLanguage,
@@ -130,7 +130,7 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
 });
 
 test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full stops`, t => {
-  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
         removeWidows(
@@ -253,7 +253,7 @@ test(`01.04 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - raw non-breaking
 });
 
 test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed`, t => {
-  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
         removeWidows(
@@ -317,7 +317,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
 
 test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed and encoded but in wrong format`, t => {
   encodedNbsps.forEach((singleEncodedNbsp, z) => {
-    ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+    ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
         t.is(
           removeWidows(
@@ -360,7 +360,7 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
 });
 
 test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t => {
-  const str = "fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh";
+  const str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
   languages.forEach((targetLanguage, i) => {
     // removeWidowPreventionMeasures false
     t.is(
@@ -413,49 +413,49 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
 
 test(`01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch empty strings`, t => {
   const sources = [
-    "",
-    " ",
-    "\t",
-    " \t",
-    "\t ",
-    " \t ",
-    " \t\t\t\t",
-    "\n",
-    "\r",
-    "\r\n",
-    "\n\n",
-    "\r\r",
-    "\r\n\r\n",
-    "\r\n",
-    "\n \n",
-    "\r \r",
-    "\r\n \r\n",
-    "\n \t \n",
-    "\r \t \r",
-    "\r\n \t \r\n"
+    ``,
+    ` `,
+    `\t`,
+    ` \t`,
+    `\t `,
+    ` \t `,
+    ` \t\t\t\t`,
+    `\n`,
+    `\r`,
+    `\r\n`,
+    `\n\n`,
+    `\r\r`,
+    `\r\n\r\n`,
+    `\r\n`,
+    `\n \n`,
+    `\r \r`,
+    `\r\n \r\n`,
+    `\n \t \n`,
+    `\r \t \r`,
+    `\r\n \t \r\n`
   ];
   sources.forEach(str => {
     t.is(
-      removeWidows("", {
+      removeWidows(``, {
         convertEntities: true
       }).res,
-      "",
-      `01.08 - "${JSON.stringify(str, null, 4)}"`
+      ``,
+      `01.08 - ${JSON.stringify(str, null, 4)}`
     );
   });
 });
 
 test(`01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`, t => {
-  const source = "aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd";
+  const source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
   t.is(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: "html",
+      targetLanguage: `html`,
       UKPostcodes: true,
       hyphens: true
     }).res,
     source,
-    "01.09"
+    `01.09`
   );
 });
 
@@ -464,12 +464,12 @@ test(`01.10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp
   t.is(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: "html",
+      targetLanguage: `html`,
       UKPostcodes: true,
       hyphens: true
     }).res,
     source,
-    "01.10"
+    `01.10`
   );
 });
 
@@ -478,12 +478,12 @@ test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and 
   t.is(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: "html",
+      targetLanguage: `html`,
       UKPostcodes: true,
       hyphens: true
     }).res,
     source,
-    "01.11"
+    `01.11`
   );
 });
 
@@ -492,82 +492,79 @@ test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and 
 
 test(`02.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd", {
+    removeWidows(`aaa bbb ccc ddd`, {
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "02.01.01 - entities, one line string no full stop"
+    `02.01.01 - entities, one line string no full stop`
   );
   t.is(
-    removeWidows("aaa bbb ccc ddd.", {
+    removeWidows(`aaa bbb ccc ddd.`, {
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.`,
-    "02.01.02 - entities, one line string with full stop"
+    `02.01.02 - entities, one line string with full stop`
   );
   t.is(
-    removeWidows("aaa bbb ccc ddd", { convertEntities: false, minCharCount: 5 })
+    removeWidows(`aaa bbb ccc ddd`, { convertEntities: false, minCharCount: 5 })
       .res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "02.01.03 - no entities, one line string no full stop"
+    `02.01.03 - no entities, one line string no full stop`
   );
   t.is(
-    removeWidows("aaa bbb ccc ddd.", {
+    removeWidows(`aaa bbb ccc ddd.`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${rawnbsp}ddd.`,
-    "02.01.04 - no entities, one line string with full stop"
+    `02.01.04 - no entities, one line string with full stop`
   );
 });
 
 test(`02.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd\neee fff ggg hhh.", {
+    removeWidows(`aaa bbb ccc ddd\neee fff ggg hhh.`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb ccc ddd\neee fff ggg&nbsp;hhh.",
-    "02.02.01"
+    `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`,
+    `02.02.01`
   );
-
-  // but,
-
   t.is(
-    removeWidows("aaa bbb ccc ddd.\neee fff ggg hhh.", {
+    removeWidows(`aaa bbb ccc ddd.\neee fff ggg hhh.`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`,
-    "02.02.06 - one line break, with full stop - widow fix needed"
+    `02.02.06 - one line break, with full stop - widow fix needed`
   );
 });
 
 test(`02.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - with trailing whitespace`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd.  \n\neee fff ggg hhh", {
+    removeWidows(`aaa bbb ccc ddd.  \n\neee fff ggg hhh`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`,
-    "02.03.01 - trailing space"
+    `02.03.01 - trailing space`
   );
   t.is(
-    removeWidows("aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t", {
+    removeWidows(`aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`,
-    "02.03.02 - trailing tabs"
+    `02.03.02 - trailing tabs`
   );
 });
 
 test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`, t => {
   const sources = [
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
   ];
   sources.forEach((str, idx) => {
     t.is(removeWidows(str).res, str, `02.05.0${1 + idx}`);
@@ -576,145 +573,145 @@ test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not a
 
 test(`02.07 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`, t => {
   t.is(
-    removeWidows("aaa bbb ccc&#160;ddd", {
+    removeWidows(`aaa bbb ccc&#160;ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb ccc&nbsp;ddd",
-    "02.07.01"
+    `aaa bbb ccc${encodedNbspHtml}ddd`,
+    `02.07.01`
   );
   t.is(
-    removeWidows("aaa bbb ccc&#160;ddd", {
+    removeWidows(`aaa bbb ccc&#160;ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "02.07.02"
+    `02.07.02`
   );
 });
 
 test(`02.08 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`, t => {
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc&#160;ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb&nbsp;ccc&nbsp;ddd",
-    "02.08.01"
+    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
+    `02.08.01`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc&#160;ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    "02.08.02"
+    `02.08.02`
   );
 });
 
 test(`02.09 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`, t => {
   t.is(
-    removeWidows("aaa bbb ccc  ddd", {
+    removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb ccc&nbsp;ddd",
-    "02.09.01"
+    `aaa bbb ccc${encodedNbspHtml}ddd`,
+    `02.09.01`
   );
   t.is(
-    removeWidows("aaa bbb ccc  ddd", {
+    removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "02.09.02"
+    `02.09.02`
   );
 });
 
 test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`, t => {
   t.is(
-    removeWidows("aaa bbb ccc\tddd", {
+    removeWidows(`aaa bbb ccc\tddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb ccc&nbsp;ddd",
-    "02.10.01"
+    `aaa bbb ccc${encodedNbspHtml}ddd`,
+    `02.10.01`
   );
   t.is(
-    removeWidows("aaa bbb ccc\tddd", {
+    removeWidows(`aaa bbb ccc\tddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "02.10.02"
+    `02.10.02`
   );
 });
 
 test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
   // existing, neighbour nbsp's get converted
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    "aaa bbb&nbsp;ccc&nbsp;ddd",
-    "02.11.01"
+    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
+    `02.11.01`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    "02.11.02"
+    `02.11.02`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
-      targetLanguage: "css",
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
+      targetLanguage: `css`,
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
-    "02.11.03"
+    `02.11.03`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
-      targetLanguage: "js",
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
+      targetLanguage: `js`,
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`,
-    "02.11.04"
+    `02.11.04`
   );
 
   // removeWidowPreventionMeasures
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
     `aaa bbb${rawnbsp}ccc ddd`,
-    "02.11.05"
+    `02.11.05`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: true,
       minCharCount: 5
     }).res,
     `aaa bbb${encodedNbspHtml}ccc ddd`,
-    "02.11.06"
+    `02.11.06`
   );
   t.is(
-    removeWidows("aaa bbb&nbsp;ccc ddd", {
+    removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: true,
-      targetLanguage: "css",
+      targetLanguage: `css`,
       minCharCount: 5
     }).res,
     `aaa bbb${encodedNbspCss}ccc ddd`,
-    "02.11.07"
+    `02.11.07`
   );
 });
 
@@ -797,7 +794,7 @@ test(`03.02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus wher
   });
 });
 
-test(`03.03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with &nbsp; and double space`, t => {
+test(`03.03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with ${encodedNbspHtml} and double space`, t => {
   languages.forEach((targetLanguage, i) => {
     t.is(
       removeWidows(`HOORAY  &mdash;  IT&rsquo;S HERE`, {
@@ -817,7 +814,7 @@ test(`03.03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with &nbsp; and doub
 // -----------------------------------------------------------------------------
 
 test(`04.01 - \u001b[${34}m${`line endings`}\u001b[${39}m - does not mangle string with consistent line endings`, t => {
-  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
         removeWidows(
@@ -894,15 +891,15 @@ test(`05.01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
   // ganged cases where nothing should happen:
   const vals = [
     `{% if something %} some text and more text {% endif %}`,
-    "{%- if something -%}\n\nsome text and more text\n\n{%- endif -%}",
-    "{{ something else here with many words }}",
-    "{% if something else and also another thing %}",
-    "Something here and there and then, {% if something else and also another thing %}"
+    `{%- if something -%}\n\nsome text and more text\n\n{%- endif -%}`,
+    `{{ something else here with many words }}`,
+    `{% if something else and also another thing %}`,
+    `Something here and there and then, {% if something else and also another thing %}`
   ];
   vals.forEach((val, i) => {
     t.is(
       removeWidows(val, {
-        ignore: "jinja"
+        ignore: `jinja`
       }).res,
       val,
       `05.01.0${1 + i} - templating chunks`
@@ -911,22 +908,20 @@ test(`05.01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
 });
 
 test(`05.02 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`, t => {
-  const source =
-    "{% if something else and also another thing %}tralala {% endif %}some text here";
-  const res =
-    "{% if something else and also another thing %}tralala {% endif %}some text&nbsp;here";
+  const source = `{% if something else and also another thing %}tralala {% endif %}some text here`;
+  const res = `{% if something else and also another thing %}tralala {% endif %}some text${encodedNbspHtml}here`;
   t.is(
     removeWidows(source, { minCharCount: 5 }).res,
     res,
-    "05.02.01 - words under threshold outside templating chunk which completes the threshold"
+    `05.02.01 - words under threshold outside templating chunk which completes the threshold`
   );
   t.is(
     removeWidows(source, {
-      ignore: "jinja",
+      ignore: `jinja`,
       minCharCount: 5
     }).res,
     res,
-    "05.02.02"
+    `05.02.02`
   );
 });
 
@@ -964,7 +959,7 @@ test(`05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
         {
           convertEntities: false,
           targetLanguage,
-          ignore: "jinja",
+          ignore: `jinja`,
           minCharCount: 5
         }
       ).res,
@@ -977,7 +972,7 @@ test(`05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
         {
           convertEntities: true,
           targetLanguage,
-          ignore: "jinja",
+          ignore: `jinja`,
           minCharCount: 5
         }
       ).res,
@@ -993,158 +988,158 @@ test(`05.03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow remov
 
 test(`06.01 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    "Some text SW1A 1AA and some more&nbsp;text.",
-    "06.01.01"
+    `Some text SW1A 1AA and some more${encodedNbspHtml}text.`,
+    `06.01.01`
   );
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       minCharCount: 5
     }).res,
-    "Some text SW1A&nbsp;1AA and some more&nbsp;text.",
-    "06.01.02"
+    `Some text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
+    `06.01.02`
   );
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
     `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    "06.01.03"
+    `06.01.03`
   );
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       convertEntities: true,
-      targetLanguage: "css",
+      targetLanguage: `css`,
       minCharCount: 5
     }).res,
     `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`,
-    "06.01.04"
+    `06.01.04`
   );
 });
 
 test(`06.02 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
-      "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       { UKPostcodes: false }
     ).res,
-    "Some text SW1A 1AA and some more text SW1A 1AA and some more&nbsp;text.",
-    "06.02.01"
+    `Some text SW1A 1AA and some more text SW1A 1AA and some more${encodedNbspHtml}text.`,
+    `06.02.01`
   );
   t.is(
     removeWidows(
-      "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       { UKPostcodes: true }
     ).res,
-    "Some text SW1A&nbsp;1AA and some more text SW1A&nbsp;1AA and some more&nbsp;text.",
-    "06.02.02"
+    `Some text SW1A${encodedNbspHtml}1AA and some more text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
+    `06.02.02`
   );
 });
 
 test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`, t => {
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    "This very long line of text ends with a postcode SW1A&nbsp;1AA.",
-    "06.03.01"
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+    `06.03.01`
   );
   t.is(
-    removeWidows("Postcode SW1A 1AA.", {
+    removeWidows(`Postcode SW1A 1AA.`, {
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    "Postcode SW1A 1AA.",
-    "06.03.02 - default minimum word count (4) kicks in"
+    `Postcode SW1A 1AA.`,
+    `06.03.02 - default minimum word count (4) kicks in`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       UKPostcodes: true,
       minCharCount: 5
     }).res,
-    "This very long line of text ends with a postcode SW1A&nbsp;1AA.",
-    "06.03.03"
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
+    `06.03.03`
   );
 
-  // targetLanguage === "js"
+  // targetLanguage === `js`
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
-    "06.03.04"
+    `06.03.04`
   );
   t.is(
-    removeWidows("Postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`Postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    "Postcode SW1A 1AA.",
-    "06.03.05 - default minimum word count (4) kicks in"
+    `Postcode SW1A 1AA.`,
+    `06.03.05 - default minimum word count (4) kicks in`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: true,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
-    "06.03.06"
+    `06.03.06`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
-    "06.03.07"
+    `06.03.07`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: true,
       convertEntities: false,
       removeWidowPreventionMeasures: true,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A 1AA.`,
-    "06.03.08"
+    `06.03.08`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
-      targetLanguage: "js",
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
       UKPostcodes: true,
       convertEntities: false,
       removeWidowPreventionMeasures: true,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A 1AA.`,
-    "06.03.09"
+    `06.03.09`
   );
 });
 
 test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       removeWidowPreventionMeasures: true,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    "This very long line of text ends with a postcode SW1A 1AA.",
-    "06.04.01"
+    `This very long line of text ends with a postcode SW1A 1AA.`,
+    `06.04.01`
   );
   t.is(
     removeWidows(
@@ -1155,17 +1150,17 @@ test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowP
         minCharCount: 5
       }
     ).res,
-    "This very long line of text ends with a postcode SW1A 1AA.",
-    "06.04.02 - removeWidowPreventionMeasures trumps UKPostcodes"
+    `This very long line of text ends with a postcode SW1A 1AA.`,
+    `06.04.02 - removeWidowPreventionMeasures trumps UKPostcodes`
   );
   t.is(
-    removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       removeWidowPreventionMeasures: false,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
     `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    "06.04.03 - added because of last two words"
+    `06.04.03 - added because of last two words`
   );
   t.is(
     removeWidows(
@@ -1177,26 +1172,26 @@ test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowP
       }
     ).res,
     `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    "06.04.04 - added because of opts.UKPostcodes"
+    `06.04.04 - added because of opts.UKPostcodes`
   );
 });
 
 test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: true,
         convertEntities: true,
         minCharCount: 5
       }
     ).res,
-    "\uD83E\uDD84 some text text text SW1A&nbsp;1AA more text text text \uD83E\uDD84&nbsp;aaa",
-    "06.05.01"
+    `\uD83E\uDD84 some text text text SW1A${encodedNbspHtml}1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
+    `06.05.01`
   );
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: true,
         convertEntities: false,
@@ -1204,23 +1199,23 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
       }
     ).res,
     `\uD83E\uDD84 some text text text SW1A${rawnbsp}1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
-    "06.05.02"
+    `06.05.02`
   );
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: false,
         convertEntities: true,
         minCharCount: 5
       }
     ).res,
-    "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84&nbsp;aaa",
-    "06.05.03"
+    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
+    `06.05.03`
   );
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: false,
         convertEntities: false,
@@ -1228,101 +1223,101 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
       }
     ).res,
     `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
-    "06.05.04"
+    `06.05.04`
   );
 });
 
 test(`06.06 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`, t => {
   t.is(
-    removeWidows("Some text SW1A 1Aa and some more text.", {
+    removeWidows(`Some text SW1A 1Aa and some more text.`, {
       UKPostcodes: false,
       convertEntities: true,
       minCharCount: 5
     }).res,
     `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
-    "06.06.01"
+    `06.06.01`
   );
   t.is(
-    removeWidows("Some text SW1A 1Aa and some more text.", {
+    removeWidows(`Some text SW1A 1Aa and some more text.`, {
       UKPostcodes: true,
       convertEntities: true,
       minCharCount: 5
     }).res,
     `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
-    "06.06.02"
+    `06.06.02`
   );
 });
 
 test(`06.07 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: false,
       convertEntities: false,
       minCharCount: 5
     }).res,
     `Some text SW1A 1AA and some more${rawnbsp}text.`,
-    "06.07.01"
+    `06.07.01`
   );
   t.is(
-    removeWidows("Some text SW1A 1AA and some more text.", {
+    removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
     `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    "06.07.02"
+    `06.07.02`
   );
 });
 
 test(`06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
-      "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       {
         UKPostcodes: false,
         convertEntities: false
       }
     ).res,
-    "Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.",
-    "06.08.01"
+    `Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.`,
+    `06.08.01`
   );
   t.is(
     removeWidows(
-      "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
+      `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       {
         UKPostcodes: true,
         convertEntities: false
       }
     ).res,
     `Some text SW1A${rawnbsp}1AA and some more text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    "06.08.02"
+    `06.08.02`
   );
 });
 
 test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`, t => {
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: false,
         convertEntities: false,
         minCharCount: 5
       }
     ).res,
-    "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa",
-    "06.09.01"
+    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa`,
+    `06.09.01`
   );
   t.is(
     removeWidows(
-      "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
+      `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
       {
         UKPostcodes: true,
         convertEntities: false,
         minCharCount: 5
       }
     ).res,
-    "\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa",
-    "06.09.02"
+    `\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa`,
+    `06.09.02`
   );
 });
 
@@ -1333,32 +1328,32 @@ test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
 test(`07.01 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - baseline`, t => {
   t.is(
     removeWidows(
-      `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+      `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       {
         convertEntities: true
       }
     ).res,
-    `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est&nbsp;laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est&nbsp;laborum.`,
-    "07.01"
+    `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbspHtml}laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est${encodedNbspHtml}laborum.`,
+    `07.01`
   );
 });
 
 test(`07.02 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in without nbsp's`, t => {
   t.is(
     removeWidows(
-      `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+      `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       {
         removeWidowPreventionMeasures: true,
         convertEntities: true
       }
     ).res,
-    `Lorem&nbsp;ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    "07.02"
+    `Lorem${encodedNbspHtml}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+    `07.02`
   );
 });
 
 test(`07.03 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39}m`} - comes in with nbsp's`, t => {
-  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
+  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
         removeWidows(
@@ -1384,66 +1379,66 @@ test(`07.03 - ${`\u001b[${31}m${`opts.removeWidowPreventionMeasures`}\u001b[${39
 
 test(`08.01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = zero`, t => {
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minWordCount: 0,
       minCharCount: 5
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "08.01"
+    `08.01`
   );
 });
 
 test(`08.02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`, t => {
   t.is(
-    removeWidows("aaa bbb", {
-      targetLanguage: "css",
+    removeWidows(`aaa bbb`, {
+      targetLanguage: `css`,
       minWordCount: null,
       minCharCount: 5
     }).res,
     `aaa${encodedNbspCss}bbb`,
-    "08.02.01"
+    `08.02.01`
   );
   t.is(
-    removeWidows("aaa bbb", {
-      targetLanguage: "css",
+    removeWidows(`aaa bbb`, {
+      targetLanguage: `css`,
       minWordCount: false,
       minCharCount: 5
     }).res,
     `aaa${encodedNbspCss}bbb`,
-    "08.02.02"
+    `08.02.02`
   );
 });
 
 test(`08.03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd", {
+    removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 2,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "08.03"
+    `08.03`
   );
 });
 
 test(`08.04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd", {
+    removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 4,
       minCharCount: 5
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "08.04"
+    `08.04`
   );
 });
 
 test(`08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`, t => {
   t.is(
-    removeWidows("aaa bbb ccc ddd", {
+    removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 999,
       minCharCount: 5
     }).res,
     `aaa bbb ccc ddd`,
-    "08.05"
+    `08.05`
   );
 });
 
@@ -1453,93 +1448,93 @@ test(`08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is
 
 test(`09.01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = zero`, t => {
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 0
     }).res,
     `aaa bbb`,
-    "09.01.01 - default word count 4 kicks in and makes program skip this"
+    `09.01.01 - default word count 4 kicks in and makes program skip this`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 0,
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.01.02"
+    `09.01.02`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 5,
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.01.03"
+    `09.01.03`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 6,
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.01.04"
+    `09.01.04`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 7,
       minWordCount: 0
     }).res,
     `aaa bbb`,
-    "09.01.05"
+    `09.01.05`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 99,
       minWordCount: 0
     }).res,
     `aaa bbb`,
-    "09.01.06"
+    `09.01.06`
   );
 });
 
 test(`09.02 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharCount = falsey`, t => {
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: false
     }).res,
     `aaa bbb`,
-    "09.02.01"
+    `09.02.01`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: false,
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.02.02"
+    `09.02.02`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: false,
       minWordCount: false
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.02.03"
+    `09.02.03`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: null,
       minWordCount: null
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.02.04"
+    `09.02.04`
   );
   t.is(
-    removeWidows("aaa bbb", {
+    removeWidows(`aaa bbb`, {
       minCharCount: 0,
       minWordCount: 0
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "09.02.05"
+    `09.02.05`
   );
 });
 
@@ -1556,19 +1551,19 @@ test(`10.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - call
   };
 
   t.deepEqual(
-    removeWidows("aaaaaaaaaa").res,
-    "aaaaaaaaaa",
-    "10.01.01 - default behaviour"
+    removeWidows(`aaaaaaaaaa`).res,
+    `aaaaaaaaaa`,
+    `10.01.01 - default behaviour`
   );
   t.deepEqual(
-    removeWidows("aaaaaaaaaa", { reportProgressFunc: null }).res,
-    "aaaaaaaaaa",
-    "10.01.02"
+    removeWidows(`aaaaaaaaaa`, { reportProgressFunc: null }).res,
+    `aaaaaaaaaa`,
+    `10.01.02`
   );
   t.deepEqual(
-    removeWidows("aaaaaaaaaa", { reportProgressFunc: false }).res,
-    "aaaaaaaaaa",
-    "10.01.03"
+    removeWidows(`aaaaaaaaaa`, { reportProgressFunc: false }).res,
+    `aaaaaaaaaa`,
+    `10.01.03`
   );
 
   // 1. our function will mutate the counter variable:
@@ -1594,7 +1589,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   );
 
   // 2. check the counter variable:
-  t.true(counter > 95, "10.01.04 - counter called");
+  t.true(counter > 95, `10.01.04 - counter called`);
 });
 
 test(`10.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, t => {
@@ -1686,7 +1681,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
     t.true(compareTo.includes(perc), `checking: ${perc}%`)
   );
   t.is(gather.length, 86 - 21 + 1);
-  // t.deepEqual(gather, compareTo, "10.02")
+  // t.deepEqual(gather, compareTo, `10.02`)
 });
 
 // 11 - opts.tagRanges
@@ -1699,7 +1694,7 @@ test(`11.01 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known
       tagRanges: [[0, 74]]
     }).res,
     source,
-    "11.01 - everything ignored because everything is a tag"
+    `11.01 - everything ignored because everything is a tag`
   );
 });
 
@@ -1708,8 +1703,8 @@ test(`11.02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space b
     removeWidows(
       `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`
     ).res,
-    `something in front here <a style="display: block;">x</a> <b style="display:&nbsp;block;">y</b>`,
-    "11.02.01 - default behaviour"
+    `something in front here <a style="display: block;">x</a> <b style="display:${encodedNbspHtml}block;">y</b>`,
+    `11.02.01 - default behaviour`
   );
   t.is(
     removeWidows(
@@ -1718,7 +1713,27 @@ test(`11.02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space b
         tagRanges: [[24, 51], [52, 56], [57, 84], [85, 89]]
       }
     ).res,
-    `something in front here <a style="display: block;">x</a>&nbsp;<b style="display: block;">y</b>`,
-    "11.02 - tags skipped"
+    `something in front here <a style="display: block;">x</a>${encodedNbspHtml}<b style="display: block;">y</b>`,
+    `11.02 - tags skipped`
+  );
+});
+
+test(`11.03 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space between tags`, t => {
+  t.is(
+    removeWidows(
+      `Very long line, long-enough to trigger widow removal.<br/>\n<br/>\n Text.`
+    ).res,
+    `Very long line, long-enough to trigger widow${encodedNbspHtml}removal.<br/>\n<br/>\n Text.`,
+    `11.03.01`
+  );
+  t.is(
+    removeWidows(
+      `Very long line, long-enough to trigger widow removal.<br/>\n<br/>\n Text.`,
+      {
+        tagRanges: [[53, 58], [60, 65]]
+      }
+    ).res,
+    `Very long line, long-enough to trigger widow${encodedNbspHtml}removal.<br/>\n<br/>\n Text.`,
+    `11.03.02`
   );
 });

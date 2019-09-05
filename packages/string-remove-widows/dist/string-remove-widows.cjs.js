@@ -271,35 +271,36 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[_i] && str[_i].trim().length && (!str[_i - 1] || !str[_i - 1].trim().length)) {
       wordCount++;
     }
-    if (!doNothingUntil && (!str[_i] || str[_i] === "\n" && str[_i + 1] === "\n" || str[_i] === "\r" && str[_i + 1] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n" && str[_i + 2] === "\r" && str[_i + 3] === "\n" || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))) {
-      if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
-        var finalStart;
-        var finalEnd;
-        if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-          if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
+    if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[stringLeftRight.left(str, _i)]))
+    ) {
+        if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
+          var finalStart;
+          var finalEnd;
+          if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
+              finalStart = lastWhitespaceStartedAt;
+              finalEnd = lastWhitespaceEndedAt;
+            } else {
+              finalStart = lastEncodedNbspStartedAt;
+              finalEnd = lastEncodedNbspEndedAt;
+            }
+          } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
             finalStart = lastWhitespaceStartedAt;
             finalEnd = lastWhitespaceEndedAt;
-          } else {
+          } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
             finalStart = lastEncodedNbspStartedAt;
             finalEnd = lastEncodedNbspEndedAt;
           }
-        } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
-          finalStart = lastWhitespaceStartedAt;
-          finalEnd = lastWhitespaceEndedAt;
-        } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-          finalStart = lastEncodedNbspStartedAt;
-          finalEnd = lastEncodedNbspEndedAt;
+          if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
+            finalStart = secondToLastWhitespaceStartedAt;
+            finalEnd = secondToLastWhitespaceEndedAt;
+          }
+          if (finalStart && finalEnd) {
+            push(finalStart, finalEnd);
+          }
         }
-        if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
-          finalStart = secondToLastWhitespaceStartedAt;
-          finalEnd = secondToLastWhitespaceEndedAt;
-        }
-        if (finalStart && finalEnd) {
-          push(finalStart, finalEnd);
-        }
+        resetAll();
       }
-      resetAll();
-    }
     if (opts.UKPostcodes && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
       push(_i, stringLeftRight.right(str, _i));
     }
