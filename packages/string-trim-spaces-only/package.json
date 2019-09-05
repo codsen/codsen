@@ -164,9 +164,6 @@
     ],
     "sourceMap": false
   },
-  "dependencies": {
-    "check-types-mini": "^5.7.38"
-  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",

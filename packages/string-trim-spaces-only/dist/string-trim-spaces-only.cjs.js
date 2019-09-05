@@ -9,10 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var checkTypes = _interopDefault(require('check-types-mini'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -32,18 +28,23 @@ function trimSpaces(s, originalOpts) {
     throw new Error("string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ".concat(_typeof(s), ", equal to:\n").concat(JSON.stringify(s, null, 4)));
   }
   var defaults = {
-    classicTrim: false
+    classicTrim: false,
+    cr: false,
+    lf: false,
+    tab: false,
+    space: true,
+    nbsp: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-trim-spaces-only: [THROW_ID_02*]"
-  });
+  function check(_char) {
+    return opts.classicTrim && _char.trim().length === 0 || !opts.classicTrim && (opts.space && _char === " " || opts.cr && _char === "\r" || opts.lf && _char === "\n" || opts.tab && _char === "\t" || opts.nbsp && _char === "\xA0");
+  }
   var newStart;
   var newEnd;
   if (s.length > 0) {
-    if (opts.classicTrim && s[0].trim().length === 0 || !opts.classicTrim && s[0] === " ") {
+    if (check(s[0])) {
       for (var i = 0, len = s.length; i < len; i++) {
-        if (opts.classicTrim && s[i].trim().length !== 0 || !opts.classicTrim && s[i] !== " ") {
+        if (!check(s[i])) {
           newStart = i;
           break;
         }
@@ -55,9 +56,9 @@ function trimSpaces(s, originalOpts) {
         }
       }
     }
-    if (opts.classicTrim && s[s.length - 1].trim().length === 0 || !opts.classicTrim && s[s.length - 1] === " ") {
+    if (check(s[s.length - 1])) {
       for (var _i = s.length; _i--;) {
-        if (opts.classicTrim && s[_i].trim().length !== 0 || !opts.classicTrim && s[_i] !== " ") {
+        if (!check(s[_i])) {
           newEnd = _i + 1;
           break;
         }

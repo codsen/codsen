@@ -7,8 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
  */
 
-import checkTypes from 'check-types-mini';
-
 function trimSpaces(s, originalOpts) {
   if (typeof s !== "string") {
     throw new Error(
@@ -20,24 +18,31 @@ function trimSpaces(s, originalOpts) {
     );
   }
   const defaults = {
-    classicTrim: false
+    classicTrim: false,
+    cr: false,
+    lf: false,
+    tab: false,
+    space: true,
+    nbsp: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-trim-spaces-only: [THROW_ID_02*]"
-  });
+  function check(char) {
+    return (
+      (opts.classicTrim && char.trim().length === 0) ||
+      (!opts.classicTrim &&
+        ((opts.space && char === " ") ||
+          (opts.cr && char === "\r") ||
+          (opts.lf && char === "\n") ||
+          (opts.tab && char === "\t") ||
+          (opts.nbsp && char === "\u00a0")))
+    );
+  }
   let newStart;
   let newEnd;
   if (s.length > 0) {
-    if (
-      (opts.classicTrim && s[0].trim().length === 0) ||
-      (!opts.classicTrim && s[0] === " ")
-    ) {
+    if (check(s[0])) {
       for (let i = 0, len = s.length; i < len; i++) {
-        if (
-          (opts.classicTrim && s[i].trim().length !== 0) ||
-          (!opts.classicTrim && s[i] !== " ")
-        ) {
+        if (!check(s[i])) {
           newStart = i;
           break;
         }
@@ -49,15 +54,9 @@ function trimSpaces(s, originalOpts) {
         }
       }
     }
-    if (
-      (opts.classicTrim && s[s.length - 1].trim().length === 0) ||
-      (!opts.classicTrim && s[s.length - 1] === " ")
-    ) {
+    if (check(s[s.length - 1])) {
       for (let i = s.length; i--; ) {
-        if (
-          (opts.classicTrim && s[i].trim().length !== 0) ||
-          (!opts.classicTrim && s[i] !== " ")
-        ) {
+        if (!check(s[i])) {
           newEnd = i + 1;
           break;
         }

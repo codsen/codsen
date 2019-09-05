@@ -1,5 +1,3 @@
-import checkTypes from "check-types-mini";
-
 function trimSpaces(s, originalOpts) {
   // insurance:
   if (typeof s !== "string") {
@@ -13,35 +11,48 @@ function trimSpaces(s, originalOpts) {
   }
   // opts preparation:
   const defaults = {
-    classicTrim: false
+    classicTrim: false,
+    cr: false,
+    lf: false,
+    tab: false,
+    space: true,
+    nbsp: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-trim-spaces-only: [THROW_ID_02*]"
-  });
+
+  function check(char) {
+    return (
+      (opts.classicTrim && char.trim().length === 0) ||
+      (!opts.classicTrim &&
+        ((opts.space && char === " ") ||
+          (opts.cr && char === "\r") ||
+          (opts.lf && char === "\n") ||
+          (opts.tab && char === "\t") ||
+          (opts.nbsp && char === "\u00a0")))
+    );
+  }
+
   // action:
   let newStart;
   let newEnd;
-  console.log("025 about to check the length");
+  console.log("038 about to check the length");
   if (s.length > 0) {
-    if (
-      (opts.classicTrim && s[0].trim().length === 0) ||
-      (!opts.classicTrim && s[0] === " ")
-    ) {
+    if (check(s[0])) {
       console.log(
-        `032 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`
+        `042 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`
       );
       for (let i = 0, len = s.length; i < len; i++) {
         console.log(
-          `\u001b[${36}m${`036 ------ str[${i}] = ${s[i]}`}\u001b[${39}m`
+          `\u001b[${36}m${`046 ------ s[${i}] = ${JSON.stringify(
+            s[i],
+            null,
+            0
+          )}`}\u001b[${39}m`
         );
-        if (
-          (opts.classicTrim && s[i].trim().length !== 0) ||
-          (!opts.classicTrim && s[i] !== " ")
-        ) {
+        if (!check(s[i])) {
           newStart = i;
           console.log(
-            `044 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `055 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
               newStart,
               null,
               4
@@ -54,7 +65,7 @@ function trimSpaces(s, originalOpts) {
         // whole thing can be trimmed:
         if (i === s.length - 1) {
           // this means there are only spaces/whitespace from beginning to the end
-          console.log("057");
+          console.log("068");
           return {
             res: "",
             ranges: [[0, s.length]]
@@ -65,24 +76,18 @@ function trimSpaces(s, originalOpts) {
 
     // if we reached this far, check the last character - find out, is it worth
     // trimming the end of the given string:
-    if (
-      (opts.classicTrim && s[s.length - 1].trim().length === 0) ||
-      (!opts.classicTrim && s[s.length - 1] === " ")
-    ) {
+    if (check(s[s.length - 1])) {
       console.log(
-        `073 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`
+        `081 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`
       );
       for (let i = s.length; i--; ) {
         console.log(
-          `\u001b[${36}m${`077 ------ str[${i}] = ${s[i]}`}\u001b[${39}m`
+          `\u001b[${36}m${`085 ------ s[${i}] = ${s[i]}`}\u001b[${39}m`
         );
-        if (
-          (opts.classicTrim && s[i].trim().length !== 0) ||
-          (!opts.classicTrim && s[i] !== " ")
-        ) {
+        if (!check(s[i])) {
           newEnd = i + 1;
           console.log(
-            `085 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            `090 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
               newEnd,
               null,
               4
@@ -93,14 +98,14 @@ function trimSpaces(s, originalOpts) {
       }
     }
     console.log(
-      `096 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+      `101 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
         newStart,
         null,
         4
       )}`
     );
     console.log(
-      `103 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+      `108 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
         newEnd,
         null,
         4
@@ -108,20 +113,20 @@ function trimSpaces(s, originalOpts) {
     );
     if (newStart) {
       if (newEnd) {
-        console.log("111 - returning trimmed both heads and tails");
+        console.log("116 - returning trimmed both heads and tails");
         return {
           res: s.slice(newStart, newEnd),
           ranges: [[0, newStart], [newEnd, s.length]]
         };
       }
-      console.log("117 - returning trimmed heads");
+      console.log("122 - returning trimmed heads");
       return {
         res: s.slice(newStart),
         ranges: [[0, newStart]]
       };
     }
     if (newEnd) {
-      console.log("124 - returning trimmed tails");
+      console.log("129 - returning trimmed tails");
       return {
         res: s.slice(0, newEnd),
         ranges: [[newEnd, s.length]]
