@@ -1,0 +1,717 @@
+[
+    {
+        "name": "all-named-html-entities",
+        "size": 232537,
+        "imports": []
+    },
+    {
+        "name": "array-group-str-omit-num-char",
+        "size": 2877,
+        "imports": [
+            "ranges-apply"
+        ]
+    },
+    {
+        "name": "array-includes-with-glob",
+        "size": 2563,
+        "imports": []
+    },
+    {
+        "name": "array-of-arrays-into-ast",
+        "size": 1366,
+        "imports": [
+            "check-types-mini",
+            "object-merge-advanced"
+        ]
+    },
+    {
+        "name": "array-of-arrays-sort-by-col",
+        "size": 3332,
+        "imports": []
+    },
+    {
+        "name": "array-pull-all-with-glob",
+        "size": 3268,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "arrayiffy-if-string",
+        "size": 501,
+        "imports": []
+    },
+    {
+        "name": "ast-compare",
+        "size": 8919,
+        "imports": [
+            "ast-contains-only-empty-space",
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "ast-contains-only-empty-space",
+        "size": 962,
+        "imports": [
+            "ast-monkey-traverse"
+        ]
+    },
+    {
+        "name": "ast-delete-object",
+        "size": 2101,
+        "imports": [
+            "ast-compare",
+            "ast-monkey-traverse",
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "ast-get-object",
+        "size": 2070,
+        "imports": [
+            "ast-compare"
+        ]
+    },
+    {
+        "name": "ast-get-values-by-key",
+        "size": 2565,
+        "imports": [
+            "ast-monkey-traverse"
+        ]
+    },
+    {
+        "name": "ast-is-empty",
+        "size": 1110,
+        "imports": []
+    },
+    {
+        "name": "ast-loose-compare",
+        "size": 2933,
+        "imports": [
+            "ast-contains-only-empty-space"
+        ]
+    },
+    {
+        "name": "ast-monkey",
+        "size": 7765,
+        "imports": [
+            "ast-compare",
+            "ast-monkey-traverse",
+            "check-types-mini",
+            "util-array-object-or-both"
+        ]
+    },
+    {
+        "name": "ast-monkey-traverse",
+        "size": 2534,
+        "imports": []
+    },
+    {
+        "name": "bitbucket-slug",
+        "size": 726,
+        "imports": []
+    },
+    {
+        "name": "charcode-is-valid-xml-name-character",
+        "size": 1590,
+        "imports": [
+            "ranges-is-index-within"
+        ]
+    },
+    {
+        "name": "check-types-mini",
+        "size": 11089,
+        "imports": [
+            "arrayiffy-if-string",
+            "ast-monkey-traverse"
+        ]
+    },
+    {
+        "name": "chlu",
+        "size": 19651,
+        "imports": [
+            "ast-contains-only-empty-space",
+            "easy-replace"
+        ]
+    },
+    {
+        "name": "chlu-cli",
+        "size": 2604,
+        "imports": [
+            "chlu"
+        ]
+    },
+    {
+        "name": "color-shorthand-hex-to-six-digit",
+        "size": 1261,
+        "imports": []
+    },
+    {
+        "name": "csv-sort",
+        "size": 14188,
+        "imports": [
+            "csv-split-easy"
+        ]
+    },
+    {
+        "name": "csv-sort-cli",
+        "size": 9321,
+        "imports": [
+            "csv-sort"
+        ]
+    },
+    {
+        "name": "csv-split-easy",
+        "size": 5071,
+        "imports": [
+            "check-types-mini",
+            "string-remove-thousand-separators"
+        ]
+    },
+    {
+        "name": "detect-is-it-html-or-xhtml",
+        "size": 1857,
+        "imports": []
+    },
+    {
+        "name": "detergent",
+        "size": 55205,
+        "imports": [
+            "all-named-html-entities",
+            "html-entities-not-email-friendly",
+            "ranges-apply",
+            "ranges-ent-decode",
+            "ranges-is-index-within",
+            "ranges-process-outside",
+            "ranges-push",
+            "string-apostrophes",
+            "string-collapse-white-space",
+            "string-fix-broken-named-entities",
+            "string-left-right",
+            "string-range-expander",
+            "string-remove-widows",
+            "string-strip-html",
+            "string-trim-spaces-only"
+        ]
+    },
+    {
+        "name": "easy-replace",
+        "size": 10066,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "email-all-chars-within-ascii",
+        "size": 2166,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "email-all-chars-within-ascii-cli",
+        "size": 6738,
+        "imports": [
+            "email-all-chars-within-ascii"
+        ]
+    },
+    {
+        "name": "email-comb",
+        "size": 60980,
+        "imports": [
+            "array-pull-all-with-glob",
+            "ast-is-empty",
+            "ranges-apply",
+            "ranges-push",
+            "regex-empty-conditional-comments",
+            "string-extract-class-names",
+            "string-left-right",
+            "string-match-left-right",
+            "string-range-expander",
+            "string-uglify"
+        ]
+    },
+    {
+        "name": "email-homey",
+        "size": 6033,
+        "imports": []
+    },
+    {
+        "name": "emlint",
+        "size": 116465,
+        "imports": [
+            "arrayiffy-if-string",
+            "html-entities-not-email-friendly",
+            "ranges-merge",
+            "string-fix-broken-named-entities",
+            "string-left-right"
+        ]
+    },
+    {
+        "name": "generate-atomic-css",
+        "size": 20642,
+        "imports": [
+            "ranges-apply",
+            "string-left-right"
+        ]
+    },
+    {
+        "name": "generate-atomic-css-cli",
+        "size": 4543,
+        "imports": [
+            "generate-atomic-css"
+        ]
+    },
+    {
+        "name": "gulp-email-remove-unused-css",
+        "size": 834,
+        "imports": [
+            "email-comb"
+        ]
+    },
+    {
+        "name": "helga",
+        "size": 730,
+        "imports": []
+    },
+    {
+        "name": "html-crush",
+        "size": 32389,
+        "imports": [
+            "ranges-apply",
+            "ranges-push",
+            "string-left-right",
+            "string-match-left-right",
+            "string-range-expander"
+        ]
+    },
+    {
+        "name": "html-entities-not-email-friendly",
+        "size": 79285,
+        "imports": []
+    },
+    {
+        "name": "html-img-alt",
+        "size": 10667,
+        "imports": [
+            "check-types-mini",
+            "ranges-apply",
+            "ranges-push",
+            "string-unfancy"
+        ]
+    },
+    {
+        "name": "html-table-patcher",
+        "size": 8073,
+        "imports": []
+    },
+    {
+        "name": "js-row-num",
+        "size": 5686,
+        "imports": [
+            "ranges-apply",
+            "ranges-push"
+        ]
+    },
+    {
+        "name": "js-row-num-cli",
+        "size": 4911,
+        "imports": [
+            "js-row-num"
+        ]
+    },
+    {
+        "name": "json-comb",
+        "size": 6571,
+        "imports": [
+            "json-comb-core"
+        ]
+    },
+    {
+        "name": "json-comb-core",
+        "size": 13686,
+        "imports": [
+            "check-types-mini",
+            "object-fill-missing-keys",
+            "object-flatten-all-arrays",
+            "object-merge-advanced",
+            "object-no-new-keys",
+            "object-set-all-values-to"
+        ]
+    },
+    {
+        "name": "json-sort-cli",
+        "size": 11486,
+        "imports": [
+            "ast-monkey-traverse"
+        ]
+    },
+    {
+        "name": "json-variables",
+        "size": 20366,
+        "imports": [
+            "arrayiffy-if-string",
+            "ast-get-values-by-key",
+            "ast-monkey-traverse",
+            "check-types-mini",
+            "ranges-apply",
+            "ranges-push",
+            "string-find-heads-tails",
+            "string-match-left-right",
+            "string-remove-duplicate-heads-tails"
+        ]
+    },
+    {
+        "name": "lect",
+        "size": 73747,
+        "imports": [
+            "array-pull-all-with-glob",
+            "arrayiffy-if-string",
+            "ast-monkey-traverse",
+            "bitbucket-slug",
+            "object-delete-key",
+            "object-merge-advanced"
+        ]
+    },
+    {
+        "name": "lerna-clean-changelogs",
+        "size": 2961,
+        "imports": []
+    },
+    {
+        "name": "lerna-clean-changelogs-cli",
+        "size": 7099,
+        "imports": [
+            "lerna-clean-changelogs"
+        ]
+    },
+    {
+        "name": "lerna-link-dep",
+        "size": 12259,
+        "imports": []
+    },
+    {
+        "name": "object-all-values-equal-to",
+        "size": 2311,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "object-boolean-combinations",
+        "size": 2463,
+        "imports": []
+    },
+    {
+        "name": "object-delete-key",
+        "size": 2588,
+        "imports": [
+            "ast-is-empty",
+            "ast-monkey",
+            "check-types-mini",
+            "util-array-object-or-both"
+        ]
+    },
+    {
+        "name": "object-fill-missing-keys",
+        "size": 5552,
+        "imports": [
+            "arrayiffy-if-string",
+            "check-types-mini",
+            "object-all-values-equal-to",
+            "object-merge-advanced"
+        ]
+    },
+    {
+        "name": "object-flatten-all-arrays",
+        "size": 2197,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "object-flatten-referencing",
+        "size": 11776,
+        "imports": [
+            "check-types-mini",
+            "str-indexes-of-plus"
+        ]
+    },
+    {
+        "name": "object-merge-advanced",
+        "size": 14755,
+        "imports": [
+            "array-includes-with-glob",
+            "arrayiffy-if-string",
+            "check-types-mini",
+            "util-nonempty"
+        ]
+    },
+    {
+        "name": "object-no-new-keys",
+        "size": 3722,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "object-set-all-values-to",
+        "size": 1378,
+        "imports": []
+    },
+    {
+        "name": "ranges-apply",
+        "size": 4755,
+        "imports": [
+            "ranges-merge"
+        ]
+    },
+    {
+        "name": "ranges-crop",
+        "size": 3427,
+        "imports": [
+            "ranges-merge"
+        ]
+    },
+    {
+        "name": "ranges-ent-decode",
+        "size": 3114,
+        "imports": [
+            "check-types-mini",
+            "ranges-merge"
+        ]
+    },
+    {
+        "name": "ranges-invert",
+        "size": 4532,
+        "imports": [
+            "check-types-mini",
+            "ranges-crop",
+            "ranges-merge"
+        ]
+    },
+    {
+        "name": "ranges-is-index-within",
+        "size": 1072,
+        "imports": []
+    },
+    {
+        "name": "ranges-iterate",
+        "size": 2785,
+        "imports": []
+    },
+    {
+        "name": "ranges-merge",
+        "size": 4937,
+        "imports": [
+            "ranges-sort"
+        ]
+    },
+    {
+        "name": "ranges-process-outside",
+        "size": 2413,
+        "imports": [
+            "ranges-crop",
+            "ranges-invert"
+        ]
+    },
+    {
+        "name": "ranges-push",
+        "size": 7612,
+        "imports": [
+            "ranges-merge",
+            "string-collapse-leading-whitespace"
+        ]
+    },
+    {
+        "name": "ranges-regex",
+        "size": 2071,
+        "imports": [
+            "ranges-merge"
+        ]
+    },
+    {
+        "name": "ranges-sort",
+        "size": 3048,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "regex-empty-conditional-comments",
+        "size": 368,
+        "imports": []
+    },
+    {
+        "name": "str-indexes-of-plus",
+        "size": 2422,
+        "imports": []
+    },
+    {
+        "name": "string-apostrophes",
+        "size": 9355,
+        "imports": [
+            "ranges-apply"
+        ]
+    },
+    {
+        "name": "string-character-is-astral-surrogate",
+        "size": 1202,
+        "imports": []
+    },
+    {
+        "name": "string-collapse-leading-whitespace",
+        "size": 1985,
+        "imports": []
+    },
+    {
+        "name": "string-collapse-white-space",
+        "size": 17758,
+        "imports": [
+            "check-types-mini",
+            "ranges-apply",
+            "ranges-push",
+            "string-match-left-right"
+        ]
+    },
+    {
+        "name": "string-convert-indexes",
+        "size": 5483,
+        "imports": [
+            "ast-monkey",
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "string-extract-class-names",
+        "size": 3734,
+        "imports": [
+            "string-left-right"
+        ]
+    },
+    {
+        "name": "string-find-heads-tails",
+        "size": 13212,
+        "imports": [
+            "arrayiffy-if-string",
+            "check-types-mini",
+            "string-match-left-right"
+        ]
+    },
+    {
+        "name": "string-fix-broken-named-entities",
+        "size": 38303,
+        "imports": [
+            "all-named-html-entities",
+            "string-left-right"
+        ]
+    },
+    {
+        "name": "string-left-right",
+        "size": 10992,
+        "imports": []
+    },
+    {
+        "name": "string-match-left-right",
+        "size": 18177,
+        "imports": [
+            "arrayiffy-if-string",
+            "string-character-is-astral-surrogate"
+        ]
+    },
+    {
+        "name": "string-overlap-one-on-another",
+        "size": 3021,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "string-range-expander",
+        "size": 8718,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "string-remove-duplicate-heads-tails",
+        "size": 8283,
+        "imports": [
+            "arrayiffy-if-string",
+            "check-types-mini",
+            "ranges-apply",
+            "ranges-push",
+            "string-match-left-right",
+            "string-trim-spaces-only"
+        ]
+    },
+    {
+        "name": "string-remove-thousand-separators",
+        "size": 3763,
+        "imports": [
+            "check-types-mini",
+            "ranges-apply",
+            "ranges-push"
+        ]
+    },
+    {
+        "name": "string-remove-widows",
+        "size": 17385,
+        "imports": [
+            "arrayiffy-if-string",
+            "ranges-apply",
+            "ranges-push",
+            "string-left-right",
+            "string-match-left-right"
+        ]
+    },
+    {
+        "name": "string-split-by-whitespace",
+        "size": 2118,
+        "imports": [
+            "check-types-mini",
+            "ranges-is-index-within"
+        ]
+    },
+    {
+        "name": "string-strip-html",
+        "size": 33365,
+        "imports": [
+            "ranges-apply",
+            "ranges-push",
+            "string-left-right"
+        ]
+    },
+    {
+        "name": "string-trim-spaces-only",
+        "size": 2075,
+        "imports": []
+    },
+    {
+        "name": "string-uglify",
+        "size": 5629,
+        "imports": []
+    },
+    {
+        "name": "string-unfancy",
+        "size": 1340,
+        "imports": []
+    },
+    {
+        "name": "update-versions",
+        "size": 8260,
+        "imports": []
+    },
+    {
+        "name": "util-array-object-or-both",
+        "size": 2581,
+        "imports": [
+            "check-types-mini"
+        ]
+    },
+    {
+        "name": "util-nonempty",
+        "size": 848,
+        "imports": []
+    }
+]

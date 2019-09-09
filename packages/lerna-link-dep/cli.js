@@ -334,7 +334,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           ] = `^${requestedPackageJsonContents.version}`;
           fs.writeJsonSync(
             path.resolve("package.json"),
-            askerPackageJsonContents
+            askerPackageJsonContents,
+            { spaces: 2 }
           );
         } else {
           // user wants normal dep added in package.json
@@ -346,7 +347,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           ] = `^${requestedPackageJsonContents.version}`;
           fs.writeJsonSync(
             path.resolve("package.json"),
-            askerPackageJsonContents
+            askerPackageJsonContents,
+            { spaces: 2 }
           );
         }
       } catch (e1) {

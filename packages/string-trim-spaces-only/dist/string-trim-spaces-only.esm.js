@@ -1,6 +1,6 @@
 /**
  * string-trim-spaces-only
- * Like String.trim() but trims only spaces
+ * Like String.trim() but you can choose granularly what to trim
  * Version: 2.7.41
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

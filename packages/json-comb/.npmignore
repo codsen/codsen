@@ -11,6 +11,8 @@
 
 # folders:
 
+.nyc_output
+coverage
 test
 
 # files:
@@ -18,3 +20,4 @@ test
 .eslintrc.json
 .npmignore
 .prettierignore
+testStats.json

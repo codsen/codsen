@@ -1,0 +1,22 @@
+{
+    "stats": {
+        "byFile": {},
+        "declaredTests": 457,
+        "failedHooks": 0,
+        "failedTests": 0,
+        "failedWorkers": 0,
+        "files": 5,
+        "parallelRuns": null,
+        "finishedWorkers": 5,
+        "internalErrors": 0,
+        "remainingTests": 0,
+        "passedKnownFailingTests": 0,
+        "passedTests": 457,
+        "selectedTests": 457,
+        "skippedTests": 0,
+        "timeouts": 0,
+        "todoTests": 0,
+        "uncaughtExceptions": 0,
+        "unhandledRejections": 0
+    }
+}

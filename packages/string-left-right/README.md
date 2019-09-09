@@ -16,6 +16,8 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API - left() and right()](#api---left-and-right)
+- [API - chompLeft() and chompRight()](#api---chompleft-and-chompright)
+- [API - chompLeft() and chompRight() modes](#api---chompleft-and-chompright-modes)
 - [API - leftStopAtNewLines() and rightStopAtNewLines()](#api---leftstopatnewlines-and-rightstopatnewlines)
 - [More complex lookups](#more-complex-lookups)
 - [Contributing](#contributing)
@@ -167,50 +169,54 @@ console.log(`res2`);
 // => 2
 ```
 
+**[⬆ back to top](#)**
+
 ## API - chompLeft() and chompRight() modes
 
 You can pass an options object as a third argument before characters to match.
 
 Modes:
 
-* `0` - leave single space if possible
-* `1` - stop at first space, leave whitespace alone
-* `2` - aggressively chomp all whitespace except newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
-* `3` - aggressively chomp all whitespace including newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
+- `0` - leave single space if possible
+- `1` - stop at first space, leave whitespace alone
+- `2` - aggressively chomp all whitespace except newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
+- `3` - aggressively chomp all whitespace including newlines ([CR](https://en.wikipedia.org/wiki/Carriage_return), [LF](https://en.wikipedia.org/wiki/Newline))
 
 For example:
 
 ```js
 const { chompLeft } = require("string-left-right");
-const res1 = chompLeft("a\n  b c b c  x y", 13, "b", "c")
+const res1 = chompLeft("a\n  b c b c  x y", 13, "b", "c");
 console.log(res1);
 // => 2
 // the default chomp stopped when it reached line break character. It didn't leave a space because it's not a non-whitespace character. If it were not a line break but a letter, it would have stopped one space short of it.
 
 // passing default { mode: 0 } is the same result:
-const res2 = chompLeft("a\n  b c b c  x y", { mode: 0 }, 13, "b", "c")
+const res2 = chompLeft("a\n  b c b c  x y", { mode: 0 }, 13, "b", "c");
 console.log(res2);
 // => 2
 
 // mode 1 - stops at first space met, in this case at first "b"
-const res3 = chompLeft("a\n  b c b c  x y", 12, { mode: "1" }, "b", "c")
+const res3 = chompLeft("a\n  b c b c  x y", 12, { mode: "1" }, "b", "c");
 console.log(res3);
 // => 4
 // PS. "\n" counts as length of one
 
 // mode 2 - chomps all whitespace except newlines
 // in this case it stops to the right of \n, index 2:
-const res4 = chompLeft("a\n  b c b c  x y", 12, { mode: "2" }, "b", "c")
+const res4 = chompLeft("a\n  b c b c  x y", 12, { mode: "2" }, "b", "c");
 // => 2
 
 // mode 3 - hungriest of all whitespace chomps - chomps until it meets
 // edge of a string or non-whitespace character (one which String.trim()'s
 // to non-zero length character):
-const res5 = chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c")
+const res5 = chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c");
 // => 1
 ```
 
 The `chompRight()` works the same way, just towards the right side of a given index.
+
+**[⬆ back to top](#)**
 
 ## API - leftStopAtNewLines() and rightStopAtNewLines()
 

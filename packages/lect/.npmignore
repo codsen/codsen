@@ -11,6 +11,8 @@
 
 # folders:
 
+.nyc_output
+coverage
 docs
 media
 reference
@@ -21,3 +23,4 @@ test
 .eslintrc.json
 .npmignore
 .prettierignore
+testStats.json
