@@ -270,6 +270,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
       nbspWipe();
       counter++;
+      if (str[i] === "&" && str[i + 1] !== "&") {
+        nbsp.nameStartsAt = i;
+        nbsp.ampersandNecessary = false;
+      }
       return "continue|outerloop";
     }
     if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
@@ -611,12 +615,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (nbsp.nameStartsAt && nbsp.nameStartsAt < i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
         nbspWipe();
       }
-      if (nbsp.nameStartsAt === null) {
-        if (nbsp.ampersandNecessary === null) {
-          nbsp.nameStartsAt = i;
-          nbsp.ampersandNecessary = false;
-        }
-      }
+      nbsp.nameStartsAt = i;
+      nbsp.ampersandNecessary = false;
     }
     if (str[i] && str[i].toLowerCase() === "n") {
       if (str[i - 1] && str[i - 1].toLowerCase() === "i" && str[i + 1] && str[i + 1].toLowerCase() === "s") {

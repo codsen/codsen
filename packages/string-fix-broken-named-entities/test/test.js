@@ -1,3 +1,5 @@
+// avanotonly
+
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
 
@@ -422,12 +424,12 @@ test(`02.036 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp
 
 test(`02.037 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - repeated characters - complete set - \u001b[${36}m${`repeated`}\u001b[${39}m amp, tight, leading letters`, t => {
   const inp1 = "&&nbsp;x&&nbsp;y&&nbsp;";
-  const outp1 = [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]];
+  const outp1 = [];
   t.deepEqual(fix(inp1), outp1, "02.037.01 - duplicate ampersand");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.037.02");
 
   const inp2 = "&&&&nbsp;x&&&&nbsp;y&&&&nbsp;";
-  const outp2 = [[0, 9, "&nbsp;"], [10, 19, "&nbsp;"], [20, 29, "&nbsp;"]];
+  const outp2 = [];
   t.deepEqual(fix(inp2), outp2, "02.037.03 - duplicate ampersand");
   t.deepEqual(fix(inp2, { cb }), outp2, "02.037.04");
 });
@@ -469,35 +471,35 @@ test(`02.042 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorr
 
 test(`02.043 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + n missing`, t => {
   const inp1 = "&&bsp;x&&bsp;y&&bsp;";
-  const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [8, 13, "&nbsp;"], [15, 20, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.043.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.043.02");
 });
 
 test(`02.044 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + b missing`, t => {
   const inp1 = "&&nsp;x&&nsp;y&&nsp;";
-  const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [8, 13, "&nbsp;"], [15, 20, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.044.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.044.02");
 });
 
 test(`02.045 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + s missing`, t => {
   const inp1 = "&&nbp;x&&nbp;y&&nbp;";
-  const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [8, 13, "&nbsp;"], [15, 20, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.045.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.045.02");
 });
 
 test(`02.046 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + p missing`, t => {
   const inp1 = "&&nbs;x&&nbs;y&&nbs;";
-  const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [8, 13, "&nbsp;"], [15, 20, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.046.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.046.02");
 });
 
 test(`02.047 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand - semicol missing`, t => {
   const inp1 = "&&nbspx&&nbspy&&nbsp";
-  const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [8, 13, "&nbsp;"], [15, 20, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.047.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.047.02");
 });
@@ -868,7 +870,7 @@ test(`02.093 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampers
 
 test(`02.094 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`ampersand present, no semicolon`}\u001b[${39}m - N & S capitals`, t => {
   const inp1 = "&&NbSpzzz&&NbSpzzz";
-  const outp1 = [[0, 6, "&nbsp;"], [9, 15, "&nbsp;"]];
+  const outp1 = [[1, 6, "&nbsp;"], [10, 15, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.094.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.094.02");
 });
@@ -2104,6 +2106,65 @@ test(`10.018 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
     ],
     "10.018.02"
   );
+});
+
+test(`10.019 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`, t => {
+  const inp1 = "&nbsp;&nbsp;";
+  t.deepEqual(
+    fix(inp1, {
+      cb: obj => obj
+    }),
+    []
+  );
+});
+
+test(`10.020 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 2`, t => {
+  const inputs = [
+    "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
+    "&nbsp; &nbsp; &nbsp; a &nbsp; &nbsp; &nbsp;",
+    " &nbsp; &nbsp; &nbsp; a &nbsp; &nbsp; &nbsp; ",
+    "&nbsp;a&nbsp;a&nbsp; a &nbsp;a&nbsp;a&nbsp;",
+    "&nbsp;\n&nbsp;\n&nbsp;\n\na\n&nbsp;\n&nbsp;\n&nbsp;",
+    "&nbsp;\r\n&nbsp;\r\n&nbsp;\r\n\r\na\r\n&nbsp;\r\n&nbsp;\r\n&nbsp;",
+    "&nbsp;\r&nbsp;\r&nbsp;\r\ra\r&nbsp;\r&nbsp;\r&nbsp;",
+    "&nbsp;\t&nbsp;\t&nbsp;\t\ta\t&nbsp;\t&nbsp;\t&nbsp;",
+    "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;"
+  ];
+  inputs.forEach((input, i) =>
+    t.deepEqual(fix(input), [], `"${input}" - ${i}`)
+  );
+});
+
+test(`10.021 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`, t => {
+  const inp1 = "&NBSP;&NBSP;";
+  t.deepEqual(fix(inp1), [[0, 6, "&nbsp;"], [6, 12, "&nbsp;"]]);
+});
+
+test(`10.022 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`, t => {
+  const inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
+  t.deepEqual(fix(inp1), [
+    [0, 6, "&nbsp;"],
+    [6, 12, "&nbsp;"],
+    [12, 18, "&nbsp;"],
+    [21, 27, "&nbsp;"],
+    [27, 33, "&nbsp;"],
+    [33, 39, "&nbsp;"]
+  ]);
+});
+
+test(`10.023 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`, t => {
+  const inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
+  t.deepEqual(fix(inp1), [[12, 17, "&nbsp;"], [26, 33, "&nbsp;"]]);
+});
+
+test(`10.024 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`, t => {
+  const inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
+  t.deepEqual(fix(inp1), [
+    [6, 11, "&nbsp;"],
+    [11, 18, "&nbsp;"],
+    [27, 34, "&nbsp;"],
+    [34, 41, "&nbsp;"]
+  ]);
 });
 
 // -----------------------------------------------------------------------------

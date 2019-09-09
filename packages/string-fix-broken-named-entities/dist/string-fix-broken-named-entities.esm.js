@@ -377,6 +377,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
       nbspWipe();
       counter++;
+      if (str[i] === "&" && str[i + 1] !== "&") {
+        nbsp.nameStartsAt = i;
+        nbsp.ampersandNecessary = false;
+      }
       continue outerloop;
     }
     if (
@@ -933,12 +937,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       ) {
         nbspWipe();
       }
-      if (nbsp.nameStartsAt === null) {
-        if (nbsp.ampersandNecessary === null) {
-          nbsp.nameStartsAt = i;
-          nbsp.ampersandNecessary = false;
-        }
-      }
+      nbsp.nameStartsAt = i;
+      nbsp.ampersandNecessary = false;
     }
     if (str[i] && str[i].toLowerCase() === "n") {
       if (
