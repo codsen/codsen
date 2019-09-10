@@ -338,6 +338,26 @@ test("03.03 - trim involving non-breaking spaces", t => {
   t.is(collapse("    \xa0     a     \xa0      "), "\xa0 a \xa0", "03.03.02");
 });
 
+test("03.04 - trim involving non-breaking spaces", t => {
+  t.is(
+    collapse(" \xa0 ", {
+      trimStart: false,
+      trimEnd: false
+    }),
+    " \xa0 "
+  );
+});
+
+test("03.05 - trim involving non-breaking spaces", t => {
+  t.is(
+    collapse("  \xa0  ", {
+      trimStart: false,
+      trimEnd: false
+    }),
+    " \xa0 "
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 04. Line trimming
 // -----------------------------------------------------------------------------
