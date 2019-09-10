@@ -46,8 +46,8 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.isplainobject",
         "ranges-apply",
-        "string-match-left-right",
-        "ranges-merge"
+        "ranges-merge",
+        "string-match-left-right"
       ],
       plugins: [
         strip({
@@ -68,8 +68,8 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.isplainobject",
         "ranges-apply",
-        "string-match-left-right",
-        "ranges-merge"
+        "ranges-merge",
+        "string-match-left-right"
       ],
       plugins: [
         strip({
