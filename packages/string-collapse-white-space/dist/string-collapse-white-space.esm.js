@@ -83,7 +83,13 @@ function collapse(str, originalOpts) {
     count = resetCounts();
   }
   let lastLineBreaksLastCharIndex;
+  let consecutiveLineBreakCount = 0;
   for (let i = str.length; i--; ) {
+    if (str[i] === "\n") {
+      consecutiveLineBreakCount++;
+    } else if (str[i].trim().length) {
+      consecutiveLineBreakCount = 0;
+    }
     if (str[i] === " ") {
       if (spacesEndAt === null) {
         spacesEndAt = i;
@@ -126,7 +132,15 @@ function collapse(str, originalOpts) {
             lastLineBreaksLastCharIndex !== undefined &&
             str.slice(sliceFrom, sliceTo).trim() === ""
           ) {
-            finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
+            if (
+              consecutiveLineBreakCount >
+              opts.limitConsecutiveEmptyLinesTo + 1
+            ) {
+              finalIndexesToDelete.push([
+                i + 1,
+                lastLineBreaksLastCharIndex + 1
+              ]);
+            }
           }
         }
         lastLineBreaksLastCharIndex = i;

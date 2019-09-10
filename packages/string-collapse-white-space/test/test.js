@@ -1029,7 +1029,7 @@ test(`07.06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}
 
 test(`07.07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
   t.is(
-    collapse("a\n\nb", {
+    collapse("a\n\n\n\nb", {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1
     }),
@@ -1134,7 +1134,7 @@ test(`07.17 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}
       limitConsecutiveEmptyLinesTo: 0,
       trimLines: false
     }),
-    "a\n \nb"
+    "a\nb"
   );
 });
 
@@ -1156,7 +1156,7 @@ test(`07.19 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}
       limitConsecutiveEmptyLinesTo: 0,
       trimLines: false
     }),
-    "a\r\n \r\nb"
+    "a\r\nb"
   );
 });
 
