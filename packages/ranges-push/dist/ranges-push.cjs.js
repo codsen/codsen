@@ -14,8 +14,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
-var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
+var collapse = _interopDefault(require('string-collapse-white-space'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var trimSpacesOnly = _interopDefault(require('string-trim-spaces-only'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -78,6 +79,7 @@ function existy(x) {
 }
 var isArr = Array.isArray;
 var isNum = Number.isInteger;
+var nbsp = "\xA0";
 function isStr(something) {
   return typeof something === "string";
 }
@@ -85,6 +87,18 @@ function prepNumStr(str) {
   return isNumStr(str, {
     includeZero: true
   }) ? parseInt(str, 10) : str;
+}
+function canBeReplacedWithASpace(something) {
+  return isStr(something) && something.length && !something.trim().length && !something.includes("\n") && !something.includes("\r") && !something.includes(nbsp);
+}
+function specialTrim(something) {
+  return trimSpacesOnly(something, {
+    cr: false,
+    lf: false,
+    tab: true,
+    space: true,
+    nbsp: false
+  }).res;
 }
 var Ranges =
 function () {
@@ -162,9 +176,35 @@ function () {
           this.last()[1] = to;
           if (this.last()[2] === null || addVal === null) ;
           if (this.last()[2] !== null && existy(addVal)) {
-            var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+            if (isStr(addVal) && (addVal.includes("\n") || addVal.includes("\r"))) {
+              addVal = specialTrim(addVal);
+            }
+            var calculatedVal = addVal;
+            if (existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)) {
+              calculatedVal = this.last()[2] + addVal;
+              if (this.opts.limitToBeAddedWhitespace) {
+                calculatedVal = collapse(calculatedVal, {
+                  trimStart: false,
+                  trimEnd: false,
+                  removeEmptyLines: true,
+                  limitConsecutiveEmptyLinesTo: this.opts.limitLinebreaksCount - 1 < 0 ? 0 : this.opts.limitLinebreaksCount - 1
+                });
+              }
+            }
             if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              if (canBeReplacedWithASpace(calculatedVal)) {
+                calculatedVal = " ";
+              } else {
+                calculatedVal = collapse(calculatedVal, {
+                  trimStart: false,
+                  trimEnd: false,
+                  removeEmptyLines: true,
+                  limitConsecutiveEmptyLinesTo: this.opts.limitLinebreaksCount - 1 < 0 ? 0 : this.opts.limitLinebreaksCount - 1
+                });
+                if (!calculatedVal.trim().length && !calculatedVal.includes(nbsp)) {
+                  calculatedVal = specialTrim(calculatedVal);
+                }
+              }
             }
             if (!(isStr(calculatedVal) && !calculatedVal.length)) {
               this.last()[2] = calculatedVal;
@@ -174,7 +214,23 @@ function () {
           if (!this.slices) {
             this.slices = [];
           }
-          var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+          var insertValue = addVal;
+          if (addVal != null && !(isStr(addVal) && !addVal.length)) {
+            insertValue = this.opts.limitToBeAddedWhitespace ? collapse(addVal, {
+              trimStart: false,
+              trimEnd: false,
+              removeEmptyLines: true,
+              limitConsecutiveEmptyLinesTo: this.opts.limitLinebreaksCount - 1 < 0 ? 0 : this.opts.limitLinebreaksCount - 1
+            }) : addVal;
+          }
+          if (this.opts.limitToBeAddedWhitespace) {
+            if (canBeReplacedWithASpace(insertValue)) {
+              insertValue = " ";
+            } else if (isStr(insertValue) && (insertValue.includes("\n") || insertValue.includes("\r"))) {
+              insertValue = specialTrim(insertValue);
+            }
+          }
+          var whatToPush = isStr(insertValue) && insertValue.length || insertValue === null ? [from, to, insertValue] : [from, to];
           this.slices.push(whatToPush);
         }
       } else {
@@ -206,7 +262,12 @@ function () {
         if (this.opts.limitToBeAddedWhitespace) {
           return this.slices.map(function (val) {
             if (existy(val[2])) {
-              return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
+              return [val[0], val[1], collapse(val[2], {
+                trimStart: false,
+                trimEnd: false,
+                removeEmptyLines: true,
+                limitConsecutiveEmptyLinesTo: _this2.opts.limitLinebreaksCount - 1 < 0 ? 0 : _this2.opts.limitLinebreaksCount - 1
+              })];
             }
             return val;
           });

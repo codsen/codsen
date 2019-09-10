@@ -1,19 +1,40 @@
 import isInt from "is-natural-number";
 import isNumStr from "is-natural-number-string";
 import mergeRanges from "ranges-merge";
-import collapseLeadingWhitespace from "string-collapse-leading-whitespace";
+import collapse from "string-collapse-white-space";
 import clone from "lodash.clonedeep";
+import trimSpacesOnly from "string-trim-spaces-only";
 
 function existy(x) {
   return x != null;
 }
 const isArr = Array.isArray;
 const isNum = Number.isInteger;
+const nbsp = "\xA0";
 function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
   return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
+}
+function canBeReplacedWithASpace(something) {
+  return (
+    isStr(something) &&
+    something.length &&
+    !something.trim().length &&
+    !something.includes("\n") &&
+    !something.includes("\r") &&
+    !something.includes(nbsp)
+  );
+}
+function specialTrim(something) {
+  return trimSpacesOnly(something, {
+    cr: false,
+    lf: false,
+    tab: true,
+    space: true,
+    nbsp: false
+  }).res;
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +69,7 @@ class Ranges {
     }
     // so it's correct, let's get it in:
     console.log(
-      `051 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
+      `072 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
     );
     this.opts = opts;
   }
@@ -58,7 +79,11 @@ class Ranges {
   add(originalFrom, originalTo, addVal, ...etc) {
     console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
     console.log(
-      `061 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`
+      `082 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${JSON.stringify(
+        addVal,
+        null,
+        0
+      )}`
     );
     if (etc.length > 0) {
       throw new TypeError(
@@ -71,7 +96,7 @@ class Ranges {
     }
 
     if (!existy(originalFrom) && !existy(originalTo)) {
-      console.log(`074 nothing happens`);
+      console.log(`099 nothing happens`);
       return;
     } else if (existy(originalFrom) && !existy(originalTo)) {
       if (isArr(originalFrom)) {
@@ -81,7 +106,7 @@ class Ranges {
               if (isArr(thing)) {
                 // recursively feed this subarray, hopefully it's an array
                 console.log(
-                  `084 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+                  `109 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                     thing,
                     null,
                     4
@@ -89,7 +114,7 @@ class Ranges {
                 );
                 this.add(...thing);
                 console.log("\n\n\n");
-                console.log("092 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+                console.log("117 ██ END OF RECURSION, BACK TO NORMAL FLOW");
                 console.log("\n\n\n");
               }
               // just skip other cases
@@ -102,7 +127,7 @@ class Ranges {
           ) {
             // recursively pass in those values
             console.log(
-              `105 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+              `130 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                 originalFrom,
                 null,
                 4
@@ -110,7 +135,7 @@ class Ranges {
             );
             this.add(...originalFrom);
             console.log("\n\n\n");
-            console.log("113 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+            console.log("138 ██ END OF RECURSION, BACK TO NORMAL FLOW");
             console.log("\n\n\n");
           }
         }
@@ -158,7 +183,7 @@ class Ranges {
       isInt(to, { includeZero: true })
     ) {
       console.log(
-        `161 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
+        `186 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
       );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
@@ -171,7 +196,7 @@ class Ranges {
         );
       }
       console.log(
-        `174 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+        `199 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
           addVal,
           null,
           4
@@ -184,7 +209,7 @@ class Ranges {
         from === this.last()[1]
       ) {
         console.log(
-          `187 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
+          `212 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
         );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -192,71 +217,187 @@ class Ranges {
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) {
-          console.log(`195 this.last()[2] = ${this.last()[2]}`);
-          console.log(`196 addVal = ${addVal}`);
+          console.log(`220 this.last()[2] = ${this.last()[2]}`);
+          console.log(`221 addVal = ${JSON.stringify(addVal, null, 4)}`);
         }
 
         if (this.last()[2] !== null && existy(addVal)) {
-          console.log(`200`);
-          let calculatedVal =
+          console.log(`225`);
+          if (
+            isStr(addVal) &&
+            (addVal.includes("\n") || addVal.includes("\r"))
+          ) {
+            addVal = specialTrim(addVal);
+            console.log(
+              `232 special trim, SET addVal = ${JSON.stringify(
+                addVal,
+                null,
+                0
+              )}`
+            );
+          }
+
+          let calculatedVal = addVal;
+          if (
             existy(this.last()[2]) &&
             this.last()[2].length > 0 &&
             (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)
-              ? this.last()[2] + addVal
-              : addVal;
+          ) {
+            calculatedVal = this.last()[2] + addVal;
+            if (this.opts.limitToBeAddedWhitespace) {
+              calculatedVal = collapse(calculatedVal, {
+                trimStart: false,
+                trimEnd: false,
+                removeEmptyLines: true,
+                limitConsecutiveEmptyLinesTo:
+                  this.opts.limitLinebreaksCount - 1 < 0
+                    ? 0
+                    : this.opts.limitLinebreaksCount - 1
+              });
+            }
+          }
+
           console.log(
-            `208 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `261 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
               calculatedVal,
               null,
-              4
+              0
             )}`
           );
+          console.log(
+            `268 ${`\u001b[${36}m${`██ character-by-character list:`}\u001b[${39}m`} ${Array.from(
+              calculatedVal
+            ).reduce((acc, curr) => {
+              return `${acc}\nchar "${curr}", charCodeAt: ${curr.charCodeAt(
+                0
+              )}`;
+            }, "")}`
+          );
+          console.log(`${`\u001b[${36}m${`========`}\u001b[${39}m`}`);
+
           if (this.opts.limitToBeAddedWhitespace) {
-            calculatedVal = collapseLeadingWhitespace(
-              calculatedVal,
-              this.opts.limitLinebreaksCount
-            );
+            if (canBeReplacedWithASpace(calculatedVal)) {
+              calculatedVal = " ";
+              console.log(
+                `282 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} calculatedVal = ${JSON.stringify(
+                  calculatedVal,
+                  null,
+                  0
+                )}`
+              );
+            } else {
+              console.log(
+                `290 ███████████████████████████████████████ call collapse with limit ${this
+                  .opts.limitLinebreaksCount - 1}`
+              );
+              calculatedVal = collapse(calculatedVal, {
+                trimStart: false,
+                trimEnd: false,
+                removeEmptyLines: true,
+                limitConsecutiveEmptyLinesTo:
+                  this.opts.limitLinebreaksCount - 1 < 0
+                    ? 0
+                    : this.opts.limitLinebreaksCount - 1
+              });
+              console.log(
+                `303 collapse, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} calculatedVal = ${JSON.stringify(
+                  calculatedVal,
+                  null,
+                  0
+                )}`
+              );
+              if (
+                !calculatedVal.trim().length &&
+                !calculatedVal.includes(nbsp)
+              ) {
+                calculatedVal = specialTrim(calculatedVal);
+                console.log(
+                  `312 special trim, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} calculatedVal = ${JSON.stringify(
+                    calculatedVal,
+                    null,
+                    0
+                  )}`
+                );
+              }
+            }
           }
           console.log(
-            `221 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `322 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               calculatedVal,
               null,
-              4
+              0
             )}`
+          );
+          console.log(
+            `329 ${`\u001b[${36}m${`██ character-by-character list:`}\u001b[${39}m`} ${Array.from(
+              calculatedVal
+            ).reduce((acc, curr) => {
+              return `${acc}\nchar "${curr}", charCodeAt: ${curr.charCodeAt(
+                0
+              )}`;
+            }, "")}`
           );
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
         }
-        console.log(`232`);
+        console.log(`342`);
       } else {
         console.log(
-          `235 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
+          `345 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
         );
         if (!this.slices) {
           this.slices = [];
         }
+
+        let insertValue = addVal;
+        if (addVal != null && !(isStr(addVal) && !addVal.length)) {
+          insertValue = this.opts.limitToBeAddedWhitespace
+            ? collapse(addVal, {
+                trimStart: false,
+                trimEnd: false,
+                removeEmptyLines: true,
+                limitConsecutiveEmptyLinesTo:
+                  this.opts.limitLinebreaksCount - 1 < 0
+                    ? 0
+                    : this.opts.limitLinebreaksCount - 1
+              })
+            : addVal;
+        }
+
+        if (this.opts.limitToBeAddedWhitespace) {
+          if (canBeReplacedWithASpace(insertValue)) {
+            insertValue = " ";
+            console.log(
+              `370 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} insertValue value to a single space`
+            );
+          } else if (
+            isStr(insertValue) &&
+            (insertValue.includes("\n") || insertValue.includes("\r"))
+          ) {
+            insertValue = specialTrim(insertValue);
+            console.log(
+              `378 special trim, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} insertValue value to a single space`
+            );
+          }
+        }
+
         const whatToPush =
-          addVal !== undefined && !(isStr(addVal) && !addVal.length)
-            ? [
-                from,
-                to,
-                this.opts.limitToBeAddedWhitespace
-                  ? collapseLeadingWhitespace(
-                      addVal,
-                      this.opts.limitLinebreaksCount
-                    )
-                  : addVal
-              ]
+          (isStr(insertValue) && insertValue.length) || insertValue === null
+            ? [from, to, insertValue]
             : [from, to];
-        console.log(`253 PUSH whatToPush = "${whatToPush}"`);
+        console.log(
+          `388 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 0)}`
+        );
         this.slices.push(whatToPush);
-        console.log(`255 this.slices = ${this.slices};`);
+        console.log(
+          `392 this.slices = ${JSON.stringify(this.slices, null, 4)};`
+        );
       }
     } else {
       console.log(
-        `259 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
+        `397 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
       );
       // Error somewhere!
       // Let's find out where.
@@ -281,7 +422,7 @@ class Ranges {
         );
       }
     }
-    console.log(`284`);
+    console.log(`422`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
@@ -304,7 +445,15 @@ class Ranges {
             return [
               val[0],
               val[1],
-              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)
+              collapse(val[2], {
+                trimStart: false,
+                trimEnd: false,
+                removeEmptyLines: true,
+                limitConsecutiveEmptyLinesTo:
+                  this.opts.limitLinebreaksCount - 1 < 0
+                    ? 0
+                    : this.opts.limitLinebreaksCount - 1
+              })
             ];
           }
           return val;

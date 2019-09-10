@@ -2,6 +2,7 @@
 
 import test from "ava";
 import Ranges from "../dist/ranges-push.esm";
+const nbsp = "\xA0";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -11,31 +12,31 @@ test("01.01  -  ADD() - empty call", t => {
   // missing
   const ranges = new Ranges();
   ranges.add();
-  t.is(ranges.current(), null, "01.01");
+  t.is(ranges.current(), null);
 });
 
 test("01.02  -  ADD() - two hardcoded undefined args", t => {
   const ranges = new Ranges();
   ranges.add(undefined, undefined);
-  t.is(ranges.current(), null, "01.02");
+  t.is(ranges.current(), null);
 });
 
 test("01.03  -  ADD() - three hardcoded undefined args", t => {
   const ranges = new Ranges();
   ranges.add(undefined, undefined, undefined);
-  t.is(ranges.current(), null, "01.03");
+  t.is(ranges.current(), null);
 });
 
 test("01.04  -  ADD() - two null args", t => {
   const ranges = new Ranges();
   ranges.add(null, null);
-  t.is(ranges.current(), null, "01.04");
+  t.is(ranges.current(), null);
 });
 
 test("01.05  -  ADD() - three null args", t => {
   const ranges = new Ranges();
   ranges.add(null, null, null);
-  t.is(ranges.current(), null, "01.05");
+  t.is(ranges.current(), null);
 });
 
 test("01.06  -  ADD() - wrong input args", t => {
@@ -97,7 +98,7 @@ test("01.12  -  ADD() - wrong input args", t => {
 test("01.13  -  ADD() - third input arg is not string", t => {
   const ranges = new Ranges();
   ranges.add(1, 2, 3);
-  t.deepEqual(ranges.current(), [[1, 2, "3"]], "01.13");
+  t.deepEqual(ranges.current(), [[1, 2, "3"]]);
 });
 
 test("01.14  -  ADD() - overloading", t => {
@@ -198,7 +199,7 @@ test("01.25  -  PUSH() - numbers but not natural integers", t => {
 test("01.26  -  ADD() - first argument is .current() output of ranges", t => {
   const ranges = new Ranges();
   ranges.add([[1, 2, 3]]);
-  t.deepEqual(ranges.current(), [[1, 2, "3"]], "01.26");
+  t.deepEqual(ranges.current(), [[1, 2, "3"]]);
 });
 
 test("01.27  -  ADD() - first argument is .current() output of ranges", t => {
@@ -257,21 +258,21 @@ test("02.01  -  ADD() - adds two non-overlapping ranges", t => {
   const ranges = new Ranges();
   ranges.add(1, 2);
   ranges.add(3, 4);
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4]], "02.01");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4]]);
 });
 
 test("02.02  -  ADD() - adds two overlapping ranges", t => {
   const ranges = new Ranges();
   ranges.add(0, 5, undefined);
   ranges.add(3, 9);
-  t.deepEqual(ranges.current(), [[0, 9]], "02.02");
+  t.deepEqual(ranges.current(), [[0, 9]]);
 });
 
 test("02.03  -  ADD() - extends range", t => {
   const ranges = new Ranges();
   ranges.add(1, 5);
   ranges.add(5, 9);
-  t.deepEqual(ranges.current(), [[1, 9]], "02.03");
+  t.deepEqual(ranges.current(), [[1, 9]]);
 });
 
 test("02.04  -  ADD() - new range bypasses the last range completely", t => {
@@ -281,24 +282,24 @@ test("02.04  -  ADD() - new range bypasses the last range completely", t => {
   ranges.add(6, 10);
   ranges.add(16, 20);
   ranges.add(10, 30);
-  t.deepEqual(ranges.current(), [[1, 5], [6, 30]], "02.04");
+  t.deepEqual(ranges.current(), [[1, 5], [6, 30]]);
 });
 
 test("02.05  -  ADD() - head and tail markers in new are smaller than last one's", t => {
   const ranges = new Ranges();
   ranges.add(10, 20);
   ranges.add(1, 5);
-  t.deepEqual(ranges.current(), [[1, 5], [10, 20]], "02.05");
+  t.deepEqual(ranges.current(), [[1, 5], [10, 20]]);
 });
 
 test("02.06  -  ADD() - same value in heads and tails", t => {
   const ranges1 = new Ranges();
   ranges1.add(1, 1);
-  t.deepEqual(ranges1.current(), [], "02.06.01");
+  t.deepEqual(ranges1.current(), []);
 
   const ranges2 = new Ranges();
   ranges2.add(1, 1, "zzz");
-  t.deepEqual(ranges2.current(), [[1, 1, "zzz"]], "02.06.02");
+  t.deepEqual(ranges2.current(), [[1, 1, "zzz"]]);
 });
 
 test("02.07  -  ADD() - same range again and again", t => {
@@ -309,7 +310,7 @@ test("02.07  -  ADD() - same range again and again", t => {
   ranges.add(1, 10);
   ranges.add(1, 10);
   ranges.add(1, 10);
-  t.deepEqual(ranges.current(), [[1, 10]], "02.07");
+  t.deepEqual(ranges.current(), [[1, 10]]);
 });
 
 test("02.08  -  ADD() - same range again and again, one had third arg", t => {
@@ -320,42 +321,42 @@ test("02.08  -  ADD() - same range again and again, one had third arg", t => {
   ranges.add(1, 10, "zzz");
   ranges.add(1, 10);
   ranges.add(1, 10);
-  t.deepEqual(ranges.current(), [[1, 10, "zzz"]], "02.08");
+  t.deepEqual(ranges.current(), [[1, 10, "zzz"]]);
 });
 
 test("02.09  -  ADD() - inputs as numeric strings - all OK", t => {
   const ranges = new Ranges();
   ranges.add("1", "2");
   ranges.add("3", "4");
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4]], "02.09");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4]]);
 });
 
 test("02.10  -  ADD() - wrong order is fine", t => {
   const ranges = new Ranges();
   ranges.add("3", "4");
   ranges.add("1", "2");
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4]], "02.10");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4]]);
 });
 
 test("02.11  -  PUSH() - adds two non-overlapping ranges", t => {
   const ranges = new Ranges();
   ranges.push(1, 2);
   ranges.push(3, 4);
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4]], "02.11");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4]]);
 });
 
 test("02.12  -  PUSH() - adds two overlapping ranges", t => {
   const ranges = new Ranges();
   ranges.push(0, 5);
   ranges.push(3, 9);
-  t.deepEqual(ranges.current(), [[0, 9]], "02.12");
+  t.deepEqual(ranges.current(), [[0, 9]]);
 });
 
 test("02.13  -  PUSH() - nulls, empty result", t => {
   const ranges = new Ranges();
   ranges.push(null, null); // two
   ranges.push(null, null, null); // three
-  t.deepEqual(ranges.current(), null, "02.13");
+  t.deepEqual(ranges.current(), null);
 });
 
 test("02.14  -  PUSH() - nulls, previous result retained", t => {
@@ -363,7 +364,7 @@ test("02.14  -  PUSH() - nulls, previous result retained", t => {
   ranges.push(0, 5);
   ranges.push(null, null); // two
   ranges.push(null, null, null); // three
-  t.deepEqual(ranges.current(), [[0, 5]], "02.14");
+  t.deepEqual(ranges.current(), [[0, 5]]);
 });
 
 // -----------------------------------------------------------------------------
@@ -373,14 +374,14 @@ test("02.14  -  PUSH() - nulls, previous result retained", t => {
 test("03.01  -  ADD() - adds third argument, blank start", t => {
   const ranges = new Ranges();
   ranges.add(1, 1, "zzz");
-  t.deepEqual(ranges.current(), [[1, 1, "zzz"]], "03.01");
+  t.deepEqual(ranges.current(), [[1, 1, "zzz"]]);
 });
 
 test("03.02  -  ADD() - adds third argument onto existing and stops", t => {
   const ranges = new Ranges();
   ranges.add(1, 2);
   ranges.add(3, 4, "zzz");
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4, "zzz"]], "03.02");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4, "zzz"]]);
 });
 
 test("03.03  -  ADD() - adds third argument onto existing and adds more", t => {
@@ -388,7 +389,7 @@ test("03.03  -  ADD() - adds third argument onto existing and adds more", t => {
   ranges.add(1, 2);
   ranges.add(3, 4, "zzz");
   ranges.add(5, 6);
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4, "zzz"], [5, 6]], "03.03");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4, "zzz"], [5, 6]]);
 });
 
 test('03.04  -  ADD() - existing "add" values get concatenated with incoming-ones', t => {
@@ -396,7 +397,7 @@ test('03.04  -  ADD() - existing "add" values get concatenated with incoming-one
   ranges.add(1, 2, "aaa");
   ranges.add(2, 4, "zzz");
   ranges.add(5, 6);
-  t.deepEqual(ranges.current(), [[1, 4, "aaazzz"], [5, 6]], "03.04");
+  t.deepEqual(ranges.current(), [[1, 4, "aaazzz"], [5, 6]]);
 });
 
 test("03.05  -  ADD() - jumped over values have third args and they get concatenated", t => {
@@ -406,21 +407,21 @@ test("03.05  -  ADD() - jumped over values have third args and they get concaten
   ranges.add(11, 15, "aaa");
   ranges.add(10, 30); // this superset range will wipe the `aaa` and `bbb` above
   ranges.add(1, 5);
-  t.deepEqual(ranges.current(), [[1, 5], [6, 30]], "03.05");
+  t.deepEqual(ranges.current(), [[1, 5], [6, 30]]);
 });
 
 test("03.06  -  ADD() - combo of third arg and jumping behind previous range", t => {
   const ranges = new Ranges();
   ranges.add(10, 11, "aaa");
   ranges.add(3, 4, "zzz");
-  t.deepEqual(ranges.current(), [[3, 4, "zzz"], [10, 11, "aaa"]], "03.06");
+  t.deepEqual(ranges.current(), [[3, 4, "zzz"], [10, 11, "aaa"]]);
 });
 
 test("03.07  -  ADD() - combo of third arg merging and extending previous range (default)", t => {
   const ranges = new Ranges();
   ranges.add(1, 2);
   ranges.add(2, 4, "zzz");
-  t.deepEqual(ranges.current(), [[1, 4, "zzz"]], "03.07");
+  t.deepEqual(ranges.current(), [[1, 4, "zzz"]]);
 });
 
 test("03.08  -  ADD() - v1.1.0 - do not merge add-only entries with deletion entries case #1", t => {
@@ -428,14 +429,14 @@ test("03.08  -  ADD() - v1.1.0 - do not merge add-only entries with deletion ent
   ranges.add(1, 3);
   ranges.add(4, 10);
   ranges.add(3, 3, "zzz");
-  t.deepEqual(ranges.current(), [[1, 3, "zzz"], [4, 10]], "03.08");
+  t.deepEqual(ranges.current(), [[1, 3, "zzz"], [4, 10]]);
 });
 
 test("03.09  -  ADD() - v2.1.0 - overlapping ranges discard their inner range to-add values", t => {
   const ranges = new Ranges();
   ranges.add(5, 6, " ");
   ranges.add(1, 10);
-  t.deepEqual(ranges.current(), [[1, 10]], "03.09");
+  t.deepEqual(ranges.current(), [[1, 10]]);
 });
 
 test("03.10  -  ADD() - adds third argument with null", t => {
@@ -443,7 +444,7 @@ test("03.10  -  ADD() - adds third argument with null", t => {
   ranges.add(1, 2);
   ranges.add(3, 4, null);
   ranges.add(5, 6);
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4, null], [5, 6]], "03.10");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4, null], [5, 6]]);
 });
 
 test("03.11  -  ADD() - pushing whole .current() output of another ranges class", t => {
@@ -457,44 +458,52 @@ test("03.11  -  ADD() - pushing whole .current() output of another ranges class"
 
   ranges1.push(ranges2.current());
 
-  t.deepEqual(ranges1.current(), [[1, 12]], "03.11");
+  t.deepEqual(ranges1.current(), [[1, 12]]);
 });
 
 test("03.12  -  ADD() - empty string to add", t => {
   const ranges1 = new Ranges();
   ranges1.add(1, 2, "");
-  t.deepEqual(ranges1.current(), [[1, 2]], "03.12.01");
+  t.deepEqual(ranges1.current(), [[1, 2]]);
+});
 
+test("03.13  -  ADD() - empty string to add", t => {
   const ranges2 = new Ranges({ limitToBeAddedWhitespace: true });
   ranges2.add(1, 2, "");
-  t.deepEqual(ranges2.current(), [[1, 2]], "03.12.02");
+  t.deepEqual(ranges2.current(), [[1, 2]]);
+});
 
+test("03.14  -  ADD() - empty string to add", t => {
   const ranges3 = new Ranges({ limitToBeAddedWhitespace: true });
   ranges3.add(1, 2, "");
   ranges3.add(1, 2, "");
-  t.deepEqual(ranges3.current(), [[1, 2]], "03.12.03");
+  t.deepEqual(ranges3.current(), [[1, 2]]);
+});
 
+test("03.15  -  ADD() - empty string to add", t => {
   const ranges4 = new Ranges({ limitToBeAddedWhitespace: true });
   ranges4.add(1, 2, "");
   ranges4.add(3, 4, "");
-  t.deepEqual(ranges4.current(), [[1, 2], [3, 4]], "03.12.04");
+  t.deepEqual(ranges4.current(), [[1, 2], [3, 4]]);
 });
 
-test("03.13  -  ADD() - leading/trailing spaces in the third arg.", t => {
+test("03.16  -  ADD() - leading/trailing spaces in the third arg.", t => {
   const ranges = new Ranges();
   ranges.add("1", "2", "a");
   ranges.add("2", "2", " click here ");
   ranges.add("2", "3", "b");
-  t.deepEqual(ranges.current(), [[1, 3, "a click here b"]], "03.13");
+  t.deepEqual(ranges.current(), [[1, 3, "a click here b"]]);
+});
 
+test("03.17  -  ADD() - leading/trailing spaces in the third arg.", t => {
   const ranges2 = new Ranges({ limitToBeAddedWhitespace: true });
   ranges2.add("1", "2", "a");
   ranges2.add("2", "2", " click here ");
   ranges2.add("2", "3", "b");
-  t.deepEqual(ranges2.current(), [[1, 3, "a click here b"]], "03.13");
+  t.deepEqual(ranges2.current(), [[1, 3, "a click here b"]]);
 });
 
-test("03.14  -  ADD() - whole ranges array is pushed", t => {
+test("03.18  -  ADD() - whole ranges array is pushed", t => {
   const ranges1 = new Ranges();
   const ranges2 = new Ranges();
 
@@ -503,45 +512,47 @@ test("03.14  -  ADD() - whole ranges array is pushed", t => {
 
   ranges2.push(5, 6);
   ranges2.push(ranges1.current());
-  t.deepEqual(ranges2.current(), [[1, 2], [3, 4], [5, 6]], "03.14");
+  t.deepEqual(ranges2.current(), [[1, 2], [3, 4], [5, 6]]);
 });
 
-test("03.15  -  ADD() - empty array is pushed", t => {
+test("03.19  -  ADD() - empty array is pushed", t => {
   const ranges1 = new Ranges();
   ranges1.push([]);
-  t.is(ranges1.current(), null, "03.15");
+  t.is(ranges1.current(), null);
 });
 
-test("03.16  -  ADD() - null is pushed", t => {
+test("03.20  -  ADD() - null is pushed", t => {
   const ranges1 = new Ranges();
   const ranges2 = new Ranges();
   ranges1.push(ranges2.current());
-  t.is(ranges1.current(), null, "03.16.01");
-  t.is(ranges1.current(), null, "03.16.02");
+  t.is(ranges1.current(), null);
+  t.is(ranges1.current(), null);
 });
 
-test("03.17  -  ADD() - clashing third argument, mergeType === 1", t => {
+test("03.21  -  ADD() - clashing third argument, mergeType === 1", t => {
   const ranges1 = new Ranges();
   ranges1.add(0, 5, "a");
   ranges1.add(0, 5, "b");
-  t.deepEqual(ranges1.current(), [[0, 5, "ab"]], "03.17.01");
+  t.deepEqual(ranges1.current(), [[0, 5, "ab"]]);
+});
 
+test("03.22  -  ADD() - clashing third argument, mergeType === 1", t => {
   // hardcoded default:
   const ranges2 = new Ranges({
     mergeType: 1
   });
   ranges2.add(0, 5, "a");
   ranges2.add(0, 5, "b");
-  t.deepEqual(ranges2.current(), [[0, 5, "ab"]], "03.17.02");
+  t.deepEqual(ranges2.current(), [[0, 5, "ab"]]);
 });
 
-test("03.18  -  ADD() - clashing third argument, mergeType === 2", t => {
+test("03.23  -  ADD() - clashing third argument, mergeType === 2", t => {
   const ranges = new Ranges({
     mergeType: 2
   });
   ranges.add(0, 5, "a");
   ranges.add(0, 5, "b");
-  t.deepEqual(ranges.current(), [[0, 5, "b"]], "03.18");
+  t.deepEqual(ranges.current(), [[0, 5, "b"]]);
 });
 
 // -----------------------------------------------------------------------------
@@ -550,7 +561,7 @@ test("03.18  -  ADD() - clashing third argument, mergeType === 2", t => {
 
 test("04.01  -  CURRENT() - calling on blank yields null", t => {
   const ranges = new Ranges();
-  t.deepEqual(ranges.current(), null, "04.01");
+  t.deepEqual(ranges.current(), null);
 });
 
 test("04.02  -  CURRENT() - multiple calls on the same should yield the same", t => {
@@ -563,7 +574,7 @@ test("04.02  -  CURRENT() - multiple calls on the same should yield the same", t
   ranges.current();
   ranges.current();
   ranges.current();
-  t.deepEqual(ranges.current(), [[7, 14], [24, 28, " "], [29, 31]], "04.02");
+  t.deepEqual(ranges.current(), [[7, 14], [24, 28, " "], [29, 31]]);
 });
 
 // -----------------------------------------------------------------------------
@@ -575,7 +586,7 @@ test("05.01  -  WIPE() - wipes correctly", t => {
   ranges.add(10, 10, "aaa");
   ranges.wipe();
   ranges.add(1, 2, "bbb");
-  t.deepEqual(ranges.current(), [[1, 2, "bbb"]], "05.01");
+  t.deepEqual(ranges.current(), [[1, 2, "bbb"]]);
 });
 
 // -----------------------------------------------------------------------------
@@ -584,13 +595,13 @@ test("05.01  -  WIPE() - wipes correctly", t => {
 
 test("06.01  -  LAST() - fetches the last range from empty", t => {
   const ranges = new Ranges();
-  t.deepEqual(ranges.last(), null, "06.01");
+  t.deepEqual(ranges.last(), null);
 });
 
 test("06.02  -  LAST() - fetches the last range from non-empty", t => {
   const ranges = new Ranges();
   ranges.add(1, 2, "bbb");
-  t.deepEqual(ranges.last(), [1, 2, "bbb"], "06.02");
+  t.deepEqual(ranges.last(), [1, 2, "bbb"]);
 });
 
 // -----------------------------------------------------------------------------
@@ -691,21 +702,21 @@ test("07.11  -  opts.limitToBeAddedWhitespace - linebreaks - #3", t => {
   const ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " \t\t\t        ");
   ranges.add(2, 4, "  \n  ");
-  t.deepEqual(ranges.current(), [[1, 4, "\n"]], "07.11");
+  t.deepEqual(ranges.current(), [[1, 4, "\n"]]);
 });
 
 test("07.12  -  opts.limitToBeAddedWhitespace - linebreaks - #4", t => {
   const ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, "");
   ranges.add(2, 4, "");
-  t.deepEqual(ranges.current(), [[1, 4]], "07.12");
+  t.deepEqual(ranges.current(), [[1, 4]]);
 });
 
 test("07.13  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #1", t => {
   const ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, null);
   ranges.add(2, 4, " z  ");
-  t.deepEqual(ranges.current(), [[1, 4, null]], "07.13");
+  t.deepEqual(ranges.current(), [[1, 4, null]]);
 });
 
 test("07.14  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2", t => {
@@ -713,7 +724,7 @@ test("07.14  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2", t => {
   ranges.add(1, 2, "   ");
   ranges.add(2, 3, "z");
   ranges.add(2, 4, null);
-  t.deepEqual(ranges.current(), [[1, 4, null]], "07.14");
+  t.deepEqual(ranges.current(), [[1, 4, null]]);
 });
 
 test("07.15  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #1", t => {
@@ -733,22 +744,22 @@ test("07.16  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2", t => {
   ranges.add(1, 2, "   ");
   ranges.add(2, 3, "z");
   ranges.add(2, 4, null);
-  t.deepEqual(ranges.current(), [[1, 4, null]], "07.16 - no opts");
+  t.deepEqual(ranges.current(), [[1, 4, null]]);
 });
 
-test("07.17  -  ADD() - null wipes third arg values", t => {
+test("07.17  -  opts.limitToBeAddedWhitespace - null wipes third arg values", t => {
   const ranges = new Ranges();
   ranges.add(1, 2, "aaa");
   ranges.add(2, 4, "zzz");
   ranges.add(1, 6, null);
-  t.deepEqual(ranges.current(), [[1, 6, null]], "07.17");
+  t.deepEqual(ranges.current(), [[1, 6, null]]);
 });
 
-test("07.18  -  ADD() - adds two non-overlapping ranges", t => {
+test("07.18  -  opts.limitToBeAddedWhitespace - adds two non-overlapping ranges", t => {
   const ranges = new Ranges();
   ranges.add(1, 2);
   ranges.add(3, 4);
-  t.deepEqual(ranges.current(), [[1, 2], [3, 4]], "07.18");
+  t.deepEqual(ranges.current(), [[1, 2], [3, 4]]);
 });
 
 test("07.19  -  opts.limitToBeAddedWhitespace - leading whitespace - control", t => {
@@ -756,7 +767,7 @@ test("07.19  -  opts.limitToBeAddedWhitespace - leading whitespace - control", t
   ranges.add(1, 2, "   ");
   ranges.add(2, 3, "z");
   ranges.add(2, 4, " ");
-  t.deepEqual(ranges.current(), [[1, 4, "   z "]], "07.19 - control, no opts");
+  t.deepEqual(ranges.current(), [[1, 4, "   z "]]);
 });
 
 test("07.20  -  opts.limitToBeAddedWhitespace - leading whitespace #1", t => {
@@ -764,7 +775,7 @@ test("07.20  -  opts.limitToBeAddedWhitespace - leading whitespace #1", t => {
   ranges.add(1, 2, "   ");
   ranges.add(2, 3, "z");
   ranges.add(2, 4, " ");
-  t.deepEqual(ranges.current(), [[1, 4, " z "]], "07.20");
+  t.deepEqual(ranges.current(), [[1, 4, " z "]]);
 });
 
 test("07.21  -  opts.limitToBeAddedWhitespace - leading whitespace #2", t => {
@@ -772,7 +783,7 @@ test("07.21  -  opts.limitToBeAddedWhitespace - leading whitespace #2", t => {
   ranges.add(1, 2, " \n  ");
   ranges.add(2, 3, "z");
   ranges.add(2, 4, " ");
-  t.deepEqual(ranges.current(), [[1, 4, "\nz "]], "07.21");
+  t.deepEqual(ranges.current(), [[1, 4, "\nz "]]);
 });
 
 test("07.22  -  opts.limitToBeAddedWhitespace - leading whitespace #3", t => {
@@ -781,7 +792,15 @@ test("07.22  -  opts.limitToBeAddedWhitespace - leading whitespace #3", t => {
   ranges.add(7, 14, " ");
   ranges.add(7, 11);
   ranges.add(14, 14, ' alt=""');
-  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, ' alt=""']], "07.22");
+  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, ' alt=""']]);
+});
+
+test("07.23  -  opts.limitToBeAddedWhitespace - nbsp replacement", t => {
+  const ranges = new Ranges({ limitToBeAddedWhitespace: true });
+  ranges.add(1, 2, " ");
+  ranges.add(2, 3, nbsp);
+  ranges.add(3, 4, " ");
+  t.deepEqual(ranges.current(), [[1, 4, ` ${nbsp} `]]);
 });
 
 // -----------------------------------------------------------------------------
@@ -822,8 +841,8 @@ test("08.03  -  opts.limitLinebreaksCount #3 - hardcoded defaults", t => {
   ranges.add(4, 4, null);
   ranges.add(7, 14, "\n");
   ranges.add(7, 11, "\n\n");
-  ranges.add(14, 14, ' alt=""');
-  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, '\nalt=""']], "08.03");
+  ranges.add(14, 14, 'alt=""');
+  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, '\nalt=""']]);
 });
 
 test("08.04  -  opts.limitLinebreaksCount #4 - hardcoded defaults", t => {
@@ -834,8 +853,8 @@ test("08.04  -  opts.limitLinebreaksCount #4 - hardcoded defaults", t => {
   ranges.add(4, 4, null);
   ranges.add(7, 14, "\n");
   ranges.add(7, 11, "\n\n");
-  ranges.add(14, 14, ' alt=""');
-  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, '\n\nalt=""']], "08.04");
+  ranges.add(14, 14, 'alt=""');
+  t.deepEqual(ranges.current(), [[4, 4, null], [7, 14, '\n\nalt=""']]);
 });
 
 // -----------------------------------------------------------------------------
@@ -901,7 +920,7 @@ test("09.02  -  REPLACE() - replaces ranges with null", t => {
   newRanges.wipe();
 
   // ensure oldRanges is now same as newRanges:
-  t.deepEqual(oldRanges.current(), null, "09.02.02");
+  t.deepEqual(oldRanges.current(), null);
 });
 
 test("09.03  -  REPLACE() - replaces ranges with empty array", t => {
@@ -920,7 +939,7 @@ test("09.03  -  REPLACE() - replaces ranges with empty array", t => {
   oldRanges.replace([]);
 
   // ensure oldRanges is now same as newRanges:
-  t.deepEqual(oldRanges.current(), null, "09.03.02");
+  t.deepEqual(oldRanges.current(), null);
 });
 
 test("09.04  -  REPLACE() - replaces ranges with single range (throws)", t => {
@@ -943,5 +962,5 @@ test("09.04  -  REPLACE() - replaces ranges with single range (throws)", t => {
 
   // but range or ranges does work fine:
   oldRanges.replace([[6, 8, "zzz"]]);
-  t.deepEqual(oldRanges.current(), [[6, 8, "zzz"]], "09.04.01");
+  t.deepEqual(oldRanges.current(), [[6, 8, "zzz"]]);
 });
