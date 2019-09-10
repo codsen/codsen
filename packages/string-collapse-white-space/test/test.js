@@ -191,15 +191,6 @@ test(`01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`, 
   t.notThrows(() => {
     collapse("aaaa", null); // null fine too - that's hardcoded "nothing"
   });
-  t.throws(() => {
-    collapse("aaaa", { zzz: true }); // opts contain rogue keys.
-  });
-  t.throws(() => {
-    collapse("aaaa", { zzz: true, messageOnly: false }); // one rogue key is enough to cause a throw
-  });
-  t.throws(() => {
-    collapse("aaaa", { messageOnly: false }); // no rogue keys.
-  });
 });
 
 test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - empty string`, t => {
@@ -977,19 +968,223 @@ test(`06.15 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leadin
 });
 
 // -----------------------------------------------------------------------------
-// 07. opts.returnRangesOnly
+// 07. opts.limitConsecutiveEmptyLinesTo
 // -----------------------------------------------------------------------------
 
-test(`07.01 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
+test(`07.01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=off`, t => {
+  t.is(
+    collapse("a\n\nb", {
+      removeEmptyLines: false
+    }),
+    "a\n\nb"
+  );
+});
+
+test(`07.02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=off`, t => {
+  t.is(
+    collapse("a\r\n\r\nb", {
+      removeEmptyLines: false
+    }),
+    "a\r\n\r\nb"
+  );
+});
+
+test(`07.03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on`, t => {
+  t.is(
+    collapse("a\n\nb", {
+      removeEmptyLines: true
+    }),
+    "a\nb"
+  );
+});
+
+test(`07.04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on`, t => {
+  t.is(
+    collapse("a\r\n\r\nb", {
+      removeEmptyLines: true
+    }),
+    "a\r\nb"
+  );
+});
+
+test(`07.05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on, hardcoded default`, t => {
+  t.is(
+    collapse("a\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0
+    }),
+    "a\nb"
+  );
+});
+
+test(`07.06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on, hardcoded default`, t => {
+  t.is(
+    collapse("a\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0
+    }),
+    "a\r\nb"
+  );
+});
+
+test(`07.07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  t.is(
+    collapse("a\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 1
+    }),
+    "a\n\nb"
+  );
+});
+
+test(`07.08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  t.is(
+    collapse("a\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 1
+    }),
+    "a\r\n\r\nb"
+  );
+});
+
+test(`07.09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  t.is(
+    collapse("a\n\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 1
+    }),
+    "a\n\nb"
+  );
+});
+
+test(`07.10 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  t.is(
+    collapse("a\r\n\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 1
+    }),
+    "a\r\n\r\nb"
+  );
+});
+
+test(`07.11 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, t => {
+  t.is(
+    collapse("a\n\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 2
+    }),
+    "a\n\n\nb"
+  );
+});
+
+test(`07.12 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, t => {
+  t.is(
+    collapse("a\r\n\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 2
+    }),
+    "a\r\n\r\n\r\nb"
+  );
+});
+
+test(`07.13 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, t => {
+  t.is(
+    collapse("a\n\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 3
+    }),
+    "a\n\n\nb"
+  );
+});
+
+test(`07.14 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, t => {
+  t.is(
+    collapse("a\r\n\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 3
+    }),
+    "a\r\n\r\n\r\nb"
+  );
+});
+
+test(`07.15 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, t => {
+  t.is(
+    collapse("a\n\n\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 99
+    }),
+    "a\n\n\nb"
+  );
+});
+
+test(`07.16 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, t => {
+  t.is(
+    collapse("a\r\n\r\n\r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 99
+    }),
+    "a\r\n\r\n\r\nb"
+  );
+});
+
+test(`07.17 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, t => {
+  t.is(
+    collapse("a\n \nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0,
+      trimLines: false
+    }),
+    "a\n \nb"
+  );
+});
+
+test(`07.18 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, t => {
+  t.is(
+    collapse("a\n \nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0,
+      trimLines: true
+    }),
+    "a\nb"
+  );
+});
+
+test(`07.19 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, CRLF, trimLines=off`, t => {
+  t.is(
+    collapse("a\r\n \r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0,
+      trimLines: false
+    }),
+    "a\r\n \r\nb"
+  );
+});
+
+test(`07.20 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, CRLF, trimLines=on`, t => {
+  t.is(
+    collapse("a\r\n \r\nb", {
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: 0,
+      trimLines: true
+    }),
+    "a\r\nb"
+  );
+});
+
+// -----------------------------------------------------------------------------
+// 08. opts.returnRangesOnly
+// -----------------------------------------------------------------------------
+
+test(`08.01 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
   t.is(
     collapse("   a   bbb  \n   c   d   "),
     "a bbb \n c d",
-    "07.01.01 - defaults"
+    "08.01.01 - defaults"
   );
   t.is(
     collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: false }),
     "a bbb \n c d",
-    "07.01.02 - hardcoded default"
+    "08.01.02 - hardcoded default"
   );
   t.deepEqual(
     collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: true }),
@@ -997,31 +1192,31 @@ test(`07.01 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there 
   );
 });
 
-test(`07.02 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`, t => {
-  t.is(collapse("a b"), "a b", "07.02.01 - defaults");
+test(`08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`, t => {
+  t.is(collapse("a b"), "a b", "08.02.01 - defaults");
   t.is(
     collapse("a b", { returnRangesOnly: false }),
     "a b",
-    "07.02.02 - hardcoded default"
+    "08.02.02 - hardcoded default"
   );
   t.deepEqual(collapse("a b", { returnRangesOnly: true }), []);
 });
 
-test(`07.03 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`, t => {
-  t.is(collapse("a\nb"), "a\nb", "07.03.01 - defaults");
+test(`08.03 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`, t => {
+  t.is(collapse("a\nb"), "a\nb", "08.03.01 - defaults");
   t.is(
     collapse("a\nb", { returnRangesOnly: false }),
     "a\nb",
-    "07.03.02 - hardcoded default"
+    "08.03.02 - hardcoded default"
   );
   t.deepEqual(collapse("a\nb", { returnRangesOnly: true }), []);
 });
 
 // -----------------------------------------------------------------------------
-// 08. check a ten thousand randomly-generated strings that don't need collapsing
+// 09. check a ten thousand randomly-generated strings that don't need collapsing
 // -----------------------------------------------------------------------------
 
-test(`08.XX - ${`\u001b[${32}m${`GENERATED TESTS`}\u001b[${39}m`}`, t => {
+test(`09.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`, t => {
   for (let i = 10000; i--; ) {
     let temp = nothingToCollapseGenerator();
     t.is(collapse(temp), temp);

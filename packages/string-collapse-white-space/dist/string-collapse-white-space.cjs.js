@@ -11,10 +11,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var replaceSlicesArr = _interopDefault(require('ranges-apply'));
-var Slices = _interopDefault(require('ranges-push'));
+var rangesMerge = _interopDefault(require('ranges-merge'));
 var stringMatchLeftRight = require('string-match-left-right');
 
 function _typeof(obj) {
@@ -89,7 +88,8 @@ function collapse(str, originalOpts) {
   if (str.length === 0) {
     return "";
   }
-  var finalIndexesToDelete = new Slices();
+  var isNum = Number.isInteger;
+  var finalIndexesToDelete = [];
   var defaults = {
     trimStart: true,
     trimEnd: true,
@@ -101,12 +101,9 @@ function collapse(str, originalOpts) {
     limitConsecutiveEmptyLinesTo: 0
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-collapse-white-space/collapse(): [THROW_ID_03*]"
-  });
   var preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
-    preliminaryIndexesToDelete = new Slices();
+    preliminaryIndexesToDelete = [];
   }
   var spacesEndAt = null;
   var whiteSpaceEndsAt = null;
@@ -139,7 +136,7 @@ function collapse(str, originalOpts) {
       }
     } else if (spacesEndAt !== null) {
       if (i + 1 !== spacesEndAt) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt);
+        finalIndexesToDelete.push([i + 1, spacesEndAt]);
       }
       spacesEndAt = null;
     }
@@ -153,7 +150,7 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n" || str[i] === "\r") {
         if (lineWhiteSpaceEndsAt !== null) {
           if (opts.trimLines) {
-            finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
           }
           lineWhiteSpaceEndsAt = null;
         }
@@ -164,32 +161,35 @@ function collapse(str, originalOpts) {
       }
       if (str[i] === "\n") {
         var sliceFrom = i + 1;
-        var sliceTo = lastLineBreaksLastCharIndex + 1;
-        if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
-          finalIndexesToDelete.add(i + 1, lastLineBreaksLastCharIndex + 1);
+        var sliceTo = void 0;
+        if (isNum(lastLineBreaksLastCharIndex)) {
+          sliceTo = lastLineBreaksLastCharIndex + 1;
+          if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
+            finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
+          }
         }
         lastLineBreaksLastCharIndex = i;
       }
     } else {
       if (whiteSpaceEndsAt !== null) {
         if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
-          finalIndexesToDelete.add(i + 1, whiteSpaceEndsAt + 1);
+          finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
         }
         whiteSpaceEndsAt = null;
       }
       if (lineWhiteSpaceEndsAt !== null) {
         if (endingOfTheLine && opts.trimLines) {
           endingOfTheLine = false;
-          finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+          finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
         }
         lineWhiteSpaceEndsAt = null;
       }
     }
     if (i === 0) {
       if (whiteSpaceEndsAt !== null && opts.trimStart) {
-        finalIndexesToDelete.add(0, whiteSpaceEndsAt + 1);
+        finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
       } else if (spacesEndAt !== null) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt + 1);
+        finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
       }
     }
     if (opts.recogniseHTML) {
@@ -203,7 +203,7 @@ function collapse(str, originalOpts) {
         if (tagMatched && str[i - 1] !== undefined && str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
           tagMatched = false;
           stateWithinTag = false;
-          preliminaryIndexesToDelete.wipe();
+          preliminaryIndexesToDelete = [];
         }
         if (!bail && !bracketJustFound && str[i].trim() === "" && str[i - 1] !== "<" && (str[i + 1] === undefined || str[i + 1].trim() !== "" && str[i + 1].trim() !== "/")) {
           if (str[i - 1] === undefined || str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
@@ -234,14 +234,14 @@ function collapse(str, originalOpts) {
           bracketJustFound = false;
         }
         if (whiteSpaceWithinTagEndsAt !== null) {
-          preliminaryIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt);
+          preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
           whiteSpaceWithinTagEndsAt = null;
         }
         if (str[i] === ">") {
           count = resetCounts();
           bracketJustFound = true;
           if (stateWithinTag) {
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
           } else {
             stateWithinTag = true;
             if (str[i - 1] !== undefined && str[i - 1].trim() === "" && !whiteSpaceWithinTagEndsAt) {
@@ -258,15 +258,15 @@ function collapse(str, originalOpts) {
           }
           if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
             tagMatched = false;
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
           }
           if (tagMatched) {
-            if (preliminaryIndexesToDelete.current()) {
-              preliminaryIndexesToDelete.current().forEach(function (_ref) {
+            if (preliminaryIndexesToDelete.length) {
+              preliminaryIndexesToDelete.forEach(function (_ref) {
                 var _ref2 = _slicedToArray(_ref, 2),
                     rangeStart = _ref2[0],
                     rangeEnd = _ref2[1];
-                return finalIndexesToDelete.add(rangeStart, rangeEnd);
+                return finalIndexesToDelete.push([rangeStart, rangeEnd]);
               });
             }
             tagMatched = false;
@@ -407,9 +407,9 @@ function collapse(str, originalOpts) {
     }
   }
   if (opts.returnRangesOnly) {
-    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
+    return rangesMerge(finalIndexesToDelete);
   }
-  return finalIndexesToDelete.current() ? replaceSlicesArr(str, finalIndexesToDelete.current()) : str;
+  return finalIndexesToDelete.length ? replaceSlicesArr(str, finalIndexesToDelete) : str;
 }
 
 module.exports = collapse;

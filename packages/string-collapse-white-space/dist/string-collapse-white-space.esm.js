@@ -7,10 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
  */
 
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import replaceSlicesArr from 'ranges-apply';
-import Slices from 'ranges-push';
+import rangesMerge from 'ranges-merge';
 import { matchLeftIncl } from 'string-match-left-right';
 
 function collapse(str, originalOpts) {
@@ -45,7 +44,8 @@ function collapse(str, originalOpts) {
   if (str.length === 0) {
     return "";
   }
-  const finalIndexesToDelete = new Slices();
+  const isNum = Number.isInteger;
+  const finalIndexesToDelete = [];
   const defaults = {
     trimStart: true,
     trimEnd: true,
@@ -57,12 +57,9 @@ function collapse(str, originalOpts) {
     limitConsecutiveEmptyLinesTo: 0
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-collapse-white-space/collapse(): [THROW_ID_03*]"
-  });
   let preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
-    preliminaryIndexesToDelete = new Slices();
+    preliminaryIndexesToDelete = [];
   }
   let spacesEndAt = null;
   let whiteSpaceEndsAt = null;
@@ -93,7 +90,7 @@ function collapse(str, originalOpts) {
       }
     } else if (spacesEndAt !== null) {
       if (i + 1 !== spacesEndAt) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt);
+        finalIndexesToDelete.push([i + 1, spacesEndAt]);
       }
       spacesEndAt = null;
     }
@@ -110,7 +107,7 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n" || str[i] === "\r") {
         if (lineWhiteSpaceEndsAt !== null) {
           if (opts.trimLines) {
-            finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
           }
           lineWhiteSpaceEndsAt = null;
         }
@@ -121,13 +118,16 @@ function collapse(str, originalOpts) {
       }
       if (str[i] === "\n") {
         const sliceFrom = i + 1;
-        const sliceTo = lastLineBreaksLastCharIndex + 1;
-        if (
-          opts.removeEmptyLines &&
-          lastLineBreaksLastCharIndex !== undefined &&
-          str.slice(sliceFrom, sliceTo).trim() === ""
-        ) {
-          finalIndexesToDelete.add(i + 1, lastLineBreaksLastCharIndex + 1);
+        let sliceTo;
+        if (isNum(lastLineBreaksLastCharIndex)) {
+          sliceTo = lastLineBreaksLastCharIndex + 1;
+          if (
+            opts.removeEmptyLines &&
+            lastLineBreaksLastCharIndex !== undefined &&
+            str.slice(sliceFrom, sliceTo).trim() === ""
+          ) {
+            finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
+          }
         }
         lastLineBreaksLastCharIndex = i;
       }
@@ -137,23 +137,23 @@ function collapse(str, originalOpts) {
           i + 1 !== whiteSpaceEndsAt + 1 &&
           (whiteSpaceEndsAt === str.length - 1 && opts.trimEnd)
         ) {
-          finalIndexesToDelete.add(i + 1, whiteSpaceEndsAt + 1);
+          finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
         }
         whiteSpaceEndsAt = null;
       }
       if (lineWhiteSpaceEndsAt !== null) {
         if (endingOfTheLine && opts.trimLines) {
           endingOfTheLine = false;
-          finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+          finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
         }
         lineWhiteSpaceEndsAt = null;
       }
     }
     if (i === 0) {
       if (whiteSpaceEndsAt !== null && opts.trimStart) {
-        finalIndexesToDelete.add(0, whiteSpaceEndsAt + 1);
+        finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
       } else if (spacesEndAt !== null) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt + 1);
+        finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
       }
     }
     if (opts.recogniseHTML) {
@@ -173,7 +173,7 @@ function collapse(str, originalOpts) {
         ) {
           tagMatched = false;
           stateWithinTag = false;
-          preliminaryIndexesToDelete.wipe();
+          preliminaryIndexesToDelete = [];
         }
         if (
           !bail &&
@@ -216,14 +216,14 @@ function collapse(str, originalOpts) {
           bracketJustFound = false;
         }
         if (whiteSpaceWithinTagEndsAt !== null) {
-          preliminaryIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt);
+          preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
           whiteSpaceWithinTagEndsAt = null;
         }
         if (str[i] === ">") {
           count = resetCounts();
           bracketJustFound = true;
           if (stateWithinTag) {
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
           } else {
             stateWithinTag = true;
             if (
@@ -247,15 +247,13 @@ function collapse(str, originalOpts) {
             count.equalDoubleQuoteCombo === 0
           ) {
             tagMatched = false;
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
           }
           if (tagMatched) {
-            if (preliminaryIndexesToDelete.current()) {
-              preliminaryIndexesToDelete
-                .current()
-                .forEach(([rangeStart, rangeEnd]) =>
-                  finalIndexesToDelete.add(rangeStart, rangeEnd)
-                );
+            if (preliminaryIndexesToDelete.length) {
+              preliminaryIndexesToDelete.forEach(([rangeStart, rangeEnd]) =>
+                finalIndexesToDelete.push([rangeStart, rangeEnd])
+              );
             }
             tagMatched = false;
           }
@@ -499,10 +497,10 @@ function collapse(str, originalOpts) {
     }
   }
   if (opts.returnRangesOnly) {
-    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
+    return rangesMerge(finalIndexesToDelete);
   }
-  return finalIndexesToDelete.current()
-    ? replaceSlicesArr(str, finalIndexesToDelete.current())
+  return finalIndexesToDelete.length
+    ? replaceSlicesArr(str, finalIndexesToDelete)
     : str;
 }
 

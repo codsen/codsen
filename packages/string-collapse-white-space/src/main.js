@@ -1,11 +1,9 @@
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import replaceSlicesArr from "ranges-apply";
-import Slices from "ranges-push";
+import rangesMerge from "ranges-merge";
 import { matchLeftIncl } from "string-match-left-right";
 
 function collapse(str, originalOpts) {
-  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   // f's
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
@@ -39,7 +37,8 @@ function collapse(str, originalOpts) {
     return "";
   }
 
-  const finalIndexesToDelete = new Slices();
+  const isNum = Number.isInteger;
+  const finalIndexesToDelete = [];
 
   // declare defaults, so we can enforce types later:
   const defaults = {
@@ -56,14 +55,9 @@ function collapse(str, originalOpts) {
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOpts);
 
-  // the check:
-  checkTypes(opts, defaults, {
-    msg: "string-collapse-white-space/collapse(): [THROW_ID_03*]"
-  });
-
   let preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
-    preliminaryIndexesToDelete = new Slices();
+    preliminaryIndexesToDelete = [];
   }
 
   // -----------------------------------------------------------------------------
@@ -107,19 +101,19 @@ function collapse(str, originalOpts) {
       if (spacesEndAt === null) {
         spacesEndAt = i;
         console.log(
-          `109 SET ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
+          `104 SET ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
         );
       }
     } else if (spacesEndAt !== null) {
       // it's not a space character
       // if we have a sequence of spaces, this character terminates that sequence
       if (i + 1 !== spacesEndAt) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt);
-        console.log(`117 PUSH [${i + 1}, ${spacesEndAt}]`);
+        finalIndexesToDelete.push([i + 1, spacesEndAt]);
+        console.log(`112 PUSH [${i + 1}, ${spacesEndAt}]`);
       }
       spacesEndAt = null;
       console.log(
-        `121 SET ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
+        `116 SET ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
       );
     }
 
@@ -132,14 +126,14 @@ function collapse(str, originalOpts) {
       if (whiteSpaceEndsAt === null) {
         whiteSpaceEndsAt = i;
         console.log(
-          `134 SET ${`\u001b[${33}m${`whiteSpaceEndsAt`}\u001b[${39}m`} = ${whiteSpaceEndsAt}`
+          `129 SET ${`\u001b[${33}m${`whiteSpaceEndsAt`}\u001b[${39}m`} = ${whiteSpaceEndsAt}`
         );
       }
       // line trimming:
       if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
         lineWhiteSpaceEndsAt = i + 1;
         console.log(
-          `141 SET ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
+          `136 SET ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
         );
       }
 
@@ -147,22 +141,22 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n" || str[i] === "\r") {
         if (lineWhiteSpaceEndsAt !== null) {
           if (opts.trimLines) {
-            console.log(`149 PUSH [${i + 1}, ${lineWhiteSpaceEndsAt}]`);
-            finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+            console.log(`144 PUSH [${i + 1}, ${lineWhiteSpaceEndsAt}]`);
+            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
           }
           lineWhiteSpaceEndsAt = null;
           console.log(
-            `154 SET ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
+            `149 SET ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
           );
         }
         if (str[i - 1] !== "\n" && str[i - 1] !== "\r") {
           lineWhiteSpaceEndsAt = i;
           endingOfTheLine = true;
           console.log(
-            `161 ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
+            `156 ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
           );
           console.log(
-            `164 ${`\u001b[${33}m${`endingOfTheLine`}\u001b[${39}m`} = ${endingOfTheLine}`
+            `159 ${`\u001b[${33}m${`endingOfTheLine`}\u001b[${39}m`} = ${endingOfTheLine}`
           );
         }
       }
@@ -171,36 +165,41 @@ function collapse(str, originalOpts) {
       if (str[i] === "\n") {
         const sliceFrom = i + 1;
         console.log(
-          `173 SET ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
+          `168 SET ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
         );
         console.log(
-          `176 ${`\u001b[${33}m${`lastLineBreaksLastCharIndex`}\u001b[${39}m`} = ${JSON.stringify(
+          `171 ${`\u001b[${33}m${`lastLineBreaksLastCharIndex`}\u001b[${39}m`} = ${JSON.stringify(
             lastLineBreaksLastCharIndex,
             null,
             4
           )}`
         );
-        const sliceTo = lastLineBreaksLastCharIndex + 1;
-        console.log(
-          `184 SET ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${sliceTo}`
-        );
-        console.log(
-          `187 \u001b[${33}m [${sliceFrom}, ${sliceTo}] >>>${str.slice(
-            sliceFrom,
-            sliceTo
-          )}<<<\u001b[${39}m`
-        );
-        if (
-          opts.removeEmptyLines &&
-          lastLineBreaksLastCharIndex !== undefined &&
-          str.slice(sliceFrom, sliceTo).trim() === ""
-        ) {
+        let sliceTo;
+
+        if (isNum(lastLineBreaksLastCharIndex)) {
+          sliceTo = lastLineBreaksLastCharIndex + 1;
           console.log(
-            `198 \n\u001b[${33}m${`RANGE CAUGHT: [i=${i +
-              1}, lastLineBreaksLastCharIndex + 1=${lastLineBreaksLastCharIndex +
-              1}]`}\u001b[${39}m\n`
+            `182 SET ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${sliceTo}`
           );
-          finalIndexesToDelete.add(i + 1, lastLineBreaksLastCharIndex + 1);
+          console.log(
+            `185 \u001b[${33}m [${sliceFrom}, ${sliceTo}] >>>${JSON.stringify(
+              str.slice(sliceFrom, sliceTo),
+              null,
+              4
+            )}<<<\u001b[${39}m`
+          );
+          if (
+            opts.removeEmptyLines &&
+            lastLineBreaksLastCharIndex !== undefined &&
+            str.slice(sliceFrom, sliceTo).trim() === ""
+          ) {
+            console.log(
+              `197 \n\u001b[${33}m${`PUSH: [i=${i +
+                1}, lastLineBreaksLastCharIndex + 1=${lastLineBreaksLastCharIndex +
+                1}]`}\u001b[${39}m\n`
+            );
+            finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
+          }
         }
         lastLineBreaksLastCharIndex = i;
         console.log(
@@ -215,7 +214,7 @@ function collapse(str, originalOpts) {
           (whiteSpaceEndsAt === str.length - 1 && opts.trimEnd)
         ) {
           console.log(`216 PUSH [${i + 1}, ${whiteSpaceEndsAt + 1}]`);
-          finalIndexesToDelete.add(i + 1, whiteSpaceEndsAt + 1);
+          finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
         }
         whiteSpaceEndsAt = null;
         console.log(
@@ -231,7 +230,7 @@ function collapse(str, originalOpts) {
             `230 SET ${`\u001b[${33}m${`endingOfTheLine`}\u001b[${39}m`} = ${endingOfTheLine}`
           );
           console.log(`232 PUSH [${i + 1}, ${lineWhiteSpaceEndsAt}]`);
-          finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+          finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
         }
         lineWhiteSpaceEndsAt = null;
         console.log(
@@ -246,10 +245,10 @@ function collapse(str, originalOpts) {
     // therefore it's less code if we put zero index clauses here.
     if (i === 0) {
       if (whiteSpaceEndsAt !== null && opts.trimStart) {
-        finalIndexesToDelete.add(0, whiteSpaceEndsAt + 1);
+        finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
         console.log(`249 PUSH [0, ${whiteSpaceEndsAt + 1}]`);
       } else if (spacesEndAt !== null) {
-        finalIndexesToDelete.add(i + 1, spacesEndAt + 1);
+        finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
         console.log(`252 PUSH [${i + 1}, ${spacesEndAt + 1}]`);
       }
     }
@@ -283,7 +282,7 @@ function collapse(str, originalOpts) {
           stateWithinTag = false;
           console.log("283 SET tagMatched = false; stateWithinTag = false;");
 
-          preliminaryIndexesToDelete.wipe();
+          preliminaryIndexesToDelete = [];
           console.log("286 WIPE preliminaryIndexesToDelete");
         }
         if (
@@ -370,8 +369,8 @@ function collapse(str, originalOpts) {
         // terminate existing range, push the captured range into preliminaries' array
         if (whiteSpaceWithinTagEndsAt !== null) {
           console.log(`371 PUSH [${i + 1}, ${whiteSpaceWithinTagEndsAt}]`);
-          preliminaryIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt);
-          // finalIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt)
+          preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
+          // finalIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt])
           whiteSpaceWithinTagEndsAt = null;
           console.log(
             `376 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
@@ -395,7 +394,7 @@ function collapse(str, originalOpts) {
           // two cases:
           if (stateWithinTag) {
             // this is bad, another closing bracket
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
             console.log("398 WIPE preliminaryIndexesToDelete");
           } else {
             stateWithinTag = true;
@@ -422,8 +421,8 @@ function collapse(str, originalOpts) {
           }
         } else if (str[i] === "<") {
           console.log(
-            `424 preliminaryIndexesToDelete.current() = ${JSON.stringify(
-              preliminaryIndexesToDelete.current(),
+            `424 preliminaryIndexesToDelete = ${JSON.stringify(
+              preliminaryIndexesToDelete,
               null,
               4
             )}`
@@ -451,27 +450,25 @@ function collapse(str, originalOpts) {
             console.log(
               `451 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
             );
-            preliminaryIndexesToDelete.wipe();
+            preliminaryIndexesToDelete = [];
             console.log("454 WIPE preliminaryIndexesToDelete");
           }
           // if somehow we're within a tag and there are already provisional ranges
           if (tagMatched) {
-            if (preliminaryIndexesToDelete.current()) {
-              preliminaryIndexesToDelete
-                .current()
-                .forEach(([rangeStart, rangeEnd]) =>
-                  finalIndexesToDelete.add(rangeStart, rangeEnd)
-                );
+            if (preliminaryIndexesToDelete.length) {
+              preliminaryIndexesToDelete.forEach(([rangeStart, rangeEnd]) =>
+                finalIndexesToDelete.push([rangeStart, rangeEnd])
+              );
             }
             tagMatched = false;
             console.log(
-              `467 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+              `465 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
             );
           }
           // finally, reset the count obj.
           count = resetCounts(count);
           console.log(
-            `473 SET ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
+            `471 SET ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
               count,
               null,
               0
@@ -480,7 +477,7 @@ function collapse(str, originalOpts) {
         } else if (stateWithinTag && str[i] === "/") {
           whiteSpaceWithinTagEndsAt = i;
           console.log(
-            `482 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
+            `480 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
           );
         } else if (stateWithinTag && !tagMatched) {
           if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
@@ -488,7 +485,7 @@ function collapse(str, originalOpts) {
             // ---------------------------------------------------------------
             tagCanEndHere = false;
             console.log(
-              `490 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
+              `488 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
             );
             if (charCodeBetweenInclusive(str[i], 97, 110)) {
               // if letters a-n, inclusive:
@@ -615,7 +612,7 @@ function collapse(str, originalOpts) {
               ) {
                 tagMatched = true;
                 console.log(
-                  `617 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                  `615 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
                 );
               }
             } else {
@@ -709,7 +706,7 @@ function collapse(str, originalOpts) {
               ) {
                 tagMatched = true;
                 console.log(
-                  `711 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                  `709 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
                 );
               }
             }
@@ -722,7 +719,7 @@ function collapse(str, originalOpts) {
             // if digits 1-6
             tagCanEndHere = false;
             console.log(
-              `724 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
+              `722 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
             );
             if (
               str[i - 1] === "h" &&
@@ -730,13 +727,13 @@ function collapse(str, originalOpts) {
             ) {
               tagMatched = true;
               console.log(
-                `732 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                `730 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
               );
             }
           } else if (str[i] === "=" || str[i] === '"') {
             tagCanEndHere = false;
             console.log(
-              `738 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${`\u001b[${35}m${tagCanEndHere}\u001b[${39}m`}`
+              `736 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${`\u001b[${35}m${tagCanEndHere}\u001b[${39}m`}`
             );
           }
         }
@@ -754,16 +751,12 @@ function collapse(str, originalOpts) {
 
   if (opts.returnRangesOnly) {
     console.log(
-      `756 RETURNING: ${JSON.stringify(
-        finalIndexesToDelete.current(),
-        null,
-        4
-      )}`
+      `754 RETURNING: ${JSON.stringify(finalIndexesToDelete, null, 4)}`
     );
-    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
+    return rangesMerge(finalIndexesToDelete);
   }
-  return finalIndexesToDelete.current()
-    ? replaceSlicesArr(str, finalIndexesToDelete.current())
+  return finalIndexesToDelete.length
+    ? replaceSlicesArr(str, finalIndexesToDelete)
     : str;
 }
 
