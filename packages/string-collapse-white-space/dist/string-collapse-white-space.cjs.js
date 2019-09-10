@@ -40,6 +40,10 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -93,7 +97,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false,
     recogniseHTML: true,
     removeEmptyLines: false,
-    returnRangesOnly: false
+    returnRangesOnly: false,
+    limitConsecutiveEmptyLinesTo: 0
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {

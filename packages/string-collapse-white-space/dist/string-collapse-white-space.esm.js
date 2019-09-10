@@ -53,7 +53,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false,
     recogniseHTML: true,
     removeEmptyLines: false,
-    returnRangesOnly: false
+    returnRangesOnly: false,
+    limitConsecutiveEmptyLinesTo: 0
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {

@@ -49,7 +49,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false, // non-breaking spaces are trimmed too
     recogniseHTML: true, // collapses whitespace around HTML brackets
     removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
-    returnRangesOnly: false // if on, only ranges array is returned
+    returnRangesOnly: false, // if on, only ranges array is returned
+    limitConsecutiveEmptyLinesTo: 0 // zero lines are allowed (if opts.removeEmptyLines is on)
   };
 
   // fill any settings with defaults if missing:
