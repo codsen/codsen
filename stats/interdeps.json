@@ -174,27 +174,6 @@
         "imports": []
     },
     {
-        "name": "detergent",
-        "size": 55205,
-        "imports": [
-            "all-named-html-entities",
-            "html-entities-not-email-friendly",
-            "ranges-apply",
-            "ranges-ent-decode",
-            "ranges-is-index-within",
-            "ranges-process-outside",
-            "ranges-push",
-            "string-apostrophes",
-            "string-collapse-white-space",
-            "string-fix-broken-named-entities",
-            "string-left-right",
-            "string-range-expander",
-            "string-remove-widows",
-            "string-strip-html",
-            "string-trim-spaces-only"
-        ]
-    },
-    {
         "name": "easy-replace",
         "size": 10066,
         "imports": [
@@ -217,7 +196,7 @@
     },
     {
         "name": "email-comb",
-        "size": 60980,
+        "size": 61072,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -520,7 +499,8 @@
         "size": 7612,
         "imports": [
             "ranges-merge",
-            "string-collapse-leading-whitespace"
+            "string-collapse-leading-whitespace",
+            "string-trim-spaces-only"
         ]
     },
     {
@@ -566,11 +546,11 @@
     },
     {
         "name": "string-collapse-white-space",
-        "size": 17758,
+        "size": 18054,
         "imports": [
             "check-types-mini",
             "ranges-apply",
-            "ranges-push",
+            "ranges-merge",
             "string-match-left-right"
         ]
     },
@@ -684,7 +664,7 @@
     },
     {
         "name": "string-trim-spaces-only",
-        "size": 2075,
+        "size": 2096,
         "imports": []
     },
     {
