@@ -50,14 +50,14 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.3.0",
-    "eslint-config-prettier": "^6.2.0",
+    "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^3.0.5",
-    "lect": "^0.9.9",
+    "lect": "^0.9.10",
     "lerna": "3.13.0",
-    "lerna-clean-changelogs-cli": "^1.2.32",
+    "lerna-clean-changelogs-cli": "^1.2.33",
     "npm-watch": "^0.6.0",
     "prettier": "^1.18.2"
   }
