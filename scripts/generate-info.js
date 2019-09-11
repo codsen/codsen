@@ -72,7 +72,7 @@ allPackages.map(name => {
 
 fs.writeFile(
   path.resolve("stats/interdeps.json"),
-  JSON.stringify(interdep, null, 4),
+  JSON.stringify(interdep.filter(obj => obj.imports.length), null, 4),
   err => {
     if (err) {
       throw err;
