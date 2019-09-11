@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.4.0](https://gitlab.com/codsen/codsen/compare/string-remove-widows@1.3.0...string-remove-widows@1.4.0) (2019-09-11)
-
+## 1.4.0 (2019-09-11)
 
 ### Bug Fixes
 
-* properly recognise single line breaks, not counts are reset correctly ([ec5578b](https://gitlab.com/codsen/codsen/commit/ec5578b))
-
+- properly recognise single line breaks, not counts are reset correctly ([ec5578b](https://gitlab.com/codsen/codsen/commit/ec5578b))
 
 ### Features
 
-* add opts.ignore option "all" ([a02dc78](https://gitlab.com/codsen/codsen/commit/a02dc78))
-* improvements to the algorithm ([8a37c1d](https://gitlab.com/codsen/codsen/commit/8a37c1d))
-
-
-
-
+- add opts.ignore option "all" ([a02dc78](https://gitlab.com/codsen/codsen/commit/a02dc78))
+- improvements to the algorithm ([8a37c1d](https://gitlab.com/codsen/codsen/commit/8a37c1d))
 
 ## 1.3.0 (2019-09-04)
 

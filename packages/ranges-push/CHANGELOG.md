@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.5.0](https://gitlab.com/codsen/codsen/compare/ranges-push@3.4.0...ranges-push@3.5.0) (2019-09-11)
-
+## 3.5.0 (2019-09-11)
 
 ### Features
 
-* improved whitespace insertion algorithm ([b8c4463](https://gitlab.com/codsen/codsen/commit/b8c4463))
-
+- improved whitespace insertion algorithm ([b8c4463](https://gitlab.com/codsen/codsen/commit/b8c4463))
 
 ### Reverts
 
-* restores back as it was before, no changes to opts.limitToBeAddedWhitespace ([f0b36f3](https://gitlab.com/codsen/codsen/commit/f0b36f3))
-
-
-
-
+- restores back as it was before, no changes to opts.limitToBeAddedWhitespace ([f0b36f3](https://gitlab.com/codsen/codsen/commit/f0b36f3))
 
 ## 3.4.0 (2019-09-04)
 

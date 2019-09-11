@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.8.0](https://gitlab.com/codsen/codsen/compare/string-trim-spaces-only@2.7.41...string-trim-spaces-only@2.8.0) (2019-09-11)
-
+## 2.8.0 (2019-09-11)
 
 ### Features
 
-* add granular options to trim (or not) each whitespace type ([c12e5b3](https://gitlab.com/codsen/codsen/commit/c12e5b3))
-
-
-
-
+- add granular options to trim (or not) each whitespace type ([c12e5b3](https://gitlab.com/codsen/codsen/commit/c12e5b3))
 
 ## 2.7.0 (2019-01-20)
 

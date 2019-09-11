@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.7.1](https://gitlab.com/codsen/codsen/compare/email-comb@3.7.0...email-comb@3.7.1) (2019-09-11)
-
+## 3.7.1 (2019-09-11)
 
 ### Bug Fixes
 
-* remove leading spaces in cleaned like class=" zz" and tighten up class/id recognition ([a900e4e](https://gitlab.com/codsen/codsen/commit/a900e4e))
-
-
-
-
+- remove leading spaces in cleaned like class=" zz" and tighten up class/id recognition ([a900e4e](https://gitlab.com/codsen/codsen/commit/a900e4e))
 
 ## 3.7.0 (2019-09-04)
 
