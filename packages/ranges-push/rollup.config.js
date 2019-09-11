@@ -47,7 +47,7 @@ export default commandLineArgs => {
         "is-natural-number-string",
         "lodash.clonedeep",
         "ranges-merge",
-        "string-collapse-white-space",
+        "string-collapse-leading-whitespace",
         "string-trim-spaces-only"
       ],
       plugins: [
@@ -70,7 +70,7 @@ export default commandLineArgs => {
         "is-natural-number-string",
         "lodash.clonedeep",
         "ranges-merge",
-        "string-collapse-white-space",
+        "string-collapse-leading-whitespace",
         "string-trim-spaces-only"
       ],
       plugins: [

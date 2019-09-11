@@ -169,7 +169,7 @@
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "ranges-merge": "^4.2.19",
-    "string-collapse-white-space": "^5.0.33",
+    "string-collapse-leading-whitespace": "^1.12.41",
     "string-trim-spaces-only": "^2.7.41"
   },
   "devDependencies": {

@@ -796,7 +796,7 @@ test("07.22  -  opts.limitToBeAddedWhitespace - leading whitespace #3", t => {
 });
 
 test("07.23  -  opts.limitToBeAddedWhitespace - nbsp replacement", t => {
-  const ranges = new Ranges({ limitToBeAddedWhitespace: true });
+  const ranges = new Ranges({ limitToBeAddedWhitespace: false });
   ranges.add(1, 2, " ");
   ranges.add(2, 3, nbsp);
   ranges.add(3, 4, " ");

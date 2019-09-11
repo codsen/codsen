@@ -10,40 +10,19 @@
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import mergeRanges from 'ranges-merge';
-import collapse from 'string-collapse-white-space';
+import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
 import clone from 'lodash.clonedeep';
-import trimSpacesOnly from 'string-trim-spaces-only';
 
 function existy(x) {
   return x != null;
 }
 const isArr = Array.isArray;
 const isNum = Number.isInteger;
-const nbsp = "\xA0";
 function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
   return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
-}
-function canBeReplacedWithASpace(something) {
-  return (
-    isStr(something) &&
-    something.length &&
-    !something.trim().length &&
-    !something.includes("\n") &&
-    !something.includes("\r") &&
-    !something.includes(nbsp)
-  );
-}
-function specialTrim(something) {
-  return trimSpacesOnly(something, {
-    cr: false,
-    lf: false,
-    tab: true,
-    space: true,
-    nbsp: false
-  }).res;
 }
 class Ranges {
   constructor(originalOpts) {
@@ -156,51 +135,17 @@ class Ranges {
         this.last()[1] = to;
         if (this.last()[2] === null || addVal === null) ;
         if (this.last()[2] !== null && existy(addVal)) {
-          if (
-            isStr(addVal) &&
-            (addVal.includes("\n") || addVal.includes("\r"))
-          ) {
-            addVal = specialTrim(addVal);
-          }
-          let calculatedVal = addVal;
-          if (
+          let calculatedVal =
             existy(this.last()[2]) &&
             this.last()[2].length > 0 &&
             (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1)
-          ) {
-            calculatedVal = this.last()[2] + addVal;
-            if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapse(calculatedVal, {
-                trimStart: false,
-                trimEnd: false,
-                removeEmptyLines: true,
-                limitConsecutiveEmptyLinesTo:
-                  this.opts.limitLinebreaksCount - 1 < 0
-                    ? 0
-                    : this.opts.limitLinebreaksCount - 1
-              });
-            }
-          }
+              ? this.last()[2] + addVal
+              : addVal;
           if (this.opts.limitToBeAddedWhitespace) {
-            if (canBeReplacedWithASpace(calculatedVal)) {
-              calculatedVal = " ";
-            } else {
-              calculatedVal = collapse(calculatedVal, {
-                trimStart: false,
-                trimEnd: false,
-                removeEmptyLines: true,
-                limitConsecutiveEmptyLinesTo:
-                  this.opts.limitLinebreaksCount - 1 < 0
-                    ? 0
-                    : this.opts.limitLinebreaksCount - 1
-              });
-              if (
-                !calculatedVal.trim().length &&
-                !calculatedVal.includes(nbsp)
-              ) {
-                calculatedVal = specialTrim(calculatedVal);
-              }
-            }
+            calculatedVal = collapseLeadingWhitespace(
+              calculatedVal,
+              this.opts.limitLinebreaksCount
+            );
           }
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
             this.last()[2] = calculatedVal;
@@ -210,33 +155,18 @@ class Ranges {
         if (!this.slices) {
           this.slices = [];
         }
-        let insertValue = addVal;
-        if (addVal != null && !(isStr(addVal) && !addVal.length)) {
-          insertValue = this.opts.limitToBeAddedWhitespace
-            ? collapse(addVal, {
-                trimStart: false,
-                trimEnd: false,
-                removeEmptyLines: true,
-                limitConsecutiveEmptyLinesTo:
-                  this.opts.limitLinebreaksCount - 1 < 0
-                    ? 0
-                    : this.opts.limitLinebreaksCount - 1
-              })
-            : addVal;
-        }
-        if (this.opts.limitToBeAddedWhitespace) {
-          if (canBeReplacedWithASpace(insertValue)) {
-            insertValue = " ";
-          } else if (
-            isStr(insertValue) &&
-            (insertValue.includes("\n") || insertValue.includes("\r"))
-          ) {
-            insertValue = specialTrim(insertValue);
-          }
-        }
         const whatToPush =
-          (isStr(insertValue) && insertValue.length) || insertValue === null
-            ? [from, to, insertValue]
+          addVal !== undefined && !(isStr(addVal) && !addVal.length)
+            ? [
+                from,
+                to,
+                this.opts.limitToBeAddedWhitespace
+                  ? collapseLeadingWhitespace(
+                      addVal,
+                      this.opts.limitLinebreaksCount
+                    )
+                  : addVal
+              ]
             : [from, to];
         this.slices.push(whatToPush);
       }
@@ -274,15 +204,7 @@ class Ranges {
             return [
               val[0],
               val[1],
-              collapse(val[2], {
-                trimStart: false,
-                trimEnd: false,
-                removeEmptyLines: true,
-                limitConsecutiveEmptyLinesTo:
-                  this.opts.limitLinebreaksCount - 1 < 0
-                    ? 0
-                    : this.opts.limitLinebreaksCount - 1
-              })
+              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)
             ];
           }
           return val;
