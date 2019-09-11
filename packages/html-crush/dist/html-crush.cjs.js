@@ -59,6 +59,10 @@ function _iterableToArray(iter) {
 }
 
 function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -280,18 +284,18 @@ function crush(str, originalOpts) {
       }
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
       ) {
-          tagName = str.slice(tagNameStartsAt, _i);
-          if (str[stringLeftRight.right(str, _i - 1)] === ">" && !str[_i].trim().length) {
+        tagName = str.slice(tagNameStartsAt, _i);
+        if (str[stringLeftRight.right(str, _i - 1)] === ">" && !str[_i].trim().length) {
+          finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
+        } else if (str[stringLeftRight.right(str, _i - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, _i - 1))] === ">") {
+          if (!str[_i].trim().length) {
             finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
-          } else if (str[stringLeftRight.right(str, _i - 1)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, _i - 1))] === ">") {
-            if (!str[_i].trim().length) {
-              finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
-            }
-            if (str[stringLeftRight.right(str, _i - 1) + 1] !== ">") {
-              finalIndexesToDelete.push(stringLeftRight.right(str, _i - 1) + 1, stringLeftRight.right(str, stringLeftRight.right(str, _i - 1) + 1));
-            }
+          }
+          if (str[stringLeftRight.right(str, _i - 1) + 1] !== ">") {
+            finalIndexesToDelete.push(stringLeftRight.right(str, _i - 1) + 1, stringLeftRight.right(str, stringLeftRight.right(str, _i - 1) + 1));
           }
         }
+      }
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str[_i - 1] === "<" && tagNameStartsAt === null) {
         if (/\w/.test(str[_i])) {
           tagNameStartsAt = _i;
