@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "1.8.41",
+  "version": "1.8.42",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "license": "MIT",
   "engines": {
@@ -171,7 +171,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.12.14",
+    "ast-compare": "^1.12.15",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -179,7 +179,7 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
-    "ava": "^2.2.4",
+    "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.3.0",
@@ -189,8 +189,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.42",
-    "lect": "^0.9.9",
+    "js-row-num-cli": "^1.5.43",
+    "lect": "^0.9.10",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.2",

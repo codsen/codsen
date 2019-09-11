@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.4.2...string-fix-broken-named-entities@2.4.3) (2019-09-11)
+
+
+### Bug Fixes
+
+* algorithm tweaks ([fe71a2a](https://gitlab.com/codsen/codsen/commit/fe71a2a))
+* treat clean nbsp sequences correctly ([061de0d](https://gitlab.com/codsen/codsen/commit/061de0d))
+
+
+
+
+
 ## 2.4.0 (2019-08-24)
 
 ### Bug Fixes

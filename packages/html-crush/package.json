@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "engines": {
@@ -183,18 +183,18 @@
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.32",
-    "ranges-push": "^3.4.0",
-    "string-left-right": "^2.3.0",
-    "string-match-left-right": "^3.11.5",
-    "string-range-expander": "^1.10.42"
+    "ranges-apply": "^3.0.33",
+    "ranges-push": "^3.5.0",
+    "string-left-right": "^2.3.1",
+    "string-match-left-right": "^3.11.6",
+    "string-range-expander": "^1.10.43"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
-    "ava": "^2.2.4",
+    "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.3.0",
@@ -204,8 +204,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.42",
-    "lect": "^0.9.9",
+    "js-row-num-cli": "^1.5.43",
+    "lect": "^0.9.10",
     "node-fetch": "^2.6.0",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "1.9.14",
+  "version": "1.9.15",
   "description": "turns an array of arrays of data into a nested tree of plain objects",
   "license": "MIT",
   "engines": {
@@ -170,14 +170,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.38",
-    "object-merge-advanced": "^10.10.41"
+    "check-types-mini": "^5.7.39",
+    "object-merge-advanced": "^10.10.42"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
-    "ava": "^2.2.4",
+    "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.3.0",
@@ -187,8 +187,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.42",
-    "lect": "^0.9.9",
+    "js-row-num-cli": "^1.5.43",
+    "lect": "^0.9.10",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.2",

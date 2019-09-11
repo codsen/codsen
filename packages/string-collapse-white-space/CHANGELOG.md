@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@5.0.33...string-collapse-white-space@5.1.0) (2019-09-11)
+
+
+### Features
+
+* opts.limitConsecutiveEmptyLinesTo ([ece9334](https://gitlab.com/codsen/codsen/commit/ece9334))
+* wIP - opts.limitConsecutiveEmptyLinesTo, 12 failing ([a179337](https://gitlab.com/codsen/codsen/commit/a179337))
+
+
+
+
+
 ## 4.5.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

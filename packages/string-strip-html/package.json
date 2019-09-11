@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Strips HTML tags from strings. Detects legit unencoded brackets.",
   "license": "MIT",
   "engines": {
@@ -173,15 +173,15 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
-    "ranges-apply": "^3.0.32",
-    "ranges-push": "^3.4.0",
-    "string-left-right": "^2.3.0"
+    "ranges-apply": "^3.0.33",
+    "ranges-push": "^3.5.0",
+    "string-left-right": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
-    "ava": "^2.2.4",
+    "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.3.0",
@@ -191,8 +191,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.42",
-    "lect": "^0.9.9",
+    "js-row-num-cli": "^1.5.43",
+    "lect": "^0.9.10",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.2",
