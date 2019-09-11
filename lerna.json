@@ -9,7 +9,7 @@
     "packages/*/CHANGELOG.md",
     "packages/*/package.json",
     "packages/*/testStats.json",
-    "packages/perf/*"
+    "packages/*/perf/*"
   ],
   "lifecycle": {
     "version": "npm run build && git add ."
