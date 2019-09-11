@@ -319,12 +319,10 @@ function comb(str, opts) {
         stateWithinStyleTag = false;
       }
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
-        if (insideCurlyBraces) {
-          if (!currentlyWithinQuotes) {
-            currentlyWithinQuotes = str[i];
-          } else {
-            currentlyWithinQuotes = null;
-          }
+        if (!currentlyWithinQuotes) {
+          currentlyWithinQuotes = str[i];
+        } else {
+          currentlyWithinQuotes = null;
         }
       }
       if (doNothing) {
@@ -661,7 +659,7 @@ function comb(str, opts) {
       ) {
         if ("\"'".includes(str[i + 6])) ;
       }
-      if (!doNothing && stateWithinBody && !stateWithinStyleTag && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
       ) {
         var valuesStart = void 0;
         var quoteless = false;
@@ -734,7 +732,7 @@ function comb(str, opts) {
           }
         }
       }
-      if (!doNothing && bodyStartedAt !== null && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1])
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1])
       ) {
         var _valuesStart = void 0;
         var _quoteless = false;
@@ -1313,6 +1311,7 @@ function comb(str, opts) {
     }
     str = "".concat(str.trim()).concat(prevailingEOL);
   }
+  str = str.replace(/ ((class|id)=["']) /g, " $1");
   return {
     log: {
       timeTakenInMiliseconds: Date.now() - start,

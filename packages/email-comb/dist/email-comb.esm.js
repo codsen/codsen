@@ -368,12 +368,10 @@ function comb(str, opts) {
         stateWithinStyleTag = false;
       }
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
-        if (insideCurlyBraces) {
-          if (!currentlyWithinQuotes) {
-            currentlyWithinQuotes = str[i];
-          } else {
-            currentlyWithinQuotes = null;
-          }
+        if (!currentlyWithinQuotes) {
+          currentlyWithinQuotes = str[i];
+        } else {
+          currentlyWithinQuotes = null;
         }
       }
       if (doNothing) {
@@ -858,6 +856,7 @@ function comb(str, opts) {
         !doNothing &&
         stateWithinBody &&
         !stateWithinStyleTag &&
+        !currentlyWithinQuotes &&
         str[i] === "c" &&
         str[i + 1] === "l" &&
         str[i + 2] === "a" &&
@@ -941,7 +940,9 @@ function comb(str, opts) {
       }
       if (
         !doNothing &&
-        bodyStartedAt !== null &&
+        stateWithinBody &&
+        !stateWithinStyleTag &&
+        !currentlyWithinQuotes &&
         str[i] === "i" &&
         str[i + 1] === "d" &&
         badChars.includes(str[i - 1])
@@ -1758,6 +1759,7 @@ function comb(str, opts) {
     }
     str = `${str.trim()}${prevailingEOL}`;
   }
+  str = str.replace(/ ((class|id)=["']) /g, " $1");
   return {
     log: {
       timeTakenInMiliseconds: Date.now() - start,

@@ -4261,7 +4261,7 @@ zzz
 });
 
 // ==============================
-// 8. Discovered bugs, 2.5.0 release
+// 8. Discovered bugs
 // ==============================
 
 test("08.01 - color code hashes within head styles with no selectors", t => {
@@ -4733,6 +4733,79 @@ test("08.11 - checking whole results object, all its keys #2", t => {
     "08.11.04 - deletedFromBody"
   );
   t.deepEqual(actual.result, intended.result, "08.11.05 - result");
+});
+
+test("08.12 - Cosmin's reported bug", t => {
+  const srcs = [
+    `<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n`,
+    `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`
+  ];
+  srcs.forEach(src => {
+    t.deepEqual(comb(src).result, src);
+  });
+});
+
+test("08.13 - inner whitespace #1", t => {
+  const inp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="xyz klm abc">
+</td>
+`;
+
+  const outp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="abc">
+</td>
+`;
+  t.deepEqual(comb(inp).result, outp);
+});
+
+test("08.14 - inner whitespace #2", t => {
+  const inp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="xyz klm  abc">
+</td>
+`;
+
+  const outp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="abc">
+</td>
+`;
+  t.deepEqual(comb(inp).result, outp);
+});
+
+test("08.15 - inner whitespace #3", t => {
+  const inp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="xyz abc klm ">
+</td>
+`;
+
+  const outp = `<style>
+.abc {font-family: cursive;}
+</style>
+</head>
+<body>
+<br class="abc">
+</td>
+`;
+  t.deepEqual(comb(inp).result, outp);
 });
 
 // ============================================================
