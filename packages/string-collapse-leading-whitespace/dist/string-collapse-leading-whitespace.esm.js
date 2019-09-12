@@ -7,63 +7,118 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
  */
 
-function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-  let limitLinebreaksCount;
+const rawNbsp = "\u00A0";
+function push(arr, leftSide = true, charToPush) {
   if (
-    !originalLimitLinebreaksCount ||
-    typeof originalLimitLinebreaksCount !== "number"
+    !charToPush.trim().length &&
+    (!arr.length ||
+      charToPush === "\n" ||
+      charToPush === rawNbsp ||
+      (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") &&
+    (!arr.length ||
+      (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" ||
+      charToPush === "\n" ||
+      charToPush === rawNbsp)
   ) {
-    limitLinebreaksCount = 1;
-  } else {
-    limitLinebreaksCount = originalLimitLinebreaksCount;
+    if (leftSide) {
+      if (
+        (charToPush === "\n" || charToPush === rawNbsp) &&
+        arr.length &&
+        arr[arr.length - 1] === " "
+      ) {
+        while (arr.length && arr[arr.length - 1] === " ") {
+          arr.pop();
+        }
+      }
+      arr.push(
+        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
+      );
+    } else {
+      if (
+        (charToPush === "\n" || charToPush === rawNbsp) &&
+        arr.length &&
+        arr[0] === " "
+      ) {
+        while (arr.length && arr[0] === " ") {
+          arr.shift();
+        }
+      }
+      arr.unshift(
+        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
+      );
+    }
   }
-  if (typeof str === "string") {
-    if (str.length === 0) {
-      return "";
-    } else if (str.trim() === "") {
-      const linebreakCount = (str.match(/\n/g) || []).length;
-      if (linebreakCount) {
-        return "\n".repeat(Math.min(linebreakCount, limitLinebreaksCount));
-      }
-      return " ";
+}
+function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
+  if (typeof str === "string" && str.length) {
+    let windowsEol = false;
+    if (str.includes("\r\n")) {
+      windowsEol = true;
     }
-    let startCharacter = "";
+    let limitLinebreaksCount;
+    if (
+      !originalLimitLinebreaksCount ||
+      typeof originalLimitLinebreaksCount !== "number"
+    ) {
+      limitLinebreaksCount = 1;
+    } else {
+      limitLinebreaksCount = originalLimitLinebreaksCount;
+    }
+    let limit;
+    if (str.trim() === "") {
+      const resArr = [];
+      limit = limitLinebreaksCount;
+      Array.from(str).forEach(char => {
+        if (char !== "\n" || limit) {
+          if (char === "\n") {
+            limit--;
+          }
+          push(resArr, true, char);
+        }
+      });
+      while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
+        resArr.pop();
+      }
+      return resArr.join("");
+    }
+    const startCharacter = [];
+    limit = limitLinebreaksCount;
     if (str[0].trim() === "") {
-      startCharacter = " ";
-      let lineBreakEncountered = 0;
       for (let i = 0, len = str.length; i < len; i++) {
-        if (str[i] === "\n") {
-          lineBreakEncountered++;
-        }
         if (str[i].trim().length !== 0) {
           break;
+        } else {
+          if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit--;
+            }
+            push(startCharacter, true, str[i]);
+          }
         }
       }
-      if (lineBreakEncountered) {
-        startCharacter = "\n".repeat(
-          Math.min(lineBreakEncountered, limitLinebreaksCount)
-        );
-      }
     }
-    let endCharacter = "";
+    const endCharacter = [];
+    limit = limitLinebreaksCount;
     if (str.slice(-1).trim() === "") {
-      endCharacter = " ";
-      let lineBreakEncountered = 0;
       for (let i = str.length; i--; ) {
-        if (str[i] === "\n") {
-          lineBreakEncountered++;
-        }
         if (str[i].trim().length !== 0) {
           break;
+        } else {
+          if (str[i] !== "\n" || limit) {
+            if (str[i] === "\n") {
+              limit--;
+            }
+            push(endCharacter, false, str[i]);
+          }
         }
       }
-      if (lineBreakEncountered) {
-        endCharacter = "\n".repeat(
-          Math.min(lineBreakEncountered, limitLinebreaksCount)
-        );
-      }
     }
-    return startCharacter + str.trim() + endCharacter;
+    if (!windowsEol) {
+      return startCharacter.join("") + str.trim() + endCharacter.join("");
+    }
+    return `${startCharacter.join("")}${str.trim()}${endCharacter.join(
+      ""
+    )}`.replace(/\n/g, "\r\n");
   }
   return str;
 }
