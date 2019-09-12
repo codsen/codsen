@@ -92,46 +92,49 @@ If second input argument is zero or falsey or not a number, it will be set to `1
 
 String of zero or more characters. If input was not a string, same thing will be returned back, without an error.
 
-## Example
+## TLDR
 
-```js
-const collapseLeadingWhitespace = require("string-collapse-leading-whitespace");
-const someStr = "\n\n\n tralalaa \n\n";
-const res1 = collapseLeadingWhitespace(someStr); // default is one leading/trailing line break
-console.log(
-  `${`\u001b[${33}m${`res1`}\u001b[${39}m`} = ${JSON.stringify(res1, null, 4)}`
-);
-// res1 = "\ntralalaa\n"
-// result has single leading/trailing linebreak because second argument's default is 1.
-
-// -----------------------------------------------------------------------------
-
-// now, same thing, but set it to two:
-const res2 = collapseLeadingWhitespace(someStr, 2); // notice second arg set
-console.log(
-  `${`\u001b[${33}m${`res2`}\u001b[${39}m`} = ${JSON.stringify(res2, null, 4)}`
-);
-// res2 = "\n\ntralalaa\n\n"
-// result has two leading, two trailing. Leading count was capped, trailing reached max anyway. There were two only leading line breaks.
-// Notice spaces/tabs are/would be removed.
-
-// -----------------------------------------------------------------------------
-
-// now set it to three:
-const res3 = collapseLeadingWhitespace(someStr, 3); // notice second arg set
-console.log(
-  `${`\u001b[${33}m${`res3`}\u001b[${39}m`} = ${JSON.stringify(res3, null, 4)}`
-);
-// res3 = "\n\n\ntralalaa\n\n"
-// result has three leading line breaks, them maxed out - there were three. There were two trailing linebreaks, allowance was for three. End result - two trailing linebreaks.
-// All spaces were removed.
-```
-
-**[⬆ back to top](#)**
+It's like custom trim - whitespace in the beginning and in the ending of a string is collapsed with an algorithm, aimed to retain only one space out of each spaces/tabs chunk; or all encountered line breaks; or all encountered non-breaking spaces.
 
 ## Purpose
 
+When we process strings, sometimes we take notes of what needs to be deleted/added and in the end, process the string in one go. That's opposed to mutating string over and over, where first step's output is second step's input.
+
+Now, we call those "notes" _ranges_ and use familiar format - array and string indexes.
+
+For example, sentence "delete character from string index 1 to index 4" is range `[1, 4]`.
+
+To mark something as to be added, we use third element in array: `[1, 4, "replace with this instead"]`.
+
+Now, when we process these ranges, "to add" values sometimes clash.
+
+This program does the processing of those merged "to add" values, specifically, whitespace control - collapsing or trimming any deemed-to-be-excessive whitespace characters.
+
 I'm going to use it in [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push).
+
+## The logic explained in examples
+
+Sequence of more than one space gets replaced with single space:
+
+```js
+const coll = require("string-collapse-leading-whitespace");
+const res1 = coll("zzz  ");
+console.log(res1);
+// Those two trailing spaces got trimmed to one space
+// => "zzz "
+```
+
+Tabs and other whitespace characters which are not non-breaking spaces or new lines (LF) are replaced with spaces. There can't be more than one space at any outcome.
+
+```js
+const coll = require("string-collapse-leading-whitespace");
+const res2 = coll("\t\t\t\t\t     zzz zzz\t      \t\t\t\t");
+console.log(res2);
+// Those two trailing spaces got trimmed to one space
+// => " zzz zzz "
+```
+
+**[⬆ back to top](#)**
 
 ## Contributing
 
