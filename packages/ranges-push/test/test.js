@@ -803,6 +803,12 @@ test("07.23  -  opts.limitToBeAddedWhitespace - nbsp replacement", t => {
   t.deepEqual(ranges.current(), [[1, 4, ` ${nbsp} `]]);
 });
 
+test("07.24  -  opts.limitToBeAddedWhitespace - inserting a raw nbsp", t => {
+  const ranges = new Ranges({ limitToBeAddedWhitespace: true });
+  ranges.add(1, 2, nbsp);
+  t.deepEqual(ranges.current(), [[1, 2, nbsp]]);
+});
+
 // -----------------------------------------------------------------------------
 // 08. opts.limitLinebreaksCount
 // -----------------------------------------------------------------------------
