@@ -31,8 +31,8 @@
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
     "test": "lerna run unittest --concurrency 1",
-    "test:full": "FORCE_COLOR=1 lerna run test --concurrency 1",
-    "test:only": "FORCE_COLOR=1 lerna run unittest --concurrency 1",
+    "test:full": "FORCE_COLOR=1 lerna run test --concurrency 1 && npm run readme:generate && npm run info",
+    "test:only": "FORCE_COLOR=1 lerna run unittest --concurrency 1 && npm run readme:generate && npm run info",
     "wipe": "rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
   "husky": {
