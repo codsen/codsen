@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.9.0
+
+Davide Riva reported on emailgeeks slack that space in front of `!important` should not be removed, for example:
+
+```html
+<!--[if lte mso 11]>
+  <style type="text/css">
+    .class {
+      width: 100% !important;
+    }
+  </style>
+<![endif]-->
+```
+
+That's now implemented.
+
 ## 1.8.5 (2019-09-04)
 
 ### Bug Fixes

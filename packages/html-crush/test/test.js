@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import "@babel/polyfill";
 import test from "ava";
@@ -2371,6 +2371,132 @@ test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
     }).result,
     'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
     "07.08.04"
+  );
+});
+
+test(`07.09 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals`, t => {
+  t.deepEqual(
+    m(
+      `<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->`,
+      {
+        removeLineBreaks: true
+      }
+    ).result,
+    `<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->`
+  );
+});
+
+test(`07.10 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`, t => {
+  t.deepEqual(
+    m(
+      `<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 0
+      }
+    ).result,
+    `<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->`
+  );
+});
+
+test(`07.11 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix`, t => {
+  t.deepEqual(
+    m(
+      `<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->
+<style type="text/css">
+.class { width:100% !important; }
+</style>`,
+      {
+        removeLineBreaks: true
+      }
+    ).result,
+    `<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->
+<style type="text/css">
+.class{width:100%!important;}
+</style>
+<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->
+<style type="text/css">
+.class{width:100%!important;}
+</style>`
+  );
+});
+
+test(`07.12 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`, t => {
+  t.deepEqual(
+    m(
+      `<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<!--[if lte mso 11]>
+<style type="text/css">
+.class { width:100% !important; }
+</style>
+<![endif]-->
+<style type="text/css">
+.class { width:100% !important; }
+</style>`,
+      {
+        removeLineBreaks: true,
+        lineLengthLimit: 0
+      }
+    ).result,
+    `<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->
+<style type="text/css">
+.class{width:100%!important;}
+</style>
+<!--[if lte mso 11]>
+<style type="text/css">
+.class{width:100% !important;}
+</style>
+<![endif]-->
+<style type="text/css">
+.class{width:100%!important;}
+</style>`
   );
 });
 

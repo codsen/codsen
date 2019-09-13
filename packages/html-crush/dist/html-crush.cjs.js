@@ -157,6 +157,7 @@ function crush(str, originalOpts) {
   var nonWhitespaceCharMet = false;
   var countCharactersPerLine = 0;
   var withinStyleTag = false;
+  var withinHTMLConditional = false;
   var withinInlineStyle = null;
   var styleCommentStartedAt = null;
   var scriptStartedAt = null;
@@ -282,6 +283,12 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
+      if (withinHTMLConditional && stringMatchLeftRight.matchRight(str, _i, "![endif")) {
+        withinHTMLConditional = false;
+      }
+      if (str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, "!--[if") && !withinHTMLConditional) {
+        withinHTMLConditional = true;
+      }
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
       ) {
         tagName = str.slice(tagNameStartsAt, _i);
@@ -385,7 +392,7 @@ function crush(str, originalOpts) {
                   return !nextChar || !/\w/.test(nextChar);
                 }
               })
-              ) ; else if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"') || str[whitespaceStartedAt - 1] === "}" && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" || str[_i] === ">" && ("'\"".includes(str[stringLeftRight.left(str, _i)]) || str[stringLeftRight.right(str, _i)] === "<") || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
+              ) ; else if (str[whitespaceStartedAt - 1] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[whitespaceStartedAt - 1]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str[_i] === "!" && str[_i + 1] === "i" && str[_i + 2] === "m" && str[_i + 3] === "p" && str[_i + 4] === "o" && str[_i + 5] === "r" && str[_i + 6] === "t" && str[_i + 7] === "a" && str[_i + 8] === "n" && str[_i + 9] === "t" && !withinHTMLConditional || withinInlineStyle && (str[whitespaceStartedAt - 1] === "'" || str[whitespaceStartedAt - 1] === '"') || str[whitespaceStartedAt - 1] === "}" && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" || str[_i] === ">" && ("'\"".includes(str[stringLeftRight.left(str, _i)]) || str[stringLeftRight.right(str, _i)] === "<") || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
                 whatToAdd = "";
                 if (str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">" && stringLeftRight.right(str, _i) > _i + 1) {
                   finalIndexesToDelete.push(_i + 1, stringLeftRight.right(str, _i));

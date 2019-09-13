@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import applyRanges from 'ranges-apply';
 import Slices from 'ranges-push';
-import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
+import { matchRight, matchRightIncl, matchLeft } from 'string-match-left-right';
 import expand from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
@@ -181,6 +181,7 @@ function crush(str, originalOpts) {
   let nonWhitespaceCharMet = false;
   let countCharactersPerLine = 0;
   let withinStyleTag = false;
+  let withinHTMLConditional = false;
   let withinInlineStyle = null;
   let styleCommentStartedAt = null;
   let scriptStartedAt = null;
@@ -403,6 +404,16 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
+      if (withinHTMLConditional && matchRight(str, i, "![endif")) {
+        withinHTMLConditional = false;
+      }
+      if (
+        str[i] === "<" &&
+        matchRight(str, i, "!--[if") &&
+        !withinHTMLConditional
+      ) {
+        withinHTMLConditional = true;
+      }
       if (
         tagNameStartsAt !== null &&
         tagName === null &&
@@ -608,7 +619,8 @@ function crush(str, originalOpts) {
                   str[i + 6] === "t" &&
                   str[i + 7] === "a" &&
                   str[i + 8] === "n" &&
-                  str[i + 9] === "t") ||
+                  str[i + 9] === "t" &&
+                  !withinHTMLConditional) ||
                 (withinInlineStyle &&
                   (str[whitespaceStartedAt - 1] === "'" ||
                     str[whitespaceStartedAt - 1] === '"')) ||
