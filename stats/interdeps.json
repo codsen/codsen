@@ -200,7 +200,7 @@
     },
     {
         "name": "html-crush",
-        "size": 32389,
+        "size": 32749,
         "imports": [
             "ranges-apply",
             "ranges-push",

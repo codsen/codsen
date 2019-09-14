@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 94 npm libraries 📦📦📦
+    A lerna monorepo for our 95 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -12,7 +12,7 @@ We coded up and maintain a few npm packages:
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-12-range-libraries)
-- [String Processing Libraries](#-28-string-processing-libraries)
+- [String Processing Libraries](#-29-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [Lerna Libraries](#-3-lerna-libraries)
 - [CLI Apps](#%EF%B8%8F-11-cli-apps)
@@ -78,7 +78,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#codsen)**
 
-## 🎻 28 String Processing Libraries
+## 🎻 29 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -95,6 +95,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`csv-sort`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort/) | Sorts double-entry bookkeeping CSV coming from internet banking | [![csv-sort on npm](https://img.shields.io/npm/v/csv-sort.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort) | [packages/csv-sort](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort/) |
 | [`csv-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/) |
 | [`csv-split-easy`](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy/) | Splits the CSV string into array of arrays, each representing a row of columns | [![csv-split-easy on npm](https://img.shields.io/npm/v/csv-split-easy.svg?style=flat-square)](https://www.npmjs.com/package/csv-split-easy) | [packages/csv-split-easy](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy/) |
+| [`string-apostrophes`](https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes/) | Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes | [![string-apostrophes on npm](https://img.shields.io/npm/v/string-apostrophes.svg?style=flat-square)](https://www.npmjs.com/package/string-apostrophes) | [packages/string-apostrophes](https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes/) |
 | [`string-character-is-astral-surrogate`](https://gitlab.com/codsen/codsen/tree/master/packages/string-character-is-astral-surrogate/) | Tells, is given character a part of astral character, specifically, a high and low surrogate | [![string-character-is-astral-surrogate on npm](https://img.shields.io/npm/v/string-character-is-astral-surrogate.svg?style=flat-square)](https://www.npmjs.com/package/string-character-is-astral-surrogate) | [packages/string-character-is-astral-surrogate](https://gitlab.com/codsen/codsen/tree/master/packages/string-character-is-astral-surrogate/) |
 | [`string-collapse-leading-whitespace`](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace/) | Collapse the leading and trailing whitespace of a string | [![string-collapse-leading-whitespace on npm](https://img.shields.io/npm/v/string-collapse-leading-whitespace.svg?style=flat-square)](https://www.npmjs.com/package/string-collapse-leading-whitespace) | [packages/string-collapse-leading-whitespace](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace/) |
 | [`string-collapse-white-space`](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/) | Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition | [![string-collapse-white-space on npm](https://img.shields.io/npm/v/string-collapse-white-space.svg?style=flat-square)](https://www.npmjs.com/package/string-collapse-white-space) | [packages/string-collapse-white-space](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/) |
@@ -109,7 +110,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-remove-thousand-separators`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) | Detects and removes thousand separators (dot/comma/quote/space) from string-type digits | [![string-remove-thousand-separators on npm](https://img.shields.io/npm/v/string-remove-thousand-separators.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-thousand-separators) | [packages/string-remove-thousand-separators](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) |
 | [`string-remove-widows`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) | Helps to prevent widow words in a text | [![string-remove-widows on npm](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [packages/string-remove-widows](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) |
 | [`string-split-by-whitespace`](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) | Split string into array by chunks of whitespace | [![string-split-by-whitespace on npm](https://img.shields.io/npm/v/string-split-by-whitespace.svg?style=flat-square)](https://www.npmjs.com/package/string-split-by-whitespace) | [packages/string-split-by-whitespace](https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace/) |
-| [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but trims only spaces | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
+| [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but you can choose granularly what to trim | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
 | [`string-uglify`](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) | Uglify — generate unique short names for sets of strings | [![string-uglify on npm](https://img.shields.io/npm/v/string-uglify.svg?style=flat-square)](https://www.npmjs.com/package/string-uglify) | [packages/string-uglify](https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify/) |
 | [`string-unfancy`](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) | Replace all fancy dashes, quotes etc with their simpler equivalents | [![string-unfancy on npm](https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square)](https://www.npmjs.com/package/string-unfancy) | [packages/string-unfancy](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) |
 
