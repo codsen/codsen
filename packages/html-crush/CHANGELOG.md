@@ -27,7 +27,7 @@ That's now implemented.
 
 ### Bug Fixes
 
-- stop breaking `<!--<![endif]-->` into two parts, in front of <![endif](<[af421c7](https://gitlab.com/codsen/codsen/commit/af421c7)>)
+- stop breaking `<!--<![endif]-->` into two parts, in front of `<![endif]` (<[af421c7](https://gitlab.com/codsen/codsen/commit/af421c7)>)
 
 ## 1.8.3 (2019-08-24)
 
