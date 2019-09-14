@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - don't remove space in front of !important within HTML conditionals ([e997f51](https://gitlab.com/codsen/codsen/commit/e997f51))
 
-## 1.9.0
-
 Davide Riva reported on emailgeeks slack that space in front of `!important` should not be removed, for example:
 
 ```html
