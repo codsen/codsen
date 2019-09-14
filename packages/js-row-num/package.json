@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "2.3.18",
+  "version": "2.3.19",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -170,7 +170,7 @@
   },
   "dependencies": {
     "ranges-apply": "^3.0.33",
-    "ranges-push": "^3.5.0"
+    "ranges-push": "^3.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -186,7 +186,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.43",
+    "js-row-num-cli": "^1.5.44",
     "lect": "^0.9.10",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",

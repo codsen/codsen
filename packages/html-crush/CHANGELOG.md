@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.8.6...html-crush@1.9.0) (2019-09-14)
+
+
+### Features
+
+* don't remove space in front of !important within HTML conditionals ([e997f51](https://gitlab.com/codsen/codsen/commit/e997f51))
+
+
+
+
+
 ## 1.9.0
 
 Davide Riva reported on emailgeeks slack that space in front of `!important` should not be removed, for example:

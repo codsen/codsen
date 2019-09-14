@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://gitlab.com/codsen/codsen/compare/ranges-push@3.5.0...ranges-push@3.6.0) (2019-09-14)
+
+
+### Features
+
+* non-breaking spaces are now retained when pushing with whitespace limiter option on ([2de001d](https://gitlab.com/codsen/codsen/commit/2de001d))
+
+
+
+
+
 ## 3.5.0 (2019-09-11)
 
 ### Features
