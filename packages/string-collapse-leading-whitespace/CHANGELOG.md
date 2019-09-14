@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.0.0](https://gitlab.com/codsen/codsen/compare/string-collapse-leading-whitespace@1.12.42...string-collapse-leading-whitespace@2.0.0) (2019-09-14)
-
+## 2.0.0 (2019-09-14)
 
 ### Features
 
-* keep raw non-breaking spaces, gather line breaks and non-breaking spaces ([fae52f8](https://gitlab.com/codsen/codsen/commit/fae52f8))
-
+- keep raw non-breaking spaces, gather line breaks and non-breaking spaces ([fae52f8](https://gitlab.com/codsen/codsen/commit/fae52f8))
 
 ### BREAKING CHANGES
 
-* Nonbreaking spaces are not removed any more
-
-
-
-
+- Nonbreaking spaces are not removed any more
 
 ## 1.12.0 (2019-01-20)
 
