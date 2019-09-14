@@ -17,8 +17,9 @@
 - [Idea](#idea)
 - [API - Input](#api---input)
 - [API - Output](#api---output)
-- [Example](#example)
+- [TLDR](#tldr)
 - [Purpose](#purpose)
+- [The logic explained in examples](#the-logic-explained-in-examples)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -96,6 +97,8 @@ String of zero or more characters. If input was not a string, same thing will be
 
 It's like custom trim - whitespace in the beginning and in the ending of a string is collapsed with an algorithm, aimed to retain only one space out of each spaces/tabs chunk; or all encountered line breaks; or all encountered non-breaking spaces.
 
+**[⬆ back to top](#)**
+
 ## Purpose
 
 When we process strings, sometimes we take notes of what needs to be deleted/added and in the end, process the string in one go. That's opposed to mutating string over and over, where first step's output is second step's input.
@@ -111,6 +114,8 @@ Now, when we process these ranges, "to add" values sometimes clash.
 This program does the processing of those merged "to add" values, specifically, whitespace control - collapsing or trimming any deemed-to-be-excessive whitespace characters.
 
 I'm going to use it in [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push).
+
+**[⬆ back to top](#)**
 
 ## The logic explained in examples
 
