@@ -13,7 +13,7 @@ import pullAllWithGlob from 'array-pull-all-with-glob';
 import extract from 'string-extract-class-names';
 import intersection from 'lodash.intersection';
 import expander from 'string-range-expander';
-import { right } from 'string-left-right';
+import { left, right } from 'string-left-right';
 import { uglifyArr } from 'string-uglify';
 import isObj from 'lodash.isplainobject';
 import applyRanges from 'ranges-apply';
@@ -369,7 +369,16 @@ function comb(str, opts) {
       }
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
         if (!currentlyWithinQuotes) {
-          currentlyWithinQuotes = str[i];
+          const leftSideIdx = left(str, i);
+          if (
+            (stateWithinStyleTag &&
+              ["(", ",", ":"].includes(str[leftSideIdx])) ||
+            (stateWithinBody &&
+              !stateWithinStyleTag &&
+              ["(", ",", ":", "="].includes(str[leftSideIdx]))
+          ) {
+            currentlyWithinQuotes = str[i];
+          }
         } else if (
           (str[i] === `"` &&
             str[right(str, i)] === `'` &&

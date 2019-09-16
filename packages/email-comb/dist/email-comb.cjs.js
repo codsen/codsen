@@ -320,7 +320,10 @@ function comb(str, opts) {
       }
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
         if (!currentlyWithinQuotes) {
-          currentlyWithinQuotes = str[i];
+          var leftSideIdx = stringLeftRight.left(str, i);
+          if (stateWithinStyleTag && ["(", ",", ":"].includes(str[leftSideIdx]) || stateWithinBody && !stateWithinStyleTag && ["(", ",", ":", "="].includes(str[leftSideIdx])) {
+            currentlyWithinQuotes = str[i];
+          }
         } else if (str[i] === "\"" && str[stringLeftRight.right(str, i)] === "'" && str[stringLeftRight.right(str, stringLeftRight.right(str, i))] === "\"" || str[i] === "'" && str[stringLeftRight.right(str, i)] === "\"" && str[stringLeftRight.right(str, stringLeftRight.right(str, i))] === "'") {
           i = stringLeftRight.right(str, stringLeftRight.right(str, i));
           continue stepouter;

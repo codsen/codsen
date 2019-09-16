@@ -4854,6 +4854,33 @@ test("08.17 - adhoc", t => {
   t.deepEqual(comb(inp).result, outp);
 });
 
+test("08.18 - adhoc", t => {
+  const inp = `<style>
+@media screen {
+  .sm-border-0 {
+    border-width: 0 !important;
+  }
+}
+</style>
+<body>
+<span>S's</span>
+<td class="py-16 leading-0 sm-leading-full sm-border-0">
+`;
+
+  const outp = `<style>
+@media screen {
+  .sm-border-0 {
+    border-width: 0 !important;
+  }
+}
+</style>
+<body>
+<span>S's</span>
+<td class="sm-border-0">
+`;
+  t.deepEqual(comb(inp).result, outp);
+});
+
 // ============================================================
 // 9. Release 2.11.0 - backend variables with spaces as classes
 // ============================================================
