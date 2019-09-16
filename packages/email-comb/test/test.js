@@ -4808,6 +4808,52 @@ test("08.15 - inner whitespace #3", t => {
   t.deepEqual(comb(inp).result, outp);
 });
 
+test("08.16 - adhoc", t => {
+  const inp = `<style>
+@media only screen{
+  .klm{ font-size:16px !important; }
+}
+</style>
+<body>
+<a href="a("'")">
+<td class="klm nop">
+`;
+
+  const outp = `<style>
+@media only screen{
+  .klm{ font-size:16px !important; }
+}
+</style>
+<body>
+<a href="a("'")">
+<td class="klm">
+`;
+  t.deepEqual(comb(inp).result, outp);
+});
+
+test("08.17 - adhoc", t => {
+  const inp = `<style>
+@media only screen{
+  .klm{ font-size:16px !important; }
+}
+</style>
+<body>
+<a class="aaa bbb ccc-ddd" href="https://www.google.com/maps/search/?api=1&query={{ order.storeInformation.name | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
+<td class="klm nop">
+`;
+
+  const outp = `<style>
+@media only screen{
+  .klm{ font-size:16px !important; }
+}
+</style>
+<body>
+<a href="https://www.google.com/maps/search/?api=1&query={{ order.storeInformation.name | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
+<td class="klm">
+`;
+  t.deepEqual(comb(inp).result, outp);
+});
+
 // ============================================================
 // 9. Release 2.11.0 - backend variables with spaces as classes
 // ============================================================

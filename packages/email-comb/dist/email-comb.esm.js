@@ -370,7 +370,17 @@ function comb(str, opts) {
       if (!doNothing && (str[i] === '"' || str[i] === "'")) {
         if (!currentlyWithinQuotes) {
           currentlyWithinQuotes = str[i];
-        } else {
+        } else if (
+          (str[i] === `"` &&
+            str[right(str, i)] === `'` &&
+            str[right(str, right(str, i))] === `"`) ||
+          (str[i] === `'` &&
+            str[right(str, i)] === `"` &&
+            str[right(str, right(str, i))] === `'`)
+        ) {
+          i = right(str, right(str, i));
+          continue stepouter;
+        } else if (currentlyWithinQuotes === str[i]) {
           currentlyWithinQuotes = null;
         }
       }
