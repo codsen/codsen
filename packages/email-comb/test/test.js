@@ -4838,7 +4838,7 @@ test("08.17 - adhoc", t => {
 }
 </style>
 <body>
-<a class="aaa bbb ccc-ddd" href="https://www.google.com/maps/search/?api=1&query={{ order.storeInformation.name | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
+<a class="aaa bbb ccc-ddd" href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm nop">
 `;
 
@@ -4848,7 +4848,7 @@ test("08.17 - adhoc", t => {
 }
 </style>
 <body>
-<a href="https://www.google.com/maps/search/?api=1&query={{ order.storeInformation.name | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
+<a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
   t.deepEqual(comb(inp).result, outp);
