@@ -402,18 +402,8 @@ const voidTags = [
 ];
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
-    console.log(
-      `423 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
-    );
     return Array.from(inputString)
       .map(char => {
-        console.log(
-          `431 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
-            char.charCodeAt(0),
-            null,
-            4
-          )}`
-        );
         if (
           char.charCodeAt(0) < 880 ||
           latinAndNonNonLatinRanges.some(
@@ -422,11 +412,6 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
               char.charCodeAt(0) < rangeArr[1]
           )
         ) {
-          console.log(
-            `446 doConvertEntities() - encoding to "${he.encode(char, {
-              useNamedReferences: true
-            })}"`
-          );
           return he.encode(char, {
             useNamedReferences: true
           });
@@ -435,7 +420,6 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       })
       .join("");
   }
-  console.log(`458 doConvertEntities() - outside if (dontEncodeNonLatin)`);
   return he.encode(inputString, {
     useNamedReferences: true
   });

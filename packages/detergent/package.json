@@ -234,7 +234,7 @@
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.42",
     "prettier": "^1.18.2",
-    "rollup": "^1.21.2",
+    "rollup": "^1.21.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
@@ -244,6 +244,6 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.2",
-    "rollup-plugin-terser": "^5.1.1"
+    "rollup-plugin-terser": "^5.1.2"
   }
 }
