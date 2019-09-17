@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 95 npm libraries 📦📦📦
+    A lerna monorepo for our 96 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -28,6 +28,7 @@ We coded up and maintain a few npm packages:
 | -------------- | ------- | ------- | ----------- | ----------------------- |
 | [`email-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) | Remove unused CSS from email templates | [emailcomb.com](https://emailcomb.com) | [![email-comb on npm](https://img.shields.io/npm/v/email-comb.svg?style=flat-square)](https://www.npmjs.com/package/email-comb) | [packages/email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) |
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
+| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
 
 There are quite a few small libraries, so let's group them by a common purpose.
 

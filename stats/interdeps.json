@@ -129,6 +129,27 @@
         ]
     },
     {
+        "name": "detergent",
+        "size": 40662,
+        "imports": [
+            "all-named-html-entities",
+            "arrayiffy-if-string",
+            "html-entities-not-email-friendly",
+            "object-merge-advanced",
+            "ranges-apply",
+            "ranges-process-outside",
+            "ranges-push",
+            "string-apostrophes",
+            "string-collapse-white-space",
+            "string-fix-broken-named-entities",
+            "string-left-right",
+            "string-range-expander",
+            "string-remove-widows",
+            "string-strip-html",
+            "string-trim-spaces-only"
+        ]
+    },
+    {
         "name": "easy-replace",
         "size": 10066,
         "imports": [
@@ -151,7 +172,7 @@
     },
     {
         "name": "email-comb",
-        "size": 61072,
+        "size": 61785,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
