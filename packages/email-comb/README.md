@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="EmailComb" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/email-comb/media/repo_logo.png" width="480" align="center">
+  <img alt="EmailComb" src="https://cdn.statically.io/gl/codsen/codsen/master/packages/email-comb/media/repo_logo.png" width="480" align="center">
 </div>
 
 <div align="center"><p>Remove unused CSS from email templates</p></div>
