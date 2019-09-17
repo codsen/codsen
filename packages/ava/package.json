@@ -55,7 +55,7 @@
     "arrify": "^2.0.1",
     "bluebird": "^3.5.5",
     "chalk": "^2.4.2",
-    "chokidar": "^3.0.2",
+    "chokidar": "^3.1.0",
     "chunkd": "^1.0.0",
     "ci-parallel-vars": "^1.0.0",
     "clean-stack": "^2.2.0",
@@ -131,7 +131,7 @@
     "signal-exit": "^3.0.2",
     "sinon": "^7.4.2",
     "source-map-fixtures": "^2.1.0",
-    "tap": "^14.6.2",
+    "tap": "^14.6.4",
     "temp-write": "^4.0.0",
     "touch": "^3.1.0",
     "zen-observable": "^0.8.14"

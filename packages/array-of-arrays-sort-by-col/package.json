@@ -190,7 +190,7 @@
     "lect": "^0.9.10",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "rollup": "^1.21.2",
+    "rollup": "^1.21.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
