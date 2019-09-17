@@ -1,8 +1,8 @@
-![Detergent](media/detergent_200x200.png)
+<div align="center">
+  <img alt="Detergent" src="https://cdn.statically.io/gl/codsen/codsen/master/packages/detergent/media/detergent_1752x1752.png" height="200" align="center">
+</div>
 
-# Detergent
-
-> All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool
+<div align="center"><p>All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -14,7 +14,7 @@
 [![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
-- Online web app: [Detergent.io](https://detergent.io)
+<div align="center"><p>Online web app: <a href="https://Detergent.io">https://detergent.io</a></p></div>
 
 ## Table of Contents
 
@@ -58,9 +58,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                    | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 36 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 40 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 416 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 56 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 62 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 432 KB |
 
 **[⬆ back to top](#)**
 
@@ -68,10 +68,10 @@ This package has three builds in `dist/` folder:
 
 Detergent is a tool which cleans and prepares text so you can paste it safely into HTML template:
 
-For starters Detergent will:
+For starters, Detergent will:
 
 - delete invisible Unicode characters
-- collapse whitespace chunks longer than 1 space (considering new lines)
+- collapse whitespace chunks longer than one space (considering newlines)
 - strip HTML and recursively decode anything HTML-encoded
 
 Then Detergent will optionally:
@@ -79,7 +79,7 @@ Then Detergent will optionally:
 - encode all non-ASCII characters (for example, `£` into `&pound;`)
 - improve English grammar style (for example, convert straight quotes to curly)
 
-Adobe Photoshop and Illustrator both place [ETX](https://en.wikipedia.org/wiki/End-of-Text_character) characters when you insert linebreaks using SHIFT+ENTER to break line but keep text within the same paragraph (that's opposed to normal line breaks using ENTER alone which breaks paragraphs). When text with an ETX character is pasted into HTML template, it is invisible in the code editor but might surface up later as � when CMS or ESP or other platform attempts to read the code.
+Adobe Photoshop and Illustrator both place [ETX](https://en.wikipedia.org/wiki/End-of-Text_character) characters when you insert linebreaks using SHIFT+ENTER to break the line but keep the text within the same paragraph (that's opposed to normal line breaks using ENTER alone which breaks paragraphs). When a text with an ETX character is pasted into HTML template, it is invisible in the code editor but might surface up later as � when CMS or ESP or other platform attempts to read the code.
 
 Detergent has optional features to improve the English style:
 
@@ -90,10 +90,10 @@ Detergent has optional features to improve the English style:
 
 Extra features are:
 
-- You can skip the HTML encoding of non-Latin language letters. Useful when you are deploying Japanese or Chinese emails, because otherwise _everything_ will be HTML-encoded.
-- Detergent is both XHTML and HTML-friendly. You can set which way you want your `<BR>`'s to appear: with closing slash (XHTML) or without (HTML), so your HTML code should be passing the W3C validator.
+- You can skip the HTML encoding of non-Latin language letters. Useful when you are deploying Japanese or Chinese emails because otherwise, _everything_ would be HTML-encoded.
+- Detergent is both XHTML and HTML-friendly. You can set which way you want your `<BR>`'s to appear: with a closing slash (XHTML) or without (HTML), so your HTML code should be passing the W3C validator.
 - Detergent handles the full range of Unicode code points. In other words, it's emoji-friendly.
-- Detergent will use the named HTML entities (for example, `` instead of `&#xA0;`) so you can read and recognise them. Not all named HTML entities work in all email clients so we did the testing, found out which-ones don't render correctly and set those to be _numeric_.
+- Detergent will use the named HTML entities (for example, `&nbsp;` instead of `&#xA0;`) so you can read and recognise them. Not all named HTML entities work in all email clients, so we did the testing, found out which-ones [don't render correctly](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) and set those to be _numeric_.
 
 **[⬆ back to top](#)**
 
@@ -104,14 +104,20 @@ The main function is exported in a plain object under key `detergent`, so please
 ```js
 const { det } = require("detergent");
 // or request everything:
-const { detergent, opts: exportedOpts } = require("detergent");
+const { det, opts, version } = require("detergent");
 // this gives extra plain object `exportedOpts` with default options. Handy when
 // developing front-ends that consume the Detergent.
 ```
 
+`det` is the main function. See its API below.
+`opts` is default options' object. You pass it (or its tweaked version) to `det`.
+`version` returns same-named package.json key's value - the version of the particular copy of Detergent you've got.
+
 **[⬆ back to top](#)**
 
-### API - Input for `detergent()`
+### API - `det()` Input
+
+The `det` above is a function. You pass two input arguments to it:
 
 | Input argument | Type   | Obligatory? | Description                                    |
 | -------------- | ------ | ----------- | ---------------------------------------------- |
@@ -120,9 +126,9 @@ const { detergent, opts: exportedOpts } = require("detergent");
 
 **[⬆ back to top](#)**
 
-### Options object
+### API - `det()` options object
 
-| options object's key     | Type of its value | Default                                   | Description                                                                                                                                                                       |
+| Options object's key     | Type of its value | Default                                   | Description                                                                                                                                                                       |
 | ------------------------ | ----------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                        |                   |                                           |
 | `fixBrokenEntities`      | Boolean           | True                                      | should we try to fix any broken named HTML entities like `&nsp;` ("b" missing)                                                                                                    |
@@ -143,7 +149,7 @@ const { detergent, opts: exportedOpts } = require("detergent");
 Here it is in one place:
 
 ```js
-detergent("text to clean", {
+det("text to clean", {
   fixBrokenEntities: true,
   removeWidows: true,
   convertEntities: true,
@@ -160,15 +166,13 @@ detergent("text to clean", {
 });
 ```
 
-The default settings are specifically chosen to be the most common scenario. Unless you want something specific, default set is a wise choice.
+The default set is a wise choice for the most common scenario - preparing text to be pasted into HTML.
 
 You can also set the options to numeric `0` or `1`, that's shorter than Boolean `true` or `false`.
 
-If you introduce any other keys from mentioned above, it will cause an error `throw`n. That's done to prevent mis-configurations, cases when you thought you set something but actually there was a typo and that setting was wrong. This is a production tool, so the stricter the settings with more errors, the better.
-
 **[⬆ back to top](#)**
 
-### API - Output object
+### API - `det()` output object
 
 | output object's key | Type of its value | Description        |
 | ------------------- | ----------------- | ------------------ |
@@ -176,11 +180,13 @@ If you introduce any other keys from mentioned above, it will cause an error `th
 | `res`               | String            | The cleaned string |
 | }                   |                   |
 
+Function `det` returns a plain object. You retrieve the result from its key `res`.
+
 **[⬆ back to top](#)**
 
 ## Example
 
-Simple encoding using default settings:
+The simplest possible operation - encoding using default settings:
 
 ```js
 const { det } = require("detergent");
@@ -189,12 +195,12 @@ console.log(res);
 // > 'clean this text &pound;'
 ```
 
-Using custom settings object:
+Now, using custom settings object with one custom setting `convertEntities` (others are left default):
 
 ```js
 const { det } = require("detergent");
 let { res } = detergent("clean this text £", {
-  convertEntities: 0
+  convertEntities: 0 // <--- zero is like "false", turns off the feature
 });
 console.log(res);
 // > 'clean this text £'
@@ -221,7 +227,7 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
+Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0.
 
 [node-img]: https://img.shields.io/node/v/detergent.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/detergent

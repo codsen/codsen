@@ -1,7 +1,7 @@
 // avanotonly
 
 import test from "ava";
-import { det, opts as exportedOptsObj } from "../dist/detergent.esm";
+import { det, opts as exportedOptsObj, version } from "../dist/detergent.esm";
 import { mixer, allCombinations } from "../t-util/util";
 
 import {
@@ -37,6 +37,10 @@ test(`00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second a
 
 test(`00.02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`, t => {
   t.true(Object.keys(exportedOptsObj).length > 10);
+});
+
+test(`00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, t => {
+  t.regex(version, /\d+\.\d+\.\d+/g);
 });
 
 // ==============================
