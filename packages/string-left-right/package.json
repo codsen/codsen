@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Look what's to the left or the right of a given index within a string",
   "license": "MIT",
   "engines": {
@@ -186,8 +186,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.44",
-    "lect": "^0.9.10",
+    "js-row-num-cli": "^1.5.45",
+    "lect": "^0.9.11",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.4",

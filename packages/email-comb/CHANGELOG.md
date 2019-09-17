@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.7.2...email-comb@3.8.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* correctly recognise single and double apostrophes within the text, outside tags ([5f7f428](https://gitlab.com/codsen/codsen/commit/5f7f428))
+
+
+### Features
+
+* recognise single-double-single/double-single-double quotes within attr values ([3eeaf1e](https://gitlab.com/codsen/codsen/commit/3eeaf1e))
+
+
+
+
+
 ## 3.7.1 (2019-09-11)
 
 ### Bug Fixes

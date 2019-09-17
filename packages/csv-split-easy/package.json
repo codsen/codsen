@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "3.0.34",
+  "version": "3.0.35",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "license": "MIT",
   "engines": {
@@ -176,9 +176,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.39",
+    "check-types-mini": "^5.7.40",
     "lodash.isplainobject": "^4.0.6",
-    "string-remove-thousand-separators": "^3.0.34"
+    "string-remove-thousand-separators": "^3.0.35"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -194,8 +194,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.44",
-    "lect": "^0.9.10",
+    "js-row-num-cli": "^1.5.45",
+    "lect": "^0.9.11",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.4",

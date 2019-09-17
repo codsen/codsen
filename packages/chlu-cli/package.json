@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.16.43",
+  "version": "1.16.44",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -164,7 +164,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chlu": "^3.7.43",
+    "chlu": "^3.7.44",
     "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "simple-git": "^1.126.0",
@@ -185,8 +185,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
     "execa": "^2.0.4",
-    "js-row-num-cli": "^1.5.44",
-    "lect": "^0.9.10",
+    "js-row-num-cli": "^1.5.45",
+    "lect": "^0.9.11",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

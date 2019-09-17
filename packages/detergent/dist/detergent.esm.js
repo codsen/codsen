@@ -1,7 +1,7 @@
 /**
  * detergent
  * All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool
- * Version: 4.0.4
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -27,7 +27,7 @@ import { allNamedEntities } from 'all-named-html-entities';
 import rangesExpander from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
 
-var version = "4.0.4";
+var version = "5.0.0";
 
 const defaultOpts = {
   fixBrokenEntities: true,

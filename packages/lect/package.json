@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
@@ -169,10 +169,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.43",
-    "arrayiffy-if-string": "^3.11.15",
-    "ast-monkey-traverse": "^1.11.38",
-    "bitbucket-slug": "^1.9.42",
+    "array-pull-all-with-glob": "^4.12.44",
+    "arrayiffy-if-string": "^3.11.16",
+    "ast-monkey-traverse": "^1.11.39",
+    "bitbucket-slug": "^1.9.43",
     "chalk": "^2.4.2",
     "execa": "^2.0.4",
     "filesize": "^4.2.0",
@@ -191,8 +191,8 @@
     "log-symbols": "^3.0.0",
     "matcher": "^2.0.0",
     "meow": "^5.0.0",
-    "object-delete-key": "^1.8.42",
-    "object-merge-advanced": "^10.10.42",
+    "object-delete-key": "^1.8.43",
+    "object-merge-advanced": "^10.10.43",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
@@ -220,8 +220,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.44",
-    "lect": "^0.9.10",
+    "js-row-num-cli": "^1.5.45",
+    "lect": "^0.9.11",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

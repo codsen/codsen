@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "4.2.20",
+  "version": "4.2.21",
   "description": "Merge and sort arrays which mean string slice ranges",
   "license": "MIT",
   "engines": {
@@ -167,7 +167,7 @@
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-sort": "^3.10.37"
+    "ranges-sort": "^3.10.38"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -183,8 +183,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.44",
-    "lect": "^0.9.10",
+    "js-row-num-cli": "^1.5.45",
+    "lect": "^0.9.11",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.4",

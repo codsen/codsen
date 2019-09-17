@@ -1,7 +1,7 @@
 /**
  * detergent
  * All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool
- * Version: 4.0.4
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -67,7 +67,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var version = "4.0.4";
+var version = "5.0.0";
 
 var defaultOpts = {
   fixBrokenEntities: true,

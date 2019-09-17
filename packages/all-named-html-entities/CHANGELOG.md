@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://gitlab.com/codsen/codsen/compare/all-named-html-entities@1.2.3...all-named-html-entities@1.2.4) (2019-09-17)
+
+**Note:** Version bump only for package all-named-html-entities
+
+
+
+
+
 ## 1.2.3 (2019-09-11)
 
 ### Bug Fixes
