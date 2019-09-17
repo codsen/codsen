@@ -1,0 +1,29 @@
+# .... generated using www.npmjs.com/package/lect ....
+#
+#
+#       __         ______     ______     ______  
+#      /\ \       /\  ___\   /\  ___\   /\__  _\ 
+#      \ \ \____  \ \  __\   \ \ \____  \/_/\ \/ 
+#       \ \_____\  \ \_____\  \ \_____\    \ \_\ 
+#        \/_____/   \/_____/   \/_____/     \/_/ 
+#  
+#
+
+# folders:
+
+.nyc_output
+coverage
+media
+perf
+src
+t-util
+test
+
+# files:
+
+.babelrc
+.eslintrc.json
+.npmignore
+.prettierignore
+rollup.config.js
+testStats.json
