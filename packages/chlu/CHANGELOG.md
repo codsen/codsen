@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.7.44](https://gitlab.com/codsen/codsen/compare/chlu@3.7.43...chlu@3.7.44) (2019-09-17)
-
-**Note:** Version bump only for package chlu
-
-
-
-
-
 ## 3.7.38 (2019-08-15)
 
 ### Bug Fixes
