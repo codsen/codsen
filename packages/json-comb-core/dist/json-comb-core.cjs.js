@@ -13,17 +13,18 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var setAllValuesTo = _interopDefault(require('object-set-all-values-to'));
 var flattenAllArrays = _interopDefault(require('object-flatten-all-arrays'));
-var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
 var fillMissingKeys = _interopDefault(require('object-fill-missing-keys'));
+var setAllValuesTo = _interopDefault(require('object-set-all-values-to'));
+var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
+var compareVersions = _interopDefault(require('compare-versions'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+var includes = _interopDefault(require('lodash.includes'));
 var nnk = _interopDefault(require('object-no-new-keys'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var includes = _interopDefault(require('lodash.includes'));
-var typ = _interopDefault(require('type-detect'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var sortKeys = _interopDefault(require('sort-keys'));
 var pReduce = _interopDefault(require('p-reduce'));
+var typ = _interopDefault(require('type-detect'));
 var pOne = _interopDefault(require('p-one'));
 
 function _typeof(obj) {
@@ -117,10 +118,53 @@ function isArr(something) {
 function isStr(something) {
   return typ(something) === "string";
 }
+function defaultCompare(x, y) {
+  if (x === undefined && y === undefined) {
+    return 0;
+  }
+  if (x === undefined) {
+    return 1;
+  }
+  if (y === undefined) {
+    return -1;
+  }
+  var xString = toString(x);
+  var yString = toString(y);
+  if (xString < yString) {
+    return -1;
+  }
+  if (xString > yString) {
+    return 1;
+  }
+  return 0;
+}
+function toString(obj) {
+  if (obj === null) {
+    return "null";
+  }
+  if (typeof obj === "boolean" || typeof obj === "number") {
+    return obj.toString();
+  }
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (_typeof(obj) === "symbol") {
+    throw new TypeError();
+  }
+  return obj.toString();
+}
+function compare(firstEl, secondEl) {
+  var semverRegex = /^\d+\.\d+\.\d+$/g;
+  if (semverRegex.test(firstEl) && semverRegex.test(secondEl)) {
+    return compareVersions(firstEl, secondEl);
+  }
+  return defaultCompare(firstEl, secondEl);
+}
 function sortAllObjectsSync(input) {
   if (isObj(input) || isArr(input)) {
     return sortKeys(input, {
-      deep: true
+      deep: true,
+      compare: compare
     });
   }
   return input;

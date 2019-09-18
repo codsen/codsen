@@ -44,6 +44,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "check-types-mini",
+        "compare-versions",
         "lodash.clonedeep",
         "lodash.includes",
         "object-fill-missing-keys",
@@ -74,6 +75,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "check-types-mini",
+        "compare-versions",
         "lodash.clonedeep",
         "lodash.includes",
         "object-fill-missing-keys",

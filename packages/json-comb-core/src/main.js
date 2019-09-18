@@ -1,16 +1,17 @@
 /* eslint no-param-reassign:0 */
 
-import setAllValuesTo from "object-set-all-values-to";
 import flattenAllArrays from "object-flatten-all-arrays";
-import mergeAdvanced from "object-merge-advanced";
 import fillMissingKeys from "object-fill-missing-keys";
+import setAllValuesTo from "object-set-all-values-to";
+import mergeAdvanced from "object-merge-advanced";
+import compareVersions from "compare-versions";
+import checkTypes from "check-types-mini";
+import includes from "lodash.includes";
 import nnk from "object-no-new-keys";
 import clone from "lodash.clonedeep";
-import includes from "lodash.includes";
-import typ from "type-detect";
-import checkTypes from "check-types-mini";
 import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
+import typ from "type-detect";
 import pOne from "p-one";
 
 // -----------------------------------------------------------------------------
@@ -34,9 +35,60 @@ function isStr(something) {
 // -----------------------------------------------------------------------------
 // SORT THEM THINGIES
 
+//INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+//ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
+// from https://stackoverflow.com/a/47349064/3943954
+function defaultCompare(x, y) {
+  if (x === undefined && y === undefined) {
+    return 0;
+  }
+  if (x === undefined) {
+    return 1;
+  }
+  if (y === undefined) {
+    return -1;
+  }
+  const xString = toString(x);
+  const yString = toString(y);
+  if (xString < yString) {
+    return -1;
+  }
+  if (xString > yString) {
+    return 1;
+  }
+  return 0;
+}
+
+//ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
+function toString(obj) {
+  if (obj === null) {
+    return "null";
+  }
+  if (typeof obj === "boolean" || typeof obj === "number") {
+    return obj.toString();
+  }
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (typeof obj === "symbol") {
+    throw new TypeError();
+  }
+  return obj.toString();
+}
+
+// compareFunction
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Parameters
+function compare(firstEl, secondEl) {
+  const semverRegex = /^\d+\.\d+\.\d+$/g;
+  if (semverRegex.test(firstEl) && semverRegex.test(secondEl)) {
+    return compareVersions(firstEl, secondEl);
+  }
+  return defaultCompare(firstEl, secondEl);
+}
+
 function sortAllObjectsSync(input) {
   if (isObj(input) || isArr(input)) {
-    return sortKeys(input, { deep: true });
+    return sortKeys(input, { deep: true, compare });
   }
   return input;
 }

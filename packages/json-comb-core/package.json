@@ -168,6 +168,7 @@
   },
   "dependencies": {
     "check-types-mini": "^5.7.40",
+    "compare-versions": "^3.5.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "object-fill-missing-keys": "^7.9.43",

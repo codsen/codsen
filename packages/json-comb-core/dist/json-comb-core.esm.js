@@ -7,17 +7,18 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
  */
 
-import setAllValuesTo from 'object-set-all-values-to';
 import flattenAllArrays from 'object-flatten-all-arrays';
-import mergeAdvanced from 'object-merge-advanced';
 import fillMissingKeys from 'object-fill-missing-keys';
+import setAllValuesTo from 'object-set-all-values-to';
+import mergeAdvanced from 'object-merge-advanced';
+import compareVersions from 'compare-versions';
+import checkTypes from 'check-types-mini';
+import includes from 'lodash.includes';
 import nnk from 'object-no-new-keys';
 import clone from 'lodash.clonedeep';
-import includes from 'lodash.includes';
-import typ from 'type-detect';
-import checkTypes from 'check-types-mini';
 import sortKeys from 'sort-keys';
 import pReduce from 'p-reduce';
+import typ from 'type-detect';
 import pOne from 'p-one';
 
 function existy(x) {
@@ -35,9 +36,51 @@ function isArr(something) {
 function isStr(something) {
   return typ(something) === "string";
 }
+function defaultCompare(x, y) {
+  if (x === undefined && y === undefined) {
+    return 0;
+  }
+  if (x === undefined) {
+    return 1;
+  }
+  if (y === undefined) {
+    return -1;
+  }
+  const xString = toString(x);
+  const yString = toString(y);
+  if (xString < yString) {
+    return -1;
+  }
+  if (xString > yString) {
+    return 1;
+  }
+  return 0;
+}
+function toString(obj) {
+  if (obj === null) {
+    return "null";
+  }
+  if (typeof obj === "boolean" || typeof obj === "number") {
+    return obj.toString();
+  }
+  if (typeof obj === "string") {
+    return obj;
+  }
+  if (typeof obj === "symbol") {
+    throw new TypeError();
+  }
+  return obj.toString();
+}
+function compare(firstEl, secondEl) {
+  const semverRegex = /^\d+\.\d+\.\d+$/g;
+  if (semverRegex.test(firstEl) && semverRegex.test(secondEl)) {
+    return compareVersions(firstEl, secondEl);
+  }
+  return defaultCompare(firstEl, secondEl);
+}
 function sortAllObjectsSync(input) {
   if (isObj(input) || isArr(input)) {
-    return sortKeys(input, { deep: true });
+    return sortKeys(input, { deep: true, compare });
   }
   return input;
 }
