@@ -89,10 +89,27 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## Whole idea
+
+It's trivial to check, is something on the left or on the right of a given index in a string. That's `str[i - 1]`/`str[i + 1]`. Done.
+
+It's not that trivial to check, what is the index of the first non-whitespace character on either side. You need to use loops or trim functions and calculate the position, also consider the `null` cases where there are no such characters.
+
+That's what this program is about — it is a string value lookup helper.
+
 ## Usage
 
 ```js
-const { left, right } = require("string-left-right");
+const {
+  left,
+  right,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight,
+  leftStopAtNewLines,
+  rightStopAtNewLines
+} = require("string-left-right");
 // let's get the closest non-whitespace letter to the left of "d"
 const str = "abc   def";
 const res = left(str, 6); // 6th index marks letter "d"
@@ -137,7 +154,7 @@ The output is either **natural number index**, pointing to the nearest non-white
 
 ## API - chompLeft() and chompRight()
 
-These two allow you to "chomp" multiple instances of a set of characters, possibly spaced out with whitespace.
+These two allow you to jump over certain repeated characters, possibly spaced out with whitespace.
 
 For example, imagine you have this string:
 
@@ -145,7 +162,7 @@ For example, imagine you have this string:
 text x  y xyyyyxxxx       x x x x x yyyy y y y .
 ```
 
-Imagine, you are "located" at the index of ".", `47`. In this case, `chompLeft()` lets you "jump" over x's and y's and locate the index of a second "t" in "text", `3`.
+Imagine, you are "located" at the index of dot ".", `47`. In this case, `chompLeft()` lets you "jump" over x's and y's and locate the index of a second "t" in "text", `3`.
 
 Both exported functions have the same API:
 
@@ -159,6 +176,9 @@ For example:
 
 ```js
 const { chompLeft } = require("string-left-right");
+// we're saying, jump over all b's and c's when traversing left from "x",
+// then report the index of a first non-whitespace string you landed upon (
+// or leave space, depending on the chosen mode, see next chapter for its API)
 const res1 = chompLeft("a  b c b c  x y", 12, "b", "c");
 console.log(`res1`);
 // => 2
@@ -217,6 +237,61 @@ const res5 = chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c");
 The `chompRight()` works the same way, just towards the right side of a given index.
 
 **[⬆ back to top](#)**
+
+## API - leftSeq() and rightSeq()
+
+`leftSeq()` and `rightSeq()` matches the characters in that order, on the particular
+side of given index, disregarding the whitespace.
+
+Both exported functions have the same API:
+
+**leftSeq(str, idx, \[opts], str1ToMatch, str2ToMatch, str3ToMatch... )**
+
+**rightSeq(str, idx, \[opts], str1ToMatch, str2ToMatch, str3ToMatch... )**
+
+Above, square brackets mean options are optional, you can omit them.
+
+| Input argument | Type         | Obligatory? | Description                                        |
+| -------------- | ------------ | ----------- | -------------------------------------------------- |
+| `str`          | String       | yes         | String to work upon |
+| `idx`         | Natural number or zero | yes          | At which index we start looking on either side |
+| `opts`         | Plain object | no          | The Optional Options Object, see below for its API |
+| `str1ToMatch`  | String, single character | no          | The first character to match on the sequence |
+| `str2ToMatch`  | String, single character | no          | The second character to match on the sequence |
+| `str3ToMatch`  | String, single character | no          | The third character to match on the sequence |
+| ...  | String, single character | no          | The n-th character to match on the sequence |
+
+You can put as many characters as you want.
+
+Example:
+
+```js
+const { leftSeq } = require("string-left-right");
+// we start at index 5, that's "f" and look on the left, are there sequence
+// of characters "c", "d" and "e", possibly separated by whitespace
+const result = leftSeq("abcdefghijk", 5, "c", "d", "e");
+// yes, and there are no gaps:
+console.log(JSON.stringify(result, null, 4));
+// => {
+//      gaps: [],
+//      leftmostChar: 2,
+//      rightmostChar: 4
+//    }
+```
+
+Now example with gaps:
+
+We're also on "f" and we're also looking left, are the sequence "c", "d", "e" on that side.
+
+```js
+t.deepEqual(
+  leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
+  { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+  "04.01.02"
+);
+```
+
+Program reports any whitespace gap ranges it encountered and also indexes of leftmost and rightmost character.
 
 ## API - leftStopAtNewLines() and rightStopAtNewLines()
 
