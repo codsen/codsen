@@ -50,7 +50,7 @@ Here are other notable features:
 
 Now you have full control over HTML-stripping, thanks to `string-strip-html` ([npm](https://www.npmjs.com/package/string-strip-html), [gitlab monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/)).
 
-It's controlled by a new options keys `opts.stripHtml` and `stripHtmlButIgnoreTags`.
+It's controlled by a new options keys `opts.stripHtml` and `opts.stripHtmlButIgnoreTags`.
 
 If you give Detergent a piece of HTML and disable HTML stripping, it will detect the tags and process the text between the tags. Furthermore, it should recognise some common templating languages.
 
