@@ -14,6 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [API - Input](#api---input)
 - [API - Output](#api---output)
 - [`opts.decode`](#optsdecode)
 - [`opts.cb` - a callback function](#optscb---a-callback-function)
@@ -65,15 +66,80 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## API - Input
+
+The `fixEnt` you required/imported is a function and it has two input arguments:
+
+| Input argument | Type         | Obligatory? | Description                                        |
+| -------------- | ------------ | ----------- | -------------------------------------------------- |
+| `input`        | String       | yes         | String, hopefully HTML code                        |
+| `opts`         | Plain object | no          | The Optional Options Object, see below for its API |
+
+For example:
+
+```js
+const fixEnt = require("string-fix-broken-named-entities");
+const result = fixEnt("&nsp;x&nsp;y&nsp;");
+console.log(JSON.stringify(result, null, 4));
+// => [[0, 5, "&nbsp;"], [6, 11, "&nbsp;"], [12, 17, "&nbsp;"]]
+```
+
+**[⬆ back to top](#)**
+
+### Optional Options Object
+
+| An Optional Options Object's key | Type of its value | Default | Description                                                                                                                                                          |
+| -------------------------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                |                   |         |
+| `decode`                         | Boolean           | `false` | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                                          |
+| `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output |
+| `progressFn`                     | Function          | `null`  | Used in web worker setups. You pass a function and it gets called one for each natural number `0` to `99`, meaning percentage of the work done so far |
+| }                                |                   |         |
+
+Here it is in one place:
+
+```js
+{
+  decode: false,
+  cb: ({ rangeFrom, rangeTo, rangeValEncoded, rangeValDecoded }) =>
+    rangeValDecoded || rangeValEncoded
+      ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded]
+      : [rangeFrom, rangeTo],
+  progressFn: null
+}
+```
+
+**[⬆ back to top](#)**
+
 ## API - Output
 
-**Output**: array or arrays (_ranges_) OR `null`
+**Output**: array of zero or more arrays (_ranges_).
+
+For example, four fixed `nbsp`'s:
+
+```js
+[
+  [6, 11, "&nbsp;"],
+  [11, 18, "&nbsp;"],
+  [27, 34, "&nbsp;"],
+  [34, 41, "&nbsp;"]
+]
+```
 
 ## `opts.decode`
 
 If you set `opts.decode` and there are healthy encoded entities, those will not be decoded. Only if there are broken entities, those will be set in ranges as decoded values. If you want full decoding, consider filter the input with [normal decoding library](https://www.npmjs.com/package/ranges-ent-decode) right after filtering using this library.
 
 For example, you'd first filter the string using this library, `string-fix-broken-named-entities`. Then you'd filter the same input skipping already recorded ranges, using [ranges-ent-decode](https://www.npmjs.com/package/ranges-ent-decode). Then you'd merge the ranges.
+
+For example:
+
+```js
+const fixEnt = require("string-fix-broken-named-entities");
+const result = fixEnt("zz nbsp;zz nbsp;", { decode: true });
+console.log(JSON.stringify(result, null, 4));
+// => [[3, 8, "\xA0"], [11, 16, "\xA0"]]
+```
 
 **[⬆ back to top](#)**
 
