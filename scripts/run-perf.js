@@ -9,7 +9,7 @@ function runPerf(cb, callerDir) {
   // read historical data
   // ---------------------------------------------------------------------------
 
-  let historicalData = JSON.parse(
+  const historicalData = JSON.parse(
     fs.readFileSync(path.resolve(callerDir, "perf/historical.json"))
   );
   const { version, name } = JSON.parse(
@@ -67,7 +67,7 @@ function runPerf(cb, callerDir) {
       //                                 \|/
       //                                  V
       const optsPerSec = this[0].hz;
-      historicalData = {};
+      // historicalData = {};
       if (optsPerSec) {
         if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
           historicalData[version] = optsPerSec;
