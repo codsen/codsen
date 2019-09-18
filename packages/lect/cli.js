@@ -71,6 +71,13 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+function getUmdUrl(name) {
+  // JSDelivr:
+  return `https://cdn.jsdelivr.net/npm/${name}/dist/${name}.umd.js`;
+
+  // Statically:
+  // return `https://cdn.statically.io/gl/codsen/codsen/master/packages/${name}/dist/${name}.umd.js`;
+}
 
 // -----------------------------------------------------------------------------
 // 0. STUFF WE READ
@@ -1800,9 +1807,7 @@ import ${consumedName} from "${pack.name}";
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
 
 \`\`\`html
-<script src="https://cdn.jsdelivr.net/npm/${pack.name}/dist/${
-                  pack.name
-                }.umd.js"></script>
+<script src="${getUmdUrl(pack.name)}"></script>
 \`\`\`
 
 \`\`\`js
