@@ -24,7 +24,8 @@
           "perf/**/*.*",
           "**/*test.js",
           "test/**/*.*",
-          "rollup.config.js"
+          "rollup.config.js",
+          "scripts/**/*.*"
         ]
       }
     ],

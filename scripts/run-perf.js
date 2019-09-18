@@ -1,4 +1,5 @@
 const Benchmark = require("benchmark");
+const { sortAllObjectsSync } = require("../packages/json-comb-core");
 const fs = require("fs");
 const path = require("path");
 
@@ -8,7 +9,7 @@ function runPerf(cb, callerDir) {
   // read historical data
   // ---------------------------------------------------------------------------
 
-  const historicalData = JSON.parse(
+  let historicalData = JSON.parse(
     fs.readFileSync(path.resolve(callerDir, "perf/historical.json"))
   );
   const { version, name } = JSON.parse(
@@ -49,9 +50,7 @@ function runPerf(cb, callerDir) {
   // add tests
   // ---------------------------------------------------------------------------
 
-  const suite = new Benchmark.Suite({
-    minTime: 50
-  });
+  const suite = new Benchmark.Suite();
   const heads = `${`\u001b[${90}m${`${name} perf/check.js:`}\u001b[${39}m`} `;
 
   suite
@@ -68,7 +67,7 @@ function runPerf(cb, callerDir) {
       //                                 \|/
       //                                  V
       const optsPerSec = this[0].hz;
-      // historicalData = {};
+      historicalData = {};
       if (optsPerSec) {
         if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
           historicalData[version] = optsPerSec;
@@ -77,7 +76,7 @@ function runPerf(cb, callerDir) {
         historicalData["lastRan"] = historicalData[version];
         fs.writeFile(
           path.resolve(callerDir, "./perf/historical.json"),
-          JSON.stringify(historicalData, null, 4),
+          JSON.stringify(sortAllObjectsSync(historicalData), null, 4),
           err => {
             if (err) {
               throw err;

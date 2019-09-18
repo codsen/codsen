@@ -7,8 +7,7 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 
 // setup
 const f = require("../");
-const testme = () =>
-  f("<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(f()));
+const testme = () => f([[5, 6], [5, 3], [5, 0]]);
 
 // action
 runPerf(testme, callerDir);
