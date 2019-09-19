@@ -29,6 +29,7 @@ const objectLibsList = [
 ];
 const stringLibsList = [
   "string-strip-html",
+  "edit-package-json",
   "easy-replace",
   "str-indexes-of-plus",
   "bitbucket-slug",
