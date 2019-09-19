@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -50,11 +51,11 @@ const { set } = editPackageJson;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 5 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 5 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 2 KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 7 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 7 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 36 KB |
 
 **[⬆ back to top](#)**
 
@@ -146,6 +147,8 @@ Passes .set() unit tests from https://github.com/mariocasciaro/object-path/blob/
 [node-url]: https://www.npmjs.com/package/edit-package-json
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
+[cov-img]: https://img.shields.io/badge/coverage-97.7%25-brightgreen.svg?style=flat-square
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/edit-package-json
 [downloads-img]: https://img.shields.io/npm/dm/edit-package-json.svg?style=flat-square

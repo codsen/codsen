@@ -11,6 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var stringLeftRight = require('string-left-right');
+var apply = _interopDefault(require('ranges-apply'));
+
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -37,13 +42,15 @@ function stringifyPath(something) {
   }
   return String(something);
 }
-function isNotEscpe(str, idx) {
-  return idx !== "\\" || str[idx - 2] === "\\";
+function isNotEscape(str, idx) {
+  return str[idx] !== "\\" || str[idx - 2] === "\\";
 }
-function set(str, path, valToInsert) {
-  if (!isStr(str) || !str.length) {
-    throw new Error("edit-package-json: [THROW_ID_01] first input argument must be a non-empty string. It was given as ".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
-  }
+function main(_ref) {
+  var str = _ref.str,
+      path = _ref.path,
+      valToInsert = _ref.valToInsert,
+      mode = _ref.mode;
+  var ranges = [];
   var badChars = ["{", "}", "[", "]", ":"];
   var calculatedValueToInsert = valToInsert;
   if (isStr(valToInsert) && !valToInsert.startsWith("\"") && !valToInsert.startsWith("{")) {
@@ -129,12 +136,47 @@ function set(str, path, valToInsert) {
       valueStartedAt = i;
     }
     if (replaceThisValue && valueStartedAt && i > valueStartedAt) {
-      if (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscpe(str, i - 1))) {
-        return "".concat(str.slice(0, valueStartedAt)).concat(calculatedValueToInsert).concat(str.slice(i + (str[i].trim().length ? 1 : 0)));
+      if (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1))) {
+        if (mode === "set") {
+          return "".concat(str.slice(0, valueStartedAt)).concat(calculatedValueToInsert).concat(str.slice(i + (str[i].trim().length ? 1 : 0)));
+        } else if (mode === "del") {
+          var startingPoint = stringLeftRight.left(str, keyStartedAt - 1) + 1;
+          var endingPoint = i + (str[i].trim().length ? 1 : 0);
+          if (str[startingPoint - 1] === "," && str[stringLeftRight.right(str, endingPoint - 1)] === "}") {
+            startingPoint--;
+          }
+          if (str[endingPoint] === ",") {
+            endingPoint++;
+          }
+          ranges.push([startingPoint, endingPoint]);
+          break;
+        }
       }
     }
   }
-  return str;
+  return apply(str, ranges);
+}
+function set(str, path, valToInsert) {
+  if (!isStr(str) || !str.length) {
+    throw new Error("edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
+  }
+  return main({
+    str: str,
+    path: path,
+    valToInsert: valToInsert,
+    mode: "set"
+  });
+}
+function del(str, path) {
+  if (!isStr(str) || !str.length) {
+    throw new Error("edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
+  }
+  return main({
+    str: str,
+    path: path,
+    mode: "del"
+  });
 }
 
+exports.del = del;
 exports.set = set;

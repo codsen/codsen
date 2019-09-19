@@ -7,6 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
  */
 
+import { left, right } from 'string-left-right';
+import apply from 'ranges-apply';
+
 const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
@@ -19,19 +22,11 @@ function stringifyPath(something) {
   }
   return String(something);
 }
-function isNotEscpe(str, idx) {
-  return idx !== "\\" || str[idx - 2] === "\\";
+function isNotEscape(str, idx) {
+  return str[idx] !== "\\" || str[idx - 2] === "\\";
 }
-function set(str, path, valToInsert) {
-  if (!isStr(str) || !str.length) {
-    throw new Error(
-      `edit-package-json: [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
-        str,
-        null,
-        4
-      )} (type ${typeof str})`
-    );
-  }
+function main({ str, path, valToInsert, mode }) {
+  const ranges = [];
   const badChars = ["{", "}", "[", "]", ":"];
   let calculatedValueToInsert = valToInsert;
   if (
@@ -208,18 +203,58 @@ function set(str, path, valToInsert) {
         (str[valueStartedAt] === `"` && str[i] === `"`) ||
         (str[valueStartedAt].trim().length &&
           (!str[i].trim().length ||
-            (badChars.includes(str[i]) && isNotEscpe(str, i - 1))))
+            (badChars.includes(str[i]) && isNotEscape(str, i - 1))))
       ) {
-        return `${str.slice(
-          0,
-          valueStartedAt
-        )}${calculatedValueToInsert}${str.slice(
-          i + (str[i].trim().length ? 1 : 0)
-        )}`;
+        if (mode === "set") {
+          return `${str.slice(
+            0,
+            valueStartedAt
+          )}${calculatedValueToInsert}${str.slice(
+            i + (str[i].trim().length ? 1 : 0)
+          )}`;
+        } else if (mode === "del") {
+          let startingPoint = left(str, keyStartedAt - 1) + 1;
+          let endingPoint = i + (str[i].trim().length ? 1 : 0);
+          if (
+            str[startingPoint - 1] === "," &&
+            str[right(str, endingPoint - 1)] === "}"
+          ) {
+            startingPoint--;
+          }
+          if (str[endingPoint] === ",") {
+            endingPoint++;
+          }
+          ranges.push([startingPoint, endingPoint]);
+          break;
+        }
       }
     }
   }
-  return str;
+  return apply(str, ranges);
+}
+function set(str, path, valToInsert) {
+  if (!isStr(str) || !str.length) {
+    throw new Error(
+      `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (type ${typeof str})`
+    );
+  }
+  return main({ str, path, valToInsert, mode: "set" });
+}
+function del(str, path) {
+  if (!isStr(str) || !str.length) {
+    throw new Error(
+      `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (type ${typeof str})`
+    );
+  }
+  return main({ str, path, mode: "del" });
 }
 
-export { set };
+export { del, set };

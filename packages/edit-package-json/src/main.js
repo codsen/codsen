@@ -1,3 +1,6 @@
+import { left, right } from "string-left-right";
+import apply from "ranges-apply";
+
 const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
@@ -11,21 +14,13 @@ function stringifyPath(something) {
   return String(something);
 }
 
-function isNotEscpe(str, idx) {
-  return idx !== "\\" || str[idx - 2] === "\\";
+function isNotEscape(str, idx) {
+  return str[idx] !== "\\" || str[idx - 2] === "\\";
 }
 
-function set(str, path, valToInsert) {
-  if (!isStr(str) || !str.length) {
-    throw new Error(
-      `edit-package-json: [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
-        str,
-        null,
-        4
-      )} (type ${typeof str})`
-    );
-  }
-
+function main({ str, path, valToInsert, mode }) {
+  const ranges = [];
+  console.log(`023 main(): MODE=${mode}`);
   // bad characters
   const badChars = ["{", "}", "[", "]", ":"];
 
@@ -99,7 +94,7 @@ function set(str, path, valToInsert) {
     ) {
       currentlyWithinObject = true;
       console.log(
-        `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+        `097 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
       );
     }
 
@@ -111,7 +106,7 @@ function set(str, path, valToInsert) {
     ) {
       currentlyWithinObject = false;
       console.log(
-        `114 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
+        `109 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
       );
     }
 
@@ -123,7 +118,7 @@ function set(str, path, valToInsert) {
     ) {
       currentlyWithinArray = true;
       console.log(
-        `126 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
+        `121 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
       );
     }
 
@@ -135,15 +130,15 @@ function set(str, path, valToInsert) {
     ) {
       currentlyWithinArray = false;
       console.log(
-        `138 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
+        `133 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray}`
       );
 
       currentPath.pop();
       console.log(
-        `143 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
+        `138 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
       );
 
-      console.log(`146 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+      console.log(`141 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
       reset();
     }
 
@@ -177,7 +172,7 @@ function set(str, path, valToInsert) {
       if (currentlyWithinArray) {
         currentPath.push(0);
         console.log(
-          `180 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
+          `175 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
             currentPath,
             null,
             0
@@ -187,7 +182,7 @@ function set(str, path, valToInsert) {
 
       valueStartedAt = i;
       console.log(
-        `190 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
+        `185 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
       );
 
       // for arrays, this is the beginning of what to replace
@@ -198,7 +193,7 @@ function set(str, path, valToInsert) {
       ) {
         replaceThisValue = true;
         console.log(
-          `201 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
+          `196 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
         );
       }
     }
@@ -219,11 +214,11 @@ function set(str, path, valToInsert) {
         str[valueStartedAt] === `"` ? i + 1 : i
       );
       console.log(
-        `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyValue`}\u001b[${39}m`} = ${keyValue}`
+        `217 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyValue`}\u001b[${39}m`} = ${keyValue}`
       );
       valueEndedAt = i;
       console.log(
-        `226 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueEndedAt`}\u001b[${39}m`} = ${valueEndedAt}`
+        `221 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueEndedAt`}\u001b[${39}m`} = ${valueEndedAt}`
       );
     }
 
@@ -240,7 +235,7 @@ function set(str, path, valToInsert) {
     ) {
       keyStartedAt = i + 1;
       console.log(
-        `243 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${keyStartedAt}`
+        `238 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${keyStartedAt}`
       );
     }
 
@@ -258,13 +253,13 @@ function set(str, path, valToInsert) {
       keyEndedAt = i + 1;
       keyName = str.slice(keyStartedAt, i);
       console.log(
-        `261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyEndedAt`}\u001b[${39}m`} = ${keyEndedAt};  ${`\u001b[${33}m${`keyName`}\u001b[${39}m`} = ${keyName}`
+        `256 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyEndedAt`}\u001b[${39}m`} = ${keyEndedAt};  ${`\u001b[${33}m${`keyName`}\u001b[${39}m`} = ${keyName}`
       );
 
       // set the path
       currentPath.push(keyName);
       console.log(
-        `267 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`
+        `262 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`
       );
 
       // array cases don't come here so there are no conditionals for currentlyWithinArray
@@ -274,7 +269,7 @@ function set(str, path, valToInsert) {
       ) {
         replaceThisValue = true;
         console.log(
-          `277 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
+          `272 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
         );
       }
     }
@@ -286,15 +281,15 @@ function set(str, path, valToInsert) {
       i >= valueEndedAt &&
       str[i].trim().length
     ) {
-      console.log(`289 ${`\u001b[${36}m${`██`}\u001b[${39}m`}`);
+      console.log(`284 ${`\u001b[${36}m${`██`}\u001b[${39}m`}`);
       if (str[i] === ",") {
-        console.log(`291 comma caught`);
+        console.log(`286 comma caught`);
 
         if (currentlyWithinArray) {
           currentPath[currentPath.length - 1] =
             currentPath[currentPath.length - 1] + 1;
           console.log(
-            `297 BUMP index of last path digit, now = ${JSON.stringify(
+            `292 BUMP index of last path digit, now = ${JSON.stringify(
               currentPath,
               null,
               4
@@ -303,24 +298,24 @@ function set(str, path, valToInsert) {
         } else {
           currentPath.pop();
           console.log(
-            `306 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
+            `301 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
           );
         }
 
-        console.log(`310 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+        console.log(`305 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
       } else if (str[i] === "}") {
-        console.log(`313 closing curlie caught`);
+        console.log(`308 closing curlie caught`);
 
         // also reset but don't touch the path - rabbit hole goes deeper
-        console.log(`316 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+        console.log(`311 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
 
         currentPath.pop();
         currentPath.pop();
 
         console.log(
-          `323 POP path twice, now = ${JSON.stringify(currentPath, null, 4)}`
+          `318 POP path twice, now = ${JSON.stringify(currentPath, null, 4)}`
         );
       }
     }
@@ -334,7 +329,7 @@ function set(str, path, valToInsert) {
       !keyValue
     ) {
       // also reset but don't touch the path - rabbit hole goes deeper
-      console.log(`337 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+      console.log(`332 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
       reset();
     }
 
@@ -348,13 +343,13 @@ function set(str, path, valToInsert) {
     ) {
       valueStartedAt = i;
       console.log(
-        `351 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
+        `346 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
       );
     }
 
     // catch the end of the value when replaceThisValue is on
     if (replaceThisValue && valueStartedAt && i > valueStartedAt) {
-      console.log(`357 within catching the end clauses`);
+      console.log(`352 within catching the end clauses`);
 
       if (
         (str[valueStartedAt] === "[" && str[i] === "]") ||
@@ -362,16 +357,49 @@ function set(str, path, valToInsert) {
         (str[valueStartedAt] === `"` && str[i] === `"`) ||
         (str[valueStartedAt].trim().length &&
           (!str[i].trim().length ||
-            (badChars.includes(str[i]) && isNotEscpe(str, i - 1))))
+            (badChars.includes(str[i]) && isNotEscape(str, i - 1))))
       ) {
-        // 1. replacing bracket or curlie ranges
-        console.log(`368 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
-        return `${str.slice(
-          0,
-          valueStartedAt
-        )}${calculatedValueToInsert}${str.slice(
-          i + (str[i].trim().length ? 1 : 0)
-        )}`;
+        if (mode === "set") {
+          // 1. if set()
+          console.log(`364 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+          return `${str.slice(
+            0,
+            valueStartedAt
+          )}${calculatedValueToInsert}${str.slice(
+            i + (str[i].trim().length ? 1 : 0)
+          )}`;
+        } else if (mode === "del") {
+          // 1. if del()
+          console.log(`373 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+          let startingPoint = left(str, keyStartedAt - 1) + 1;
+          let endingPoint = i + (str[i].trim().length ? 1 : 0);
+          if (
+            str[startingPoint - 1] === "," &&
+            str[right(str, endingPoint - 1)] === "}"
+          ) {
+            startingPoint--;
+            console.log(
+              `382 SET ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
+            );
+          }
+          if (str[endingPoint] === ",") {
+            endingPoint++;
+            console.log(
+              `388 SET ${`\u001b[${33}m${`endingPoint`}\u001b[${39}m`} = ${endingPoint}`
+            );
+          }
+
+          ranges.push([startingPoint, endingPoint]);
+          console.log(
+            `394 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+              ranges,
+              null,
+              4
+            )}`
+          );
+          console.log(`400 then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          break;
+        }
       }
       // 2. replace non-quoted values
     }
@@ -414,7 +442,34 @@ function set(str, path, valToInsert) {
     `\n\u001b[${36}m${`===============================`}\u001b[${39}m`
   );
 
-  return str;
+  return apply(str, ranges);
 }
 
-export { set };
+function set(str, path, valToInsert) {
+  if (!isStr(str) || !str.length) {
+    throw new Error(
+      `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (type ${typeof str})`
+    );
+  }
+  return main({ str, path, valToInsert, mode: "set" });
+}
+
+function del(str, path) {
+  if (!isStr(str) || !str.length) {
+    throw new Error(
+      `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (type ${typeof str})`
+    );
+  }
+  // absence of what to insert means delete
+  return main({ str, path, mode: "del" });
+}
+
+export { set, del };
