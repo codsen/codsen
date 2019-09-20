@@ -187,7 +187,7 @@
     "eslint-plugin-ava": "^8.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "execa": "^2.0.4",
     "js-row-num-cli": "^1.5.45",
