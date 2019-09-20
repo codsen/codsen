@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Edit package.json without parsing, as string, keep indentation etc intact",
   "license": "MIT",
   "engines": {
