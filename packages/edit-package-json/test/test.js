@@ -364,13 +364,98 @@ test(`04.07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
     "f": "i"
   }
 }`;
-  // path is array:
   setter(t, testObj, result, "b.d.0", `"o"`, "04.07");
 });
 
 test(`04.08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
   // crop of test "should set value using number path", obj.b.d
   setter(t, `["a", "b"]`, `["o", "b"]`, 0, `"o"`, "04.08");
+});
+
+test(`04.09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": "o",
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  }
+}`;
+  setter(t, testObj, result, "b.c", `"o"`, "04.09");
+});
+
+test(`04.10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": "o",
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  }
+}`;
+  // quotes around "o" missing:
+  setter(t, testObj, result, "b.c", `o`, "04.10");
+});
+
+test(`04.11 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": "o",
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  }
+}`;
+  setter(t, testObj, result, ["b", "c"], `"o"`, "04.11");
+});
+
+test(`04.12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": "o",
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  }
+}`;
+  // quotes around "o" missing:
+  setter(t, testObj, result, ["b", "c"], `o`, "04.12");
+});
+
+test(`04.13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": null }],
+    "f": "i"
+  }
+}`;
+  // TODO: creates new keys
+  // setter(t, testObj, result, "b.e.1.g", "f", "04.13");
+
+  setter(t, testObj, result, "b.e.1.f", null, "04.13");
+});
+
+test(`04.14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": null }],
+    "f": "i"
+  }
+}`;
+  // TODO: creates new keys
+  // setter(t, testObj, result, "b.e.1.g", "f", "04.14");
+
+  setter(t, testObj, result, ["b", "e", 1, "f"], null, "04.14");
 });
 
 // -----------------------------------------------------------------------------
@@ -414,3 +499,135 @@ test(`05.03 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
 
 // TODO - escaped left slashes
 // TODO - minified json
+
+// -----------------------------------------------------------------------------
+// Create keys
+// -----------------------------------------------------------------------------
+
+// TODO:
+// test(`99.01 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
+//   const obj = "{}";
+//   let res = set(obj, "b.0", "c");
+//   res = set(res, "b.1", "d");
+//   t.is(res, `{"b": ["c", "d"]}`);
+// });
+
+// TODO:
+// test(`99.02 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should create intermediate objects`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "c": {
+//     "d": {
+//       "e": {
+//         "f": "l"
+//       }
+//     }
+//   }
+// }`;
+//   setter(t, testObj, result, "c.d.e.f", "l", "99.02");
+// });
+
+// TODO:
+// test(`99.03 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should create intermediate objects`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "c": {
+//     "d": {
+//       "e": {
+//         "f": "l"
+//       }
+//     }
+//   }
+// }`;
+//   setter(t, testObj, result, ["c", "d", "e", "f"], "l", "99.03");
+// });
+
+// TODO:
+// test(`99.04 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should create intermediate arrays`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "c": [[undefined, {
+//     "m": "l"
+//   }]]
+// }`;
+//   setter(t, testObj, result, "c.0.1.m", "l", "99.04");
+// });
+
+// TODO:
+// test(`99.05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should create intermediate arrays`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "c": {
+//     "0": [{
+//       "m": "l"
+//     }]
+//   }
+// }`;
+//   setter(t, testObj, result, ["c", "0", 1, "m"], "l", "99.05");
+// });
+
+// TODO
+// test(`99.06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under integer-like key`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "1a": "foo"
+// }`;
+//   setter(t, testObj, result, "1a", "foo", "99.06");
+// });
+
+// TODO
+// test(`99.07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under integer-like key`, t => {
+//   const result = `{
+//   "a": "b",
+//   "b": {
+//     "c": [],
+//     "d": ["a", "b"],
+//     "e": [{}, { "f": "g" }],
+//     "f": "i"
+//   },
+//   "1a": "foo"
+// }`;
+//   setter(t, testObj, result, ["1a"], "foo", "99.07");
+// });
+
+// TODO
+// test(`99.08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under integer-like key`, t => {
+//   const result = `["foo"]`;
+//   setter(t, [], result, [0], "foo", "99.08");
+// });
+
+// TODO
+// test(`99.09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under integer-like key`, t => {
+//   const result = `["foo"]`;
+//   setter(t, [], result, "0", "foo", "99.09");
+// });

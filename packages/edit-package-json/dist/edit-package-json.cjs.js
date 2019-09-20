@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, keep indentation etc intact
- * Version: 1.0.0
+ * Version: 0.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
@@ -51,13 +51,33 @@ function main(_ref) {
       valToInsert = _ref.valToInsert,
       mode = _ref.mode;
   var ranges = [];
-  var badChars = ["{", "}", "[", "]", ":"];
+  var badChars = ["{", "}", "[", "]", ":", ","];
   var calculatedValueToInsert = valToInsert;
   if (isStr(valToInsert) && !valToInsert.startsWith("\"") && !valToInsert.startsWith("{")) {
     calculatedValueToInsert = "\"".concat(valToInsert, "\"");
   }
-  var currentlyWithinObject = false;
-  var currentlyWithinArray = false;
+  var withinObject = [];
+  var withinArray = [];
+  function currentlyWithinObject() {
+    if (!withinObject.length) {
+      return false;
+    } else if (withinArray.length) {
+      return (
+        withinObject[withinObject.length - 1] > withinArray[withinArray.length - 1]
+      );
+    }
+    return true;
+  }
+  function currentlyWithinArray() {
+    if (!withinArray.length) {
+      return false;
+    } else if (withinObject.length) {
+      return (
+        withinArray[withinArray.length - 1] > withinObject[withinObject.length - 1]
+      );
+    }
+    return true;
+  }
   var replaceThisValue = false;
   var keyStartedAt;
   var keyEndedAt;
@@ -65,6 +85,7 @@ function main(_ref) {
   var valueEndedAt;
   var keyName;
   var keyValue;
+  var itsTheFirstElem = false;
   function reset() {
     keyStartedAt = null;
     keyEndedAt = null;
@@ -77,37 +98,60 @@ function main(_ref) {
   var currentPath = [];
   var len = str.length;
   for (var i = 0; i < len; i++) {
-    if (str[i] === "{" && str[i - 1] !== "\\" && !currentlyWithinObject && !replaceThisValue) {
-      currentlyWithinObject = true;
+    if (str[i] === "{" && str[i - 1] !== "\\" && !replaceThisValue) {
+      if (currentlyWithinArray()) {
+        if (itsTheFirstElem) {
+          currentPath.push(0);
+        } else {
+          currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
+        }
+      }
+      withinObject.push(i);
     }
-    if (str[i] === "}" && str[i - 1] !== "\\" && currentlyWithinObject && !replaceThisValue) {
-      currentlyWithinObject = false;
+    if (str[i] === "}" && str[i - 1] !== "\\" && !replaceThisValue) {
+      withinObject.pop();
     }
-    if (str[i] === "[" && str[i - 1] !== "\\" && !currentlyWithinArray && !replaceThisValue) {
-      currentlyWithinArray = true;
+    if (str[i] === "[" && str[i - 1] !== "\\" && !replaceThisValue) {
+      withinArray.push(i);
+      itsTheFirstElem = true;
     }
-    if (str[i] === "]" && str[i - 1] !== "\\" && currentlyWithinArray && !replaceThisValue) {
-      currentlyWithinArray = false;
+    if (str[i] === "]" && str[i - 1] !== "\\" && !replaceThisValue) {
+      withinArray.pop();
       currentPath.pop();
       reset();
-    }
-    if (!replaceThisValue && !valueStartedAt && str[i].trim().length && !badChars.includes(str[i]) && (currentlyWithinArray || !currentlyWithinArray && keyName)) {
-      if (currentlyWithinArray) {
-        currentPath.push(0);
+      if (!itsTheFirstElem && currentlyWithinObject()) {
+        currentPath.pop();
       }
+      if (itsTheFirstElem) {
+        itsTheFirstElem = false;
+      }
+    }
+    if (currentlyWithinArray() && str[i] === "," && itsTheFirstElem && !(valueStartedAt && !valueEndedAt)
+    ) {
+        itsTheFirstElem = false;
+      }
+    if (!replaceThisValue && !valueStartedAt && str[i].trim().length && !badChars.includes(str[i]) && (currentlyWithinArray() || !currentlyWithinArray() && keyName)) {
       valueStartedAt = i;
-      if (currentlyWithinArray && (stringifyPath(path) === currentPath.join(".") || currentPath.join(".").endsWith(".".concat(stringifyPath(path))))) {
+      if (currentlyWithinArray()) {
+        if (itsTheFirstElem) {
+          currentPath.push(0);
+          itsTheFirstElem = false;
+        } else {
+          currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
+        }
+      }
+    }
+    if (!replaceThisValue && (currentlyWithinArray() || !currentlyWithinArray() && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
+      keyValue = str.slice(valueStartedAt, str[valueStartedAt] === "\"" ? i + 1 : i);
+      valueEndedAt = i;
+      if (currentlyWithinArray() && (stringifyPath(path) === currentPath.join(".") || currentPath.join(".").endsWith(".".concat(stringifyPath(path))))) {
         replaceThisValue = true;
       }
     }
-    if (!replaceThisValue && (currentlyWithinArray || !currentlyWithinArray && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
-      keyValue = str.slice(valueStartedAt, str[valueStartedAt] === "\"" ? i + 1 : i);
-      valueEndedAt = i;
-    }
-    if (!replaceThisValue && !currentlyWithinArray && str[i] === "\"" && str[i - 1] !== "\\" && !keyName && !keyStartedAt && !keyEndedAt && str[i + 1]) {
+    if (!replaceThisValue && !currentlyWithinArray() && str[i] === "\"" && str[i - 1] !== "\\" && !keyName && !keyStartedAt && !keyEndedAt && str[i + 1]) {
       keyStartedAt = i + 1;
     }
-    if (!replaceThisValue && !currentlyWithinArray && str[i] === "\"" && str[i - 1] !== "\\" && !keyEndedAt && keyStartedAt && !valueStartedAt && keyStartedAt < i) {
+    if (!replaceThisValue && !currentlyWithinArray() && str[i] === "\"" && str[i - 1] !== "\\" && !keyEndedAt && keyStartedAt && !valueStartedAt && keyStartedAt < i) {
       keyEndedAt = i + 1;
       keyName = str.slice(keyStartedAt, i);
       currentPath.push(keyName);
@@ -117,9 +161,7 @@ function main(_ref) {
     }
     if (!replaceThisValue && valueEndedAt && i >= valueEndedAt && str[i].trim().length) {
       if (str[i] === ",") {
-        if (currentlyWithinArray) {
-          currentPath[currentPath.length - 1] = currentPath[currentPath.length - 1] + 1;
-        } else {
+        if (currentlyWithinArray()) ; else {
           currentPath.pop();
         }
         reset();
