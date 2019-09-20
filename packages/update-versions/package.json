@@ -171,7 +171,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "format-package": "^5.2.0",
+    "edit-package-json": "^1.0.0",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "lodash.isplainobject": "^4.0.6",
@@ -180,8 +180,7 @@
     "meow": "^5.0.0",
     "pacote": "^9.5.8",
     "path": "^0.12.7",
-    "update-notifier": "^3.0.1",
-    "write-json-file": "^4.2.0"
+    "update-notifier": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",

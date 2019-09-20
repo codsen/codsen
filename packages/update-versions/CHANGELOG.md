@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.6.0 (2019-06-21)
+
+### Changes
+
+- Removed dependencies `write-json-file` and `format-package` because now we edit JSON as string using `edit-package-json` ([npm](https://www.npmjs.com/package/edit-package-json), [gitlab](https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json/)). Now we don't touch the formatting of each `package.json` - its indentation or whatever.
+
 ## 1.5.0 (2019-06-18)
 
 ### Features

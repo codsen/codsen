@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/*eslint require-atomic-updates:0 */
+
 // VARS
 // -----------------------------------------------------------------------------
 
@@ -9,11 +11,10 @@ const globby = require("globby");
 const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");
-const writeJsonFile = require("write-json-file");
 const pacote = require("pacote");
-const format = require("format-package");
 const logUpdate = require("log-update");
 const logSymbols = require("log-symbols");
+const { set, del } = require("edit-package-json");
 
 const { log } = console;
 const cli = meow(
@@ -78,72 +79,71 @@ if (cli.flags) {
           p === "package.json" ? "root " : ""
         }${p}\u001b[${39}m`}`
       );
-      const contents = JSON.parse(await fs.readFile(p, "utf8"));
+      let stringContents = await fs.readFile(p, "utf8");
+      const parsedContents = JSON.parse(stringContents);
 
-      if (isObj(contents.dependencies)) {
-        const keys = Object.keys(contents.dependencies);
+      if (isObj(parsedContents.dependencies)) {
+        const keys = Object.keys(parsedContents.dependencies);
         for (let y = 0, len2 = keys.length; y < len2; y++) {
           let updatedThisDep = false;
           const singleDepName = keys[y];
-          const singleDepValue = contents.dependencies[keys[y]];
+          const singleDepValue = parsedContents.dependencies[keys[y]];
           if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
             continue;
           }
-          if (db.hasOwnProperty(singleDepName)) {
+
+          let retrievedVersion;
+          try {
+            retrievedVersion = await pacote
+              .manifest(singleDepName)
+              .then(pkg => pkg.version);
+          } catch (err) {
+            console.log(
+              `   ${`\u001b[${36}m${path.dirname(
+                p
+              )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
+            );
+            logUpdate.done();
+          }
+
+          if (retrievedVersion) {
+            db[singleDepName] = retrievedVersion;
             if (
-              contents.dependencies[singleDepName] !== `^${db[singleDepName]}`
+              parsedContents.dependencies[singleDepName] !==
+              `^${retrievedVersion}`
             ) {
-              contents.dependencies[singleDepName] = `^${db[singleDepName]}`;
+              stringContents = set(
+                stringContents,
+                `dependencies.${singleDepName}`,
+                `^${retrievedVersion}`
+              );
               wrote = true;
               updatedThisDep = true;
             }
-          } else {
-            let retrievedVersion;
-            try {
-              retrievedVersion = await pacote
-                .manifest(singleDepName)
-                .then(pkg => pkg.version);
-            } catch (err) {
-              console.log(
-                `   ${`\u001b[${36}m${path.dirname(
-                  p
-                )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
-              );
-              logUpdate.done();
-            }
-
-            if (retrievedVersion) {
-              db[singleDepName] = retrievedVersion;
-              if (
-                contents.dependencies[singleDepName] !== `^${retrievedVersion}`
-              ) {
-                contents.dependencies[singleDepName] = `^${retrievedVersion}`;
-                wrote = true;
-                updatedThisDep = true;
-              }
-            }
           }
+
           if (updatedThisDep) {
             logUpdate.done();
             console.log(
               `   ${`\u001b[${36}m${path.dirname(
                 p
-              )}\u001b[${39}m`} dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${
-                contents.dependencies[singleDepName]
-              }`
+              )}\u001b[${39}m`} dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${`^${retrievedVersion}`}`
             );
           }
         }
       }
-      if (isObj(contents.devDependencies)) {
-        let keys = Object.keys(contents.devDependencies);
+      if (isObj(parsedContents.devDependencies)) {
+        let keys = Object.keys(parsedContents.devDependencies);
         // 1. first, remove deps which if they are in normal dependencies in
-        // package.json, that's our value contents.dependencies
+        // package.json, that's our value parsedContents.dependencies
 
-        if (isObj(contents.dependencies)) {
-          Object.keys(contents.dependencies).forEach(depName => {
+        if (isObj(parsedContents.dependencies)) {
+          Object.keys(parsedContents.dependencies).forEach(depName => {
             if (keys.includes(depName)) {
-              delete contents.devDependencies[depName];
+              stringContents = del(
+                stringContents,
+                `devDependencies.${depName}`
+              );
               wrote = true;
               logUpdate.done();
               console.log(
@@ -158,73 +158,64 @@ if (cli.flags) {
         // 2. update the deps
 
         // recalculate keys:
-        keys = Object.keys(contents.devDependencies);
+        keys = Object.keys(parsedContents.devDependencies);
         for (let y = 0, len2 = keys.length; y < len2; y++) {
           let updatedThisDep = false;
           const singleDepName = keys[y];
-          const singleDepValue = contents.devDependencies[keys[y]];
+          const singleDepValue = parsedContents.devDependencies[keys[y]];
           if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
             continue;
           }
-          if (db.hasOwnProperty(singleDepName)) {
+
+          let retrievedVersion;
+          try {
+            retrievedVersion = await pacote
+              .manifest(singleDepName)
+              .then(pkg => pkg.version);
+          } catch (err) {
+            console.log(
+              `   ${`\u001b[${36}m${path.dirname(
+                p
+              )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
+            );
+            logUpdate.done();
+          }
+          if (retrievedVersion) {
+            db[singleDepName] = retrievedVersion;
             if (
-              contents.devDependencies[singleDepName] !==
-                `^${db[singleDepName]}` &&
-              singleDepName !== "lerna"
+              parsedContents.devDependencies[singleDepName] !==
+              `^${retrievedVersion}`
             ) {
-              contents.devDependencies[singleDepName] = `^${db[singleDepName]}`;
+              stringContents = set(
+                stringContents,
+                `devDependencies.${singleDepName}`,
+                `^${retrievedVersion}`
+              );
               wrote = true;
               updatedThisDep = true;
             }
-          } else {
-            let retrievedVersion;
-            try {
-              retrievedVersion = await pacote
-                .manifest(singleDepName)
-                .then(pkg => pkg.version);
-            } catch (err) {
-              console.log(
-                `   ${`\u001b[${36}m${path.dirname(
-                  p
-                )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
-              );
-              logUpdate.done();
-            }
-            if (retrievedVersion) {
-              db[singleDepName] = retrievedVersion;
-              if (
-                contents.devDependencies[singleDepName] !==
-                `^${retrievedVersion}`
-              ) {
-                contents.devDependencies[
-                  singleDepName
-                ] = `^${retrievedVersion}`;
-                wrote = true;
-                updatedThisDep = true;
-              }
-            }
           }
+
           if (updatedThisDep) {
             logUpdate.done();
             console.log(
               `   ${`\u001b[${36}m${path.dirname(
                 p
-              )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${
-                contents.devDependencies[singleDepName]
-              }`
+              )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${`^${retrievedVersion}`}`
             );
           }
         }
       }
 
-      if (isObj(contents) && contents.hasOwnProperty("gitHead")) {
-        delete contents.gitHead;
+      if (
+        isObj(parsedContents) &&
+        Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
+      ) {
+        stringContents = del(stringContents, "gitHead");
       }
 
       if (wrote) {
-        await writeJsonFile(p, JSON.parse(await format(contents)), {
-          indent: 2
-        });
+        await fs.writeFile(p, stringContents);
       }
       logUpdate(
         `${

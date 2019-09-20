@@ -67,13 +67,11 @@ Two exceptions:
 
 ## Opinionated part 2
 
-It is hard to ensure that all `package.json` files are sorted in correct order. For that we use `format-package` to automatically format each `package.json` file. It's like [Prettier](https://prettier.io) but for `package.json` key order.
-
-**[⬆ back to top](#)**
+If any dependency is listed on both `dependencies` and `devDependencies`, it will be removed from the latter list.
 
 ## Opinionated part 3
 
-If any dependency is listed on both `dependencies` and `devDependencies`, it will be removed from the latter list.
+If Lerna build goes wrong, key called `gitHead` is created in `package.json`. Lerna normally cleans it up but if things go wrong, key might be left there. This CLI removes key called `gitHead` if such exists, in every processed `package.json`.
 
 ## Conclusion
 
@@ -87,7 +85,6 @@ If you don't like something above, don't use `update-versions`.
 
 ## All Extras
 
-- Each `package.json` is [sorted](https://www.npmjs.com/package/format-package) considering classic `package.json` key order (dependencies at the bottom etc.)
 - Any `gitHead` keys will be removed from all `package.json`. `gitHead` are bad and happen when `lerna publish` goes wrong.
 - If algorithm encounters `node_modules` it won't touch that folder (or deeper inside). This guarantees all your symlinks will be intact.
 - Thanks to `log-update` the log footprint is as minimal as possible, to save space
@@ -103,7 +100,6 @@ Only the finest dependencies are used:
 
 | Dependency                                                                   | Purpose                                                                                                                                           |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`format-package`](https://www.npmjs.com/package/format-package)             | Puts all keys in package.json in good order                                                                                                       |
 | [`fs-extra`](https://www.npmjs.com/package/fs-extra)                         | We want it for `fs` ops but with promises                                                                                                         |
 | [`globby`](https://www.npmjs.com/package/globby)                             | Globbing utility from Mr. Sorhus                                                                                                                  |
 | [`lodash.isplainobject`](https://www.npmjs.com/package/lodash.isplainobject) | To surely identify plain objects                                                                                                                  |
@@ -112,7 +108,6 @@ Only the finest dependencies are used:
 | [`meow`](https://www.npmjs.com/package/meow)                                 | CLI helper from Mr. Sorhus                                                                                                                        |
 | [`pacote`](https://www.npmjs.com/package/pacote)                             | npm own's app - pings npm, fetches latest version                                                                                                 |
 | [`update-notifier`](https://www.npmjs.com/package/update-notifier)           | Pesters users if CLI is not up-to-date. npm use it too.                                                                                           |
-| [`write-json-file`](https://www.npmjs.com/package/write-json-file)           | Atomically writes JSON. [Prevents](<https://en.wikipedia.org/wiki/Atomicity_(database_systems)>) broken files if/when write operation goes wrong. |
 
 **[⬆ back to top](#)**
 
