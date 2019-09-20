@@ -1,3 +1,5 @@
+// avaonly
+
 import test from "ava";
 import stripHtml from "../dist/string-strip-html.esm";
 
@@ -158,7 +160,7 @@ test("01.31 - string is whole (opening) tag - custom, outer whitespace", t => {
 test("01.32 - string is whole (opening) tag - custom, line breaks", t => {
   t.deepEqual(
     stripHtml("a\n<custom-tag /></ custom-tag>\n< /custom-tag>\n\nb"),
-    "a\nb",
+    "a\n\nb",
     "01.32"
   );
 });
@@ -560,7 +562,7 @@ test("03.11 - tag pairs including content - via opts.stripTogetherWithTheirConte
     stripHtml("a<    b    >     c \n\n\n        <   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"]
     }),
-    "a\nd",
+    "a\n\nd",
     "03.11 - no closing slashes"
   );
 });
@@ -835,7 +837,7 @@ test("05.08 - multiple ranged tags - and the same but with bunch of line breaks 
 test("06.01 - whitespace control - line breaks between tags", t => {
   t.deepEqual(
     stripHtml("something <a> \n\n to <a> put here to test"),
-    "something\nto put here to test",
+    "something\n\nto put here to test",
     "06.01"
   );
 });
@@ -932,7 +934,7 @@ test("07.04 - CDATA - single linebreaks", t => {
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>\nb`),
-    "a\nb",
+    "a\n\nb",
     "07.04"
   );
 });
@@ -943,7 +945,7 @@ test("07.05 - CDATA - excessive linebreaks", t => {
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\nb`),
-    "a\nb",
+    "a\n\nb",
     "07.05"
   );
 });
@@ -954,7 +956,7 @@ test("07.06 - CDATA - mixed linebreaks", t => {
     The <, &, ', and " can be used,
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\n\t b`),
-    "a\nb",
+    "a\n\nb",
     "07.06"
   );
 });
@@ -1290,7 +1292,7 @@ test("10.05 - strips XML - generous trailing space", t => {
 </xml><![endif]-->
 
   def`),
-    "abc\ndef",
+    "abc\n\ndef",
     "10.05"
   );
 });
@@ -1645,7 +1647,7 @@ test("13.04 - whitespace control - adds a linebreak between each substring piece
     b
   </div>
 c`),
-    "a\nb\nc",
+    "a\n\nb\n\nc",
     "13.04"
   );
 });
@@ -1664,7 +1666,7 @@ test("13.06 - whitespace control - multiple tag combo case #2", t => {
           </b>
         </a>
       y`),
-    "z\nc\ny",
+    "z\n\nc\n\ny",
     "13.06"
   );
 });
@@ -2629,6 +2631,73 @@ test("18.02 - opts.onlyStripTags + opts.ignoreTags combo", t => {
     ),
     '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
     "18.02.06 - both entries cancel each one out"
+  );
+});
+
+test("18.03 - opts.onlyStripTags - multiline text - defaults", t => {
+  t.deepEqual(
+    stripHtml(
+      `Abc
+
+<b>mn</b>
+
+def`
+    ),
+    `Abc
+
+mn
+
+def`,
+    "18.03"
+  );
+});
+
+test("18.04 - opts.onlyStripTags - multiline text - option on", t => {
+  t.deepEqual(
+    stripHtml(
+      `Abc
+
+<b>mn</b>
+<i>op</i>
+<u>qr</u>
+<strong>st</strong>
+<em>uv</em>
+
+def`,
+      {
+        onlyStripTags: [
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "strong",
+          "em",
+          "u",
+          "strike",
+          "ul",
+          "ol",
+          "hr",
+          "p",
+          "li",
+          "sub",
+          "sup",
+          "i",
+          "b"
+        ]
+      }
+    ),
+    `Abc
+
+mn
+op
+qr
+st
+uv
+
+def`,
+    "18.04"
   );
 });
 

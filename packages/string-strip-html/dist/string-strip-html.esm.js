@@ -264,14 +264,28 @@ function stripHtml(str, originalOpts) {
     if (fromIdx < lastOpeningBracketAt) {
       strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
     }
-    if (toIdx > lastClosingBracketAt) {
-      strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
+    if (toIdx > lastClosingBracketAt + 1) {
+      const temp = str.slice(lastClosingBracketAt + 1, toIdx);
+      if (temp.includes("\n") && str[toIdx] === "<") {
+        strToEvaluateForLineBreaks += " ";
+      } else {
+        strToEvaluateForLineBreaks += temp;
+      }
     }
     if (
       !punctuation.includes(str[currCharIdx]) &&
       str[currCharIdx] !== "!"
     ) {
-      return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
+      const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+      if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+        if (foundLineBreaks.length === 1) {
+          return "\n";
+        } else if (foundLineBreaks.length === 2) {
+          return "\n\n";
+        }
+        return "\n\n\n";
+      }
+      return " ";
     }
     return "";
   }
@@ -446,10 +460,7 @@ function stripHtml(str, originalOpts) {
   }
   const rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
-    limitLinebreaksCount:
-      opts.dumpLinkHrefsNearby.enabled && opts.dumpLinkHrefsNearby.putOnNewLine
-        ? 2
-        : 1
+    limitLinebreaksCount: 2
   });
   if (str === "" || str.trim() === "") {
     return str;
@@ -878,7 +889,14 @@ function stripHtml(str, originalOpts) {
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted();
-          let insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`;
+          let insert;
+          if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
+            insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
+              whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation
+            }`;
+          } else {
+            insert = whiteSpaceCompensation;
+          }
           if (
             tag.leftOuterWhitespace === 0 ||
             !right(str, endingRangeIndex - 1)

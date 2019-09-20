@@ -177,13 +177,27 @@ function stripHtml(str, originalOpts) {
     if (fromIdx < lastOpeningBracketAt) {
       strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
     }
-    if (toIdx > lastClosingBracketAt) {
-      strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
+    if (toIdx > lastClosingBracketAt + 1) {
+      var temp = str.slice(lastClosingBracketAt + 1, toIdx);
+      if (temp.includes("\n") && str[toIdx] === "<") {
+        strToEvaluateForLineBreaks += " ";
+      } else {
+        strToEvaluateForLineBreaks += temp;
+      }
     }
     if (!punctuation.includes(str[currCharIdx]) &&
     str[currCharIdx] !== "!"
     ) {
-        return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
+        var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+        if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+          if (foundLineBreaks.length === 1) {
+            return "\n";
+          } else if (foundLineBreaks.length === 2) {
+            return "\n\n";
+          }
+          return "\n\n\n";
+        }
+        return " ";
       }
     return "";
   }
@@ -301,7 +315,7 @@ function stripHtml(str, originalOpts) {
   }
   var rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
-    limitLinebreaksCount: opts.dumpLinkHrefsNearby.enabled && opts.dumpLinkHrefsNearby.putOnNewLine ? 2 : 1
+    limitLinebreaksCount: 2
   });
   if (str === "" || str.trim() === "") {
     return str;
@@ -549,7 +563,12 @@ function stripHtml(str, originalOpts) {
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted();
-          var insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2);
+          var insert = void 0;
+          if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
+            insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2 === "\n\n" ? "\n" : _whiteSpaceCompensation2);
+          } else {
+            insert = _whiteSpaceCompensation2;
+          }
           if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, endingRangeIndex - 1)) {
             insert = "";
           }
