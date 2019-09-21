@@ -186,7 +186,7 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
-    "ava": "^2.4.0",
+    "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
