@@ -3,10 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.6.0 (2019-06-21)
+## 2.0.0 (2019-09-22)
 
-### Changes
+### Improvements
 
+- Fully recoded all operations to be in async and with full progress tracking.
+- If package "a" consumes dependency package "b" and the "b" exists on the monorepo, we set "a" package.json version for "b" to be `version` from local "b" package.json. We don't even query npm. For example, we have our own bastardised `ava`, frozen in time at `v2.2.5` which is consumed by all monorepo packages, instead of npm's `v2.4.0` (at the time of writing).
 - Removed dependencies `write-json-file` and `format-package` because now we edit JSON as string using `edit-package-json` ([npm](https://www.npmjs.com/package/edit-package-json), [gitlab](https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json/)). Now we don't touch the formatting of each `package.json` - its indentation or whatever.
 
 ## 1.5.0 (2019-06-18)

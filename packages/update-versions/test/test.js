@@ -1,6 +1,10 @@
 /* eslint ava/prefer-async-await:0 */
 
-import fs from "fs-extra";
+const { promisify } = require("util");
+const fs = require("fs-extra");
+const read = fs.readFile;
+const write = promisify(require("write-file-atomic"));
+
 import path from "path";
 import test from "ava";
 import execa from "execa";
@@ -106,6 +110,7 @@ const test2FileContents = [packTest12Lib3, rootPack];
 // -----------------------------------------------------------------------------
 
 test("01 - monorepo", async t => {
+  // const tempFolder = "temp";
   const tempFolder = tempy.directory();
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
@@ -117,10 +122,9 @@ test("01 - monorepo", async t => {
   // 2. asynchronously write all test files
 
   await pMap(test1FilePaths, (oneOfTestFilePaths, testIndex) =>
-    fs.writeJson(
+    write(
       path.join(tempFolder, oneOfTestFilePaths),
-      test1FileContents[testIndex],
-      { spaces: 2 }
+      JSON.stringify(test1FileContents[testIndex], null, 2)
     )
   )
     .then(() =>
@@ -139,18 +143,14 @@ test("01 - monorepo", async t => {
     })
     .then(() =>
       pMap(test1FilePaths, oneOfPaths =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
-      ).then(contentsArray => {
-        return pMap(contentsArray, oneOfArrays =>
-          JSON.stringify(oneOfArrays, null, 2)
-        );
-      })
-    )
-    .then(received =>
-      execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
-        () => received
+        read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
+    // .then(received =>
+    //   execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+    //     () => received
+    //   )
+    // )
     .then(contents => {
       // array comes in, but each JSON inside in unparsed and in string format:
       contents = contents.map(arr => JSON.parse(arr));
@@ -192,10 +192,9 @@ test("02 - normal repo", async t => {
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    fs.writeJson(
+    write(
       path.join(tempFolder, oneOfTestFilePaths),
-      test2FileContents[testIndex],
-      { spaces: 2 }
+      JSON.stringify(test2FileContents[testIndex], null, 2)
     )
   )
     .then(() =>
@@ -214,14 +213,9 @@ test("02 - normal repo", async t => {
     })
     .then(() =>
       pMap(test2FilePaths, oneOfPaths =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+        read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
-    .then(contentsArray => {
-      return pMap(contentsArray, oneOfArrays =>
-        JSON.stringify(oneOfArrays, null, "\t")
-      );
-    })
     .then(received =>
       execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
         () => received
@@ -260,10 +254,9 @@ test("03 - deletes deps from devdeps if they are among normal deps", async t => 
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    fs.writeJson(
+    write(
       path.join(tempFolder, oneOfTestFilePaths),
-      tweakedContents[testIndex],
-      { spaces: 2 }
+      JSON.stringify(tweakedContents[testIndex], null, 2)
     )
   )
     .then(() =>
@@ -282,14 +275,9 @@ test("03 - deletes deps from devdeps if they are among normal deps", async t => 
     })
     .then(() =>
       pMap(test2FilePaths, oneOfPaths =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+        read(path.join(tempFolder, oneOfPaths), "utf8")
       )
     )
-    .then(contentsArray => {
-      return pMap(contentsArray, oneOfArrays =>
-        JSON.stringify(oneOfArrays, null, "\t")
-      );
-    })
     .then(received =>
       execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
         shell: true
@@ -332,13 +320,7 @@ test("93 - no files found in the given directory", async t => {
     `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`,
     { shell: true }
   );
-  // console.log(
-  //   `${`\u001b[${33}m${`stdOutContents`}\u001b[${39}m`} = ${JSON.stringify(
-  //     stdOutContents,
-  //     null,
-  //     4
-  //   )}`
-  // );
+
   // CLI should exit with a non-error code zero:
   t.is(stdOutContents.exitCode, 0);
 

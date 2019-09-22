@@ -73,6 +73,8 @@ If any dependency is listed on both `dependencies` and `devDependencies`, it wil
 
 If Lerna build goes wrong, key called `gitHead` is created in `package.json`. Lerna normally cleans it up but if things go wrong, key might be left there. This CLI removes key called `gitHead` if such exists, in every processed `package.json`.
 
+**[⬆ back to top](#)**
+
 ## Conclusion
 
 Because of the features mentioned above, this package is slower than alternatives, `yarn` or `npm-check-updates` or whatever.
@@ -98,16 +100,16 @@ PS. We are using `update-versions` to maintain itself — our [monorepo](https:/
 
 Only the finest dependencies are used:
 
-| Dependency                                                                   | Purpose                                                                                                                                           |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`fs-extra`](https://www.npmjs.com/package/fs-extra)                         | We want it for `fs` ops but with promises                                                                                                         |
-| [`globby`](https://www.npmjs.com/package/globby)                             | Globbing utility from Mr. Sorhus                                                                                                                  |
-| [`lodash.isplainobject`](https://www.npmjs.com/package/lodash.isplainobject) | To surely identify plain objects                                                                                                                  |
-| [`log-symbols`](https://www.npmjs.com/package/log-symbols)                   | Success icon. From Mr. Sorhus.                                                                                                                    |
-| [`log-update`](https://www.npmjs.com/package/log-update)                     | Allows to overwrite current line in terminal. From Mr. Sorhus too.                                                                                |
-| [`meow`](https://www.npmjs.com/package/meow)                                 | CLI helper from Mr. Sorhus                                                                                                                        |
-| [`pacote`](https://www.npmjs.com/package/pacote)                             | npm own's app - pings npm, fetches latest version                                                                                                 |
-| [`update-notifier`](https://www.npmjs.com/package/update-notifier)           | Pesters users if CLI is not up-to-date. npm use it too.                                                                                           |
+| Dependency                                                                   | Purpose                                                            |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [`fs-extra`](https://www.npmjs.com/package/fs-extra)                         | We want it for `fs` ops but with promises                          |
+| [`globby`](https://www.npmjs.com/package/globby)                             | Globbing utility from Mr. Sorhus                                   |
+| [`lodash.isplainobject`](https://www.npmjs.com/package/lodash.isplainobject) | To surely identify plain objects                                   |
+| [`log-symbols`](https://www.npmjs.com/package/log-symbols)                   | Success icon. From Mr. Sorhus.                                     |
+| [`log-update`](https://www.npmjs.com/package/log-update)                     | Allows to overwrite current line in terminal. From Mr. Sorhus too. |
+| [`meow`](https://www.npmjs.com/package/meow)                                 | CLI helper from Mr. Sorhus                                         |
+| [`pacote`](https://www.npmjs.com/package/pacote)                             | npm own's app - pings npm, fetches latest version                  |
+| [`update-notifier`](https://www.npmjs.com/package/update-notifier)           | Pesters users if CLI is not up-to-date. npm use it too.            |
 
 **[⬆ back to top](#)**
 

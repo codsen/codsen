@@ -1,22 +1,33 @@
 #!/usr/bin/env node
 
-/*eslint require-atomic-updates:0 */
-
 // VARS
 // -----------------------------------------------------------------------------
 
-const fs = require("fs-extra");
+const { promisify } = require("util");
 const path = require("path");
+
+// *
+const read = promisify(require("fs").readFile);
+const write = promisify(require("write-file-atomic"));
+// *
+
 const globby = require("globby");
+const pReduce = require("p-reduce");
+const pMap = require("p-map");
+const PProgress = require("p-progress");
+const delay = require("delay");
 const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");
 const pacote = require("pacote");
-const logUpdate = require("log-update");
-const logSymbols = require("log-symbols");
+
+const diff = require("ansi-diff-stream")();
+const progress = require("progress-string");
+
 const { set, del } = require("edit-package-json");
 
 const { log } = console;
+const messagePrefix = `\u001b[${90}m${"✨ update-versions: "}\u001b[${39}m`;
 const cli = meow(
   `
   Usage:
@@ -30,11 +41,7 @@ const cli = meow(
 `
 );
 updateNotifier({ pkg: cli.pkg }).notify();
-const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
-// our compiled DB object. To save us rounds of pinging npm API, we record
-// all package versions that were retrieved so far under this object, so that
-// we can cut corner and reference this, instead of pinging npm again:
-const db = {};
+// const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
@@ -63,171 +70,249 @@ if (cli.flags) {
   });
 }
 
-// Step #2. query the glob and follow the pipeline
+// Step #2. the main function
 // -----------------------------------------------------------------------------
 
 (async () => {
-  const paths = await globby(["**/package.json", "!**/node_modules/**"]);
-  const totalLength = paths.length;
-  for (let i = 0; i < totalLength; i++) {
-    try {
-      let wrote = false;
-      const p = paths[i];
-      logUpdate(
-        `${sparkles} ${`\u001b[${90}m${`update-versions:`}\u001b[${39}m`} ${i +
-          1}/${totalLength} ${`\u001b[${90}m${
-          p === "package.json" ? "root " : ""
-        }${p}\u001b[${39}m`}`
-      );
-      let stringContents = await fs.readFile(p, "utf8");
-      const parsedContents = JSON.parse(stringContents);
-
-      if (isObj(parsedContents.dependencies)) {
-        const keys = Object.keys(parsedContents.dependencies);
-        for (let y = 0, len2 = keys.length; y < len2; y++) {
-          let updatedThisDep = false;
-          const singleDepName = keys[y];
-          const singleDepValue = parsedContents.dependencies[keys[y]];
-          if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
-            continue;
-          }
-
-          let retrievedVersion;
-          try {
-            retrievedVersion = await pacote
-              .manifest(singleDepName)
-              .then(pkg => pkg.version);
-          } catch (err) {
-            console.log(
-              `   ${`\u001b[${36}m${path.dirname(
-                p
-              )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
+  const pathsPromise = await globby([
+    "**/package.json",
+    "!**/node_modules/**",
+    "!**/test/**"
+  ]).then(paths =>
+    pReduce(
+      paths,
+      (mapReceived, currentPath) =>
+        read(currentPath, "utf8")
+          .then(packContentsStr => {
+            const parsedContents = JSON.parse(packContentsStr);
+            mapReceived.namesList.push(parsedContents.name);
+            mapReceived.pathsList.push(currentPath);
+            mapReceived.pathsByName[parsedContents.name] = currentPath;
+            mapReceived.contentsStr[currentPath] = packContentsStr;
+            mapReceived.contentsObj[currentPath] = parsedContents;
+            return mapReceived;
+          })
+          .catch(err => {
+            log(
+              `${messagePrefix}${`\u001b[${31}m${`Couldn't read and parse the package.json at "${currentPath}": (${err})`}\u001b[${39}m`}`
             );
-            logUpdate.done();
-          }
+            return mapReceived;
+          }),
+      {
+        namesList: [],
+        pathsList: [],
+        pathsByName: {},
+        contentsObj: {},
+        contentsStr: {}
+      }
+    )
+  );
 
-          if (retrievedVersion) {
-            db[singleDepName] = retrievedVersion;
+  // we work on array pathsPromise.pathsByName
+
+  const allProgressPromise = PProgress.all(
+    pathsPromise.pathsList.map(oneOfPaths =>
+      PProgress.fn(async progress => {
+        // call progress() like progress(0.14);
+
+        let amended = false;
+        let stringContents = pathsPromise.contentsStr[oneOfPaths];
+        const parsedContents = pathsPromise.contentsObj[oneOfPaths];
+
+        const totalDeps = (isObj(parsedContents.dependencies)
+          ? Object.keys(parsedContents.dependencies)
+          : []
+        ).concat(
+          isObj(parsedContents.devDependencies)
+            ? Object.keys(parsedContents.devDependencies)
+            : []
+        );
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //               1. LOOKUP OF ALL DEPS & DEVDEPS ALL AT ONCE
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        // As dependency lookup is process-heavy and will take time, we need
+        // to track it. The total progress of this single package we're processing
+        // is divided 75% to compile new versions, 25% to write/skip
+
+        // this is the first 75% of per-package progress
+        // https://github.com/sindresorhus/p-progress#pprogressallpromises-options
+
+        const compiledDepNameVersionPairs = {};
+        const allProgressPromise2 = PProgress.all(
+          totalDeps.map(async singleDepName => {
+            if (pathsPromise.namesList.includes(singleDepName)) {
+              compiledDepNameVersionPairs[singleDepName] =
+                pathsPromise.contentsObj[
+                  pathsPromise.pathsByName[singleDepName]
+                ].version;
+              return;
+            }
+            try {
+              await pacote.manifest(singleDepName).then(pkg => {
+                compiledDepNameVersionPairs[singleDepName] = pkg.version;
+              });
+            } catch (err) {
+              // no response from npm
+              compiledDepNameVersionPairs[singleDepName] = null;
+            }
+          })
+        );
+        allProgressPromise2.onProgress(val => {
+          progress(val * 0.75);
+        });
+        await allProgressPromise2;
+
+        // Now we need to simultaneously query all the deps, dev and normal ones.
+        // We rely on pacote's caching mechanism.
+
+        // The plan is to query all the deps at once, then await the result,
+        // then process received result, picking values we need from it.
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //                            2. DEPS
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        if (isObj(parsedContents.dependencies)) {
+          const keys = Object.keys(parsedContents.dependencies);
+          for (let y = 0, len2 = keys.length; y < len2; y++) {
+            const singleDepName = keys[y];
+            const singleDepValue = parsedContents.dependencies[keys[y]];
             if (
-              parsedContents.dependencies[singleDepName] !==
-              `^${retrievedVersion}`
+              singleDepValue.startsWith("file:") ||
+              singleDepName === "lerna"
+            ) {
+              continue;
+            }
+
+            if (
+              singleDepValue !==
+              `^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
                 `dependencies.${singleDepName}`,
-                `^${retrievedVersion}`
+                `^${compiledDepNameVersionPairs[singleDepName]}`
               );
-              wrote = true;
-              updatedThisDep = true;
+              amended = true;
             }
-          }
 
-          if (updatedThisDep) {
-            logUpdate.done();
-            console.log(
-              `   ${`\u001b[${36}m${path.dirname(
-                p
-              )}\u001b[${39}m`} dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${`^${retrievedVersion}`}`
-            );
+            // report progress
+            // total: totalDeps, current chunk total: len2
+            progress(0.75 + 0.24 * (y / totalDeps.length));
           }
         }
-      }
-      if (isObj(parsedContents.devDependencies)) {
-        let keys = Object.keys(parsedContents.devDependencies);
-        // 1. first, remove deps which if they are in normal dependencies in
-        // package.json, that's our value parsedContents.dependencies
 
-        if (isObj(parsedContents.dependencies)) {
-          Object.keys(parsedContents.dependencies).forEach(depName => {
-            if (keys.includes(depName)) {
-              stringContents = del(
-                stringContents,
-                `devDependencies.${depName}`
-              );
-              wrote = true;
-              logUpdate.done();
-              console.log(
-                `   ${`\u001b[${36}m${path.dirname(
-                  p
-                )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${depName}\u001b[${39}m`} removed because it is among normal dependencies`
-              );
-            }
-          });
-        }
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //                        3. DEV-DEPS
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
-        // 2. update the deps
-
-        // recalculate keys:
-        keys = Object.keys(parsedContents.devDependencies);
-        for (let y = 0, len2 = keys.length; y < len2; y++) {
-          let updatedThisDep = false;
-          const singleDepName = keys[y];
-          const singleDepValue = parsedContents.devDependencies[keys[y]];
-          if (singleDepValue.startsWith("file:") || singleDepName === "lerna") {
-            continue;
+        if (isObj(parsedContents.devDependencies)) {
+          let keys = Object.keys(parsedContents.devDependencies);
+          // 1. first, remove deps which if they are in normal dependencies in
+          // package.json, that's our value parsedContents.dependencies
+          if (isObj(parsedContents.dependencies)) {
+            Object.keys(parsedContents.dependencies).forEach(depName => {
+              if (keys.includes(depName)) {
+                // 1. delete devdep entry on JSON string
+                stringContents = del(
+                  stringContents,
+                  `devDependencies.${depName}`
+                );
+                // 2. delete the devdep from parsedContents.devDependencies
+                // key array which will be used to traverse in the loop later
+                keys = keys.filter(val => val !== depName);
+                // 3. set the flag to activate the file write operation later
+                amended = true;
+              }
+            });
           }
-
-          let retrievedVersion;
-          try {
-            retrievedVersion = await pacote
-              .manifest(singleDepName)
-              .then(pkg => pkg.version);
-          } catch (err) {
-            console.log(
-              `   ${`\u001b[${36}m${path.dirname(
-                p
-              )}\u001b[${39}m`} dep ${`\u001b[${31}m${singleDepName}\u001b[${39}m`} - no response from npm`
-            );
-            logUpdate.done();
-          }
-          if (retrievedVersion) {
-            db[singleDepName] = retrievedVersion;
+          for (let y = 0, len2 = keys.length; y < len2; y++) {
+            const singleDepName = keys[y];
+            const singleDepValue = parsedContents.devDependencies[keys[y]];
             if (
-              parsedContents.devDependencies[singleDepName] !==
-              `^${retrievedVersion}`
+              singleDepValue.startsWith("file:") ||
+              singleDepName === "lerna"
+            ) {
+              continue;
+            }
+
+            if (
+              singleDepValue !==
+              `^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
                 `devDependencies.${singleDepName}`,
-                `^${retrievedVersion}`
+                `^${compiledDepNameVersionPairs[singleDepName]}`
               );
-              wrote = true;
-              updatedThisDep = true;
+              amended = true;
             }
-          }
 
-          if (updatedThisDep) {
-            logUpdate.done();
-            console.log(
-              `   ${`\u001b[${36}m${path.dirname(
-                p
-              )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${singleDepName}\u001b[${39}m`} = ${singleDepValue} ---> ${`^${retrievedVersion}`}`
+            progress(
+              0.75 + 0.24 * ((totalDeps.length - len2 + y) / totalDeps.length)
             );
           }
         }
-      }
 
-      if (
-        isObj(parsedContents) &&
-        Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
-      ) {
-        stringContents = del(stringContents, "gitHead");
-      }
+        if (
+          isObj(parsedContents) &&
+          Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
+        ) {
+          stringContents = del(stringContents, "gitHead");
+        }
 
-      if (wrote) {
-        await fs.writeFile(p, stringContents);
-      }
-      logUpdate(
-        `${
-          logSymbols.success
-        } ${`\u001b[${90}m${`update-versions:`}\u001b[${39}m`}${
-          totalLength > 1 ? ` ${i + 1}/${totalLength}` : ""
-        } ${`\u001b[${90}m${`done`}\u001b[${39}m`}`
-      );
-    } catch (err) {
-      console.log(
-        `${`\u001b[${31}m${`something wrong happened:`}\u001b[${39}m`}\n${err}`
-      );
-    }
-  }
+        if (amended) {
+          await write(oneOfPaths, stringContents);
+        }
+      })
+    )
+  );
+
+  allProgressPromise.onProgress(val =>
+    diff.write(
+      val === 1
+        ? `${messagePrefix}all done`
+        : `${messagePrefix}${Math.floor(val * 100)}% done`
+    )
+  );
+  diff.pipe(process.stdout);
+  await allProgressPromise;
 })();
