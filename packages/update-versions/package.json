@@ -173,18 +173,14 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "delay": "^4.3.0",
     "edit-package-json": "^0.0.1",
     "globby": "^10.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^3.3.0",
     "meow": "^5.0.0",
-    "p-map": "^3.0.0",
     "p-progress": "^0.4.1",
     "p-reduce": "^2.1.0",
     "pacote": "^9.5.8",
-    "path": "^0.12.7",
-    "progress-string": "^1.2.2",
     "update-notifier": "^3.0.1",
     "write-file-atomic": "^3.0.0"
   },

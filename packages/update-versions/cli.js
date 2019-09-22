@@ -4,7 +4,6 @@
 // -----------------------------------------------------------------------------
 
 const { promisify } = require("util");
-const path = require("path");
 
 // *
 const read = promisify(require("fs").readFile);
@@ -13,16 +12,13 @@ const write = promisify(require("write-file-atomic"));
 
 const globby = require("globby");
 const pReduce = require("p-reduce");
-const pMap = require("p-map");
 const PProgress = require("p-progress");
-const delay = require("delay");
 const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");
 const pacote = require("pacote");
 
 const diff = require("ansi-diff-stream")();
-const progress = require("progress-string");
 
 const { set, del } = require("edit-package-json");
 
