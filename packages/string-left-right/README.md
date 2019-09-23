@@ -14,10 +14,12 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Whole idea](#whole-idea)
 - [Usage](#usage)
 - [API - left() and right()](#api---left-and-right)
 - [API - chompLeft() and chompRight()](#api---chompleft-and-chompright)
 - [API - chompLeft() and chompRight() modes](#api---chompleft-and-chompright-modes)
+- [API - leftSeq() and rightSeq()](#api---leftseq-and-rightseq)
 - [API - leftStopAtNewLines() and rightStopAtNewLines()](#api---leftstopatnewlines-and-rightstopatnewlines)
 - [More complex lookups](#more-complex-lookups)
 - [Contributing](#contributing)
@@ -96,6 +98,8 @@ It's trivial to check, is something on the left or on the right of a given index
 It's not that trivial to check, what is the index of the first non-whitespace character on either side. You need to use loops or trim functions and calculate the position, also consider the `null` cases where there are no such characters.
 
 That's what this program is about — it is a string value lookup helper.
+
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -251,15 +255,15 @@ Both exported functions have the same API:
 
 Above, square brackets mean options are optional, you can omit them.
 
-| Input argument | Type         | Obligatory? | Description                                        |
-| -------------- | ------------ | ----------- | -------------------------------------------------- |
-| `str`          | String       | yes         | String to work upon |
-| `idx`         | Natural number or zero | yes          | At which index we start looking on either side |
-| `opts`         | Plain object | no          | The Optional Options Object, see below for its API |
-| `str1ToMatch`  | String, single character | no          | The first character to match on the sequence |
-| `str2ToMatch`  | String, single character | no          | The second character to match on the sequence |
-| `str3ToMatch`  | String, single character | no          | The third character to match on the sequence |
-| ...  | String, single character | no          | The n-th character to match on the sequence |
+| Input argument | Type                     | Obligatory? | Description                                        |
+| -------------- | ------------------------ | ----------- | -------------------------------------------------- |
+| `str`          | String                   | yes         | String to work upon                                |
+| `idx`          | Natural number or zero   | yes         | At which index we start looking on either side     |
+| `opts`         | Plain object             | no          | The Optional Options Object, see below for its API |
+| `str1ToMatch`  | String, single character | no          | The first character to match on the sequence       |
+| `str2ToMatch`  | String, single character | no          | The second character to match on the sequence      |
+| `str3ToMatch`  | String, single character | no          | The third character to match on the sequence       |
+| ...            | String, single character | no          | The n-th character to match on the sequence        |
 
 You can put as many characters as you want.
 
@@ -292,6 +296,8 @@ t.deepEqual(
 ```
 
 Program reports any whitespace gap ranges it encountered and also indexes of leftmost and rightmost character.
+
+**[⬆ back to top](#)**
 
 ## API - leftStopAtNewLines() and rightStopAtNewLines()
 

@@ -157,6 +157,14 @@
         ]
     },
     {
+        "name": "edit-package-json",
+        "size": 8755,
+        "imports": [
+            "ranges-apply",
+            "string-left-right"
+        ]
+    },
+    {
         "name": "email-all-chars-within-ascii",
         "size": 2166,
         "imports": [
@@ -264,7 +272,7 @@
     },
     {
         "name": "json-comb-core",
-        "size": 13686,
+        "size": 14639,
         "imports": [
             "check-types-mini",
             "object-fill-missing-keys",
@@ -298,7 +306,7 @@
     },
     {
         "name": "lect",
-        "size": 73747,
+        "size": 73901,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -556,11 +564,18 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33365,
+        "size": 33928,
         "imports": [
             "ranges-apply",
             "ranges-push",
             "string-left-right"
+        ]
+    },
+    {
+        "name": "update-versions",
+        "size": 9416,
+        "imports": [
+            "edit-package-json"
         ]
     },
     {

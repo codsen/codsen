@@ -217,6 +217,7 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
+    "all-named-html-entities": "^1.2.4",
     "ava": "^2.2.5",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",

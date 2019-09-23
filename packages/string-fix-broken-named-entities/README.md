@@ -88,13 +88,13 @@ console.log(JSON.stringify(result, null, 4));
 
 ### Optional Options Object
 
-| An Optional Options Object's key | Type of its value | Default | Description                                                                                                                                                          |
-| -------------------------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                                |                   |         |
-| `decode`                         | Boolean           | `false` | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                                          |
-| `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output |
-| `progressFn`                     | Function          | `null`  | Used in web worker setups. You pass a function and it gets called one for each natural number `0` to `99`, meaning percentage of the work done so far |
-| }                                |                   |         |
+| An Optional Options Object's key | Type of its value | Default   | Description                                                                                                                                           |
+| -------------------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                |                   |           |
+| `decode`                         | Boolean           | `false`   | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                           |
+| `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output                                                                            |
+| `progressFn`                     | Function          | `null`    | Used in web worker setups. You pass a function and it gets called one for each natural number `0` to `99`, meaning percentage of the work done so far |
+| }                                |                   |           |
 
 Here it is in one place:
 
@@ -118,12 +118,7 @@ Here it is in one place:
 For example, four fixed `nbsp`'s:
 
 ```js
-[
-  [6, 11, "&nbsp;"],
-  [11, 18, "&nbsp;"],
-  [27, 34, "&nbsp;"],
-  [34, 41, "&nbsp;"]
-]
+[[6, 11, "&nbsp;"], [11, 18, "&nbsp;"], [27, 34, "&nbsp;"], [34, 41, "&nbsp;"]];
 ```
 
 ## `opts.decode`
