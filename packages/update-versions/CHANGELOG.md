@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://gitlab.com/codsen/codsen/compare/update-versions@1.5.13...update-versions@2.0.0) (2019-09-23)
+
+
+### Features
+
+* don't touch existing package.json formatting ([c51782e](https://gitlab.com/codsen/codsen/commit/c51782e))
+* recode fully in async ([a3adac5](https://gitlab.com/codsen/codsen/commit/a3adac5))
+
+
+### BREAKING CHANGES
+
+* Full recode
+
+
+
+
+
 ## 2.0.0 (2019-09-22)
 
 ### Improvements

@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool",
   "license": "MIT",
   "engines": {
@@ -206,11 +206,11 @@
     "ranges-push": "^3.6.1",
     "string-apostrophes": "^1.1.1",
     "string-collapse-white-space": "^5.1.1",
-    "string-fix-broken-named-entities": "^2.4.4",
-    "string-left-right": "^2.3.2",
+    "string-fix-broken-named-entities": "^2.4.5",
+    "string-left-right": "^2.3.3",
     "string-range-expander": "^1.10.44",
-    "string-remove-widows": "^1.4.1",
-    "string-strip-html": "^4.2.3",
+    "string-remove-widows": "^1.4.2",
+    "string-strip-html": "^4.3.0",
     "string-trim-spaces-only": "^2.8.1"
   },
   "devDependencies": {
@@ -230,7 +230,7 @@
     "esm": "^3.2.25",
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.11",
+    "lect": "^0.9.12",
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.43",
     "prettier": "^1.18.2",

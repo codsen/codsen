@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://gitlab.com/codsen/codsen/compare/detergent@5.0.0...detergent@5.0.1) (2019-09-23)
+
+**Note:** Version bump only for package detergent
+
+
+
+
+
 ## 5.0.0 (2019-09-17)
 
 Let's migrate Detergent onto a monorepo, split some of its functionality into standalone packages (`html-entities-not-email-friendly` ([npm](https://www.npmjs.com/package/html-entities-not-email-friendly), [gitlab monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/)), `string-apostrophes` ([npm](https://www.npmjs.com/package/string-apostrophes), [gitlab monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes/)) and `string-remove-widows` ([npm](https://www.npmjs.com/package/string-remove-widows), [gitlab monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/)), for starters).

@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.9.2",
+  "version": "5.9.3",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "string-left-right": "^2.3.2"
+    "string-left-right": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -178,7 +178,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.11",
+    "lect": "^0.9.12",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.4",

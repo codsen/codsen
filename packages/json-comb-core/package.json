@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "6.5.43",
+  "version": "6.6.0",
   "description": "The inner core of json-comb",
   "license": "MIT",
   "engines": {
@@ -197,7 +197,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.11",
+    "lect": "^0.9.12",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.21.4",
