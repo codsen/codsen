@@ -695,30 +695,26 @@ test("113 - unclosed tag followed by a tag - XHTML", t => {
 
 test("114 - unclosed tag followed by a tag - HTML - line break", t => {
   //
-  t.deepEqual(stripHtml('111 <br class="zz"\n<img> 222'), "111\n\n222", "114");
+  t.deepEqual(stripHtml('111 <br class="zz"\n<img> 222'), "111\n222", "114");
 });
 
 test("115 - unclosed tag followed by a tag - XHTML - line break", t => {
-  t.deepEqual(stripHtml('111 <br class="zz"/\n<img> 222'), "111\n\n222", "115");
+  t.deepEqual(stripHtml('111 <br class="zz"/\n<img> 222'), "111\n222", "115");
 });
 
 test("116 - unclosed tag followed by a tag - space and line break, HTML", t => {
   //
-  t.deepEqual(stripHtml('111 <br class="zz" \n<img> 222'), "111\n\n222", "116");
+  t.deepEqual(stripHtml('111 <br class="zz" \n<img> 222'), "111\n222", "116");
 });
 
 test("117 - unclosed tag followed by a tag - space and line break, XHTML", t => {
-  t.deepEqual(
-    stripHtml('111 <br class="zz"/ \n<img> 222'),
-    "111\n\n222",
-    "117"
-  );
+  t.deepEqual(stripHtml('111 <br class="zz"/ \n<img> 222'), "111\n222", "117");
 });
 
 test("118 - unclosed tag followed by a tag - messy", t => {
   t.deepEqual(
     stripHtml('111 <br class="zz"\t/ \n<img> 222'),
-    "111\n\n222",
+    "111\n222",
     "118"
   );
 });
