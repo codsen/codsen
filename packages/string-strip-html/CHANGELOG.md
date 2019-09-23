@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.3.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@4.2.3...string-strip-html@4.3.0) (2019-09-23)
-
+## 4.3.0 (2019-09-23)
 
 ### Features
 
-* respect double line breaks ([2c09d59](https://gitlab.com/codsen/codsen/commit/2c09d59)), closes [#15](https://gitlab.com/codsen/codsen/issues/15)
-
-
-
-
+- respect double line breaks ([2c09d59](https://gitlab.com/codsen/codsen/commit/2c09d59)), closes [#15](https://gitlab.com/codsen/codsen/issues/15)
 
 ## 4.2.0 (2019-09-04)
 

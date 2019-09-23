@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.6.0](https://gitlab.com/codsen/codsen/compare/json-comb-core@6.5.43...json-comb-core@6.6.0) (2019-09-23)
-
+## 6.6.0 (2019-09-23)
 
 ### Features
 
-* sort keys with semver values by comparing semver, not by alphabettical sort ([a5896fa](https://gitlab.com/codsen/codsen/commit/a5896fa))
-
-
-
-
+- sort keys with semver values by comparing semver, not by alphabettical sort ([a5896fa](https://gitlab.com/codsen/codsen/commit/a5896fa))
 
 ## 6.5.0 (2019-01-20)
 
