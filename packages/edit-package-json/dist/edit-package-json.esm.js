@@ -22,6 +22,20 @@ function stringifyPath(something) {
   }
   return String(something);
 }
+function stringifyAndEscapeValue(something) {
+  if (
+    isStr(something) &&
+    something.startsWith(`"`) &&
+    something.endsWith(`"`)
+  ) {
+    return `${JSON.stringify(
+      something.slice(1, something.length - 1),
+      null,
+      0
+    )}`;
+  }
+  return JSON.stringify(something, null, 0);
+}
 function isNotEscape(str, idx) {
   return str[idx] !== "\\" || str[idx - 2] === "\\";
 }
@@ -68,6 +82,7 @@ function main({ str, path, valToInsert, mode }) {
   let keyName;
   let keyValue;
   let itsTheFirstElem = false;
+  let skipUntilTheFollowingIsMet;
   function reset() {
     keyStartedAt = null;
     keyEndedAt = null;
@@ -225,7 +240,32 @@ function main({ str, path, valToInsert, mode }) {
     ) {
       valueStartedAt = i;
     }
-    if (replaceThisValue && valueStartedAt && i > valueStartedAt) {
+    if (
+      skipUntilTheFollowingIsMet &&
+      str[i] === skipUntilTheFollowingIsMet &&
+      isNotEscape(str, i - 1)
+    ) {
+      skipUntilTheFollowingIsMet = undefined;
+    } else if (
+      replaceThisValue &&
+      !skipUntilTheFollowingIsMet &&
+      !currentlyWithinArray() &&
+      valueStartedAt
+    ) {
+      if (str[i] === "{" && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = "}";
+      } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = "]";
+      } else if (str[i] === `"` && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = `"`;
+      }
+    }
+    if (
+      replaceThisValue &&
+      !skipUntilTheFollowingIsMet &&
+      valueStartedAt &&
+      i > valueStartedAt
+    ) {
       if (
         (str[valueStartedAt] === "[" && str[i] === "]") ||
         (str[valueStartedAt] === "{" && str[i] === "}") ||
@@ -235,12 +275,9 @@ function main({ str, path, valToInsert, mode }) {
             (badChars.includes(str[i]) && isNotEscape(str, i - 1))))
       ) {
         if (mode === "set") {
-          return `${str.slice(
-            0,
-            valueStartedAt
-          )}${calculatedValueToInsert}${str.slice(
-            i + (str[i].trim().length ? 1 : 0)
-          )}`;
+          return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(
+            calculatedValueToInsert
+          )}${str.slice(i + (str[i].trim().length ? 1 : 0))}`;
         } else if (mode === "del") {
           let startingPoint = left(str, keyStartedAt - 1) + 1;
           let endingPoint = i + (str[i].trim().length ? 1 : 0);

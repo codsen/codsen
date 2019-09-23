@@ -53,8 +53,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 8 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 8 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 9 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 9 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 37 KB |
 
 **[⬆ back to top](#)**
@@ -66,6 +66,10 @@ Normally, when editing `package.json` file, it is parsed, its value, a plain obj
 When parsing-editing-stringifying JSON, we can't guarantee the: key order, indentation (tabs vs. spaces) and all other formatting to be intact.
 
 This program gives you interface to edit JSON files as string, without parsing.
+
+IMPORTANT.
+
+**Since this program is still in _a baby state_, it can't create new keys which didn't exist before. `set()` will only change values of existing keys. It is not able to add new keys yet.**
 
 It edits JSON as _string_ but let's you use [object-path](https://www.npmjs.com/package/object-path) notation to set values on any paths in JSON.
 
@@ -105,6 +109,10 @@ const editPack = require("edit-package-json");
 When you consume `set` (`const { set } = require("edit-package-json");`), it is a function.
 
 `set()` can set values by path, on a JSON string.
+
+**THIS IS AN EARLY STAGE OF THIS PROGRAM AND IT CAN'T CREATE NEW KEYS, IT WILL ONLY CHANGE VALUE IF KEY ALREADY EXISTS.**
+
+This is the primary difference (from a more mature) `object-path` for now.
 
 ---
 
@@ -147,7 +155,7 @@ Passes .set() unit tests from https://github.com/mariocasciaro/object-path/blob/
 [node-url]: https://www.npmjs.com/package/edit-package-json
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
-[cov-img]: https://img.shields.io/badge/coverage-97.3%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-98.37%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/edit-package-json

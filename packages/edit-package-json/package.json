@@ -156,7 +156,6 @@
         "label": ""
       },
       "devDependencies": [
-        "is-ci",
         "object-path",
         "lodash.clonedeep"
       ],
@@ -188,7 +187,6 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.5.45",
     "lect": "^0.9.11",
     "lodash.clonedeep": "^4.5.0",

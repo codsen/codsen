@@ -42,6 +42,12 @@ function stringifyPath(something) {
   }
   return String(something);
 }
+function stringifyAndEscapeValue(something) {
+  if (isStr(something) && something.startsWith("\"") && something.endsWith("\"")) {
+    return "".concat(JSON.stringify(something.slice(1, something.length - 1), null, 0));
+  }
+  return JSON.stringify(something, null, 0);
+}
 function isNotEscape(str, idx) {
   return str[idx] !== "\\" || str[idx - 2] === "\\";
 }
@@ -86,6 +92,7 @@ function main(_ref) {
   var keyName;
   var keyValue;
   var itsTheFirstElem = false;
+  var skipUntilTheFollowingIsMet;
   function reset() {
     keyStartedAt = null;
     keyEndedAt = null;
@@ -177,23 +184,35 @@ function main(_ref) {
     if (str[i].trim().length && replaceThisValue && !valueStartedAt && i > keyEndedAt && ![":"].includes(str[i])) {
       valueStartedAt = i;
     }
-    if (replaceThisValue && valueStartedAt && i > valueStartedAt) {
-      if (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1))) {
-        if (mode === "set") {
-          return "".concat(str.slice(0, valueStartedAt)).concat(calculatedValueToInsert).concat(str.slice(i + (str[i].trim().length ? 1 : 0)));
-        } else if (mode === "del") {
-          var startingPoint = stringLeftRight.left(str, keyStartedAt - 1) + 1;
-          var endingPoint = i + (str[i].trim().length ? 1 : 0);
-          if (str[startingPoint - 1] === "," && str[stringLeftRight.right(str, endingPoint - 1)] === "}") {
-            startingPoint--;
-          }
-          if (str[endingPoint] === ",") {
-            endingPoint++;
-          }
-          ranges.push([startingPoint, endingPoint]);
-          break;
-        }
+    if (skipUntilTheFollowingIsMet && str[i] === skipUntilTheFollowingIsMet && isNotEscape(str, i - 1)) {
+      skipUntilTheFollowingIsMet = undefined;
+    } else if (replaceThisValue && !skipUntilTheFollowingIsMet && !currentlyWithinArray() && valueStartedAt) {
+      if (str[i] === "{" && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = "}";
+      } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = "]";
+      } else if (str[i] === "\"" && isNotEscape(str, i - 1)) {
+        skipUntilTheFollowingIsMet = "\"";
       }
+    }
+    if (replaceThisValue && !skipUntilTheFollowingIsMet && valueStartedAt && i > valueStartedAt) {
+      if (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1))
+      ) {
+          if (mode === "set") {
+            return "".concat(str.slice(0, valueStartedAt)).concat(stringifyAndEscapeValue(calculatedValueToInsert)).concat(str.slice(i + (str[i].trim().length ? 1 : 0)));
+          } else if (mode === "del") {
+            var startingPoint = stringLeftRight.left(str, keyStartedAt - 1) + 1;
+            var endingPoint = i + (str[i].trim().length ? 1 : 0);
+            if (str[startingPoint - 1] === "," && str[stringLeftRight.right(str, endingPoint - 1)] === "}") {
+              startingPoint--;
+            }
+            if (str[endingPoint] === ",") {
+              endingPoint++;
+            }
+            ranges.push([startingPoint, endingPoint]);
+            break;
+          }
+        }
     }
   }
   return apply(str, ranges);
