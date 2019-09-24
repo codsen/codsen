@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Detergent" src="https://cdn.statically.io/gl/codsen/codsen/master/packages/detergent/media/detergent_1752x1752.png" height="200" align="center">
+  <img alt="Detergent" src="https://cdn.statically.io/gl/codsen/codsen/master/packages/detergent/media/detergent_200x200.png" height="200" align="center">
 </div>
 
 <div align="center"><p>All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool</p></div>
