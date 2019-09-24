@@ -59,6 +59,14 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## TLDR - Our promise
+
+* write to JSON without parsing, edit string directly
+* `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
+* passes all unit tests of object-path^
+
+^ some features like setting values on keys which don't exist are not implemented yet, so tests were adapted but commented-out.
+
 ## Idea
 
 Normally, when editing `package.json` file, it is parsed, its value, a plain object, is tweaked and then it is stringified and written back. The problem is, sometimes that "object tweaking" maintains the original key order but sometimes it does not.
@@ -71,19 +79,25 @@ IMPORTANT.
 
 **Since this program is still in _a baby state_, it can't create new keys which didn't exist before. `set()` will only change values of existing keys. It is not able to add new keys yet.**
 
-It edits JSON as _string_ but let's you use [object-path](https://www.npmjs.com/package/object-path) notation to set values on any paths in JSON.
+It edits JSON as _string_ but let's you use [object-path](https://www.npmjs.com/package/object-path) notation to set values on any (for now, only already-existing) paths in JSON.
 
 ```js
 const { set } = require("edit-package-json");
-// define string as constant but normally the following your be read file contents, string
-const source = `{
+// we defined JSON contents manually, but in real programs you'd read the file,
+// as string, without parsing and pass it to set()
+const startingJSONContents = `{
   "a": "b",
   "c": {
     "d": "e"
   }
 }`;
-// three input arguments: JSON source, path and value - amended JSON, string is returned
+
+// amended result:
 const result = set(source, "c.d", "f");
+// notation is the same as "object-path" from npm
+// ^ in real programs you'd write this string back to JSON file
+
+console.log(JSON.stringify(result, null, 4));
 // => {
 //   "a": "b",
 //   "c": {
@@ -96,33 +110,31 @@ We wrote quite a few non-parsing string-processing programs ([1](https://gitlab.
 
 **[⬆ back to top](#)**
 
-## Usage
-
-```js
-const editPack = require("edit-package-json");
-```
-
 ## API
 
 ### .set()
 
-When you consume `set` (`const { set } = require("edit-package-json");`), it is a function.
+When you consume `set` (`const { set } = require("edit-package-json");`), it is a _function_.
 
 `set()` can set values by path, on a JSON string.
 
 **THIS IS AN EARLY STAGE OF THIS PROGRAM AND IT CAN'T CREATE NEW KEYS, IT WILL ONLY CHANGE VALUE IF KEY ALREADY EXISTS.**
 
-This is the primary difference (from a more mature) `object-path` for now.
+For now, this is the primary difference (from a more mature and more popular) `object-path`.
 
 ---
 
 **Input**
+
+**set(source, path, val)**
 
 | Input argument | Type     | Obligatory? | Description                                                                                               |
 | -------------- | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
 | `str`          | String   | yes         | JSON file contents                                                                                        |
 | `path`         | String   | yes         | Desired path in the object, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
 | `valToInsert`  | Whatever | yes         | What to insert at the given path                                                                          |
+
+---
 
 **Output**
 

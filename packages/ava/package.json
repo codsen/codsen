@@ -96,7 +96,7 @@
     "micromatch": "^4.0.2",
     "ms": "^2.1.2",
     "observable-to-promise": "^1.0.0",
-    "ora": "^4.0.0",
+    "ora": "^4.0.1",
     "package-hash": "^4.0.0",
     "pkg-conf": "^3.1.0",
     "plur": "^3.1.1",
