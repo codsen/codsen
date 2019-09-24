@@ -168,7 +168,17 @@ compiledStats.testsCountMedian = median(
 
 fs.writeFile(
   path.resolve("stats/interdeps.json"),
-  JSON.stringify(interdep.filter(obj => obj.imports.length), null, 4),
+  // JSON.stringify(interdep, null, 4),
+  JSON.stringify(
+    interdep.filter(obj1 => {
+      return !(
+        !obj1.imports.length &&
+        !interdep.some(obj2 => obj2.imports.includes(obj1.name))
+      );
+    }),
+    null,
+    4
+  ),
   err => {
     if (err) {
       throw err;
