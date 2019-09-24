@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 96 npm libraries 📦📦📦
+    A lerna monorepo for our 97 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -12,7 +12,7 @@ We coded up and maintain a few npm packages:
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-12-range-libraries)
-- [String Processing Libraries](#-29-string-processing-libraries)
+- [String Processing Libraries](#-30-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [Lerna Libraries](#-3-lerna-libraries)
 - [CLI Apps](#%EF%B8%8F-11-cli-apps)
@@ -79,13 +79,14 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#codsen)**
 
-## 🎻 29 String Processing Libraries
+## 🎻 30 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
+| [`edit-package-json`](https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json/) | Edit package.json without parsing, as string, keep indentation etc intact | [![edit-package-json on npm](https://img.shields.io/npm/v/edit-package-json.svg?style=flat-square)](https://www.npmjs.com/package/edit-package-json) | [packages/edit-package-json](https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json/) |
 | [`easy-replace`](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) | Replace strings with optional lookarounds, but without regexes | [![easy-replace on npm](https://img.shields.io/npm/v/easy-replace.svg?style=flat-square)](https://www.npmjs.com/package/easy-replace) | [packages/easy-replace](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace/) |
 | [`str-indexes-of-plus`](https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus/) | Search for a string in another string. Get array of indexes. Full Unicode support. | [![str-indexes-of-plus on npm](https://img.shields.io/npm/v/str-indexes-of-plus.svg?style=flat-square)](https://www.npmjs.com/package/str-indexes-of-plus) | [packages/str-indexes-of-plus](https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus/) |
 | [`bitbucket-slug`](https://gitlab.com/codsen/codsen/tree/master/packages/bitbucket-slug/) | Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond. | [![bitbucket-slug on npm](https://img.shields.io/npm/v/bitbucket-slug.svg?style=flat-square)](https://www.npmjs.com/package/bitbucket-slug) | [packages/bitbucket-slug](https://gitlab.com/codsen/codsen/tree/master/packages/bitbucket-slug/) |
