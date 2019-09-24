@@ -140,7 +140,7 @@
     "licence": {
       "extras": [
         "",
-        "Passes .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro"
+        "Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro"
       ]
     },
     "npmignore": {
@@ -149,7 +149,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "{ set }",
+    "req": "{ set, del }",
     "various": {
       "back_to_top": {
         "enabled": true,
