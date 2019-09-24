@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <p><img alt="lerna-clean-changelogs" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs/media/deleted.png" width="480" align="center"></p>
+  <p><img alt="lerna-clean-changelogs" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs/media/deleted.png" width="680" align="center"></p>
 </div>
 
 <div align="center"><p>Cleans all the crap from Lerna and Conventional Commits-generated changelogs</p></div>

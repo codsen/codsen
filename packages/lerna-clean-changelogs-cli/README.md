@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <p><img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="480" align="center"></p>
+  <p><img alt="lerna-clean-changelogs-cli" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/lerna-clean-changelogs-cli/media/deleted.png" width="680" align="center"></p>
 </div>
 
 <div align="center"><p>CLI application to cleanse the lerna-generated changelogs</p></div>
