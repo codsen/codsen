@@ -272,7 +272,7 @@
     },
     {
         "name": "json-comb-core",
-        "size": 14639,
+        "size": 14638,
         "imports": [
             "check-types-mini",
             "object-fill-missing-keys",
