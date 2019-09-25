@@ -259,18 +259,12 @@ We coded up and maintain a few npm packages:
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#-flagship-libraries)
-- [Range Libraries](#-${filteredRangeLibsList.length}-range-libraries)
-- [String Processing Libraries](#-${
-  filteredStringLibsList.length
-}-string-processing-libraries)
-- [Object Processing Libraries](#-${
-  filteredObjectLibsList.length
-}-object-processing-libraries)
-- [Lerna Libraries](#-${filteredLernaLibsList.length}-lerna-libraries)
-- [CLI Apps](#%EF%B8%8F-${filteredCliAppsList.length}-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-${
-  filteredOtherLibsList.length
-}-miscellaneous-libraries)
+- [Range Libraries](#-range-libraries)
+- [String Processing Libraries](#-string-processing-libraries)
+- [Object Processing Libraries](#-object-processing-libraries)
+- [Lerna Libraries](#-lerna-libraries)
+- [CLI Apps](#%EF%B8%8F-cli-apps)
+- [Miscellaneous Libraries](#%EF%B8%8F-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -281,11 +275,13 @@ We coded up and maintain a few npm packages:
 ${topRow(true)}
 ${filteredFlagshipAppsList.map(lib => row(lib, true)).join("\n")}
 
-There are quite a few small libraries, so let's group them by a common purpose.
+Let's group all others by their purpose.
 
 **[⬆ back to top](#codsen)**
 
-## 🎯 ${filteredRangeLibsList.length} Range Libraries
+## 🎯 Range Libraries
+
+${filteredRangeLibsList.length} in total.
 
 > _Range_ means an array of two text character index numbers, "from" and "to" (plus optional third element, string, which marks "what to add").
 
@@ -318,7 +314,9 @@ ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
-## 🎻 ${filteredStringLibsList.length} String Processing Libraries
+## 🎻 String Processing Libraries
+
+${filteredStringLibsList.length} in total.
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -327,7 +325,9 @@ ${filteredStringLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
-## 🔮 ${filteredObjectLibsList.length} Object Processing Libraries
+## 🔮 Object Processing Libraries
+
+${filteredObjectLibsList.length} in total.
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ name: "Bob" }\`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
 
@@ -338,7 +338,9 @@ ${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
-## 🐉 ${filteredLernaLibsList.length} Lerna Libraries
+## 🐉 Lerna Libraries
+
+${filteredLernaLibsList.length} in total.
 
 While maintaining this very monorepo we found that some essential tools were missing, so we created them!
 
@@ -349,7 +351,9 @@ ${filteredLernaLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
-## ✂️ ${filteredCliAppsList.length} CLI Apps
+## ✂️ CLI Apps
+
+${filteredCliAppsList.length} in total.
 
 All the following libraries are command line applications. You install them using \`-g\` flag, for example, \`npm i -g json-sort-cli\`.
 
@@ -362,7 +366,9 @@ ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ ${filteredOtherLibsList.length} Miscellaneous Libraries
+## 🛠️ Miscellaneous Libraries
+
+${filteredOtherLibsList.length} in total.
 
 ${topRow()}
 ${filteredOtherLibsList.map(lib => row(lib)).join("\n")}

@@ -11,12 +11,12 @@ We coded up and maintain a few npm packages:
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#-flagship-libraries)
-- [Range Libraries](#-12-range-libraries)
-- [String Processing Libraries](#-30-string-processing-libraries)
-- [Object Processing Libraries](#-20-object-processing-libraries)
-- [Lerna Libraries](#-3-lerna-libraries)
-- [CLI Apps](#%EF%B8%8F-11-cli-apps)
-- [Miscellaneous Libraries](#%EF%B8%8F-22-miscellaneous-libraries)
+- [Range Libraries](#-range-libraries)
+- [String Processing Libraries](#-string-processing-libraries)
+- [Object Processing Libraries](#-object-processing-libraries)
+- [Lerna Libraries](#-lerna-libraries)
+- [CLI Apps](#%EF%B8%8F-cli-apps)
+- [Miscellaneous Libraries](#%EF%B8%8F-miscellaneous-libraries)
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
@@ -30,11 +30,13 @@ We coded up and maintain a few npm packages:
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
 | [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
 
-There are quite a few small libraries, so let's group them by a common purpose.
+Let's group all others by their purpose.
 
 **[⬆ back to top](#codsen)**
 
-## 🎯 12 Range Libraries
+## 🎯 Range Libraries
+
+12 in total.
 
 > _Range_ means an array of two text character index numbers, "from" and "to" (plus optional third element, string, which marks "what to add").
 
@@ -79,7 +81,9 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#codsen)**
 
-## 🎻 30 String Processing Libraries
+## 🎻 String Processing Libraries
+
+30 in total.
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -118,7 +122,9 @@ They process string inputs, which might be text, code or something else as long 
 
 **[⬆ back to top](#codsen)**
 
-## 🔮 20 Object Processing Libraries
+## 🔮 Object Processing Libraries
+
+20 in total.
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, `{ name: "Bob" }`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
 
@@ -149,7 +155,9 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 
 **[⬆ back to top](#codsen)**
 
-## 🐉 3 Lerna Libraries
+## 🐉 Lerna Libraries
+
+3 in total.
 
 While maintaining this very monorepo we found that some essential tools were missing, so we created them!
 
@@ -163,7 +171,9 @@ If you also use Lerna monorepos, check these out:
 
 **[⬆ back to top](#codsen)**
 
-## ✂️ 11 CLI Apps
+## ✂️ CLI Apps
+
+11 in total.
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -187,7 +197,9 @@ You use them in the Terminal (command line), for example:
 
 **[⬆ back to top](#codsen)**
 
-## 🛠️ 22 Miscellaneous Libraries
+## 🛠️ Miscellaneous Libraries
+
+22 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
