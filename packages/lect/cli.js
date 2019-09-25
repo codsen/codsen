@@ -56,7 +56,6 @@ const {
   extractStringUnderBadges,
   parseReadme,
   standardiseBools,
-  contributionTypes,
   assembleRollupInfoTable
 } = require("./util");
 
@@ -88,7 +87,6 @@ let readmeData = ""; // readme's contents
 let pack = {}; // package.json of the lib located at root
 let parsedPack; // package.json parsed through "getPkgRepo"
 let lectrc = {}; // .lectrc one level above from root
-const contributors = null; // final result of async-fetched contributors from github
 let addBackToTopLinks = true; // should we add back-to-top anchor links under sections?
 
 // -----------------------------------------------------------------------------
@@ -132,13 +130,6 @@ const packageJsonlectKeyDefaults = {
   },
   cliSpecialKeyword: "",
   cliSpecialKeywordInstructions: "",
-  contribution_types: contributionTypes,
-  contributors: [
-    {
-      contribution: ["Code", "Documentation", "Tests"],
-      username: "revelt"
-    }
-  ],
   eslintrc: {
     add: [],
     remove: []
@@ -237,6 +228,12 @@ function slugify(str) {
 
 async function step14(receivedPack) {
   // log(`${chalk.white("\nSTEP 14 - Write out package.json and .lectrc.json")}`);
+
+  // delete all contributors-related entries
+  objectPath.del(receivedPack, "lect.badges.contributors");
+  objectPath.del(receivedPack, "lect.contribution_types");
+  objectPath.del(receivedPack, "lect.contributors");
+
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
@@ -860,7 +857,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         concatInsteadOfMerging: false,
         dedupeStringsInArrayValues: true,
         mergeBoolsUsingOrNotAnd: false,
-        ignoreKeys: ["contribution_types"]
+        ignoreKeys: []
       }
     );
   }
@@ -1318,19 +1315,6 @@ function step7() {
 // -----------------------------------------------------------------------------
 // 6. generating and overwriting the readme
 
-function thereAreContributors() {
-  if (
-    contributors &&
-    isArr(contributors) &&
-    contributors.every(el => existy(el)) &&
-    objectPath.has(pack, "lect.contributors") &&
-    pack.lect.contributors.length > 1
-  ) {
-    return true;
-  }
-  return false;
-}
-
 function step6() {
   // log(`${chalk.white("\nSTEP 6 - Assemble and write readme.md")}`);
   // log(
@@ -1351,21 +1335,6 @@ function step6() {
 
   let topBadgesString = "";
   let bottomBadgesString = "";
-
-  // let finalContributorsString;
-  //
-  // if (thereAreContributors()) {
-  //   finalContributorsString = assembleContributors(
-  //     contributors,
-  //     pack,
-  //     parsedPack
-  //   );
-  //   if (DEBUG) {
-  //     console.log(
-  //       `\u001b[${32}m${"----------------------------------------------------------------------"}\u001b[${39}m`
-  //     );
-  //   }
-  // }
 
   // if package.json ("pack" variable) has no "coverage" script, automatically
   // don't add the cov badge.
@@ -1921,20 +1890,6 @@ const ${consumedName} = ${camelCase(pack.name)};
       : ""
   }`;
 
-  // add extra links:
-  const contribLinks = get("contributors.links");
-  if (
-    thereAreContributors() &&
-    contribLinks &&
-    isObj(contribLinks) &&
-    Object.keys(contribLinks).length > 0
-  ) {
-    content += "\n";
-    Object.keys(contribLinks).forEach(key => {
-      content += `\n[${key}]: ${contribLinks[key]}`;
-    });
-  }
-
   if (!content.endsWith("\n")) {
     content += "\n";
   }
@@ -2131,35 +2086,7 @@ function step5() {
 // -----------------------------------------------------------------------------
 // 4. fetch github contributors user data
 
-// function step4() {
-//   // log(`${chalk.white("\nSTEP 4 - Fetch Github contributors data")}`);
-
-//   if (
-//     objectPath.has(pack, "lect.contributors") &&
-//     pack.lect.contributors.length > 0
-//   ) {
-//     const names = pack.lect.contributors.map(obj => obj.username);
-//     pMap(names, getUserInfo, { concurrency: 2 })
-//       .then(result => {
-//         contributors = result;
-//         return Promise.resolve(step5());
-//       })
-//       .catch(() => {
-//         log(`${chalk.red(logSymbols.error, "error fetching from GitHub!")}`);
-//         log(
-//           `${chalk.yellow(
-//             logSymbols.warning,
-//             "contributors' data will be stale"
-//           )}`
-//         );
-//         contributors = null;
-//         return Promise.resolve(step5());
-//       });
-//   } else {
-//     contributors = null;
-//     step5();
-//   }
-// }
+// removed
 
 // -----------------------------------------------------------------------------
 // 3. Read the lectrc file one level above, the .lectrc

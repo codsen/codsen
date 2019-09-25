@@ -69,7 +69,6 @@
       "set": false
     },
     "badges": {
-      "contributors": true,
       "cov": false,
       "deps": true,
       "deps2d": true,
@@ -85,38 +84,6 @@
     },
     "cliSpecialKeyword": "johnnydepp",
     "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.",
-    "contribution_types": [
-      "Blogposts",
-      "Bug reports",
-      "Code",
-      "Design",
-      "Documentation",
-      "Event Organizing",
-      "Examples",
-      "Financial",
-      "Funding Finding",
-      "Ideas, Planning, & Feedback",
-      "Infrastructure (Hosting, Build-Tools, etc)",
-      "Plugin/utility libraries",
-      "Answering Questions",
-      "Reviewed Pull Requests",
-      "Talks",
-      "Tests",
-      "Tools",
-      "Translation",
-      "Tutorials",
-      "Videos"
-    ],
-    "contributors": [
-      {
-        "contribution": [
-          "Code",
-          "Documentation",
-          "Tests"
-        ],
-        "username": "revelt"
-      }
-    ],
     "eslintrc": {
       "add": [],
       "remove": []

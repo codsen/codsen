@@ -14,8 +14,8 @@
 ## Table of Contents
 
 - [Install](#install)
+- [TLDR - Our promise](#tldr---our-promise)
 - [Idea](#idea)
-- [Usage](#usage)
 - [API](#api)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -29,13 +29,13 @@ npm i edit-package-json
 Consume via a `require()`:
 
 ```js
-const { set } = require("edit-package-json");
+const { set, del } = require("edit-package-json");
 ```
 
 or as an ES Module:
 
 ```js
-import { set } from "edit-package-json";
+import { set, del } from "edit-package-json";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -46,7 +46,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "editPackageJson" which you consume like this:
-const { set } = editPackageJson;
+const { set, del } = editPackageJson;
 ```
 
 This package has three builds in `dist/` folder:
@@ -61,11 +61,13 @@ This package has three builds in `dist/` folder:
 
 ## TLDR - Our promise
 
-* write to JSON without parsing, edit string directly
-* `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
-* passes all unit tests of object-path^
+- write to JSON without parsing, edit string directly
+- `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
+- passes all unit tests of object-path^
 
 ^ some features like setting values on keys which don't exist are not implemented yet, so tests were adapted but commented-out.
+
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -161,7 +163,7 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-Passes .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
+Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 
 [node-img]: https://img.shields.io/node/v/edit-package-json.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/edit-package-json

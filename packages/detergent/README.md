@@ -11,7 +11,6 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
-[![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
 <div align="center"><p>Online web app: <a href="https://Detergent.io">https://detergent.io</a></p></div>
@@ -235,7 +234,7 @@ Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.js
 [node-url]: https://www.npmjs.com/package/detergent
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
-[cov-img]: https://img.shields.io/badge/coverage-90.79%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-91.22%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/detergent
@@ -245,7 +244,5 @@ Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.js
 [runkit-url]: https://npm.runkit.com/detergent
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-[contributors-img]: https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square
-[contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

@@ -9,7 +9,6 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
-[![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
@@ -206,7 +205,5 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [runkit-url]: https://npm.runkit.com/csv-split-easy
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-[contributors-img]: https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square
-[contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

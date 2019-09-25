@@ -69,7 +69,6 @@
       "set": false
     },
     "badges": {
-      "contributors": true,
       "cov": true,
       "deps": true,
       "deps2d": true,
@@ -83,56 +82,6 @@
       "travis": false,
       "vulnerabilities": true
     },
-    "contribution_types": [
-      "Blogposts",
-      "Bug reports",
-      "Code",
-      "Design",
-      "Documentation",
-      "Event Organizing",
-      "Examples",
-      "Financial",
-      "Funding Finding",
-      "Ideas, Planning, & Feedback",
-      "Infrastructure (Hosting, Build-Tools, etc)",
-      "Plugin/utility libraries",
-      "Answering Questions",
-      "Reviewed Pull Requests",
-      "Talks",
-      "Tests",
-      "Tools",
-      "Translation",
-      "Tutorials",
-      "Videos"
-    ],
-    "contributors": [
-      {
-        "contribution": [
-          "Code",
-          "Documentation",
-          "Tests"
-        ],
-        "username": "revelt"
-      },
-      {
-        "contribution": [
-          "Bug reports"
-        ],
-        "username": "maxlapides"
-      },
-      {
-        "contribution": [
-          "Bug reports"
-        ],
-        "username": "nacimgoura"
-      },
-      {
-        "contribution": [
-          "Bug reports"
-        ],
-        "username": "jacksteamdev"
-      }
-    ],
     "eslintrc": {
       "add": [],
       "remove": []

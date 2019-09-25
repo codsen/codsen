@@ -65,7 +65,6 @@
       "set": false
     },
     "badges": {
-      "contributors": true,
       "cov": true,
       "deps": true,
       "deps2d": true,
@@ -79,64 +78,6 @@
       "travis": true,
       "vulnerabilities": true
     },
-    "contribution_types": [
-      "Blogposts",
-      "Bug reports",
-      "Code",
-      "Design",
-      "Documentation",
-      "Event Organizing",
-      "Examples",
-      "Financial",
-      "Funding Finding",
-      "Ideas, Planning, & Feedback",
-      "Infrastructure (Hosting, Build-Tools, etc)",
-      "Plugin/utility libraries",
-      "Answering Questions",
-      "Reviewed Pull Requests",
-      "Talks",
-      "Tests",
-      "Tools",
-      "Translation",
-      "Tutorials",
-      "Videos"
-    ],
-    "contributors": [
-      {
-        "contribution": [
-          "Code",
-          "Documentation",
-          "Tests"
-        ],
-        "username": "revelt"
-      },
-      {
-        "contribution": [
-          "Code",
-          "Documentation",
-          "Tests"
-        ],
-        "username": "jabiinfante"
-      },
-      {
-        "contribution": [
-          "Bug reports"
-        ],
-        "username": "project707"
-      },
-      {
-        "contribution": [
-          "Ideas, Planning, & Feedback"
-        ],
-        "username": "Kaishiyoku"
-      },
-      {
-        "contribution": [
-          "Ideas, Planning, & Feedback"
-        ],
-        "username": "SnooHD"
-      }
-    ],
     "eslintrc": {
       "add": [],
       "remove": []

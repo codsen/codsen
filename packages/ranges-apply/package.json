@@ -67,7 +67,6 @@
       "set": false
     },
     "badges": {
-      "contributors": true,
       "cov": true,
       "deps": true,
       "deps2d": true,
@@ -81,38 +80,6 @@
       "travis": true,
       "vulnerabilities": true
     },
-    "contribution_types": [
-      "Blogposts",
-      "Bug reports",
-      "Code",
-      "Design",
-      "Documentation",
-      "Event Organizing",
-      "Examples",
-      "Financial",
-      "Funding Finding",
-      "Ideas, Planning, & Feedback",
-      "Infrastructure (Hosting, Build-Tools, etc)",
-      "Plugin/utility libraries",
-      "Answering Questions",
-      "Reviewed Pull Requests",
-      "Talks",
-      "Tests",
-      "Tools",
-      "Translation",
-      "Tutorials",
-      "Videos"
-    ],
-    "contributors": [
-      {
-        "contribution": [
-          "Code",
-          "Documentation",
-          "Tests"
-        ],
-        "username": "revelt"
-      }
-    ],
     "eslintrc": {
       "add": [],
       "remove": []
