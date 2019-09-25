@@ -183,7 +183,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0) {
+    } else if (from === 0 && str.slice(to).trim().length) {
       // 2. if it's the beginning of a string
       if (convertApostrophes) {
         rangesArr.push([
@@ -197,10 +197,10 @@ function convertOne(
           }]`
         );
       }
-    } else if (!str[to]) {
+    } else if (!str[to] && str.slice(0, from).trim().length) {
       //
       if (convertApostrophes) {
-        // 3. if it's the beginning of a string
+        // 3. if it's the ending of a string
         rangesArr.push([
           from,
           to,
@@ -382,7 +382,7 @@ function convertOne(
             offsetBy(1);
           }
         }
-      } else if (from === 0) {
+      } else if (from === 0 && str[to] && str.slice(to).trim().length) {
         // 2. if it's the beginning of a string
         rangesArr.push([
           from,
@@ -394,7 +394,7 @@ function convertOne(
             convertEntities ? "&ldquo;" : leftDoubleQuote
           }]`
         );
-      } else if (!str[to]) {
+      } else if (!str[to] && str.slice(0, from).trim().length) {
         // 3. if it's the beginning of a string
         console.log(
           `400 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${

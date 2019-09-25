@@ -76,11 +76,11 @@ function convertOne(str, _ref) {
             }
           }
         }
-    } else if (from === 0) {
+    } else if (from === 0 && str.slice(to).trim().length) {
       if (convertApostrophes) {
         rangesArr.push([from, to, convertEntities ? "&lsquo;" : leftSingleQuote]);
       }
-    } else if (!str[to]) {
+    } else if (!str[to] && str.slice(0, from).trim().length) {
       if (convertApostrophes) {
         rangesArr.push([from, to, convertEntities ? "&rsquo;" : rightSingleQuote]);
       }
@@ -123,9 +123,9 @@ function convertOne(str, _ref) {
             offsetBy(1);
           }
         }
-      } else if (from === 0) {
+      } else if (from === 0 && str[to] && str.slice(to).trim().length) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);
-      } else if (!str[to]) {
+      } else if (!str[to] && str.slice(0, from).trim().length) {
         rangesArr.push([from, to, convertEntities ? "&rdquo;" : rightDoubleQuote]);
       } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
         rangesArr.push([from, to, convertEntities ? "&ldquo;" : leftDoubleQuote]);

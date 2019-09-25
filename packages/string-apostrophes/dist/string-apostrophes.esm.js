@@ -144,7 +144,7 @@ function convertOne(
           }
         }
       }
-    } else if (from === 0) {
+    } else if (from === 0 && str.slice(to).trim().length) {
       if (convertApostrophes) {
         rangesArr.push([
           from,
@@ -152,7 +152,7 @@ function convertOne(
           convertEntities ? "&lsquo;" : leftSingleQuote
         ]);
       }
-    } else if (!str[to]) {
+    } else if (!str[to] && str.slice(0, from).trim().length) {
       if (convertApostrophes) {
         rangesArr.push([
           from,
@@ -270,13 +270,13 @@ function convertOne(
             offsetBy(1);
           }
         }
-      } else if (from === 0) {
+      } else if (from === 0 && str[to] && str.slice(to).trim().length) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&ldquo;" : leftDoubleQuote
         ]);
-      } else if (!str[to]) {
+      } else if (!str[to] && str.slice(0, from).trim().length) {
         rangesArr.push([
           from,
           to,
