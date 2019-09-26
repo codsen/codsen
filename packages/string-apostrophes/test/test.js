@@ -27,63 +27,70 @@ test(`01.01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with enti
       convertApostrophes: 1,
       convertEntities: 1
     }),
-    [[4, 5, "&rsquo;"]],
-    "01.01.01"
-  );
-  t.deepEqual(
-    convertOne(`test's`, {
-      from: 4,
-      to: 5,
-      convertApostrophes: 1,
-      convertEntities: 1
-    }),
-    [[4, 5, "&rsquo;"]],
-    "01.01.02"
-  );
-  t.deepEqual(
-    convertOne(`test's`, {
-      from: 4,
-      to: 5,
-      convertApostrophes: 1,
-      convertEntities: 0
-    }),
-    [[4, 5, rightSingleQuote]],
-    "01.01.03"
-  );
-
-  // convertApostrophes=off
-  t.deepEqual(
-    convertOne(`test's`, {
-      from: 4,
-      convertApostrophes: 0,
-      convertEntities: 1
-    }),
-    [],
-    "01.01.04"
-  );
-  t.deepEqual(
-    convertOne(`test's`, {
-      from: 4,
-      to: 5,
-      convertApostrophes: 0,
-      convertEntities: 1
-    }),
-    [],
-    "01.01.05"
-  );
-  t.deepEqual(
-    convertOne(`test's`, {
-      from: 4,
-      to: 5,
-      convertApostrophes: 0,
-      convertEntities: 0
-    }),
-    [],
-    "01.01.06"
+    [[4, 5, "&rsquo;"]]
   );
 });
 
-test(`01.02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark + space`, t => {
+test(`01.02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, t => {
+  t.deepEqual(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 1
+    }),
+    [[4, 5, "&rsquo;"]]
+  );
+});
+
+test(`01.03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, t => {
+  t.deepEqual(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 0
+    }),
+    [[4, 5, rightSingleQuote]]
+  );
+});
+
+test(`01.04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test's`, {
+      from: 4,
+      convertApostrophes: 0,
+      convertEntities: 1
+    }),
+    []
+  );
+});
+
+test(`01.05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 1
+    }),
+    []
+  );
+});
+
+test(`01.06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test's`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 0
+    }),
+    []
+  );
+});
+
+test(`01.07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark + space`, t => {
   t.deepEqual(
     convertAll(`'What!' he said`, {
       convertApostrophes: 1,
@@ -93,7 +100,7 @@ test(`01.02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamati
   );
 });
 
-test(`01.03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop + space`, t => {
+test(`01.08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop + space`, t => {
   t.deepEqual(
     convertAll(`'What.' he said`, {
       convertApostrophes: 1,
@@ -103,7 +110,7 @@ test(`01.03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop
   );
 });
 
-test(`01.04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon + space`, t => {
+test(`01.09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon + space`, t => {
   t.deepEqual(
     convertAll(`'What;' he said`, {
       convertApostrophes: 1,
@@ -113,7 +120,7 @@ test(`01.04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon
   );
 });
 
-test(`01.05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark + space`, t => {
+test(`01.10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark + space`, t => {
   t.deepEqual(
     convertAll(`'What?' he said`, {
       convertApostrophes: 1,
@@ -123,7 +130,7 @@ test(`01.05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question 
   );
 });
 
-test(`01.06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark`, t => {
+test(`01.11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark`, t => {
   t.deepEqual(
     convertAll(`"'What!'" he said`, {
       convertApostrophes: 1,
@@ -133,7 +140,7 @@ test(`01.06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamati
   );
 });
 
-test(`01.07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`, t => {
+test(`01.12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`, t => {
   t.deepEqual(
     convertAll(`"'What.'" he said`, {
       convertApostrophes: 1,
@@ -143,7 +150,7 @@ test(`01.07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop
   );
 });
 
-test(`01.08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`, t => {
+test(`01.13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`, t => {
   t.deepEqual(
     convertAll(`"'What,'" he said`, {
       convertApostrophes: 1,
@@ -153,7 +160,7 @@ test(`01.08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`, t
   );
 });
 
-test(`01.09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon`, t => {
+test(`01.14 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon`, t => {
   t.deepEqual(
     convertAll(`"'What;'" he said`, {
       convertApostrophes: 1,
@@ -163,7 +170,7 @@ test(`01.09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon
   );
 });
 
-test(`01.10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark`, t => {
+test(`01.15 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark`, t => {
   t.deepEqual(
     convertAll(`"'What;'" he said`, {
       convertApostrophes: 1,
@@ -173,7 +180,7 @@ test(`01.10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question 
   );
 });
 
-test(`01.11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + space`, t => {
+test(`01.16 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + space`, t => {
   t.deepEqual(
     convertAll(`'What,' he said`, {
       convertApostrophes: 1,
@@ -183,7 +190,7 @@ test(`01.11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + s
   );
 });
 
-test(`01.12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-escaped apostrophe`, t => {
+test(`01.17 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-escaped apostrophe`, t => {
   t.deepEqual(
     convertOne(`test&apos;s`, {
       from: 4,
@@ -191,12 +198,11 @@ test(`01.12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-esca
       value: "'",
       convertEntities: 0
     }),
-    [[4, 10, "\u2019"]],
-    "01.12"
+    [[4, 10, "\u2019"]]
   );
 });
 
-test(`01.13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, t => {
+test(`01.18 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, t => {
   t.deepEqual(
     convertOne(`'`, {
       from: 0,
@@ -204,6 +210,76 @@ test(`01.13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with enti
       convertEntities: 1
     }),
     []
+  );
+});
+
+test(`01.19 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      convertApostrophes: 1,
+      convertEntities: 1
+    }),
+    [[4, 5, "&rsquo;"]]
+  );
+});
+
+test(`01.20 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 1
+    }),
+    [[4, 5, "&rsquo;"]]
+  );
+});
+
+test(`01.21 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 1,
+      convertEntities: 0
+    }),
+    [[4, 5, rightSingleQuote]]
+  );
+});
+
+test(`01.22 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      convertApostrophes: 0,
+      convertEntities: 1
+    }),
+    [[4, 5, `'`]]
+  );
+});
+
+test(`01.23 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 1
+    }),
+    [[4, 5, `'`]]
+  );
+});
+
+test(`01.24 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, t => {
+  t.deepEqual(
+    convertOne(`test${leftSingleQuote}s`, {
+      from: 4,
+      to: 5,
+      convertApostrophes: 0,
+      convertEntities: 0
+    }),
+    [[4, 5, `'`]]
   );
 });
 
@@ -629,7 +705,7 @@ test(`03.24 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${3
   );
 });
 
-test(`03.25 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - inches`, t => {
+test(`03.25 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - inches`, t => {
   t.deepEqual(
     convertAll('12" record, 5\'10" height', {
       convertApostrophes: 1,
@@ -639,7 +715,27 @@ test(`03.25 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${3
   );
 });
 
-test(`03.26 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - word wrapped with double quotes in the end of a string`, t => {
+test(`03.26 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - left type quote used`, t => {
+  t.deepEqual(
+    convertAll(`12" record, 5${leftSingleQuote}10${leftDoubleQuote} height`, {
+      convertApostrophes: 1,
+      convertEntities: 0
+    }).result,
+    `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`
+  );
+});
+
+test(`03.27 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - right type quote used`, t => {
+  t.deepEqual(
+    convertAll(`12" record, 5${rightSingleQuote}10${rightDoubleQuote} height`, {
+      convertApostrophes: 1,
+      convertEntities: 0
+    }).result,
+    `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`
+  );
+});
+
+test(`03.28 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - word wrapped with double quotes in the end of a string`, t => {
   t.deepEqual(
     convertAll('Model "T2000"', {
       convertApostrophes: 1,
@@ -649,7 +745,7 @@ test(`03.26 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${3
   );
 });
 
-test(`03.27 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, t => {
+test(`03.29 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, t => {
   t.deepEqual(
     convertAll(`iPad 3's battery life is not great.`, {
       convertApostrophes: 1,
@@ -659,13 +755,65 @@ test(`03.27 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${3
   );
 });
 
-test(`03.28 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, t => {
+test(`03.30 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, t => {
   t.deepEqual(
     convertAll(`Book 'em, Danno. Rock 'n' roll. 'Cause 'twas the season.`, {
       convertApostrophes: 1,
       convertEntities: 0
     }).result,
     `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+  );
+});
+
+test(`03.31 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - left type used`, t => {
+  t.deepEqual(
+    convertAll(
+      `Book ${leftSingleQuote}em, Danno. Rock ${leftSingleQuote}n${leftSingleQuote} roll. ${leftSingleQuote}Cause ${leftSingleQuote}twas the season.`,
+      {
+        convertApostrophes: 1,
+        convertEntities: 0
+      }
+    ).result,
+    `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+  );
+});
+
+test(`03.32 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - right type used`, t => {
+  t.deepEqual(
+    convertAll(
+      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
+      {
+        convertApostrophes: 1,
+        convertEntities: 0
+      }
+    ).result,
+    `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`
+  );
+});
+
+test(`03.33 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - left type used`, t => {
+  t.deepEqual(
+    convertAll(
+      `Book ${leftSingleQuote}em, Danno. Rock ${leftSingleQuote}n${leftSingleQuote} roll. ${leftSingleQuote}Cause ${leftSingleQuote}twas the season.`,
+      {
+        convertApostrophes: 1,
+        convertEntities: 1
+      }
+    ).result,
+    `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`
+  );
+});
+
+test(`03.34 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - right type used`, t => {
+  t.deepEqual(
+    convertAll(
+      `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
+      {
+        convertApostrophes: 1,
+        convertEntities: 1
+      }
+    ).result,
+    `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`
   );
 });
 

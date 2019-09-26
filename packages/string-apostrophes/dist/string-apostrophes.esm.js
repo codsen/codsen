@@ -51,15 +51,29 @@ function convertOne(
       str.toUpperCase() !== str.toLowerCase()
     );
   }
-  if (value === "'" || (to === from + 1 && str[from] === "'")) {
+  if (
+    [`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(value) ||
+    (to === from + 1 &&
+      [`'`, leftSingleQuote, rightSingleQuote, singlePrime].includes(str[from]))
+  ) {
     if (
       str[from - 1] &&
       str[to] &&
       isNumber(str[from - 1]) &&
       !isLetter(str[to])
     ) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !== (convertEntities ? "&prime;" : singlePrime) &&
+        value !== (convertEntities ? "&prime;" : singlePrime)
+      ) {
         rangesArr.push([from, to, convertEntities ? "&prime;" : singlePrime]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (
       str[to] &&
@@ -67,12 +81,33 @@ function convertOne(
       str[to] === "n" &&
       str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))
     ) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to + 2) !==
+          (convertEntities
+            ? "&rsquo;n&rsquo;"
+            : `${rightSingleQuote}n${rightSingleQuote}`) &&
+        value !==
+          (convertEntities
+            ? "&rsquo;n&rsquo;"
+            : `${rightSingleQuote}n${rightSingleQuote}`)
+      ) {
         rangesArr.push([
           from,
           to + 2,
-          convertEntities ? "&rsquo;n&rsquo;" : "\u2019n\u2019"
+          convertEntities
+            ? "&rsquo;n&rsquo;"
+            : `${rightSingleQuote}n${rightSingleQuote}`
         ]);
+        if (typeof offsetBy === "function") {
+          offsetBy(2);
+        }
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to + 2) !== "'n'" &&
+        value !== "'n'"
+      ) {
+        rangesArr.push([from, to + 2, "'n'"]);
         if (typeof offsetBy === "function") {
           offsetBy(2);
         }
@@ -104,12 +139,23 @@ function convertOne(
         str[to + 4].toLowerCase() === "e") ||
       (str[to] && isNumber(str[to]))
     ) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+        value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rsquo;" : rightSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== "'" &&
+        value !== "'"
+      ) {
+        rangesArr.push([from, to, "'"]);
       }
     } else if (
       str[from - 1] &&
@@ -117,19 +163,40 @@ function convertOne(
       punctuationChars.includes(str[from - 1])
     ) {
       if (str[to].trim().length === 0) {
-        if (convertApostrophes) {
+        if (
+          convertApostrophes &&
+          str.slice(from, to) !==
+            (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+          value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+        ) {
           rangesArr.push([
             from,
             to,
             convertEntities ? "&rsquo;" : rightSingleQuote
           ]);
+        } else if (
+          !convertApostrophes &&
+          str.slice(from, to) !== "'" &&
+          value !== "'"
+        ) {
+          rangesArr.push([from, to, "'"]);
         }
       } else if (
         str[to].charCodeAt(0) === 34 &&
         str[to + 1] &&
         str[to + 1].trim().length === 0
       ) {
-        if (convertApostrophes) {
+        if (
+          convertApostrophes &&
+          str.slice(from, to + 1) !==
+            (convertEntities
+              ? "&rsquo;&rdquo;"
+              : `${rightSingleQuote}${rightDoubleQuote}`) &&
+          value !==
+            (convertEntities
+              ? "&rsquo;&rdquo;"
+              : `${rightSingleQuote}${rightDoubleQuote}`)
+        ) {
           rangesArr.push([
             from,
             to + 1,
@@ -142,23 +209,54 @@ function convertOne(
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
+        } else if (
+          !convertApostrophes &&
+          str.slice(from, to + 1) !== `'"` &&
+          value !== `'"`
+        ) {
+          rangesArr.push([from, to + 1, `'"`]);
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
+          }
         }
       }
     } else if (from === 0 && str.slice(to).trim().length) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&lsquo;" : leftSingleQuote) &&
+        value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&lsquo;" : leftSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (!str[to] && str.slice(0, from).trim().length) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+        value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rsquo;" : rightSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (
       str[from - 1] &&
@@ -168,7 +266,7 @@ function convertOne(
     ) {
       if (convertApostrophes) {
         if (
-          (str[to] &&
+          ((str[to] &&
             str[from - 5] &&
             str[from - 5].toLowerCase() === "h" &&
             str[from - 4].toLowerCase() === "a" &&
@@ -176,88 +274,180 @@ function convertOne(
             str[from - 2].toLowerCase() === "a" &&
             str[from - 1].toLowerCase() === "i" &&
             str[to].toLowerCase() === "i") ||
-          (str[from - 1] &&
-            str[from - 1].toLowerCase() === "o" &&
-            str[to + 2] &&
-            str[to].toLowerCase() === "a" &&
-            str[to + 1].toLowerCase() === "h" &&
-            str[to + 2].toLowerCase() === "u")
+            (str[from - 1] &&
+              str[from - 1].toLowerCase() === "o" &&
+              str[to + 2] &&
+              str[to].toLowerCase() === "a" &&
+              str[to + 1].toLowerCase() === "h" &&
+              str[to + 2].toLowerCase() === "u")) &&
+          str.slice(from, to) !==
+            (convertEntities ? "&lsquo;" : leftSingleQuote) &&
+          value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
         ) {
           rangesArr.push([
             from,
             to,
             convertEntities ? "&lsquo;" : leftSingleQuote
           ]);
-        } else {
+        } else if (
+          str.slice(from, to) !==
+            (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+          value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+        ) {
           rangesArr.push([
             from,
             to,
             convertEntities ? "&rsquo;" : rightSingleQuote
           ]);
         }
+      } else if (str.slice(from, to) !== "'" && value !== "'") {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&lsquo;" : leftSingleQuote) &&
+        value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&lsquo;" : leftSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+        value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rsquo;" : rightSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (str[from - 1] && str[from - 1].trim().length === 0) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&lsquo;" : leftSingleQuote) &&
+        value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&lsquo;" : leftSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     } else if (str[to] && str[to].trim().length === 0) {
-      if (convertApostrophes) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rsquo;" : rightSingleQuote) &&
+        value !== (convertEntities ? "&rsquo;" : rightSingleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rsquo;" : rightSingleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `'` &&
+        value !== `'`
+      ) {
+        rangesArr.push([from, to, `'`]);
       }
     }
-  } else if (value === `"` || (to === from + 1 && str[from] === `"`)) {
-    if (convertApostrophes) {
+  } else if (
+    [`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(value) ||
+    (to === from + 1 &&
+      [`"`, leftDoubleQuote, rightDoubleQuote, doublePrime].includes(str[from]))
+  ) {
+    if (
+      str[from - 1] &&
+      isNumber(str[from - 1]) &&
+      (str[to] &&
+        str[to] !== "'" &&
+        str[to] !== '"' &&
+        str[to] !== rightSingleQuote &&
+        str[to] !== rightDoubleQuote &&
+        str[to] !== leftSingleQuote &&
+        str[to] !== leftDoubleQuote)
+    ) {
       if (
-        str[from - 1] &&
-        isNumber(str[from - 1]) &&
-        (str[to] &&
-          str[to] !== "'" &&
-          str[to] !== '"' &&
-          str[to] !== rightSingleQuote &&
-          str[to] !== rightDoubleQuote &&
-          str[to] !== leftSingleQuote &&
-          str[to] !== leftDoubleQuote)
+        convertApostrophes &&
+        str.slice(from, to) !== (convertEntities ? "&Prime;" : doublePrime) &&
+        value !== (convertEntities ? "&Prime;" : doublePrime)
       ) {
         rangesArr.push([from, to, convertEntities ? "&Prime;" : doublePrime]);
       } else if (
-        str[from - 1] &&
-        str[to] &&
-        punctuationChars.includes(str[from - 1])
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
       ) {
-        if (str[to].trim().length === 0) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (
+      str[from - 1] &&
+      str[to] &&
+      punctuationChars.includes(str[from - 1])
+    ) {
+      if (str[to].trim().length === 0) {
+        if (
+          convertApostrophes &&
+          str.slice(from, to) !==
+            (convertEntities ? "&rdquo;" : rightDoubleQuote) &&
+          value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
+        ) {
           rangesArr.push([
             from,
             to,
             convertEntities ? "&rdquo;" : rightDoubleQuote
           ]);
         } else if (
-          str[to].charCodeAt(0) === 39 &&
-          str[to + 1] &&
-          str[to + 1].trim().length === 0
+          !convertApostrophes &&
+          str.slice(from, to) !== `"` &&
+          value !== `"`
+        ) {
+          rangesArr.push([from, to, `"`]);
+        }
+      } else if (
+        str[to].charCodeAt(0) === 39 &&
+        str[to + 1] &&
+        str[to + 1].trim().length === 0
+      ) {
+        if (
+          convertApostrophes &&
+          str.slice(from, to + 1) !==
+            (convertEntities
+              ? "&rdquo;&rsquo;"
+              : `${rightDoubleQuote}${rightSingleQuote}`) &&
+          value !==
+            (convertEntities
+              ? "&rdquo;&rsquo;"
+              : `${rightDoubleQuote}${rightSingleQuote}`)
         ) {
           rangesArr.push([
             from,
@@ -269,46 +459,133 @@ function convertOne(
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
+        } else if (
+          !convertApostrophes &&
+          str.slice(from, to + 1) !== `"'` &&
+          value !== `"'`
+        ) {
+          rangesArr.push([from, to + 1, `"'`]);
+          if (typeof offsetBy === "function") {
+            offsetBy(1);
+          }
         }
-      } else if (from === 0 && str[to] && str.slice(to).trim().length) {
-        rangesArr.push([
-          from,
-          to,
-          convertEntities ? "&ldquo;" : leftDoubleQuote
-        ]);
-      } else if (!str[to] && str.slice(0, from).trim().length) {
-        rangesArr.push([
-          from,
-          to,
-          convertEntities ? "&rdquo;" : rightDoubleQuote
-        ]);
-      } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+      }
+    } else if (from === 0 && str[to] && str.slice(to).trim().length) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&ldquo;" : leftDoubleQuote) &&
+        value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&ldquo;" : leftDoubleQuote
         ]);
       } else if (
-        str[from - 1] &&
-        (isLetter(str[from - 1]) || isNumber(str[from - 1]))
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (!str[to] && str.slice(0, from).trim().length) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rdquo;" : rightDoubleQuote) &&
+        value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
       ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rdquo;" : rightDoubleQuote
         ]);
-      } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (str[to] && (isLetter(str[to]) || isNumber(str[to]))) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&ldquo;" : leftDoubleQuote) &&
+        value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&ldquo;" : leftDoubleQuote
         ]);
-      } else if (str[to] && str[to].trim().length === 0) {
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (
+      str[from - 1] &&
+      (isLetter(str[from - 1]) || isNumber(str[from - 1]))
+    ) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rdquo;" : rightDoubleQuote) &&
+        value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
+      ) {
         rangesArr.push([
           from,
           to,
           convertEntities ? "&rdquo;" : rightDoubleQuote
         ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (str[from - 1] && str[from - 1].trim().length === 0) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&ldquo;" : leftDoubleQuote) &&
+        value !== (convertEntities ? "&ldquo;" : leftDoubleQuote)
+      ) {
+        rangesArr.push([
+          from,
+          to,
+          convertEntities ? "&ldquo;" : leftDoubleQuote
+        ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
+      }
+    } else if (str[to] && str[to].trim().length === 0) {
+      if (
+        convertApostrophes &&
+        str.slice(from, to) !==
+          (convertEntities ? "&rdquo;" : rightDoubleQuote) &&
+        value !== (convertEntities ? "&rdquo;" : rightDoubleQuote)
+      ) {
+        rangesArr.push([
+          from,
+          to,
+          convertEntities ? "&rdquo;" : rightDoubleQuote
+        ]);
+      } else if (
+        !convertApostrophes &&
+        str.slice(from, to) !== `"` &&
+        value !== `"`
+      ) {
+        rangesArr.push([from, to, `"`]);
       }
     }
   }
