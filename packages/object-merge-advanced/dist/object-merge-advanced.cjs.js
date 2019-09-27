@@ -34,9 +34,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function isArr(something) {
-  return Array.isArray(something);
-}
 function isStr(something) {
   return typeof something === "string";
 }
@@ -49,6 +46,7 @@ function isBool(something) {
 function isFun(something) {
   return typeof something === "function";
 }
+var isArr = Array.isArray;
 function arrayContainsStr(arr) {
   return !!arr && arr.some(function (val) {
     return typeof val === "string";

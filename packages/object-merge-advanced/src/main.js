@@ -15,9 +15,6 @@ import includesAll from "array-includes-all";
 // ===================================
 // F U N C T I O N S
 
-function isArr(something) {
-  return Array.isArray(something);
-}
 function isStr(something) {
   return typeof something === "string";
 }
@@ -30,6 +27,7 @@ function isBool(something) {
 function isFun(something) {
   return typeof something === "function";
 }
+const isArr = Array.isArray;
 function arrayContainsStr(arr) {
   return !!arr && arr.some(val => typeof val === "string");
 }
