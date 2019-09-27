@@ -654,38 +654,35 @@ test("04.02 - deletion of empty things is limited in arrays too", t => {
 // ==============================
 
 test("05.01 - both key and value missing - throws", t => {
-  t.throws(() => {
+  const error1 = t.throws(() => {
     deleteKey({ a: "a" }, {});
   });
+  t.regex(error1.message, /THROW_ID_04/);
 });
 
 test("05.02 - nonsensical options object - throws", t => {
-  t.throws(() => {
+  const error1 = t.throws(() => {
     deleteKey({ a: "a" }, { z: "z" });
   });
-  t.throws(() => {
+  t.regex(error1.message, /THROW_ID_04/);
+});
+
+test("05.03 - nonsensical options object - throws", t => {
+  const error1 = t.throws(() => {
     deleteKey({ a: "a" }, 1);
   });
+  t.regex(error1.message, /THROW_ID_04/);
 });
 
-test("05.03 - no input args - throws", t => {
-  t.throws(() => {
+test("05.04 - no input args - throws", t => {
+  const error1 = t.throws(() => {
     deleteKey();
   });
+  t.regex(error1.message, /THROW_ID_01/);
 });
 
-test("05.04 - wrong input args - throws", t => {
-  t.throws(() => {
-    deleteKey(
-      { a: "a" },
-      {
-        key: "yyy",
-        val: "zzz",
-        cleanup: 1
-      }
-    );
-  });
-  t.throws(() => {
+test("05.05 - wrong input args - throws", t => {
+  const error1 = t.throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -695,7 +692,11 @@ test("05.04 - wrong input args - throws", t => {
       }
     );
   });
-  t.throws(() => {
+  t.regex(error1.message, /opts\.key/g);
+});
+
+test("05.06 - wrong input args - throws", t => {
+  const error1 = t.throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -705,9 +706,14 @@ test("05.04 - wrong input args - throws", t => {
       }
     );
   });
-  t.throws(() => {
+  t.regex(error1.message, /opts\.key/);
+});
+
+test("05.07 - wrong input args - throws", t => {
+  const error1 = t.throws(() => {
     deleteKey({ a: "a" }, { key: 1 }, "third arg");
   });
+  t.regex(error1.message, /THROW_ID_02/);
 });
 
 // ==============================

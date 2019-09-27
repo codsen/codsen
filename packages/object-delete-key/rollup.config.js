@@ -45,7 +45,6 @@ export default commandLineArgs => {
       external: [
         "ast-is-empty",
         "ast-monkey",
-        "check-types-mini",
         "lodash.clonedeep",
         "util-array-object-or-both"
       ],
@@ -67,7 +66,6 @@ export default commandLineArgs => {
       external: [
         "ast-is-empty",
         "ast-monkey",
-        "check-types-mini",
         "lodash.clonedeep",
         "util-array-object-or-both"
       ],

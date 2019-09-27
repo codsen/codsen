@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var astMonkey = require('ast-monkey');
 var isEmpty = _interopDefault(require('ast-is-empty'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var validateTheOnly = _interopDefault(require('util-array-object-or-both'));
 
 function deleteKey(originalInput, originalOpts) {
@@ -34,14 +33,6 @@ function deleteKey(originalInput, originalOpts) {
     only: "any"
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-delete-key/deleteKey(): [THROW_ID_00*]",
-    ignorePaths: "val.*",
-    schema: {
-      key: ["null", "string"],
-      val: "whatever"
-    }
-  });
   opts.only = validateTheOnly(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"

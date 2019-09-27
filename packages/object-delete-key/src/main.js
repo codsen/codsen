@@ -1,7 +1,6 @@
 import { find, get, drop, del } from "ast-monkey";
 import isEmpty from "ast-is-empty";
 import clone from "lodash.clonedeep";
-import checkTypes from "check-types-mini";
 import validateTheOnly from "util-array-object-or-both";
 
 // ---------------------------------------------------------------------
@@ -28,14 +27,6 @@ function deleteKey(originalInput, originalOpts) {
     only: "any"
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-delete-key/deleteKey(): [THROW_ID_00*]",
-    ignorePaths: "val.*",
-    schema: {
-      key: ["null", "string"],
-      val: "whatever"
-    }
-  });
   opts.only = validateTheOnly(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"
