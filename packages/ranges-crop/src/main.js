@@ -1,5 +1,4 @@
 import isNatNum from "is-natural-number";
-import ordinalSuffix from "ordinal-number-suffix";
 import mergeRanges from "ranges-merge";
 
 const isArr = Array.isArray;
@@ -68,9 +67,8 @@ function rangesCrop(arrOfRanges, strLen) {
     }
 
     throw new TypeError(
-      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${ordinalSuffix(
-        culpritsIndex + 1
-      )} range (${JSON.stringify(
+      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex +
+        1}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -89,9 +87,7 @@ function rangesCrop(arrOfRanges, strLen) {
     })
   ) {
     throw new TypeError(
-      `ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${ordinalSuffix(
-        culpritsIndex
-      )} range ${JSON.stringify(
+      `ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
