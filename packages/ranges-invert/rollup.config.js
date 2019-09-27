@@ -45,7 +45,6 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "is-natural-number",
-        "ordinal-number-suffix",
         "ranges-crop",
         "ranges-merge"
       ],
@@ -67,7 +66,6 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "is-natural-number",
-        "ordinal-number-suffix",
         "ranges-crop",
         "ranges-merge"
       ],

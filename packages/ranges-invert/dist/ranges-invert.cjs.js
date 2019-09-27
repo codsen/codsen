@@ -12,8 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var isNatNum = _interopDefault(require('is-natural-number'));
-var ordinalSuffix = _interopDefault(require('ordinal-number-suffix'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 var rangesCrop = _interopDefault(require('ranges-crop'));
 
@@ -54,9 +52,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     skipChecks: false
   };
   var opts = Object.assign({}, defaults, originalOptions);
-  checkTypes(opts, defaults, {
-    msg: "ranges-invert: [THROW_ID_03*]"
-  });
   var culpritsIndex;
   var culpritsLen;
   if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
@@ -67,7 +62,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     return true;
   })) {
-    throw new TypeError("ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ".concat(ordinalSuffix(culpritsIndex), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") has not two but ").concat(culpritsLen, " elements!"));
+    throw new TypeError("ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") has not two but ").concat(culpritsLen, " elements!"));
   }
   if (!opts.skipChecks && !arrOfRanges.every(function (rangeArr, indx) {
     if (!isNatNum(rangeArr[0], {
@@ -83,7 +78,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
       throw new TypeError("ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ".concat(JSON.stringify(arrOfRanges, null, 0), "!"));
     }
-    throw new TypeError("ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(ordinalSuffix(culpritsIndex + 1), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
+    throw new TypeError("ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
   }
   var prep;
   if (!opts.skipChecks) {

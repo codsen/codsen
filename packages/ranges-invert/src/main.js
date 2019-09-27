@@ -1,6 +1,4 @@
 import isNatNum from "is-natural-number";
-import ordinalSuffix from "ordinal-number-suffix";
-import checkTypes from "check-types-mini";
 import mergeRanges from "ranges-merge";
 import rangesCrop from "ranges-crop";
 
@@ -49,9 +47,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   };
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptions);
-  // the check:
-  checkTypes(opts, defaults, { msg: "ranges-invert: [THROW_ID_03*]" });
-
   // arrOfRanges validation
 
   let culpritsIndex;
@@ -71,9 +66,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     })
   ) {
     throw new TypeError(
-      `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${ordinalSuffix(
-        culpritsIndex
-      )} range (${JSON.stringify(
+      `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -109,9 +102,8 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
 
     throw new TypeError(
-      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${ordinalSuffix(
-        culpritsIndex + 1
-      )} range (${JSON.stringify(
+      `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex +
+        1}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
