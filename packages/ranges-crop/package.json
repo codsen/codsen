@@ -135,7 +135,6 @@
   },
   "dependencies": {
     "is-natural-number": "^4.0.1",
-    "ordinal-number-suffix": "^0.1.2",
     "ranges-merge": "^4.2.21"
   },
   "devDependencies": {
