@@ -1,6 +1,5 @@
 import isObj from "lodash.isplainobject";
 import isEq from "lodash.isequal";
-import checkTypes from "check-types-mini";
 
 const isArr = Array.isArray;
 
@@ -77,9 +76,6 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
     arraysMustNotContainPlaceholders: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-all-values-equal-to: [THROW_ID_04*]"
-  });
 
   // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);

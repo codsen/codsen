@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var isEq = _interopDefault(require('lodash.isequal'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -74,9 +73,6 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
     arraysMustNotContainPlaceholders: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-all-values-equal-to: [THROW_ID_04*]"
-  });
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
