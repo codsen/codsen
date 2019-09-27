@@ -10,8 +10,6 @@
 import { traverse, set } from 'ast-monkey';
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
-import ordinal from 'ordinal-number-suffix';
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
@@ -23,7 +21,7 @@ function isStr(something) {
 }
 function mandatory(i) {
   throw new Error(
-    `string-convert-indexes: [THROW_ID_01*] Missing ${ordinal(i)} parameter!`
+    `string-convert-indexes: [THROW_ID_01*] Missing ${i}th parameter!`
   );
 }
 function prep(something) {
@@ -58,7 +56,6 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "string-convert-indexes: [THROW_ID_04*]" });
   const data = { id: 0 };
   let toDoList = [];
   if (

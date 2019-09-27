@@ -44,12 +44,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-monkey",
-        "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
         "lodash.clonedeep",
-        "lodash.isplainobject",
-        "ordinal-number-suffix"
+        "lodash.isplainobject"
       ],
       plugins: [
         strip({
@@ -68,12 +66,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "ast-monkey",
-        "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
         "lodash.clonedeep",
-        "lodash.isplainobject",
-        "ordinal-number-suffix"
+        "lodash.isplainobject"
       ],
       plugins: [
         strip({

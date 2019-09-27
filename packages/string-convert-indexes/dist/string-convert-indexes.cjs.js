@@ -16,8 +16,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var astMonkey = require('ast-monkey');
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
-var ordinal = _interopDefault(require('ordinal-number-suffix'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
@@ -42,7 +40,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function mandatory(i) {
-  throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(ordinal(i), " parameter!"));
+  throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
 }
 function prep(something) {
   if (typeof something === "string") {
@@ -72,9 +70,6 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-convert-indexes: [THROW_ID_04*]"
-  });
   var data = {
     id: 0
   };

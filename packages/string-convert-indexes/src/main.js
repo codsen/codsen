@@ -3,8 +3,6 @@
 import { set, traverse } from "ast-monkey";
 import isInt from "is-natural-number";
 import isNumStr from "is-natural-number-string";
-import ordinal from "ordinal-number-suffix";
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
 
@@ -16,7 +14,7 @@ function isStr(something) {
 }
 function mandatory(i) {
   throw new Error(
-    `string-convert-indexes: [THROW_ID_01*] Missing ${ordinal(i)} parameter!`
+    `string-convert-indexes: [THROW_ID_01*] Missing ${i}th parameter!`
   );
 }
 
@@ -59,7 +57,6 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "string-convert-indexes: [THROW_ID_04*]" });
 
   // this simple counter will later act as the "address" to each finding and will
   // be used in set() method to convert the value at this "address" within tree:
