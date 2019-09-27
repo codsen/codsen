@@ -2962,24 +2962,7 @@ test("13.01 - \u001b[33mOPTS\u001b[39m - third argument is not a plain object", 
   });
 });
 
-test("13.02 - \u001b[33mOPTS\u001b[39m - opts.mergeObjectsOnlyWhenKeysetMatches type checks work", t => {
-  t.throws(() => {
-    mergeAdvanced(
-      { a: "a" },
-      { b: "b" },
-      { mergeObjectsOnlyWhenKeysetMatches: "true" }
-    );
-  });
-  t.notThrows(() => {
-    mergeAdvanced(
-      { a: "a" },
-      { b: "b" },
-      { mergeObjectsOnlyWhenKeysetMatches: true }
-    );
-  });
-});
-
-test("13.03 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work", t => {
+test("13.02 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work", t => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, { ignoreKeys: 1 });
   });
@@ -2997,7 +2980,7 @@ test("13.03 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work", t =>
   });
 });
 
-test("13.04 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys type checks work", t => {
+test("13.03 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys type checks work", t => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, { hardMergeKeys: 1 });
   });

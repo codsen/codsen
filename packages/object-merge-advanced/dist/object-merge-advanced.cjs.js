@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var includes = _interopDefault(require('array-includes-with-glob'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var lodashIncludes = _interopDefault(require('lodash.includes'));
 var uniq = _interopDefault(require('lodash.uniq'));
 var arrayiffyString = _interopDefault(require('arrayiffy-if-string'));
@@ -46,6 +45,9 @@ function isNum(something) {
 }
 function isBool(something) {
   return typeof something === "boolean";
+}
+function isFun(something) {
+  return typeof something === "function";
 }
 function arrayContainsStr(arr) {
   return !!arr && arr.some(function (val) {
@@ -87,12 +89,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   var opts = Object.assign(clone(defaults), originalOpts);
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
-  checkTypes(opts, defaults, {
-    msg: "object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]",
-    schema: {
-      cb: ["null", "undefined", "false", "function"]
-    }
-  });
   if (opts.hardMergeKeys.includes("*")) {
     opts.hardMergeEverything = true;
   }
@@ -101,7 +97,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   }
   var currPath;
   if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
-    return opts.cb ? opts.cb(input1orig, input2orig, null, {
+    return isFun(opts.cb) ? opts.cb(input1orig, input2orig, null, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -121,7 +117,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       if (isArr(i2) && nonEmpty(i2)) {
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           var _currentResult = uni ? uniRes : [];
-          return opts.cb ? opts.cb(i1, i2, _currentResult, {
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -129,7 +125,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         }
         if (opts.hardArrayConcat) {
           var _currentResult2 = uni ? uniRes : i1.concat(i2);
-          return opts.cb ? opts.cb(i1, i2, _currentResult2, {
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult2, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -179,7 +175,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         i1 = clone(temp);
       } else {
         var _currentResult3 = uni ? uniRes : i1;
-        return opts.cb ? opts.cb(i1, i2, _currentResult3, {
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult3, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
@@ -188,14 +184,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     } else {
       if (nonEmpty(i2)) {
         var _currentResult5 = uni ? uniRes : i2;
-        return opts.cb ? opts.cb(i1, i2, _currentResult5, {
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult5, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
         }) : _currentResult5;
       }
       var _currentResult4 = uni ? uniRes : i1;
-      return opts.cb ? opts.cb(i1, i2, _currentResult4, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult4, {
         path: currPath,
         key: infoObj.key,
         type: infoObj.type
@@ -206,14 +202,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       if (isArr(i2)) {
         if (nonEmpty(i2)) {
           var _currentResult9 = uni ? uniRes : i2;
-          return opts.cb ? opts.cb(i1, i2, _currentResult9, {
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult9, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
           }) : _currentResult9;
         }
         var _currentResult8 = uni ? uniRes : i1;
-        return opts.cb ? opts.cb(i1, i2, _currentResult8, {
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult8, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
@@ -260,7 +256,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         return i1;
       }
       var _currentResult7 = uni ? uniRes : i1;
-      return opts.cb ? opts.cb(i1, i2, _currentResult7, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult7, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -268,14 +264,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     }
     if (isArr(i2) || isObj(i2) || nonEmpty(i2)) {
       var _currentResult10 = uni ? uniRes : i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult10, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult10, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult10;
     }
     var _currentResult6 = uni ? uniRes : i1;
-    return opts.cb ? opts.cb(i1, i2, _currentResult6, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult6, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -284,14 +280,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     if (nonEmpty(i1)) {
       if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty(i2)) {
         var _currentResult13 = uni ? uniRes : i2;
-        return opts.cb ? opts.cb(i1, i2, _currentResult13, {
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult13, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         }) : _currentResult13;
       }
       var _currentResult12 = uni ? uniRes : i1;
-      return opts.cb ? opts.cb(i1, i2, _currentResult12, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult12, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -299,14 +295,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     }
     if (i2 != null && !isBool(i2)) {
       var _currentResult14 = uni ? uniRes : i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult14, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult14, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult14;
     }
     var _currentResult11 = uni ? uniRes : i1;
-    return opts.cb ? opts.cb(i1, i2, _currentResult11, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult11, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -314,14 +310,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   } else if (isNum(i1)) {
     if (nonEmpty(i2)) {
       var _currentResult16 = uni ? uniRes : i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult16, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult16, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult16;
     }
     var _currentResult15 = uni ? uniRes : i1;
-    return opts.cb ? opts.cb(i1, i2, _currentResult15, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult15, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -330,28 +326,28 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     if (isBool(i2)) {
       if (opts.mergeBoolsUsingOrNotAnd) {
         var _currentResult19 = uni ? uniRes : i1 || i2;
-        return opts.cb ? opts.cb(i1, i2, _currentResult19, {
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult19, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         }) : _currentResult19;
       }
       var _currentResult18 = uni ? uniRes : i1 && i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult18, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult18, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult18;
     } else if (i2 != null) {
       var _currentResult20 = uni ? uniRes : i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult20, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult20, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult20;
     }
     var _currentResult17 = uni ? uniRes : i1;
-    return opts.cb ? opts.cb(i1, i2, _currentResult17, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult17, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -359,28 +355,28 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   } else if (i1 === null) {
     if (i2 != null) {
       var _currentResult22 = uni ? uniRes : i2;
-      return opts.cb ? opts.cb(i1, i2, _currentResult22, {
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult22, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       }) : _currentResult22;
     }
     var _currentResult21 = uni ? uniRes : i1;
-    return opts.cb ? opts.cb(i1, i2, _currentResult21, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult21, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
     }) : _currentResult21;
   } else {
     var _currentResult23 = uni ? uniRes : i2;
-    return opts.cb ? opts.cb(i1, i2, _currentResult23, {
+    return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult23, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
     }) : _currentResult23;
   }
   var currentResult = uni ? uniRes : i1;
-  return opts.cb ? opts.cb(i1, i2, currentResult, {
+  return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
     path: infoObj.path,
     key: infoObj.key,
     type: infoObj.type

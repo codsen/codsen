@@ -6,7 +6,6 @@
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
 import includes from "array-includes-with-glob";
-import checkTypes from "check-types-mini";
 import lodashIncludes from "lodash.includes";
 import uniq from "lodash.uniq";
 import arrayiffyString from "arrayiffy-if-string";
@@ -27,6 +26,9 @@ function isNum(something) {
 }
 function isBool(something) {
   return typeof something === "boolean";
+}
+function isFun(something) {
+  return typeof something === "function";
 }
 function arrayContainsStr(arr) {
   return !!arr && arr.some(val => typeof val === "string");
@@ -83,13 +85,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
 
-  checkTypes(opts, defaults, {
-    msg: "object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]",
-    schema: {
-      cb: ["null", "undefined", "false", "function"]
-    }
-  });
-
   // hardMergeKeys: '*' <===> hardMergeEverything === true
   // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
   if (opts.hardMergeKeys.includes("*")) {
@@ -125,7 +120,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
   ) {
     console.log(
       `\u001b[${33}m${`127 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(input1orig, input2orig, null, {
               path: infoObj.path,
               key: infoObj.key,
@@ -134,7 +129,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : null
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(input1orig, input2orig, null, {
           path: infoObj.path,
           key: infoObj.key,
@@ -200,7 +195,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           const currentResult = uni ? uniRes : [];
           console.log(
             `\u001b[${33}m${`202 RET: ${
-              opts.cb
+              isFun(opts.cb)
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
@@ -209,7 +204,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 : currentResult
             }`}\u001b[${39}m`
           );
-          return opts.cb
+          return isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
@@ -221,7 +216,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           const currentResult = uni ? uniRes : i1.concat(i2);
           console.log(
             `\u001b[${33}m${`223 RET: ${
-              opts.cb
+              isFun(opts.cb)
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
@@ -230,7 +225,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 : currentResult
             }`}\u001b[${39}m`
           );
-          return opts.cb
+          return isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
@@ -329,7 +324,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         const currentResult = uni ? uniRes : i1;
         console.log(
           `\u001b[${33}m${`331 RET: ${
-            opts.cb
+            isFun(opts.cb)
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
@@ -338,7 +333,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               : currentResult
           }`}\u001b[${39}m`
         );
-        return opts.cb
+        return isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
@@ -353,7 +348,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         const currentResult = uni ? uniRes : i2;
         console.log(
           `\u001b[${33}m${`355 RET: ${
-            opts.cb
+            isFun(opts.cb)
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
@@ -362,7 +357,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               : currentResult
           }`}\u001b[${39}m`
         );
-        return opts.cb
+        return isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
@@ -374,7 +369,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i1;
       console.log(
         `\u001b[${33}m${`376 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
@@ -383,7 +378,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: currPath,
             key: infoObj.key,
@@ -402,7 +397,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           const currentResult = uni ? uniRes : i2;
           console.log(
             `\u001b[${33}m${`404 RET: ${
-              opts.cb
+              isFun(opts.cb)
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
                     key: infoObj.key,
@@ -411,7 +406,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 : currentResult
             }`}\u001b[${39}m`
           );
-          return opts.cb
+          return isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
                 key: infoObj.key,
@@ -423,7 +418,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         const currentResult = uni ? uniRes : i1;
         console.log(
           `\u001b[${33}m${`425 RET: ${
-            opts.cb
+            isFun(opts.cb)
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
                   key: infoObj.key,
@@ -432,7 +427,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               : currentResult
           }`}\u001b[${39}m`
         );
-        return opts.cb
+        return isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: currPath,
               key: infoObj.key,
@@ -556,7 +551,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i1;
       console.log(
         `\u001b[${33}m${`558 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -565,7 +560,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -580,7 +575,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i2;
       console.log(
         `\u001b[${33}m${`582 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -589,7 +584,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -601,7 +596,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i1;
     console.log(
       `\u001b[${33}m${`603 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -610,7 +605,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -626,7 +621,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         const currentResult = uni ? uniRes : i2;
         console.log(
           `\u001b[${33}m${`628 RET: ${
-            opts.cb
+            isFun(opts.cb)
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
                   key: infoObj.key,
@@ -635,7 +630,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               : currentResult
           }`}\u001b[${39}m`
         );
-        return opts.cb
+        return isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -647,7 +642,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i1;
       console.log(
         `\u001b[${33}m${`649 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -656,7 +651,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -671,7 +666,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i2;
       console.log(
         `\u001b[${33}m${`673 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -680,7 +675,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -692,7 +687,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i1;
     console.log(
       `\u001b[${33}m${`694 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -701,7 +696,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -715,7 +710,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i2;
       console.log(
         `\u001b[${33}m${`717 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -724,7 +719,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -736,7 +731,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i1;
     console.log(
       `\u001b[${33}m${`738 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -745,7 +740,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -760,7 +755,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         const currentResult = uni ? uniRes : i1 || i2; // default - OR
         console.log(
           `\u001b[${33}m${`762 RET: ${
-            opts.cb
+            isFun(opts.cb)
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
                   key: infoObj.key,
@@ -769,7 +764,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               : currentResult
           }`}\u001b[${39}m`
         );
-        return opts.cb
+        return isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -780,7 +775,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i1 && i2; // alternative merge using AND
       console.log(
         `\u001b[${33}m${`782 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -789,7 +784,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -802,7 +797,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       const currentResult = uni ? uniRes : i2;
       console.log(
         `\u001b[${33}m${`804 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -811,7 +806,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -824,7 +819,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i1;
     console.log(
       `\u001b[${33}m${`826 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -833,7 +828,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -852,7 +847,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       console.log(`\u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`);
       console.log(
         `\u001b[${33}m${`854 RET: ${
-          opts.cb
+          isFun(opts.cb)
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
                 key: infoObj.key,
@@ -861,7 +856,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             : currentResult
         }`}\u001b[${39}m`
       );
-      return opts.cb
+      return isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -873,7 +868,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i1;
     console.log(
       `\u001b[${33}m${`875 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -882,7 +877,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -894,7 +889,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     const currentResult = uni ? uniRes : i2;
     console.log(
       `\u001b[${33}m${`896 RET: ${
-        opts.cb
+        isFun(opts.cb)
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
               key: infoObj.key,
@@ -903,7 +898,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           : currentResult
       }`}\u001b[${39}m`
     );
-    return opts.cb
+    return isFun(opts.cb)
       ? opts.cb(i1, i2, currentResult, {
           path: infoObj.path,
           key: infoObj.key,
@@ -925,7 +920,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
 
   console.log(
     `\u001b[${33}m${`927 RET: ${JSON.stringify(
-      opts.cb
+      isFun(opts.cb)
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
             key: infoObj.key,
@@ -936,7 +931,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       4
     )}`}\u001b[${39}m`
   );
-  return opts.cb
+  return isFun(opts.cb)
     ? opts.cb(i1, i2, currentResult, {
         path: infoObj.path,
         key: infoObj.key,
