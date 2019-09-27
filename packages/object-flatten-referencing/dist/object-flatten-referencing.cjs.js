@@ -11,12 +11,11 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var typ = _interopDefault(require('type-detect'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var search = _interopDefault(require('str-indexes-of-plus'));
 var includes = _interopDefault(require('lodash.includes'));
 var matcher = _interopDefault(require('matcher'));
-var checkTypes = _interopDefault(require('check-types-mini'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 var isStringInt = _interopDefault(require('is-string-int'));
 
 function _typeof(obj) {
@@ -35,10 +34,7 @@ function _typeof(obj) {
 
 var isArr = Array.isArray;
 function isStr(something) {
-  return typ(something) === "string";
-}
-function isObj(something) {
-  return typ(something) === "Object";
+  return typeof something === "string";
 }
 function flattenObject(objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
@@ -134,10 +130,7 @@ function existy(x) {
   return x != null;
 }
 function isStr$1(something) {
-  return typ(something) === "string";
-}
-function isObj$1(something) {
-  return typ(something) === "Object";
+  return typeof something === "string";
 }
 function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 0) {
@@ -146,7 +139,7 @@ function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 1) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!");
   }
-  if (existy(opts1) && !isObj$1(opts1)) {
+  if (existy(opts1) && !isObj(opts1)) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ".concat(_typeof(opts1)));
   }
   function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs, currentRoot) {
@@ -183,15 +176,10 @@ function outer(originalInput1, originalReference1, opts1) {
     opts.dontWrapPaths = arrayiffyString(opts.dontWrapPaths);
     opts.ignore = arrayiffyString(opts.ignore);
     opts.whatToDoWhenReferenceIsMissing = reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing);
-    checkTypes(opts, defaults, {
-      msg: "object-flatten-referencing/ofr(): [THROW_ID_05*]",
-      optsVarName: "opts",
-      enforceStrictKeyset: opts.enforceStrictKeyset
-    });
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
     }
-    if (isObj$1(input)) {
+    if (isObj(input)) {
       Object.keys(input).forEach(function (key) {
         var currentPath = currentRoot + (currentRoot.length === 0 ? key : ".".concat(key));
         if (opts.ignore.length === 0 || !includes(opts.ignore, key)) {
@@ -235,7 +223,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 }
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
-            } else if (isObj$1(input[key])) {
+            } else if (isObj(input[key])) {
               if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 input[key] = flattenArr(flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
@@ -248,7 +236,7 @@ function outer(originalInput1, originalReference1, opts1) {
             } else if (isStr$1(input[key])) {
               input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
             }
-          } else if (typ(input[key]) !== typ(reference[key])) {
+          } else if (_typeof(input[key]) !== _typeof(reference[key])) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error("object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ".concat(key, " and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing."));
             }

@@ -7,20 +7,16 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-referencing
  */
 
-import typ from 'type-detect';
 import clone from 'lodash.clonedeep';
 import search from 'str-indexes-of-plus';
 import includes from 'lodash.includes';
 import matcher from 'matcher';
-import checkTypes from 'check-types-mini';
+import isObj from 'lodash.isplainobject';
 import isStringInt from 'is-string-int';
 
 const isArr = Array.isArray;
 function isStr(something) {
-  return typ(something) === "string";
-}
-function isObj(something) {
-  return typ(something) === "Object";
+  return typeof something === "string";
 }
 function flattenObject(objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
@@ -140,10 +136,7 @@ function existy(x) {
   return x != null;
 }
 function isStr$1(something) {
-  return typ(something) === "string";
-}
-function isObj$1(something) {
-  return typ(something) === "Object";
+  return typeof something === "string";
 }
 function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 0) {
@@ -156,7 +149,7 @@ function outer(originalInput1, originalReference1, opts1) {
       "object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!"
     );
   }
-  if (existy(opts1) && !isObj$1(opts1)) {
+  if (existy(opts1) && !isObj(opts1)) {
     throw new Error(
       `object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ${typeof opts1}`
     );
@@ -206,15 +199,10 @@ function outer(originalInput1, originalReference1, opts1) {
     opts.whatToDoWhenReferenceIsMissing = reclaimIntegerString(
       opts.whatToDoWhenReferenceIsMissing
     );
-    checkTypes(opts, defaults, {
-      msg: "object-flatten-referencing/ofr(): [THROW_ID_05*]",
-      optsVarName: "opts",
-      enforceStrictKeyset: opts.enforceStrictKeyset
-    });
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
     }
-    if (isObj$1(input)) {
+    if (isObj(input)) {
       Object.keys(input).forEach(key => {
         const currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
@@ -287,7 +275,7 @@ function outer(originalInput1, originalReference1, opts1) {
                   currentPath
                 );
               }
-            } else if (isObj$1(input[key])) {
+            } else if (isObj(input[key])) {
               if (
                 opts.whatToDoWhenReferenceIsMissing === 2 ||
                 isStr$1(reference[key])
@@ -327,7 +315,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 currentPath
               );
             }
-          } else if (typ(input[key]) !== typ(reference[key])) {
+          } else if (typeof input[key] !== typeof reference[key]) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(
                 `object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.`

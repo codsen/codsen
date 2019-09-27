@@ -26,69 +26,6 @@ test("01.01 - throws when inputs are missing/wrong", t => {
   });
 });
 
-test("01.02 - throws when opts object has wrong opts.wrapHeadsWith", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { wrapHeadsWith: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { wrapHeadsWith: false });
-  });
-});
-
-test("01.03 - throws when opts object has wrong opts.wrapTailsWith", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { wrapTailsWith: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { wrapTailsWith: false });
-  });
-});
-
-test("01.04 - throws when opts object has wrong opts.dontWrapKeys", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { dontWrapKeys: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { dontWrapKeys: false });
-  });
-});
-
-test("01.05 - throws when opts object has wrong opts.xhtml", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { xhtml: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { xhtml: "false" });
-  });
-});
-
-test("01.06 - throws when opts object has wrong opts.preventDoubleWrapping", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { preventDoubleWrapping: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { preventDoubleWrapping: "false" });
-  });
-});
-
-test("01.07 - throws when opts object has wrong opts.objectKeyAndValueJoinChar", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { objectKeyAndValueJoinChar: 1 });
-  });
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { objectKeyAndValueJoinChar: false });
-  });
-});
-
-test("01.08 - opts.enforceStrictKeyset", t => {
-  t.throws(() => {
-    ofr({ a: "a" }, { b: "b" }, { zzzz: 1 });
-  });
-  t.notThrows(() => {
-    ofr({ a: "a" }, { b: "b" }, { zzzz: 1, enforceStrictKeyset: false });
-  });
-});
-
 // -----------------------------------------------------------------------------
 // 02. B.A.U.
 // -----------------------------------------------------------------------------

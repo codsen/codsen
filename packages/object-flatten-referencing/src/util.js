@@ -1,14 +1,11 @@
-import type from "type-detect";
 import clone from "lodash.clonedeep";
+import isObj from "lodash.isplainobject";
 import isStringInt from "is-string-int";
 
 const isArr = Array.isArray;
 
 function isStr(something) {
-  return type(something) === "string";
-}
-function isObj(something) {
-  return type(something) === "Object";
+  return typeof something === "string";
 }
 
 function flattenObject(objOrig, opts) {

@@ -1,9 +1,8 @@
-import typ from "type-detect";
 import clone from "lodash.clonedeep";
 import search from "str-indexes-of-plus";
 import includes from "lodash.includes";
 import matcher from "matcher";
-import checkTypes from "check-types-mini";
+import isObj from "lodash.isplainobject";
 import {
   flattenObject,
   flattenArr,
@@ -17,10 +16,7 @@ function existy(x) {
   return x != null;
 }
 function isStr(something) {
-  return typ(something) === "string";
-}
-function isObj(something) {
-  return typ(something) === "Object";
+  return typeof something === "string";
 }
 
 function outer(originalInput1, originalReference1, opts1) {
@@ -96,12 +92,6 @@ function outer(originalInput1, originalReference1, opts1) {
     opts.whatToDoWhenReferenceIsMissing = reclaimIntegerString(
       opts.whatToDoWhenReferenceIsMissing
     );
-
-    checkTypes(opts, defaults, {
-      msg: "object-flatten-referencing/ofr(): [THROW_ID_05*]",
-      optsVarName: "opts",
-      enforceStrictKeyset: opts.enforceStrictKeyset
-    });
 
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
@@ -253,7 +243,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 currentPath
               );
             }
-          } else if (typ(input[key]) !== typ(reference[key])) {
+          } else if (typeof input[key] !== typeof reference[key]) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(
                 `object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.`

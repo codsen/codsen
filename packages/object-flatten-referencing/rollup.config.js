@@ -43,13 +43,12 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "check-types-mini",
         "is-string-int",
         "lodash.clonedeep",
         "lodash.includes",
+        "lodash.isplainobject",
         "matcher",
-        "str-indexes-of-plus",
-        "type-detect"
+        "str-indexes-of-plus"
       ],
       plugins: [
         strip({
@@ -67,13 +66,12 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "check-types-mini",
         "is-string-int",
         "lodash.clonedeep",
         "lodash.includes",
+        "lodash.isplainobject",
         "matcher",
-        "str-indexes-of-plus",
-        "type-detect"
+        "str-indexes-of-plus"
       ],
       plugins: [
         strip({
@@ -89,7 +87,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["is-string-int", "lodash.clonedeep", "type-detect"],
+      external: ["is-string-int", "lodash.clonedeep", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false
