@@ -241,8 +241,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           for (var y = startingPosition; y--;) {
             if (stringCharacterIsAstralSurrogate.isLowSurrogate(str[y]) && stringCharacterIsAstralSurrogate.isHighSurrogate(str[y - 1])
             ) {
-              continue;
-            }
+                continue;
+              }
             var currentChar = str[y];
             if (stringCharacterIsAstralSurrogate.isHighSurrogate(str[y]) && stringCharacterIsAstralSurrogate.isLowSurrogate(str[y + 1])) {
               currentChar = str[y] + str[y + 1];
