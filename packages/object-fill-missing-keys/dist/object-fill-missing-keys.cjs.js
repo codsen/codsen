@@ -31,9 +31,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function isArr(something) {
-  return Array.isArray(something);
-}
 function typ(something) {
   if (isObj(something)) {
     return "plain object";
@@ -48,6 +45,7 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+var isArr = Array.isArray;
 function fillMissingKeys(incompleteOriginal, schema, opts) {
   var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
   var incomplete = clone(incompleteOriginal);

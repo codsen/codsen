@@ -13,9 +13,6 @@ import arrayiffyIfString from 'arrayiffy-if-string';
 import allValuesEqualTo from 'object-all-values-equal-to';
 import isObj from 'lodash.isplainobject';
 
-function isArr(something) {
-  return Array.isArray(something);
-}
 function typ(something) {
   if (isObj(something)) {
     return "plain object";
@@ -30,6 +27,7 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+const isArr = Array.isArray;
 function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
   const incomplete = clone(incompleteOriginal);
   if (

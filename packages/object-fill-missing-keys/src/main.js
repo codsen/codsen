@@ -12,9 +12,6 @@ import isObj from "lodash.isplainobject";
 // ===================================
 // I N T E R N A L   F U N C T I O N S
 
-function isArr(something) {
-  return Array.isArray(something);
-}
 function typ(something) {
   if (isObj(something)) {
     return "plain object";
@@ -29,6 +26,7 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+const isArr = Array.isArray;
 
 // this function does the job, but it is not exposed because its first argument
 // requirements are loose - it can be anything since it will be calling itself recursively
