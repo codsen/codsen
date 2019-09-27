@@ -1,5 +1,3 @@
-/* eslint ava/no-only-test:0 */
-
 import test from "ava";
 import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
 

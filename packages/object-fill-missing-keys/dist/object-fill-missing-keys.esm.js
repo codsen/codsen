@@ -9,7 +9,6 @@
 
 import clone from 'lodash.clonedeep';
 import merge from 'object-merge-advanced';
-import checkTypes from 'check-types-mini';
 import arrayiffyIfString from 'arrayiffy-if-string';
 import allValuesEqualTo from 'object-all-values-equal-to';
 import isObj from 'lodash.isplainobject';
@@ -149,12 +148,6 @@ function fillMissingKeysWrapper(
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(
     opts.doNotFillThesePathsIfTheyContainPlaceholders
   );
-  checkTypes(opts, defaults, {
-    msg: "object-fill-missing-keys: [THROW_ID_05*]",
-    schema: {
-      placeholder: ["object", "array", "string", "null", "boolean", "number"]
-    }
-  });
   let culpritsVal = null;
   let culpritsIndex = null;
   if (

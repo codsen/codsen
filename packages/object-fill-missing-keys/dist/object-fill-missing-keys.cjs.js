@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var clone = _interopDefault(require('lodash.clonedeep'));
 var merge = _interopDefault(require('object-merge-advanced'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var allValuesEqualTo = _interopDefault(require('object-all-values-equal-to'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
@@ -112,12 +111,6 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
   };
   var opts = Object.assign({}, defaults, originalOptsWrapper);
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
-  checkTypes(opts, defaults, {
-    msg: "object-fill-missing-keys: [THROW_ID_05*]",
-    schema: {
-      placeholder: ["object", "array", "string", "null", "boolean", "number"]
-    }
-  });
   var culpritsVal = null;
   var culpritsIndex = null;
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (key, idx) {
