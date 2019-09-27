@@ -12,7 +12,6 @@ function existy(x) {
 }
 
 function rangesCrop(arrOfRanges, strLen) {
-  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
     throw new TypeError(
