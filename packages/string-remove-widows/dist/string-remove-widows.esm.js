@@ -7,11 +7,11 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
  */
 
-import apply from 'ranges-apply';
-import { left, right } from 'string-left-right';
 import { matchRightIncl } from 'string-match-left-right';
-import isObj from 'lodash.isplainobject';
 import arrayiffyIfStr from 'arrayiffy-if-string';
+import { left, right } from 'string-left-right';
+import isObj from 'lodash.isplainobject';
+import apply from 'ranges-apply';
 
 var version = "1.4.2";
 

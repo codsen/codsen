@@ -13,11 +13,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var apply = _interopDefault(require('ranges-apply'));
-var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var arrayiffyIfStr = _interopDefault(require('arrayiffy-if-string'));
+var stringLeftRight = require('string-left-right');
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var apply = _interopDefault(require('ranges-apply'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {

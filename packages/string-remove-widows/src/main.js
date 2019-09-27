@@ -1,8 +1,10 @@
-import { version } from "../package.json";
-import apply from "ranges-apply";
-const Ranges = require("ranges-push");
-import { left, right } from "string-left-right";
 import { matchRightIncl } from "string-match-left-right";
+import arrayiffyIfStr from "arrayiffy-if-string";
+import { left, right } from "string-left-right";
+import { version } from "../package.json";
+import isObj from "lodash.isplainobject";
+const Ranges = require("ranges-push");
+import apply from "ranges-apply";
 import {
   rawnbsp,
   encodedNbspHtml,
@@ -21,8 +23,6 @@ import {
   headsAndTailsHexo,
   knownHTMLTags
 } from "./util";
-import isObj from "lodash.isplainobject";
-import arrayiffyIfStr from "arrayiffy-if-string";
 
 const defaultOpts = {
   removeWidowPreventionMeasures: false,
