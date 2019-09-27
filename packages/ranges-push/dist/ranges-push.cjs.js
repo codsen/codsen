@@ -11,10 +11,10 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isInt = _interopDefault(require('is-natural-number'));
+var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
-var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
+var isInt = _interopDefault(require('is-natural-number'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {

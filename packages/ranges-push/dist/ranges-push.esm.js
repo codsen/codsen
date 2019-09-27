@@ -7,10 +7,10 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
  */
 
-import isInt from 'is-natural-number';
+import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
 import isNumStr from 'is-natural-number-string';
 import mergeRanges from 'ranges-merge';
-import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
+import isInt from 'is-natural-number';
 import clone from 'lodash.clonedeep';
 
 function existy(x) {

@@ -1,5 +1,3 @@
-/* eslint ava/no-only-test:0 */
-
 import test from "ava";
 import Ranges from "../dist/ranges-push.esm";
 const nbsp = "\xA0";
