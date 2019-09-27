@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
  */
 
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 
 const isArr = Array.isArray;
@@ -110,14 +109,6 @@ function expander(originalOpts) {
     addSingleSpaceToPreventAccidentalConcatenation: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-trim-spaces-only: [THROW_ID_19*]",
-    acceptArrays: true,
-    acceptArraysIgnore: ["str", "from", "to", "extendToOneSide"],
-    schema: {
-      extendToOneSide: ["false", "string"]
-    }
-  });
   if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;

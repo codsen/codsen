@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
@@ -85,14 +84,6 @@ function expander(originalOpts) {
     addSingleSpaceToPreventAccidentalConcatenation: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-trim-spaces-only: [THROW_ID_19*]",
-    acceptArrays: true,
-    acceptArraysIgnore: ["str", "from", "to", "extendToOneSide"],
-    schema: {
-      extendToOneSide: ["false", "string"]
-    }
-  });
   if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
     var culpritsIndex;
     var culpritsValue;
