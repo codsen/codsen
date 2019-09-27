@@ -1,7 +1,6 @@
 import merge from "lodash.merge";
 import clone from "lodash.clonedeep";
-import typ from "type-detect";
-import checkTypes from "check-types-mini";
+import isObj from "lodash.isplainobject";
 
 const isArr = Array.isArray;
 
@@ -14,10 +13,6 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     return arr.some(val => typeof val === "string");
   }
 
-  function isObj(something) {
-    return typ(something) === "Object";
-  }
-
   // setup
   // =====
 
@@ -25,9 +20,6 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     flattenArraysContainingStringsToBeEmpty: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-flatten-all-arrays: [THROW_ID_02*]"
-  });
 
   const incommingObj = clone(originalIncommingObj);
   let isFirstObj;

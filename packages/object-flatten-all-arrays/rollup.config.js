@@ -45,8 +45,8 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.clonedeep",
-        "lodash.merge",
-        "type-detect"
+        "lodash.isplainobject",
+        "lodash.merge"
       ],
       plugins: [
         strip({
@@ -66,8 +66,8 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.clonedeep",
-        "lodash.merge",
-        "type-detect"
+        "lodash.isplainobject",
+        "lodash.merge"
       ],
       plugins: [
         strip({

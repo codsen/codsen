@@ -13,8 +13,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var merge = _interopDefault(require('lodash.merge'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var typ = _interopDefault(require('type-detect'));
-var checkTypes = _interopDefault(require('check-types-mini'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 
 var isArr = Array.isArray;
 function flattenAllArrays(originalIncommingObj, originalOpts) {
@@ -23,16 +22,10 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       return typeof val === "string";
     });
   }
-  function isObj(something) {
-    return typ(something) === "Object";
-  }
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "object-flatten-all-arrays: [THROW_ID_02*]"
-  });
   var incommingObj = clone(originalIncommingObj);
   var isFirstObj;
   var combinedObj;
