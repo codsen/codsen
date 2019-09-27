@@ -395,15 +395,3 @@ test("04.02 - mode is given as integer - throws", t => {
     nnk({ a: "a" }, { b: "b" }, 2.5);
   });
 });
-
-test("04.03 - check-types-mini will throw if rogue options key is given", t => {
-  t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, { aaa: 1 });
-  });
-  t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, { aaa: 1, mode: 1 });
-  });
-  t.notThrows(() => {
-    nnk({ a: "a" }, { b: "b" }, { mode: 1 });
-  });
-});

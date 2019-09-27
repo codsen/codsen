@@ -8,7 +8,6 @@
  */
 
 import isObj from 'lodash.isplainobject';
-import checkTypes from 'check-types-mini';
 
 function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   const isArr = Array.isArray;
@@ -35,9 +34,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
       `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, "${optsOuter.mode}" while it should be either natural number 1 or 2.`
     );
   }
-  checkTypes(optsOuter, defaults, {
-    msg: "object-no-new-keys/objectNoNewKeys(): [THROW_ID_04*]"
-  });
   function objectNoNewKeysInternal(input, reference, opts, innerVar) {
     let temp;
     if (innerVar === undefined) {
