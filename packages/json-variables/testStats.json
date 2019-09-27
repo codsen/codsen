@@ -1,7 +1,7 @@
 {
     "stats": {
         "byFile": {},
-        "declaredTests": 109,
+        "declaredTests": 106,
         "failedHooks": 0,
         "failedTests": 0,
         "failedWorkers": 0,
@@ -11,8 +11,8 @@
         "internalErrors": 0,
         "remainingTests": 0,
         "passedKnownFailingTests": 0,
-        "passedTests": 109,
-        "selectedTests": 109,
+        "passedTests": 106,
+        "selectedTests": 106,
         "skippedTests": 0,
         "timeouts": 0,
         "todoTests": 0,

@@ -15,7 +15,6 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 var matcher = _interopDefault(require('matcher'));
 var objectPath = _interopDefault(require('object-path'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var strFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
 var get = _interopDefault(require('ast-get-values-by-key'));
@@ -131,6 +130,12 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
 function wrap(placementValue, opts) {
   var dontWrapTheseVars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var oldVarName = arguments.length > 5 ? arguments[5] : undefined;
+  if (!opts.wrapHeadsWith) {
+    opts.wrapHeadsWith = "";
+  }
+  if (!opts.wrapTailsWith) {
+    opts.wrapTailsWith = "";
+  }
   if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
     return matcher.isMatch(oldVarName, val);
   }) && (
@@ -239,17 +244,17 @@ function resolveString(input, string, path, opts) {
   var secretResolvedVarsStash = {};
   var breadCrumbPath = clone(incomingBreadCrumbPath);
   breadCrumbPath.push(path);
-  var slices = new Ranges();
+  var finalRangesArr = new Ranges();
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
     for (var i = 0, len = arr.length; i < len; i++) {
       var obj = arr[i];
       var varName = string.slice(obj.headsEndAt, obj.tailsStartAt);
       if (varName.length === 0) {
-        slices.push(obj.headsStartAt,
+        finalRangesArr.push(obj.headsStartAt,
         obj.tailsEndAt
         );
       } else if (has.call(secretResolvedVarsStash, varName) && isStr(secretResolvedVarsStash[varName])) {
-        slices.push(obj.headsStartAt,
+        finalRangesArr.push(obj.headsStartAt,
         obj.tailsEndAt,
         secretResolvedVarsStash[varName]
         );
@@ -267,7 +272,7 @@ function resolveString(input, string, path, opts) {
         }
         if (isBool(resolvedValue)) {
           if (opts.resolveToBoolIfAnyValuesContainBool) {
-            slices = undefined;
+            finalRangesArr = undefined;
             if (!opts.resolveToFalseIfAnyValuesContainBool) {
               return resolvedValue;
             }
@@ -275,7 +280,7 @@ function resolveString(input, string, path, opts) {
           }
           resolvedValue = "";
         } else if (isNull(resolvedValue) && wholeValueIsVariable) {
-          slices = undefined;
+          finalRangesArr = undefined;
           return resolvedValue;
         } else if (isArr(resolvedValue)) {
           resolvedValue = String(resolvedValue.join(""));
@@ -289,7 +294,7 @@ function resolveString(input, string, path, opts) {
           var replacementVal = wrap(resolveString(
           input, resolvedValue, newPath, opts, breadCrumbPath), opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim());
           if (isStr(replacementVal)) {
-            slices.push(obj.headsStartAt,
+            finalRangesArr.push(obj.headsStartAt,
             obj.tailsEndAt,
             replacementVal);
           }
@@ -297,7 +302,7 @@ function resolveString(input, string, path, opts) {
           secretResolvedVarsStash[varName] = resolvedValue;
           var _replacementVal = wrap(resolvedValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim());
           if (isStr(_replacementVal)) {
-            slices.push(obj.headsStartAt,
+            finalRangesArr.push(obj.headsStartAt,
             obj.tailsEndAt,
             _replacementVal);
           }
@@ -342,8 +347,8 @@ function resolveString(input, string, path, opts) {
   } else if (isNull(temp2)) {
     return temp2;
   }
-  if (slices && slices.current()) {
-    return rangesApply(string, slices.current());
+  if (finalRangesArr && finalRangesArr.current()) {
+    return rangesApply(string, finalRangesArr.current());
   }
   return string;
 }
@@ -382,13 +387,6 @@ function jsonVariables(inputOriginal) {
   } else if (!isArr(opts.dontWrapVars)) {
     opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
   }
-  checkTypes(opts, defaults, {
-    msg: "json-variables/jsonVariables(): [THROW_ID_04*]",
-    schema: {
-      headsNoWrap: ["string", "null", "undefined"],
-      tailsNoWrap: ["string", "null", "undefined"]
-    }
-  });
   var culpritVal;
   var culpritIndex;
   if (opts.dontWrapVars.length > 0 && !opts.dontWrapVars.every(function (el, idx) {

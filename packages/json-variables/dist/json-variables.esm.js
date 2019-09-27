@@ -11,7 +11,6 @@ import clone from 'lodash.clonedeep';
 import traverse from 'ast-monkey-traverse';
 import matcher from 'matcher';
 import objectPath from 'object-path';
-import checkTypes from 'check-types-mini';
 import arrayiffyIfString from 'arrayiffy-if-string';
 import strFindHeadsTails from 'string-find-heads-tails';
 import get from 'ast-get-values-by-key';
@@ -132,6 +131,12 @@ function wrap(
   newPath,
   oldVarName
 ) {
+  if (!opts.wrapHeadsWith) {
+    opts.wrapHeadsWith = "";
+  }
+  if (!opts.wrapTailsWith) {
+    opts.wrapTailsWith = "";
+  }
   if (
     isStr(placementValue) &&
     !dontWrapTheseVars &&
@@ -290,13 +295,13 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   const secretResolvedVarsStash = {};
   const breadCrumbPath = clone(incomingBreadCrumbPath);
   breadCrumbPath.push(path);
-  let slices = new Ranges();
+  let finalRangesArr = new Ranges();
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
     for (let i = 0, len = arr.length; i < len; i++) {
       const obj = arr[i];
       const varName = string.slice(obj.headsEndAt, obj.tailsStartAt);
       if (varName.length === 0) {
-        slices.push(
+        finalRangesArr.push(
           obj.headsStartAt,
           obj.tailsEndAt
         );
@@ -304,7 +309,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
         has.call(secretResolvedVarsStash, varName) &&
         isStr(secretResolvedVarsStash[varName])
       ) {
-        slices.push(
+        finalRangesArr.push(
           obj.headsStartAt,
           obj.tailsEndAt,
           secretResolvedVarsStash[varName]
@@ -342,7 +347,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
         }
         if (isBool(resolvedValue)) {
           if (opts.resolveToBoolIfAnyValuesContainBool) {
-            slices = undefined;
+            finalRangesArr = undefined;
             if (!opts.resolveToFalseIfAnyValuesContainBool) {
               return resolvedValue;
             }
@@ -350,7 +355,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
           }
           resolvedValue = "";
         } else if (isNull(resolvedValue) && wholeValueIsVariable) {
-          slices = undefined;
+          finalRangesArr = undefined;
           return resolvedValue;
         } else if (isArr(resolvedValue)) {
           resolvedValue = String(resolvedValue.join(""));
@@ -378,7 +383,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
             varName.trim()
           );
           if (isStr(replacementVal)) {
-            slices.push(
+            finalRangesArr.push(
               obj.headsStartAt,
               obj.tailsEndAt,
               replacementVal
@@ -395,7 +400,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
             varName.trim()
           );
           if (isStr(replacementVal)) {
-            slices.push(
+            finalRangesArr.push(
               obj.headsStartAt,
               obj.tailsEndAt,
               replacementVal
@@ -468,8 +473,8 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   } else if (isNull(temp2)) {
     return temp2;
   }
-  if (slices && slices.current()) {
-    return rangesApply(string, slices.current());
+  if (finalRangesArr && finalRangesArr.current()) {
+    return rangesApply(string, finalRangesArr.current());
   }
   return string;
 }
@@ -517,13 +522,6 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
   } else if (!isArr(opts.dontWrapVars)) {
     opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
   }
-  checkTypes(opts, defaults, {
-    msg: "json-variables/jsonVariables(): [THROW_ID_04*]",
-    schema: {
-      headsNoWrap: ["string", "null", "undefined"],
-      tailsNoWrap: ["string", "null", "undefined"]
-    }
-  });
   let culpritVal;
   let culpritIndex;
   if (

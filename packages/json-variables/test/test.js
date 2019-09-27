@@ -302,33 +302,7 @@ test("01.09 - throws when data container lookup is turned off and var is missing
   );
 });
 
-test("01.10 - throws when data container name append is not string", t => {
-  // in both tests, check-types-mini will throw:
-
-  const err1 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { lookForDataContainers: true, dataContainerIdentifierTails: false }
-    );
-  });
-  t.regex(err1.message, /THROW_ID_04*/);
-
-  const err2 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { lookForDataContainers: true, dataContainerIdentifierTails: 1 }
-    );
-  });
-  t.regex(err2.message, /THROW_ID_04*/);
-});
-
-test("01.11 - not throws when data container name append is given empty, but data container lookup is turned off", t => {
+test("01.10 - not throws when data container name append is given empty, but data container lookup is turned off", t => {
   t.notThrows(() => {
     jv(
       {
@@ -340,7 +314,7 @@ test("01.11 - not throws when data container name append is given empty, but dat
   });
 });
 
-test("01.12 - throws when data container name append is given empty", t => {
+test("01.11 - throws when data container name append is given empty", t => {
   const err1 = t.throws(() => {
     jv(
       {
@@ -373,7 +347,7 @@ test("01.13 - throws when opts.wrapHeadsWith is customised to anything other tha
       { wrapHeadsWith: false }
     );
   });
-  t.regex(err1.message, /THROW_ID_04*/); // thx to check-types-mini
+  t.regex(err1.message, /THROW_ID_18/); // thx to check-types-mini
 });
 
 test("01.14 - opts.wrapHeadsWith does not affect failing resolving", t => {
@@ -399,7 +373,7 @@ test("01.15 - throws when opts.wrapTailsWith is customised to anything other tha
       { wrapTailsWith: false }
     );
   });
-  t.regex(err1.message, /THROW_ID_04*/);
+  t.regex(err1.message, /THROW_ID_18/);
 });
 
 test("01.16 - not throws when opts.wrapTailsWith is customised to an empty string", t => {
@@ -550,54 +524,6 @@ test("01.24 - throws when there's a longer recursion", t => {
     });
   });
   t.regex(err1.message, /THROW_ID_19/);
-});
-
-test("01.25 - throws when opts.lookForDataContainers is not boolean", t => {
-  const err1 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { lookForDataContainers: 1 }
-    ); // as number, should be Bool
-  });
-  t.regex(err1.message, /THROW_ID_04*/);
-
-  const err2 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { lookForDataContainers: "false" }
-    ); // as string, should be Bool
-  });
-  t.regex(err2.message, /THROW_ID_04*/);
-});
-
-test("01.26 - throws when opts.preventDoubleWrapping is not boolean", t => {
-  const err1 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { preventDoubleWrapping: 1 }
-    );
-  });
-  t.regex(err1.message, /THROW_ID_04*/);
-
-  const err2 = t.throws(() => {
-    jv(
-      {
-        a: "some text %%_var1_%% more text",
-        b: "something"
-      },
-      { preventDoubleWrapping: "false" }
-    );
-  });
-  t.regex(err2.message, /THROW_ID_04*/);
 });
 
 test("01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal", t => {
