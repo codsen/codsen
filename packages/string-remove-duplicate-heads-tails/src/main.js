@@ -1,6 +1,5 @@
 /* eslint max-len:0, no-param-reassign:0, no-continue:0 */
 
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import arrayiffy from "arrayiffy-if-string";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
@@ -65,9 +64,6 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     tails: ["}}"]
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-remove-duplicate-heads-tails: [THROW_ID_06*]"
-  });
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map(el => el.trim());

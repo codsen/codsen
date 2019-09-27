@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
  */
 
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import arrayiffy from 'arrayiffy-if-string';
 import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
@@ -64,9 +63,6 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     tails: ["}}"]
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-remove-duplicate-heads-tails: [THROW_ID_06*]"
-  });
   opts.heads = opts.heads.map(el => el.trim());
   opts.tails = opts.tails.map(el => el.trim());
   let firstNonMarkerChunkFound = false;

@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringMatchLeftRight = require('string-match-left-right');
@@ -79,9 +78,6 @@ function removeDuplicateHeadsTails(str) {
     tails: ["}}"]
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-remove-duplicate-heads-tails: [THROW_ID_06*]"
-  });
   opts.heads = opts.heads.map(function (el) {
     return el.trim();
   });

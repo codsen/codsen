@@ -33,13 +33,6 @@ test("01.02 - wrong opts", t => {
       tails: ["}}", 1]
     });
   });
-  t.throws(() => {
-    rem("a", {
-      heads: "{{",
-      tails: "}}",
-      zzz: "a"
-    });
-  });
 });
 
 test("01.03 - empty input string", t => {
