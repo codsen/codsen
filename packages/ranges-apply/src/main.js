@@ -1,6 +1,5 @@
 import isInt from "is-natural-number";
 import isNumStr from "is-natural-number-string";
-import ordinal from "ordinal-number-suffix";
 import rangesMerge from "ranges-merge";
 
 const isArr = Array.isArray;
@@ -73,9 +72,7 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
 
     if (!isArr(el)) {
       throw new TypeError(
-        `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${ordinal(
-          i
-        )} element not an array: ${JSON.stringify(
+        `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
           el,
           null,
           4
@@ -87,9 +84,9 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
         throw new TypeError(
-          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${ordinal(
-            i
-          )} element, array [${el[0]},${
+          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${
+            el[0]
+          },${
             el[1]
           }]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(
             el[0],
@@ -104,9 +101,9 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {
         throw new TypeError(
-          `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${ordinal(
-            i
-          )} element, array [${el[0]},${
+          `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${
+            el[0]
+          },${
             el[1]
           }]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(
             el[1],

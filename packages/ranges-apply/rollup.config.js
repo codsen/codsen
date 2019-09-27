@@ -45,7 +45,6 @@ export default commandLineArgs => {
       external: [
         "is-natural-number",
         "is-natural-number-string",
-        "ordinal-number-suffix",
         "ranges-merge"
       ],
       plugins: [
@@ -66,7 +65,6 @@ export default commandLineArgs => {
       external: [
         "is-natural-number",
         "is-natural-number-string",
-        "ordinal-number-suffix",
         "ranges-merge"
       ],
       plugins: [

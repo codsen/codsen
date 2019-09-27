@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
-var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var rangesMerge = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
@@ -76,7 +75,7 @@ function replaceSlicesArr(str, rangesArr, _progressFn) {
       }
     }
     if (!isArr(el)) {
-      throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(ordinal(i), " element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
+      throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
     }
     if (!isInt(el[0], {
       includeZero: true
@@ -86,7 +85,7 @@ function replaceSlicesArr(str, rangesArr, _progressFn) {
       })) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
-        throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(ordinal(i), " element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
+        throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
       }
     }
     if (!isInt(el[1], {
@@ -97,7 +96,7 @@ function replaceSlicesArr(str, rangesArr, _progressFn) {
       })) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {
-        throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(ordinal(i), " element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
+        throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
       }
     }
     counter++;
