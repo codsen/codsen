@@ -1,5 +1,4 @@
 import includes from "lodash.includes";
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 
 function arrObjOrBoth(str, originalOpts) {
@@ -53,14 +52,7 @@ function arrObjOrBoth(str, originalOpts) {
     optsVarName: "given variable"
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "util-array-object-or-both/validate(): [THROW_ID_03]",
-    optsVarName: "opts",
-    schema: {
-      msg: ["string", null],
-      optsVarName: ["string", null]
-    }
-  });
+
   if (existy(opts.msg) && opts.msg.length > 0) {
     opts.msg = `${opts.msg.trim()} `;
   }

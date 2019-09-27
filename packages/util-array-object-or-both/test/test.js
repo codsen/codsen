@@ -26,21 +26,6 @@ test("1.1 - wrong/missing inputs - throws", t => {
   });
 });
 
-test("1.2 - wrongly set up options object - throws", t => {
-  t.throws(() => {
-    aoob("any", { msg: 1 });
-  });
-  t.throws(() => {
-    aoob("any", { optsVarName: 1 });
-  });
-  t.notThrows(() => {
-    aoob("any", { msg: null });
-  });
-  t.notThrows(() => {
-    aoob("any", { optsVarName: null });
-  });
-});
-
 // ===
 // BAU
 // ===

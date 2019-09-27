@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var includes = _interopDefault(require('lodash.includes'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
@@ -50,14 +49,6 @@ function arrObjOrBoth(str, originalOpts) {
     optsVarName: "given variable"
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "util-array-object-or-both/validate(): [THROW_ID_03]",
-    optsVarName: "opts",
-    schema: {
-      msg: ["string", null],
-      optsVarName: ["string", null]
-    }
-  });
   if (existy(opts.msg) && opts.msg.length > 0) {
     opts.msg = "".concat(opts.msg.trim(), " ");
   }
