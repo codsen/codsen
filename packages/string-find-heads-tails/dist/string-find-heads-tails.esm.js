@@ -9,10 +9,8 @@
 
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
-import ordinal from 'ordinal-number-suffix';
 import { matchRightIncl } from 'string-match-left-right';
 import arrayiffy from 'arrayiffy-if-string';
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import includes from 'lodash.includes';
 
@@ -25,7 +23,7 @@ function isStr(something) {
 const isArr = Array.isArray;
 function mandatory(i) {
   throw new Error(
-    `string-find-heads-tails: [THROW_ID_01*] Missing ${ordinal(i)} parameter!`
+    `string-find-heads-tails: [THROW_ID_01*] Missing ${i}th parameter!`
   );
 }
 function strFindHeadsTails(str, heads, tails, opts) {
@@ -47,9 +45,6 @@ function strFindHeadsTails(str, heads, tails, opts) {
     relaxedAPI: false
   };
   opts = Object.assign({}, defaults, opts);
-  checkTypes(opts, defaults, {
-    msg: "string-find-heads-tails: [THROW_ID_14*]"
-  });
   if (!opts.relaxedAPI) {
     if (str === undefined) {
       mandatory(1);
@@ -115,9 +110,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ${ordinal(
-            culpritsIndex
-          )} index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
+          `string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
             culpritsVal,
             null,
             4
@@ -190,9 +183,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ${ordinal(
-            culpritsIndex
-          )} index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
+          `string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
             culpritsVal,
             null,
             4

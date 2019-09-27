@@ -13,10 +13,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
-var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var stringMatchLeftRight = require('string-match-left-right');
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var includes = _interopDefault(require('lodash.includes'));
 
@@ -42,7 +40,7 @@ function isStr(something) {
 }
 var isArr = Array.isArray;
 function mandatory(i) {
-  throw new Error("string-find-heads-tails: [THROW_ID_01*] Missing ".concat(ordinal(i), " parameter!"));
+  throw new Error("string-find-heads-tails: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
 }
 function strFindHeadsTails(str, heads, tails, opts) {
   if (existy(opts)) {
@@ -63,9 +61,6 @@ function strFindHeadsTails(str, heads, tails, opts) {
     relaxedAPI: false
   };
   opts = Object.assign({}, defaults, opts);
-  checkTypes(opts, defaults, {
-    msg: "string-find-heads-tails: [THROW_ID_14*]"
-  });
   if (!opts.relaxedAPI) {
     if (str === undefined) {
       mandatory(1);
@@ -118,7 +113,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError("string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ".concat(ordinal(culpritsIndex), " index is ").concat(_typeof(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4), ". Whole heads array looks like:\n").concat(JSON.stringify(heads, null, 4)));
+        throw new TypeError("string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ".concat(culpritsIndex, "th index is ").concat(_typeof(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4), ". Whole heads array looks like:\n").concat(JSON.stringify(heads, null, 4)));
       }
     } else if (!heads.every(function (val, index) {
       culpritsIndex = index;
@@ -169,7 +164,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError("string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ".concat(ordinal(culpritsIndex), " index is ").concat(_typeof(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4), ". Whole tails array is equal to:\n").concat(JSON.stringify(tails, null, 4)));
+        throw new TypeError("string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ".concat(culpritsIndex, "th index is ").concat(_typeof(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4), ". Whole tails array is equal to:\n").concat(JSON.stringify(tails, null, 4)));
       }
     } else if (!tails.every(function (val, index) {
       culpritsIndex = index;

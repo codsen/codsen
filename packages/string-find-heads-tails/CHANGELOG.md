@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.15.0 (2019-09-26)
+
+- ✨ Remove `ordinal-number-suffix` and `check-types-mini` to make operations around 176 times faster
+
 ## 3.14.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

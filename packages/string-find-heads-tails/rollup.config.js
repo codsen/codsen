@@ -44,12 +44,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "arrayiffy-if-string",
-        "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
         "lodash.includes",
         "lodash.isplainobject",
-        "ordinal-number-suffix",
         "string-match-left-right"
       ],
       plugins: [
@@ -69,12 +67,10 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "arrayiffy-if-string",
-        "check-types-mini",
         "is-natural-number",
         "is-natural-number-string",
         "lodash.includes",
         "lodash.isplainobject",
-        "ordinal-number-suffix",
         "string-match-left-right"
       ],
       plugins: [
