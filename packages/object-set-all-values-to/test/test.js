@@ -501,13 +501,7 @@ test("03.02 - input is string, value provided", t => {
   t.deepEqual(setAllValuesTo("nothing", "something"), "nothing", "03.02");
 });
 
-test("03.03 - input is missing", t => {
-  t.throws(() => {
-    setAllValuesTo();
-  });
-});
-
-test("03.04 - input is missing but value provided", t => {
+test("03.03 - input is missing but value provided", t => {
   t.deepEqual(setAllValuesTo(undefined, "a"), undefined, "03.04");
 });
 

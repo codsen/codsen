@@ -12,19 +12,11 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var clone = _interopDefault(require('lodash.clonedeep'));
-var typ = _interopDefault(require('type-detect'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 
-function isObj(something) {
-  return typ(something) === "Object";
-}
-function isArr(something) {
-  return Array.isArray(something);
-}
+var isArr = Array.isArray;
 function setAllValuesTo(inputOriginal, valueOriginal) {
   var value;
-  if (arguments.length === 0) {
-    throw new Error("object-set-all-values-to: [THROW_ID_01] All the inputs are missing!");
-  }
   var input = clone(inputOriginal);
   if (arguments.length < 2) {
     value = false;

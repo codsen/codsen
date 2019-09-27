@@ -1,18 +1,6 @@
-// ===================================
-// R E Q U I R E' S
-
 import clone from "lodash.clonedeep";
-import typ from "type-detect";
-
-// ===================================
-// F U N C T I O N S
-
-function isObj(something) {
-  return typ(something) === "Object";
-}
-function isArr(something) {
-  return Array.isArray(something);
-}
+import isObj from "lodash.isplainobject";
+const isArr = Array.isArray;
 
 /**
  * setAllValuesTo - sets all keys of all plain objects (no matter how deep-nested) to
@@ -23,12 +11,6 @@ function isArr(something) {
  */
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
-
-  if (arguments.length === 0) {
-    throw new Error(
-      "object-set-all-values-to: [THROW_ID_01] All the inputs are missing!"
-    );
-  }
   const input = clone(inputOriginal);
 
   if (arguments.length < 2) {
@@ -36,6 +18,7 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   } else if (isObj(valueOriginal) || isArr(valueOriginal)) {
     value = clone(valueOriginal);
   } else {
+    // needed for functions as values - we can't clone them!
     value = valueOriginal;
   }
 
