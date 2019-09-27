@@ -111,36 +111,12 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
 
-  // // validate string length:
-  // if (
-  //   !opts.skipChecks &&
-  //   arrOfRanges.some((range, i) => {
-  //     if (range[1] > strLen) {
-  //       culpritsIndex = i;
-  //       return true;
-  //     }
-  //     return false;
-  //   })
-  // ) {
-  //   throw new TypeError(
-  //     `ranges-invert: [THROW_ID_06] The reference string length strLen=${strLen} does not cover all the ranges. For example, the ${ordinalSuffix(
-  //       culpritsIndex
-  //     )} range, ${JSON.stringify(
-  //       arrOfRanges[culpritsIndex],
-  //       null,
-  //       0
-  //     )} - ending of this range, ${
-  //       arrOfRanges[culpritsIndex][1]
-  //     } > ${strLen} (strLen).`
-  //   );
-  // }
-
   let prep;
 
   if (!opts.skipChecks) {
     // if checks are enabled, filter merged ranges.
 
-    // For posterity merging is general cleaning: sorting, joining overlapping
+    // For posterity, merging is general cleaning: sorting, joining overlapping
     // ranges, also deleting blank ranges (equal start and end indexes with
     // nothing to insert). Imagine, how can we iterate unsorted ranges, for
     // example: [[1, 3], [0, 4]] -> it's impossible because order is messed up

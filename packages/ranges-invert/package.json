@@ -127,7 +127,6 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.40",
     "is-natural-number": "^4.0.1",
     "ranges-crop": "^2.0.34",
     "ranges-merge": "^4.2.21"
