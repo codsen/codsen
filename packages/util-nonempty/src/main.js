@@ -1,8 +1,5 @@
 import isPlainObject from "lodash.isplainobject";
-
-function isArr(something) {
-  return Array.isArray(something);
-}
+const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
