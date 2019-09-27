@@ -5,7 +5,6 @@ import fillMissingKeys from "object-fill-missing-keys";
 import setAllValuesTo from "object-set-all-values-to";
 import mergeAdvanced from "object-merge-advanced";
 import compareVersions from "compare-versions";
-import checkTypes from "check-types-mini";
 import includes from "lodash.includes";
 import nnk from "object-no-new-keys";
 import clone from "lodash.clonedeep";
@@ -25,12 +24,10 @@ function truthy(x) {
 function isObj(something) {
   return typ(something) === "Object";
 }
-function isArr(something) {
-  return Array.isArray(something);
-}
 function isStr(something) {
-  return typ(something) === "string";
+  return typeof something === "string";
 }
+const isArr = Array.isArray;
 
 // -----------------------------------------------------------------------------
 // SORT THEM THINGIES
@@ -103,9 +100,11 @@ function getKeyset(arrOfPromises, originalOpts) {
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typ(
-        originalOpts
-      )}, equal to: ${JSON.stringify(originalOpts, null, 4)}`
+      `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to: ${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )}`
     );
   }
   const defaults = {
@@ -132,13 +131,6 @@ function getKeyset(arrOfPromises, originalOpts) {
       4
     )}`
   );
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
-    ignorePaths: ["placeholder.*"],
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   let culpritIndex;
   let culpritVal;
 
@@ -198,9 +190,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   }
   if (!isArr(arrOriginal)) {
     throw new Error(
-      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typ(
-        arrOriginal
-      )}`
+      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arrOriginal}`
     );
   }
   if (arrOriginal.length === 0) {
@@ -210,9 +200,11 @@ function getKeysetSync(arrOriginal, originalOpts) {
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typ(
-        originalOpts
-      )}, equal to: ${JSON.stringify(originalOpts, null, 4)}`
+      `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to: ${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )}`
     );
   }
 
@@ -222,12 +214,6 @@ function getKeysetSync(arrOriginal, originalOpts) {
     placeholder: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/getKeysetSync(): [THROW_ID_20*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
 
   const fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
@@ -236,9 +222,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
   arr.forEach((obj, i) => {
     if (!isObj(obj)) {
       throw new TypeError(
-        `json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (${typ(
-          obj
-        )}) detected within an array! It's the ${i}th element: ${JSON.stringify(
+        `json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
           obj,
           null,
           4
@@ -276,12 +260,6 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
     useNullAsExplicitFalse: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/enforceKeyset(): [THROW_ID_30*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(val => isStr(val))
@@ -300,18 +278,22 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
         if (!isObj(obj)) {
           return reject(
             Error(
-              `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typ(
-                obj
-              )}, equal to: ${JSON.stringify(obj, null, 4)}`
+              `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+                obj,
+                null,
+                4
+              )}`
             )
           );
         }
         if (!isObj(schemaKeyset)) {
           return reject(
             Error(
-              `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typ(
-                schemaKeyset
-              )}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`
+              `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+                schemaKeyset,
+                null,
+                4
+              )}`
             )
           );
         }
@@ -346,16 +328,20 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ${typ(
-        obj
-      )}, equal to: ${JSON.stringify(obj, null, 4)}`
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+        obj,
+        null,
+        4
+      )}`
     );
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ${typ(
-        schemaKeyset
-      )}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+        schemaKeyset,
+        null,
+        4
+      )}`
     );
   }
   const defaults = {
@@ -364,12 +350,6 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     useNullAsExplicitFalse: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/enforceKeysetSync(): [THROW_ID_40*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   if (
     opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 &&
     !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(val => isStr(val))
@@ -402,16 +382,20 @@ function noNewKeysSync(obj, schemaKeyset) {
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ${typ(
-        obj
-      )}, equal to: ${JSON.stringify(obj, null, 4)}`
+      `json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+        obj,
+        null,
+        4
+      )}`
     );
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ${typ(
-        schemaKeyset
-      )}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`
+      `json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+        schemaKeyset,
+        null,
+        4
+      )}`
     );
   }
   return nnk(obj, schemaKeyset);
@@ -430,16 +414,12 @@ function findUnusedSync(arrOriginal, originalOpts) {
     }
   } else {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typ(
-        arrOriginal
-      )}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arrOriginal}`
     );
   }
   if (arguments.length > 1 && !isObj(originalOpts)) {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typ(
-        originalOpts
-      )}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof originalOpts}`
     );
   }
   const defaults = {
@@ -460,13 +440,6 @@ function findUnusedSync(arrOriginal, originalOpts) {
   if (!truthy(opts.comments) || opts.comments === 0) {
     opts.comments = false;
   }
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/findUnusedSync(): [THROW_ID_60]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean"],
-      comments: ["string", "boolean"]
-    }
-  });
   if (opts.comments === "") {
     opts.comments = false;
   }
@@ -491,7 +464,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
       path = "";
     }
     let keySet;
-    if (arr1.every(el => typ(el) === "Object")) {
+    if (arr1.every(el => isObj(el))) {
       keySet = getKeysetSync(arr1);
       //
       // ------ PART 1 ------
@@ -551,12 +524,11 @@ function findUnusedSync(arrOriginal, originalOpts) {
           );
         });
       }
-    } else if (arr1.every(el => typ(el) === "Array")) {
+    } else if (arr1.every(el => isArr(el))) {
       arr1.forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });
-    } // else if (arr1.every(el => typ(el) === 'string')) {
-    // }
+    }
 
     return removeLeadingDot(res);
   }

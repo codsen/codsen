@@ -18,7 +18,6 @@ var fillMissingKeys = _interopDefault(require('object-fill-missing-keys'));
 var setAllValuesTo = _interopDefault(require('object-set-all-values-to'));
 var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
 var compareVersions = _interopDefault(require('compare-versions'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var includes = _interopDefault(require('lodash.includes'));
 var nnk = _interopDefault(require('object-no-new-keys'));
 var clone = _interopDefault(require('lodash.clonedeep'));
@@ -112,12 +111,10 @@ function truthy(x) {
 function isObj(something) {
   return typ(something) === "Object";
 }
-function isArr(something) {
-  return Array.isArray(something);
-}
 function isStr(something) {
-  return typ(something) === "string";
+  return typeof something === "string";
 }
+var isArr = Array.isArray;
 function defaultCompare(x, y) {
   if (x === undefined && y === undefined) {
     return 0;
@@ -174,19 +171,12 @@ function getKeyset(arrOfPromises, originalOpts) {
     throw new Error("json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ".concat(typ(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
+    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {
     placeholder: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
-    ignorePaths: ["placeholder.*"],
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   var culpritIndex;
   var culpritVal;
   return new Promise(function (resolve, reject) {
@@ -223,13 +213,13 @@ function getKeysetSync(arrOriginal, originalOpts) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!");
   }
   if (!isArr(arrOriginal)) {
-    throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ".concat(typ(arrOriginal)));
+    throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ".concat(_typeof(arrOriginal)));
   }
   if (arrOriginal.length === 0) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ".concat(typ(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
+    throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var schemaObj = {};
   var arr = clone(arrOriginal);
@@ -237,18 +227,12 @@ function getKeysetSync(arrOriginal, originalOpts) {
     placeholder: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/getKeysetSync(): [THROW_ID_20*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   var fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
   };
   arr.forEach(function (obj, i) {
     if (!isObj(obj)) {
-      throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (".concat(typ(obj), ") detected within an array! It's the ").concat(i, "th element: ").concat(JSON.stringify(obj, null, 4)));
+      throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (".concat(_typeof(obj), ") detected within an array! It's the ").concat(i, "th element: ").concat(JSON.stringify(obj, null, 4)));
     }
     schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), {
       mergeArraysContainingStringsToBeEmpty: true
@@ -270,12 +254,6 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
     useNullAsExplicitFalse: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/enforceKeyset(): [THROW_ID_30*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -287,10 +265,10 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
           objResolved = _ref2[0],
           schemaKeysetResolved = _ref2[1];
       if (!isObj(obj)) {
-        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ".concat(typ(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4))));
+        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ".concat(_typeof(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4))));
       }
       if (!isObj(schemaKeyset)) {
-        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ".concat(typ(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4))));
+        return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ".concat(_typeof(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4))));
       }
       return resolve(sortAllObjectsSync(clone(fillMissingKeys(clone(objResolved), clone(schemaKeysetResolved), opts))));
     });
@@ -304,10 +282,10 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!");
   }
   if (!isObj(obj)) {
-    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ".concat(typ(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
+    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ".concat(_typeof(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ".concat(typ(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
+    throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ".concat(_typeof(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
   }
   var defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
@@ -315,12 +293,6 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     useNullAsExplicitFalse: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/enforceKeysetSync(): [THROW_ID_40*]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean", "object"]
-    }
-  });
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
     return isStr(val);
   })) {
@@ -336,10 +308,10 @@ function noNewKeysSync(obj, schemaKeyset) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!");
   }
   if (!isObj(obj)) {
-    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ".concat(typ(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
+    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ".concat(_typeof(obj), ", equal to: ").concat(JSON.stringify(obj, null, 4)));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ".concat(typ(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
+    throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ".concat(_typeof(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
   }
   return nnk(obj, schemaKeyset);
 }
@@ -349,10 +321,10 @@ function findUnusedSync(arrOriginal, originalOpts) {
       return [];
     }
   } else {
-    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ".concat(typ(arrOriginal)));
+    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ".concat(_typeof(arrOriginal)));
   }
   if (arguments.length > 1 && !isObj(originalOpts)) {
-    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ".concat(typ(originalOpts)));
+    throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ".concat(_typeof(originalOpts)));
   }
   var defaults = {
     placeholder: false,
@@ -368,13 +340,6 @@ function findUnusedSync(arrOriginal, originalOpts) {
   if (!truthy(opts.comments) || opts.comments === 0) {
     opts.comments = false;
   }
-  checkTypes(opts, defaults, {
-    msg: "json-comb-core/findUnusedSync(): [THROW_ID_60]",
-    schema: {
-      placeholder: ["null", "number", "string", "boolean"],
-      comments: ["string", "boolean"]
-    }
-  });
   if (opts.comments === "") {
     opts.comments = false;
   }
@@ -396,7 +361,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     }
     var keySet;
     if (arr1.every(function (el) {
-      return typ(el) === "Object";
+      return isObj(el);
     })) {
       var _ref3;
       keySet = getKeysetSync(arr1);
@@ -439,7 +404,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
         });
       }
     } else if (arr1.every(function (el) {
-      return typ(el) === "Array";
+      return isArr(el);
     })) {
       arr1.forEach(function (singleArray, i) {
         res = findUnusedSyncInner(singleArray, opts1, res, "".concat(path, "[").concat(i, "]"));

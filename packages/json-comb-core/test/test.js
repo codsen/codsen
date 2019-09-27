@@ -1,5 +1,3 @@
-/* eslint ava/no-only-test:0 */
-
 import test from "ava";
 import pMap from "p-map";
 import {
@@ -3857,23 +3855,7 @@ test("09.14 - enforceKeyset() - array over empty array", async t => {
   );
 });
 
-test("09.15.01 - enforceKeyset() - wrong opts - resolves to rejected promise #1", t => {
-  t.throws(() => {
-    enforceKeyset(
-      { a: "a" },
-      { a: "false", b: "b" },
-      { doNotFillThesePathsIfTheyContainPlaceholders: 1 }
-    )
-      .then(() => {
-        t.fail("not ok");
-      })
-      .catch(() => {
-        t.pass("ok");
-      });
-  });
-});
-
-test("09.15.02 - enforceKeyset() - wrong opts - resolves to rejected promise #2", t => {
+test("09.15 - enforceKeyset() - wrong opts - resolves to rejected promise", t => {
   t.throws(() => {
     enforceKeyset(
       { a: "a" },
