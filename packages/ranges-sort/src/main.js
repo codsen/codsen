@@ -1,7 +1,4 @@
 import isNatNum from "is-natural-number";
-import ordinalSuffix from "ordinal-number-suffix";
-import checkTypes from "check-types-mini";
-
 const isArr = Array.isArray;
 
 //
@@ -38,21 +35,13 @@ function rangesSort(arrOfRanges, originalOptions) {
     strictlyTwoElementsInRangeArrays: false,
     progressFn: null
   };
+
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptions);
-  // the check:
-  checkTypes(opts, defaults, {
-    msg: "ranges-sort: [THROW_ID_02*]",
-    schema: {
-      progressFn: ["function", "false", "null"]
-    }
-  });
 
   // arrOfRanges validation
-
   let culpritsIndex;
   let culpritsLen;
-
   // validate does every range consist of exactly two indexes:
   if (
     opts.strictlyTwoElementsInRangeArrays &&
@@ -66,9 +55,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     })
   ) {
     throw new TypeError(
-      `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${ordinalSuffix(
-        culpritsIndex
-      )} range (${JSON.stringify(
+      `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         4
@@ -90,9 +77,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     })
   ) {
     throw new TypeError(
-      `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${ordinalSuffix(
-        culpritsIndex
-      )} range (${JSON.stringify(
+      `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         4
