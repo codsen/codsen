@@ -129,72 +129,72 @@ test("01.06 - getKeysetSync() - calculates - three objects - custom placeholder"
     },
     "01.06.01"
   );
-  // t.deepEqual(
-  //   getKeysetSync(
-  //     [
-  //       {
-  //         a: "a",
-  //         b: "c",
-  //         c: {
-  //           d: "d",
-  //           e: "e"
-  //         }
-  //       },
-  //       {
-  //         a: "a"
-  //       },
-  //       {
-  //         c: {
-  //           f: "f"
-  //         }
-  //       }
-  //     ],
-  //     { placeholder: "" }
-  //   ),
-  //   {
-  //     a: "",
-  //     b: "",
-  //     c: {
-  //       d: "",
-  //       e: "",
-  //       f: ""
-  //     }
-  //   },
-  //   "01.06.02"
-  // );
-  // t.deepEqual(
-  //   getKeysetSync(
-  //     [
-  //       {
-  //         a: "a",
-  //         b: "c",
-  //         c: {
-  //           d: "d",
-  //           e: "e"
-  //         }
-  //       },
-  //       {
-  //         a: "a"
-  //       },
-  //       {
-  //         c: {
-  //           f: "f"
-  //         }
-  //       }
-  //     ],
-  //     { placeholder: { a: "a" } }
-  //   ),
-  //   {
-  //     a: { a: "a" },
-  //     b: { a: "a" },
-  //     c: {
-  //       d: { a: "a" },
-  //       e: { a: "a" },
-  //       f: { a: "a" }
-  //     }
-  //   },
-  //   "01.06.03"
-  // );
+  t.deepEqual(
+    getKeysetSync(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e"
+          }
+        },
+        {
+          a: "a"
+        },
+        {
+          c: {
+            f: "f"
+          }
+        }
+      ],
+      { placeholder: "" }
+    ),
+    {
+      a: "",
+      b: "",
+      c: {
+        d: "",
+        e: "",
+        f: ""
+      }
+    },
+    "01.06.02"
+  );
+  t.deepEqual(
+    getKeysetSync(
+      [
+        {
+          a: "a",
+          b: "c",
+          c: {
+            d: "d",
+            e: "e"
+          }
+        },
+        {
+          a: "a"
+        },
+        {
+          c: {
+            f: "f"
+          }
+        }
+      ],
+      { placeholder: { a: "a" } }
+    ),
+    {
+      a: { a: "a" },
+      b: { a: "a" },
+      c: {
+        d: { a: "a" },
+        e: { a: "a" },
+        f: { a: "a" }
+      }
+    },
+    "01.06.03"
+  );
 });
 
 test("01.07 - getKeysetSync() - settings argument is not a plain object - throws", t => {
@@ -2659,7 +2659,28 @@ test("06.05 - sortAllObjectsSync() - nested case", t => {
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
     "06.05.02"
-  ); // test
+  );
+});
+
+test("06.06 - sortAllObjectsSync() - nested case", t => {
+  const original = {
+    lastRan: 6,
+    lastPublished: 5,
+    "1.1.10": 2,
+    "1.1.9": 1,
+    "1.2.1": 4,
+    "1.2.0": 3
+  };
+  const res = `{
+  "1.1.9": 1,
+  "1.1.10": 2,
+  "1.2.0": 3,
+  "1.2.1": 4,
+  "lastPublished": 5,
+  "lastRan": 6
+}`;
+
+  t.is(JSON.stringify(sortAllObjectsSync(original), null, 2), res);
 });
 
 // -----------------------------------------------------------------------------

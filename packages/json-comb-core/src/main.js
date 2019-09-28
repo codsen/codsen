@@ -77,7 +77,7 @@ function toString(obj) {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Parameters
 function compare(firstEl, secondEl) {
   const semverRegex = /^\d+\.\d+\.\d+$/g;
-  if (semverRegex.test(firstEl) && semverRegex.test(secondEl)) {
+  if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
     return compareVersions(firstEl, secondEl);
   }
   return defaultCompare(firstEl, secondEl);
@@ -112,7 +112,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
-    `064 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `132 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4

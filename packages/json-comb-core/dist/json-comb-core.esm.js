@@ -70,7 +70,7 @@ function toString(obj) {
 }
 function compare(firstEl, secondEl) {
   const semverRegex = /^\d+\.\d+\.\d+$/g;
-  if (semverRegex.test(firstEl) && semverRegex.test(secondEl)) {
+  if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
     return compareVersions(firstEl, secondEl);
   }
   return defaultCompare(firstEl, secondEl);
