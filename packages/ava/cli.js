@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-console.log(`                       👊 BASTARDAVA 👊`);
+console.log(`                       👊`);
 require("./lib/cli").run();

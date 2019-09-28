@@ -1,4 +1,4 @@
-/* eslint ava/no-only-test:0 */
+
 
 import test from "ava";
 import a from "../dist/array-of-arrays-into-ast.esm";

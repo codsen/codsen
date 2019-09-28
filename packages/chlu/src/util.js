@@ -25,9 +25,6 @@ function existy(x) {
 function truthy(x) {
   return x !== false && existy(x);
 }
-function isArr(something) {
-  return Array.isArray(something);
-}
 function isStr(something) {
   return typeof something === "string";
 }
@@ -37,6 +34,7 @@ function aContainsB(a, b) {
   }
   return a.indexOf(b) >= 0;
 }
+const isArr = Array.isArray;
 
 function isFooterLink(str) {
   if (str === undefined) {
