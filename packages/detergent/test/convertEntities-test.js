@@ -1,22 +1,16 @@
 // avanotonly
 
+import { mixer, allCombinations } from "../t-util/util";
+import { det } from "../dist/detergent.esm";
 import test from "ava";
 import he from "he";
-// import { allNamedEntities } from "all-named-html-entities";
-// import { notEmailFriendly } from "html-entities-not-email-friendly";
-import { det } from "../dist/detergent.esm";
-import { mixer, allCombinations } from "../t-util/util";
 import {
   rawReplacementMark,
-  // rawNDash,
-  rawMDash,
-  rawNbsp,
+  rightSingleQuote,
+  leftSingleQuote,
   rawhairspace,
-  // rawEllipsis,
-  rightSingleQuote
-  // rightDoubleQuote,
-  // leftDoubleQuote,
-  // leftSingleQuote
+  rawMDash,
+  rawNbsp
 } from "../dist/util.esm";
 
 // 01. opts.opts.convertEntities
@@ -40,7 +34,8 @@ test(`01.02 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound -
 
 test(`01.03 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`, t => {
   mixer({
-    convertEntities: 1
+    convertEntities: 1,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(det(`${rawMDash}`, opt).res, "&mdash;", JSON.stringify(opt, null, 4));
   });
@@ -48,7 +43,16 @@ test(`01.03 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`
 
 test(`01.04 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`, t => {
   mixer({
-    convertEntities: 0
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(det(`${rawMDash}`, opt).res, "-", JSON.stringify(opt, null, 4));
+  });
+});
+
+test(`01.05 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`, t => {
+  mixer({
+    convertEntities: 0,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`${rawMDash}`, opt).res,
@@ -58,13 +62,19 @@ test(`01.04 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`
   });
 });
 
-// 02. hairspaces
-// -----------------------------------------------------------------------------
+test(`01.06 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`, t => {
+  mixer({
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(det(`${rawMDash}`, opt).res, `-`, JSON.stringify(opt, null, 4));
+  });
+});
 
-test(`02.01 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - with m-dash combo`, t => {
+test(`01.07 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`, t => {
   mixer({
     convertEntities: 0,
-    removeWidows: 0
+    removeWidows: 0,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`a${rawhairspace}&mdash;${rawhairspace}a`, opt).res,
@@ -74,9 +84,27 @@ test(`02.01 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - with m-dash combo
   });
 });
 
-test(`02.02 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #1`, t => {
+test(`01.08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`, t => {
+  mixer({
+    convertDashes: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`a${rawhairspace}&mdash;${rawhairspace}a`, opt).res,
+      `a - a`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+// 02. mixed cases
+// -----------------------------------------------------------------------------
+
+test(`02.01 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, right single q.`, t => {
   mixer({
     convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 1,
     removeWidows: 0
   }).forEach(opt => {
     t.is(
@@ -90,125 +118,271 @@ test(`02.02 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #1`, t => {
   });
 });
 
-test(`02.03 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #2`, t => {
+test(`02.02 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, left single q.`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 0,
-    convertDashes: 1
+    convertApostrophes: 1,
+    convertDashes: 1,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`HOORAY  -  IT’S HERE ${rawhairspace}`, opt).res,
+      det(
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
+        opt
+      ).res,
+      `HOORAY &mdash; IT&rsquo;S HERE`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.03 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=off`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 1,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  ${rawMDash}  IT'S HERE ${rawhairspace}`, opt).res,
+      `HOORAY &mdash; IT'S HERE`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.04 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 1,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
       "HOORAY &mdash; IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.04 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #3`, t => {
+test(`02.05 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - left single q.`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 0,
-    convertDashes: 0
+    convertApostrophes: 1,
+    convertDashes: 1,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`HOORAY  -  IT’S HERE ${rawhairspace}`, opt).res,
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY &mdash; IT&rsquo;S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.06 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - left single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 1,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY &mdash; IT'S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.07 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - right single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 1,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY &mdash; IT'S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.08 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - left single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
       "HOORAY - IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.05 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #4`, t => {
+test(`02.09 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - left single q.`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 1,
-    convertDashes: 0
+    convertApostrophes: 0,
+    convertDashes: 0,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`HOORAY  -  IT’S HERE ${rawhairspace}`, opt).res,
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY - IT'S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.10 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - right single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY - IT&rsquo;S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.11 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - right single q.`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY - IT'S HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.12 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 0,
+    removeWidows: 1
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
       "HOORAY - IT&rsquo;S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.06 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - mixed #5`, t => {
+test(`02.13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, t => {
   mixer({
     convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 0,
     removeWidows: 1
   }).forEach(opt => {
     t.is(
-      det(`HOORAY  ${rawMDash}  IT’S HERE ${rawhairspace}`, opt).res,
+      det(`HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY - IT'S&nbsp;HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 0,
+    removeWidows: 1
+  }).forEach(opt => {
+    t.is(
+      det(`HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      "HOORAY - IT'S&nbsp;HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`02.15 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`, t => {
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 1,
+    removeWidows: 1
+  }).forEach(opt => {
+    t.is(
+      det(
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
+        opt
+      ).res,
       "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.07 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=on`, t => {
+test(`02.16 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`, t => {
   mixer({
     convertEntities: 1,
+    convertApostrophes: 1,
+    convertDashes: 1,
     removeWidows: 1
   }).forEach(opt => {
     t.is(
-      det(`a${rawhairspace}a a a a a a a a a ${rawMDash} a a a a `, opt).res,
-      "a a a a a a a a a a&nbsp;&mdash; a a a&nbsp;a",
+      det(
+        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawhairspace}`,
+        opt
+      ).res,
+      "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.08 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=off`, t => {
+test(`02.17 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 0
+    convertApostrophes: 0,
+    convertDashes: 1,
+    removeWidows: 1
   }).forEach(opt => {
     t.is(
-      det(`a a a a a a${rawhairspace}a a a a ${rawMDash} a a a a `, opt).res,
-      "a a a a a a a a a a &mdash; a a a a",
+      det(
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
+        opt
+      ).res,
+      "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`02.09 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=on`, t => {
-  t.is(
-    det(`a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, {
-      fixBrokenEntities: 0,
-      convertDashes: 0,
-      convertApostrophes: 0,
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      useXHTML: 0,
-      dontEncodeNonLatin: 0,
-      addMissingSpaces: 0,
-      convertDotsToEllipsis: 0,
-      stripHtml: 0,
-      convertEntities: 0,
-      removeWidows: 1
-    }).res,
-    `a a a a a a a a a a${rawNbsp}${rawMDash} a a a${rawNbsp}a`
-  );
-  // mixer({
-  //   convertEntities: 0,
-  //   removeWidows: 1
-  // }).forEach(opt => {
-  //   t.is(
-  //     det(`a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, opt).res,
-  //     `a a a a a a a a a a${rawNbsp}${rawMDash} a a a${rawNbsp}a`,
-  //     JSON.stringify(opt, null, 4)
-  //   );
-  // });
-});
-
-test(`02.10 - ${`\u001b[${33}m${`hairspaces`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=off`, t => {
+test(`02.18 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`, t => {
   mixer({
-    convertEntities: 0,
-    removeWidows: 0
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 1,
+    removeWidows: 1
   }).forEach(opt => {
     t.is(
-      det(`a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, opt).res,
-      `a a a a a a a a a a ${rawMDash} a a a a`,
+      det(
+        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawhairspace}`,
+        opt
+      ).res,
+      "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -245,6 +419,7 @@ test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 1
   }).forEach(opt => {
@@ -258,6 +433,7 @@ test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 1,
     addMissingSpaces: 0
@@ -272,6 +448,7 @@ test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 1,
     addMissingSpaces: 1
@@ -286,6 +463,7 @@ test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0,
     addMissingSpaces: 0
@@ -300,6 +478,7 @@ test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0,
     addMissingSpaces: 1
@@ -314,6 +493,7 @@ test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 1,
     addMissingSpaces: 0
@@ -328,6 +508,7 @@ test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 1,
     addMissingSpaces: 1
@@ -342,6 +523,7 @@ test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 0,
     addMissingSpaces: 0
@@ -356,6 +538,7 @@ test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 0,
     addMissingSpaces: 1
@@ -370,6 +553,7 @@ test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 1,
     addMissingSpaces: 0
@@ -384,6 +568,7 @@ test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 1,
     addMissingSpaces: 1
@@ -398,6 +583,7 @@ test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0,
     addMissingSpaces: 0
@@ -412,6 +598,7 @@ test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0,
     addMissingSpaces: 1
@@ -426,6 +613,7 @@ test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 1,
     addMissingSpaces: 0
@@ -440,6 +628,7 @@ test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 1,
     addMissingSpaces: 1
@@ -454,6 +643,7 @@ test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 0,
     addMissingSpaces: 0
@@ -468,6 +658,7 @@ test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0,
     removeWidows: 0,
     addMissingSpaces: 1
@@ -480,7 +671,20 @@ test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
+test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+  mixer({
+    convertDashes: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`a${rawhairspace}${rawMDash} a`, opt).res,
+      `a - a`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   mixer({
     convertEntities: 1
   }).forEach(opt => {
@@ -492,7 +696,7 @@ test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t =
   });
 });
 
-test(`03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
+test(`03.22 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   mixer({
     convertEntities: 0
   }).forEach(opt => {
@@ -504,11 +708,67 @@ test(`03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t =
   });
 });
 
-test(`03.22 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
+test(`03.23 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   allCombinations.forEach(opt => {
     t.is(
       det(`Discount: -10.00`, opt).res,
       "Discount: -10.00",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.24 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=on`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 1,
+    removeWidows: 1
+  }).forEach(opt => {
+    t.is(
+      det(`a${rawhairspace}a a a a a a a a a ${rawMDash} a a a a `, opt).res,
+      "a a a a a a a a a a&nbsp;&mdash; a a a&nbsp;a",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.25 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=off`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 1,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`a a a a a a${rawhairspace}a a a a ${rawMDash} a a a a `, opt).res,
+      "a a a a a a a a a a &mdash; a a a a",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.26 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=on`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 0,
+    removeWidows: 1
+  }).forEach(opt => {
+    t.is(
+      det(`a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, opt).res,
+      `a a a a a a a a a a${rawNbsp}${rawMDash} a a a${rawNbsp}a`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.27 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=off`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 0,
+    removeWidows: 0
+  }).forEach(opt => {
+    t.is(
+      det(`a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, opt).res,
+      `a a a a a a a a a a ${rawMDash} a a a a`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -624,7 +884,7 @@ test(`05.01 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - Germ
   });
 });
 
-test(`05.02 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes are not encoded`, t => {
+test(`05.02 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single raw apostrophes are not encoded`, t => {
   mixer({
     convertApostrophes: 0
   }).forEach(opt => {
@@ -632,11 +892,12 @@ test(`05.02 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - sing
   });
 });
 
-test(`05.03 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes are not encoded`, t => {
+test(`05.03 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single encoded apostrophes are decoded`, t => {
   mixer({
     convertApostrophes: 0
   }).forEach(opt => {
     t.is(det(`&apos;`, opt).res, "'", JSON.stringify(opt, null, 4));
+    t.is(det(`&#x27;`, opt).res, "'", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -647,6 +908,11 @@ test(`05.04 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - sing
   }).forEach(opt => {
     t.is(
       det(`It&apos;s Monday.`, opt).res,
+      `It${rightSingleQuote}s Monday.`,
+      JSON.stringify(opt, null, 4)
+    );
+    t.is(
+      det(`It&#x27;s Monday.`, opt).res,
       `It${rightSingleQuote}s Monday.`,
       JSON.stringify(opt, null, 4)
     );
@@ -663,36 +929,32 @@ test(`05.05 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - sing
       "It&rsquo;s Monday.",
       JSON.stringify(opt, null, 4)
     );
+    t.is(
+      det(`It&#x27;s Monday.`, opt).res,
+      "It&rsquo;s Monday.",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
 test(`05.06 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`, t => {
   mixer({
-    convertApostrophes: 0,
-    convertEntities: 0
+    convertApostrophes: 0
   }).forEach(opt => {
     t.is(
       det(`It&apos;s Monday.`, opt).res,
       "It's Monday.",
       JSON.stringify(opt, null, 4)
     );
-  });
-});
-
-test(`05.07 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`, t => {
-  mixer({
-    convertApostrophes: 0,
-    convertEntities: 1
-  }).forEach(opt => {
     t.is(
-      det(`It&apos;s Monday.`, opt).res,
+      det(`It&#x27;s Monday.`, opt).res,
       "It's Monday.",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`05.08 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
+test(`05.07 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
   mixer({
     convertApostrophes: 1,
     convertEntities: 1
@@ -705,7 +967,7 @@ test(`05.08 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
   });
 });
 
-test(`05.09 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
+test(`05.08 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
   mixer({
     convertApostrophes: 1,
     convertEntities: 0
@@ -718,7 +980,7 @@ test(`05.09 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
   });
 });
 
-test(`05.10 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
+test(`05.09 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, t => {
   mixer({
     convertApostrophes: 0
   }).forEach(opt => {
@@ -730,7 +992,7 @@ test(`05.10 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
   });
 });
 
-test(`05.11 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
+test(`05.10 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
   mixer({
     convertApostrophes: 1,
     convertEntities: 1
@@ -743,7 +1005,7 @@ test(`05.11 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
   });
 });
 
-test(`05.12 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
+test(`05.11 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
   mixer({
     convertApostrophes: 1,
     convertEntities: 0
@@ -756,7 +1018,7 @@ test(`05.12 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
   });
 });
 
-test(`05.13 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
+test(`05.12 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, t => {
   mixer({
     convertApostrophes: 0
   }).forEach(opt => {
@@ -1151,7 +1413,8 @@ test(`06.23 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
 test(`06.24 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 0
+    removeWidows: 0,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`minutes ${rawReplacementMark} we`, opt).res,
@@ -1164,7 +1427,8 @@ test(`06.24 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
 test(`06.25 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
   mixer({
     convertEntities: 1,
-    removeWidows: 1
+    removeWidows: 1,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`minutes ${rawReplacementMark} we`, opt).res,
@@ -1177,7 +1441,8 @@ test(`06.25 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
 test(`06.26 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
   mixer({
     convertEntities: 0,
-    removeWidows: 1
+    removeWidows: 1,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`minutes ${rawReplacementMark} we`, opt).res,
@@ -1190,11 +1455,68 @@ test(`06.26 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
 test(`06.27 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
   mixer({
     convertEntities: 0,
-    removeWidows: 0
+    removeWidows: 0,
+    convertDashes: 1
   }).forEach(opt => {
     t.is(
       det(`minutes ${rawReplacementMark} we`, opt).res,
       `minutes ${rawMDash} we`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`06.28 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
+  mixer({
+    convertEntities: 1,
+    removeWidows: 0,
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(
+      det(`minutes ${rawReplacementMark} we`, opt).res,
+      "minutes - we",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`06.29 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
+  mixer({
+    convertEntities: 1,
+    removeWidows: 1,
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(
+      det(`minutes ${rawReplacementMark} we`, opt).res,
+      "minutes&nbsp;- we",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`06.30 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
+  mixer({
+    convertEntities: 0,
+    removeWidows: 1,
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(
+      det(`minutes ${rawReplacementMark} we`, opt).res,
+      `minutes${rawNbsp}- we`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`06.31 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`, t => {
+  mixer({
+    convertEntities: 0,
+    removeWidows: 0,
+    convertDashes: 0
+  }).forEach(opt => {
+    t.is(
+      det(`minutes ${rawReplacementMark} we`, opt).res,
+      `minutes - we`,
       JSON.stringify(opt, null, 4)
     );
   });

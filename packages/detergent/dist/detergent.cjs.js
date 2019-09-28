@@ -13,25 +13,25 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
-var merge = _interopDefault(require('object-merge-advanced'));
-var stringRemoveWidows = require('string-remove-widows');
-var collapse = _interopDefault(require('string-collapse-white-space'));
-var stripHtml = _interopDefault(require('string-strip-html'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
-var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var ansiRegex = _interopDefault(require('ansi-regex'));
 var stringLeftRight = require('string-left-right');
-var he = _interopDefault(require('he'));
-var Ranges = _interopDefault(require('ranges-push'));
-var rangesApply = _interopDefault(require('ranges-apply'));
-var processOutside = _interopDefault(require('ranges-process-outside'));
+var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
 var allNamedHtmlEntities = require('all-named-html-entities');
 var rangesExpander = _interopDefault(require('string-range-expander'));
 var stringApostrophes = require('string-apostrophes');
+var he = _interopDefault(require('he'));
+var stringRemoveWidows = require('string-remove-widows');
+var processOutside = _interopDefault(require('ranges-process-outside'));
+var collapse = _interopDefault(require('string-collapse-white-space'));
+var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
+var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
+var merge = _interopDefault(require('object-merge-advanced'));
+var stripHtml = _interopDefault(require('string-strip-html'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var rangesApply = _interopDefault(require('ranges-apply'));
+var clone = _interopDefault(require('lodash.clonedeep'));
+var ansiRegex = _interopDefault(require('ansi-regex'));
+var Ranges = _interopDefault(require('ranges-push'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -66,8 +66,6 @@ function _iterableToArray(iter) {
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
-
-var version = "5.0.1";
 
 var defaultOpts = {
   fixBrokenEntities: true,
@@ -135,12 +133,14 @@ function isUppercaseLetter(str) {
 }
 
 var endOfLine = require("os").EOL || "\n";
-function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state) {
+function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts) {
   var len = str.length;
   var isNum = Number.isInteger;
   if (/[\uD800-\uDFFF]/g.test(str[i]) && !(str.charCodeAt(i + 1) >= 0xdc00 && str.charCodeAt(i + 1) <= 0xdfff || str.charCodeAt(i - 1) >= 0xd800 && str.charCodeAt(i - 1) <= 0xdbff)) {
     rangesArr.push(i, i + 1);
   } else if (y - i > 1) {
+    applicableOpts.convertEntities = true;
+    applicableOpts.dontEncodeNonLatin = applicableOpts.dontEncodeNonLatin || doConvertEntities(str.slice(i, y), true) !== doConvertEntities(str.slice(i, y), false);
     if (opts.convertEntities) {
       rangesArr.push(i, y, doConvertEntities(str.slice(i, y), opts.dontEncodeNonLatin));
     }
@@ -151,51 +151,62 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         if (charcode < 9) {
           if (charcode === 3) {
             rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">\n") : "\n");
+            applicableOpts.removeLineBreaks = true;
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
           } else {
             rangesArr.push(i, y);
           }
         } else if (charcode === 9) {
           rangesArr.push(i, y, " ");
         } else if (charcode === 10) {
-          if (str[i - 1] !== "\r") {
-            if (opts.removeLineBreaks) {
-              var whatToInsert = " ";
-              if (punctuationChars.includes(str[stringLeftRight.right(str, i)])) {
-                whatToInsert = "";
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.useXHTML = true;
+          applicableOpts.removeLineBreaks = true;
+          if (opts.removeLineBreaks) {
+            var whatToInsert = " ";
+            if (punctuationChars.includes(str[stringLeftRight.right(str, i)])) {
+              whatToInsert = "";
+            }
+            rangesArr.push(i, y, whatToInsert);
+          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
+            return stringLeftRight.left(str, i) === idx;
+          }))) {
+            var startingIdx = i;
+            if (str[i - 1] === " ") {
+              startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
+            }
+            rangesArr.push(startingIdx, i, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : ""));
+          } else {
+            if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
+              var tempIdx = stringLeftRight.leftStopAtNewLines(str, i);
+              if (tempIdx < i - 1) {
+                rangesArr.push(tempIdx + 1, i, "".concat(endOfLine === "\r\n" ? "\r" : ""));
               }
-              rangesArr.push(i, y, whatToInsert);
-            } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
-              return stringLeftRight.left(str, i) === idx;
-            }))) {
-              var startingIdx = i;
-              if (str[i - 1] === " ") {
-                startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
-              }
-              rangesArr.push(startingIdx, i, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : ""));
-            } else {
-              if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
-                var tempIdx = stringLeftRight.leftStopAtNewLines(str, i);
-                if (tempIdx < i - 1) {
-                  rangesArr.push(tempIdx + 1, i, "".concat(endOfLine === "\r\n" ? "\r" : ""));
-                }
-              } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
-                rangesArr.push(i, i, "\r");
-              }
-              if (str[stringLeftRight.rightStopAtNewLines(str, i)].trim().length) {
-                var _tempIdx = stringLeftRight.rightStopAtNewLines(str, i);
-                if (_tempIdx > i + 1) {
-                  rangesArr.push(i + 1, _tempIdx);
-                }
+            } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
+              rangesArr.push(i, i, "\r");
+            }
+            if (str[stringLeftRight.rightStopAtNewLines(str, i)].trim().length) {
+              var _tempIdx = stringLeftRight.rightStopAtNewLines(str, i);
+              if (_tempIdx > i + 1) {
+                rangesArr.push(i + 1, _tempIdx);
               }
             }
           }
           state.onUrlCurrently = false;
         } else if (charcode === 11 || charcode === 12) {
+          applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.useXHTML = true;
           if (opts.removeLineBreaks) {
             var _whatToInsert = " ";
-            if (punctuationChars.includes(str[stringLeftRight.right(str, i)])) {
+            if (punctuationChars.includes(str[stringLeftRight.right(str, i)]) || str[i + 1] === "\n") {
               _whatToInsert = "";
             }
             rangesArr.push(i, y, _whatToInsert);
@@ -209,6 +220,9 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
               endingIdx = i + 1;
             }
             rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(str[i + 1] === "\n" ? "" : "\n"));
+            if (str[i + 1] === "\n") {
+              offsetBy(1);
+            }
           } else {
             if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
               var _endingIdx = i;
@@ -233,6 +247,8 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
           if (stringLeftRight.right(str, i) || stringLeftRight.left(str, i)) {
+            applicableOpts.convertEntities = true;
+            applicableOpts.convertApostrophes = true;
             rangesArr.push(stringApostrophes.convertOne(str, {
               from: i,
               convertEntities: opts.convertEntities,
@@ -247,8 +263,10 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             var temp = Object.keys(allNamedHtmlEntities.allNamedEntities).find(function (entName) {
               return str.startsWith(entName, i + 1) && str[i + entName.length + 1] === ";";
             });
+            applicableOpts.convertEntities = true;
             if (temp) {
               if (temp === "apos") {
+                applicableOpts.convertApostrophes = true;
                 var decodedTempRes = stringApostrophes.convertOne(str, {
                   from: i,
                   to: i + temp.length + 2,
@@ -291,17 +309,23 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
               }
             }
           } else {
+            applicableOpts.convertEntities = true;
             if (opts.convertEntities) {
               rangesArr.push(i, i + 1, "&amp;");
             }
           }
         } else if (charcode === 39) {
-          rangesArr.push(stringApostrophes.convertOne(str, {
+          applicableOpts.convertApostrophes = true;
+          var _temp = stringApostrophes.convertOne(str, {
             from: i,
             convertEntities: opts.convertEntities,
             convertApostrophes: opts.convertApostrophes,
             offsetBy: offsetBy
-          }));
+          });
+          if (_temp.length) {
+            applicableOpts.convertEntities = true;
+            rangesArr.push(_temp);
+          }
         } else if (charcode === 44 || charcode === 59) {
           if (str[i - 1] && !str[i - 1].trim().length) {
             var whatsOnTheLeft = stringLeftRight.left(str, i);
@@ -309,24 +333,48 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
               rangesArr.push(whatsOnTheLeft + 1, i);
             }
           }
-          if (charcode === 44 && opts.addMissingSpaces && str[y] !== undefined && !state.onUrlCurrently && !isNumber(str[y]) && str[y].trim().length && str[y] !== " " && str[y] !== "\n" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
-            rangesArr.push(y, y, " ");
+          if (charcode === 44 && str[y] !== undefined && !state.onUrlCurrently && !isNumber(str[y]) && str[y].trim().length && str[y] !== " " && str[y] !== "\n" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
           }
-          if (charcode === 59 && opts.addMissingSpaces && str[y] !== undefined && !state.onUrlCurrently && str[y].trim().length && str[y] !== "&" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
-            rangesArr.push(y, y, " ");
+          if (charcode === 59 && str[y] !== undefined && !state.onUrlCurrently && str[y].trim().length && str[y] !== "&" && str[y] !== '"' && str[y] !== "'" && str[y] !== leftSingleQuote && str[y] !== leftDoubleQuote && str[y] !== rightSingleQuote && str[y] !== rightDoubleQuote) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
           }
         } else if (charcode === 45) {
-          if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
-            rangesArr.push(y, y, " ");
-          } else if (opts.convertDashes && str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
-            rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
-          } else if (opts.convertDashes && str[i - 1] && str[y] && (str[i - 1].trim().length === 0 && str[y].trim().length === 0 || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
-            rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
-          } else if (opts.convertDashes && str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
-            rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+          if (str[i - 1] === " " && str[y] === " " && isNumber(str[stringLeftRight.left(str, i)]) && isNumber(str[stringLeftRight.right(str, y)])) ; else {
+            if ((str[i - 1] === rawNbsp || str[i - 1] === " ") && str[y] !== "$" && str[y] !== "£" && str[y] !== "€" && str[y] !== "₽" && str[y] !== "0" && str[y] !== "1" && str[y] !== "2" && str[y] !== "3" && str[y] !== "4" && str[y] !== "5" && str[y] !== "6" && str[y] !== "7" && str[y] !== "8" && str[y] !== "9" && str[y] !== "-" && str[y] !== ">" && str[y] !== " ") {
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
+            } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
+              applicableOpts.convertDashes = true;
+              applicableOpts.convertEntities = true;
+              if (opts.convertDashes) {
+                rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
+              }
+            } else if (str[i - 1] && str[y] && (str[i - 1].trim().length === 0 && str[y].trim().length === 0 || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
+              applicableOpts.convertDashes = true;
+              applicableOpts.convertEntities = true;
+              if (opts.convertDashes) {
+                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+              }
+            } else if (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
+              applicableOpts.convertDashes = true;
+              if (opts.convertDashes) {
+                rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+              }
+            }
           }
         } else if (charcode === 46) {
           if (str[i - 1] !== "." && str[y] === "." && str[y + 1] === "." && str[y + 2] !== ".") {
+            applicableOpts.convertDotsToEllipsis = true;
+            applicableOpts.convertEntities = true;
             if (opts.convertDotsToEllipsis) {
               rangesArr.push(i, y + 2, opts.convertEntities ? "&hellip;" : "".concat(rawEllipsis));
             }
@@ -337,9 +385,12 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           var fourth = str[y + 3] ? str[y + 3].toLowerCase() : "";
           var nextThreeChars = first + second + third;
           if (first + second !== "js" && nextThreeChars !== "jpg" && nextThreeChars !== "png" && nextThreeChars !== "gif" && nextThreeChars !== "svg" && nextThreeChars !== "htm" && nextThreeChars !== "pdf" && nextThreeChars !== "psd" && nextThreeChars !== "tar" && nextThreeChars !== "zip" && nextThreeChars !== "rar" && nextThreeChars !== "otf" && nextThreeChars !== "ttf" && nextThreeChars !== "eot" && nextThreeChars !== "php" && nextThreeChars !== "rss" && nextThreeChars !== "asp" && nextThreeChars !== "ppt" && nextThreeChars !== "doc" && nextThreeChars !== "txt" && nextThreeChars !== "rtf" && nextThreeChars !== "git" && nextThreeChars + fourth !== "jpeg" && nextThreeChars + fourth !== "html" && nextThreeChars + fourth !== "woff" && !(!isLetter(str[i - 2]) && str[i - 1] === "p" && str[y] === "s" && str[y + 1] === "t" && !isLetter(str[y + 2]))) {
-            if (opts.addMissingSpaces && str[y] !== undefined && (
+            if (str[y] !== undefined && (
             !state.onUrlCurrently && isUppercaseLetter(str[y]) || state.onUrlCurrently && isLetter(str[y]) && isUppercaseLetter(str[y]) && isLetter(str[y + 1]) && isLowercaseLetter(str[y + 1])) && str[y] !== " " && str[y] !== "." && str[y] !== "\n") {
-              rangesArr.push(y, y, " ");
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
             }
             if (str[i - 1] !== undefined && str[i - 1].trim() === "" && str[y] !== "." && (str[i - 2] === undefined || str[i - 2] !== ".")
             ) {
@@ -356,10 +407,12 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             state.onUrlCurrently = true;
           }
         } else if (charcode === 60) {
+          applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
             rangesArr.push(i, i + 1, "&lt;");
           }
         } else if (charcode === 62) {
+          applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
             rangesArr.push(i, i + 1, "&gt;");
           }
@@ -388,11 +441,13 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         if (charcode !== 133) {
           rangesArr.push(i, y);
         } else {
+          applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
       } else if (charcode === 173) {
         rangesArr.push(i, y);
       } else if (charcode === 8232 || charcode === 8233) {
+        applicableOpts.removeLineBreaks = true;
         rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
       } else if (charcode === 8202) {
         if (!str[y]) {
@@ -413,41 +468,105 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else if (charcode === 8207) {
         rangesArr.push(i, y);
       } else if (charcode === 8211) {
-        if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
-          if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
-            rangesArr.push(i - 1, i);
-          } else {
-            if (opts.addMissingSpaces) {
-              var whatToAdd = " ";
-              if (opts.removeWidows && !widowRegexTest.test(str.slice(y))) {
-                whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
-              }
-              rangesArr.push(y, y, whatToAdd);
-            }
-            if (opts.removeWidows && str.slice(i - 1, i) !== rawNbsp) {
-              rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
-            }
+        applicableOpts.convertDashes = true;
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+          if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0 && !(str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y]))) {
+            applicableOpts.addMissingSpaces = true;
           }
-        } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
-          rangesArr.push(i - 1, i);
-          rangesArr.push(y, y + 1);
-        }
-        if (opts.convertEntities) {
-          rangesArr.push(i, y, "&ndash;");
-        } else if (charcode === 65533) {
-          rangesArr.push(i, y, rawMDash);
+        } else {
+          applicableOpts.convertEntities = true;
+          if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
+            if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
+              rangesArr.push(i - 1, i);
+            } else {
+              applicableOpts.addMissingSpaces = true;
+              applicableOpts.convertEntities = true;
+              applicableOpts.removeWidows = true;
+              if (opts.addMissingSpaces) {
+                var whatToAdd = " ";
+                if (opts.removeWidows && !widowRegexTest.test(str.slice(y))) {
+                  whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+                }
+                rangesArr.push(y, y, whatToAdd);
+              }
+              if (opts.removeWidows && str.slice(i - 1, i) !== rawNbsp) {
+                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+              }
+            }
+          } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
+            rangesArr.push(i - 1, i);
+            rangesArr.push(y, y + 1);
+          }
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&ndash;");
+          } else if (charcode === 65533) {
+            rangesArr.push(i, y, rawMDash);
+          }
         }
       } else if (charcode === 8212) {
-        if (opts.addMissingSpaces && str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
-          rangesArr.push(y, y, " ");
+        applicableOpts.convertDashes = true;
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+          if (opts.removeWidows && str[i - 2] && str[i - 2].trim().length && !str[i - 1].trim().length && !["\n", "\r"].includes(str[i - 1])) {
+            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          }
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&mdash;");
+          }
+          if (str[i - 1] === " " && stringLeftRight.left(str, i) !== null) {
+            applicableOpts.removeWidows = true;
+            if (opts.removeWidows) {
+              rangesArr.push(stringLeftRight.left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+            }
+          }
         }
-        if (opts.convertEntities) {
-          rangesArr.push(i, y, "&mdash;");
+      } else if (charcode === 8216) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        rangesArr.push(stringApostrophes.convertOne(str, {
+          from: i,
+          to: y,
+          convertEntities: opts.convertEntities,
+          convertApostrophes: opts.convertApostrophes,
+          offsetBy: offsetBy
+        }));
+      } else if (charcode === 8217) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, "'");
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&rsquo;");
         }
-        if (opts.removeWidows && str[i - 1] === " " && stringLeftRight.left(str, i) !== null) {
-          rangesArr.push(stringLeftRight.left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+      } else if (charcode === 8220) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, opts.convertEntities ? "&quot;" : "\"");
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&ldquo;");
+        }
+      } else if (charcode === 8221) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, opts.convertEntities ? "&quot;" : "\"");
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&rdquo;");
         }
       } else if (charcode === 8230) {
+        applicableOpts.convertDotsToEllipsis = true;
+        applicableOpts.convertEntities = true;
         if (!opts.convertDotsToEllipsis) {
           rangesArr.push(i, y, "...");
         } else if (opts.convertEntities) {
@@ -456,6 +575,8 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else if (charcode === 65279) {
         rangesArr.push(i, y);
       } else {
+        applicableOpts.convertEntities = true;
+        applicableOpts.dontEncodeNonLatin = applicableOpts.dontEncodeNonLatin || doConvertEntities(str[i], true) !== doConvertEntities(str[i], false);
         if (opts.convertEntities) {
           var convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
           if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
@@ -476,6 +597,8 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
     }
   }
 }
+
+var version = "5.0.1";
 
 function det(str, inputOpts) {
   var opts;
@@ -509,6 +632,7 @@ function det(str, inputOpts) {
   }).forEach(function (singleOption) {
     applicableOpts[singleOption] = false;
   });
+  delete applicableOpts.stripHtmlButIgnoreTags;
   var endOfLine = require("os").EOL || "\n";
   var brClosingBracketIndexesArr = [];
   var finalIndexesToDelete = new Ranges({
@@ -523,7 +647,6 @@ function det(str, inputOpts) {
   function isNum(something) {
     return Number.isInteger(something);
   }
-  var isArr = Array.isArray;
   var state = {
     onUrlCurrently: false
   };
@@ -546,6 +669,7 @@ function det(str, inputOpts) {
       if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber(str[i + 1]))) {
         var replacement = opts.convertApostrophes ? rightSingleQuote : "'";
         finalIndexesToDelete.push(i, i + 1, "".concat(replacement));
+        applicableOpts.convertApostrophes = true;
       } else if (str[i - 2] && isLowercaseLetter(str[i - 2]) && !str[i - 1].trim().length && str[i + 2] && isLowercaseLetter(str[i + 2]) && !str[i + 1].trim().length) {
         finalIndexesToDelete.push(i, i + 1, rawMDash);
       } else {
@@ -554,10 +678,14 @@ function det(str, inputOpts) {
     }
   }
   applyAndWipe();
-  if (opts.fixBrokenEntities) {
-    str = rangesApply(str, fixBrokenEntities(str, {
-      decode: false
-    }));
+  var entityFixes = fixBrokenEntities(str, {
+    decode: false
+  });
+  if (entityFixes && entityFixes.length) {
+    applicableOpts.fixBrokenEntities = true;
+    if (opts.fixBrokenEntities) {
+      str = rangesApply(str, entityFixes);
+    }
   }
   if (str.includes("<") || str.includes(">")) {
     var cb = function cb(_ref) {
@@ -566,9 +694,12 @@ function det(str, inputOpts) {
           deleteTo = _ref.deleteTo,
           proposedReturn = _ref.proposedReturn;
       if (isNum(tag.lastOpeningBracketAt) && isNum(tag.lastClosingBracketAt) && tag.lastOpeningBracketAt < tag.lastClosingBracketAt || tag.slashPresent) {
+        applicableOpts.stripHtml = true;
         skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
-        if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase()) || opts.removeLineBreaks && tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
+        if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
           if (tag.name.toLowerCase() === "li" && !tag.slashPresent || tag.name.toLowerCase() === "ul" && tag.slashPresent) {
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
             if (!opts.removeLineBreaks) {
               finalIndexesToDelete.push(deleteFrom, deleteTo, "".concat(opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">") : "", "\n"));
             } else {
@@ -580,11 +711,11 @@ function det(str, inputOpts) {
             finalIndexesToDelete.push(proposedReturn);
           }
         } else {
-          if ((!opts.stripHtml || isArr(opts.stripHtmlButIgnoreTags) && opts.stripHtmlButIgnoreTags.includes("br")) && opts.replaceLineBreaks && tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt && !"\n\r".includes(str[tag.lastClosingBracketAt + 1])) {
-            finalIndexesToDelete.push(tag.lastClosingBracketAt + 1, tag.lastClosingBracketAt + 1, "\n");
-          }
-          if (opts.useXHTML && voidTags.includes(tag.name.toLowerCase()) && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
-            finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
+          if (voidTags.includes(tag.name.toLowerCase()) && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
+            applicableOpts.useXHTML = true;
+            if (opts.useXHTML) {
+              finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
+            }
           }
           if (voidTags.includes(tag.name.toLowerCase()) && tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
             return !_char.trim().length || _char === "/";
@@ -593,6 +724,7 @@ function det(str, inputOpts) {
           }
           if (voidTags.includes(tag.name.toLowerCase()) && tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
             if (str[stringLeftRight.left(str, stringLeftRight.left(str, tag.lastClosingBracketAt))] === "/") {
+              applicableOpts.useXHTML = true;
               if (!opts.useXHTML || str.slice(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
                 mode: 2
               }, "/"), tag.lastClosingBracketAt) !== "/") {
@@ -635,21 +767,34 @@ function det(str, inputOpts) {
     });
   }
   processOutside(str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {
-    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state);
+    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts);
   }, true);
   applyAndWipe();
   str = str.replace(/(\r\n|\r|\n){3,}/g, "".concat(endOfLine).concat(endOfLine));
-  if (opts.removeWidows) {
-    str = stringRemoveWidows.removeWidows(str, {
-      ignore: "all",
-      convertEntities: opts.convertEntities,
-      targetLanguage: "html",
-      UKPostcodes: true,
-      hyphens: opts.convertDashes
-    }).res;
+  var widowFixes = stringRemoveWidows.removeWidows(str, {
+    ignore: "all",
+    convertEntities: true,
+    targetLanguage: "html",
+    UKPostcodes: true,
+    hyphens: true
+  });
+  if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
+    applicableOpts.removeWidows = true;
+    if (opts.removeWidows) {
+      str = stringRemoveWidows.removeWidows(str, {
+        ignore: "all",
+        convertEntities: opts.convertEntities,
+        targetLanguage: "html",
+        UKPostcodes: true,
+        hyphens: opts.convertDashes
+      }).res;
+    }
   }
-  if (opts.removeLineBreaks) {
-    str = str.replace(/\r\n|\r|\n/gm, " ");
+  if (str !== str.replace(/\r\n|\r|\n/gm, " ")) {
+    applicableOpts.removeLineBreaks = true;
+    if (opts.removeLineBreaks) {
+      str = str.replace(/\r\n|\r|\n/gm, " ");
+    }
   }
   str = collapse(str, {
     trimLines: true,

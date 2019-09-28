@@ -3,12 +3,14 @@
 import test from "ava";
 import { mixer, allCombinations } from "../t-util/util";
 import { det } from "../dist/detergent.esm";
+import { rawNDash } from "../dist/util.esm";
 
 // -----------------------------------------------------------------------------
 
 test(`01.01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, t => {
   mixer({
     convertEntities: 1,
+    convertDashes: 1,
     removeWidows: 1,
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
@@ -23,6 +25,7 @@ test(`01.01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
 test(`01.02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, t => {
   mixer({
     convertEntities: 1,
+    convertDashes: 1,
     removeWidows: 0,
     addMissingSpaces: 1 // <-------
   }).forEach(opt => {
@@ -37,6 +40,7 @@ test(`01.02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
 test(`01.03 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, t => {
   mixer({
     convertEntities: 1,
+    convertDashes: 1,
     removeWidows: 0,
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
@@ -149,11 +153,12 @@ test(`01.10 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
 
 test(`01.11 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det("10am&ndash;11am", opt).res,
-      "10am\u201311am",
+      det(`10am&ndash;11am`, opt).res,
+      `10am${rawNDash}11am`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -768,6 +773,7 @@ test(`01.55 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
 
 test(`01.56 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
   mixer({
+    convertDashes: 1,
     removeWidows: 1,
     convertEntities: 1,
     addMissingSpaces: 1 // <-------
@@ -780,9 +786,9 @@ test(`01.56 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
   });
 });
 
-test(`01.58 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
+test(`01.57 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
   mixer({
-    // removeWidows: 1,
+    convertDashes: 1,
     convertEntities: 1,
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
@@ -794,8 +800,9 @@ test(`01.58 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
   });
 });
 
-test(`01.59 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
+test(`01.58 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
   mixer({
+    convertDashes: 1,
     removeWidows: 1,
     convertEntities: 1,
     addMissingSpaces: 0 // <-------
@@ -808,8 +815,9 @@ test(`01.59 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
   });
 });
 
-test(`01.60 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed`, t => {
+test(`01.59 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1
   }).forEach(opt => {
     t.is(
@@ -820,29 +828,31 @@ test(`01.60 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
   });
 });
 
-test(`01.61 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
+test(`01.60 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
   mixer({
+    convertDashes: 1,
     removeWidows: 1,
     convertEntities: 0,
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
       det("10am&nbsp;&ndash;11am", opt).res,
-      "10am\u00A0\u2013\u00A011am",
+      `10am\u00A0${rawNDash}\u00A011am`,
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`01.62 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
+test(`01.61 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, t => {
   mixer({
+    convertDashes: 1,
     removeWidows: 0,
     convertEntities: 0,
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
       det("10am&nbsp;&ndash;11am", opt).res,
-      "10am\u00A0\u2013 11am",
+      `10am\u00A0${rawNDash} 11am`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -853,11 +863,12 @@ test(`01.62 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
 
 test(`02.01 - deletes space around n-dash between numbers`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det("1880 \u2013 1912", opt).res,
-      "1880\u20131912",
+      det(`1880 ${rawNDash} 1912`, opt).res,
+      `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -865,11 +876,12 @@ test(`02.01 - deletes space around n-dash between numbers`, t => {
 
 test(`02.02 - deletes space around n-dash between numbers`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det("1880 &ndash; 1912", opt).res,
-      "1880\u20131912",
+      det(`1880 &ndash; 1912`, opt).res,
+      `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -877,10 +889,11 @@ test(`02.02 - deletes space around n-dash between numbers`, t => {
 
 test(`02.03 - deletes space around n-dash between numbers`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det("1880 \u2013 1912", opt).res,
+      det(`1880 ${rawNDash} 1912`, opt).res,
       "1880&ndash;1912",
       JSON.stringify(opt, null, 4)
     );
@@ -889,6 +902,7 @@ test(`02.03 - deletes space around n-dash between numbers`, t => {
 
 test(`02.04 - deletes space around n-dash between numbers`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 1
   }).forEach(opt => {
     t.is(
@@ -901,11 +915,12 @@ test(`02.04 - deletes space around n-dash between numbers`, t => {
 
 test(`02.05 - space in front of n-dash, missing space after it`, t => {
   mixer({
+    convertDashes: 1,
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det("1880 \u20131912", opt).res,
-      "1880\u20131912",
+      det(`1880 ${rawNDash}1912`, opt).res,
+      `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
   });

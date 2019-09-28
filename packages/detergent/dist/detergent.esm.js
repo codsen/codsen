@@ -7,27 +7,25 @@
  * Homepage: https://detergent.io
  */
 
-import fixBrokenEntities from 'string-fix-broken-named-entities';
-import merge from 'object-merge-advanced';
-import { removeWidows } from 'string-remove-widows';
-import collapse from 'string-collapse-white-space';
-import stripHtml from 'string-strip-html';
-import isObj from 'lodash.isplainobject';
-import arrayiffy from 'arrayiffy-if-string';
-import trimSpaces from 'string-trim-spaces-only';
-import clone from 'lodash.clonedeep';
-import ansiRegex from 'ansi-regex';
 import { right, left, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
-import he from 'he';
-import Ranges from 'ranges-push';
-import rangesApply from 'ranges-apply';
-import processOutside from 'ranges-process-outside';
+import fixBrokenEntities from 'string-fix-broken-named-entities';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { allNamedEntities } from 'all-named-html-entities';
 import rangesExpander from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
-
-var version = "5.0.1";
+import he from 'he';
+import { removeWidows } from 'string-remove-widows';
+import processOutside from 'ranges-process-outside';
+import collapse from 'string-collapse-white-space';
+import trimSpaces from 'string-trim-spaces-only';
+import arrayiffy from 'arrayiffy-if-string';
+import merge from 'object-merge-advanced';
+import stripHtml from 'string-strip-html';
+import isObj from 'lodash.isplainobject';
+import rangesApply from 'ranges-apply';
+import clone from 'lodash.clonedeep';
+import ansiRegex from 'ansi-regex';
+import Ranges from 'ranges-push';
 
 const defaultOpts = {
   fixBrokenEntities: true,
@@ -496,7 +494,8 @@ function processCharacter(
   y,
   offsetBy,
   brClosingBracketIndexesArr,
-  state
+  state,
+  applicableOpts
 ) {
   const len = str.length;
   const isNum = Number.isInteger;
@@ -509,6 +508,11 @@ function processCharacter(
   ) {
     rangesArr.push(i, i + 1);
   } else if (y - i > 1) {
+    applicableOpts.convertEntities = true;
+    applicableOpts.dontEncodeNonLatin =
+      applicableOpts.dontEncodeNonLatin ||
+      doConvertEntities(str.slice(i, y), true) !==
+        doConvertEntities(str.slice(i, y), false);
     if (opts.convertEntities) {
       rangesArr.push(
         i,
@@ -531,66 +535,78 @@ function processCharacter(
                 ? `<br${opts.useXHTML ? "/" : ""}>\n`
                 : "\n"
             );
+            applicableOpts.removeLineBreaks = true;
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
           } else {
             rangesArr.push(i, y);
           }
         } else if (charcode === 9) {
           rangesArr.push(i, y, " ");
         } else if (charcode === 10) {
-          if (str[i - 1] !== "\r") {
-            if (opts.removeLineBreaks) {
-              let whatToInsert = " ";
-              if (punctuationChars.includes(str[right(str, i)])) {
-                whatToInsert = "";
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.useXHTML = true;
+          applicableOpts.removeLineBreaks = true;
+          if (opts.removeLineBreaks) {
+            let whatToInsert = " ";
+            if (punctuationChars.includes(str[right(str, i)])) {
+              whatToInsert = "";
+            }
+            rangesArr.push(i, y, whatToInsert);
+          } else if (
+            opts.replaceLineBreaks &&
+            (!brClosingBracketIndexesArr ||
+              (Array.isArray(brClosingBracketIndexesArr) &&
+                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+          ) {
+            let startingIdx = i;
+            if (str[i - 1] === " ") {
+              startingIdx = leftStopAtNewLines(str, i) + 1;
+            }
+            rangesArr.push(
+              startingIdx,
+              i,
+              `<br${opts.useXHTML ? "/" : ""}>${
+                endOfLine === "\r\n" ? "\r" : ""
+              }`
+            );
+          } else {
+            if (str[leftStopAtNewLines(str, i)].trim().length) {
+              const tempIdx = leftStopAtNewLines(str, i);
+              if (tempIdx < i - 1) {
+                rangesArr.push(
+                  tempIdx + 1,
+                  i,
+                  `${endOfLine === "\r\n" ? "\r" : ""}`
+                );
               }
-              rangesArr.push(i, y, whatToInsert);
-            } else if (
-              opts.replaceLineBreaks &&
-              (!brClosingBracketIndexesArr ||
-                (Array.isArray(brClosingBracketIndexesArr) &&
-                  !brClosingBracketIndexesArr.some(
-                    idx => left(str, i) === idx
-                  )))
-            ) {
-              let startingIdx = i;
-              if (str[i - 1] === " ") {
-                startingIdx = leftStopAtNewLines(str, i) + 1;
-              }
-              rangesArr.push(
-                startingIdx,
-                i,
-                `<br${opts.useXHTML ? "/" : ""}>${
-                  endOfLine === "\r\n" ? "\r" : ""
-                }`
-              );
-            } else {
-              if (str[leftStopAtNewLines(str, i)].trim().length) {
-                const tempIdx = leftStopAtNewLines(str, i);
-                if (tempIdx < i - 1) {
-                  rangesArr.push(
-                    tempIdx + 1,
-                    i,
-                    `${endOfLine === "\r\n" ? "\r" : ""}`
-                  );
-                }
-              } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
-                rangesArr.push(i, i, "\r");
-              }
-              if (str[rightStopAtNewLines(str, i)].trim().length) {
-                const tempIdx = rightStopAtNewLines(str, i);
-                if (tempIdx > i + 1) {
-                  rangesArr.push(i + 1, tempIdx);
-                }
+            } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
+              rangesArr.push(i, i, "\r");
+            }
+            if (str[rightStopAtNewLines(str, i)].trim().length) {
+              const tempIdx = rightStopAtNewLines(str, i);
+              if (tempIdx > i + 1) {
+                rangesArr.push(i + 1, tempIdx);
               }
             }
           }
           state.onUrlCurrently = false;
         } else if (charcode === 11 || charcode === 12) {
+          applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.removeLineBreaks = true;
+          applicableOpts.replaceLineBreaks = true;
+          applicableOpts.useXHTML = true;
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
-            if (punctuationChars.includes(str[right(str, i)])) {
+            if (
+              punctuationChars.includes(str[right(str, i)]) ||
+              str[i + 1] === "\n"
+            ) {
               whatToInsert = "";
             }
             rangesArr.push(i, y, whatToInsert);
@@ -610,6 +626,9 @@ function processCharacter(
                 str[i + 1] === "\n" ? "" : "\n"
               }`
             );
+            if (str[i + 1] === "\n") {
+              offsetBy(1);
+            }
           } else {
             if (str[leftStopAtNewLines(str, i)].trim().length) {
               let endingIdx = i;
@@ -641,6 +660,8 @@ function processCharacter(
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
           if (right(str, i) || left(str, i)) {
+            applicableOpts.convertEntities = true;
+            applicableOpts.convertApostrophes = true;
             rangesArr.push(
               convertOne(str, {
                 from: i,
@@ -659,8 +680,10 @@ function processCharacter(
                 str.startsWith(entName, i + 1) &&
                 str[i + entName.length + 1] === ";"
             );
+            applicableOpts.convertEntities = true;
             if (temp) {
               if (temp === "apos") {
+                applicableOpts.convertApostrophes = true;
                 const decodedTempRes = convertOne(str, {
                   from: i,
                   to: i + temp.length + 2,
@@ -716,19 +739,23 @@ function processCharacter(
               }
             }
           } else {
+            applicableOpts.convertEntities = true;
             if (opts.convertEntities) {
               rangesArr.push(i, i + 1, "&amp;");
             }
           }
         } else if (charcode === 39) {
-          rangesArr.push(
-            convertOne(str, {
-              from: i,
-              convertEntities: opts.convertEntities,
-              convertApostrophes: opts.convertApostrophes,
-              offsetBy
-            })
-          );
+          applicableOpts.convertApostrophes = true;
+          const temp = convertOne(str, {
+            from: i,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy
+          });
+          if (temp.length) {
+            applicableOpts.convertEntities = true;
+            rangesArr.push(temp);
+          }
         } else if (charcode === 44 || charcode === 59) {
           if (str[i - 1] && !str[i - 1].trim().length) {
             const whatsOnTheLeft = left(str, i);
@@ -738,7 +765,6 @@ function processCharacter(
           }
           if (
             charcode === 44 &&
-            opts.addMissingSpaces &&
             str[y] !== undefined &&
             !state.onUrlCurrently &&
             !isNumber(str[y]) &&
@@ -752,11 +778,13 @@ function processCharacter(
             str[y] !== rightSingleQuote &&
             str[y] !== rightDoubleQuote
           ) {
-            rangesArr.push(y, y, " ");
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
           }
           if (
             charcode === 59 &&
-            opts.addMissingSpaces &&
             str[y] !== undefined &&
             !state.onUrlCurrently &&
             str[y].trim().length &&
@@ -768,52 +796,88 @@ function processCharacter(
             str[y] !== rightSingleQuote &&
             str[y] !== rightDoubleQuote
           ) {
-            rangesArr.push(y, y, " ");
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
           }
         } else if (charcode === 45) {
           if (
-            (str[i - 1] === rawNbsp || str[i - 1] === " ") &&
-            str[y] !== "$" &&
-            str[y] !== "£" &&
-            str[y] !== "€" &&
-            str[y] !== "₽" &&
-            str[y] !== "0" &&
-            str[y] !== "1" &&
-            str[y] !== "2" &&
-            str[y] !== "3" &&
-            str[y] !== "4" &&
-            str[y] !== "5" &&
-            str[y] !== "6" &&
-            str[y] !== "7" &&
-            str[y] !== "8" &&
-            str[y] !== "9" &&
-            str[y] !== "-" &&
-            str[y] !== ">" &&
-            str[y] !== " "
-          ) {
-            rangesArr.push(y, y, " ");
-          } else if (
-            opts.convertDashes &&
-            str[i - 1] &&
-            str[y] &&
-            ((isNumber(str[i - 1]) && isNumber(str[y])) ||
-              (str[i - 1].toLowerCase() === "a" &&
-                str[y].toLowerCase() === "z"))
-          ) {
-            rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
-          } else if (
-            opts.convertDashes &&
-            str[i - 1] &&
-            str[y] &&
-            ((str[i - 1].trim().length === 0 && str[y].trim().length === 0) ||
-              (isLowercaseLetter(str[i - 1]) && str[y] === "'"))
-          ) {
-            rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
-          } else if (
-            opts.convertDashes &&
-            (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y]))
-          ) {
-            rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
+            str[i - 1] === " " &&
+            str[y] === " " &&
+            isNumber(str[left(str, i)]) &&
+            isNumber(str[right(str, y)])
+          ) ; else {
+            if (
+              (str[i - 1] === rawNbsp || str[i - 1] === " ") &&
+              str[y] !== "$" &&
+              str[y] !== "£" &&
+              str[y] !== "€" &&
+              str[y] !== "₽" &&
+              str[y] !== "0" &&
+              str[y] !== "1" &&
+              str[y] !== "2" &&
+              str[y] !== "3" &&
+              str[y] !== "4" &&
+              str[y] !== "5" &&
+              str[y] !== "6" &&
+              str[y] !== "7" &&
+              str[y] !== "8" &&
+              str[y] !== "9" &&
+              str[y] !== "-" &&
+              str[y] !== ">" &&
+              str[y] !== " "
+            ) {
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
+            } else if (
+              str[i - 1] &&
+              str[y] &&
+              ((isNumber(str[i - 1]) && isNumber(str[y])) ||
+                (str[i - 1].toLowerCase() === "a" &&
+                  str[y].toLowerCase() === "z"))
+            ) {
+              applicableOpts.convertDashes = true;
+              applicableOpts.convertEntities = true;
+              if (opts.convertDashes) {
+                rangesArr.push(
+                  i,
+                  y,
+                  opts.convertEntities ? "&ndash;" : "\u2013"
+                );
+              }
+            } else if (
+              str[i - 1] &&
+              str[y] &&
+              ((str[i - 1].trim().length === 0 && str[y].trim().length === 0) ||
+                (isLowercaseLetter(str[i - 1]) && str[y] === "'"))
+            ) {
+              applicableOpts.convertDashes = true;
+              applicableOpts.convertEntities = true;
+              if (opts.convertDashes) {
+                rangesArr.push(
+                  i,
+                  y,
+                  opts.convertEntities ? "&mdash;" : rawMDash
+                );
+              }
+            } else if (
+              str[i - 1] &&
+              str[y] &&
+              isLetter(str[i - 1]) &&
+              isQuote(str[y])
+            ) {
+              applicableOpts.convertDashes = true;
+              if (opts.convertDashes) {
+                rangesArr.push(
+                  i,
+                  y,
+                  opts.convertEntities ? "&mdash;" : rawMDash
+                );
+              }
+            }
           }
         } else if (charcode === 46) {
           if (
@@ -822,6 +886,8 @@ function processCharacter(
             str[y + 1] === "." &&
             str[y + 2] !== "."
           ) {
+            applicableOpts.convertDotsToEllipsis = true;
+            applicableOpts.convertEntities = true;
             if (opts.convertDotsToEllipsis) {
               rangesArr.push(
                 i,
@@ -870,7 +936,6 @@ function processCharacter(
             )
           ) {
             if (
-              opts.addMissingSpaces &&
               str[y] !== undefined &&
               ((!state.onUrlCurrently && isUppercaseLetter(str[y])) ||
                 (state.onUrlCurrently &&
@@ -882,7 +947,10 @@ function processCharacter(
               str[y] !== "." &&
               str[y] !== "\n"
             ) {
-              rangesArr.push(y, y, " ");
+              applicableOpts.addMissingSpaces = true;
+              if (opts.addMissingSpaces) {
+                rangesArr.push(y, y, " ");
+              }
             }
             if (
               str[i - 1] !== undefined &&
@@ -907,10 +975,12 @@ function processCharacter(
             state.onUrlCurrently = true;
           }
         } else if (charcode === 60) {
+          applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
             rangesArr.push(i, i + 1, "&lt;");
           }
         } else if (charcode === 62) {
+          applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
             rangesArr.push(i, i + 1, "&gt;");
           }
@@ -943,11 +1013,13 @@ function processCharacter(
         if (charcode !== 133) {
           rangesArr.push(i, y);
         } else {
+          applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
       } else if (charcode === 173) {
         rangesArr.push(i, y);
       } else if (charcode === 8232 || charcode === 8233) {
+        applicableOpts.removeLineBreaks = true;
         rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
       } else if (charcode === 8202) {
         if (!str[y]) {
@@ -968,67 +1040,143 @@ function processCharacter(
       } else if (charcode === 8207) {
         rangesArr.push(i, y);
       } else if (charcode === 8211) {
-        if (
-          str[i - 1] &&
-          str[i - 1].trim().length === 0 &&
-          str[y].trim().length !== 0
-        ) {
-          if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
-            rangesArr.push(i - 1, i);
-          } else {
-            if (opts.addMissingSpaces) {
-              let whatToAdd = " ";
-              if (opts.removeWidows && !widowRegexTest.test(str.slice(y))) {
-                whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+        applicableOpts.convertDashes = true;
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+          if (
+            str[i - 1] &&
+            str[i - 1].trim().length === 0 &&
+            str[y].trim().length !== 0 &&
+            !(str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y]))
+          ) {
+            applicableOpts.addMissingSpaces = true;
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          if (
+            str[i - 1] &&
+            str[i - 1].trim().length === 0 &&
+            str[y].trim().length !== 0
+          ) {
+            if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
+              rangesArr.push(i - 1, i);
+            } else {
+              applicableOpts.addMissingSpaces = true;
+              applicableOpts.convertEntities = true;
+              applicableOpts.removeWidows = true;
+              if (opts.addMissingSpaces) {
+                let whatToAdd = " ";
+                if (opts.removeWidows && !widowRegexTest.test(str.slice(y))) {
+                  whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+                }
+                rangesArr.push(y, y, whatToAdd);
               }
-              rangesArr.push(y, y, whatToAdd);
+              if (opts.removeWidows && str.slice(i - 1, i) !== rawNbsp) {
+                rangesArr.push(
+                  i - 1,
+                  i,
+                  opts.convertEntities ? "&nbsp;" : rawNbsp
+                );
+              }
             }
-            if (opts.removeWidows && str.slice(i - 1, i) !== rawNbsp) {
+          } else if (
+            str[i - 2] &&
+            str[i - 1] &&
+            str[y] &&
+            str[y + 1] &&
+            isNumber(str[i - 2]) &&
+            isNumber(str[y + 1]) &&
+            str[i - 1].trim().length === 0 &&
+            str[y].trim().length === 0
+          ) {
+            rangesArr.push(i - 1, i);
+            rangesArr.push(y, y + 1);
+          }
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&ndash;");
+          } else if (charcode === 65533) {
+            rangesArr.push(i, y, rawMDash);
+          }
+        }
+      } else if (charcode === 8212) {
+        applicableOpts.convertDashes = true;
+        if (!opts.convertDashes) {
+          rangesArr.push(i, y, "-");
+          if (
+            opts.removeWidows &&
+            str[i - 2] &&
+            str[i - 2].trim().length &&
+            !str[i - 1].trim().length &&
+            !["\n", "\r"].includes(str[i - 1])
+          ) {
+            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          if (
+            str[i - 1] &&
+            str[i - 1].trim().length === 0 &&
+            str[y].trim().length !== 0
+          ) {
+            applicableOpts.addMissingSpaces = true;
+            if (opts.addMissingSpaces) {
+              rangesArr.push(y, y, " ");
+            }
+          }
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&mdash;");
+          }
+          if (str[i - 1] === " " && left(str, i) !== null) {
+            applicableOpts.removeWidows = true;
+            if (opts.removeWidows) {
               rangesArr.push(
-                i - 1,
+                left(str, i) + 1,
                 i,
                 opts.convertEntities ? "&nbsp;" : rawNbsp
               );
             }
           }
-        } else if (
-          str[i - 2] &&
-          str[i - 1] &&
-          str[y] &&
-          str[y + 1] &&
-          isNumber(str[i - 2]) &&
-          isNumber(str[y + 1]) &&
-          str[i - 1].trim().length === 0 &&
-          str[y].trim().length === 0
-        ) {
-          rangesArr.push(i - 1, i);
-          rangesArr.push(y, y + 1);
         }
-        if (opts.convertEntities) {
-          rangesArr.push(i, y, "&ndash;");
-        } else if (charcode === 65533) {
-          rangesArr.push(i, y, rawMDash);
+      } else if (charcode === 8216) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        rangesArr.push(
+          convertOne(str, {
+            from: i,
+            to: y,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy
+          })
+        );
+      } else if (charcode === 8217) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, "'");
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&rsquo;");
         }
-      } else if (charcode === 8212) {
-        if (
-          opts.addMissingSpaces &&
-          str[i - 1] &&
-          str[i - 1].trim().length === 0 &&
-          str[y].trim().length !== 0
-        ) {
-          rangesArr.push(y, y, " ");
+      } else if (charcode === 8220) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&ldquo;");
         }
-        if (opts.convertEntities) {
-          rangesArr.push(i, y, "&mdash;");
-        }
-        if (opts.removeWidows && str[i - 1] === " " && left(str, i) !== null) {
-          rangesArr.push(
-            left(str, i) + 1,
-            i,
-            opts.convertEntities ? "&nbsp;" : rawNbsp
-          );
+      } else if (charcode === 8221) {
+        applicableOpts.convertApostrophes = true;
+        applicableOpts.convertEntities = true;
+        if (!opts.convertApostrophes) {
+          rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
+        } else if (opts.convertEntities) {
+          rangesArr.push(i, y, "&rdquo;");
         }
       } else if (charcode === 8230) {
+        applicableOpts.convertDotsToEllipsis = true;
+        applicableOpts.convertEntities = true;
         if (!opts.convertDotsToEllipsis) {
           rangesArr.push(i, y, "...");
         } else if (opts.convertEntities) {
@@ -1037,6 +1185,10 @@ function processCharacter(
       } else if (charcode === 65279) {
         rangesArr.push(i, y);
       } else {
+        applicableOpts.convertEntities = true;
+        applicableOpts.dontEncodeNonLatin =
+          applicableOpts.dontEncodeNonLatin ||
+          doConvertEntities(str[i], true) !== doConvertEntities(str[i], false);
         if (opts.convertEntities) {
           let convertedCharVal = doConvertEntities(
             str[i],
@@ -1068,6 +1220,8 @@ function processCharacter(
     }
   }
 }
+
+var version = "5.0.1";
 
 function det(str, inputOpts) {
   let opts;
@@ -1111,6 +1265,7 @@ function det(str, inputOpts) {
     .forEach(singleOption => {
       applicableOpts[singleOption] = false;
     });
+  delete applicableOpts.stripHtmlButIgnoreTags;
   const endOfLine = require("os").EOL || "\n";
   const brClosingBracketIndexesArr = [];
   const finalIndexesToDelete = new Ranges({
@@ -1125,7 +1280,6 @@ function det(str, inputOpts) {
   function isNum(something) {
     return Number.isInteger(something);
   }
-  const isArr = Array.isArray;
   const state = {
     onUrlCurrently: false
   };
@@ -1195,6 +1349,7 @@ function det(str, inputOpts) {
       ) {
         const replacement = opts.convertApostrophes ? rightSingleQuote : "'";
         finalIndexesToDelete.push(i, i + 1, `${replacement}`);
+        applicableOpts.convertApostrophes = true;
       } else if (
         str[i - 2] &&
         isLowercaseLetter(str[i - 2]) &&
@@ -1210,8 +1365,12 @@ function det(str, inputOpts) {
     }
   }
   applyAndWipe();
-  if (opts.fixBrokenEntities) {
-    str = rangesApply(str, fixBrokenEntities(str, { decode: false }));
+  const entityFixes = fixBrokenEntities(str, { decode: false });
+  if (entityFixes && entityFixes.length) {
+    applicableOpts.fixBrokenEntities = true;
+    if (opts.fixBrokenEntities) {
+      str = rangesApply(str, entityFixes);
+    }
   }
   if (str.includes("<") || str.includes(">")) {
     const cb = ({
@@ -1226,21 +1385,21 @@ function det(str, inputOpts) {
           tag.lastOpeningBracketAt < tag.lastClosingBracketAt) ||
         tag.slashPresent
       ) {
+        applicableOpts.stripHtml = true;
         skipArr.push(
           tag.lastOpeningBracketAt,
           tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length
         );
         if (
-          (opts.stripHtml &&
-            !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) ||
-          (opts.removeLineBreaks &&
-            tag.name.toLowerCase() === "br" &&
-            tag.lastClosingBracketAt)
+          opts.stripHtml &&
+          !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())
         ) {
           if (
             (tag.name.toLowerCase() === "li" && !tag.slashPresent) ||
             (tag.name.toLowerCase() === "ul" && tag.slashPresent)
           ) {
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
             if (!opts.removeLineBreaks) {
               finalIndexesToDelete.push(
                 deleteFrom,
@@ -1264,31 +1423,18 @@ function det(str, inputOpts) {
           }
         } else {
           if (
-            (!opts.stripHtml ||
-              (isArr(opts.stripHtmlButIgnoreTags) &&
-                opts.stripHtmlButIgnoreTags.includes("br"))) &&
-            opts.replaceLineBreaks &&
-            tag.name.toLowerCase() === "br" &&
-            tag.lastClosingBracketAt &&
-            !`\n\r`.includes(str[tag.lastClosingBracketAt + 1])
-          ) {
-            finalIndexesToDelete.push(
-              tag.lastClosingBracketAt + 1,
-              tag.lastClosingBracketAt + 1,
-              "\n"
-            );
-          }
-          if (
-            opts.useXHTML &&
             voidTags.includes(tag.name.toLowerCase()) &&
             str[left(str, tag.lastClosingBracketAt)] !== "/" &&
             tag.lastClosingBracketAt
           ) {
-            finalIndexesToDelete.push(
-              tag.lastClosingBracketAt,
-              tag.lastClosingBracketAt,
-              "/"
-            );
+            applicableOpts.useXHTML = true;
+            if (opts.useXHTML) {
+              finalIndexesToDelete.push(
+                tag.lastClosingBracketAt,
+                tag.lastClosingBracketAt,
+                "/"
+              );
+            }
           }
           if (
             voidTags.includes(tag.name.toLowerCase()) &&
@@ -1312,6 +1458,7 @@ function det(str, inputOpts) {
             str[left(str, tag.lastClosingBracketAt)] === "/"
           ) {
             if (str[left(str, left(str, tag.lastClosingBracketAt))] === "/") {
+              applicableOpts.useXHTML = true;
               if (
                 !opts.useXHTML ||
                 str.slice(
@@ -1403,23 +1550,37 @@ function det(str, inputOpts) {
         idxTo,
         offsetBy,
         brClosingBracketIndexesArr,
-        state
+        state,
+        applicableOpts
       ),
     true
   );
   applyAndWipe();
   str = str.replace(/(\r\n|\r|\n){3,}/g, `${endOfLine}${endOfLine}`);
-  if (opts.removeWidows) {
-    str = removeWidows(str, {
-      ignore: "all",
-      convertEntities: opts.convertEntities,
-      targetLanguage: "html",
-      UKPostcodes: true,
-      hyphens: opts.convertDashes
-    }).res;
+  const widowFixes = removeWidows(str, {
+    ignore: "all",
+    convertEntities: true,
+    targetLanguage: "html",
+    UKPostcodes: true,
+    hyphens: true
+  });
+  if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
+    applicableOpts.removeWidows = true;
+    if (opts.removeWidows) {
+      str = removeWidows(str, {
+        ignore: "all",
+        convertEntities: opts.convertEntities,
+        targetLanguage: "html",
+        UKPostcodes: true,
+        hyphens: opts.convertDashes
+      }).res;
+    }
   }
-  if (opts.removeLineBreaks) {
-    str = str.replace(/\r\n|\r|\n/gm, " ");
+  if (str !== str.replace(/\r\n|\r|\n/gm, " ")) {
+    applicableOpts.removeLineBreaks = true;
+    if (opts.removeLineBreaks) {
+      str = str.replace(/\r\n|\r|\n/gm, " ");
+    }
   }
   str = collapse(str, {
     trimLines: true,

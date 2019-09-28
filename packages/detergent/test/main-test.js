@@ -65,49 +65,36 @@ test(`02.02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement 
 
 test(`02.03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
+    det(`a<br>b`, {
+      useXHTML: true
+    }).res,
+    "a<br/>b",
+    "02.03.01"
+  );
+  t.is(
+    det(`a<br>b`, {
+      useXHTML: false
+    }).res,
+    "a<br>b",
+    "02.03.02"
+  );
+  t.is(
     det(`a<br/>b`, {
       useXHTML: true
     }).res,
-    "a<br/>\nb"
+    "a<br/>b",
+    "02.03.01"
+  );
+  t.is(
+    det(`a<br/>b`, {
+      useXHTML: false
+    }).res,
+    "a<br>b",
+    "02.03.02"
   );
 });
 
 test(`02.04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
-  t.is(
-    det(`a<br>b`, {
-      useXHTML: true,
-      replaceLineBreaks: true
-    }).res,
-    "a<br/>\nb",
-    "02.04.01"
-  );
-  t.is(
-    det(`a<br>b`, {
-      useXHTML: false,
-      replaceLineBreaks: true
-    }).res,
-    "a<br>\nb",
-    "02.04.02"
-  );
-  t.is(
-    det(`a<br>b`, {
-      useXHTML: true,
-      replaceLineBreaks: false
-    }).res,
-    "a<br/>b",
-    "02.04.03"
-  );
-  t.is(
-    det(`a<br>b`, {
-      useXHTML: false,
-      replaceLineBreaks: false
-    }).res,
-    "a<br>b",
-    "02.04.04"
-  );
-});
-
-test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
     det(`abc<br >def<br>ghi<br/>jkl<br />mno`, {
       useXHTML: true,
@@ -117,7 +104,7 @@ test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
   );
 });
 
-test(`02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`, t => {
+test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`, t => {
   t.is(
     det(`abc<br >def<br>ghi<br/>jkl<br />mno`, {
       useXHTML: false,
@@ -127,28 +114,33 @@ test(`02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
   );
 });
 
-test(`02.07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
-  t.is(det(`<BR />`).res, `<br/>`, "02.07.01");
-  t.is(det(`< BR>`).res, `<br/>`, "02.07.02");
-  t.is(det(`<BR class="z"/>`).res, `<br class="z"/>`, "02.07.03");
+test(`02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
+  t.is(det(`<BR />`).res, `<br/>`, "02.06.01");
+  t.is(det(`< BR>`).res, `<br/>`, "02.06.02");
+  t.is(det(`<BR class="z"/>`).res, `<br class="z"/>`, "02.06.03");
   t.is(
     det(`aaa<BR />< BR>bbb< BR ><BR>ccc< br >< Br>ddd`).res,
-    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc<br/>\n<br/>\nddd",
-    "02.07.04"
+    "aaa<br/><br/>bbb<br/><br/>ccc<br/><br/>ddd",
+    "02.06.04"
   );
 });
 
-test(`02.08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t => {
+test(`02.07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t => {
   t.is(
     det(`a</br>b`, {
-      useXHTML: false,
-      replaceLineBreaks: false
+      useXHTML: false
     }).res,
     "a<br>b"
   );
+  t.is(
+    det(`a</br>b`, {
+      useXHTML: true
+    }).res,
+    "a<br/>b"
+  );
 });
 
-test(`02.09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, t => {
+test(`02.08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, t => {
   t.is(
     det(`a< / / br>b`, {
       useXHTML: false,
@@ -158,7 +150,7 @@ test(`02.09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, t 
   );
 });
 
-test(`02.10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, t => {
+test(`02.09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, t => {
   t.is(
     det(`a< / / br style="something" / />b`, {
       useXHTML: false,
@@ -168,7 +160,7 @@ test(`02.10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, t 
   );
 });
 
-test(`02.11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, t => {
+test(`02.10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, t => {
   t.is(
     det(`a< / / br style="something" / />b`, {
       useXHTML: true,
@@ -178,9 +170,28 @@ test(`02.11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, t 
   );
 });
 
-test(`02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t => {
+test(`02.11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t => {
   t.is(
     det(`a</br class="display: none;">b`, {
+      useXHTML: false,
+      replaceLineBreaks: false
+    }).res,
+    `a<br class="display: none;">b`,
+    "02.11.01"
+  );
+  t.is(
+    det(`a</br class="display: none;">b`, {
+      useXHTML: true,
+      replaceLineBreaks: false
+    }).res,
+    `a<br class="display: none;"/>b`,
+    "02.11.02"
+  );
+});
+
+test(`02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t => {
+  t.is(
+    det(`a<br class="display: none;"/>b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -188,7 +199,7 @@ test(`02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t 
     "02.12.01"
   );
   t.is(
-    det(`a</br class="display: none;">b`, {
+    det(`a<br class="display: none;"/>b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -197,9 +208,9 @@ test(`02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t 
   );
 });
 
-test(`02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t => {
+test(`02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, t => {
   t.is(
-    det(`a<br class="display: none;"/>b`, {
+    det(`a<br class="display: none;">b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -207,31 +218,12 @@ test(`02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t 
     "02.13.01"
   );
   t.is(
-    det(`a<br class="display: none;"/>b`, {
+    det(`a<br class="display: none;">b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
     `a<br class="display: none;"/>b`,
     "02.13.02"
-  );
-});
-
-test(`02.14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, t => {
-  t.is(
-    det(`a<br class="display: none;">b`, {
-      useXHTML: false,
-      replaceLineBreaks: false
-    }).res,
-    `a<br class="display: none;">b`,
-    "02.14.01"
-  );
-  t.is(
-    det(`a<br class="display: none;">b`, {
-      useXHTML: true,
-      replaceLineBreaks: false
-    }).res,
-    `a<br class="display: none;"/>b`,
-    "02.14.02"
   );
 });
 
@@ -523,7 +515,7 @@ test(`04.03 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minim
     useXHTML: 1,
     convertEntities: 1
   }).forEach(opt => {
-    t.is(det(`a<br/>b`, opt).res, "a<br/>\nb", JSON.stringify(opt, null, 0));
+    t.is(det(`a<br/>b`, opt).res, "a<br/>b", JSON.stringify(opt, null, 0));
   });
 });
 
@@ -597,7 +589,7 @@ test(`04.08 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br wi
   }).forEach(opt => {
     t.is(
       det(`a<br class="z">b`, opt).res,
-      `a<br class="z">\nb`,
+      `a<br class="z">b`,
       JSON.stringify(opt, null, 0)
     );
   });
@@ -613,7 +605,7 @@ test(`04.09 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br wi
   }).forEach(opt => {
     t.is(
       det(`a<br class="z">b`, opt).res,
-      `a<br class="z"/>\nb`,
+      `a<br class="z"/>b`,
       JSON.stringify(opt, null, 0)
     );
   });
@@ -643,19 +635,38 @@ test(`05.02 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minima
 
 test(`05.03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`, t => {
   mixer({
-    removeLineBreaks: 1
+    removeLineBreaks: 1,
+    removeWidows: 0
   }).forEach(opt => {
-    t.is(det(`a<   bR />b`, opt).res, "a b", JSON.stringify(opt, null, 0));
+    t.is(
+      det(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt).res,
+      "tralala tralala2 tralala3 tralala4",
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    removeLineBreaks: 1,
+    removeWidows: 1,
+    convertEntities: 1
+  }).forEach(opt => {
+    t.is(
+      det(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt).res,
+      "tralala tralala2 tralala3&nbsp;tralala4",
+      JSON.stringify(opt, null, 0)
+    );
   });
 });
 
-test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`, t => {
+test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, t => {
   mixer({
-    removeLineBreaks: 1
+    removeLineBreaks: 1,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`\n\n\ntralala\ntralala2\ntralala3\n<   bR />\n\ntralala4\n\n\n`, opt)
-        .res,
+      det(
+        "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
+        opt
+      ).res,
       "tralala tralala2 tralala3 tralala4",
       JSON.stringify(opt, null, 0)
     );
@@ -665,14 +676,15 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
 test(`05.05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, t => {
   mixer({
     removeLineBreaks: 1,
-    removeWidows: 0
+    removeWidows: 1,
+    convertEntities: 0
   }).forEach(opt => {
     t.is(
       det(
-        "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n<   bR />\r\n\r\ntralala4\r\n\r\n\r\n",
+        "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
         opt
       ).res,
-      "tralala tralala2 tralala3 tralala4",
+      `tralala tralala2 tralala3${rawNbsp}tralala4`,
       JSON.stringify(opt, null, 0)
     );
   });
@@ -684,9 +696,22 @@ test(`05.06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`\r\r\rtralala\rtralala2\rtralala3\r<   bR />\r\rtralala4\r\r\r`, opt)
-        .res,
+      det(`\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt).res,
       "tralala tralala2 tralala3 tralala4",
+      JSON.stringify(opt, null, 0)
+    );
+  });
+});
+
+test(`05.07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, t => {
+  mixer({
+    removeLineBreaks: 1,
+    removeWidows: 1,
+    convertEntities: 1
+  }).forEach(opt => {
+    t.is(
+      det(`\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt).res,
+      "tralala tralala2 tralala3&nbsp;tralala4",
       JSON.stringify(opt, null, 0)
     );
   });
