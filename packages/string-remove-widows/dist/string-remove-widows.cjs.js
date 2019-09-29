@@ -143,6 +143,10 @@ function removeWidows(str, originalOpts) {
   var doNothingUntil;
   var bumpWordCountAt;
   var opts = Object.assign({}, defaultOpts, originalOpts);
+  var whatWasDone = {
+    removeWidows: false,
+    convertEntities: false
+  };
   if (opts.dashes) {
     opts.hyphens = true;
     delete opts.dashes;
@@ -224,6 +228,7 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim().length || str[_i] === "&")) {
       if (str[_i - 1] && !str[_i - 1].trim().length && str[stringLeftRight.left(str, _i)]) {
         push(stringLeftRight.left(str, _i) + 1, _i);
+        whatWasDone.removeWidows = true;
       }
     }
     if (!doNothingUntil && (str[_i] === "&" && str[_i + 1] === "n" && str[_i + 2] === "b" && str[_i + 3] === "s" && str[_i + 4] === "p" && str[_i + 5] === ";" || str[_i] === "&" && str[_i + 1] === "#" && str[_i + 2] === "1" && str[_i + 3] === "6" && str[_i + 4] === "0" && str[_i + 5] === ";")) {
@@ -234,8 +239,10 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 6, rawnbsp);
+        whatWasDone.convertEntities = true;
       } else if (opts.targetLanguage === "css" || opts.targetLanguage === "js") {
         rangesArr.push(_i, _i + 6, opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs);
+        whatWasDone.convertEntities = true;
       }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3] && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
@@ -246,8 +253,10 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(_i, _i + 5, rawnbsp);
+        whatWasDone.convertEntities = true;
       } else if (opts.targetLanguage === "html" || opts.targetLanguage === "js") {
         rangesArr.push(_i, _i + 5, opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs);
+        whatWasDone.convertEntities = true;
       }
     }
     if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] && str[_i + 1].toLowerCase() === "u" && str[_i + 2] === "0" && str[_i + 3] === "0" && str[_i + 4] && str[_i + 4].toUpperCase() === "A" && str[_i + 5] === "0") {
@@ -301,12 +310,14 @@ function removeWidows(str, originalOpts) {
           }
           if (finalStart && finalEnd) {
             push(finalStart, finalEnd);
+            whatWasDone.removeWidows = true;
           }
         }
         resetAll();
       }
     if (opts.UKPostcodes && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && postcodeRegexFront.test(str.slice(0, _i)) && str[stringLeftRight.right(str, _i)] && postcodeRegexEnd.test(str.slice(stringLeftRight.right(str, _i)))) {
       push(_i, stringLeftRight.right(str, _i));
+      whatWasDone.removeWidows = true;
     }
     if (!doNothingUntil && str[_i] && !str[_i].trim().length && str[_i - 1] && str[_i - 1].trim().length && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim().length) && !"/>".includes(str[stringLeftRight.right(str, _i)]) && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("br") && !str.slice(0, stringLeftRight.left(str, _i) + 1).endsWith("hr") && !(str[stringLeftRight.left(str, _i)] === "<" && knownHTMLTags.some(function (tag) {
       return str.startsWith(tag, stringLeftRight.right(str, _i));
@@ -380,7 +391,8 @@ function removeWidows(str, originalOpts) {
     ranges: rangesArr.current(),
     log: {
       timeTakenInMiliseconds: Date.now() - start
-    }
+    },
+    whatWasDone: whatWasDone
   };
 }
 

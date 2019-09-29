@@ -260,6 +260,10 @@ function removeWidows(str, originalOpts) {
   let doNothingUntil;
   let bumpWordCountAt;
   const opts = Object.assign({}, defaultOpts, originalOpts);
+  const whatWasDone = {
+    removeWidows: false,
+    convertEntities: false
+  };
   if (opts.dashes) {
     opts.hyphens = true;
     delete opts.dashes;
@@ -370,6 +374,7 @@ function removeWidows(str, originalOpts) {
     ) {
       if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
         push(left(str, i) + 1, i);
+        whatWasDone.removeWidows = true;
       }
     }
     if (
@@ -394,6 +399,7 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 6, rawnbsp);
+        whatWasDone.convertEntities = true;
       } else if (
         opts.targetLanguage === "css" ||
         opts.targetLanguage === "js"
@@ -403,6 +409,7 @@ function removeWidows(str, originalOpts) {
           i + 6,
           opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
         );
+        whatWasDone.convertEntities = true;
       }
     }
     if (
@@ -421,6 +428,7 @@ function removeWidows(str, originalOpts) {
       }
       if (!opts.convertEntities) {
         rangesArr.push(i, i + 5, rawnbsp);
+        whatWasDone.convertEntities = true;
       } else if (
         opts.targetLanguage === "html" ||
         opts.targetLanguage === "js"
@@ -430,6 +438,7 @@ function removeWidows(str, originalOpts) {
           i + 5,
           opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
         );
+        whatWasDone.convertEntities = true;
       }
     }
     if (
@@ -539,6 +548,7 @@ function removeWidows(str, originalOpts) {
         }
         if (finalStart && finalEnd) {
           push(finalStart, finalEnd);
+          whatWasDone.removeWidows = true;
         }
       }
       resetAll();
@@ -554,6 +564,7 @@ function removeWidows(str, originalOpts) {
       postcodeRegexEnd.test(str.slice(right(str, i)))
     ) {
       push(i, right(str, i));
+      whatWasDone.removeWidows = true;
     }
     if (
       !doNothingUntil &&
@@ -659,7 +670,8 @@ function removeWidows(str, originalOpts) {
     ranges: rangesArr.current(),
     log: {
       timeTakenInMiliseconds: Date.now() - start
-    }
+    },
+    whatWasDone
   };
 }
 

@@ -44,26 +44,33 @@ test(`00.04 - ${`\u001b[${36}m${`api bits`}\u001b[${39}m`} - empty opts obj`, t 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-test(`01.00 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`, t => {
-  t.is(
-    removeWidows(`aaa bbb ccc ddd`, {
-      convertEntities: true,
-      minCharCount: 5
-    }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `01.00.01`
-  );
-  t.is(
-    removeWidows(`aaa bbb ccc  ddd`, {
-      convertEntities: true,
-      minCharCount: 5
-    }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `01.00.02 - two spaces`
-  );
+test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`, t => {
+  const resObj = removeWidows(`aaa bbb ccc ddd`, {
+    convertEntities: true,
+    minCharCount: 5
+  });
+  t.is(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`);
+  t.deepEqual(resObj.whatWasDone, {
+    removeWidows: true,
+    convertEntities: false
+  });
+  t.deepEqual(resObj.ranges, [[11, 12, encodedNbspHtml]]);
 });
 
-test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, no full stop`, t => {
+test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - most basic`, t => {
+  const resObj = removeWidows(`aaa bbb ccc  ddd`, {
+    convertEntities: true,
+    minCharCount: 5
+  });
+  t.is(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`);
+  t.deepEqual(resObj.whatWasDone, {
+    removeWidows: true,
+    convertEntities: false
+  });
+  t.deepEqual(resObj.ranges, [[11, 13, encodedNbspHtml]]);
+});
+
+test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, no full stop`, t => {
   languages.forEach((targetLanguage, i) => {
     t.is(
       removeWidows(`aaa bbb ccc ddd`, {
@@ -72,7 +79,7 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `01.01.0${1 + i} - ${targetLanguage}`
+      `01.03.0${1 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(`aaa bbb ccc ddd`, {
@@ -81,7 +88,7 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `01.01.0${2 + i} - ${targetLanguage}`
+      `01.03.0${2 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(`aaa bbb ccc ddd`, {
@@ -91,12 +98,12 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `aaa bbb ccc ddd`,
-      `01.01.0${3 + i} - ${targetLanguage}`
+      `01.03.0${3 + i} - ${targetLanguage}`
     );
   });
 });
 
-test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, full stop`, t => {
+test(`01.04 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence, full stop`, t => {
   languages.forEach((targetLanguage, i) => {
     t.is(
       removeWidows(`Aaa bbb ccc ddd.`, {
@@ -105,7 +112,7 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `Aaa bbb ccc${encodedNbsps[i]}ddd.`,
-      `01.02.0${1 + i} - ${targetLanguage}`
+      `01.04.0${1 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(`Aaa bbb ccc ddd.`, {
@@ -114,7 +121,7 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `Aaa bbb ccc${rawnbsp}ddd.`,
-      `01.02.0${2 + i} - ${targetLanguage}`
+      `01.04.0${2 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(`Aaa bbb ccc ddd.`, {
@@ -124,12 +131,12 @@ test(`01.02 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
         minCharCount: 5
       }).res,
       `Aaa bbb ccc ddd.`,
-      `01.02.0${3 + i} - ${targetLanguage}`
+      `01.04.0${3 + i} - ${targetLanguage}`
     );
   });
 });
 
-test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full stops`, t => {
+test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full stops`, t => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
@@ -142,7 +149,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.03.0${1 + i + idx} - ${targetLanguage} - ${
+        `01.05.0${1 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=true`
       );
@@ -156,7 +163,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.03.0${2 + i + idx} - ${targetLanguage} - ${
+        `01.05.0${2 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=false`
       );
@@ -172,7 +179,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.03.0${3 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
+        `01.05.0${3 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
       t.is(
         removeWidows(
@@ -184,7 +191,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.03.0${4 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
+        `01.05.0${4 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
 
       // opts.removeWidowPreventionMeasures=on
@@ -199,7 +206,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.03.0${5 + i + idx} - ${targetLanguage} - ${
+        `01.05.0${5 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=false`
       );
@@ -213,7 +220,7 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.03.0${6 + i + idx} - ${targetLanguage} - ${
+        `01.05.0${6 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=true`
       );
@@ -221,38 +228,51 @@ test(`01.03 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, full
   });
 });
 
-test(`01.04 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - raw non-breaking space already there`, t => {
+test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - raw non-breaking space already there`, t => {
   languages.forEach((targetLanguage, i) => {
+    const val1 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+      convertEntities: true,
+      targetLanguage,
+      minCharCount: 5
+    });
     t.is(
-      removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
-        convertEntities: true,
-        targetLanguage,
-        minCharCount: 5
-      }).res,
+      val1.res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `01.04.0${1 + i} - ${targetLanguage}`
+      `01.06.0${1 + i} - ${targetLanguage}`
     );
+    t.deepEqual(val1.whatWasDone, {
+      removeWidows: true,
+      convertEntities: false
+    });
+
+    const val2 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+      convertEntities: false,
+      minCharCount: 5
+    });
     t.is(
-      removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
-        convertEntities: false,
-        minCharCount: 5
-      }).res,
+      val2.res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `01.04.0${2 + i} - ${targetLanguage}`
+      `01.06.0${2 + i} - ${targetLanguage}`
     );
-    t.is(
-      removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
-        removeWidowPreventionMeasures: true,
-        convertEntities: false,
-        minCharCount: 5
-      }).res,
-      `aaa bbb ccc ddd`,
-      `01.04.0${3 + i} - ${targetLanguage}`
-    );
+    t.deepEqual(val2.whatWasDone, {
+      removeWidows: true,
+      convertEntities: false
+    });
+
+    const val3 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
+      removeWidowPreventionMeasures: true,
+      convertEntities: false,
+      minCharCount: 5
+    });
+    t.is(val3.res, `aaa bbb ccc ddd`, `01.06.0${3 + i} - ${targetLanguage}`);
+    t.deepEqual(val3.whatWasDone, {
+      removeWidows: true,
+      convertEntities: false
+    });
   });
 });
 
-test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed`, t => {
+test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed`, t => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       t.is(
@@ -265,7 +285,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
           }
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.05.0${1 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
+        `01.07.0${1 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
       t.is(
         removeWidows(
@@ -278,7 +298,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
           }
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.05.0${2 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
+        `01.07.0${2 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`
       );
 
       // removeWidowPreventionMeasures: true
@@ -292,7 +312,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.05.0${3 + i + idx} - ${targetLanguage} - ${
+        `01.07.0${3 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - removeWidowPreventionMeasures`
       );
@@ -307,7 +327,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
           }
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.05.0${4 + i + idx} - ${targetLanguage} - ${
+        `01.07.0${4 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - removeWidowPreventionMeasures`
       );
@@ -315,7 +335,7 @@ test(`01.05 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
   });
 });
 
-test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed and encoded but in wrong format`, t => {
+test(`01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, coming already fixed and encoded but in wrong format`, t => {
   encodedNbsps.forEach((singleEncodedNbsp, z) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -329,7 +349,7 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
             }
           ).res,
           `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-          `01.06.0${1 +
+          `01.08.0${1 +
             i +
             idx +
             z} - requested lang. ${targetLanguage} - existing lang. ${
@@ -347,7 +367,7 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
             }
           ).res,
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-          `01.06.0${2 +
+          `01.08.0${2 +
             i +
             idx +
             z} - requested lang. ${targetLanguage} - existing lang. ${
@@ -359,7 +379,7 @@ test(`01.06 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - paragraphs, comi
   });
 });
 
-test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t => {
+test(`01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t => {
   const str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
   languages.forEach((targetLanguage, i) => {
     // removeWidowPreventionMeasures false
@@ -369,7 +389,7 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
         targetLanguage
       }).res,
       str,
-      `01.07.0${1 + i} - ${targetLanguage}`
+      `01.09.0${1 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(str, {
@@ -377,7 +397,7 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
         targetLanguage
       }).res,
       str,
-      `01.07.0${2 + i} - ${targetLanguage}`
+      `01.09.0${2 + i} - ${targetLanguage}`
     );
 
     // removeWidowPreventionMeasures: true
@@ -387,7 +407,7 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
         targetLanguage
       }).res,
       str,
-      `01.07.0${3 + i} - ${targetLanguage}`
+      `01.09.0${3 + i} - ${targetLanguage}`
     );
     t.is(
       removeWidows(str, {
@@ -396,7 +416,7 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
         targetLanguage
       }).res,
       str,
-      `01.07.0${4 + i} - ${targetLanguage}`
+      `01.09.0${4 + i} - ${targetLanguage}`
     );
 
     t.is(
@@ -406,12 +426,12 @@ test(`01.07 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single word`, t 
         minCharCount: 0
       }).res,
       str,
-      `01.07.0${5 + i} - ${targetLanguage}`
+      `01.09.0${5 + i} - ${targetLanguage}`
     );
   });
 });
 
-test(`01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch empty strings`, t => {
+test(`01.10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch empty strings`, t => {
   const sources = [
     ``,
     ` `,
@@ -440,41 +460,13 @@ test(`01.08 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't touch em
         convertEntities: true
       }).res,
       ``,
-      `01.08 - ${JSON.stringify(str, null, 4)}`
+      `01.10 - ${JSON.stringify(str, null, 4)}`
     );
   });
 });
 
-test(`01.09 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`, t => {
+test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't break within tag`, t => {
   const source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
-  t.is(
-    removeWidows(source, {
-      convertEntities: true,
-      targetLanguage: `html`,
-      UKPostcodes: true,
-      hyphens: true
-    }).res,
-    source,
-    `01.09`
-  );
-});
-
-test(`01.10 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp after line breaks`, t => {
-  const source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
-  t.is(
-    removeWidows(source, {
-      convertEntities: true,
-      targetLanguage: `html`,
-      UKPostcodes: true,
-      hyphens: true
-    }).res,
-    source,
-    `01.10`
-  );
-});
-
-test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and spaces`, t => {
-  const source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
   t.is(
     removeWidows(source, {
       convertEntities: true,
@@ -487,7 +479,35 @@ test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and 
   );
 });
 
-test(`01.12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`, t => {
+test(`01.12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - doesn't add nbsp after line breaks`, t => {
+  const source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
+  t.is(
+    removeWidows(source, {
+      convertEntities: true,
+      targetLanguage: `html`,
+      UKPostcodes: true,
+      hyphens: true
+    }).res,
+    source,
+    `01.12`
+  );
+});
+
+test(`01.13 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and spaces`, t => {
+  const source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
+  t.is(
+    removeWidows(source, {
+      convertEntities: true,
+      targetLanguage: `html`,
+      UKPostcodes: true,
+      hyphens: true
+    }).res,
+    source,
+    `01.13`
+  );
+});
+
+test(`01.14 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`, t => {
   const source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
   const res = removeWidows(source, {
     ignore: "all",
@@ -496,83 +516,125 @@ test(`01.12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`, t 
     UKPostcodes: true,
     hyphens: true
   });
-
   t.deepEqual(res.ranges, null);
+});
+
+test(`01.15 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp is decoded and reported correctly, mixed with widow case`, t => {
+  const source = `abc&nbsp;def ghij knmn`;
+  const res = removeWidows(source, {
+    convertEntities: false
+  });
+  t.is(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`);
+  t.deepEqual(res.whatWasDone, {
+    removeWidows: true,
+    convertEntities: true
+  });
+});
+
+test(`01.16 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - non-widow nbsp only`, t => {
+  const source = `x&nbsp;x`;
+  const res = removeWidows(source, {
+    convertEntities: false
+  });
+  t.is(res.res, `x${rawnbsp}x`);
+  t.deepEqual(res.whatWasDone, {
+    removeWidows: false,
+    convertEntities: true
+  });
+});
+
+test(`01.17 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - nbsp only, nothing else`, t => {
+  const source = `&nbsp;`;
+  const res = removeWidows(source, {
+    convertEntities: false
+  });
+  t.is(res.res, `${rawnbsp}`);
+  t.deepEqual(res.whatWasDone, {
+    removeWidows: false,
+    convertEntities: true
+  });
 });
 
 // 02 - opts.convertEntities
 // -----------------------------------------------------------------------------
 
-test(`02.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text`, t => {
+test(`02.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string no full stop`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd`, {
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `02.01.01 - entities, one line string no full stop`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string with full stop`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd.`, {
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd.`,
-    `02.01.02 - entities, one line string with full stop`
+    `aaa bbb ccc${encodedNbspHtml}ddd.`
   );
+});
+
+test(`02.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string no full stop`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd`, { convertEntities: false, minCharCount: 5 })
       .res,
-    `aaa bbb ccc${rawnbsp}ddd`,
-    `02.01.03 - no entities, one line string no full stop`
+    `aaa bbb ccc${rawnbsp}ddd`
   );
+});
+
+test(`02.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - no entities, one line string with full stop`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd.`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${rawnbsp}ddd.`,
-    `02.01.04 - no entities, one line string with full stop`
+    `aaa bbb ccc${rawnbsp}ddd.`
   );
 });
 
-test(`02.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break`, t => {
+test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break - widow fix needed`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd\neee fff ggg hhh.`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`,
-    `02.02.01`
+    `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`
   );
+});
+
+test(`02.06 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - single line break -  - one line break, with full stop - widow fix needed`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd.\neee fff ggg hhh.`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`,
-    `02.02.06 - one line break, with full stop - widow fix needed`
+    `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`
   );
 });
 
-test(`02.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - with trailing whitespace`, t => {
+test(`02.07 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing space`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd.  \n\neee fff ggg hhh`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`,
-    `02.03.01 - trailing space`
+    `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`
   );
+});
+
+test(`02.08 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - trailing tabs`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`,
-    `02.03.02 - trailing tabs`
+    `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`
   );
 });
 
-test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`, t => {
+test(`02.09 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not added within hidden HTML tags`, t => {
   const sources = [
     `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
@@ -580,142 +642,156 @@ test(`02.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - nbsp's not a
     `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
   ];
   sources.forEach((str, idx) => {
-    t.is(removeWidows(str).res, str, `02.05.0${1 + idx}`);
+    t.is(removeWidows(str).res, str, `02.09.0${1 + idx}`);
   });
 });
 
-test(`02.07 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`, t => {
+test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`, t => {
   t.is(
     removeWidows(`aaa bbb ccc&#160;ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `02.07.01`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - numeric HTML entity #160`, t => {
   t.is(
     removeWidows(`aaa bbb ccc&#160;ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${rawnbsp}ddd`,
-    `02.07.02`
+    `aaa bbb ccc${rawnbsp}ddd`
   );
 });
 
-test(`02.08 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`, t => {
+test(`02.12 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
-    `02.08.01`
+    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.13 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - doesn't touch other nbsp's`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    `02.08.02`
+    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`
   );
 });
 
-test(`02.09 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`, t => {
+test(`02.14 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`, t => {
   t.is(
     removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `02.09.01`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.15 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - two spaces`, t => {
   t.is(
     removeWidows(`aaa bbb ccc  ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${rawnbsp}ddd`,
-    `02.09.02`
+    `aaa bbb ccc${rawnbsp}ddd`
   );
 });
 
-test(`02.10 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`, t => {
+test(`02.16 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`, t => {
   t.is(
     removeWidows(`aaa bbb ccc\tddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `02.10.01`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.17 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - tabs`, t => {
   t.is(
     removeWidows(`aaa bbb ccc\tddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${rawnbsp}ddd`,
-    `02.10.02`
+    `aaa bbb ccc${rawnbsp}ddd`
   );
 });
 
-test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
-  // existing, neighbour nbsp's get converted
+// existing, neighbour nbsp's get converted
+test(`02.18 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
-    `02.11.01`
+    `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`
   );
+});
+
+test(`02.19 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    `02.11.02`
+    `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`
   );
+});
+
+test(`02.20 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       targetLanguage: `css`,
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
-    `02.11.03`
+    `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`
   );
+});
+
+test(`02.21 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       targetLanguage: `js`,
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`,
-    `02.11.04`
+    `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`
   );
+});
 
-  // removeWidowPreventionMeasures
+test(`02.22 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `aaa bbb${rawnbsp}ccc ddd`,
-    `02.11.05`
+    `aaa bbb${rawnbsp}ccc ddd`
   );
+});
+
+test(`02.23 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspHtml}ccc ddd`,
-    `02.11.06`
+    `aaa bbb${encodedNbspHtml}ccc ddd`
   );
+});
+
+test(`02.24 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, t => {
   t.is(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
@@ -723,8 +799,7 @@ test(`02.11 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - converts non
       targetLanguage: `css`,
       minCharCount: 5
     }).res,
-    `aaa bbb${encodedNbspCss}ccc ddd`,
-    `02.11.07`
+    `aaa bbb${encodedNbspCss}ccc ddd`
   );
 });
 
@@ -1005,26 +1080,32 @@ test(`06.01 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `Some text SW1A 1AA and some more${encodedNbspHtml}text.`,
-    `06.01.01`
+    `Some text SW1A 1AA and some more${encodedNbspHtml}text.`
   );
+});
+
+test(`06.02 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
     removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       minCharCount: 5
     }).res,
-    `Some text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
-    `06.01.02`
+    `Some text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`
   );
+});
+
+test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
     removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    `06.01.03`
+    `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
   );
+});
+
+test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
     removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
@@ -1032,128 +1113,143 @@ test(`06.01 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
       targetLanguage: `css`,
       minCharCount: 5
     }).res,
-    `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`,
-    `06.01.04`
+    `Some text SW1A${encodedNbspCss}1AA and some more${encodedNbspCss}text.`
   );
 });
 
-test(`06.02 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
+test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
       `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       { UKPostcodes: false }
     ).res,
-    `Some text SW1A 1AA and some more text SW1A 1AA and some more${encodedNbspHtml}text.`,
-    `06.02.01`
+    `Some text SW1A 1AA and some more text SW1A 1AA and some more${encodedNbspHtml}text.`
   );
+});
+
+test(`06.06 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
       `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
       { UKPostcodes: true }
     ).res,
-    `Some text SW1A${encodedNbspHtml}1AA and some more text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`,
-    `06.02.02`
+    `Some text SW1A${encodedNbspHtml}1AA and some more text SW1A${encodedNbspHtml}1AA and some more${encodedNbspHtml}text.`
   );
 });
 
-test(`06.03 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`, t => {
+test(`06.07 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`, t => {
   t.is(
     removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    `06.03.01`
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
   );
+});
+
+test(`06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`, t => {
   t.is(
     removeWidows(`Postcode SW1A 1AA.`, {
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `Postcode SW1A 1AA.`,
-    `06.03.02 - default minimum word count (4) kicks in`
+    `Postcode SW1A 1AA.`
   );
+});
+
+test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - line ends with a postcode (full stop)`, t => {
   t.is(
     removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       UKPostcodes: true,
       minCharCount: 5
     }).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    `06.03.03`
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
   );
+});
 
-  // targetLanguage === `js`
+test(`06.10 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`, t => {
   t.is(
     removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       targetLanguage: `js`,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
-    `06.03.04`
+    `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`
   );
+});
+
+test(`06.11 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop) - default minimum word count (4) kicks in`, t => {
   t.is(
     removeWidows(`Postcode SW1A 1AA.`, {
       targetLanguage: `js`,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `Postcode SW1A 1AA.`,
-    `06.03.05 - default minimum word count (4) kicks in`
-  );
-  t.is(
-    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
-      targetLanguage: `js`,
-      UKPostcodes: true,
-      minCharCount: 5
-    }).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`,
-    `06.03.06`
-  );
-  t.is(
-    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
-      targetLanguage: `js`,
-      UKPostcodes: true,
-      convertEntities: false,
-      minCharCount: 5
-    }).res,
-    `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
-    `06.03.07`
-  );
-  t.is(
-    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
-      targetLanguage: `js`,
-      UKPostcodes: true,
-      convertEntities: false,
-      removeWidowPreventionMeasures: true,
-      minCharCount: 5
-    }).res,
-    `This very long line of text ends with a postcode SW1A 1AA.`,
-    `06.03.08`
-  );
-  t.is(
-    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
-      targetLanguage: `js`,
-      UKPostcodes: true,
-      convertEntities: false,
-      removeWidowPreventionMeasures: true,
-      minCharCount: 5
-    }).res,
-    `This very long line of text ends with a postcode SW1A 1AA.`,
-    `06.03.09`
+    `Postcode SW1A 1AA.`
   );
 });
 
-test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
+test(`06.12 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`, t => {
+  t.is(
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
+      UKPostcodes: true,
+      minCharCount: 5
+    }).res,
+    `This very long line of text ends with a postcode SW1A${encodedNbspJs}1AA.`
+  );
+});
+
+test(`06.13 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`, t => {
+  t.is(
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
+      UKPostcodes: true,
+      convertEntities: false,
+      minCharCount: 5
+    }).res,
+    `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`
+  );
+});
+
+test(`06.14 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`, t => {
+  t.is(
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
+      UKPostcodes: true,
+      convertEntities: false,
+      removeWidowPreventionMeasures: true,
+      minCharCount: 5
+    }).res,
+    `This very long line of text ends with a postcode SW1A 1AA.`
+  );
+});
+
+test(`06.15 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - ${`\u001b[${33}m${`js`}\u001b[${39}m`} - line ends with a postcode (full stop)`, t => {
+  t.is(
+    removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
+      targetLanguage: `js`,
+      UKPostcodes: true,
+      convertEntities: false,
+      removeWidowPreventionMeasures: true,
+      minCharCount: 5
+    }).res,
+    `This very long line of text ends with a postcode SW1A 1AA.`
+  );
+});
+
+test(`06.16 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
   t.is(
     removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       removeWidowPreventionMeasures: true,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `This very long line of text ends with a postcode SW1A 1AA.`,
-    `06.04.01`
+    `This very long line of text ends with a postcode SW1A 1AA.`
   );
+});
+
+test(`06.17 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
   t.is(
     removeWidows(
       `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
@@ -1163,18 +1259,22 @@ test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowP
         minCharCount: 5
       }
     ).res,
-    `This very long line of text ends with a postcode SW1A 1AA.`,
-    `06.04.02 - removeWidowPreventionMeasures trumps UKPostcodes`
+    `This very long line of text ends with a postcode SW1A 1AA.`
   );
+});
+
+test(`06.18 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
   t.is(
     removeWidows(`This very long line of text ends with a postcode SW1A 1AA.`, {
       removeWidowPreventionMeasures: false,
       UKPostcodes: false,
       minCharCount: 5
     }).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    `06.04.03 - added because of last two words`
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
   );
+});
+
+test(`06.19 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowPreventionMeasures`, t => {
   t.is(
     removeWidows(
       `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
@@ -1184,12 +1284,11 @@ test(`06.04 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - vs. removeWidowP
         minCharCount: 5
       }
     ).res,
-    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`,
-    `06.04.04 - added because of opts.UKPostcodes`
+    `This very long line of text ends with a postcode SW1A${encodedNbspHtml}1AA.`
   );
 });
 
-test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
+test(`06.20 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1199,9 +1298,11 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A${encodedNbspHtml}1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
-    `06.05.01`
+    `\uD83E\uDD84 some text text text SW1A${encodedNbspHtml}1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`
   );
+});
+
+test(`06.21 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1211,9 +1312,11 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A${rawnbsp}1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
-    `06.05.02`
+    `\uD83E\uDD84 some text text text SW1A${rawnbsp}1AA more text text text \uD83E\uDD84${rawnbsp}aaa`
   );
+});
+
+test(`06.22 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1223,9 +1326,11 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`,
-    `06.05.03`
+    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${encodedNbspHtml}aaa`
   );
+});
+
+test(`06.23 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, horse emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1235,54 +1340,55 @@ test(`06.05 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${rawnbsp}aaa`,
-    `06.05.04`
+    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84${rawnbsp}aaa`
   );
 });
 
-test(`06.06 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`, t => {
+test(`06.24 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`, t => {
   t.is(
     removeWidows(`Some text SW1A 1Aa and some more text.`, {
       UKPostcodes: false,
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
-    `06.06.01`
+    `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`
   );
+});
+
+test(`06.25 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - improperly formatted UK postcode`, t => {
   t.is(
     removeWidows(`Some text SW1A 1Aa and some more text.`, {
       UKPostcodes: true,
       convertEntities: true,
       minCharCount: 5
     }).res,
-    `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`,
-    `06.06.02`
+    `Some text SW1A 1Aa and some more${encodedNbspHtml}text.`
   );
 });
 
-test(`06.07 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
+test(`06.26 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
     removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: false,
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `Some text SW1A 1AA and some more${rawnbsp}text.`,
-    `06.07.01`
+    `Some text SW1A 1AA and some more${rawnbsp}text.`
   );
+});
+
+test(`06.27 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, in caps`, t => {
   t.is(
     removeWidows(`Some text SW1A 1AA and some more text.`, {
       UKPostcodes: true,
       convertEntities: false,
       minCharCount: 5
     }).res,
-    `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    `06.07.02`
+    `Some text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
   );
 });
 
-test(`06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
+test(`06.28 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
       `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
@@ -1291,9 +1397,11 @@ test(`06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properl
         convertEntities: false
       }
     ).res,
-    `Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.`,
-    `06.08.01`
+    `Some text SW1A 1AA and some more text SW1A 1AA and some more\u00A0text.`
   );
+});
+
+test(`06.29 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properly formatted postcodes`, t => {
   t.is(
     removeWidows(
       `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
@@ -1302,12 +1410,11 @@ test(`06.08 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - multiple properl
         convertEntities: false
       }
     ).res,
-    `Some text SW1A${rawnbsp}1AA and some more text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`,
-    `06.08.02`
+    `Some text SW1A${rawnbsp}1AA and some more text SW1A${rawnbsp}1AA and some more${rawnbsp}text.`
   );
 });
 
-test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`, t => {
+test(`06.30 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1317,9 +1424,11 @@ test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa`,
-    `06.09.01`
+    `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84\u00A0aaa`
   );
+});
+
+test(`06.31 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatted UK postcode, some emoji`, t => {
   t.is(
     removeWidows(
       `\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa`,
@@ -1329,8 +1438,7 @@ test(`06.09 - \u001b[${36}m${`opts.UKPostcodes`}\u001b[${39}m - properly formatt
         minCharCount: 5
       }
     ).res,
-    `\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa`,
-    `06.09.02`
+    `\uD83E\uDD84 some text text text SW1A\u00A01AA more text text text \uD83E\uDD84\u00A0aaa`
   );
 });
 
@@ -1396,8 +1504,7 @@ test(`08.01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWo
       minWordCount: 0,
       minCharCount: 5
     }).res,
-    `aaa${encodedNbspHtml}bbb`,
-    `08.01`
+    `aaa${encodedNbspHtml}bbb`
   );
 });
 
@@ -1408,50 +1515,48 @@ test(`08.02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWo
       minWordCount: null,
       minCharCount: 5
     }).res,
-    `aaa${encodedNbspCss}bbb`,
-    `08.02.01`
+    `aaa${encodedNbspCss}bbb`
   );
+});
+
+test(`08.03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`, t => {
   t.is(
     removeWidows(`aaa bbb`, {
       targetLanguage: `css`,
       minWordCount: false,
       minCharCount: 5
     }).res,
-    `aaa${encodedNbspCss}bbb`,
-    `08.02.02`
+    `aaa${encodedNbspCss}bbb`
   );
 });
 
-test(`08.03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`, t => {
+test(`08.04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 2,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `08.03`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
 });
 
-test(`08.04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`, t => {
+test(`08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 4,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc${encodedNbspHtml}ddd`,
-    `08.04`
+    `aaa bbb ccc${encodedNbspHtml}ddd`
   );
 });
 
-test(`08.05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`, t => {
+test(`08.06 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`, t => {
   t.is(
     removeWidows(`aaa bbb ccc ddd`, {
       minWordCount: 999,
       minCharCount: 5
     }).res,
-    `aaa bbb ccc ddd`,
-    `08.05`
+    `aaa bbb ccc ddd`
   );
 });
 

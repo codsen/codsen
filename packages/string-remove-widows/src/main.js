@@ -135,6 +135,14 @@ function removeWidows(str, originalOpts) {
   // prep the opts
   const opts = Object.assign({}, defaultOpts, originalOpts);
 
+  // Now, strictly speaking, this program can remove widow words but also
+  // it will decode any entities it encounters if option convertEntities is off.
+  // We need an interface to report what actions were taken:
+  const whatWasDone = {
+    removeWidows: false,
+    convertEntities: false
+  };
+
   // tackle alternative name for hyphens, "dashes"
   if (opts.dashes) {
     opts.hyphens = true;
@@ -364,6 +372,12 @@ function removeWidows(str, originalOpts) {
       if (str[i - 1] && !str[i - 1].trim().length && str[left(str, i)]) {
         push(left(str, i) + 1, i);
         console.log(`366 push [${left(str, i) + 1}, ${i}]`);
+
+        // report what was done:
+        whatWasDone.removeWidows = true;
+        console.log(
+          `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`
+        );
       }
     }
 
@@ -403,6 +417,11 @@ function removeWidows(str, originalOpts) {
           `403 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
             6}, "${rawnbsp}"]`
         );
+
+        whatWasDone.convertEntities = true;
+        console.log(
+          `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`
+        );
       } else if (
         opts.targetLanguage === "css" ||
         opts.targetLanguage === "js"
@@ -416,6 +435,11 @@ function removeWidows(str, originalOpts) {
           `416 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
             opts.targetLanguage === "css" ? encodedNbspCss : encodedNbspJs
           }"]`
+        );
+
+        whatWasDone.convertEntities = true;
+        console.log(
+          `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -450,6 +474,11 @@ function removeWidows(str, originalOpts) {
           `450 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i +
             5}, "${rawnbsp}"]`
         );
+
+        whatWasDone.convertEntities = true;
+        console.log(
+          `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`
+        );
       } else if (
         opts.targetLanguage === "html" ||
         opts.targetLanguage === "js"
@@ -463,6 +492,11 @@ function removeWidows(str, originalOpts) {
           `463 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 5}, "${
             opts.targetLanguage === "html" ? encodedNbspHtml : encodedNbspJs
           }"]`
+        );
+
+        whatWasDone.convertEntities = true;
+        console.log(
+          `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -651,6 +685,11 @@ function removeWidows(str, originalOpts) {
 
         if (finalStart && finalEnd) {
           push(finalStart, finalEnd);
+
+          whatWasDone.removeWidows = true;
+          console.log(
+            `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`
+          );
         }
       }
 
@@ -672,6 +711,11 @@ function removeWidows(str, originalOpts) {
     ) {
       console.log(`673 POSTCODE caught: [${i}, ${right(str, i)}]`);
       push(i, right(str, i));
+
+      whatWasDone.removeWidows = true;
+      console.log(
+        `1 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`
+      );
     }
 
     //
@@ -942,7 +986,8 @@ function removeWidows(str, originalOpts) {
     ranges: rangesArr.current(),
     log: {
       timeTakenInMiliseconds: Date.now() - start
-    }
+    },
+    whatWasDone
   };
 }
 
