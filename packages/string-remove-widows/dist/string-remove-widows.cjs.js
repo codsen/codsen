@@ -103,7 +103,9 @@ function removeWidows(str, originalOpts) {
         }
       }
     }
-    rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+    if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
+      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+    }
   }
   function isStr(something) {
     return typeof something === "string";

@@ -74,25 +74,25 @@ test(`01.01 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - single sentence,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
       `01.01.0${1 + i} - ${targetLanguage}`
     );
-    // t.is(
-    //   removeWidows(`aaa bbb ccc ddd`, {
-    //     convertEntities: false,
-    //     targetLanguage,
-    //     minCharCount: 5
-    //   }).res,
-    //   `aaa bbb ccc${rawnbsp}ddd`,
-    //   `01.01.0${2 + i} - ${targetLanguage}`
-    // );
-    // t.is(
-    //   removeWidows(`aaa bbb ccc ddd`, {
-    //     removeWidowPreventionMeasures: true,
-    //     convertEntities: false,
-    //     targetLanguage,
-    //     minCharCount: 5
-    //   }).res,
-    //   `aaa bbb ccc ddd`,
-    //   `01.01.0${3 + i} - ${targetLanguage}`
-    // );
+    t.is(
+      removeWidows(`aaa bbb ccc ddd`, {
+        convertEntities: false,
+        targetLanguage,
+        minCharCount: 5
+      }).res,
+      `aaa bbb ccc${rawnbsp}ddd`,
+      `01.01.0${2 + i} - ${targetLanguage}`
+    );
+    t.is(
+      removeWidows(`aaa bbb ccc ddd`, {
+        removeWidowPreventionMeasures: true,
+        convertEntities: false,
+        targetLanguage,
+        minCharCount: 5
+      }).res,
+      `aaa bbb ccc ddd`,
+      `01.01.0${3 + i} - ${targetLanguage}`
+    );
   });
 });
 
@@ -485,6 +485,19 @@ test(`01.11 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - line breaks and 
     source,
     `01.11`
   );
+});
+
+test(`01.12 - ${`\u001b[${32}m${`basic tests`}\u001b[${39}m`} - ad hoc case`, t => {
+  const source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
+  const res = removeWidows(source, {
+    ignore: "all",
+    convertEntities: true,
+    targetLanguage: "html",
+    UKPostcodes: true,
+    hyphens: true
+  });
+
+  t.deepEqual(res.ranges, null);
 });
 
 // 02 - opts.convertEntities
