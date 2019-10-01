@@ -73,11 +73,14 @@ function _nonIterableRest() {
 }
 
 function collapse(str, originalOpts) {
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
   function isSpaceOrLeftBracket(character) {
-    return character === "<" || character.trim() === "";
+    return isStr(character) && (character === "<" || character.trim() === "");
   }
   if (typeof str !== "string") {
     throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));

@@ -339,6 +339,68 @@ test(`03.05 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-
   );
 });
 
+test(`03.06 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
+  t.is(
+    collapse(`a > b`, {
+      trimLines: true,
+      recogniseHTML: true
+    }),
+    "a > b"
+  );
+  t.is(
+    collapse(`a > b`, {
+      trimLines: false,
+      recogniseHTML: true
+    }),
+    "a > b"
+  );
+  t.is(
+    collapse(`a > b`, {
+      trimLines: true,
+      recogniseHTML: false
+    }),
+    "a > b"
+  );
+  t.is(
+    collapse(`a > b`, {
+      trimLines: false,
+      recogniseHTML: false
+    }),
+    "a > b"
+  );
+});
+
+test(`03.07 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
+  t.is(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 1,
+      recogniseHTML: 1
+    }),
+    "<span>zzz</span> abc def ghij klm"
+  );
+  t.is(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 0,
+      recogniseHTML: 1
+    }),
+    "<span>zzz</span> abc def ghij klm"
+  );
+  t.is(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 1,
+      recogniseHTML: 0
+    }),
+    "<span>zzz</span> abc def ghij klm"
+  );
+  t.is(
+    collapse(`<span>zzz</span> abc def ghij klm`, {
+      trimLines: 0,
+      recogniseHTML: 0
+    }),
+    "<span>zzz</span> abc def ghij klm"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 04. Line trimming
 // -----------------------------------------------------------------------------

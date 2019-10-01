@@ -13,11 +13,14 @@ import rangesMerge from 'ranges-merge';
 import { matchLeftIncl } from 'string-match-left-right';
 
 function collapse(str, originalOpts) {
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
   function isSpaceOrLeftBracket(character) {
-    return character === "<" || character.trim() === "";
+    return isStr(character) && (character === "<" || character.trim() === "");
   }
   if (typeof str !== "string") {
     throw new Error(
