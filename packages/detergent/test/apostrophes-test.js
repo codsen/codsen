@@ -2,10 +2,10 @@
 
 import test from "ava";
 import {
+  det,
   mixer
   // allCombinations
 } from "../t-util/util";
-import { det } from "../dist/detergent.esm";
 
 // -----------------------------------------------------------------------------
 
@@ -29,7 +29,11 @@ test(`01 - converts single apostrophes - with entities`, t => {
     convertApostrophes: 1,
     convertEntities: 1
   }).forEach(opt => {
-    t.is(det("test's", opt).res, "test&rsquo;s", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "test's", opt).res,
+      "test&rsquo;s",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -38,7 +42,11 @@ test(`02 - converts single apostrophes - no entities`, t => {
     convertApostrophes: 1,
     convertEntities: 0
   }).forEach(opt => {
-    t.is(det("test's", opt).res, "test\u2019s", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "test's", opt).res,
+      "test\u2019s",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -46,7 +54,7 @@ test(`03 - doesn't convert single apostrophes`, t => {
   mixer({
     convertApostrophes: 0
   }).forEach(opt => {
-    t.is(det("test's", opt).res, "test's", JSON.stringify(opt, null, 4));
+    t.is(det(t, "test's", opt).res, "test's", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -56,7 +64,7 @@ test(`04 - converts quotation marks into fancy ones: +entities`, t => {
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det('this is "citation"', opt).res,
+      det(t, 'this is "citation"', opt).res,
       "this is &ldquo;citation&rdquo;",
       JSON.stringify(opt, null, 4)
     );
@@ -69,7 +77,7 @@ test(`05 - converts quotation marks into fancy ones: -entities`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det('this is "citation"', opt).res,
+      det(t, 'this is "citation"', opt).res,
       "this is \u201Ccitation\u201D",
       JSON.stringify(opt, null, 4)
     );
@@ -82,7 +90,7 @@ test(`06 - doesn't convert quotation marks: -apostrophes-entities`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det('this is "citation"', opt).res,
+      det(t, 'this is "citation"', opt).res,
       'this is "citation"',
       JSON.stringify(opt, null, 4)
     );
@@ -96,7 +104,7 @@ test(`07 - exclamation mark + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"What!" he said', opt).res,
+      det(t, '"What!" he said', opt).res,
       `${leftDoubleQuote}What!${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -110,7 +118,7 @@ test(`08 - full stop + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"What." he said', opt).res,
+      det(t, '"What." he said', opt).res,
       `${leftDoubleQuote}What.${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -124,7 +132,7 @@ test(`09 - comma + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"What," he said', opt).res,
+      det(t, '"What," he said', opt).res,
       `${leftDoubleQuote}What,${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -138,7 +146,7 @@ test(`10 - semicolon + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"What;" he said', opt).res,
+      det(t, '"What;" he said', opt).res,
       `${leftDoubleQuote}What;${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -152,7 +160,7 @@ test(`11 - question mark + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"What?" he said', opt).res,
+      det(t, '"What?" he said', opt).res,
       `${leftDoubleQuote}What?${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -166,7 +174,7 @@ test(`12 - exclamation mark + double quote + space`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'What!' he said", opt).res,
+      det(t, "'What!' he said", opt).res,
       `${leftSingleQuote}What!${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -180,7 +188,7 @@ test(`13 - full stop + double quote + space`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'What.' he said", opt).res,
+      det(t, "'What.' he said", opt).res,
       `${leftSingleQuote}What.${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -194,7 +202,7 @@ test(`14 - comma + double quote + space`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'What,' he said", opt).res,
+      det(t, "'What,' he said", opt).res,
       `${leftSingleQuote}What,${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -208,7 +216,7 @@ test(`15 - semicolon + double quote + space`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'What;' he said", opt).res,
+      det(t, "'What;' he said", opt).res,
       `${leftSingleQuote}What;${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -222,7 +230,7 @@ test(`16 - question mark + double quote + space`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'What?' he said", opt).res,
+      det(t, "'What?' he said", opt).res,
       `${leftSingleQuote}What?${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -236,7 +244,7 @@ test(`17 - exclamation mark + single quote + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"'What!'\" he said", opt).res,
+      det(t, "\"'What!'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -250,7 +258,7 @@ test(`18 - full stop + single quote + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"'What.'\" he said", opt).res,
+      det(t, "\"'What.'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -264,7 +272,7 @@ test(`19 - comma + single quote + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"'What,'\" he said", opt).res,
+      det(t, "\"'What,'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -278,7 +286,7 @@ test(`20 - semicolon + single quote + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"'What;'\" he said", opt).res,
+      det(t, "\"'What;'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -292,7 +300,7 @@ test(`21 - question mark + single quote + double quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"'What;'\" he said", opt).res,
+      det(t, "\"'What;'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -306,7 +314,7 @@ test(`22 - exclamation mark + double quote + single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'\"What!\"' he said", opt).res,
+      det(t, "'\"What!\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What!${rightDoubleQuote}${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -320,7 +328,7 @@ test(`23 - full stop + double quote + single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'\"What.\"' he said", opt).res,
+      det(t, "'\"What.\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What.${rightDoubleQuote}${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -334,7 +342,7 @@ test(`24 - comma + double quote + single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'\"What,\"' he said", opt).res,
+      det(t, "'\"What,\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What,${rightDoubleQuote}${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -348,7 +356,7 @@ test(`25 - semicolon + double quote + single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'\"What;\"' he said", opt).res,
+      det(t, "'\"What;\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What;${rightDoubleQuote}${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -362,7 +370,7 @@ test(`26 - question mark + double quote + single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'\"What?\"' he said", opt).res,
+      det(t, "'\"What?\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What?${rightDoubleQuote}${rightSingleQuote} he said`,
       JSON.stringify(opt, null, 4)
     );
@@ -379,7 +387,7 @@ test(`27 - one word wrapped with double quotes`, t => {
     convertEntities: 0,
     convertDashes: 0
   }).forEach(opt => {
-    t.is(det('"Hello!"', opt).res, "“Hello!”", JSON.stringify(opt, null, 4));
+    t.is(det(t, '"Hello!"', opt).res, "“Hello!”", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -389,7 +397,7 @@ test(`28 - single quote surrounded by letters`, t => {
     convertEntities: 0,
     convertDashes: 0
   }).forEach(opt => {
-    t.is(det("ain't", opt).res, "ain’t", JSON.stringify(opt, null, 4));
+    t.is(det(t, "ain't", opt).res, "ain’t", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -399,7 +407,7 @@ test(`29 - single quote surrounded by letters 2`, t => {
     convertEntities: 0,
     convertDashes: 0
   }).forEach(opt => {
-    t.is(det("ma'am", opt).res, "ma’am", JSON.stringify(opt, null, 4));
+    t.is(det(t, "ma'am", opt).res, "ma’am", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -411,7 +419,7 @@ test(`30 - leading single quote`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twas the night", opt).res,
+      det(t, "'Twas the night", opt).res,
       `${rightSingleQuote}Twas the night`,
       JSON.stringify(opt, null, 4)
     );
@@ -426,7 +434,7 @@ test(`31 - mixed quotes within a single sentence`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('"Hello," said the spider. "\'Shelob\' is my name."', opt).res,
+      det(t, '"Hello," said the spider. "\'Shelob\' is my name."', opt).res,
       "“Hello,” said the spider. “‘Shelob’ is my name.”",
       JSON.stringify(opt, null, 4)
     );
@@ -441,7 +449,7 @@ test(`32 - single letters wrapped with single quotes`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'A', 'B', and 'C' are letters.", opt).res,
+      det(t, "'A', 'B', and 'C' are letters.", opt).res,
       "‘A’, ‘B’, and ‘C’ are letters.",
       JSON.stringify(opt, null, 4)
     );
@@ -456,7 +464,7 @@ test(`33 - words wrapped with single quotes`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'", opt)
+      det(t, "'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'", opt)
         .res,
       "‘Oak,’ ‘elm,’ and ‘beech’ are names of trees. So is ‘pine.’",
       JSON.stringify(opt, null, 4)
@@ -472,7 +480,8 @@ test(`34 - double quotes within single quotes`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'He said, \"I want to go.\"' Were you alive in the 70's?", opt).res,
+      det(t, "'He said, \"I want to go.\"' Were you alive in the 70's?", opt)
+        .res,
       "‘He said, “I want to go.”’ Were you alive in the 70’s?",
       JSON.stringify(opt, null, 4)
     );
@@ -487,7 +496,7 @@ test(`35 - double quotes within single quotes`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("\"That's a 'magic' sock.\"", opt).res,
+      det(t, "\"That's a 'magic' sock.\"", opt).res,
       "“That’s a ‘magic’ sock.”",
       JSON.stringify(opt, null, 4)
     );
@@ -503,6 +512,7 @@ test(`36 - double quotes within double quotes`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         'Welcome to Website Name! Company Name, Inc. ("Company Name" or "Company") recommends that you read the following terms and conditions carefully.',
         opt
       ).res,
@@ -521,6 +531,7 @@ test(`37 - single quotes within double quotes`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Welcome to Website Name! Company Name, Inc. ('Company Name' or 'Company') recommends that you read the following terms and conditions carefully.",
         opt
       ).res,
@@ -538,7 +549,7 @@ test(`38 - plural`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'85 was a good year. (The entire '80s were.)", opt).res,
+      det(t, "'85 was a good year. (The entire '80s were.)", opt).res,
       "’85 was a good year. (The entire ’80s were.)",
       JSON.stringify(opt, null, 4)
     );
@@ -552,7 +563,7 @@ test(`39 - single quote in the end of a word`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("Workin' hard", opt).res,
+      det(t, "Workin' hard", opt).res,
       "Workin’ hard",
       JSON.stringify(opt, null, 4)
     );
@@ -567,7 +578,7 @@ test(`40 - single quote in the front of a word`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twas the night before Christmas.", opt).res,
+      det(t, "'Twas the night before Christmas.", opt).res,
       "’Twas the night before Christmas.",
       JSON.stringify(opt, null, 4)
     );
@@ -582,7 +593,7 @@ test(`41 - single quote in the front of a word plus in the middle`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twasn't the night before Christmas.", opt).res,
+      det(t, "'Twasn't the night before Christmas.", opt).res,
       "’Twasn’t the night before Christmas.",
       JSON.stringify(opt, null, 4)
     );
@@ -597,7 +608,7 @@ test(`42 - single quote in the front of a word plus in the middle`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Tis the night before Christmas.", opt).res,
+      det(t, "'Tis the night before Christmas.", opt).res,
       "’Tis the night before Christmas.",
       JSON.stringify(opt, null, 4)
     );
@@ -612,7 +623,7 @@ test(`43 - single quote in the front of a word plus in the middle`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Tisn't the night before Christmas.", opt).res,
+      det(t, "'Tisn't the night before Christmas.", opt).res,
       "’Tisn’t the night before Christmas.",
       JSON.stringify(opt, null, 4)
     );
@@ -627,7 +638,7 @@ test(`44 - single quote in the front of a string`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twill be the night before Christmas.", opt).res,
+      det(t, "'Twill be the night before Christmas.", opt).res,
       `${rightSingleQuote}Twill be the night before Christmas.`,
       JSON.stringify(opt, null, 4)
     );
@@ -642,7 +653,7 @@ test(`45 - single quote in the front of a string`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twould be the night before Christmas.", opt).res,
+      det(t, "'Twould be the night before Christmas.", opt).res,
       `${rightSingleQuote}Twould be the night before Christmas.`,
       JSON.stringify(opt, null, 4)
     );
@@ -657,7 +668,7 @@ test(`46 - single quote in the front of a string`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twere the night before Christmas, I would be happy.", opt).res,
+      det(t, "'Twere the night before Christmas, I would be happy.", opt).res,
       "’Twere the night before Christmas, I would be happy.",
       JSON.stringify(opt, null, 4)
     );
@@ -672,7 +683,8 @@ test(`47 - single quote in the front of a string`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Tweren't the night before Christmas, I would be happy.", opt).res,
+      det(t, "'Tweren't the night before Christmas, I would be happy.", opt)
+        .res,
       "’Tweren’t the night before Christmas, I would be happy.",
       JSON.stringify(opt, null, 4)
     );
@@ -687,7 +699,7 @@ test(`48 - single quotes wrapping word, ending in the middle`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'Twon't be the night before Christmas.", opt).res,
+      det(t, "'Twon't be the night before Christmas.", opt).res,
       "’Twon’t be the night before Christmas.",
       JSON.stringify(opt, null, 4)
     );
@@ -702,7 +714,7 @@ test(`49 - single quotes wrapping a word, ending in between words`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'70s are my favorite numbers,' she said.", opt).res,
+      det(t, "'70s are my favorite numbers,' she said.", opt).res,
       `${rightSingleQuote}70s are my favorite numbers,${rightSingleQuote} she said.`,
       JSON.stringify(opt, null, 4)
     );
@@ -717,7 +729,7 @@ test(`50 - single quote on years`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("'70s fashion was weird.", opt).res,
+      det(t, "'70s fashion was weird.", opt).res,
       `${rightSingleQuote}70s fashion was weird.`,
       JSON.stringify(opt, null, 4)
     );
@@ -732,7 +744,7 @@ test(`51 - inches`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('12" record, 5\'10" height', opt).res,
+      det(t, '12" record, 5\'10" height', opt).res,
       "12″ record, 5′10″ height",
       JSON.stringify(opt, null, 4)
     );
@@ -746,7 +758,7 @@ test(`52 - word wrapped with double quotes in the end of a string`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det('Model "T2000"', opt).res,
+      det(t, 'Model "T2000"', opt).res,
       `Model ${leftDoubleQuote}T2000${rightDoubleQuote}`,
       JSON.stringify(opt, null, 4)
     );
@@ -761,7 +773,7 @@ test(`53 - plural`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("iPad 3's battery life is not great.", opt).res,
+      det(t, "iPad 3's battery life is not great.", opt).res,
       "iPad 3’s battery life is not great.",
       JSON.stringify(opt, null, 4)
     );
@@ -776,7 +788,8 @@ test(`54 - plural`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("Book 'em, Danno. Rock 'n' roll. 'Cause 'twas the season.", opt).res,
+      det(t, "Book 'em, Danno. Rock 'n' roll. 'Cause 'twas the season.", opt)
+        .res,
       "Book ’em, Danno. Rock ’n’ roll. ’Cause ’twas the season.",
       JSON.stringify(opt, null, 4)
     );
@@ -792,7 +805,7 @@ test(`55 - Buttericks example - on`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("In the '60s, rock 'n' roll", opt).res,
+      det(t, "In the '60s, rock 'n' roll", opt).res,
       "In the ’60s, rock ’n’ roll",
       JSON.stringify(opt, null, 4)
     );
@@ -807,7 +820,7 @@ test(`56 - Buttericks example - off`, t => {
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det("In the '60s, rock 'n' roll", opt).res,
+      det(t, "In the '60s, rock 'n' roll", opt).res,
       "In the '60s, rock 'n' roll",
       JSON.stringify(opt, null, 4)
     );
@@ -821,7 +834,7 @@ test(`57 - Hawaii - sets okina #1`, t => {
     convertEntities: 0,
     convertDashes: 0
   }).forEach(opt => {
-    t.is(det("Hawai'i", opt).res, "Hawai‘i", JSON.stringify(opt, null, 4));
+    t.is(det(t, "Hawai'i", opt).res, "Hawai‘i", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -832,6 +845,6 @@ test(`58 - Hawaii - sets okina #2`, t => {
     convertEntities: 0,
     convertDashes: 0
   }).forEach(opt => {
-    t.is(det("O'ahu", opt).res, "O‘ahu", JSON.stringify(opt, null, 4));
+    t.is(det(t, "O'ahu", opt).res, "O‘ahu", JSON.stringify(opt, null, 4));
   });
 });

@@ -1,8 +1,7 @@
 // avanotonly
 
 import test from "ava";
-import { mixer, allCombinations } from "../t-util/util";
-import { det } from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -21,7 +20,7 @@ import {
 
 test(`00 - minimal samples`, t => {
   t.is(
-    det(`aaa bbb ccc ddd`, {
+    det(t, `aaa bbb ccc ddd`, {
       removeWidows: 1,
       convertEntities: 1
     }).res,
@@ -32,7 +31,7 @@ test(`00 - minimal samples`, t => {
 
 test(`00 - ETX processed twice, 2nd time during widow removal`, t => {
   t.is(
-    det(`aaa bbb ccc\u0003ddd`, {
+    det(t, `aaa bbb ccc\u0003ddd`, {
       removeWidows: 1,
       convertEntities: 1,
       removeLineBreaks: 1
@@ -51,12 +50,12 @@ test(`01 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd`, opt).res,
+      det(t, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc&nbsp;ddd`,
       `01.01 - remove widows - entities, one line string no full stop`
     );
     t.is(
-      det(`aaa bbb ccc ddd.`, opt).res,
+      det(t, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc&nbsp;ddd.`,
       `01.02 - remove widows - entities, one line string with full stop`
     );
@@ -69,12 +68,12 @@ test(`02 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd`, opt).res,
+      det(t, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd`,
       `02.01 - remove widows - no entities, one line string no full stop`
     );
     t.is(
-      det(`aaa bbb ccc ddd.`, opt).res,
+      det(t, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd.`,
       `02.02 - remove widows - no entities, one line string with full stop`
     );
@@ -86,12 +85,12 @@ test(`03 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd`, opt).res,
+      det(t, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc ddd`,
       `03.01 - don't remove widows - no full stop`
     );
     t.is(
-      det(`aaa bbb ccc ddd.`, opt).res,
+      det(t, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc ddd.`,
       `03.02 - don't remove widows - ending with full stop`
     );
@@ -107,7 +106,7 @@ test(`04 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     useXHTML: 1
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
+      det(t, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd<br/>\n<br/>\neee fff ggg&nbsp;hhh`,
       `04 - two line breaks with encoding BR in XHTML`
     );
@@ -123,7 +122,7 @@ test(`05 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     useXHTML: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
+      det(t, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd<br>\n<br>\neee fff ggg&nbsp;hhh`,
       `05 - two BR's, widows with NBSP and HTML BR`
     );
@@ -138,7 +137,7 @@ test(`06 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     removeLineBreaks: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
+      det(t, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd\n\neee fff ggg&nbsp;hhh`,
       `06 - two BR's, widows replaced with &nbsp`
     );
@@ -153,7 +152,7 @@ test(`07 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     removeLineBreaks: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
+      det(t, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd\n\neee fff ggg${rawNbsp}hhh`,
       `07 - two BR's, widows replaced with non-encoded NBSP`
     );
@@ -168,12 +167,12 @@ test(`08 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     removeLineBreaks: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd\neee fff ggg hhh.`, opt).res,
+      det(t, `aaa bbb ccc ddd\neee fff ggg hhh.`, opt).res,
       `aaa bbb ccc&nbsp;ddd\neee fff ggg&nbsp;hhh.`,
       `08.01`
     );
     t.is(
-      det(`aaa bbb ccc ddd.\neee fff ggg hhh.`, opt).res,
+      det(t, `aaa bbb ccc ddd.\neee fff ggg hhh.`, opt).res,
       `aaa bbb ccc&nbsp;ddd.\neee fff ggg&nbsp;hhh.`,
       `08.02`
     );
@@ -189,7 +188,7 @@ test(`09 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with trailing whit
     useXHTML: 0
   }).forEach(opt => {
     t.is(
-      det(`aaa bbb ccc ddd. \n\neee fff ggg hhh`, opt).res,
+      det(t, `aaa bbb ccc ddd. \n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd.<br>\n<br>\neee fff ggg&nbsp;hhh`,
       `09 - remove widows - trailing space`
     );
@@ -202,12 +201,13 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det(`Some text SW1A 1AA and some more text.`, opt).res,
+      det(t, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A&nbsp;1AA and some more&nbsp;text.`,
       `04.01 - properly formatted UK postcode, in caps`
     );
     t.is(
       det(
+        t,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -215,24 +215,25 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `04.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(`This very long line of text ends with a postcode SW1A 1AA.`, opt)
+      det(t, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
         .res,
       `This very long line of text ends with a postcode SW1A&nbsp;1AA.`,
       `04.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(`this very long line of text ends with a postcode SW1A 1AA`, opt).res,
+      det(t, `this very long line of text ends with a postcode SW1A 1AA`, opt)
+        .res,
       `this very long line of text ends with a postcode SW1A&nbsp;1AA`,
       `04.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(`🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
+      det(t, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
         .res,
       `&#x1F984; some text text text SW1A&nbsp;1AA more text text text &#x1F984;&nbsp;aaa`,
       `04.05 - properly formatted UK postcode, some emoji`
     );
     t.is(
-      det(`Some text SW1A 1Aa and some more text.`, opt).res,
+      det(t, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more&nbsp;text.`,
       `04.06 - improperly formatted UK postcode`
     );
@@ -245,12 +246,13 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`Some text SW1A 1AA and some more text.`, opt).res,
+      det(t, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A${rawNbsp}1AA and some more${rawNbsp}text.`,
       `11.01 - properly formatted UK postcode, in caps`
     );
     t.is(
       det(
+        t,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -258,24 +260,25 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `11.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(`This very long line of text ends with a postcode SW1A 1AA.`, opt)
+      det(t, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
         .res,
       `This very long line of text ends with a postcode SW1A${rawNbsp}1AA.`,
       `11.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(`this very long line of text ends with a postcode SW1A 1AA`, opt).res,
+      det(t, `this very long line of text ends with a postcode SW1A 1AA`, opt)
+        .res,
       `this very long line of text ends with a postcode SW1A${rawNbsp}1AA`,
       `11.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(`🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
+      det(t, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
         .res,
       `🦄 some text text text SW1A${rawNbsp}1AA more text text text 🦄${rawNbsp}aaa`,
       `11.05 - properly formatted UK postcode, some emoji`
     );
     t.is(
-      det(`Some text SW1A 1Aa and some more text.`, opt).res,
+      det(t, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more${rawNbsp}text.`,
       `11.06 - improperly formatted UK postcode`
     );
@@ -288,12 +291,13 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`Some text SW1A 1AA and some more text.`, opt).res,
+      det(t, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A 1AA and some more text.`,
       `12.01 - properly formatted UK postcode, in caps`
     );
     t.is(
       det(
+        t,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -301,24 +305,25 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `12.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(`This very long line of text ends with a postcode SW1A 1AA.`, opt)
+      det(t, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
         .res,
       `This very long line of text ends with a postcode SW1A 1AA.`,
       `12.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(`this very long line of text ends with a postcode SW1A 1AA`, opt).res,
+      det(t, `this very long line of text ends with a postcode SW1A 1AA`, opt)
+        .res,
       `this very long line of text ends with a postcode SW1A 1AA`,
       `12.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(`🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
+      det(t, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
         .res,
       `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
       `12.05 - properly formatted UK postcode, some emoji`
     );
     t.is(
-      det(`Some text SW1A 1Aa and some more text.`, opt).res,
+      det(t, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more text.`,
       `12.06 - improperly formatted UK postcode`
     );
@@ -329,6 +334,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
   allCombinations.forEach(opt => {
     t.is(
       det(
+        t,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -342,6 +348,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
   allCombinations.forEach(opt => {
     t.is(
       det(
+        t,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -355,6 +362,7 @@ test(`15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
   allCombinations.forEach(opt => {
     t.is(
       det(
+        t,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -368,6 +376,7 @@ test(`16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
   allCombinations.forEach(opt => {
     t.is(
       det(
+        t,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -380,22 +389,22 @@ test(`16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
 test(`17 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widow removal detects template code (Jinja/Nunjucks)`, t => {
   allCombinations.forEach(opt => {
     t.is(
-      det(`{% if something %}`, opt).res,
+      det(t, `{% if something %}`, opt).res,
       `{% if something %}`,
       `17.01 - four chunks`
     );
     t.is(
-      det(`{%- if something -%}`, opt).res,
+      det(t, `{%- if something -%}`, opt).res,
       `{%- if something -%}`,
       `17.02 - dashes`
     );
     t.is(
-      det(`{{ something }}`, opt).res,
+      det(t, `{{ something }}`, opt).res,
       `{{ something }}`,
       `17.03 - three chunks`
     );
     t.is(
-      det(`{% if something else and also another thing %}`, opt).res,
+      det(t, `{% if something else and also another thing %}`, opt).res,
       `{% if something else and also another thing %}`,
       `17.04 - nine chunks`
     );
@@ -408,7 +417,7 @@ test(`18 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     convertDashes: 0
   }).forEach(opt => {
     t.is(
-      det(`AA Some text And Some Text - 9999`, opt).res,
+      det(t, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text - 9999`,
       `18`
     );
@@ -422,7 +431,7 @@ test(`19 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det(`AA Some text And Some Text - 9999`, opt).res,
+      det(t, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text&nbsp;&mdash;&nbsp;9999`,
       `19`
     );
@@ -436,7 +445,7 @@ test(`20 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`AA Some text And Some Text - 9999`, opt).res,
+      det(t, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text${rawNbsp}\u2014${rawNbsp}9999`,
       `20`
     );
@@ -450,7 +459,7 @@ test(`21 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det(`AA Some text And Some Text - 9999`, opt).res,
+      det(t, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text &mdash; 9999`,
       `21`
     );
@@ -464,7 +473,7 @@ test(`22 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`AA Some text And Some Text - 9999`, opt).res,
+      det(t, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text \u2014 9999`,
       `22`
     );

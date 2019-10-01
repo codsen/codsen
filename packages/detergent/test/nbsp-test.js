@@ -1,8 +1,7 @@
 // avanotonly
 
 import test from "ava";
-import { mixer } from "../t-util/util";
-import { det } from "../dist/detergent.esm";
+import { det, mixer } from "../t-util/util";
 // import {
 //   rawReplacementMark,
 //   rawNDash,
@@ -25,7 +24,7 @@ test(`01.01 - repetitions - semicols`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa &nnnbbbspp;;;; aaa", opt).res,
+      det(t, "aaa &nnnbbbspp;;;; aaa", opt).res,
       "aaa &nbsp; aaa",
       JSON.stringify(opt, null, 4)
     );
@@ -41,7 +40,7 @@ test(`01.02 - repetitions - no semicols`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa nnnbbbsssp aaaa", opt).res,
+      det(t, "aaa nnnbbbsssp aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -57,7 +56,7 @@ test(`01.03 - repetitions - mashed`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaaa&nnnnbbbssssppp;aaa", opt).res,
+      det(t, "aaaa&nnnnbbbssssppp;aaa", opt).res,
       "aaaa&nbsp;aaa",
       JSON.stringify(opt, null, 4)
     );
@@ -73,7 +72,7 @@ test(`01.04 - repetitions - amp missing, repetitions`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaannnbbbsssp;aaaa", opt).res,
+      det(t, "aaannnbbbsssp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -89,7 +88,7 @@ test(`01.05 - repetitions - amp and semicol missing`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa&nnnbbbssspaaaa", opt).res,
+      det(t, "aaa&nnnbbbssspaaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -105,7 +104,7 @@ test(`01.06 - repetitions - sandwiched, n repeated`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa&nnbsp;aaaa", opt).res,
+      det(t, "aaa&nnbsp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -121,7 +120,7 @@ test(`01.07 - repetitions - sandwiched, amp missing`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaannbsp;aaaa", opt).res,
+      det(t, "aaannbsp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -137,7 +136,7 @@ test(`01.08 - repetitions - sandwiched, amp missing`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa&nnbspaaaa", opt).res,
+      det(t, "aaa&nnbspaaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -153,7 +152,7 @@ test(`01.09 - repetitions - n repeated, spaced`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa &nnbsp; aaaa", opt).res,
+      det(t, "aaa &nnbsp; aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -169,7 +168,7 @@ test(`01.10 - repetitions - n repeated, spaced, amp missing`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa nnbsp; aaaa", opt).res,
+      det(t, "aaa nnbsp; aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -185,7 +184,7 @@ test(`01.11 - repetitions - n repeated, spaced, semicol missing`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("aaa &nnbsp aaaa", opt).res,
+      det(t, "aaa &nnbsp aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -203,6 +202,7 @@ test(`01.12 - repetitions - longer sentence, convertEntities=on`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -223,6 +223,7 @@ test(`01.13 - repetitions - longer sentence, useXHTML=off`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -241,6 +242,7 @@ test(`01.14 - repetitions - longer sentence, repeated semicols`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -255,7 +257,11 @@ test(`01.15 - nbSp with no semicol #1, convertEntities=on`, t => {
     fixBrokenEntities: 1,
     convertEntities: 1
   }).forEach(opt => {
-    t.is(det("a nbbSp a", opt).res, "a &nbsp; a", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "a nbbSp a", opt).res,
+      "a &nbsp; a",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -265,7 +271,7 @@ test(`01.16 - nbSp with no semicol #2, convertEntities=off`, t => {
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det("a nbbSppp; a", opt).res,
+      det(t, "a nbbSppp; a", opt).res,
       "a &nbsp; a",
       JSON.stringify(opt, null, 4)
     );
@@ -284,6 +290,7 @@ test(`01.17 - NBSP missing letters - &nbsp missing p`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nbs;aaaa\naaa&nbsaaaa\naaa &nbs; aaaa\naaa &nbs aaaa\naaa &nbs\naaa &nbs",
         opt
       ).res,
@@ -303,6 +310,7 @@ test(`01.18 - NBSP missing letters - &nbsp missing s`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nbp;aaaa\naaa&nbpaaaa\naaa &nbp; aaaa\naaa &nbp aaaa\naaa &nbp\naaa &nbp",
         opt
       ).res,
@@ -322,6 +330,7 @@ test(`01.19 - NBSP missing letters - &nbsp missing b`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nsp;aaaa\naaa&nspaaaa\naaa &nsp; aaaa\naaa &nsp aaaa\naaa &nsp\naaa &nsp",
         opt
       ).res,
@@ -341,6 +350,7 @@ test(`01.20 - NBSP missing letters - &nbsp missing n`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&bsp;aaaa\naaa&bspaaaa\naaa &bsp; aaaa\naaa &bsp aaaa\naaa &bsp\naaa &bsp",
         opt
       ).res,
@@ -362,6 +372,7 @@ test(`01.21 - broken nbsp - nbsp; (no ampersand)`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nbs;aaaa\naaanbs;aaaa\naaa &nbs; aaaa\naaa nbs; aaaa\nnbs; aaaa\nnbs; aaaa",
         opt
       ).res,
@@ -381,6 +392,7 @@ test(`01.22 - broken nbsp - nbsp; (no ampersand)`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nbp;aaaa\naaanbp;aaaa\naaa &nbp; aaaa\naaa nbp; aaaa\nnbp; aaaa\nnbp; aaaa",
         opt
       ).res,
@@ -400,6 +412,7 @@ test(`01.23 - broken nbsp - nbsp; (no ampersand)`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&nsp;aaaa\naaansp;aaaa\naaa &nsp; aaaa\naaa nsp; aaaa\nnsp; aaaa\nnsp; aaaa",
         opt
       ).res,
@@ -419,6 +432,7 @@ test(`01.24 - broken nbsp - nbsp; (no ampersand)`, t => {
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "aaa&bsp;aaaa\naaabsp;aaaa\naaa &bsp; aaaa\naaa bsp; aaaa\nbsp; aaaa\nbsp; aaaa",
         opt
       ).res,

@@ -1,8 +1,7 @@
 // avanotonly
 
 import test from "ava";
-import { mixer, allCombinations } from "../t-util/util";
-import { det } from "../dist/detergent.esm";
+import { det, mixer, allCombinations } from "../t-util/util";
 import { rawNDash } from "../dist/util.esm";
 
 // -----------------------------------------------------------------------------
@@ -15,7 +14,7 @@ test(`01.01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am &ndash;11am", opt).res,
+      det(t, "10am &ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
       JSON.stringify(opt, null, 4)
     );
@@ -30,7 +29,7 @@ test(`01.02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     addMissingSpaces: 1 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am &ndash;11am", opt).res,
+      det(t, "10am &ndash;11am", opt).res,
       "10am &ndash; 11am",
       JSON.stringify(opt, null, 4)
     );
@@ -45,7 +44,7 @@ test(`01.03 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am &ndash;11am", opt).res,
+      det(t, "10am &ndash;11am", opt).res,
       "10am &ndash;11am",
       JSON.stringify(opt, null, 4)
     );
@@ -59,7 +58,11 @@ test(`01.04 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     "tel://123"
   ].forEach(src => {
     allCombinations.forEach(opt => {
-      t.is(det(src, opt).res, src, `${src} - ${JSON.stringify(opt, null, 4)}`);
+      t.is(
+        det(t, src, opt).res,
+        src,
+        `${src} - ${JSON.stringify(opt, null, 4)}`
+      );
     });
   });
 });
@@ -70,7 +73,7 @@ test(`01.05 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     keepBoldEtc: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io ", opt).res,
+      det(t, "http://detergent.io ", opt).res,
       "http://detergent.io",
       JSON.stringify(opt, null, 4)
     );
@@ -84,7 +87,7 @@ test(`01.06 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io is cool", opt).res,
+      det(t, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -99,7 +102,7 @@ test(`01.07 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io.\nThis is cool", opt).res,
+      det(t, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -114,7 +117,7 @@ test(`01.08 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io. \nThis is cool", opt).res,
+      det(t, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -129,7 +132,7 @@ test(`01.09 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
+      det(t, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa. Aaaa www.detergent.io bbbbb. Bbbbb",
       JSON.stringify(opt, null, 4)
     );
@@ -144,7 +147,7 @@ test(`01.10 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io is cool", opt).res,
+      det(t, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -157,7 +160,7 @@ test(`01.11 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`10am&ndash;11am`, opt).res,
+      det(t, `10am&ndash;11am`, opt).res,
       `10am${rawNDash}11am`,
       JSON.stringify(opt, null, 4)
     );
@@ -172,7 +175,7 @@ test(`01.12 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io.\nThis is cool", opt).res,
+      det(t, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -187,7 +190,7 @@ test(`01.13 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io. \nThis is cool", opt).res,
+      det(t, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
       JSON.stringify(opt, null, 4)
     );
@@ -202,7 +205,7 @@ test(`01.14 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
+      det(t, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb",
       JSON.stringify(opt, null, 4)
     );
@@ -215,7 +218,7 @@ test(`01.15 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -228,7 +231,7 @@ test(`01.16 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -242,7 +245,7 @@ test(`01.17 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is&nbsp;cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -256,7 +259,7 @@ test(`01.18 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -270,7 +273,7 @@ test(`01.19 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is\u00A0cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -284,7 +287,7 @@ test(`01.20 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -297,7 +300,7 @@ test(`01.21 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -310,7 +313,7 @@ test(`01.22 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -324,7 +327,7 @@ test(`01.23 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is&nbsp;cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -338,7 +341,7 @@ test(`01.24 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -352,7 +355,7 @@ test(`01.25 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.This is cool.", opt).res,
+      det(t, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is\u00A0cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -366,7 +369,7 @@ test(`01.26 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds s
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.", opt).res,
+      det(t, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
       JSON.stringify(opt, null, 4)
     );
@@ -383,6 +386,7 @@ test(`01.27 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
         opt
       ).res,
@@ -402,6 +406,7 @@ test(`01.28 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
         opt
       ).res,
@@ -421,6 +426,7 @@ test(`01.29 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
         opt
       ).res,
@@ -440,6 +446,7 @@ test(`01.30 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
         opt
       ).res,
@@ -454,7 +461,7 @@ test(`01.31 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io;is cool.", opt).res,
+      det(t, "http://detergent.io;is cool.", opt).res,
       "http://detergent.io;is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -465,7 +472,7 @@ test(`01.32 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach(opt => {
-    t.is(det("aaa;bbb", opt).res, "aaa; bbb", JSON.stringify(opt, null, 4));
+    t.is(det(t, "aaa;bbb", opt).res, "aaa; bbb", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -474,7 +481,7 @@ test(`01.33 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io,is cool.", opt).res,
+      det(t, "http://detergent.io,is cool.", opt).res,
       "http://detergent.io,is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -485,7 +492,7 @@ test(`01.34 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach(opt => {
-    t.is(det("aaa,bbb", opt).res, "aaa, bbb", JSON.stringify(opt, null, 4));
+    t.is(det(t, "aaa,bbb", opt).res, "aaa, bbb", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -494,7 +501,7 @@ test(`01.35 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io.Cool!", opt).res,
+      det(t, "http://detergent.io.Cool!", opt).res,
       "http://detergent.io. Cool!",
       JSON.stringify(opt, null, 4)
     );
@@ -506,7 +513,7 @@ test(`01.36 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io.IS COOL.", opt).res,
+      det(t, "http://detergent.io.IS COOL.", opt).res,
       "http://detergent.io.IS COOL.",
       JSON.stringify(opt, null, 4)
     );
@@ -518,7 +525,7 @@ test(`01.37 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("http://detergent.io.is cool.", opt).res,
+      det(t, "http://detergent.io.is cool.", opt).res,
       "http://detergent.io.is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -529,7 +536,7 @@ test(`01.38 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach(opt => {
-    t.is(det("aaa.bbb", opt).res, "aaa.bbb", JSON.stringify(opt, null, 4));
+    t.is(det(t, "aaa.bbb", opt).res, "aaa.bbb", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -537,7 +544,7 @@ test(`01.39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach(opt => {
-    t.is(det("Aaa.Bbb", opt).res, "Aaa. Bbb", JSON.stringify(opt, null, 4));
+    t.is(det(t, "Aaa.Bbb", opt).res, "Aaa. Bbb", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -548,7 +555,7 @@ test(`01.40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io. Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -562,7 +569,7 @@ test(`01.41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io,Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -576,7 +583,7 @@ test(`01.42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io;Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -590,7 +597,7 @@ test(`01.43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io.Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io.Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -604,7 +611,7 @@ test(`01.44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io,Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -618,7 +625,7 @@ test(`01.45 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
     addMissingSpaces: 0
   }).forEach(opt => {
     t.is(
-      det("This is http://detergent.io;Это хорошо.", opt).res,
+      det(t, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
       JSON.stringify(opt, null, 4)
     );
@@ -645,13 +652,13 @@ test(`01.46 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - leaves
       "image.htm",
       "image.HTM"
     ].forEach(src => {
-      t.is(det(src, opt).res, src, JSON.stringify(opt, null, 4));
+      t.is(det(t, src, opt).res, src, JSON.stringify(opt, null, 4));
     });
   });
 });
 
 test(`01.47 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #1`, t => {
-  t.is(det("Some text .gitignore").res, "Some text .gitignore");
+  t.is(det(t, "Some text .gitignore").res, "Some text .gitignore");
 });
 
 test(`01.48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #2`, t => {
@@ -660,6 +667,7 @@ test(`01.48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long s
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "When you will download header.PNG, file fix.jpg and the dotfiles named .gitignore, check them.",
         opt
       ).res,
@@ -672,7 +680,7 @@ test(`01.48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long s
 test(`01.49 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - false positive - Dutch "p.st"`, t => {
   allCombinations.forEach(opt => {
     t.is(
-      det("10eur p.st", opt).res,
+      det(t, "10eur p.st", opt).res,
       "10eur p.st",
       JSON.stringify(opt, null, 4)
     );
@@ -686,7 +694,7 @@ test(`01.50 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     useXHTML: 1
   }).forEach(opt => {
     t.is(
-      det("Text.More text.", opt).res,
+      det(t, "Text.More text.", opt).res,
       "Text. More text.",
       JSON.stringify(opt, null, 4)
     );
@@ -700,7 +708,7 @@ test(`01.51 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     useXHTML: 1
   }).forEach(opt => {
     t.is(
-      det("Text.More text.", opt).res,
+      det(t, "Text.More text.", opt).res,
       "Text.More text.",
       JSON.stringify(opt, null, 4)
     );
@@ -713,9 +721,9 @@ test(`01.52 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     dontEncodeNonLatin: 1,
     useXHTML: 1
   }).forEach(opt => {
-    t.is(det("Text,more text.", opt).res, "Text, more text.");
+    t.is(det(t, "Text,more text.", opt).res, "Text, more text.");
     t.is(
-      det("Text,more text,", opt).res,
+      det(t, "Text,more text,", opt).res,
       "Text, more text,",
       JSON.stringify(opt, null, 4)
     );
@@ -728,9 +736,9 @@ test(`01.53 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     dontEncodeNonLatin: 1,
     useXHTML: 1
   }).forEach(opt => {
-    t.is(det("Text,more text.", opt).res, "Text,more text.");
+    t.is(det(t, "Text,more text.", opt).res, "Text,more text.");
     t.is(
-      det("Text,more text,", opt).res,
+      det(t, "Text,more text,", opt).res,
       "Text,more text,",
       JSON.stringify(opt, null, 4)
     );
@@ -743,11 +751,11 @@ test(`01.54 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     dontEncodeNonLatin: 1,
     useXHTML: 1
   }).forEach(opt => {
-    t.is(det("Text;more text.", opt).res, "Text; more text.");
-    t.is(det("text;more text.", opt).res, "text; more text.");
-    t.is(det("Text;more text", opt).res, "Text; more text");
+    t.is(det(t, "Text;more text.", opt).res, "Text; more text.");
+    t.is(det(t, "text;more text.", opt).res, "text; more text.");
+    t.is(det(t, "Text;more text", opt).res, "Text; more text");
     t.is(
-      det("text;more text", opt).res,
+      det(t, "text;more text", opt).res,
       "text; more text",
       JSON.stringify(opt, null, 4)
     );
@@ -760,11 +768,11 @@ test(`01.55 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missin
     dontEncodeNonLatin: 1,
     useXHTML: 1
   }).forEach(opt => {
-    t.is(det("Text;more text.", opt).res, "Text;more text.");
-    t.is(det("text;more text.", opt).res, "text;more text.");
-    t.is(det("Text;more text", opt).res, "Text;more text");
+    t.is(det(t, "Text;more text.", opt).res, "Text;more text.");
+    t.is(det(t, "text;more text.", opt).res, "text;more text.");
+    t.is(det(t, "Text;more text", opt).res, "Text;more text");
     t.is(
-      det("text;more text", opt).res,
+      det(t, "text;more text", opt).res,
       "text;more text",
       JSON.stringify(opt, null, 4)
     );
@@ -779,7 +787,7 @@ test(`01.56 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     addMissingSpaces: 1 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am&nbsp;&ndash;11am", opt).res,
+      det(t, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;&nbsp;11am",
       JSON.stringify(opt, null, 4)
     );
@@ -793,7 +801,7 @@ test(`01.57 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am&nbsp;&ndash;11am", opt).res,
+      det(t, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
       JSON.stringify(opt, null, 4)
     );
@@ -808,7 +816,7 @@ test(`01.58 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     addMissingSpaces: 0 // <-------
   }).forEach(opt => {
     t.is(
-      det("10am&nbsp;&ndash;11am and more text", opt).res,
+      det(t, "10am&nbsp;&ndash;11am and more text", opt).res,
       "10am&nbsp;&ndash;11am and more&nbsp;text",
       JSON.stringify(opt, null, 4)
     );
@@ -821,7 +829,7 @@ test(`01.59 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det("10am&ndash;11am", opt).res,
+      det(t, "10am&ndash;11am", opt).res,
       "10am&ndash;11am",
       JSON.stringify(opt, null, 4)
     );
@@ -836,7 +844,7 @@ test(`01.60 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("10am&nbsp;&ndash;11am", opt).res,
+      det(t, "10am&nbsp;&ndash;11am", opt).res,
       `10am\u00A0${rawNDash}\u00A011am`,
       JSON.stringify(opt, null, 4)
     );
@@ -851,7 +859,7 @@ test(`01.61 - \u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m - missing spa
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
-      det("10am&nbsp;&ndash;11am", opt).res,
+      det(t, "10am&nbsp;&ndash;11am", opt).res,
       `10am\u00A0${rawNDash} 11am`,
       JSON.stringify(opt, null, 4)
     );
@@ -867,7 +875,7 @@ test(`02.01 - deletes space around n-dash between numbers`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`1880 ${rawNDash} 1912`, opt).res,
+      det(t, `1880 ${rawNDash} 1912`, opt).res,
       `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
@@ -880,7 +888,7 @@ test(`02.02 - deletes space around n-dash between numbers`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`1880 &ndash; 1912`, opt).res,
+      det(t, `1880 &ndash; 1912`, opt).res,
       `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
@@ -893,7 +901,7 @@ test(`02.03 - deletes space around n-dash between numbers`, t => {
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det(`1880 ${rawNDash} 1912`, opt).res,
+      det(t, `1880 ${rawNDash} 1912`, opt).res,
       "1880&ndash;1912",
       JSON.stringify(opt, null, 4)
     );
@@ -906,7 +914,7 @@ test(`02.04 - deletes space around n-dash between numbers`, t => {
     convertEntities: 1
   }).forEach(opt => {
     t.is(
-      det("1880 &ndash; 1912", opt).res,
+      det(t, "1880 &ndash; 1912", opt).res,
       "1880&ndash;1912",
       JSON.stringify(opt, null, 4)
     );
@@ -919,7 +927,7 @@ test(`02.05 - space in front of n-dash, missing space after it`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det(`1880 ${rawNDash}1912`, opt).res,
+      det(t, `1880 ${rawNDash}1912`, opt).res,
       `1880${rawNDash}1912`,
       JSON.stringify(opt, null, 4)
     );
@@ -929,17 +937,17 @@ test(`02.05 - space in front of n-dash, missing space after it`, t => {
 test(`02.06 - jinja/nunjucks code chunk with double quotes`, t => {
   const str1 = '{{ "%.2f"|format(total.value) }}';
   allCombinations.forEach(opt => {
-    t.is(det(str1, opt).res, str1);
+    t.is(det(t, str1, opt).res, str1);
   });
 
   const str2 = '{% if z == "text" %}{{ text }}{% endif %}';
   allCombinations.forEach(opt => {
-    t.is(det(str2, opt).res, str2);
+    t.is(det(t, str2, opt).res, str2);
   });
 
   const str3 = '{%- if z == "text" -%}{{ text }}{%- endif -%}';
   allCombinations.forEach(opt => {
-    t.is(det(str3, opt).res, str3, JSON.stringify(opt, null, 4));
+    t.is(det(t, str3, opt).res, str3, JSON.stringify(opt, null, 4));
   });
 });
 
@@ -949,7 +957,7 @@ test(`02.07 - sanity check #01`, t => {
     removeWidows: 0
   }).forEach(opt => {
     t.is(
-      det("Semicolon;\u00A0is cool.", opt).res,
+      det(t, "Semicolon;\u00A0is cool.", opt).res,
       "Semicolon;\u00A0is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -961,7 +969,7 @@ test(`02.08 - sanity check #02`, t => {
     convertEntities: 0
   }).forEach(opt => {
     t.is(
-      det("Semicolon;&is cool.", opt).res,
+      det(t, "Semicolon;&is cool.", opt).res,
       "Semicolon;&is cool.",
       JSON.stringify(opt, null, 4)
     );
@@ -974,7 +982,7 @@ test(`02.09 - sanity check #03`, t => {
     keepBoldEtc: 1
   }).forEach(opt => {
     t.is(
-      det("${responseObject.storeName}", opt).res,
+      det(t, "${responseObject.storeName}", opt).res,
       "${responseObject.storeName}",
       JSON.stringify(opt, null, 4)
     );

@@ -1,14 +1,13 @@
 // avanotonly
 
 import test from "ava";
-import { mixer } from "../t-util/util";
-import { det } from "../dist/detergent.esm";
+import { det, mixer } from "../t-util/util";
 
 test(`01.01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`, t => {
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -16,7 +15,7 @@ test(`01.02 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sani
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -24,7 +23,7 @@ test(`01.03 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sani
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -33,7 +32,7 @@ test(`01.04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellips
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -42,7 +41,7 @@ test(`01.05 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - correctly encoded - conv
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -51,7 +50,7 @@ test(`01.06 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - wrongly encoded - conver
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -59,7 +58,7 @@ test(`01.07 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("...", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "...", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -68,7 +67,7 @@ test(`01.08 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
     convertDotsToEllipsis: 0
   }).forEach(opt => {
     t.is(
-      det("And then...", opt).res,
+      det(t, "And then...", opt).res,
       "And then...",
       JSON.stringify(opt, null, 4)
     );
@@ -79,7 +78,7 @@ test(`01.09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -87,7 +86,7 @@ test(`01.10 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -95,7 +94,7 @@ test(`01.11 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -104,7 +103,7 @@ test(`01.12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("\u2026", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "\u2026", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -113,7 +112,7 @@ test(`01.13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -122,7 +121,7 @@ test(`01.14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -131,7 +130,7 @@ test(`01.15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - thr
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("...", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "...", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -142,7 +141,7 @@ test(`01.16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - thr
     convertDotsToEllipsis: 1
   }).forEach(opt => {
     t.is(
-      det("Aaaaa... Bbbbb... C...", opt).res,
+      det(t, "Aaaaa... Bbbbb... C...", opt).res,
       "Aaaaa\u2026 Bbbbb\u2026 C\u2026",
       JSON.stringify(opt, null, 4)
     );
@@ -155,7 +154,7 @@ test(`01.17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - enc
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -165,7 +164,7 @@ test(`01.18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - enc
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -175,7 +174,7 @@ test(`01.19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&#x02026;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&#x02026;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -185,7 +184,7 @@ test(`01.20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - dec
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&#8230;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&#8230;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -195,7 +194,7 @@ test(`01.21 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - thre
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("...", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "...", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -205,7 +204,7 @@ test(`01.22 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - thre
     convertDotsToEllipsis: 1
   }).forEach(opt => {
     t.is(
-      det("Aaaaa... Bbbbb... C...", opt).res,
+      det(t, "Aaaaa... Bbbbb... C...", opt).res,
       "Aaaaa&hellip; Bbbbb&hellip; C&hellip;",
       JSON.stringify(opt, null, 4)
     );
@@ -217,7 +216,7 @@ test(`01.23 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - enco
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -226,7 +225,7 @@ test(`01.24 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - enco
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -235,7 +234,11 @@ test(`01.25 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - hexi
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&#x02026;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&#x02026;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -245,7 +248,7 @@ test(`01.26 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - deci
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("&#8230;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&#8230;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -255,7 +258,7 @@ test(`01.27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unen
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det("\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(det(t, "\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -264,7 +267,7 @@ test(`01.28 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - thr
     removeWidows: 0,
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("...", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "...", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -274,7 +277,7 @@ test(`01.29 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - sin
     convertDotsToEllipsis: 0
   }).forEach(opt => {
     t.is(
-      det("Aaaaa... Bbbbb... C...", opt).res,
+      det(t, "Aaaaa... Bbbbb... C...", opt).res,
       "Aaaaa... Bbbbb... C...",
       JSON.stringify(opt, null, 4)
     );
@@ -286,7 +289,7 @@ test(`01.30 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hel
     removeWidows: 0,
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&hellip;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -295,7 +298,7 @@ test(`01.31 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - mld
     removeWidows: 0,
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&mldr;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -304,7 +307,7 @@ test(`01.32 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex
     removeWidows: 0,
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&#x02026;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&#x02026;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -313,7 +316,7 @@ test(`01.33 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - num
     removeWidows: 0,
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det("&#8230;", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(det(t, "&#8230;", opt).res, "...", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -326,7 +329,7 @@ test(`01.34 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - long lines of
     removeWidows: 0,
     convertEntities: 0
   }).forEach(opt => {
-    t.is(det(source, opt).res, source, JSON.stringify(opt, null, 4));
+    t.is(det(t, source, opt).res, source, JSON.stringify(opt, null, 4));
   });
 });
 
@@ -340,6 +343,7 @@ test(`01.35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false 
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,
@@ -356,6 +360,7 @@ test(`01.35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false 
   }).forEach(opt => {
     t.is(
       det(
+        t,
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,
@@ -374,7 +379,7 @@ test(`01.36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`,
     convertDotsToEllipsis: 1 // <---------
   }).forEach(opt => {
     t.is(
-      det("..... ... . ..", opt).res,
+      det(t, "..... ... . ..", opt).res,
       "..... \u2026 . ..",
       JSON.stringify(opt, null, 4)
     );
@@ -387,7 +392,7 @@ test(`01.36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`,
     convertDotsToEllipsis: 0 // <---------
   }).forEach(opt => {
     t.is(
-      det("..... ... . ..", opt).res,
+      det(t, "..... ... . ..", opt).res,
       "..... ... . ..",
       JSON.stringify(opt, null, 4)
     );
@@ -402,6 +407,6 @@ test(`01.37 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - resembling re
     removeWidows: 0,
     convertEntities: 0
   }).forEach(opt => {
-    t.is(det(source, opt).res, source, JSON.stringify(opt, null, 4));
+    t.is(det(t, source, opt).res, source, JSON.stringify(opt, null, 4));
   });
 });

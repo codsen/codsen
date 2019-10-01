@@ -629,6 +629,9 @@ var version = "5.0.1";
 
 function det(str, inputOpts) {
   var opts;
+  if (typeof str !== "string") {
+    throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(inputOpts)));
+  }
   if (inputOpts) {
     opts = clone(inputOpts);
     if (isObj(inputOpts)) {
@@ -651,7 +654,7 @@ function det(str, inputOpts) {
         }
       });
     } else {
-      throw new Error("detergent(): [THROW_ID_01] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
+      throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
     }
   } else {
     opts = clone(defaultOpts);

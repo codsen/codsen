@@ -6,9 +6,7 @@ import {
   opts as exportedOptsObj,
   version
 } from "../dist/detergent.esm";
-import { mixer, allCombinations } from "../t-util/util";
-import clone from "lodash.clonedeep";
-import objectPath from "object-path";
+import { det, mixer, allCombinations } from "../t-util/util";
 
 import {
   // rawReplacementMark,
@@ -23,75 +21,61 @@ import {
   // leftSingleQuote
 } from "../dist/util.esm";
 
-// Applicable opts tracking via an intermediary det() mirror
-// ==============================
-
-function det(t, src, opts = {}) {
-  const resolvedOpts = Object.assign({}, exportedOptsObj, opts);
-  const tempObj = {};
-  Object.keys(resolvedOpts).forEach(key => {
-    if (!["stripHtmlButIgnoreTags", "stripHtmlAddNewLine"].includes(key)) {
-      tempObj[key] = !!resolvedOpts[key];
-    }
-  });
-  Object.keys(tempObj).forEach(key => {
-    // If toggling any of the options makes a difference,
-    // that option must be reported as "applicable". And on the opposite.
-
-    // incoming object might be with digits instead of boolean values,
-    // so we convert whatever value is to a boolean
-    const obj1 = clone(tempObj);
-    objectPath.set(obj1, key, true);
-
-    const obj2 = clone(tempObj);
-    objectPath.set(obj2, key, false);
-
-    if (det1(src, obj1).res !== det1(src, obj2).res) {
-      t.truthy(
-        det1(src, resolvedOpts).applicableOpts[key],
-        `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
-"${`\u001b[${33}m${
-          det1(src, obj1).res
-        }\u001b[${39}m`}" (opts.${key}=true) and "${`\u001b[${33}m${
-          det1(src, obj2).res
-        }\u001b[${39}m`}" (opts.${key}=false).`
-      );
-    } else if (key !== "stripHtml") {
-      t.falsy(
-        det1(src, resolvedOpts).applicableOpts[key],
-        `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on different opts.${key}:
-"${`\u001b[${33}m${det1(src, obj1).res}\u001b[${39}m`}".`
-      );
-    }
-  });
-  return det1(src, opts);
-}
-
 // ==============================
 // 0. throws and API bits
 // ==============================
 
 // pinning throws by throw ID:
 
-test(`00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, t => {
+test(`00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first argument is not string`, t => {
   const error1 = t.throws(() => {
-    det(t, `zzz`, "zzz");
+    det(t, 1, "zzz");
   });
-  t.regex(error1.message, /THROW_ID_01/gm, "00.01.01");
+  t.regex(error1.message, /THROW_ID_01/gm);
+
+  const error2 = t.throws(() => {
+    det(t, true, "zzz");
+  });
+  t.regex(error2.message, /THROW_ID_01/gm);
+
+  function fn() {
+    return true;
+  }
+  const error3 = t.throws(() => {
+    det(t, fn, "zzz");
+  });
+  t.regex(error3.message, /THROW_ID_01/gm);
+
+  const error4 = t.throws(() => {
+    det(t, { a: "b" }, "zzz");
+  });
+  t.regex(error4.message, /THROW_ID_01/gm);
+
+  const error5 = t.throws(() => {
+    det(t, null, "zzz");
+  });
+  t.regex(error5.message, /THROW_ID_01/gm);
 });
 
 test(`00.02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, t => {
+  const error1 = t.throws(() => {
+    det(t, `zzz`, "zzz");
+  });
+  t.regex(error1.message, /THROW_ID_02/gm);
+});
+
+test(`00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, t => {
   const error2 = t.throws(() => {
     det(t, `zzz`, ["zzz"]);
   });
-  t.regex(error2.message, /THROW_ID_01/gm, "00.01.02");
+  t.regex(error2.message, /THROW_ID_02/gm);
 });
 
-test(`00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`, t => {
+test(`00.04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`, t => {
   t.true(Object.keys(exportedOptsObj).length > 10);
 });
 
-test(`00.04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, t => {
+test(`00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, t => {
   t.regex(version, /\d+\.\d+\.\d+/g);
 });
 
