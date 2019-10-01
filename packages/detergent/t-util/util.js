@@ -8,7 +8,7 @@ import objectPath from "object-path";
 function mixer(ref) {
   // for quick testing, you can short-wire to test only one set of options, instead
   // of 512, 2024, or whatever count mixer produced.
-  const quickie = true;
+  const quickie = false;
 
   if (!isCI && quickie) {
     if (ref) {
