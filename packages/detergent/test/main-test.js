@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import test from "ava";
 import {
@@ -1474,6 +1474,34 @@ test(`09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
       JSON.stringify(opt, null, 0)
     );
   });
+
+  t.deepEqual(
+    det1(
+      "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
+      {
+        removeLineBreaks: 1,
+        removeWidows: 0,
+        stripHtml: 1
+      }
+    ),
+    {
+      res: "Text First point Second point Third point Text straight after",
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: true,
+        convertEntities: false,
+        convertDashes: false,
+        convertApostrophes: false,
+        replaceLineBreaks: false,
+        removeLineBreaks: true,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: true
+      }
+    }
+  );
 });
 
 test(`09.03 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, t => {
@@ -1485,42 +1513,6 @@ test(`09.03 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
   }).forEach(opt => {
     t.is(det(t, `a<li>b`, opt).res, "a\nb", JSON.stringify(opt, null, 0));
   });
-
-  t.is(
-    det1(`a<li>b`, {
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      replaceLineBreaks: 0,
-      stripHtml: 1
-    }).res,
-    "a\nb"
-  );
-
-  t.deepEqual(
-    det1(`a<li>b`, {
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      replaceLineBreaks: 0,
-      stripHtml: 1
-    }),
-    {
-      res: "a\nb",
-      applicableOpts: {
-        fixBrokenEntities: false,
-        removeWidows: false,
-        convertEntities: false,
-        convertDashes: false,
-        convertApostrophes: false,
-        replaceLineBreaks: false,
-        removeLineBreaks: false,
-        useXHTML: false,
-        dontEncodeNonLatin: false,
-        addMissingSpaces: false,
-        convertDotsToEllipsis: false,
-        stripHtml: true
-      }
-    }
-  );
 });
 
 test(`09.04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, t => {
@@ -1560,6 +1552,20 @@ test(`09.05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
       JSON.stringify(opt, null, 0)
     );
   });
+
+  t.is(
+    det1(
+      "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
+      {
+        removeLineBreaks: 0,
+        removeWidows: 0,
+        replaceLineBreaks: 1,
+        useXHTML: 1,
+        stripHtml: 1
+      }
+    ).res,
+    "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after"
+  );
 });
 
 // ==============================

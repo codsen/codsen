@@ -1443,8 +1443,9 @@ function det(str, inputOpts) {
                   tag.name.toLowerCase() === tagName)
             )
           ) {
-            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
               if (opts.replaceLineBreaks) {
                 applicableOpts.useXHTML = true;
               }
@@ -1597,6 +1598,7 @@ function det(str, inputOpts) {
     true
   );
   applyAndWipe();
+  str = str.replace(/ (<br[/]?>)/g, "$1");
   str = str.replace(/(\r\n|\r|\n){3,}/g, `${endOfLine}${endOfLine}`);
   const widowFixes = removeWidows(str, {
     ignore: "all",

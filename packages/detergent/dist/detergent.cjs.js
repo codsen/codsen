@@ -733,8 +733,9 @@ function det(str, inputOpts) {
           if (opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
             return tagName.startsWith("/") && tag.slashPresent && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !tag.slashPresent && tag.name.toLowerCase() === tagName;
           })) {
-            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
               if (opts.replaceLineBreaks) {
                 applicableOpts.useXHTML = true;
               }
@@ -808,6 +809,7 @@ function det(str, inputOpts) {
     return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts);
   }, true);
   applyAndWipe();
+  str = str.replace(/ (<br[/]?>)/g, "$1");
   str = str.replace(/(\r\n|\r|\n){3,}/g, "".concat(endOfLine).concat(endOfLine));
   var widowFixes = stringRemoveWidows.removeWidows(str, {
     ignore: "all",
