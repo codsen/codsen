@@ -80,7 +80,8 @@ var defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
-  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"]
+  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
+  stripHtmlAddNewLine: ["li", "/ul"]
 };
 var leftSingleQuote = "\u2018";
 var rightSingleQuote = "\u2019";
@@ -153,31 +154,43 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">\n") : "\n");
             applicableOpts.removeLineBreaks = true;
             applicableOpts.replaceLineBreaks = true;
-            applicableOpts.useXHTML = true;
+            if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
+            }
           } else {
             rangesArr.push(i, y);
           }
         } else if (charcode === 9) {
           rangesArr.push(i, y, " ");
         } else if (charcode === 10) {
-          applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.useXHTML = true;
-          applicableOpts.removeLineBreaks = true;
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
+          if (!opts.removeLineBreaks && !brClosingBracketIndexesArr.some(function (idx) {
+            return stringLeftRight.left(str, i) === idx;
+          })) {
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
+            }
+          }
           if (opts.removeLineBreaks) {
             var whatToInsert = " ";
             if (punctuationChars.includes(str[stringLeftRight.right(str, i)])) {
               whatToInsert = "";
             }
             rangesArr.push(i, y, whatToInsert);
-          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
+          } else if (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
             return stringLeftRight.left(str, i) === idx;
-          }))) {
-            var startingIdx = i;
-            if (str[i - 1] === " ") {
-              startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
+          })) {
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              var startingIdx = i;
+              if (str[i - 1] === " ") {
+                startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
+              }
+              rangesArr.push(startingIdx, i, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : ""));
             }
-            rangesArr.push(startingIdx, i, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : ""));
           } else {
             if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
               var tempIdx = stringLeftRight.leftStopAtNewLines(str, i);
@@ -200,30 +213,40 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
           applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.useXHTML = true;
+          if (!opts.removeLineBreaks && !brClosingBracketIndexesArr.some(function (idx) {
+            return stringLeftRight.left(str, i) === idx;
+          })) {
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
+          }
           if (opts.removeLineBreaks) {
             var _whatToInsert = " ";
             if (punctuationChars.includes(str[stringLeftRight.right(str, i)]) || str[i + 1] === "\n") {
               _whatToInsert = "";
             }
             rangesArr.push(i, y, _whatToInsert);
-          } else if (opts.replaceLineBreaks) {
-            var _startingIdx = i;
-            if (str[i - 1] === " ") {
-              _startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
-            }
-            var endingIdx = i;
-            if (endOfLine === "\n") {
-              endingIdx = i + 1;
-            }
-            rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(str[i + 1] === "\n" ? "" : "\n"));
-            if (str[i + 1] === "\n") {
-              offsetBy(1);
+          } else if (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
+            return stringLeftRight.left(str, i) === idx;
+          })) {
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              var _startingIdx = i;
+              if (str[i - 1] === " ") {
+                _startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
+              }
+              var endingIdx = i;
+              if (endOfLine === "\n") {
+                endingIdx = i + 1;
+              }
+              rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(str[i + 1] === "\n" ? "" : "\n"));
+              if (str[i + 1] === "\n") {
+                offsetBy(1);
+              }
             }
           } else {
+            if (endOfLine === "\n") {
+              rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
+            }
             if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
               var _endingIdx = i;
               if (endOfLine === "\n") {
@@ -575,8 +598,9 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else if (charcode === 65279) {
         rangesArr.push(i, y);
       } else {
-        applicableOpts.convertEntities = true;
-        applicableOpts.dontEncodeNonLatin = applicableOpts.dontEncodeNonLatin || doConvertEntities(str[i], true) !== doConvertEntities(str[i], false);
+        if (!applicableOpts.dontEncodeNonLatin && doConvertEntities(str[i], true) !== doConvertEntities(str[i], false)) {
+          applicableOpts.dontEncodeNonLatin = true;
+        }
         if (opts.convertEntities) {
           var convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
           if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
@@ -588,7 +612,10 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             } else if (convertedCharVal !== "&apos;") {
               rangesArr.push(i, y, convertedCharVal);
             }
+            applicableOpts.convertEntities = true;
           }
+        } else {
+          applicableOpts.convertEntities = true;
         }
       }
     }
@@ -603,11 +630,19 @@ var version = "5.0.1";
 function det(str, inputOpts) {
   var opts;
   if (inputOpts) {
+    opts = clone(inputOpts);
     if (isObj(inputOpts)) {
-      if (inputOpts.stripHtmlButIgnoreTags) {
-        inputOpts.stripHtmlButIgnoreTags = arrayiffy(inputOpts.stripHtmlButIgnoreTags);
+      if (!opts.stripHtmlButIgnoreTags) {
+        opts.stripHtmlButIgnoreTags = [];
+      } else {
+        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
       }
-      opts = merge(defaultOpts, inputOpts, {
+      if (!opts.stripHtmlButIgnoreTags) {
+        opts.stripHtmlButIgnoreTags = [];
+      } else {
+        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
+      }
+      opts = merge(defaultOpts, opts, {
         cb: function cb(inputArg1, inputArg2, resultAboutToBeReturned) {
           if (Array.isArray(inputArg1) && Array.isArray(inputArg2) && inputArg2.length || typeof inputArg1 === "boolean" && typeof inputArg2 === "boolean") {
             return inputArg2;
@@ -615,11 +650,6 @@ function det(str, inputOpts) {
           return resultAboutToBeReturned;
         }
       });
-      if (typeof opts.stripHtmlButIgnoreTags === "string") {
-        opts.stripHtmlButIgnoreTags = [opts.stripHtmlButIgnoreTags];
-      } else if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      }
     } else {
       throw new Error("detergent(): [THROW_ID_01] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
     }
@@ -628,7 +658,7 @@ function det(str, inputOpts) {
   }
   var applicableOpts = {};
   Object.keys(defaultOpts).sort().filter(function (val) {
-    return val !== "stripHtmlButIgnoreTags";
+    return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags"].includes(val);
   }).forEach(function (singleOption) {
     applicableOpts[singleOption] = false;
   });
@@ -663,7 +693,10 @@ function det(str, inputOpts) {
     lastVal = temp;
     temp = he.decode(temp);
   } while (temp !== str && lastVal !== temp);
-  str = temp;
+  if (str !== temp) {
+    str = temp;
+    applicableOpts.convertEntities = true;
+  }
   for (var i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
       if (str[i - 1] && str[i + 1] && (str[i - 1].toLowerCase() === "n" && str[i + 1].toLowerCase() === "t" || isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s") || str[i + 2] && ((str[i + 1].toLowerCase() === "r" || str[i + 1].toLowerCase() === "v") && str[i + 2].toLowerCase() === "e" || str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l") && (str[i - 3] && str[i - 3].toLowerCase() === "y" && str[i - 2].toLowerCase() === "o" && str[i - 1].toLowerCase() === "u" || str[i - 2] && str[i - 2].toLowerCase() === "w" && str[i - 1].toLowerCase() === "e" || str[i - 4] && str[i - 4].toLowerCase() === "t" && str[i - 3].toLowerCase() === "h" && str[i - 2].toLowerCase() === "e" && str[i - 1].toLowerCase() === "y") || (str[i - 1] && str[i - 1].toLowerCase() === "i" || str[i - 2] && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e" || str[i - 3] && str[i - 3].toLowerCase() === "s" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "e") && str[i + 2] && str[i + 1].toLowerCase() === "l" && str[i + 2].toLowerCase() === "l" || str[i - 5] && str[i + 2] && str[i - 5].toLowerCase() === "m" && str[i - 4].toLowerCase() === "i" && str[i - 3].toLowerCase() === "g" && str[i - 2].toLowerCase() === "h" && str[i - 1].toLowerCase() === "t" && str[i + 1] === "v" && str[i + 2] === "e" || str[i - 1] && str[i - 1].toLowerCase() === "s" && (!str[i + 1] || !isLetter(str[i + 1]) && !isNumber(str[i + 1]))) {
@@ -697,44 +730,55 @@ function det(str, inputOpts) {
         applicableOpts.stripHtml = true;
         skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
         if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
-          if (tag.name.toLowerCase() === "li" && !tag.slashPresent || tag.name.toLowerCase() === "ul" && tag.slashPresent) {
+          if (opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
+            return tagName.startsWith("/") && tag.slashPresent && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !tag.slashPresent && tag.name.toLowerCase() === tagName;
+          })) {
             applicableOpts.replaceLineBreaks = true;
-            applicableOpts.useXHTML = true;
             if (!opts.removeLineBreaks) {
+              if (opts.replaceLineBreaks) {
+                applicableOpts.useXHTML = true;
+              }
               finalIndexesToDelete.push(deleteFrom, deleteTo, "".concat(opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">") : "", "\n"));
             } else {
               finalIndexesToDelete.push(proposedReturn);
             }
-          } else if (["ul", "li"].includes(tag.name.toLowerCase()) && !opts.removeLineBreaks) {
-            finalIndexesToDelete.push(deleteFrom, deleteTo);
           } else {
             finalIndexesToDelete.push(proposedReturn);
           }
         } else {
-          if (voidTags.includes(tag.name.toLowerCase()) && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
+          if (voidTags.includes(tag.name.toLowerCase())) {
             applicableOpts.useXHTML = true;
-            if (opts.useXHTML) {
-              finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
-            }
-          }
-          if (voidTags.includes(tag.name.toLowerCase()) && tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
-            return !_char.trim().length || _char === "/";
-          })) {
-            finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
-          }
-          if (voidTags.includes(tag.name.toLowerCase()) && tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
-            if (str[stringLeftRight.left(str, stringLeftRight.left(str, tag.lastClosingBracketAt))] === "/") {
-              applicableOpts.useXHTML = true;
-              if (!opts.useXHTML || str.slice(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
-                mode: 2
-              }, "/"), tag.lastClosingBracketAt) !== "/") {
-                finalIndexesToDelete.push(
-                stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
-                  mode: 2
-                }, "/"), tag.lastClosingBracketAt, opts.useXHTML ? "/" : undefined);
+            if (str[stringLeftRight.left(str, tag.lastClosingBracketAt)] !== "/" && tag.lastClosingBracketAt) {
+              if (opts.useXHTML) {
+                finalIndexesToDelete.push(tag.lastClosingBracketAt, tag.lastClosingBracketAt, "/");
               }
-            } else if (!opts.useXHTML || str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/") {
-              finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
+            }
+            if (tag.slashPresent && isNum(tag.lastOpeningBracketAt) && tag.nameStarts && tag.lastOpeningBracketAt < tag.nameStarts - 1 && str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).split("").every(function (_char) {
+              return !_char.trim().length || _char === "/";
+            })) {
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.nameStarts);
+            }
+            if (tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
+              if (str[stringLeftRight.left(str, stringLeftRight.left(str, tag.lastClosingBracketAt))] === "/") {
+                applicableOpts.useXHTML = true;
+                if (!opts.useXHTML || str.slice(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
+                  mode: 2
+                }, "/"), tag.lastClosingBracketAt) !== "/") {
+                  finalIndexesToDelete.push(
+                  stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
+                    mode: 2
+                  }, "/"), tag.lastClosingBracketAt, opts.useXHTML ? "/" : undefined);
+                }
+              } else if (!opts.useXHTML || str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/") {
+                finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
+              }
+            }
+          } else {
+            if (tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
+              finalIndexesToDelete.push(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
+                mode: 2
+              }, "/"), tag.lastClosingBracketAt);
+              finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
             }
           }
           if (tag.name.toLowerCase() !== tag.name) {
@@ -742,12 +786,6 @@ function det(str, inputOpts) {
           }
           if ("/>".includes(str[stringLeftRight.right(str, tag.nameEnds - 1)]) && stringLeftRight.right(str, tag.nameEnds - 1) > tag.nameEnds) {
             finalIndexesToDelete.push(tag.nameEnds, stringLeftRight.right(str, tag.nameEnds - 1));
-          }
-          if (!voidTags.includes(tag.name.toLowerCase()) && tag.slashPresent && str[stringLeftRight.left(str, tag.lastClosingBracketAt)] === "/") {
-            finalIndexesToDelete.push(stringLeftRight.chompLeft(str, tag.lastClosingBracketAt, {
-              mode: 2
-            }, "/"), tag.lastClosingBracketAt);
-            finalIndexesToDelete.push(tag.lastOpeningBracketAt + 1, tag.lastOpeningBracketAt + 1, "/");
           }
         }
         if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
@@ -779,7 +817,15 @@ function det(str, inputOpts) {
     hyphens: true
   });
   if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
-    applicableOpts.removeWidows = true;
+    if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
+      applicableOpts.removeWidows = true;
+      if (opts.removeWidows) {
+        applicableOpts.convertEntities = true;
+      }
+    }
+    if (!applicableOpts.convertEntities && widowFixes.whatWasDone.convertEntities) {
+      applicableOpts.convertEntities = true;
+    }
     if (opts.removeWidows) {
       str = stringRemoveWidows.removeWidows(str, {
         ignore: "all",

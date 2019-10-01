@@ -13,7 +13,8 @@ const defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
-  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"]
+  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
+  stripHtmlAddNewLine: ["li", "/ul"]
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";

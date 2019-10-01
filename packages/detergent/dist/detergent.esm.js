@@ -7,7 +7,7 @@
  * Homepage: https://detergent.io
  */
 
-import { right, left, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
+import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { allNamedEntities } from 'all-named-html-entities';
@@ -40,7 +40,8 @@ const defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
-  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"]
+  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
+  stripHtmlAddNewLine: ["li", "/ul"]
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";
@@ -537,17 +538,27 @@ function processCharacter(
             );
             applicableOpts.removeLineBreaks = true;
             applicableOpts.replaceLineBreaks = true;
-            applicableOpts.useXHTML = true;
+            if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
+            }
           } else {
             rangesArr.push(i, y);
           }
         } else if (charcode === 9) {
           rangesArr.push(i, y, " ");
         } else if (charcode === 10) {
-          applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.useXHTML = true;
-          applicableOpts.removeLineBreaks = true;
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
+          if (
+            !opts.removeLineBreaks &&
+            !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)
+          ) {
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
+            }
+          }
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
             if (punctuationChars.includes(str[right(str, i)])) {
@@ -555,22 +566,24 @@ function processCharacter(
             }
             rangesArr.push(i, y, whatToInsert);
           } else if (
-            opts.replaceLineBreaks &&
-            (!brClosingBracketIndexesArr ||
-              (Array.isArray(brClosingBracketIndexesArr) &&
-                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
+            !brClosingBracketIndexesArr ||
+            (Array.isArray(brClosingBracketIndexesArr) &&
+              !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))
           ) {
-            let startingIdx = i;
-            if (str[i - 1] === " ") {
-              startingIdx = leftStopAtNewLines(str, i) + 1;
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              let startingIdx = i;
+              if (str[i - 1] === " ") {
+                startingIdx = leftStopAtNewLines(str, i) + 1;
+              }
+              rangesArr.push(
+                startingIdx,
+                i,
+                `<br${opts.useXHTML ? "/" : ""}>${
+                  endOfLine === "\r\n" ? "\r" : ""
+                }`
+              );
             }
-            rangesArr.push(
-              startingIdx,
-              i,
-              `<br${opts.useXHTML ? "/" : ""}>${
-                endOfLine === "\r\n" ? "\r" : ""
-              }`
-            );
           } else {
             if (str[leftStopAtNewLines(str, i)].trim().length) {
               const tempIdx = leftStopAtNewLines(str, i);
@@ -597,10 +610,13 @@ function processCharacter(
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
           applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.removeLineBreaks = true;
-          applicableOpts.replaceLineBreaks = true;
-          applicableOpts.useXHTML = true;
+          if (
+            !opts.removeLineBreaks &&
+            !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)
+          ) {
+            applicableOpts.replaceLineBreaks = true;
+            applicableOpts.useXHTML = true;
+          }
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
             if (
@@ -610,26 +626,36 @@ function processCharacter(
               whatToInsert = "";
             }
             rangesArr.push(i, y, whatToInsert);
-          } else if (opts.replaceLineBreaks) {
-            let startingIdx = i;
-            if (str[i - 1] === " ") {
-              startingIdx = leftStopAtNewLines(str, i) + 1;
-            }
-            let endingIdx = i;
-            if (endOfLine === "\n") {
-              endingIdx = i + 1;
-            }
-            rangesArr.push(
-              startingIdx,
-              endingIdx,
-              `<br${opts.useXHTML ? "/" : ""}>${
-                str[i + 1] === "\n" ? "" : "\n"
-              }`
-            );
-            if (str[i + 1] === "\n") {
-              offsetBy(1);
+          } else if (
+            !brClosingBracketIndexesArr ||
+            (Array.isArray(brClosingBracketIndexesArr) &&
+              !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))
+          ) {
+            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks) {
+              let startingIdx = i;
+              if (str[i - 1] === " ") {
+                startingIdx = leftStopAtNewLines(str, i) + 1;
+              }
+              let endingIdx = i;
+              if (endOfLine === "\n") {
+                endingIdx = i + 1;
+              }
+              rangesArr.push(
+                startingIdx,
+                endingIdx,
+                `<br${opts.useXHTML ? "/" : ""}>${
+                  str[i + 1] === "\n" ? "" : "\n"
+                }`
+              );
+              if (str[i + 1] === "\n") {
+                offsetBy(1);
+              }
             }
           } else {
+            if (endOfLine === "\n") {
+              rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
+            }
             if (str[leftStopAtNewLines(str, i)].trim().length) {
               let endingIdx = i;
               if (endOfLine === "\n") {
@@ -1185,10 +1211,12 @@ function processCharacter(
       } else if (charcode === 65279) {
         rangesArr.push(i, y);
       } else {
-        applicableOpts.convertEntities = true;
-        applicableOpts.dontEncodeNonLatin =
-          applicableOpts.dontEncodeNonLatin ||
-          doConvertEntities(str[i], true) !== doConvertEntities(str[i], false);
+        if (
+          !applicableOpts.dontEncodeNonLatin &&
+          doConvertEntities(str[i], true) !== doConvertEntities(str[i], false)
+        ) {
+          applicableOpts.dontEncodeNonLatin = true;
+        }
         if (opts.convertEntities) {
           let convertedCharVal = doConvertEntities(
             str[i],
@@ -1211,7 +1239,10 @@ function processCharacter(
             } else if (convertedCharVal !== "&apos;") {
               rangesArr.push(i, y, convertedCharVal);
             }
+            applicableOpts.convertEntities = true;
           }
+        } else {
+          applicableOpts.convertEntities = true;
         }
       }
     }
@@ -1226,13 +1257,19 @@ var version = "5.0.1";
 function det(str, inputOpts) {
   let opts;
   if (inputOpts) {
+    opts = clone(inputOpts);
     if (isObj(inputOpts)) {
-      if (inputOpts.stripHtmlButIgnoreTags) {
-        inputOpts.stripHtmlButIgnoreTags = arrayiffy(
-          inputOpts.stripHtmlButIgnoreTags
-        );
+      if (!opts.stripHtmlButIgnoreTags) {
+        opts.stripHtmlButIgnoreTags = [];
+      } else {
+        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
       }
-      opts = merge(defaultOpts, inputOpts, {
+      if (!opts.stripHtmlButIgnoreTags) {
+        opts.stripHtmlButIgnoreTags = [];
+      } else {
+        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
+      }
+      opts = merge(defaultOpts, opts, {
         cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
           if (
             (Array.isArray(inputArg1) &&
@@ -1245,11 +1282,6 @@ function det(str, inputOpts) {
           return resultAboutToBeReturned;
         }
       });
-      if (typeof opts.stripHtmlButIgnoreTags === "string") {
-        opts.stripHtmlButIgnoreTags = [opts.stripHtmlButIgnoreTags];
-      } else if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      }
     } else {
       throw new Error(
         `detergent(): [THROW_ID_01] Options object must be a plain object, not ${typeof inputOpts}`
@@ -1261,7 +1293,9 @@ function det(str, inputOpts) {
   const applicableOpts = {};
   Object.keys(defaultOpts)
     .sort()
-    .filter(val => val !== "stripHtmlButIgnoreTags")
+    .filter(
+      val => !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags"].includes(val)
+    )
     .forEach(singleOption => {
       applicableOpts[singleOption] = false;
     });
@@ -1296,7 +1330,10 @@ function det(str, inputOpts) {
     lastVal = temp;
     temp = he.decode(temp);
   } while (temp !== str && lastVal !== temp);
-  str = temp;
+  if (str !== temp) {
+    str = temp;
+    applicableOpts.convertEntities = true;
+  }
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
       if (
@@ -1395,12 +1432,22 @@ function det(str, inputOpts) {
           !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())
         ) {
           if (
-            (tag.name.toLowerCase() === "li" && !tag.slashPresent) ||
-            (tag.name.toLowerCase() === "ul" && tag.slashPresent)
+            opts.stripHtmlAddNewLine.length &&
+            opts.stripHtmlAddNewLine.some(
+              tagName =>
+                (tagName.startsWith("/") &&
+                  tag.slashPresent &&
+                  tag.name.toLowerCase() === tagName.slice(1)) ||
+                (!tagName.startsWith("/") &&
+                  !tag.slashPresent &&
+                  tag.name.toLowerCase() === tagName)
+            )
           ) {
             applicableOpts.replaceLineBreaks = true;
-            applicableOpts.useXHTML = true;
             if (!opts.removeLineBreaks) {
+              if (opts.replaceLineBreaks) {
+                applicableOpts.useXHTML = true;
+              }
               finalIndexesToDelete.push(
                 deleteFrom,
                 deleteTo,
@@ -1413,72 +1460,81 @@ function det(str, inputOpts) {
             } else {
               finalIndexesToDelete.push(proposedReturn);
             }
-          } else if (
-            ["ul", "li"].includes(tag.name.toLowerCase()) &&
-            !opts.removeLineBreaks
-          ) {
-            finalIndexesToDelete.push(deleteFrom, deleteTo);
           } else {
             finalIndexesToDelete.push(proposedReturn);
           }
         } else {
-          if (
-            voidTags.includes(tag.name.toLowerCase()) &&
-            str[left(str, tag.lastClosingBracketAt)] !== "/" &&
-            tag.lastClosingBracketAt
-          ) {
+          if (voidTags.includes(tag.name.toLowerCase())) {
             applicableOpts.useXHTML = true;
-            if (opts.useXHTML) {
-              finalIndexesToDelete.push(
-                tag.lastClosingBracketAt,
-                tag.lastClosingBracketAt,
-                "/"
-              );
-            }
-          }
-          if (
-            voidTags.includes(tag.name.toLowerCase()) &&
-            tag.slashPresent &&
-            isNum(tag.lastOpeningBracketAt) &&
-            tag.nameStarts &&
-            tag.lastOpeningBracketAt < tag.nameStarts - 1 &&
-            str
-              .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
-              .split("")
-              .every(char => !char.trim().length || char === "/")
-          ) {
-            finalIndexesToDelete.push(
-              tag.lastOpeningBracketAt + 1,
-              tag.nameStarts
-            );
-          }
-          if (
-            voidTags.includes(tag.name.toLowerCase()) &&
-            tag.slashPresent &&
-            str[left(str, tag.lastClosingBracketAt)] === "/"
-          ) {
-            if (str[left(str, left(str, tag.lastClosingBracketAt))] === "/") {
-              applicableOpts.useXHTML = true;
-              if (
-                !opts.useXHTML ||
-                str.slice(
-                  chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
-                  tag.lastClosingBracketAt
-                ) !== "/"
-              ) {
+            if (
+              str[left(str, tag.lastClosingBracketAt)] !== "/" &&
+              tag.lastClosingBracketAt
+            ) {
+              if (opts.useXHTML) {
                 finalIndexesToDelete.push(
-                  chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
                   tag.lastClosingBracketAt,
-                  opts.useXHTML ? "/" : undefined
+                  tag.lastClosingBracketAt,
+                  "/"
                 );
               }
-            } else if (
-              !opts.useXHTML ||
-              str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/"
+            }
+            if (
+              tag.slashPresent &&
+              isNum(tag.lastOpeningBracketAt) &&
+              tag.nameStarts &&
+              tag.lastOpeningBracketAt < tag.nameStarts - 1 &&
+              str
+                .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
+                .split("")
+                .every(char => !char.trim().length || char === "/")
             ) {
               finalIndexesToDelete.push(
-                tag.slashPresent,
+                tag.lastOpeningBracketAt + 1,
+                tag.nameStarts
+              );
+            }
+            if (
+              tag.slashPresent &&
+              str[left(str, tag.lastClosingBracketAt)] === "/"
+            ) {
+              if (str[left(str, left(str, tag.lastClosingBracketAt))] === "/") {
+                applicableOpts.useXHTML = true;
+                if (
+                  !opts.useXHTML ||
+                  str.slice(
+                    chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
+                    tag.lastClosingBracketAt
+                  ) !== "/"
+                ) {
+                  finalIndexesToDelete.push(
+                    chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
+                    tag.lastClosingBracketAt,
+                    opts.useXHTML ? "/" : undefined
+                  );
+                }
+              } else if (
+                !opts.useXHTML ||
+                str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/"
+              ) {
+                finalIndexesToDelete.push(
+                  tag.slashPresent,
+                  tag.lastClosingBracketAt
+                );
+              }
+            }
+          } else {
+            if (
+              tag.slashPresent &&
+              str[left(str, tag.lastClosingBracketAt)] === "/"
+            ) {
+              finalIndexesToDelete.push(
+                chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
                 tag.lastClosingBracketAt
+              );
+              finalIndexesToDelete.push(
+                tag.lastOpeningBracketAt + 1,
+                tag.lastOpeningBracketAt + 1,
+                "/"
               );
             }
           }
@@ -1496,21 +1552,6 @@ function det(str, inputOpts) {
             finalIndexesToDelete.push(
               tag.nameEnds,
               right(str, tag.nameEnds - 1)
-            );
-          }
-          if (
-            !voidTags.includes(tag.name.toLowerCase()) &&
-            tag.slashPresent &&
-            str[left(str, tag.lastClosingBracketAt)] === "/"
-          ) {
-            finalIndexesToDelete.push(
-              chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
-              tag.lastClosingBracketAt
-            );
-            finalIndexesToDelete.push(
-              tag.lastOpeningBracketAt + 1,
-              tag.lastOpeningBracketAt + 1,
-              "/"
             );
           }
         }
@@ -1565,7 +1606,18 @@ function det(str, inputOpts) {
     hyphens: true
   });
   if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
-    applicableOpts.removeWidows = true;
+    if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
+      applicableOpts.removeWidows = true;
+      if (opts.removeWidows) {
+        applicableOpts.convertEntities = true;
+      }
+    }
+    if (
+      !applicableOpts.convertEntities &&
+      widowFixes.whatWasDone.convertEntities
+    ) {
+      applicableOpts.convertEntities = true;
+    }
     if (opts.removeWidows) {
       str = removeWidows(str, {
         ignore: "all",
