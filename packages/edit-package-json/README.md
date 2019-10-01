@@ -61,11 +61,13 @@ This package has three builds in `dist/` folder:
 
 ## TLDR - Our promise
 
-- write to JSON without parsing, edit string directly
+- change value by path or delete by path in read JSON contents string, directly, without parsing
 - `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
 - passes all unit tests of object-path^
 
 ^ some features like setting values on keys which don't exist are not implemented yet, so tests were adapted but commented-out.
+
+The aim is to 100% guarantee that JSON formatting will be kept intact.
 
 **[⬆ back to top](#)**
 
@@ -75,16 +77,20 @@ Normally, when editing `package.json` file, it is parsed, its value, a plain obj
 
 When parsing-editing-stringifying JSON, we can't guarantee the: key order, indentation (tabs vs. spaces) and all other formatting to be intact.
 
+There are programs to stringify package.json and sort keys in particular order (https://www.npmjs.com/package/format-package) but formatting — indentation especially — is an opinionated thing and hard to customise across the whole pipeline of different programs (parser, editor, strigifier/sorter).
+
+Maintaining JSON formatting and key order is a challenge and this program tackles it.
+
 This program gives you interface to edit JSON files as string, without parsing.
 
-IMPORTANT.
+**IMPORTANT.**
 
 **Since this program is still in _a baby state_, it can't create new keys which didn't exist before. `set()` will only change values of existing keys. It is not able to add new keys yet.**
 
 It edits JSON as _string_ but let's you use [object-path](https://www.npmjs.com/package/object-path) notation to set values on any (for now, only already-existing) paths in JSON.
 
 ```js
-const { set } = require("edit-package-json");
+const { set, del } = require("edit-package-json");
 // we defined JSON contents manually, but in real programs you'd read the file,
 // as string, without parsing and pass it to set()
 const startingJSONContents = `{
@@ -116,7 +122,7 @@ We wrote quite a few non-parsing string-processing programs ([1](https://gitlab.
 
 ### .set()
 
-When you consume `set` (`const { set } = require("edit-package-json");`), it is a _function_.
+When you consume `set` (`const { set, del } = require("edit-package-json");`), it is a _function_.
 
 `set()` can set values by path, on a JSON string.
 
@@ -133,7 +139,7 @@ For now, this is the primary difference (from a more mature and more popular) `o
 | Input argument | Type     | Obligatory? | Description                                                                                               |
 | -------------- | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
 | `str`          | String   | yes         | JSON file contents                                                                                        |
-| `path`         | String   | yes         | Desired path in the object, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
+| `path`         | String   | yes         | Desired **EXISTING** path in the object, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
 | `valToInsert`  | Whatever | yes         | What to insert at the given path                                                                          |
 
 ---
@@ -142,7 +148,52 @@ For now, this is the primary difference (from a more mature and more popular) `o
 
 Amended string is returned.
 
+---
+
+To repeat again, `set()` can't create new paths yet, it's still in baby state. `set()` can only edit existing paths in JSON.
+
 **[⬆ back to top](#)**
+
+### .del()
+
+Put the a JSON string and a path into `del`, [object-path](https://www.npmjs.com/package/object-path)-style.
+
+For example,
+
+```js
+const { set, del } = require("edit-package-json");
+// we defined JSON contents manually, but in real programs you'd read the file,
+// as string, without parsing and pass it to set()
+const startingJSONContents = `{
+  "a": "b",
+  "c": "d"
+}`;
+
+// amended result:
+const result = del(source, "c");
+
+console.log(JSON.stringify(result, null, 4));
+// => {
+//    "a": "b"
+//    }
+```
+
+---
+
+**Input**
+
+**del(source, path)**
+
+| Input argument | Type     | Obligatory? | Description                                                                                               |
+| -------------- | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
+| `str`          | String   | yes         | JSON file contents                                                                                        |
+| `path`         | String   | yes         | Desired path in the object to delete, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
+
+---
+
+**Output**
+
+Amended string is returned.
 
 ## Contributing
 
