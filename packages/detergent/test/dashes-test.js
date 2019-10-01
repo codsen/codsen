@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer, allCombinations } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
   rawNDash,
@@ -125,8 +126,7 @@ test(`01.06 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
     t.is(det(t, `An A&ndash;Z guide`, opt).res, `An A${rawNDash}Z guide`);
   });
   mixer({
-    convertDashes: 0,
-    convertEntities: 0
+    convertDashes: 0
   }).forEach(opt => {
     t.is(
       det(t, `An A&ndash;Z guide`, opt).res,
@@ -134,6 +134,29 @@ test(`01.06 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
       JSON.stringify(opt, null, 4)
     );
   });
+
+  t.deepEqual(
+    det1(`An A&ndash;Z guide`, {
+      convertDashes: 0
+    }),
+    {
+      res: "An A-Z guide",
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: false,
+        convertEntities: false,
+        convertDashes: true,
+        convertApostrophes: false,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: false
+      }
+    }
+  );
 });
 
 //                                 m dashes
@@ -509,7 +532,8 @@ test(`04.02 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
 
 test(`04.03 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - minus and number, too short to widow removal`, t => {
   mixer({
-    convertEntities: 0
+    convertEntities: 0,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(det(t, "Temperatures of -20°C", opt).res, "Temperatures of -20°C");
     t.is(det(t, "-20°C", opt).res, "-20°C", JSON.stringify(opt, null, 4));
@@ -518,7 +542,8 @@ test(`04.03 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
 
 test(`04.04 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - deg HTML entity`, t => {
   mixer({
-    convertEntities: 1
+    convertEntities: 1,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(det(t, "Temperatures of -20°C", opt).res, "Temperatures of -20&deg;C");
     t.is(det(t, "-20°C", opt).res, "-20&deg;C", JSON.stringify(opt, null, 4));

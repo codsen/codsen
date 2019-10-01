@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer, allCombinations } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
 import {
   leftSingleQuote,
   rightSingleQuote,
@@ -14,7 +15,6 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01.01 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error present`, t => {
-  t.is(det(t, "abc&nspdef").applicableOpts.fixBrokenEntities, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "abc&nspdef", opt).applicableOpts.fixBrokenEntities,
@@ -25,7 +25,6 @@ test(`01.01 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error pres
 });
 
 test(`01.02 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #1`, t => {
-  t.is(det(t, "&nbsp;").applicableOpts.fixBrokenEntities, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "&nbsp;", opt).applicableOpts.fixBrokenEntities,
@@ -36,7 +35,6 @@ test(`01.02 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 });
 
 test(`01.03 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #2`, t => {
-  t.is(det(t, "Some text").applicableOpts.fixBrokenEntities, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "Some text", opt).applicableOpts.fixBrokenEntities,
@@ -47,7 +45,6 @@ test(`01.03 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 });
 
 test(`01.04 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #3`, t => {
-  t.is(det(t, "").applicableOpts.fixBrokenEntities, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "", opt).applicableOpts.fixBrokenEntities,
@@ -61,7 +58,6 @@ test(`01.04 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 // -----------------------------------------------------------------------------
 
 test(`02.01 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, between words`, t => {
-  t.is(det(t, "aaa bbb ccc ddd").applicableOpts.removeWidows, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "aaa bbb ccc ddd", opt).applicableOpts.removeWidows,
@@ -72,10 +68,6 @@ test(`02.01 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.02 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, in front of dash`, t => {
-  t.is(
-    det(t, "Some text And Some Text -&nbsp;9999").applicableOpts.removeWidows,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, "Some text And Some Text -&nbsp;9999", opt).applicableOpts
@@ -87,7 +79,6 @@ test(`02.02 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.03 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, UK postcode`, t => {
-  t.is(det(t, "abc SW1A 1AA def").applicableOpts.removeWidows, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "abc SW1A 1AA def", opt).applicableOpts.removeWidows,
@@ -98,7 +89,6 @@ test(`02.03 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.04 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #1`, t => {
-  t.is(det(t, "slfhdjgdhfgdfhkd").applicableOpts.removeWidows, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "slfhdjgdhfgdfhkd", opt).applicableOpts.removeWidows,
@@ -109,7 +99,6 @@ test(`02.04 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.05 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #2`, t => {
-  t.is(det(t, "\n\n\n\t\t\t      \n\n\n").applicableOpts.removeWidows, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "\n\n\n\t\t\t      \n\n\n", opt).applicableOpts.removeWidows,
@@ -120,7 +109,6 @@ test(`02.05 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.06 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #3`, t => {
-  t.is(det(t, "").applicableOpts.removeWidows, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "", opt).applicableOpts.removeWidows,
@@ -131,7 +119,6 @@ test(`02.06 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.07 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 1, considering opts.convertDashes can be on or off`, t => {
-  t.is(det(t, "a - b").applicableOpts.removeWidows, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "a - b", opt).applicableOpts.removeWidows,
@@ -142,7 +129,6 @@ test(`02.07 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 1, 
 });
 
 test(`02.08 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 2, considering opts.convertDashes can be on or off`, t => {
-  t.is(det(t, "a-b").applicableOpts.removeWidows, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, "a-b", opt).applicableOpts.removeWidows,
@@ -156,7 +142,6 @@ test(`02.08 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 2, 
 // -----------------------------------------------------------------------------
 
 test(`03.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII, never encoded - straight quote`, t => {
-  t.is(det(t, `'`).applicableOpts.convertEntities, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `'`, opt).applicableOpts.convertEntities,
@@ -167,7 +152,6 @@ test(`03.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII
 });
 
 test(`03.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII, invisible`, t => {
-  t.is(det(t, `\u0001`).applicableOpts.convertEntities, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `\u0001`, opt).applicableOpts.convertEntities,
@@ -177,22 +161,7 @@ test(`03.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII
   });
 });
 
-test(`03.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII, letters`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.convertEntities,
-    false
-  );
-  allCombinations.forEach(opt => {
-    t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.convertEntities,
-      false,
-      JSON.stringify(opt, null, 0)
-    );
-  });
-});
-
-test(`03.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, pound`, t => {
-  t.is(det(t, `£`).applicableOpts.convertEntities, true);
+test(`03.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, pound`, t => {
   allCombinations.forEach(opt => {
     t.is(
       det(t, `£`, opt).applicableOpts.convertEntities,
@@ -202,8 +171,7 @@ test(`03.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCI
   });
 });
 
-test(`03.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, Ą`, t => {
-  t.is(det(t, `Ą`).applicableOpts.convertEntities, true);
+test(`03.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, Ą`, t => {
   allCombinations.forEach(opt => {
     t.is(
       det(t, `Ą`, opt).applicableOpts.convertEntities,
@@ -213,8 +181,7 @@ test(`03.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCI
   });
 });
 
-test(`03.06 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - encoded non-breaking space`, t => {
-  t.is(det(t, `&nbsp;`).applicableOpts.convertEntities, true);
+test(`03.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - encoded non-breaking space`, t => {
   allCombinations.forEach(opt => {
     t.is(
       det(t, `&nbsp;`, opt).applicableOpts.convertEntities,
@@ -228,10 +195,6 @@ test(`03.06 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - encoded non-
 // -----------------------------------------------------------------------------
 
 test(`04.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.convertDashes,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.convertDashes,
@@ -242,7 +205,6 @@ test(`04.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - just text`, t 
 });
 
 test(`04.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.convertDashes, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.convertDashes,
@@ -253,7 +215,6 @@ test(`04.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - empty`, t => {
 });
 
 test(`04.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - n-dash case`, t => {
-  t.is(det(t, `Ranges 1-2`).applicableOpts.convertDashes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `Ranges 1-2`, opt).applicableOpts.convertDashes,
@@ -264,7 +225,6 @@ test(`04.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - n-dash case`, 
 });
 
 test(`04.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - m-dash case`, t => {
-  t.is(det(t, `Ranges - best solution.`).applicableOpts.convertDashes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `Ranges - best solution.`, opt).applicableOpts.convertDashes,
@@ -275,11 +235,6 @@ test(`04.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - m-dash case`, 
 });
 
 test(`04.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - legit minus`, t => {
-  t.is(
-    // nothing to convert:
-    det(t, `1 - 2 = 3`).applicableOpts.convertDashes,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `1 - 2 = 3`, opt).applicableOpts.convertDashes,
@@ -293,10 +248,6 @@ test(`04.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - legit minus`, 
 // -----------------------------------------------------------------------------
 
 test(`05.01 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.convertApostrophes,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
@@ -308,7 +259,6 @@ test(`05.01 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - just text
 });
 
 test(`05.02 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.convertApostrophes, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.convertApostrophes,
@@ -319,7 +269,6 @@ test(`05.02 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - empty`, t
 });
 
 test(`05.03 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  t.is(det(t, `she's good`).applicableOpts.convertApostrophes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `she's good`, opt).applicableOpts.convertApostrophes,
@@ -330,10 +279,6 @@ test(`05.03 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 });
 
 test(`05.04 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - possessive`, t => {
-  t.is(
-    det(t, `the particular citizen's debt`).applicableOpts.convertApostrophes,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `the particular citizen's debt`, opt).applicableOpts
@@ -345,7 +290,6 @@ test(`05.04 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - possessiv
 });
 
 test(`05.05 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  t.is(det(t, `so-called "ownership"`).applicableOpts.convertApostrophes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `so-called "ownership"`, opt).applicableOpts.convertApostrophes,
@@ -356,10 +300,6 @@ test(`05.05 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 });
 
 test(`05.06 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  t.is(
-    det(t, `not very 'legit', how they say`).applicableOpts.convertApostrophes,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `not very 'legit', how they say`, opt).applicableOpts
@@ -371,18 +311,18 @@ test(`05.06 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 });
 
 test(`05.07 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw lsquo`, t => {
-  t.is(det(t, leftSingleQuote).applicableOpts.convertApostrophes, true);
-  allCombinations.forEach(opt => {
+  mixer({
+    convertEntities: 0
+  }).forEach(opt => {
     t.is(
-      det(t, leftSingleQuote, opt).applicableOpts.convertApostrophes,
-      true,
+      det(t, leftSingleQuote, opt).res,
+      leftSingleQuote,
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
 test(`05.08 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rsquo`, t => {
-  t.is(det(t, rightSingleQuote).applicableOpts.convertApostrophes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, rightSingleQuote, opt).applicableOpts.convertApostrophes,
@@ -393,7 +333,6 @@ test(`05.08 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rsquo
 });
 
 test(`05.09 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw ldquo`, t => {
-  t.is(det(t, leftDoubleQuote).applicableOpts.convertApostrophes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, leftDoubleQuote, opt).applicableOpts.convertApostrophes,
@@ -404,7 +343,6 @@ test(`05.09 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw ldquo
 });
 
 test(`05.10 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rdquo`, t => {
-  t.is(det(t, rightDoubleQuote).applicableOpts.convertApostrophes, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, rightDoubleQuote, opt).applicableOpts.convertApostrophes,
@@ -418,10 +356,6 @@ test(`05.10 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rdquo
 // -----------------------------------------------------------------------------
 
 test(`06.01 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.replaceLineBreaks,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
@@ -433,7 +367,6 @@ test(`06.01 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - just text`
 });
 
 test(`06.02 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.replaceLineBreaks, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.replaceLineBreaks,
@@ -444,7 +377,6 @@ test(`06.02 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - empty`, t 
 });
 
 test(`06.03 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single line break gets trimmed`, t => {
-  t.is(det(t, `\n`).applicableOpts.replaceLineBreaks, false);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -468,7 +400,6 @@ test(`06.03 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single lin
 });
 
 test(`06.04 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - more line breaks`, t => {
-  t.is(det(t, `\n\n\n`).applicableOpts.replaceLineBreaks, false);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -492,7 +423,6 @@ test(`06.04 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - more line 
 });
 
 test(`06.05 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single line break`, t => {
-  t.is(det(t, `a\nb`).applicableOpts.replaceLineBreaks, true);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -519,10 +449,6 @@ test(`06.05 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single lin
 // -----------------------------------------------------------------------------
 
 test(`07.01 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.removeLineBreaks,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.removeLineBreaks,
@@ -533,7 +459,6 @@ test(`07.01 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - just text`,
 });
 
 test(`07.02 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.removeLineBreaks, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.removeLineBreaks,
@@ -544,7 +469,6 @@ test(`07.02 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - empty`, t =
 });
 
 test(`07.03 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line break just gets trimmed`, t => {
-  t.is(det(t, `\n`).applicableOpts.removeLineBreaks, false);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -568,7 +492,6 @@ test(`07.03 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line
 });
 
 test(`07.04 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - more line breaks`, t => {
-  t.is(det(t, `\n\n\n`).applicableOpts.removeLineBreaks, false);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -592,7 +515,6 @@ test(`07.04 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - more line b
 });
 
 test(`07.05 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line break`, t => {
-  t.is(det(t, `a\nb`).applicableOpts.removeLineBreaks, true);
   allCombinations.forEach(opt => {
     // LF
     t.is(
@@ -616,7 +538,6 @@ test(`07.05 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line
 });
 
 test(`07.06 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - br`, t => {
-  t.is(det(t, `a<br>b`).applicableOpts.removeLineBreaks, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `a<br>b`, opt).applicableOpts.removeLineBreaks,
@@ -630,7 +551,6 @@ test(`07.06 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - br`, t => {
 // -----------------------------------------------------------------------------
 
 test(`08.01 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - just text`, t => {
-  t.is(det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.useXHTML, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.useXHTML,
@@ -641,7 +561,6 @@ test(`08.01 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - just text`, t => {
 });
 
 test(`08.02 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.useXHTML, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.useXHTML,
@@ -652,7 +571,6 @@ test(`08.02 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - empty`, t => {
 });
 
 test(`08.03 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - line breaks`, t => {
-  t.is(det(t, `a\nb`).applicableOpts.useXHTML, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `a\nb`, opt).applicableOpts.useXHTML,
@@ -758,10 +676,6 @@ test(`08.07 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - not ignored self-cl
 // -----------------------------------------------------------------------------
 
 test(`09.01 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.dontEncodeNonLatin,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
@@ -773,7 +687,6 @@ test(`09.01 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - just text
 });
 
 test(`09.02 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.dontEncodeNonLatin, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.dontEncodeNonLatin,
@@ -784,7 +697,6 @@ test(`09.02 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - empty`, t
 });
 
 test(`09.03 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - mixed`, t => {
-  t.is(det(t, "\u03A1").applicableOpts.dontEncodeNonLatin, true);
   allCombinations.forEach(opt => {
     [
       "\u03A1",
@@ -838,7 +750,6 @@ test(`09.03 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - mixed`, t
 });
 
 test(`09.04 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - a`, t => {
-  t.is(det(t, `a`).applicableOpts.dontEncodeNonLatin, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `a`, opt).applicableOpts.dontEncodeNonLatin,
@@ -849,7 +760,6 @@ test(`09.04 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - a`, t => 
 });
 
 test(`09.05 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - č`, t => {
-  t.is(det(t, `č`).applicableOpts.dontEncodeNonLatin, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `č`, opt).applicableOpts.dontEncodeNonLatin,
@@ -860,7 +770,6 @@ test(`09.05 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - č`, t =>
 });
 
 test(`09.06 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - =`, t => {
-  t.is(det(t, `=`).applicableOpts.dontEncodeNonLatin, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `=`, opt).applicableOpts.dontEncodeNonLatin,
@@ -871,7 +780,6 @@ test(`09.06 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - =`, t => 
 });
 
 test(`09.07 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - 2`, t => {
-  t.is(det(t, `2`).applicableOpts.dontEncodeNonLatin, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `2`, opt).applicableOpts.dontEncodeNonLatin,
@@ -885,10 +793,6 @@ test(`09.07 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - 2`, t => 
 // -----------------------------------------------------------------------------
 
 test(`10.01 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - just text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.addMissingSpaces,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.addMissingSpaces,
@@ -899,7 +803,6 @@ test(`10.01 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - just text`,
 });
 
 test(`10.02 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.addMissingSpaces, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.addMissingSpaces,
@@ -910,7 +813,6 @@ test(`10.02 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t =
 });
 
 test(`10.03 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, `1-2 1 - 2`).applicableOpts.addMissingSpaces, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `1-2 1 - 2`, opt).applicableOpts.addMissingSpaces,
@@ -931,11 +833,6 @@ test(`10.04 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - after n-das
 });
 
 test(`10.05 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - URL`, t => {
-  t.is(
-    det(t, `This is http://detergent.io.This is cool.`).applicableOpts
-      .addMissingSpaces,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `This is http://detergent.io.This is cool.`, opt).applicableOpts
@@ -947,7 +844,6 @@ test(`10.05 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - URL`, t => 
 });
 
 test(`10.06 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - comma in a sentence`, t => {
-  t.is(det(t, `Text,more text.`).applicableOpts.addMissingSpaces, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `Text,more text.`, opt).applicableOpts.addMissingSpaces,
@@ -961,10 +857,6 @@ test(`10.06 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - comma in a 
 // -----------------------------------------------------------------------------
 
 test(`11.01 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - normal text`, t => {
-  t.is(
-    det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.convertDotsToEllipsis,
-    false
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
@@ -976,7 +868,6 @@ test(`11.01 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - normal
 });
 
 test(`11.02 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.convertDotsToEllipsis, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.convertDotsToEllipsis,
@@ -987,7 +878,6 @@ test(`11.02 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - empty`
 });
 
 test(`11.03 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  t.is(det(t, `text&hellip;`).applicableOpts.convertDotsToEllipsis, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `text&hellip;`, opt).applicableOpts.convertDotsToEllipsis,
@@ -998,10 +888,6 @@ test(`11.03 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.04 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  t.is(
-    det(t, `it must mean something...`).applicableOpts.convertDotsToEllipsis,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `it must mean something...`, opt).applicableOpts
@@ -1013,11 +899,6 @@ test(`11.04 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.05 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  t.is(
-    det(t, `it must mean something...\n\nalso...\n\nzzz`).applicableOpts
-      .convertDotsToEllipsis,
-    true
-  );
   allCombinations.forEach(opt => {
     t.is(
       det(t, `it must mean something...\n\nalso...\n\nzzz`, opt).applicableOpts
@@ -1029,7 +910,6 @@ test(`11.05 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.06 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - raw ellipsis`, t => {
-  t.is(det(t, rawEllipsis).applicableOpts.convertDotsToEllipsis, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, rawEllipsis, opt).applicableOpts.convertDotsToEllipsis,
@@ -1043,7 +923,6 @@ test(`11.06 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - raw el
 // -----------------------------------------------------------------------------
 
 test(`12.01 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - normal text`, t => {
-  t.is(det(t, `sflj ldjflgk jlkfjghf lfhl`).applicableOpts.stripHtml, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.stripHtml,
@@ -1054,7 +933,6 @@ test(`12.01 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - normal text`, t =>
 });
 
 test(`12.02 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - empty`, t => {
-  t.is(det(t, ``).applicableOpts.stripHtml, false);
   allCombinations.forEach(opt => {
     t.is(
       det(t, ``, opt).applicableOpts.stripHtml,
@@ -1065,7 +943,6 @@ test(`12.02 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - empty`, t => {
 });
 
 test(`12.03 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single unrecognised tag`, t => {
-  t.is(det(t, `<zzz>`).applicableOpts.stripHtml, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `<zzz>`, opt).applicableOpts.stripHtml,
@@ -1076,7 +953,6 @@ test(`12.03 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single unrecognise
 });
 
 test(`12.04 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single br`, t => {
-  t.is(det(t, `<br>`).applicableOpts.stripHtml, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `<br>`, opt).applicableOpts.stripHtml,
@@ -1087,7 +963,6 @@ test(`12.04 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single br`, t => {
 });
 
 test(`12.05 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => {
-  t.is(det(t, `<sup>`).applicableOpts.stripHtml, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `<sup>`, opt).applicableOpts.stripHtml,
@@ -1098,7 +973,6 @@ test(`12.05 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => 
 });
 
 test(`12.06 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => {
-  t.is(det(t, `<sup>`).applicableOpts.stripHtml, true);
   allCombinations.forEach(opt => {
     t.is(
       det(t, `<sup>`, opt).applicableOpts.stripHtml,

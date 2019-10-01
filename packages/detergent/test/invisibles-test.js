@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -99,7 +100,7 @@ test("06 - invisible breaks - encoded decimal HTML entities", t => {
   }).forEach(opt => {
     t.is(
       det(t, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
-      "a\nb\nc\nd",
+      "a\nb\nc\n\nd",
       "06"
     );
   });

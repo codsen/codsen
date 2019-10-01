@@ -2,12 +2,32 @@
 
 import test from "ava";
 import { det, mixer } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
+
+import {
+  // rawReplacementMark,
+  // rawNDash,
+  // rawMDash,
+  // rawNbsp,
+  // rawhairspace,
+  rawEllipsis
+  // rightSingleQuote,
+  // rightDoubleQuote,
+  // leftDoubleQuote,
+  // leftSingleQuote
+} from "../dist/util.esm";
+
+// -----------------------------------------------------------------------------
 
 test(`01.01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`, t => {
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det(t, "\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, `${rawEllipsis}`, opt).res,
+      "...",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -32,7 +52,11 @@ test(`01.04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellips
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, `${rawEllipsis}`, opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -78,7 +102,11 @@ test(`01.09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setti
   mixer({
     convertDotsToEllipsis: 0
   }).forEach(opt => {
-    t.is(det(t, "\u2026", opt).res, "...", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, `${rawEllipsis}`, opt).res,
+      "...",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -103,7 +131,11 @@ test(`01.12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "\u2026", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, `${rawEllipsis}`, opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -112,7 +144,11 @@ test(`01.13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&hellip;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -121,7 +157,11 @@ test(`01.14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, t =>
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&mldr;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -130,7 +170,11 @@ test(`01.15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - thr
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "...", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "...", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -142,7 +186,7 @@ test(`01.16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - thr
   }).forEach(opt => {
     t.is(
       det(t, "Aaaaa... Bbbbb... C...", opt).res,
-      "Aaaaa\u2026 Bbbbb\u2026 C\u2026",
+      `Aaaaa${rawEllipsis} Bbbbb${rawEllipsis} C${rawEllipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -154,7 +198,11 @@ test(`01.17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - enc
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&hellip;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&hellip;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -164,7 +212,11 @@ test(`01.18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - enc
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&mldr;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&mldr;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -174,7 +226,11 @@ test(`01.19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&#x02026;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&#x02026;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -184,7 +240,11 @@ test(`01.20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - dec
     convertEntities: 0,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "&#8230;", opt).res, "\u2026", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, "&#8230;", opt).res,
+      `${rawEllipsis}`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -258,7 +318,11 @@ test(`01.27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unen
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach(opt => {
-    t.is(det(t, "\u2026", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, `${rawEllipsis}`, opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -347,7 +411,7 @@ test(`01.35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false 
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,
-      "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so\u2026",
+      `Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so${rawEllipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -380,7 +444,7 @@ test(`01.36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`,
   }).forEach(opt => {
     t.is(
       det(t, "..... ... . ..", opt).res,
-      "..... \u2026 . ..",
+      `..... ${rawEllipsis} . ..`,
       JSON.stringify(opt, null, 4)
     );
   });

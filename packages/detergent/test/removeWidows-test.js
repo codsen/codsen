@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer, allCombinations } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -29,7 +30,7 @@ test(`00 - minimal samples`, t => {
   );
 });
 
-test(`00 - ETX processed twice, 2nd time during widow removal`, t => {
+test(`01 - ETX processed twice, 2nd time during widow removal`, t => {
   t.is(
     det(t, `aaa bbb ccc\u0003ddd`, {
       removeWidows: 1,

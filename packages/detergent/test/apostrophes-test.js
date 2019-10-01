@@ -6,6 +6,7 @@ import {
   mixer
   // allCombinations
 } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm";
 
 // -----------------------------------------------------------------------------
 
@@ -95,6 +96,30 @@ test(`06 - doesn't convert quotation marks: -apostrophes-entities`, t => {
       JSON.stringify(opt, null, 4)
     );
   });
+
+  t.deepEqual(
+    det1('this is "citation"', {
+      convertApostrophes: 0,
+      convertEntities: 0
+    }),
+    {
+      res: 'this is "citation"',
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: false,
+        convertEntities: false,
+        convertDashes: false,
+        convertApostrophes: true,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: false
+      }
+    }
+  );
 });
 
 test(`07 - exclamation mark + double quote`, t => {

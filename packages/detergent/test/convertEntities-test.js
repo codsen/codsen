@@ -1,6 +1,7 @@
 // avanotonly
 
 import { det, mixer, allCombinations } from "../t-util/util";
+import { det as det1 } from "../dist/detergent.esm";
 import test from "ava";
 import he from "he";
 import {
@@ -154,6 +155,32 @@ test(`02.03 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
       JSON.stringify(opt, null, 4)
     );
   });
+
+  t.deepEqual(
+    det1(`HOORAY  ${rawMDash}  IT'S HERE ${rawhairspace}`, {
+      convertEntities: 1,
+      convertApostrophes: 0,
+      convertDashes: 1,
+      removeWidows: 0
+    }),
+    {
+      res: `HOORAY &mdash; IT'S HERE`,
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: true,
+        convertEntities: true,
+        convertDashes: true,
+        convertApostrophes: true,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: false
+      }
+    }
+  );
 });
 
 test(`02.04 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`, t => {
@@ -416,7 +443,47 @@ test(`03.01 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
-    convertDashes: 0
+    convertDashes: 0,
+    removeWidows: 1,
+    convertEntities: 1
+  }).forEach(opt => {
+    t.is(
+      det(t, `aaaaaaaaaaa - aaaaaaaaaaaa`, opt).res,
+      "aaaaaaaaaaa&nbsp;- aaaaaaaaaaaa",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+
+  t.deepEqual(
+    det1(`aaaaaaaaaaa - aaaaaaaaaaaa`, {
+      convertDashes: 0,
+      removeWidows: 1,
+      convertEntities: 1
+    }),
+    {
+      res: "aaaaaaaaaaa&nbsp;- aaaaaaaaaaaa",
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: true,
+        convertEntities: true,
+        convertDashes: true,
+        convertApostrophes: false,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: false
+      }
+    }
+  );
+});
+
+test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+  mixer({
+    convertDashes: 0,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
       det(t, `aaaaaaaaaaa - aaaaaaaaaaaa`, opt).res,
@@ -426,7 +493,7 @@ test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -439,9 +506,18 @@ test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
       JSON.stringify(opt, null, 4)
     );
   });
+
+  t.is(
+    det1(`aaaaaaaaaaa ${rawMDash} aaaaaaaaaaaa &mdash; aaaaaaaaaaaa`, {
+      convertDashes: 1,
+      convertEntities: 1,
+      removeWidows: 1
+    }).res,
+    `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`
+  );
 });
 
-test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -456,7 +532,7 @@ test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -466,21 +542,6 @@ test(`03.05 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
     t.is(
       det(t, `a ${rawMDash}a`, opt).res,
       "a&nbsp;&mdash; a",
-      JSON.stringify(opt, null, 4)
-    );
-  });
-});
-
-test(`03.06 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
-  mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 0,
-    addMissingSpaces: 0
-  }).forEach(opt => {
-    t.is(
-      det(t, `a ${rawMDash}a`, opt).res,
-      "a &mdash;a",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -491,6 +552,21 @@ test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
     convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0,
+    addMissingSpaces: 0
+  }).forEach(opt => {
+    t.is(
+      det(t, `a ${rawMDash}a`, opt).res,
+      "a &mdash;a",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 1,
+    removeWidows: 0,
     addMissingSpaces: 1
   }).forEach(opt => {
     t.is(
@@ -501,7 +577,7 @@ test(`03.07 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -516,7 +592,7 @@ test(`03.08 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -531,7 +607,7 @@ test(`03.09 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -546,7 +622,7 @@ test(`03.10 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -561,7 +637,7 @@ test(`03.11 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -576,7 +652,7 @@ test(`03.12 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -591,7 +667,7 @@ test(`03.13 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -606,7 +682,7 @@ test(`03.14 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 1,
@@ -621,7 +697,7 @@ test(`03.15 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -636,7 +712,7 @@ test(`03.16 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -651,7 +727,7 @@ test(`03.17 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   });
 });
 
-test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
   mixer({
     convertDashes: 1,
     convertEntities: 0,
@@ -661,21 +737,6 @@ test(`03.18 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
     t.is(
       det(t, `a${rawhairspace}${rawMDash}a`, opt).res,
       `a ${rawMDash}a`,
-      JSON.stringify(opt, null, 4)
-    );
-  });
-});
-
-test(`03.19 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
-  mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 0,
-    addMissingSpaces: 1
-  }).forEach(opt => {
-    t.is(
-      det(t, `a${rawhairspace}${rawMDash}a`, opt).res,
-      `a ${rawMDash} a`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -696,7 +757,8 @@ test(`03.20 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
 
 test(`03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   mixer({
-    convertEntities: 1
+    convertEntities: 1,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
       det(t, `Discount: -£10.00`, opt).res,
@@ -704,11 +766,20 @@ test(`03.21 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t =
       JSON.stringify(opt, null, 4)
     );
   });
+
+  t.is(
+    det1(`Discount: -£10.00`, {
+      convertEntities: 1,
+      removeWidows: 0
+    }).res,
+    "Discount: -&pound;10.00"
+  );
 });
 
 test(`03.22 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   mixer({
-    convertEntities: 0
+    convertEntities: 0,
+    removeWidows: 0
   }).forEach(opt => {
     t.is(
       det(t, `Discount: -£10.00`, opt).res,
@@ -720,11 +791,7 @@ test(`03.22 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t =
 
 test(`03.23 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, t => {
   allCombinations.forEach(opt => {
-    t.is(
-      det(t, `Discount: -10.00`, opt).res,
-      "Discount: -10.00",
-      JSON.stringify(opt, null, 4)
-    );
+    t.is(det(t, `-10.00`, opt).res, "-10.00", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -781,6 +848,21 @@ test(`03.27 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntit
       det(t, `a a a a a a a a a a ${rawMDash} a a a a ${rawhairspace}`, opt)
         .res,
       `a a a a a a a a a a ${rawMDash} a a a a`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+});
+
+test(`03.28 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
+  mixer({
+    convertDashes: 1,
+    convertEntities: 0,
+    removeWidows: 0,
+    addMissingSpaces: 1
+  }).forEach(opt => {
+    t.is(
+      det(t, `a${rawhairspace}${rawMDash}a`, opt).res,
+      `a ${rawMDash} a`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -1739,8 +1821,7 @@ test(`10.03 - numeric entities`, t => {
 
 test(`10.04 - wrong named entity QUOT into quot`, t => {
   mixer({
-    convertEntities: 1,
-    convertApostrophes: 0
+    convertEntities: 1
   }).forEach(opt => {
     t.is(det(t, `&QUOT;`, opt).res, "&quot;", JSON.stringify(opt, null, 4));
   });

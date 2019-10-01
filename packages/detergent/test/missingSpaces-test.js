@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer, allCombinations } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
 import { rawNDash } from "../dist/util.esm";
 
 // -----------------------------------------------------------------------------

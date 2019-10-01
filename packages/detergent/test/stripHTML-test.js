@@ -2,6 +2,7 @@
 
 import test from "ava";
 import { det, mixer } from "../t-util/util";
+// import { det as det1 } from "../dist/detergent.esm";
 
 test(`01.01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`, t => {
   mixer({

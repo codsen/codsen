@@ -88,6 +88,7 @@ var rightSingleQuote = "\u2019";
 var leftDoubleQuote = "\u201C";
 var rightDoubleQuote = "\u201D";
 var punctuationChars = [".", ",", ";", "!", "?"];
+var rawNDash = "\u2013";
 var rawMDash = "\u2014";
 var rawNbsp = "\xA0";
 var rawEllipsis = "\u2026";
@@ -153,9 +154,11 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           if (charcode === 3) {
             rangesArr.push(i, y, opts.removeLineBreaks ? " " : opts.replaceLineBreaks ? "<br".concat(opts.useXHTML ? "/" : "", ">\n") : "\n");
             applicableOpts.removeLineBreaks = true;
-            applicableOpts.replaceLineBreaks = true;
-            if (opts.replaceLineBreaks) {
-              applicableOpts.useXHTML = true;
+            if (!opts.removeLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+              if (opts.replaceLineBreaks) {
+                applicableOpts.useXHTML = true;
+              }
             }
           } else {
             rangesArr.push(i, y);
@@ -217,7 +220,6 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             return stringLeftRight.left(str, i) === idx;
           })) {
             applicableOpts.replaceLineBreaks = true;
-            applicableOpts.useXHTML = true;
           }
           if (opts.removeLineBreaks) {
             var _whatToInsert = " ";
@@ -230,6 +232,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           })) {
             applicableOpts.replaceLineBreaks = true;
             if (opts.replaceLineBreaks) {
+              applicableOpts.useXHTML = true;
               var _startingIdx = i;
               if (str[i - 1] === " ") {
                 _startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
@@ -270,16 +273,22 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
           if (stringLeftRight.right(str, i) || stringLeftRight.left(str, i)) {
-            applicableOpts.convertEntities = true;
             applicableOpts.convertApostrophes = true;
-            rangesArr.push(stringApostrophes.convertOne(str, {
+            var tempRes = stringApostrophes.convertOne(str, {
               from: i,
               convertEntities: opts.convertEntities,
               convertApostrophes: opts.convertApostrophes,
               offsetBy: offsetBy
-            }));
-          } else if (opts.convertEntities) {
-            rangesArr.push(i, i + 1, "&quot;");
+            });
+            if (tempRes && tempRes.length) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(tempRes);
+            }
+          } else {
+            applicableOpts.convertEntities = true;
+            if (opts.convertEntities) {
+              rangesArr.push(i, i + 1, "&quot;");
+            }
           }
         } else if (charcode === 38) {
           if (isLetter(str[i + 1])) {
@@ -321,11 +330,11 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             for (var z = stringLeftRight.right(str, i); z < len; z++) {
               if (str[z].trim().length && !isNum(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
-                  var tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
+                  var _tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
                     useNamedReferences: true
                   });
-                  if (tempRes) {
-                    rangesArr.push(i, z + 1, tempRes);
+                  if (_tempRes) {
+                    rangesArr.push(i, z + 1, _tempRes);
                   }
                   offsetBy(z + 1 - i);
                 }
@@ -338,16 +347,22 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             }
           }
         } else if (charcode === 39) {
-          applicableOpts.convertApostrophes = true;
           var _temp = stringApostrophes.convertOne(str, {
             from: i,
-            convertEntities: opts.convertEntities,
-            convertApostrophes: opts.convertApostrophes,
-            offsetBy: offsetBy
+            convertEntities: true,
+            convertApostrophes: true
           });
           if (_temp.length) {
-            applicableOpts.convertEntities = true;
-            rangesArr.push(_temp);
+            applicableOpts.convertApostrophes = true;
+            if (opts.convertApostrophes) {
+              applicableOpts.convertEntities = true;
+            }
+            rangesArr.push(stringApostrophes.convertOne(str, {
+              from: i,
+              convertEntities: opts.convertEntities,
+              convertApostrophes: opts.convertApostrophes,
+              offsetBy: offsetBy
+            }));
           }
         } else if (charcode === 44 || charcode === 59) {
           if (str[i - 1] && !str[i - 1].trim().length) {
@@ -377,28 +392,36 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
               }
             } else if (str[i - 1] && str[y] && (isNumber(str[i - 1]) && isNumber(str[y]) || str[i - 1].toLowerCase() === "a" && str[y].toLowerCase() === "z")) {
               applicableOpts.convertDashes = true;
-              applicableOpts.convertEntities = true;
               if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
                 rangesArr.push(i, y, opts.convertEntities ? "&ndash;" : "\u2013");
               }
             } else if (str[i - 1] && str[y] && (str[i - 1].trim().length === 0 && str[y].trim().length === 0 || isLowercaseLetter(str[i - 1]) && str[y] === "'")) {
               applicableOpts.convertDashes = true;
-              applicableOpts.convertEntities = true;
               if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
                 rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
               }
             } else if (str[i - 1] && str[y] && isLetter(str[i - 1]) && isQuote(str[y])) {
               applicableOpts.convertDashes = true;
               if (opts.convertDashes) {
+                applicableOpts.convertEntities = true;
                 rangesArr.push(i, y, opts.convertEntities ? "&mdash;" : rawMDash);
               }
+            }
+          }
+          if (str[i - 2] && str[i - 2].trim().length && !str[i - 1].trim().length && !["\n", "\r"].includes(str[i - 1])) {
+            applicableOpts.removeWidows = true;
+            if (opts.removeWidows) {
+              applicableOpts.convertEntities = true;
+              rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
             }
           }
         } else if (charcode === 46) {
           if (str[i - 1] !== "." && str[y] === "." && str[y + 1] === "." && str[y + 2] !== ".") {
             applicableOpts.convertDotsToEllipsis = true;
-            applicableOpts.convertEntities = true;
             if (opts.convertDotsToEllipsis) {
+              applicableOpts.convertEntities = true;
               rangesArr.push(i, y + 2, opts.convertEntities ? "&hellip;" : "".concat(rawEllipsis));
             }
           }
@@ -490,51 +513,56 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         rangesArr.push(i, y);
       } else if (charcode === 8207) {
         rangesArr.push(i, y);
-      } else if (charcode === 8211) {
+      } else if (charcode === 8211 || charcode === 65533 && isNum(str[i - 1]) && isNum(str[y])) {
         applicableOpts.convertDashes = true;
         if (!opts.convertDashes) {
           rangesArr.push(i, y, "-");
-          if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0 && !(str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y]))) {
-            applicableOpts.addMissingSpaces = true;
-          }
         } else {
-          applicableOpts.convertEntities = true;
-          if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
-            if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
-              rangesArr.push(i - 1, i);
-            } else {
-              applicableOpts.addMissingSpaces = true;
-              applicableOpts.convertEntities = true;
-              applicableOpts.removeWidows = true;
-              if (opts.addMissingSpaces) {
-                var whatToAdd = " ";
-                if (opts.removeWidows && !widowRegexTest.test(str.slice(y))) {
-                  whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
-                }
-                rangesArr.push(y, y, whatToAdd);
-              }
-              if (opts.removeWidows && str.slice(i - 1, i) !== rawNbsp) {
-                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
-              }
-            }
-          } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
-            rangesArr.push(i - 1, i);
-            rangesArr.push(y, y + 1);
-          }
           applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&ndash;");
           } else if (charcode === 65533) {
-            rangesArr.push(i, y, rawMDash);
+            rangesArr.push(i, y, rawNDash);
           }
         }
-      } else if (charcode === 8212) {
+        if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
+          if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
+            rangesArr.push(i - 1, i);
+          } else {
+            applicableOpts.addMissingSpaces = true;
+            applicableOpts.convertEntities = true;
+            if (opts.addMissingSpaces) {
+              var whatToAdd = " ";
+              if (!widowRegexTest.test(str.slice(y))) {
+                applicableOpts.removeWidows = true;
+                if (opts.removeWidows) {
+                  whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
+                }
+              }
+              rangesArr.push(y, y, whatToAdd);
+            }
+            if (str.slice(i - 1, i) !== rawNbsp) {
+              applicableOpts.removeWidows = true;
+              if (opts.removeWidows) {
+                rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+              }
+            }
+          }
+        } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
+          rangesArr.push(i - 1, i);
+          rangesArr.push(y, y + 1);
+        }
+      } else if (charcode === 8212 || charcode === 65533 && str[i - 1] === " " && str[y] === " ") {
         applicableOpts.convertDashes = true;
+        if (str[i - 1] === " " && stringLeftRight.left(str, i) !== null) {
+          applicableOpts.removeWidows = true;
+          if (opts.removeWidows) {
+            applicableOpts.convertEntities = true;
+            rangesArr.push(stringLeftRight.left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
+        }
         if (!opts.convertDashes) {
           rangesArr.push(i, y, "-");
-          if (opts.removeWidows && str[i - 2] && str[i - 2].trim().length && !str[i - 1].trim().length && !["\n", "\r"].includes(str[i - 1])) {
-            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
-          }
         } else {
           applicableOpts.convertEntities = true;
           if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
@@ -545,55 +573,75 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           }
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&mdash;");
-          }
-          if (str[i - 1] === " " && stringLeftRight.left(str, i) !== null) {
-            applicableOpts.removeWidows = true;
-            if (opts.removeWidows) {
-              rangesArr.push(stringLeftRight.left(str, i) + 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
-            }
+          } else if (charcode === 65533) {
+            rangesArr.push(i, y, rawMDash);
           }
         }
       } else if (charcode === 8216) {
-        applicableOpts.convertApostrophes = true;
-        applicableOpts.convertEntities = true;
-        rangesArr.push(stringApostrophes.convertOne(str, {
+        var _tempRes2 = stringApostrophes.convertOne(str, {
           from: i,
           to: y,
-          convertEntities: opts.convertEntities,
-          convertApostrophes: opts.convertApostrophes,
-          offsetBy: offsetBy
-        }));
+          convertEntities: true,
+          convertApostrophes: true
+        });
+        if (_tempRes2 && _tempRes2.length) {
+          applicableOpts.convertApostrophes = true;
+          var _tempRes3 = stringApostrophes.convertOne(str, {
+            from: i,
+            to: y,
+            convertEntities: true,
+            convertApostrophes: true
+          });
+          if (_tempRes3) {
+            if (opts.convertApostrophes) {
+              applicableOpts.convertEntities = true;
+            }
+            rangesArr.push(stringApostrophes.convertOne(str, {
+              from: i,
+              to: y,
+              convertEntities: opts.convertEntities,
+              convertApostrophes: opts.convertApostrophes,
+              offsetBy: offsetBy
+            }));
+          }
+        }
       } else if (charcode === 8217) {
         applicableOpts.convertApostrophes = true;
-        applicableOpts.convertEntities = true;
         if (!opts.convertApostrophes) {
           rangesArr.push(i, y, "'");
-        } else if (opts.convertEntities) {
-          rangesArr.push(i, y, "&rsquo;");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&rsquo;");
+          }
         }
       } else if (charcode === 8220) {
         applicableOpts.convertApostrophes = true;
-        applicableOpts.convertEntities = true;
         if (!opts.convertApostrophes) {
+          applicableOpts.convertEntities = true;
           rangesArr.push(i, y, opts.convertEntities ? "&quot;" : "\"");
         } else if (opts.convertEntities) {
+          applicableOpts.convertEntities = true;
           rangesArr.push(i, y, "&ldquo;");
         }
       } else if (charcode === 8221) {
         applicableOpts.convertApostrophes = true;
-        applicableOpts.convertEntities = true;
         if (!opts.convertApostrophes) {
+          applicableOpts.convertEntities = true;
           rangesArr.push(i, y, opts.convertEntities ? "&quot;" : "\"");
         } else if (opts.convertEntities) {
+          applicableOpts.convertEntities = true;
           rangesArr.push(i, y, "&rdquo;");
         }
       } else if (charcode === 8230) {
         applicableOpts.convertDotsToEllipsis = true;
-        applicableOpts.convertEntities = true;
         if (!opts.convertDotsToEllipsis) {
           rangesArr.push(i, y, "...");
-        } else if (opts.convertEntities) {
-          rangesArr.push(i, y, "&hellip;");
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&hellip;");
+          }
         }
       } else if (charcode === 65279) {
         rangesArr.push(i, y);
@@ -630,7 +678,7 @@ var version = "5.0.1";
 function det(str, inputOpts) {
   var opts;
   if (typeof str !== "string") {
-    throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(inputOpts)));
+    throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
   }
   if (inputOpts) {
     opts = clone(inputOpts);
@@ -698,7 +746,6 @@ function det(str, inputOpts) {
   } while (temp !== str && lastVal !== temp);
   if (str !== temp) {
     str = temp;
-    applicableOpts.convertEntities = true;
   }
   for (var i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
@@ -748,6 +795,7 @@ function det(str, inputOpts) {
             }
           } else {
             finalIndexesToDelete.push(proposedReturn);
+            skipArr.push(proposedReturn);
           }
         } else {
           if (voidTags.includes(tag.name.toLowerCase())) {

@@ -56,9 +56,53 @@ function det(t, src, opts = {}) {
     // so we convert whatever value is to a boolean
     const obj1 = clone(tempObj);
     objectPath.set(obj1, key, true);
+    // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
+    objectPath.set(
+      obj1,
+      "stripHtmlButIgnoreTags",
+      objectPath.has(opts, "stripHtmlButIgnoreTags")
+        ? opts.stripHtmlButIgnoreTags
+        : defaultOpts.stripHtmlButIgnoreTags
+    );
+    objectPath.set(
+      obj1,
+      "stripHtmlAddNewLine",
+      objectPath.has(opts, "stripHtmlAddNewLine")
+        ? opts.stripHtmlAddNewLine
+        : defaultOpts.stripHtmlAddNewLine
+    );
+    // console.log(
+    //   `${`\u001b[${33}m${`obj1`}\u001b[${39}m`} = ${JSON.stringify(
+    //     obj1,
+    //     null,
+    //     4
+    //   )}`
+    // );
 
     const obj2 = clone(tempObj);
     objectPath.set(obj2, key, false);
+    // add stripHtmlButIgnoreTags and stripHtmlAddNewLine
+    objectPath.set(
+      obj2,
+      "stripHtmlButIgnoreTags",
+      objectPath.has(opts, "stripHtmlButIgnoreTags")
+        ? opts.stripHtmlButIgnoreTags
+        : defaultOpts.stripHtmlButIgnoreTags
+    );
+    objectPath.set(
+      obj2,
+      "stripHtmlAddNewLine",
+      objectPath.has(opts, "stripHtmlAddNewLine")
+        ? opts.stripHtmlAddNewLine
+        : defaultOpts.stripHtmlAddNewLine
+    );
+    // console.log(
+    //   `${`\u001b[${33}m${`obj2`}\u001b[${39}m`} = ${JSON.stringify(
+    //     obj2,
+    //     null,
+    //     4
+    //   )}`
+    // );
 
     if (det1(src, obj1).res !== det1(src, obj2).res) {
       t.truthy(
