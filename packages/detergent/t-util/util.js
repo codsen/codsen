@@ -21,8 +21,10 @@ function mixer(ref) {
   // key from the defaults obj
   const preppedDefaults = clone(defaultOpts);
   delete preppedDefaults.stripHtmlButIgnoreTags;
+  delete preppedDefaults.stripHtmlAddNewLine;
 
   const res = obc(preppedDefaults, ref);
+  // restore keys in stripHtmlButIgnoreTags:
   if (
     ref &&
     ref.stripHtmlButIgnoreTags &&
@@ -35,6 +37,21 @@ function mixer(ref) {
   } else {
     res.forEach(obj => {
       obj.stripHtmlButIgnoreTags = clone(defaultOpts.stripHtmlButIgnoreTags);
+    });
+  }
+  // restore keys in stripHtmlAddNewLine:
+  if (
+    ref &&
+    ref.stripHtmlAddNewLine &&
+    Array.isArray(ref.stripHtmlAddNewLine) &&
+    ref.stripHtmlAddNewLine.length
+  ) {
+    res.forEach(obj => {
+      obj.stripHtmlAddNewLine = clone(ref.stripHtmlAddNewLine);
+    });
+  } else {
+    res.forEach(obj => {
+      obj.stripHtmlAddNewLine = clone(defaultOpts.stripHtmlAddNewLine);
     });
   }
   return res;
