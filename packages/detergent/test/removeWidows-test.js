@@ -220,7 +220,6 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `This very long line of text ends with a postcode SW1A 1AA.`,
         opt
       ).res,
@@ -231,7 +230,6 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `this very long line of text ends with a postcode SW1A 1AA`,
         opt
       ).res,
@@ -241,7 +239,6 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
-        n,
         n,
         `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
         opt
@@ -281,7 +278,6 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `This very long line of text ends with a postcode SW1A 1AA.`,
         opt
       ).res,
@@ -292,7 +288,6 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `this very long line of text ends with a postcode SW1A 1AA`,
         opt
       ).res,
@@ -302,7 +297,6 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
-        n,
         n,
         `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
         opt
@@ -342,7 +336,6 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `This very long line of text ends with a postcode SW1A 1AA.`,
         opt
       ).res,
@@ -353,7 +346,6 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       det(
         t,
         n,
-        n,
         `this very long line of text ends with a postcode SW1A 1AA`,
         opt
       ).res,
@@ -363,7 +355,6 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
-        n,
         n,
         `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
         opt

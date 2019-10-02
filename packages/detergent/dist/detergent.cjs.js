@@ -649,12 +649,13 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         if (!applicableOpts.dontEncodeNonLatin && doConvertEntities(str[i], true) !== doConvertEntities(str[i], false)) {
           applicableOpts.dontEncodeNonLatin = true;
         }
-        if (opts.convertEntities) {
-          var convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
-          if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
-            convertedCharVal = "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[convertedCharVal.slice(1, convertedCharVal.length - 1)], ";");
-          }
-          if (str[i] !== convertedCharVal) {
+        var convertedCharVal = doConvertEntities(str[i], opts.dontEncodeNonLatin);
+        if (Object.keys(htmlEntitiesNotEmailFriendly.notEmailFriendly).includes(convertedCharVal.slice(1, convertedCharVal.length - 1))) {
+          convertedCharVal = "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[convertedCharVal.slice(1, convertedCharVal.length - 1)], ";");
+        }
+        if (str[i] !== convertedCharVal) {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
             if (convertedCharVal === "&mldr;") {
               rangesArr.push(i, y, "&hellip;");
             } else if (convertedCharVal !== "&apos;") {
@@ -662,8 +663,6 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             }
             applicableOpts.convertEntities = true;
           }
-        } else {
-          applicableOpts.convertEntities = true;
         }
       }
     }

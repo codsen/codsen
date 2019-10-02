@@ -537,7 +537,6 @@ test(`01.44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
       det(
         t,
         n,
-        n,
         'test text is being <em id="main">set in emphasis<em/> here',
         opt
       ).res,

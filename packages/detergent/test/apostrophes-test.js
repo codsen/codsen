@@ -496,7 +496,6 @@ test(`33 - words wrapped with single quotes`, t => {
       det(
         t,
         n,
-        n,
         "'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'",
         opt
       ).res,

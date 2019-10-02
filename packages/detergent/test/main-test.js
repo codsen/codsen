@@ -961,6 +961,7 @@ test(`05.08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic
 test(`06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - doesn't encode non-Latin`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1
   }).forEach((opt, n) => {
     t.is(

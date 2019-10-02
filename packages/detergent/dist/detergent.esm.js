@@ -1269,23 +1269,24 @@ function processCharacter(
         ) {
           applicableOpts.dontEncodeNonLatin = true;
         }
-        if (opts.convertEntities) {
-          let convertedCharVal = doConvertEntities(
-            str[i],
-            opts.dontEncodeNonLatin
-          );
-          if (
-            Object.keys(notEmailFriendly).includes(
+        let convertedCharVal = doConvertEntities(
+          str[i],
+          opts.dontEncodeNonLatin
+        );
+        if (
+          Object.keys(notEmailFriendly).includes(
+            convertedCharVal.slice(1, convertedCharVal.length - 1)
+          )
+        ) {
+          convertedCharVal = `&${
+            notEmailFriendly[
               convertedCharVal.slice(1, convertedCharVal.length - 1)
-            )
-          ) {
-            convertedCharVal = `&${
-              notEmailFriendly[
-                convertedCharVal.slice(1, convertedCharVal.length - 1)
-              ]
-            };`;
-          }
-          if (str[i] !== convertedCharVal) {
+            ]
+          };`;
+        }
+        if (str[i] !== convertedCharVal) {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
             if (convertedCharVal === "&mldr;") {
               rangesArr.push(i, y, "&hellip;");
             } else if (convertedCharVal !== "&apos;") {
@@ -1293,8 +1294,6 @@ function processCharacter(
             }
             applicableOpts.convertEntities = true;
           }
-        } else {
-          applicableOpts.convertEntities = true;
         }
       }
     }

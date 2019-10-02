@@ -572,6 +572,7 @@ test(`01.39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
 test(`01.40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #1`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 1
   }).forEach((opt, n) => {
@@ -586,6 +587,7 @@ test(`01.40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
 test(`01.41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #2`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 1
   }).forEach((opt, n) => {
@@ -600,6 +602,7 @@ test(`01.41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
 test(`01.42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #3`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 1
   }).forEach((opt, n) => {
@@ -614,6 +617,7 @@ test(`01.42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
 test(`01.43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #1`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 0
   }).forEach((opt, n) => {
@@ -628,6 +632,7 @@ test(`01.43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
 test(`01.44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #2`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 0
   }).forEach((opt, n) => {
@@ -642,6 +647,7 @@ test(`01.44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-La
 test(`01.45 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #3`, t => {
   mixer({
     removeWidows: 0,
+    convertEntities: 1,
     dontEncodeNonLatin: 1,
     addMissingSpaces: 0
   }).forEach((opt, n) => {
