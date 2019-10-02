@@ -29,12 +29,12 @@ import {
 
 test(`00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first argument is not string`, t => {
   const error1 = t.throws(() => {
-    det(t, n, 1, "zzz");
+    det(t, 0, 1, "zzz");
   });
   t.regex(error1.message, /THROW_ID_01/gm);
 
   const error2 = t.throws(() => {
-    det(t, n, true, "zzz");
+    det(t, 0, true, "zzz");
   });
   t.regex(error2.message, /THROW_ID_01/gm);
 
@@ -42,31 +42,31 @@ test(`00.01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first ar
     return true;
   }
   const error3 = t.throws(() => {
-    det(t, n, fn, "zzz");
+    det(t, 0, fn, "zzz");
   });
   t.regex(error3.message, /THROW_ID_01/gm);
 
   const error4 = t.throws(() => {
-    det(t, n, { a: "b" }, "zzz");
+    det(t, 0, { a: "b" }, "zzz");
   });
   t.regex(error4.message, /THROW_ID_01/gm);
 
   const error5 = t.throws(() => {
-    det(t, n, null, "zzz");
+    det(t, 0, null, "zzz");
   });
   t.regex(error5.message, /THROW_ID_01/gm);
 });
 
 test(`00.02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, t => {
   const error1 = t.throws(() => {
-    det(t, n, `zzz`, "zzz");
+    det(t, 0, `zzz`, "zzz");
   });
   t.regex(error1.message, /THROW_ID_02/gm);
 });
 
 test(`00.03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, t => {
   const error2 = t.throws(() => {
-    det(t, n, `zzz`, ["zzz"]);
+    det(t, 0, `zzz`, ["zzz"]);
   });
   t.regex(error2.message, /THROW_ID_02/gm);
 });
@@ -85,7 +85,7 @@ test(`00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, t 
 
 test(`02.01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - LF`, t => {
   t.is(
-    det(t, n, `aaa\n\nbbb\n\nccc`).res,
+    det(t, 0, `aaa\n\nbbb\n\nccc`).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
     "02.01"
   );
@@ -93,7 +93,7 @@ test(`02.01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement 
 
 test(`02.02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - CRLF`, t => {
   t.is(
-    det(t, n, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
+    det(t, 0, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
     "02.02 - CRLF"
   );
@@ -101,7 +101,7 @@ test(`02.02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement 
 
 test(`02.03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
-    det(t, n, `a<br>b`, {
+    det(t, 0, `a<br>b`, {
       useXHTML: true
     }).res,
     "a<br/>b"
@@ -110,7 +110,7 @@ test(`02.03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 
 test(`02.04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
-    det(t, n, `a<br>b`, {
+    det(t, 0, `a<br>b`, {
       useXHTML: false
     }).res,
     "a<br>b"
@@ -119,7 +119,7 @@ test(`02.04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 
 test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.deepEqual(
-    det(t, n, `a<br/>b`, {
+    det(t, 0, `a<br/>b`, {
       useXHTML: true
     }),
     {
@@ -144,7 +144,7 @@ test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 
 test(`02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
-    det(t, n, `a<br/>b`, {
+    det(t, 0, `a<br/>b`, {
       useXHTML: false
     }).res,
     "a<br>b"
@@ -153,7 +153,7 @@ test(`02.06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 
 test(`02.07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
   t.is(
-    det(t, n, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
+    det(t, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -163,7 +163,7 @@ test(`02.07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 
 test(`02.08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with HTML BR`, t => {
   t.is(
-    det(t, n, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
+    det(t, 0, `abc<br >def<br>ghi<br/>jkl<br />mno`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -172,27 +172,27 @@ test(`02.08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 });
 
 test(`02.09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
-  t.is(det(t, n, `<BR />`).res, `<br/>`);
+  t.is(det(t, 0, `<BR />`).res, `<br/>`);
 });
 
 test(`02.10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
-  t.is(det(t, n, `< BR>`).res, `<br/>`);
+  t.is(det(t, 0, `< BR>`).res, `<br/>`);
 });
 
 test(`02.11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
-  t.is(det(t, n, `<BR class="z"/>`).res, `<br class="z"/>`);
+  t.is(det(t, 0, `<BR class="z"/>`).res, `<br class="z"/>`);
 });
 
 test(`02.12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, t => {
   t.is(
-    det(t, n, `aaa<BR />< BR>bbb< BR ><BR>ccc< br >< Br>ddd`).res,
+    det(t, 0, `aaa<BR />< BR>bbb< BR ><BR>ccc< br >< Br>ddd`).res,
     "aaa<br/><br/>bbb<br/><br/>ccc<br/><br/>ddd"
   );
 });
 
 test(`02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t => {
   t.is(
-    det(t, n, `a</br>b`, {
+    det(t, 0, `a</br>b`, {
       useXHTML: false
     }).res,
     "a<br>b"
@@ -201,7 +201,7 @@ test(`02.13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t 
 
 test(`02.14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t => {
   t.is(
-    det(t, n, `a</br>b`, {
+    det(t, 0, `a</br>b`, {
       useXHTML: true
     }).res,
     "a<br/>b"
@@ -210,7 +210,7 @@ test(`02.14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, t 
 
 test(`02.15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, t => {
   t.is(
-    det(t, n, `a< / / br>b`, {
+    det(t, 0, `a< / / br>b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -220,7 +220,7 @@ test(`02.15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, t 
 
 test(`02.16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, t => {
   t.is(
-    det(t, n, `a< / / br style="something" / />b`, {
+    det(t, 0, `a< / / br style="something" / />b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -230,7 +230,7 @@ test(`02.16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, t 
 
 test(`02.17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, t => {
   t.is(
-    det(t, n, `a< / / br style="something" / />b`, {
+    det(t, 0, `a< / / br style="something" / />b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -240,7 +240,7 @@ test(`02.17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, t 
 
 test(`02.18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t => {
   t.is(
-    det(t, n, `a</br class="display: none;">b`, {
+    det(t, 0, `a</br class="display: none;">b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -250,7 +250,7 @@ test(`02.18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t 
 
 test(`02.19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t => {
   t.is(
-    det(t, n, `a</br class="display: none;">b`, {
+    det(t, 0, `a</br class="display: none;">b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -260,7 +260,7 @@ test(`02.19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, t 
 
 test(`02.20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t => {
   t.is(
-    det(t, n, `a<br class="display: none;"/>b`, {
+    det(t, 0, `a<br class="display: none;"/>b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -270,7 +270,7 @@ test(`02.20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t 
 
 test(`02.21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t => {
   t.is(
-    det(t, n, `a<br class="display: none;"/>b`, {
+    det(t, 0, `a<br class="display: none;"/>b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -280,7 +280,7 @@ test(`02.21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, t 
 
 test(`02.22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, t => {
   t.is(
-    det(t, n, `a<br class="display: none;">b`, {
+    det(t, 0, `a<br class="display: none;">b`, {
       useXHTML: false,
       replaceLineBreaks: false
     }).res,
@@ -290,7 +290,7 @@ test(`02.22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, t 
 
 test(`02.23 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, t => {
   t.is(
-    det(t, n, `a<br class="display: none;">b`, {
+    det(t, 0, `a<br class="display: none;">b`, {
       useXHTML: true,
       replaceLineBreaks: false
     }).res,
@@ -509,6 +509,7 @@ test(`03.13 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
     t.is(
       det(
         t,
+        n,
         `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
         opt
       ).res,
@@ -525,6 +526,7 @@ test(`03.14 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
     t.is(
       det(
         t,
+        n,
         ` ${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp} `,
         opt
       ).res,
@@ -696,6 +698,7 @@ test(`04.04 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - repla
       t.is(
         det(
           t,
+          n,
           `${eolType}${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}`,
           opt
         ).res,
@@ -717,6 +720,7 @@ test(`04.05 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - repla
       t.is(
         det(
           t,
+          n,
           `${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}${eolType}`,
           opt
         ).res,
@@ -836,7 +840,8 @@ test(`05.03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt).res,
+      det(t, n, `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt)
+        .res,
       "tralala tralala2 tralala3 tralala4",
       JSON.stringify(opt, null, 0)
     );
@@ -850,7 +855,8 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
     convertEntities: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt).res,
+      det(t, n, `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, opt)
+        .res,
       "tralala tralala2 tralala3&nbsp;tralala4",
       JSON.stringify(opt, null, 0)
     );
@@ -890,6 +896,7 @@ test(`05.05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS st
     t.is(
       det(
         t,
+        n,
         "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
         opt
       ).res,
@@ -908,6 +915,7 @@ test(`05.06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS st
     t.is(
       det(
         t,
+        n,
         "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
         opt
       ).res,
@@ -923,7 +931,8 @@ test(`05.07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt).res,
+      det(t, n, `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt)
+        .res,
       "tralala tralala2 tralala3 tralala4",
       JSON.stringify(opt, null, 0)
     );
@@ -937,7 +946,8 @@ test(`05.08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic
     convertEntities: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt).res,
+      det(t, n, `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`, opt)
+        .res,
       "tralala tralala2 tralala3&nbsp;tralala4",
       JSON.stringify(opt, null, 0)
     );
@@ -956,6 +966,7 @@ test(`06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - does
     t.is(
       det(
         t,
+        n,
         "Greek: \u03A1\u03CC\u03B9\u03C3\u03C4\u03BF\u03BD \u03AE\u03C4\u03B1\u03BD \u03B5\u03B4\u03CE / Russian: \u0420\u043E\u0438\u0441\u0442\u043E\u043D / Japanese: \u30ED\u30A4\u30B9\u30C8\u30F3 / Chinese: \u7F85\u4F0A\u65AF\u9813 / Hebrew: \u05E8\u05D5\u05D9\u05E1\u05D8\u05D5\u05DF / Arabic: \u0631\u0648\u064A\u0633\u062A\u0648\u0646",
         opt
       ).res,
@@ -1007,6 +1018,7 @@ test(`07.01 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1027,6 +1039,7 @@ test(`07.02 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1047,6 +1060,7 @@ test(`07.03 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, con
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1066,6 +1080,7 @@ test(`07.04 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1086,6 +1101,7 @@ test(`07.05 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, con
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1106,6 +1122,7 @@ test(`07.06 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, con
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1125,6 +1142,7 @@ test(`07.07 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1145,6 +1163,7 @@ test(`07.08 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1165,6 +1184,7 @@ test(`07.09 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
         opt
       ).res,
@@ -1182,6 +1202,7 @@ test(`07.10 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         " \u000a    Very long line, long-enough to trigger widow removal   \n\n. \u000a\n Text text text text . ",
         opt
       ).res,
@@ -1199,6 +1220,7 @@ test(`07.11 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         " \u000a    Very long line, long-enough to trigger widow removal   \r\r. \u000a\n Text text text text . ",
         opt
       ).res,
@@ -1216,6 +1238,7 @@ test(`07.12 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         " \u000a    Very long line, long-enough to trigger widow removal   \r\n\r\n. \u000a\n Text text text text . ",
         opt
       ).res,
@@ -1234,6 +1257,7 @@ test(`07.13 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         " \u000a    Very long line, long-enough to trigger widow removal .  \n \n \u000a\n Text text text text . ",
         opt
       ).res,
@@ -1252,6 +1276,7 @@ test(`07.14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
     t.is(
       det(
         t,
+        n,
         " \u000a   Very long line, long-enough to trigger widow removal .  \n \n  \u000a\n Text text text text . ",
         opt
       ).res,
@@ -1262,15 +1287,15 @@ test(`07.14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, rem
 });
 
 test(`07.15 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, t => {
-  t.is(det(t, n, `a. \na`).res, "a.<br/>\na");
+  t.is(det(t, 0, `a. \na`).res, "a.<br/>\na");
 });
 
 test(`07.16 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, t => {
-  t.is(det(t, n, `a . \na`).res, "a.<br/>\na");
+  t.is(det(t, 0, `a . \na`).res, "a.<br/>\na");
 });
 
 test(`07.17 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, t => {
-  t.is(det(t, n, `a , \na`).res, "a,<br/>\na");
+  t.is(det(t, 0, `a , \na`).res, "a,<br/>\na");
 });
 
 test(`07.18 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - checking line feed being replaced with space`, t => {
@@ -1345,7 +1370,11 @@ test(`08.06 - ${`\u001b[${33}m${`multiple encoding`}\u001b[${39}m`} - recursive 
   mixer({
     convertEntities: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, `&amp;nbsp;`, opt).res, "&nbsp;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `&amp;nbsp;`, opt).res,
+      "&nbsp;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -1451,6 +1480,7 @@ test(`09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
     t.is(
       det(
         t,
+        n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
         opt
       ).res,
@@ -1509,6 +1539,7 @@ test(`09.04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
     t.is(
       det(
         t,
+        n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
         opt
       ).res,
@@ -1529,6 +1560,7 @@ test(`09.05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
     t.is(
       det(
         t,
+        n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
         opt
       ).res,
@@ -1619,6 +1651,7 @@ test(`10.05 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - unlinked .co.uk in th
     t.is(
       det(
         t,
+        n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
         opt
       ).res,
@@ -1635,6 +1668,7 @@ test(`10.06 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - unlinked .co.uk in th
     t.is(
       det(
         t,
+        n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
         opt
       ).res,
@@ -1652,6 +1686,7 @@ test(`10.07 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - consecutive empty lin
     t.is(
       det(
         t,
+        n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
         opt
       ).res,

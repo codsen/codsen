@@ -98,7 +98,10 @@ test(`01.05 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
     convertDashes: 1,
     convertEntities: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, `An A${rawNDash}Z guide`, opt).res, `An A${rawNDash}Z guide`);
+    t.is(
+      det(t, n, `An A${rawNDash}Z guide`, opt).res,
+      `An A${rawNDash}Z guide`
+    );
   });
   mixer({
     convertDashes: 0,
@@ -213,6 +216,7 @@ test(`02.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     t.is(
       det(
         t,
+        n,
         "In brute material terms, he was an accomplice - in fact, a conspirator - to the clearing of the ice-cream fridge.",
         opt
       ).res,
@@ -232,6 +236,7 @@ test(`02.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     t.is(
       det(
         t,
+        n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
         opt
       ).res,
@@ -251,6 +256,7 @@ test(`02.06 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     t.is(
       det(
         t,
+        n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
         opt
       ).res,
@@ -270,6 +276,7 @@ test(`02.07 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     t.is(
       det(
         t,
+        n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
         opt
       ).res,
@@ -289,6 +296,7 @@ test(`02.08 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     t.is(
       det(
         t,
+        n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
         opt
       ).res,
@@ -477,7 +485,11 @@ test(`03.05 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
     convertEntities: 0,
     convertDashes: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, `m${rawMDash}m`, opt).res, `m-m`, JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `m${rawMDash}m`, opt).res,
+      `m-m`,
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -503,7 +515,11 @@ test(`03.07 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertDashes: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, `m${rawMDash}m`, opt).res, "m-m", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `m${rawMDash}m`, opt).res,
+      "m-m",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -545,8 +561,15 @@ test(`04.04 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
     convertEntities: 1,
     removeWidows: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, "Temperatures of -20°C", opt).res, "Temperatures of -20&deg;C");
-    t.is(det(t, n, "-20°C", opt).res, "-20&deg;C", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "Temperatures of -20°C", opt).res,
+      "Temperatures of -20&deg;C"
+    );
+    t.is(
+      det(t, n, "-20°C", opt).res,
+      "-20&deg;C",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -558,6 +581,7 @@ test(`04.05 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
     t.is(
       det(
         t,
+        n,
         "The records show that there were temperatures as low as -20°C",
         opt
       ).res,
@@ -575,6 +599,7 @@ test(`04.06 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
     t.is(
       det(
         t,
+        n,
         "The records show that there were temperatures as low as -20°C",
         opt
       ).res,
@@ -592,6 +617,7 @@ test(`04.07 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
     t.is(
       det(
         t,
+        n,
         "The records show that there were temperatures as low as -20°C",
         opt
       ).res,
@@ -609,6 +635,7 @@ test(`04.08 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
     t.is(
       det(
         t,
+        n,
         "The records show that there were temperatures as low as -20°C",
         opt
       ).res,

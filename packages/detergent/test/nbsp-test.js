@@ -203,6 +203,7 @@ test(`01.12 - repetitions - longer sentence, convertEntities=on`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -224,6 +225,7 @@ test(`01.13 - repetitions - longer sentence, useXHTML=off`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -243,6 +245,7 @@ test(`01.14 - repetitions - longer sentence, repeated semicols`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa &nnnbbbspp;;;; aaa\naaa nnnbbbsssp aaaa\naaaa&nnnnbbbssssppp;aaa\naaannnbbbsssp;aaaa\naaa&nnnbbbssspaaaa\naaa&nnbsp;aaaa\naaannbsp;aaaa\naaa&nnbspaaaa\naaa &nnbsp; aaaa\naaa nnbsp; aaaa\naaa &nnbsp aaaa",
         opt
       ).res,
@@ -291,6 +294,7 @@ test(`01.17 - NBSP missing letters - &nbsp missing p`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nbs;aaaa\naaa&nbsaaaa\naaa &nbs; aaaa\naaa &nbs aaaa\naaa &nbs\naaa &nbs",
         opt
       ).res,
@@ -311,6 +315,7 @@ test(`01.18 - NBSP missing letters - &nbsp missing s`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nbp;aaaa\naaa&nbpaaaa\naaa &nbp; aaaa\naaa &nbp aaaa\naaa &nbp\naaa &nbp",
         opt
       ).res,
@@ -331,6 +336,7 @@ test(`01.19 - NBSP missing letters - &nbsp missing b`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nsp;aaaa\naaa&nspaaaa\naaa &nsp; aaaa\naaa &nsp aaaa\naaa &nsp\naaa &nsp",
         opt
       ).res,
@@ -351,6 +357,7 @@ test(`01.20 - NBSP missing letters - &nbsp missing n`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&bsp;aaaa\naaa&bspaaaa\naaa &bsp; aaaa\naaa &bsp aaaa\naaa &bsp\naaa &bsp",
         opt
       ).res,
@@ -373,6 +380,7 @@ test(`01.21 - broken nbsp - nbsp; (no ampersand)`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nbs;aaaa\naaanbs;aaaa\naaa &nbs; aaaa\naaa nbs; aaaa\nnbs; aaaa\nnbs; aaaa",
         opt
       ).res,
@@ -393,6 +401,7 @@ test(`01.22 - broken nbsp - nbsp; (no ampersand)`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nbp;aaaa\naaanbp;aaaa\naaa &nbp; aaaa\naaa nbp; aaaa\nnbp; aaaa\nnbp; aaaa",
         opt
       ).res,
@@ -413,6 +422,7 @@ test(`01.23 - broken nbsp - nbsp; (no ampersand)`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&nsp;aaaa\naaansp;aaaa\naaa &nsp; aaaa\naaa nsp; aaaa\nnsp; aaaa\nnsp; aaaa",
         opt
       ).res,
@@ -433,6 +443,7 @@ test(`01.24 - broken nbsp - nbsp; (no ampersand)`, t => {
     t.is(
       det(
         t,
+        n,
         "aaa&bsp;aaaa\naaabsp;aaaa\naaa &bsp; aaaa\naaa bsp; aaaa\nbsp; aaaa\nbsp; aaaa",
         opt
       ).res,

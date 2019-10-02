@@ -451,7 +451,8 @@ test(`06.05 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single lin
 test(`07.01 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - just text`, t => {
   allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+        .removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -581,7 +582,7 @@ test(`08.03 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - line breaks`, t => 
 });
 
 test(`08.04 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closing tag br`, t => {
-  const calculated1 = det(t, n, `a<br>b`, {
+  const calculated1 = det(t, 0, `a<br>b`, {
     fixBrokenEntities: 0,
     removeWidows: 0,
     convertEntities: 0,
@@ -616,7 +617,7 @@ test(`08.04 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closin
 });
 
 test(`08.05 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closing tag br`, t => {
-  const calculated2 = det(t, n, `a<br>b`, {
+  const calculated2 = det(t, 0, `a<br>b`, {
     fixBrokenEntities: 0,
     removeWidows: 0,
     convertEntities: 0,
@@ -795,7 +796,8 @@ test(`09.07 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - 2`, t => 
 test(`10.01 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - just text`, t => {
   allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.addMissingSpaces,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+        .addMissingSpaces,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -901,8 +903,8 @@ test(`11.04 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 test(`11.05 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
   allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, n, `it must mean something...\n\nalso...\n\nzzz`, opt).applicableOpts
-        .convertDotsToEllipsis,
+      det(t, n, `it must mean something...\n\nalso...\n\nzzz`, opt)
+        .applicableOpts.convertDotsToEllipsis,
       true,
       JSON.stringify(opt, null, 0)
     );

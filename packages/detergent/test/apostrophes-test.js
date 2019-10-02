@@ -25,7 +25,7 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test.only(`01 - converts single apostrophes - with entities`, t => {
+test(`01 - converts single apostrophes - with entities`, t => {
   mixer({
     convertApostrophes: 1,
     convertEntities: 1
@@ -496,6 +496,7 @@ test(`33 - words wrapped with single quotes`, t => {
       det(
         t,
         n,
+        n,
         "'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'",
         opt
       ).res,
@@ -546,6 +547,7 @@ test(`36 - double quotes within double quotes`, t => {
     t.is(
       det(
         t,
+        n,
         'Welcome to Website Name! Company Name, Inc. ("Company Name" or "Company") recommends that you read the following terms and conditions carefully.',
         opt
       ).res,
@@ -565,6 +567,7 @@ test(`37 - single quotes within double quotes`, t => {
     t.is(
       det(
         t,
+        n,
         "Welcome to Website Name! Company Name, Inc. ('Company Name' or 'Company') recommends that you read the following terms and conditions carefully.",
         opt
       ).res,

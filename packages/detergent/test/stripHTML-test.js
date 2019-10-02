@@ -59,6 +59,7 @@ test(`01.05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense t
     t.is(
       det(
         t,
+        n,
         'text <sldkfj asdasd="lekjrtt" lgkdjfld="lndllkjfg">text<hgjkd> text',
         opt
       ).res,
@@ -73,7 +74,8 @@ test(`01.06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML
     stripHtml: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, 'text <a href="#" style="display: block;">text</a> text', opt).res,
+      det(t, n, 'text <a href="#" style="display: block;">text</a> text', opt)
+        .res,
       "text text text",
       JSON.stringify(opt, null, 4)
     );
@@ -113,7 +115,7 @@ test(`01.10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored si
     stripHtmlButIgnoreTags: ["hr"]
   }).forEach((opt, i) => {
     t.is(
-      det(t, n, `<hr>`, opt).res,
+      det(t, 0, `<hr>`, opt).res,
       "<hr>",
       `opt #${i}:\n${JSON.stringify(opt, null, 4)}`
     );
@@ -127,7 +129,7 @@ test(`01.11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - r
     stripHtmlButIgnoreTags: ["hr"]
   }).forEach((opt, i) => {
     t.is(
-      det(t, n, `<hr/>`, opt).res,
+      det(t, 0, `<hr/>`, opt).res,
       "<hr>",
       `opt #${i}:\n${JSON.stringify(opt, null, 4)}`
     );
@@ -205,7 +207,7 @@ test(`01.17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - m
 
 test(`01.18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, `<div>`, {
+    det(t, 0, `<div>`, {
       stripHtml: 0
     }).res,
     "<div>"
@@ -214,7 +216,7 @@ test(`01.18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t =>
 
 test(`01.19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, `<a>`, {
+    det(t, 0, `<a>`, {
       stripHtml: 0
     }).res,
     "<a>"
@@ -223,7 +225,7 @@ test(`01.19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t =>
 
 test(`01.20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, '<a style="font-size: red;">', {
+    det(t, 0, '<a style="font-size: red;">', {
       stripHtml: 0
     }).res,
     '<a style="font-size: red;">'
@@ -232,7 +234,7 @@ test(`01.20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t =>
 
 test(`01.21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, `<div>`, {
+    det(t, 0, `<div>`, {
       stripHtml: 1
     }).res,
     ""
@@ -241,7 +243,7 @@ test(`01.21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t =>
 
 test(`01.22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, `<a>`, {
+    det(t, 0, `<a>`, {
       stripHtml: 1
     }).res,
     ""
@@ -250,7 +252,7 @@ test(`01.22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t =>
 
 test(`01.23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, t => {
   t.is(
-    det(t, n, '<a style="font-size: red;">', {
+    det(t, 0, '<a style="font-size: red;">', {
       stripHtml: 1
     }).res,
     ""
@@ -352,6 +354,7 @@ test(`01.31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags 
     t.is(
       det(
         t,
+        n,
         'test text is being <b class="test" id="br">set in bold</b> here',
         opt
       ).res,
@@ -368,6 +371,7 @@ test(`01.32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags 
     t.is(
       det(
         t,
+        n,
         'test text is being < b class="test" >set in bold< /  b > here',
         opt
       ).res,
@@ -418,7 +422,8 @@ test(`01.36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closin
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `test text is being <B class="h">set in bold<B/> here`, opt).res,
+      det(t, n, `test text is being <B class="h">set in bold<B/> here`, opt)
+        .res,
       `test text is being <b class="h">set in bold</b> here`,
       JSON.stringify(opt, null, 4)
     );
@@ -468,6 +473,7 @@ test(`01.40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
     t.is(
       det(
         t,
+        n,
         `test text is being <strong id="main">set in bold</ strong> here`,
         opt
       ).res,
@@ -484,6 +490,7 @@ test(`01.41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
     t.is(
       det(
         t,
+        n,
         `test text is being <strong id="main">set in bold<strong/> here`,
         opt
       ).res,
@@ -500,6 +507,7 @@ test(`01.42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
     t.is(
       det(
         t,
+        n,
         'test text is being < StRoNg >set in bold<StRoNg class="wrong1" / > here',
         opt
       ).res,
@@ -526,8 +534,13 @@ test(`01.44 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, 'test text is being <em id="main">set in emphasis<em/> here', opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        'test text is being <em id="main">set in emphasis<em/> here',
+        opt
+      ).res,
       `test text is being <em id="main">set in emphasis</em> here`,
       JSON.stringify(opt, null, 4)
     );
@@ -552,12 +565,12 @@ test(`01.45 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong 
 // ==============================
 
 test(`02.01 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - simple case`, t => {
-  t.is(det(t, n, `a <div><a>z</a></div> c`).res, "a z c", "11.01 - control");
+  t.is(det(t, 0, `a <div><a>z</a></div> c`).res, "a z c", "11.01 - control");
 });
 
 test(`02.02 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "a"
     }).res,
     "a <a>z</a> c"
@@ -566,7 +579,7 @@ test(`02.02 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 
 test(`02.03 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a"]
     }).res,
     "a <a>z</a> c"
@@ -575,7 +588,7 @@ test(`02.03 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 
 test(`02.04 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "div",
       removeWidows: false
     }).res,
@@ -585,7 +598,7 @@ test(`02.04 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 
 test(`02.05 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["div"],
       removeWidows: false
     }).res,
@@ -595,7 +608,7 @@ test(`02.05 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 
 test(`02.06 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - both tags ignored`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a", "div"],
       removeWidows: false
     }).res,
@@ -605,7 +618,7 @@ test(`02.06 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 
 test(`02.07 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - other tags ignored, not present in the input`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["article", "z"],
       removeWidows: false
     }).res,
@@ -614,12 +627,12 @@ test(`02.07 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} - 
 });
 
 test(`02.08 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - control for stripHtml`, t => {
-  t.is(det(t, n, `a <div><a>z</a></div> c`).res, "a z c", "11.08 - control");
+  t.is(det(t, 0, `a <div><a>z</a></div> c`).res, "a z c", "11.08 - control");
 });
 
 test(`02.09 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtml: false,
       removeWidows: false
     }).res,
@@ -629,7 +642,7 @@ test(`02.09 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.10 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - no ignores`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtml: true,
       removeWidows: false
     }).res,
@@ -639,7 +652,7 @@ test(`02.10 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.11 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "a",
       stripHtml: false,
       removeWidows: false
@@ -650,7 +663,7 @@ test(`02.11 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.12 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "a",
       stripHtml: true,
       removeWidows: false
@@ -661,7 +674,7 @@ test(`02.12 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.13 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a"],
       stripHtml: false,
       removeWidows: false
@@ -672,7 +685,7 @@ test(`02.13 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.14 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a"],
       stripHtml: true,
       removeWidows: false
@@ -683,7 +696,7 @@ test(`02.14 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.15 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "div",
       stripHtml: false,
       removeWidows: false
@@ -694,7 +707,7 @@ test(`02.15 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.16 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: "div",
       stripHtml: true,
       removeWidows: false
@@ -705,7 +718,7 @@ test(`02.16 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.17 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["div"],
       stripHtml: false,
       removeWidows: false
@@ -716,7 +729,7 @@ test(`02.17 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.18 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - single tag to ignore, given as string in an array`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["div"],
       stripHtml: true,
       removeWidows: false
@@ -727,7 +740,7 @@ test(`02.18 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.19 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a", "div"],
       stripHtml: false,
       removeWidows: false
@@ -738,7 +751,7 @@ test(`02.19 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.20 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - both tags ignored`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["a", "div"],
       stripHtml: true,
       removeWidows: false
@@ -749,7 +762,7 @@ test(`02.20 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.21 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["article", "z"],
       stripHtml: false,
       removeWidows: false
@@ -760,7 +773,7 @@ test(`02.21 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
 
 test(`02.22 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - other tags ignored, not present in the input`, t => {
   t.is(
-    det(t, n, `a <div><a>z</a></div> c`, {
+    det(t, 0, `a <div><a>z</a></div> c`, {
       stripHtmlButIgnoreTags: ["article", "z"],
       stripHtml: true,
       removeWidows: false

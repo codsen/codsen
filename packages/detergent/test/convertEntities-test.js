@@ -114,6 +114,7 @@ test(`02.01 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -133,6 +134,7 @@ test(`02.02 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -191,7 +193,8 @@ test(`02.04 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -206,7 +209,8 @@ test(`02.05 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -221,7 +225,8 @@ test(`02.06 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -236,7 +241,8 @@ test(`02.07 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -251,7 +257,8 @@ test(`02.08 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -266,7 +273,8 @@ test(`02.09 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -281,7 +289,8 @@ test(`02.10 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -296,7 +305,8 @@ test(`02.11 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -311,7 +321,8 @@ test(`02.12 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT&rsquo;S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -326,7 +337,8 @@ test(`02.13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -341,7 +353,8 @@ test(`02.14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt).res,
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
       "HOORAY - IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -358,6 +371,7 @@ test(`02.15 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -377,6 +391,7 @@ test(`02.16 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -396,6 +411,7 @@ test(`02.17 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -415,6 +431,7 @@ test(`02.18 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(
         t,
+        n,
         `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawhairspace}`,
         opt
       ).res,
@@ -500,8 +517,12 @@ test(`03.04 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `aaaaaaaaaaa ${rawMDash} aaaaaaaaaaaa &mdash; aaaaaaaaaaaa`, opt)
-        .res,
+      det(
+        t,
+        n,
+        `aaaaaaaaaaa ${rawMDash} aaaaaaaaaaaa &mdash; aaaaaaaaaaaa`,
+        opt
+      ).res,
       `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`,
       JSON.stringify(opt, null, 4)
     );
@@ -802,7 +823,8 @@ test(`03.24 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntit
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `a${rawhairspace}a a a a a a a a a ${rawMDash} a a a a `, opt).res,
+      det(t, n, `a${rawhairspace}a a a a a a a a a ${rawMDash} a a a a `, opt)
+        .res,
       "a a a a a a a a a a&nbsp;&mdash; a a a&nbsp;a",
       JSON.stringify(opt, null, 4)
     );
@@ -816,7 +838,8 @@ test(`03.25 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntit
     removeWidows: 0
   }).forEach((opt, n) => {
     t.is(
-      det(t, n, `a a a a a a${rawhairspace}a a a a ${rawMDash} a a a a `, opt).res,
+      det(t, n, `a a a a a a${rawhairspace}a a a a ${rawMDash} a a a a `, opt)
+        .res,
       "a a a a a a a a a a &mdash; a a a a",
       JSON.stringify(opt, null, 4)
     );
@@ -1621,21 +1644,21 @@ test(`06.31 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - repl
 
 test(`07.01 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - numeric entities`, t => {
   t.is(
-    det(t, n, `aaaaaaa aaaaaaaaa aaaaaaaaaa&#160;bbbb`).res,
+    det(t, 0, `aaaaaaa aaaaaaaaa aaaaaaaaaa&#160;bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb"
   );
 });
 
 test(`07.02 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - named entities`, t => {
   t.is(
-    det(t, n, `aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb`).res,
+    det(t, 0, `aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb"
   );
 });
 
 test(`07.03 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - raw characters`, t => {
   t.is(
-    det(t, n, `aaaaaaa aaaaaaaaa aaaaaaaaa${rawNbsp}bbbb`).res,
+    det(t, 0, `aaaaaaa aaaaaaaaa aaaaaaaaa${rawNbsp}bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaa&nbsp;bbbb"
   );
 });
@@ -1644,20 +1667,20 @@ test(`07.03 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - raw charact
 // -----------------------------------------------------------------------------
 
 test(`08.01 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities - precaution &fnof; (\\u0192)`, t => {
-  t.is(det(t, n, `aaa&fnof;aaa`).res, "aaa&fnof;aaa");
+  t.is(det(t, 0, `aaa&fnof;aaa`).res, "aaa&fnof;aaa");
 });
 
 test(`08.02 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
-  t.is(det(t, n, `aaa&thinsp;aaa`).res, "aaa&thinsp;aaa");
+  t.is(det(t, 0, `aaa&thinsp;aaa`).res, "aaa&thinsp;aaa");
 });
 
 test(`08.03 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
-  t.is(det(t, n, `aaa&zwnjaaa`).res, "aaa&zwnj;aaa");
+  t.is(det(t, 0, `aaa&zwnjaaa`).res, "aaa&zwnj;aaa");
 });
 
 test(`08.04 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
   t.is(
-    det(t, n, `aaa&pi&piv&pi&pivaaa`, {
+    det(t, 0, `aaa&pi&piv&pi&pivaaa`, {
       convertEntities: false
     }).res,
     "aaa\u03C0\u03D6\u03C0\u03D6aaa"
@@ -1666,7 +1689,7 @@ test(`08.04 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potential
 
 test(`08.05 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
   t.is(
-    det(t, n, `aaa&pi&piv&pi&pivaaa`, {
+    det(t, 0, `aaa&pi&piv&pi&pivaaa`, {
       convertEntities: true,
       dontEncodeNonLatin: false
     }).res,
@@ -1682,6 +1705,7 @@ test(`08.06 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - precautio
     t.is(
       det(
         t,
+        n,
         "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz euro;",
         opt
       ).res,
@@ -1692,14 +1716,14 @@ test(`08.06 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - precautio
 
 test(`08.07 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
   t.is(
-    det(t, n, `aaa&sup&sup1&sup&sup2&sup&sup3&sup&supeaaa`).res,
+    det(t, 0, `aaa&sup&sup1&sup&sup2&sup&sup3&sup&supeaaa`).res,
     "aaa&sup;&sup1;&sup;&sup2;&sup;&sup3;&sup;&supe;aaa"
   );
 });
 
 test(`08.08 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
   t.is(
-    det(t, n, `aaa&theta&thetasym&theta&thetasymaaa`, {
+    det(t, 0, `aaa&theta&thetasym&theta&thetasymaaa`, {
       convertEntities: false
     }).res,
     he.decode("aaa&theta;&thetasym;&theta;&thetasym;aaa")
@@ -1708,7 +1732,7 @@ test(`08.08 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potential
 
 test(`08.09 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
   t.is(
-    det(t, n, `aaa&ang&angst&ang&angstaaa`).res,
+    det(t, 0, `aaa&ang&angst&ang&angstaaa`).res,
     "aaa&ang;&#xC5;&ang;&#xC5;aaa"
   );
 });
@@ -1717,12 +1741,12 @@ test(`08.09 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potential
 // -----------------------------------------------------------------------------
 
 test(`09.01 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
-  t.is(det(t, n, `aaa&lt;bbb ccc`).res, "aaa&lt;bbb ccc");
+  t.is(det(t, 0, `aaa&lt;bbb ccc`).res, "aaa&lt;bbb ccc");
 });
 
 test(`09.02 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
   t.is(
-    det(t, n, `aaa&lt;bbb ccc`, {
+    det(t, 0, `aaa&lt;bbb ccc`, {
       convertEntities: true
     }).res,
     "aaa&lt;bbb ccc"
@@ -1731,7 +1755,7 @@ test(`09.02 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if en
 
 test(`09.03 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
   t.is(
-    det(t, n, `aaa&lt;bbb ccc`, {
+    det(t, 0, `aaa&lt;bbb ccc`, {
       convertEntities: false
     }).res,
     "aaa<bbb ccc"
@@ -1739,12 +1763,12 @@ test(`09.03 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if en
 });
 
 test(`09.04 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
-  t.is(det(t, n, `aaa<bbb ccc`).res, "aaa&lt;bbb ccc");
+  t.is(det(t, 0, `aaa<bbb ccc`).res, "aaa&lt;bbb ccc");
 });
 
 test(`09.05 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
   t.is(
-    det(t, n, `aaa<bbb ccc`, { convertEntities: true }).res,
+    det(t, 0, `aaa<bbb ccc`, { convertEntities: true }).res,
     "aaa&lt;bbb ccc",
     "76.02"
   );
@@ -1752,7 +1776,7 @@ test(`09.05 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if en
 
 test(`09.06 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, t => {
   t.is(
-    det(t, n, `aaa<bbb ccc`, { convertEntities: false }).res,
+    det(t, 0, `aaa<bbb ccc`, { convertEntities: false }).res,
     "aaa<bbb ccc",
     "76.03"
   );
@@ -1765,6 +1789,7 @@ test(`09.07 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution aga
     t.is(
       det(
         t,
+        n,
         "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz euro;",
         opt
       ).res,
@@ -1782,6 +1807,7 @@ test(`09.08 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution aga
     t.is(
       det(
         t,
+        n,
         "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz euro;",
         opt
       ).res,
@@ -1796,11 +1822,11 @@ test(`09.08 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution aga
 // ============================================================================
 
 test(`10.01 - email-not-friendly entities`, t => {
-  t.is(det(t, n, `&Breve;`, { convertEntities: 1 }).res, "&#x2D8;");
+  t.is(det(t, 0, `&Breve;`, { convertEntities: 1 }).res, "&#x2D8;");
 });
 
 test(`10.02 - email-not-friendly entities`, t => {
-  t.is(det(t, n, `&Breve;`, { convertEntities: 0 }).res, "\u02D8");
+  t.is(det(t, 0, `&Breve;`, { convertEntities: 0 }).res, "\u02D8");
 });
 
 test(`10.03 - numeric entities`, t => {
@@ -1810,6 +1836,7 @@ test(`10.03 - numeric entities`, t => {
     t.is(
       det(
         t,
+        n,
         "&Breve;&Backslash;&Cacute;&CircleDot;&DD;&Diamond;&DownArrow;&LT;&RightArrow;&SmallCircle;&Uarr;&Verbar;&angst;&zdot; a",
         opt
       ).res,
@@ -1831,7 +1858,11 @@ test(`10.05 - enforce spaces after semicolons - semicol between letters, addMiss
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, `aaa;aaa`, opt).res, "aaa; aaa", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `aaa;aaa`, opt).res,
+      "aaa; aaa",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -1839,7 +1870,11 @@ test(`10.06 - enforce spaces after semicolons - semicol between letters, addMiss
   mixer({
     addMissingSpaces: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, `aaa;aaa`, opt).res, "aaa;aaa", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `aaa;aaa`, opt).res,
+      "aaa;aaa",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -1859,7 +1894,11 @@ test(`10.08 - enforce spaces after semicolons - semicol between letters, ends wi
   mixer({
     addMissingSpaces: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, `aaa;aaa;`, opt).res, "aaa;aaa;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `aaa;aaa;`, opt).res,
+      "aaa;aaa;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -1879,12 +1918,20 @@ test(`10.10 - enforce spaces after semicolons`, t => {
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, `aaa.Aaa`, opt).res, "aaa. Aaa", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `aaa.Aaa`, opt).res,
+      "aaa. Aaa",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
 test(`10.11 - enforce spaces after semicolons`, t => {
   allCombinations.forEach((opt, n) => {
-    t.is(det(t, n, `aaa.aaa`, opt).res, "aaa.aaa", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, `aaa.aaa`, opt).res,
+      "aaa.aaa",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });

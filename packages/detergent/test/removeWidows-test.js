@@ -21,7 +21,7 @@ import {
 
 test(`00 - minimal samples`, t => {
   t.is(
-    det(t, n, `aaa bbb ccc ddd`, {
+    det(t, 0, `aaa bbb ccc ddd`, {
       removeWidows: 1,
       convertEntities: 1
     }).res,
@@ -32,7 +32,7 @@ test(`00 - minimal samples`, t => {
 
 test(`01 - ETX processed twice, 2nd time during widow removal`, t => {
   t.is(
-    det(t, n, `aaa bbb ccc\u0003ddd`, {
+    det(t, 0, `aaa bbb ccc\u0003ddd`, {
       removeWidows: 1,
       convertEntities: 1,
       removeLineBreaks: 1
@@ -209,6 +209,7 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
+        n,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -216,20 +217,35 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `04.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(t, n, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `This very long line of text ends with a postcode SW1A 1AA.`,
+        opt
+      ).res,
       `This very long line of text ends with a postcode SW1A&nbsp;1AA.`,
       `04.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(t, n, `this very long line of text ends with a postcode SW1A 1AA`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `this very long line of text ends with a postcode SW1A 1AA`,
+        opt
+      ).res,
       `this very long line of text ends with a postcode SW1A&nbsp;1AA`,
       `04.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(t, n, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
+        opt
+      ).res,
       `&#x1F984; some text text text SW1A&nbsp;1AA more text text text &#x1F984;&nbsp;aaa`,
       `04.05 - properly formatted UK postcode, some emoji`
     );
@@ -254,6 +270,7 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
+        n,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -261,20 +278,35 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `11.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(t, n, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `This very long line of text ends with a postcode SW1A 1AA.`,
+        opt
+      ).res,
       `This very long line of text ends with a postcode SW1A${rawNbsp}1AA.`,
       `11.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(t, n, `this very long line of text ends with a postcode SW1A 1AA`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `this very long line of text ends with a postcode SW1A 1AA`,
+        opt
+      ).res,
       `this very long line of text ends with a postcode SW1A${rawNbsp}1AA`,
       `11.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(t, n, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
+        opt
+      ).res,
       `🦄 some text text text SW1A${rawNbsp}1AA more text text text 🦄${rawNbsp}aaa`,
       `11.05 - properly formatted UK postcode, some emoji`
     );
@@ -299,6 +331,7 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     t.is(
       det(
         t,
+        n,
         `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
         opt
       ).res,
@@ -306,20 +339,35 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
       `12.02 - multiple properly formatted postcodes`
     );
     t.is(
-      det(t, n, `This very long line of text ends with a postcode SW1A 1AA.`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `This very long line of text ends with a postcode SW1A 1AA.`,
+        opt
+      ).res,
       `This very long line of text ends with a postcode SW1A 1AA.`,
       `12.03 - line ends with a postcode (full stop)`
     );
     t.is(
-      det(t, n, `this very long line of text ends with a postcode SW1A 1AA`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `this very long line of text ends with a postcode SW1A 1AA`,
+        opt
+      ).res,
       `this very long line of text ends with a postcode SW1A 1AA`,
       `12.04 - line ends with a postcode (no full stop)`
     );
     t.is(
-      det(t, n, `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`, opt)
-        .res,
+      det(
+        t,
+        n,
+        n,
+        `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
+        opt
+      ).res,
       `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
       `12.05 - properly formatted UK postcode, some emoji`
     );
@@ -336,6 +384,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
     t.is(
       det(
         t,
+        n,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -350,6 +399,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
     t.is(
       det(
         t,
+        n,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -364,6 +414,7 @@ test(`15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
     t.is(
       det(
         t,
+        n,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,
@@ -378,6 +429,7 @@ test(`16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
     t.is(
       det(
         t,
+        n,
         `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         opt
       ).res,

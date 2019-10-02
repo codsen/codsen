@@ -388,6 +388,7 @@ test(`01.27 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     t.is(
       det(
         t,
+        n,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
         opt
       ).res,
@@ -408,6 +409,7 @@ test(`01.28 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     t.is(
       det(
         t,
+        n,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
         opt
       ).res,
@@ -428,6 +430,7 @@ test(`01.29 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     t.is(
       det(
         t,
+        n,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
         opt
       ).res,
@@ -448,6 +451,7 @@ test(`01.30 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn'
     t.is(
       det(
         t,
+        n,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
         opt
       ).res,
@@ -473,7 +477,11 @@ test(`01.32 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "aaa;bbb", opt).res, "aaa; bbb", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "aaa;bbb", opt).res,
+      "aaa; bbb",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -493,7 +501,11 @@ test(`01.34 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "aaa,bbb", opt).res, "aaa, bbb", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "aaa,bbb", opt).res,
+      "aaa, bbb",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -537,7 +549,11 @@ test(`01.38 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "aaa.bbb", opt).res, "aaa.bbb", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "aaa.bbb", opt).res,
+      "aaa.bbb",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -545,7 +561,11 @@ test(`01.39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being 
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "Aaa.Bbb", opt).res, "Aaa. Bbb", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "Aaa.Bbb", opt).res,
+      "Aaa. Bbb",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -659,7 +679,7 @@ test(`01.46 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - leaves
 });
 
 test(`01.47 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #1`, t => {
-  t.is(det(t, n, "Some text .gitignore").res, "Some text .gitignore");
+  t.is(det(t, 0, "Some text .gitignore").res, "Some text .gitignore");
 });
 
 test(`01.48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #2`, t => {
@@ -669,6 +689,7 @@ test(`01.48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long s
     t.is(
       det(
         t,
+        n,
         "When you will download header.PNG, file fix.jpg and the dotfiles named .gitignore, check them.",
         opt
       ).res,

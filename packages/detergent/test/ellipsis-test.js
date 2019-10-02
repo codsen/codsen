@@ -65,7 +65,11 @@ test(`01.05 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - correctly encoded - conv
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "&hellip;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -74,7 +78,11 @@ test(`01.06 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - wrongly encoded - conver
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "&mldr;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -276,7 +284,11 @@ test(`01.23 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - enco
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "&hellip;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "&hellip;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -285,7 +297,11 @@ test(`01.24 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - enco
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "&mldr;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "&mldr;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -308,7 +324,11 @@ test(`01.26 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - deci
     convertEntities: 1,
     convertDotsToEllipsis: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "&#8230;", opt).res, "&hellip;", JSON.stringify(opt, null, 4));
+    t.is(
+      det(t, n, "&#8230;", opt).res,
+      "&hellip;",
+      JSON.stringify(opt, null, 4)
+    );
   });
 });
 
@@ -408,6 +428,7 @@ test(`01.35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false 
     t.is(
       det(
         t,
+        n,
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,
@@ -425,6 +446,7 @@ test(`01.35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false 
     t.is(
       det(
         t,
+        n,
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,

@@ -20,6 +20,7 @@
 - [Install](#install)
 - [Rationale](#rationale)
 - [API](#api)
+- [`applicableOpts`](#applicableopts)
 - [Example](#example)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -57,9 +58,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                    | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 42 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 46 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 404 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 45 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 49 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 405 KB |
 
 **[⬆ back to top](#)**
 
@@ -175,10 +176,10 @@ You can also set the options to numeric `0` or `1`, that's shorter than Boolean 
 
 ### API - `det()` output object
 
-| output object's key | Type of its value | Description        |
-| ------------------- | ----------------- | ------------------ |
+| output object's key | Type of its value | Description                                                                                                                 |
+| ------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | {                   |                   |
-| `res`               | String            | The cleaned string |
+| `res`               | String            | The cleaned string                                                                                                          |
 | `applicableOpts`    | Plain Object      | Copy of options object without keys that have array values, each set to boolean, is that function applicable to given input |
 | }                   |                   |
 
@@ -219,6 +220,8 @@ For example, detergent's output might look like this — all options not applica
   }
 }
 ```
+
+**[⬆ back to top](#)**
 
 ## Example
 
