@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://gitlab.com/codsen/codsen/compare/object-delete-key@1.8.43...object-delete-key@1.9.0) (2019-10-02)
+
+
+### Features
+
+* make program run faster by removing options validation ([9d8cef6](https://gitlab.com/codsen/codsen/commit/9d8cef6))
+
+
+
+
+
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

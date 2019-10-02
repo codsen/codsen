@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.11.0](https://gitlab.com/codsen/codsen/compare/object-flatten-referencing@4.10.43...object-flatten-referencing@4.11.0) (2019-10-02)
+
+
+### Features
+
+* remove check-types-mini options validation to make operation 148 times faster ([adbfa37](https://gitlab.com/codsen/codsen/commit/adbfa37))
+
+
+
+
+
 ## 4.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

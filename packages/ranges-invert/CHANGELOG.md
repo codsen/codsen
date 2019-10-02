@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.22](https://gitlab.com/codsen/codsen/compare/ranges-invert@2.1.21...ranges-invert@2.1.22) (2019-10-02)
+
+
+### Performance Improvements
+
+* remove check-types-mini and ordinal numbers dependencies ([e62326c](https://gitlab.com/codsen/codsen/commit/e62326c))
+
+
+
+
+
 ## 2.1.0 (2019-06-01)
 
 ### Features

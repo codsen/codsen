@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Iterate through string and optionally a given ranges as if they were one",
   "license": "MIT",
   "engines": {
@@ -127,15 +127,15 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-crop": "^2.0.34",
-    "ranges-invert": "^2.1.21",
+    "ranges-crop": "^2.0.35",
+    "ranges-invert": "^2.1.22",
     "runes": "^0.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "ava": "^2.2.5",
+    "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.5.1",
@@ -145,8 +145,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.12",
+    "js-row-num-cli": "^1.5.46",
+    "lect": "^0.9.13",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.22.0",

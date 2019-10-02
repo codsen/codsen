@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.45](https://gitlab.com/codsen/codsen/compare/string-range-expander@1.10.44...string-range-expander@1.10.45) (2019-10-02)
+
+
+### Performance Improvements
+
+* remove check-types-mini to improve speed by around 500x ([5e219a8](https://gitlab.com/codsen/codsen/commit/5e219a8))
+
+
+
+
+
 ## 1.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

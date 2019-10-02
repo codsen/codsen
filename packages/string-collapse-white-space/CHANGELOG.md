@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.2](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@5.1.1...string-collapse-white-space@5.1.2) (2019-10-02)
+
+
+### Bug Fixes
+
+* string boundary won't throw now, sorry about that ([94639dd](https://gitlab.com/codsen/codsen/commit/94639dd))
+
+
+
+
+
 ## 5.1.0 (2019-09-11)
 
 ### Features

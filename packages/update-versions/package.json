@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
@@ -140,7 +140,7 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.1.0",
+    "edit-package-json": "^0.1.1",
     "globby": "^10.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^3.3.0",
@@ -155,7 +155,7 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "ava": "^2.2.5",
+    "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.3.0",
@@ -166,8 +166,8 @@
     "esm": "^3.2.25",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
-    "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.12",
+    "js-row-num-cli": "^1.5.46",
+    "lect": "^0.9.13",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",

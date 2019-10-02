@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.37](https://gitlab.com/codsen/codsen/compare/json-variables@8.0.36...json-variables@8.0.37) (2019-10-02)
+
+
+### Performance Improvements
+
+* remove check-types-mini which gaves 6x times speed gain ([21a1cb0](https://gitlab.com/codsen/codsen/commit/21a1cb0))
+
+
+
+
+
 ## 7.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

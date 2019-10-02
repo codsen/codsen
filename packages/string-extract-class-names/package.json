@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.9.3",
+  "version": "5.9.4",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -128,13 +128,13 @@
     "sourceMap": false
   },
   "dependencies": {
-    "string-left-right": "^2.3.3"
+    "string-left-right": "^2.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "ava": "^2.2.5",
+    "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.5.1",
@@ -144,8 +144,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.45",
-    "lect": "^0.9.12",
+    "js-row-num-cli": "^1.5.46",
+    "lect": "^0.9.13",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.22.0",
