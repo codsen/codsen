@@ -55,7 +55,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/edit-package-json.cjs.js` | 9 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/edit-package-json.esm.js` | 9 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 37 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/edit-package-json.umd.js` | 19 KB |
 
 **[⬆ back to top](#)**
 
@@ -136,11 +136,11 @@ For now, this is the primary difference (from a more mature and more popular) `o
 
 **set(source, path, val)**
 
-| Input argument | Type     | Obligatory? | Description                                                                                               |
-| -------------- | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
-| `str`          | String   | yes         | JSON file contents                                                                                        |
+| Input argument | Type     | Obligatory? | Description                                                                                                            |
+| -------------- | -------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `str`          | String   | yes         | JSON file contents                                                                                                     |
 | `path`         | String   | yes         | Desired **EXISTING** path in the object, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
-| `valToInsert`  | Whatever | yes         | What to insert at the given path                                                                          |
+| `valToInsert`  | Whatever | yes         | What to insert at the given path                                                                                       |
 
 ---
 
@@ -184,16 +184,18 @@ console.log(JSON.stringify(result, null, 4));
 
 **del(source, path)**
 
-| Input argument | Type     | Obligatory? | Description                                                                                               |
-| -------------- | -------- | ----------- | --------------------------------------------------------------------------------------------------------- |
-| `str`          | String   | yes         | JSON file contents                                                                                        |
-| `path`         | String   | yes         | Desired path in the object to delete, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
+| Input argument | Type   | Obligatory? | Description                                                                                                         |
+| -------------- | ------ | ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| `str`          | String | yes         | JSON file contents                                                                                                  |
+| `path`         | String | yes         | Desired path in the object to delete, must follow [object-path](https://www.npmjs.com/package/object-path) notation |
 
 ---
 
 **Output**
 
 Amended string is returned.
+
+**[⬆ back to top](#)**
 
 ## Contributing
 

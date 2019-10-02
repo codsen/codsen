@@ -178,11 +178,11 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
 
 Function `removeWidows` returns a plain object; you pick the values from it:
 
-| Key in a returned object | Key value's type                      | Description                                 |
-| ------------------------ | ------------------------------------- | ------------------------------------------- |
-| `res`                    | String                                | Processed string                            |
-| `ranges`                 | Array of zero or more ranges (arrays) | Calculated ranges used to produce the `res` |
-| `log`                    | Plain object                          | See its format below                        |
+| Key in a returned object | Key value's type                      | Description                                       |
+| ------------------------ | ------------------------------------- | ------------------------------------------------- |
+| `res`                    | String                                | Processed string                                  |
+| `ranges`                 | Array of zero or more ranges (arrays) | Calculated ranges used to produce the `res`       |
+| `log`                    | Plain object                          | See its format below                              |
 | `whatWasDone`            | Plain object                          | Was it widow removal or just decoding performed ? |
 
 for example, here's how the output could look like:

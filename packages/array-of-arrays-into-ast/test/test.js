@@ -1,5 +1,3 @@
-
-
 import test from "ava";
 import a from "../dist/array-of-arrays-into-ast.esm";
 

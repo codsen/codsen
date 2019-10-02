@@ -1746,6 +1746,7 @@ function encode(str, mode = "html") {
 }
 
 var util = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   characterSuitableForNames: characterSuitableForNames,
   charSuitableForAttrName: charSuitableForAttrName,
   charSuitableForTagName: charSuitableForTagName,

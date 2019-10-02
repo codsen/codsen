@@ -1,5 +1,3 @@
-
-
 import test from "ava";
 import allValuesEqualTo from "../dist/object-all-values-equal-to.esm";
 
