@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.37](https://gitlab.com/codsen/codsen/compare/string-remove-duplicate-heads-tails@3.0.36...string-remove-duplicate-heads-tails@3.0.37) (2019-10-02)
-
+## 3.0.37 (2019-10-02)
 
 ### Performance Improvements
 
-* remove options checking (check-types-mini) to make operations 4 times faster ([1beffd4](https://gitlab.com/codsen/codsen/commit/1beffd4))
-
-
-
-
+- remove options checking (check-types-mini) to make operations 4 times faster ([1beffd4](https://gitlab.com/codsen/codsen/commit/1beffd4))
 
 ## 2.11.0 (2019-01-20)
 

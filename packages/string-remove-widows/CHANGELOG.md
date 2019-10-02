@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.5.0](https://gitlab.com/codsen/codsen/compare/string-remove-widows@1.4.2...string-remove-widows@1.5.0) (2019-10-02)
-
+## 1.5.0 (2019-10-02)
 
 ### Bug Fixes
 
-* fix a case where nbsp could be replaced with itself ([7ca664a](https://gitlab.com/codsen/codsen/commit/7ca664a))
-
+- fix a case where nbsp could be replaced with itself ([7ca664a](https://gitlab.com/codsen/codsen/commit/7ca664a))
 
 ### Features
 
-* reporting res.whatWasDone - widow removal, decoding or both or neither ([630a08d](https://gitlab.com/codsen/codsen/commit/630a08d))
-
-
-
-
+- reporting res.whatWasDone - widow removal, decoding or both or neither ([630a08d](https://gitlab.com/codsen/codsen/commit/630a08d))
 
 ## 1.4.0 (2019-09-11)
 

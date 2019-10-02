@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.10.0](https://gitlab.com/codsen/codsen/compare/object-fill-missing-keys@7.9.43...object-fill-missing-keys@7.10.0) (2019-10-02)
-
+## 7.10.0 (2019-10-02)
 
 ### Features
 
-* remove options validation, to make operation 540% faster ([dab767a](https://gitlab.com/codsen/codsen/commit/dab767a))
-
+- remove options validation, to make operation 540% faster ([dab767a](https://gitlab.com/codsen/codsen/commit/dab767a))
 
 ### Performance Improvements
 
-* tap native Array.isArray to gain around 140 times more speed ([35af347](https://gitlab.com/codsen/codsen/commit/35af347))
-
-
-
-
+- tap native Array.isArray to gain around 140 times more speed ([35af347](https://gitlab.com/codsen/codsen/commit/35af347))
 
 ## 7.9.0 (2019-01-20)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.15.0](https://gitlab.com/codsen/codsen/compare/string-find-heads-tails@3.14.44...string-find-heads-tails@3.15.0) (2019-10-02)
-
+## 3.15.0 (2019-10-02)
 
 ### Features
 
-* remove option checking and ordinals dep; now ~176 times faster ([a827baa](https://gitlab.com/codsen/codsen/commit/a827baa))
-
-
-
-
+- remove option checking and ordinals dep; now ~176 times faster ([a827baa](https://gitlab.com/codsen/codsen/commit/a827baa))
 
 ## 3.15.0 (2019-09-26)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.9.44](https://gitlab.com/codsen/codsen/compare/util-nonempty@2.9.43...util-nonempty@2.9.44) (2019-10-02)
-
+## 2.9.44 (2019-10-02)
 
 ### Performance Improvements
 
-* tap Array.isArray directly, speed improvements ([83cd308](https://gitlab.com/codsen/codsen/commit/83cd308))
-
-
-
-
+- tap Array.isArray directly, speed improvements ([83cd308](https://gitlab.com/codsen/codsen/commit/83cd308))
 
 ## 2.9.0 (2019-01-20)
 

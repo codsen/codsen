@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.35](https://gitlab.com/codsen/codsen/compare/ranges-crop@2.0.34...ranges-crop@2.0.35) (2019-10-02)
-
+## 2.0.35 (2019-10-02)
 
 ### Performance Improvements
 
-* remove ordinal number package ([8129ceb](https://gitlab.com/codsen/codsen/commit/8129ceb))
-
-
-
-
+- remove ordinal number package ([8129ceb](https://gitlab.com/codsen/codsen/commit/8129ceb))
 
 ## 1.3.0 (2019-01-20)
 

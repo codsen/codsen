@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.10.39](https://gitlab.com/codsen/codsen/compare/ranges-sort@3.10.38...ranges-sort@3.10.39) (2019-10-02)
-
+## 3.10.39 (2019-10-02)
 
 ### Performance Improvements
 
-* remove orginal number package and check-types-mini, make 165 times faster ([6e995c5](https://gitlab.com/codsen/codsen/commit/6e995c5))
-
-
-
-
+- remove orginal number package and check-types-mini, make 165 times faster ([6e995c5](https://gitlab.com/codsen/codsen/commit/6e995c5))
 
 ## 3.10.0 (2019-01-20)
 

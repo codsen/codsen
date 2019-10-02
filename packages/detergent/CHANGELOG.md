@@ -3,25 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.1.0](https://gitlab.com/codsen/codsen/compare/detergent@5.0.1...detergent@5.1.0) (2019-10-02)
-
+## 5.1.0 (2019-10-02)
 
 ### Bug Fixes
 
-* fix last false alerts, tests were not updated properly ([d990e45](https://gitlab.com/codsen/codsen/commit/d990e45))
-
-
-### Features
-
-* applicableOpts - WIP - extended to all test files ([3f51f9c](https://gitlab.com/codsen/codsen/commit/3f51f9c))
-* applicableOpts - WIP - only 3 failing ([b9d3a71](https://gitlab.com/codsen/codsen/commit/b9d3a71))
-* report applicableOpts ([a03644a](https://gitlab.com/codsen/codsen/commit/a03644a))
-* report applicableOpts in the output ([ad9e8e6](https://gitlab.com/codsen/codsen/commit/ad9e8e6))
-* return applicableOpts ([75178ef](https://gitlab.com/codsen/codsen/commit/75178ef))
-
-
-
-
+- fix last false alerts, tests were not updated properly ([d990e45](https://gitlab.com/codsen/codsen/commit/d990e45))
+- report applicableOpts ([a03644a](https://gitlab.com/codsen/codsen/commit/a03644a))
+- report applicableOpts in the output ([ad9e8e6](https://gitlab.com/codsen/codsen/commit/ad9e8e6))
+- return applicableOpts ([75178ef](https://gitlab.com/codsen/codsen/commit/75178ef))
 
 ## 5.0.0 (2019-09-17)
 

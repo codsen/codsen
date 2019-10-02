@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.8.0](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.7.43...object-no-new-keys@2.8.0) (2019-10-02)
-
+## 2.8.0 (2019-10-02)
 
 ### Features
 
-* remove option type checking to make program run around 54 times faster ([5acc5f6](https://gitlab.com/codsen/codsen/commit/5acc5f6))
-
-
-
-
+- remove option type checking to make program run around 54 times faster ([5acc5f6](https://gitlab.com/codsen/codsen/commit/5acc5f6))
 
 ## 2.7.0 (2019-01-20)
 

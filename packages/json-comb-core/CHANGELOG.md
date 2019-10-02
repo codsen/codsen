@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.6.1](https://gitlab.com/codsen/codsen/compare/json-comb-core@6.6.0...json-comb-core@6.6.1) (2019-10-02)
-
+## 6.6.1 (2019-10-02)
 
 ### Bug Fixes
 
-* fix the semver key comparison, regex was off ([6335dc9](https://gitlab.com/codsen/codsen/commit/6335dc9))
-
-
-
-
+- fix the semver key comparison, regex was off ([6335dc9](https://gitlab.com/codsen/codsen/commit/6335dc9))
 
 ## 6.6.0 (2019-09-23)
 

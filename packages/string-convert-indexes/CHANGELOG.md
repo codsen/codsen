@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.44](https://gitlab.com/codsen/codsen/compare/string-convert-indexes@1.9.43...string-convert-indexes@1.9.44) (2019-10-02)
-
+## 1.9.44 (2019-10-02)
 
 ### Performance Improvements
 
-* remove opts validation and orginal number packages, around 500x speed improv ([e2211c1](https://gitlab.com/codsen/codsen/commit/e2211c1))
-
-
-
-
+- remove opts validation and orginal number packages, around 500x speed improv ([e2211c1](https://gitlab.com/codsen/codsen/commit/e2211c1))
 
 ## 1.9.0 (2019-01-20)
 

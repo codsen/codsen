@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.8.0](https://gitlab.com/codsen/codsen/compare/object-flatten-all-arrays@4.7.43...object-flatten-all-arrays@4.8.0) (2019-10-02)
-
+## 4.8.0 (2019-10-02)
 
 ### Features
 
-* remove check-types-mini and replace type-detect with lodash.isplainobject ([31936bf](https://gitlab.com/codsen/codsen/commit/31936bf))
-
-
-
-
+- remove check-types-mini and replace type-detect with lodash.isplainobject ([31936bf](https://gitlab.com/codsen/codsen/commit/31936bf))
 
 ## 4.8.0 (2019-09-26)
 
