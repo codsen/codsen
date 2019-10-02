@@ -25,9 +25,9 @@ test(`01.01 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
     convertDashes: 1,
     convertEntities: 1,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "1880-1912, pages 330-39", opt).res,
+      det(t, n, "1880-1912, pages 330-39", opt).res,
       "1880&ndash;1912, pages 330&ndash;39",
       JSON.stringify(opt, null, 4)
     );
@@ -39,9 +39,9 @@ test(`01.02 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
     convertDashes: 1,
     convertEntities: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "1880-1912, pages 330-39", opt).res,
+      det(t, n, "1880-1912, pages 330-39", opt).res,
       "1880\u20131912, pages 330\u201339",
       JSON.stringify(opt, null, 4)
     );
@@ -52,9 +52,9 @@ test(`01.03 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertDashes: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "1880-1912, pages 330-39", opt).res,
+      det(t, n, "1880-1912, pages 330-39", opt).res,
       "1880-1912, pages 330-39",
       JSON.stringify(opt, null, 4)
     );
@@ -66,21 +66,21 @@ test(`01.04 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertDashes: 1,
     convertEntities: 1
-  }).forEach(opt => {
-    t.is(det(t, "An A-Z guide", opt).res, "An A&ndash;Z guide");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "An A-Z guide", opt).res, "An A&ndash;Z guide");
   });
   mixer({
     convertDashes: 1,
     convertEntities: 0
-  }).forEach(opt => {
-    t.is(det(t, "An A-Z guide", opt).res, "An A\u2013Z guide");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "An A-Z guide", opt).res, "An A\u2013Z guide");
   });
   mixer({
     convertDashes: 0,
     convertEntities: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "An A-Z guide", opt).res,
+      det(t, n, "An A-Z guide", opt).res,
       "An A-Z guide",
       JSON.stringify(opt, null, 4)
     );
@@ -91,21 +91,21 @@ test(`01.05 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertDashes: 1,
     convertEntities: 1
-  }).forEach(opt => {
-    t.is(det(t, `An A${rawNDash}Z guide`, opt).res, "An A&ndash;Z guide");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `An A${rawNDash}Z guide`, opt).res, "An A&ndash;Z guide");
   });
   mixer({
     convertDashes: 1,
     convertEntities: 0
-  }).forEach(opt => {
-    t.is(det(t, `An A${rawNDash}Z guide`, opt).res, `An A${rawNDash}Z guide`);
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `An A${rawNDash}Z guide`, opt).res, `An A${rawNDash}Z guide`);
   });
   mixer({
     convertDashes: 0,
     convertEntities: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `An A${rawNDash}Z guide`, opt).res,
+      det(t, n, `An A${rawNDash}Z guide`, opt).res,
       "An A-Z guide",
       JSON.stringify(opt, null, 4)
     );
@@ -116,20 +116,20 @@ test(`01.06 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertDashes: 1,
     convertEntities: 1
-  }).forEach(opt => {
-    t.is(det(t, `An A&ndash;Z guide`, opt).res, "An A&ndash;Z guide");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `An A&ndash;Z guide`, opt).res, "An A&ndash;Z guide");
   });
   mixer({
     convertDashes: 1,
     convertEntities: 0
-  }).forEach(opt => {
-    t.is(det(t, `An A&ndash;Z guide`, opt).res, `An A${rawNDash}Z guide`);
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `An A&ndash;Z guide`, opt).res, `An A${rawNDash}Z guide`);
   });
   mixer({
     convertDashes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `An A&ndash;Z guide`, opt).res,
+      det(t, n, `An A&ndash;Z guide`, opt).res,
       "An A-Z guide",
       JSON.stringify(opt, null, 4)
     );
@@ -167,9 +167,9 @@ test(`02.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertDashes: 1,
     removeWidows: 0,
     convertEntities: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "some text - some more text", opt).res,
+      det(t, n, "some text - some more text", opt).res,
       "some text &mdash; some more text",
       JSON.stringify(opt, null, 4)
     );
@@ -181,9 +181,9 @@ test(`02.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertDashes: 1,
     removeWidows: 0,
     convertEntities: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "some text - some more text", opt).res,
+      det(t, n, "some text - some more text", opt).res,
       `some text ${rawMDash} some more text`,
       JSON.stringify(opt, null, 4)
     );
@@ -194,9 +194,9 @@ test(`02.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
   mixer({
     convertDashes: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "some text - some more text", opt).res,
+      det(t, n, "some text - some more text", opt).res,
       "some text - some more text",
       JSON.stringify(opt, null, 4)
     );
@@ -209,7 +209,7 @@ test(`02.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertDashes: 1,
     removeWidows: 0,
     convertEntities: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -228,7 +228,7 @@ test(`02.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     removeWidows: 0,
     convertEntities: 1,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -247,7 +247,7 @@ test(`02.06 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     removeWidows: 0,
     convertEntities: 0,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -266,7 +266,7 @@ test(`02.07 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     removeWidows: 0,
     convertEntities: 1,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -285,7 +285,7 @@ test(`02.08 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     removeWidows: 0,
     convertEntities: 0,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -304,9 +304,9 @@ test(`02.09 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 1,
     convertDashes: 1,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, &lsquo;You mean you want me to&mdash;&rsquo;`,
       JSON.stringify(opt, null, 4)
     );
@@ -319,9 +319,9 @@ test(`02.10 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 1,
     convertDashes: 1,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, 'You mean you want me to&mdash;'`,
       JSON.stringify(opt, null, 4)
     );
@@ -334,9 +334,9 @@ test(`02.11 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 1,
     convertDashes: 0,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, &lsquo;You mean you want me to-&rsquo;`,
       JSON.stringify(opt, null, 4)
     );
@@ -349,9 +349,9 @@ test(`02.12 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 1,
     convertDashes: 0,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, 'You mean you want me to-'`,
       JSON.stringify(opt, null, 4)
     );
@@ -364,9 +364,9 @@ test(`02.13 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 0,
     convertDashes: 1,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, ${leftSingleQuote}You mean you want me to${rawMDash}${rightSingleQuote}`,
       JSON.stringify(opt, null, 4)
     );
@@ -379,9 +379,9 @@ test(`02.14 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 0,
     convertDashes: 1,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, 'You mean you want me to${rawMDash}'`,
       JSON.stringify(opt, null, 4)
     );
@@ -394,9 +394,9 @@ test(`02.15 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 0,
     convertDashes: 0,
     convertApostrophes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
       JSON.stringify(opt, null, 4)
     );
@@ -409,9 +409,9 @@ test(`02.16 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
     convertEntities: 0,
     convertDashes: 0,
     convertApostrophes: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `I smiled and she said, 'You mean you want me to-'`, opt).res,
+      det(t, n, `I smiled and she said, 'You mean you want me to-'`, opt).res,
       `I smiled and she said, 'You mean you want me to-'`,
       JSON.stringify(opt, null, 4)
     );
@@ -422,9 +422,9 @@ test(`02.16 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m$
 // -----------------------------------------------------------------------------
 
 test(`03.01 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - if statements`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "zzz{% if something %}yyy", opt).res,
+      det(t, n, "zzz{% if something %}yyy", opt).res,
       "zzz{% if something %}yyy",
       JSON.stringify(opt, null, 4)
     );
@@ -432,9 +432,9 @@ test(`03.01 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
 });
 
 test(`03.02 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - variables`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "zzz{{ something }}yyy", opt).res,
+      det(t, n, "zzz{{ something }}yyy", opt).res,
       "zzz{{ something }}yyy",
       JSON.stringify(opt, null, 4)
     );
@@ -442,10 +442,10 @@ test(`03.02 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
 });
 
 test(`03.03 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - if statements`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // with Nunjucks whitespace collapse hyphen:
     t.is(
-      det(t, "zzz{%- if something -%}yyy", opt).res,
+      det(t, n, "zzz{%- if something -%}yyy", opt).res,
       "zzz{%- if something -%}yyy",
       JSON.stringify(opt, null, 4)
     );
@@ -453,9 +453,9 @@ test(`03.03 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
 });
 
 test(`03.04 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - Jinja/Nunjucks code - collapsing variables`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "zzz{{- something -}}yyy", opt).res,
+      det(t, n, "zzz{{- something -}}yyy", opt).res,
       "zzz{{- something -}}yyy",
       JSON.stringify(opt, null, 4)
     );
@@ -466,9 +466,9 @@ test(`03.05 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertEntities: 0,
     convertDashes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `m${rawMDash}m`, opt).res,
+      det(t, n, `m${rawMDash}m`, opt).res,
       `m${rawMDash}m`,
       JSON.stringify(opt, null, 4)
     );
@@ -476,16 +476,16 @@ test(`03.05 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertEntities: 0,
     convertDashes: 0
-  }).forEach(opt => {
-    t.is(det(t, `m${rawMDash}m`, opt).res, `m-m`, JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `m${rawMDash}m`, opt).res, `m-m`, JSON.stringify(opt, null, 4));
   });
 });
 
 test(`03.06 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m${`insurance`}\u001b[${39}m - leaves minuses alone with convert entities option off`, t => {
   mixer({
     convertEntities: 0
-  }).forEach(opt => {
-    t.is(det(t, "m-m", opt).res, "m-m", JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "m-m", opt).res, "m-m", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -493,17 +493,17 @@ test(`03.07 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
   mixer({
     convertEntities: 1,
     convertDashes: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `m${rawMDash}m`, opt).res,
+      det(t, n, `m${rawMDash}m`, opt).res,
       "m&mdash;m",
       JSON.stringify(opt, null, 4)
     );
   });
   mixer({
     convertDashes: 0
-  }).forEach(opt => {
-    t.is(det(t, `m${rawMDash}m`, opt).res, "m-m", JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, `m${rawMDash}m`, opt).res, "m-m", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -513,18 +513,18 @@ test(`03.07 - \u001b[${36}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
 test(`04.01 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - leaves minuses alone with convert entities option on`, t => {
   mixer({
     convertEntities: 1
-  }).forEach(opt => {
-    t.is(det(t, "m-m", opt).res, "m-m", JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "m-m", opt).res, "m-m", JSON.stringify(opt, null, 4));
   });
 });
 
 test(`04.02 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - legit minus between two numbers`, t => {
   mixer({
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       // nothing to convert:
-      det(t, `1 - 2 = 3`, opt).res,
+      det(t, n, `1 - 2 = 3`, opt).res,
       `1 - 2 = 3`
     );
   });
@@ -534,9 +534,9 @@ test(`04.03 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 0,
     removeWidows: 0
-  }).forEach(opt => {
-    t.is(det(t, "Temperatures of -20°C", opt).res, "Temperatures of -20°C");
-    t.is(det(t, "-20°C", opt).res, "-20°C", JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "Temperatures of -20°C", opt).res, "Temperatures of -20°C");
+    t.is(det(t, n, "-20°C", opt).res, "-20°C", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -544,9 +544,9 @@ test(`04.04 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 1,
     removeWidows: 0
-  }).forEach(opt => {
-    t.is(det(t, "Temperatures of -20°C", opt).res, "Temperatures of -20&deg;C");
-    t.is(det(t, "-20°C", opt).res, "-20&deg;C", JSON.stringify(opt, null, 4));
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "Temperatures of -20°C", opt).res, "Temperatures of -20&deg;C");
+    t.is(det(t, n, "-20°C", opt).res, "-20&deg;C", JSON.stringify(opt, null, 4));
   });
 });
 
@@ -554,7 +554,7 @@ test(`04.05 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 1,
     removeWidows: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -571,7 +571,7 @@ test(`04.06 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 1,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -588,7 +588,7 @@ test(`04.07 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 0,
     removeWidows: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -605,7 +605,7 @@ test(`04.08 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -622,9 +622,9 @@ test(`04.08 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
 // -----------------------------------------------------------------------------
 
 test(`05.01 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - no full stop`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "Stratford-upon-Avon", opt).res,
+      det(t, n, "Stratford-upon-Avon", opt).res,
       "Stratford-upon-Avon",
       JSON.stringify(opt, null, 4)
     );
@@ -635,9 +635,9 @@ test(`05.02 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 1,
     removeWidows: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "One day we should visit Stratford-upon-Avon", opt).res,
+      det(t, n, "One day we should visit Stratford-upon-Avon", opt).res,
       "One day we should visit&nbsp;Stratford-upon-Avon",
       JSON.stringify(opt, null, 4)
     );
@@ -648,9 +648,9 @@ test(`05.03 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
   mixer({
     convertEntities: 1,
     removeWidows: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "One day we should visit Stratford-upon-Avon.", opt).res,
+      det(t, n, "One day we should visit Stratford-upon-Avon.", opt).res,
       "One day we should visit&nbsp;Stratford-upon-Avon.",
       JSON.stringify(opt, null, 4)
     );
@@ -660,9 +660,9 @@ test(`05.03 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
 test(`05.04 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - no full stop, widows=off`, t => {
   mixer({
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "One day we should visit Stratford-upon-Avon", opt).res,
+      det(t, n, "One day we should visit Stratford-upon-Avon", opt).res,
       "One day we should visit Stratford-upon-Avon",
       JSON.stringify(opt, null, 4)
     );
@@ -672,9 +672,9 @@ test(`05.04 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m$
 test(`05.05 - \u001b[${35}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`hyphens`}\u001b[${39}m - dashes between words, no spaces - full stop, widows=off`, t => {
   mixer({
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "One day we should visit Stratford-upon-Avon.", opt).res,
+      det(t, n, "One day we should visit Stratford-upon-Avon.", opt).res,
       "One day we should visit Stratford-upon-Avon.",
       JSON.stringify(opt, null, 4)
     );

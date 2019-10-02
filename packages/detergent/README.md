@@ -179,11 +179,46 @@ You can also set the options to numeric `0` or `1`, that's shorter than Boolean 
 | ------------------- | ----------------- | ------------------ |
 | {                   |                   |
 | `res`               | String            | The cleaned string |
+| `applicableOpts`    | Plain Object      | Copy of options object without keys that have array values, each set to boolean, is that function applicable to given input |
 | }                   |                   |
 
 Function `det` returns a plain object. You retrieve the result from its key `res`.
 
 **[⬆ back to top](#)**
+
+## `applicableOpts`
+
+Next generation web applications are designed to show only the options that are applicable to the given input. This saves user's time and also conserves mental resources — you don't even need to read all the labels of the options if they are not applicable.
+
+Detergent currently has 14 option keys, 12 of them boolean. That's not a lot but if you use the tool every day, every optimisation counts.
+
+I got inspiration for this feature while visiting competitor application https://typograf.github.io — it has 110 checkboxes grouped into 12 groups and options are hidden twice — first sidebar is hidden when you visit the page, second, option groups are collapsed.
+
+Another example of overwhelming options set — Kangax minifier — https://kangax.github.io/html-minifier/ — it's got 26 options with heavy descriptions.
+
+Detergent tackles this problem by changing its algorithm: it processes the given input and then makes a note, is particular option applicable or not, independently, is it enabled or not. Then, if it's enabled, it changes the result value.
+
+For example, detergent's output might look like this — all options not applicable because there's nothing to do on "abc":
+
+```js
+{
+  res: "abc",
+  applicableOpts: {
+    fixBrokenEntities: false,
+    removeWidows: false,
+    convertEntities: false,
+    convertDashes: false,
+    convertApostrophes: false,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
+    useXHTML: false,
+    dontEncodeNonLatin: false,
+    addMissingSpaces: false,
+    convertDotsToEllipsis: false,
+    stripHtml: false
+  }
+}
+```
 
 ## Example
 

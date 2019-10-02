@@ -17,7 +17,7 @@ import {
 } from "../dist/util.esm";
 
 test(`00 - empty string input`, t => {
-  t.is(det(t, "").res, "");
+  t.is(det(t, n, "").res, "");
 });
 
 test(`01 - all low ASCII invisible characters are removed`, t => {
@@ -34,7 +34,7 @@ test(`01 - all low ASCII invisible characters are removed`, t => {
 test(`02 - hairspace - tight - hairspace changed to space`, t => {
   mixer({
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -50,7 +50,7 @@ test(`02 - hairspace - tight - hairspace changed to space`, t => {
 test(`03 - hairspace - tight - hairspace changed to space (lots of spaces)`, t => {
   mixer({
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -67,7 +67,7 @@ test(`04 - hairspace - tight - hairspace changed to space: +widows+entities`, t 
   mixer({
     removeWidows: 1,
     convertEntities: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -84,9 +84,9 @@ test("05 - invisible breaks - raw", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
+      det(t, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
       "a\nb\nc\nd\re\nf\ng\nh",
       "05"
     );
@@ -97,9 +97,9 @@ test("06 - invisible breaks - encoded decimal HTML entities", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
+      det(t, n, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
       "a\nb\nc\n\nd",
       "06"
     );
@@ -109,9 +109,9 @@ test("06 - invisible breaks - encoded decimal HTML entities", t => {
 test("07 - invisible breaks - remove all line breaks on", t => {
   mixer({
     removeLineBreaks: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
+      det(t, n, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
       "ab cd",
       "07"
     );
@@ -123,9 +123,9 @@ test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
+      det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
       "a<br/>\nb\nc\n<br/>\nd",
       "08"
     );
@@ -137,9 +137,9 @@ test("09 - invisible breaks - replace breaks into HTML BR's", t => {
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
+      det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
       "a<br>\nb\nc\n<br>\nd",
       "09"
     );
@@ -150,8 +150,8 @@ test("10 - line feed \\u000A (LF) and o.removeLineBreaks", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 1
-  }).forEach(opt => {
-    t.is(det(t, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
   });
 });
 
@@ -160,7 +160,7 @@ test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     convertEntities: 0
-  }).forEach(opt => {
-    t.is(det(t, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
   });
 });

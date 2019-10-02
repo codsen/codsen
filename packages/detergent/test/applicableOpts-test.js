@@ -15,9 +15,9 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01.01 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error present`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "abc&nspdef", opt).applicableOpts.fixBrokenEntities,
+      det(t, n, "abc&nspdef", opt).applicableOpts.fixBrokenEntities,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -25,9 +25,9 @@ test(`01.01 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error pres
 });
 
 test(`01.02 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #1`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "&nbsp;", opt).applicableOpts.fixBrokenEntities,
+      det(t, n, "&nbsp;", opt).applicableOpts.fixBrokenEntities,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -35,9 +35,9 @@ test(`01.02 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 });
 
 test(`01.03 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #2`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "Some text", opt).applicableOpts.fixBrokenEntities,
+      det(t, n, "Some text", opt).applicableOpts.fixBrokenEntities,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -45,9 +45,9 @@ test(`01.03 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 });
 
 test(`01.04 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not present #3`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "", opt).applicableOpts.fixBrokenEntities,
+      det(t, n, "", opt).applicableOpts.fixBrokenEntities,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -58,9 +58,9 @@ test(`01.04 - \u001b[${35}m${`opts.fixBrokenEntities`}\u001b[${39}m - error not 
 // -----------------------------------------------------------------------------
 
 test(`02.01 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, between words`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "aaa bbb ccc ddd", opt).applicableOpts.removeWidows,
+      det(t, n, "aaa bbb ccc ddd", opt).applicableOpts.removeWidows,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -68,9 +68,9 @@ test(`02.01 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.02 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, in front of dash`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "Some text And Some Text -&nbsp;9999", opt).applicableOpts
+      det(t, n, "Some text And Some Text -&nbsp;9999", opt).applicableOpts
         .removeWidows,
       true,
       JSON.stringify(opt, null, 0)
@@ -79,9 +79,9 @@ test(`02.02 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.03 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case, UK postcode`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "abc SW1A 1AA def", opt).applicableOpts.removeWidows,
+      det(t, n, "abc SW1A 1AA def", opt).applicableOpts.removeWidows,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -89,9 +89,9 @@ test(`02.03 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - widow word case
 });
 
 test(`02.04 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #1`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "slfhdjgdhfgdfhkd", opt).applicableOpts.removeWidows,
+      det(t, n, "slfhdjgdhfgdfhkd", opt).applicableOpts.removeWidows,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -99,9 +99,9 @@ test(`02.04 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.05 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #2`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "\n\n\n\t\t\t      \n\n\n", opt).applicableOpts.removeWidows,
+      det(t, n, "\n\n\n\t\t\t      \n\n\n", opt).applicableOpts.removeWidows,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -109,9 +109,9 @@ test(`02.05 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.06 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow word case #3`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "", opt).applicableOpts.removeWidows,
+      det(t, n, "", opt).applicableOpts.removeWidows,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -119,9 +119,9 @@ test(`02.06 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - not a widow wor
 });
 
 test(`02.07 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 1, considering opts.convertDashes can be on or off`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "a - b", opt).applicableOpts.removeWidows,
+      det(t, n, "a - b", opt).applicableOpts.removeWidows,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -129,9 +129,9 @@ test(`02.07 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 1, 
 });
 
 test(`02.08 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 2, considering opts.convertDashes can be on or off`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, "a-b", opt).applicableOpts.removeWidows,
+      det(t, n, "a-b", opt).applicableOpts.removeWidows,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -142,9 +142,9 @@ test(`02.08 - \u001b[${31}m${`opts.removeWidows`}\u001b[${39}m - hyphen case 2, 
 // -----------------------------------------------------------------------------
 
 test(`03.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII, never encoded - straight quote`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `'`, opt).applicableOpts.convertEntities,
+      det(t, n, `'`, opt).applicableOpts.convertEntities,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -152,9 +152,9 @@ test(`03.01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII
 });
 
 test(`03.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII, invisible`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `\u0001`, opt).applicableOpts.convertEntities,
+      det(t, n, `\u0001`, opt).applicableOpts.convertEntities,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -162,9 +162,9 @@ test(`03.02 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - within ASCII
 });
 
 test(`03.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, pound`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `£`, opt).applicableOpts.convertEntities,
+      det(t, n, `£`, opt).applicableOpts.convertEntities,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -172,9 +172,9 @@ test(`03.03 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCI
 });
 
 test(`03.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCII, Ą`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `Ą`, opt).applicableOpts.convertEntities,
+      det(t, n, `Ą`, opt).applicableOpts.convertEntities,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -182,9 +182,9 @@ test(`03.04 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - outside ASCI
 });
 
 test(`03.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - encoded non-breaking space`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `&nbsp;`, opt).applicableOpts.convertEntities,
+      det(t, n, `&nbsp;`, opt).applicableOpts.convertEntities,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -195,9 +195,9 @@ test(`03.05 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - encoded non-
 // -----------------------------------------------------------------------------
 
 test(`04.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.convertDashes,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.convertDashes,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -205,9 +205,9 @@ test(`04.01 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - just text`, t 
 });
 
 test(`04.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.convertDashes,
+      det(t, n, ``, opt).applicableOpts.convertDashes,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -215,9 +215,9 @@ test(`04.02 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - empty`, t => {
 });
 
 test(`04.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - n-dash case`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `Ranges 1-2`, opt).applicableOpts.convertDashes,
+      det(t, n, `Ranges 1-2`, opt).applicableOpts.convertDashes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -225,9 +225,9 @@ test(`04.03 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - n-dash case`, 
 });
 
 test(`04.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - m-dash case`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `Ranges - best solution.`, opt).applicableOpts.convertDashes,
+      det(t, n, `Ranges - best solution.`, opt).applicableOpts.convertDashes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -235,9 +235,9 @@ test(`04.04 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - m-dash case`, 
 });
 
 test(`04.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - legit minus`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `1 - 2 = 3`, opt).applicableOpts.convertDashes,
+      det(t, n, `1 - 2 = 3`, opt).applicableOpts.convertDashes,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -248,9 +248,9 @@ test(`04.05 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - legit minus`, 
 // -----------------------------------------------------------------------------
 
 test(`05.01 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
         .convertApostrophes,
       false,
       JSON.stringify(opt, null, 0)
@@ -259,9 +259,9 @@ test(`05.01 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - just text
 });
 
 test(`05.02 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.convertApostrophes,
+      det(t, n, ``, opt).applicableOpts.convertApostrophes,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -269,9 +269,9 @@ test(`05.02 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - empty`, t
 });
 
 test(`05.03 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `she's good`, opt).applicableOpts.convertApostrophes,
+      det(t, n, `she's good`, opt).applicableOpts.convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -279,9 +279,9 @@ test(`05.03 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 });
 
 test(`05.04 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - possessive`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `the particular citizen's debt`, opt).applicableOpts
+      det(t, n, `the particular citizen's debt`, opt).applicableOpts
         .convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
@@ -290,9 +290,9 @@ test(`05.04 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - possessiv
 });
 
 test(`05.05 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `so-called "ownership"`, opt).applicableOpts.convertApostrophes,
+      det(t, n, `so-called "ownership"`, opt).applicableOpts.convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -300,9 +300,9 @@ test(`05.05 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 });
 
 test(`05.06 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd person`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `not very 'legit', how they say`, opt).applicableOpts
+      det(t, n, `not very 'legit', how they say`, opt).applicableOpts
         .convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
@@ -313,9 +313,9 @@ test(`05.06 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - 3rd perso
 test(`05.07 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw lsquo`, t => {
   mixer({
     convertEntities: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, leftSingleQuote, opt).res,
+      det(t, n, leftSingleQuote, opt).res,
       leftSingleQuote,
       JSON.stringify(opt, null, 0)
     );
@@ -323,9 +323,9 @@ test(`05.07 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw lsquo
 });
 
 test(`05.08 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rsquo`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, rightSingleQuote, opt).applicableOpts.convertApostrophes,
+      det(t, n, rightSingleQuote, opt).applicableOpts.convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -333,9 +333,9 @@ test(`05.08 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rsquo
 });
 
 test(`05.09 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw ldquo`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, leftDoubleQuote, opt).applicableOpts.convertApostrophes,
+      det(t, n, leftDoubleQuote, opt).applicableOpts.convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -343,9 +343,9 @@ test(`05.09 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw ldquo
 });
 
 test(`05.10 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rdquo`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, rightDoubleQuote, opt).applicableOpts.convertApostrophes,
+      det(t, n, rightDoubleQuote, opt).applicableOpts.convertApostrophes,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -356,9 +356,9 @@ test(`05.10 - \u001b[${36}m${`opts.convertApostrophes`}\u001b[${39}m - raw rdquo
 // -----------------------------------------------------------------------------
 
 test(`06.01 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
         .replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
@@ -367,9 +367,9 @@ test(`06.01 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - just text`
 });
 
 test(`06.02 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, ``, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -377,22 +377,22 @@ test(`06.02 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - empty`, t 
 });
 
 test(`06.03 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single line break gets trimmed`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `\n`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\n`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `\r`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\r`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `\r\n`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\r\n`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -400,22 +400,22 @@ test(`06.03 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single lin
 });
 
 test(`06.04 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - more line breaks`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `\n\n\n`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\n\n\n`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `\r\r\r`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\r\r\r`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `\r\n\r\n\r\n`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `\r\n\r\n\r\n`, opt).applicableOpts.replaceLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -423,22 +423,22 @@ test(`06.04 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - more line 
 });
 
 test(`06.05 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single line break`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `a\nb`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `a\nb`, opt).applicableOpts.replaceLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `a\rb`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `a\rb`, opt).applicableOpts.replaceLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `a\r\nb`, opt).applicableOpts.replaceLineBreaks,
+      det(t, n, `a\r\nb`, opt).applicableOpts.replaceLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -449,9 +449,9 @@ test(`06.05 - \u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m - single lin
 // -----------------------------------------------------------------------------
 
 test(`07.01 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -459,9 +459,9 @@ test(`07.01 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - just text`,
 });
 
 test(`07.02 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.removeLineBreaks,
+      det(t, n, ``, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -469,22 +469,22 @@ test(`07.02 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - empty`, t =
 });
 
 test(`07.03 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line break just gets trimmed`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `\n`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\n`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `\r`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\r`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `\r\n`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\r\n`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -492,22 +492,22 @@ test(`07.03 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line
 });
 
 test(`07.04 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - more line breaks`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `\n\n\n`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\n\n\n`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `\r\r\r`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\r\r\r`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `\r\n\r\n\r\n`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `\r\n\r\n\r\n`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -515,22 +515,22 @@ test(`07.04 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - more line b
 });
 
 test(`07.05 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line break`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     // LF
     t.is(
-      det(t, `a\nb`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `a\nb`, opt).applicableOpts.removeLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
     // CR
     t.is(
-      det(t, `a\rb`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `a\rb`, opt).applicableOpts.removeLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
     // CRLF
     t.is(
-      det(t, `a\r\nb`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `a\r\nb`, opt).applicableOpts.removeLineBreaks,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -538,9 +538,9 @@ test(`07.05 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - single line
 });
 
 test(`07.06 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - br`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `a<br>b`, opt).applicableOpts.removeLineBreaks,
+      det(t, n, `a<br>b`, opt).applicableOpts.removeLineBreaks,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -551,9 +551,9 @@ test(`07.06 - \u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m - br`, t => {
 // -----------------------------------------------------------------------------
 
 test(`08.01 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.useXHTML,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.useXHTML,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -561,9 +561,9 @@ test(`08.01 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - just text`, t => {
 });
 
 test(`08.02 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.useXHTML,
+      det(t, n, ``, opt).applicableOpts.useXHTML,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -571,9 +571,9 @@ test(`08.02 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - empty`, t => {
 });
 
 test(`08.03 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - line breaks`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `a\nb`, opt).applicableOpts.useXHTML,
+      det(t, n, `a\nb`, opt).applicableOpts.useXHTML,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -581,7 +581,7 @@ test(`08.03 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - line breaks`, t => 
 });
 
 test(`08.04 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closing tag br`, t => {
-  const calculated1 = det(t, `a<br>b`, {
+  const calculated1 = det(t, n, `a<br>b`, {
     fixBrokenEntities: 0,
     removeWidows: 0,
     convertEntities: 0,
@@ -616,7 +616,7 @@ test(`08.04 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closin
 });
 
 test(`08.05 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closing tag br`, t => {
-  const calculated2 = det(t, `a<br>b`, {
+  const calculated2 = det(t, n, `a<br>b`, {
     fixBrokenEntities: 0,
     removeWidows: 0,
     convertEntities: 0,
@@ -651,9 +651,9 @@ test(`08.05 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closin
 });
 
 test(`08.06 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closing tag br`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `a<br>b`, opt).applicableOpts.useXHTML,
+      det(t, n, `a<br>b`, opt).applicableOpts.useXHTML,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -663,9 +663,9 @@ test(`08.06 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - ignored self-closin
 test(`08.07 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - not ignored self-closing tag br`, t => {
   mixer({
     stripHtml: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, `a<hr>b`, opt).applicableOpts.useXHTML,
+      det(t, n, `a<hr>b`, opt).applicableOpts.useXHTML,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -676,9 +676,9 @@ test(`08.07 - \u001b[${31}m${`opts.useXHTML`}\u001b[${39}m - not ignored self-cl
 // -----------------------------------------------------------------------------
 
 test(`09.01 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
         .dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
@@ -687,9 +687,9 @@ test(`09.01 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - just text
 });
 
 test(`09.02 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.dontEncodeNonLatin,
+      det(t, n, ``, opt).applicableOpts.dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -697,7 +697,7 @@ test(`09.02 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - empty`, t
 });
 
 test(`09.03 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - mixed`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     [
       "\u03A1",
       "\u03CC",
@@ -741,7 +741,7 @@ test(`09.03 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - mixed`, t
       "\u0646"
     ].forEach(char => {
       t.is(
-        det(t, char, opt).applicableOpts.dontEncodeNonLatin,
+        det(t, n, char, opt).applicableOpts.dontEncodeNonLatin,
         true,
         `${char} + ${JSON.stringify(opt, null, 0)}`
       );
@@ -750,9 +750,9 @@ test(`09.03 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - mixed`, t
 });
 
 test(`09.04 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - a`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `a`, opt).applicableOpts.dontEncodeNonLatin,
+      det(t, n, `a`, opt).applicableOpts.dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -760,9 +760,9 @@ test(`09.04 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - a`, t => 
 });
 
 test(`09.05 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - č`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `č`, opt).applicableOpts.dontEncodeNonLatin,
+      det(t, n, `č`, opt).applicableOpts.dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -770,9 +770,9 @@ test(`09.05 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - č`, t =>
 });
 
 test(`09.06 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - =`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `=`, opt).applicableOpts.dontEncodeNonLatin,
+      det(t, n, `=`, opt).applicableOpts.dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -780,9 +780,9 @@ test(`09.06 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - =`, t => 
 });
 
 test(`09.07 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - 2`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `2`, opt).applicableOpts.dontEncodeNonLatin,
+      det(t, n, `2`, opt).applicableOpts.dontEncodeNonLatin,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -793,9 +793,9 @@ test(`09.07 - \u001b[${33}m${`opts.dontEncodeNonLatin`}\u001b[${39}m - 2`, t => 
 // -----------------------------------------------------------------------------
 
 test(`10.01 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - just text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.addMissingSpaces,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.addMissingSpaces,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -803,9 +803,9 @@ test(`10.01 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - just text`,
 });
 
 test(`10.02 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.addMissingSpaces,
+      det(t, n, ``, opt).applicableOpts.addMissingSpaces,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -813,9 +813,9 @@ test(`10.02 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t =
 });
 
 test(`10.03 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `1-2 1 - 2`, opt).applicableOpts.addMissingSpaces,
+      det(t, n, `1-2 1 - 2`, opt).applicableOpts.addMissingSpaces,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -823,9 +823,9 @@ test(`10.03 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - empty`, t =
 });
 
 test(`10.04 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - after n-dash`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `10am &ndash;11am`, opt).applicableOpts.addMissingSpaces,
+      det(t, n, `10am &ndash;11am`, opt).applicableOpts.addMissingSpaces,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -833,9 +833,9 @@ test(`10.04 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - after n-das
 });
 
 test(`10.05 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - URL`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `This is http://detergent.io.This is cool.`, opt).applicableOpts
+      det(t, n, `This is http://detergent.io.This is cool.`, opt).applicableOpts
         .addMissingSpaces,
       true,
       JSON.stringify(opt, null, 0)
@@ -844,9 +844,9 @@ test(`10.05 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - URL`, t => 
 });
 
 test(`10.06 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - comma in a sentence`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `Text,more text.`, opt).applicableOpts.addMissingSpaces,
+      det(t, n, `Text,more text.`, opt).applicableOpts.addMissingSpaces,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -857,9 +857,9 @@ test(`10.06 - \u001b[${32}m${`opts.addMissingSpaces`}\u001b[${39}m - comma in a 
 // -----------------------------------------------------------------------------
 
 test(`11.01 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - normal text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts
         .convertDotsToEllipsis,
       false,
       JSON.stringify(opt, null, 0)
@@ -868,9 +868,9 @@ test(`11.01 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - normal
 });
 
 test(`11.02 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.convertDotsToEllipsis,
+      det(t, n, ``, opt).applicableOpts.convertDotsToEllipsis,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -878,9 +878,9 @@ test(`11.02 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - empty`
 });
 
 test(`11.03 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `text&hellip;`, opt).applicableOpts.convertDotsToEllipsis,
+      det(t, n, `text&hellip;`, opt).applicableOpts.convertDotsToEllipsis,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -888,9 +888,9 @@ test(`11.03 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.04 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `it must mean something...`, opt).applicableOpts
+      det(t, n, `it must mean something...`, opt).applicableOpts
         .convertDotsToEllipsis,
       true,
       JSON.stringify(opt, null, 0)
@@ -899,9 +899,9 @@ test(`11.04 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.05 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `it must mean something...\n\nalso...\n\nzzz`, opt).applicableOpts
+      det(t, n, `it must mean something...\n\nalso...\n\nzzz`, opt).applicableOpts
         .convertDotsToEllipsis,
       true,
       JSON.stringify(opt, null, 0)
@@ -910,9 +910,9 @@ test(`11.05 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - hellip
 });
 
 test(`11.06 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - raw ellipsis`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, rawEllipsis, opt).applicableOpts.convertDotsToEllipsis,
+      det(t, n, rawEllipsis, opt).applicableOpts.convertDotsToEllipsis,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -923,9 +923,9 @@ test(`11.06 - \u001b[${36}m${`opts.convertDotsToEllipsis`}\u001b[${39}m - raw el
 // -----------------------------------------------------------------------------
 
 test(`12.01 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - normal text`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.stripHtml,
+      det(t, n, `sflj ldjflgk jlkfjghf lfhl`, opt).applicableOpts.stripHtml,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -933,9 +933,9 @@ test(`12.01 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - normal text`, t =>
 });
 
 test(`12.02 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - empty`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, ``, opt).applicableOpts.stripHtml,
+      det(t, n, ``, opt).applicableOpts.stripHtml,
       false,
       JSON.stringify(opt, null, 0)
     );
@@ -943,9 +943,9 @@ test(`12.02 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - empty`, t => {
 });
 
 test(`12.03 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single unrecognised tag`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `<zzz>`, opt).applicableOpts.stripHtml,
+      det(t, n, `<zzz>`, opt).applicableOpts.stripHtml,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -953,9 +953,9 @@ test(`12.03 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single unrecognise
 });
 
 test(`12.04 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single br`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `<br>`, opt).applicableOpts.stripHtml,
+      det(t, n, `<br>`, opt).applicableOpts.stripHtml,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -963,9 +963,9 @@ test(`12.04 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single br`, t => {
 });
 
 test(`12.05 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `<sup>`, opt).applicableOpts.stripHtml,
+      det(t, n, `<sup>`, opt).applicableOpts.stripHtml,
       true,
       JSON.stringify(opt, null, 0)
     );
@@ -973,9 +973,9 @@ test(`12.05 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => 
 });
 
 test(`12.06 - \u001b[${34}m${`opts.stripHtml`}\u001b[${39}m - single sup`, t => {
-  allCombinations.forEach(opt => {
+  allCombinations.forEach((opt, n) => {
     t.is(
-      det(t, `<sup>`, opt).applicableOpts.stripHtml,
+      det(t, n, `<sup>`, opt).applicableOpts.stripHtml,
       true,
       JSON.stringify(opt, null, 0)
     );

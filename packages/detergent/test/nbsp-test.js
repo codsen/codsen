@@ -22,9 +22,9 @@ test(`01.01 - repetitions - semicols`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa &nnnbbbspp;;;; aaa", opt).res,
+      det(t, n, "aaa &nnnbbbspp;;;; aaa", opt).res,
       "aaa &nbsp; aaa",
       JSON.stringify(opt, null, 4)
     );
@@ -38,9 +38,9 @@ test(`01.02 - repetitions - no semicols`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa nnnbbbsssp aaaa", opt).res,
+      det(t, n, "aaa nnnbbbsssp aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -54,9 +54,9 @@ test(`01.03 - repetitions - mashed`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaaa&nnnnbbbssssppp;aaa", opt).res,
+      det(t, n, "aaaa&nnnnbbbssssppp;aaa", opt).res,
       "aaaa&nbsp;aaa",
       JSON.stringify(opt, null, 4)
     );
@@ -70,9 +70,9 @@ test(`01.04 - repetitions - amp missing, repetitions`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaannnbbbsssp;aaaa", opt).res,
+      det(t, n, "aaannnbbbsssp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -86,9 +86,9 @@ test(`01.05 - repetitions - amp and semicol missing`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa&nnnbbbssspaaaa", opt).res,
+      det(t, n, "aaa&nnnbbbssspaaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -102,9 +102,9 @@ test(`01.06 - repetitions - sandwiched, n repeated`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa&nnbsp;aaaa", opt).res,
+      det(t, n, "aaa&nnbsp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -118,9 +118,9 @@ test(`01.07 - repetitions - sandwiched, amp missing`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaannbsp;aaaa", opt).res,
+      det(t, n, "aaannbsp;aaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -134,9 +134,9 @@ test(`01.08 - repetitions - sandwiched, amp missing`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa&nnbspaaaa", opt).res,
+      det(t, n, "aaa&nnbspaaaa", opt).res,
       "aaa&nbsp;aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -150,9 +150,9 @@ test(`01.09 - repetitions - n repeated, spaced`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa &nnbsp; aaaa", opt).res,
+      det(t, n, "aaa &nnbsp; aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -166,9 +166,9 @@ test(`01.10 - repetitions - n repeated, spaced, amp missing`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa nnbsp; aaaa", opt).res,
+      det(t, n, "aaa nnbsp; aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -182,9 +182,9 @@ test(`01.11 - repetitions - n repeated, spaced, semicol missing`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "aaa &nnbsp aaaa", opt).res,
+      det(t, n, "aaa &nnbsp aaaa", opt).res,
       "aaa &nbsp; aaaa",
       JSON.stringify(opt, null, 4)
     );
@@ -199,7 +199,7 @@ test(`01.12 - repetitions - longer sentence, convertEntities=on`, t => {
     removeLineBreaks: 0,
     useXHTML: 1,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -220,7 +220,7 @@ test(`01.13 - repetitions - longer sentence, useXHTML=off`, t => {
     removeLineBreaks: 0,
     useXHTML: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -239,7 +239,7 @@ test(`01.14 - repetitions - longer sentence, repeated semicols`, t => {
     convertEntities: 1,
     removeLineBreaks: 1,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -256,9 +256,9 @@ test(`01.15 - nbSp with no semicol #1, convertEntities=on`, t => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a nbbSp a", opt).res,
+      det(t, n, "a nbbSp a", opt).res,
       "a &nbsp; a",
       JSON.stringify(opt, null, 4)
     );
@@ -269,9 +269,9 @@ test(`01.16 - nbSp with no semicol #2, convertEntities=off`, t => {
   mixer({
     fixBrokenEntities: 1,
     convertEntities: 1
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
-      det(t, "a nbbSppp; a", opt).res,
+      det(t, n, "a nbbSppp; a", opt).res,
       "a &nbsp; a",
       JSON.stringify(opt, null, 4)
     );
@@ -287,7 +287,7 @@ test(`01.17 - NBSP missing letters - &nbsp missing p`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -307,7 +307,7 @@ test(`01.18 - NBSP missing letters - &nbsp missing s`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -327,7 +327,7 @@ test(`01.19 - NBSP missing letters - &nbsp missing b`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -347,7 +347,7 @@ test(`01.20 - NBSP missing letters - &nbsp missing n`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -369,7 +369,7 @@ test(`01.21 - broken nbsp - nbsp; (no ampersand)`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -389,7 +389,7 @@ test(`01.22 - broken nbsp - nbsp; (no ampersand)`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -409,7 +409,7 @@ test(`01.23 - broken nbsp - nbsp; (no ampersand)`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
@@ -429,7 +429,7 @@ test(`01.24 - broken nbsp - nbsp; (no ampersand)`, t => {
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     removeWidows: 0
-  }).forEach(opt => {
+  }).forEach((opt, n) => {
     t.is(
       det(
         t,
