@@ -124,12 +124,10 @@
         "label": ""
       },
       "devDependencies": [
-        "all-named-html-entities",
         "is-ci",
         "object-boolean-combinations",
         "rollup-plugin-json",
         "rollup-plugin-node-builtins",
-        "lodash.clonedeep",
         "object-path"
       ],
       "rollupIgnoreFilesForDist": "processCharacter.js",
@@ -168,7 +166,6 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "all-named-html-entities": "^1.2.4",
     "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
@@ -182,7 +179,6 @@
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.5.46",
     "lect": "^0.9.13",
-    "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.44",
     "object-path": "^0.11.4",

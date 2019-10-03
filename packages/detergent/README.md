@@ -146,7 +146,7 @@ The `det` above is a function. You pass two input arguments to it:
 | `convertDotsToEllipsis`  | Boolean           | True                                      | convert three dots into `&hellip;` - ellipsis character. When set to `false`, all encoded ellipses will be converted to three dots.                                               |
 | `stripHtml`              | Boolean           | True                                      | by default, all HTML tags are stripped (with exception to `opts.keepBoldEtc` - option to ignore `b`, `strong` and other tags). You can turn off HTML tag removal completely here. |
 | `stripHtmlButIgnoreTags` | Array             | `["b", "strong", "i", "em", "br", "sup"]` | List zero or more strings, each meaning a tag name that should not be stripped. For example, `["a", "sup"]`.                                                                      |
-| `stripHtmlAddNewLine`    | Array             | `["li", "/ul"]`                           | List of zero or more tag names which, if stripped, are replaced with a line break. Closing tags must start with slash. |
+| `stripHtmlAddNewLine`    | Array             | `["li", "/ul"]`                           | List of zero or more tag names which, if stripped, are replaced with a line break. Closing tags must start with slash.                                                            |
 | }                        |                   |                                           |
 
 Here it is in one place:
@@ -296,7 +296,7 @@ Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.js
 [node-url]: https://www.npmjs.com/package/detergent
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
-[cov-img]: https://img.shields.io/badge/coverage-89.01%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-89.1%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/detergent
