@@ -7,7 +7,10 @@ const dateObj = new Date();
 const month = dateObj.getUTCMonth() + 1; //months from 1-12
 const day = dateObj.getUTCDate();
 const year = dateObj.getUTCFullYear();
-const newdate = `${year}-${`${month}`.padStart(2, "0")}-${day}`;
+const newdate = `${year}-${`${month}`.padStart(2, "0")}-${`${day}`.padStart(
+  2,
+  "0"
+)}`;
 
 // FUNCTIONS
 // =========

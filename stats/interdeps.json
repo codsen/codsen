@@ -363,12 +363,12 @@
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 2177,
+        "size": 2176,
         "imports": []
     },
     {
         "name": "object-delete-key",
-        "size": 2351,
+        "size": 2350,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -387,21 +387,21 @@
     },
     {
         "name": "object-flatten-all-arrays",
-        "size": 2001,
+        "size": 2000,
         "imports": [
             "check-types-mini"
         ]
     },
     {
         "name": "object-flatten-referencing",
-        "size": 11425,
+        "size": 11424,
         "imports": [
             "str-indexes-of-plus"
         ]
     },
     {
         "name": "object-merge-advanced",
-        "size": 14747,
+        "size": 14746,
         "imports": [
             "array-includes-with-glob",
             "arrayiffy-if-string",
@@ -410,7 +410,7 @@
     },
     {
         "name": "object-no-new-keys",
-        "size": 3573,
+        "size": 3572,
         "imports": []
     },
     {
@@ -541,7 +541,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 12967,
+        "size": 12966,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
