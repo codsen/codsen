@@ -146,6 +146,7 @@ The `det` above is a function. You pass two input arguments to it:
 | `convertDotsToEllipsis`  | Boolean           | True                                      | convert three dots into `&hellip;` - ellipsis character. When set to `false`, all encoded ellipses will be converted to three dots.                                               |
 | `stripHtml`              | Boolean           | True                                      | by default, all HTML tags are stripped (with exception to `opts.keepBoldEtc` - option to ignore `b`, `strong` and other tags). You can turn off HTML tag removal completely here. |
 | `stripHtmlButIgnoreTags` | Array             | `["b", "strong", "i", "em", "br", "sup"]` | List zero or more strings, each meaning a tag name that should not be stripped. For example, `["a", "sup"]`.                                                                      |
+| `stripHtmlAddNewLine`    | Array             | `["li", "/ul"]`                           | List of zero or more tag names which, if stripped, are replaced with a line break. Closing tags must start with slash. |
 | }                        |                   |                                           |
 
 Here it is in one place:
@@ -164,7 +165,8 @@ det("text to clean", {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
-  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"]
+  stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
+  stripHtmlAddNewLine: ["li", "/ul"]
 });
 ```
 
@@ -183,7 +185,27 @@ You can also set the options to numeric `0` or `1`, that's shorter than Boolean 
 | `applicableOpts`    | Plain Object      | Copy of options object without keys that have array values, each set to boolean, is that function applicable to given input |
 | }                   |                   |
 
-Function `det` returns a plain object. You retrieve the result from its key `res`.
+Function `det` returns a plain object, for example:
+
+```js
+{
+  res: "abc",
+  applicableOpts: {
+    fixBrokenEntities: false,
+    removeWidows: false,
+    convertEntities: false,
+    convertDashes: false,
+    convertApostrophes: false,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
+    useXHTML: false,
+    dontEncodeNonLatin: false,
+    addMissingSpaces: false,
+    convertDotsToEllipsis: false,
+    stripHtml: false
+  }
+}
+```
 
 **[⬆ back to top](#)**
 
@@ -220,6 +242,8 @@ For example, detergent's output might look like this — all options not applica
   }
 }
 ```
+
+The options keys which have values of a type _array_ (`stripHtmlButIgnoreTags` and `stripHtmlAddNewLine`) are omitted from `applicableOpts` report.
 
 **[⬆ back to top](#)**
 
