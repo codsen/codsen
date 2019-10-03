@@ -229,7 +229,7 @@ The simplest possible operation - encoding using default settings:
 
 ```js
 const { det } = require("detergent");
-let { res } = detergent("clean this text £");
+let { res } = det("clean this text £");
 console.log(res);
 // > 'clean this text &pound;'
 ```
@@ -238,7 +238,7 @@ Now, using custom settings object with one custom setting `convertEntities` (oth
 
 ```js
 const { det } = require("detergent");
-let { res } = detergent("clean this text £", {
+let { res } = det("clean this text £", {
   convertEntities: 0 // <--- zero is like "false", turns off the feature
 });
 console.log(res);
