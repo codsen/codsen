@@ -65,6 +65,7 @@ function main(_ref) {
   var withinObject = [];
   var withinArray = [];
   function currentlyWithinObject() {
+    /* istanbul ignore next */
     if (!withinObject.length) {
       return false;
     } else if (withinArray.length) {
@@ -201,9 +202,9 @@ function main(_ref) {
           if (mode === "set") {
             return "".concat(str.slice(0, valueStartedAt)).concat(stringifyAndEscapeValue(calculatedValueToInsert)).concat(str.slice(i + (str[i].trim().length ? 1 : 0)));
           } else if (mode === "del") {
-            var startingPoint = stringLeftRight.left(str, keyStartedAt - 1) + 1;
+            var startingPoint = stringLeftRight.left(str, (currentlyWithinArray() ? valueStartedAt : keyStartedAt) - 1) + 1;
             var endingPoint = i + (str[i].trim().length ? 1 : 0);
-            if (str[startingPoint - 1] === "," && str[stringLeftRight.right(str, endingPoint - 1)] === "}") {
+            if (str[startingPoint - 1] === "," && ["}", "]"].includes(str[stringLeftRight.right(str, endingPoint - 1)])) {
               startingPoint--;
             }
             if (str[endingPoint] === ",") {

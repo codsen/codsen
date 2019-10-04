@@ -51,8 +51,6 @@ function deleter(t, source, result, path, idNum) {
     JSON.parse(result),
     `${idNum}.03 - objectPath del is deep-equal`
   );
-
-  // }
 }
 
 // -----------------------------------------------------------------------------
@@ -541,6 +539,45 @@ test(`05.03 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
   "e": "f"
 }`;
   deleter(t, source, result, "c", "05.03");
+});
+
+test(`05.04 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`, t => {
+  const source = `{"qwe": [
+  "ab",
+  "cd",
+  "ef"
+]}`;
+  const result = `{"qwe": [
+  "cd",
+  "ef"
+]}`;
+  deleter(t, source, result, "qwe.0", "05.04");
+});
+
+test(`05.05 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`, t => {
+  const source = `{"qwe": [
+  "ab",
+  "cd",
+  "ef"
+]}`;
+  const result = `{"qwe": [
+  "ab",
+  "ef"
+]}`;
+  deleter(t, source, result, "qwe.1", "05.05");
+});
+
+test(`05.06 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`, t => {
+  const source = `{"qwe": [
+  "ab",
+  "cd",
+  "ef"
+]}`;
+  const result = `{"qwe": [
+  "ab",
+  "cd"
+]}`;
+  deleter(t, source, result, "qwe.2", "05.06");
 });
 
 // TODO - escaped left slashes

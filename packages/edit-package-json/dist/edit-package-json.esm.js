@@ -53,6 +53,7 @@ function main({ str, path, valToInsert, mode }) {
   const withinObject = [];
   const withinArray = [];
   function currentlyWithinObject() {
+    /* istanbul ignore next */
     if (!withinObject.length) {
       return false;
     } else if (withinArray.length) {
@@ -279,11 +280,15 @@ function main({ str, path, valToInsert, mode }) {
             calculatedValueToInsert
           )}${str.slice(i + (str[i].trim().length ? 1 : 0))}`;
         } else if (mode === "del") {
-          let startingPoint = left(str, keyStartedAt - 1) + 1;
+          let startingPoint =
+            left(
+              str,
+              (currentlyWithinArray() ? valueStartedAt : keyStartedAt) - 1
+            ) + 1;
           let endingPoint = i + (str[i].trim().length ? 1 : 0);
           if (
             str[startingPoint - 1] === "," &&
-            str[right(str, endingPoint - 1)] === "}"
+            ["}", "]"].includes(str[right(str, endingPoint - 1)])
           ) {
             startingPoint--;
           }
