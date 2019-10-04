@@ -123,9 +123,7 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": [
-        "fs-extra"
-      ],
+      "devDependencies": [],
       "travisVersionsOverride": []
     }
   },
