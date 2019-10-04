@@ -25,14 +25,14 @@ function padStart(str, targetLength, padString) {
     )}`
   );
   console.log(
-    `024 ${`\u001b[${33}m${`targetLength`}\u001b[${39}m`} = ${JSON.stringify(
+    `028 ${`\u001b[${33}m${`targetLength`}\u001b[${39}m`} = ${JSON.stringify(
       targetLength,
       null,
       4
     )}`
   );
   console.log(
-    `031 ${`\u001b[${33}m${`padString`}\u001b[${39}m`} = ${JSON.stringify(
+    `035 ${`\u001b[${33}m${`padString`}\u001b[${39}m`} = ${JSON.stringify(
       padString,
       null,
       4
@@ -49,7 +49,7 @@ function padStart(str, targetLength, padString) {
 
   targetLength = targetLength - str.length;
   console.log(
-    `054 SET ${`\u001b[${33}m${`targetLength`}\u001b[${39}m`} = ${JSON.stringify(
+    `052 SET ${`\u001b[${33}m${`targetLength`}\u001b[${39}m`} = ${JSON.stringify(
       targetLength,
       null,
       4
@@ -58,7 +58,7 @@ function padStart(str, targetLength, padString) {
   if (targetLength > padString.length) {
     padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
   }
-  console.log("063 ABOUT TO RETURN:\n");
+  console.log("061 ABOUT TO RETURN:\n");
   console.log(
     `padString.slice(0, targetLength) = ${padString.slice(0, targetLength)}`
   );

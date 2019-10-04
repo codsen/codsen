@@ -331,6 +331,24 @@ test(`05.02 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - broken ANSI - will no
 });
 
 // -----------------------------------------------------------------------------
+// 06. custom functions via opts.triggerKeywords
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - baseline`, t => {
+  t.is(
+    fixRowNums(`a\nb\nc\nlog(\`1 something\`)`),
+    `a\nb\nc\nlog(\`1 something\`)`
+  );
+});
+
+test(`06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works on custom function`, t => {
+  t.is(
+    fixRowNums(`a\nb\nc\nlog(\`1 something\`)`, { triggerKeywords: ["log"] }),
+    `a\nb\nc\nlog(\`004 something\`)`
+  );
+});
+
+// -----------------------------------------------------------------------------
 // group 99. util / padStart
 // -----------------------------------------------------------------------------
 

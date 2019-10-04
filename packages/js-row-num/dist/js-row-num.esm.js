@@ -44,7 +44,8 @@ function fixRowNums(str, originalOpts) {
     return /[A-Za-z]/.test(something);
   }
   const defaults = {
-    padStart: 3
+    padStart: 3,
+    triggerKeywords: ["console.log"]
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
@@ -182,21 +183,17 @@ function fixRowNums(str, originalOpts) {
         digitStartsAt = null;
       }
     }
+    let caughtKeyword;
     if (
-      str[i] === "c" &&
-      str[i + 1] === "o" &&
-      str[i + 2] === "n" &&
-      str[i + 3] === "s" &&
-      str[i + 4] === "o" &&
-      str[i + 5] === "l" &&
-      str[i + 6] === "e" &&
-      str[i + 7] === "." &&
-      str[i + 8] === "l" &&
-      str[i + 9] === "o" &&
-      str[i + 10] === "g"
+      opts.triggerKeywords.some(keyw => {
+        if (str.startsWith(keyw, i)) {
+          caughtKeyword = keyw;
+          return true;
+        }
+      })
     ) {
-      consoleStartsAt = i + 11;
-      i = i + 10;
+      consoleStartsAt = i + caughtKeyword.length;
+      i = i + caughtKeyword.length - 1;
       continue;
     }
   }
