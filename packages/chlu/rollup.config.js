@@ -56,7 +56,6 @@ export default commandLineArgs => {
         "lodash.includes",
         "lodash.isplainobject",
         "lodash.min",
-        "lodash.reverse",
         "lodash.trim",
         "semver-compare",
         "split-lines"
@@ -89,7 +88,6 @@ export default commandLineArgs => {
         "lodash.includes",
         "lodash.isplainobject",
         "lodash.min",
-        "lodash.reverse",
         "lodash.trim",
         "semver-compare",
         "split-lines"

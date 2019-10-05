@@ -151,7 +151,6 @@
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.min": "^4.0.1",
-    "lodash.reverse": "^4.0.1",
     "lodash.trim": "^4.5.1",
     "semver-compare": "^1.0.0",
     "split-lines": "^2.0.0"
@@ -174,7 +173,7 @@
     "lect": "^0.9.13",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "rollup": "^1.22.0",
+    "rollup": "^1.23.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

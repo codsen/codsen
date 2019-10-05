@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var reverse = _interopDefault(require('lodash.reverse'));
 var splitLines = _interopDefault(require('split-lines'));
 var getPkgRepo = _interopDefault(require('get-pkg-repo'));
 var semverCompare = _interopDefault(require('semver-compare'));
@@ -409,7 +408,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     });
   }
   if (ascending) {
-    temp = reverse(temp);
+    temp = temp.reverse();
   }
   newLinesArr = insert(linesArr, temp, whereToPlaceIt);
   temp = getTitlesAndFooterLinks(newLinesArr);

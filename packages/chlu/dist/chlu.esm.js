@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
  */
 
-import reverse from 'lodash.reverse';
 import splitLines from 'split-lines';
 import getPkgRepo from 'get-pkg-repo';
 import semverCompare from 'semver-compare';
@@ -523,7 +522,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     });
   }
   if (ascending) {
-    temp = reverse(temp);
+    temp = temp.reverse();
   }
   newLinesArr = insert(linesArr, temp, whereToPlaceIt);
   temp = getTitlesAndFooterLinks(newLinesArr);

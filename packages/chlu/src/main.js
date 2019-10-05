@@ -1,6 +1,5 @@
 /* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
 
-import reverse from "lodash.reverse";
 import splitLines from "split-lines";
 import getPkgRepo from "get-pkg-repo";
 import semverCompare from "semver-compare";
@@ -404,7 +403,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   );
 
   if (ascending) {
-    temp = reverse(temp);
+    temp = temp.reverse();
   }
 
   // =======
