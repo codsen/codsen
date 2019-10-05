@@ -8,7 +8,6 @@
  */
 
 import remSep from 'string-remove-thousand-separators';
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 
 function splitEasy(str, originalOpts) {
@@ -33,7 +32,6 @@ function splitEasy(str, originalOpts) {
     forceUKStyle: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "csv-split-easy/split(): [THROW_ID_03*]" });
   if (typeof str !== "string") {
     throw new TypeError(
       `csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(

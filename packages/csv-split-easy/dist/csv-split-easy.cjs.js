@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var remSep = _interopDefault(require('string-remove-thousand-separators'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
@@ -45,9 +44,6 @@ function splitEasy(str, originalOpts) {
     forceUKStyle: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "csv-split-easy/split(): [THROW_ID_03*]"
-  });
   if (typeof str !== "string") {
     throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   } else {

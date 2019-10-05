@@ -136,7 +136,6 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.41",
     "lodash.isplainobject": "^4.0.6",
     "string-remove-thousand-separators": "^3.0.36"
   },
