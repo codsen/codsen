@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var within = _interopDefault(require('ranges-is-index-within'));
 
 function split(str, originalOpts) {
@@ -28,10 +27,6 @@ function split(str, originalOpts) {
     ignoreRanges: []
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-split-by-whitespace: [THROW_ID_02*]",
-    ignorePaths: ["ignoreRanges.*"]
-  });
   if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(function (arr) {
     return Array.isArray(arr);
   })) {

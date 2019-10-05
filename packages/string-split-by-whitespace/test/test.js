@@ -23,7 +23,7 @@ test("01.02 - empty string as input", t => {
   t.deepEqual(split(""), [], "01.02");
 });
 
-test("01.03 opts contain non-array elements", t => {
+test("01.03 - opts contain non-array elements", t => {
   t.throws(() => {
     split("a b", { ignoreRanges: ["a"] });
   });

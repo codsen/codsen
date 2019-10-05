@@ -138,7 +138,6 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.41",
     "ranges-is-index-within": "^1.14.22"
   },
   "devDependencies": {

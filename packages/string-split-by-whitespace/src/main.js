@@ -1,4 +1,3 @@
-import checkTypes from "check-types-mini";
 import within from "ranges-is-index-within";
 
 function split(str, originalOpts) {
@@ -18,10 +17,6 @@ function split(str, originalOpts) {
     ignoreRanges: []
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-split-by-whitespace: [THROW_ID_02*]",
-    ignorePaths: ["ignoreRanges.*"]
-  });
   if (
     opts.ignoreRanges.length > 0 &&
     !opts.ignoreRanges.every(arr => Array.isArray(arr))

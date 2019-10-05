@@ -42,7 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["check-types-mini", "ranges-is-index-within"],
+      external: ["ranges-is-index-within"],
       plugins: [
         strip({
           sourceMap: false
@@ -58,7 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["check-types-mini", "ranges-is-index-within"],
+      external: ["ranges-is-index-within"],
       plugins: [
         strip({
           sourceMap: false
