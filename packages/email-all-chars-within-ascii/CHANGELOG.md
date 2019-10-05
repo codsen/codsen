@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.9.45](https://gitlab.com/codsen/codsen/compare/email-all-chars-within-ascii@2.9.44...email-all-chars-within-ascii@2.9.45) (2019-10-05)
-
+## 2.9.45 (2019-10-05)
 
 ### Performance Improvements
 
-* remove check-types-mini ([a76b12d](https://gitlab.com/codsen/codsen/commit/a76b12d))
-
-
-
-
+- remove check-types-mini ([a76b12d](https://gitlab.com/codsen/codsen/commit/a76b12d))
 
 ## 2.9.0 (2019-01-20)
 

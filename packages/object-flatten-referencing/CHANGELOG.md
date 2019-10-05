@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.11.1](https://gitlab.com/codsen/codsen/compare/object-flatten-referencing@4.11.0...object-flatten-referencing@4.11.1) (2019-10-05)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-
-
-
-
 ## 4.11.0 (2019-10-02)
 
 ### Features

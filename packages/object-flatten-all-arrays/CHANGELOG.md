@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.8.1](https://gitlab.com/codsen/codsen/compare/object-flatten-all-arrays@4.8.0...object-flatten-all-arrays@4.8.1) (2019-10-05)
-
+## 4.8.1 (2019-10-05)
 
 ### Performance Improvements
 
-* remove unused check-types-mini from deps list ([53f78a6](https://gitlab.com/codsen/codsen/commit/53f78a6))
-
-
-
-
+- remove unused check-types-mini from deps list ([53f78a6](https://gitlab.com/codsen/codsen/commit/53f78a6))
 
 ## 4.8.0 (2019-10-02)
 

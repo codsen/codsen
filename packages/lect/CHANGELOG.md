@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.10.0](https://gitlab.com/codsen/codsen/compare/lect@0.9.13...lect@0.10.0) (2019-10-05)
-
+## 0.10.0 (2019-10-05)
 
 ### Bug Fixes
 
-* remove pify dependency which is unused here ([30a0fb2](https://gitlab.com/codsen/codsen/commit/30a0fb2))
-
+- remove pify dependency which is unused here ([30a0fb2](https://gitlab.com/codsen/codsen/commit/30a0fb2))
 
 ### Features
 
-* add nyc/istanbul ignore comments to be retained during the cleanup in Rollup builds ([9dbd43f](https://gitlab.com/codsen/codsen/commit/9dbd43f))
-
-
-
-
+- add nyc/istanbul ignore comments to be retained during the cleanup in Rollup builds ([9dbd43f](https://gitlab.com/codsen/codsen/commit/9dbd43f))
 
 ## 0.9.0 (2019-07-24)
 

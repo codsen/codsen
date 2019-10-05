@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.7.42](https://gitlab.com/codsen/codsen/compare/check-types-mini@5.7.41...check-types-mini@5.7.42) (2019-10-05)
-
+## 5.7.42 (2019-10-05)
 
 ### Performance Improvements
 
-* remove dependency cardinal ([ed20231](https://gitlab.com/codsen/codsen/commit/ed20231))
-
-
-
-
+- remove dependency cardinal ([ed20231](https://gitlab.com/codsen/codsen/commit/ed20231))
 
 ## 5.7.0 (2019-01-31)
 

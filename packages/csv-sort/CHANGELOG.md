@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.37](https://gitlab.com/codsen/codsen/compare/csv-sort@3.0.36...csv-sort@3.0.37) (2019-10-05)
-
+## 3.0.37 (2019-10-05)
 
 ### Performance Improvements
 
-* removal dependency ordinal ([e8cd758](https://gitlab.com/codsen/codsen/commit/e8cd758))
-
-
-
-
+- removal dependency ordinal ([e8cd758](https://gitlab.com/codsen/codsen/commit/e8cd758))
 
 ## 2.7.0 (2019-02-26)
 

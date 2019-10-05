@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [8.0.38](https://gitlab.com/codsen/codsen/compare/json-variables@8.0.37...json-variables@8.0.38) (2019-10-05)
-
-**Note:** Version bump only for package json-variables
-
-
-
-
-
 ## 8.0.37 (2019-10-02)
 
 ### Performance Improvements

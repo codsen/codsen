@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.6.0](https://gitlab.com/codsen/codsen/compare/js-row-num-cli@1.5.46...js-row-num-cli@1.6.0) (2019-10-05)
-
+## 1.6.0 (2019-10-05)
 
 ### Features
 
-* -t flag ([a9432cf](https://gitlab.com/codsen/codsen/commit/a9432cf))
-
-
-
-
+- -t flag ([a9432cf](https://gitlab.com/codsen/codsen/commit/a9432cf))
 
 ## 1.5.0 (2019-01-20)
 
