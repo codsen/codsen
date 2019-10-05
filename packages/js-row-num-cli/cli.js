@@ -10,6 +10,7 @@ const isDirectory = require("is-d");
 const writeFileAtomic = require("write-file-atomic");
 const { promisify } = require("util");
 const write = promisify(writeFileAtomic);
+const arrayiffy = require("arrayiffy-if-string");
 
 const fixRowNums = require("js-row-num");
 const updateNotifier = require("update-notifier");
@@ -33,9 +34,12 @@ const cli = meow(
   Call either way:
     $ jsrownum
     $ jrn
+    $ jrn -t "log"
+  for example, above, "log" would update "1" in: log(\`1 a = \${a}\`)
 
   Options:
     --pad, -p      Let's you set the padding of the row numbers. Default = 3.
+    --trigger, -t  Let's you customise the functions where row numbers are updated
 
     --help, -h     Shows help
     --version, -v  Shows the current version
@@ -51,6 +55,9 @@ const cli = meow(
       pad: {
         type: "number",
         alias: "p"
+      },
+      trigger: {
+        alias: "t"
       }
     }
   }
@@ -58,6 +65,9 @@ const cli = meow(
 updateNotifier({ pkg: cli.pkg }).notify();
 
 const paddingVal = existy(cli.flags.pad) ? cli.flags.pad : 3;
+const triggerKeywords = cli.flags.trigger
+  ? arrayiffy(cli.flags.trigger)
+  : undefined;
 
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
@@ -65,7 +75,7 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
     .then(filesContent => {
       return write(
         oneOfPaths,
-        fixRowNums(filesContent, { padStart: paddingVal })
+        fixRowNums(filesContent, { padStart: paddingVal, triggerKeywords })
       ).then(() => {
         log(
           `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`

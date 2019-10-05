@@ -231,3 +231,47 @@ test("01.05 - two files processed by calling glob with wildcard", async t => {
 //                                  *
 //                                  *
 //                                  *
+
+test('01.06 - "t" flag', async t => {
+  const originalFile = "log('123 zzz');\nlog('123 zzz');";
+
+  const intendedFile = "log('001 zzz');\nlog('002 zzz');";
+
+  // 1. fetch us an empty, random, temporary folder:
+
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+
+  // 2. asynchronously write all test files
+  const processedFileContents = fs
+    .writeFile(path.join(tempFolder, "cli.js"), originalFile)
+    .then(() =>
+      execa(
+        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -t "log"`,
+        {
+          shell: true
+        }
+      )
+    )
+    .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
+    .catch(err => t.fail(err));
+
+  // 3. compare:
+  t.is(await processedFileContents, intendedFile);
+});
+
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//
+//                                  ?
+//
+//                                  *
+//                                  *
+//                                  *
+//                                  *
+//                                  *

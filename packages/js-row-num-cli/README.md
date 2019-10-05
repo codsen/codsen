@@ -25,6 +25,8 @@ Other siblings of this package:
 - [Use it](#use-it)
 - [TLDR](#tldr)
 - [What it does](#what-it-does)
+- [Using multiple flags](#using-multiple-flags)
+- [Escaping](#escaping)
 - [A nifty setup idea](#a-nifty-setup-idea)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
@@ -86,7 +88,17 @@ console.log('003 var = ' + var);
 //           ^^^
 ```
 
-Because it's on row 3.
+Because it's on row 3. If you're not using `console.log`, and are using for example `log()`, put that under "-t" flag:
+
+```bash
+jrn -t "log"
+```
+
+or if specifying paths,
+
+```bash
+jrn "folder/*.js" -t "log"
+```
 
 ⚡️⚡️⚡️⚡️🔥🔥🔥🍻🍻🍻🍻🤩🤩💪🏼💪🏼💪🏼💪🏼💪🏼👊🏼👊🏼👊🏼👊🏼💥💥💥💥⚡️⚡️🌟🌟🌟🌟⚡️🍺🍺💪🏼💪🏼
 
@@ -144,11 +156,38 @@ jrn "test1.js test2.js" -p 2
 
 Optionally, you can pass the options, which match the [API](https://www.npmjs.com/package/js-row-num):
 
-| CLI flag        | For example,                       | What it does                                                                                                                                                                   |
-| --------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `-p` or `--pad` | `jsrownum -p 3` or `jrn --pad="4"` | Lets you set the row number padding. For example, `console.log` statement on row 3 with padding set to 4 would get `0003` added. Row 99 with padding of 1 would be still `99`. |
+| CLI flag            | For example,                       | What it does                                                                                                                                                                   |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `-p` or `--pad`     | `jsrownum -p 3` or `jrn --pad="4"` | Lets you set the row number padding. For example, `console.log` statement on row 3 with padding set to 4 would get `0003` added. Row 99 with padding of 1 would be still `99`. |
+| `-t` or `--trigger` | `jrn -t "log"`                     | Lets you change from "console.log" to any function's name, for example update "001" in `log(\`001 z = \${z}\`);`                                                               |
 
 **[⬆ back to top](#)**
+
+## Using multiple flags
+
+Command line applications have few rules. First, if you want to pass multiple values to a certain flag, put `-*` or `--*****` for each value:
+
+GOOD:
+
+```bash
+jrn -f "log" -f "yo"
+```
+
+BAD:
+
+```bash
+jrn -f "log" "yo"
+```
+
+**[⬆ back to top](#)**
+
+## Escaping
+
+If you want to put double quotes, escape it like using left slash:
+
+```bash
+jrn -f "zzz\"yyy"
+```
 
 ## A nifty setup idea
 

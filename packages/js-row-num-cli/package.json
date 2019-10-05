@@ -132,6 +132,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "arrayiffy-if-string": "^3.11.17",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
