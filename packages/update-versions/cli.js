@@ -17,9 +17,9 @@ const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");
 const pacote = require("pacote");
-
+const objectPath = require("object-path");
 const diff = require("ansi-diff-stream")();
-
+const isArr = Array.isArray;
 const { set, del } = require("edit-package-json");
 
 const { log } = console;
@@ -197,6 +197,32 @@ if (cli.flags) {
         if (isObj(parsedContents.dependencies)) {
           const keys = Object.keys(parsedContents.dependencies);
           for (let y = 0, len2 = keys.length; y < len2; y++) {
+            // delete this dependency from lect.various.devDependencies if present
+            if (
+              objectPath.has(parsedContents, `lect.various.devDependencies`) &&
+              isArr(parsedContents.lect.various.devDependencies) &&
+              parsedContents.lect.various.devDependencies.includes(keys[y])
+            ) {
+              let foundIdx;
+              const newVal = parsedContents.lect.various.devDependencies.filter(
+                (dep, z) => {
+                  if (dep === keys[y]) {
+                    foundIdx = z;
+                    return false;
+                  }
+                  return true;
+                }
+              );
+              parsedContents.lect.various.devDependencies = newVal;
+              stringContents = del(
+                stringContents,
+                `lect.various.devDependencies.${foundIdx}`
+              );
+            }
+
+            // tackle the deps list:
+            // ---------------------
+
             const singleDepName = keys[y];
             const singleDepValue = parsedContents.dependencies[keys[y]];
             if (
