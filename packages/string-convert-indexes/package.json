@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.9.44",
+  "version": "1.9.45",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "engines": {
@@ -131,7 +131,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey": "^7.10.44",
+    "ast-monkey": "^7.10.45",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
@@ -151,8 +151,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.5.46",
-    "lect": "^0.9.13",
+    "js-row-num-cli": "^1.6.0",
+    "lect": "^0.10.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.23.1",

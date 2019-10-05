@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.45](https://gitlab.com/codsen/codsen/compare/string-overlap-one-on-another@1.5.44...string-overlap-one-on-another@1.5.45) (2019-10-05)
+
+
+### Performance Improvements
+
+* remove check-types-mini ([faed1ea](https://gitlab.com/codsen/codsen/commit/faed1ea))
+
+
+
+
+
 ## 1.5.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

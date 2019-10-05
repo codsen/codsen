@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.37](https://gitlab.com/codsen/codsen/compare/csv-split-easy@3.0.36...csv-split-easy@3.0.37) (2019-10-05)
+
+
+### Performance Improvements
+
+* remove check-types-mini ([4eae010](https://gitlab.com/codsen/codsen/commit/4eae010))
+
+
+
+
+
 ## 2.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

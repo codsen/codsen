@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.46](https://gitlab.com/codsen/codsen/compare/chlu@3.7.45...chlu@3.7.46) (2019-10-05)
+
+
+### Performance Improvements
+
+* remove dependency lodash.reverse and switch to native ([121abc0](https://gitlab.com/codsen/codsen/commit/121abc0))
+
+
+
+
+
 ## 3.7.38 (2019-08-15)
 
 ### Bug Fixes

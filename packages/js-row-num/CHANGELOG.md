@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.3.21...js-row-num@2.4.0) (2019-10-05)
+
+
+### Features
+
+* opts.triggerKeywords ([d76cf72](https://gitlab.com/codsen/codsen/commit/d76cf72))
+* opts.triggerKeywords ([8ef01ae](https://gitlab.com/codsen/codsen/commit/8ef01ae))
+
+
+
+
+
 ## 2.3.0 (2019-06-18)
 
 ### Features

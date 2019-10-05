@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.46](https://gitlab.com/codsen/codsen/compare/string-split-by-whitespace@1.6.45...string-split-by-whitespace@1.6.46) (2019-10-05)
+
+
+### Performance Improvements
+
+* remove check-types-mini ([f70e58b](https://gitlab.com/codsen/codsen/commit/f70e58b))
+
+
+
+
+
 ## 1.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

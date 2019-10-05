@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://gitlab.com/codsen/codsen/compare/update-versions@2.0.1...update-versions@2.1.0) (2019-10-05)
+
+
+### Features
+
+* delete lect internal devDependency records in package.json if it is a normal dependency ([83fd996](https://gitlab.com/codsen/codsen/commit/83fd996))
+
+
+
+
+
 ## 2.0.0 (2019-09-23)
 
 ### Features
