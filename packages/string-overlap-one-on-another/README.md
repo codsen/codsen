@@ -53,11 +53,11 @@ const overlap = stringOverlapOneOnAnother;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-overlap-one-on-another.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-overlap-one-on-another.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-overlap-one-on-another.umd.js` | 29 KB |
+| Type                                                                                                    | Key in `package.json` | Path                                        | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-overlap-one-on-another.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-overlap-one-on-another.esm.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-overlap-one-on-another.umd.js` | 3 KB |
 
 **[⬆ back to top](#)**
 

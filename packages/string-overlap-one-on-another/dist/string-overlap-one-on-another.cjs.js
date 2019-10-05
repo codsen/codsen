@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var isNatNum = _interopDefault(require('is-natural-number'));
 
@@ -55,9 +54,6 @@ function overlap(str1, str2, originalOpts) {
     if (!opts.offsetFillerCharacter && opts.offsetFillerCharacter !== "") {
       opts.offsetFillerCharacter = " ";
     }
-    checkTypes(opts, defaults, {
-      msg: "string-overlap-one-on-another: [THROW_ID_05*]"
-    });
   }
   if (str2.length === 0) {
     return str1;

@@ -1,4 +1,3 @@
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import isNatNum from "is-natural-number";
 
@@ -55,10 +54,6 @@ function overlap(str1, str2, originalOpts) {
     if (!opts.offsetFillerCharacter && opts.offsetFillerCharacter !== "") {
       opts.offsetFillerCharacter = " ";
     }
-
-    checkTypes(opts, defaults, {
-      msg: "string-overlap-one-on-another: [THROW_ID_05*]"
-    });
   }
 
   if (str2.length === 0) {

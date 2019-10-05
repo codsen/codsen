@@ -30,30 +30,6 @@ test("01.01 - wrong inputs throw", t => {
     overlap("z", "z", { offset: -1.2 });
   });
   t.regex(error5.message, /THROW_ID_04/);
-
-  // wrong opts value type
-  const error6 = t.throws(() => {
-    overlap("z", "z", { offset: true });
-  });
-  t.regex(error6.message, /THROW_ID_05*/);
-
-  // also wrong opts value type
-  const error7 = t.throws(() => {
-    overlap("z", "z", { offsetFillerCharacter: true });
-  });
-  t.regex(error7.message, /THROW_ID_05*/);
-
-  // rogue opts key
-  const error8 = t.throws(() => {
-    overlap("z", "z", { offset: 0, zzz: true });
-  });
-  t.regex(error8.message, /THROW_ID_05*/);
-
-  // wrong opts value type
-  const error9 = t.throws(() => {
-    overlap("z", "z", { offset: "1" });
-  });
-  t.regex(error9.message, /THROW_ID_05*/);
 });
 
 // -----------------------------------------------------------------------------
