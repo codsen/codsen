@@ -164,7 +164,6 @@
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
     "pacote": "^9.5.8",
-    "pify": "^4.0.1",
     "replace-string": "^3.0.0",
     "request": "^2.88.0",
     "semver-compare": "^1.0.0",
