@@ -195,7 +195,7 @@
     },
     {
         "name": "email-all-chars-within-ascii",
-        "size": 2166,
+        "size": 2021,
         "imports": [
             "check-types-mini"
         ]
