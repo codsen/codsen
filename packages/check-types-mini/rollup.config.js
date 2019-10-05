@@ -49,7 +49,6 @@ export default commandLineArgs => {
         "lodash.pullall",
         "matcher",
         "object-path",
-        "ordinal",
         "type-detect"
       ],
       plugins: [
@@ -74,7 +73,6 @@ export default commandLineArgs => {
         "lodash.pullall",
         "matcher",
         "object-path",
-        "ordinal",
         "type-detect"
       ],
       plugins: [

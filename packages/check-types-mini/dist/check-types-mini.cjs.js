@@ -17,7 +17,6 @@ var traverse = _interopDefault(require('ast-monkey-traverse'));
 var intersection = _interopDefault(require('lodash.intersection'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var objectPath = _interopDefault(require('object-path'));
-var ordinal = _interopDefault(require('ordinal'));
 var matcher = _interopDefault(require('matcher'));
 
 function checkTypesMini(obj, ref, originalOptions) {
@@ -175,7 +174,7 @@ function checkTypesMini(obj, ref, originalOptions) {
           if (isArr(current) && opts.acceptArrays) {
             for (var i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
-                throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(ordinal(i + 1), " element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typ(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
+                throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(i, "th element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typ(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
               }
             }
           } else {

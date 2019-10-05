@@ -1281,7 +1281,7 @@ test(`02.09 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema
       }
     );
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.regex(err2.message, /opts.opt2.opt3.1, the 2nd element/gi);
+  t.regex(err2.message, /opts.opt2.opt3.1, the/gi);
   t.regex(err2.message, /number/gi);
   t.regex(err2.message, /string/gi);
 });
@@ -2603,7 +2603,7 @@ test(`04.08 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.a
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
   t.is(
     err2.message,
-    "check-types-mini: opts.option2.1, the 2nd element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string"
+    "check-types-mini: opts.option2.1, the 1th element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string"
   );
 
   t.notThrows(() => {

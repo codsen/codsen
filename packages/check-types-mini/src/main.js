@@ -4,7 +4,6 @@ import traverse from "ast-monkey-traverse";
 import intersection from "lodash.intersection";
 import arrayiffyIfString from "arrayiffy-if-string";
 import objectPath from "object-path";
-import ordinal from "ordinal";
 import matcher from "matcher";
 
 // fourth input argument is shielded from an external API:
@@ -643,9 +642,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
                 throw new TypeError(
                   `${opts.msg}: ${opts.optsVarName}.${
                     innerObj.path
-                  }.${i}, the ${ordinal(
-                    i + 1
-                  )} element (equal to ${JSON.stringify(
+                  }.${i}, the ${i}th element (equal to ${JSON.stringify(
                     current[i],
                     null,
                     0

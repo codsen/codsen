@@ -140,7 +140,6 @@
     "lodash.pullall": "^4.2.0",
     "matcher": "^2.0.0",
     "object-path": "^0.11.4",
-    "ordinal": "^1.0.3",
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
