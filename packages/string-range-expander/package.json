@@ -131,7 +131,6 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.41",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -152,7 +151,7 @@
     "lect": "^0.9.13",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "rollup": "^1.23.0",
+    "rollup": "^1.22.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
