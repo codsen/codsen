@@ -22,7 +22,6 @@ Other siblings of this package:
 - [Usage](#usage)
 - [API](#api)
 - [Rules](#rules)
-- [Dependencies used](#dependencies-used)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -62,8 +61,8 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 5 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 6 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 22 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 5 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 40 KB |
 
 **[⬆ back to top](#)**
 
@@ -125,17 +124,19 @@ API is simple: `string` in, `string` out. No options, everything beyond the 1st 
 
 ### Optional Options Object
 
-| options object's key | Type of its value                       | Default value | Description                         |
-| -------------------- | --------------------------------------- | ------------- | ----------------------------------- |
-| {                    |                                         |               |                                     |
-| `padStart`           | Zero, natural number or anything falsey | `3`           | Sets how much digits will be padded |
-| }                    |                                         |               |                                     |
+| options object's key | Type of its value                       | Default value     | Description                                                                                                        |
+| -------------------- | --------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| {                    |                                         |                   |                                                                                                                    |
+| `padStart`           | Zero, natural number or anything falsey | `3`               | Sets how much digits will be padded                                                                                |
+| `triggerKeywords`    | `null` or array of zero or more strings | `["console.log"]` | After this string, first met chunks of numbers will be replaced with padded row number, unless letter is met first |
+| }                    |                                         |                   |                                                                                                                    |
 
 Here it is all in one place:
 
 ```js
 {
-  padStart: 3;
+  padStart: 3,
+  triggerKeywords: ["console.log"]
 }
 ```
 
@@ -176,17 +177,14 @@ console.log("001 999 This number in front will be replaced"); // it's first line
 
 EOL type does not matter; we support all three types of EOL's: `\n`, `\r` and `\r\n` (see unit tests under group `05.01`).
 
-**[⬆ back to top](#)**
+If you don't use `console.log`, put your function's name in `opts.triggerKeywords`:
 
-## Dependencies used
+```js
+fixRowNums(`a\nb\nc\n log(\`1 something\`)`, { triggerKeywords: ["log"] }),
+// => "a\nb\nc\n log(\`004 something\`)"
+```
 
-All dependencies are our own:
-
-| name                                                               | purpose                                                                                                                                                                                |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [check-types-mini](https://www.npmjs.com/package/check-types-mini) | to enforce the correct Optional Options Object's key value types                                                                                                                       |
-| [ranges-push](https://www.npmjs.com/package/ranges-push)           | to compile what needs to be replaced ("ranges" - arrays containing `String.slice` indexes) so we can create result string in one go, as opposed to mutating it each time amend is done |
-| [ranges-apply](https://www.npmjs.com/package/ranges-apply)         | to "apply" the compiled ranges into a string                                                                                                                                           |
+Above, `log()` is used and it's on the fourth row and padding is default (three).
 
 **[⬆ back to top](#)**
 
@@ -213,7 +211,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/js-row-num
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
-[cov-img]: https://img.shields.io/badge/coverage-96.58%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-98.95%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/js-row-num

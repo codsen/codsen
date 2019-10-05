@@ -1,6 +1,7 @@
 import Slices from "ranges-push";
 import applySlices from "ranges-apply";
-import { padStart } from "./util";
+import clone from "lodash.clonedeep";
+import isObj from "lodash.isplainobject";
 
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -17,7 +18,22 @@ function fixRowNums(str, originalOpts) {
     padStart: 3,
     triggerKeywords: ["console.log"]
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = clone(defaults);
+  if (isObj(originalOpts)) {
+    // null is the "official" value to turn off the setting
+    if (Object.prototype.hasOwnProperty.call(originalOpts, "triggerKeywords")) {
+      if (Array.isArray(originalOpts.triggerKeywords)) {
+        opts.triggerKeywords = clone(originalOpts.triggerKeywords);
+      } else if (originalOpts.triggerKeywords === null) {
+        opts.triggerKeywords = [];
+      }
+    }
+
+    if (Object.prototype.hasOwnProperty.call(originalOpts, "padStart")) {
+      opts.padStart = originalOpts.padStart;
+    }
+  }
+
   if (
     !opts.padStart ||
     typeof opts.padStart !== "number" ||
@@ -70,21 +86,23 @@ function fixRowNums(str, originalOpts) {
         `070 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
           opts.padStart
         } (typeof ${opts.padStart}), "0")`}\u001b[${39}m`} = ${JSON.stringify(
-          padStart(currentRow, opts.padStart, "0"),
+          String(currentRow).padStart(opts.padStart, "0"),
           null,
           4
         )}`
       );
       console.log(
-        `079 ${opts.padStart}`
-          ? padStart(currentRow, opts.padStart, "0")
-          : `${currentRow}`
+        `1 ${`\u001b[${33}m${`currentRow`}\u001b[${39}m`} = ${JSON.stringify(
+          currentRow,
+          null,
+          4
+        )}`
       );
       finalIndexesToDelete.push(
         digitStartsAt,
         i,
         opts.padStart
-          ? padStart(currentRow, opts.padStart, "0")
+          ? String(currentRow).padStart(opts.padStart, "0")
           : `${currentRow}`
       );
       // then, reset:

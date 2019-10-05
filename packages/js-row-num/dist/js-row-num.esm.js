@@ -9,29 +9,8 @@
 
 import Slices from 'ranges-push';
 import applySlices from 'ranges-apply';
-
-function existy(x) {
-  return x != null;
-}
-function padStart(str, targetLength, padString) {
-  targetLength = targetLength >> 0;
-  padString = existy(padString) ? String(padString) : " ";
-  if (!existy(str)) {
-    return str;
-  } else if (typeof str === "number") {
-    str = String(str);
-  } else if (typeof str !== "string") {
-    return str;
-  }
-  if (str.length >= targetLength) {
-    return str;
-  }
-  targetLength = targetLength - str.length;
-  if (targetLength > padString.length) {
-    padString += padString.repeat(targetLength / padString.length);
-  }
-  return padString.slice(0, targetLength) + str;
-}
+import clone from 'lodash.clonedeep';
+import isObj from 'lodash.isplainobject';
 
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -47,7 +26,19 @@ function fixRowNums(str, originalOpts) {
     padStart: 3,
     triggerKeywords: ["console.log"]
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = clone(defaults);
+  if (isObj(originalOpts)) {
+    if (Object.prototype.hasOwnProperty.call(originalOpts, "triggerKeywords")) {
+      if (Array.isArray(originalOpts.triggerKeywords)) {
+        opts.triggerKeywords = clone(originalOpts.triggerKeywords);
+      } else if (originalOpts.triggerKeywords === null) {
+        opts.triggerKeywords = [];
+      }
+    }
+    if (Object.prototype.hasOwnProperty.call(originalOpts, "padStart")) {
+      opts.padStart = originalOpts.padStart;
+    }
+  }
   if (
     !opts.padStart ||
     typeof opts.padStart !== "number" ||
@@ -76,7 +67,7 @@ function fixRowNums(str, originalOpts) {
         digitStartsAt,
         i,
         opts.padStart
-          ? padStart(currentRow, opts.padStart, "0")
+          ? String(currentRow).padStart(opts.padStart, "0")
           : `${currentRow}`
       );
       digitStartsAt = null;

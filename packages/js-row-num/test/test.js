@@ -1,6 +1,5 @@
 import test from "ava";
 import fixRowNums from "../dist/js-row-num.esm";
-import { padStart } from "../dist/util.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. no throws
@@ -348,50 +347,13 @@ test(`06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works o
   );
 });
 
-// -----------------------------------------------------------------------------
-// group 99. util / padStart
-// -----------------------------------------------------------------------------
-
-test(`99.01 - ${`\u001b[${35}m${`util / padStart()`}\u001b[${39}m`} - pads with numbers`, t => {
-  t.is(padStart("1", -1, "0"), "1", "99.01.01");
-  t.is(padStart("1", 0, "0"), "1", "99.01.02");
-  t.is(padStart("1", 1, "0"), "1", "99.01.03");
-  t.is(padStart("1", 2, "0"), "01", "99.01.04");
-  t.is(padStart("1", 3, "0"), "001", "99.01.05");
-  t.is(padStart("1", 4, "0"), "0001", "99.01.06");
-  t.is(padStart("1", 5.1, "0"), "00001", "99.01.07");
-  t.is(padStart("100", 0, "0"), "100", "99.01.08");
-  t.is(padStart("100", 1, "0"), "100", "99.01.09");
-  t.is(padStart("100", 2, "0"), "100", "99.01.10");
-  t.is(padStart("100", 3, "0"), "100", "99.01.11");
-  t.is(padStart("100", 4, "0"), "0100", "99.01.12");
-
-  // input can be numeric as well:
-  t.is(padStart(1, -1, "0"), "1", "99.01.13");
-  t.is(padStart(1, 0, "0"), "1", "99.01.14");
-  t.is(padStart(1, 1, "0"), "1", "99.01.15");
-  t.is(padStart(1, 2, "0"), "01", "99.01.16");
-  t.is(padStart(1, 3, "0"), "001", "99.01.17");
-  t.is(padStart(1, 4, "0"), "0001", "99.01.18");
-  t.is(padStart(1, 5.1, "0"), "00001", "99.01.19");
-  t.is(padStart(100, 0, "0"), "100", "99.01.20");
-  t.is(padStart(100, 1, "0"), "100", "99.01.21");
-  t.is(padStart(100, 2, "0"), "100", "99.01.22");
-  t.is(padStart(100, 3, "0"), "100", "99.01.23");
-  t.is(padStart(100, 4, "0"), "0100", "99.01.24");
-});
-
-test(`99.02 - ${`\u001b[${35}m${`util / padStart()`}\u001b[${39}m`} - edge cases`, t => {
-  // third arg falsey
-  t.is(padStart("1", 3), "  1", "99.02.01");
-  t.is(padStart("1", 3, null), "  1", "99.02.02");
-  t.is(padStart("1", 3, undefined), "  1", "99.02.03");
-
-  // first arg missing
-  t.is(padStart(null, 3, undefined), null, "99.02.04");
-  t.is(padStart("", 3, undefined), "   ", "99.02.05");
-  t.is(padStart(null, 3, "0"), null, "99.02.06");
-  t.is(padStart("", 3, "0"), "000", "99.02.07");
-  t.is(padStart(undefined, 3, "0"), undefined, "99.02.08");
-  t.is(padStart(true, 3, "0"), true, "99.02.08");
+test(`06.03 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - non-existing log function`, t => {
+  const sources = [
+    `a\nb\nc\nconsole.log(\`1 something\`)`,
+    `a\nb\nc\nlog(\`1 something\`)`
+  ];
+  sources.forEach(source => {
+    t.is(fixRowNums(source, { triggerKeywords: ["zzz"] }), source);
+    t.is(fixRowNums(source, { triggerKeywords: null }), source);
+  });
 });

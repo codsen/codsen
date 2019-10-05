@@ -42,7 +42,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ranges-apply", "ranges-push"],
+      external: [
+        "lodash.clonedeep",
+        "lodash.isplainobject",
+        "ranges-apply",
+        "ranges-push"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -58,7 +63,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ranges-apply", "ranges-push"],
+      external: [
+        "lodash.clonedeep",
+        "lodash.isplainobject",
+        "ranges-apply",
+        "ranges-push"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -66,21 +76,6 @@ export default commandLineArgs => {
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
-      ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: [],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" })
       ]
     }
   ];
