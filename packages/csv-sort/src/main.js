@@ -1,6 +1,5 @@
 import split from "csv-split-easy";
 import pull from "lodash.pull";
-import ordinal from "ordinal";
 import currency from "currency.js";
 import { findtype } from "./util";
 
@@ -35,9 +34,7 @@ function csvSort(input) {
       })
     ) {
       throw new TypeError(
-        `csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ${ordinal(
-          culpritIndex
-        )} element is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(
+        `csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the element at index ${culpritIndex} is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(
           culpritVal,
           null,
           4

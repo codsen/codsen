@@ -141,8 +141,7 @@
     "csv-split-easy": "^3.0.36",
     "currency.js": "^1.2.2",
     "is-numeric": "^0.0.9",
-    "lodash.pull": "^4.1.0",
-    "ordinal": "^1.0.3"
+    "lodash.pull": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

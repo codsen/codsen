@@ -42,13 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "csv-split-easy",
-        "currency.js",
-        "is-numeric",
-        "lodash.pull",
-        "ordinal"
-      ],
+      external: ["csv-split-easy", "currency.js", "is-numeric", "lodash.pull"],
       plugins: [
         strip({
           sourceMap: false
@@ -64,13 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "csv-split-easy",
-        "currency.js",
-        "is-numeric",
-        "lodash.pull",
-        "ordinal"
-      ],
+      external: ["csv-split-easy", "currency.js", "is-numeric", "lodash.pull"],
       plugins: [
         strip({
           sourceMap: false

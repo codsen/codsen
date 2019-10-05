@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var split = _interopDefault(require('csv-split-easy'));
 var pull = _interopDefault(require('lodash.pull'));
-var ordinal = _interopDefault(require('ordinal'));
 var currency = _interopDefault(require('currency.js'));
 var isNumeric = _interopDefault(require('is-numeric'));
 
@@ -73,7 +72,7 @@ function csvSort(input) {
       }
       return isArr(val);
     })) {
-      throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ".concat(ordinal(culpritIndex), " element is not array but: ").concat(_typeof(culpritVal), ", equal to:\n").concat(JSON.stringify(culpritVal, null, 4)));
+      throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the element at index ".concat(culpritIndex, " is not array but: ").concat(_typeof(culpritVal), ", equal to:\n").concat(JSON.stringify(culpritVal, null, 4)));
     }
   } else {
     throw new TypeError("csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ".concat(_typeof(input), ", equal to:\n").concat(JSON.stringify(input, null, 4)));
