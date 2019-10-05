@@ -34,6 +34,9 @@ var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
+function isNum(something) {
+  return typeof something === "number";
+}
 function stringifyPath(something) {
   if (isArr(something)) {
     return something.join(".");
@@ -49,13 +52,24 @@ function stringifyAndEscapeValue(something) {
   return JSON.stringify(something, null, 0);
 }
 function isNotEscape(str, idx) {
-  return str[idx] !== "\\" || str[idx - 2] === "\\";
+  if (str[idx] !== "\\") {
+    return true;
+  }
+  var temp = stringLeftRight.chompLeft(str, idx, {
+    mode: 1
+  }, "\\");
+  if (isNum(temp) && (idx - temp) % 2 !== 0) {
+    return true;
+  }
+  return false;
 }
 function main(_ref) {
   var str = _ref.str,
       path = _ref.path,
       valToInsert = _ref.valToInsert,
       mode = _ref.mode;
+  var i;
+  var len = str.length;
   var ranges = [];
   var badChars = ["{", "}", "[", "]", ":", ","];
   var calculatedValueToInsert = valToInsert;
@@ -92,6 +106,10 @@ function main(_ref) {
   var valueEndedAt;
   var keyName;
   var keyValue;
+  var withinQuotesSince;
+  function withinQuotes() {
+    return isNum(withinQuotesSince);
+  }
   var itsTheFirstElem = false;
   var skipUntilTheFollowingIsMet;
   function reset() {
@@ -104,8 +122,10 @@ function main(_ref) {
   }
   reset();
   var currentPath = [];
-  var len = str.length;
-  for (var i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
+    if (str[i] === "\"" && isNotEscape(str, i - 1)) {
+      withinQuotesSince = isNum(withinQuotesSince) ? undefined : i;
+    }
     if (str[i] === "{" && str[i - 1] !== "\\" && !replaceThisValue) {
       if (currentlyWithinArray()) {
         if (itsTheFirstElem) {
@@ -149,7 +169,7 @@ function main(_ref) {
         }
       }
     }
-    if (!replaceThisValue && (currentlyWithinArray() || !currentlyWithinArray() && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
+    if (!replaceThisValue && !withinQuotes() && (currentlyWithinArray() || !currentlyWithinArray() && keyName) && valueStartedAt && valueStartedAt < i && !valueEndedAt && (str[valueStartedAt] === "\"" && str[i] === "\"" && str[i - 1] !== "\\" || str[valueStartedAt] !== "\"" && !str[i].trim().length || ["}", ","].includes(str[i]))) {
       keyValue = str.slice(valueStartedAt, str[valueStartedAt] === "\"" ? i + 1 : i);
       valueEndedAt = i;
       if (currentlyWithinArray() && (stringifyPath(path) === currentPath.join(".") || currentPath.join(".").endsWith(".".concat(stringifyPath(path))))) {
@@ -167,16 +187,18 @@ function main(_ref) {
         replaceThisValue = true;
       }
     }
-    if (!replaceThisValue && valueEndedAt && i >= valueEndedAt && str[i].trim().length) {
+    if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[stringLeftRight.left(str, i)]) && ["}", "]"].includes(str[i])) && str[i].trim().length) {
       if (str[i] === ",") {
         if (currentlyWithinArray()) ; else {
           currentPath.pop();
         }
         reset();
       } else if (str[i] === "}") {
+        if (valueEndedAt) {
+          currentPath.pop();
+        }
+        currentPath.pop();
         reset();
-        currentPath.pop();
-        currentPath.pop();
       }
     }
     if (!replaceThisValue && str[i] === "{" && isStr(keyName) && !valueStartedAt && !keyValue) {

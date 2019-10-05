@@ -7,12 +7,15 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
  */
 
-import { left, right } from 'string-left-right';
+import { left, right, chompLeft } from 'string-left-right';
 import apply from 'ranges-apply';
 
 const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
+}
+function isNum(something) {
+  return typeof something === "number";
 }
 function stringifyPath(something) {
   if (isArr(something)) {
@@ -37,9 +40,18 @@ function stringifyAndEscapeValue(something) {
   return JSON.stringify(something, null, 0);
 }
 function isNotEscape(str, idx) {
-  return str[idx] !== "\\" || str[idx - 2] === "\\";
+  if (str[idx] !== "\\") {
+    return true;
+  }
+  const temp = chompLeft(str, idx, { mode: 1 }, "\\");
+  if (isNum(temp) && (idx - temp) % 2 !== 0) {
+    return true;
+  }
+  return false;
 }
 function main({ str, path, valToInsert, mode }) {
+  let i;
+  const len = str.length;
   const ranges = [];
   const badChars = ["{", "}", "[", "]", ":", ","];
   let calculatedValueToInsert = valToInsert;
@@ -82,6 +94,10 @@ function main({ str, path, valToInsert, mode }) {
   let valueEndedAt;
   let keyName;
   let keyValue;
+  let withinQuotesSince;
+  function withinQuotes() {
+    return isNum(withinQuotesSince);
+  }
   let itsTheFirstElem = false;
   let skipUntilTheFollowingIsMet;
   function reset() {
@@ -94,8 +110,10 @@ function main({ str, path, valToInsert, mode }) {
   }
   reset();
   const currentPath = [];
-  const len = str.length;
-  for (let i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
+    if (str[i] === `"` && isNotEscape(str, i - 1)) {
+      withinQuotesSince = isNum(withinQuotesSince) ? undefined : i;
+    }
     if (str[i] === "{" && str[i - 1] !== "\\" && !replaceThisValue) {
       if (currentlyWithinArray()) {
         if (itsTheFirstElem) {
@@ -153,6 +171,7 @@ function main({ str, path, valToInsert, mode }) {
     }
     if (
       !replaceThisValue &&
+      !withinQuotes() &&
       (currentlyWithinArray() || (!currentlyWithinArray() && keyName)) &&
       valueStartedAt &&
       valueStartedAt < i &&
@@ -208,8 +227,9 @@ function main({ str, path, valToInsert, mode }) {
     }
     if (
       !replaceThisValue &&
-      valueEndedAt &&
-      i >= valueEndedAt &&
+      ((valueEndedAt && i >= valueEndedAt) ||
+        (["}", "]"].includes(str[left(str, i)]) &&
+          ["}", "]"].includes(str[i]))) &&
       str[i].trim().length
     ) {
       if (str[i] === ",") {
@@ -218,9 +238,11 @@ function main({ str, path, valToInsert, mode }) {
         }
         reset();
       } else if (str[i] === "}") {
+        if (valueEndedAt) {
+          currentPath.pop();
+        }
+        currentPath.pop();
         reset();
-        currentPath.pop();
-        currentPath.pop();
       }
     }
     if (

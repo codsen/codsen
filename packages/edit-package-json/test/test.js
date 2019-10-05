@@ -1,7 +1,8 @@
+// avanotonly
+
 import test from "ava";
 import { set, del } from "../dist/edit-package-json.esm";
 import objectPath from "object-path";
-// import clone from "lodash.clonedeep";
 
 function setter(t, source, result, path, val, idNum) {
   // 01.
@@ -580,7 +581,80 @@ test(`05.06 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
   deleter(t, source, result, "qwe.2", "05.06");
 });
 
-// TODO - escaped left slashes
+test(`05.07 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - dips to root level key before going to second branch`, t => {
+  const source = `{
+  "ab": {
+    "cd": {
+      "ef": "gh"
+    }
+  },
+  "ij": {
+    "kl": {
+      "mn": [
+        "op",
+        "qr",
+        "st"
+      ],
+      "uv": []
+    }
+  }
+}`;
+  const result = `{
+  "ab": {
+    "cd": {
+      "ef": "gh"
+    }
+  },
+  "ij": {
+    "kl": {
+      "mn": [
+        "op",
+        "qr"
+      ],
+      "uv": []
+    }
+  }
+}`;
+  deleter(t, source, result, "ij.kl.mn.2", "05.07");
+});
+
+test(`05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`, t => {
+  const source = `{
+  "a": {
+    "b": [],
+    "c": [
+      {
+        "d": "",
+        "e": ""
+      }
+    ],
+    "f": [
+      {
+        "g": "",
+        "h": ""
+      }
+    ]
+  }
+}`;
+  const result = `{
+  "a": {
+    "b": [],
+    "c": [
+      {
+        "d": "",
+        "e": ""
+      }
+    ],
+    "f": [
+      {
+        "g": ""
+      }
+    ]
+  }
+}`;
+  deleter(t, source, result, "a.f.0.h", "05.08");
+});
+
 // TODO - minified json
 
 // -----------------------------------------------------------------------------
