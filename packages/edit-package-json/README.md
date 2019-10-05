@@ -62,33 +62,37 @@ This package has three builds in `dist/` folder:
 
 ## NOTICE
 
-THIS PROGRAM IS IN STILL IN EARLY STAGE AND BUGS ARE LIKELY. HAVING SAID THAT, WE USE IT IN [PRODUCTION](https://www.npmjs.com/browse/depended/edit-package-json). DO TEST YOUR PROGRAM THOROUGHLY, AS ALWAYS.
+1. The proof of the pudding is in the eating. We use this program ourselves: https://www.npmjs.com/browse/depended/edit-package-json
+2. This a niche program, used specifically in JSON tooling, where it's very important to keep the formatting intact (like `package.json`). In "normal life", you should use `JSON.parse` and edit that object rather than unparsed string like this program does. Reason - it's more reliable that way. Plus, currently, we can't even add new paths, we can only edit/delete existing paths (so far).
+3. This program is still in early stage of development. Bugs can be present and we are currently fixing everything we find. If you do choose to use this program, test your functionality very very thoroughly.
 
 **[⬆ back to top](#)**
 
 ## TLDR - Our promise
 
-- change value by path or delete by path in read JSON contents string, directly, without parsing
-- `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
-- passes all unit tests of object-path^
+- amend the JSON contents **string** without parsing
+- use `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
+- passes all unit tests of object-path*
 
-^ some features like setting values on keys which don't exist are not implemented yet, so tests were adapted but commented-out.
+* some features like setting new paths are not implemented yet, although we even adapted prepared tests for that too
 
-The aim is to 100% guarantee that JSON formatting will be kept intact.
+The aim is to 100% guarantee that JSON formatting will be kept intact after edits, while giving you familiar `object-path`-style interface
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-Normally, when editing `package.json` file, it is parsed, its value, a plain object, is tweaked and then it is stringified and written back. The problem is, sometimes that "object tweaking" maintains the original key order but sometimes it does not.
+Normally, when editing `package.json` file, it is parsed, then, its value, a plain object, is tweaked and then it is stringified and written back. The problem is, sometimes that "object tweaking" maintains the original key order but sometimes it does not.
 
 When parsing-editing-stringifying JSON, we can't guarantee the: key order, indentation (tabs vs. spaces) and all other formatting to be intact.
 
-There are programs to stringify package.json and sort keys in particular order (https://www.npmjs.com/package/format-package) but formatting — indentation especially — is an opinionated thing and hard to customise across the whole pipeline of different programs (parser, editor, strigifier/sorter).
+People use JSON formatting detection libraries but a) those are imperfect and b) files can arrive messy and throw formatting detection algorithms off-track.
 
-Maintaining JSON formatting and key order is a challenge and this program tackles it.
+There are programs to stringify `package.json` and sort keys in particular order (good https://www.npmjs.com/package/format-package) but maintaining the formatting intact is a complex task.
 
-This program gives you interface to edit JSON files as string, without parsing.
+This program tackles it.
+
+It gives you an interface to edit JSON files as string, without parsing.
 
 **IMPORTANT.**
 
@@ -133,7 +137,7 @@ When you consume `set` (`const { set, del } = require("edit-package-json");`), i
 
 `set()` can set values by path, on a JSON string.
 
-**THIS IS AN EARLY STAGE OF THIS PROGRAM AND IT CAN'T CREATE NEW KEYS, IT WILL ONLY CHANGE VALUE IF KEY ALREADY EXISTS.**
+**THIS IS AN EARLY STAGE OF THIS PROGRAM AND IT CAN'T CREATE NEW KEYS, IT WILL ONLY CHANGE/DELETE VALUE IF KEY ALREADY EXISTS.**
 
 For now, this is the primary difference (from a more mature and more popular) `object-path`.
 
