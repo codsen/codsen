@@ -58,7 +58,7 @@ export default commandLineArgs => {
         }),
         json(),
         babel(),
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     },
@@ -82,7 +82,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         json(),
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     },
@@ -98,7 +98,7 @@ export default commandLineArgs => {
         }),
         resolve(),
         json(),
-        cleanup()
+        cleanup({ comments: "istanbul" })
       ]
     }
   ];

@@ -135,7 +135,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "execa": "^2.0.4",
+    "execa": "^2.0.5",
     "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "package-json-editor": "^1.0.1",

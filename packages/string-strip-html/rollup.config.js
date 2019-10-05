@@ -60,7 +60,7 @@ export default commandLineArgs => {
         builtins(),
         json(),
         babel(),
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     },
@@ -84,7 +84,7 @@ export default commandLineArgs => {
         }),
         builtins(),
         json(),
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     }

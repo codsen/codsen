@@ -72,7 +72,7 @@ This package has three builds in `dist/` folder:
 
 - amend the JSON contents **string** without parsing
 - use `object-path` notation (for example, array `key.0.val`, not `key[0].val`)
-- passes all unit tests of object-path*
+- passes all unit tests of object-path\*
 
 * some features like setting new paths are not implemented yet, although we even adapted prepared tests for that too
 
