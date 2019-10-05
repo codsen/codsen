@@ -1,4 +1,3 @@
-import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 
 function within(str, originalOpts) {
@@ -32,11 +31,6 @@ function within(str, originalOpts) {
 
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOpts);
-
-  // the check:
-  checkTypes(opts, defaults, {
-    msg: "email-all-chars-within-ascii/within(): [THROW_ID_03*]"
-  });
 
   // -----------------------------------------------------------------------------
 

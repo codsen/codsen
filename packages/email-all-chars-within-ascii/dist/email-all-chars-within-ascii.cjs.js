@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
@@ -43,9 +42,6 @@ function within(str, originalOpts) {
     checkLineLength: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "email-all-chars-within-ascii/within(): [THROW_ID_03*]"
-  });
   var counter = 0;
   for (var i = 0, len = str.length; i < len; i++) {
     counter += 1;

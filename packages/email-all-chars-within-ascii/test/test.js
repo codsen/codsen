@@ -38,18 +38,12 @@ test("01.02 - wrong opts = throw", t => {
   t.notThrows(() => {
     within("aaaa", null); // null fine too - that's hardcoded "nothing"
   });
-  t.throws(() => {
-    within("aaaa", { zzz: true }); // opts contain rogue keys.
-  });
-  t.throws(() => {
-    within("aaaa", { zzz: true, messageOnly: false }); // one rogue key is enough to cause a throw
-  });
   t.notThrows(() => {
     within("aaaa", { messageOnly: false }); // no rogue keys.
   });
 });
 
-test("01.02 - 1000 chars line = throw", t => {
+test("01.03 - 1000 chars line = throw", t => {
   t.throws(() => {
     // 1000 chars on 3rd line
     within(

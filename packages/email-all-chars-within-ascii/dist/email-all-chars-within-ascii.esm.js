@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
  */
 
-import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 
 function within(str, originalOpts) {
@@ -37,9 +36,6 @@ function within(str, originalOpts) {
     checkLineLength: true
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "email-all-chars-within-ascii/within(): [THROW_ID_03*]"
-  });
   let counter = 0;
   for (let i = 0, len = str.length; i < len; i++) {
     counter += 1;
