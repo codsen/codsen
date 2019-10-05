@@ -1,7 +1,6 @@
 import he from "he";
 import mergeRanges from "ranges-merge";
 import isObj from "lodash.isplainobject";
-import checkTypes from "check-types-mini";
 
 /**
  * chomp - leaves only last #x26; or amp; between ampersand and string
@@ -44,9 +43,6 @@ function decode(str, originalOpts) {
   } else {
     opts = Object.assign({}, defaults, originalOpts);
   }
-  checkTypes(opts, defaults, {
-    msg: "ranges-ent-decode/decode(): [THROW_ID_03*]"
-  });
 
   console.log(
     `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(

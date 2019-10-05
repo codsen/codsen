@@ -1,7 +1,5 @@
 import test from "ava";
 import decode from "../dist/ranges-ent-decode.esm";
-// import he from "he";
-// import rangesApply from "ranges-apply";
 
 // ==============================
 // 00. Throws
@@ -28,27 +26,7 @@ test("00.03 - throws when second input argument is not a plain object", t => {
   t.regex(error1.message, /THROW_ID_02/);
 });
 
-test("00.04 - throws when Optional Options Object contains only a rogue key", t => {
-  const error1 = t.throws(() => {
-    decode("yyy", {
-      zzz: true
-    });
-  });
-  t.regex(error1.message, /THROW_ID_03/);
-});
-
-test("00.05 - throws when Optional Options Object contains a rogue key among legit ones", t => {
-  const error1 = t.throws(() => {
-    decode("yyy", {
-      isAttributeValue: false,
-      strict: false,
-      zzz: true
-    });
-  });
-  t.regex(error1.message, /THROW_ID_03/);
-});
-
-test("00.06 - falsey opts does not throw", t => {
+test("00.04 - falsey opts does not throw", t => {
   t.notThrows(() => {
     decode("yyy", undefined);
   });
