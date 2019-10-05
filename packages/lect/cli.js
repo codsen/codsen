@@ -386,7 +386,7 @@ function step13() {
         resolve()${
           pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
         },
-        cleanup()
+        cleanup({ comments: "istanbul" })
       ]
     }`;
   }, "");
@@ -459,7 +459,7 @@ function step13() {
       rollupPluginsStrToInsert ? `,\n        ${rollupPluginsStrToInsert}` : ""
     },
         babel(),
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     },
@@ -494,7 +494,7 @@ function step13() {
     }${pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""}${
       rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""
     },
-        cleanup(),
+        cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
     }`;
