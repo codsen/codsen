@@ -115,7 +115,7 @@
     },
     {
         "name": "check-types-mini",
-        "size": 11089,
+        "size": 11007,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -123,7 +123,7 @@
     },
     {
         "name": "chlu",
-        "size": 19615,
+        "size": 19578,
         "imports": [
             "ast-contains-only-empty-space",
             "easy-replace"
@@ -138,7 +138,7 @@
     },
     {
         "name": "csv-sort",
-        "size": 14188,
+        "size": 14137,
         "imports": [
             "csv-split-easy"
         ]
@@ -152,9 +152,8 @@
     },
     {
         "name": "csv-split-easy",
-        "size": 5071,
+        "size": 4947,
         "imports": [
-            "check-types-mini",
             "string-remove-thousand-separators"
         ]
     },
@@ -188,7 +187,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 8755,
+        "size": 9494,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -285,7 +284,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 5686,
+        "size": 5558,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -293,8 +292,9 @@
     },
     {
         "name": "js-row-num-cli",
-        "size": 4911,
+        "size": 5285,
         "imports": [
+            "arrayiffy-if-string",
             "js-row-num"
         ]
     },
@@ -339,7 +339,7 @@
     },
     {
         "name": "lect",
-        "size": 71987,
+        "size": 72059,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -380,7 +380,6 @@
         "size": 5285,
         "imports": [
             "arrayiffy-if-string",
-            "check-types-mini",
             "object-all-values-equal-to",
             "object-merge-advanced"
         ]
@@ -388,9 +387,7 @@
     {
         "name": "object-flatten-all-arrays",
         "size": 2000,
-        "imports": [
-            "check-types-mini"
-        ]
+        "imports": []
     },
     {
         "name": "object-flatten-referencing",
@@ -434,9 +431,8 @@
     },
     {
         "name": "ranges-ent-decode",
-        "size": 3114,
+        "size": 2980,
         "imports": [
-            "check-types-mini",
             "ranges-merge"
         ]
     },
@@ -569,18 +565,9 @@
         ]
     },
     {
-        "name": "string-overlap-one-on-another",
-        "size": 3021,
-        "imports": [
-            "check-types-mini"
-        ]
-    },
-    {
         "name": "string-range-expander",
         "size": 8433,
-        "imports": [
-            "check-types-mini"
-        ]
+        "imports": []
     },
     {
         "name": "string-remove-duplicate-heads-tails",
@@ -615,9 +602,8 @@
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 2118,
+        "size": 1947,
         "imports": [
-            "check-types-mini",
             "ranges-is-index-within"
         ]
     },
@@ -647,7 +633,7 @@
     },
     {
         "name": "update-versions",
-        "size": 9416,
+        "size": 10462,
         "imports": [
             "edit-package-json"
         ]

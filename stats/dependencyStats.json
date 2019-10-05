@@ -1,0 +1,259 @@
+{
+    "dependencies": {
+        "all-named-html-entities": 2,
+        "ansi-diff-stream": 1,
+        "ansi-regex": 1,
+        "array-includes-all": 1,
+        "array-includes-with-glob": 1,
+        "array-pull-all-with-glob": 2,
+        "arrayiffy-if-string": 12,
+        "ast-compare": 3,
+        "ast-contains-only-empty-space": 3,
+        "ast-get-values-by-key": 1,
+        "ast-is-empty": 2,
+        "ast-monkey": 2,
+        "ast-monkey-traverse": 8,
+        "bitbucket-slug": 1,
+        "chalk": 6,
+        "check-types-mini": 9,
+        "chlu": 1,
+        "compare-versions": 1,
+        "csv-sort": 1,
+        "csv-split-easy": 1,
+        "currency.js": 1,
+        "dehumanize-date": 1,
+        "dom-serializer": 1,
+        "domutils-bastardised": 1,
+        "easy-replace": 1,
+        "edit-package-json": 1,
+        "email-all-chars-within-ascii": 1,
+        "email-comb": 1,
+        "emoji-regex": 1,
+        "ent": 2,
+        "execa": 2,
+        "filesize": 1,
+        "find-file-recursively-up": 1,
+        "format-package": 2,
+        "fs-extra": 9,
+        "generate-atomic-css": 1,
+        "get-pkg-repo": 2,
+        "github-slugger": 1,
+        "globby": 9,
+        "he": 4,
+        "hex-color-regex": 1,
+        "html-comment-regex": 1,
+        "html-dom-parser": 1,
+        "html-entities-not-email-friendly": 2,
+        "inquirer": 3,
+        "is-d": 4,
+        "is-natural-number": 13,
+        "is-natural-number-string": 7,
+        "is-numeric": 2,
+        "is-string-int": 1,
+        "js-row-num": 1,
+        "json-comb-core": 1,
+        "just-insert": 1,
+        "lerna-clean-changelogs": 1,
+        "lodash.camelcase": 1,
+        "lodash.clonedeep": 27,
+        "lodash.deburr": 1,
+        "lodash.includes": 6,
+        "lodash.intersection": 3,
+        "lodash.isequal": 1,
+        "lodash.isfunction": 1,
+        "lodash.isplainobject": 45,
+        "lodash.isregexp": 1,
+        "lodash.isstring": 2,
+        "lodash.merge": 1,
+        "lodash.min": 1,
+        "lodash.partition": 1,
+        "lodash.pull": 2,
+        "lodash.pullall": 5,
+        "lodash.toarray": 2,
+        "lodash.trim": 5,
+        "lodash.uniq": 7,
+        "lodash.without": 1,
+        "log-symbols": 2,
+        "log-update": 1,
+        "matcher": 9,
+        "meow": 12,
+        "object-all-values-equal-to": 1,
+        "object-delete-key": 1,
+        "object-fill-missing-keys": 1,
+        "object-flatten-all-arrays": 1,
+        "object-merge-advanced": 5,
+        "object-no-new-keys": 1,
+        "object-path": 4,
+        "object-set-all-values-to": 1,
+        "p-filter": 1,
+        "p-map": 3,
+        "p-one": 1,
+        "p-progress": 1,
+        "p-reduce": 8,
+        "package-json-editor": 1,
+        "pacote": 2,
+        "plugin-error": 1,
+        "ranges-apply": 15,
+        "ranges-crop": 2,
+        "ranges-invert": 1,
+        "ranges-is-index-within": 2,
+        "ranges-merge": 8,
+        "ranges-process-outside": 1,
+        "ranges-push": 10,
+        "ranges-sort": 1,
+        "regex-empty-conditional-comments": 1,
+        "replace-string": 1,
+        "request": 1,
+        "runes": 1,
+        "semver-compare": 2,
+        "semver-regex": 1,
+        "simple-git": 1,
+        "sort-keys": 1,
+        "sorted-object": 1,
+        "split-lines": 4,
+        "str-indexes-of-plus": 1,
+        "string-apostrophes": 1,
+        "string-character-is-astral-surrogate": 1,
+        "string-collapse-leading-whitespace": 1,
+        "string-collapse-white-space": 1,
+        "string-extract-class-names": 1,
+        "string-find-heads-tails": 1,
+        "string-fix-broken-named-entities": 2,
+        "string-left-right": 10,
+        "string-match-left-right": 7,
+        "string-range-expander": 3,
+        "string-remove-duplicate-heads-tails": 1,
+        "string-remove-thousand-separators": 1,
+        "string-remove-widows": 1,
+        "string-splice": 1,
+        "string-strip-html": 1,
+        "string-trim-spaces-only": 3,
+        "string-uglify": 1,
+        "string-unfancy": 1,
+        "type-detect": 4,
+        "unescape-js": 1,
+        "update-notifier": 12,
+        "util-array-object-or-both": 2,
+        "util-nonempty": 1,
+        "write-file-atomic": 6,
+        "write-json-file": 1
+    },
+    "devDependencies": {
+        "@babel/core": 97,
+        "@babel/polyfill": 1,
+        "@babel/preset-env": 97,
+        "@babel/register": 97,
+        "array-shuffle": 1,
+        "ava": 97,
+        "babel-plugin-istanbul": 97,
+        "benchmark": 85,
+        "browser-sync": 1,
+        "deep-equal": 1,
+        "eslint": 97,
+        "eslint-config-prettier": 97,
+        "eslint-plugin-ava": 97,
+        "eslint-plugin-import": 97,
+        "eslint-plugin-no-unsanitized": 97,
+        "eslint-plugin-prettier": 97,
+        "esm": 97,
+        "execa": 10,
+        "fs-extra": 2,
+        "html-crush": 1,
+        "is-ci": 1,
+        "js-row-num-cli": 97,
+        "json-stringify-safe": 1,
+        "lect": 97,
+        "lodash.clonedeep": 3,
+        "lodash.isequal": 1,
+        "map-stream": 1,
+        "node-fetch": 1,
+        "nyc": 97,
+        "object-boolean-combinations": 1,
+        "object-delete-key": 1,
+        "object-path": 4,
+        "p-map": 4,
+        "posthtml-parser": 1,
+        "prettier": 97,
+        "ranges-apply": 4,
+        "ranges-merge": 1,
+        "rollup": 84,
+        "rollup-plugin-ascii": 84,
+        "rollup-plugin-babel": 84,
+        "rollup-plugin-banner": 84,
+        "rollup-plugin-cleanup": 84,
+        "rollup-plugin-commonjs": 84,
+        "rollup-plugin-json": 84,
+        "rollup-plugin-node-builtins": 8,
+        "rollup-plugin-node-globals": 1,
+        "rollup-plugin-node-resolve": 84,
+        "rollup-plugin-strip": 84,
+        "rollup-plugin-terser": 84,
+        "string-find-heads-tails": 1,
+        "tempy": 12,
+        "vinyl-string": 1
+    },
+    "top10ExternalDeps": [
+        {
+            "lodash.isplainobject": 45
+        },
+        {
+            "lodash.clonedeep": 27
+        },
+        {
+            "is-natural-number": 13
+        },
+        {
+            "meow": 12
+        },
+        {
+            "update-notifier": 12
+        },
+        {
+            "matcher": 9
+        },
+        {
+            "fs-extra": 9
+        },
+        {
+            "globby": 9
+        },
+        {
+            "p-reduce": 8
+        },
+        {
+            "lodash.uniq": 7
+        }
+    ],
+    "top10OwnDeps": [
+        {
+            "ranges-apply": 15
+        },
+        {
+            "arrayiffy-if-string": 12
+        },
+        {
+            "ranges-push": 10
+        },
+        {
+            "string-left-right": 10
+        },
+        {
+            "check-types-mini": 9
+        },
+        {
+            "ast-monkey-traverse": 8
+        },
+        {
+            "ranges-merge": 8
+        },
+        {
+            "string-match-left-right": 7
+        },
+        {
+            "object-merge-advanced": 5
+        },
+        {
+            "ast-contains-only-empty-space": 3
+        }
+    ]
+}
