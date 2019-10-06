@@ -20,7 +20,6 @@
 - [Opinionated part 3](#opinionated-part-3)
 - [Conclusion](#conclusion)
 - [All Extras](#all-extras)
-- [Ingredients](#ingredients)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
