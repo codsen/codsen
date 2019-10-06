@@ -16,7 +16,6 @@ var pullAll = _interopDefault(require('lodash.pullall'));
 var typeDetect = _interopDefault(require('type-detect'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var matcher = _interopDefault(require('matcher'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -93,9 +92,6 @@ function compare(bo, so, originalOpts) {
     useWildcards: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "ast-compare/compare(): [THROW_ID_06*]"
-  });
   if (opts.hungryForWhitespace && opts.matchStrictly && isObj(bo) && empty(bo) && isObj(so) && Object.keys(so).length === 0) {
     return true;
   }

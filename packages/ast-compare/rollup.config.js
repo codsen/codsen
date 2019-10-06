@@ -44,7 +44,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-contains-only-empty-space",
-        "check-types-mini",
         "lodash.clonedeep",
         "lodash.pullall",
         "matcher",
@@ -67,7 +66,6 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "ast-contains-only-empty-space",
-        "check-types-mini",
         "lodash.clonedeep",
         "lodash.pullall",
         "matcher",

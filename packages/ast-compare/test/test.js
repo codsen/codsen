@@ -134,61 +134,7 @@ test("01.06 - undefined in a second-level depth", t => {
   });
 });
 
-test("01.07 - opts.hungryForWhitespace - throws when and only when necessary", t => {
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { hungryForWhitespace: 1 });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { hungryForWhitespace: "false" });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { hungryForWhitespace: null });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { hungryForWhitespace: false });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { hungryForWhitespace: true });
-  });
-});
-
-test("01.08 - opts.matchStrictly - throws when and only when necessary", t => {
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { matchStrictly: 1 });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { matchStrictly: "false" });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { matchStrictly: null });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { matchStrictly: false });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { matchStrictly: true });
-  });
-});
-
-test("01.09 - opts.verboseWhenMismatches - throws when and only when necessary", t => {
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { verboseWhenMismatches: 1 });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { verboseWhenMismatches: "false" });
-  });
-  t.throws(() => {
-    compare({ a: "a" }, { a: "a" }, { verboseWhenMismatches: null });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { verboseWhenMismatches: false });
-  });
-  t.notThrows(() => {
-    compare({ a: "a" }, { a: "a" }, { verboseWhenMismatches: true });
-  });
-});
-
-test("01.10 - wrong types of input args", t => {
+test("01.07 - wrong types of input args", t => {
   t.throws(() => {
     compare(undefined, { a: "a" }, { verboseWhenMismatches: true });
   });

@@ -138,7 +138,6 @@
   },
   "dependencies": {
     "ast-contains-only-empty-space": "^1.8.45",
-    "check-types-mini": "^5.7.42",
     "lodash.clonedeep": "^4.5.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^2.0.0",

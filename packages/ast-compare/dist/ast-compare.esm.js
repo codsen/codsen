@@ -12,7 +12,6 @@ import pullAll from 'lodash.pullall';
 import typeDetect from 'type-detect';
 import empty from 'ast-contains-only-empty-space';
 import matcher from 'matcher';
-import checkTypes from 'check-types-mini';
 
 const isArr = Array.isArray;
 function existy(x) {
@@ -98,7 +97,6 @@ function compare(bo, so, originalOpts) {
     useWildcards: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "ast-compare/compare(): [THROW_ID_06*]" });
   if (
     opts.hungryForWhitespace &&
     opts.matchStrictly &&
