@@ -58,10 +58,7 @@ This CLI is a good idea in Lerna monorepos full of owned npm packages (where you
 
 Lerna `bootstrap` will not work properly if each dependency is not prefixed with `^`, as in `^x.y.z`. It's hard to manually enforce that all monorepo packages should have all dependencies in this format. `update-versions` will force this format.
 
-Two exceptions:
-
-1. if dependency is called "lerna" (because of https://github.com/lerna/lerna/issues/2117 which is still happening)
-2. its dependency's value starts with `file:`
+**One exception** - if its dependency's value starts with `file:`
 
 **[⬆ back to top](#)**
 
@@ -93,23 +90,6 @@ If you don't like something above, don't use `update-versions`.
 - Thanks to `update-notifier` CLI will pester you to update if newer version is released
 
 PS. We are using `update-versions` to maintain itself — our [monorepo](https://gitlab.com/codsen/codsen/) version updates are driven by this very CLI.
-
-**[⬆ back to top](#)**
-
-## Ingredients
-
-Only the finest dependencies are used:
-
-| Dependency                                                                   | Purpose                                                            |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [`fs-extra`](https://www.npmjs.com/package/fs-extra)                         | We want it for `fs` ops but with promises                          |
-| [`globby`](https://www.npmjs.com/package/globby)                             | Globbing utility from Mr. Sorhus                                   |
-| [`lodash.isplainobject`](https://www.npmjs.com/package/lodash.isplainobject) | To surely identify plain objects                                   |
-| [`log-symbols`](https://www.npmjs.com/package/log-symbols)                   | Success icon. From Mr. Sorhus.                                     |
-| [`log-update`](https://www.npmjs.com/package/log-update)                     | Allows to overwrite current line in terminal. From Mr. Sorhus too. |
-| [`meow`](https://www.npmjs.com/package/meow)                                 | CLI helper from Mr. Sorhus                                         |
-| [`pacote`](https://www.npmjs.com/package/pacote)                             | npm own's app - pings npm, fetches latest version                  |
-| [`update-notifier`](https://www.npmjs.com/package/update-notifier)           | Pesters users if CLI is not up-to-date. npm use it too.            |
 
 **[⬆ back to top](#)**
 

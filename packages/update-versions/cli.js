@@ -225,10 +225,7 @@ if (cli.flags) {
 
             const singleDepName = keys[y];
             const singleDepValue = parsedContents.dependencies[keys[y]];
-            if (
-              singleDepValue.startsWith("file:") ||
-              singleDepName === "lerna"
-            ) {
+            if (singleDepValue.startsWith("file:")) {
               continue;
             }
 
@@ -289,10 +286,7 @@ if (cli.flags) {
           for (let y = 0, len2 = keys.length; y < len2; y++) {
             const singleDepName = keys[y];
             const singleDepValue = parsedContents.devDependencies[keys[y]];
-            if (
-              singleDepValue.startsWith("file:") ||
-              singleDepName === "lerna"
-            ) {
+            if (singleDepValue.startsWith("file:")) {
               continue;
             }
 
