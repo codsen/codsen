@@ -23,7 +23,8 @@ const isArr = Array.isArray;
 const { set, del } = require("edit-package-json");
 
 const { log } = console;
-const messagePrefix = `\u001b[${90}m${"✨ update-versions: "}\u001b[${39}m`;
+const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
+const messagePrefix = `\u001b[${90}m${`${sparkles} update-versions: `}\u001b[${39}m`;
 const cli = meow(
   `
   Usage:
@@ -37,7 +38,6 @@ const cli = meow(
 `
 );
 updateNotifier({ pkg: cli.pkg }).notify();
-// const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
 
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
@@ -70,6 +70,15 @@ if (cli.flags) {
 // -----------------------------------------------------------------------------
 
 (async () => {
+  // we'll use the object below to distill all unique package updates
+  const updatedPackages = {};
+  function printUpdated() {
+    return Object.keys(updatedPackages)
+      .sort()
+      .map(n => `${n} ${updatedPackages[n]}`)
+      .join("\n");
+  }
+
   const pathsPromise = await globby([
     "**/package.json",
     "!**/node_modules/**",
@@ -198,6 +207,7 @@ if (cli.flags) {
           const keys = Object.keys(parsedContents.dependencies);
           for (let y = 0, len2 = keys.length; y < len2; y++) {
             // delete this dependency from lect.various.devDependencies if present
+            // ---------------------
             if (
               objectPath.has(parsedContents, `lect.various.devDependencies`) &&
               isArr(parsedContents.lect.various.devDependencies) &&
@@ -239,9 +249,21 @@ if (cli.flags) {
                 `^${compiledDepNameVersionPairs[singleDepName]}`
               );
               amended = true;
+              if (
+                !Object.prototype.hasOwnProperty.call(
+                  updatedPackages,
+                  singleDepName
+                )
+              ) {
+                updatedPackages[
+                  singleDepName
+                ] = `${compiledDepNameVersionPairs[singleDepName]}`;
+              }
             }
 
             // report progress
+            // ---------------------
+
             // total: totalDeps, current chunk total: len2
             progress(0.75 + 0.24 * (y / totalDeps.length));
           }
@@ -300,6 +322,18 @@ if (cli.flags) {
                 `^${compiledDepNameVersionPairs[singleDepName]}`
               );
               amended = true;
+
+              // update logging:
+              if (
+                !Object.prototype.hasOwnProperty.call(
+                  updatedPackages,
+                  singleDepName
+                )
+              ) {
+                updatedPackages[
+                  singleDepName
+                ] = `${compiledDepNameVersionPairs[singleDepName]}`;
+              }
             }
 
             progress(
@@ -325,10 +359,26 @@ if (cli.flags) {
   allProgressPromise.onProgress(val =>
     diff.write(
       val === 1
-        ? `${messagePrefix}all done`
-        : `${messagePrefix}${Math.floor(val * 100)}% done`
+        ? `${messagePrefix}${
+            Object.keys(updatedPackages).length
+              ? `all updated:\n${printUpdated()}`
+              : `everything was already up-to-date`
+          }`
+        : `${messagePrefix}${Math.floor(val * 100)}% ${
+            Object.keys(updatedPackages).length
+              ? `updated:\n${printUpdated()}`
+              : `done`
+          }`
     )
   );
   diff.pipe(process.stdout);
+
   await allProgressPromise;
+  // console.log(
+  //   `${`\u001b[${33}m${`updatedPackages`}\u001b[${39}m`} = ${JSON.stringify(
+  //     updatedPackages,
+  //     null,
+  //     4
+  //   )}`
+  // );
 })();
