@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.10.46](https://gitlab.com/codsen/codsen/compare/ast-monkey@7.10.45...ast-monkey@7.10.46) (2019-10-07)
-
-**Note:** Version bump only for package ast-monkey
-
-
-
-
-
 ## 7.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
