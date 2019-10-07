@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://gitlab.com/codsen/codsen/compare/update-versions@2.1.0...update-versions@2.2.0) (2019-10-07)
+
+
+### Features
+
+* add reporting what was done ([cc09c8d](https://gitlab.com/codsen/codsen/commit/cc09c8d))
+* start updating lerna as well, newest versions are fine ([3d3e986](https://gitlab.com/codsen/codsen/commit/3d3e986))
+
+
+
+
+
 ## 2.1.0 (2019-10-05)
 
 ### Features
