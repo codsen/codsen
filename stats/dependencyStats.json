@@ -15,7 +15,7 @@
         "ast-monkey-traverse": 8,
         "bitbucket-slug": 1,
         "chalk": 6,
-        "check-types-mini": 9,
+        "check-types-mini": 8,
         "chlu": 1,
         "compare-versions": 1,
         "csv-sort": 1,
@@ -238,7 +238,7 @@
             "string-left-right": 10
         },
         {
-            "check-types-mini": 9
+            "check-types-mini": 8
         },
         {
             "ast-monkey-traverse": 8

@@ -38,10 +38,9 @@
     },
     {
         "name": "ast-compare",
-        "size": 8919,
+        "size": 8796,
         "imports": [
-            "ast-contains-only-empty-space",
-            "check-types-mini"
+            "ast-contains-only-empty-space"
         ]
     },
     {
@@ -284,7 +283,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 5558,
+        "size": 5557,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -633,7 +632,7 @@
     },
     {
         "name": "update-versions",
-        "size": 10462,
+        "size": 11793,
         "imports": [
             "edit-package-json"
         ]

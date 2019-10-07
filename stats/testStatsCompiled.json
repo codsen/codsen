@@ -7,7 +7,7 @@
         "array-of-arrays-sort-by-col": 25,
         "array-pull-all-with-glob": 21,
         "arrayiffy-if-string": 2,
-        "ast-compare": 73,
+        "ast-compare": 70,
         "ast-contains-only-empty-space": 17,
         "ast-delete-object": 69,
         "ast-get-object": 18,
@@ -99,7 +99,7 @@
         "util-nonempty": 9
     },
     "totalPackageCount": 97,
-    "totalTestsCount": 4855,
+    "totalTestsCount": 4852,
     "minTestsCount": 2,
     "minTestsName": "arrayiffy-if-string",
     "maxTestsCount": 590,
