@@ -2807,6 +2807,9 @@ test(`33.12 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - repeated dashe
     t
   ));
 
+test(`33.13 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - space inside HTML comment`, t =>
+  c(`<!-- z-->`, t));
+
 // 34. rule "bad-character-unencoded-ampersand"
 // -----------------------------------------------------------------------------
 

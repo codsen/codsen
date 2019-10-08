@@ -1,6 +1,6 @@
 /**
  * emlint
- * Non-parsing, email template-oriented linter
+ * Non-parsing static code analysis tool for HTML mixed with anything
  * Version: 1.7.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -3383,7 +3383,11 @@ function lint(str, originalOpts) {
       if (logTag.closing === null) {
         logTag.closing = false;
       }
-      if (logTag.tagStartAt < i - 1 && logWhitespace.startAt !== null) {
+      if (
+        logTag.tagStartAt < i - 1 &&
+        logWhitespace.startAt !== null &&
+        !logTag.comment
+      ) {
         tagIssueStaging.push({
           name: "tag-space-after-opening-bracket",
           position: [[logTag.tagStartAt + 1, i]]

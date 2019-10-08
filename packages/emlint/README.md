@@ -1,6 +1,6 @@
 # EMLint
 
-> Non-parsing, email template-oriented linter
+> Non-parsing static code analysis tool for HTML mixed with anything
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -14,7 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Aim](#aim)
+- [Two aims](#two-aims)
 - [Idea](#idea)
 - [Description for the final product we're aiming](#description-for-the-final-product-were-aiming)
 - [API](#api)
@@ -61,21 +61,37 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
-## Aim
+## Two aims
 
-To be the most advanced, automated and smart (X)HTML/CSS code linting tool that humanity has ever produced.
+1. To catch HTML and CSS code errors, including things that make code unparseable.
+2. To catch bad email template code patterns which cause rendering bugs.
 
 ## Idea
 
-Let's lint HTML/CSS including email templates.
+Currently, the [Litmus](https://www.crunchbase.com/organization/litmus) and [Email on Acid](https://www.crunchbase.com/organization/emailonacid) are leading providers in Email Development industry. After coding up the template, developer sends the test email to their services and visually evaluates the screenshots of the template, prepared on various platforms (like Android), email consumption programs (like Outlook) and webmail clients (like gmail.com).
+
+Such code error-checking process is tedious and inefficient.
+
+Code errors should be detected right in the code editor, while developer is typing.
+
+The primary challenge is, email templates are prepared for deployment by inserting templating language code. It can be Mailchimp, Oracle Responsys, Campaign Monitor proprietary templating literals, it can be pure templating languages like Nunjucks, Liquid or others, it can be programming languages like Java or Python or Go. There are many ways to achive templating and manage the code module assembly.
+
+This means, proper linter **can't be parsing**.
+
+Furthermore, bugs often cause parsing errors. It is stupid for a tool to demand that code should be parseable in order to find errors in it. It's like requiring patients to pass military health test in order to be admitted to a hospital. All admitted patients will be healthy (negating the purpose of hospital) or no sick patients will be treated. Same with the HTML/CSS code (both web and email actually) — for example, current HTML linters in the market will not tell you if you accidentally put a space after opening bracket (like [Kangax minifier](http://kangax.github.io/html-lint/)).
+
+Current HTML/CSS linters are also not email-template friendly, have convoluted API's and often are not coded up on modern tooling (Rollup, Babel, ES6+ source, ESLint, Prettier etc).
+
+**[⬆ back to top](#)**
 
 ## Description for the final product we're aiming
 
 This is a linter API, still in _a baby state_ but eventually it will able to detect **all** of the following:
 
-- HTML/CSS code errors
-- Missing tags
-- Redundant tags
+- HTML/CSS code errors, especially ones that make code un-parseable
+- Missing tags and single characters
+- Messed up tags and rogue characters
+- Redundant tags and characters
 - Enforce tag patterns such as _Hybrid Email_ or _Outlook Shadow Code_
 - If would be nice to detect chunks of _shifted code_ (nobody has done it before)
 - Email-specific feature, detect issues with Micro\$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) - both bugs and settings considering surrounding code
@@ -169,7 +185,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/emlint
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-[cov-img]: https://img.shields.io/badge/coverage-87.64%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-88.08%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint

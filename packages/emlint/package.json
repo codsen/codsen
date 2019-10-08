@@ -1,7 +1,7 @@
 {
   "name": "emlint",
   "version": "1.7.7",
-  "description": "Non-parsing, email template-oriented linter",
+  "description": "Non-parsing static code analysis tool for HTML mixed with anything",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
