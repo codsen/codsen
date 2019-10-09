@@ -42,12 +42,12 @@ function stringifyAndEscapeValue(something) {
 
 function isNotEscape(str, idx) {
   if (str[idx] !== "\\") {
-    // console.log(`045 yes, it's not excaped`);
+    // log(`045 yes, it's not excaped`);
     return true;
   }
 
   const temp = chompLeft(str, idx, { mode: 1 }, "\\");
-  // console.log(
+  // log(
   //   `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
   //     temp,
   //     null,
@@ -56,24 +56,24 @@ function isNotEscape(str, idx) {
   //     2}`
   // );
   if (isNum(temp) && (idx - temp) % 2 !== 0) {
-    // console.log(`059 yes, it's not excaped`);
+    // log(`059 yes, it's not excaped`);
     return true;
   }
-  // console.log(`062 no, it's excaped!`);
+  // log(`062 no, it's excaped!`);
   return false;
 }
 
 function main({ str, path, valToInsert, mode }) {
   let i;
-  // function log(something) {
-  //   // if (i > 2790 && str[i] && str[i].trim().length) {
-  //   if (str[i] && str[i].trim().length) {
-  //     console.log(something);
-  //   }
-  // }
+  function log(something) {
+    // if (i > 80 && str[i] && str[i].trim().length) {
+    if (str[i] && str[i].trim().length) {
+      console.log(something);
+    }
+  }
   const len = str.length;
   const ranges = [];
-  console.log(`075 main(): MODE=${mode}`);
+  log(`076 main(): MODE=${mode}`);
   // bad characters
   const badChars = ["{", "}", "[", "]", ":", ","];
 
@@ -176,7 +176,7 @@ function main({ str, path, valToInsert, mode }) {
 
     // Logging:
     // ███████████████████████████████████████
-    console.log(
+    log(
       `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
         str[i] && str[i].trim().length
           ? str[i]
@@ -185,10 +185,10 @@ function main({ str, path, valToInsert, mode }) {
     );
 
     // toggle withinQuotesSince
-    if (str[i] === `"` && isNotEscape(str, i - 1)) {
-      console.log(`189 toggle withinQuotesSince clause`);
+    if (str[i] === `"` && isNotEscape(str, i - 1) && keyName) {
+      log(`189 toggle withinQuotesSince clause`);
       withinQuotesSince = isNum(withinQuotesSince) ? undefined : i;
-      console.log(
+      log(
         `192 SET ${`\u001b[${33}m${`withinQuotesSince`}\u001b[${39}m`} = ${withinQuotesSince}; withinQuotes = ${withinQuotes()}`
       );
     }
@@ -197,59 +197,90 @@ function main({ str, path, valToInsert, mode }) {
       if (currentlyWithinArray()) {
         if (itsTheFirstElem) {
           currentPath.push(0);
-          console.log(
-            `194 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
+          log(
+            `201 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
               currentPath,
               null,
               0
             )}`
           );
         } else {
+          log(
+            `209 ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+              currentPath,
+              null,
+              4
+            )}`
+          );
           currentPath[currentPath.length - 1] =
             currentPath[currentPath.length - 1] + 1;
-          console.log(
-            `204 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length -
+          log(
+            `218 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length -
               1}]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`
           );
         }
       }
 
       withinObject.push(i);
-      console.log(
-        `212 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinObject`}\u001b[${39}m`} = ${withinObject}`
+      log(
+        `226 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinObject`}\u001b[${39}m`} = ${JSON.stringify(
+          withinObject,
+          null,
+          4
+        )}`
       );
     }
 
     if (str[i] === "}" && str[i - 1] !== "\\" && !replaceThisValue) {
       withinObject.pop();
-      console.log(
-        `219 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinObject`}\u001b[${39}m`} = ${withinObject}`
+      log(
+        `237 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinObject`}\u001b[${39}m`} = ${JSON.stringify(
+          withinObject,
+          null,
+          4
+        )}`
       );
     }
 
-    if (str[i] === "[" && str[i - 1] !== "\\" && !replaceThisValue) {
+    if (
+      !isNum(withinQuotesSince) &&
+      str[i] === "[" &&
+      str[i - 1] !== "\\" &&
+      !replaceThisValue
+    ) {
       withinArray.push(i);
       itsTheFirstElem = true;
-      console.log(
-        `227 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArray`}\u001b[${39}m`} = ${withinArray}; ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
+      log(
+        `249 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArray`}\u001b[${39}m`} = ${JSON.stringify(
+          withinArray,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
       );
     }
 
     if (str[i] === "]" && str[i - 1] !== "\\" && !replaceThisValue) {
+      console.log(`263 inside sq. bracket clauses`);
       withinArray.pop();
-      console.log(
-        `234 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArray`}\u001b[${39}m`} = ${withinArray}`
+      log(
+        `260 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArray`}\u001b[${39}m`} = ${JSON.stringify(
+          withinArray,
+          null,
+          4
+        )}`
       );
 
       currentPath.pop();
-      console.log(
-        `238 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
-      );
+      log(`269 POP path, now = ${JSON.stringify(currentPath, null, 4)}`);
 
-      console.log(`240 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+      log(`272 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
       reset();
 
-      if (!itsTheFirstElem && currentlyWithinObject()) {
+      // if (!itsTheFirstElem && currentlyWithinObject()) {
+      if (
+        currentlyWithinObject() &&
+        (!itsTheFirstElem || !(str[i] === "]" && str[left(str, i)] === "["))
+      ) {
         // last digit with numeric index might have been popped which leaves the
         // key still in place. Imagine, we're on
         // "c": [],
@@ -259,14 +290,14 @@ function main({ str, path, valToInsert, mode }) {
         // the path was "d.1". When we popped above, we're still on "d", we're
         // not ready to move on to next object's key. We need to pop that "d" too:
         currentPath.pop();
-        console.log(
-          `254 POP path again, now = ${JSON.stringify(currentPath, null, 4)}`
+        log(
+          `286 POP path again, now = ${JSON.stringify(currentPath, null, 4)}`
         );
       }
       if (itsTheFirstElem) {
         itsTheFirstElem = false;
-        console.log(
-          `260 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
+        log(
+          `292 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
         );
       }
     }
@@ -281,8 +312,8 @@ function main({ str, path, valToInsert, mode }) {
       // that empty array will have itsTheFirstElem still on:
       // "e": [{}, ...],
       itsTheFirstElem = false;
-      console.log(
-        `276 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
+      log(
+        `308 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
       );
     }
 
@@ -318,18 +349,18 @@ function main({ str, path, valToInsert, mode }) {
       !badChars.includes(str[i]) &&
       (currentlyWithinArray() || (!currentlyWithinArray() && keyName))
     ) {
-      console.log(`313 catching the start of a value clauses`);
+      log(`344 catching the start of a value clauses`);
       valueStartedAt = i;
-      console.log(
-        `314 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
+      log(
+        `347 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
       );
 
       // calculate the path on arrays
       if (currentlyWithinArray()) {
         if (itsTheFirstElem) {
           currentPath.push(0);
-          console.log(
-            `322 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
+          log(
+            `355 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
               currentPath,
               null,
               0
@@ -337,14 +368,14 @@ function main({ str, path, valToInsert, mode }) {
           );
 
           itsTheFirstElem = false;
-          console.log(
-            `331 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
+          log(
+            `364 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
           );
         } else {
           currentPath[currentPath.length - 1] =
             currentPath[currentPath.length - 1] + 1;
-          console.log(
-            `337 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length -
+          log(
+            `370 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${currentPath.length -
               1}]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`
           );
         }
@@ -363,17 +394,17 @@ function main({ str, path, valToInsert, mode }) {
         ((str[valueStartedAt] !== `"` && !str[i].trim().length) ||
           ["}", ","].includes(str[i])))
     ) {
-      console.log(`358 catching the end of a value clauses`);
+      log(`389 catching the end of a value clauses`);
       keyValue = str.slice(
         valueStartedAt,
         str[valueStartedAt] === `"` ? i + 1 : i
       );
-      console.log(
-        `360 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyValue`}\u001b[${39}m`} = ${keyValue}`
+      log(
+        `395 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyValue`}\u001b[${39}m`} = ${keyValue}`
       );
       valueEndedAt = i;
-      console.log(
-        `364 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueEndedAt`}\u001b[${39}m`} = ${valueEndedAt}`
+      log(
+        `399 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueEndedAt`}\u001b[${39}m`} = ${valueEndedAt}`
       );
 
       // for arrays, this is the beginning of what to replace
@@ -383,8 +414,8 @@ function main({ str, path, valToInsert, mode }) {
           currentPath.join(".").endsWith(`.${stringifyPath(path)}`))
       ) {
         replaceThisValue = true;
-        console.log(
-          `375 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
+        log(
+          `410 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
         );
       }
     }
@@ -401,8 +432,8 @@ function main({ str, path, valToInsert, mode }) {
       str[i + 1]
     ) {
       keyStartedAt = i + 1;
-      console.log(
-        `393 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${keyStartedAt}`
+      log(
+        `428 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${keyStartedAt}`
       );
     }
 
@@ -424,15 +455,13 @@ function main({ str, path, valToInsert, mode }) {
     ) {
       keyEndedAt = i + 1;
       keyName = str.slice(keyStartedAt, i);
-      console.log(
-        `416 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyEndedAt`}\u001b[${39}m`} = ${keyEndedAt};  ${`\u001b[${33}m${`keyName`}\u001b[${39}m`} = ${keyName}`
+      log(
+        `451 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`keyEndedAt`}\u001b[${39}m`} = ${keyEndedAt};  ${`\u001b[${33}m${`keyName`}\u001b[${39}m`} = ${keyName}`
       );
 
       // set the path
       currentPath.push(keyName);
-      console.log(
-        `421 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`
-      );
+      log(`457 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`);
 
       // array cases don't come here so there are no conditionals for currentlyWithinArray()
       if (
@@ -440,31 +469,41 @@ function main({ str, path, valToInsert, mode }) {
         currentPath.join(".").endsWith(`.${stringifyPath(path)}`)
       ) {
         replaceThisValue = true;
-        console.log(
-          `430 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
+        log(
+          `467 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`
         );
       }
     }
 
-    // catch the end of a key-value pair
+    // if (
+    //   !replaceThisValue &&
+    //   ((valueEndedAt && i >= valueEndedAt) ||
+    //   (["}", "]"].includes(str[left(str, i)]) &&
+    //   ["}", "]"].includes(str[i])) ||
+    //   ((str[i] === "]" && str[left(str, i)] === "[") ||
+    //   (str[i] === "}" && str[left(str, i)] === "{"))) &&
+    //   str[i].trim().length
+    // ) {
+    // catch the end of a key-value pair, also end of empty object/array
     if (
       !replaceThisValue &&
       ((valueEndedAt && i >= valueEndedAt) ||
         (["}", "]"].includes(str[left(str, i)]) &&
-          ["}", "]"].includes(str[i]))) &&
+          ["}", "]"].includes(str[i])) ||
+        (str[i] === "}" && str[left(str, i)] === "{")) &&
       str[i].trim().length
     ) {
-      console.log(
-        `444 ${`\u001b[${36}m${`██`}\u001b[${39}m`} catch the end of a key-value pair clauses`
+      log(
+        `491 ${`\u001b[${36}m${`██`}\u001b[${39}m`} catch the end of a key-value pair clauses`
       );
       if (str[i] === ",") {
-        console.log(`447 comma caught`);
+        log(`494 comma caught`);
 
         if (currentlyWithinArray()) {
           // currentPath[currentPath.length - 1] =
           //   currentPath[currentPath.length - 1] + 1;
-          // console.log(
-          //   `453 BUMP index of last path digit, now = ${JSON.stringify(
+          // log(
+          //   `500 BUMP index of last path digit, now = ${JSON.stringify(
           //     currentPath,
           //     null,
           //     4
@@ -472,29 +511,35 @@ function main({ str, path, valToInsert, mode }) {
           // );
         } else {
           currentPath.pop();
-          console.log(
-            `461 POP path, now = ${JSON.stringify(currentPath, null, 4)}`
-          );
+          log(`509 POP path, now = ${JSON.stringify(currentPath, null, 4)}`);
         }
 
-        console.log(`464 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+        log(`513 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
       } else if (str[i] === "}") {
-        console.log(`467 closing curlie caught`);
+        log(`516 closing curlie caught`);
 
         if (valueEndedAt) {
-          console.log(`470 POP()`);
+          log(`519 POP()`);
           currentPath.pop();
         }
-        console.log(`473 POP()`);
-        currentPath.pop();
+
+        log(
+          `524 currently, currentlyWithinObject(): ${currentlyWithinObject()}`
+        );
+        log(`527 currently, currentlyWithinArray(): ${currentlyWithinArray()}`);
+
+        if (!currentlyWithinArray()) {
+          log(`531 POP()`);
+          currentPath.pop();
+        }
 
         // also reset but don't touch the path - rabbit hole goes deeper
-        console.log(`477 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+        log(`536 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
 
-        console.log(
-          `481 POP path twice, now = ${JSON.stringify(currentPath, null, 4)}`
+        log(
+          `540 POP path twice, now = ${JSON.stringify(currentPath, null, 4)}`
         );
       }
     }
@@ -508,7 +553,7 @@ function main({ str, path, valToInsert, mode }) {
       !keyValue
     ) {
       // also reset but don't touch the path - rabbit hole goes deeper
-      console.log(`495 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+      log(`554 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
       reset();
     }
 
@@ -521,8 +566,8 @@ function main({ str, path, valToInsert, mode }) {
       ![":"].includes(str[i])
     ) {
       valueStartedAt = i;
-      console.log(
-        `509 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
+      log(
+        `568 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`
       );
     }
 
@@ -538,8 +583,8 @@ function main({ str, path, valToInsert, mode }) {
       isNotEscape(str, i - 1)
     ) {
       skipUntilTheFollowingIsMet = undefined;
-      console.log(
-        `526 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} skipUntilTheFollowingIsMet = ${skipUntilTheFollowingIsMet}`
+      log(
+        `585 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} skipUntilTheFollowingIsMet = ${skipUntilTheFollowingIsMet}`
       );
     } else if (
       replaceThisValue &&
@@ -549,18 +594,18 @@ function main({ str, path, valToInsert, mode }) {
     ) {
       if (str[i] === "{" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet = "}";
-        console.log(
-          `537 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
+        log(
+          `596 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
         );
       } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet = "]";
-        console.log(
-          `542 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
+        log(
+          `601 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
         );
       } else if (str[i] === `"` && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet = `"`;
-        console.log(
-          `547 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
+        log(
+          `606 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${skipUntilTheFollowingIsMet}`
         );
       }
     }
@@ -572,7 +617,7 @@ function main({ str, path, valToInsert, mode }) {
       valueStartedAt &&
       i > valueStartedAt
     ) {
-      console.log(`559 within catching the end clauses`);
+      log(`618 within catching the end clauses`);
 
       if (
         (str[valueStartedAt] === "[" && str[i] === "]") ||
@@ -582,8 +627,8 @@ function main({ str, path, valToInsert, mode }) {
           (!str[i].trim().length ||
             (badChars.includes(str[i]) && isNotEscape(str, i - 1)))) // cover numeric, bool, null etc, without quotes
       ) {
-        console.log(
-          `570 currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+        log(
+          `629 currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(
             str[valueStartedAt],
             null,
             4
@@ -591,16 +636,16 @@ function main({ str, path, valToInsert, mode }) {
         );
         if (mode === "set") {
           // 1. if set()
-          console.log(`578 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+          log(`637 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
           return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(
             calculatedValueToInsert
           )}${str.slice(i + (str[i].trim().length ? 1 : 0))}`;
         } else if (mode === "del") {
           // 1. if del()
-          console.log(`584 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+          log(`643 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
 
-          console.log(
-            `609 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+          log(
+            `646 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
               keyStartedAt,
               null,
               4
@@ -613,8 +658,8 @@ function main({ str, path, valToInsert, mode }) {
               str,
               (currentlyWithinArray() ? valueStartedAt : keyStartedAt) - 1
             ) + 1;
-          console.log(
-            `601 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} initial ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
+          log(
+            `660 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} initial ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
           );
           let endingPoint = i + (str[i].trim().length ? 1 : 0);
           if (
@@ -622,18 +667,18 @@ function main({ str, path, valToInsert, mode }) {
             ["}", "]"].includes(str[right(str, endingPoint - 1)])
           ) {
             startingPoint--;
-            console.log(
-              `610 SET ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
+            log(
+              `669 SET ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
             );
           }
           if (str[endingPoint] === ",") {
             endingPoint++;
-            console.log(
-              `616 SET ${`\u001b[${33}m${`endingPoint`}\u001b[${39}m`} = ${endingPoint}`
+            log(
+              `675 SET ${`\u001b[${33}m${`endingPoint`}\u001b[${39}m`} = ${endingPoint}`
             );
           }
-          console.log(
-            `620 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
+          log(
+            `679 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startingPoint,
               null,
               4
@@ -645,14 +690,14 @@ function main({ str, path, valToInsert, mode }) {
           );
 
           ranges.push([startingPoint, endingPoint]);
-          console.log(
-            `633 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          log(
+            `692 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
               ranges,
               null,
               4
             )}`
           );
-          console.log(`639 then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          log(`698 then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
       }
@@ -678,7 +723,7 @@ function main({ str, path, valToInsert, mode }) {
     //
     //
 
-    console.log(
+    log(
       `${`\u001b[${withinQuotesSince ? 32 : 31}m${`withinQuotesSince${
         isNum(withinQuotesSince) ? `=${withinQuotesSince}` : ""
       }`}\u001b[${39}m`}; ${`\u001b[${
@@ -696,11 +741,11 @@ function main({ str, path, valToInsert, mode }) {
       }`}\u001b[${39}m`}`
     );
 
-    console.log(`current path: ${currentPath.join(".")}`);
-    console.log(
+    log(`current path: ${currentPath.join(".")}`);
+    log(
       `${`\u001b[${33}m${`keyName`}\u001b[${39}m`} = ${keyName}; ${`\u001b[${33}m${`keyValue`}\u001b[${39}m`} = ${keyValue}; ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${keyStartedAt}; ${`\u001b[${33}m${`keyEndedAt`}\u001b[${39}m`} = ${keyEndedAt}; ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}; ${`\u001b[${33}m${`valueEndedAt`}\u001b[${39}m`} = ${valueEndedAt}`
     );
-    console.log(
+    log(
       `${`\u001b[${33}m${`withinArray`}\u001b[${39}m`} = ${JSON.stringify(
         withinArray,
         null,
@@ -712,17 +757,14 @@ function main({ str, path, valToInsert, mode }) {
       )};`
     );
   }
-  console.log(
-    `\n\u001b[${36}m${`=============================== FIN.`}\u001b[${39}m`
-  );
+  log(`\n\u001b[${36}m${`=============================== FIN.`}\u001b[${39}m`);
 
-  console.log(
-    `724 RETURN applied ${JSON.stringify(apply(str, ranges), null, 4)}`
-  );
+  log(`763 RETURN applied ${JSON.stringify(apply(str, ranges), null, 4)}`);
   return apply(str, ranges);
 }
 
 function set(str, path, valToInsert) {
+  console.log(`767 set()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
@@ -736,6 +778,7 @@ function set(str, path, valToInsert) {
 }
 
 function del(str, path) {
+  console.log(`781 del()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(

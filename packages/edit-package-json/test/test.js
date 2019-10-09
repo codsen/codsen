@@ -503,6 +503,62 @@ test(`04.14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
   setter(t, testObj, result, ["b", "e", 1, "f"], null, "04.14");
 });
 
+test(`04.15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`, t => {
+  const source = `{
+  "a": [{}, { "b": "c" }]
+}`;
+  const result = `{
+  "a": [{}, { "b": null }]
+}`;
+  setter(t, source, result, "a.1.b", null, "04.15");
+});
+
+test(`04.16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`, t => {
+  const source = `{
+  "a": [{ "b": "c" }]
+}`;
+  const result = `{
+  "a": [{ "b": null }]
+}`;
+  setter(t, source, result, "a.0.b", null, "04.16");
+});
+
+test(`04.17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`, t => {
+  const source = `{
+  "a": "[",
+  "k": {
+    "lm": "1",
+    "no": "2"
+  }
+}`;
+  const result = `{
+  "a": "[",
+  "k": {
+    "lm": "1",
+    "no": "9"
+  }
+}`;
+  setter(t, source, result, "k.no", "9", "04.17");
+});
+
+test(`04.18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, t => {
+  const source = `{
+  "a": "{",
+  "k": {
+    "lm": "1",
+    "no": "2"
+  }
+}`;
+  const result = `{
+  "a": "{",
+  "k": {
+    "lm": "1",
+    "no": "9"
+  }
+}`;
+  setter(t, source, result, "k.no", "9", "04.18");
+});
+
 // -----------------------------------------------------------------------------
 // 05. del - delete existing key
 // -----------------------------------------------------------------------------

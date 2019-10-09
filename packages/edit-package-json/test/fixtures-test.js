@@ -5,7 +5,7 @@ import { set, del } from "../dist/edit-package-json.esm";
 import objectPath from "object-path";
 
 function compare(t, testName, pathToProcess, val) {
-  const isSet = arguments.length === 5;
+  const isSet = arguments.length === 4;
   // console.log(`009 ${isSet ? "SET" : "DEL"} mode`);
 
   const source = read(
@@ -79,3 +79,9 @@ test("deletes a key from key which has a value with escaped quotes - minified", 
 
 test("deletes a key from key which has a value with escaped quotes - normal", t =>
   compare(t, "escaped-quotes", "a"));
+
+test("updates a key 1", t => compare(t, "bug1", "dependencies.yz", "^1.2.17"));
+
+test("updates a key 2", t => compare(t, "bug2", "gh.yz", "3"));
+
+test("updates a key 3", t => compare(t, "bug3", "gh.yz", "3"));
