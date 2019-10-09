@@ -186,7 +186,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 9494,
+        "size": 14123,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -224,7 +224,7 @@
     },
     {
         "name": "emlint",
-        "size": 116484,
+        "size": 117546,
         "imports": [
             "arrayiffy-if-string",
             "html-entities-not-email-friendly",
@@ -632,7 +632,7 @@
     },
     {
         "name": "update-versions",
-        "size": 11793,
+        "size": 11789,
         "imports": [
             "edit-package-json"
         ]

@@ -1,59 +1,8 @@
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { right, left } from 'string-left-right';
+import knownESPTags from './knownESPTags.json';
 import arrayiffy from 'arrayiffy-if-string';
 import he from 'he';
-
-var $ = {
-	sibling: "$",
-	type: "closing"
-};
-var knownESPTags = {
-	$: $,
-	"{%": {
-	sibling: [
-		"%}",
-		"-%}"
-	],
-	type: "opening"
-},
-	"%}": {
-	sibling: [
-		"{%",
-		"{%-"
-	],
-	type: "closing"
-},
-	"*|": {
-	sibling: "|*",
-	type: "opening"
-},
-	"|*": {
-	sibling: "*|",
-	type: "closing"
-},
-	"{%-": {
-	sibling: [
-		"-%}",
-		"%}"
-	],
-	type: "opening"
-},
-	"-%}": {
-	sibling: [
-		"{%-",
-		"{%"
-	],
-	type: "closing"
-},
-	"{{": {
-	sibling: "}}",
-	type: "opening"
-},
-	"}}": {
-	sibling: "{{",
-	type: "closing"
-}
-};
 
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
