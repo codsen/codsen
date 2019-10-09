@@ -55,9 +55,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                 | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 110 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 114 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 303 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 111 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 115 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 304 KB |
 
 **[⬆ back to top](#)**
 
@@ -74,11 +74,27 @@ Such code error-checking process is tedious and inefficient.
 
 Code errors should be detected right in the code editor, while developer is typing.
 
-The primary challenge is, email templates are prepared for deployment by inserting templating language code. It can be Mailchimp, Oracle Responsys, Campaign Monitor proprietary templating literals, it can be pure templating languages like Nunjucks, Liquid or others, it can be programming languages like Java or Python or Go. There are many ways to achive templating and manage the code module assembly.
+The primary challenge is, email templates use templating language code for dynamic variables such as `${customer.firstName}`. It can be Mailchimp, Oracle Responsys, Campaign Monitor proprietary templating literals, it can be pure templating languages like Nunjucks, Liquid or others, it can be programming languages like Java or Python or Go. There are many ways to achive templating and manage the code module assembly. One thing is sure — HTML and CSS is always not pure.
 
 This means, proper linter **can't be parsing**.
 
-Furthermore, bugs often cause parsing errors. It is stupid for a tool to demand that code should be parseable in order to find errors in it. It's like requiring patients to pass military health test in order to be admitted to a hospital. All admitted patients will be healthy (negating the purpose of hospital) or no sick patients will be treated. Same with the HTML/CSS code (both web and email actually) — for example, current HTML linters in the market will not tell you if you accidentally put a space after opening bracket (like [Kangax minifier](http://kangax.github.io/html-lint/)).
+The brackets can be templating literal logic greater/lesser than signs:
+
+```
+<span {% if product.count > 1 %} ...>
+```
+
+or worse, here a templating language tries to URL-encode, concatenating string from quoted apostrophes (no HTML parser can cope with that):
+
+```
+<a href="https://qrs?tuv={{ mn.op | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}"
+```
+
+Furthermore, code bugs often cause parsing errors. It is stupid for a tool to demand that code should be parseable in order to find errors in it. It's like requiring patients to pass military health test in order to be admitted to a hospital.
+
+All admitted patients will be healthy (negating the purpose of hospital) and no sick patients will end up treated.
+
+Same with the HTML/CSS code (both web and email actually) — for example, current HTML linters in the market will not tell you if you accidentally put a space after opening bracket (like [Kangax minifier](http://kangax.github.io/html-lint/)).
 
 Current HTML/CSS linters are also not email-template friendly, have convoluted API's and often are not coded up on modern tooling (Rollup, Babel, ES6+ source, ESLint, Prettier etc).
 
@@ -96,6 +112,7 @@ This is a linter API, still in _a baby state_ but eventually it will able to det
 - If would be nice to detect chunks of _shifted code_ (nobody has done it before)
 - Email-specific feature, detect issues with Micro\$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) - both bugs and settings considering surrounding code
 - Check the shadow code which is commented-out
+- Modern JS tooling, API and setup
 
 **Other features:**
 
@@ -185,7 +202,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/emlint
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-[cov-img]: https://img.shields.io/badge/coverage-88.08%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-87.36%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint

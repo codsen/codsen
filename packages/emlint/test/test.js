@@ -2432,6 +2432,10 @@ test(`29.08 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys clickthro
     t
   ));
 
+// TODO
+// test(`29.09 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - quotes within Nunjucks/Jinja brackets`, t =>
+//   c(`<a href="{{ " }}">`, t));
+
 // 30. rule: "esp-more-closing-parentheses-than-opening"
 // -----------------------------------------------------------------------------
 

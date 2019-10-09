@@ -3,6 +3,13 @@
     "sibling": "$",
     "type": "closing"
   },
+  "{%": {
+    "sibling": [
+      "%}",
+      "-%}"
+    ],
+    "type": "opening"
+  },
   "%}": {
     "sibling": [
       "{%",
@@ -14,19 +21,9 @@
     "sibling": "|*",
     "type": "opening"
   },
-  "-%}": {
-    "sibling": [
-      "{%-",
-      "{%"
-    ],
+  "|*": {
+    "sibling": "*|",
     "type": "closing"
-  },
-  "{%": {
-    "sibling": [
-      "%}",
-      "-%}"
-    ],
-    "type": "opening"
   },
   "{%-": {
     "sibling": [
@@ -35,8 +32,19 @@
     ],
     "type": "opening"
   },
-  "|*": {
-    "sibling": "*|",
+  "-%}": {
+    "sibling": [
+      "{%-",
+      "{%"
+    ],
+    "type": "closing"
+  },
+  "{{": {
+    "sibling": "}}",
+    "type": "opening"
+  },
+  "}}": {
+    "sibling": "{{",
     "type": "closing"
   }
 }

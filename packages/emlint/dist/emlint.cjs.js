@@ -658,6 +658,13 @@ var $ = {
 };
 var knownESPTags = {
 	$: $,
+	"{%": {
+	sibling: [
+		"%}",
+		"-%}"
+	],
+	type: "opening"
+},
 	"%}": {
 	sibling: [
 		"{%",
@@ -669,19 +676,9 @@ var knownESPTags = {
 	sibling: "|*",
 	type: "opening"
 },
-	"-%}": {
-	sibling: [
-		"{%-",
-		"{%"
-	],
+	"|*": {
+	sibling: "*|",
 	type: "closing"
-},
-	"{%": {
-	sibling: [
-		"%}",
-		"-%}"
-	],
-	type: "opening"
 },
 	"{%-": {
 	sibling: [
@@ -690,8 +687,19 @@ var knownESPTags = {
 	],
 	type: "opening"
 },
-	"|*": {
-	sibling: "*|",
+	"-%}": {
+	sibling: [
+		"{%-",
+		"{%"
+	],
+	type: "closing"
+},
+	"{{": {
+	sibling: "}}",
+	type: "opening"
+},
+	"}}": {
+	sibling: "{{",
 	type: "closing"
 }
 };
@@ -927,6 +935,8 @@ var version = "1.7.7";
 var isArr = Array.isArray;
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
 var c1CharacterNames = ["delete", "padding", "high-octet-preset", "break-permitted-here", "no-break-here", "index", "next-line", "start-of-selected-area", "end-of-selected-area", "character-tabulation-set", "character-tabulation-with-justification", "line-tabulation-set", "partial-line-forward", "partial-line-backward", "reverse-line-feed", "single-shift-two", "single-shift-three", "device-control-string", "private-use-1", "private-use-2", "set-transmit-state", "cancel-character", "message-waiting", "start-of-protected-area", "end-of-protected-area", "start-of-string", "single-graphic-character-introducer", "single-character-intro-introducer", "control-sequence-introducer", "string-terminator", "operating-system-command", "private-message", "application-program-command"];
+var espChars = "{}%-$_()*|";
+var espCharsFunc = "$";
 function charSuitableForAttrName(_char) {
   var res = !"\"'><=".includes(_char);
   return res;
@@ -1361,41 +1371,72 @@ function findClosingQuote(str) {
   var lastQuoteAt = null;
   var startingQuote = "\"'".includes(str[idx]) ? str[idx] : null;
   var lastClosingBracketAt = null;
-  for (var i = idx, len = str.length; i < len; i++) {
+  var doNothingUntil;
+  var _loop2 = function _loop2(i, len) {
     var charcode = str[i].charCodeAt(0);
-    if (charcode === 34 || charcode === 39) {
+    var caughtTag = void 0;
+    if (!doNothingUntil) {
+      if (Object.keys(knownESPTags).filter(function (tag) {
+        return knownESPTags[tag].type === "opening";
+      }).some(function (tag) {
+        if (str.startsWith(tag, i)) {
+          caughtTag = tag;
+          return true;
+        }
+      })) {
+        doNothingUntil = knownESPTags[caughtTag].sibling;
+      }
+    }
+    if (doNothingUntil && arrayiffy(doNothingUntil).some(function (val) {
+      return str.startsWith(val, i);
+    })) {
+      doNothingUntil = undefined;
+    }
+    if (!doNothingUntil && (charcode === 34 || charcode === 39)) {
       if (str[i] === startingQuote && i > idx) {
-        return i;
+        return {
+          v: i
+        };
       }
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       if (i > idx && (str[i] === "'" || str[i] === '"') && withinTagInnerspace(str, i + 1)) {
-        return i;
+        return {
+          v: i
+        };
       }
       if (tagOnTheRight(str, i + 1)) {
-        return i;
+        return {
+          v: i
+        };
       }
     }
-    else if (str[i].trim().length) {
+    else if (!doNothingUntil && str[i].trim().length) {
         if (str[i] === ">") {
           lastClosingBracketAt = i;
           if (lastNonWhitespaceCharWasQuoteAt !== null) {
             var temp = withinTagInnerspace(str, i);
             if (temp) {
               if (lastNonWhitespaceCharWasQuoteAt === idx) {
-                return lastNonWhitespaceCharWasQuoteAt + 1;
+                return {
+                  v: lastNonWhitespaceCharWasQuoteAt + 1
+                };
               }
-              return lastNonWhitespaceCharWasQuoteAt;
+              return {
+                v: lastNonWhitespaceCharWasQuoteAt
+              };
             }
           }
         } else if (str[i] === "=") {
           var whatFollowsEq = stringLeftRight.right(str, i);
           if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
             if (lastQuoteAt && lastQuoteAt !== idx && withinTagInnerspace(str, lastQuoteAt + 1)) {
-              return lastQuoteAt + 1;
+              return {
+                v: lastQuoteAt + 1
+              };
             } else if (!lastQuoteAt || lastQuoteAt === idx) {
               var startingPoint = str[i - 1].trim().length ? i - 1 : stringLeftRight.left(str, i);
-              var res = void 0;
+              var res;
               for (var y = startingPoint; y--;) {
                 if (!str[y].trim().length) {
                   res = stringLeftRight.left(str, y) + 1;
@@ -1405,10 +1446,12 @@ function findClosingQuote(str) {
                   break;
                 }
               }
-              return res;
+              return {
+                v: res
+              };
             }
           } else if (str[i + 1].trim().length) {
-            var _temp = void 0;
+            var _temp;
             for (var _y = i; _y--;) {
               if (!str[_y].trim().length) {
                 _temp = stringLeftRight.left(str, _y);
@@ -1416,14 +1459,20 @@ function findClosingQuote(str) {
               }
             }
             if (charIsQuote(_temp)) {
-              return _temp;
+              return {
+                v: _temp
+              };
             }
-            return _temp + 1;
+            return {
+              v: _temp + 1
+            };
           }
         } else if (str[i] !== "/") {
           if (str[i] === "<" && tagOnTheRight(str, i)) {
             if (lastClosingBracketAt !== null) {
-              return lastClosingBracketAt;
+              return {
+                v: lastClosingBracketAt
+              };
             }
           }
           if (lastNonWhitespaceCharWasQuoteAt !== null) {
@@ -1431,6 +1480,10 @@ function findClosingQuote(str) {
           }
         }
       }
+  };
+  for (var i = idx, len = str.length; i < len; i++) {
+    var _ret2 = _loop2(i);
+    if (_typeof(_ret2) === "object") return _ret2.v;
   }
   return null;
 }
@@ -1518,9 +1571,11 @@ var characterSuitableForNames$1 = characterSuitableForNames,
     findClosingQuote$1 = findClosingQuote,
     tagOnTheRight$1 = tagOnTheRight,
     isLatinLetter$1 = isLatinLetter,
+    espCharsFunc$1 = espCharsFunc,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
     pingEspTag$1 = pingEspTag,
+    espChars$1 = espChars,
     encode$1 = encode,
     isStr$1 = isStr,
     flip$1 = flip;
@@ -1636,8 +1691,6 @@ function lint(str, originalOpts) {
     logEspTag = clone(defaultEspTag);
   }
   resetEspTag();
-  var espChars = "{}%-$_()*|";
-  var espCharsFunc = "$";
   var logWhitespace;
   var defaultLogWhitespace = {
     startAt: null,
@@ -1810,7 +1863,7 @@ function lint(str, originalOpts) {
         }
       }
     }
-    if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars.includes(str[_i + 1])) {
+    if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars$1.includes(str[_i + 1])) {
       doNothingUntil = _i + 1;
     }
     if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.headVal && logEspTag.tailStartAt === null) {
@@ -1831,12 +1884,12 @@ function lint(str, originalOpts) {
         pingEspTag$1(str, logEspTag, submit);
         resetEspTag();
       } else if (flip$1(logEspTag.headVal).includes(str[_i])) {
-        if (espChars.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
+        if (espChars$1.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
           logEspTag.tailStartAt = _i;
         }
       }
     }
-    if (logEspTag.headStartAt !== null && logEspTag.headEndAt === null && _i > logEspTag.headStartAt && str[_i + 1] && (!str[_i + 1].trim().length || !espChars.includes(str[_i + 1]))) {
+    if (logEspTag.headStartAt !== null && logEspTag.headEndAt === null && _i > logEspTag.headStartAt && str[_i + 1] && (!str[_i + 1].trim().length || !espChars$1.includes(str[_i + 1]))) {
       if (!logEspTag.recognised || knownESPTags[logEspTag.headVal].type === "opening") {
         if (str.slice(logEspTag.headStartAt, _i + 1) !== "--") {
           logEspTag.headEndAt = _i + 1;
@@ -1845,12 +1898,17 @@ function lint(str, originalOpts) {
         }
       }
     }
-    if (!logTag.comment && logEspTag.startAt === null && logEspTag.headStartAt === null && espChars.includes(str[_i]) && str[_i + 1] && !stringLeftRight.leftSeq(str, _i, "<", "!") && (!doNothingUntil || doNothingUntil === true)) {
-      if (espChars.includes(str[_i + 1])) {
+    if (!logTag.comment && logEspTag.startAt === null && logEspTag.headStartAt === null && espChars$1.includes(str[_i]) && str[_i + 1] && !stringLeftRight.leftSeq(str, _i, "<", "!") && (!doNothingUntil || doNothingUntil === true)) {
+      if (espChars$1.includes(str[_i + 1])) {
         logEspTag.headStartAt = _i;
         logEspTag.startAt = _i;
         logEspTag.type = "tag-based";
-      } else if (espCharsFunc.includes(str[_i]) && isLowerCaseLetter$1(str[_i + 1])) {
+        logEspTag.recognised = Object.keys(knownESPTags).filter(function (tag) {
+          return tag.length > 1 && knownESPTags[tag].type === "opening";
+        }).some(function (tag) {
+          return str.startsWith(tag);
+        });
+      } else if (espCharsFunc$1.includes(str[_i]) && isLowerCaseLetter$1(str[_i + 1])) {
         logEspTag.headStartAt = _i;
         logEspTag.startAt = _i;
         logEspTag.headEndAt = _i + 1;

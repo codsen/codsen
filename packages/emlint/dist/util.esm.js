@@ -2,6 +2,68 @@ import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { right, left } from 'string-left-right';
 import he from 'he';
 
+var $ = {
+	sibling: "$",
+	type: "closing"
+};
+var knownESPTags = {
+	$: $,
+	"{%": {
+	sibling: [
+		"%}",
+		"-%}"
+	],
+	type: "opening"
+},
+	"%}": {
+	sibling: [
+		"{%",
+		"{%-"
+	],
+	type: "closing"
+},
+	"*|": {
+	sibling: "|*",
+	type: "opening"
+},
+	"|*": {
+	sibling: "*|",
+	type: "closing"
+},
+	"{%-": {
+	sibling: [
+		"-%}",
+		"%}"
+	],
+	type: "opening"
+},
+	"-%}": {
+	sibling: [
+		"{%-",
+		"{%"
+	],
+	type: "closing"
+},
+	"{{": {
+	sibling: "}}",
+	type: "opening"
+},
+	"}}": {
+	sibling: "{{",
+	type: "closing"
+}
+};
+
+function arrayiffyString(something) {
+  if (typeof something === "string") {
+    if (something.length > 0) {
+      return [something];
+    }
+    return [];
+  }
+  return something;
+}
+
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
   "null",
@@ -74,6 +136,8 @@ const c1CharacterNames = [
   "private-message",
   "application-program-command"
 ];
+const espChars = `{}%-$_()*|`;
+const espCharsFunc = `$`;
 function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
   return res;
@@ -675,9 +739,31 @@ function findClosingQuote(str, idx = 0) {
   let lastQuoteAt = null;
   const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
   let lastClosingBracketAt = null;
+  let doNothingUntil;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
-    if (charcode === 34 || charcode === 39) {
+    let caughtTag;
+    if (!doNothingUntil) {
+      if (
+        Object.keys(knownESPTags)
+          .filter(tag => knownESPTags[tag].type === "opening")
+          .some(tag => {
+            if (str.startsWith(tag, i)) {
+              caughtTag = tag;
+              return true;
+            }
+          })
+      ) {
+        doNothingUntil = knownESPTags[caughtTag].sibling;
+      }
+    }
+    if (
+      doNothingUntil &&
+      arrayiffyString(doNothingUntil).some(val => str.startsWith(val, i))
+    ) {
+      doNothingUntil = undefined;
+    }
+    if (!doNothingUntil && (charcode === 34 || charcode === 39)) {
       if (str[i] === startingQuote && i > idx) {
         return i;
       }
@@ -694,7 +780,7 @@ function findClosingQuote(str, idx = 0) {
         return i;
       }
     }
-    else if (str[i].trim().length) {
+    else if (!doNothingUntil && str[i].trim().length) {
       if (str[i] === ">") {
         lastClosingBracketAt = i;
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
@@ -863,4 +949,4 @@ function encode(str, mode = "html") {
   }
 }
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, characterSuitableForNames, encode, encodeChar, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, characterSuitableForNames, encode, encodeChar, espChars, espCharsFunc, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };

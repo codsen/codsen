@@ -618,6 +618,13 @@ var $ = {
 };
 var knownESPTags = {
 	$: $,
+	"{%": {
+	sibling: [
+		"%}",
+		"-%}"
+	],
+	type: "opening"
+},
 	"%}": {
 	sibling: [
 		"{%",
@@ -629,19 +636,9 @@ var knownESPTags = {
 	sibling: "|*",
 	type: "opening"
 },
-	"-%}": {
-	sibling: [
-		"{%-",
-		"{%"
-	],
+	"|*": {
+	sibling: "*|",
 	type: "closing"
-},
-	"{%": {
-	sibling: [
-		"%}",
-		"-%}"
-	],
-	type: "opening"
 },
 	"{%-": {
 	sibling: [
@@ -650,8 +647,19 @@ var knownESPTags = {
 	],
 	type: "opening"
 },
-	"|*": {
-	sibling: "*|",
+	"-%}": {
+	sibling: [
+		"{%-",
+		"{%"
+	],
+	type: "closing"
+},
+	"{{": {
+	sibling: "}}",
+	type: "opening"
+},
+	"}}": {
+	sibling: "{{",
 	type: "closing"
 }
 };
@@ -956,6 +964,8 @@ const c1CharacterNames = [
   "private-message",
   "application-program-command"
 ];
+const espChars = `{}%-$_()*|`;
+const espCharsFunc = `$`;
 function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
   return res;
@@ -1557,9 +1567,31 @@ function findClosingQuote(str, idx = 0) {
   let lastQuoteAt = null;
   const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
   let lastClosingBracketAt = null;
+  let doNothingUntil;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
-    if (charcode === 34 || charcode === 39) {
+    let caughtTag;
+    if (!doNothingUntil) {
+      if (
+        Object.keys(knownESPTags)
+          .filter(tag => knownESPTags[tag].type === "opening")
+          .some(tag => {
+            if (str.startsWith(tag, i)) {
+              caughtTag = tag;
+              return true;
+            }
+          })
+      ) {
+        doNothingUntil = knownESPTags[caughtTag].sibling;
+      }
+    }
+    if (
+      doNothingUntil &&
+      arrayiffy(doNothingUntil).some(val => str.startsWith(val, i))
+    ) {
+      doNothingUntil = undefined;
+    }
+    if (!doNothingUntil && (charcode === 34 || charcode === 39)) {
       if (str[i] === startingQuote && i > idx) {
         return i;
       }
@@ -1576,7 +1608,7 @@ function findClosingQuote(str, idx = 0) {
         return i;
       }
     }
-    else if (str[i].trim().length) {
+    else if (!doNothingUntil && str[i].trim().length) {
       if (str[i] === ">") {
         lastClosingBracketAt = i;
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
@@ -1761,6 +1793,7 @@ var util = /*#__PURE__*/Object.freeze({
   c1CharacterNames: c1CharacterNames,
   tagOnTheRight: tagOnTheRight,
   isLatinLetter: isLatinLetter,
+  espCharsFunc: espCharsFunc,
   isLowercase: isLowercase,
   charIsQuote: charIsQuote,
   pingEspTag: pingEspTag,
@@ -1769,6 +1802,7 @@ var util = /*#__PURE__*/Object.freeze({
   firstChar: firstChar,
   isTagChar: isTagChar,
   lastChar: lastChar,
+  espChars: espChars,
   encode: encode,
   isStr: isStr,
   isNum: isNum,
@@ -1785,9 +1819,11 @@ const {
   findClosingQuote: findClosingQuote$1,
   tagOnTheRight: tagOnTheRight$1,
   isLatinLetter: isLatinLetter$1,
+  espCharsFunc: espCharsFunc$1,
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
   pingEspTag: pingEspTag$1,
+  espChars: espChars$1,
   encode: encode$1,
   isStr: isStr$1,
   flip: flip$1,
@@ -1920,8 +1956,6 @@ function lint(str, originalOpts) {
     logEspTag = clone(defaultEspTag);
   }
   resetEspTag();
-  const espChars = `{}%-$_()*|`;
-  const espCharsFunc = `$`;
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -2209,7 +2243,7 @@ function lint(str, originalOpts) {
       doNothingUntilReason === "esp" &&
       logEspTag.tailStartAt &&
       logEspTag.tailEndAt === null &&
-      !espChars.includes(str[i + 1])
+      !espChars$1.includes(str[i + 1])
     ) {
       doNothingUntil = i + 1;
     }
@@ -2242,7 +2276,7 @@ function lint(str, originalOpts) {
         resetEspTag();
       } else if (flip$1(logEspTag.headVal).includes(str[i])) {
         if (
-          espChars.includes(str[right(str, i)]) ||
+          espChars$1.includes(str[right(str, i)]) ||
           logEspTag.headVal.includes(str[i]) ||
           flip$1(logEspTag.headVal).includes(str[i])
         ) {
@@ -2255,7 +2289,7 @@ function lint(str, originalOpts) {
       logEspTag.headEndAt === null &&
       i > logEspTag.headStartAt &&
       (str[i + 1] &&
-        (!str[i + 1].trim().length || !espChars.includes(str[i + 1])))
+        (!str[i + 1].trim().length || !espChars$1.includes(str[i + 1])))
     ) {
       if (
         !logEspTag.recognised ||
@@ -2275,17 +2309,20 @@ function lint(str, originalOpts) {
       !logTag.comment &&
       logEspTag.startAt === null &&
       logEspTag.headStartAt === null &&
-      espChars.includes(str[i]) &&
+      espChars$1.includes(str[i]) &&
       str[i + 1] &&
       !leftSeq(str, i, "<", "!") &&
       (!doNothingUntil || doNothingUntil === true)
     ) {
-      if (espChars.includes(str[i + 1])) {
+      if (espChars$1.includes(str[i + 1])) {
         logEspTag.headStartAt = i;
         logEspTag.startAt = i;
         logEspTag.type = "tag-based";
+        logEspTag.recognised = Object.keys(knownESPTags)
+          .filter(tag => tag.length > 1 && knownESPTags[tag].type === "opening")
+          .some(tag => str.startsWith(tag));
       } else if (
-        espCharsFunc.includes(str[i]) &&
+        espCharsFunc$1.includes(str[i]) &&
         isLowerCaseLetter$1(str[i + 1])
       ) {
         logEspTag.headStartAt = i;
