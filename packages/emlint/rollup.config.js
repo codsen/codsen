@@ -92,7 +92,6 @@ export default commandLineArgs => {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
       external: [
-        "./knownESPTags.json",
         "arrayiffy-if-string",
         "he",
         "html-entities-not-email-friendly",

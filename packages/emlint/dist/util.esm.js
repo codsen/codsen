@@ -1,5 +1,6 @@
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { right, left } from 'string-left-right';
+import arrayiffy from 'arrayiffy-if-string';
 import he from 'he';
 
 var $ = {
@@ -53,16 +54,6 @@ var knownESPTags = {
 	type: "closing"
 }
 };
-
-function arrayiffyString(something) {
-  if (typeof something === "string") {
-    if (something.length > 0) {
-      return [something];
-    }
-    return [];
-  }
-  return something;
-}
 
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
@@ -759,7 +750,7 @@ function findClosingQuote(str, idx = 0) {
     }
     if (
       doNothingUntil &&
-      arrayiffyString(doNothingUntil).some(val => str.startsWith(val, i))
+      arrayiffy(doNothingUntil).some(val => str.startsWith(val, i))
     ) {
       doNothingUntil = undefined;
     }
