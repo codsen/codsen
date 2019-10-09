@@ -135,15 +135,15 @@
     "sourceMap": false
   },
   "dependencies": {
-    "execa": "^2.0.5",
+    "execa": "^2.1.0",
     "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "package-json-editor": "^1.0.1",
     "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/core": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",

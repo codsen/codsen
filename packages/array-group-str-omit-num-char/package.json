@@ -143,8 +143,8 @@
     "ranges-apply": "^3.0.36"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/core": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",

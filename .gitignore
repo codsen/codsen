@@ -20,3 +20,4 @@ lerna-debug.log
 *.lerna_backup
 /packages/ava/.nyc_output
 /packages/ava/coverage
+ideas.md

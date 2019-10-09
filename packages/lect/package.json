@@ -141,8 +141,8 @@
     "ast-monkey-traverse": "^1.11.41",
     "bitbucket-slug": "^1.9.45",
     "chalk": "^2.4.2",
-    "execa": "^2.0.5",
-    "filesize": "^5.0.2",
+    "execa": "^2.1.0",
+    "filesize": "^5.0.3",
     "find-file-recursively-up": "^1.1.2",
     "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
@@ -174,8 +174,8 @@
     "write-json-file": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
+    "@babel/core": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
