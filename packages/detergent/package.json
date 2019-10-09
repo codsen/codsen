@@ -178,7 +178,7 @@
     "esm": "^3.2.25",
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.6.0",
-    "lect": "^0.10.0",
+    "lect": "^0.10.1",
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.45",
     "object-path": "^0.11.4",
