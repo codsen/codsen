@@ -7,7 +7,7 @@ const { promisify } = require("util");
 
 // *
 const read = promisify(require("fs").readFile);
-const write = promisify(require("write-file-atomic"));
+const write = require("write-file-atomic");
 // *
 
 const globby = require("globby");
@@ -350,7 +350,13 @@ if (cli.flags) {
         }
 
         if (amended) {
-          await write(oneOfPaths, stringContents);
+          try {
+            await write(oneOfPaths, stringContents);
+          } catch (e) {
+            console.error(
+              `${messagePrefix}error happened when writing package.json:\n${e}`
+            );
+          }
         }
       })
     )
@@ -374,11 +380,4 @@ if (cli.flags) {
   diff.pipe(process.stdout);
 
   await allProgressPromise;
-  // console.log(
-  //   `${`\u001b[${33}m${`updatedPackages`}\u001b[${39}m`} = ${JSON.stringify(
-  //     updatedPackages,
-  //     null,
-  //     4
-  //   )}`
-  // );
 })();
