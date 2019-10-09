@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "1.7.7",
+  "version": "1.8.0",
   "description": "Non-parsing static code analysis tool for HTML mixed with anything",
   "license": "MIT",
   "engines": {

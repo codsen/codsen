@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://gitlab.com/codsen/codsen/compare/edit-package-json@0.1.2...edit-package-json@0.1.3) (2019-10-09)
+
+
+### Bug Fixes
+
+* few bug fixes involving arrays, comments and quoted chunks ([337c7ca](https://gitlab.com/codsen/codsen/commit/337c7cad0935d7b1b2449d6b69175f5a3c02b8c4))
+
+
+
+
+
 ## 0.1.2 (2019-10-05)
 
 ### Bug Fixes
