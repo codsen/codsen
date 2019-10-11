@@ -1221,7 +1221,7 @@ function step9() {
 
     writeFileAtomic(
       ".eslintrc.json",
-      JSON.stringify(finalEslintRc, null, 2),
+      `${JSON.stringify(finalEslintRc, null, 2)}\n`,
       err => {
         if (err) {
           log(
