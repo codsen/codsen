@@ -1,5 +1,5 @@
-import test from '../../../..';
+import test from "../../../..";
 
-test('first pass', t => {
-	t.pass();
+test("first pass", t => {
+  t.pass();
 });

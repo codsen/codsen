@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-'use strict';
+"use strict";
 
 /*
  A Babel plugin that causes each AVA test to be duplicated with a new title.
@@ -14,36 +14,38 @@
   This is used by some integration tests to validate correct handling of Babel config options.
 */
 module.exports = babel => {
-	const t = babel.types;
-	let anonCount = 1;
+  const t = babel.types;
+  let anonCount = 1;
 
-	return {
-		visitor: {
-			CallExpression: path => {
-				const {node} = path;
-				const {callee} = node;
-				let args = node.arguments;
+  return {
+    visitor: {
+      CallExpression: path => {
+        const { node } = path;
+        const { callee } = node;
+        let args = node.arguments;
 
-				if (callee.type === 'Identifier' && callee.name === 'test') {
-					if (args.length === 1) {
-						args = [t.StringLiteral(`repeated test: anonymous${anonCount++}`), args[0]];
-					} else if (args.length === 2 && args[0].type === 'StringLiteral') {
-						if (args[0].value.startsWith('repeated test')) {
-							return;
-						}
+        if (callee.type === "Identifier" && callee.name === "test") {
+          if (args.length === 1) {
+            args = [
+              t.StringLiteral(`repeated test: anonymous${anonCount++}`),
+              args[0]
+            ];
+          } else if (args.length === 2 && args[0].type === "StringLiteral") {
+            if (args[0].value.startsWith("repeated test")) {
+              return;
+            }
 
-						args = args.slice();
-						args[0] = t.StringLiteral(`repeated test: ${args[0].value}`);
-					} else {
-						throw new Error('The plugin does not know how to handle this call to test');
-					}
+            args = args.slice();
+            args[0] = t.StringLiteral(`repeated test: ${args[0].value}`);
+          } else {
+            throw new Error(
+              "The plugin does not know how to handle this call to test"
+            );
+          }
 
-					path.insertAfter(t.CallExpression(
-						t.Identifier('test'),
-						args
-					));
-				}
-			}
-		}
-	};
+          path.insertAfter(t.CallExpression(t.Identifier("test"), args));
+        }
+      }
+    }
+  };
 };

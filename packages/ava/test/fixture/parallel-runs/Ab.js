@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/filename-case */
-import test from '../../..';
+import test from "../../..";
 
-test('at expected index', t => {
-	t.is(process.env.CI_NODE_INDEX, '1');
+test("at expected index", t => {
+  t.is(process.env.CI_NODE_INDEX, "1");
 });

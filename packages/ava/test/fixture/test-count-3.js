@@ -1,19 +1,19 @@
-import test from '../..';
+import test from "../..";
 
-test('passCount', t => {
-	t.pass();
+test("passCount", t => {
+  t.pass();
 });
 
-test('passCount2', t => {
-	t.pass();
+test("passCount2", t => {
+  t.pass();
 });
 
-test('failCount', t => {
-	t.fail();
+test("failCount", t => {
+  t.fail();
 });
 
-test.skip('skipCount', t => {
-	t.pass();
+test.skip("skipCount", t => {
+  t.pass();
 });
 
-test.todo('todoCount');
+test.todo("todoCount");

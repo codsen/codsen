@@ -1,3 +1,3 @@
-const config = require('./cjs');
+const config = require("./cjs");
 
 export default config;

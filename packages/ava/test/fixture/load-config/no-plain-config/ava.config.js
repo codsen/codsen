@@ -1,1 +1,1 @@
-export default 'should not work!';
+export default "should not work!";

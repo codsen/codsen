@@ -1,29 +1,29 @@
-import test from '../../../..';
+import test from "../../../..";
 
 function throwError() {
-	throw new Error('uh-oh');
+  throw new Error("uh-oh");
 }
 
 function returnRejectedPromise() {
-	return Promise.reject(new Error('uh-oh'));
+  return Promise.reject(new Error("uh-oh"));
 }
 
-test('throws', t => {
-	t.throws(() => throwError(), TypeError);
+test("throws", t => {
+  t.throws(() => throwError(), TypeError);
 });
 
-test('notThrows', t => {
-	t.notThrows(() => throwError());
+test("notThrows", t => {
+  t.notThrows(() => throwError());
 });
 
-test('notThrowsAsync', t => {
-	t.notThrowsAsync(() => throwError());
+test("notThrowsAsync", t => {
+  t.notThrowsAsync(() => throwError());
 });
 
-test('throwsAsync', t => {
-	t.throwsAsync(() => throwError(), TypeError);
+test("throwsAsync", t => {
+  t.throwsAsync(() => throwError(), TypeError);
 });
 
-test('throwsAsync different error', t => {
-	return t.throwsAsync(returnRejectedPromise, TypeError);
+test("throwsAsync different error", t => {
+  return t.throwsAsync(returnRejectedPromise, TypeError);
 });

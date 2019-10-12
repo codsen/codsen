@@ -1,7 +1,7 @@
-import test from '../..';
+import test from "../..";
 
-test('test', t => {
-	t.pass();
+test("test", t => {
+  t.pass();
 });
 
 // eslint-disable-next-line spaced-comment

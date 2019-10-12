@@ -1,2 +1,2 @@
-'use strict';
-module.exports = 'baz';
+"use strict";
+module.exports = "baz";

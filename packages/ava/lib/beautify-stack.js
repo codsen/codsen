@@ -1,7 +1,7 @@
-'use strict';
-const StackUtils = require('stack-utils');
-const cleanStack = require('clean-stack');
-const debug = require('debug')('ava');
+"use strict";
+const StackUtils = require("stack-utils");
+const cleanStack = require("clean-stack");
+const debug = require("debug")("ava");
 
 // Ignore unimportant stack trace lines
 let ignoreStackLines = [];
@@ -11,19 +11,19 @@ const avaDependencies = /\/node_modules\/(?:append-transform|bluebird|empower-co
 const stackFrameLine = /^.+( \(.+:\d+:\d+\)|:\d+:\d+)$/;
 
 if (!debug.enabled) {
-	ignoreStackLines = StackUtils.nodeInternals();
-	ignoreStackLines.push(avaInternals);
-	ignoreStackLines.push(avaDependencies);
+  ignoreStackLines = StackUtils.nodeInternals();
+  ignoreStackLines.push(avaInternals);
+  ignoreStackLines.push(avaDependencies);
 }
 
-const stackUtils = new StackUtils({internals: ignoreStackLines});
+const stackUtils = new StackUtils({ internals: ignoreStackLines });
 
 function extractFrames(stack) {
-	return stack
-		.split('\n')
-		.map(line => line.trim())
-		.filter(line => stackFrameLine.test(line))
-		.join('\n');
+  return stack
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => stackFrameLine.test(line))
+    .join("\n");
 }
 
 /*
@@ -57,19 +57,24 @@ function extractFrames(stack) {
  * ```
  */
 module.exports = stack => {
-	if (!stack) {
-		return '';
-	}
+  if (!stack) {
+    return "";
+  }
 
-	stack = extractFrames(stack);
-	// Workaround for https://github.com/tapjs/stack-utils/issues/14
-	// TODO: fix it in `stack-utils`
-	stack = cleanStack(stack);
+  stack = extractFrames(stack);
+  // Workaround for https://github.com/tapjs/stack-utils/issues/14
+  // TODO: fix it in `stack-utils`
+  stack = cleanStack(stack);
 
-	return stackUtils.clean(stack)
-		// Remove the trailing newline inserted by the `stack-utils` module
-		.trim()
-		// Remove remaining file:// prefixes, inserted by `esm`, that are not
-		// cleaned up by `stack-utils`
-		.split('\n').map(line => line.replace(/\(file:\/\/([^/].+:\d+:\d+)\)$/, '($1)')).join('\n');
+  return (
+    stackUtils
+      .clean(stack)
+      // Remove the trailing newline inserted by the `stack-utils` module
+      .trim()
+      // Remove remaining file:// prefixes, inserted by `esm`, that are not
+      // cleaned up by `stack-utils`
+      .split("\n")
+      .map(line => line.replace(/\(file:\/\/([^/].+:\d+:\d+)\)$/, "($1)"))
+      .join("\n")
+  );
 };

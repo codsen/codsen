@@ -1,12 +1,12 @@
-'use strict';
-const runner = require('./subprocess').getRunner();
+"use strict";
+const runner = require("./subprocess").getRunner();
 
 const makeCjsExport = () => {
-	function test(...args) {
-		return runner.chain(...args);
-	}
+  function test(...args) {
+    return runner.chain(...args);
+  }
 
-	return Object.assign(test, runner.chain);
+  return Object.assign(test, runner.chain);
 };
 
 // Support CommonJS modules by exporting a test function that can be fully
@@ -16,6 +16,6 @@ const makeCjsExport = () => {
 // `test.default.test()` chains, though in CommonJS `test.test()` is
 // unavoidable.
 module.exports = Object.assign(makeCjsExport(), {
-	__esModule: true,
-	default: runner.chain
+  __esModule: true,
+  default: runner.chain
 });

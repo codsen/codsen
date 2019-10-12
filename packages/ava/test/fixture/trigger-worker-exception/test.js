@@ -1,9 +1,9 @@
-import test from '../../..';
+import test from "../../..";
 
-import {restoreAfterFirstCall} from './hack';
+import { restoreAfterFirstCall } from "./hack";
 
 restoreAfterFirstCall();
 
-test('test', async () => {
-	throw new Error('Hi :)');
+test("test", async () => {
+  throw new Error("Hi :)");
 });

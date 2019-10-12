@@ -1,5 +1,5 @@
-import test from '../../../..';
+import test from "../../../..";
 
-test.cb('slow', t => {
-	setTimeout(t.end, 200);
+test.cb("slow", t => {
+  setTimeout(t.end, 200);
 });

@@ -1,5 +1,5 @@
-import test from '../../../../..';
+import test from "../../../../..";
 
-test('test title', t => {
-	t.snapshot({foo: 'bar'});
+test("test title", t => {
+  t.snapshot({ foo: "bar" });
 });

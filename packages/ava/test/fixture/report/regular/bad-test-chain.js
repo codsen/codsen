@@ -1,3 +1,3 @@
-import test from '../../../..';
+import test from "../../../..";
 
-test.serial.test('passes', t => t.pass());
+test.serial.test("passes", t => t.pass());

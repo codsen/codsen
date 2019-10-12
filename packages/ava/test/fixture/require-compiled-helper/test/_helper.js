@@ -1,3 +1,3 @@
-import value from '../dependency';
+import value from "../dependency";
 
 global.value = value;

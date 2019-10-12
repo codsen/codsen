@@ -1,2 +1,2 @@
-'use strict';
-global.foo = 'bar';
+"use strict";
+global.foo = "bar";

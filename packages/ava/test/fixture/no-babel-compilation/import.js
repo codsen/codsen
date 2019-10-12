@@ -1,1 +1,1 @@
-import dependency from './dependency'; // eslint-disable-line no-unused-vars
+import dependency from "./dependency"; // eslint-disable-line no-unused-vars

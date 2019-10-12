@@ -1,11 +1,11 @@
-import test from '../../../../../../..';
+import test from "../../../../../../..";
 
-test('test nested feature title', t => {
-	t.snapshot({foo: 'bar'});
+test("test nested feature title", t => {
+	t.snapshot({ foo: "bar" });
 
-	t.snapshot({answer: 42});
+	t.snapshot({ answer: 42 });
 });
 
-test('another nested feature test', t => {
+test("another nested feature test", t => {
 	t.snapshot(new Map());
 });

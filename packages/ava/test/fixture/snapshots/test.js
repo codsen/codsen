@@ -1,11 +1,11 @@
-import test from '../../..';
+import test from "../../..";
 
-test('test title', t => {
-	t.snapshot({foo: 'bar'});
+test("test title", t => {
+  t.snapshot({ foo: "bar" });
 
-	t.snapshot({answer: 42});
+  t.snapshot({ answer: 42 });
 });
 
-test('another test', t => {
-	t.snapshot(new Map());
+test("another test", t => {
+  t.snapshot(new Map());
 });

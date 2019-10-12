@@ -1,5 +1,5 @@
-import test from '../../..';
+import test from "../../..";
 
-test('subdir', t => {
-	t.pass();
+test("subdir", t => {
+  t.pass();
 });

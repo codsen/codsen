@@ -1,8 +1,8 @@
 export default {
-	babel: {
-		extensions: ['bar']
-	},
-	files: ['build/tests/**/*'],
-	helpers: ['build/helpers/*'],
-	sources: ['src/**/*']
+  babel: {
+    extensions: ["bar"]
+  },
+  files: ["build/tests/**/*"],
+  helpers: ["build/helpers/*"],
+  sources: ["src/**/*"]
 };

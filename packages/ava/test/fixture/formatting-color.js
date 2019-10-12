@@ -1,5 +1,5 @@
-import test from '../..';
+import test from "../..";
 
-test('test', t => {
-	t.deepEqual({foo: 1}, {foo: 2});
+test("test", t => {
+  t.deepEqual({ foo: 1 }, { foo: 2 });
 });

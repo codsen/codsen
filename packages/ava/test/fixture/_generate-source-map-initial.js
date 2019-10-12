@@ -1,9 +1,10 @@
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const babel = require('@babel/core');
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const babel = require("@babel/core");
 
-const transformed = babel.transform(`
+const transformed = babel.transform(
+  `
 import {mapFile} from 'source-map-fixtures';
 import test from '../../';
 
@@ -18,19 +19,22 @@ test('throw an uncaught exception', t => {
 	t.pass();
 })
 const run = () => fixture.run();
-`.trim(), {
-	filename: 'source-map-initial-input.js',
-	sourceMaps: true,
-	presets: ['@ava/stage-4']
-});
-
-fs.writeFileSync(
-	path.join(__dirname, 'source-map-initial.js'),
-	transformed.code + '\n//# sourceMappingURL=./source-map-initial.js.map\n// Generated using node test/fixtures/_generate-source-map-initial.js\n'
-);
-fs.writeFileSync(
-	path.join(__dirname, 'source-map-initial.js.map'),
-	JSON.stringify(transformed.map)
+`.trim(),
+  {
+    filename: "source-map-initial-input.js",
+    sourceMaps: true,
+    presets: ["@ava/stage-4"]
+  }
 );
 
-console.log('Generated source-map-initial.js');
+fs.writeFileSync(
+  path.join(__dirname, "source-map-initial.js"),
+  transformed.code +
+    "\n//# sourceMappingURL=./source-map-initial.js.map\n// Generated using node test/fixtures/_generate-source-map-initial.js\n"
+);
+fs.writeFileSync(
+  path.join(__dirname, "source-map-initial.js.map"),
+  JSON.stringify(transformed.map)
+);
+
+console.log("Generated source-map-initial.js");

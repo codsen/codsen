@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const test = require('../../..');
+const test = require("../../..");
 
-test('test', t => {
-	const bool = false;
-	t.assert(bool);
+test("test", t => {
+  const bool = false;
+  t.assert(bool);
 });

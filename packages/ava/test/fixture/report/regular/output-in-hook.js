@@ -1,35 +1,35 @@
-import test from '../../../..';
+import test from "../../../..";
 
 test.before(() => {});
 
 test.before(t => {
-	t.log('before');
+  t.log("before");
 });
 
-test.after('cleanup', t => {
-	t.log('after');
+test.after("cleanup", t => {
+  t.log("after");
 });
 
-test.after.always('cleanup', t => {
-	t.log('afterAlways');
+test.after.always("cleanup", t => {
+  t.log("afterAlways");
 });
 
 test.beforeEach(t => {
-	t.log('beforeEach');
+  t.log("beforeEach");
 });
 
 test.afterEach(t => {
-	t.log('afterEach');
+  t.log("afterEach");
 });
 
 test.afterEach.always(t => {
-	t.log('afterEachAlways');
+  t.log("afterEachAlways");
 });
 
-test('passing test', t => {
-	t.pass();
+test("passing test", t => {
+  t.pass();
 });
 
-test('failing test', t => {
-	t.fail();
+test("failing test", t => {
+  t.fail();
 });

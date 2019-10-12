@@ -1,5 +1,5 @@
-import test from '../../..';
+import test from "../../..";
 
-test('subdir fail', t => {
-	t.fail();
+test("subdir fail", t => {
+  t.fail();
 });

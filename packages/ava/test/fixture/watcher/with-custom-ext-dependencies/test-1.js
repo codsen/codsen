@@ -1,6 +1,6 @@
-import test from '../../../..';
-import dependency from './source.custom-ext';
+import test from "../../../..";
+import dependency from "./source.custom-ext";
 
-test('works', t => {
-	t.truthy(dependency);
+test("works", t => {
+  t.truthy(dependency);
 });

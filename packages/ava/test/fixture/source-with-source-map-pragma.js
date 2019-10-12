@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 module.exports = foo;
 
 function foo() {
-	bar();
+  bar();
 }
 
 function bar() {
-	throw new Error('Can\'t catch me!');
+  throw new Error("Can't catch me!");
 }
 
 // eslint-disable-next-line spaced-comment

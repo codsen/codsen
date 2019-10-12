@@ -1,3 +1,3 @@
-import test from '../../../..';
+import test from "../../../..";
 
-test('passes', t => t.pass());
+test("passes", t => t.pass());

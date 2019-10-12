@@ -1,7 +1,7 @@
-import test from '../../..';
+import test from "../../..";
 
-test('test', t => {
-	return new Promise(() => {
-		t.pass();
-	});
+test("test", t => {
+  return new Promise(() => {
+    t.pass();
+  });
 });

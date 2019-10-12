@@ -1,5 +1,5 @@
-import test from '../..';
+import test from "../..";
 
-test('test', t => {
-	t.true(process.execArgv[0].startsWith('--inspect'));
+test("test", t => {
+  t.true(process.execArgv[0].startsWith("--inspect"));
 });
