@@ -139,7 +139,7 @@
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.3",
+    "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "array-shuffle": "^1.0.1",
