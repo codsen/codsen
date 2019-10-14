@@ -1305,6 +1305,77 @@ function processCharacter(
 
 var version = "5.1.1";
 
+var _endianness;
+function endianness() {
+  if (typeof _endianness === 'undefined') {
+    var a = new ArrayBuffer(2);
+    var b = new Uint8Array(a);
+    var c = new Uint16Array(a);
+    b[0] = 1;
+    b[1] = 2;
+    if (c[0] === 258) {
+      _endianness = 'BE';
+    } else if (c[0] === 513){
+      _endianness = 'LE';
+    } else {
+      throw new Error('unable to figure out endianess');
+    }
+  }
+  return _endianness;
+}
+function hostname() {
+  if (typeof global.location !== 'undefined') {
+    return global.location.hostname
+  } else return '';
+}
+function loadavg() {
+  return [];
+}
+function uptime() {
+  return 0;
+}
+function freemem() {
+  return Number.MAX_VALUE;
+}
+function totalmem() {
+  return Number.MAX_VALUE;
+}
+function cpus() {
+  return [];
+}
+function type() {
+  return 'Browser';
+}
+function release () {
+  if (typeof global.navigator !== 'undefined') {
+    return global.navigator.appVersion;
+  }
+  return '';
+}
+function networkInterfaces(){}
+function getNetworkInterfaces(){}
+function tmpDir() {
+  return '/tmp';
+}
+var tmpdir = tmpDir;
+var EOL = '\n';
+var os = {
+  EOL: EOL,
+  tmpdir: tmpdir,
+  tmpDir: tmpDir,
+  networkInterfaces:networkInterfaces,
+  getNetworkInterfaces: getNetworkInterfaces,
+  release: release,
+  type: type,
+  cpus: cpus,
+  totalmem: totalmem,
+  freemem: freemem,
+  uptime: uptime,
+  loadavg: loadavg,
+  hostname: hostname,
+  endianness: endianness,
+};
+
 function det(str, inputOpts) {
   let opts;
   if (typeof str !== "string") {
@@ -1356,7 +1427,7 @@ function det(str, inputOpts) {
       applicableOpts[singleOption] = false;
     });
   delete applicableOpts.stripHtmlButIgnoreTags;
-  const endOfLine = require("os").EOL || "\n";
+  const endOfLine = os.EOL;
   const brClosingBracketIndexesArr = [];
   const finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true

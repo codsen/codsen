@@ -16,6 +16,7 @@ import clone from "lodash.clonedeep";
 import ansiRegex from "ansi-regex";
 import Ranges from "ranges-push";
 import he from "he";
+import os from "os";
 import {
   defaultOpts,
   voidTags,
@@ -102,9 +103,9 @@ function det(str, inputOpts) {
 
   //
   // vars and internal functions
-  // ---------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-  const endOfLine = require("os").EOL || "\n";
+  const endOfLine = os.EOL;
   const brClosingBracketIndexesArr = [];
 
   // We need to track what actions need to be done. Each action (a range) is
