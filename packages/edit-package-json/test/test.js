@@ -4,7 +4,7 @@ import test from "ava";
 import { set, del } from "../dist/edit-package-json.esm";
 import objectPath from "object-path";
 
-function setter(t, source, result, path, val, idNum) {
+function setter(t, source, result, path, val, idNum, isInvalidJson = false) {
   // 01.
   t.is(
     set(source, path, val),
@@ -12,21 +12,24 @@ function setter(t, source, result, path, val, idNum) {
     `${idNum}.01 - string is identical after set`
   );
 
-  // 02. parsed versions we just compared must be deep-equal
-  t.deepEqual(
-    JSON.parse(set(source, path, val)),
-    JSON.parse(result),
-    `${idNum}.02 - both parsed parties are deep-equal`
-  );
+  // we can process invalid JSON too!
+  if (!isInvalidJson) {
+    // 02. parsed versions we just compared must be deep-equal
+    t.deepEqual(
+      JSON.parse(set(source, path, val)),
+      JSON.parse(result),
+      `${idNum}.02 - both parsed parties are deep-equal`
+    );
 
-  // 03. result is equivalent to (JSON.parse + object-path.set())
-  const temp = JSON.parse(source);
-  objectPath.set(temp, path, val);
-  t.deepEqual(
-    temp,
-    JSON.parse(result),
-    `${idNum}.03 - objectPath set is deep-equal`
-  );
+    // 03. result is equivalent to (JSON.parse + object-path.set())
+    const temp = JSON.parse(source);
+    objectPath.set(temp, path, val);
+    t.deepEqual(
+      temp,
+      JSON.parse(result),
+      `${idNum}.03 - objectPath set is deep-equal`
+    );
+  }
 }
 
 function deleter(t, source, result, path, idNum) {
@@ -254,6 +257,218 @@ test(`02.10 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`exist
   setter(t, input, result, "x", `{ y: "x" }`, "02.10");
 });
 
+test(`02.11 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 1`, t => {
+  const input = `{
+  "a": {
+    "b": "}c"
+}}`;
+  const result = `{
+  "a": "x"
+}`;
+  setter(t, input, result, "a", `x`, "02.11");
+});
+
+test(`02.12 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - difficult characters 2`, t => {
+  const input = `{
+  "a": {
+    "b": "c '*.{d,e,f,g,md}' --write",
+    "m": "n"
+  }
+}`;
+  const result = `{
+  "a": "x"
+}`;
+  setter(t, input, result, "a", `x`, "02.12");
+});
+
+test(`02.13 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - nested objects`, t => {
+  const input = `{
+  "a": {
+    "b": {
+      "c": "d"
+    }
+  }
+}
+`;
+  const result = `{
+  "a": "x"
+}
+`;
+  setter(t, input, result, "a", `x`, "02.13");
+});
+
+test(`02.14 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`, t => {
+  const input = `{
+  "a": {
+    "z": "x"
+  },
+  "z": {
+    "k": false,
+    "l": [
+      "m"
+    ],
+    "n": true
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "z": "x"
+  },
+  "z": "y"
+}
+`;
+  setter(t, input, result, "z", `y`, "02.14");
+});
+
+test(`02.15 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - same-named key is passed through at deeper level while iterating`, t => {
+  const input = `{
+  "a": {
+    "z": "x",
+  },
+  "z": {
+    "k": false,
+    "l": [
+      "m"
+    ],
+    "n": true
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "z": "x",
+  },
+  "z": "y"
+}
+`;
+  setter(t, input, result, "z", `y`, "02.15", "invalid JSON");
+});
+
+test(`02.16 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with quoted`, t => {
+  const input = `{
+  "a": {
+    "b": false
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": "x"
+  }
+}
+`;
+  setter(t, input, result, "a.b", `x`, "02.16");
+});
+
+test(`02.17 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - non-quoted value replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": false
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": true
+  }
+}
+`;
+  setter(t, input, result, "a.b", true, "02.17");
+});
+
+test(`02.18 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - quoted value replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": "c"
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": true
+  }
+}
+`;
+  setter(t, input, result, "a.b", true, "02.18");
+});
+
+test(`02.19 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": {}
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": true
+  }
+}
+`;
+  setter(t, input, result, "a.b", true, "02.19");
+});
+
+test(`02.20 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": []
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": true
+  }
+}
+`;
+  setter(t, input, result, "a.b", true, "02.20");
+});
+
+test(`02.21 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": {
+      "c": []
+    },
+    "d": "e"
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": {
+      "c": []
+    },
+    "d": "x"
+  }
+}
+`;
+  setter(t, input, result, "a.d", "x", "02.21");
+});
+
+test(`02.22 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - value empty obj replaced with non-quoted`, t => {
+  const input = `{
+  "a": {
+    "b": {
+      "c": ["z"]
+    },
+    "d": "e"
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": {
+      "c": ["z"]
+    },
+    "d": "x"
+  }
+}
+`;
+  setter(t, input, result, "a.d", "x", "02.22");
+});
+
 // -----------------------------------------------------------------------------
 // 03. set - key does not exist
 // -----------------------------------------------------------------------------
@@ -331,26 +546,18 @@ test(`04.03 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
 
 test(`04.04 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, t => {
   const input = `{
-  "a": "b",
   "b": {
-    "c": [],
-    "d": ["a", "b"],
-    "e": [{}, { "f": "g" }],
-    "f": "i"
+    "d": ["a"]
   },
   "j": {"k": "l"}
 }`;
   const result = `{
-  "a": "b",
   "b": {
-    "c": [],
-    "d": ["a", "b"],
-    "e": [{}, { "f": "g" }],
-    "f": "i"
+    "d": ["a"]
   },
-  "j": {"k":"l"}
+  "j": {"k":"x"}
 }`;
-  setter(t, input, result, "j", { k: "l" }, "04.04");
+  setter(t, input, result, "j", { k: "x" }, "04.04");
 });
 
 test(`04.05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, t => {
@@ -372,13 +579,38 @@ test(`04.05 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
     "e": [{}, { "f": "g" }],
     "f": "i"
   },
-  "j": {"k":"l"}
+  "j": {"k":"x"}
 }`;
-  // path is array:
-  setter(t, input, result, ["j"], { k: "l" }, "04.05");
+  setter(t, input, result, "j", { k: "x" }, "04.05");
 });
 
-test(`04.06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
+test(`04.06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under shallow object`, t => {
+  const input = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  },
+  "j": {"k": "l"}
+}`;
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g" }],
+    "f": "i"
+  },
+  "j": {"k":"x"}
+}`;
+  // path is array:
+  setter(t, input, result, ["j"], { k: "x" }, "04.06");
+});
+
+// TODO
+test(`04.07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
   const source = `{
   "a": "b",
   "b": {
@@ -390,44 +622,31 @@ test(`04.06 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
   const result = `{
   "a": "b",
   "b": {
-    "d": ["o", "b"],
+    "d": ["x", "b"],
     "e": [{}, { "f": "g" }],
     "f": "i"
   }
 }`;
   // path is array:
-  setter(t, source, result, "b.d.0", `o`, "04.06");
+  setter(t, source, result, "b.d.0", `x`, "04.07");
 });
 
-test(`04.07 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
+test(`04.08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
   const result = `{
   "a": "b",
   "b": {
     "c": [],
-    "d": ["o", "b"],
+    "d": ["x", "b"],
     "e": [{}, { "f": "g" }],
     "f": "i"
   }
 }`;
-  setter(t, testObj, result, "b.d.0", `o`, "04.07");
+  setter(t, testObj, result, "b.d.0", `x`, "04.08");
 });
 
-test(`04.08 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
+test(`04.09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value using number path`, t => {
   // crop of test "should set value using number path", obj.b.d
-  setter(t, `["a", "b"]`, `["o", "b"]`, 0, `o`, "04.08");
-});
-
-test(`04.09 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
-  const result = `{
-  "a": "b",
-  "b": {
-    "c": "o",
-    "d": ["a", "b"],
-    "e": [{}, { "f": "g" }],
-    "f": "i"
-  }
-}`;
-  setter(t, testObj, result, "b.c", `o`, "04.09");
+  setter(t, `["a", "b"]`, `["x", "b"]`, 0, `x`, "04.09");
 });
 
 test(`04.10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
@@ -440,7 +659,6 @@ test(`04.10 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
     "f": "i"
   }
 }`;
-  // quotes around "o" missing:
   setter(t, testObj, result, "b.c", `o`, "04.10");
 });
 
@@ -454,7 +672,8 @@ test(`04.11 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
     "f": "i"
   }
 }`;
-  setter(t, testObj, result, ["b", "c"], `o`, "04.11");
+  // quotes around "o" missing:
+  setter(t, testObj, result, "b.c", `o`, "04.11");
 });
 
 test(`04.12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
@@ -467,24 +686,21 @@ test(`04.12 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
     "f": "i"
   }
 }`;
-  // quotes around "o" missing:
   setter(t, testObj, result, ["b", "c"], `o`, "04.12");
 });
 
-test(`04.13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
+test(`04.13 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under deep object`, t => {
   const result = `{
   "a": "b",
   "b": {
-    "c": [],
+    "c": "o",
     "d": ["a", "b"],
-    "e": [{}, { "f": null }],
+    "e": [{}, { "f": "g" }],
     "f": "i"
   }
 }`;
-  // TODO: creates new keys
-  // setter(t, testObj, result, "b.e.1.g", "f", "04.13");
-
-  setter(t, testObj, result, "b.e.1.f", null, "04.13");
+  // quotes around "o" missing:
+  setter(t, testObj, result, ["b", "c"], `o`, "04.13");
 });
 
 test(`04.14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
@@ -500,30 +716,46 @@ test(`04.14 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
   // TODO: creates new keys
   // setter(t, testObj, result, "b.e.1.g", "f", "04.14");
 
-  setter(t, testObj, result, ["b", "e", 1, "f"], null, "04.14");
+  setter(t, testObj, result, "b.e.1.f", null, "04.14");
 });
 
-test(`04.15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`, t => {
+test(`04.15 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - should set value under array`, t => {
+  const result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": null }],
+    "f": "i"
+  }
+}`;
+  // TODO: creates new keys
+  // setter(t, testObj, result, "b.e.1.g", "f", "04.15");
+
+  setter(t, testObj, result, ["b", "e", 1, "f"], null, "04.15");
+});
+
+test(`04.16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 1`, t => {
   const source = `{
   "a": [{}, { "b": "c" }]
 }`;
   const result = `{
   "a": [{}, { "b": null }]
 }`;
-  setter(t, source, result, "a.1.b", null, "04.15");
+  setter(t, source, result, "a.1.b", null, "04.16");
 });
 
-test(`04.16 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`, t => {
+test(`04.17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - minimal case, arrays 2`, t => {
   const source = `{
   "a": [{ "b": "c" }]
 }`;
   const result = `{
   "a": [{ "b": null }]
 }`;
-  setter(t, source, result, "a.0.b", null, "04.16");
+  setter(t, source, result, "a.0.b", null, "04.17");
 });
 
-test(`04.17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`, t => {
+test(`04.18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - square bracket as value`, t => {
   const source = `{
   "a": "[",
   "k": {
@@ -533,30 +765,36 @@ test(`04.17 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`objec
 }`;
   const result = `{
   "a": "[",
-  "k": {
-    "lm": "1",
-    "no": "9"
-  }
-}`;
-  setter(t, source, result, "k.no", "9", "04.17");
-});
-
-test(`04.18 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, t => {
-  const source = `{
-  "a": "{",
-  "k": {
-    "lm": "1",
-    "no": "2"
-  }
-}`;
-  const result = `{
-  "a": "{",
   "k": {
     "lm": "1",
     "no": "9"
   }
 }`;
   setter(t, source, result, "k.no", "9", "04.18");
+});
+
+test(`04.19 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, t => {
+  const source = `{
+  "a": "{",
+  "k": {
+    "lm": "1",
+    "no": "2"
+  }
+}`;
+  const result = `{
+  "a": "{",
+  "k": {
+    "lm": "1",
+    "no": "9"
+  }
+}`;
+  setter(t, source, result, "k.no", "9", "04.19");
+});
+
+test(`04.20 - ${`\u001b[${36}m${`set`}\u001b[${39}m`} - ${`\u001b[${35}m${`object-path/set()`}\u001b[${39}m`} - curly bracket as value`, t => {
+  const source = `{"a": {},"gh": {"mn": "1","yz": "-"}}`;
+  const result = `{"a": {},"gh": {"mn": "1","yz": "x"}}`;
+  setter(t, source, result, "gh.yz", "x", "04.20");
 });
 
 // -----------------------------------------------------------------------------
@@ -637,7 +875,46 @@ test(`05.06 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
   deleter(t, source, result, "qwe.2", "05.06");
 });
 
-test(`05.07 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - dips to root level key before going to second branch`, t => {
+test(`05.07 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the first array's element`, t => {
+  const source = `{"qwe": [
+  true,
+  "cd",
+  "ef"
+]}`;
+  const result = `{"qwe": [
+  "cd",
+  "ef"
+]}`;
+  deleter(t, source, result, "qwe.0", "05.07");
+});
+
+test(`05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the middle array's element`, t => {
+  const source = `{"qwe": [
+  "ab",
+  true,
+  "ef"
+]}`;
+  const result = `{"qwe": [
+  "ab",
+  "ef"
+]}`;
+  deleter(t, source, result, "qwe.1", "05.08");
+});
+
+test(`05.09 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - deletes the last array's element`, t => {
+  const source = `{"qwe": [
+  "ab",
+  "cd",
+  true
+]}`;
+  const result = `{"qwe": [
+  "ab",
+  "cd"
+]}`;
+  deleter(t, source, result, "qwe.2", "05.09");
+});
+
+test(`05.10 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - dips to root level key before going to second branch`, t => {
   const source = `{
   "ab": {
     "cd": {
@@ -671,13 +948,43 @@ test(`05.07 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
     }
   }
 }`;
-  deleter(t, source, result, "ij.kl.mn.2", "05.07");
+  deleter(t, source, result, "ij.kl.mn.2", "05.10");
 });
 
-test(`05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`, t => {
+test(`05.11 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`, t => {
   const source = `{
   "a": {
-    "b": [],
+    "c": [
+      {
+      }
+    ],
+    "f": [
+      {
+        "g": "",
+        "h": ""
+      }
+    ]
+  }
+}`;
+  const result = `{
+  "a": {
+    "c": [
+      {
+      }
+    ],
+    "f": [
+      {
+        "g": ""
+      }
+    ]
+  }
+}`;
+  deleter(t, source, result, "a.f.0.h", "05.11");
+});
+
+test(`05.12 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`existing path`}\u001b[${39}m`} - nested arrays`, t => {
+  const source = `{
+  "a": {
     "c": [
       {
         "d": "",
@@ -694,7 +1001,6 @@ test(`05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
 }`;
   const result = `{
   "a": {
-    "b": [],
     "c": [
       {
         "d": "",
@@ -708,8 +1014,64 @@ test(`05.08 - ${`\u001b[${33}m${`del`}\u001b[${39}m`} - ${`\u001b[${34}m${`exist
     ]
   }
 }`;
-  deleter(t, source, result, "a.f.0.h", "05.08");
+  deleter(t, source, result, "a.f.0.h", "05.12");
 });
+
+// -----------------------------------------------------------------------------
+// 06. set - on arrays, existing path
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, t => {
+  const input = `[[]]`;
+  const result = `[true]`;
+  setter(t, input, result, "0", true, "06.01");
+});
+
+test(`06.02 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, t => {
+  const input = `[{}]`;
+  const result = `[true]`;
+  setter(t, input, result, "0", true, "06.02");
+});
+
+test(`06.03 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, t => {
+  const input = `[false]`;
+  const result = `[true]`;
+  setter(t, input, result, "0", true, "06.03");
+});
+
+test(`06.04 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, t => {
+  const input = `["z"]`;
+  const result = `[true]`;
+  setter(t, input, result, "0", true, "06.04");
+});
+
+// // TODO - new path
+// test(`06.05 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`new path`}\u001b[${39}m`} - nested arrays 2`, t => {
+//   const input = `[[]]`;
+//   const result = `[[true]]`;
+//   setter(t, input, result, "0.0", true, "06.05");
+// });
+//
+// // TODO - new path
+// test(`06.06 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`new path`}\u001b[${39}m`} - nested arrays 2`, t => {
+//   const input = `[{}]`;
+//   const result = `[[true]]`;
+//   setter(t, input, result, "0.0", true, "06.06");
+// });
+//
+// // TODO - new path
+// test(`06.07 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`new path`}\u001b[${39}m`} - nested arrays 2`, t => {
+//   const input = `[false]`;
+//   const result = `[[true]]`;
+//   setter(t, input, result, "0.0", true, "06.07");
+// });
+//
+// // TODO - new path
+// test(`06.08 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`new path`}\u001b[${39}m`} - nested arrays 2`, t => {
+//   const input = `["z"]`;
+//   const result = `[[true]]`;
+//   setter(t, input, result, "0.0", true, "06.08");
+// });
 
 // TODO - minified json
 

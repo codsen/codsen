@@ -1,3 +1,5 @@
+// avanotonly
+
 import test from "ava";
 import path from "path";
 import { readFileSync as read, writeFileSync as write } from "fs";
@@ -6,7 +8,7 @@ import objectPath from "object-path";
 
 function compare(t, testName, pathToProcess, val) {
   const isSet = arguments.length === 4;
-  // console.log(`009 ${isSet ? "SET" : "DEL"} mode`);
+  // console.log(`011 ${isSet ? "SET" : "DEL"} mode`);
 
   const source = read(
     path.join(__dirname, "fixtures", `${testName}.json`),

@@ -123,8 +123,11 @@
         "label": ""
       },
       "devDependencies": [
+        "ast-monkey-traverse",
         "object-path",
-        "lodash.clonedeep"
+        "lodash.clonedeep",
+        "p-map",
+        "p-progress"
       ],
       "travisVersionsOverride": []
     }
@@ -144,6 +147,7 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "ast-monkey-traverse": "^1.11.41",
     "ava": "^2.2.6",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
@@ -159,8 +163,10 @@
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-path": "^0.11.4",
+    "p-map": "^3.0.0",
+    "p-progress": "^0.4.1",
     "prettier": "^1.18.2",
-    "rollup": "^1.23.1",
+    "rollup": "^1.24.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
