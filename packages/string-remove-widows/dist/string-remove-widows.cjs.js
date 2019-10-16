@@ -17,6 +17,7 @@ var stringMatchLeftRight = require('string-match-left-right');
 var arrayiffyIfStr = _interopDefault(require('arrayiffy-if-string'));
 var stringLeftRight = require('string-left-right');
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var Ranges = _interopDefault(require('ranges-push'));
 var apply = _interopDefault(require('ranges-apply'));
 
 function _typeof(obj) {
@@ -73,7 +74,6 @@ var headsAndTailsHexo = [{
 }];
 var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
 
-var Ranges = require("ranges-push");
 var defaultOpts = {
   removeWidowPreventionMeasures: false,
   convertEntities: true,

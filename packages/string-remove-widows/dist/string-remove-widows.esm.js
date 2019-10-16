@@ -11,6 +11,7 @@ import { matchRightIncl } from 'string-match-left-right';
 import arrayiffyIfStr from 'arrayiffy-if-string';
 import { left, right } from 'string-left-right';
 import isObj from 'lodash.isplainobject';
+import Ranges from 'ranges-push';
 import apply from 'ranges-apply';
 
 var version = "1.5.1";
@@ -178,7 +179,6 @@ const knownHTMLTags = [
   "xml"
 ];
 
-const Ranges = require("ranges-push");
 const defaultOpts = {
   removeWidowPreventionMeasures: false,
   convertEntities: true,
