@@ -136,7 +136,8 @@ test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: true
+        stripHtml: true,
+        eol: false
       }
     }
   );
@@ -396,7 +397,8 @@ test(`03.07 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: false
+        stripHtml: false,
+        eol: false
       }
     }
   );
@@ -438,7 +440,8 @@ test(`03.09 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
       dontEncodeNonLatin: false,
       addMissingSpaces: false,
       convertDotsToEllipsis: false,
-      stripHtml: false
+      stripHtml: false,
+      eol: false
     }
   });
 });
@@ -496,7 +499,8 @@ test(`03.12 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: false
+        stripHtml: false,
+        eol: false
       }
     }
   );
@@ -621,58 +625,33 @@ test(`03.20 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - strips UTF8 
 // 04. opts.replaceLineBreaks
 // ==============================
 
+const key = ["crlf", "cr", "lf"];
+
 test(`04.01 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minimal example - correct existing linebreaks`, t => {
-  ["\r\n", "\r", "\n"].forEach(eolType => {
-    mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 1,
-      convertEntities: 1
-    }).forEach((opt, n) => {
-      t.is(
-        det(t, n, `a${eolType}b`, opt).res,
-        `a<br/>\nb`,
-        `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
-          opt,
-          null,
-          0
-        )}`
-      );
+  ["\r\n", "\r", "\n"].forEach((requestedEolType, idx1) => {
+    ["\r\n", "\r", "\n"].forEach((presentEolType, idx2) => {
+      mixer({
+        replaceLineBreaks: 1,
+        removeLineBreaks: 0,
+        useXHTML: 1,
+        convertEntities: 1,
+        eol: key[idx1]
+      }).forEach((opt, n) => {
+        t.is(
+          det(t, n, `a${presentEolType}b`, opt).res,
+          `a<br/>${requestedEolType}b`,
+          `present ${key[idx2]}, requested ${key[idx1]} --- ${JSON.stringify(
+            opt,
+            null,
+            0
+          )}`
+        );
+      });
     });
   });
 });
 
-test(`04.02 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minimal example - wrong existing linebreaks`, t => {
-  ["\r\n", "\r", "\n"].forEach((eolType, i, eolArr) => {
-    mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 1,
-      convertEntities: 1
-    }).forEach((opt, n) => {
-      t.is(
-        det(t, n, `a${eolArr[(i + 1) % 3]}b`, opt).res,
-        `a<br/>\nb`,
-        `1. existing ${eolArr[(i + 1) % 3]} --- intended ${JSON.stringify(
-          eolType,
-          null,
-          4
-        )} --- ${JSON.stringify(opt, null, 0)}`
-      );
-      t.is(
-        det(t, n, `a${eolArr[(i + 2) % 3]}b`, opt).res,
-        `a<br/>\nb`,
-        `2. existing ${eolArr[(i + 2) % 3]} --- intended ${JSON.stringify(
-          eolType,
-          null,
-          4
-        )} --- ${JSON.stringify(opt, null, 0)}`
-      );
-    });
-  });
-});
-
-test(`04.03 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minimal example - br`, t => {
+test(`04.02 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minimal example - br`, t => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -687,7 +666,7 @@ test(`04.03 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - minim
   });
 });
 
-test(`04.04 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - replace \\n line breaks with BR - useXHTML=on`, t => {
+test(`04.03 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - replace \\n line breaks with BR - useXHTML=on`, t => {
   ["\r\n", "\r", "\n"].forEach(eolType => {
     mixer({
       replaceLineBreaks: 1,
@@ -709,7 +688,7 @@ test(`04.04 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - repla
   });
 });
 
-test(`04.05 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - replace \\n line breaks with BR - useXHTML=off`, t => {
+test(`04.04 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - replace \\n line breaks with BR - useXHTML=off`, t => {
   ["\r\n", "\r", "\n"].forEach(eolType => {
     mixer({
       replaceLineBreaks: 1,
@@ -731,7 +710,7 @@ test(`04.05 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - repla
   });
 });
 
-test(`04.06 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, line break present`, t => {
+test(`04.05 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, line break present`, t => {
   ["\r\n", "\r", "\n"].forEach(eolType => {
     mixer({
       replaceLineBreaks: 1,
@@ -761,7 +740,7 @@ test(`04.06 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br wi
   );
 });
 
-test(`04.07 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - only adds a slash, respects existing attrs`, t => {
+test(`04.06 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - only adds a slash, respects existing attrs`, t => {
   ["\r\n", "\r", "\n"].forEach(eolType => {
     mixer({
       replaceLineBreaks: 1,
@@ -782,7 +761,7 @@ test(`04.07 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - only 
   });
 });
 
-test(`04.08 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, no line break, HTML`, t => {
+test(`04.07 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, no line break, HTML`, t => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -797,7 +776,7 @@ test(`04.08 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br wi
   });
 });
 
-test(`04.09 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, no line break, XHTML`, t => {
+test(`04.08 - ${`\u001b[${34}m${`opts.replaceLineBreaks`}\u001b[${39}m`} - br with attribute, no line break, XHTML`, t => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
@@ -862,6 +841,45 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
     );
   });
 
+  t.is(
+    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+      removeLineBreaks: 1,
+      removeWidows: 1,
+      convertEntities: 1,
+      eol: 1
+    }).res,
+    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+      removeLineBreaks: 1,
+      removeWidows: 1,
+      convertEntities: 1,
+      eol: 0
+    }).res
+  );
+
+  t.false(
+    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+      removeLineBreaks: 1,
+      removeWidows: 1,
+      convertEntities: 1
+    }).applicableOpts.eol
+  );
+
+  t.false(
+    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
+      removeLineBreaks: 1,
+      removeWidows: 1,
+      convertEntities: 1
+    }).applicableOpts.replaceLineBreaks
+  );
+
+  t.false(
+    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
+      removeLineBreaks: 1,
+      removeWidows: 1,
+      convertEntities: 1
+    }).applicableOpts.useXHTML
+  );
+
   t.deepEqual(
     det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
       removeLineBreaks: 1,
@@ -882,7 +900,8 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: false
+        stripHtml: false,
+        eol: false
       }
     }
   );
@@ -999,7 +1018,8 @@ test(`06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - does
         dontEncodeNonLatin: true,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: false
+        stripHtml: false,
+        eol: false
       }
     }
   );
@@ -1466,7 +1486,8 @@ test(`09.01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, t 
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: true
+        stripHtml: true,
+        eol: false
       }
     }
   );
@@ -1513,7 +1534,8 @@ test(`09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: true
+        stripHtml: true,
+        eol: false
       }
     }
   );
@@ -1734,8 +1756,126 @@ test(`10.09 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - greater than sign`, t
         dontEncodeNonLatin: false,
         addMissingSpaces: false,
         convertDotsToEllipsis: false,
-        stripHtml: false
+        stripHtml: false,
+        eol: false
       }
     }
   );
+});
+
+test(`10.10 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, CR requested`, t => {
+  const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
+  const opts = {
+    eol: "cr"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
+    "10.10.02 - CR requested"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.11 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, LF requested`, t => {
+  const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
+  const opts = {
+    eol: "lf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
+    "10.11"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.12 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF present, CRLF requested`, t => {
+  const source = `aaa\r\n\r\nbbb\r\n\r\nccc`;
+  const opts = {
+    eol: "crlf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
+    "10.12"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.13 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, CR requested`, t => {
+  const source = `aaa\n\nbbb\n\nccc`;
+  const opts = {
+    eol: "cr"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
+    "10.13"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.14 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, LF requested`, t => {
+  const source = `aaa\n\nbbb\n\nccc`;
+  const opts = {
+    eol: "lf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
+    "10.14"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.15 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - LF present, CRLF requested`, t => {
+  const source = `aaa\n\nbbb\n\nccc`;
+  const opts = {
+    eol: "crlf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
+    "10.15"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.16 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, CR requested`, t => {
+  const source = `aaa\r\rbbb\r\rccc`;
+  const opts = {
+    eol: "cr"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
+    "10.16"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.17 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, LF requested`, t => {
+  const source = `aaa\r\rbbb\r\rccc`;
+  const opts = {
+    eol: "lf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
+    "10.17"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
+});
+
+test(`10.18 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CR present, CRLF requested`, t => {
+  const source = `aaa\r\rbbb\r\rccc`;
+  const opts = {
+    eol: "crlf"
+  };
+  t.is(
+    det(t, 0, source, opts).res,
+    "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
+    "10.18.02"
+  );
+  t.true(det1(source, opts).applicableOpts.eol);
 });

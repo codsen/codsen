@@ -91,7 +91,7 @@ test("05 - invisible breaks - raw", t => {
   }).forEach((opt, n) => {
     t.is(
       det(t, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
-      "a\nb\nc\nd\re\nf\ng\nh",
+      "a\nb\nc\nd\ne\nf\ng\nh",
       "05"
     );
   });
@@ -130,7 +130,7 @@ test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
   }).forEach((opt, n) => {
     t.is(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
-      "a<br/>\nb\nc\n<br/>\nd",
+      "a<br/>\nb\nc\n<br/>\n\nd",
       "08"
     );
   });
@@ -144,7 +144,7 @@ test("09 - invisible breaks - replace breaks into HTML BR's", t => {
   }).forEach((opt, n) => {
     t.is(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
-      "a<br>\nb\nc\n<br>\nd",
+      "a<br>\nb\nc\n<br>\n\nd",
       "09"
     );
   });

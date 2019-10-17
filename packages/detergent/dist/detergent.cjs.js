@@ -80,6 +80,7 @@ var defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
+  eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"]
 };
@@ -134,8 +135,7 @@ function isUppercaseLetter(str) {
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
 
-var endOfLine = require("os").EOL || "\n";
-function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts) {
+function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine) {
   var len = str.length;
   var isNum = Number.isInteger;
   if (/[\uD800-\uDFFF]/g.test(str[i]) && !(str.charCodeAt(i + 1) >= 0xdc00 && str.charCodeAt(i + 1) <= 0xdfff || str.charCodeAt(i - 1) >= 0xd800 && str.charCodeAt(i - 1) <= 0xdbff)) {
@@ -169,13 +169,18 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           if (!applicableOpts.removeLineBreaks) {
             applicableOpts.removeLineBreaks = true;
           }
-          if (!opts.removeLineBreaks && !brClosingBracketIndexesArr.some(function (idx) {
+          if (!opts.removeLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
             return stringLeftRight.left(str, i) === idx;
-          })) {
-            applicableOpts.replaceLineBreaks = true;
+          }))) {
             if (opts.replaceLineBreaks) {
               applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
             }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
           }
           if (opts.removeLineBreaks) {
             var whatToInsert = " ";
@@ -183,25 +188,25 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
               whatToInsert = "";
             }
             rangesArr.push(i, y, whatToInsert);
-          } else if (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
+          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
             return stringLeftRight.left(str, i) === idx;
-          })) {
-            applicableOpts.replaceLineBreaks = true;
-            if (opts.replaceLineBreaks) {
-              var startingIdx = i;
-              if (str[i - 1] === " ") {
-                startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
-              }
-              rangesArr.push(startingIdx, i, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : ""));
+          }))) {
+            var startingIdx = i;
+            if (str[i - 1] === " ") {
+              startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
             }
+            rangesArr.push(startingIdx, i + (endOfLine === "\r" ? 1 : 0), "<br".concat(opts.useXHTML ? "/" : "", ">").concat(endOfLine === "\r\n" ? "\r" : "").concat(endOfLine === "\r" ? "\r" : ""));
           } else {
             if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
               var tempIdx = stringLeftRight.leftStopAtNewLines(str, i);
               if (tempIdx < i - 1) {
                 rangesArr.push(tempIdx + 1, i, "".concat(endOfLine === "\r\n" ? "\r" : ""));
               }
-            } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
+            }
+            if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
               rangesArr.push(i, i, "\r");
+            } else if (endOfLine === "\r") {
+              rangesArr.push(i, i + 1);
             }
             if (str[stringLeftRight.rightStopAtNewLines(str, i)].trim().length) {
               var _tempIdx = stringLeftRight.rightStopAtNewLines(str, i);
@@ -215,40 +220,60 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
-          applicableOpts.removeLineBreaks = true;
-          if (!opts.removeLineBreaks && !brClosingBracketIndexesArr.some(function (idx) {
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
+          if (!opts.removeLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
             return stringLeftRight.left(str, i) === idx;
-          })) {
-            applicableOpts.replaceLineBreaks = true;
+          }))) {
+            if (opts.replaceLineBreaks && !opts.removeLineBreaks) {
+              applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+            }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
           }
           if (opts.removeLineBreaks) {
             var _whatToInsert = " ";
-            if (punctuationChars.includes(str[stringLeftRight.right(str, i)]) || str[i + 1] === "\n") {
+            if (punctuationChars.includes(str[stringLeftRight.right(str, i)]) || ["\n", "\r"].includes(str[i + 1])) {
               _whatToInsert = "";
             }
             rangesArr.push(i, y, _whatToInsert);
-          } else if (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
+          } else if (opts.replaceLineBreaks && (!brClosingBracketIndexesArr || Array.isArray(brClosingBracketIndexesArr) && !brClosingBracketIndexesArr.some(function (idx) {
             return stringLeftRight.left(str, i) === idx;
-          })) {
-            applicableOpts.replaceLineBreaks = true;
-            if (opts.replaceLineBreaks) {
-              applicableOpts.useXHTML = true;
-              var _startingIdx = i;
-              if (str[i - 1] === " ") {
-                _startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
-              }
-              var endingIdx = i;
+          }))) {
+            var _startingIdx = i;
+            if (str[i - 1] === " ") {
+              _startingIdx = stringLeftRight.leftStopAtNewLines(str, i) + 1;
+            }
+            var endingIdx = i;
+            var _whatToInsert2 = "";
+            if (str[i + 1] !== "\n") {
               if (endOfLine === "\n") {
-                endingIdx = i + 1;
+                _whatToInsert2 = "\n";
+              } else if (endOfLine === "\r\n") {
+                rangesArr.push(i + 1, i + 1, "\n");
               }
-              rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(str[i + 1] === "\n" ? "" : "\n"));
-              if (str[i + 1] === "\n") {
-                offsetBy(1);
-              }
+            }
+            if (endOfLine === "\n") {
+              endingIdx = i + 1;
+            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            }
+            rangesArr.push(_startingIdx, endingIdx, "<br".concat(opts.useXHTML ? "/" : "", ">").concat(_whatToInsert2));
+            if (str[i + 1] === "\n") {
+              offsetBy(1);
             }
           } else {
             if (endOfLine === "\n") {
               rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
+            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            } else if (endOfLine === "\r\n" && str[i + 1] !== "\n") {
+              rangesArr.push(i, i + 1, "\n");
             }
             if (str[stringLeftRight.leftStopAtNewLines(str, i)].trim().length) {
               var _endingIdx = i;
@@ -674,82 +699,11 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
 
 var version = "5.1.1";
 
-var _endianness;
-function endianness() {
-  if (typeof _endianness === 'undefined') {
-    var a = new ArrayBuffer(2);
-    var b = new Uint8Array(a);
-    var c = new Uint16Array(a);
-    b[0] = 1;
-    b[1] = 2;
-    if (c[0] === 258) {
-      _endianness = 'BE';
-    } else if (c[0] === 513) {
-      _endianness = 'LE';
-    } else {
-      throw new Error('unable to figure out endianess');
-    }
-  }
-  return _endianness;
-}
-function hostname() {
-  if (typeof global.location !== 'undefined') {
-    return global.location.hostname;
-  } else return '';
-}
-function loadavg() {
-  return [];
-}
-function uptime() {
-  return 0;
-}
-function freemem() {
-  return Number.MAX_VALUE;
-}
-function totalmem() {
-  return Number.MAX_VALUE;
-}
-function cpus() {
-  return [];
-}
-function type() {
-  return 'Browser';
-}
-function release() {
-  if (typeof global.navigator !== 'undefined') {
-    return global.navigator.appVersion;
-  }
-  return '';
-}
-function networkInterfaces() {}
-function getNetworkInterfaces() {}
-function tmpDir() {
-  return '/tmp';
-}
-var tmpdir = tmpDir;
-var EOL = '\n';
-var os = {
-  EOL: EOL,
-  tmpdir: tmpdir,
-  tmpDir: tmpDir,
-  networkInterfaces: networkInterfaces,
-  getNetworkInterfaces: getNetworkInterfaces,
-  release: release,
-  type: type,
-  cpus: cpus,
-  totalmem: totalmem,
-  freemem: freemem,
-  uptime: uptime,
-  loadavg: loadavg,
-  hostname: hostname,
-  endianness: endianness
-};
-
 function det(str, inputOpts) {
-  var opts;
   if (typeof str !== "string") {
     throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
   }
+  var opts;
   if (inputOpts) {
     opts = clone(inputOpts);
     if (isObj(inputOpts)) {
@@ -777,6 +731,9 @@ function det(str, inputOpts) {
   } else {
     opts = clone(defaultOpts);
   }
+  if (!["lf", "crlf", "cr"].includes(opts.eol)) {
+    opts.eol = "lf";
+  }
   var applicableOpts = {};
   Object.keys(defaultOpts).sort().filter(function (val) {
     return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags"].includes(val);
@@ -784,10 +741,15 @@ function det(str, inputOpts) {
     applicableOpts[singleOption] = false;
   });
   delete applicableOpts.stripHtmlButIgnoreTags;
-  var endOfLine = os.EOL;
+  var endOfLine = "\n";
+  if (opts.eol === "crlf") {
+    endOfLine = "\r\n";
+  } else if (opts.eol === "cr") {
+    endOfLine = "\r";
+  }
   var brClosingBracketIndexesArr = [];
   var finalIndexesToDelete = new Ranges({
-    limitToBeAddedWhitespace: true
+    limitToBeAddedWhitespace: false
   });
   var skipArr = new Ranges();
   function applyAndWipe() {
@@ -927,7 +889,7 @@ function det(str, inputOpts) {
     });
   }
   processOutside(str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {
-    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts);
+    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine);
   }, true);
   applyAndWipe();
   str = str.replace(/ (<br[/]?>)/g, "$1");

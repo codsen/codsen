@@ -157,32 +157,6 @@ test(`02.03 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
       JSON.stringify(opt, null, 4)
     );
   });
-
-  t.deepEqual(
-    det1(`HOORAY  ${rawMDash}  IT'S HERE ${rawhairspace}`, {
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 0
-    }),
-    {
-      res: `HOORAY &mdash; IT'S HERE`,
-      applicableOpts: {
-        fixBrokenEntities: false,
-        removeWidows: true,
-        convertEntities: true,
-        convertDashes: true,
-        convertApostrophes: true,
-        replaceLineBreaks: false,
-        removeLineBreaks: false,
-        useXHTML: false,
-        dontEncodeNonLatin: false,
-        addMissingSpaces: false,
-        convertDotsToEllipsis: false,
-        stripHtml: false
-      }
-    }
-  );
 });
 
 test(`02.04 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`, t => {
@@ -470,31 +444,6 @@ test(`03.02 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {
       JSON.stringify(opt, null, 4)
     );
   });
-
-  t.deepEqual(
-    det1(`aaaaaaaaaaa - aaaaaaaaaaaa`, {
-      convertDashes: 0,
-      removeWidows: 1,
-      convertEntities: 1
-    }),
-    {
-      res: "aaaaaaaaaaa&nbsp;- aaaaaaaaaaaa",
-      applicableOpts: {
-        fixBrokenEntities: false,
-        removeWidows: true,
-        convertEntities: true,
-        convertDashes: true,
-        convertApostrophes: false,
-        replaceLineBreaks: false,
-        removeLineBreaks: false,
-        useXHTML: false,
-        dontEncodeNonLatin: false,
-        addMissingSpaces: false,
-        convertDotsToEllipsis: false,
-        stripHtml: false
-      }
-    }
-  );
 });
 
 test(`03.03 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, t => {

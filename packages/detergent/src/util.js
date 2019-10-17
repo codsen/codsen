@@ -16,6 +16,7 @@ const defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
+  eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"]
 };
@@ -421,7 +422,7 @@ const voidTags = [
 function doConvertEntities(inputString, dontEncodeNonLatin) {
   if (dontEncodeNonLatin) {
     console.log(
-      `424 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
+      `425 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
     );
     // split, check, encode conditionally
     return Array.from(inputString)
@@ -429,7 +430,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
         console.log(
-          `432 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
+          `433 doConvertEntities() - char = "${char}"; ${`\u001b[${33}m${`char.charCodeAt(0)`}\u001b[${39}m`} = ${JSON.stringify(
             char.charCodeAt(0),
             null,
             4
@@ -444,7 +445,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
           )
         ) {
           console.log(
-            `447 doConvertEntities() - encoding to "${he.encode(char, {
+            `448 doConvertEntities() - encoding to "${he.encode(char, {
               useNamedReferences: true
             })}"`
           );
@@ -456,7 +457,7 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       })
       .join("");
   }
-  console.log(`459 doConvertEntities() - outside if (dontEncodeNonLatin)`);
+  console.log(`460 doConvertEntities() - outside if (dontEncodeNonLatin)`);
   // else, if dontEncodeNonLatin if off, just encode everything:
   return he.encode(inputString, {
     useNamedReferences: true

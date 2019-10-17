@@ -2,7 +2,6 @@
 
 import test from "ava";
 import { det, mixer, allCombinations } from "../t-util/util";
-import { det as det1 } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
   rawNDash,
@@ -15,6 +14,7 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
 } from "../dist/util.esm";
+// import { det as det1 } from "../dist/detergent.esm";
 
 // -----------------------------------------------------------------------------
 
@@ -137,29 +137,6 @@ test(`01.06 - \u001b[${33}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${33}m$
       JSON.stringify(opt, null, 4)
     );
   });
-
-  t.deepEqual(
-    det1(`An A&ndash;Z guide`, {
-      convertDashes: 0
-    }),
-    {
-      res: "An A-Z guide",
-      applicableOpts: {
-        fixBrokenEntities: false,
-        removeWidows: false,
-        convertEntities: false,
-        convertDashes: true,
-        convertApostrophes: false,
-        replaceLineBreaks: false,
-        removeLineBreaks: false,
-        useXHTML: false,
-        dontEncodeNonLatin: false,
-        addMissingSpaces: false,
-        convertDotsToEllipsis: false,
-        stripHtml: false
-      }
-    }
-  );
 });
 
 //                                 m dashes

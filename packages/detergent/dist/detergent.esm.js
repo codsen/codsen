@@ -40,6 +40,7 @@ const defaultOpts = {
   addMissingSpaces: true,
   convertDotsToEllipsis: true,
   stripHtml: true,
+  eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
   stripHtmlAddNewLine: ["li", "/ul"]
 };
@@ -487,7 +488,6 @@ function isUppercaseLetter(str) {
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
 
-const endOfLine = require("os").EOL || "\n";
 function processCharacter(
   str,
   opts,
@@ -497,7 +497,8 @@ function processCharacter(
   offsetBy,
   brClosingBracketIndexesArr,
   state,
-  applicableOpts
+  applicableOpts,
+  endOfLine
 ) {
   const len = str.length;
   const isNum = Number.isInteger;
@@ -555,12 +556,19 @@ function processCharacter(
           }
           if (
             !opts.removeLineBreaks &&
-            !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)
+            (!brClosingBracketIndexesArr ||
+              (Array.isArray(brClosingBracketIndexesArr) &&
+                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
           ) {
-            applicableOpts.replaceLineBreaks = true;
             if (opts.replaceLineBreaks) {
               applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
             }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
           }
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
@@ -569,24 +577,22 @@ function processCharacter(
             }
             rangesArr.push(i, y, whatToInsert);
           } else if (
-            !brClosingBracketIndexesArr ||
-            (Array.isArray(brClosingBracketIndexesArr) &&
-              !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))
+            opts.replaceLineBreaks &&
+            (!brClosingBracketIndexesArr ||
+              (Array.isArray(brClosingBracketIndexesArr) &&
+                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
           ) {
-            applicableOpts.replaceLineBreaks = true;
-            if (opts.replaceLineBreaks) {
-              let startingIdx = i;
-              if (str[i - 1] === " ") {
-                startingIdx = leftStopAtNewLines(str, i) + 1;
-              }
-              rangesArr.push(
-                startingIdx,
-                i,
-                `<br${opts.useXHTML ? "/" : ""}>${
-                  endOfLine === "\r\n" ? "\r" : ""
-                }`
-              );
+            let startingIdx = i;
+            if (str[i - 1] === " ") {
+              startingIdx = leftStopAtNewLines(str, i) + 1;
             }
+            rangesArr.push(
+              startingIdx,
+              i + (endOfLine === "\r" ? 1 : 0),
+              `<br${opts.useXHTML ? "/" : ""}>${
+                endOfLine === "\r\n" ? "\r" : ""
+              }${endOfLine === "\r" ? "\r" : ""}`
+            );
           } else {
             if (str[leftStopAtNewLines(str, i)].trim().length) {
               const tempIdx = leftStopAtNewLines(str, i);
@@ -597,8 +603,11 @@ function processCharacter(
                   `${endOfLine === "\r\n" ? "\r" : ""}`
                 );
               }
-            } else if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
+            }
+            if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
               rangesArr.push(i, i, "\r");
+            } else if (endOfLine === "\r") {
+              rangesArr.push(i, i + 1);
             }
             if (str[rightStopAtNewLines(str, i)].trim().length) {
               const tempIdx = rightStopAtNewLines(str, i);
@@ -612,52 +621,73 @@ function processCharacter(
           applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? " " : "\n");
         } else if (charcode === 13) {
-          applicableOpts.removeLineBreaks = true;
+          if (!applicableOpts.removeLineBreaks) {
+            applicableOpts.removeLineBreaks = true;
+          }
           if (
             !opts.removeLineBreaks &&
-            !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)
+            (!brClosingBracketIndexesArr ||
+              (Array.isArray(brClosingBracketIndexesArr) &&
+                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
           ) {
-            applicableOpts.replaceLineBreaks = true;
+            if (opts.replaceLineBreaks && !opts.removeLineBreaks) {
+              applicableOpts.useXHTML = true;
+              applicableOpts.replaceLineBreaks = true;
+            } else if (!opts.replaceLineBreaks) {
+              applicableOpts.replaceLineBreaks = true;
+            }
+          }
+          if (!opts.removeLineBreaks) {
+            applicableOpts.eol = true;
           }
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
             if (
               punctuationChars.includes(str[right(str, i)]) ||
-              str[i + 1] === "\n"
+              ["\n", "\r"].includes(str[i + 1])
             ) {
               whatToInsert = "";
             }
             rangesArr.push(i, y, whatToInsert);
           } else if (
-            !brClosingBracketIndexesArr ||
-            (Array.isArray(brClosingBracketIndexesArr) &&
-              !brClosingBracketIndexesArr.some(idx => left(str, i) === idx))
+            opts.replaceLineBreaks &&
+            (!brClosingBracketIndexesArr ||
+              (Array.isArray(brClosingBracketIndexesArr) &&
+                !brClosingBracketIndexesArr.some(idx => left(str, i) === idx)))
           ) {
-            applicableOpts.replaceLineBreaks = true;
-            if (opts.replaceLineBreaks) {
-              applicableOpts.useXHTML = true;
-              let startingIdx = i;
-              if (str[i - 1] === " ") {
-                startingIdx = leftStopAtNewLines(str, i) + 1;
-              }
-              let endingIdx = i;
+            let startingIdx = i;
+            if (str[i - 1] === " ") {
+              startingIdx = leftStopAtNewLines(str, i) + 1;
+            }
+            let endingIdx = i;
+            let whatToInsert = "";
+            if (str[i + 1] !== "\n") {
               if (endOfLine === "\n") {
-                endingIdx = i + 1;
+                whatToInsert = "\n";
+              } else if (endOfLine === "\r\n") {
+                rangesArr.push(i + 1, i + 1, "\n");
               }
-              rangesArr.push(
-                startingIdx,
-                endingIdx,
-                `<br${opts.useXHTML ? "/" : ""}>${
-                  str[i + 1] === "\n" ? "" : "\n"
-                }`
-              );
-              if (str[i + 1] === "\n") {
-                offsetBy(1);
-              }
+            }
+            if (endOfLine === "\n") {
+              endingIdx = i + 1;
+            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            }
+            rangesArr.push(
+              startingIdx,
+              endingIdx,
+              `<br${opts.useXHTML ? "/" : ""}>${whatToInsert}`
+            );
+            if (str[i + 1] === "\n") {
+              offsetBy(1);
             }
           } else {
             if (endOfLine === "\n") {
               rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
+            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+              rangesArr.push(i + 1, i + 2);
+            } else if (endOfLine === "\r\n" && str[i + 1] !== "\n") {
+              rangesArr.push(i, i + 1, "\n");
             }
             if (str[leftStopAtNewLines(str, i)].trim().length) {
               let endingIdx = i;
@@ -1305,84 +1335,13 @@ function processCharacter(
 
 var version = "5.1.1";
 
-var _endianness;
-function endianness() {
-  if (typeof _endianness === 'undefined') {
-    var a = new ArrayBuffer(2);
-    var b = new Uint8Array(a);
-    var c = new Uint16Array(a);
-    b[0] = 1;
-    b[1] = 2;
-    if (c[0] === 258) {
-      _endianness = 'BE';
-    } else if (c[0] === 513){
-      _endianness = 'LE';
-    } else {
-      throw new Error('unable to figure out endianess');
-    }
-  }
-  return _endianness;
-}
-function hostname() {
-  if (typeof global.location !== 'undefined') {
-    return global.location.hostname
-  } else return '';
-}
-function loadavg() {
-  return [];
-}
-function uptime() {
-  return 0;
-}
-function freemem() {
-  return Number.MAX_VALUE;
-}
-function totalmem() {
-  return Number.MAX_VALUE;
-}
-function cpus() {
-  return [];
-}
-function type() {
-  return 'Browser';
-}
-function release () {
-  if (typeof global.navigator !== 'undefined') {
-    return global.navigator.appVersion;
-  }
-  return '';
-}
-function networkInterfaces(){}
-function getNetworkInterfaces(){}
-function tmpDir() {
-  return '/tmp';
-}
-var tmpdir = tmpDir;
-var EOL = '\n';
-var os = {
-  EOL: EOL,
-  tmpdir: tmpdir,
-  tmpDir: tmpDir,
-  networkInterfaces:networkInterfaces,
-  getNetworkInterfaces: getNetworkInterfaces,
-  release: release,
-  type: type,
-  cpus: cpus,
-  totalmem: totalmem,
-  freemem: freemem,
-  uptime: uptime,
-  loadavg: loadavg,
-  hostname: hostname,
-  endianness: endianness,
-};
-
 function det(str, inputOpts) {
-  let opts;
   if (typeof str !== "string") {
     throw new Error(
       `detergent(): [THROW_ID_01] the first input argument must be of a string type, not ${typeof str}`
     );
   }
+  let opts;
   if (inputOpts) {
     opts = clone(inputOpts);
     if (isObj(inputOpts)) {
@@ -1417,6 +1376,9 @@ function det(str, inputOpts) {
   } else {
     opts = clone(defaultOpts);
   }
+  if (!["lf", "crlf", "cr"].includes(opts.eol)) {
+    opts.eol = "lf";
+  }
   const applicableOpts = {};
   Object.keys(defaultOpts)
     .sort()
@@ -1427,10 +1389,15 @@ function det(str, inputOpts) {
       applicableOpts[singleOption] = false;
     });
   delete applicableOpts.stripHtmlButIgnoreTags;
-  const endOfLine = os.EOL;
+  let endOfLine = "\n";
+  if (opts.eol === "crlf") {
+    endOfLine = "\r\n";
+  } else if (opts.eol === "cr") {
+    endOfLine = "\r";
+  }
   const brClosingBracketIndexesArr = [];
   const finalIndexesToDelete = new Ranges({
-    limitToBeAddedWhitespace: true
+    limitToBeAddedWhitespace: false
   });
   const skipArr = new Ranges();
   function applyAndWipe() {
@@ -1720,7 +1687,8 @@ function det(str, inputOpts) {
         offsetBy,
         brClosingBracketIndexesArr,
         state,
-        applicableOpts
+        applicableOpts,
+        endOfLine
       ),
     true
   );
