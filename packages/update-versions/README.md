@@ -35,19 +35,28 @@ Then, call it from the command line using keyword:
 upd
 ```
 
-## Purpose
+## TLDR
 
-This is a very opinionated CLI to keep dependencies in monorepos up-to-date.
+Update all dependencies on all packages in a monorepo — or single repo — to be the latest as per npm.
 
-It is aimed specifically at monorepos full of npm packages (as opposed to React component monorepos and similar).
+## Different kinds of monorepos
 
-It assumed you'll always want to update all dependencies to the latest and patch any bugs right away.
+Here's where life is different between front-end web dev/React/SPA and npm Open Source package worlds: open source JS programs very rarely need any intervention after updating dependencies, even after updates to new major releases. Front-end, React, SPA packages, on other hand, are very fragile — even minor version bump in a dependency can break everything.
 
-This CLI will:
+Here it assumed you'll always want to update all dependencies to the latest and patch any bugs right away.
 
-- Update all dependencies according to npm
-- Replace `*` with `^x.x.x` automatically
-- Replace all dependency version ranges without `^` to have `^`
+That's why using `upd` in Open Source npm package monorepos is a wise idea but using it in React component monorepos, it's, well, _a questionable idea_.
+
+PS. Notice how [`create-react-app`](https://github.com/facebook/create-react-app) uses fixed deps (no caret `^`) and gives instructions how to update. Front-end world is fragile!
+
+**[⬆ back to top](#)**
+
+## What `update-versions` does
+
+This CLI will iterate all `package.json` in a given path and its sub-paths and process each dev- and normal dependency:
+
+- If it's a monorepo setup and if another package in monorepo exists with such name, that version is set in `^x.x.x` format
+- In all other cases, value from npm is fetched using `pacote` and that value is set in `^x.x.x` format
 
 This CLI is a good idea in Lerna monorepos full of owned npm packages (where you bump versions often and effortlessly) but a bad idea in React SPA's (where single minor update might break many things and updating dependencies is a big, complex deal).
 
@@ -57,38 +66,17 @@ This CLI is a good idea in Lerna monorepos full of owned npm packages (where you
 
 Lerna `bootstrap` will not work properly if each dependency is not prefixed with `^`, as in `^x.y.z`. It's hard to manually enforce that all monorepo packages should have all dependencies in this format. `update-versions` will force this format.
 
-**One exception** - if its dependency's value starts with `file:`
+**One exception** - if its dependency's value starts with `file:`.
 
 **[⬆ back to top](#)**
 
 ## Opinionated part 2
 
-If any dependency is listed on both `dependencies` and `devDependencies`, it will be removed from the latter list.
+If any dependency is listed on both `dependencies` and `devDependencies`, it will be removed from the latter list. It's common sense but we mention this "extra".
 
 ## Opinionated part 3
 
 If Lerna build goes wrong, key called `gitHead` is created in `package.json`. Lerna normally cleans it up but if things go wrong, key might be left there. This CLI removes key called `gitHead` if such exists, in every processed `package.json`.
-
-**[⬆ back to top](#)**
-
-## Conclusion
-
-Because of the features mentioned above, this package is slower than alternatives, `yarn` or `npm-check-updates` or whatever.
-
-I prefer slower but single tool instead of faster but multiple.
-
-If you don't like something above, don't use `update-versions`.
-
-**[⬆ back to top](#)**
-
-## All Extras
-
-- Any `gitHead` keys will be removed from all `package.json`. `gitHead` are bad and happen when `lerna publish` goes wrong.
-- If algorithm encounters `node_modules` it won't touch that folder (or deeper inside). This guarantees all your symlinks will be intact.
-- Thanks to `log-update` the log footprint is as minimal as possible, to save space
-- Thanks to `update-notifier` CLI will pester you to update if newer version is released
-
-PS. We are using `update-versions` to maintain itself — our [monorepo](https://gitlab.com/codsen/codsen/) version updates are driven by this very CLI.
 
 **[⬆ back to top](#)**
 

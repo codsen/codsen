@@ -100,7 +100,9 @@
 		},
 		"extends": [
 			"eslint:recommended",
-			"plugin:prettier/recommended"
+			"plugin:prettier/recommended",
+			"plugin:import/errors",
+			"plugin:import/warnings"
 		],
 		"parserOptions": {
 			"ecmaVersion": 2018,
@@ -108,8 +110,7 @@
 		},
 		"plugins": [
 			"ava",
-			"no-unsanitized",
-			"import"
+			"no-unsanitized"
 		],
 		"root": true,
 		"rules": {
@@ -306,7 +307,7 @@
 			"verbose": true
 		},
 		"devDependencies": {
-			"@babel/core": "^7.6.3",
+			"@babel/core": "^7.6.4",
 			"@babel/preset-env": "^7.6.3",
 			"@babel/register": "^7.6.2",
 			"ava": "^2.2.6",
@@ -323,7 +324,7 @@
 			"lect": "^0.10.1",
 			"nyc": "^14.1.1",
 			"prettier": "^1.18.2",
-			"rollup": "^1.23.1",
+			"rollup": "^1.25.0",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-babel": "^4.3.3",
 			"rollup-plugin-cleanup": "^3.1.1",

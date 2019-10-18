@@ -141,7 +141,7 @@
     "ast-monkey-traverse": "^1.11.41",
     "bitbucket-slug": "^1.9.45",
     "chalk": "^2.4.2",
-    "execa": "^2.1.0",
+    "execa": "^3.2.0",
     "filesize": "^5.0.3",
     "find-file-recursively-up": "^1.1.2",
     "format-package": "^5.2.0",
@@ -170,7 +170,7 @@
     "semver-regex": "^3.1.0",
     "split-lines": "^2.0.0",
     "update-notifier": "^3.0.1",
-    "write-file-atomic": "^3.0.0",
+    "write-file-atomic": "^3.0.1",
     "write-json-file": "^4.2.0"
   },
   "devDependencies": {
