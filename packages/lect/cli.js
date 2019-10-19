@@ -1899,7 +1899,19 @@ const ${consumedName} = ${camelCase(pack.name)};
   // from .lectrc.json:
   if (content.includes("%COVPERC%")) {
     let colour = "red";
-    const perc = objectPath.get(coverageValues, "total.lines.pct");
+    let perc = objectPath.get(coverageValues, "total.lines.pct");
+    let caught;
+    if (
+      Object.keys(coverageValues).some(key => {
+        caught = key;
+        return key.includes(".esm.");
+      })
+    ) {
+      const perc2 = objectPath.get(coverageValues[caught], `lines.pct`);
+      if (perc2) {
+        perc = perc2;
+      }
+    }
     if (typeof perc === "number" && perc > 50) {
       colour = perc > 85 ? "brightgreen" : "yellow";
     }
