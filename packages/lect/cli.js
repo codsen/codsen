@@ -353,6 +353,33 @@ function step13() {
     return;
   }
   const addon = allFilesInSrc.reduce((acc, currVal) => {
+    const calculatedExternalImports = extractImports(
+      fs.readFileSync(`./src/${currVal}`, "utf8")
+    )
+      .sort()
+      .map(val => {
+        console.log(`\nval = >>>${val}<<<`);
+        if (String(val).startsWith(`"./`)) {
+          console.log(
+            `* returning ${String(val)
+              .trim()
+              .slice(3)}`
+          );
+          return `"${String(val).slice(3)}`;
+        }
+        console.log(`isStr(val) = ${isStr(val)}`);
+
+        console.log(`returning ${val}`);
+        return val;
+      })
+      .join(",\n        ");
+    console.log(
+      `${`\u001b[${33}m${`calculatedExternalImports`}\u001b[${39}m`} = ${JSON.stringify(
+        calculatedExternalImports,
+        null,
+        4
+      )}`
+    );
     return `${acc},
 
     // ${currVal} build:
@@ -362,10 +389,7 @@ function step13() {
         { file: "dist/${path.parse(currVal).name}.esm.js", format: "es" },
       ],
       external: [
-        ${extractImports(fs.readFileSync(`./src/${currVal}`, "utf8"))
-          .sort()
-          .filter(val => !val.includes("./"))
-          .join(",\n        ")}
+        ${calculatedExternalImports}
       ],
       plugins: [
         strip({
