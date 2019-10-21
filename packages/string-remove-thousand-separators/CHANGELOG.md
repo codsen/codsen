@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.38](https://gitlab.com/codsen/codsen/compare/string-remove-thousand-separators@3.0.37...string-remove-thousand-separators@3.0.38) (2019-10-21)
+
+**Note:** Version bump only for package string-remove-thousand-separators
+
+
+
+
+
 ## 2.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

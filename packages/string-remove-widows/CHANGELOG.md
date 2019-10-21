@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://gitlab.com/codsen/codsen/compare/string-remove-widows@1.5.1...string-remove-widows@1.5.2) (2019-10-21)
+
+
+### Bug Fixes
+
+* remove rogue require() which was present instead of import ([233a8d1](https://gitlab.com/codsen/codsen/commit/233a8d11d70f62c7a521e97207acfdb3b64d5f63))
+
+
+
+
+
 ## 1.5.0 (2019-10-02)
 
 ### Bug Fixes
