@@ -332,9 +332,32 @@ if (
   oldHistoricTotals[oldHistoricTotals.length - 1][1] !==
     compiledStats.totalTestsCount
 ) {
-  oldHistoricTotals.push([newdate, compiledStats.totalTestsCount]);
-  fs.writeFileSync(
+  let findingIdx;
+  if (
+    oldHistoricTotals.some((arr, i) => {
+      if (arr[0] === newdate) {
+        findingIdx = i;
+        return true;
+      }
+      return false;
+    })
+  ) {
+    // edit old if it was on the same date, today
+    oldHistoricTotals[findingIdx][1] = compiledStats.totalTestsCount;
+  } else {
+    // push new
+    oldHistoricTotals.push([newdate, compiledStats.totalTestsCount]);
+  }
+  fs.writeFile(
     path.join("stats/oldHistoricTotals.json"),
-    JSON.stringify(oldHistoricTotals, null, 4)
+    JSON.stringify(oldHistoricTotals, null, 4),
+    err => {
+      if (err) {
+        throw err;
+      }
+      console.log(
+        `\u001b[${32}m${`oldHistoricTotals.json written OK`}\u001b[${39}m`
+      );
+    }
   );
 }
