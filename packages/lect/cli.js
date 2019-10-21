@@ -358,28 +358,12 @@ function step13() {
     )
       .sort()
       .map(val => {
-        console.log(`\nval = >>>${val}<<<`);
         if (String(val).startsWith(`"./`)) {
-          console.log(
-            `* returning ${String(val)
-              .trim()
-              .slice(3)}`
-          );
           return `"${String(val).slice(3)}`;
         }
-        console.log(`isStr(val) = ${isStr(val)}`);
-
-        console.log(`returning ${val}`);
         return val;
       })
       .join(",\n        ");
-    console.log(
-      `${`\u001b[${33}m${`calculatedExternalImports`}\u001b[${39}m`} = ${JSON.stringify(
-        calculatedExternalImports,
-        null,
-        4
-      )}`
-    );
     return `${acc},
 
     // ${currVal} build:
