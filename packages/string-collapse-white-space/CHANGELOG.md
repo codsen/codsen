@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.1.4](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@5.1.3...string-collapse-white-space@5.1.4) (2019-10-21)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-
-
-
-
 ## 5.1.2 (2019-10-02)
 
 ### Bug Fixes

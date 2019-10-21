@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.2](https://gitlab.com/codsen/codsen/compare/lect@0.10.1...lect@0.10.2) (2019-10-21)
-
+## 0.10.2 (2019-10-21)
 
 ### Bug Fixes
 
-* fix the json files as external dependencies in rollup configs ([2c85f82](https://gitlab.com/codsen/codsen/commit/2c85f82e41a4af8cbf56edb610eeb5daec9292b2))
-
-
-
-
+- fix the json files as external dependencies in rollup configs ([2c85f82](https://gitlab.com/codsen/codsen/commit/2c85f82e41a4af8cbf56edb610eeb5daec9292b2))
 
 ## 0.10.0 (2019-10-05)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.2.0](https://gitlab.com/codsen/codsen/compare/detergent@5.1.1...detergent@5.2.0) (2019-10-21)
-
+## 5.2.0 (2019-10-21)
 
 ### Features
 
-* opts.eol ([3ee6701](https://gitlab.com/codsen/codsen/commit/3ee670145b0f18b01e798932d33e0e750507fdc9))
-
-
-
-
+- opts.eol ([3ee6701](https://gitlab.com/codsen/codsen/commit/3ee670145b0f18b01e798932d33e0e750507fdc9))
 
 ## 5.1.0 (2019-10-02)
 

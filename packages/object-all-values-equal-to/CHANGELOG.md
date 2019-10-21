@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.2](https://gitlab.com/codsen/codsen/compare/object-all-values-equal-to@1.8.1...object-all-values-equal-to@1.8.2) (2019-10-21)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-
-
-
-
 ## 1.8.0 (2019-10-02)
 
 ### Features
