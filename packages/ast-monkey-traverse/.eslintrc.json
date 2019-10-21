@@ -5,7 +5,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -13,8 +15,7 @@
   },
   "plugins": [
     "ava",
-    "no-unsanitized",
-    "import"
+    "no-unsanitized"
   ],
   "root": true,
   "rules": {

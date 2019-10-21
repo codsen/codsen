@@ -14,12 +14,12 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Purpose](#purpose)
+- [TLDR](#tldr)
+- [Different kinds of monorepos](#different-kinds-of-monorepos)
+- [What `update-versions` does](#what-update-versions-does)
 - [Opinionated part 1](#opinionated-part-1)
 - [Opinionated part 2](#opinionated-part-2)
 - [Opinionated part 3](#opinionated-part-3)
-- [Conclusion](#conclusion)
-- [All Extras](#all-extras)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

@@ -1,7 +1,7 @@
 {
     "all": {
         "all-named-html-entities": 13,
-        "array-group-str-omit-num-char": 10,
+        "array-group-str-omit-num-char": 12,
         "array-includes-with-glob": 16,
         "array-of-arrays-into-ast": 4,
         "array-of-arrays-sort-by-col": 25,
@@ -57,7 +57,7 @@
         "object-delete-key": 36,
         "object-fill-missing-keys": 30,
         "object-flatten-all-arrays": 19,
-        "object-flatten-referencing": 36,
+        "object-flatten-referencing": 33,
         "object-merge-advanced": 86,
         "object-no-new-keys": 12,
         "object-set-all-values-to": 21,
@@ -99,12 +99,12 @@
         "util-nonempty": 9
     },
     "totalPackageCount": 97,
-    "totalTestsCount": 4899,
+    "totalTestsCount": 4898,
     "minTestsCount": 2,
     "minTestsName": "arrayiffy-if-string",
     "maxTestsCount": 600,
     "maxTestsName": "detergent",
     "testsCountMedian": 17,
-    "testsCountArithmeticMean": 51,
+    "testsCountArithmeticMean": 50,
     "testsCountGeometricMean": 20
 }
