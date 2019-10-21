@@ -3,7 +3,6 @@
 import test from "ava";
 import ofr from "../dist/object-flatten-referencing.esm";
 import {
-  checkTypes,
   flattenObject,
   flattenArr,
   arrayiffyString,
@@ -1715,28 +1714,6 @@ test("96.03 - util.arrayiffyString - doesn't touch any other input types", t => 
   t.deepEqual(arrayiffyString([]), [], "96.03.02");
   t.deepEqual(arrayiffyString(1), 1, "96.03.03");
   t.deepEqual(arrayiffyString(null), null, "96.03.04");
-});
-
-// -----------------------------------------------------------------------------
-// 97. util.checkTypes
-// -----------------------------------------------------------------------------
-
-test("97.01 - util.checkTypes > missing both inputs - throws", t => {
-  t.throws(() => {
-    checkTypes();
-  });
-});
-
-test("97.02 - util.checkTypes > key of wrong type", t => {
-  t.throws(() => {
-    checkTypes({ a: "a" }, { a: false }, "Error!", "a");
-  });
-});
-
-test("97.03 - util.checkTypes > key of wrong type", t => {
-  t.throws(() => {
-    checkTypes({ a: "a", b: false }, { a: "a", b: "something" }, "Error!", "b");
-  });
 });
 
 // -----------------------------------------------------------------------------
