@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.0.39",
+  "version": "8.0.40",
   "description": "Preprocessor for JSON to allow keys referencing keys",
   "license": "MIT",
   "engines": {
@@ -138,15 +138,15 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.19",
-    "ast-get-values-by-key": "^2.6.46",
+    "arrayiffy-if-string": "^3.11.20",
+    "ast-get-values-by-key": "^2.6.47",
     "ast-monkey-traverse": "^1.11.42",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^2.0.0",
     "object-path": "^0.11.4",
-    "ranges-apply": "^3.0.37",
-    "ranges-push": "^3.6.4",
+    "ranges-apply": "^3.0.38",
+    "ranges-push": "^3.6.5",
     "string-find-heads-tails": "^3.15.2",
     "string-match-left-right": "^3.11.10",
     "string-remove-duplicate-heads-tails": "^3.0.39"
@@ -165,8 +165,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.1",
-    "lect": "^0.10.2",
+    "js-row-num-cli": "^1.6.2",
+    "lect": "^0.10.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.25.1",

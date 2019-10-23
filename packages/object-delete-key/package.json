@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "engines": {
@@ -141,7 +141,7 @@
   },
   "dependencies": {
     "ast-is-empty": "^1.9.46",
-    "ast-monkey": "^7.10.47",
+    "ast-monkey": "^7.10.48",
     "lodash.clonedeep": "^4.5.0",
     "util-array-object-or-both": "^2.7.46"
   },
@@ -159,8 +159,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.1",
-    "lect": "^0.10.2",
+    "js-row-num-cli": "^1.6.2",
+    "lect": "^0.10.3",
     "nyc": "^14.1.1",
     "posthtml-parser": "^0.4.1",
     "prettier": "^1.18.2",

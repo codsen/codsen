@@ -1,7 +1,7 @@
 /**
  * emlint
  * Non-parsing static code analysis tool for HTML mixed with anything
- * Version: 1.8.1
+ * Version: 1.8.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -930,7 +930,7 @@ var errorsRules = {
 }
 };
 
-var version = "1.8.1";
+var version = "1.8.2";
 
 var isArr = Array.isArray;
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
