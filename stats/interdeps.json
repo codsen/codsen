@@ -186,7 +186,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 17880,
+        "size": 18214,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -557,7 +557,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 18177,
+        "size": 18178,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
