@@ -469,6 +469,84 @@ test(`02.22 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`exist
   setter(t, input, result, "a.d", "x", "02.22");
 });
 
+test(`02.23 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - middle element in the array`, t => {
+  const input = `{
+  "k": {
+    "l": "m",
+    "p": "q"
+  },
+  "r": [
+    "s",
+    "t",
+    "u"
+  ]
+}
+`;
+  const result = `{
+  "k": {
+    "l": "m",
+    "p": "q"
+  },
+  "r": [
+    "s",
+    "x",
+    "u"
+  ]
+}
+`;
+  setter(t, input, result, "r.1", "x", "02.23");
+});
+
+test(`02.24 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - the last element in the array`, t => {
+  const input = `{
+  "k": {
+    "l": "m",
+    "p": "q"
+  },
+  "r": [
+    "s",
+    "t",
+    "u"
+  ]
+}
+`;
+  const result = `{
+  "k": {
+    "l": "m",
+    "p": "q"
+  },
+  "r": [
+    "s",
+    "t",
+    "x"
+  ]
+}
+`;
+  setter(t, input, result, "r.2", "x", "02.24");
+});
+
+test(`02.25 - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - ${`\u001b[${32}m${`existing path`}\u001b[${39}m`} - last value in array, bool replaced with a quoted string`, t => {
+  const input = `{
+  "a": {
+    "b": false,
+    "c": [
+      "d"
+    ]
+  }
+}
+`;
+  const result = `{
+  "a": {
+    "b": "x",
+    "c": [
+      "d"
+    ]
+  }
+}
+`;
+  setter(t, input, result, "a.b", "x", "02.25");
+});
+
 // -----------------------------------------------------------------------------
 // 03. set - key does not exist
 // -----------------------------------------------------------------------------

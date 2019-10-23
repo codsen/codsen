@@ -223,7 +223,7 @@ function main({ str, path, valToInsert, mode }) {
       withinArrayIndexes.push(i);
       itsTheFirstElem = true;
       log(
-        `364 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArrayIndexes`}\u001b[${39}m`} = ${JSON.stringify(
+        `348 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`withinArrayIndexes`}\u001b[${39}m`} = ${JSON.stringify(
           withinArrayIndexes,
           null,
           4
@@ -231,7 +231,7 @@ function main({ str, path, valToInsert, mode }) {
       );
       currentPath.push(0);
       log(
-        `375 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
+        `359 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} zero to path, now = ${JSON.stringify(
           currentPath,
           null,
           0
@@ -315,7 +315,7 @@ function main({ str, path, valToInsert, mode }) {
       keyName = str.slice(keyStartedAt, i);
       log();
       currentPath.push(keyName);
-      log(`531 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`);
+      log(`506 PUSH to path, now = ${JSON.stringify(currentPath, null, 4)}`);
       if (
         stringifyPath(path) === currentPath.join(".")
       ) {
@@ -331,7 +331,7 @@ function main({ str, path, valToInsert, mode }) {
     ) {
       currentPath.pop();
       log(
-        `605 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+        `535 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
           currentPath,
           null,
           0
@@ -355,7 +355,7 @@ function main({ str, path, valToInsert, mode }) {
         if (valueEndedAt || str[left(str, i)] !== "{") {
           currentPath.pop();
           log(
-            `605 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+            `569 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
               currentPath,
               null,
               0
@@ -415,7 +415,7 @@ function main({ str, path, valToInsert, mode }) {
     ) {
       skipUntilTheFollowingIsMet.pop();
       log(
-        `712 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} skipUntilTheFollowingIsMet = ${JSON.stringify(
+        `677 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} skipUntilTheFollowingIsMet = ${JSON.stringify(
           skipUntilTheFollowingIsMet,
           null,
           4
@@ -430,7 +430,7 @@ function main({ str, path, valToInsert, mode }) {
       if (str[i] === "{" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push("}");
         log(
-          `730 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
+          `695 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
             skipUntilTheFollowingIsMet,
             null,
             4
@@ -439,7 +439,7 @@ function main({ str, path, valToInsert, mode }) {
       } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push("]");
         log(
-          `740 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
+          `705 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
             skipUntilTheFollowingIsMet,
             null,
             4
@@ -448,7 +448,7 @@ function main({ str, path, valToInsert, mode }) {
       } else if (str[i] === `"` && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push(`"`);
         log(
-          `750 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
+          `715 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`skipUntilTheFollowingIsMet`}\u001b[${39}m`} = ${JSON.stringify(
             skipUntilTheFollowingIsMet,
             null,
             4
@@ -484,7 +484,7 @@ function main({ str, path, valToInsert, mode }) {
               (badChars.includes(str[i]) && isNotEscape(str, i - 1)))))
       ) {
         log(
-          `815 INSIDE CATCH-END CLAUSES currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+          `780 INSIDE CATCH-END CLAUSES currently ${`\u001b[${33}m${`str[valueStartedAt=${valueStartedAt}]`}\u001b[${39}m`} = ${JSON.stringify(
             str[valueStartedAt],
             null,
             4
@@ -503,10 +503,16 @@ function main({ str, path, valToInsert, mode }) {
           }
           let endingPartsBeginning = i + (str[i].trim().length ? 1 : 0);
           if (
-            currentlyWithinArray &&
-            ![`"`, `[`, `{`].includes(str[valueStartedAt])
+            (currentlyWithinArray &&
+              ![`"`, `[`, `{`].includes(str[valueStartedAt]) &&
+              str[right(str, endingPartsBeginning - 1)] !== "]") ||
+            (str[endingPartsBeginning - 1] === "," &&
+              str[valueStartedAt - 1] !== `"`)
           ) {
-            endingPartsBeginning--;
+            endingPartsBeginning = endingPartsBeginning - 1;
+          }
+          if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
+            valueStartedAt = valueStartedAt - 1;
           }
           return `${str.slice(0, valueStartedAt)}${stringifyAndEscapeValue(
             calculatedValueToInsert
@@ -514,7 +520,7 @@ function main({ str, path, valToInsert, mode }) {
         } else if (mode === "del") {
           log();
           log(
-            `879 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `851 ${`\u001b[${33}m${`keyStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
               keyStartedAt,
               null,
               4
@@ -540,7 +546,7 @@ function main({ str, path, valToInsert, mode }) {
             log();
           }
           log(
-            `911 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
+            `883 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startingPoint,
               null,
               4
@@ -552,7 +558,7 @@ function main({ str, path, valToInsert, mode }) {
           );
           ranges.push([startingPoint, endingPoint]);
           log(
-            `924 ${`\u001b[${32}m${`FINAL PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+            `896 ${`\u001b[${32}m${`FINAL PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
               ranges,
               null,
               4
@@ -597,7 +603,7 @@ function main({ str, path, valToInsert, mode }) {
     );
   }
   log();
-  log(`975 RETURN applied ${JSON.stringify(apply(str, ranges), null, 4)}`);
+  log(`947 RETURN applied ${JSON.stringify(apply(str, ranges), null, 4)}`);
   return apply(str, ranges);
 }
 function set(str, path, valToInsert) {

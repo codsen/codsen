@@ -172,9 +172,9 @@ function main(_ref) {
     if (!isNum(withinQuotesSince) && str[i] === "[" && isNotEscape(str, i - 1) && !replaceThisValue) {
       withinArrayIndexes.push(i);
       itsTheFirstElem = true;
-      log("364 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "withinArrayIndexes", "\x1B[", 39, "m"), " = ", JSON.stringify(withinArrayIndexes, null, 4), "; ", "\x1B[".concat(33, "m", "itsTheFirstElem", "\x1B[", 39, "m"), " = ").concat(itsTheFirstElem));
+      log("348 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "withinArrayIndexes", "\x1B[", 39, "m"), " = ", JSON.stringify(withinArrayIndexes, null, 4), "; ", "\x1B[".concat(33, "m", "itsTheFirstElem", "\x1B[", 39, "m"), " = ").concat(itsTheFirstElem));
       currentPath.push(0);
-      log("375 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " zero to path, now = ", JSON.stringify(currentPath, null, 0)));
+      log("359 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " zero to path, now = ", JSON.stringify(currentPath, null, 0)));
     }
     if (currentlyWithinArray && str[i] === "," && itsTheFirstElem && !(valueStartedAt && !valueEndedAt)
     ) {
@@ -211,7 +211,7 @@ function main(_ref) {
       keyName = str.slice(keyStartedAt, i);
       log();
       currentPath.push(keyName);
-      log("531 PUSH to path, now = ".concat(JSON.stringify(currentPath, null, 4)));
+      log("506 PUSH to path, now = ".concat(JSON.stringify(currentPath, null, 4)));
       if (stringifyPath(path) === currentPath.join(".")
       ) {
           replaceThisValue = true;
@@ -220,7 +220,7 @@ function main(_ref) {
     }
     if (!replaceThisValue && !isNum(withinQuotesSince) && str[i] === "," && currentlyWithinObject) {
       currentPath.pop();
-      log("605 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
+      log("535 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
     }
     if (!replaceThisValue && (valueEndedAt && i >= valueEndedAt || ["}", "]"].includes(str[stringLeftRight.left(str, i)]) && ["}", "]"].includes(str[i]) || str[i] === "}" && str[stringLeftRight.left(str, i)] === "{") && str[i].trim().length) {
       log();
@@ -231,7 +231,7 @@ function main(_ref) {
         log();
         if (valueEndedAt || str[stringLeftRight.left(str, i)] !== "{") {
           currentPath.pop();
-          log("605 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
+          log("569 POP(), now ".concat("\x1B[".concat(33, "m", "currentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(currentPath, null, 0)));
         }
         log();
         log();
@@ -257,18 +257,18 @@ function main(_ref) {
     }
     if (skipUntilTheFollowingIsMet.length && str[i] === skipUntilTheFollowingIsMet[skipUntilTheFollowingIsMet.length - 1] && isNotEscape(str, i - 1)) {
       skipUntilTheFollowingIsMet.pop();
-      log("712 ".concat("\x1B[".concat(32, "m", "POP", "\x1B[", 39, "m"), " skipUntilTheFollowingIsMet = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
+      log("677 ".concat("\x1B[".concat(32, "m", "POP", "\x1B[", 39, "m"), " skipUntilTheFollowingIsMet = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
     } else if ((!withinQuotesSince || withinQuotesSince === i) && replaceThisValue &&
     !currentlyWithinArray && valueStartedAt) {
       if (str[i] === "{" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push("}");
-        log("730 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
+        log("695 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
       } else if (str[i] === "[" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push("]");
-        log("740 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
+        log("705 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
       } else if (str[i] === "\"" && isNotEscape(str, i - 1)) {
         skipUntilTheFollowingIsMet.push("\"");
-        log("750 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
+        log("715 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "skipUntilTheFollowingIsMet", "\x1B[", 39, "m"), " = ", JSON.stringify(skipUntilTheFollowingIsMet, null, 4)));
       }
     }
     if (str[i] === "\"" && isNotEscape(str, i - 1) && isNum(withinQuotesSince) && withinQuotesSince !== i) {
@@ -279,7 +279,7 @@ function main(_ref) {
       log();
       if (!withinQuotesSince && (str[valueStartedAt] === "[" && str[i] === "]" || str[valueStartedAt] === "{" && str[i] === "}" || str[valueStartedAt] === "\"" && str[i] === "\"" || !["[", "{", "\""].includes(str[valueStartedAt]) && str[valueStartedAt].trim().length && (!str[i].trim().length || badChars.includes(str[i]) && isNotEscape(str, i - 1)))
       ) {
-          log("815 INSIDE CATCH-END CLAUSES currently ".concat("\x1B[".concat(33, "m", "str[valueStartedAt=".concat(valueStartedAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[valueStartedAt], null, 4)));
+          log("780 INSIDE CATCH-END CLAUSES currently ".concat("\x1B[".concat(33, "m", "str[valueStartedAt=".concat(valueStartedAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[valueStartedAt], null, 4)));
           if (mode === "set") {
             log();
             var extraLineBreak = "";
@@ -287,13 +287,16 @@ function main(_ref) {
               extraLineBreak = "\n";
             }
             var endingPartsBeginning = i + (str[i].trim().length ? 1 : 0);
-            if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt])) {
-              endingPartsBeginning--;
+            if (currentlyWithinArray && !["\"", "[", "{"].includes(str[valueStartedAt]) && str[stringLeftRight.right(str, endingPartsBeginning - 1)] !== "]" || str[endingPartsBeginning - 1] === "," && str[valueStartedAt - 1] !== "\"") {
+              endingPartsBeginning = endingPartsBeginning - 1;
+            }
+            if (currentlyWithinArray && str[valueStartedAt - 1] === "\"") {
+              valueStartedAt = valueStartedAt - 1;
             }
             return "".concat(str.slice(0, valueStartedAt)).concat(stringifyAndEscapeValue(calculatedValueToInsert)).concat(extraLineBreak).concat(str.slice(endingPartsBeginning));
           } else if (mode === "del") {
             log();
-            log("879 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
+            log("851 ".concat("\x1B[".concat(33, "m", "keyStartedAt", "\x1B[", 39, "m"), " = ", JSON.stringify(keyStartedAt, null, 4), "; val = ").concat((currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1));
             var startingPoint = stringLeftRight.left(str, (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1) + 1;
             log();
             var endingPoint = i + (str[i].trim().length ? 1 : 0);
@@ -305,9 +308,9 @@ function main(_ref) {
               endingPoint++;
               log();
             }
-            log("911 ".concat("\x1B[".concat(33, "m", "startingPoint", "\x1B[", 39, "m"), " = ", JSON.stringify(startingPoint, null, 4), "; ", "\x1B[".concat(33, "m", "endingPoint", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(endingPoint, null, 4), ";"));
+            log("883 ".concat("\x1B[".concat(33, "m", "startingPoint", "\x1B[", 39, "m"), " = ", JSON.stringify(startingPoint, null, 4), "; ", "\x1B[".concat(33, "m", "endingPoint", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(endingPoint, null, 4), ";"));
             ranges.push([startingPoint, endingPoint]);
-            log("924 ".concat("\x1B[".concat(32, "m", "FINAL PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "ranges", "\x1B[", 39, "m"), " = ", JSON.stringify(ranges, null, 4)));
+            log("896 ".concat("\x1B[".concat(32, "m", "FINAL PUSH", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "ranges", "\x1B[", 39, "m"), " = ", JSON.stringify(ranges, null, 4)));
             log();
             break;
           }
@@ -319,7 +322,7 @@ function main(_ref) {
     log("".concat("\x1B[".concat(33, "m", "withinArrayIndexes", "\x1B[", 39, "m"), " = ", JSON.stringify(withinArrayIndexes, null, 0), "; ", "\x1B[".concat(33, "m", "withinObjectIndexes", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(withinObjectIndexes, null, 0), ";"));
   }
   log();
-  log("975 RETURN applied ".concat(JSON.stringify(apply(str, ranges), null, 4)));
+  log("947 RETURN applied ".concat(JSON.stringify(apply(str, ranges), null, 4)));
   return apply(str, ranges);
 }
 function set(str, path, valToInsert) {
