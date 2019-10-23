@@ -1,9 +1,10 @@
 // avanotonly
+/* eslint import/no-extraneous-dependencies:0 */
 
 import test from "ava";
 const fs = require("fs");
 const fsp = fs.promises;
-import { set, del } from "../dist/edit-package-json.esm";
+import { set } from "../dist/edit-package-json.esm";
 import objectPath from "object-path";
 import traverse from "ast-monkey-traverse";
 import globby from "globby";
