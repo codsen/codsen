@@ -1,6 +1,6 @@
 /**
  * detergent
- * All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool
+ * a tool to prepare text for pasting into HTML
  * Version: 5.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -502,6 +502,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             for (var _z = i; _z < len; _z++) {
               if (str[_z] === stopUntil[0] && str[_z + 1] === stopUntil[1]) {
                 offsetBy(_z + 1 - i);
+                break;
               }
             }
           }
@@ -545,9 +546,17 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         } else {
           applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
-            rangesArr.push(i, y, "&ndash;");
+            if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length) {
+              rangesArr.push(i, y, "&mdash;");
+            } else {
+              rangesArr.push(i, y, "&ndash;");
+            }
           } else if (charcode === 65533) {
-            rangesArr.push(i, y, rawNDash);
+            if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length) {
+              rangesArr.push(i, y, rawMDash);
+            } else {
+              rangesArr.push(i, y, rawNDash);
+            }
           }
         }
         if (str[i - 1] && str[i - 1].trim().length === 0 && str[y].trim().length !== 0) {
@@ -576,6 +585,12 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         } else if (str[i - 2] && str[i - 1] && str[y] && str[y + 1] && isNumber(str[i - 2]) && isNumber(str[y + 1]) && str[i - 1].trim().length === 0 && str[y].trim().length === 0) {
           rangesArr.push(i - 1, i);
           rangesArr.push(y, y + 1);
+        }
+        if (str[i - 2] && str[i + 1] && !str[i - 1].trim().length && str[i - 2].trim().length && !str[i + 1].trim().length) {
+          applicableOpts.removeWidows = true;
+          if (opts.removeWidows) {
+            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
         }
       } else if (charcode === 8212 || charcode === 65533 && str[i - 1] === " " && str[y] === " ") {
         applicableOpts.convertDashes = true;

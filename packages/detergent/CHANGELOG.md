@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.3.0
+
+### Features
+
+- converts n-dash found in pattern "space - n-dash - space" into an m-dash
+- fixed bug within the ESP templating tag recognition - algorithm exited later than expected
+- corrected some dash applicable opts reporting and added many dash-related tests
+
 ## 5.2.0 (2019-10-21)
 
 ### Features

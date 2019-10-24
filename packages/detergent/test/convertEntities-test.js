@@ -1863,7 +1863,7 @@ test(`10.09 - enforce spaces after semicolons - semicol fixes must not affect HT
   });
 });
 
-test(`10.10 - enforce spaces after semicolons`, t => {
+test(`10.10 - enforce spaces after dot if upper-case letter follows`, t => {
   mixer({
     addMissingSpaces: 1
   }).forEach((opt, n) => {
@@ -1875,12 +1875,18 @@ test(`10.10 - enforce spaces after semicolons`, t => {
   });
 });
 
-test(`10.11 - enforce spaces after semicolons`, t => {
+test(`10.11 - does not touch dots among lowercase letters`, t => {
   allCombinations.forEach((opt, n) => {
     t.is(
       det(t, n, `aaa.aaa`, opt).res,
       "aaa.aaa",
       JSON.stringify(opt, null, 4)
     );
+  });
+});
+
+test(`10.12 - letters within ASCII are decoded if come encoded`, t => {
+  allCombinations.forEach((opt, n) => {
+    t.is(det(t, n, `&#x61;`, opt).res, "a", JSON.stringify(opt, null, 4));
   });
 });

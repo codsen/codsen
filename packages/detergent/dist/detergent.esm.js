@@ -1,6 +1,6 @@
 /**
  * detergent
- * All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool
+ * a tool to prepare text for pasting into HTML
  * Version: 5.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -1091,6 +1091,7 @@ function processCharacter(
             for (let z = i; z < len; z++) {
               if (str[z] === stopUntil[0] && str[z + 1] === stopUntil[1]) {
                 offsetBy(z + 1 - i);
+                break;
               }
             }
           }
@@ -1137,9 +1138,27 @@ function processCharacter(
         } else {
           applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
-            rangesArr.push(i, y, "&ndash;");
+            if (
+              str[i - 1] &&
+              !str[i - 1].trim().length &&
+              str[i + 1] &&
+              !str[i + 1].trim().length
+            ) {
+              rangesArr.push(i, y, "&mdash;");
+            } else {
+              rangesArr.push(i, y, "&ndash;");
+            }
           } else if (charcode === 65533) {
-            rangesArr.push(i, y, rawNDash);
+            if (
+              str[i - 1] &&
+              !str[i - 1].trim().length &&
+              str[i + 1] &&
+              !str[i + 1].trim().length
+            ) {
+              rangesArr.push(i, y, rawMDash);
+            } else {
+              rangesArr.push(i, y, rawNDash);
+            }
           }
         }
         if (
@@ -1185,6 +1204,18 @@ function processCharacter(
         ) {
           rangesArr.push(i - 1, i);
           rangesArr.push(y, y + 1);
+        }
+        if (
+          str[i - 2] &&
+          str[i + 1] &&
+          !str[i - 1].trim().length &&
+          str[i - 2].trim().length &&
+          !str[i + 1].trim().length
+        ) {
+          applicableOpts.removeWidows = true;
+          if (opts.removeWidows) {
+            rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
+          }
         }
       } else if (
         charcode === 8212 ||

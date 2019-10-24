@@ -2,7 +2,7 @@
   <img alt="Detergent" src="https://cdn.statically.io/gl/codsen/codsen/master/packages/detergent/media/detergent_200x200.png" height="200" align="center">
 </div>
 
-<div align="center"><p>All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool</p></div>
+<div align="center"><p>a tool to prepare text for pasting into HTML</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
