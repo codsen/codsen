@@ -426,18 +426,3 @@ test("99.03 - throws when second arg is not a plain object", t => {
     r("aaa", ["aaa"]);
   });
 });
-
-test("99.04 - throws when opts contain unrecognised key", t => {
-  t.throws(() => {
-    // contains only that
-    r("aaa", { zzz: true });
-  });
-  t.throws(() => {
-    // or contains mixed, some valid keys too
-    r("aaa", { zzz: true, padSingleDecimalPlaceNumbers: true });
-  });
-  t.notThrows(() => {
-    // does not throw when all keys are valid
-    r("aaa", { padSingleDecimalPlaceNumbers: true });
-  });
-});

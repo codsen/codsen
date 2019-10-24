@@ -10,7 +10,6 @@
 import replaceSlicesArr from 'ranges-apply';
 import Slices from 'ranges-push';
 import isObj from 'lodash.isplainobject';
-import checkTypes from 'check-types-mini';
 import isNum from 'is-numeric';
 import trimChars from 'lodash.trim';
 
@@ -46,9 +45,6 @@ function remSep(str, originalOpts) {
     forceUKStyle: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-remove-thousand-separators/remSep(): [THROW_ID_03*]"
-  });
   const res = trimChars(str.trim(), '"');
   if (res === "") {
     return res;

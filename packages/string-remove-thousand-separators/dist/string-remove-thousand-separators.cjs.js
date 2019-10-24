@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var replaceSlicesArr = _interopDefault(require('ranges-apply'));
 var Slices = _interopDefault(require('ranges-push'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 var isNum = _interopDefault(require('is-numeric'));
 var trimChars = _interopDefault(require('lodash.trim'));
 
@@ -48,9 +47,6 @@ function remSep(str, originalOpts) {
     forceUKStyle: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "string-remove-thousand-separators/remSep(): [THROW_ID_03*]"
-  });
   var res = trimChars(str.trim(), '"');
   if (res === "") {
     return res;
