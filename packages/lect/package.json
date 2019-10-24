@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
@@ -136,8 +136,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.47",
-    "arrayiffy-if-string": "^3.11.19",
+    "array-pull-all-with-glob": "^4.12.48",
+    "arrayiffy-if-string": "^3.11.20",
     "ast-monkey-traverse": "^1.11.42",
     "bitbucket-slug": "^1.9.46",
     "chalk": "^2.4.2",
@@ -158,8 +158,8 @@
     "log-symbols": "^3.0.0",
     "matcher": "^2.0.0",
     "meow": "^5.0.0",
-    "object-delete-key": "^1.9.3",
-    "object-merge-advanced": "^10.11.2",
+    "object-delete-key": "^1.9.4",
+    "object-merge-advanced": "^10.11.3",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
@@ -186,8 +186,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.1",
-    "lect": "^0.10.2",
+    "js-row-num-cli": "^1.6.2",
+    "lect": "^0.10.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "tempy": "^0.3.0"

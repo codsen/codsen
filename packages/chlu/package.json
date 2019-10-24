@@ -140,7 +140,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.46",
+    "ast-contains-only-empty-space": "^1.8.47",
     "dehumanize-date": "^2.6.2",
     "easy-replace": "^3.7.46",
     "emoji-regex": "^8.0.0",
@@ -169,11 +169,11 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.1",
-    "lect": "^0.10.2",
+    "js-row-num-cli": "^1.6.2",
+    "lect": "^0.10.3",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "rollup": "^1.25.1",
+    "rollup": "^1.25.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
