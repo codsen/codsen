@@ -137,7 +137,6 @@ function isUppercaseLetter(str) {
 
 function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine) {
   var len = str.length;
-  var isNum = Number.isInteger;
   if (/[\uD800-\uDFFF]/g.test(str[i]) && !(str.charCodeAt(i + 1) >= 0xdc00 && str.charCodeAt(i + 1) <= 0xdfff || str.charCodeAt(i - 1) >= 0xd800 && str.charCodeAt(i - 1) <= 0xdbff)) {
     rangesArr.push(i, i + 1);
   } else if (y - i > 1) {
@@ -353,7 +352,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             }
           } else if (str[stringLeftRight.right(str, i)] === "#") {
             for (var z = stringLeftRight.right(str, i); z < len; z++) {
-              if (str[z].trim().length && !isNum(str[z]) && str[z] !== "#") {
+              if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
                   var _tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
                     useNamedReferences: true
@@ -539,14 +538,14 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         rangesArr.push(i, y);
       } else if (charcode === 8207) {
         rangesArr.push(i, y);
-      } else if (charcode === 8211 || charcode === 65533 && isNum(str[i - 1]) && isNum(str[y])) {
+      } else if (charcode === 8211 || charcode === 65533 && isNumber(str[i - 1]) && isNumber(str[y])) {
         applicableOpts.convertDashes = true;
         if (!opts.convertDashes) {
           rangesArr.push(i, y, "-");
         } else {
           applicableOpts.convertEntities = true;
           if (opts.convertEntities) {
-            if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length) {
+            if (str[i - 1] && !str[i - 1].trim().length && str[i + 1] && !str[i + 1].trim().length && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
               rangesArr.push(i, y, "&mdash;");
             } else {
               rangesArr.push(i, y, "&ndash;");
@@ -586,7 +585,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           rangesArr.push(i - 1, i);
           rangesArr.push(y, y + 1);
         }
-        if (str[i - 2] && str[i + 1] && !str[i - 1].trim().length && str[i - 2].trim().length && !str[i + 1].trim().length) {
+        if (str[i - 2] && str[i + 1] && !str[i - 1].trim().length && str[i - 2].trim().length && !str[i + 1].trim().length && !(isNumber(str[i - 2]) && isNumber(str[i + 2]))) {
           applicableOpts.removeWidows = true;
           if (opts.removeWidows) {
             rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);

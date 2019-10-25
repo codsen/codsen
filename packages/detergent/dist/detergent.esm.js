@@ -501,7 +501,6 @@ function processCharacter(
   endOfLine
 ) {
   const len = str.length;
-  const isNum = Number.isInteger;
   if (
     /[\uD800-\uDFFF]/g.test(str[i]) &&
     !(
@@ -789,7 +788,7 @@ function processCharacter(
             }
           } else if (str[right(str, i)] === "#") {
             for (let z = right(str, i); z < len; z++) {
-              if (str[z].trim().length && !isNum(str[z]) && str[z] !== "#") {
+              if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
                   const tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
                     useNamedReferences: true
@@ -1130,7 +1129,7 @@ function processCharacter(
         rangesArr.push(i, y);
       } else if (
         charcode === 8211 ||
-        (charcode === 65533 && (isNum(str[i - 1]) && isNum(str[y])))
+        (charcode === 65533 && (isNumber(str[i - 1]) && isNumber(str[y])))
       ) {
         applicableOpts.convertDashes = true;
         if (!opts.convertDashes) {
@@ -1142,7 +1141,8 @@ function processCharacter(
               str[i - 1] &&
               !str[i - 1].trim().length &&
               str[i + 1] &&
-              !str[i + 1].trim().length
+              !str[i + 1].trim().length &&
+              !(isNumber(str[i - 2]) && isNumber(str[i + 2]))
             ) {
               rangesArr.push(i, y, "&mdash;");
             } else {
@@ -1210,7 +1210,8 @@ function processCharacter(
           str[i + 1] &&
           !str[i - 1].trim().length &&
           str[i - 2].trim().length &&
-          !str[i + 1].trim().length
+          !str[i + 1].trim().length &&
+          !(isNumber(str[i - 2]) && isNumber(str[i + 2]))
         ) {
           applicableOpts.removeWidows = true;
           if (opts.removeWidows) {
