@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.5](https://gitlab.com/codsen/codsen/compare/object-delete-key@1.9.4...object-delete-key@1.9.5) (2019-10-25)
-
-**Note:** Version bump only for package object-delete-key
-
-
-
-
-
 ## 1.9.0 (2019-10-02)
 
 ### Features

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.22](https://gitlab.com/codsen/codsen/compare/string-uglify@1.2.21...string-uglify@1.2.22) (2019-10-25)
-
-**Note:** Version bump only for package string-uglify
-
-
-
-
-
 ## 1.2.0 (2019-06-29)
 
 ### Features
