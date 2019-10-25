@@ -158,7 +158,7 @@
     },
     {
         "name": "detergent",
-        "size": 51507,
+        "size": 52450,
         "imports": [
             "all-named-html-entities",
             "arrayiffy-if-string",
@@ -581,9 +581,8 @@
     },
     {
         "name": "string-remove-thousand-separators",
-        "size": 3763,
+        "size": 3613,
         "imports": [
-            "check-types-mini",
             "ranges-apply",
             "ranges-push"
         ]
