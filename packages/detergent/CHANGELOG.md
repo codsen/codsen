@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://gitlab.com/codsen/codsen/compare/detergent@5.2.1...detergent@5.3.0) (2019-10-25)
+
+
+### Bug Fixes
+
+* fix long dashes between numbers ([88523e1](https://gitlab.com/codsen/codsen/commit/88523e13c1a29ca667c9b3ad991e60cd824fa91d))
+
+
+### Features
+
+* some improvements around the dash recognition, reporting and surrounding ESP tags ([f7ee1a1](https://gitlab.com/codsen/codsen/commit/f7ee1a1d524bc2c65ed193a0f3297c19cf76191a))
+
+
+
+
+
 ## 5.3.0
 
 ### Features
