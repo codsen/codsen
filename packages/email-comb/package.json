@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "3.8.7",
+  "version": "3.8.8",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {
@@ -150,7 +150,7 @@
     "string-left-right": "^2.3.6",
     "string-match-left-right": "^3.11.10",
     "string-range-expander": "^1.10.47",
-    "string-uglify": "^1.2.22"
+    "string-uglify": "^1.2.23"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
