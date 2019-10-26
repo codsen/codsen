@@ -1,4 +1,4 @@
-// avanotonly
+// avaonly
 
 import test from "ava";
 import { det, mixer } from "../t-util/util";

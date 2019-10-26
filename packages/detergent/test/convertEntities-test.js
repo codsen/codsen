@@ -289,7 +289,7 @@ test(`02.11 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
 
 test(`02.12 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, t => {
   mixer({
-    convertEntities: 1,
+    convertEntities: 1, // <-----
     convertApostrophes: 1,
     convertDashes: 0,
     removeWidows: 1
@@ -297,7 +297,20 @@ test(`02.12 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
         .res,
-      "HOORAY - IT&rsquo;S&nbsp;HERE",
+      "HOORAY&nbsp;- IT&rsquo;S&nbsp;HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    convertEntities: 0, // <-----
+    convertApostrophes: 1,
+    convertDashes: 0,
+    removeWidows: 1
+  }).forEach((opt, n) => {
+    t.is(
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
+      `HOORAY${rawNbsp}- IT${rightSingleQuote}S${rawNbsp}HERE`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -307,13 +320,26 @@ test(`02.13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
   mixer({
     convertEntities: 1,
     convertApostrophes: 0,
-    convertDashes: 0,
+    convertDashes: 0, // <-----
     removeWidows: 1
   }).forEach((opt, n) => {
     t.is(
       det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
         .res,
-      "HOORAY - IT'S&nbsp;HERE",
+      "HOORAY&nbsp;- IT'S&nbsp;HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 0,
+    convertDashes: 1, // <-----
+    removeWidows: 1
+  }).forEach((opt, n) => {
+    t.is(
+      det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
+      "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -321,7 +347,7 @@ test(`02.13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
 
 test(`02.14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, t => {
   mixer({
-    convertEntities: 1,
+    convertEntities: 1, // <-----
     convertApostrophes: 0,
     convertDashes: 0,
     removeWidows: 1
@@ -329,7 +355,20 @@ test(`02.14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixe
     t.is(
       det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
         .res,
-      "HOORAY - IT'S&nbsp;HERE",
+      "HOORAY&nbsp;- IT'S&nbsp;HERE",
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    convertEntities: 0, // <-----
+    convertApostrophes: 0,
+    convertDashes: 0,
+    removeWidows: 1
+  }).forEach((opt, n) => {
+    t.is(
+      det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
+        .res,
+      `HOORAY${rawNbsp}- IT'S${rawNbsp}HERE`,
       JSON.stringify(opt, null, 4)
     );
   });

@@ -1459,6 +1459,12 @@ function det(str, inputOpts) {
   if (str !== temp) {
     str = temp;
   }
+  str = collapse(str, {
+    trimLines: true,
+    recogniseHTML: false,
+    removeEmptyLines: true,
+    limitConsecutiveEmptyLinesTo: 1
+  });
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
       if (
@@ -1681,6 +1687,16 @@ function det(str, inputOpts) {
               right(str, tag.nameEnds - 1)
             );
           }
+          if (
+            tag.lastOpeningBracketAt + 1 < tag.nameStarts &&
+            !str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim()
+              .length
+          ) {
+            finalIndexesToDelete.push(
+              tag.lastOpeningBracketAt + 1,
+              tag.nameStarts
+            );
+          }
         }
         if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
@@ -1765,7 +1781,7 @@ function det(str, inputOpts) {
   }
   str = collapse(str, {
     trimLines: true,
-    recogniseHTML: true
+    recogniseHTML: false
   });
   return {
     res: rangesApply(str, finalIndexesToDelete.current()),
