@@ -521,33 +521,7 @@ function det(str, inputOpts) {
           }
         } else {
           console.log("523 - not stripping tags");
-          // 3. add line breaks after <br>
-          // if (
-          //   (!opts.stripHtml ||
-          //     (isArr(opts.stripHtmlButIgnoreTags) &&
-          //       opts.stripHtmlButIgnoreTags.includes("br"))) &&
-          //   tag.name.toLowerCase() === "br" &&
-          //   tag.lastClosingBracketAt &&
-          //   !`\n\r`.includes(str[tag.lastClosingBracketAt + 1])
-          // ) {
-          //   applicableOpts.replaceLineBreaks = true;
-          //   console.log(
-          //     `535 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.replaceLineBreaks = ${
-          //       applicableOpts.replaceLineBreaks
-          //     }`
-          //   );
-          //
-          //   if (opts.replaceLineBreaks) {
-          //     console.log(`541 insert line break clauses`);
-          //     finalIndexesToDelete.push(
-          //       tag.lastClosingBracketAt + 1,
-          //       tag.lastClosingBracketAt + 1,
-          //       "\n"
-          //     );
-          //   }
-          // }
-
-          // 4. add closing slash on void tags if XHTML mode is on
+          // 3. add closing slash on void tags if XHTML mode is on
           if (voidTags.includes(tag.name.toLowerCase())) {
             //
             // IF A VOID TAG
@@ -555,7 +529,7 @@ function det(str, inputOpts) {
 
             applicableOpts.useXHTML = true;
             console.log(
-              `558 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.useXHTML = ${
+              `532 it's a void tag. ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.useXHTML = ${
                 applicableOpts.useXHTML
               }`
             );
@@ -566,7 +540,7 @@ function det(str, inputOpts) {
             ) {
               if (opts.useXHTML) {
                 console.log(
-                  `569 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                  `543 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     tag.lastClosingBracketAt
                   }, ${tag.lastClosingBracketAt}, "/"]`
                 );
@@ -578,7 +552,7 @@ function det(str, inputOpts) {
               }
             }
 
-            // 5. remove slashes in front of a void tag
+            // 4. remove slashes in front of a void tag
             if (
               tag.slashPresent &&
               isNum(tag.lastOpeningBracketAt) &&
@@ -590,7 +564,7 @@ function det(str, inputOpts) {
                 .every(char => !char.trim().length || char === "/")
             ) {
               console.log(
-                `593 remove whitespace ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${tag.lastOpeningBracketAt +
+                `567 remove whitespace/slashes ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${tag.lastOpeningBracketAt +
                   1}, ${tag.nameStarts}]`
               );
               finalIndexesToDelete.push(
@@ -599,17 +573,25 @@ function det(str, inputOpts) {
               );
             }
 
-            // 6. remove closing slash from void tags is XHTML mode is off
+            console.log(
+              `577 finalIndexesToDelete.current() = ${JSON.stringify(
+                finalIndexesToDelete.current(),
+                null,
+                4
+              )}`
+            );
+
+            // 5. remove closing slash from void tags is XHTML mode is off
             // or excessive, multiple closing slashes
             if (
               tag.slashPresent &&
               str[left(str, tag.lastClosingBracketAt)] === "/"
             ) {
-              console.log("608");
+              console.log("590");
               if (str[left(str, left(str, tag.lastClosingBracketAt))] === "/") {
                 applicableOpts.useXHTML = true;
                 console.log(
-                  `612 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.useXHTML = ${
+                  `594 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.useXHTML = ${
                     applicableOpts.useXHTML
                   }`
                 );
@@ -632,7 +614,7 @@ function det(str, inputOpts) {
                     opts.useXHTML ? "/" : undefined
                   );
                   console.log(
-                    `635 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} chomped [${chompLeft(
+                    `617 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} chomped [${chompLeft(
                       str,
                       tag.lastClosingBracketAt,
                       { mode: 2 },
@@ -647,7 +629,7 @@ function det(str, inputOpts) {
                 str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/"
               ) {
                 console.log(
-                  `650 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                  `632 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     tag.slashPresent
                   }, ${tag.lastClosingBracketAt}]`
                 );
@@ -662,17 +644,17 @@ function det(str, inputOpts) {
             // IF NOT A VOID TAG
             //
 
-            // 9. if it's not a void tag and there's slash on a wrong side, correct it
+            // 6. if it's not a void tag and there's slash on a wrong side, correct it
             if (
               tag.slashPresent &&
               str[left(str, tag.lastClosingBracketAt)] === "/"
             ) {
-              // 9-1. remove the wrong slash
+              // 6-1. remove the wrong slash
               finalIndexesToDelete.push(
                 chompLeft(str, tag.lastClosingBracketAt, { mode: 2 }, "/"),
                 tag.lastClosingBracketAt
               );
-              // 9-2. add where it needs to be
+              // 6-2. add where it needs to be
               finalIndexesToDelete.push(
                 tag.lastOpeningBracketAt + 1,
                 tag.lastOpeningBracketAt + 1,
@@ -681,10 +663,18 @@ function det(str, inputOpts) {
             }
           }
 
+          console.log(
+            `667 finalIndexesToDelete.current() = ${JSON.stringify(
+              finalIndexesToDelete.current(),
+              null,
+              4
+            )}`
+          );
+
           // 7. tackle wrong letter case
           if (tag.name.toLowerCase() !== tag.name) {
             console.log(
-              `687 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+              `677 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 tag.nameStarts
               }, ${tag.nameEnds}, ${tag.name.toLowerCase()}]`
             );
@@ -701,7 +691,7 @@ function det(str, inputOpts) {
             right(str, tag.nameEnds - 1) > tag.nameEnds
           ) {
             console.log(
-              `704 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+              `694 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 tag.nameEnds
               }, ${right(str, tag.nameEnds - 1)}]`
             );
@@ -711,20 +701,46 @@ function det(str, inputOpts) {
             );
           }
 
-          // 9. remove whitespace in front of tag name like < tr>
+          // 9. remove whitespace in front of tag name, considering closing slashes
           if (
-            tag.lastOpeningBracketAt + 1 < tag.nameStarts &&
-            !str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim()
-              .length
+            isNum(tag.lastOpeningBracketAt) &&
+            isNum(tag.nameStarts) &&
+            tag.lastOpeningBracketAt + 1 < tag.nameStarts
           ) {
-            console.log(
-              `717 whitespace in front of tag name - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${tag.lastOpeningBracketAt +
-                1}, ${tag.nameStarts}]`
-            );
-            finalIndexesToDelete.push(
-              tag.lastOpeningBracketAt + 1,
-              tag.nameStarts
-            );
+            // cases like < tr>
+            if (
+              !str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim()
+                .length
+            ) {
+              // all this whitespace goes
+              console.log(
+                `717 whitespace in front of tag name - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${tag.lastOpeningBracketAt +
+                  1}, ${tag.nameStarts}]`
+              );
+              finalIndexesToDelete.push(
+                tag.lastOpeningBracketAt + 1,
+                tag.nameStarts
+              );
+            } else if (
+              !voidTags.includes(tag.name.toLowerCase()) &&
+              str
+                .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
+                .split("")
+                .every(char => !char.trim().length || char === "/")
+            ) {
+              // if there is mix of whitespace and closing slashes, all this
+              // goes and replaced with single slash.
+              // Imagine: < ///    ///    table>
+              finalIndexesToDelete.push(
+                tag.lastOpeningBracketAt + 1,
+                tag.nameStarts,
+                "/"
+              );
+              console.log(
+                `740 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${tag.lastOpeningBracketAt +
+                  1}, ${tag.nameStarts}, ${"/"}]`
+              );
+            }
           }
         }
 
@@ -732,7 +748,7 @@ function det(str, inputOpts) {
         if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
           console.log(
-            `731 brClosingBracketIndexesArr now = ${JSON.stringify(
+            `751 brClosingBracketIndexesArr now = ${JSON.stringify(
               brClosingBracketIndexesArr,
               null,
               0
@@ -747,17 +763,34 @@ function det(str, inputOpts) {
           str[tag.lastOpeningBracketAt - 1] &&
           !str[tag.lastOpeningBracketAt - 1].trim().length
         ) {
-          console.log(`746 - ul/li prep`);
+          console.log(`766 - ul/li prep`);
           // if there's whitespace in front,
           finalIndexesToDelete.push(
             leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1,
             tag.lastOpeningBracketAt
           );
           console.log(
-            `753 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${leftStopAtNewLines(
+            `773 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${leftStopAtNewLines(
               str,
               tag.lastOpeningBracketAt
             ) + 1}, ${tag.lastOpeningBracketAt}]`
+          );
+        }
+
+        // 12. remove whitespace before closing bracket
+        if (
+          str[tag.lastClosingBracketAt - 1] &&
+          !str[tag.lastClosingBracketAt - 1].trim().length
+        ) {
+          finalIndexesToDelete.push(
+            left(str, tag.lastClosingBracketAt) + 1,
+            tag.lastClosingBracketAt
+          );
+          console.log(
+            `790 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${left(
+              str,
+              tag.lastClosingBracketAt
+            ) + 1}, ${tag.lastClosingBracketAt}]`
           );
         }
       }
@@ -790,10 +823,10 @@ function det(str, inputOpts) {
   }
 
   console.log(
-    `789 ${str.includes("<") || str.includes(">") ? "" : "no tags found"}`
+    `826 ${str.includes("<") || str.includes(">") ? "" : "no tags found"}`
   );
   console.log(
-    `792 ${`\u001b[${33}m${`rangesArr`}\u001b[${39}m`}.current() = ${JSON.stringify(
+    `829 ${`\u001b[${33}m${`rangesArr`}\u001b[${39}m`}.current() = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       0
@@ -808,10 +841,10 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `807 ${`\u001b[${90}m${`================= NEXT STEP. Process outside tags =================`}\u001b[${39}m`}`
+    `844 ${`\u001b[${90}m${`================= NEXT STEP. Process outside tags =================`}\u001b[${39}m`}`
   );
 
-  console.log(`810 call processOutside()`);
+  console.log(`847 call processOutside()`);
   processOutside(
     str,
     skipArr.current(),
@@ -835,7 +868,7 @@ function det(str, inputOpts) {
   );
 
   console.log(
-    `834 back to main.js(): ${`\u001b[${33}m${`str`}\u001b[${39}m`}=${JSON.stringify(
+    `871 back to main.js(): ${`\u001b[${33}m${`str`}\u001b[${39}m`}=${JSON.stringify(
       str,
       null,
       0
@@ -850,11 +883,11 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `849 ${`\u001b[${90}m${`================= NEXT STEP. apply+wipe =================`}\u001b[${39}m`}`
+    `886 ${`\u001b[${90}m${`================= NEXT STEP. apply+wipe =================`}\u001b[${39}m`}`
   );
 
   console.log(
-    `853 ${`\u001b[${33}m${`str`}\u001b[${39}m`} before apply+wipe: ${JSON.stringify(
+    `890 ${`\u001b[${33}m${`str`}\u001b[${39}m`} before apply+wipe: ${JSON.stringify(
       str,
       null,
       4
@@ -862,7 +895,7 @@ function det(str, inputOpts) {
   );
   applyAndWipe();
   console.log(
-    `861 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after apply+wipe: ${JSON.stringify(
+    `898 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after apply+wipe: ${JSON.stringify(
       str,
       null,
       4
@@ -873,14 +906,14 @@ function det(str, inputOpts) {
 
   str = str.replace(/(\r\n|\r|\n){3,}/g, `${endOfLine}${endOfLine}`);
   console.log(
-    `872 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after str.replace: ${JSON.stringify(
+    `909 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after str.replace: ${JSON.stringify(
       str,
       null,
       4
     )}`
   );
   console.log(
-    `879 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
+    `916 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       4
@@ -891,7 +924,7 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `890 ${`\u001b[${90}m${`================= NEXT STEP. widows =================`}\u001b[${39}m`}`
+    `927 ${`\u001b[${90}m${`================= NEXT STEP. widows =================`}\u001b[${39}m`}`
   );
 
   // remove widow words
@@ -903,7 +936,7 @@ function det(str, inputOpts) {
     hyphens: true // full-on setup
   });
   console.log(
-    `902 ${`\u001b[${33}m${`widowFixes`}\u001b[${39}m`} = ${JSON.stringify(
+    `939 ${`\u001b[${33}m${`widowFixes`}\u001b[${39}m`} = ${JSON.stringify(
       widowFixes,
       null,
       4
@@ -914,12 +947,12 @@ function det(str, inputOpts) {
     if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
       applicableOpts.removeWidows = true;
       console.log(
-        `913 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`
+        `950 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`
       );
       if (opts.removeWidows) {
         applicableOpts.convertEntities = true;
         console.log(
-          `918 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
+          `955 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -930,7 +963,7 @@ function det(str, inputOpts) {
     ) {
       applicableOpts.convertEntities = true;
       console.log(
-        `929 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
+        `966 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
       );
     }
 
@@ -944,7 +977,7 @@ function det(str, inputOpts) {
         hyphens: opts.convertDashes
       }).res;
       console.log(
-        `943 after fixing widows, str = ${JSON.stringify(str, null, 0)}`
+        `980 after fixing widows, str = ${JSON.stringify(str, null, 0)}`
       );
     }
   }
@@ -953,12 +986,12 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `952 ${`\u001b[${90}m${`================= NEXT STEP. linebreaks =================`}\u001b[${39}m`}`
+    `989 ${`\u001b[${90}m${`================= NEXT STEP. linebreaks =================`}\u001b[${39}m`}`
   );
 
   console.log("\n\n\n");
   console.log(
-    `957 STEP#6 ${`\u001b[${33}m${`brClosingBracketIndexesArr`}\u001b[${39}m`} = ${JSON.stringify(
+    `994 STEP#6 ${`\u001b[${33}m${`brClosingBracketIndexesArr`}\u001b[${39}m`} = ${JSON.stringify(
       brClosingBracketIndexesArr,
       null,
       4
@@ -980,25 +1013,25 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `979 ${`\u001b[${90}m${`================= NEXT STEP. collapse =================`}\u001b[${39}m`}`
+    `1016 ${`\u001b[${90}m${`================= NEXT STEP. collapse =================`}\u001b[${39}m`}`
   );
 
-  console.log(`982 str before collapsing: ${JSON.stringify(str, null, 0)}`);
+  console.log(`1019 str before collapsing: ${JSON.stringify(str, null, 0)}`);
   str = collapse(str, {
     trimLines: true,
     recogniseHTML: false
   });
-  console.log(`987 str after collapsing: ${JSON.stringify(str, null, 0)}`);
+  console.log(`1024 str after collapsing: ${JSON.stringify(str, null, 0)}`);
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
   console.log(
-    `993 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
+    `1030 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
   );
 
   console.log(
-    `997 FINAL RESULT:\n${JSON.stringify(
+    `1034 FINAL RESULT:\n${JSON.stringify(
       {
         res: rangesApply(str, finalIndexesToDelete.current())
       },

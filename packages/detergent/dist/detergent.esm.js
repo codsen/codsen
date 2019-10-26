@@ -1688,14 +1688,31 @@ function det(str, inputOpts) {
             );
           }
           if (
-            tag.lastOpeningBracketAt + 1 < tag.nameStarts &&
-            !str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim()
-              .length
+            isNum(tag.lastOpeningBracketAt) &&
+            isNum(tag.nameStarts) &&
+            tag.lastOpeningBracketAt + 1 < tag.nameStarts
           ) {
-            finalIndexesToDelete.push(
-              tag.lastOpeningBracketAt + 1,
-              tag.nameStarts
-            );
+            if (
+              !str.slice(tag.lastOpeningBracketAt + 1, tag.nameStarts).trim()
+                .length
+            ) {
+              finalIndexesToDelete.push(
+                tag.lastOpeningBracketAt + 1,
+                tag.nameStarts
+              );
+            } else if (
+              !voidTags.includes(tag.name.toLowerCase()) &&
+              str
+                .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
+                .split("")
+                .every(char => !char.trim().length || char === "/")
+            ) {
+              finalIndexesToDelete.push(
+                tag.lastOpeningBracketAt + 1,
+                tag.nameStarts,
+                "/"
+              );
+            }
           }
         }
         if (tag.name.toLowerCase() === "br" && tag.lastClosingBracketAt) {
@@ -1710,6 +1727,15 @@ function det(str, inputOpts) {
           finalIndexesToDelete.push(
             leftStopAtNewLines(str, tag.lastOpeningBracketAt) + 1,
             tag.lastOpeningBracketAt
+          );
+        }
+        if (
+          str[tag.lastClosingBracketAt - 1] &&
+          !str[tag.lastClosingBracketAt - 1].trim().length
+        ) {
+          finalIndexesToDelete.push(
+            left(str, tag.lastClosingBracketAt) + 1,
+            tag.lastClosingBracketAt
           );
         }
       }
