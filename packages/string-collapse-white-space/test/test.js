@@ -1,6 +1,8 @@
+// avanotonly
+
 import test from "ava";
 import collapse from "../dist/string-collapse-white-space.esm";
-
+const key = ["crlf", "cr", "lf"];
 const htmlTags = [
   "h1",
   "h2",
@@ -207,90 +209,198 @@ test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - only letter character
 
 test(`02.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`, t => {
   t.is(collapse("a b"), "a b", "02.01.01 - nothing to collapse");
+});
+
+test(`02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`, t => {
   t.is(collapse("a  b"), "a b");
+});
+
+test(`02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`, t => {
   t.is(collapse("aaa     bbb    ccc   dddd"), "aaa bbb ccc dddd");
 });
 
-test(`02.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
+test(`02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
   t.is(collapse("  a b  "), "a b", "02.02.01 - nothing to collapse, only trim");
+});
+
+test(`02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
   t.is(collapse(" a b "), "a b", "02.02.02 - trims single spaces");
+});
+
+test(`02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
   t.is(collapse("\ta b\t"), "a b", "02.02.03 - trims single tabs");
+});
+
+test(`02.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
   t.is(collapse("  a  b  "), "a b");
+});
+
+test(`02.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`, t => {
   t.is(collapse("  aaa     bbb    ccc   dddd  "), "aaa bbb ccc dddd");
 });
 
-test(`02.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
+test(`02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
   // opts.trimStart
   t.is(
     collapse("  a b  ", { trimStart: false }),
     " a b",
     "02.03.01 - nothing to collapse, only trim"
   );
+});
+
+test(`02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
   t.is(
     collapse(" a b ", { trimStart: false }),
     " a b",
     "02.03.02 - trims single spaces"
   );
+});
+
+test(`02.11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
   t.is(
     collapse("\ta b\t", { trimStart: false }),
     "\ta b",
     "02.03.03 - trims single tabs"
   );
-  t.is(
-    collapse("\n \ta b\t \n", { trimStart: false }),
-    "\n \ta b",
-    "02.03.04 - trims with line breaks"
-  );
+});
+
+test(`02.12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType} \ta b\t ${presentEolType}`, {
+        trimStart: false
+      }),
+      `${presentEolType} \ta b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
   t.is(collapse("  a  b  ", { trimStart: false }), " a b");
+});
+
+test(`02.14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`, t => {
   t.is(
     collapse("  aaa     bbb    ccc   dddd  ", { trimStart: false }),
     " aaa bbb ccc dddd"
   );
 });
 
-test(`02.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
+test(`02.15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
   // opts.trimEnd
   t.is(
     collapse("  a b  ", { trimEnd: false }),
     "a b ",
     "02.04.01 - nothing to collapse, only trim"
   );
+});
+
+test(`02.16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
   t.is(
     collapse(" a b ", { trimEnd: false }),
     "a b ",
     "02.04.02 - trims single spaces"
   );
+});
+
+test(`02.17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
   t.is(
     collapse("\ta b\t", { trimEnd: false }),
     "a b\t",
     "02.04.03 - trims single tabs"
   );
+});
+
+test(`02.18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType} \ta b\t ${presentEolType}`, {
+        trimEnd: false
+      }),
+      `a b\t ${presentEolType}`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType} \ta b\t    ${presentEolType}`, {
+        trimEnd: false
+      }),
+      `a b\t ${presentEolType}`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
+  t.is(collapse(`  a  b  `, { trimEnd: false }), `a b `);
+});
+
+test(`02.21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`, t => {
   t.is(
-    collapse("\n \ta b\t \n", { trimEnd: false }),
-    "a b\t \n",
-    "02.04.04 - trims with line breaks"
-  );
-  t.is(
-    collapse("\n \ta b\t    \n", { trimEnd: false }),
-    "a b\t \n",
-    "02.04.05 - trims with line breaks"
-  );
-  t.is(collapse("  a  b  ", { trimEnd: false }), "a b ");
-  t.is(
-    collapse("  aaa     bbb    ccc   dddd  ", { trimEnd: false }),
-    "aaa bbb ccc dddd "
+    collapse(`  aaa     bbb    ccc   dddd  `, { trimEnd: false }),
+    `aaa bbb ccc dddd `
   );
 });
 
-test(`02.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`, t => {
-  t.is(collapse("a\nb\nc\n\n\n\n\nd"), "a\nb\nc\n\n\n\n\nd");
-  t.is(collapse("a\nb\nc\n   \n\n\n\nd"), "a\nb\nc\n \n\n\n\nd");
+test(`02.22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `a${presentEolType}b${presentEolType}c${presentEolType}${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`
+      ),
+      `a${presentEolType}b${presentEolType}c${presentEolType}${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`, t => {
-  t.is(collapse("a<br>\nb"), "a<br>\nb");
-  t.is(collapse("a<br>\nb<br>\nc"), "a<br>\nb<br>\nc");
-  t.is(collapse("a<br>\nb<br>\nc<br>\nd"), "a<br>\nb<br>\nc<br>\nd");
+test(`02.23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `a${presentEolType}b${presentEolType}c${presentEolType}   ${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`
+      ),
+      `a${presentEolType}b${presentEolType}c${presentEolType} ${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a<br>${presentEolType}b`),
+      `a<br>${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a<br>${presentEolType}b<br>${presentEolType}c`),
+      `a<br>${presentEolType}b<br>${presentEolType}c`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`02.26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`
+      ),
+      `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------
@@ -298,106 +408,138 @@ test(`02.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak
 // -----------------------------------------------------------------------------
 
 test(`03.01 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`, t => {
-  // defaults
-  t.is(collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t"), "aaa");
-  t.is(collapse("   \t\t\t   aaa   \t\t\t   "), "aaa");
-  t.is(collapse("   \t \t \t   aaa   \t \t \t   "), "aaa");
-  t.is(collapse("\t \n \t \r \naaa\t \r \t \n \t \n \r \t"), "aaa");
+  t.is(collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`), `aaa`);
 });
 
-test(`03.02 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`, t => {
-  // defaults
+test(`03.02 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`, t => {
+  t.is(collapse(`   \t\t\t   aaa   \t\t\t   `), `aaa`);
+});
+
+test(`03.03 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`, t => {
+  t.is(collapse(`   \t \t \t   aaa   \t \t \t   `), `aaa`);
+});
+
+test(`03.04 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trimming mixed lumps of trimmable characters`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `\t ${presentEolType} \t \r ${presentEolType}aaa\t \r \t ${presentEolType} \t ${presentEolType} \r\n \t \n`
+      ),
+      `aaa`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`03.05 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`, t => {
   t.is(collapse("      "), "");
+});
+
+test(`03.06 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`, t => {
   t.is(collapse("\t\t\t   \t\t\t"), "");
+});
+
+test(`03.07 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`, t => {
   t.is(collapse("\t\t\t"), "");
-  t.is(collapse("\n\n\n"), "");
 });
 
-test(`03.03 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
-  // defaults
-  t.is(collapse("\xa0   a   \xa0"), "\xa0 a \xa0");
-  t.is(collapse("    \xa0     a     \xa0      "), "\xa0 a \xa0");
+test(`03.08 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trims mixed white space lump into empty string`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}${presentEolType}${presentEolType}`),
+      "",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`03.04 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
+test(`03.09 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
+  t.is(collapse(`\xa0   a   \xa0`), `\xa0 a \xa0`);
+});
+
+test(`03.10 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
+  t.is(collapse(`    \xa0     a     \xa0      `), `\xa0 a \xa0`);
+});
+
+test(`03.11 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
   t.is(
-    collapse(" \xa0 ", {
+    collapse(` \xa0 `, {
       trimStart: false,
       trimEnd: false
     }),
-    " \xa0 "
+    ` \xa0 `
   );
 });
 
-test(`03.05 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
+test(`03.12 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - trim involving non-breaking spaces`, t => {
   t.is(
-    collapse("  \xa0  ", {
+    collapse(`  \xa0  `, {
       trimStart: false,
       trimEnd: false
     }),
-    " \xa0 "
+    ` \xa0 `
   );
 });
 
-test(`03.06 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
+test(`03.13 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
   t.is(
     collapse(`a > b`, {
       trimLines: true,
       recogniseHTML: true
     }),
-    "a > b"
+    `a > b`
   );
   t.is(
     collapse(`a > b`, {
       trimLines: false,
       recogniseHTML: true
     }),
-    "a > b"
+    `a > b`
   );
   t.is(
     collapse(`a > b`, {
       trimLines: true,
       recogniseHTML: false
     }),
-    "a > b"
+    `a > b`
   );
   t.is(
     collapse(`a > b`, {
       trimLines: false,
       recogniseHTML: false
     }),
-    "a > b"
+    `a > b`
   );
 });
 
-test(`03.07 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
+test(`03.14 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
   t.is(
     collapse(`<span>zzz</span> abc def ghij klm`, {
       trimLines: 1,
       recogniseHTML: 1
     }),
-    "<span>zzz</span> abc def ghij klm"
+    `<span>zzz</span> abc def ghij klm`
   );
   t.is(
     collapse(`<span>zzz</span> abc def ghij klm`, {
       trimLines: 0,
       recogniseHTML: 1
     }),
-    "<span>zzz</span> abc def ghij klm"
+    `<span>zzz</span> abc def ghij klm`
   );
   t.is(
     collapse(`<span>zzz</span> abc def ghij klm`, {
       trimLines: 1,
       recogniseHTML: 0
     }),
-    "<span>zzz</span> abc def ghij klm"
+    `<span>zzz</span> abc def ghij klm`
   );
   t.is(
     collapse(`<span>zzz</span> abc def ghij klm`, {
       trimLines: 0,
       recogniseHTML: 0
     }),
-    "<span>zzz</span> abc def ghij klm"
+    `<span>zzz</span> abc def ghij klm`
   );
 });
 
@@ -406,89 +548,103 @@ test(`03.07 - ${`\u001b[${32}m${`advanced`}\u001b[${39}m`} - bracket`, t => {
 // -----------------------------------------------------------------------------
 
 test(`04.01 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - does not trim each lines because it's default setting`, t => {
-  t.is(
-    collapse("   a   bbb  \n   c   d   "),
-    "a bbb \n c d",
-    "04.01.01 - defaults"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`   a   bbb  ${presentEolType}   c   d   `),
+      `a bbb ${presentEolType} c d`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`04.02 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - trim setting on, trims every line`, t => {
-  t.is(
-    collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: false }),
-    "aaa bbb \n ccc ddd",
-    "04.02.01 - defaults"
-  );
-  t.is(
-    collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: true }),
-    "aaa bbb\nccc ddd",
-    "04.02.01 - line trim"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`   aaa   bbb  ${presentEolType}    ccc   ddd   `, {
+        trimLines: false
+      }),
+      `aaa bbb ${presentEolType} ccc ddd`,
+      `EOL ${key[idx]}`
+    );
+    t.is(
+      collapse(`   aaa   bbb  ${presentEolType}    ccc   ddd   `, {
+        trimLines: true
+      }),
+      `aaa bbb${presentEolType}ccc ddd`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`04.03 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and non-breaking spaces`, t => {
-  t.is(
-    collapse(
-      "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
-      { trimLines: false }
-    ),
-    "\xa0 aaa bbb \xa0 \n \xa0 ccc ddd \xa0",
-    "04.03.01 - defaults"
-  );
-  t.is(
-    collapse(
-      "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
-      { trimLines: true, trimnbsp: false }
-    ),
-    "\xa0 aaa bbb \xa0\n\xa0 ccc ddd \xa0",
-    "04.03.02 - trimLines = 1, trimnbsp = 0"
-  );
-  t.is(
-    collapse(
-      "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
-      { trimLines: true, trimnbsp: true }
-    ),
-    "aaa bbb\nccc ddd",
-    "04.03.03 - trimLines = 1, trimnbsp = 1"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
+        { trimLines: false }
+      ),
+      `\xa0 aaa bbb \xa0 ${presentEolType} \xa0 ccc ddd \xa0`,
+      `EOL ${key[idx]}`
+    );
+    t.is(
+      collapse(
+        `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
+        { trimLines: true, trimnbsp: false }
+      ),
+      `\xa0 aaa bbb \xa0${presentEolType}\xa0 ccc ddd \xa0`,
+      `04.03.02 - trimLines = 1, trimnbsp = 0`
+    );
+    t.is(
+      collapse(
+        `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
+        { trimLines: true, trimnbsp: true }
+      ),
+      `aaa bbb${presentEolType}ccc ddd`,
+      `04.03.03 - trimLines = 1, trimnbsp = 1`
+    );
+  });
 });
 
 test(`04.04 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and \\r`, t => {
-  t.is(
-    collapse(
-      "\n\n     a    b    \r\n    c    d      \r     e     f     \n\n\n     g    h    \r",
-      { trimLines: true, trimnbsp: false }
-    ),
-    "a b\r\nc d\re f\n\n\ng h",
-    "04.04.01 - mix of \\r and \\n"
-  );
-  t.is(
-    collapse(
-      "\n\n     a    b    \r\n    c    d      \r     e     f     \n\n\n     g    h    \r",
-      { trimLines: true, trimnbsp: true }
-    ),
-    "a b\r\nc d\re f\n\n\ng h",
-    "04.04.02 same except trimnbsp = true"
-  );
-  t.is(
-    collapse(
-      "\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0",
-      { trimLines: true, trimnbsp: true }
-    ),
-    "a b\r\nc d\re f\n\n\ng h",
-    "04.04.03 bunch of non-breaking spaces to be trimmed"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType}${presentEolType}     a    b    ${presentEolType}    c    d      ${presentEolType}     e     f     ${presentEolType}${presentEolType}${presentEolType}     g    h    ${presentEolType}`,
+        { trimLines: true, trimnbsp: false }
+      ),
+      `a b${presentEolType}c d${presentEolType}e f${presentEolType}${presentEolType}${presentEolType}g h`,
+      `EOL ${key[idx]} - 1`
+    );
+    t.is(
+      collapse(
+        `${presentEolType}${presentEolType}     a    b    ${presentEolType}    c    d      ${presentEolType}     e     f     ${presentEolType}${presentEolType}${presentEolType}     g    h    ${presentEolType}`,
+        { trimLines: true, trimnbsp: true }
+      ),
+      `a b${presentEolType}c d${presentEolType}e f${presentEolType}${presentEolType}${presentEolType}g h`,
+      `EOL ${key[idx]} - 2`
+    );
+    t.is(
+      collapse(
+        `\xa0${presentEolType}${presentEolType}  \xa0   a    b   \xa0 ${presentEolType}  \xa0  c    d   \xa0\xa0   ${presentEolType}  \xa0\xa0   e     f  \xa0\xa0   ${presentEolType}${presentEolType}${presentEolType} \xa0\xa0    g    h    ${presentEolType}\xa0\xa0`,
+        { trimLines: true, trimnbsp: true }
+      ),
+      `a b${presentEolType}c d${presentEolType}e f${presentEolType}${presentEolType}${presentEolType}g h`,
+      `EOL ${key[idx]} - 3`
+    );
+  });
 });
 
-test(`04.05 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims and \\r`, t => {
-  t.is(
-    collapse(
-      "\n\n     a    b    \r\n    c    d      \r     e     f     \n\n\n     g    h    \r",
-      { trimLines: true, trimnbsp: false }
-    ),
-    "a b\r\nc d\re f\n\n\ng h",
-    "04.05.01 - mix of \\r and \\n"
-  );
+test(`04.05 - ${`\u001b[${36}m${`line trimming`}\u001b[${39}m`} - line and outer trims`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType}${presentEolType}     a    b    ${presentEolType}    c    d      ${presentEolType}     e     f     ${presentEolType}${presentEolType}${presentEolType}     g    h    ${presentEolType}`,
+        { trimLines: true, trimnbsp: false }
+      ),
+      `a b${presentEolType}c d${presentEolType}e f${presentEolType}${presentEolType}${presentEolType}g h`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------
@@ -515,16 +671,27 @@ test(`05.04 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b
 });
 
 test(`05.05 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 03, but with more non-space white space for trimming`, t => {
-  t.is(collapse("\n\n\r\r\t\t<\thtml\r\t\t>\n\r\t\n"), "<html>");
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `\n${presentEolType}\r\r\t\t<\thtml\r\t\t>\n\r\t${presentEolType}`
+      ),
+      "<html>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.06 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - defaults: like 04 but with sprinkled spaces`, t => {
-  t.is(
-    collapse(
-      "\n \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  "
-    ),
-    "<html>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `\n ${presentEolType}    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    ${presentEolType}  `
+      ),
+      "<html>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.07 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - defaults`, t => {
@@ -552,20 +719,28 @@ test(`05.10 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b
 });
 
 test(`05.11 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with more non-space white space for trimming`, t => {
-  t.is(
-    collapse("\n\n\r\r\t\t<\thtml\r\t\t>\n\r\t\n", { recogniseHTML: false }),
-    "<\thtml\r\t\t>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\r\r\t\t<\thtml\r\t\t>\n\r\t\n`, {
+        recogniseHTML: false
+      }),
+      "<\thtml\r\t\t>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.12 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${35}m${`HTML`}\u001b[${39}m`} - recognition is off - like before but with sprinkled spaces`, t => {
-  t.is(
-    collapse(
-      "\n \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  ",
-      { recogniseHTML: false }
-    ),
-    "< \t html \r \t \t >"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType} \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  `,
+        { recogniseHTML: false }
+      ),
+      "< \t html \r \t \t >",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.13 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - no attr`, t => {
@@ -592,24 +767,45 @@ test(`05.17 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b
 });
 
 test(`05.18 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #1`, t => {
-  t.is(collapse("\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n"), "<html/>");
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n`),
+      "<html/>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.19 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #2`, t => {
-  t.is(collapse("\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n"), "<html/>");
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n`),
+      "<html/>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.20 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #3`, t => {
-  t.is(collapse("\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n"), "<html/>");
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n`),
+      "<html/>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.21 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - inner tag whitespace, many mixed #4`, t => {
-  t.is(
-    collapse(
-      "\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  "
-    ),
-    "<html/>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType} \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  `
+      ),
+      "<html/>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.22 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - basic`, t => {
@@ -633,39 +829,53 @@ test(`05.25 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b
   t.is(collapse("<\thtml\r/>", { recogniseHTML: false }), "<\thtml\r/>");
 });
 
-test(`05.26 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - inner tag whitespace, tab and CR after slash`, t => {
-  t.is(collapse("<\thtml/\r>", { recogniseHTML: false }), "<\thtml/\r>");
-});
-
 test(`05.27 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #1`, t => {
-  t.is(
-    collapse("\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n", { recogniseHTML: false }),
-    "<\thtml\r\t\t/>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n`, {
+        recogniseHTML: false
+      }),
+      "<\thtml\r\t\t/>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.28 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #2`, t => {
-  t.is(
-    collapse("\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n", { recogniseHTML: false }),
-    "<\thtml\r/\t\t>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n`, {
+        recogniseHTML: false
+      }),
+      "<\thtml\r/\t\t>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.29 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #3`, t => {
-  t.is(
-    collapse("\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n", { recogniseHTML: false }),
-    "<\thtml/\r\t\t>"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`${presentEolType}\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n`, {
+        recogniseHTML: false
+      }),
+      "<\thtml/\r\t\t>",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.30 - ${`\u001b[${34}m${`opts.recogniseHTML`}\u001b[${39}m`} - ${`\u001b[${36}m${`XHTML`}\u001b[${39}m`} - recognition is off - mixed inner whitespace #4`, t => {
-  t.is(
-    collapse(
-      "\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  ",
-      { recogniseHTML: false }
-    ),
-    "< \t html \t \t \t / >"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType}\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  `,
+        { recogniseHTML: false }
+      ),
+      "< \t html \t \t \t / >",
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test(`05.31 - ${`\u001b[${35}m${`testing all recognised`}\u001b[${39}m`} - inner whitespace`, t => {
@@ -770,10 +980,15 @@ test(`05.43 - testing against false positives #2 - the "< b" part is sneaky clos
 });
 
 test("05.44 - testing against false positives #3 - with asterisks", t => {
-  t.is(
-    collapse("We have equations: * a < b \n * c > d \n \n and others."),
-    "We have equations: * a < b \n * c > d \n \n and others."
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `We have equations: * a < b ${presentEolType} * c > d ${presentEolType} ${presentEolType} and others.`
+      ),
+      `We have equations: * a < b ${presentEolType} * c > d ${presentEolType} ${presentEolType} and others.`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 test("05.45 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left", t => {
@@ -864,373 +1079,242 @@ test("05.56 - detected erroneous code (space after equal sign in HTML attribute)
 // 06. opts.removeEmptyLines
 // -----------------------------------------------------------------------------
 
-test(`06.01 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - \\n - on`, t => {
-  // on
-  t.is(
-    collapse("a\n\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb"
-  );
+test(`06.01 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - remove`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        trimLines: true,
+        trimnbsp: true,
+        removeEmptyLines: true
+      }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.02 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - \\r\\n - on`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb"
-  );
+test(`06.02 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - don't remove`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        trimLines: true,
+        trimnbsp: true,
+        removeEmptyLines: false
+      }),
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.03 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - \\n - off`, t => {
-  t.is(
-    collapse("a\n\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\n\nb"
-  );
+test(`06.03 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - remove`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(` a ${presentEolType} ${presentEolType} b `, {
+        trimLines: true,
+        trimnbsp: true,
+        removeEmptyLines: true
+      }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.04 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - \\r\\n - off`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\r\n\r\nb"
-  );
+test(`06.04 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - don't remove`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(` a ${presentEolType} ${presentEolType} b `, {
+        trimLines: true,
+        trimnbsp: true,
+        removeEmptyLines: false
+      }),
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.05 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - \\n - on`, t => {
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb"
-  );
+test(`06.05 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - empty lines removal off + per-line trimming off`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(` a ${presentEolType} ${presentEolType} b `, {
+        trimLines: false,
+        trimnbsp: true,
+        removeEmptyLines: false
+      }),
+      `a ${presentEolType} ${presentEolType} b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.06 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - \\r\\n - on`, t => {
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb"
-  );
+test(`06.06 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
+        trimLines: false,
+        trimnbsp: true,
+        removeEmptyLines: false
+      }),
+      `a ${presentEolType} ${presentEolType} b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.07 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - \\n - off`, t => {
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\n\nb"
-  );
+test(`06.07 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `\xa0${presentEolType}${presentEolType}  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   ${presentEolType}${presentEolType}${presentEolType} \xa0\xa0    g    h    \r\xa0\xa0`,
+        { trimLines: true, trimnbsp: true, removeEmptyLines: true }
+      ),
+      `a b\r\nc d\re f${presentEolType}g h`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`06.08 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - \\r\\n - off`, t => {
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\r\n\r\nb"
-  );
-});
-
-test(`06.09 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off`, t => {
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \n \n b"
-  );
-});
-
-test(`06.10 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\r\\n - empty lines removal off + per-line trimming off`, t => {
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \r\n \r\n b"
-  );
-});
-
-test(`06.11 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`, t => {
-  t.is(
-    collapse("  a  \n  \n  b  ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \n \n b"
-  );
-});
-
-test(`06.12 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\r\\n - empty lines removal off + per-line trimming off - multiple spaces`, t => {
-  t.is(
-    collapse("  a  \r\n  \r\n  b    ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \r\n \r\n b"
-  );
-});
-
-test(`06.13 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`, t => {
-  t.is(
-    collapse(
-      "\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0",
-      { trimLines: true, trimnbsp: true, removeEmptyLines: true }
-    ),
-    "a b\r\nc d\re f\ng h"
-  );
-});
-
-test(`06.14 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines - \\n`, t => {
-  t.is(
-    collapse("\na\n\nb\n", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb"
-  );
-});
-
-test(`06.15 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines - \\r\\n`, t => {
-  t.is(
-    collapse("\r\na\r\n\r\nb\r\n", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb"
-  );
+test(`06.08 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `${presentEolType}a${presentEolType}${presentEolType}b${presentEolType}`,
+        {
+          trimLines: true,
+          trimnbsp: true,
+          removeEmptyLines: true
+        }
+      ),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------
 // 07. opts.limitConsecutiveEmptyLinesTo
 // -----------------------------------------------------------------------------
 
-test(`07.01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=off`, t => {
-  t.is(
-    collapse("a\n\nb", {
-      removeEmptyLines: false
-    }),
-    "a\n\nb"
-  );
+test(`07.01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: false
+      }),
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=off`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      removeEmptyLines: false
-    }),
-    "a\r\n\r\nb"
-  );
+test(`07.02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true
+      }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on`, t => {
-  t.is(
-    collapse("a\n\nb", {
-      removeEmptyLines: true
-    }),
-    "a\nb"
-  );
+test(`07.05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(
+        `a${presentEolType}${presentEolType}${presentEolType}${presentEolType}b`,
+        {
+          removeEmptyLines: true,
+          limitConsecutiveEmptyLinesTo: 1
+        }
+      ),
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      removeEmptyLines: true
-    }),
-    "a\r\nb"
-  );
+test(`07.06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 1
+      }),
+      `a${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on, hardcoded default`, t => {
-  t.is(
-    collapse("a\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0
-    }),
-    "a\nb"
-  );
+test(`07.07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 2
+      }),
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on, hardcoded default`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0
-    }),
-    "a\r\nb"
-  );
+test(`07.08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 3
+      }),
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
-  t.is(
-    collapse("a\n\n\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 1
-    }),
-    "a\n\nb"
-  );
+test(`07.09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 99
+      }),
+      `a${presentEolType}${presentEolType}${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
-  t.is(
-    collapse("a\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 1
-    }),
-    "a\r\n\r\nb"
-  );
+test(`07.10 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType} ${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 0,
+        trimLines: false
+      }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
-test(`07.09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
-  t.is(
-    collapse("a\n\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 1
-    }),
-    "a\n\nb"
-  );
-});
-
-test(`07.10 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, t => {
-  t.is(
-    collapse("a\r\n\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 1
-    }),
-    "a\r\n\r\nb"
-  );
-});
-
-test(`07.11 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, t => {
-  t.is(
-    collapse("a\n\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 2
-    }),
-    "a\n\n\nb"
-  );
-});
-
-test(`07.12 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, t => {
-  t.is(
-    collapse("a\r\n\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 2
-    }),
-    "a\r\n\r\n\r\nb"
-  );
-});
-
-test(`07.13 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, t => {
-  t.is(
-    collapse("a\n\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 3
-    }),
-    "a\n\n\nb"
-  );
-});
-
-test(`07.14 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, t => {
-  t.is(
-    collapse("a\r\n\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 3
-    }),
-    "a\r\n\r\n\r\nb"
-  );
-});
-
-test(`07.15 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, t => {
-  t.is(
-    collapse("a\n\n\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 99
-    }),
-    "a\n\n\nb"
-  );
-});
-
-test(`07.16 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  CRLF, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, t => {
-  t.is(
-    collapse("a\r\n\r\n\r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 99
-    }),
-    "a\r\n\r\n\r\nb"
-  );
-});
-
-test(`07.17 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, t => {
-  t.is(
-    collapse("a\n \nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0,
-      trimLines: false
-    }),
-    "a\nb"
-  );
-});
-
-test(`07.18 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, t => {
-  t.is(
-    collapse("a\n \nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0,
-      trimLines: true
-    }),
-    "a\nb"
-  );
-});
-
-test(`07.19 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, CRLF, trimLines=off`, t => {
-  t.is(
-    collapse("a\r\n \r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0,
-      trimLines: false
-    }),
-    "a\r\nb"
-  );
-});
-
-test(`07.20 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, CRLF, trimLines=on`, t => {
-  t.is(
-    collapse("a\r\n \r\nb", {
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 0,
-      trimLines: true
-    }),
-    "a\r\nb"
-  );
+test(`07.11 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType} ${presentEolType}b`, {
+        removeEmptyLines: true,
+        limitConsecutiveEmptyLinesTo: 0,
+        trimLines: true
+      }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------
@@ -1238,23 +1322,30 @@ test(`07.20 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}
 // -----------------------------------------------------------------------------
 
 test(`08.01 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
-  t.is(
-    collapse("   a   bbb  \n   c   d   "),
-    "a bbb \n c d",
-    "08.01.01 - defaults"
-  );
-  t.is(
-    collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: false }),
-    "a bbb \n c d",
-    "08.01.02 - hardcoded default"
-  );
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`   a   bbb  ${presentEolType}   c   d   `),
+      `a bbb ${presentEolType} c d`,
+      `EOL ${key[idx]}`
+    );
+    t.is(
+      collapse(`   a   bbb  ${presentEolType}   c   d   `, {
+        returnRangesOnly: false
+      }),
+      `a bbb ${presentEolType} c d`,
+      `EOL ${key[idx]}`
+    );
+  });
+});
+
+test(`08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
   t.deepEqual(
-    collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: true }),
+    collapse(`   a   bbb  \n   c   d   `, { returnRangesOnly: true }),
     [[0, 3], [4, 6], [10, 11], [13, 15], [17, 19], [21, 24]]
   );
 });
 
-test(`08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`, t => {
+test(`08.03 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`, t => {
   t.is(collapse("a b"), "a b", "08.02.01 - defaults");
   t.is(
     collapse("a b", { returnRangesOnly: false }),
@@ -1264,14 +1355,24 @@ test(`08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there 
   t.deepEqual(collapse("a b", { returnRangesOnly: true }), []);
 });
 
-test(`08.03 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`, t => {
-  t.is(collapse("a\nb"), "a\nb", "08.03.01 - defaults");
-  t.is(
-    collapse("a\nb", { returnRangesOnly: false }),
-    "a\nb",
-    "08.03.02 - hardcoded default"
-  );
-  t.deepEqual(collapse("a\nb", { returnRangesOnly: true }), []);
+test(`08.04 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`, t => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    t.is(
+      collapse(`a${presentEolType}b`),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+    t.is(
+      collapse(`a${presentEolType}b`, { returnRangesOnly: false }),
+      `a${presentEolType}b`,
+      `EOL ${key[idx]}`
+    );
+    t.deepEqual(
+      collapse(`a${presentEolType}b`, { returnRangesOnly: true }),
+      [],
+      `EOL ${key[idx]}`
+    );
+  });
 });
 
 // -----------------------------------------------------------------------------

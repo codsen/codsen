@@ -116,17 +116,18 @@ Options object is sanitized by `check-types-mini` ([npm](https://www.npmjs.com/p
 
 ### Optional Options Object's API:
 
-| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                         |
-| ---------------------- | ------- | ----------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                      |         |             |         |
-| `trimStart`            | Boolean | no          | `true`  | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.                                                |
-| `trimEnd`              | Boolean | no          | `true`  | if `false`, trailing whitespace will be just collapsed.                                                                                                                             |
-| `trimLines`            | Boolean | no          | `false` | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)                            |
-| `trimnbsp`             | Boolean | no          | `false` | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.                                     |
-| `recogniseHTML`        | Boolean | no          | `true`  | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` -> `<div>`. It will not touch any other brackets such as string `a > b`. |
-| `removeEmptyLines`     | Boolean | no          | `false` | if any line can be trimmed to empty string, it will be removed.                                                                                                                     |
-| `returnRangesOnly`     | Boolean | no          | `false` | if enabled, ranges array (array of arrays) or `null` (if there was nothing to collapse) will be returned instead                                                                    |
-| }                      |         |             |         |
+| `options` object's key         | Type                   | Obligatory? | Default | Description                                                                                                                                                                         |
+| ------------------------------ | ---------------------- | ----------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                              |                        |             |         |
+| `trimStart`                    | Boolean                | no          | `true`  | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.                                                |
+| `trimEnd`                      | Boolean                | no          | `true`  | if `false`, trailing whitespace will be just collapsed.                                                                                                                             |
+| `trimLines`                    | Boolean                | no          | `false` | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)                            |
+| `trimnbsp`                     | Boolean                | no          | `false` | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.                                     |
+| `recogniseHTML`                | Boolean                | no          | `true`  | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` -> `<div>`. It will not touch any other brackets such as string `a > b`. |
+| `removeEmptyLines`             | Boolean                | no          | `false` | if any line can be trimmed to empty string, it will be removed.                                                                                                                     |
+| `returnRangesOnly`             | Boolean                | no          | `false` | if enabled, ranges array (array of arrays) or `null` (if there was nothing to collapse) will be returned instead                                                                    |
+| `limitConsecutiveEmptyLinesTo` | Natural number or zero | no          | `0`     | Set to 1 or more to allow that many blank lines between content                                                                                                                     |
+| }                              |                        |             |         |
 
 **Defaults**:
 
@@ -138,7 +139,8 @@ Options object is sanitized by `check-types-mini` ([npm](https://www.npmjs.com/p
   trimnbsp: false, // non-breaking spaces are trimmed too
   recogniseHTML: true, // collapses whitespace around HTML brackets
   removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
-  returnRangesOnly: false // if on, only ranges array is returned
+  returnRangesOnly: false, // if on, only ranges array is returned
+  limitConsecutiveEmptyLinesTo: 0 // zero lines are allowed (if opts.removeEmptyLines is on)
 }
 ```
 

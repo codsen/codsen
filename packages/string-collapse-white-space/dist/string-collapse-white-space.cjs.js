@@ -134,7 +134,7 @@ function collapse(str, originalOpts) {
   var lastLineBreaksLastCharIndex;
   var consecutiveLineBreakCount = 0;
   for (var i = str.length; i--;) {
-    if (str[i] === "\n") {
+    if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
       consecutiveLineBreakCount++;
     } else if (str[i].trim().length) {
       consecutiveLineBreakCount = 0;
@@ -168,7 +168,7 @@ function collapse(str, originalOpts) {
           endingOfTheLine = true;
         }
       }
-      if (str[i] === "\n") {
+      if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
         var sliceFrom = i + 1;
         var sliceTo = void 0;
         if (isNum(lastLineBreaksLastCharIndex)) {
@@ -191,7 +191,9 @@ function collapse(str, originalOpts) {
       if (lineWhiteSpaceEndsAt !== null) {
         if (endingOfTheLine && opts.trimLines) {
           endingOfTheLine = false;
-          finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
+          if (lineWhiteSpaceEndsAt !== i + 1) {
+            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
+          }
         }
         lineWhiteSpaceEndsAt = null;
       }
