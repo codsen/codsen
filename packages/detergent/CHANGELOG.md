@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.4.0](https://gitlab.com/codsen/codsen/compare/detergent@5.3.0...detergent@5.4.0) (2019-10-26)
-
+## 5.4.0 (2019-10-26)
 
 ### Bug Fixes
 
-* making all tests pass ([e1f332b](https://gitlab.com/codsen/codsen/commit/e1f332bd61714cac672f1ec3cadb32fbadde06bd))
-
+- making all tests pass ([e1f332b](https://gitlab.com/codsen/codsen/commit/e1f332bd61714cac672f1ec3cadb32fbadde06bd))
 
 ### Features
 
-* algorithm improvements around empty whitespace blocks ([0dcb178](https://gitlab.com/codsen/codsen/commit/0dcb178760e561aa66606bdb304f07d8eab06c73))
-
-
-
-
+- algorithm improvements around empty whitespace blocks ([0dcb178](https://gitlab.com/codsen/codsen/commit/0dcb178760e561aa66606bdb304f07d8eab06c73))
 
 ## 5.3.0 (2019-10-25)
 
