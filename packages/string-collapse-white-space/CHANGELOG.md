@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.2.0 (2019-10-26)
+## 5.2.0
 
 - full support for all kinds of linebreaks: LF, CR or CRLF
 - basic unit tests for UMD and CJS builds, to check their integrity (rather than functionality, which is covered properly by ES Modules build tests)
