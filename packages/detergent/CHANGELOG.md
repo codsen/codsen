@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.5.0](https://gitlab.com/codsen/codsen/compare/detergent@5.4.0...detergent@5.5.0) (2019-10-27)
-
+## 5.5.0 (2019-10-27)
 
 ### Features
 
-* remove few dependencies to reduce the build size, add more unit tests ([5e836c8](https://gitlab.com/codsen/codsen/commit/5e836c85bb7037a96a4f7ebe73c66dae3a462666))
-
-
-
-
+- remove few dependencies to reduce the build size, add more unit tests ([5e836c8](https://gitlab.com/codsen/codsen/commit/5e836c85bb7037a96a4f7ebe73c66dae3a462666))
 
 ## 5.4.0 (2019-10-26)
 
