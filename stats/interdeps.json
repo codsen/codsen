@@ -158,12 +158,10 @@
     },
     {
         "name": "detergent",
-        "size": 53778,
+        "size": 52790,
         "imports": [
             "all-named-html-entities",
-            "arrayiffy-if-string",
             "html-entities-not-email-friendly",
-            "object-merge-advanced",
             "ranges-apply",
             "ranges-process-outside",
             "ranges-push",

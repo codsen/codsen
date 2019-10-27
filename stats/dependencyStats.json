@@ -6,7 +6,7 @@
         "array-includes-all": 1,
         "array-includes-with-glob": 1,
         "array-pull-all-with-glob": 2,
-        "arrayiffy-if-string": 12,
+        "arrayiffy-if-string": 11,
         "ast-compare": 3,
         "ast-contains-only-empty-space": 3,
         "ast-get-values-by-key": 1,
@@ -55,7 +55,7 @@
         "just-insert": 1,
         "lerna-clean-changelogs": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 27,
+        "lodash.clonedeep": 26,
         "lodash.deburr": 1,
         "lodash.includes": 6,
         "lodash.intersection": 3,
@@ -81,7 +81,7 @@
         "object-delete-key": 1,
         "object-fill-missing-keys": 1,
         "object-flatten-all-arrays": 1,
-        "object-merge-advanced": 5,
+        "object-merge-advanced": 4,
         "object-no-new-keys": 1,
         "object-path": 4,
         "object-set-all-values-to": 1,
@@ -164,7 +164,7 @@
         "js-row-num-cli": 97,
         "json-stringify-safe": 1,
         "lect": 97,
-        "lodash.clonedeep": 3,
+        "lodash.clonedeep": 4,
         "lodash.isequal": 1,
         "map-stream": 1,
         "node-fetch": 1,
@@ -199,7 +199,7 @@
             "lodash.isplainobject": 45
         },
         {
-            "lodash.clonedeep": 27
+            "lodash.clonedeep": 26
         },
         {
             "is-natural-number": 13
@@ -231,7 +231,7 @@
             "ranges-apply": 15
         },
         {
-            "arrayiffy-if-string": 12
+            "arrayiffy-if-string": 11
         },
         {
             "ranges-push": 10
@@ -252,7 +252,7 @@
             "string-match-left-right": 7
         },
         {
-            "object-merge-advanced": 5
+            "object-merge-advanced": 4
         },
         {
             "ast-contains-only-empty-space": 3
