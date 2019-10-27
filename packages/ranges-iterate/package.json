@@ -154,7 +154,7 @@
     "prettier": "^1.18.2",
     "ranges-apply": "^3.0.39",
     "ranges-merge": "^4.2.24",
-    "rollup": "^1.25.2",
+    "rollup": "^1.26.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
