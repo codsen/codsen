@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "description": "a tool to prepare text for pasting into HTML",
   "license": "MIT",
   "engines": {
@@ -152,7 +152,7 @@
     "ranges-process-outside": "^2.2.8",
     "ranges-push": "^3.6.6",
     "string-apostrophes": "^1.2.2",
-    "string-collapse-white-space": "^5.2.0",
+    "string-collapse-white-space": "^5.2.1",
     "string-fix-broken-named-entities": "^2.4.10",
     "string-left-right": "^2.3.6",
     "string-range-expander": "^1.10.47",

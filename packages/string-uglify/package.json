@@ -1,6 +1,6 @@
 {
   "name": "string-uglify",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Uglify - generate unique short names for sets of strings",
   "license": "MIT",
   "engines": {
