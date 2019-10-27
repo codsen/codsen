@@ -780,3 +780,82 @@ test(`02.22 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
     "a z c"
   );
 });
+
+test(`02.23 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`, t => {
+  t.is(
+    det(t, 0, `<sup>`, {
+      stripHtmlButIgnoreTags: [],
+      stripHtml: true
+    }).res,
+    ""
+  );
+});
+
+test(`02.24 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`, t => {
+  t.is(
+    det(t, 0, `<sup>`, {
+      stripHtml: true
+    }).res,
+    "<sup>"
+  );
+});
+
+test(`02.25 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`, t => {
+  t.is(
+    det(t, 0, `<sup>`, {
+      stripHtmlButIgnoreTags: ["sup"],
+      stripHtml: true
+    }).res,
+    "<sup>"
+  );
+});
+
+test(`02.26 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - one tag`, t => {
+  t.is(
+    det(t, 0, `<sup>`, {
+      stripHtmlButIgnoreTags: ["a"],
+      stripHtml: true
+    }).res,
+    ""
+  );
+});
+
+test(`02.27 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`, t => {
+  t.is(
+    det(t, 0, `<sup><a><b><c>`, {
+      stripHtmlButIgnoreTags: ["a", "b", "c"],
+      stripHtml: true
+    }).res,
+    "<a><b><c>"
+  );
+});
+
+test(`02.28 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`, t => {
+  t.is(
+    det(t, 0, `<sup><a><b><c>`, {
+      stripHtmlButIgnoreTags: ["sup", "b", "c"],
+      stripHtml: true
+    }).res,
+    "<sup> <b><c>"
+  );
+});
+
+test(`02.29 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`, t => {
+  t.is(
+    det(t, 0, `<sup><a><b><c>`, {
+      stripHtmlButIgnoreTags: ["sup", "a", "c"],
+      stripHtml: true
+    }).res,
+    "<sup><a> <c>"
+  );
+});
+
+test(`02.30 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + ${`\u001b[${33}m${`opts.stripHtml`}\u001b[${39}m`} - ad hoc - four tags`, t => {
+  t.is(
+    det(t, 0, `<sup><a><b><c>`, {
+      stripHtmlButIgnoreTags: ["sup", "a", "b"],
+      stripHtml: true
+    }).res,
+    "<sup><a><b>"
+  );
+});

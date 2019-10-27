@@ -125,10 +125,11 @@
       },
       "devDependencies": [
         "is-ci",
+        "lodash.clonedeep",
         "object-boolean-combinations",
+        "object-path",
         "rollup-plugin-json",
-        "rollup-plugin-node-builtins",
-        "object-path"
+        "rollup-plugin-node-builtins"
       ],
       "rollupIgnoreFilesForDist": "processCharacter.js",
       "travisVersionsOverride": []
@@ -144,12 +145,9 @@
   "dependencies": {
     "all-named-html-entities": "^1.2.9",
     "ansi-regex": "^5.0.0",
-    "arrayiffy-if-string": "^3.11.21",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.6",
-    "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "object-merge-advanced": "^10.11.4",
     "ranges-apply": "^3.0.39",
     "ranges-process-outside": "^2.2.8",
     "ranges-push": "^3.6.6",
@@ -179,6 +177,7 @@
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.6.3",
     "lect": "^0.10.4",
+    "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.46",
     "object-path": "^0.11.4",

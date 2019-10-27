@@ -24,12 +24,9 @@ var stringRemoveWidows = require('string-remove-widows');
 var processOutside = _interopDefault(require('ranges-process-outside'));
 var collapse = _interopDefault(require('string-collapse-white-space'));
 var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
-var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
-var merge = _interopDefault(require('object-merge-advanced'));
 var stripHtml = _interopDefault(require('string-strip-html'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var rangesApply = _interopDefault(require('ranges-apply'));
-var clone = _interopDefault(require('lodash.clonedeep'));
 var ansiRegex = _interopDefault(require('ansi-regex'));
 var Ranges = _interopDefault(require('ranges-push'));
 
@@ -717,34 +714,10 @@ function det(str, inputOpts) {
   if (typeof str !== "string") {
     throw new Error("detergent(): [THROW_ID_01] the first input argument must be of a string type, not ".concat(_typeof(str)));
   }
-  var opts;
-  if (inputOpts) {
-    opts = clone(inputOpts);
-    if (isObj(inputOpts)) {
-      if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      } else {
-        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
-      }
-      if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      } else {
-        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
-      }
-      opts = merge(defaultOpts, opts, {
-        cb: function cb(inputArg1, inputArg2, resultAboutToBeReturned) {
-          if (Array.isArray(inputArg1) && Array.isArray(inputArg2) && inputArg2.length || typeof inputArg1 === "boolean" && typeof inputArg2 === "boolean") {
-            return inputArg2;
-          }
-          return resultAboutToBeReturned;
-        }
-      });
-    } else {
-      throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
-    }
-  } else {
-    opts = clone(defaultOpts);
+  if (inputOpts && !isObj(inputOpts)) {
+    throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
   }
+  var opts = Object.assign({}, defaultOpts, inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
   }

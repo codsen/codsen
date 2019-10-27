@@ -18,12 +18,9 @@ import { removeWidows } from 'string-remove-widows';
 import processOutside from 'ranges-process-outside';
 import collapse from 'string-collapse-white-space';
 import trimSpaces from 'string-trim-spaces-only';
-import arrayiffy from 'arrayiffy-if-string';
-import merge from 'object-merge-advanced';
 import stripHtml from 'string-strip-html';
 import isObj from 'lodash.isplainobject';
 import rangesApply from 'ranges-apply';
-import clone from 'lodash.clonedeep';
 import ansiRegex from 'ansi-regex';
 import Ranges from 'ranges-push';
 
@@ -1373,41 +1370,12 @@ function det(str, inputOpts) {
       `detergent(): [THROW_ID_01] the first input argument must be of a string type, not ${typeof str}`
     );
   }
-  let opts;
-  if (inputOpts) {
-    opts = clone(inputOpts);
-    if (isObj(inputOpts)) {
-      if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      } else {
-        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
-      }
-      if (!opts.stripHtmlButIgnoreTags) {
-        opts.stripHtmlButIgnoreTags = [];
-      } else {
-        opts.stripHtmlButIgnoreTags = arrayiffy(opts.stripHtmlButIgnoreTags);
-      }
-      opts = merge(defaultOpts, opts, {
-        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
-          if (
-            (Array.isArray(inputArg1) &&
-              Array.isArray(inputArg2) &&
-              inputArg2.length) ||
-            (typeof inputArg1 === "boolean" && typeof inputArg2 === "boolean")
-          ) {
-            return inputArg2;
-          }
-          return resultAboutToBeReturned;
-        }
-      });
-    } else {
-      throw new Error(
-        `detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof inputOpts}`
-      );
-    }
-  } else {
-    opts = clone(defaultOpts);
+  if (inputOpts && !isObj(inputOpts)) {
+    throw new Error(
+      `detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof inputOpts}`
+    );
   }
+  const opts = Object.assign({}, defaultOpts, inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
   }
