@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.0 (2019-10-26)
+
+### Features
+
+- proper support for all possible kinds of line end symbols ([5a49049](https://gitlab.com/codsen/codsen/commit/5a49049212afe0d9585f9592701e1d88a89c88e1))
+
 ## 5.2.0
 
 - full support for all kinds of linebreaks: LF, CR or CRLF
