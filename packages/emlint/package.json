@@ -28,7 +28,9 @@
     "automatically",
     "tool",
     "development",
-    "utility"
+    "utility",
+    "static",
+    "analysis"
   ],
   "main": "dist/emlint.cjs.js",
   "module": "dist/emlint.esm.js",

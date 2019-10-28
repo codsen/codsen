@@ -89,6 +89,9 @@ let parsedPack; // package.json parsed through "getPkgRepo"
 let lectrc = {}; // .lectrc one level above from root
 let addBackToTopLinks = true; // should we add back-to-top anchor links under sections?
 
+let isCLI = false; // is this a CLI package ("special" packages are both or neither)
+let isSpecial = false; // is this special package where we granularly control everything
+
 // -----------------------------------------------------------------------------
 // 0. STUFF WE SET
 
@@ -109,6 +112,7 @@ const readmeNames = [
 ];
 
 const packageJsonlectKeyDefaults = {
+  special: false,
   babelrc: {
     override: false,
     set: false
@@ -163,6 +167,7 @@ const packageJsonlectKeyDefaults = {
     goodFolders: []
   },
   various: {
+    rollupEntryPoint: "",
     travisVersionsOverride: [""],
     devDependencies: []
   }
@@ -303,31 +308,39 @@ function step13() {
   }
 
   // if Rollup is not used, skip to next step:
-  if (!objectPath.has(pack, "devDependencies.rollup")) {
+  if (isSpecial || !objectPath.has(pack, "devDependencies.rollup")) {
     step14(pack);
     return;
   }
 
   let allFilesInSrc;
+  let entryPoint = "main.js";
 
-  // /src/ might not exist, for example, in CLI apps that don't need/use transpiling
-  try {
-    allFilesInSrc = fs
-      .readdirSync("src")
-      .filter(file => {
-        return (
-          fs.statSync(path.join("src", file)).isFile() &&
-          (!objectPath.get(pack, "lect.various.rollupIgnoreFilesForDist") ||
-            (isArr(pack.lect.various.rollupIgnoreFilesForDist) &&
-              !pack.lect.various.rollupIgnoreFilesForDist.includes(file)) ||
-            (isStr(pack.lect.various.rollupIgnoreFilesForDist) &&
-              pack.lect.various.rollupIgnoreFilesForDist !== file))
-        );
-      })
-      .filter(file => file !== "main.js" && file.endsWith(".js"));
-  } catch (err) {
-    step14(pack);
-    return;
+  if (isSpecial) {
+    const entry =
+      objectPath.get(pack, "lect.various.rollupEntryPoint") || "main.js";
+    allFilesInSrc = [entry];
+    entryPoint = entry;
+  } else {
+    // /src/ might not exist, for example, in CLI apps that don't need/use transpiling
+    try {
+      allFilesInSrc = fs
+        .readdirSync("src")
+        .filter(file => {
+          return (
+            fs.statSync(path.join("src", file)).isFile() &&
+            (!objectPath.get(pack, "lect.various.rollupIgnoreFilesForDist") ||
+              (isArr(pack.lect.various.rollupIgnoreFilesForDist) &&
+                !pack.lect.various.rollupIgnoreFilesForDist.includes(file)) ||
+              (isStr(pack.lect.various.rollupIgnoreFilesForDist) &&
+                pack.lect.various.rollupIgnoreFilesForDist !== file))
+          );
+        })
+        .filter(file => file !== "main.js" && file.endsWith(".js"));
+    } catch (err) {
+      step14(pack);
+      return;
+    }
   }
 
   // console.log(`addon:\n-------\n` + addon + `\n-------`);
@@ -404,7 +417,7 @@ function step13() {
     defaultUmdBit = `
     // browser-friendly UMD build
     {
-      input: "src/main.js",
+      input: "src/${entryPoint}",
       output: {
         file: pkg.browser,
         format: "umd",
@@ -439,7 +452,7 @@ function step13() {
     defaultCommonJSBit = `
     // CommonJS build (for Node)
     {
-      input: "src/main.js",
+      input: "src/${entryPoint}",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "${
@@ -479,7 +492,7 @@ function step13() {
     defaultESMBit = `
     // ES module build (for bundlers)
     {
-      input: "src/main.js",
+      input: "src/${entryPoint}",
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "${
@@ -955,19 +968,21 @@ async function writePackageJson(receivedPackageJsonObj) {
     );
   }
 
-  if (pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) {
-    // it's a CLI
-    // set scripts to the ones set in .lectrc
-    const cliScripts = objectPath.get(lectrc, "scripts.cli");
-    if (cliScripts) {
-      receivedPackageJsonObj.scripts = clone(cliScripts);
-    }
-  } else {
-    // it's not a normal library
-    // set scripts to the ones set in .lectrc
-    const normalScripts = objectPath.get(lectrc, "scripts.rollup");
-    if (normalScripts) {
-      receivedPackageJsonObj.scripts = clone(normalScripts);
+  if (!isSpecial) {
+    if (isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) {
+      // it's a CLI
+      // set scripts to the ones set in .lectrc
+      const cliScripts = objectPath.get(lectrc, "scripts.cli");
+      if (cliScripts) {
+        receivedPackageJsonObj.scripts = clone(cliScripts);
+      }
+    } else {
+      // it's not a normal library
+      // set scripts to the ones set in .lectrc
+      const normalScripts = objectPath.get(lectrc, "scripts.rollup");
+      if (normalScripts) {
+        receivedPackageJsonObj.scripts = clone(normalScripts);
+      }
     }
   }
 
@@ -999,7 +1014,7 @@ async function writePackageJson(receivedPackageJsonObj) {
       !Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
       (!isArr(pack.lect.various.devDependencies) ||
         !pack.lect.various.devDependencies.includes(key)) &&
-      (!(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
+      (!(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
       // console.log(`1011 lect: we'll delete key "${key}" from dev dependencies`);
@@ -1022,7 +1037,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     // dependency
     if (
       (!Object.prototype.hasOwnProperty.call(packDevDeps, key) &&
-        !(pack.bin || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
+        !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
       // console.log(`1034 lect: we'll add a new key ${key} under dev deps`);
@@ -1083,7 +1098,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   // don't touch the config parts
   receivedPackageJsonObj.lect = pack.lect;
 
-  if (receivedPackageJsonObj.bin) {
+  if (!isSpecial && receivedPackageJsonObj.bin) {
     objectPath.del(receivedPackageJsonObj, "devDependencies.benchmark");
   }
 
@@ -1355,10 +1370,9 @@ function step6() {
     showCoverageBadge = false;
   }
 
-  // if this is a CLI app ("bin" field is present in package.json), don't showRunkitBadge
-  // Runkit badge:
+  // if this is a CLI app, don't show the Runkit badge
   let showRunkitBadge = true;
-  if (objectPath.has(pack, "bin")) {
+  if (!isSpecial && isCLI && !(pack.lect && pack.lect.special)) {
     showRunkitBadge = false;
   }
 
@@ -1694,7 +1708,7 @@ function step6() {
 
       // find out is default exported
       let sourceContainsDefaultExport = false;
-      if (!objectPath.has(pack, "bin")) {
+      if (!isSpecial && !isCLI) {
         try {
           sourceContainsDefaultExport = fs
             .readFileSync("src/main.js", "utf8")
@@ -1716,7 +1730,7 @@ function step6() {
           ? pack.lect.req
           : sourceContainsDefaultExport
           ? camelCase(pack.name)
-          : !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
+          : !pack.name.startsWith("gulp-") && !isCLI
           ? process.exit(1)
           : "";
 
@@ -1729,11 +1743,11 @@ function step6() {
         }
         let prep = `
 \`\`\`bash
-npm i ${objectPath.has(pack, "bin") ? "-g " : ""}${pack.name}
+npm i ${isCLI ? "-g " : ""}${pack.name}
 \`\`\`
 `;
 
-        if (objectPath.has(pack, "bin")) {
+        if (isCLI) {
           // if it's a CLI
           prep += `\nThen, call it from the command line using ${
             Object.keys(pack.bin).length > 1
@@ -1795,7 +1809,7 @@ const ${consumedName} = ${camelCase(pack.name)};
 \`\`\``
               : ""
           }${
-            !pack.name.startsWith("gulp-") && !objectPath.has(pack, "bin")
+            !pack.name.startsWith("gulp-") && !isCLI
               ? `\n\nThis package has three builds in \`dist/\` folder:\n\n${assembleRollupInfoTable(
                   pack,
                   lectrc
@@ -1950,7 +1964,8 @@ function step5() {
   let finalBabelrc = null;
 
   if (
-    (objectPath.has(pack, "bin") && Object.keys(pack.bin).length > 0) ||
+    isSpecial ||
+    (isCLI && Object.keys(pack.bin).length > 0) ||
     pack.name.startsWith("gulp")
   ) {
     // log(
@@ -1973,7 +1988,6 @@ function step5() {
     //
     //
 
-    // if it's a CLI app:
     if (
       objectPath.has(lectrc, "babelrc.override") &&
       isObj(lectrc.babelrc.override) &&
@@ -2049,14 +2063,8 @@ function step5() {
           step6();
         }
       );
-    } else if (pack.bin) {
+    } else if (isCLI) {
       //    SO IT'S A CLI !
-
-      // remove cli-es5.js from bin entry:
-      const binKeys = Object.keys(pack.bin);
-      if (binKeys.length === 1) {
-        pack.bin[binKeys[0]] = "cli.js";
-      }
 
       // remove cli.js from "lect.npmignore.badFiles"
       const badFiles = objectPath.get(pack, "lect.npmignore.badFiles");
@@ -2221,6 +2229,17 @@ function step2() {
 
     parsedPack = clone(obj);
     pack = clone(obj);
+
+    if (pack.lect && pack.lect.special) {
+      isSpecial = true;
+      log(`${chalk.yellow(logSymbols.info, `package is special!`)}`);
+    }
+
+    if (pack.bin) {
+      isCLI = true;
+      log(`${chalk.yellow(logSymbols.info, `package is a CLI!`)}`);
+    }
+
     step3();
   });
 }
@@ -2309,7 +2328,11 @@ function checkOneOfNames(i) {
 // START:
 // quickly read package.json and bail early if needed
 try {
-  if (JSON.parse(fs.readFileSync("package.json", "utf8")).private) {
+  const packContents = JSON.parse(fs.readFileSync("package.json", "utf8"));
+  if (
+    packContents.private &&
+    !(packContents.lect && packContents.lect.special)
+  ) {
     log(`${chalk.green(logSymbols.success, "private package, lect skipped")}`);
     process.exit();
   }
