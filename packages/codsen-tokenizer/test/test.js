@@ -96,4 +96,18 @@ test("01.05 - closing bracket in the attribute's value", t => {
   ]);
 });
 
+test("01.06 - closing bracket layers of nested quotes", t => {
+  const gathered = [];
+  ct(`<a alt='"'">"'"'>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 17
+    }
+  ]);
+});
+
 // 02.

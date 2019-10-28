@@ -92,11 +92,11 @@ function tokenizer(str, cb, originalOpts) {
         }
       }
     }
-    if (token.type === "html" && str[i] === `"`) {
-      if (layers.length && layers[layers.length - 1] === `"`) {
+    if (token.type === "html" && [`"`, `'`].includes(str[i])) {
+      if (layers.length && layers[layers.length - 1] === str[i]) {
         layers.pop();
       } else {
-        layers.push(`"`);
+        layers.push(str[i]);
       }
     }
     if (str[i] === "<") {

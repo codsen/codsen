@@ -153,13 +153,13 @@ function tokenizer(str, cb, originalOpts) {
     //
 
     // record "layers" like entering double quotes
-    if (token.type === "html" && str[i] === `"`) {
-      if (layers.length && layers[layers.length - 1] === `"`) {
+    if (token.type === "html" && [`"`, `'`].includes(str[i])) {
+      if (layers.length && layers[layers.length - 1] === str[i]) {
         // maybe it's the closing counterpart?
         layers.pop();
       } else {
         // it's opening then
-        layers.push(`"`);
+        layers.push(str[i]);
       }
     }
 
@@ -236,7 +236,9 @@ function tokenizer(str, cb, originalOpts) {
         token,
         null,
         0
-      )}`}\u001b[${39}m`}`
+      )}${
+        layers.length ? JSON.stringify(layers, null, 0) : ""
+      }`}\u001b[${39}m`}`
     );
   }
 }
