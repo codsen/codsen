@@ -9,6 +9,7 @@
 
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
+import tagOnTheRight from 'is-html-tag-opening';
 import arrayiffy from 'arrayiffy-if-string';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
@@ -1452,25 +1453,6 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
   }
   return false;
 }
-function tagOnTheRight(str, idx = 0) {
-  const r1 = /^<\s*\w+\s*\/?\s*>/g;
-  const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
-  const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
-  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
-  const whatToTest = idx ? str.slice(idx) : str;
-  let passed = false;
-  if (r1.test(whatToTest)) {
-    passed = true;
-  } else if (r2.test(whatToTest)) {
-    passed = true;
-  } else if (r3.test(whatToTest)) {
-    passed = true;
-  } else if (r4.test(whatToTest)) {
-    passed = true;
-  }
-  const res = isStr(str) && idx < str.length && passed;
-  return res;
-}
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   const startingQuoteVal = str[idx];
   if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
@@ -1791,7 +1773,6 @@ var util = /*#__PURE__*/Object.freeze({
   findClosingQuote: findClosingQuote,
   secondToLastChar: secondToLastChar,
   c1CharacterNames: c1CharacterNames,
-  tagOnTheRight: tagOnTheRight,
   isLatinLetter: isLatinLetter,
   espCharsFunc: espCharsFunc,
   isLowercase: isLowercase,
@@ -1817,7 +1798,6 @@ const {
   withinTagInnerspace: withinTagInnerspace$1,
   isLowerCaseLetter: isLowerCaseLetter$1,
   findClosingQuote: findClosingQuote$1,
-  tagOnTheRight: tagOnTheRight$1,
   isLatinLetter: isLatinLetter$1,
   espCharsFunc: espCharsFunc$1,
   charIsQuote: charIsQuote$1,
@@ -3459,7 +3439,7 @@ function lint(str, originalOpts) {
     if (!doNothingUntil && str[i] === "<") {
       if (logTag.tagStartAt === null) {
         logTag.tagStartAt = i;
-      } else if (tagOnTheRight$1(str, i)) {
+      } else if (tagOnTheRight(str, i)) {
         if (
           logTag.tagStartAt !== null &&
           ((logTag.attributes.length &&

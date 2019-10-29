@@ -11,7 +11,6 @@ import {
   isUppercaseLetter,
   findClosingQuote,
   c1CharacterNames,
-  tagOnTheRight,
   isLatinLetter,
   isLowercase,
   charIsQuote,
@@ -770,127 +769,6 @@ test(`20 - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-
   t.is(findClosingQuote(code, 7), 9, "20.01");
   t.is(findClosingQuote(code, 14), 16, "20.02");
   t.is(findClosingQuote(code, 21), 25, "20.03");
-});
-
-test(`40 - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - normal tag`, t => {
-  const s1 = `<a>`;
-  t.true(tagOnTheRight(s1), "40.01");
-  t.true(tagOnTheRight(s1, 0), "40.02");
-
-  const s2 = `<img>`;
-  t.true(tagOnTheRight(s2), "40.03");
-  t.true(tagOnTheRight(s2, 0), "40.04");
-
-  const s3 = `<img alt="">`;
-  t.true(tagOnTheRight(s3), "40.05");
-  t.true(tagOnTheRight(s3, 0), "40.06");
-
-  const s4 = `<img alt="zzz">`;
-  t.true(tagOnTheRight(s4), "40.07");
-  t.true(tagOnTheRight(s4, 0), "40.08");
-
-  const s5 = `<td nowrap>`;
-  t.false(tagOnTheRight(s5), "40.09"); // <---- false because no attributes with equal-quote found
-  t.false(tagOnTheRight(s5, 0), "40.10");
-
-  const s6 = `<td class="klm" nowrap>`;
-  t.true(tagOnTheRight(s6), "40.11");
-  t.true(tagOnTheRight(s6, 0), "40.12");
-
-  const s7 = `<td nowrap class="klm">`;
-  t.true(tagOnTheRight(s7), "40.13");
-
-  const s8 = `<td nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap class="klm"`;
-  t.true(tagOnTheRight(s8), "40.14");
-});
-
-test(`41 - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - closing tag`, t => {
-  // closing tag
-  const s1 = `</td>`;
-  t.true(tagOnTheRight(s1), "41.01");
-  t.true(tagOnTheRight(s1, 0), "41.02");
-
-  const s2 = `</ td>`;
-  t.true(tagOnTheRight(s2), "41.03");
-  t.true(tagOnTheRight(s2, 0), "41.04");
-
-  const s3 = `< / td>`;
-  t.true(tagOnTheRight(s3), "41.05");
-  t.true(tagOnTheRight(s3, 0), "41.06");
-
-  const s4 = `</ td >`;
-  t.true(tagOnTheRight(s4), "41.07");
-  t.true(tagOnTheRight(s4, 0), "41.08");
-
-  const s5 = `< / td >`;
-  t.true(tagOnTheRight(s5), "41.09");
-  t.true(tagOnTheRight(s5, 0), "41.10");
-});
-
-test(`42 - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - self-closing tag`, t => {
-  const s1 = `<br/>`;
-  t.true(tagOnTheRight(s1), "42.01");
-  t.true(tagOnTheRight(s1, 0), "42.02");
-
-  const s2 = `< br/>`;
-  t.true(tagOnTheRight(s2), "42.03");
-  t.true(tagOnTheRight(s2, 0), "42.04");
-
-  const s3 = `<br />`;
-  t.true(tagOnTheRight(s3), "42.05");
-  t.true(tagOnTheRight(s3, 0), "42.06");
-
-  const s4 = `<br/ >`;
-  t.true(tagOnTheRight(s4), "42.07");
-  t.true(tagOnTheRight(s4, 0), "42.08");
-
-  const s5 = `<br / >`;
-  t.true(tagOnTheRight(s5), "42.09");
-  t.true(tagOnTheRight(s5, 0), "42.10");
-
-  const s6 = `< br / >`;
-  t.true(tagOnTheRight(s6), "42.11");
-  t.true(tagOnTheRight(s6, 0), "42.12");
-});
-
-test(`43 - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - self-closing tag with attributes`, t => {
-  const s1 = `<br class="a"/>`;
-  t.true(tagOnTheRight(s1), "43.01");
-  t.true(tagOnTheRight(s1, 0), "43.02");
-
-  const s2 = `< br class="a"/>`;
-  t.true(tagOnTheRight(s2), "43.03");
-  t.true(tagOnTheRight(s2, 0), "43.04");
-
-  const s3 = `<br class="a" />`;
-  t.true(tagOnTheRight(s3), "43.05");
-  t.true(tagOnTheRight(s3, 0), "43.06");
-
-  const s4 = `<br class="a"/ >`;
-  t.true(tagOnTheRight(s4), "43.07");
-  t.true(tagOnTheRight(s4, 0), "43.08");
-
-  const s5 = `<br class="a" / >`;
-  t.true(tagOnTheRight(s5), "43.09");
-  t.true(tagOnTheRight(s5, 0), "43.10");
-
-  const s6 = `< br class="a" / >`;
-  t.true(tagOnTheRight(s6), "43.11");
-  t.true(tagOnTheRight(s6, 0), "43.12");
-
-  const s7 = `< br class = "a"  id ='z' / >`;
-  t.true(tagOnTheRight(s7), "43.13");
-  t.true(tagOnTheRight(s7, 0), "43.14");
-
-  const s8 = `< br class = "a'  id = "z' / >`;
-  t.true(tagOnTheRight(s8), "43.15");
-  t.true(tagOnTheRight(s8, 0), "43.16");
-});
-
-test(`44 - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - ad-hoc #1`, t => {
-  const s1 = `<a b="ccc"<d>`;
-  t.false(tagOnTheRight(s1, 6), "44.02");
-  t.true(tagOnTheRight(s1, 10), "44.02");
 });
 
 test(`51 - ${`\u001b[${33}m${`onlyTheseLeadToThat()`}\u001b[${39}m`} - not greedy - default start idx - various validators`, t => {

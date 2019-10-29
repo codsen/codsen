@@ -15,6 +15,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
+var tagOnTheRight = _interopDefault(require('is-html-tag-opening'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
@@ -1276,26 +1277,6 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
   }
   return false;
 }
-function tagOnTheRight(str) {
-  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var r1 = /^<\s*\w+\s*\/?\s*>/g;
-  var r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
-  var r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
-  var r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
-  var whatToTest = idx ? str.slice(idx) : str;
-  var passed = false;
-  if (r1.test(whatToTest)) {
-    passed = true;
-  } else if (r2.test(whatToTest)) {
-    passed = true;
-  } else if (r3.test(whatToTest)) {
-    passed = true;
-  } else if (r4.test(whatToTest)) {
-    passed = true;
-  }
-  var res = isStr(str) && idx < str.length && passed;
-  return res;
-}
 function attributeOnTheRight(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var closingQuoteAt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -1569,7 +1550,6 @@ var characterSuitableForNames$1 = characterSuitableForNames,
     withinTagInnerspace$1 = withinTagInnerspace,
     isLowerCaseLetter$1 = isLowerCaseLetter,
     findClosingQuote$1 = findClosingQuote,
-    tagOnTheRight$1 = tagOnTheRight,
     isLatinLetter$1 = isLatinLetter,
     espCharsFunc$1 = espCharsFunc,
     charIsQuote$1 = charIsQuote,
@@ -2756,7 +2736,7 @@ function lint(str, originalOpts) {
     if (!doNothingUntil && str[_i] === "<") {
       if (logTag.tagStartAt === null) {
         logTag.tagStartAt = _i;
-      } else if (tagOnTheRight$1(str, _i)) {
+      } else if (tagOnTheRight(str, _i)) {
         if (logTag.tagStartAt !== null && (logTag.attributes.length && logTag.attributes.some(function (attrObj) {
           return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
         }) || isStr$1(logTag.tagName) && knownHTMLTags.includes(logTag.tagName) && stringLeftRight.right(str, logTag.tagNameEndAt - 1) === _i)) {

@@ -2,6 +2,7 @@ import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import { right, left } from 'string-left-right';
 import arrayiffy from 'arrayiffy-if-string';
 import he from 'he';
+import tagOnTheRight from 'is-html-tag-opening';
 
 var $ = {
 	sibling: "$",
@@ -615,25 +616,6 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
   }
   return false;
 }
-function tagOnTheRight(str, idx = 0) {
-  const r1 = /^<\s*\w+\s*\/?\s*>/g;
-  const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
-  const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
-  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
-  const whatToTest = idx ? str.slice(idx) : str;
-  let passed = false;
-  if (r1.test(whatToTest)) {
-    passed = true;
-  } else if (r2.test(whatToTest)) {
-    passed = true;
-  } else if (r3.test(whatToTest)) {
-    passed = true;
-  } else if (r4.test(whatToTest)) {
-    passed = true;
-  }
-  const res = isStr(str) && idx < str.length && passed;
-  return res;
-}
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   const startingQuoteVal = str[idx];
   if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
@@ -940,4 +922,4 @@ function encode(str, mode = "html") {
   }
 }
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, characterSuitableForNames, encode, encodeChar, espChars, espCharsFunc, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, characterSuitableForNames, encode, encodeChar, espChars, espCharsFunc, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, withinTagInnerspace };

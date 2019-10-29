@@ -46,6 +46,7 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "he",
         "html-entities-not-email-friendly",
+        "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -71,6 +72,7 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "he",
         "html-entities-not-email-friendly",
+        "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -96,6 +98,7 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "he",
         "html-entities-not-email-friendly",
+        "is-html-tag-opening",
         "string-left-right"
       ],
       plugins: [

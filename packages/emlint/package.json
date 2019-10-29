@@ -142,6 +142,7 @@
     "arrayiffy-if-string": "^3.11.21",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.6",
+    "is-html-tag-opening": "^1.0.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "ranges-merge": "^4.2.24",

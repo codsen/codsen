@@ -3,6 +3,7 @@ import { notEmailFriendly } from "html-entities-not-email-friendly";
 import fixBrokenEntities from "string-fix-broken-named-entities";
 import errorsCharacters from "./errors-characters.json";
 import knownHTMLTags from "./knownHTMLTags.json";
+import tagOnTheRight from "is-html-tag-opening";
 import knownESPTags from "./knownESPTags.json";
 import errorsRules from "./errors-rules.json";
 import arrayiffy from "arrayiffy-if-string";
@@ -12,13 +13,13 @@ import clone from "lodash.clonedeep";
 import merge from "ranges-merge";
 import * as util from "./util";
 const isArr = Array.isArray;
+
 const {
   characterSuitableForNames,
   attributeOnTheRight,
   withinTagInnerspace,
   isLowerCaseLetter,
   findClosingQuote,
-  tagOnTheRight,
   isLatinLetter,
   espCharsFunc,
   charIsQuote,
