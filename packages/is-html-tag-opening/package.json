@@ -1,0 +1,167 @@
+{
+  "name": "is-html-tag-opening",
+  "version": "1.0.0",
+  "description": "Is given opening bracket a beginning of a tag?",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "keywords": [
+    "add",
+    "email",
+    "template",
+    "newsletter",
+    "marketing",
+    "alt",
+    "tags",
+    "attributes",
+    "missing",
+    "fill",
+    "templates",
+    "restore",
+    "clean",
+    "parsing"
+  ],
+  "main": "dist/is-html-tag-opening.cjs.js",
+  "module": "dist/is-html-tag-opening.esm.js",
+  "browser": "dist/is-html-tag-opening.umd.js",
+  "scripts": {
+    "ava": "ava -d",
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "rollup -c --dev --silent",
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "lect": "lect",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+    "perf": "node perf/check",
+    "prepare": "npm run build",
+    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "pretest": "npm run build",
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage && npm run perf",
+    "version": "npm run build && git add ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "timeout": "99m",
+    "verbose": true
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "req": "isOpening",
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "ava": "^2.2.7",
+    "babel-plugin-istanbul": "^5.2.0",
+    "benchmark": "^2.1.4",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-ava": "^9.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "esm": "^3.2.25",
+    "js-row-num-cli": "^1.6.3",
+    "lect": "^0.10.4",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "rollup": "^1.26.0",
+    "rollup-plugin-ascii": "^0.0.3",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-banner": "^0.2.1",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-strip": "^1.2.2",
+    "rollup-plugin-terser": "^5.1.2"
+  }
+}
