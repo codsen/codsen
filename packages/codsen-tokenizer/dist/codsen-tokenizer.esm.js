@@ -10,6 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import 'string-left-right';
 import 'string-match-left-right';
+import isTagOpening from 'is-html-tag-opening';
 
 function isStr(something) {
   return typeof something === "string";
@@ -99,7 +100,7 @@ function tokenizer(str, cb, originalOpts) {
         layers.push(str[i]);
       }
     }
-    if (str[i] === "<") {
+    if (str[i] === "<" && isTagOpening(str, i)) {
       if (token.start !== null) {
         token.end = i;
         pingcb(token);

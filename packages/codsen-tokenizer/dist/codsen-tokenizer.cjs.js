@@ -14,6 +14,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isObj = _interopDefault(require('lodash.isplainobject'));
 require('string-left-right');
 require('string-match-left-right');
+var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -92,7 +93,7 @@ function tokenizer(str, cb, originalOpts) {
         layers.push(str[i]);
       }
     }
-    if (str[i] === "<") {
+    if (str[i] === "<" && isTagOpening(str, i)) {
       if (token.start !== null) {
         token.end = i;
         pingcb(token);

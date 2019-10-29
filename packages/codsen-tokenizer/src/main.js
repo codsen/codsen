@@ -1,10 +1,18 @@
 import isObj from "lodash.isplainobject";
 import { left, right } from "string-left-right";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
+import isTagOpening from "is-html-tag-opening";
 
 const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
+}
+
+function isLetter(something) {
+  return (
+    typeof something === "string" &&
+    something.toUpperCase() !== something.toLowerCase()
+  );
 }
 
 const defaults = {
@@ -88,7 +96,7 @@ function tokenizer(str, cb, originalOpts) {
   // ---------------------------------------------------------------------------
 
   function pingcb(incomingToken) {
-    console.log(`091 PING cb() with ${JSON.stringify(incomingToken, null, 4)}`);
+    console.log(`099 PING cb() with ${JSON.stringify(incomingToken, null, 4)}`);
     cb(incomingToken);
     // reset
     tokenReset();
@@ -137,7 +145,7 @@ function tokenizer(str, cb, originalOpts) {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
-          console.log(`140 DONE ${currentPercentageDone}%`);
+          console.log(`148 DONE ${currentPercentageDone}%`);
         }
       }
     }
@@ -164,12 +172,12 @@ function tokenizer(str, cb, originalOpts) {
     }
 
     // catch the beginning of a token
-    if (str[i] === "<") {
+    if (str[i] === "<" && isTagOpening(str, i)) {
       // if a token is already being recorded, end it
       if (token.start !== null) {
         token.end = i;
         console.log(
-          `172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          `180 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
             token.end
           }; then PING CB()`
         );
@@ -179,26 +187,26 @@ function tokenizer(str, cb, originalOpts) {
       token.start = i;
       token.type = "html";
       console.log(
-        `182 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+        `190 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
           token.start
         }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
       );
     } else if (token.start === null || token.end === i) {
       if (token.end) {
-        console.log(`188 PING CB()`);
+        console.log(`196 PING CB()`);
         pingcb(token);
       }
 
       // finally, the last default type is "text"
       token.start = i;
       console.log(
-        `195 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+        `203 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
           token.start
         }`
       );
       token.type = "text";
       console.log(
-        `201 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+        `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
           token.type
         }`
       );
@@ -208,7 +216,7 @@ function tokenizer(str, cb, originalOpts) {
     if (token.type === "html" && !layers.length && str[i] === ">") {
       token.end = i + 1;
       console.log(
-        `211 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+        `219 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
           token.end
         }`
       );

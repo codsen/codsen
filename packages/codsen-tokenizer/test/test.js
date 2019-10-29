@@ -110,4 +110,38 @@ test("01.06 - closing bracket layers of nested quotes", t => {
   ]);
 });
 
-// 02.
+test("01.07 - bracket as text", t => {
+  const gathered = [];
+  ct("a < b", obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 5
+    }
+  ]);
+});
+
+// 02. broken code
+// -----------------------------------------------------------------------------
+
+test("02.01 - space after opening bracket, non-dubious HTML tag name, no attrs", t => {
+  const gathered = [];
+  ct(`a < b class="">`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 2
+    },
+    {
+      type: "html",
+      start: 2,
+      end: 15
+    }
+  ]);
+});
