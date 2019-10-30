@@ -30,22 +30,28 @@ test(`01.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
 
 test(`01.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   const s5 = `<td nowrap>`;
-  t.false(is(s5)); // <---- false because no attributes with equal-quote found
-  t.false(is(s5, 0));
+  t.true(is(s5)); // <---- true because tag name was recognised
+  t.true(is(s5, 0));
 });
 
 test(`01.06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
+  const s5 = `<zzz nowrap>`;
+  t.false(is(s5)); // <---- false because tag name was not recognised and there were no attrs
+  t.false(is(s5, 0));
+});
+
+test(`01.07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   const s6 = `<td class="klm" nowrap>`;
   t.true(is(s6));
   t.true(is(s6, 0));
 });
 
-test(`01.07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
+test(`01.08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   const s7 = `<td nowrap class="klm">`;
   t.true(is(s7));
 });
 
-test(`01.08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
+test(`01.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   const s8 = `<td nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap class="klm"`;
   t.true(is(s8));
 });
@@ -194,4 +200,9 @@ test(`05.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
   t.true(is(s1, 0));
   t.false(is(s1, 8));
   t.true(is(s1, 11));
+});
+
+test(`05.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `\n<table`;
+  t.true(is(s1, 1));
 });

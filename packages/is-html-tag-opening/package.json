@@ -135,6 +135,9 @@
     ],
     "sourceMap": false
   },
+  "dependencies": {
+    "string-match-left-right": "^3.11.10"
+  },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",

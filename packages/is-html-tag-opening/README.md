@@ -55,9 +55,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-tag-opening.cjs.js` | 977 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-tag-opening.esm.js` | 898 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-html-tag-opening.umd.js` | 753 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-tag-opening.cjs.js` | 2 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-tag-opening.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-html-tag-opening.umd.js` | 10 KB |
 
 **[⬆ back to top](#)**
 
