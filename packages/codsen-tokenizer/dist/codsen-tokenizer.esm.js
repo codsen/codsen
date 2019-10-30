@@ -8,8 +8,6 @@
  */
 
 import isObj from 'lodash.isplainobject';
-import 'string-left-right';
-import 'string-match-left-right';
 import isTagOpening from 'is-html-tag-opening';
 
 function isStr(something) {
@@ -20,6 +18,20 @@ const defaults = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+const espChars = `{}%-$_()*|`;
+function flipEspTag(str) {
+  let res = "";
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str[i] === "{") {
+      res = `}${res}`;
+    } else if (str[i] === "(") {
+      res = `)${res}`;
+    } else {
+      res = `${str[i]}${res}`;
+    }
+  }
+  return res;
+}
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
@@ -59,11 +71,13 @@ function tokenizer(str, cb, originalOpts) {
   let lastPercentage = 0;
   const len = str.length;
   const midLen = Math.floor(len / 2);
+  let doNothing;
   let token = {};
   const tokenDefault = {
     type: null,
     start: null,
-    end: null
+    end: null,
+    tail: null
   };
   function tokenReset() {
     token = Object.assign({}, tokenDefault);
@@ -73,6 +87,12 @@ function tokenizer(str, cb, originalOpts) {
   function pingcb(incomingToken) {
     cb(incomingToken);
     tokenReset();
+  }
+  function dumpCurrentToken(token, i) {
+    if (token.start !== null) {
+      token.end = i;
+      pingcb(token);
+    }
   }
   for (let i = 0; i < len; i++) {
     if (opts.reportProgressFunc) {
@@ -93,29 +113,72 @@ function tokenizer(str, cb, originalOpts) {
         }
       }
     }
-    if (token.type === "html" && [`"`, `'`].includes(str[i])) {
+    if (Number.isInteger(doNothing) && i >= doNothing) {
+      doNothing = false;
+    }
+    if (
+      !doNothing &&
+      ["html", "text"].includes(token.type) &&
+      [`"`, `'`].includes(str[i])
+    ) {
       if (layers.length && layers[layers.length - 1] === str[i]) {
         layers.pop();
       } else {
         layers.push(str[i]);
       }
     }
-    if (str[i] === "<" && isTagOpening(str, i)) {
-      if (token.start !== null) {
-        token.end = i;
-        pingcb(token);
+    if (!doNothing) {
+      if (!layers.length && str[i] === "<" && isTagOpening(str, i)) {
+        dumpCurrentToken(token, i);
+        token.start = i;
+        token.type = "html";
+      } else if (
+        token.type !== "esp" &&
+        espChars.includes(str[i]) &&
+        str[i + 1] &&
+        espChars.includes(str[i + 1])
+      ) {
+        dumpCurrentToken(token, i);
+        token.start = i;
+        token.type = "esp";
+        let wholeEspTagOpening = "";
+        for (let y = i; y < len; y++) {
+          if (espChars.includes(str[y])) {
+            wholeEspTagOpening = wholeEspTagOpening + str[y];
+          } else {
+            break;
+          }
+        }
+        doNothing = i + wholeEspTagOpening.length;
+        token.tail = flipEspTag(wholeEspTagOpening);
+      } else if (token.start === null || token.end === i) {
+        if (token.end) {
+          pingcb(token);
+        }
+        token.start = i;
+        token.type = "text";
       }
-      token.start = i;
-      token.type = "html";
-    } else if (token.start === null || token.end === i) {
-      if (token.end) {
-        pingcb(token);
-      }
-      token.start = i;
-      token.type = "text";
     }
-    if (token.type === "html" && !layers.length && str[i] === ">") {
-      token.end = i + 1;
+    if (!doNothing) {
+      if (token.type === "html" && !layers.length && str[i] === ">") {
+        token.end = i + 1;
+      } else if (
+        token.type === "esp" &&
+        token.end === null &&
+        isStr(token.tail) &&
+        token.tail.includes(str[i])
+      ) {
+        let wholeEspTagClosing = "";
+        for (let y = i; y < len; y++) {
+          if (espChars.includes(str[y])) {
+            wholeEspTagClosing = wholeEspTagClosing + str[y];
+          } else {
+            break;
+          }
+        }
+        token.end = i + wholeEspTagClosing.length;
+        doNothing = i + wholeEspTagClosing.length;
+      }
     }
     if (!str[i + 1] && token.start !== null) {
       token.end = i + 1;

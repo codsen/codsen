@@ -15,17 +15,20 @@ test("01.01 - text-tag-text", t => {
     {
       type: "text",
       start: 0,
-      end: 2
+      end: 2,
+      tail: null
     },
     {
       type: "html",
       start: 2,
-      end: 5
+      end: 5,
+      tail: null
     },
     {
       type: "text",
       start: 5,
-      end: 6
+      end: 6,
+      tail: null
     }
   ]);
 });
@@ -39,7 +42,8 @@ test("01.02 - text only", t => {
     {
       type: "text",
       start: 0,
-      end: 2
+      end: 2,
+      tail: null
     }
   ]);
 });
@@ -53,7 +57,8 @@ test("01.03 - tag only", t => {
     {
       type: "html",
       start: 0,
-      end: 3
+      end: 3,
+      tail: null
     }
   ]);
 });
@@ -67,17 +72,20 @@ test("01.04 - multiple tags", t => {
     {
       type: "html",
       start: 0,
-      end: 3
+      end: 3,
+      tail: null
     },
     {
       type: "html",
       start: 3,
-      end: 6
+      end: 6,
+      tail: null
     },
     {
       type: "html",
       start: 6,
-      end: 9
+      end: 9,
+      tail: null
     }
   ]);
 });
@@ -91,7 +99,8 @@ test("01.05 - closing bracket in the attribute's value", t => {
     {
       type: "html",
       start: 0,
-      end: 11
+      end: 11,
+      tail: null
     }
   ]);
 });
@@ -105,7 +114,8 @@ test("01.06 - closing bracket layers of nested quotes", t => {
     {
       type: "html",
       start: 0,
-      end: 17
+      end: 17,
+      tail: null
     }
   ]);
 });
@@ -119,7 +129,53 @@ test("01.07 - bracket as text", t => {
     {
       type: "text",
       start: 0,
-      end: 5
+      end: 5,
+      tail: null
+    }
+  ]);
+});
+
+test("01.08 - tag followed by brackets", t => {
+  const gathered = [];
+  ct(`<a>"something"<span>'here'</span></a>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3,
+      tail: null
+    },
+    {
+      type: "text",
+      start: 3,
+      end: 14,
+      tail: null
+    },
+    {
+      type: "html",
+      start: 14,
+      end: 20,
+      tail: null
+    },
+    {
+      type: "text",
+      start: 20,
+      end: 26,
+      tail: null
+    },
+    {
+      type: "html",
+      start: 26,
+      end: 33,
+      tail: null
+    },
+    {
+      type: "html",
+      start: 33,
+      end: 37,
+      tail: null
     }
   ]);
 });
@@ -136,12 +192,118 @@ test("02.01 - space after opening bracket, non-dubious HTML tag name, no attrs",
     {
       type: "text",
       start: 0,
-      end: 2
+      end: 2,
+      tail: null
     },
     {
       type: "html",
       start: 2,
-      end: 15
+      end: 15,
+      tail: null
     }
   ]);
 });
+
+// 03. ESP (Email Service Provider) and other templating language tags
+// -----------------------------------------------------------------------------
+
+test("03.01 - ESP literals among text get reported", t => {
+  const gathered = [];
+  ct(`{% zz %}`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "esp",
+      start: 0,
+      end: 8,
+      tail: "%}"
+    }
+  ]);
+});
+
+test("03.02 - ESP literals among text get reported", t => {
+  const gathered = [];
+  ct(`ab {% if something %} cd`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 3,
+      tail: null
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 21,
+      tail: "%}"
+    },
+    {
+      type: "text",
+      start: 21,
+      end: 24,
+      tail: null
+    }
+  ]);
+});
+
+test("03.03 - ESP literals surrounded by HTML tags", t => {
+  const gathered = [];
+  ct(`<a>{% if something %}<b>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3,
+      tail: null
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 21,
+      tail: "%}"
+    },
+    {
+      type: "html",
+      start: 21,
+      end: 24,
+      tail: null
+    }
+  ]);
+});
+
+test("03.04 - ESP literals surrounded by HTML tags", t => {
+  const gathered = [];
+  ct(`<a>{% if a<b and c>d '"'''' ><><><><><><><><><><>< %}<b>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3,
+      tail: null
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 53,
+      tail: "%}"
+    },
+    {
+      type: "html",
+      start: 53,
+      end: 56,
+      tail: null
+    }
+  ]);
+});
+
+// 04. EOLs
+// -----------------------------------------------------------------------------
+
+//

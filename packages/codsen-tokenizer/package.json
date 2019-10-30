@@ -128,10 +128,10 @@
     "sourceMap": false
   },
   "dependencies": {
+    "is-html-tag-opening": "^1.0.0",
     "lodash.isplainobject": "^4.0.6",
     "string-left-right": "^2.3.6",
-    "string-match-left-right": "^3.11.10",
-    "is-html-tag-opening": "^1.0.0"
+    "string-match-left-right": "^3.11.10"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

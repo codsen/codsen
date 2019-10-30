@@ -43,6 +43,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "is-html-tag-opening",
         "lodash.isplainobject",
         "string-left-right",
         "string-match-left-right"
@@ -63,6 +64,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "is-html-tag-opening",
         "lodash.isplainobject",
         "string-left-right",
         "string-match-left-right"

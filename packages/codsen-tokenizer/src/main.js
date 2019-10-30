@@ -1,25 +1,43 @@
 import isObj from "lodash.isplainobject";
-import { left, right } from "string-left-right";
-import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
+// import { left, right } from "string-left-right";
+// import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
 import isTagOpening from "is-html-tag-opening";
 
-const isArr = Array.isArray;
+// const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
 
-function isLetter(something) {
-  return (
-    typeof something === "string" &&
-    something.toUpperCase() !== something.toLowerCase()
-  );
-}
+// function isLetter(something) {
+//   return (
+//     typeof something === "string" &&
+//     something.toUpperCase() !== something.toLowerCase()
+//   );
+// }
 
 const defaults = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+
+// contains all common templating language head/tail marker characters:
+const espChars = `{}%-$_()*|`;
+
+// it flips all brackets backwards and puts characters in the opposite order
+function flipEspTag(str) {
+  let res = "";
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str[i] === "{") {
+      res = `}${res}`;
+    } else if (str[i] === "(") {
+      res = `)${res}`;
+    } else {
+      res = `${str[i]}${res}`;
+    }
+  }
+  return res;
+}
 
 function tokenizer(str, cb, originalOpts) {
   // INSURANCE
@@ -65,13 +83,15 @@ function tokenizer(str, cb, originalOpts) {
   let lastPercentage = 0;
   const len = str.length;
   const midLen = Math.floor(len / 2);
+  let doNothing; // normally set to a number, index until to do nothing
 
   // when we compile the token, we fill this object:
   let token = {};
   const tokenDefault = {
     type: null, // html, css, js, text, eol, esp
     start: null,
-    end: null
+    end: null,
+    tail: null // used to guess ESP token's/tag's tail
   };
   function tokenReset() {
     // object-assign is basically cloning - objects are passed by reference,
@@ -96,10 +116,23 @@ function tokenizer(str, cb, originalOpts) {
   // ---------------------------------------------------------------------------
 
   function pingcb(incomingToken) {
-    console.log(`099 PING cb() with ${JSON.stringify(incomingToken, null, 4)}`);
+    console.log(`119 PING cb() with ${JSON.stringify(incomingToken, null, 4)}`);
     cb(incomingToken);
     // reset
     tokenReset();
+  }
+
+  function dumpCurrentToken(token, i) {
+    // if a token is already being recorded, end it
+    if (token.start !== null) {
+      token.end = i;
+      console.log(
+        `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          token.end
+        }; then PING CB()`
+      );
+      pingcb(token);
+    }
   }
 
   // THE MAIN LOOP
@@ -125,6 +158,8 @@ function tokenizer(str, cb, originalOpts) {
       }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
     );
 
+    // Progress:
+    // ███████████████████████████████████████
     if (opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (i === midLen) {
@@ -145,9 +180,17 @@ function tokenizer(str, cb, originalOpts) {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
-          console.log(`148 DONE ${currentPercentageDone}%`);
+          console.log(`183 DONE ${currentPercentageDone}%`);
         }
       }
+    }
+
+    // turn off doNothing if marker passed
+    // ███████████████████████████████████████
+
+    if (Number.isInteger(doNothing) && i >= doNothing) {
+      doNothing = false;
+      console.log(`193 TURN OFF doNothing`);
     }
 
     //
@@ -161,7 +204,12 @@ function tokenizer(str, cb, originalOpts) {
     //
 
     // record "layers" like entering double quotes
-    if (token.type === "html" && [`"`, `'`].includes(str[i])) {
+    // ███████████████████████████████████████
+    if (
+      !doNothing &&
+      ["html", "text"].includes(token.type) &&
+      [`"`, `'`].includes(str[i])
+    ) {
       if (layers.length && layers[layers.length - 1] === str[i]) {
         // maybe it's the closing counterpart?
         layers.pop();
@@ -172,54 +220,118 @@ function tokenizer(str, cb, originalOpts) {
     }
 
     // catch the beginning of a token
-    if (str[i] === "<" && isTagOpening(str, i)) {
-      // if a token is already being recorded, end it
-      if (token.start !== null) {
-        token.end = i;
+    // ███████████████████████████████████████
+    if (!doNothing) {
+      if (!layers.length && str[i] === "<" && isTagOpening(str, i)) {
+        dumpCurrentToken(token, i);
+
+        token.start = i;
+        token.type = "html";
         console.log(
-          `180 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-            token.end
-          }; then PING CB()`
+          `231 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            token.start
+          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
         );
-        pingcb(token);
+      } else if (
+        token.type !== "esp" &&
+        espChars.includes(str[i]) &&
+        str[i + 1] &&
+        espChars.includes(str[i + 1])
+      ) {
+        console.log(`241 ESP tag detected`);
+        dumpCurrentToken(token, i);
+
+        token.start = i;
+        token.type = "esp";
+        console.log(
+          `247 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            token.start
+          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+        );
+
+        // extract the tag opening and guess the closing judging from it
+        let wholeEspTagOpening = "";
+        for (let y = i; y < len; y++) {
+          if (espChars.includes(str[y])) {
+            wholeEspTagOpening = wholeEspTagOpening + str[y];
+          } else {
+            break;
+          }
+        }
+        doNothing = i + wholeEspTagOpening.length;
+        console.log(
+          `263 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+        );
+        token.tail = flipEspTag(wholeEspTagOpening);
+        console.log(
+          `267 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tail`}\u001b[${39}m`} = ${
+            token.tail
+          }`
+        );
+      } else if (token.start === null || token.end === i) {
+        if (token.end) {
+          console.log(`273 PING CB()`);
+          pingcb(token);
+        }
+
+        // finally, the last default type is "text"
+        token.start = i;
+        console.log(
+          `280 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            token.start
+          }`
+        );
+        token.type = "text";
+        console.log(
+          `286 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+            token.type
+          }`
+        );
       }
 
-      token.start = i;
-      token.type = "html";
-      console.log(
-        `190 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-          token.start
-        }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
-      );
-    } else if (token.start === null || token.end === i) {
-      if (token.end) {
-        console.log(`196 PING CB()`);
-        pingcb(token);
-      }
-
-      // finally, the last default type is "text"
-      token.start = i;
-      console.log(
-        `203 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
-          token.start
-        }`
-      );
-      token.type = "text";
-      console.log(
-        `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
-          token.type
-        }`
-      );
+      // END OF if (!doNothing)
     }
 
     // catch the ending of a token
-    if (token.type === "html" && !layers.length && str[i] === ">") {
-      token.end = i + 1;
-      console.log(
-        `219 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-          token.end
-        }`
-      );
+    // ███████████████████████████████████████
+    if (!doNothing) {
+      if (token.type === "html" && !layers.length && str[i] === ">") {
+        token.end = i + 1;
+        console.log(
+          `301 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            token.end
+          }`
+        );
+      } else if (
+        token.type === "esp" &&
+        token.end === null &&
+        isStr(token.tail) &&
+        token.tail.includes(str[i])
+      ) {
+        console.log(`311 POSSIBLE ESP TAILS`);
+        // extract the whole lump of ESP tag characters:
+        let wholeEspTagClosing = "";
+        for (let y = i; y < len; y++) {
+          if (espChars.includes(str[y])) {
+            wholeEspTagClosing = wholeEspTagClosing + str[y];
+          } else {
+            break;
+          }
+        }
+        console.log(`321 wholeEspTagClosing = ${wholeEspTagClosing}`);
+
+        token.end = i + wholeEspTagClosing.length;
+        console.log(
+          `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            token.end
+          }`
+        );
+        doNothing = i + wholeEspTagClosing.length;
+        console.log(
+          `331 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+        );
+      }
+      // END OF if (!doNothing)
     }
 
     //
@@ -233,20 +345,27 @@ function tokenizer(str, cb, originalOpts) {
     //
 
     // catch end of the string
+    // ███████████████████████████████████████
+    // notice there's no "doNothing"
     if (!str[i + 1] && token.start !== null) {
       token.end = i + 1;
       pingcb(token);
     }
 
     // logging:
+    // ███████████████████████████████████████
     console.log(
       `${`\u001b[${90}m${`==========================================\ntoken: ${JSON.stringify(
         token,
         null,
         0
       )}${
-        layers.length ? JSON.stringify(layers, null, 0) : ""
-      }`}\u001b[${39}m`}`
+        layers.length ? `\nlayers: ${JSON.stringify(layers, null, 0)}` : ""
+      }`}\u001b[${39}m`}${
+        doNothing
+          ? `\n${`\u001b[${31}m${`DO NOTHING UNTIL ${doNothing}`}\u001b[${39}m`}`
+          : ""
+      }`
     );
   }
 }
