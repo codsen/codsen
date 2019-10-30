@@ -91,7 +91,7 @@ function tokenizer(str, cb, originalOpts) {
     type: null, // html, css, js, text, esp
     start: null,
     end: null,
-    tail: null // used to guess ESP token's/tag's tail
+    tail: null // used to store the guessed ESP token's/tag's tail
   };
   function tokenReset() {
     // object-assign is basically cloning - objects are passed by reference,
