@@ -84,6 +84,29 @@ function tokenizer(str, cb, originalOpts) {
   }
   tokenReset();
   const layers = [];
+  function matchLayerLast(str, i) {
+    if (!layers.length) {
+      return false;
+    } else if (layers[layers.length - 1].type === "simple") {
+      return str[i] === layers[layers.length - 1].value;
+    } else if (layers[layers.length - 1].type === "esp") {
+      if (!espChars.includes(str[i])) {
+        return false;
+      }
+      let wholeEspTagLump = "";
+      const len = str.length;
+      for (let y = i; y < len; y++) {
+        if (espChars.includes(str[y])) {
+          wholeEspTagLump = wholeEspTagLump + str[y];
+        } else {
+          break;
+        }
+      }
+      return layers[layers.length - 1].value
+        .split("")
+        .every(char => wholeEspTagLump.includes(char));
+    }
+  }
   function pingcb(incomingToken) {
     cb(incomingToken);
     tokenReset();
@@ -116,15 +139,21 @@ function tokenizer(str, cb, originalOpts) {
     if (Number.isInteger(doNothing) && i >= doNothing) {
       doNothing = false;
     }
+    if (token.end && token.end === i) {
+      dumpCurrentToken(token, i);
+    }
     if (
       !doNothing &&
-      ["html", "text"].includes(token.type) &&
+      ["html"].includes(token.type) &&
       [`"`, `'`].includes(str[i])
     ) {
-      if (layers.length && layers[layers.length - 1] === str[i]) {
+      if (matchLayerLast(str, i)) {
         layers.pop();
-      } else {
-        layers.push(str[i]);
+      } else if (!layers.length || layers[layers.length - 1].type !== "esp") {
+        layers.push({
+          type: "simple",
+          value: str[i]
+        });
       }
     }
     if (!doNothing) {
@@ -133,24 +162,34 @@ function tokenizer(str, cb, originalOpts) {
         token.start = i;
         token.type = "html";
       } else if (
-        token.type !== "esp" &&
         espChars.includes(str[i]) &&
         str[i + 1] &&
         espChars.includes(str[i + 1])
       ) {
-        dumpCurrentToken(token, i);
-        token.start = i;
-        token.type = "esp";
-        let wholeEspTagOpening = "";
+        let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
-            wholeEspTagOpening = wholeEspTagOpening + str[y];
+            wholeEspTagLump = wholeEspTagLump + str[y];
           } else {
             break;
           }
         }
-        doNothing = i + wholeEspTagOpening.length;
-        token.tail = flipEspTag(wholeEspTagOpening);
+        if (!["html", "esp"].includes(token.type)) {
+          dumpCurrentToken(token, i);
+          token.start = i;
+          token.type = "esp";
+          doNothing = i + wholeEspTagLump.length;
+          token.tail = flipEspTag(wholeEspTagLump);
+        } else if (token.type === "html") {
+          if (matchLayerLast(str, i)) {
+            layers.pop();
+          } else {
+            layers.push({
+              type: "esp",
+              value: flipEspTag(wholeEspTagLump)
+            });
+          }
+        }
       } else if (token.start === null || token.end === i) {
         if (token.end) {
           pingcb(token);

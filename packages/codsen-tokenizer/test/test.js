@@ -303,6 +303,51 @@ test("03.04 - ESP literals surrounded by HTML tags", t => {
   ]);
 });
 
+test("03.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini", t => {
+  const gathered = [];
+  ct(`<a b="c{{ z("'") }}"><b>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 21,
+      tail: null
+    },
+    {
+      type: "html",
+      start: 21,
+      end: 24,
+      tail: null
+    }
+  ]);
+});
+
+test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t => {
+  const gathered = [];
+  ct(
+    `<a href="https://zzz.yyy/?api=1&query={{ some_key | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}"><b>`,
+    obj => {
+      gathered.push(obj);
+    }
+  );
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 170,
+      tail: null
+    },
+    {
+      type: "html",
+      start: 170,
+      end: 173,
+      tail: null
+    }
+  ]);
+});
+
 // 04. EOLs
 // -----------------------------------------------------------------------------
 
