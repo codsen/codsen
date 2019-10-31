@@ -8,6 +8,7 @@
  */
 
 import isObj from 'lodash.isplainobject';
+import { matchRight } from 'string-match-left-right';
 import isTagOpening from 'is-html-tag-opening';
 
 function isStr(something) {
@@ -77,7 +78,8 @@ function tokenizer(str, cb, originalOpts) {
     type: null,
     start: null,
     end: null,
-    tail: null
+    tail: null,
+    kind: null
   };
   function tokenReset() {
     token = Object.assign({}, tokenDefault);
@@ -157,14 +159,28 @@ function tokenizer(str, cb, originalOpts) {
       }
     }
     if (!doNothing) {
-      if (!layers.length && str[i] === "<" && isTagOpening(str, i)) {
+      if (
+        !layers.length &&
+        str[i] === "<" &&
+        (isTagOpening(str, i) ||
+          matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true }))
+      ) {
         dumpCurrentToken(token, i);
         token.start = i;
         token.type = "html";
+        if (matchRight(str, i, "!--")) {
+          token.kind = "comment";
+        } else if (matchRight(str, i, "!doctype", { i: true })) {
+          token.kind = "doctype";
+        } else if (matchRight(str, i, "?xml", { i: true })) {
+          token.kind = "xml";
+        }
       } else if (
+        !(token.type === "html" && token.kind === "comment") &&
         espChars.includes(str[i]) &&
         str[i + 1] &&
-        espChars.includes(str[i + 1])
+        espChars.includes(str[i + 1]) &&
+        !(str[i] === "-" && str[i + 1] === "-")
       ) {
         let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
