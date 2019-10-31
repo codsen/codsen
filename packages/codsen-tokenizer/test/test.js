@@ -563,7 +563,49 @@ test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
   ]);
 });
 
-// 04. EOLs
+// 04. CSS
 // -----------------------------------------------------------------------------
 
-//
+test("04.01 - CSS in the head", t => {
+  const gathered = [];
+  ct(`<style>\n.d-h{z}\n</style>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 7,
+      tail: null,
+      kind: "style"
+    },
+    {
+      type: "text",
+      start: 7,
+      end: 8,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "css",
+      start: 8,
+      end: 15,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "text",
+      start: 15,
+      end: 16,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "html",
+      start: 16,
+      end: 24,
+      tail: null,
+      kind: null
+    }
+  ]);
+});

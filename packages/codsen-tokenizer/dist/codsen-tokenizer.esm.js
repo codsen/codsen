@@ -8,6 +8,7 @@
  */
 
 import isObj from 'lodash.isplainobject';
+import { right, left } from 'string-left-right';
 import { matchRight } from 'string-match-left-right';
 import isTagOpening from 'is-html-tag-opening';
 
@@ -32,6 +33,9 @@ function flipEspTag(str) {
     }
   }
   return res;
+}
+function clone(obj) {
+  return Object.assign({}, obj);
 }
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
@@ -73,6 +77,7 @@ function tokenizer(str, cb, originalOpts) {
   const len = str.length;
   const midLen = Math.floor(len / 2);
   let doNothing;
+  let styleStarts = false;
   let token = {};
   const tokenDefault = {
     type: null,
@@ -110,10 +115,21 @@ function tokenizer(str, cb, originalOpts) {
     }
   }
   function pingcb(incomingToken) {
-    cb(incomingToken);
+    cb(clone(incomingToken));
     tokenReset();
   }
   function dumpCurrentToken(token, i) {
+    if (
+      token.type !== "text" &&
+      token.start !== null &&
+      str[i - 1] &&
+      !str[i - 1].trim().length
+    ) {
+      token.end = left(str, i) + 1;
+      pingcb(token);
+      token.start = left(str, i) + 1;
+      token.type = "text";
+    }
     if (token.start !== null) {
       token.end = i;
       pingcb(token);
@@ -142,6 +158,9 @@ function tokenizer(str, cb, originalOpts) {
       doNothing = false;
     }
     if (token.end && token.end === i) {
+      if (token.kind === "style") {
+        styleStarts = true;
+      }
       dumpCurrentToken(token, i);
     }
     if (
@@ -174,6 +193,8 @@ function tokenizer(str, cb, originalOpts) {
           token.kind = "doctype";
         } else if (matchRight(str, i, "?xml", { i: true })) {
           token.kind = "xml";
+        } else if (matchRight(str, i, "style", { i: true })) {
+          token.kind = "style";
         }
       } else if (
         !(token.type === "html" && token.kind === "comment") &&
@@ -207,11 +228,25 @@ function tokenizer(str, cb, originalOpts) {
           }
         }
       } else if (token.start === null || token.end === i) {
-        if (token.end) {
-          pingcb(token);
+        if (styleStarts) {
+          if (!str[i].trim().length) {
+            token.start = i;
+            token.type = "text";
+            token.end = right(str, i) || str.length;
+            pingcb(token);
+            if (right(str, i)) {
+              token.start = right(str, i);
+              token.type = "css";
+              doNothing = right(str, i);
+            }
+          } else {
+            token.start = i;
+            token.type = "css";
+          }
+        } else {
+          token.start = i;
+          token.type = "text";
         }
-        token.start = i;
-        token.type = "text";
       }
     }
     if (!doNothing) {

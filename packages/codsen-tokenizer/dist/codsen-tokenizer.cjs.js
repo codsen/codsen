@@ -12,6 +12,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 
@@ -51,6 +52,9 @@ function flipEspTag(str) {
   }
   return res;
 }
+function clone(obj) {
+  return Object.assign({}, obj);
+}
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
@@ -71,6 +75,7 @@ function tokenizer(str, cb, originalOpts) {
   var len = str.length;
   var midLen = Math.floor(len / 2);
   var doNothing;
+  var styleStarts = false;
   var token = {};
   var tokenDefault = {
     type: null,
@@ -108,10 +113,16 @@ function tokenizer(str, cb, originalOpts) {
     }
   }
   function pingcb(incomingToken) {
-    cb(incomingToken);
+    cb(clone(incomingToken));
     tokenReset();
   }
   function dumpCurrentToken(token, i) {
+    if (token.type !== "text" && token.start !== null && str[i - 1] && !str[i - 1].trim().length) {
+      token.end = stringLeftRight.left(str, i) + 1;
+      pingcb(token);
+      token.start = stringLeftRight.left(str, i) + 1;
+      token.type = "text";
+    }
     if (token.start !== null) {
       token.end = i;
       pingcb(token);
@@ -135,6 +146,9 @@ function tokenizer(str, cb, originalOpts) {
       doNothing = false;
     }
     if (token.end && token.end === i) {
+      if (token.kind === "style") {
+        styleStarts = true;
+      }
       dumpCurrentToken(token, i);
     }
     if (!doNothing && ["html"].includes(token.type) && ["\"", "'"].includes(str[i])) {
@@ -164,6 +178,10 @@ function tokenizer(str, cb, originalOpts) {
           i: true
         })) {
           token.kind = "xml";
+        } else if (stringMatchLeftRight.matchRight(str, i, "style", {
+          i: true
+        })) {
+          token.kind = "style";
         }
       } else if (!(token.type === "html" && token.kind === "comment") && espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-")) {
         var wholeEspTagLump = "";
@@ -191,11 +209,25 @@ function tokenizer(str, cb, originalOpts) {
           }
         }
       } else if (token.start === null || token.end === i) {
-        if (token.end) {
-          pingcb(token);
+        if (styleStarts) {
+          if (!str[i].trim().length) {
+            token.start = i;
+            token.type = "text";
+            token.end = stringLeftRight.right(str, i) || str.length;
+            pingcb(token);
+            if (stringLeftRight.right(str, i)) {
+              token.start = stringLeftRight.right(str, i);
+              token.type = "css";
+              doNothing = stringLeftRight.right(str, i);
+            }
+          } else {
+            token.start = i;
+            token.type = "css";
+          }
+        } else {
+          token.start = i;
+          token.type = "text";
         }
-        token.start = i;
-        token.type = "text";
       }
     }
     if (!doNothing) {
