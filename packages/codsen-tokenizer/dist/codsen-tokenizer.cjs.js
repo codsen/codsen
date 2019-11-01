@@ -58,18 +58,21 @@ function clone(obj) {
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
-      throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+      throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
-      throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
+      throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
   if (typeof cb !== "function") {
-    throw new Error("html-crush: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ".concat(_typeof(cb), ", equal to ").concat(JSON.stringify(cb, null, 4)));
+    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ".concat(_typeof(cb), ", equal to ").concat(JSON.stringify(cb, null, 4)));
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new Error("html-crush: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
+    throw new Error("codsen-tokenizer: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var opts = Object.assign({}, defaults, originalOpts);
+  if (opts.reportProgressFunc && typeof opts.reportProgressFunc !== "function") {
+    throw new TypeError("codsen-tokenizer: [THROW_ID_05] opts.reportProgressFunc should be a function but it was given as :\n".concat(JSON.stringify(opts.reportProgressFunc, null, 4), " (").concat(_typeof(opts.reportProgressFunc), ")"));
+  }
   var currentPercentageDone;
   var lastPercentage = 0;
   var len = str.length;
@@ -135,7 +138,7 @@ function tokenizer(str, cb, originalOpts) {
           opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
         }
       } else if (len >= 2000) {
-        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len);
+        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
@@ -179,7 +182,8 @@ function tokenizer(str, cb, originalOpts) {
         })) {
           token.kind = "xml";
         } else if (stringMatchLeftRight.matchRight(str, i, "style", {
-          i: true
+          i: true,
+          trimCharsBeforeMatching: "/"
         })) {
           token.kind = "style";
         }

@@ -41,11 +41,11 @@ function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
-        "html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
+        "codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
       );
     } else {
       throw new Error(
-        `html-crush: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
+        `codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
           str,
           null,
           4
@@ -55,7 +55,7 @@ function tokenizer(str, cb, originalOpts) {
   }
   if (typeof cb !== "function") {
     throw new Error(
-      `html-crush: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof cb}, equal to ${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof cb}, equal to ${JSON.stringify(
         cb,
         null,
         4
@@ -64,7 +64,7 @@ function tokenizer(str, cb, originalOpts) {
   }
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
-      `html-crush: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
         null,
         4
@@ -72,6 +72,18 @@ function tokenizer(str, cb, originalOpts) {
     );
   }
   const opts = Object.assign({}, defaults, originalOpts);
+  if (
+    opts.reportProgressFunc &&
+    typeof opts.reportProgressFunc !== "function"
+  ) {
+    throw new TypeError(
+      `codsen-tokenizer: [THROW_ID_05] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+        opts.reportProgressFunc,
+        null,
+        4
+      )} (${typeof opts.reportProgressFunc})`
+    );
+  }
   let currentPercentageDone;
   let lastPercentage = 0;
   const len = str.length;
@@ -147,7 +159,11 @@ function tokenizer(str, cb, originalOpts) {
         }
       } else if (len >= 2000) {
         currentPercentageDone =
-          opts.reportProgressFuncFrom + Math.floor(i / len);
+          opts.reportProgressFuncFrom +
+          Math.floor(
+            (i / len) *
+              (opts.reportProgressFuncTo - opts.reportProgressFuncFrom)
+          );
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
@@ -193,7 +209,9 @@ function tokenizer(str, cb, originalOpts) {
           token.kind = "doctype";
         } else if (matchRight(str, i, "?xml", { i: true })) {
           token.kind = "xml";
-        } else if (matchRight(str, i, "style", { i: true })) {
+        } else if (
+          matchRight(str, i, "style", { i: true, trimCharsBeforeMatching: "/" })
+        ) {
           token.kind = "style";
         }
       } else if (

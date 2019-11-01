@@ -3,6 +3,49 @@
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
 
+// 00. api
+// -----------------------------------------------------------------------------
+
+test("00.01 - 1st arg missing", t => {
+  // pinning throws by throw ID:
+  const error1 = t.throws(() => {
+    ct();
+  });
+  t.truthy(error1.message.includes("THROW_ID_01"));
+});
+
+test("00.02 - 1nd arg of a wrong type", t => {
+  // pinning throws by throw ID:
+  const error1 = t.throws(() => {
+    ct(true);
+  });
+  t.truthy(error1.message.includes("THROW_ID_02"));
+});
+
+test("00.03 - 2nd arg (cb()) wrong", t => {
+  // pinning throws by throw ID:
+  const error1 = t.throws(() => {
+    ct("a", "z");
+  });
+  t.truthy(error1.message.includes("THROW_ID_03"));
+});
+
+test("00.04 - 4th arg (opts) is wrong", t => {
+  // pinning throws by throw ID:
+  const error1 = t.throws(() => {
+    ct("a", () => {}, "z");
+  });
+  t.truthy(error1.message.includes("THROW_ID_04"));
+});
+
+test("00.05 - opts.reportProgressFunc is wrong", t => {
+  // pinning throws by throw ID:
+  const error1 = t.throws(() => {
+    ct("a", () => {}, { reportProgressFunc: "z" });
+  });
+  t.truthy(error1.message.includes("THROW_ID_05"));
+});
+
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
@@ -563,6 +606,36 @@ test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
   ]);
 });
 
+test("03.07 - Responsys-style ESP tag", t => {
+  const gathered = [];
+  ct(`<a>$(something)<b>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 15,
+      tail: ")$",
+      kind: null
+    },
+    {
+      type: "html",
+      start: 15,
+      end: 18,
+      tail: null,
+      kind: null
+    }
+  ]);
+});
+
 // 04. CSS
 // -----------------------------------------------------------------------------
 
@@ -605,7 +678,187 @@ test("04.01 - CSS in the head", t => {
       start: 16,
       end: 24,
       tail: null,
+      kind: "style"
+    }
+  ]);
+});
+
+test("04.02 - CSS, no whitespace inside", t => {
+  const gathered = [];
+  ct(`<meta><style>.d-h{z}</style>`, obj => {
+    gathered.push(obj);
+  });
+  t.deepEqual(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 6,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "html",
+      start: 6,
+      end: 13,
+      tail: null,
+      kind: "style"
+    },
+    {
+      type: "css",
+      start: 13,
+      end: 20,
+      tail: null,
+      kind: null
+    },
+    {
+      type: "html",
+      start: 20,
+      end: 28,
+      tail: null,
+      kind: "style"
+    }
+  ]);
+});
+
+// 05. opts.reportProgressFunc
+// -----------------------------------------------------------------------------
+
+test(`05.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null`, t => {
+  const gathered = [];
+  ct(
+    "abc",
+    token => {
+      gathered.push(token);
+    },
+    { reportProgressFunc: null }
+  );
+  t.deepEqual(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 3,
+      tail: null,
       kind: null
     }
   ]);
+});
+
+test(`05.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - false`, t => {
+  const gathered = [];
+  ct(
+    "abc",
+    token => {
+      gathered.push(token);
+    },
+    { reportProgressFunc: false }
+  );
+  t.deepEqual(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 3,
+      tail: null,
+      kind: null
+    }
+  ]);
+});
+
+test(`05.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`, t => {
+  const gathered = [];
+  function shouldveBeenCalled(val) {
+    throw new Error(val);
+  }
+
+  // short input string should report only when passing at 50%:
+  const error1 = t.throws(() => {
+    ct(
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30),
+      token => {
+        gathered.push(token);
+      },
+      { reportProgressFunc: shouldveBeenCalled }
+    );
+  });
+  t.regex(error1.message, /50/);
+});
+
+test(`05.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`, t => {
+  let counter = 0;
+  const countingFunction = () => {
+    // const countingFunction = val => {
+    //   console.log(`val received: ${val}`);
+    counter++;
+  };
+  // long input (>1000 chars long) should report at each natural number percentage passed:
+
+  // 1. our function will mutate the counter variable:
+  t.pass(
+    ct(
+      `aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50),
+      () => {},
+      { reportProgressFunc: countingFunction }
+    )
+  );
+
+  // 2. check the counter variable:
+  t.truthy(counter);
+});
+
+test(`05.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`, t => {
+  function shouldveBeenCalled(val) {
+    throw new Error(val);
+  }
+
+  // short input string should report only when passing at 50%:
+  const error1 = t.throws(() => {
+    ct(
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20),
+      () => {},
+      {
+        reportProgressFunc: shouldveBeenCalled,
+        reportProgressFuncFrom: 21,
+        reportProgressFuncTo: 86
+      }
+    );
+  });
+  t.regex(error1.message, /32/);
+});
+
+test(`05.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`, t => {
+  const gather = [];
+  const countingFunction = val => {
+    // const countingFunction = val => {
+    // console.log(`val received: ${val}`);
+    gather.push(val);
+  };
+
+  // long input (>1000 chars long) should report at each natural number percentage passed:
+  // our function will mutate the counter variable:
+  t.pass(
+    ct(
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(
+        50
+      ),
+      () => {},
+      {
+        reportProgressFunc: countingFunction,
+        reportProgressFuncFrom: 21,
+        reportProgressFuncTo: 86
+      }
+    )
+  );
+
+  // 2. check the counter variable:
+  const compareTo = [];
+  for (let i = 21; i < 86; i++) {
+    compareTo.push(i);
+  }
+  // since we use Math.floor, some percentages can be skipped, so let's just
+  // confirm that no numbers outside of permitted values are reported
+  gather.forEach(perc => {
+    t.true(compareTo.includes(perc), String(perc));
+  });
+  t.is(gather.length, 86 - 21);
+
+  t.deepEqual(gather, compareTo);
 });
