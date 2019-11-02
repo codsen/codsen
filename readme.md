@@ -86,13 +86,13 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 6 in total.
 
-They all process HTML and/or CSS. With exception of `html-table-patcher`, all of them process HTML as string, without parsing. Heck, we even had `html-table-patcher` done in non-parsing style on earlier versions but just because of time shortage went the parsing-way.
+They all process HTML and CSS. Except for `html-table-patcher`, all of them process HTML as a string, without parsing. Heck, we even had `html-table-patcher` done in non-parsing style on earlier versions but just because of time shortage went the parsing-way.
 
-The whole idea is, if you don't parse the HTML, you can support broken or mixed code. Unless you write your own parser, it becomes a bottleneck — parser throws here and there and you can do nothing about it.
+The whole idea is, if you don't parse the HTML, you can support broken or mixed code. Unless you write your parser, it becomes a bottleneck — parser throws here and there, and you can do nothing about it.
 
-It is important to support _broken code_ because this allows us to make broken code (both email and web page HTML/CSS) fixing programs.
+It is vital to support _broken code_ because this allows us to make broken code fixing programs.
 
-It is important to support _mixed code_ because email templates are in HTML and they always have ESP (Email Service Provider) templating tags which are not HTML. Web page HTML also contains all sorts of different code and it is nice when you can process it easily.
+It is equally vital to support _mixed code_ because both web page and email template HTML can contain anything from templating languages to programming languages. For example, Wordpress website has some HTML within PHP files. Another example, email templates are coded in Nunjucks templating language and `.nunjucks` files are HTML sprinkled with their templating literals. If tooling supports HTML mixed with _other things_, we will be able to process that HTML and skip those _other things_.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
