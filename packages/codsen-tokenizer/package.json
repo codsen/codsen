@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS",
   "license": "MIT",
   "engines": {
@@ -128,7 +128,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "is-html-tag-opening": "^1.0.0",
+    "is-html-tag-opening": "^1.1.0",
     "lodash.isplainobject": "^4.0.6",
     "string-left-right": "^2.3.6",
     "string-match-left-right": "^3.11.10"
@@ -148,7 +148,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "js-row-num-cli": "^1.6.3",
-    "lect": "^0.10.4",
+    "lect": "^0.10.5",
     "lodash.isequal": "^4.5.0",
     "nyc": "^14.1.1",
     "object-path": "^0.11.4",
