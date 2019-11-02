@@ -28,14 +28,11 @@ const objectLibsList = [
   "object-merge-advanced"
 ];
 const stringLibsList = [
-  "string-strip-html",
   "edit-package-json",
   "easy-replace",
   "str-indexes-of-plus",
   "bitbucket-slug",
-  "detect-is-it-html-or-xhtml",
   "email-all-chars-within-ascii",
-  "html-table-patcher",
   "js-row-num"
 ];
 const cliAppsList = [
@@ -49,6 +46,12 @@ const lernaLibsList = [
   "lerna-clean-changelogs-cli",
   "lerna-link-dep",
   "update-versions"
+];
+const htmlLibsList = [
+  "string-strip-html",
+  "detect-is-it-html-or-xhtml",
+  "html-table-patcher",
+  "is-html-tag-opening"
 ];
 
 // note for future self - use package.json "private" key instead:
@@ -120,6 +123,7 @@ function noListsInclude(lib) {
     flagshipLibsList,
     rangeLibsList,
     objectLibsList,
+    htmlLibsList,
     stringLibsList,
     cliAppsList,
     lernaLibsList
@@ -156,6 +160,25 @@ const filteredRangeLibsList = Array.from(rangeLibsList)
 // console.log(
 //   `${`\u001b[${33}m${`filteredRangeLibsList`}\u001b[${39}m`} = ${JSON.stringify(
 //     filteredRangeLibsList,
+//     null,
+//     4
+//   )}`
+// );
+
+// -------------------------------------
+
+const filteredHtmlLibsList = Array.from(htmlLibsList)
+  .filter(lib => allPackages.includes(lib) && !flagshipLibsList.includes(lib))
+  .concat(
+    allPackages.filter(
+      lib =>
+        (lib.startsWith("html-") || lib.startsWith("css-")) &&
+        noListsInclude(lib)
+    )
+  );
+// console.log(
+//   `${`\u001b[${33}m${`filteredHtmlLibsList`}\u001b[${39}m`} = ${JSON.stringify(
+//     filteredHtmlLibsList,
 //     null,
 //     4
 //   )}`
@@ -260,6 +283,7 @@ We coded up and maintain a few npm packages:
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-range-libraries)
+- [HTML Processing Libraries](#-html-processing-libraries)
 - [String Processing Libraries](#-string-processing-libraries)
 - [Object Processing Libraries](#-object-processing-libraries)
 - [Lerna Libraries](#-lerna-libraries)
@@ -311,6 +335,23 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 ${topRow()}
 ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
+
+**[⬆ back to top](#codsen)**
+
+## 💰 HTML Processing Libraries
+
+${filteredHtmlLibsList.length} in total.
+
+They all process HTML and/or CSS. With exception of \`html-table-patcher\`, all of them process HTML as string, without parsing. Heck, we even had \`html-table-patcher\` done in non-parsing style on earlier versions but just because of time shortage went the parsing-way.
+
+The whole idea is, if you don't parse the HTML, you can support broken or mixed code. Unless you write your own parser, it becomes a bottleneck — parser throws here and there and you can do nothing about it.
+
+It is important to support _broken code_ because this allows us to make broken code (both email and web page HTML/CSS) fixing programs.
+
+It is important to support _mixed code_ because email templates are in HTML and they always have ESP (Email Service Provider) templating tags which are not HTML. Web page HTML also contains all sorts of different code and it is nice when you can process it easily.
+
+${topRow()}
+${filteredHtmlLibsList.map(lib => row(lib)).join("\n")}
 
 **[⬆ back to top](#codsen)**
 
