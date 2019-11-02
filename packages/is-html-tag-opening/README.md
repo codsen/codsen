@@ -15,7 +15,8 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [API](#api)
+- [API - Input](#api---input)
+- [API - Output](#api---output)
 - [For example,](#for-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -65,10 +66,22 @@ This package has three builds in `dist/` folder:
 
 Detect, is an opening bracket (`<`) a tag opening? Alternative being, it might be un-encoded text.
 
-## API
+## API - Input
 
-Input — 2 arguments: string and index of the opening bracket `<`
-Output — boolean `true` or `false` — telling, is it opening bracket of tag.
+**isOpening(str, idx)** — in other words, function which takes two arguments:
+
+| Input argument | Key value's type       | Obligatory? | Description                                 |
+| -------------- | ---------------------- | ----------- | ------------------------------------------- |
+| `str`          | String                 | yes         | The input string of zero or more characters |
+| `idx`          | Natural number or zero | yes         | Index of an opening bracket (`<`)           |
+
+If supplied input arguments are of any other types, an error will be thrown.
+
+**[⬆ back to top](#)**
+
+## API - Output
+
+Boolean, `true` or `false`.
 
 ## For example,
 
