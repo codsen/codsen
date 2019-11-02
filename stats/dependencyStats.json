@@ -46,6 +46,7 @@
         "html-entities-not-email-friendly": 2,
         "inquirer": 3,
         "is-d": 4,
+        "is-html-tag-opening": 2,
         "is-natural-number": 13,
         "is-natural-number-string": 7,
         "is-numeric": 2,
@@ -61,7 +62,7 @@
         "lodash.intersection": 3,
         "lodash.isequal": 1,
         "lodash.isfunction": 1,
-        "lodash.isplainobject": 45,
+        "lodash.isplainobject": 46,
         "lodash.isregexp": 1,
         "lodash.isstring": 2,
         "lodash.merge": 1,
@@ -119,8 +120,8 @@
         "string-extract-class-names": 1,
         "string-find-heads-tails": 1,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 10,
-        "string-match-left-right": 7,
+        "string-left-right": 11,
+        "string-match-left-right": 9,
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
         "string-remove-thousand-separators": 1,
@@ -139,64 +140,64 @@
         "write-json-file": 1
     },
     "devDependencies": {
-        "@babel/core": 97,
+        "@babel/core": 99,
         "@babel/polyfill": 1,
-        "@babel/preset-env": 97,
-        "@babel/register": 97,
+        "@babel/preset-env": 99,
+        "@babel/register": 99,
         "array-shuffle": 1,
         "ast-monkey-traverse": 1,
-        "ava": 97,
-        "babel-plugin-istanbul": 97,
-        "benchmark": 85,
+        "ava": 99,
+        "babel-plugin-istanbul": 99,
+        "benchmark": 87,
         "browser-sync": 1,
         "deep-equal": 1,
-        "eslint": 97,
-        "eslint-config-prettier": 97,
-        "eslint-plugin-ava": 97,
-        "eslint-plugin-import": 97,
-        "eslint-plugin-no-unsanitized": 97,
-        "eslint-plugin-prettier": 97,
-        "esm": 97,
+        "eslint": 99,
+        "eslint-config-prettier": 99,
+        "eslint-plugin-ava": 99,
+        "eslint-plugin-import": 99,
+        "eslint-plugin-no-unsanitized": 99,
+        "eslint-plugin-prettier": 99,
+        "esm": 99,
         "execa": 10,
         "fs-extra": 2,
         "html-crush": 1,
         "is-ci": 1,
-        "js-row-num-cli": 97,
+        "js-row-num-cli": 99,
         "json-stringify-safe": 1,
-        "lect": 97,
+        "lect": 99,
         "lodash.clonedeep": 4,
-        "lodash.isequal": 1,
+        "lodash.isequal": 2,
         "map-stream": 1,
         "node-fetch": 1,
-        "nyc": 97,
+        "nyc": 99,
         "object-boolean-combinations": 1,
         "object-delete-key": 1,
-        "object-path": 4,
+        "object-path": 5,
         "p-map": 5,
         "p-progress": 1,
         "posthtml-parser": 1,
-        "prettier": 97,
+        "prettier": 99,
         "ranges-apply": 4,
         "ranges-merge": 1,
-        "rollup": 84,
-        "rollup-plugin-ascii": 84,
-        "rollup-plugin-babel": 84,
-        "rollup-plugin-banner": 84,
-        "rollup-plugin-cleanup": 84,
-        "rollup-plugin-commonjs": 84,
-        "rollup-plugin-json": 84,
+        "rollup": 86,
+        "rollup-plugin-ascii": 86,
+        "rollup-plugin-babel": 86,
+        "rollup-plugin-banner": 86,
+        "rollup-plugin-cleanup": 86,
+        "rollup-plugin-commonjs": 86,
+        "rollup-plugin-json": 86,
         "rollup-plugin-node-builtins": 8,
         "rollup-plugin-node-globals": 1,
-        "rollup-plugin-node-resolve": 84,
-        "rollup-plugin-strip": 84,
-        "rollup-plugin-terser": 84,
+        "rollup-plugin-node-resolve": 86,
+        "rollup-plugin-strip": 86,
+        "rollup-plugin-terser": 86,
         "string-find-heads-tails": 1,
         "tempy": 12,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 45
+            "lodash.isplainobject": 46
         },
         {
             "lodash.clonedeep": 26
@@ -234,10 +235,13 @@
             "arrayiffy-if-string": 11
         },
         {
+            "string-left-right": 11
+        },
+        {
             "ranges-push": 10
         },
         {
-            "string-left-right": 10
+            "string-match-left-right": 9
         },
         {
             "ast-monkey-traverse": 8
@@ -247,9 +251,6 @@
         },
         {
             "check-types-mini": 7
-        },
-        {
-            "string-match-left-right": 7
         },
         {
             "object-merge-advanced": 4

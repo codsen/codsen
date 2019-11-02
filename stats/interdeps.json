@@ -136,6 +136,15 @@
         ]
     },
     {
+        "name": "codsen-tokenizer",
+        "size": 8487,
+        "imports": [
+            "is-html-tag-opening",
+            "string-left-right",
+            "string-match-left-right"
+        ]
+    },
+    {
         "name": "csv-sort",
         "size": 14137,
         "imports": [
@@ -222,10 +231,11 @@
     },
     {
         "name": "emlint",
-        "size": 117546,
+        "size": 116959,
         "imports": [
             "arrayiffy-if-string",
             "html-entities-not-email-friendly",
+            "is-html-tag-opening",
             "ranges-merge",
             "string-fix-broken-named-entities",
             "string-left-right"
@@ -277,6 +287,13 @@
             "ranges-apply",
             "ranges-push",
             "string-unfancy"
+        ]
+    },
+    {
+        "name": "is-html-tag-opening",
+        "size": 2464,
+        "imports": [
+            "string-match-left-right"
         ]
     },
     {
@@ -336,7 +353,7 @@
     },
     {
         "name": "lect",
-        "size": 72514,
+        "size": 73104,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
