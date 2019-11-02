@@ -63,7 +63,7 @@ This package has three builds in `dist/` folder:
 
 ## Idea
 
-Detect very quickly, is opening bracket (`<`) a tag opening? Alternative being, it might be un-encoded text.
+Detect, is an opening bracket (`<`) a tag opening? Alternative being, it might be un-encoded text.
 
 ## API
 
