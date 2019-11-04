@@ -141,7 +141,7 @@
     "dom-serializer": "^0.2.1",
     "domutils-bastardised": "^1.7.1",
     "html-comment-regex": "^1.1.2",
-    "html-dom-parser": "^0.2.2"
+    "html-dom-parser": "^0.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

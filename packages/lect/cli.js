@@ -1692,7 +1692,7 @@ function step6() {
           .map(val => {
             return {
               fullTitle: val,
-              slug: slugger.slug(val)
+              slug: slugger.slug(val.replace(" - ", " "))
             };
           })
           .map(({ fullTitle, slug }) => `- [${fullTitle}](#${slug})`)

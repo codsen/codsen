@@ -15,8 +15,8 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [API - Input](#api---input)
-- [API - Output](#api---output)
+- [API - Input](#api-input)
+- [API - Output](#api-output)
 - [For example,](#for-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
