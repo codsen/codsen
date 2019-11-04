@@ -1370,8 +1370,45 @@ function processCharacter(
             opts.removeLineBreaks ? "" : "\\n"
           }]`
         );
-      } else if (charcode === 8202) {
-        // replace all hairspace chars, '\u200A' with spaces
+      } else if (
+        [
+          5760,
+          8191,
+          8192,
+          8193,
+          8194,
+          8195,
+          8196,
+          8197,
+          8198,
+          8199,
+          8200,
+          8201,
+          8202,
+          8239,
+          8287,
+          12288
+        ].includes(charcode)
+      ) {
+        // replace with spaces from
+        // https://www.fileformat.info/info/unicode/category/Zs/list.htm
+
+        // - ogham space marks (#5760), '\u1680'
+        // - en quad (#8192), '\u2000'
+        // - em quad (#8193), '\u2001'
+        // - en space (#8194), '\u2002'
+        // - em space (#8195), '\u2003'
+        // - three-per-em-space (#8196), '\u2004'
+        // - four-per-em-space (#8197), '\u2005'
+        // - six-per-em-space (#8198), '\u2006'
+        // - figure space (#8199), '\u2007'
+        // - punctuation space (#8200), '\u2008'
+        // - thin space (#8201), '\u2009'
+        // - hair space (#8202), '\u200A'
+        // - narrow no break space (#8239), '\u202F'
+        // - medium mathematical space (#8287), '\u205F'
+        // - ideographic space (#12288), '\u3000'
+
         console.log("1375 processCharacter.js - hairspace caught");
         if (!str[y]) {
           rangesArr.push(i, y);
