@@ -15,7 +15,7 @@
 
 - [Install](#install)
 - [The API](#the-api)
-- [Using a callback - `opts.cb`](#using-a-callback---optscb)
+- [Using a callback - `opts.cb`](#using-a-callback-optscb)
 - [Matching relying only on a callback](#matching-relying-only-on-a-callback)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)

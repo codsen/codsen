@@ -25,8 +25,8 @@ Other siblings of this package:
 
 - [Install](#install)
 - [Idea](#idea)
-- [API - Input](#api---input)
-- [API - Output](#api---output)
+- [API - Input](#api-input)
+- [API - Output](#api-output)
 - [Purpose](#purpose)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)

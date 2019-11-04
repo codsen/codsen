@@ -13,7 +13,7 @@
 
 ## Table of Contents
 
-- [TLDR - use default opts to enforce types](#tldr---use-default-opts-to-enforce-types)
+- [TLDR - use default opts to enforce types](#tldr-use-default-opts-to-enforce-types)
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)

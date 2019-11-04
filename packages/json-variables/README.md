@@ -14,7 +14,7 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
+- [Idea - updated for v.7 - full rewrite](#idea-updated-for-v7---full-rewrite)
 - [API](#api)
 - [Use examples](#use-examples)
 - [Contributing](#contributing)

@@ -19,7 +19,7 @@
 - [Readme automation](#readme-automation)
 - [Config — .lectrc.json](#config--lectrcjson)
 - [Installation](#installation)
-- [Readme - Badges](#readme---badges)
+- [Readme - Badges](#readme-badges)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

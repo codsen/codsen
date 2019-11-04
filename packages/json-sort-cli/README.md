@@ -17,7 +17,7 @@
 
 - [Install](#install)
 - [Use it](#use-it)
-- [API - flags](#api---flags)
+- [API - flags](#api-flags)
 - [What it does exactly](#what-it-does-exactly)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)

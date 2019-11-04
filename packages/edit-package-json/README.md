@@ -15,7 +15,7 @@
 
 - [Install](#install)
 - [NOTICE](#notice)
-- [TLDR - Our promise](#tldr---our-promise)
+- [TLDR - Our promise](#tldr-our-promise)
 - [Idea](#idea)
 - [API](#api)
 - [Contributing](#contributing)

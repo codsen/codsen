@@ -15,8 +15,8 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [API - Input](#api---input)
-- [API - Output](#api---output)
+- [API - Input](#api-input)
+- [API - Output](#api-output)
 - [TLDR](#tldr)
 - [Purpose](#purpose)
 - [The logic explained in examples](#the-logic-explained-in-examples)

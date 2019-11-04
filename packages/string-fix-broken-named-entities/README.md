@@ -14,11 +14,11 @@
 ## Table of Contents
 
 - [Install](#install)
-- [API - Input](#api---input)
-- [API - Output](#api---output)
+- [API - Input](#api-input)
+- [API - Output](#api-output)
 - [`opts.decode`](#optsdecode)
-- [`opts.cb` - a callback function](#optscb---a-callback-function)
-- [`opts.progressFn` - another callback function](#optsprogressfn---another-callback-function)
+- [`opts.cb` - a callback function](#optscb-a-callback-function)
+- [`opts.progressFn` - another callback function](#optsprogressfn-another-callback-function)
 - [Tips](#tips)
 - [Why not regexes?](#why-not-regexes)
 - [Practical use](#practical-use)

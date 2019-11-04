@@ -13,7 +13,7 @@
 
 - [Install](#install)
 - [Use it](#use-it)
-- [API - flags](#api---flags)
+- [API - flags](#api-flags)
 - [Normalise](#normalise)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)

@@ -19,7 +19,7 @@
 - [Idea](#idea)
 - [Usage](#usage)
 - [API](#api)
-- [Example - treating the image alt attributes - Gulp and stream-tapping](#example---treating-the-image-alt-attributes---gulp-and-stream-tapping)
+- [Example - treating the image alt attributes - Gulp and stream-tapping](#example-treating-the-image-alt-attributes---gulp-and-stream-tapping)
 - [Can we use `lodash.deburr` instead?](#can-we-use-lodashdeburr-instead)
 - [Contributing](#contributing)
 - [Licence](#licence)

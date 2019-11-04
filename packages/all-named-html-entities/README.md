@@ -15,8 +15,8 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [API - `entStartsWith`](#api---entstartswith)
-- [API - `decode`](#api---decode)
+- [API - `entStartsWith`](#api-entstartswith)
+- [API - `decode`](#api-decode)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

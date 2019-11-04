@@ -19,8 +19,8 @@ Other siblings of this package:
 
 - [Install](#install)
 - [API](#api)
-- [genAtomic() - input API](#genatomic---input-api)
-- [genAtomic() - output API](#genatomic---output-api)
+- [genAtomic() - input API](#genatomic-input-api)
+- [genAtomic() - output API](#genatomic-output-api)
 - [version](#version)
 - [headsAndTails](#headsandtails)
 - [extractFromToSource()](#extractfromtosource)
