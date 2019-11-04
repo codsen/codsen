@@ -1659,7 +1659,7 @@ test(`08.01 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potential
 });
 
 test(`08.02 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {
-  t.is(det(t, 0, `aaa&thinsp;aaa`).res, "aaa&thinsp;aaa");
+  t.is(det(t, 0, `aaa&thinsp;aaa`).res, "aaa aaa");
 });
 
 test(`08.03 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, t => {

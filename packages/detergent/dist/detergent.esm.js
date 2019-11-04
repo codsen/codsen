@@ -1109,6 +1109,7 @@ function processCharacter(
       } else if (
         [
           5760,
+          8191,
           8192,
           8193,
           8194,

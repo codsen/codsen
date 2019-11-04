@@ -517,7 +517,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
       } else if (charcode === 8232 || charcode === 8233) {
         applicableOpts.removeLineBreaks = true;
         rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
-      } else if ([5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8239, 8287, 12288].includes(charcode)) {
+      } else if ([5760, 8191, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8239, 8287, 12288].includes(charcode)) {
         if (!str[y]) {
           rangesArr.push(i, y);
         } else {
