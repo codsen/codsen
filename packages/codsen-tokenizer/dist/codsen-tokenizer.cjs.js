@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer

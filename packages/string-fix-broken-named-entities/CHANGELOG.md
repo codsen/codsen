@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.11](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.4.10...string-fix-broken-named-entities@2.4.11) (2019-11-04)
+
+**Note:** Version bump only for package string-fix-broken-named-entities
+
+
+
+
+
 ## 2.4.3 (2019-09-11)
 
 ### Bug Fixes

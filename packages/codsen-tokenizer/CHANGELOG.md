@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@1.1.0...codsen-tokenizer@1.1.1) (2019-11-04)
+
+**Note:** Version bump only for package codsen-tokenizer
+
+
+
+
+
 ## 1.1.0 (2019-11-02)
 
 ### Features

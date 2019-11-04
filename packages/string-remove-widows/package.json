@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Helps to prevent widow words in a text",
   "license": "MIT",
   "engines": {
@@ -140,9 +140,9 @@
     "arrayiffy-if-string": "^3.11.21",
     "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.0.39",
-    "ranges-push": "^3.6.6",
-    "string-left-right": "^2.3.6",
-    "string-match-left-right": "^3.11.10"
+    "ranges-push": "^3.6.7",
+    "string-left-right": "^2.3.7",
+    "string-match-left-right": "^3.11.11"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -158,8 +158,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.3",
-    "lect": "^0.10.5",
+    "js-row-num-cli": "^1.6.4",
+    "lect": "^0.10.6",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rollup": "^1.26.3",

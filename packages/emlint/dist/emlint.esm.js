@@ -1,7 +1,7 @@
 /**
  * emlint
  * Non-parsing static code analysis tool for HTML mixed with anything
- * Version: 1.8.4
+ * Version: 1.8.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -891,7 +891,7 @@ var errorsRules = {
 }
 };
 
-var version = "1.8.4";
+var version = "1.8.5";
 
 const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
