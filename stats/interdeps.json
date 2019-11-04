@@ -167,7 +167,7 @@
     },
     {
         "name": "detergent",
-        "size": 52790,
+        "size": 53075,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -353,7 +353,7 @@
     },
     {
         "name": "lect",
-        "size": 73104,
+        "size": 73124,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
