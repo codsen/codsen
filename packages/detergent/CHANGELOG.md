@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.6.0](https://gitlab.com/codsen/codsen/compare/detergent@5.5.0...detergent@5.6.0) (2019-11-04)
-
+## 5.6.0 (2019-11-04)
 
 ### Features
 
-* add few previously missing invisible space-like characters ([33ee0ed](https://gitlab.com/codsen/codsen/commit/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
-
-
-
-
+- add few previously missing invisible space-like characters ([33ee0ed](https://gitlab.com/codsen/codsen/commit/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
 
 ## 5.6.0
 
