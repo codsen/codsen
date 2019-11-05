@@ -859,3 +859,54 @@ test(`02.30 - ${`\u001b[${35}m${`opts.stripHtmlButIgnoreTags`}\u001b[${39}m`} + 
     "<sup><a><b>"
   );
 });
+
+// 03. stripping off
+// -----------------------------------------------------------------------------
+
+test(`03.01 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`, t => {
+  const input = `<a b c d>`;
+  // t.is(
+  //   det1(input, {
+  //     removeWidows: 1,
+  //     convertEntities: 0,
+  //     replaceLineBreaks: 0,
+  //     removeLineBreaks: 0,
+  //     stripHtml: 0
+  //   }).res,
+  //   input,
+  //   "03.01"
+  // );
+  mixer({
+    removeWidows: 1,
+    convertEntities: 0,
+    replaceLineBreaks: 0,
+    removeLineBreaks: 0,
+    stripHtml: 0
+  }).forEach((opt, n) => {
+    t.is(det(t, n, input, opt).res, input, "03.01");
+  });
+});
+
+test(`03.02 - ${`\u001b[${31}m${`opts.stripHtmlButIgnoreTags off`}\u001b[${39}m`} - widow removal is aware of surrounding html`, t => {
+  const input = `<a w="1" x="y" z="x">\n<!--[if (gte mso 9)|(IE)]>\n<td a="b:c;" d="e" f="g">`;
+  // t.is(
+  //   det1(input, {
+  //     removeWidows: 1,
+  //     convertEntities: 0,
+  //     replaceLineBreaks: 0,
+  //     removeLineBreaks: 0,
+  //     stripHtml: 0
+  //   }).res,
+  //   input,
+  //   "03.02"
+  // );
+  mixer({
+    removeWidows: 1,
+    convertEntities: 0,
+    replaceLineBreaks: 0,
+    removeLineBreaks: 0,
+    stripHtml: 0
+  }).forEach((opt, n) => {
+    t.is(det(t, n, input, opt).res, input, "03.02");
+  });
+});

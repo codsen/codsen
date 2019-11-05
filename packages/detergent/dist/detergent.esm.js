@@ -1422,7 +1422,6 @@ function det(str, inputOpts) {
   function applyAndWipe() {
     str = rangesApply(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
-    skipArr.wipe();
   }
   function isNum(something) {
     return Number.isInteger(something);
@@ -1761,7 +1760,8 @@ function det(str, inputOpts) {
     convertEntities: true,
     targetLanguage: "html",
     UKPostcodes: true,
-    hyphens: true
+    hyphens: true,
+    tagRanges: skipArr.current()
   });
   if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
     if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {

@@ -1409,11 +1409,11 @@ function processCharacter(
         // - medium mathematical space (#8287), '\u205F'
         // - ideographic space (#12288), '\u3000'
 
-        console.log("1375 processCharacter.js - hairspace caught");
+        console.log("1412 processCharacter.js - hairspace caught");
         if (!str[y]) {
           rangesArr.push(i, y);
           console.log(
-            `1379 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
+            `1416 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
           );
         } else {
           // rangesArr.push(i, y, " ");
@@ -1426,7 +1426,7 @@ function processCharacter(
             addSingleSpaceToPreventAccidentalConcatenation: true
           });
           console.log(
-            `1392 processCharacter.js - expanded to ${JSON.stringify(
+            `1429 processCharacter.js - expanded to ${JSON.stringify(
               expandedRange,
               null,
               0
@@ -1436,42 +1436,42 @@ function processCharacter(
         }
       } else if (charcode === 8206) {
         // remove all left-to-right mark chars, '\u200E'
-        console.log("1402 processCharacter.js - LTR mark caught");
+        console.log("1439 processCharacter.js - LTR mark caught");
         rangesArr.push(i, y);
         console.log(
-          `1405 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
+          `1442 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
         );
       } else if (charcode === 8207) {
-        console.log("1408 processCharacter.js - RTL mark caught");
+        console.log("1445 processCharacter.js - RTL mark caught");
         // remove all right-to-right mark chars, '\u200F'
         rangesArr.push(i, y);
         console.log(
-          `1412 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
+          `1449 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
         );
       } else if (
         charcode === 8211 ||
         (charcode === 65533 && (isNumber(str[i - 1]) && isNumber(str[y])))
       ) {
         // IF N-DASH, '\u2013'
-        console.log("1419 processCharacter.js - N dash caught");
+        console.log("1456 processCharacter.js - N dash caught");
 
         applicableOpts.convertDashes = true;
         console.log(
-          `1423 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDashes = ${
+          `1460 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDashes = ${
             applicableOpts.convertDashes
           }`
         );
 
         if (!opts.convertDashes) {
-          console.log(`1429 conversion is off`);
+          console.log(`1466 conversion is off`);
           rangesArr.push(i, y, "-");
           console.log(
-            `1432 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "-"]`
+            `1469 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "-"]`
           );
         } else {
           applicableOpts.convertEntities = true;
           console.log(
-            `1437 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1474 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
@@ -1487,13 +1487,13 @@ function processCharacter(
             ) {
               rangesArr.push(i, y, "&mdash;");
               console.log(
-                `1453 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&mdash;"]`
+                `1490 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&mdash;"]`
               );
             } else {
               // ELSE - n-dash stays
               rangesArr.push(i, y, "&ndash;");
               console.log(
-                `1459 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&ndash;"]`
+                `1496 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&ndash;"]`
               );
             }
           } else if (charcode === 65533) {
@@ -1505,12 +1505,12 @@ function processCharacter(
             ) {
               rangesArr.push(i, y, rawMDash);
               console.log(
-                `1471 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw m-dash"]`
+                `1508 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw m-dash"]`
               );
             } else {
               rangesArr.push(i, y, rawNDash);
               console.log(
-                `1476 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw n-dash"]`
+                `1513 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw n-dash"]`
               );
             }
           }
@@ -1523,23 +1523,23 @@ function processCharacter(
           str[i - 1].trim().length === 0 &&
           str[y].trim().length !== 0
         ) {
-          console.log(`1489`);
+          console.log(`1526`);
           if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
             rangesArr.push(i - 1, i);
             console.log(
-              `1493 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} (TO DELETE) [${i -
+              `1530 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} (TO DELETE) [${i -
                 1}, ${i}]`
             );
           } else {
             applicableOpts.addMissingSpaces = true;
             console.log(
-              `1499 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.addMissingSpaces = ${
+              `1536 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.addMissingSpaces = ${
                 applicableOpts.addMissingSpaces
               }`
             );
             applicableOpts.convertEntities = true;
             console.log(
-              `1505 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+              `1542 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
                 applicableOpts.convertEntities
               }`
             );
@@ -1554,14 +1554,14 @@ function processCharacter(
               if (!widowRegexTest.test(str.slice(y))) {
                 applicableOpts.removeWidows = true;
                 console.log(
-                  `1520 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
+                  `1557 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
                     applicableOpts.removeWidows
                   }`
                 );
                 if (opts.removeWidows) {
                   whatToAdd = opts.convertEntities ? "&nbsp;" : rawNbsp;
                   console.log(
-                    `1527 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} whatToAdd = ${
+                    `1564 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} whatToAdd = ${
                       opts.convertEntities ? whatToAdd : "rawNbsp"
                     }`
                   );
@@ -1570,7 +1570,7 @@ function processCharacter(
 
               rangesArr.push(y, y, whatToAdd);
               console.log(
-                `1536 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${y}, ${y}, ${JSON.stringify(
+                `1573 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${y}, ${y}, ${JSON.stringify(
                   whatToAdd,
                   null,
                   0
@@ -1583,7 +1583,7 @@ function processCharacter(
             if (str.slice(i - 1, i) !== rawNbsp) {
               applicableOpts.removeWidows = true;
               console.log(
-                `1549 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
+                `1586 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
                   applicableOpts.removeWidows
                 }`
               );
@@ -1595,7 +1595,7 @@ function processCharacter(
                   opts.convertEntities ? "&nbsp;" : rawNbsp
                 );
                 console.log(
-                  `1561 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
+                  `1598 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
                     1}, ${i}, ${JSON.stringify(
                     opts.convertEntities ? "&nbsp;" : rawNbsp,
                     null,
@@ -1619,7 +1619,7 @@ function processCharacter(
           rangesArr.push(i - 1, i);
           rangesArr.push(y, y + 1);
           console.log(
-            `1585 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
+            `1622 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
               1}, ${i}], then [${y}, ${y + 1}]`
           );
         }
@@ -1641,7 +1641,7 @@ function processCharacter(
             // 2. replace the space
             rangesArr.push(i - 1, i, opts.convertEntities ? "&nbsp;" : rawNbsp);
             console.log(
-              `1607 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
+              `1644 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i -
                 1}, ${i}, ${JSON.stringify(
                 opts.convertEntities ? "&nbsp;" : rawNbsp,
                 null,
@@ -1655,11 +1655,11 @@ function processCharacter(
         (charcode === 65533 && (str[i - 1] === " " && str[y] === " "))
       ) {
         // IF RAW M-DASH, '\u2014'
-        console.log("1621 processCharacter.js - M dash caught");
+        console.log("1658 processCharacter.js - M dash caught");
 
         applicableOpts.convertDashes = true;
         console.log(
-          `1625 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDashes = ${
+          `1662 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDashes = ${
             applicableOpts.convertDashes
           }`
         );
@@ -1668,7 +1668,7 @@ function processCharacter(
         if (str[i - 1] === " " && left(str, i) !== null) {
           applicableOpts.removeWidows = true;
           console.log(
-            `1634 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
+            `1671 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.removeWidows = ${
               applicableOpts.removeWidows
             }`
           );
@@ -1676,7 +1676,7 @@ function processCharacter(
           if (opts.removeWidows) {
             applicableOpts.convertEntities = true;
             console.log(
-              `1642 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+              `1679 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
                 applicableOpts.convertEntities
               }`
             );
@@ -1687,7 +1687,7 @@ function processCharacter(
               opts.convertEntities ? "&nbsp;" : rawNbsp
             );
             console.log(
-              `1653 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${left(
+              `1690 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${left(
                 str,
                 i
               ) + 1}, ${i}, ${JSON.stringify(
@@ -1701,15 +1701,15 @@ function processCharacter(
 
         // tackle conversion into hyphen and surrounding spaces
         if (!opts.convertDashes) {
-          console.log(`1667 processCharacter.js - conversion is off`);
+          console.log(`1704 processCharacter.js - conversion is off`);
           rangesArr.push(i, y, "-");
           console.log(
-            `1670 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "-"]`
+            `1707 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "-"]`
           );
         } else {
           applicableOpts.convertEntities = true;
           console.log(
-            `1675 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1712 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
@@ -1721,7 +1721,7 @@ function processCharacter(
           ) {
             applicableOpts.addMissingSpaces = true;
             console.log(
-              `1687 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.addMissingSpaces = ${
+              `1724 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.addMissingSpaces = ${
                 applicableOpts.addMissingSpaces
               }`
             );
@@ -1729,7 +1729,7 @@ function processCharacter(
             if (opts.addMissingSpaces) {
               rangesArr.push(y, y, " ");
               console.log(
-                `1695 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${y}, ${y}, " "]`
+                `1732 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${y}, ${y}, " "]`
               );
             }
           }
@@ -1738,12 +1738,12 @@ function processCharacter(
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&mdash;");
             console.log(
-              `1704 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&mdash;"]`
+              `1741 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&mdash;"]`
             );
           } else if (charcode === 65533) {
             rangesArr.push(i, y, rawMDash);
             console.log(
-              `1709 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw m-dash"]`
+              `1746 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "raw m-dash"]`
             );
           }
 
@@ -1768,7 +1768,7 @@ function processCharacter(
         if (tempRes && tempRes.length) {
           applicableOpts.convertApostrophes = true;
           console.log(
-            `1734 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
+            `1771 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
               applicableOpts.convertApostrophes
             }`
           );
@@ -1784,7 +1784,7 @@ function processCharacter(
             if (opts.convertApostrophes) {
               applicableOpts.convertEntities = true;
               console.log(
-                `1750 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+                `1787 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
                   applicableOpts.convertEntities
                 }`
               );
@@ -1805,7 +1805,7 @@ function processCharacter(
         // IF UNENCODED RIGHT SINGLE QUOTE
         applicableOpts.convertApostrophes = true;
         console.log(
-          `1771 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
+          `1808 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
             applicableOpts.convertApostrophes
           }`
         );
@@ -1813,19 +1813,19 @@ function processCharacter(
         if (!opts.convertApostrophes) {
           rangesArr.push(i, y, "'");
           console.log(
-            `1779 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "'"]`
+            `1816 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "'"]`
           );
         } else {
           applicableOpts.convertEntities = true;
           console.log(
-            `1784 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1821 processCharacter.js - ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&rsquo;");
             console.log(
-              `1791 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&rsquo;"]`
+              `1828 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&rsquo;"]`
             );
           }
         }
@@ -1833,7 +1833,7 @@ function processCharacter(
         // IF UNENCODED LEFT DOUBLE QUOTE
         applicableOpts.convertApostrophes = true;
         console.log(
-          `1799 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
+          `1836 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
             applicableOpts.convertApostrophes
           }`
         );
@@ -1841,13 +1841,13 @@ function processCharacter(
         if (!opts.convertApostrophes) {
           applicableOpts.convertEntities = true;
           console.log(
-            `1807 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1844 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
           rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
           console.log(
-            `1813 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${JSON.stringify(
+            `1850 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${JSON.stringify(
               opts.convertEntities ? `&quot;` : `"`,
               null,
               0
@@ -1856,20 +1856,20 @@ function processCharacter(
         } else if (opts.convertEntities) {
           applicableOpts.convertEntities = true;
           console.log(
-            `1822 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1859 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
           rangesArr.push(i, y, "&ldquo;");
           console.log(
-            `1828 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&ldquo;"]`
+            `1865 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&ldquo;"]`
           );
         }
       } else if (charcode === 8221) {
         // IF UNENCODED RIGHT DOUBLE QUOTE
         applicableOpts.convertApostrophes = true;
         console.log(
-          `1835 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
+          `1872 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
             applicableOpts.convertApostrophes
           }`
         );
@@ -1877,13 +1877,13 @@ function processCharacter(
         if (!opts.convertApostrophes) {
           applicableOpts.convertEntities = true;
           console.log(
-            `1843 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1880 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
           rangesArr.push(i, y, opts.convertEntities ? `&quot;` : `"`);
           console.log(
-            `1849 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${JSON.stringify(
+            `1886 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${JSON.stringify(
               opts.convertEntities ? `&quot;` : `"`,
               null,
               0
@@ -1892,20 +1892,20 @@ function processCharacter(
         } else if (opts.convertEntities) {
           applicableOpts.convertEntities = true;
           console.log(
-            `1858 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1895 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
           rangesArr.push(i, y, "&rdquo;");
           console.log(
-            `1864 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&rdquo;"]`
+            `1901 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&rdquo;"]`
           );
         }
       } else if (charcode === 8230) {
         // IF UNENCODED HORIZONTAL ELLIPSIS CHARACTER &hellip;
         applicableOpts.convertDotsToEllipsis = true;
         console.log(
-          `1871 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDotsToEllipsis = ${
+          `1908 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertDotsToEllipsis = ${
             applicableOpts.convertDotsToEllipsis
           }`
         );
@@ -1913,12 +1913,12 @@ function processCharacter(
         if (!opts.convertDotsToEllipsis) {
           rangesArr.push(i, y, "...");
           console.log(
-            `1879 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "..."]`
+            `1916 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "..."]`
           );
         } else {
           applicableOpts.convertEntities = true;
           console.log(
-            `1884 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1921 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
@@ -1926,7 +1926,7 @@ function processCharacter(
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&hellip;");
             console.log(
-              `1892 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&hellip;"]`
+              `1929 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&hellip;"]`
             );
           }
         }
@@ -1934,11 +1934,11 @@ function processCharacter(
         // IF BOM, '\uFEFF'
         rangesArr.push(i, y);
         console.log(
-          `1900 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
+          `1937 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}]`
         );
       } else {
         console.log(
-          `1904 processCharacter.js - ${`\u001b[${90}m${`else clause leading to encode`}\u001b[${39}m`}`
+          `1941 processCharacter.js - ${`\u001b[${90}m${`else clause leading to encode`}\u001b[${39}m`}`
         );
         //
         //
@@ -1952,7 +1952,7 @@ function processCharacter(
         ) {
           applicableOpts.dontEncodeNonLatin = true;
           console.log(
-            `1918 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.dontEncodeNonLatin = ${
+            `1955 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.dontEncodeNonLatin = ${
               applicableOpts.dontEncodeNonLatin
             }`
           );
@@ -1964,7 +1964,7 @@ function processCharacter(
           opts.dontEncodeNonLatin
         );
         console.log(
-          `1930 processCharacter.js - ${`\u001b[${33}m${`convertedCharVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `1967 processCharacter.js - ${`\u001b[${33}m${`convertedCharVal`}\u001b[${39}m`} = ${JSON.stringify(
             convertedCharVal,
             null,
             4
@@ -1982,7 +1982,7 @@ function processCharacter(
           };`;
         }
         console.log(
-          `1948 processCharacter.js - ${`\u001b[${33}m${`convertedCharVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `1985 processCharacter.js - ${`\u001b[${33}m${`convertedCharVal`}\u001b[${39}m`} = ${JSON.stringify(
             convertedCharVal,
             null,
             4
@@ -1994,7 +1994,7 @@ function processCharacter(
         if (str[i] !== convertedCharVal) {
           applicableOpts.convertEntities = true;
           console.log(
-            `1960 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+            `1997 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
               applicableOpts.convertEntities
             }`
           );
@@ -2004,19 +2004,19 @@ function processCharacter(
           if (opts.convertEntities) {
             if (convertedCharVal === "&mldr;") {
               console.log(
-                `1970 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&hellip;"]`
+                `2007 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, "&hellip;"]`
               );
               rangesArr.push(i, y, "&hellip;");
             } else if (convertedCharVal !== "&apos;") {
               console.log(
-                `1975 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${convertedCharVal}]`
+                `2012 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${y}, ${convertedCharVal}]`
               );
               rangesArr.push(i, y, convertedCharVal);
             }
 
             applicableOpts.convertEntities = true;
             console.log(
-              `1982 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+              `2019 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
                 applicableOpts.convertEntities
               }`
             );
@@ -2027,7 +2027,7 @@ function processCharacter(
 
     if (state.onUrlCurrently && !str[i].trim().length) {
       console.log(
-        `1993 SET ${`\u001b[${33}m${`state.onUrlCurrently`}\u001b[${39}m`} = false`
+        `2030 SET ${`\u001b[${33}m${`state.onUrlCurrently`}\u001b[${39}m`} = false`
       );
       state.onUrlCurrently = false;
     }
@@ -2042,7 +2042,7 @@ function processCharacter(
   }
 
   console.log(
-    `2008 processCharacter.js - ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, rangesArr = ${JSON.stringify(
+    `2045 processCharacter.js - ${`\u001b[${32}m${`finally`}\u001b[${39}m`}, rangesArr = ${JSON.stringify(
       rangesArr.current(),
       null,
       4

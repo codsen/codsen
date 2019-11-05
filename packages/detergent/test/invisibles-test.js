@@ -168,3 +168,16 @@ test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", t => {
     t.is(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
   });
 });
+
+test("12 - narrow no break space", t => {
+  mixer({
+    convertEntities: 0
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "a\u202Fb", opt).res, "a b", "12");
+  });
+  mixer({
+    convertEntities: 1
+  }).forEach((opt, n) => {
+    t.is(det(t, n, "a\u202Fb", opt).res, "a b", "12");
+  });
+});
