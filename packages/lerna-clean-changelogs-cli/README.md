@@ -100,6 +100,93 @@ More features will follow.
 
 **[⬆ back to top](#)**
 
+## The proof of the pudding is in the eating
+
+Here's how we use it ourselves.
+
+In short, GitLab CI calls package.json script and it cleanses the changelogs before npm package is published to npm and all builds are comitted from CI to git.
+
+In long, have a look at our GitLab CI yml:
+
+```yml
+deploy:
+  except:
+    - tags
+  image: node:latest
+  stage: deploy
+  script:
+    - git config --global credential.helper store
+    - git remote set-url origin https://gitlab-ci-token:$PERSONAL_ACCESS_TOKEN@gitlab.com/codsen/codsen.git
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$YOUR_NAME_SURNAME"
+    - npm set unsafe-perm true -g
+    - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
+    - npm set username $NPM_USERNAME -g
+    - npm set email $NPM_EMAIL -g
+    - echo "git user:"
+    - git config user.name
+    - echo "npm user:"
+    - npm whoami
+    - echo '█████████████████████████████ 1 █████████████████████████████'
+    - git status
+    - git checkout master
+    - echo '█████████████████████████████ 2 █████████████████████████████'
+    - git status
+    - npm run fresh
+    - echo '█████████████████████████████ 3 █████████████████████████████'
+    - git status
+    - npm run readme:generate
+    - npm run info
+    - echo '█████████████████████████████ 4 █████████████████████████████'
+    - git status
+    - git add packages
+    - git add stats
+    - git add readme.md
+    - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify"
+    - npx lerna changed
+    - npm run pub:vers
+    - echo '█████████████████████████████ 5 █████████████████████████████'
+    - git status
+    - git rm -f packages/ava/CHANGELOG.md || true
+    - git rm -f packages/domutils/CHANGELOG.md || true
+    - git add packages
+    - git add readme.md
+    - echo '█████████████████████████████ 6 █████████████████████████████'
+    - git status
+    - "git commit -m '[skip ci] chore: automated build tasks' --no-verify"
+    - echo '█████████████████████████████ 7 █████████████████████████████'
+    - git status
+    - npm run republish
+    - echo '█████████████████████████████ 8 █████████████████████████████'
+    - git status
+    - git push origin master
+    - echo '█████████████████████████████ 9 █████████████████████████████ - done'
+```
+
+At the end of step four, there's a line:
+
+```
+- npm run pub:vers
+```
+
+That's how CI calls npm script. By the way, "lerna-clean-changelogs-cli" can be called at the first place because our monorepo root package.json has it as a dependency:
+
+```
+"devDependencies": {
+  ...
+  "lerna-clean-changelogs-cli": "^1.2.37",
+  ...
+}
+```
+
+In the package.json, `pub:vers` looks like this:
+
+```
+"pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
+```
+
+We call `lerna version` and then we call `lernacleanchangelog` — the call name for `lerna-clean-changelogs-cli`. We could also call `lcc` instead but it's more descriptive, considering you come back after months and wonder what is such and such command...
+
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. It's the [same update notifier](https://www.npmjs.com/package/update-notifier) that AVA and [npm](https://www.npmjs.com/package/npm) themselves use!
