@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.7.0](https://gitlab.com/codsen/codsen/compare/detergent@5.6.0...detergent@5.7.0) (2019-11-05)
-
+## 5.7.0 (2019-11-05)
 
 ### Features
 
-* make known html tag ranges to be ignored during the widow removal ([f7992a7](https://gitlab.com/codsen/codsen/commit/f7992a7a86b0420dfbeaae8008df16b3245d3b1a))
-
-
-
-
+- make known html tag ranges to be ignored during the widow removal ([f7992a7](https://gitlab.com/codsen/codsen/commit/f7992a7a86b0420dfbeaae8008df16b3245d3b1a))
 
 ## 5.6.0 (2019-11-04)
 
