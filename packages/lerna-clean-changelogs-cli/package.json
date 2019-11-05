@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "1.2.38",
+  "version": "1.2.39",
   "description": "CLI application to cleanse the lerna-generated changelogs",
   "license": "MIT",
   "engines": {

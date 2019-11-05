@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.6.0",
+  "version": "5.7.0",
   "description": "a tool to prepare text for pasting into HTML",
   "license": "MIT",
   "engines": {
