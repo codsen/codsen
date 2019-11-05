@@ -144,9 +144,9 @@
     "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/register": "^7.6.2",
+    "@babel/core": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
     "ava": "^2.2.7",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.6.0",
