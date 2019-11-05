@@ -24,6 +24,7 @@ Other siblings of this package:
 - [Install](#install)
 - [Use it](#use-it)
 - [Purpose](#purpose)
+- [The proof of the pudding is in the eating](#the-proof-of-the-pudding-is-in-the-eating)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -186,6 +187,8 @@ In the package.json, `pub:vers` looks like this:
 ```
 
 We call `lerna version` and then we call `lernacleanchangelog` — the call name for `lerna-clean-changelogs-cli`. We could also call `lcc` instead but it's more descriptive, considering you come back after months and wonder what is such and such command...
+
+**[⬆ back to top](#)**
 
 ## Updating it
 

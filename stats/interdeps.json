@@ -1,7 +1,7 @@
 [
     {
         "name": "all-named-html-entities",
-        "size": 232537,
+        "size": 232538,
         "imports": []
     },
     {
@@ -167,7 +167,7 @@
     },
     {
         "name": "detergent",
-        "size": 53075,
+        "size": 53089,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -215,7 +215,7 @@
     },
     {
         "name": "email-comb",
-        "size": 61785,
+        "size": 61787,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -265,7 +265,7 @@
     },
     {
         "name": "html-crush",
-        "size": 32749,
+        "size": 32751,
         "imports": [
             "ranges-apply",
             "ranges-push",

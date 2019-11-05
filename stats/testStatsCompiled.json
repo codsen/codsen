@@ -27,7 +27,7 @@
         "csv-sort-cli": 2,
         "csv-split-easy": 14,
         "detect-is-it-html-or-xhtml": 17,
-        "detergent": 656,
+        "detergent": 659,
         "easy-replace": 152,
         "edit-package-json": 14025,
         "email-all-chars-within-ascii": 38,
@@ -101,7 +101,7 @@
         "util-nonempty": 9
     },
     "totalPackageCount": 99,
-    "totalTestsCount": 19032,
+    "totalTestsCount": 19035,
     "minTestsCount": 2,
     "minTestsName": "csv-sort-cli",
     "maxTestsCount": 14025,
