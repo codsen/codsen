@@ -65,7 +65,7 @@
     "code-excerpt": "^2.1.1",
     "common-path-prefix": "^3.0.0",
     "concordance": "^4.0.0",
-    "convert-source-map": "^1.6.0",
+    "convert-source-map": "^1.7.0",
     "currently-unhandled": "^0.4.1",
     "debug": "^4.1.1",
     "del": "^5.1.0",
@@ -117,7 +117,6 @@
     "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
-    "@types/node": "^12.12.5",
     "cli-table3": "^0.5.1",
     "codecov": "^3.6.1",
     "delay": "^4.3.0",
