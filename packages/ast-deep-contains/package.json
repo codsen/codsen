@@ -1,0 +1,169 @@
+{
+  "name": "ast-deep-contains",
+  "version": "0.0.1",
+  "description": "the t.deepEqual alternative for AVA",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "keywords": [
+    "unit",
+    "test",
+    "tests",
+    "comparison",
+    "function",
+    "deep",
+    "compare",
+    "subsets",
+    "ast",
+    "ava",
+    "helper"
+  ],
+  "main": "dist/ast-deep-contains.cjs.js",
+  "module": "dist/ast-deep-contains.esm.js",
+  "browser": "dist/ast-deep-contains.umd.js",
+  "scripts": {
+    "ava": "ava -d",
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "rollup -c --dev --silent",
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "lect": "lect",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+    "perf": "node perf/check",
+    "prepare": "npm run build",
+    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "pretest": "npm run build",
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage && npm run perf",
+    "version": "npm run build && git add ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "timeout": "99m",
+    "verbose": true
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "req": "deepContains",
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "ast-monkey-traverse": "^1.11.43",
+    "object-path": "^0.11.4",
+    "type-detect": "^4.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
+    "ava": "^2.2.7",
+    "babel-plugin-istanbul": "^5.2.0",
+    "benchmark": "^2.1.4",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-ava": "^9.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "esm": "^3.2.25",
+    "js-row-num-cli": "^1.6.4",
+    "lect": "^0.10.6",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "rollup": "^1.26.3",
+    "rollup-plugin-ascii": "^0.0.3",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-banner": "^0.2.1",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-strip": "^1.2.2",
+    "rollup-plugin-terser": "^5.1.2"
+  }
+}
