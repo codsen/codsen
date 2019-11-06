@@ -836,16 +836,23 @@ function det(str, inputOpts) {
       4
     )}`
   );
+  console.log(
+    `840 ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      applicableOpts,
+      null,
+      4
+    )}`
+  );
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
   console.log(
-    `844 ${`\u001b[${90}m${`================= NEXT STEP. apply+wipe =================`}\u001b[${39}m`}`
+    `851 ${`\u001b[${90}m${`================= NEXT STEP. apply+wipe =================`}\u001b[${39}m`}`
   );
 
   console.log(
-    `848 ${`\u001b[${33}m${`str`}\u001b[${39}m`} before apply+wipe: ${JSON.stringify(
+    `855 ${`\u001b[${33}m${`str`}\u001b[${39}m`} before apply+wipe: ${JSON.stringify(
       str,
       null,
       4
@@ -853,7 +860,7 @@ function det(str, inputOpts) {
   );
   applyAndWipe();
   console.log(
-    `856 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after apply+wipe: ${JSON.stringify(
+    `863 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after apply+wipe: ${JSON.stringify(
       str,
       null,
       4
@@ -864,14 +871,14 @@ function det(str, inputOpts) {
 
   str = str.replace(/(\r\n|\r|\n){3,}/g, `${endOfLine}${endOfLine}`);
   console.log(
-    `867 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after str.replace: ${JSON.stringify(
+    `874 ${`\u001b[${33}m${`str`}\u001b[${39}m`} after str.replace: ${JSON.stringify(
       str,
       null,
       4
     )}`
   );
   console.log(
-    `874 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
+    `881 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       4
@@ -882,10 +889,10 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `885 ${`\u001b[${90}m${`================= NEXT STEP. widows =================`}\u001b[${39}m`}`
+    `892 ${`\u001b[${90}m${`================= NEXT STEP. widows =================`}\u001b[${39}m`}`
   );
   console.log(
-    `888 ${`\u001b[${33}m${`skipArr.current()`}\u001b[${39}m`} = ${JSON.stringify(
+    `895 ${`\u001b[${33}m${`skipArr.current()`}\u001b[${39}m`} = ${JSON.stringify(
       skipArr.current(),
       null,
       4
@@ -895,14 +902,14 @@ function det(str, inputOpts) {
   // remove widow words
   const widowFixes = removeWidows(str, {
     ignore: "all",
-    convertEntities: true, // full-on setup
+    convertEntities: opts.convertEntities, // full-on setup
     targetLanguage: "html",
     UKPostcodes: true, // full-on setup
-    hyphens: true, // full-on setup
+    hyphens: opts.convertDashes, // full-on setup
     tagRanges: skipArr.current()
   });
   console.log(
-    `905 ${`\u001b[${33}m${`widowFixes`}\u001b[${39}m`} = ${JSON.stringify(
+    `912 ${`\u001b[${33}m${`widowFixes`}\u001b[${39}m`} = ${JSON.stringify(
       widowFixes,
       null,
       4
@@ -913,12 +920,12 @@ function det(str, inputOpts) {
     if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
       applicableOpts.removeWidows = true;
       console.log(
-        `916 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`
+        `923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`
       );
       if (opts.removeWidows) {
         applicableOpts.convertEntities = true;
         console.log(
-          `921 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
+          `928 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -929,21 +936,15 @@ function det(str, inputOpts) {
     ) {
       applicableOpts.convertEntities = true;
       console.log(
-        `932 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
+        `939 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`
       );
     }
 
     // 3. if option is enabled, apply it:
     if (opts.removeWidows) {
-      str = removeWidows(str, {
-        ignore: "all",
-        convertEntities: opts.convertEntities,
-        targetLanguage: "html",
-        UKPostcodes: true,
-        hyphens: opts.convertDashes
-      }).res;
+      str = widowFixes.res;
       console.log(
-        `946 after fixing widows, str = ${JSON.stringify(str, null, 0)}`
+        `947 after fixing widows, str = ${JSON.stringify(str, null, 0)}`
       );
     }
   }
@@ -952,12 +953,12 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `955 ${`\u001b[${90}m${`================= NEXT STEP. linebreaks =================`}\u001b[${39}m`}`
+    `956 ${`\u001b[${90}m${`================= NEXT STEP. linebreaks =================`}\u001b[${39}m`}`
   );
 
   console.log("\n\n\n");
   console.log(
-    `960 STEP#6 ${`\u001b[${33}m${`brClosingBracketIndexesArr`}\u001b[${39}m`} = ${JSON.stringify(
+    `961 STEP#6 ${`\u001b[${33}m${`brClosingBracketIndexesArr`}\u001b[${39}m`} = ${JSON.stringify(
       brClosingBracketIndexesArr,
       null,
       4
@@ -979,25 +980,25 @@ function det(str, inputOpts) {
   // NEXT STEP.
 
   console.log(
-    `982 ${`\u001b[${90}m${`================= NEXT STEP. collapse =================`}\u001b[${39}m`}`
+    `983 ${`\u001b[${90}m${`================= NEXT STEP. collapse =================`}\u001b[${39}m`}`
   );
 
-  console.log(`985 str before collapsing: ${JSON.stringify(str, null, 0)}`);
+  console.log(`986 str before collapsing: ${JSON.stringify(str, null, 0)}`);
   str = collapse(str, {
     trimLines: true,
     recogniseHTML: false
   });
-  console.log(`990 str after collapsing: ${JSON.stringify(str, null, 0)}`);
+  console.log(`991 str after collapsing: ${JSON.stringify(str, null, 0)}`);
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
   console.log(
-    `996 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
+    `997 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
   );
 
   console.log(
-    `1000 FINAL RESULT:\n${JSON.stringify(
+    `1001 FINAL RESULT:\n${JSON.stringify(
       {
         res: rangesApply(str, finalIndexesToDelete.current())
       },

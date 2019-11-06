@@ -900,10 +900,10 @@ function det(str, inputOpts) {
   str = str.replace(/(\r\n|\r|\n){3,}/g, "".concat(endOfLine).concat(endOfLine));
   var widowFixes = stringRemoveWidows.removeWidows(str, {
     ignore: "all",
-    convertEntities: true,
+    convertEntities: opts.convertEntities,
     targetLanguage: "html",
     UKPostcodes: true,
-    hyphens: true,
+    hyphens: opts.convertDashes,
     tagRanges: skipArr.current()
   });
   if (widowFixes && widowFixes.ranges && widowFixes.ranges.length) {
@@ -917,13 +917,7 @@ function det(str, inputOpts) {
       applicableOpts.convertEntities = true;
     }
     if (opts.removeWidows) {
-      str = stringRemoveWidows.removeWidows(str, {
-        ignore: "all",
-        convertEntities: opts.convertEntities,
-        targetLanguage: "html",
-        UKPostcodes: true,
-        hyphens: opts.convertDashes
-      }).res;
+      str = widowFixes.res;
     }
   }
   if (str !== str.replace(/\r\n|\r|\n/gm, " ")) {
