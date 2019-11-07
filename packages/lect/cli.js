@@ -1189,29 +1189,6 @@ async function step10() {
       objectPath.del(finalThing, "browser");
     }
 
-    const adhocDevDeps = objectPath.get(pack, "lect.various.devDependencies");
-    if (
-      existy(adhocDevDeps) &&
-      isArr(adhocDevDeps) &&
-      adhocDevDeps.length > 0
-    ) {
-      for (let i = 0, len = adhocDevDeps.length; i < len; i++) {
-        const dep = adhocDevDeps[i];
-        if (!objectPath.has(finalThing, `devDependencies.${dep}`)) {
-          const retrievedVersion = await pacote
-            .manifest(dep)
-            .then(pkg => pkg.version);
-          // console.log(
-          //   `1196 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
-          //     retrievedVersion,
-          //     null,
-          //     4
-          //   )}`
-          // );
-          finalThing.devDependencies[dep] = `^${retrievedVersion}`;
-        }
-      }
-    }
     // then write out whole thing:
     writePackageJson(finalThing);
   } else {
