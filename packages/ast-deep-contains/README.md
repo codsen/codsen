@@ -164,11 +164,63 @@ console.log(JSON.stringify(errors, null, 4));
 
 ## Real World Example
 
-Taken from EMLint unit tests:
+Here's an example from codsen-tokenizer. Tokenizer's API is callback-based, it will feed your callback function with tokens (plain objects), one by one. Unit test is set up so that callback stashes the tokens into an array. AVA would be called to compare the contents of that array.
+
+Now, the fun part is, if we used `t.deepEqual`, if we added new keys in a tokenizer, let's if instead of old set of keys:
+
+```json
+{
+  type: "text",
+  start: 0,
+  end: 2,
+  tail: null,
+  kind: null
+}
+```
+
+we added a new key, `tagName`, for example, `t.deepEqual` assertion would fail.
+
+But `deepContains` is fine with that, as long as all paths from the 2nd argument are present in the 1st, it will ping `t.is` with those values (`opts.skipContainers` prevents arrays or objects from being passed into the callback, although paths existence is still checked).
 
 ```js
-// TODO
+test("01.01 - text-tag-text", t => {
+  const gathered = [];
+  ct("  <a>z", obj => {
+    gathered.push(obj);
+  });
+
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 2,
+        end: 5,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 5,
+        end: 6,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
 ```
+
+Here you go, an alternative for AVA's `t.deepEqual`.
 
 ## Contributing
 
