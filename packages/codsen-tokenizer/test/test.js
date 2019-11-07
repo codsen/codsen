@@ -62,23 +62,17 @@ test("01.01 - text-tag-text", t => {
       {
         type: "text",
         start: 0,
-        end: 2,
-        tail: null,
-        kind: null
+        end: 2
       },
       {
         type: "html",
         start: 2,
-        end: 5,
-        tail: null,
-        kind: null
+        end: 5
       },
       {
         type: "text",
         start: 5,
-        end: 6,
-        tail: null,
-        kind: null
+        end: 6
       }
     ],
     t.is,
@@ -97,9 +91,7 @@ test("01.02 - text only", t => {
       {
         type: "text",
         start: 0,
-        end: 2,
-        tail: null,
-        kind: null
+        end: 2
       }
     ],
     t.is,
@@ -118,9 +110,7 @@ test("01.03 - tag only", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       }
     ],
     t.is,
@@ -139,23 +129,17 @@ test("01.04 - multiple tags", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "html",
         start: 3,
-        end: 6,
-        tail: null,
-        kind: null
+        end: 6
       },
       {
         type: "html",
         start: 6,
-        end: 9,
-        tail: null,
-        kind: null
+        end: 9
       }
     ],
     t.is,
@@ -174,9 +158,7 @@ test("01.05 - closing bracket in the attribute's value", t => {
       {
         type: "html",
         start: 0,
-        end: 11,
-        tail: null,
-        kind: null
+        end: 11
       }
     ],
     t.is,
@@ -195,9 +177,7 @@ test("01.06 - closing bracket layers of nested quotes", t => {
       {
         type: "html",
         start: 0,
-        end: 17,
-        tail: null,
-        kind: null
+        end: 17
       }
     ],
     t.is,
@@ -216,9 +196,7 @@ test("01.07 - bracket as text", t => {
       {
         type: "text",
         start: 0,
-        end: 5,
-        tail: null,
-        kind: null
+        end: 5
       }
     ],
     t.is,
@@ -237,44 +215,32 @@ test("01.08 - tag followed by brackets", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "text",
         start: 3,
-        end: 14,
-        tail: null,
-        kind: null
+        end: 14
       },
       {
         type: "html",
         start: 14,
-        end: 20,
-        tail: null,
-        kind: null
+        end: 20
       },
       {
         type: "text",
         start: 20,
-        end: 26,
-        tail: null,
-        kind: null
+        end: 26
       },
       {
         type: "html",
         start: 26,
-        end: 33,
-        tail: null,
-        kind: null
+        end: 33
       },
       {
         type: "html",
         start: 33,
-        end: 37,
-        tail: null,
-        kind: null
+        end: 37
       }
     ],
     t.is,
@@ -293,30 +259,23 @@ test("01.09 - html comment", t => {
       {
         type: "html",
         start: 0,
-        end: 7,
-        tail: null,
-        kind: null
+        end: 7
       },
       {
         type: "html",
         start: 7,
         end: 33,
-        tail: null,
         kind: "comment"
       },
       {
         type: "text",
         start: 33,
-        end: 34,
-        tail: null,
-        kind: null
+        end: 34
       },
       {
         type: "html",
         start: 34,
-        end: 40,
-        tail: null,
-        kind: null
+        end: 40
       }
     ],
     t.is,
@@ -335,23 +294,18 @@ test("01.10 - html5 doctype", t => {
       {
         type: "text",
         start: 0,
-        end: 1,
-        tail: null,
-        kind: null
+        end: 1
       },
       {
         type: "html",
         start: 1,
         end: 16,
-        tail: null,
         kind: "doctype"
       },
       {
         type: "text",
         start: 16,
-        end: 17,
-        tail: null,
-        kind: null
+        end: 17
       }
     ],
     t.is,
@@ -376,37 +330,28 @@ test("01.11 - xhtml doctype", t => {
       {
         type: "text",
         start: 0,
-        end: 1,
-        tail: null,
-        kind: null
+        end: 1
       },
       {
         type: "html",
         start: 1,
         end: 126,
-        tail: null,
         kind: "doctype"
       },
       {
         type: "text",
         start: 126,
-        end: 127,
-        tail: null,
-        kind: null
+        end: 127
       },
       {
         type: "html",
         start: 127,
-        end: 190,
-        tail: null,
-        kind: null
+        end: 190
       },
       {
         type: "text",
         start: 190,
-        end: 191,
-        tail: null,
-        kind: null
+        end: 191
       }
     ],
     t.is,
@@ -432,51 +377,39 @@ test("01.12 - xhtml DTD doctype", t => {
       {
         type: "text",
         start: 0,
-        end: 1,
-        tail: null,
-        kind: null
+        end: 1
       },
       {
         type: "html",
         start: 1,
         end: 39,
-        tail: null,
         kind: "xml"
       },
       {
         type: "text",
         start: 39,
-        end: 41,
-        tail: null,
-        kind: null
+        end: 41
       },
       {
         type: "html",
         start: 41,
         end: 160,
-        tail: null,
         kind: "doctype"
       },
       {
         type: "text",
         start: 160,
-        end: 162,
-        tail: null,
-        kind: null
+        end: 162
       },
       {
         type: "html",
         start: 162,
-        end: 229,
-        tail: null,
-        kind: null
+        end: 229
       },
       {
         type: "text",
         start: 229,
-        end: 230,
-        tail: null,
-        kind: null
+        end: 230
       }
     ],
     t.is,
@@ -498,16 +431,12 @@ test("02.01 - space after opening bracket, non-dubious HTML tag name, no attrs",
       {
         type: "text",
         start: 0,
-        end: 2,
-        tail: null,
-        kind: null
+        end: 2
       },
       {
         type: "html",
         start: 2,
-        end: 15,
-        tail: null,
-        kind: null
+        end: 15
       }
     ],
     t.is,
@@ -530,8 +459,7 @@ test("03.01 - ESP literals among text get reported", t => {
         type: "esp",
         start: 0,
         end: 8,
-        tail: "%}",
-        kind: null
+        tail: "%}"
       }
     ],
     t.is,
@@ -550,23 +478,18 @@ test("03.02 - ESP literals among text get reported", t => {
       {
         type: "text",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "esp",
         start: 3,
         end: 21,
-        tail: "%}",
-        kind: null
+        tail: "%}"
       },
       {
         type: "text",
         start: 21,
-        end: 24,
-        tail: null,
-        kind: null
+        end: 24
       }
     ],
     t.is,
@@ -585,23 +508,18 @@ test("03.03 - ESP literals surrounded by HTML tags", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "esp",
         start: 3,
         end: 21,
-        tail: "%}",
-        kind: null
+        tail: "%}"
       },
       {
         type: "html",
         start: 21,
-        end: 24,
-        tail: null,
-        kind: null
+        end: 24
       }
     ],
     t.is,
@@ -620,23 +538,18 @@ test("03.04 - ESP literals surrounded by HTML tags", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "esp",
         start: 3,
         end: 53,
-        tail: "%}",
-        kind: null
+        tail: "%}"
       },
       {
         type: "html",
         start: 53,
-        end: 56,
-        tail: null,
-        kind: null
+        end: 56
       }
     ],
     t.is,
@@ -655,16 +568,12 @@ test("03.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini"
       {
         type: "html",
         start: 0,
-        end: 21,
-        tail: null,
-        kind: null
+        end: 21
       },
       {
         type: "html",
         start: 21,
-        end: 24,
-        tail: null,
-        kind: null
+        end: 24
       }
     ],
     t.is,
@@ -686,16 +595,12 @@ test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
       {
         type: "html",
         start: 0,
-        end: 170,
-        tail: null,
-        kind: null
+        end: 170
       },
       {
         type: "html",
         start: 170,
-        end: 173,
-        tail: null,
-        kind: null
+        end: 173
       }
     ],
     t.is,
@@ -714,23 +619,18 @@ test("03.07 - Responsys-style ESP tag", t => {
       {
         type: "html",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       },
       {
         type: "esp",
         start: 3,
         end: 15,
-        tail: ")$",
-        kind: null
+        tail: ")$"
       },
       {
         type: "html",
         start: 15,
-        end: 18,
-        tail: null,
-        kind: null
+        end: 18
       }
     ],
     t.is,
@@ -753,35 +653,27 @@ test("04.01 - CSS in the head", t => {
         type: "html",
         start: 0,
         end: 7,
-        tail: null,
         kind: "style"
       },
       {
         type: "text",
         start: 7,
-        end: 8,
-        tail: null,
-        kind: null
+        end: 8
       },
       {
         type: "css",
         start: 8,
-        end: 15,
-        tail: null,
-        kind: null
+        end: 15
       },
       {
         type: "text",
         start: 15,
-        end: 16,
-        tail: null,
-        kind: null
+        end: 16
       },
       {
         type: "html",
         start: 16,
         end: 24,
-        tail: null,
         kind: "style"
       }
     ],
@@ -801,29 +693,23 @@ test("04.02 - CSS, no whitespace inside", t => {
       {
         type: "html",
         start: 0,
-        end: 6,
-        tail: null,
-        kind: null
+        end: 6
       },
       {
         type: "html",
         start: 6,
         end: 13,
-        tail: null,
         kind: "style"
       },
       {
         type: "css",
         start: 13,
-        end: 20,
-        tail: null,
-        kind: null
+        end: 20
       },
       {
         type: "html",
         start: 20,
         end: 28,
-        tail: null,
         kind: "style"
       }
     ],
@@ -850,9 +736,7 @@ test(`05.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null
       {
         type: "text",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       }
     ],
     t.is,
@@ -875,9 +759,7 @@ test(`05.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - fals
       {
         type: "text",
         start: 0,
-        end: 3,
-        tail: null,
-        kind: null
+        end: 3
       }
     ],
     t.is,
