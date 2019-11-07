@@ -114,6 +114,7 @@
         "label": ""
       },
       "devDependencies": [
+        "ast-deep-contains",
         "object-path",
         "lodash.isequal"
       ],
@@ -137,6 +138,7 @@
     "@babel/core": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
+    "ast-deep-contains": "^0.0.1",
     "ava": "^2.2.7",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",

@@ -103,7 +103,7 @@ function tokenizer(str, cb, originalOpts) {
   let lastPercentage = 0;
   const len = str.length;
   const midLen = Math.floor(len / 2);
-  let doNothing; // normally set to a number, index until to do nothing
+  let doNothing; // normally set to a number, index until where to do nothing
   let styleStarts = false; // flag used to instruct content after <style> to toggle type="css"
 
   // when we compile the token, we fill this object:

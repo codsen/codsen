@@ -2,6 +2,7 @@
 
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
+import deepContains from "ast-deep-contains";
 
 // 00. api
 // -----------------------------------------------------------------------------
@@ -54,29 +55,35 @@ test("01.01 - text-tag-text", t => {
   ct("  <a>z", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 2,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 2,
-      end: 5,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 5,
-      end: 6,
-      tail: null,
-      kind: null
-    }
-  ]);
+
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 2,
+        end: 5,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 5,
+        end: 6,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.02 - text only", t => {
@@ -84,15 +91,20 @@ test("01.02 - text only", t => {
   ct("  ", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 2,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.03 - tag only", t => {
@@ -100,15 +112,20 @@ test("01.03 - tag only", t => {
   ct("<a>", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.04 - multiple tags", t => {
@@ -116,29 +133,34 @@ test("01.04 - multiple tags", t => {
   ct("<a><b><c>", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 3,
-      end: 6,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 6,
-      end: 9,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 3,
+        end: 6,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 6,
+        end: 9,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.05 - closing bracket in the attribute's value", t => {
@@ -146,15 +168,20 @@ test("01.05 - closing bracket in the attribute's value", t => {
   ct(`<a alt=">">`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 11,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 11,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.06 - closing bracket layers of nested quotes", t => {
@@ -162,15 +189,20 @@ test("01.06 - closing bracket layers of nested quotes", t => {
   ct(`<a alt='"'">"'"'>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 17,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 17,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.07 - bracket as text", t => {
@@ -178,15 +210,20 @@ test("01.07 - bracket as text", t => {
   ct("a < b", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 5,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 5,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.08 - tag followed by brackets", t => {
@@ -194,50 +231,55 @@ test("01.08 - tag followed by brackets", t => {
   ct(`<a>"something"<span>'here'</span></a>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 3,
-      end: 14,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 14,
-      end: 20,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 20,
-      end: 26,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 26,
-      end: 33,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 33,
-      end: 37,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 3,
+        end: 14,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 14,
+        end: 20,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 20,
+        end: 26,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 26,
+        end: 33,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 33,
+        end: 37,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.09 - html comment", t => {
@@ -245,36 +287,41 @@ test("01.09 - html comment", t => {
   ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 7,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 7,
-      end: 33,
-      tail: null,
-      kind: "comment"
-    },
-    {
-      type: "text",
-      start: 33,
-      end: 34,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 34,
-      end: 40,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 7,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 7,
+        end: 33,
+        tail: null,
+        kind: "comment"
+      },
+      {
+        type: "text",
+        start: 33,
+        end: 34,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 34,
+        end: 40,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.10 - html5 doctype", t => {
@@ -282,29 +329,34 @@ test("01.10 - html5 doctype", t => {
   ct("a<!DOCTYPE html>b", obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 1,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 1,
-      end: 16,
-      tail: null,
-      kind: "doctype"
-    },
-    {
-      type: "text",
-      start: 16,
-      end: 17,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 1,
+        end: 16,
+        tail: null,
+        kind: "doctype"
+      },
+      {
+        type: "text",
+        start: 16,
+        end: 17,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.11 - xhtml doctype", t => {
@@ -318,43 +370,48 @@ test("01.11 - xhtml doctype", t => {
       gathered.push(obj);
     }
   );
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 1,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 1,
-      end: 126,
-      tail: null,
-      kind: "doctype"
-    },
-    {
-      type: "text",
-      start: 126,
-      end: 127,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 127,
-      end: 190,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 190,
-      end: 191,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 1,
+        end: 126,
+        tail: null,
+        kind: "doctype"
+      },
+      {
+        type: "text",
+        start: 126,
+        end: 127,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 127,
+        end: 190,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 190,
+        end: 191,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("01.12 - xhtml DTD doctype", t => {
@@ -369,57 +426,62 @@ test("01.12 - xhtml DTD doctype", t => {
       gathered.push(obj);
     }
   );
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 1,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 1,
-      end: 39,
-      tail: null,
-      kind: "xml"
-    },
-    {
-      type: "text",
-      start: 39,
-      end: 41,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 41,
-      end: 160,
-      tail: null,
-      kind: "doctype"
-    },
-    {
-      type: "text",
-      start: 160,
-      end: 162,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 162,
-      end: 229,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 229,
-      end: 230,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 1,
+        end: 39,
+        tail: null,
+        kind: "xml"
+      },
+      {
+        type: "text",
+        start: 39,
+        end: 41,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 41,
+        end: 160,
+        tail: null,
+        kind: "doctype"
+      },
+      {
+        type: "text",
+        start: 160,
+        end: 162,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 162,
+        end: 229,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 229,
+        end: 230,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 // 02. broken code
@@ -430,22 +492,27 @@ test("02.01 - space after opening bracket, non-dubious HTML tag name, no attrs",
   ct(`a < b class="">`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 2,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 2,
-      end: 15,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 2,
+        end: 15,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 // 03. ESP (Email Service Provider) and other templating language tags
@@ -456,15 +523,20 @@ test("03.01 - ESP literals among text get reported", t => {
   ct(`{% zz %}`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "esp",
-      start: 0,
-      end: 8,
-      tail: "%}",
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 8,
+        tail: "%}",
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.02 - ESP literals among text get reported", t => {
@@ -472,29 +544,34 @@ test("03.02 - ESP literals among text get reported", t => {
   ct(`ab {% if something %} cd`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 21,
-      tail: "%}",
-      kind: null
-    },
-    {
-      type: "text",
-      start: 21,
-      end: 24,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 21,
+        tail: "%}",
+        kind: null
+      },
+      {
+        type: "text",
+        start: 21,
+        end: 24,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.03 - ESP literals surrounded by HTML tags", t => {
@@ -502,29 +579,34 @@ test("03.03 - ESP literals surrounded by HTML tags", t => {
   ct(`<a>{% if something %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 21,
-      tail: "%}",
-      kind: null
-    },
-    {
-      type: "html",
-      start: 21,
-      end: 24,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 21,
+        tail: "%}",
+        kind: null
+      },
+      {
+        type: "html",
+        start: 21,
+        end: 24,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.04 - ESP literals surrounded by HTML tags", t => {
@@ -532,29 +614,34 @@ test("03.04 - ESP literals surrounded by HTML tags", t => {
   ct(`<a>{% if a<b and c>d '"'''' ><><><><><><><><><><>< %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 53,
-      tail: "%}",
-      kind: null
-    },
-    {
-      type: "html",
-      start: 53,
-      end: 56,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 53,
+        tail: "%}",
+        kind: null
+      },
+      {
+        type: "html",
+        start: 53,
+        end: 56,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini", t => {
@@ -562,22 +649,27 @@ test("03.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini"
   ct(`<a b="c{{ z("'") }}"><b>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 21,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 21,
-      end: 24,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 21,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 21,
+        end: 24,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t => {
@@ -588,22 +680,27 @@ test("03.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
       gathered.push(obj);
     }
   );
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 170,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 170,
-      end: 173,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 170,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 170,
+        end: 173,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("03.07 - Responsys-style ESP tag", t => {
@@ -611,29 +708,34 @@ test("03.07 - Responsys-style ESP tag", t => {
   ct(`<a>$(something)<b>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 15,
-      tail: ")$",
-      kind: null
-    },
-    {
-      type: "html",
-      start: 15,
-      end: 18,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 15,
+        tail: ")$",
+        kind: null
+      },
+      {
+        type: "html",
+        start: 15,
+        end: 18,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 // 04. CSS
@@ -644,43 +746,48 @@ test("04.01 - CSS in the head", t => {
   ct(`<style>\n.d-h{z}\n</style>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 7,
-      tail: null,
-      kind: "style"
-    },
-    {
-      type: "text",
-      start: 7,
-      end: 8,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "css",
-      start: 8,
-      end: 15,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "text",
-      start: 15,
-      end: 16,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 16,
-      end: 24,
-      tail: null,
-      kind: "style"
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 7,
+        tail: null,
+        kind: "style"
+      },
+      {
+        type: "text",
+        start: 7,
+        end: 8,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "css",
+        start: 8,
+        end: 15,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "text",
+        start: 15,
+        end: 16,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 16,
+        end: 24,
+        tail: null,
+        kind: "style"
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test("04.02 - CSS, no whitespace inside", t => {
@@ -688,36 +795,41 @@ test("04.02 - CSS, no whitespace inside", t => {
   ct(`<meta><style>.d-h{z}</style>`, obj => {
     gathered.push(obj);
   });
-  t.deepEqual(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 6,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 6,
-      end: 13,
-      tail: null,
-      kind: "style"
-    },
-    {
-      type: "css",
-      start: 13,
-      end: 20,
-      tail: null,
-      kind: null
-    },
-    {
-      type: "html",
-      start: 20,
-      end: 28,
-      tail: null,
-      kind: "style"
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 6,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 6,
+        end: 13,
+        tail: null,
+        kind: "style"
+      },
+      {
+        type: "css",
+        start: 13,
+        end: 20,
+        tail: null,
+        kind: null
+      },
+      {
+        type: "html",
+        start: 20,
+        end: 28,
+        tail: null,
+        kind: "style"
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 // 05. opts.reportProgressFunc
@@ -732,15 +844,20 @@ test(`05.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null
     },
     { reportProgressFunc: null }
   );
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test(`05.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - false`, t => {
@@ -752,15 +869,20 @@ test(`05.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - fals
     },
     { reportProgressFunc: false }
   );
-  t.deepEqual(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 3,
-      tail: null,
-      kind: null
-    }
-  ]);
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 3,
+        tail: null,
+        kind: null
+      }
+    ],
+    t.is,
+    t.fail
+  );
 });
 
 test(`05.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`, t => {
