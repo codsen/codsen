@@ -170,11 +170,11 @@ Now, the fun part is, if we used `t.deepEqual`, if we added new keys in a tokeni
 
 ```json
 {
-  type: "text",
-  start: 0,
-  end: 2,
-  tail: null,
-  kind: null
+  "type": "text",
+  "start": 0,
+  "end": 2,
+  "tail": null,
+  "kind": null
 }
 ```
 
@@ -221,6 +221,8 @@ test("01.01 - text-tag-text", t => {
 ```
 
 Here you go, an alternative for AVA's `t.deepEqual`.
+
+**[⬆ back to top](#)**
 
 ## Contributing
 

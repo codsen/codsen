@@ -1,5 +1,3 @@
-/* eslint no-param-reassign:0 */
-
 import typeDetect from "type-detect";
 import objectPath from "object-path";
 import traverse from "ast-monkey-traverse";
