@@ -49,7 +49,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
         // if tree1 has that path on tree2, call the callback
         const retrieved = objectPath.get(tree1, path);
         if ((!isObj(retrieved) && !isArr(retrieved)) || !opts.skipContainers) {
-          cb(objectPath.get(tree1, path), current);
+          cb(objectPath.get(tree1, path), current, path);
         }
       } else {
         errCb(`first input does not have the path "${path}"`);

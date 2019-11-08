@@ -33,7 +33,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
       if (objectPath.has(tree1, path)) {
         var retrieved = objectPath.get(tree1, path);
         if (!isObj(retrieved) && !isArr(retrieved) || !opts.skipContainers) {
-          cb(objectPath.get(tree1, path), current);
+          cb(objectPath.get(tree1, path), current, path);
         }
       } else {
         errCb("first input does not have the path \"".concat(path, "\""));
