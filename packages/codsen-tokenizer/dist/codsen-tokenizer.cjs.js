@@ -11,10 +11,11 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
+var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -33,12 +34,12 @@ function _typeof(obj) {
 function isStr(something) {
   return typeof something === "string";
 }
-var defaults = {
-  reportProgressFunc: null,
-  reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
-};
-var espChars = "{}%-$_()*|";
+function isNum(something) {
+  return typeof something === "number";
+}
+function isLatinLetter(_char4) {
+  return isStr(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
+}
 function flipEspTag(str) {
   var res = "";
   for (var i = 0, len = str.length; i < len; i++) {
@@ -52,9 +53,13 @@ function flipEspTag(str) {
   }
   return res;
 }
-function clone(obj) {
-  return Object.assign({}, obj);
-}
+
+var defaults = {
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
+};
+var espChars = "{}%-$_()*|";
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
@@ -131,6 +136,17 @@ function tokenizer(str, cb, originalOpts) {
       pingcb(token);
     }
   }
+  function initHtmlToken() {
+    token = Object.assign({
+      tagNameStartAt: null,
+      tagNameEndAt: null,
+      tagName: null,
+      recognised: null,
+      closing: null,
+      pureHTML: true,
+      esp: []
+    }, token);
+  }
   for (var i = 0; i < len; i++) {
     if (opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
@@ -168,9 +184,12 @@ function tokenizer(str, cb, originalOpts) {
       if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || stringMatchLeftRight.matchRight(str, i, ["!--", "!doctype", "?xml"], {
         i: true
       }))) {
-        dumpCurrentToken(token, i);
+        if (token.type) {
+          dumpCurrentToken(token, i);
+        }
         token.start = i;
         token.type = "html";
+        initHtmlToken();
         if (stringMatchLeftRight.matchRight(str, i, "!--")) {
           token.kind = "comment";
         } else if (stringMatchLeftRight.matchRight(str, i, "!doctype", {
@@ -248,6 +267,17 @@ function tokenizer(str, cb, originalOpts) {
         }
         token.end = i + wholeEspTagClosing.length;
         doNothing = i + wholeEspTagClosing.length;
+      }
+    }
+    if (token.type === "html" && isNum(token.tagNameStartAt) && !isNum(token.tagNameEndAt)) {
+      if (!isLatinLetter(str[i])) {
+        token.tagNameEndAt = i;
+        token.tagName = str.slice(token.tagNameStartAt, i);
+      }
+    }
+    if (token.type === "html" && !isNum(token.tagNameStartAt)) {
+      if (isLatinLetter(str[i])) {
+        token.tagNameStartAt = i;
       }
     }
     if (!str[i + 1] && token.start !== null) {

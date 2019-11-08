@@ -44,6 +44,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "is-html-tag-opening",
+        "lodash.clonedeep",
         "lodash.isplainobject",
         "string-left-right",
         "string-match-left-right"
@@ -65,6 +66,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "is-html-tag-opening",
+        "lodash.clonedeep",
         "lodash.isplainobject",
         "string-left-right",
         "string-match-left-right"
@@ -76,6 +78,21 @@ export default commandLineArgs => {
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
+      ]
+    },
+
+    // util.js build:
+    {
+      input: "src/util.js",
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: [],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        resolve(),
+        json(),
+        cleanup({ comments: "istanbul" })
       ]
     }
   ];

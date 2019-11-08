@@ -7,20 +7,26 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
  */
 
-import isObj from 'lodash.isplainobject';
-import { right, left } from 'string-left-right';
 import { matchRight } from 'string-match-left-right';
+import { right, left } from 'string-left-right';
 import isTagOpening from 'is-html-tag-opening';
+import isObj from 'lodash.isplainobject';
+import clone from 'lodash.clonedeep';
 
 function isStr(something) {
   return typeof something === "string";
 }
-const defaults = {
-  reportProgressFunc: null,
-  reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
-};
-const espChars = `{}%-$_()*|`;
+function isNum(something) {
+  return typeof something === "number";
+}
+function isLatinLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
+}
 function flipEspTag(str) {
   let res = "";
   for (let i = 0, len = str.length; i < len; i++) {
@@ -34,9 +40,13 @@ function flipEspTag(str) {
   }
   return res;
 }
-function clone(obj) {
-  return Object.assign({}, obj);
-}
+
+const defaults = {
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
+};
+const espChars = `{}%-$_()*|`;
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
@@ -147,6 +157,20 @@ function tokenizer(str, cb, originalOpts) {
       pingcb(token);
     }
   }
+  function initHtmlToken() {
+    token = Object.assign(
+      {
+        tagNameStartAt: null,
+        tagNameEndAt: null,
+        tagName: null,
+        recognised: null,
+        closing: null,
+        pureHTML: true,
+        esp: []
+      },
+      token
+    );
+  }
   for (let i = 0; i < len; i++) {
     if (opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
@@ -200,9 +224,12 @@ function tokenizer(str, cb, originalOpts) {
         (isTagOpening(str, i) ||
           matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true }))
       ) {
-        dumpCurrentToken(token, i);
+        if (token.type) {
+          dumpCurrentToken(token, i);
+        }
         token.start = i;
         token.type = "html";
+        initHtmlToken();
         if (matchRight(str, i, "!--")) {
           token.kind = "comment";
         } else if (matchRight(str, i, "!doctype", { i: true })) {
@@ -286,6 +313,21 @@ function tokenizer(str, cb, originalOpts) {
         }
         token.end = i + wholeEspTagClosing.length;
         doNothing = i + wholeEspTagClosing.length;
+      }
+    }
+    if (
+      token.type === "html" &&
+      isNum(token.tagNameStartAt) &&
+      !isNum(token.tagNameEndAt)
+    ) {
+      if (!isLatinLetter(str[i])) {
+        token.tagNameEndAt = i;
+        token.tagName = str.slice(token.tagNameStartAt, i);
+      }
+    }
+    if (token.type === "html" && !isNum(token.tagNameStartAt)) {
+      if (isLatinLetter(str[i])) {
+        token.tagNameStartAt = i;
       }
     }
     if (!str[i + 1] && token.start !== null) {
