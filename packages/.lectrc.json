@@ -144,21 +144,6 @@
 			"ava/use-test": "error",
 			"ava/use-true-false": "error",
 			"curly": "error",
-			"import/no-extraneous-dependencies": [
-				"error",
-				{
-					"devDependencies": [
-						"gulpfile.js",
-						"**/*test.js",
-						"perf/**/*.*",
-						"test/**/*.*",
-						"test-util/**/*.*",
-						"t-util/**/*.*",
-						"rollup.config.js",
-						"**/scripts/**/*.*"
-					]
-				}
-			],
 			"no-console": "off",
 			"no-constant-condition": [
 				"error",
