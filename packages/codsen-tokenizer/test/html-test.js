@@ -1,4 +1,4 @@
-// avanotonly
+// avaonly
 
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
@@ -69,6 +69,8 @@ test("01.03 - opening tag only", t => {
         tagNameStartAt: 1,
         tagNameEndAt: 2,
         tagName: "a",
+        closing: false,
+        selfClosing: false,
         start: 0,
         end: 3
       }
@@ -91,6 +93,8 @@ test("01.04 - closing tag only", t => {
         tagNameStartAt: 2,
         tagNameEndAt: 3,
         tagName: "a",
+        closing: true,
+        selfClosing: false,
         start: 0,
         end: 4
       }
@@ -113,6 +117,8 @@ test("01.05 - self-closing tag only", t => {
         tagNameStartAt: 1,
         tagNameEndAt: 3,
         tagName: "br",
+        closing: false,
+        selfClosing: true,
         start: 0,
         end: 5
       }
@@ -218,6 +224,9 @@ test("01.10 - tag followed by brackets", t => {
     [
       {
         type: "html",
+        tagName: "a",
+        closing: false,
+        selfClosing: false,
         start: 0,
         end: 3
       },
@@ -228,6 +237,9 @@ test("01.10 - tag followed by brackets", t => {
       },
       {
         type: "html",
+        tagName: "span",
+        closing: false,
+        selfClosing: false,
         start: 14,
         end: 20
       },
@@ -238,11 +250,17 @@ test("01.10 - tag followed by brackets", t => {
       },
       {
         type: "html",
+        tagName: "span",
+        closing: true,
+        selfClosing: false,
         start: 26,
         end: 33
       },
       {
         type: "html",
+        tagName: "a",
+        closing: true,
+        selfClosing: false,
         start: 33,
         end: 37
       }
