@@ -51,6 +51,13 @@
         ]
     },
     {
+        "name": "ast-deep-contains",
+        "size": 1360,
+        "imports": [
+            "ast-monkey-traverse"
+        ]
+    },
+    {
         "name": "ast-delete-object",
         "size": 2101,
         "imports": [
@@ -137,7 +144,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 8487,
+        "size": 9841,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -167,7 +174,7 @@
     },
     {
         "name": "detergent",
-        "size": 53089,
+        "size": 52936,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -353,7 +360,7 @@
     },
     {
         "name": "lect",
-        "size": 73124,
+        "size": 72317,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

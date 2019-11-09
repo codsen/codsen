@@ -144,7 +144,7 @@
     "string-trim-spaces-only": "^2.8.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
     "ava": "^2.2.7",
@@ -160,7 +160,7 @@
     "js-row-num-cli": "^1.6.4",
     "lect": "^0.10.6",
     "nyc": "^14.1.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.0",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

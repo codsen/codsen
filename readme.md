@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 99 npm libraries 📦📦📦
+    A lerna monorepo for our 100 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services in email marketing field since 2014.
 
@@ -145,7 +145,7 @@ They process string inputs, which might be text, code or something else as long 
 
 ## 🔮 Object Processing Libraries
 
-20 in total.
+21 in total.
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, `{ name: "Bob" }`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
 
@@ -160,6 +160,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-merge-advanced`](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced/) | Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained | [![object-merge-advanced on npm](https://img.shields.io/npm/v/object-merge-advanced.svg?style=flat-square)](https://www.npmjs.com/package/object-merge-advanced) | [packages/object-merge-advanced](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced/) |
 | [`ast-compare`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare/) | Compare anything: AST, objects, arrays, strings and nested thereof | [![ast-compare on npm](https://img.shields.io/npm/v/ast-compare.svg?style=flat-square)](https://www.npmjs.com/package/ast-compare) | [packages/ast-compare](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare/) |
 | [`ast-contains-only-empty-space`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space/) | Returns Boolean depending if passed AST contain only empty space | [![ast-contains-only-empty-space on npm](https://img.shields.io/npm/v/ast-contains-only-empty-space.svg?style=flat-square)](https://www.npmjs.com/package/ast-contains-only-empty-space) | [packages/ast-contains-only-empty-space](https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space/) |
+| [`ast-deep-contains`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains/) | the t.deepEqual alternative for AVA | [![ast-deep-contains on npm](https://img.shields.io/npm/v/ast-deep-contains.svg?style=flat-square)](https://www.npmjs.com/package/ast-deep-contains) | [packages/ast-deep-contains](https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains/) |
 | [`ast-delete-object`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object/) | Delete all plain objects that contain a certain key/value pair | [![ast-delete-object on npm](https://img.shields.io/npm/v/ast-delete-object.svg?style=flat-square)](https://www.npmjs.com/package/ast-delete-object) | [packages/ast-delete-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object/) |
 | [`ast-get-object`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object/) | Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs | [![ast-get-object on npm](https://img.shields.io/npm/v/ast-get-object.svg?style=flat-square)](https://www.npmjs.com/package/ast-get-object) | [packages/ast-get-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object/) |
 | [`ast-get-values-by-key`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/) | Read or edit parsed HTML (or AST in general) | [![ast-get-values-by-key on npm](https://img.shields.io/npm/v/ast-get-values-by-key.svg?style=flat-square)](https://www.npmjs.com/package/ast-get-values-by-key) | [packages/ast-get-values-by-key](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/) |

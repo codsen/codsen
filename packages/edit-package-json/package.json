@@ -144,7 +144,7 @@
     "string-left-right": "^2.3.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
     "ast-monkey-traverse": "^1.11.43",
@@ -165,7 +165,7 @@
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-progress": "^0.4.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.0",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
