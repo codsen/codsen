@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import test from "ava";
 import { Linter } from "../../dist/emlint.esm";
@@ -96,7 +96,7 @@ test(`01.03 - a single closing tag, space after slash`, t => {
   t.is(applyFixes(str, messages), "\n</a>");
 });
 
-test(`01.04 - a single closing tag, space after slash`, t => {
+test(`01.04 - a single closing tag, space before and after slash`, t => {
   const str = "\n<\t/\ta>";
   const linter = new Linter();
   const messages = linter.verify(str, {

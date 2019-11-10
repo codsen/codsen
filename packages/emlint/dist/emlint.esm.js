@@ -11,6 +11,24 @@ import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import lineColumn from 'line-column';
 
+function badCharacterNull(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 0) {
+        context.report({
+          ruleId: "bad-character-null",
+          message: "Bad character - null.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
@@ -56,6 +74,7 @@ function tagSpaceAfterOpeningBracket(context) {
 }
 
 const builtInRules = {};
+defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
   builtInRules,
   "tag-space-after-opening-bracket",
@@ -452,11 +471,15 @@ class Linter extends EventEmitter {
       .forEach(rule => {
         const rulesFunction = get(rule)(this);
         Object.keys(rulesFunction).forEach(consumedNode => {
-          this.on(consumedNode, receivedFromTokenizer => {
-            rulesFunction[consumedNode](receivedFromTokenizer);
+          this.on(consumedNode, (...args) => {
+            rulesFunction[consumedNode](...args);
           });
         });
       });
+    const len = str.length;
+    for (let i = 0; i < len; i++) {
+      this.emit("character", str[i], i);
+    }
     tokenizer(str, obj => {
       this.emit(obj.type, obj);
     });

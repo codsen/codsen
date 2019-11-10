@@ -86,6 +86,24 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function badCharacterNull(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 0) {
+        context.report({
+          ruleId: "bad-character-null",
+          message: "Bad character - null.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
@@ -117,6 +135,9 @@ function tagSpaceAfterOpeningBracket(context) {
 }
 
 var builtInRules = {};
+defineLazyProp(builtInRules, "bad-character-null", function () {
+  return badCharacterNull;
+});
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;
 });
@@ -462,11 +483,15 @@ function (_EventEmitter) {
       }).forEach(function (rule) {
         var rulesFunction = get(rule)(_this);
         Object.keys(rulesFunction).forEach(function (consumedNode) {
-          _this.on(consumedNode, function (receivedFromTokenizer) {
-            rulesFunction[consumedNode](receivedFromTokenizer);
+          _this.on(consumedNode, function () {
+            rulesFunction[consumedNode].apply(rulesFunction, arguments);
           });
         });
       });
+      var len = str.length;
+      for (var i = 0; i < len; i++) {
+        this.emit("character", str[i], i);
+      }
       tokenizer(str, function (obj) {
         _this.emit(obj.type, obj);
       });
