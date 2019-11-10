@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
