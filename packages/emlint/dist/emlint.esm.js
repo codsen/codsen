@@ -17,7 +17,187 @@ function badCharacterNull(context) {
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
-          message: "Bad character - null.",
+          message: "Bad character - NULL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStartOfHeading(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 1) {
+        context.report({
+          ruleId: "bad-character-start-of-heading",
+          message: "Bad character - START OF HEADING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStartOfText(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 2) {
+        context.report({
+          ruleId: "bad-character-start-of-text",
+          message: "Bad character - START OF TEXT.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfText(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 3) {
+        context.report({
+          ruleId: "bad-character-end-of-text",
+          message: "Bad character - END OF TEXT.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, "\n"]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfTransmission(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 4) {
+        context.report({
+          ruleId: "bad-character-end-of-transmission",
+          message: "Bad character - END OF TRANSMISSION.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEnquiry(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 5) {
+        context.report({
+          ruleId: "bad-character-enquiry",
+          message: "Bad character - ENQUIRY.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterAcknowledge(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 6) {
+        context.report({
+          ruleId: "bad-character-acknowledge",
+          message: "Bad character - ACKNOWLEDGE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterBell(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 7) {
+        context.report({
+          ruleId: "bad-character-bell",
+          message: "Bad character - BELL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterBackspace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8) {
+        context.report({
+          ruleId: "bad-character-backspace",
+          message: "Bad character - BACKSPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterTabulation(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 9) {
+        context.report({
+          ruleId: "bad-character-character-tabulation",
+          message: "Bad character - TABULATION.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterLineTabulation(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 11) {
+        context.report({
+          ruleId: "bad-character-line-tabulation",
+          message: "Bad character - LINE TABULATION.",
           idxFrom: i,
           idxTo: i + 1,
           fix: {
@@ -75,6 +255,52 @@ function tagSpaceAfterOpeningBracket(context) {
 
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
+defineLazyProp(
+  builtInRules,
+  "bad-character-start-of-heading",
+  () => badCharacterStartOfHeading
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-start-of-text",
+  () => badCharacterStartOfText
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-text",
+  () => badCharacterEndOfText
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-transmission",
+  () => badCharacterEndOfTransmission
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-enquiry",
+  () => badCharacterEnquiry
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-acknowledge",
+  () => badCharacterAcknowledge
+);
+defineLazyProp(builtInRules, "bad-character-bell", () => badCharacterBell);
+defineLazyProp(
+  builtInRules,
+  "bad-character-backspace",
+  () => badCharacterBackspace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-character-tabulation",
+  () => badCharacterTabulation
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-line-tabulation",
+  () => badCharacterLineTabulation
+);
 defineLazyProp(
   builtInRules,
   "tag-space-after-opening-bracket",

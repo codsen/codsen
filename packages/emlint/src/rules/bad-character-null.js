@@ -14,7 +14,7 @@ function badCharacterNull(context) {
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
-          message: "Bad character - null.",
+          message: "Bad character - NULL.",
           idxFrom: i,
           idxTo: i + 1,
           fix: {
