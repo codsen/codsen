@@ -1,8 +1,9 @@
 {
   "name": "emlint",
-  "version": "1.8.5",
-  "description": "Non-parsing static code analysis tool for HTML mixed with anything",
+  "version": "1.8.3",
+  "description": "Pluggable email template code linter",
   "license": "MIT",
+  "private": true,
   "engines": {
     "node": ">=8.9"
   },
@@ -16,6 +17,7 @@
   "keywords": [
     "html",
     "xhtml",
+    "css",
     "lint",
     "linter",
     "check",
@@ -32,6 +34,9 @@
     "static",
     "analysis"
   ],
+  "bin": {
+    "emlint": "bin/emlint.js"
+  },
   "main": "dist/emlint.cjs.js",
   "module": "dist/emlint.esm.js",
   "browser": "dist/emlint.umd.js",
@@ -122,11 +127,13 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "{ lint, version }",
+    "req": "{ Linter, version }",
+    "special": true,
     "various": {
       "devDependencies": [
         "browser-sync",
-        "ranges-apply"
+        "rollup-plugin-node-builtins",
+        "rollup-plugin-node-globals"
       ],
       "travisVersionsOverride": []
     }
@@ -139,24 +146,18 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.21",
-    "he": "^1.2.0",
-    "html-entities-not-email-friendly": "^0.1.7",
-    "is-html-tag-opening": "^1.1.1",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.2.24",
-    "string-fix-broken-named-entities": "^2.4.11",
-    "string-left-right": "^2.3.7"
+    "ast-deep-contains": "^0.0.1",
+    "codsen-tokenizer": "^1.1.1",
+    "define-lazy-prop": "^2.0.0",
+    "line-column": "^1.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
+    "@babel/core": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
     "ava": "^2.2.7",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
-    "browser-sync": "^2.26.7",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-ava": "^9.0.0",
@@ -167,8 +168,7 @@
     "js-row-num-cli": "^1.6.4",
     "lect": "^0.10.6",
     "nyc": "^14.1.1",
-    "prettier": "^1.19.0",
-    "ranges-apply": "^3.0.39",
+    "prettier": "^1.18.2",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

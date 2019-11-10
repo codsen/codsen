@@ -1,3 +1,4 @@
+import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -29,6 +30,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        builtins(),
         resolve(),
         json(),
         commonjs(),
@@ -42,21 +44,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "arrayiffy-if-string",
-        "he",
-        "html-entities-not-email-friendly",
-        "is-html-tag-opening",
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-        "ranges-merge",
-        "string-fix-broken-named-entities",
-        "string-left-right"
-      ],
+      external: ["codsen-tokenizer", "define-lazy-prop", "line-column"],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         babel(),
         cleanup({ comments: "istanbul" }),
@@ -68,46 +61,15 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "arrayiffy-if-string",
-        "he",
-        "html-entities-not-email-friendly",
-        "is-html-tag-opening",
-        "lodash.clonedeep",
-        "lodash.isplainobject",
-        "ranges-merge",
-        "string-fix-broken-named-entities",
-        "string-left-right"
-      ],
+      external: ["codsen-tokenizer", "define-lazy-prop", "line-column"],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
-      ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: [
-        "knownESPTags.json",
-        "arrayiffy-if-string",
-        "he",
-        "html-entities-not-email-friendly",
-        "is-html-tag-opening",
-        "string-left-right"
-      ],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" })
       ]
     }
   ];
