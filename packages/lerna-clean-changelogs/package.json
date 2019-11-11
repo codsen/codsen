@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "lerna",
     "changelog",
+    "cli",
+    "conventional",
+    "entries",
+    "fix",
+    "lerna",
     "manage",
     "manager",
-    "utility",
-    "fix",
-    "patch",
     "monorepo",
+    "patch",
     "tool",
-    "entries",
-    "conventional",
-    "cli"
+    "utility"
   ],
   "main": "dist/lerna-clean-changelogs.cjs.js",
   "module": "dist/lerna-clean-changelogs.esm.js",

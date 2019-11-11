@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "encode",
-    "decode",
-    "html",
-    "entities",
     "astral",
-    "encoder",
+    "decode",
     "decoder",
-    "ranges"
+    "encode",
+    "encoder",
+    "entities",
+    "html",
+    "ranges",
+    "string"
   ],
   "main": "dist/ranges-ent-decode.cjs.js",
   "module": "dist/ranges-ent-decode.esm.js",

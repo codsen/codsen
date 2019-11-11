@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "arrays",
     "ast",
-    "plain",
-    "object",
-    "posthtml-tree",
-    "posthtmltree",
     "flatten",
     "merge",
-    "values",
-    "arrays",
     "nested",
+    "object",
+    "plain",
+    "posthtml-tree",
+    "posthtmltree",
+    "values",
     "write"
   ],
   "main": "dist/object-flatten-all-arrays.cjs.js",

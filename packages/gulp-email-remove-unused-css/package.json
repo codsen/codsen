@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "body",
+    "css",
+    "email",
+    "from",
     "gulp",
     "gulpplugin",
-    "email",
-    "remove",
-    "unused",
-    "css",
     "head",
-    "styles",
-    "body",
-    "uncss",
     "inline",
-    "from"
+    "remove",
+    "styles",
+    "uncss",
+    "unused"
   ],
   "main": "index.js",
   "scripts": {

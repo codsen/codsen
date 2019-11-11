@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "object",
-    "plain",
-    "wrap",
-    "flatten",
-    "flat",
-    "mapping",
-    "content",
-    "objects",
     "advanced",
-    "email"
+    "content",
+    "email",
+    "flat",
+    "flatten",
+    "mapping",
+    "object",
+    "objects",
+    "plain",
+    "wrap"
   ],
   "main": "dist/object-flatten-referencing.cjs.js",
   "module": "dist/object-flatten-referencing.esm.js",

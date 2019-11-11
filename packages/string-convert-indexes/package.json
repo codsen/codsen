@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "indexes",
-    "character",
-    "unicode",
+    "astral",
     "based",
+    "character",
     "convert",
     "count",
     "emoji",
-    "astral"
+    "indexes",
+    "string",
+    "unicode"
   ],
   "main": "dist/string-convert-indexes.cjs.js",
   "module": "dist/string-convert-indexes.esm.js",

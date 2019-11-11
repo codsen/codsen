@@ -116,7 +116,10 @@ function trimSpaces(s, originalOpts) {
         console.log("116 - returning trimmed both heads and tails");
         return {
           res: s.slice(newStart, newEnd),
-          ranges: [[0, newStart], [newEnd, s.length]]
+          ranges: [
+            [0, newStart],
+            [newEnd, s.length]
+          ]
         };
       }
       console.log("122 - returning trimmed heads");

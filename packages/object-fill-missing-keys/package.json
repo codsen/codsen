@@ -14,20 +14,20 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "add",
     "ast",
+    "fill",
     "json",
-    "plain",
+    "keys",
+    "missing",
+    "normalise",
+    "normalize",
     "object",
+    "plain",
     "posthtml-tree",
     "posthtmltree",
-    "add",
-    "missing",
-    "fill",
-    "keys",
     "schema",
-    "unify",
-    "normalise",
-    "normalize"
+    "unify"
   ],
   "main": "dist/object-fill-missing-keys.cjs.js",
   "module": "dist/object-fill-missing-keys.esm.js",

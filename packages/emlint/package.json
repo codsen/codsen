@@ -15,24 +15,24 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "html",
-    "xhtml",
-    "css",
-    "lint",
-    "linter",
-    "check",
-    "validate",
-    "errors",
-    "broken",
-    "code",
-    "fix",
+    "analysis",
     "automatic",
     "automatically",
-    "tool",
+    "broken",
+    "check",
+    "code",
+    "css",
     "development",
-    "utility",
+    "errors",
+    "fix",
+    "html",
+    "lint",
+    "linter",
     "static",
-    "analysis"
+    "tool",
+    "utility",
+    "validate",
+    "xhtml"
   ],
   "bin": {
     "emlint": "bin/emlint.js"

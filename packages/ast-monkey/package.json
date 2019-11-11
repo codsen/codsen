@@ -22,14 +22,14 @@
     "html",
     "key",
     "object",
-    "plain",
     "parser",
+    "plain",
     "posthtml",
     "posthtml-tree",
     "posthtmltree",
     "tree",
-    "xml",
-    "value"
+    "value",
+    "xml"
   ],
   "main": "dist/ast-monkey.cjs.js",
   "module": "dist/ast-monkey.esm.js",

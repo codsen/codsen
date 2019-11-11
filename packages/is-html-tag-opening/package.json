@@ -14,17 +14,17 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "html",
-    "non-parsing",
-    "parsing",
-    "code",
-    "cleaning",
-    "utility",
-    "opening",
-    "tag",
     "bracket",
     "brackets",
-    "is"
+    "cleaning",
+    "code",
+    "html",
+    "is",
+    "non-parsing",
+    "opening",
+    "parsing",
+    "tag",
+    "utility"
   ],
   "main": "dist/is-html-tag-opening.cjs.js",
   "module": "dist/is-html-tag-opening.esm.js",

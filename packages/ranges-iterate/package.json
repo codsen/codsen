@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
     "array",
-    "iterate",
     "indexes",
+    "iterate",
     "loop",
-    "through",
     "manage",
     "operations",
-    "perf"
+    "perf",
+    "ranges",
+    "string",
+    "through"
   ],
   "main": "dist/ranges-iterate.cjs.js",
   "module": "dist/ranges-iterate.esm.js",

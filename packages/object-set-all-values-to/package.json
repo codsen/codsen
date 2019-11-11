@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "all",
     "ast",
-    "plain",
+    "nested",
     "object",
+    "plain",
     "posthtml-tree",
     "posthtmltree",
     "set",
-    "all",
-    "values",
     "to",
-    "nested",
+    "values",
     "write"
   ],
   "main": "dist/object-set-all-values-to.cjs.js",

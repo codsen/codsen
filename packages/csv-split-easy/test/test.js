@@ -33,7 +33,10 @@ import splitEasy from "../dist/csv-split-easy.esm";
 test("01.01 - breaks lines correctly leaving no empty lines", t => {
   t.deepEqual(
     splitEasy("a,b,c\nd,e,f"),
-    [["a", "b", "c"], ["d", "e", "f"]],
+    [
+      ["a", "b", "c"],
+      ["d", "e", "f"]
+    ],
     "01.01.01 - minimal amount of chars in each col"
   );
   t.deepEqual(
@@ -48,7 +51,10 @@ test("01.01 - breaks lines correctly leaving no empty lines", t => {
   );
   t.deepEqual(
     splitEasy("a,b,c\n\r\n\r\r\r\r\n\n\nd,e,f"),
-    [["a", "b", "c"], ["d", "e", "f"]],
+    [
+      ["a", "b", "c"],
+      ["d", "e", "f"]
+    ],
     "01.01.03 - minimal amount of chars in each col"
   );
   t.deepEqual(
@@ -76,27 +82,42 @@ test("01.02 - breaks lines that have empty values", t => {
   );
   t.deepEqual(
     splitEasy("a,b\n\r,\n,c"),
-    [["a", "b"], ["", "c"]],
+    [
+      ["a", "b"],
+      ["", "c"]
+    ],
     "01.02.02 - only first row contains real data"
   );
   t.deepEqual(
     splitEasy('a,b\n\r"",""\n,c'),
-    [["a", "b"], ["", "c"]],
+    [
+      ["a", "b"],
+      ["", "c"]
+    ],
     "01.02.03 - empty row all with double quotes"
   );
   t.deepEqual(
     splitEasy('a,b\n\r"",""\n"",c'),
-    [["a", "b"], ["", "c"]],
+    [
+      ["a", "b"],
+      ["", "c"]
+    ],
     "01.02.04 - more double quotes"
   );
   t.deepEqual(
     splitEasy('a,"b"\n\r"",""\n"","c"'),
-    [["a", "b"], ["", "c"]],
+    [
+      ["a", "b"],
+      ["", "c"]
+    ],
     "01.02.05 - double quotes almost everywhere"
   );
   t.deepEqual(
     splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,"),
-    [["a", "b", "c"], ["", "d", ""]],
+    [
+      ["a", "b", "c"],
+      ["", "d", ""]
+    ],
     "01.02.06 - many empty rows"
   );
   t.deepEqual(splitEasy(",,,"), [[""]], "01.02.07 - three commas");
@@ -147,7 +168,10 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
 test("02.01 - breaks lines correctly leaving no empty lines", t => {
   t.deepEqual(
     splitEasy('"a,b",c,d\ne,f,g'),
-    [["a,b", "c", "d"], ["e", "f", "g"]],
+    [
+      ["a,b", "c", "d"],
+      ["e", "f", "g"]
+    ],
     "02.01.01 - minimal amount of chars in each col"
   );
   t.deepEqual(
@@ -165,7 +189,10 @@ test("02.01 - breaks lines correctly leaving no empty lines", t => {
 test("02.02 - particular attention of combos of line breaks and double quotes", t => {
   t.deepEqual(
     splitEasy('"a,b",c,d\n"e,f",g,h'),
-    [["a,b", "c", "d"], ["e,f", "g", "h"]],
+    [
+      ["a,b", "c", "d"],
+      ["e,f", "g", "h"]
+    ],
     "02.02.01 - double quotes follow line break"
   );
 });
@@ -173,7 +200,10 @@ test("02.02 - particular attention of combos of line breaks and double quotes", 
 test("02.03 - particular attention of double quotes at the end", t => {
   t.deepEqual(
     splitEasy('"a,b",c,d\n\re,f,"g,h"'),
-    [["a,b", "c", "d"], ["e", "f", "g,h"]],
+    [
+      ["a,b", "c", "d"],
+      ["e", "f", "g,h"]
+    ],
     "02.03.01 - double quotes follow line break"
   );
 });
@@ -194,7 +224,10 @@ test("02.04 - all values are wrapped with double quotes, some trailing white spa
 test("02.05 - values wrapped in double quotes that contain double quotes", t => {
   t.deepEqual(
     splitEasy('"a,""b""",c,d\ne,f,"g ""G"""'),
-    [['a,"b"', "c", "d"], ["e", "f", 'g "G"']],
+    [
+      ['a,"b"', "c", "d"],
+      ["e", "f", 'g "G"']
+    ],
     "02.05.01 - double quotes that contain double quotes"
   );
 });

@@ -14,17 +14,17 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
+    "amount",
+    "currency",
+    "digits",
+    "from",
+    "numbers",
     "remove",
-    "thousand",
-    "thousands",
     "separator",
     "separators",
-    "numbers",
-    "digits",
-    "currency",
-    "amount",
-    "from"
+    "string",
+    "thousand",
+    "thousands"
   ],
   "main": "dist/string-remove-thousand-separators.cjs.js",
   "module": "dist/string-remove-thousand-separators.esm.js",

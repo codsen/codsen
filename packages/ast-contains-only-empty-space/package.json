@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "array",
     "ast",
-    "posthtml",
+    "empty",
+    "html",
     "object",
-    "tree",
+    "parser",
+    "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser",
-    "array",
-    "empty",
     "space",
-    "trim"
+    "tree",
+    "trim",
+    "xml"
   ],
   "main": "dist/ast-contains-only-empty-space.cjs.js",
   "module": "dist/ast-contains-only-empty-space.esm.js",

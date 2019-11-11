@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "characters",
+    "code",
+    "codes",
     "color",
     "colour",
-    "shorthand",
-    "hex",
-    "code",
     "convert",
-    "six",
-    "characters",
-    "long",
-    "codes",
-    "hexadecimal",
     "email",
-    "newsletters"
+    "hex",
+    "hexadecimal",
+    "long",
+    "newsletters",
+    "shorthand",
+    "six"
   ],
   "main": "dist/color-shorthand-hex-to-six-digit.cjs.js",
   "module": "dist/color-shorthand-hex-to-six-digit.esm.js",

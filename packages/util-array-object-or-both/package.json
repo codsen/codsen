@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "validate",
     "array",
-    "plain",
-    "object",
     "both",
+    "choice",
+    "normalise",
+    "object",
+    "plain",
     "user",
     "util",
-    "normalise",
-    "choice"
+    "validate"
   ],
   "main": "dist/util-array-object-or-both.cjs.js",
   "module": "dist/util-array-object-or-both.esm.js",

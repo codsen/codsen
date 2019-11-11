@@ -14,11 +14,11 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "array",
+    "empty",
     "is",
     "not",
-    "empty",
     "object",
-    "array",
     "string",
     "util"
   ],

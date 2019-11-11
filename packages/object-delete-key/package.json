@@ -22,14 +22,14 @@
     "html",
     "key",
     "object",
-    "plain",
     "parser",
+    "plain",
     "posthtml",
     "posthtml-tree",
     "posthtmltree",
     "tree",
-    "xml",
-    "value"
+    "value",
+    "xml"
   ],
   "main": "dist/object-delete-key.cjs.js",
   "module": "dist/object-delete-key.esm.js",

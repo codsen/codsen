@@ -14,16 +14,16 @@
     "url": "https://codsen.com"
   },
   "keywords": [
-    "email",
-    "remove",
-    "unused",
-    "css",
-    "head",
-    "styles",
     "body",
-    "uncss",
+    "css",
+    "email",
+    "from",
+    "head",
     "inline",
-    "from"
+    "remove",
+    "styles",
+    "uncss",
+    "unused"
   ],
   "main": "dist/email-comb.cjs.js",
   "module": "dist/email-comb.esm.js",

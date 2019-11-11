@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "trim",
+    "characters",
+    "end",
+    "front",
+    "just",
+    "only",
     "space",
     "spaces",
-    "only",
-    "characters",
-    "front",
-    "end",
+    "string",
     "text",
-    "just"
+    "trim"
   ],
   "main": "dist/string-trim-spaces-only.cjs.js",
   "module": "dist/string-trim-spaces-only.esm.js",

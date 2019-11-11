@@ -19,7 +19,10 @@ test("UMD build works fine", t => {
     }
   );
 
-  t.deepEqual(gathered, [["1", "1"], ["2", "2"]]);
+  t.deepEqual(gathered, [
+    ["1", "1"],
+    ["2", "2"]
+  ]);
   t.deepEqual(errors, []);
 });
 
@@ -38,6 +41,9 @@ test("CJS build works fine", t => {
     }
   );
 
-  t.deepEqual(gathered, [["1", "1"], ["2", "2"]]);
+  t.deepEqual(gathered, [
+    ["1", "1"],
+    ["2", "2"]
+  ]);
   t.deepEqual(errors, []);
 });

@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "indexes",
     "array",
-    "search",
-    "plus",
+    "astral",
+    "emoji",
     "find",
     "in",
-    "unicode",
-    "emoji",
-    "astral"
+    "indexes",
+    "plus",
+    "search",
+    "string",
+    "unicode"
   ],
   "main": "dist/string-find-heads-tails.cjs.js",
   "module": "dist/string-find-heads-tails.esm.js",

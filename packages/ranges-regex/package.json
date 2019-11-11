@@ -14,19 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
+    "array",
+    "perform",
+    "performance",
     "range",
     "ranges",
-    "array",
+    "record",
     "regex",
     "regexp",
-    "perform",
-    "search",
     "replace",
     "replacement",
-    "performance",
-    "record"
+    "search",
+    "string"
   ],
   "main": "dist/ranges-regex.cjs.js",
   "module": "dist/ranges-regex.esm.js",

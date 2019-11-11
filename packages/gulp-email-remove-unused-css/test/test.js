@@ -84,8 +84,10 @@ test("removes unused CSS", async t => {
 </html>
 `;
 
-  const contents = await fromString(source, "test/source.html", geruc).then(
-    output => output.contents.toString()
-  );
+  const contents = await fromString(
+    source,
+    "test/source.html",
+    geruc
+  ).then(output => output.contents.toString());
   t.is(contents, intended, "Sass compiled as expected");
 });

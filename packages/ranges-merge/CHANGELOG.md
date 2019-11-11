@@ -71,7 +71,10 @@ Previously `null` would have been turned into a string and shown/concatenated li
 Let's say you got these two ranges:
 
 ```js
-[[5, 6, " "], [1, 10]];
+[
+  [5, 6, " "],
+  [1, 10]
+];
 ```
 
 Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.

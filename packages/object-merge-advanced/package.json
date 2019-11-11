@@ -14,14 +14,14 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "advanced",
     "ast",
-    "plain",
-    "object",
-    "posthtml-tree",
-    "posthtmltree",
     "merge",
+    "object",
     "objects",
-    "advanced"
+    "plain",
+    "posthtml-tree",
+    "posthtmltree"
   ],
   "main": "dist/object-merge-advanced.cjs.js",
   "module": "dist/object-merge-advanced.esm.js",

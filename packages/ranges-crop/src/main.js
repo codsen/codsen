@@ -119,16 +119,12 @@ function rangesCrop(arrOfRanges, strLen) {
         );
         if (singleRangeArr[2] !== undefined) {
           console.log(
-            `127 - third argument detected! RETURN [${
-              singleRangeArr[0]
-            }, ${strLen}, ${singleRangeArr[2]}]`
+            `127 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         console.log(
-          `134 - no third argument detected, returning [${
-            singleRangeArr[0]
-          }, ${strLen}]`
+          `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
         );
         return [singleRangeArr[0], strLen];
       }

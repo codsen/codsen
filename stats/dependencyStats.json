@@ -6,7 +6,7 @@
         "array-includes-all": 1,
         "array-includes-with-glob": 1,
         "array-pull-all-with-glob": 2,
-        "arrayiffy-if-string": 11,
+        "arrayiffy-if-string": 10,
         "ast-compare": 3,
         "ast-contains-only-empty-space": 3,
         "ast-get-values-by-key": 1,
@@ -39,14 +39,14 @@
         "get-pkg-repo": 2,
         "github-slugger": 1,
         "globby": 9,
-        "he": 4,
+        "he": 3,
         "hex-color-regex": 1,
         "html-comment-regex": 1,
         "html-dom-parser": 1,
-        "html-entities-not-email-friendly": 2,
+        "html-entities-not-email-friendly": 1,
         "inquirer": 3,
         "is-d": 4,
-        "is-html-tag-opening": 2,
+        "is-html-tag-opening": 1,
         "is-natural-number": 13,
         "is-natural-number-string": 7,
         "is-numeric": 2,
@@ -56,13 +56,13 @@
         "just-insert": 1,
         "lerna-clean-changelogs": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 27,
+        "lodash.clonedeep": 26,
         "lodash.deburr": 1,
         "lodash.includes": 6,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
         "lodash.isfunction": 1,
-        "lodash.isplainobject": 46,
+        "lodash.isplainobject": 45,
         "lodash.isregexp": 1,
         "lodash.isstring": 2,
         "lodash.merge": 1,
@@ -98,7 +98,7 @@
         "ranges-crop": 2,
         "ranges-invert": 1,
         "ranges-is-index-within": 2,
-        "ranges-merge": 8,
+        "ranges-merge": 7,
         "ranges-process-outside": 1,
         "ranges-push": 10,
         "ranges-sort": 1,
@@ -119,8 +119,8 @@
         "string-collapse-white-space": 1,
         "string-extract-class-names": 1,
         "string-find-heads-tails": 1,
-        "string-fix-broken-named-entities": 2,
-        "string-left-right": 11,
+        "string-fix-broken-named-entities": 1,
+        "string-left-right": 10,
         "string-match-left-right": 9,
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
@@ -140,67 +140,67 @@
         "write-json-file": 1
     },
     "devDependencies": {
-        "@babel/core": 100,
+        "@babel/core": 99,
         "@babel/polyfill": 1,
-        "@babel/preset-env": 100,
-        "@babel/register": 100,
+        "@babel/preset-env": 99,
+        "@babel/register": 99,
         "array-shuffle": 1,
+        "ast-deep-contains": 1,
         "ast-monkey-traverse": 1,
-        "ava": 100,
-        "babel-plugin-istanbul": 100,
-        "benchmark": 88,
-        "browser-sync": 1,
+        "ava": 99,
+        "babel-plugin-istanbul": 99,
+        "benchmark": 87,
         "deep-equal": 1,
-        "eslint": 100,
-        "eslint-config-prettier": 100,
-        "eslint-plugin-ava": 100,
-        "eslint-plugin-import": 100,
-        "eslint-plugin-no-unsanitized": 100,
-        "eslint-plugin-prettier": 100,
-        "esm": 100,
+        "eslint": 99,
+        "eslint-config-prettier": 99,
+        "eslint-plugin-ava": 99,
+        "eslint-plugin-import": 99,
+        "eslint-plugin-no-unsanitized": 99,
+        "eslint-plugin-prettier": 99,
+        "esm": 99,
         "execa": 10,
         "fs-extra": 2,
         "html-crush": 1,
         "is-ci": 1,
-        "js-row-num-cli": 100,
+        "js-row-num-cli": 99,
         "json-stringify-safe": 1,
-        "lect": 100,
+        "lect": 99,
         "lodash.clonedeep": 4,
         "lodash.isequal": 1,
         "map-stream": 1,
         "node-fetch": 1,
-        "nyc": 100,
+        "nyc": 99,
         "object-boolean-combinations": 1,
         "object-delete-key": 1,
         "object-path": 4,
         "p-map": 5,
         "p-progress": 1,
         "posthtml-parser": 1,
-        "prettier": 100,
-        "ranges-apply": 4,
+        "prettier": 99,
+        "ranges-apply": 3,
         "ranges-merge": 1,
-        "rollup": 87,
-        "rollup-plugin-ascii": 87,
-        "rollup-plugin-babel": 87,
-        "rollup-plugin-banner": 87,
-        "rollup-plugin-cleanup": 87,
-        "rollup-plugin-commonjs": 87,
-        "rollup-plugin-json": 87,
+        "rollup": 86,
+        "rollup-plugin-ascii": 86,
+        "rollup-plugin-babel": 86,
+        "rollup-plugin-banner": 86,
+        "rollup-plugin-cleanup": 86,
+        "rollup-plugin-commonjs": 86,
+        "rollup-plugin-json": 86,
         "rollup-plugin-node-builtins": 8,
         "rollup-plugin-node-globals": 1,
-        "rollup-plugin-node-resolve": 87,
-        "rollup-plugin-strip": 87,
-        "rollup-plugin-terser": 87,
+        "rollup-plugin-node-resolve": 86,
+        "rollup-plugin-strip": 86,
+        "rollup-plugin-terser": 86,
         "string-find-heads-tails": 1,
         "tempy": 12,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 46
+            "lodash.isplainobject": 45
         },
         {
-            "lodash.clonedeep": 27
+            "lodash.clonedeep": 26
         },
         {
             "is-natural-number": 13
@@ -232,10 +232,10 @@
             "ranges-apply": 15
         },
         {
-            "arrayiffy-if-string": 11
+            "arrayiffy-if-string": 10
         },
         {
-            "string-left-right": 11
+            "string-left-right": 10
         },
         {
             "ranges-push": 10
@@ -247,10 +247,10 @@
             "string-match-left-right": 9
         },
         {
-            "ranges-merge": 8
+            "check-types-mini": 7
         },
         {
-            "check-types-mini": 7
+            "ranges-merge": 7
         },
         {
             "object-merge-advanced": 4

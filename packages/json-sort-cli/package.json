@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "json",
-    "sort",
-    "fix",
-    "utility",
-    "file",
-    "files",
+    "app",
     "cli",
     "command line",
+    "file",
+    "files",
+    "fix",
+    "json",
+    "sort",
     "tool",
-    "app"
+    "utility"
   ],
   "bin": {
     "jsonsort": "cli.js",

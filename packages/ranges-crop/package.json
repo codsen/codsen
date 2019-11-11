@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
     "array",
     "crop",
     "index",
     "indexes",
-    "range",
+    "length",
     "limit",
-    "length"
+    "range",
+    "ranges",
+    "string"
   ],
   "main": "dist/ranges-crop.cjs.js",
   "module": "dist/ranges-crop.esm.js",

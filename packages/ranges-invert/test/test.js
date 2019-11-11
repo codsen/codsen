@@ -45,44 +45,99 @@ test("00.02 - not two arguments in one of ranges", t => {
   t.truthy(error1.message.includes("THROW_ID_04"));
 
   const error2 = t.throws(() => {
-    i([[1, 2, 3], [4, 5, 6]], 6, { strictlyTwoElementsInRangeArrays: true });
+    i(
+      [
+        [1, 2, 3],
+        [4, 5, 6]
+      ],
+      6,
+      { strictlyTwoElementsInRangeArrays: true }
+    );
   });
   t.truthy(error2.message.includes("THROW_ID_04"));
 
   const error3 = t.throws(() => {
-    i([[1, 2], [4, 5, 6], [7, 8]], 9, {
-      strictlyTwoElementsInRangeArrays: true
-    });
+    i(
+      [
+        [1, 2],
+        [4, 5, 6],
+        [7, 8]
+      ],
+      9,
+      {
+        strictlyTwoElementsInRangeArrays: true
+      }
+    );
   });
   t.truthy(error3.message.includes("THROW_ID_04"));
 
   // DOES NOT THROW:
 
   t.notThrows(() => {
-    i([[1, 2], [4, 5], [7, 8]], 9);
+    i(
+      [
+        [1, 2],
+        [4, 5],
+        [7, 8]
+      ],
+      9
+    );
   });
   // with defaults opts
   t.notThrows(() => {
     i([[1, 2, 3]], 3);
   });
   t.notThrows(() => {
-    i([[1, 2, 3], [4, 5, 6]], 6);
+    i(
+      [
+        [1, 2, 3],
+        [4, 5, 6]
+      ],
+      6
+    );
   });
   t.notThrows(() => {
-    i([[1, 2], [4, 5, 6], [7, 8]], 8);
+    i(
+      [
+        [1, 2],
+        [4, 5, 6],
+        [7, 8]
+      ],
+      8
+    );
   });
 
   t.notThrows(() => {
     i([[1, 2, "zzz"]], 3);
   });
   t.notThrows(() => {
-    i([[1, 2, "zzz"], [4, 5, "yyyy"]], 6);
+    i(
+      [
+        [1, 2, "zzz"],
+        [4, 5, "yyyy"]
+      ],
+      6
+    );
   });
   t.notThrows(() => {
-    i([[1, 2, null], [4, 5, "aaa", "bbb"], [7, 8, "ccc"]], 8);
+    i(
+      [
+        [1, 2, null],
+        [4, 5, "aaa", "bbb"],
+        [7, 8, "ccc"]
+      ],
+      8
+    );
   });
   t.notThrows(() => {
-    i([[1, 2, null], [4, 5, "aaa", "bbb"], [7, 8, "ccc"]], 80);
+    i(
+      [
+        [1, 2, null],
+        [4, 5, "aaa", "bbb"],
+        [7, 8, "ccc"]
+      ],
+      80
+    );
   });
 });
 
@@ -213,27 +268,64 @@ test(`01.04 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string 
 
 test(`01.05 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each other`, t => {
   t.deepEqual(
-    i([[3, 5], [5, 7]], 9),
-    [[0, 3], [7, 9]],
+    i(
+      [
+        [3, 5],
+        [5, 7]
+      ],
+      9
+    ),
+    [
+      [0, 3],
+      [7, 9]
+    ],
     "01.05.01 - ranges with deltas of two indexes"
   );
   t.deepEqual(
-    i([[3, 4], [4, 7]], 9),
-    [[0, 3], [7, 9]],
+    i(
+      [
+        [3, 4],
+        [4, 7]
+      ],
+      9
+    ),
+    [
+      [0, 3],
+      [7, 9]
+    ],
     "01.05.02 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 2]], 9),
+    i(
+      [
+        [0, 1],
+        [1, 2]
+      ],
+      9
+    ),
     [[2, 9]],
     "01.05.03 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 2], [5, 9]], 9),
+    i(
+      [
+        [0, 1],
+        [1, 2],
+        [5, 9]
+      ],
+      9
+    ),
     [[2, 5]],
     "01.05.04 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 9]], 9),
+    i(
+      [
+        [0, 1],
+        [1, 9]
+      ],
+      9
+    ),
     [],
     "01.05.05 - ranges with deltas of one index"
   );
@@ -241,54 +333,141 @@ test(`01.05 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each
   // opts.skipChecks - results are the same
 
   t.deepEqual(
-    i([[3, 5], [5, 7]], 9, { skipChecks: true }),
-    [[0, 3], [7, 9]],
+    i(
+      [
+        [3, 5],
+        [5, 7]
+      ],
+      9,
+      { skipChecks: true }
+    ),
+    [
+      [0, 3],
+      [7, 9]
+    ],
     "01.05.06 - ranges with deltas of two indexes"
   );
   t.deepEqual(
-    i([[3, 4], [4, 7]], 9, { skipChecks: true }),
-    [[0, 3], [7, 9]],
+    i(
+      [
+        [3, 4],
+        [4, 7]
+      ],
+      9,
+      { skipChecks: true }
+    ),
+    [
+      [0, 3],
+      [7, 9]
+    ],
     "01.05.07 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 2]], 9, { skipChecks: true }),
+    i(
+      [
+        [0, 1],
+        [1, 2]
+      ],
+      9,
+      { skipChecks: true }
+    ),
     [[2, 9]],
     "01.05.08 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 2], [5, 9]], 9, { skipChecks: true }),
+    i(
+      [
+        [0, 1],
+        [1, 2],
+        [5, 9]
+      ],
+      9,
+      { skipChecks: true }
+    ),
     [[2, 5]],
     "01.05.09 - ranges with deltas of one index"
   );
   t.deepEqual(
-    i([[0, 1], [1, 9]], 9, { skipChecks: true }),
+    i(
+      [
+        [0, 1],
+        [1, 9]
+      ],
+      9,
+      { skipChecks: true }
+    ),
     [],
     "01.05.10 - ranges with deltas of one index"
   );
 });
 
 test(`01.06 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`, t => {
-  t.deepEqual(i([[0, 5], [3, 7]], 9), [[7, 9]], "01.06.01 - starts at zero");
   t.deepEqual(
-    i([[2, 5], [3, 7]], 9),
-    [[0, 2], [7, 9]],
+    i(
+      [
+        [0, 5],
+        [3, 7]
+      ],
+      9
+    ),
+    [[7, 9]],
+    "01.06.01 - starts at zero"
+  );
+  t.deepEqual(
+    i(
+      [
+        [2, 5],
+        [3, 7]
+      ],
+      9
+    ),
+    [
+      [0, 2],
+      [7, 9]
+    ],
     "01.06.01 - does not start at zero"
   );
   t.deepEqual(
-    i([[3, 5], [2, 7]], 9),
-    [[0, 2], [7, 9]],
+    i(
+      [
+        [3, 5],
+        [2, 7]
+      ],
+      9
+    ),
+    [
+      [0, 2],
+      [7, 9]
+    ],
     "01.06.02 - does not start at zero"
   );
 
   // PS. opts.skipChecks would give erroneous result here
   const error1 = t.throws(() => {
-    i([[0, 5], [3, 7]], 9, { skipChecks: true });
+    i(
+      [
+        [0, 5],
+        [3, 7]
+      ],
+      9,
+      { skipChecks: true }
+    );
   });
   t.regex(error1.message, /THROW_ID_08/);
 });
 
 test(`01.07 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`, t => {
-  t.deepEqual(i([[0, 5, "zzz"], [3, 7, "aaaa"]], 9), [[7, 9]], "01.07");
+  t.deepEqual(
+    i(
+      [
+        [0, 5, "zzz"],
+        [3, 7, "aaaa"]
+      ],
+      9
+    ),
+    [[7, 9]],
+    "01.07"
+  );
 });
 
 test(`01.08 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`, t => {
@@ -301,9 +480,29 @@ test(`01.09 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is fa
 });
 
 test(`01.10 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`, t => {
-  t.deepEqual(i([[100, 200], [300, 400]], 10), [[0, 10]], "01.10");
+  t.deepEqual(
+    i(
+      [
+        [100, 200],
+        [300, 400]
+      ],
+      10
+    ),
+    [[0, 10]],
+    "01.10"
+  );
 });
 
 test(`01.11 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`, t => {
-  t.deepEqual(i([[300, 400], [100, 200]], 10), [[0, 10]], "01.11");
+  t.deepEqual(
+    i(
+      [
+        [300, 400],
+        [100, 200]
+      ],
+      10
+    ),
+    [[0, 10]],
+    "01.11"
+  );
 });

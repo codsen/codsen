@@ -14,11 +14,11 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
     "array",
+    "indexes",
+    "ranges",
     "sort",
-    "indexes"
+    "string"
   ],
   "main": "dist/ranges-process-outside.cjs.js",
   "module": "dist/ranges-process-outside.esm.js",

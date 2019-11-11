@@ -128,7 +128,13 @@ test("15 - trailing space, defaults", t => {
 test("16 - space on both sides", t => {
   t.deepEqual(
     trim("   a a     "),
-    { res: "a a", ranges: [[0, 3], [6, 11]] },
+    {
+      res: "a a",
+      ranges: [
+        [0, 3],
+        [6, 11]
+      ]
+    },
     "16"
   );
 });
@@ -136,7 +142,13 @@ test("16 - space on both sides", t => {
 test("17 - space on both sides - copes with emoji", t => {
   t.deepEqual(
     trim("   👍     "),
-    { res: "👍", ranges: [[0, 3], [5, 10]] },
+    {
+      res: "👍",
+      ranges: [
+        [0, 3],
+        [5, 10]
+      ]
+    },
     "17"
   );
 });
@@ -144,7 +156,13 @@ test("17 - space on both sides - copes with emoji", t => {
 test("18 - space on both sides - classicTrim=true", t => {
   t.deepEqual(
     trim("   a a     ", { classicTrim: true }),
-    { res: "a a", ranges: [[0, 3], [6, 11]] },
+    {
+      res: "a a",
+      ranges: [
+        [0, 3],
+        [6, 11]
+      ]
+    },
     "18"
   );
 });
@@ -152,7 +170,13 @@ test("18 - space on both sides - classicTrim=true", t => {
 test("19 - space on both sides - copes with emoji - classicTrim=true", t => {
   t.deepEqual(
     trim("   👍     ", { classicTrim: true }),
-    { res: "👍", ranges: [[0, 3], [5, 10]] },
+    {
+      res: "👍",
+      ranges: [
+        [0, 3],
+        [5, 10]
+      ]
+    },
     "19"
   );
 });
@@ -160,7 +184,13 @@ test("19 - space on both sides - copes with emoji - classicTrim=true", t => {
 test("20 - trimming hits the newline and stops", t => {
   t.deepEqual(
     trim("   \n  a a  \n   "),
-    { res: "\n  a a  \n", ranges: [[0, 3], [12, 15]] },
+    {
+      res: "\n  a a  \n",
+      ranges: [
+        [0, 3],
+        [12, 15]
+      ]
+    },
     "20"
   );
 });
@@ -168,7 +198,13 @@ test("20 - trimming hits the newline and stops", t => {
 test("21 - trimming hits the tab and stops", t => {
   t.deepEqual(
     trim("   \t  a a  \t   "),
-    { res: "\t  a a  \t", ranges: [[0, 3], [12, 15]] },
+    {
+      res: "\t  a a  \t",
+      ranges: [
+        [0, 3],
+        [12, 15]
+      ]
+    },
     "21"
   );
 });
@@ -176,7 +212,13 @@ test("21 - trimming hits the tab and stops", t => {
 test("22 - trimming hits the newline and stops - classicTrim", t => {
   t.deepEqual(
     trim("   \n  a a  \n   ", { classicTrim: true }),
-    { res: "a a", ranges: [[0, 6], [9, 15]] }, // <---------------- !
+    {
+      res: "a a",
+      ranges: [
+        [0, 6],
+        [9, 15]
+      ]
+    }, // <---------------- !
     "22"
   );
 });
@@ -184,7 +226,13 @@ test("22 - trimming hits the newline and stops - classicTrim", t => {
 test("23 - trimming hits the tab and stops - classicTrim", t => {
   t.deepEqual(
     trim("   \t  a a  \t   ", { classicTrim: true }),
-    { res: "a a", ranges: [[0, 6], [9, 15]] }, // <---------------- !
+    {
+      res: "a a",
+      ranges: [
+        [0, 6],
+        [9, 15]
+      ]
+    }, // <---------------- !
     "23"
   );
 });
@@ -236,7 +284,13 @@ test("24 - non-string input", t => {
 test("25 - opts.space - default", t => {
   t.deepEqual(
     trim("   a b c   "),
-    { res: "a b c", ranges: [[0, 3], [8, 11]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 3],
+        [8, 11]
+      ]
+    },
     "25"
   );
 });
@@ -244,22 +298,46 @@ test("25 - opts.space - default", t => {
 test("26 - opts.space - tabs", t => {
   t.deepEqual(
     trim(" \t  a b c  \t "),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "26.01"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { space: true }),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "26.02"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { tab: true, classicTrim: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "26.03 - classicTrim negates everything"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { space: true, tab: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "26.04"
   );
   t.deepEqual(
@@ -273,22 +351,46 @@ test("26 - opts.space - tabs", t => {
 test("27 - opts.cr", t => {
   t.deepEqual(
     trim(" \t  a b c  \t "),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "27.01"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { cr: true }),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "27.02"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { cr: true, classicTrim: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "27.03 - classicTrim negates all other settings"
   );
   t.deepEqual(
     trim(" \r  a b c  \r ", { cr: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "27.04"
   );
   t.deepEqual(
@@ -298,7 +400,13 @@ test("27 - opts.cr", t => {
   );
   t.deepEqual(
     trim("\r  a b c  \r", { cr: true, space: false }),
-    { res: "  a b c  ", ranges: [[0, 1], [10, 11]] },
+    {
+      res: "  a b c  ",
+      ranges: [
+        [0, 1],
+        [10, 11]
+      ]
+    },
     "27.06 - only CR's trimmed as requested"
   );
 });
@@ -307,22 +415,46 @@ test("27 - opts.cr", t => {
 test("28 - opts.lf", t => {
   t.deepEqual(
     trim(" \t  a b c  \t "),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "28.01"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { lf: true }),
-    { res: "\t  a b c  \t", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\t  a b c  \t",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "28.02"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { lf: true, classicTrim: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "28.03 - classicTrim negates all other settings"
   );
   t.deepEqual(
     trim(" \n  a b c  \n ", { lf: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "28.04"
   );
   t.deepEqual(
@@ -332,7 +464,13 @@ test("28 - opts.lf", t => {
   );
   t.deepEqual(
     trim("\n  a b c  \n", { lf: true, space: false }),
-    { res: "  a b c  ", ranges: [[0, 1], [10, 11]] },
+    {
+      res: "  a b c  ",
+      ranges: [
+        [0, 1],
+        [10, 11]
+      ]
+    },
     "28.06 - only CR's trimmed as requested"
   );
 });
@@ -341,22 +479,46 @@ test("28 - opts.lf", t => {
 test("29 - opts.tab", t => {
   t.deepEqual(
     trim(" \n  a b c  \n "),
-    { res: "\n  a b c  \n", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\n  a b c  \n",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "29.01"
   );
   t.deepEqual(
     trim(" \n  a b c  \n ", { tab: true }),
-    { res: "\n  a b c  \n", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\n  a b c  \n",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "29.02"
   );
   t.deepEqual(
     trim(" \n  a b c  \n ", { tab: true, classicTrim: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "29.03 - classicTrim negates all other settings"
   );
   t.deepEqual(
     trim(" \t  a b c  \t ", { tab: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "29.04"
   );
   t.deepEqual(
@@ -366,7 +528,13 @@ test("29 - opts.tab", t => {
   );
   t.deepEqual(
     trim("\t  a b c  \t", { tab: true, space: false }),
-    { res: "  a b c  ", ranges: [[0, 1], [10, 11]] },
+    {
+      res: "  a b c  ",
+      ranges: [
+        [0, 1],
+        [10, 11]
+      ]
+    },
     "29.06 - only tabs were trimmed as requested"
   );
 });
@@ -375,22 +543,46 @@ test("29 - opts.tab", t => {
 test("30 - opts.nbsp", t => {
   t.deepEqual(
     trim(" \n  a b c  \n "),
-    { res: "\n  a b c  \n", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\n  a b c  \n",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "30.01"
   );
   t.deepEqual(
     trim(" \n  a b c  \n ", { nbsp: true }),
-    { res: "\n  a b c  \n", ranges: [[0, 1], [12, 13]] },
+    {
+      res: "\n  a b c  \n",
+      ranges: [
+        [0, 1],
+        [12, 13]
+      ]
+    },
     "30.02"
   );
   t.deepEqual(
     trim(" \n  a b c  \n ", { nbsp: true, classicTrim: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "30.03 - classicTrim negates all other settings"
   );
   t.deepEqual(
     trim(` ${rawnbsp}  a b c  ${rawnbsp} `, { nbsp: true }),
-    { res: "a b c", ranges: [[0, 4], [9, 13]] },
+    {
+      res: "a b c",
+      ranges: [
+        [0, 4],
+        [9, 13]
+      ]
+    },
     "30.04"
   );
   t.deepEqual(
@@ -400,7 +592,13 @@ test("30 - opts.nbsp", t => {
   );
   t.deepEqual(
     trim(`${rawnbsp}  a b c  ${rawnbsp}`, { nbsp: true, space: false }),
-    { res: "  a b c  ", ranges: [[0, 1], [10, 11]] },
+    {
+      res: "  a b c  ",
+      ranges: [
+        [0, 1],
+        [10, 11]
+      ]
+    },
     "30.06 - only tabs were trimmed as requested"
   );
   t.deepEqual(
@@ -409,7 +607,13 @@ test("30 - opts.nbsp", t => {
       space: false,
       classicTrim: true
     }),
-    { res: `a b c`, ranges: [[0, 3], [8, 11]] },
+    {
+      res: `a b c`,
+      ranges: [
+        [0, 3],
+        [8, 11]
+      ]
+    },
     "30.07"
   );
 });

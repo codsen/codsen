@@ -1828,7 +1828,12 @@ test(`11.02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space b
     removeWidows(
       `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`,
       {
-        tagRanges: [[24, 51], [52, 56], [57, 84], [85, 89]]
+        tagRanges: [
+          [24, 51],
+          [52, 56],
+          [57, 84],
+          [85, 89]
+        ]
       }
     ).res,
     `something in front here <a style="display: block;">x</a>${encodedNbspHtml}<b style="display: block;">y</b>`,
@@ -1848,7 +1853,10 @@ test(`11.03 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space b
     removeWidows(
       `Very long line, long-enough to trigger widow removal.<br/>\n<br/>\n Text.`,
       {
-        tagRanges: [[53, 58], [60, 65]]
+        tagRanges: [
+          [53, 58],
+          [60, 65]
+        ]
       }
     ).res,
     `Very long line, long-enough to trigger widow${encodedNbspHtml}removal.<br/>\n<br/>\n Text.`,

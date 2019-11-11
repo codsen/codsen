@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "indexes",
     "array",
-    "search",
-    "plus",
+    "astral",
+    "emoji",
     "find",
     "in",
-    "unicode",
-    "emoji",
-    "astral"
+    "indexes",
+    "plus",
+    "search",
+    "string",
+    "unicode"
   ],
   "main": "dist/str-indexes-of-plus.cjs.js",
   "module": "dist/str-indexes-of-plus.esm.js",

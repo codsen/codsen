@@ -1341,7 +1341,14 @@ test(`08.01 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there 
 test(`08.02 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
   t.deepEqual(
     collapse(`   a   bbb  \n   c   d   `, { returnRangesOnly: true }),
-    [[0, 3], [4, 6], [10, 11], [13, 15], [17, 19], [21, 24]]
+    [
+      [0, 3],
+      [4, 6],
+      [10, 11],
+      [13, 15],
+      [17, 19],
+      [21, 24]
+    ]
   );
 });
 

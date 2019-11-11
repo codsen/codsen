@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "lerna",
     "changelog",
+    "cli",
+    "conventional",
+    "entries",
+    "fix",
+    "lerna",
     "manage",
     "manager",
-    "utility",
-    "fix",
-    "patch",
     "monorepo",
+    "patch",
     "tool",
-    "entries",
-    "conventional",
-    "cli"
+    "utility"
   ],
   "bin": {
     "lcc": "cli.js",

@@ -121,10 +121,7 @@ function alts(str, originalOpts) {
     // This paves the way for the future, when within double quote detection
     // we'll see this withinAlt flag, we'll know it's alt attribute contents starting.
     // ================
-    if (
-      withinAlt &&
-      (str[i].trim() !== "" && str[i] !== "=" && str[i] !== '"')
-    ) {
+    if (withinAlt && str[i].trim() !== "" && str[i] !== "=" && str[i] !== '"') {
       withinAlt = false;
     }
 

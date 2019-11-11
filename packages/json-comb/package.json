@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "app",
+    "cli",
+    "command line",
+    "delete",
+    "file",
+    "files",
     "json",
+    "key",
     "manage",
     "normalise",
     "normalize",
-    "delete",
-    "key",
-    "file",
-    "files",
-    "cli",
-    "command line",
     "tool",
-    "app",
     "utility"
   ],
   "bin": {

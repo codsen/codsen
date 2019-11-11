@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "brief",
+    "clean",
+    "code",
+    "copy",
     "detergent",
     "email",
-    "html",
-    "clean",
-    "string",
-    "copy",
-    "text",
-    "brief",
-    "code",
-    "send",
     "encode",
-    "style"
+    "html",
+    "send",
+    "string",
+    "style",
+    "text"
   ],
   "main": "dist/detergent.cjs.js",
   "module": "dist/detergent.esm.js",

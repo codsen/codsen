@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "browsersync",
+    "build",
     "email",
-    "templates",
+    "folder",
+    "generate",
     "gulp",
     "gulpplugin",
-    "root",
-    "folder",
-    "build",
-    "system",
-    "generate",
     "home",
-    "page",
     "homepage",
-    "browsersync"
+    "page",
+    "root",
+    "system",
+    "templates"
   ],
   "bin": {
     "homey": "cli.js"

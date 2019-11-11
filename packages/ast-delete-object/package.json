@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "delete",
-    "object",
-    "key",
-    "value",
     "ast",
-    "tree",
+    "delete",
+    "html",
+    "key",
+    "object",
+    "parser",
     "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser"
+    "tree",
+    "value",
+    "xml"
   ],
   "main": "dist/ast-delete-object.cjs.js",
   "module": "dist/ast-delete-object.esm.js",

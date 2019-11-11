@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "regex",
-    "html",
-    "conditional",
+    "code",
     "comments",
-    "outlook",
-    "email",
+    "conditional",
     "development",
-    "strip",
-    "mso",
+    "email",
+    "html",
     "if",
+    "mso",
+    "outlook",
+    "regex",
     "remove",
-    "code"
+    "strip"
   ],
   "main": "dist/regex-empty-conditional-comments.cjs.js",
   "module": "dist/regex-empty-conditional-comments.esm.js",

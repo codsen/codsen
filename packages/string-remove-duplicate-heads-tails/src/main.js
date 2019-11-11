@@ -212,11 +212,11 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       trimBeforeMatching: true,
       relaxedApi: true
     }) ||
-    (!opts.tails.length ||
-      !matchLeftIncl(str, str.length - 1, opts.tails, {
-        trimBeforeMatching: true,
-        relaxedApi: true
-      }))
+    !opts.tails.length ||
+    !matchLeftIncl(str, str.length - 1, opts.tails, {
+      trimBeforeMatching: true,
+      relaxedApi: true
+    })
   ) {
     console.log(
       `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`

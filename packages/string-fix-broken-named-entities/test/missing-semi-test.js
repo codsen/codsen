@@ -42,7 +42,12 @@ test("02 - single pi", t => {
 test("03 - larger set", t => {
   t.deepEqual(
     fix("aaa&pi&piv&pi&pivaaa"),
-    [[3, 6, "&pi;"], [6, 10, "&piv;"], [10, 13, "&pi;"], [13, 17, "&piv;"]],
+    [
+      [3, 6, "&pi;"],
+      [6, 10, "&piv;"],
+      [10, 13, "&pi;"],
+      [13, 17, "&piv;"]
+    ],
     "03"
   );
 });

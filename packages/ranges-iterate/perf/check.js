@@ -11,10 +11,17 @@ const f = require("../");
 let pinged = "";
 let index = 0;
 const testme = () =>
-  f("abcdefghij", [[0, 5], [5, 10]], ({ i, val }) => {
-    pinged += val;
-    index++;
-  });
+  f(
+    "abcdefghij",
+    [
+      [0, 5],
+      [5, 10]
+    ],
+    ({ i, val }) => {
+      pinged += val;
+      index++;
+    }
+  );
 
 // action
 runPerf(testme, callerDir);

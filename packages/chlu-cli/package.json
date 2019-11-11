@@ -14,21 +14,21 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "update",
-    "changelog",
-    "change",
-    "log",
-    "fix",
-    "errors",
-    "missing",
-    "links",
-    "markdown",
-    "correct",
-    "automatically",
     "automated",
-    "tool",
+    "automatically",
+    "change",
+    "changelog",
     "cli",
-    "cli-app"
+    "cli-app",
+    "correct",
+    "errors",
+    "fix",
+    "links",
+    "log",
+    "markdown",
+    "missing",
+    "tool",
+    "update"
   ],
   "bin": {
     "chlu": "cli.js"

@@ -14,11 +14,11 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "ranges",
     "index",
+    "is",
+    "ranges",
     "string",
-    "within",
-    "is"
+    "within"
   ],
   "main": "dist/ranges-is-index-within.cjs.js",
   "module": "dist/ranges-is-index-within.esm.js",

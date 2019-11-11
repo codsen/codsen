@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "changes",
     "edit",
+    "indentation",
+    "json",
+    "non-parsing",
     "package",
     "package.json",
-    "json",
-    "changes",
-    "indentation",
-    "respect",
-    "non-parsing",
     "parse",
     "read",
+    "respect",
     "write"
   ],
   "main": "dist/edit-package-json.cjs.js",

@@ -14,21 +14,21 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "csv",
-    "sort",
-    "fix",
-    "bank",
     "accountancy",
     "accounting",
-    "lloyds",
+    "bank",
+    "columns",
     "crunch",
+    "csv",
+    "file",
+    "files",
+    "fix",
+    "lloyds",
+    "missing",
     "patch",
     "pony",
     "rows",
-    "columns",
-    "missing",
-    "file",
-    "files"
+    "sort"
   ],
   "bin": {
     "csvsort": "cli.js",

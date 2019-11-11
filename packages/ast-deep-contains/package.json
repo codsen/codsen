@@ -14,17 +14,17 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "unit",
-    "test",
-    "tests",
-    "comparison",
-    "function",
-    "deep",
-    "compare",
-    "subsets",
     "ast",
     "ava",
-    "helper"
+    "compare",
+    "comparison",
+    "deep",
+    "function",
+    "helper",
+    "subsets",
+    "test",
+    "tests",
+    "unit"
   ],
   "main": "dist/ast-deep-contains.cjs.js",
   "module": "dist/ast-deep-contains.esm.js",

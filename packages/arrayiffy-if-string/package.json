@@ -14,12 +14,12 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "arrayiffy",
-    "turn",
-    "into",
     "array",
+    "arrayiffy",
     "if",
-    "string"
+    "into",
+    "string",
+    "turn"
   ],
   "main": "dist/arrayiffy-if-string.cjs.js",
   "module": "dist/arrayiffy-if-string.esm.js",

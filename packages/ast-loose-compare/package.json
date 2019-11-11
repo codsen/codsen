@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "ast",
-    "posthtml",
-    "compare",
-    "object",
     "array",
-    "tree",
+    "ast",
+    "compare",
+    "equal",
+    "html",
+    "object",
+    "parser",
+    "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser",
     "subset",
-    "equal"
+    "tree",
+    "xml"
   ],
   "main": "dist/ast-loose-compare.cjs.js",
   "module": "dist/ast-loose-compare.esm.js",

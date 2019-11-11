@@ -36,9 +36,13 @@ function split(str, originalOpts) {
       str[i].trim() !== "" &&
       (opts.ignoreRanges.length === 0 ||
         (opts.ignoreRanges.length !== 0 &&
-          !within(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
-            inclusiveRangeEnds: true
-          })))
+          !within(
+            i,
+            opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]),
+            {
+              inclusiveRangeEnds: true
+            }
+          )))
     ) {
       nonWhitespaceSubStringStartsAt = i;
     }

@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "apostrophe",
     "apostrophes",
     "convert",
-    "typography",
+    "correct",
+    "fix",
+    "string",
     "typographical",
     "typographically",
-    "correct",
-    "fix"
+    "typography"
   ],
   "main": "dist/string-apostrophes.cjs.js",
   "module": "dist/string-apostrophes.esm.js",

@@ -94,7 +94,10 @@ Complete rewrite of the API.
 Example result of `v.1` API:
 
 ```js
-[[3, 15], [9, 21]];
+[
+  [3, 15],
+  [9, 21]
+];
 ```
 
 now the same example in `v.2` API:

@@ -14,14 +14,13 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "collapse",
-    "whitespace",
-    "white",
-    "space",
     "empty",
     "space",
-    "string-utility"
+    "string",
+    "string-utility",
+    "white",
+    "whitespace"
   ],
   "main": "dist/string-collapse-white-space.cjs.js",
   "module": "dist/string-collapse-white-space.esm.js",

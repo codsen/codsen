@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "fix",
     "broken",
-    "error",
-    "erroneous",
-    "html",
-    "entities",
-    "named",
     "encoding",
+    "entities",
+    "erroneous",
+    "error",
+    "fix",
     "fixer",
+    "html",
+    "named",
     "range",
     "ranges",
-    "return"
+    "return",
+    "string"
   ],
   "main": "dist/string-fix-broken-named-entities.cjs.js",
   "module": "dist/string-fix-broken-named-entities.esm.js",

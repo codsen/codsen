@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "expand",
     "expander",
-    "range",
-    "of",
     "indexes",
-    "within",
+    "of",
+    "outwards",
+    "range",
+    "string",
     "text",
-    "outwards"
+    "within"
   ],
   "main": "dist/string-range-expander.cjs.js",
   "module": "dist/string-range-expander.esm.js",

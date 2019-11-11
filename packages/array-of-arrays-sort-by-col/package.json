@@ -16,13 +16,13 @@
   "keywords": [
     "array",
     "arrays",
-    "sort",
+    "ascending",
     "by",
     "column",
-    "order",
     "descending",
-    "ascending",
-    "nested"
+    "nested",
+    "order",
+    "sort"
   ],
   "main": "dist/array-of-arrays-sort-by-col.cjs.js",
   "module": "dist/array-of-arrays-sort-by-col.esm.js",

@@ -14,13 +14,13 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
+    "left",
     "march",
     "match",
-    "left",
-    "right",
-    "traverse",
     "no-parsing",
+    "right",
+    "string",
+    "traverse",
     "utility"
   ],
   "main": "dist/string-match-left-right.cjs.js",

@@ -237,8 +237,8 @@ function det(str, inputOpts) {
             str[i - 2].toLowerCase() === "h" &&
             str[i - 1].toLowerCase() === "e")) &&
           str[i + 2] &&
-          (str[i + 1].toLowerCase() === "l" &&
-            str[i + 2].toLowerCase() === "l")) ||
+          str[i + 1].toLowerCase() === "l" &&
+          str[i + 2].toLowerCase() === "l") ||
         (str[i - 5] &&
           str[i + 2] &&
           str[i - 5].toLowerCase() === "m" &&

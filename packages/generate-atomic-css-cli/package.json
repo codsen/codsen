@@ -15,20 +15,20 @@
   },
   "keywords": [
     "atomic",
-    "css",
-    "generate",
-    "update",
-    "render",
-    "create",
-    "refresh",
-    "email",
-    "template",
-    "marketing",
-    "mailing",
-    "development",
-    "tool",
     "cli",
-    "cli-app"
+    "cli-app",
+    "create",
+    "css",
+    "development",
+    "email",
+    "generate",
+    "mailing",
+    "marketing",
+    "refresh",
+    "render",
+    "template",
+    "tool",
+    "update"
   ],
   "bin": {
     "gac": "cli.js"

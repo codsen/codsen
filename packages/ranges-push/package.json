@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "delete",
-    "replace",
+    "from",
+    "many",
     "multiple",
     "ranges",
+    "replace",
     "slice",
     "slices",
-    "many",
-    "from",
-    "splice"
+    "splice",
+    "string"
   ],
   "main": "dist/ranges-push.cjs.js",
   "module": "dist/ranges-push.esm.js",

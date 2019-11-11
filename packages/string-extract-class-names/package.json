@@ -14,12 +14,12 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "class",
     "css",
     "extract",
-    "class",
     "id",
-    "string",
-    "selector"
+    "selector",
+    "string"
   ],
   "main": "dist/string-extract-class-names.cjs.js",
   "module": "dist/string-extract-class-names.esm.js",

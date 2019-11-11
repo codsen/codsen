@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "email",
-    "templates",
-    "template",
-    "css",
-    "generate",
+    "api",
     "atomic",
     "build",
+    "css",
+    "email",
+    "generate",
     "helper",
-    "tool",
-    "api"
+    "template",
+    "templates",
+    "tool"
   ],
   "main": "dist/generate-atomic-css.cjs.js",
   "module": "dist/generate-atomic-css.esm.js",

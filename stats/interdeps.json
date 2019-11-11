@@ -160,7 +160,7 @@
     },
     {
         "name": "csv-sort-cli",
-        "size": 9321,
+        "size": 9345,
         "imports": [
             "csv-sort"
         ]
@@ -237,18 +237,6 @@
         ]
     },
     {
-        "name": "emlint",
-        "size": 116959,
-        "imports": [
-            "arrayiffy-if-string",
-            "html-entities-not-email-friendly",
-            "is-html-tag-opening",
-            "ranges-merge",
-            "string-fix-broken-named-entities",
-            "string-left-right"
-        ]
-    },
-    {
         "name": "generate-atomic-css",
         "size": 20642,
         "imports": [
@@ -321,7 +309,7 @@
     },
     {
         "name": "json-comb",
-        "size": 6571,
+        "size": 6547,
         "imports": [
             "json-comb-core"
         ]
@@ -360,7 +348,7 @@
     },
     {
         "name": "lect",
-        "size": 72317,
+        "size": 72507,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

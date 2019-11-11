@@ -14,14 +14,14 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "not",
-    "friendly",
     "email",
-    "template",
-    "marketing",
+    "entities",
+    "friendly",
     "html",
+    "marketing",
     "named",
-    "entities"
+    "not",
+    "template"
   ],
   "main": "dist/html-entities-not-email-friendly.cjs.js",
   "module": "dist/html-entities-not-email-friendly.esm.js",

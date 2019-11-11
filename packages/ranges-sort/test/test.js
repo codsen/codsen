@@ -25,15 +25,32 @@ test("00.02 - not two arguments in one of ranges", t => {
     srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true });
   });
   t.throws(() => {
-    srt([[1, 2, 3], [4, 5, 6]], { strictlyTwoElementsInRangeArrays: true });
+    srt(
+      [
+        [1, 2, 3],
+        [4, 5, 6]
+      ],
+      { strictlyTwoElementsInRangeArrays: true }
+    );
   });
   t.throws(() => {
-    srt([[1, 2], [4, 5, 6], [7, 8]], {
-      strictlyTwoElementsInRangeArrays: true
-    });
+    srt(
+      [
+        [1, 2],
+        [4, 5, 6],
+        [7, 8]
+      ],
+      {
+        strictlyTwoElementsInRangeArrays: true
+      }
+    );
   });
   t.notThrows(() => {
-    srt([[1, 2], [4, 5], [7, 8]]);
+    srt([
+      [1, 2],
+      [4, 5],
+      [7, 8]
+    ]);
   });
   t.notThrows(() => {
     srt([]);
@@ -43,10 +60,17 @@ test("00.02 - not two arguments in one of ranges", t => {
     srt([[1, 2, 3]]);
   });
   t.notThrows(() => {
-    srt([[1, 2, 3], [4, 5, 6]]);
+    srt([
+      [1, 2, 3],
+      [4, 5, 6]
+    ]);
   });
   t.notThrows(() => {
-    srt([[1, 2], [4, 5, 6], [7, 8]]);
+    srt([
+      [1, 2],
+      [4, 5, 6],
+      [7, 8]
+    ]);
   });
 });
 
@@ -88,50 +112,134 @@ test("01.02 - only one range given", t => {
 });
 
 test("01.03 - two ranges", t => {
-  t.deepEqual(srt([[0, 3], [5, 6]]), [[0, 3], [5, 6]], "01.03.01");
-  t.deepEqual(srt([[5, 6], [0, 3]]), [[0, 3], [5, 6]], "01.03.02");
   t.deepEqual(
-    srt([[0, 3, "zzz"], [5, 6]]),
-    [[0, 3, "zzz"], [5, 6]],
+    srt([
+      [0, 3],
+      [5, 6]
+    ]),
+    [
+      [0, 3],
+      [5, 6]
+    ],
+    "01.03.01"
+  );
+  t.deepEqual(
+    srt([
+      [5, 6],
+      [0, 3]
+    ]),
+    [
+      [0, 3],
+      [5, 6]
+    ],
+    "01.03.02"
+  );
+  t.deepEqual(
+    srt([
+      [0, 3, "zzz"],
+      [5, 6]
+    ]),
+    [
+      [0, 3, "zzz"],
+      [5, 6]
+    ],
     "01.03.03"
   );
   t.deepEqual(
-    srt([[5, 6], [0, 3, "zzz"]]),
-    [[0, 3, "zzz"], [5, 6]],
+    srt([
+      [5, 6],
+      [0, 3, "zzz"]
+    ]),
+    [
+      [0, 3, "zzz"],
+      [5, 6]
+    ],
     "01.03.04"
   );
 });
 
 test("01.04 - many ranges", t => {
   t.deepEqual(
-    srt([[0, 3], [5, 8], [5, 6]]),
-    [[0, 3], [5, 6], [5, 8]],
+    srt([
+      [0, 3],
+      [5, 8],
+      [5, 6]
+    ]),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "01.04.01"
   );
   t.deepEqual(
-    srt([[5, 8], [5, 6], [0, 3]]),
-    [[0, 3], [5, 6], [5, 8]],
+    srt([
+      [5, 8],
+      [5, 6],
+      [0, 3]
+    ]),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "01.04.02"
   );
   t.deepEqual(
-    srt([[0, 8], [5, 6], [0, 3]]),
-    [[0, 3], [0, 8], [5, 6]],
+    srt([
+      [0, 8],
+      [5, 6],
+      [0, 3]
+    ]),
+    [
+      [0, 3],
+      [0, 8],
+      [5, 6]
+    ],
     "01.04.03"
   );
   t.deepEqual(
-    srt([[5, 6], [5, 6]]),
-    [[5, 6], [5, 6]],
+    srt([
+      [5, 6],
+      [5, 6]
+    ]),
+    [
+      [5, 6],
+      [5, 6]
+    ],
     "01.04.04 - same ranges"
   );
   t.deepEqual(
-    srt([[5, 6], [5, 6, "zzz"]]),
-    [[5, 6], [5, 6, "zzz"]],
+    srt([
+      [5, 6],
+      [5, 6, "zzz"]
+    ]),
+    [
+      [5, 6],
+      [5, 6, "zzz"]
+    ],
     "01.04.05 - same ranges"
   );
   t.throws(() => {
-    srt([[5, 6], [5, 6, "zzz"]], { strictlyTwoElementsInRangeArrays: true });
+    srt(
+      [
+        [5, 6],
+        [5, 6, "zzz"]
+      ],
+      { strictlyTwoElementsInRangeArrays: true }
+    );
   });
-  t.deepEqual(srt([[9, 12], [9, 15]]), [[9, 12], [9, 15]], "01.04.07");
+  t.deepEqual(
+    srt([
+      [9, 12],
+      [9, 15]
+    ]),
+    [
+      [9, 12],
+      [9, 15]
+    ],
+    "01.04.07"
+  );
 });
 
 // ==============================
@@ -139,9 +247,21 @@ test("01.04 - many ranges", t => {
 // ==============================
 
 test("02.01 - does not mutate the input arg", t => {
-  const original = [[5, 6], [3, 4], [1, 2]];
+  const original = [
+    [5, 6],
+    [3, 4],
+    [1, 2]
+  ];
   srt(original);
-  t.deepEqual(original, [[5, 6], [3, 4], [1, 2]], "02.01");
+  t.deepEqual(
+    original,
+    [
+      [5, 6],
+      [3, 4],
+      [1, 2]
+    ],
+    "02.01"
+  );
 });
 
 // ==============================
@@ -149,11 +269,33 @@ test("02.01 - does not mutate the input arg", t => {
 // ==============================
 
 test("03.01 - readme example #1", t => {
-  t.deepEqual(srt([[5, 6], [1, 3]]), [[1, 3], [5, 6]], "03.01");
+  t.deepEqual(
+    srt([
+      [5, 6],
+      [1, 3]
+    ]),
+    [
+      [1, 3],
+      [5, 6]
+    ],
+    "03.01"
+  );
 });
 
 test("03.02 - readme example #2", t => {
-  t.deepEqual(srt([[5, 6], [5, 3], [5, 0]]), [[5, 0], [5, 3], [5, 6]], "03.02");
+  t.deepEqual(
+    srt([
+      [5, 6],
+      [5, 3],
+      [5, 0]
+    ]),
+    [
+      [5, 0],
+      [5, 3],
+      [5, 6]
+    ],
+    "03.02"
+  );
 });
 
 test("03.03 - readme example #3", t => {
@@ -182,8 +324,14 @@ test("03.06 readme example #5", t => {
 
 test("03.07 readme example #6", t => {
   t.deepEqual(
-    srt([[3, 4, "aaa", "bbb"], [1, 2, "zzz"]]),
-    [[1, 2, "zzz"], [3, 4, "aaa", "bbb"]],
+    srt([
+      [3, 4, "aaa", "bbb"],
+      [1, 2, "zzz"]
+    ]),
+    [
+      [1, 2, "zzz"],
+      [3, 4, "aaa", "bbb"]
+    ],
     "03.07 - 3rd argument and onwards are ignored"
   );
 });
@@ -195,32 +343,76 @@ test("03.07 readme example #6", t => {
 // TODO:
 test("04.01 - calls progress callback correctly", t => {
   t.deepEqual(
-    srt([[0, 3], [5, 8], [5, 6]], {
-      progressFn: null
-    }),
-    [[0, 3], [5, 6], [5, 8]],
+    srt(
+      [
+        [0, 3],
+        [5, 8],
+        [5, 6]
+      ],
+      {
+        progressFn: null
+      }
+    ),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "04.01.01 - callback fn is null"
   );
   t.deepEqual(
-    srt([[0, 3], [5, 8], [5, 6]], {
-      progressFn: false
-    }),
-    [[0, 3], [5, 6], [5, 8]],
+    srt(
+      [
+        [0, 3],
+        [5, 8],
+        [5, 6]
+      ],
+      {
+        progressFn: false
+      }
+    ),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "04.01.02 - callback fn is false"
   );
   t.deepEqual(
-    srt([[0, 3], [5, 8], [5, 6]], {}),
-    [[0, 3], [5, 6], [5, 8]],
+    srt(
+      [
+        [0, 3],
+        [5, 8],
+        [5, 6]
+      ],
+      {}
+    ),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "04.01.03 - empty opts obj"
   );
   t.deepEqual(
-    srt([[0, 3], [5, 8], [5, 6]], {
-      progressFn: percentage => {
-        // console.log(`percentage = ${percentage}`);
-        t.pass(`worked - ${percentage}`);
+    srt(
+      [
+        [0, 3],
+        [5, 8],
+        [5, 6]
+      ],
+      {
+        progressFn: percentage => {
+          // console.log(`percentage = ${percentage}`);
+          t.pass(`worked - ${percentage}`);
+        }
       }
-    }),
-    [[0, 3], [5, 6], [5, 8]],
+    ),
+    [
+      [0, 3],
+      [5, 6],
+      [5, 8]
+    ],
     "04.01.04 - baseline, no fn to call"
   );
 });

@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "merge",
-    "string",
     "index",
+    "join",
+    "manage",
+    "merge",
+    "multiple",
     "ranges",
     "slices",
+    "string",
     "substring",
-    "manage",
-    "join",
-    "two",
-    "multiple"
+    "two"
   ],
   "main": "dist/ranges-merge.cjs.js",
   "module": "dist/ranges-merge.esm.js",

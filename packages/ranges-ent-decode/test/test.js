@@ -42,7 +42,10 @@ test("00.04 - falsey opts does not throw", t => {
 test("01.01 - decodes multiple entities within a string, entities surrounded by other chars", t => {
   t.deepEqual(
     decode("a &pound; b &lsquo; c"),
-    [[2, 9, "£"], [12, 19, "‘"]],
+    [
+      [2, 9, "£"],
+      [12, 19, "‘"]
+    ],
     "01.01.01"
   );
 });
@@ -50,12 +53,18 @@ test("01.01 - decodes multiple entities within a string, entities surrounded by 
 test("01.02 - decodes double-encoded entities", t => {
   t.deepEqual(
     decode("a &amp;pound; b &amp;lsquo; c"),
-    [[2, 13, "£"], [16, 27, "‘"]],
+    [
+      [2, 13, "£"],
+      [16, 27, "‘"]
+    ],
     "01.02"
   );
   t.deepEqual(
     decode("a &#x26;pound; b &#x26;lsquo; c"),
-    [[2, 14, "£"], [17, 29, "‘"]],
+    [
+      [2, 14, "£"],
+      [17, 29, "‘"]
+    ],
     "01.02"
   );
 });
@@ -63,17 +72,26 @@ test("01.02 - decodes double-encoded entities", t => {
 test("01.03 - decodes triple-encoded entities", t => {
   t.deepEqual(
     decode("a &amp;amp;pound; b &amp;amp;lsquo; c"),
-    [[2, 17, "£"], [20, 35, "‘"]],
+    [
+      [2, 17, "£"],
+      [20, 35, "‘"]
+    ],
     "01.03.01"
   );
   t.deepEqual(
     decode("a &#x26;#x26;pound; b &#x26;#x26;lsquo; c"),
-    [[2, 19, "£"], [22, 39, "‘"]],
+    [
+      [2, 19, "£"],
+      [22, 39, "‘"]
+    ],
     "01.03.02"
   );
   t.deepEqual(
     decode("a &#x26;amp;pound; b &#x26;amp;lsquo; c"),
-    [[2, 18, "£"], [21, 37, "‘"]],
+    [
+      [2, 18, "£"],
+      [21, 37, "‘"]
+    ],
     "01.03.03"
   );
 });
@@ -81,17 +99,26 @@ test("01.03 - decodes triple-encoded entities", t => {
 test("01.04 - ampersand entity", t => {
   t.deepEqual(
     decode("a &#x26; b &amp; c"),
-    [[2, 8, "&"], [11, 16, "&"]],
+    [
+      [2, 8, "&"],
+      [11, 16, "&"]
+    ],
     "01.04.01"
   );
   t.deepEqual(
     decode("a &#x26;amp; b &amp;#x26; c"),
-    [[2, 12, "&"], [15, 25, "&"]],
+    [
+      [2, 12, "&"],
+      [15, 25, "&"]
+    ],
     "01.04.02"
   );
   t.deepEqual(
     decode("a &#x26;amp;#x26; b &amp;#x26;amp; c"),
-    [[2, 17, "&"], [20, 34, "&"]],
+    [
+      [2, 17, "&"],
+      [20, 34, "&"]
+    ],
     "01.04.03"
   );
 });
@@ -107,7 +134,12 @@ test("01.05 - ambiguous ampersand", t => {
 test("01.06 - legacy named references (without a trailing semicolon)", t => {
   t.deepEqual(
     decode("&notin; &noti &notin &copy123"),
-    [[0, 7, "\u2209"], [8, 13, "\xACi"], [14, 19, "\xACi"], [21, 27, "\xA91"]],
+    [
+      [0, 7, "\u2209"],
+      [8, 13, "\xACi"],
+      [14, 19, "\xACi"],
+      [21, 27, "\xA91"]
+    ],
     "01.06"
   );
 });
@@ -115,7 +147,10 @@ test("01.06 - legacy named references (without a trailing semicolon)", t => {
 test("01.07 - hexadecimal escape", t => {
   t.deepEqual(
     decode("a&#x1D306;b&#X0000000000001d306;c"),
-    [[1, 10, "\uD834\uDF06"], [11, 32, "\uD834\uDF06"]],
+    [
+      [1, 10, "\uD834\uDF06"],
+      [11, 32, "\uD834\uDF06"]
+    ],
     "01.07"
   );
 });
@@ -123,7 +158,11 @@ test("01.07 - hexadecimal escape", t => {
 test("01.08 - Decimal escape", t => {
   t.deepEqual(
     decode("a&#119558;b&#169;c&#00000000000000000169;d"),
-    [[1, 10, "\uD834\uDF06"], [11, 17, "\xA9"], [18, 41, "\xA9"]],
+    [
+      [1, 10, "\uD834\uDF06"],
+      [11, 17, "\xA9"],
+      [18, 41, "\xA9"]
+    ],
     "01.08"
   );
 });

@@ -14,14 +14,14 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "email",
-    "templates",
-    "template",
-    "characters",
-    "ascii",
-    "range",
-    "encoded",
     "7bit",
+    "ascii",
+    "characters",
+    "email",
+    "encoded",
+    "range",
+    "template",
+    "templates",
     "validate"
   ],
   "bin": {

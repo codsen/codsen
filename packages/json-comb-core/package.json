@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "json",
-    "normalize",
-    "normalise",
-    "schema",
+    "comb",
     "files",
     "fill",
-    "keyset",
+    "json",
     "keys",
+    "keyset",
+    "normalise",
+    "normalize",
     "same",
-    "comb"
+    "schema"
   ],
   "main": "dist/json-comb-core.cjs.js",
   "module": "dist/json-comb-core.esm.js",
