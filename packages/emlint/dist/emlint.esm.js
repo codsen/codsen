@@ -209,6 +209,78 @@ function badCharacterLineTabulation(context) {
   };
 }
 
+function badCharacterFormFeed(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 12) {
+        context.report({
+          ruleId: "bad-character-form-feed",
+          message: "Bad character - FORM FEED.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterShiftOut(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 14) {
+        context.report({
+          ruleId: "bad-character-shift-out",
+          message: "Bad character - SHIFT OUT.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterShiftIn(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 15) {
+        context.report({
+          ruleId: "bad-character-shift-in",
+          message: "Bad character - SHIFT IN.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDataLinkEscape(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 16) {
+        context.report({
+          ruleId: "bad-character-data-link-escape",
+          message: "Bad character - DATA LINK ESCAPE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
@@ -300,6 +372,26 @@ defineLazyProp(
   builtInRules,
   "bad-character-line-tabulation",
   () => badCharacterLineTabulation
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-form-feed",
+  () => badCharacterFormFeed
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-shift-out",
+  () => badCharacterShiftOut
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-shift-in",
+  () => badCharacterShiftIn
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-data-link-escape",
+  () => badCharacterDataLinkEscape
 );
 defineLazyProp(
   builtInRules,

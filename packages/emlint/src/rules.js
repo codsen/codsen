@@ -12,61 +12,99 @@ const builtInRules = {};
 
 import badCharacterNull from "./rules/bad-character-null";
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
+
 import badCharacterStartOfHeading from "./rules/bad-character-start-of-heading";
 defineLazyProp(
   builtInRules,
   "bad-character-start-of-heading",
   () => badCharacterStartOfHeading
 );
+
 import badCharacterStartOfText from "./rules/bad-character-start-of-text";
 defineLazyProp(
   builtInRules,
   "bad-character-start-of-text",
   () => badCharacterStartOfText
 );
+
 import badCharacterEndOfText from "./rules/bad-character-end-of-text";
 defineLazyProp(
   builtInRules,
   "bad-character-end-of-text",
   () => badCharacterEndOfText
 );
+
 import badCharacterEndOfTransmission from "./rules/bad-character-end-of-transmission";
 defineLazyProp(
   builtInRules,
   "bad-character-end-of-transmission",
   () => badCharacterEndOfTransmission
 );
+
 import badCharacterEnquiry from "./rules/bad-character-enquiry";
 defineLazyProp(
   builtInRules,
   "bad-character-enquiry",
   () => badCharacterEnquiry
 );
+
 import badCharacterAcknowledge from "./rules/bad-character-acknowledge";
 defineLazyProp(
   builtInRules,
   "bad-character-acknowledge",
   () => badCharacterAcknowledge
 );
+
 import badCharacterBell from "./rules/bad-character-bell";
 defineLazyProp(builtInRules, "bad-character-bell", () => badCharacterBell);
+
 import badCharacterBackspace from "./rules/bad-character-backspace";
 defineLazyProp(
   builtInRules,
   "bad-character-backspace",
   () => badCharacterBackspace
 );
+
 import badCharacterTabulation from "./rules/bad-character-character-tabulation";
 defineLazyProp(
   builtInRules,
   "bad-character-character-tabulation",
   () => badCharacterTabulation
 );
+
 import badCharacterLineTabulation from "./rules/bad-character-line-tabulation";
 defineLazyProp(
   builtInRules,
   "bad-character-line-tabulation",
   () => badCharacterLineTabulation
+);
+
+import badCharacterFormFeed from "./rules/bad-character-form-feed";
+defineLazyProp(
+  builtInRules,
+  "bad-character-form-feed",
+  () => badCharacterFormFeed
+);
+
+import badCharacterShiftOut from "./rules/bad-character-shift-out";
+defineLazyProp(
+  builtInRules,
+  "bad-character-shift-out",
+  () => badCharacterShiftOut
+);
+
+import badCharacterShiftIn from "./rules/bad-character-shift-in";
+defineLazyProp(
+  builtInRules,
+  "bad-character-shift-in",
+  () => badCharacterShiftIn
+);
+
+import badCharacterDataLinkEscape from "./rules/bad-character-data-link-escape";
+defineLazyProp(
+  builtInRules,
+  "bad-character-data-link-escape",
+  () => badCharacterDataLinkEscape
 );
 
 // TAG-LEVEL rules

@@ -284,6 +284,78 @@ function badCharacterLineTabulation(context) {
   };
 }
 
+function badCharacterFormFeed(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 12) {
+        context.report({
+          ruleId: "bad-character-form-feed",
+          message: "Bad character - FORM FEED.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterShiftOut(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 14) {
+        context.report({
+          ruleId: "bad-character-shift-out",
+          message: "Bad character - SHIFT OUT.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterShiftIn(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 15) {
+        context.report({
+          ruleId: "bad-character-shift-in",
+          message: "Bad character - SHIFT IN.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDataLinkEscape(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 16) {
+        context.report({
+          ruleId: "bad-character-data-link-escape",
+          message: "Bad character - DATA LINK ESCAPE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
@@ -347,6 +419,18 @@ defineLazyProp(builtInRules, "bad-character-character-tabulation", function () {
 });
 defineLazyProp(builtInRules, "bad-character-line-tabulation", function () {
   return badCharacterLineTabulation;
+});
+defineLazyProp(builtInRules, "bad-character-form-feed", function () {
+  return badCharacterFormFeed;
+});
+defineLazyProp(builtInRules, "bad-character-shift-out", function () {
+  return badCharacterShiftOut;
+});
+defineLazyProp(builtInRules, "bad-character-shift-in", function () {
+  return badCharacterShiftIn;
+});
+defineLazyProp(builtInRules, "bad-character-data-link-escape", function () {
+  return badCharacterDataLinkEscape;
 });
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;
