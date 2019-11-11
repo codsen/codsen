@@ -242,11 +242,11 @@ async function step14(receivedPack) {
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
-  // console.log(`0254 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
+  // console.log(`0252 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
 
   if (isObj(lectrc) && Object.keys(lectrc).length) {
-    // console.log(`0257 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
-    // console.log(`0258 lect: path=${path.resolve("../.lectrc.json")}`);
+    // console.log(`0255 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
+    // console.log(`0256 lect: path=${path.resolve("../.lectrc.json")}`);
 
     await writeJsonFile(path.resolve("../.lectrc.json"), lectrc)
       .then(() => {
@@ -843,6 +843,7 @@ function step11() {
 // second part
 async function writePackageJson(receivedPackageJsonObj) {
   // const backupPerfScript = pack.scripts.perf;
+
   if (
     (objectPath.has(lectrc, "various.addBlanks") && lectrc.various.addBlanks) ||
     (objectPath.has(pack, "lect.addBlanks") && pack.lect.addBlanks)
@@ -995,18 +996,18 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   const packDevDeps = pack.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0989 packDevDeps.ava = ${packDevDeps.ava}`);
+  //   console.log(`1006 packDevDeps.ava = ${packDevDeps.ava}`);
   //   const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
   // }
   const lectrcDevDeps = lectrc.package.devDependencies;
   // if (DEBUG) {
-  //   console.log(`0994 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
+  //   console.log(`1011 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
   // }
 
   // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
-    // console.log(`1000 lect: processing ${key}`);
+    // console.log(`1017 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
@@ -1017,7 +1018,7 @@ async function writePackageJson(receivedPackageJsonObj) {
       (!(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
         (key !== "tempy" && key !== "execa"))
     ) {
-      // console.log(`1011 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1028 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1025,7 +1026,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     ) {
       // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-      // console.log(`1019 lect: ${key} stays ${pack.devDependencies[key]}`);
+      // console.log(`1036 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
     // console.log("\n-------\n");
   });
@@ -1040,7 +1041,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1034 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1051 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1085,7 +1086,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1079 lect cli: key to write hard =${key}`);
+        // console.log(`1096 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1111,8 +1112,8 @@ async function writePackageJson(receivedPackageJsonObj) {
 // the logic of prepping the package.json before overwriting it
 async function step10() {
   // log(`${chalk.white("\nSTEP 10 - Edit and write package.json")}`);
-  let newValues = clone(get("package"));
-
+  // let newValues = clone(get("package"));
+  let newValues = clone(pack);
   if (isObj(newValues) && Object.keys(newValues).length > 0) {
     // detect non-rollup setups and remove rollup if necessary:
     if (!objectPath.has(pack, "devDependencies.rollup")) {
@@ -1169,7 +1170,12 @@ async function step10() {
       }
       const defaultDevDeps = get("package.devDependencies");
       if (defaultDevDeps) {
-        objectPath.set(finalThing, "devDependencies", defaultDevDeps);
+        // objectPath.set(finalThing, "devDependencies", defaultDevDeps);
+        finalThing.devDependencies = Object.assign(
+          {},
+          defaultDevDeps.devDependencies,
+          finalThing.devDependencies
+        );
       }
     }
 
@@ -1552,7 +1558,7 @@ function step6() {
 
   readmeData.forEach((readmePiece, indx) => {
     // console.log(
-    //   `1580 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    //   `1601 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
     // );
     // console.log(
     //   `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
@@ -1580,7 +1586,7 @@ function step6() {
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
       // if (DEBUG) {
-      //   console.log(`1632 clause #1`);
+      //   console.log(`1629 clause #1`);
       // }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
@@ -1598,7 +1604,7 @@ function step6() {
       readmePiece.heading.startsWith("# ")
     ) {
       // if (DEBUG) {
-      //   console.log(`1650 clause #2`);
+      //   console.log(`1647 clause #2`);
       // }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
@@ -1644,7 +1650,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1696 clause #3`);
+        console.log(`1693 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1813,7 +1819,7 @@ const ${consumedName} = ${camelCase(pack.name)};
       }
     }
   });
-  // console.log(`1843 lect()`);
+  // console.log(`1862 lect()`);
 
   // contributing module
   content += `${
