@@ -81,22 +81,34 @@ test("00.04 - second input argument is not string", t => {
 test(`01.01 - crops out few ranges outside the strlen`, t => {
   t.deepEqual(
     rare(/def/g, "abcdefghij_abcdefghij"),
-    [[3, 6], [14, 17]],
+    [
+      [3, 6],
+      [14, 17]
+    ],
     "01.01.01"
   );
   t.deepEqual(
     rare(/def/g, "abcdefghij_abcdefghij", "yo"),
-    [[3, 6, "yo"], [14, 17, "yo"]],
+    [
+      [3, 6, "yo"],
+      [14, 17, "yo"]
+    ],
     "01.01.02"
   );
   t.deepEqual(
     rare(/def/g, "abcdefghij_abcdefghij", null),
-    [[3, 6, null], [14, 17, null]],
+    [
+      [3, 6, null],
+      [14, 17, null]
+    ],
     "01.01.03"
   );
   t.deepEqual(
     rare(/def/g, "abcdefghij_abcdefghij", ""),
-    [[3, 6], [14, 17]],
+    [
+      [3, 6],
+      [14, 17]
+    ],
     "01.01.04 - empty string is omitted by defa"
   );
 });
@@ -110,7 +122,14 @@ test(`01.02 - nothing found`, t => {
 test(`01.03 - result ranges are consecutive so their ranges are merged into one`, t => {
   const reg = /def/g;
   const str = "abcdefdefghij_abcdefghij";
-  t.deepEqual(rare(reg, str), [[3, 9], [17, 20]], "01.03.01");
+  t.deepEqual(
+    rare(reg, str),
+    [
+      [3, 9],
+      [17, 20]
+    ],
+    "01.03.01"
+  );
   t.is(rangesApply(str, rare(reg, str)), str.replace(reg, ""), "01.03.02");
 });
 

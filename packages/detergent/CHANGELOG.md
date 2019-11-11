@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.1](https://gitlab.com/codsen/codsen/compare/detergent@5.7.0...detergent@5.7.1) (2019-11-11)
+
+
+### Bug Fixes
+
+* fix the html tag skipping during widow removal ([2fd262b](https://gitlab.com/codsen/codsen/commit/2fd262bc8fecdaa376406f42fc750571af8379c8))
+
+
+
+
+
 ## 5.7.0 (2019-11-05)
 
 ### Features

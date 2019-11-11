@@ -290,7 +290,15 @@ We're also on "f" and we're also looking left, are the sequence "c", "d", "e" on
 ```js
 t.deepEqual(
   leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
-  { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+  {
+    gaps: [
+      [7, 9],
+      [10, 12],
+      [13, 15]
+    ],
+    leftmostChar: 6,
+    rightmostChar: 12
+  },
   "04.01.02"
 );
 ```

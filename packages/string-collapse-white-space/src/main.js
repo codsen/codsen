@@ -267,7 +267,8 @@ function collapse(str, originalOpts) {
       if (whiteSpaceEndsAt !== null) {
         if (
           i + 1 !== whiteSpaceEndsAt + 1 &&
-          (whiteSpaceEndsAt === str.length - 1 && opts.trimEnd)
+          whiteSpaceEndsAt === str.length - 1 &&
+          opts.trimEnd
         ) {
           console.log(
             `273 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i +

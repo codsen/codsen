@@ -1,7 +1,7 @@
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 3.0.40
+ * Version: 3.0.41
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
@@ -151,11 +151,11 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       trimBeforeMatching: true,
       relaxedApi: true
     }) ||
-    (!opts.tails.length ||
-      !matchLeftIncl(str, str.length - 1, opts.tails, {
-        trimBeforeMatching: true,
-        relaxedApi: true
-      }))
+    !opts.tails.length ||
+    !matchLeftIncl(str, str.length - 1, opts.tails, {
+      trimBeforeMatching: true,
+      relaxedApi: true
+    })
   ) {
     return trimSpaces(str).res;
   }

@@ -1336,7 +1336,10 @@ test("04.09 - two arrays, matches middle, objects within", t => {
         { d1: "d1", d2: "d2" },
         { e: "e" }
       ],
-      [{ c1: "c1", c2: "c2" }, { d1: "d1", d2: "d2" }]
+      [
+        { c1: "c1", c2: "c2" },
+        { d1: "d1", d2: "d2" }
+      ]
     ),
     true,
     "04.09.06"
@@ -1350,7 +1353,10 @@ test("04.09 - two arrays, matches middle, objects within", t => {
         { d1: "d1", d2: "d2" },
         { e: "e" }
       ],
-      [{ c2: "c2", c1: "c1" }, { d2: "d2", d1: "d1" }]
+      [
+        { c2: "c2", c1: "c1" },
+        { d2: "d2", d1: "d1" }
+      ]
     ),
     true,
     "04.09.07"
@@ -1364,7 +1370,10 @@ test("04.09 - two arrays, matches middle, objects within", t => {
         { d2: "d2" },
         { e: "e" }
       ],
-      [{ c2: "c2", c1: "c1" }, { d2: "d2", d1: "d1" }]
+      [
+        { c2: "c2", c1: "c1" },
+        { d2: "d2", d1: "d1" }
+      ]
     ),
     false,
     "04.09.08"

@@ -7,7 +7,15 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 
 // setup
 const f = require("../");
-const testme = () => f([[0, 1], [1, 2], [5, 9]], 9);
+const testme = () =>
+  f(
+    [
+      [0, 1],
+      [1, 2],
+      [5, 9]
+    ],
+    9
+  );
 
 // action
 runPerf(testme, callerDir);

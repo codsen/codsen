@@ -287,14 +287,22 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // stage 4: find unused footer links
 
   let unusedFooterLinks = footerLinks.filter(
-    link => !includes(titles.map(title => title.version), link.version)
+    link =>
+      !includes(
+        titles.map(title => title.version),
+        link.version
+      )
   );
 
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(
-      link => !includes(titles.map(title => title.version), link.version)
+      link =>
+        !includes(
+          titles.map(title => title.version),
+          link.version
+        )
     );
   }
 

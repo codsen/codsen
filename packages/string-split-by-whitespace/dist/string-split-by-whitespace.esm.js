@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 1.6.48
+ * Version: 1.6.49
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
@@ -41,9 +41,13 @@ function split(str, originalOpts) {
       str[i].trim() !== "" &&
       (opts.ignoreRanges.length === 0 ||
         (opts.ignoreRanges.length !== 0 &&
-          !within(i, opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]), {
-            inclusiveRangeEnds: true
-          })))
+          !within(
+            i,
+            opts.ignoreRanges.map(arr => [arr[0], arr[1] - 1]),
+            {
+              inclusiveRangeEnds: true
+            }
+          )))
     ) {
       nonWhitespaceSubStringStartsAt = i;
     }

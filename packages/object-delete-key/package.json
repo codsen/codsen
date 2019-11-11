@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.9.5",
+  "version": "1.9.6",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "engines": {
@@ -22,14 +22,14 @@
     "html",
     "key",
     "object",
-    "plain",
     "parser",
+    "plain",
     "posthtml",
     "posthtml-tree",
     "posthtmltree",
     "tree",
-    "xml",
-    "value"
+    "value",
+    "xml"
   ],
   "main": "dist/object-delete-key.cjs.js",
   "module": "dist/object-delete-key.esm.js",
@@ -140,10 +140,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-is-empty": "^1.9.47",
-    "ast-monkey": "^7.10.49",
+    "ast-is-empty": "^1.9.48",
+    "ast-monkey": "^7.10.50",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^2.7.46"
+    "util-array-object-or-both": "^2.7.47"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -159,8 +159,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "posthtml-parser": "^0.4.2",
     "prettier": "^1.19.0",

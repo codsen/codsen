@@ -175,9 +175,7 @@ globby(input)
       // );
       if (finalPathsToProcessArr.length === 1) {
         log(
-          `${messagePrefix}[ID_2] We can't normalise one file (${
-            finalPathsToProcessArr[0]
-          }), we need more than one.`
+          `${messagePrefix}[ID_2] We can't normalise one file (${finalPathsToProcessArr[0]}), we need more than one.`
         );
         process.exit(0);
       }

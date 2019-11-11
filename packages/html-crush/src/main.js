@@ -1056,10 +1056,10 @@ function crush(str, originalOpts) {
                   str[i + 4] === "y" &&
                   str[i + 5] === "l" &&
                   str[i + 6] === "e") ||
-                ((str[i] === ">" &&
+                (str[i] === ">" &&
                   (`'"`.includes(str[left(str, i)]) ||
                     str[right(str, i)] === "<")) ||
-                  (str[i] === "/" && str[right(str, i)] === ">"))
+                (str[i] === "/" && str[right(str, i)] === ">")
               ) {
                 console.log(`1064 whatToAdd = ""`);
 
@@ -1302,10 +1302,10 @@ function crush(str, originalOpts) {
         ) {
           if (
             !str[i + 1] ||
-            ((CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+            (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
               !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
-              CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
-              !str[i].trim().length)
+            CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
+            !str[i].trim().length
           ) {
             console.log(`1310 inside release-stage clauses`);
             // 1. release stage contents - now they'll be definitely deleted
@@ -1395,21 +1395,21 @@ function crush(str, originalOpts) {
               (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
                 (str[i - 1] &&
                   CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
-              (isStr(leftTagName) &&
-                !opts.mindTheInlineTags.includes(tagName) &&
-                (!(
-                  str[i] === "<" &&
-                  matchRight(str, i, opts.mindTheInlineTags, {
-                    cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
-                  })
-                ) &&
-                  !(
-                    str[i] === "<" &&
-                    matchRight(str, i, opts.mindTheInlineTags, {
-                      trimCharsBeforeMatching: "/",
-                      cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
-                    })
-                  )))
+              isStr(leftTagName) &&
+              !opts.mindTheInlineTags.includes(tagName) &&
+              !(
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+                })
+              ) &&
+              !(
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  trimCharsBeforeMatching: "/",
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+                })
+              )
             ) {
               stageFrom = i;
               stageTo = i;

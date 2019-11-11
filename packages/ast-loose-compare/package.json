@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.7.47",
+  "version": "1.7.48",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
@@ -14,19 +14,19 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "ast",
-    "posthtml",
-    "compare",
-    "object",
     "array",
-    "tree",
+    "ast",
+    "compare",
+    "equal",
+    "html",
+    "object",
+    "parser",
+    "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser",
     "subset",
-    "equal"
+    "tree",
+    "xml"
   ],
   "main": "dist/ast-loose-compare.cjs.js",
   "module": "dist/ast-loose-compare.esm.js",
@@ -135,7 +135,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.48",
+    "ast-contains-only-empty-space": "^1.8.49",
     "lodash.isplainobject": "^4.0.6",
     "lodash.isstring": "^4.0.1"
   },
@@ -153,8 +153,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

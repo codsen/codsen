@@ -593,16 +593,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       matchedLettersCount > 2 &&
       (nbsp.matchedSemicol !== null ||
         !nbsp.ampersandNecessary ||
-        ((isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
-          ((isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) &&
-            largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) ||
-          (nbsp.matchedN !== null &&
-            nbsp.matchedB !== null &&
-            nbsp.matchedS !== null &&
-            nbsp.matchedP !== null &&
-            nbsp.matchedN + 1 === nbsp.matchedB &&
-            nbsp.matchedB + 1 === nbsp.matchedS &&
-            nbsp.matchedS + 1 === nbsp.matchedP))) &&
+        (isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
+        ((isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) &&
+          largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) ||
+        (nbsp.matchedN !== null &&
+          nbsp.matchedB !== null &&
+          nbsp.matchedS !== null &&
+          nbsp.matchedP !== null &&
+          nbsp.matchedN + 1 === nbsp.matchedB &&
+          nbsp.matchedB + 1 === nbsp.matchedS &&
+          nbsp.matchedS + 1 === nbsp.matchedP)) &&
       (!str[i] ||
         (nbsp.matchedN !== null &&
           nbsp.matchedB !== null &&
@@ -937,8 +937,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
-                (!str[tempRes.rightmostChar + 1] ||
-                  ["&"].includes(str[tempRes.rightmostChar + 1])) ||
+                !str[tempRes.rightmostChar + 1] ||
+                ["&"].includes(str[tempRes.rightmostChar + 1]) ||
                 ((uncertain[tempEnt].addSemiIfAmpPresent === true ||
                   (uncertain[tempEnt].addSemiIfAmpPresent &&
                     (!str[tempRes.rightmostChar + 1] ||
@@ -1090,11 +1090,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
-                (uncertain[tempEnt].addAmpIfSemiPresent === true ||
-                  (uncertain[tempEnt].addAmpIfSemiPresent &&
-                    (!tempRes.leftmostChar ||
-                      (isStr(str[tempRes.leftmostChar - 1]) &&
-                        !str[tempRes.leftmostChar - 1].trim().length)))))
+                uncertain[tempEnt].addAmpIfSemiPresent === true ||
+                (uncertain[tempEnt].addAmpIfSemiPresent &&
+                  (!tempRes.leftmostChar ||
+                    (isStr(str[tempRes.leftmostChar - 1]) &&
+                      !str[tempRes.leftmostChar - 1].trim().length))))
             ) {
               console.log(
                 `1100 ${`\u001b[${35}m${`entity ${tempEnt} is indeed on the left of index ${i}, the situation is: ${JSON.stringify(
@@ -1524,9 +1524,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   // semicol respectively).
                   if (
                     Object.keys(uncertain).includes(potentialEntity) &&
-                    (isStr(str[firstChar - 1]) &&
-                      !str[firstChar - 1].trim().length &&
-                      uncertain[potentialEntity].addAmpIfSemiPresent !== true)
+                    isStr(str[firstChar - 1]) &&
+                    !str[firstChar - 1].trim().length &&
+                    uncertain[potentialEntity].addAmpIfSemiPresent !== true
                   ) {
                     console.log(
                       `1532 ${`\u001b[${31}m${`██`}\u001b[${39}m`} CONTINUE - bail clauses`

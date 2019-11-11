@@ -1,7 +1,7 @@
 /**
  * string-trim-spaces-only
  * Like String.trim() but you can choose granularly what to trim
- * Version: 2.8.4
+ * Version: 2.8.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
@@ -66,7 +66,10 @@ function trimSpaces(s, originalOpts) {
       if (newEnd) {
         return {
           res: s.slice(newStart, newEnd),
-          ranges: [[0, newStart], [newEnd, s.length]]
+          ranges: [
+            [0, newStart],
+            [newEnd, s.length]
+          ]
         };
       }
       return {

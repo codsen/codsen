@@ -2868,7 +2868,11 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
 
 test(`10.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, t => {
   t.is(matchLeft("a", 0, "EOL"), false, "10.01.01");
-  t.is(matchLeft("a", 0, () => "EOL"), "EOL", "10.01.02");
+  t.is(
+    matchLeft("a", 0, () => "EOL"),
+    "EOL",
+    "10.01.02"
+  );
   t.is(
     matchLeft("a", 0, () => "EOL", {
       cb: () => {
@@ -2905,7 +2909,11 @@ test(`10.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}
     "10.01.06 - whitespace trim opts control"
   );
 
-  t.is(matchLeft("EOLa", 3, () => "EOL"), false, "10.01.07 - CHEEKY!!!");
+  t.is(
+    matchLeft("EOLa", 3, () => "EOL"),
+    false,
+    "10.01.07 - CHEEKY!!!"
+  );
   t.is(matchLeft("EOLa", 3, "EOL"), "EOL", "10.01.08 - !!!");
 
   t.is(
@@ -3090,7 +3098,11 @@ test(`10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}
 
 test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
   t.is(matchLeftIncl("a", 0, "EOL"), false, "10.03.01");
-  t.is(matchLeftIncl("a", 0, () => "EOL"), false, "10.03.02");
+  t.is(
+    matchLeftIncl("a", 0, () => "EOL"),
+    false,
+    "10.03.02"
+  );
   t.is(
     matchLeftIncl("a", 0, () => "EOL", {
       cb: () => {
@@ -3117,7 +3129,11 @@ test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}
     "10.03.06 - whitespace trim opts control"
   );
 
-  t.is(matchLeftIncl("EOLa", 3, () => "EOLa"), false, "10.03.07");
+  t.is(
+    matchLeftIncl("EOLa", 3, () => "EOLa"),
+    false,
+    "10.03.07"
+  );
   t.is(matchLeftIncl("EOLa", 3, "EOL"), false, "10.03.08");
 
   t.is(
@@ -3160,7 +3176,11 @@ test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}
 
 test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`, t => {
   t.is(matchRight("a", 0, "EOL"), false, "10.04.01");
-  t.is(matchRight("a", 0, () => "EOL"), "EOL", "10.04.02");
+  t.is(
+    matchRight("a", 0, () => "EOL"),
+    "EOL",
+    "10.04.02"
+  );
   t.is(
     matchRight("a", 0, () => "EOL", {
       cb: () => {
@@ -3191,10 +3211,22 @@ test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}
   });
 
   // whitespace trims:
-  t.is(matchRight("a ", 0, () => "EOL"), false, "10.04.06-1");
-  t.is(matchRight("a ", 1, () => "EOL"), "EOL", "10.04.06-2");
+  t.is(
+    matchRight("a ", 0, () => "EOL"),
+    false,
+    "10.04.06-1"
+  );
+  t.is(
+    matchRight("a ", 1, () => "EOL"),
+    "EOL",
+    "10.04.06-2"
+  );
 
-  t.is(matchRight("aEOL", 0, () => "EOL"), false, "10.04.07 - CHEEKY!!!");
+  t.is(
+    matchRight("aEOL", 0, () => "EOL"),
+    false,
+    "10.04.07 - CHEEKY!!!"
+  );
   t.is(matchRight("aEOL", 0, "EOL"), "EOL", "10.04.08 - !!!");
 
   t.is(
@@ -3388,7 +3420,11 @@ test(`10.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}
 // matchRightIncl() and matchLeftIncl() that search for EOL will always be "false".
 test(`10.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
   t.is(matchRightIncl("a", 0, "EOL"), false, "10.06.01");
-  t.is(matchRightIncl("a", 0, () => "EOL"), false, "10.06.02");
+  t.is(
+    matchRightIncl("a", 0, () => "EOL"),
+    false,
+    "10.06.02"
+  );
   t.is(
     matchRightIncl("a", 0, () => "EOL", {
       cb: () => {
@@ -3415,7 +3451,11 @@ test(`10.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}
     "10.06.05 - whitespace trim opts control"
   );
 
-  t.is(matchRightIncl("aEOL", 0, () => "aEOL"), false, "10.06.06");
+  t.is(
+    matchRightIncl("aEOL", 0, () => "aEOL"),
+    false,
+    "10.06.06"
+  );
   t.is(matchRightIncl("aEOL", 0, "EOL"), false, "10.06.07");
 
   t.is(

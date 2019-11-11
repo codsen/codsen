@@ -122,7 +122,15 @@ test(`03.01 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, t => {
   );
   t.deepEqual(
     rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
-    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 9, rightmostChar: 15 },
+    {
+      gaps: [
+        [7, 9],
+        [10, 12],
+        [13, 15]
+      ],
+      leftmostChar: 9,
+      rightmostChar: 15
+    },
     "03.01.03"
   );
 });
@@ -191,7 +199,10 @@ test(`03.08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optio
   t.deepEqual(
     rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
     {
-      gaps: [[3, 5], [6, 9]],
+      gaps: [
+        [3, 5],
+        [6, 9]
+      ],
       leftmostChar: 5,
       rightmostChar: 9
     },
@@ -258,17 +269,41 @@ test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, t => {
   );
   t.deepEqual(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
-    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    {
+      gaps: [
+        [7, 9],
+        [10, 12],
+        [13, 15]
+      ],
+      leftmostChar: 6,
+      rightmostChar: 12
+    },
     "04.01.02"
   );
   t.deepEqual(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e"),
-    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    {
+      gaps: [
+        [7, 9],
+        [10, 12],
+        [13, 15]
+      ],
+      leftmostChar: 6,
+      rightmostChar: 12
+    },
     "04.01.03"
   );
   t.deepEqual(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e", "x?"),
-    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    {
+      gaps: [
+        [7, 9],
+        [10, 12],
+        [13, 15]
+      ],
+      leftmostChar: 6,
+      rightmostChar: 12
+    },
     "04.01.04"
   );
 });

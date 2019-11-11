@@ -1,7 +1,7 @@
 /**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
- * Version: 3.7.47
+ * Version: 3.7.48
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
@@ -444,13 +444,21 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   }
   const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
   let unusedFooterLinks = footerLinks.filter(
-    link => !includes(titles.map(title => title.version), link.version)
+    link =>
+      !includes(
+        titles.map(title => title.version),
+        link.version
+      )
   );
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(
-      link => !includes(titles.map(title => title.version), link.version)
+      link =>
+        !includes(
+          titles.map(title => title.version),
+          link.version
+        )
     );
   }
   const missingFooterLinks = [];

@@ -1450,7 +1450,7 @@ function processCharacter(
         );
       } else if (
         charcode === 8211 ||
-        (charcode === 65533 && (isNumber(str[i - 1]) && isNumber(str[y])))
+        (charcode === 65533 && isNumber(str[i - 1]) && isNumber(str[y]))
       ) {
         // IF N-DASH, '\u2013'
         console.log("1456 processCharacter.js - N dash caught");
@@ -1652,7 +1652,7 @@ function processCharacter(
         }
       } else if (
         charcode === 8212 ||
-        (charcode === 65533 && (str[i - 1] === " " && str[y] === " "))
+        (charcode === 65533 && str[i - 1] === " " && str[y] === " ")
       ) {
         // IF RAW M-DASH, '\u2014'
         console.log("1658 processCharacter.js - M dash caught");

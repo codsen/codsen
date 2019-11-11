@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "1.9.22",
+  "version": "1.9.23",
   "description": "turns an array of arrays of data into a nested tree of plain objects",
   "license": "MIT",
   "engines": {
@@ -16,16 +16,16 @@
   "keywords": [
     "array",
     "delete",
-    "pull",
-    "pullall",
-    "remove",
-    "pulall",
-    "pullal",
-    "pulal",
     "element",
     "from",
     "glob",
     "pattern",
+    "pulal",
+    "pulall",
+    "pull",
+    "pullal",
+    "pullall",
+    "remove",
     "whitelist"
   ],
   "main": "dist/array-of-arrays-into-ast.cjs.js",
@@ -137,8 +137,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.46",
-    "object-merge-advanced": "^10.11.4"
+    "check-types-mini": "^5.7.47",
+    "object-merge-advanced": "^10.11.5"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -154,8 +154,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

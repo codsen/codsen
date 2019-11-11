@@ -56,7 +56,13 @@ test("00.04 - something's wrong with range arrays's contents", t => {
   t.truthy(error1.message.includes("THROW_ID_04"));
 
   const error2 = t.throws(() => {
-    crop([[1, 2], ["4", 5]], 3);
+    crop(
+      [
+        [1, 2],
+        ["4", 5]
+      ],
+      3
+    );
   });
   t.truthy(error2.message.includes("THROW_ID_04"));
 
@@ -66,7 +72,13 @@ test("00.04 - something's wrong with range arrays's contents", t => {
   t.truthy(error3.message.includes("THROW_ID_04"));
 
   const error4 = t.throws(() => {
-    crop([[1, 2], [null, 5]], 3);
+    crop(
+      [
+        [1, 2],
+        [null, 5]
+      ],
+      3
+    );
   });
   t.truthy(error4.message.includes("THROW_ID_04"));
 
@@ -90,9 +102,16 @@ test("00.05 - third argument within one of given ranges if of a wrong type", t =
 test(`01.01 - crops out few ranges outside the strlen`, t => {
   const length = 7;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [4, 6], [8, 10]];
+  const sourceRange = [
+    [1, 3],
+    [4, 6],
+    [8, 10]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [4, 6]];
+  const resRange = [
+    [1, 3],
+    [4, 6]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "01.01.01");
@@ -112,9 +131,15 @@ test(`01.01 - crops out few ranges outside the strlen`, t => {
 test(`01.02 - overlap on one of ranges`, t => {
   const length = 8;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 8]];
+  const resRange = [
+    [1, 3],
+    [5, 8]
+  ];
   const resRangeBackup = clone(resRange);
   t.deepEqual(crop(sourceRange, length), resRange, "01.02.01");
 
@@ -133,9 +158,17 @@ test(`01.02 - overlap on one of ranges`, t => {
 test(`01.03 - overlap on one of ranges plus some extra ranges`, t => {
   const length = 8;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10], [12, 15], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 8]];
+  const resRange = [
+    [1, 3],
+    [5, 8]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "01.03.01");
@@ -155,9 +188,17 @@ test(`01.03 - overlap on one of ranges plus some extra ranges`, t => {
 test(`01.04 - string length on the beginning of one of ranges`, t => {
   const length = 12;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10], [12, 15], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 10]];
+  const resRange = [
+    [1, 3],
+    [5, 10]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "01.04.01");
@@ -177,9 +218,18 @@ test(`01.04 - string length on the beginning of one of ranges`, t => {
 test(`01.05 - string length on the ending of one of ranges`, t => {
   const length = 15;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10], [12, 15], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 10], [12, 15]];
+  const resRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "01.05.01");
@@ -199,7 +249,12 @@ test(`01.05 - string length on the ending of one of ranges`, t => {
 test(`01.06 - string length beyond any of given ranges`, t => {
   const length = 99;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10], [12, 15], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
   const resRange = clone(sourceRange); // <--------------- !
   const resRangeBackup = clone(resRange);
@@ -245,9 +300,15 @@ test(`01.07 - no ranges`, t => {
 test(`01.08 - unsorted ranges`, t => {
   const length = 8;
   const testStr = "z".repeat(length);
-  const sourceRange = [[5, 10], [1, 3]];
+  const sourceRange = [
+    [5, 10],
+    [1, 3]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 8]];
+  const resRange = [
+    [1, 3],
+    [5, 8]
+  ];
   const resRangeBackup = clone(resRange);
   t.deepEqual(crop(sourceRange, length), resRange, "01.08.01");
 
@@ -280,7 +341,10 @@ test(`01.09 - lots of overlapping, unsorted and futile ranges`, t => {
     [17, 19]
   ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 8]];
+  const resRange = [
+    [1, 3],
+    [5, 8]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "01.09.01");
@@ -304,9 +368,18 @@ test(`01.09 - lots of overlapping, unsorted and futile ranges`, t => {
 test(`02.01 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)`, t => {
   const length = 14;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10, "aaa"], [12, 15, "bbb"], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 15, "bbb"],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 10, "aaa"], [12, 14, "bbb"]];
+  const resRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 14, "bbb"]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "02.01.01");
@@ -326,9 +399,18 @@ test(`02.01 - strlen matches the middle of some range's indexes, there's content
 test(`02.02 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)`, t => {
   const length = 12;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10, "aaa"], [12, 15, "bbb"], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 15, "bbb"],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 10, "aaa"], [12, 12, "bbb"]];
+  const resRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 12, "bbb"]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "02.02.01");
@@ -348,9 +430,18 @@ test(`02.02 - strlen matches the beginning of some range's indexes, there's cont
 test(`02.03 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)`, t => {
   const length = 15;
   const testStr = "z".repeat(length);
-  const sourceRange = [[1, 3], [5, 10, "aaa"], [12, 15, "bbb"], [16, 20]];
+  const sourceRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 15, "bbb"],
+    [16, 20]
+  ];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [[1, 3], [5, 10, "aaa"], [12, 15, "bbb"]];
+  const resRange = [
+    [1, 3],
+    [5, 10, "aaa"],
+    [12, 15, "bbb"]
+  ];
   const resRangeBackup = clone(resRange);
 
   t.deepEqual(crop(sourceRange, length), resRange, "02.03.01");

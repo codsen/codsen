@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
@@ -14,25 +14,25 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "update",
-    "versions",
-    "package",
+    "app",
+    "automates",
+    "check",
+    "cli",
+    "dependencies",
+    "friendly",
     "json",
-    "package.json",
-    "npm",
     "lerna",
     "monorepo",
-    "friendly",
-    "check",
-    "updates",
-    "automates",
+    "npm",
+    "package",
+    "package.json",
     "tool",
-    "app",
-    "cli",
-    "utility",
+    "update",
+    "updates",
     "upgrade",
-    "dependencies",
-    "version"
+    "utility",
+    "version",
+    "versions"
   ],
   "bin": {
     "upd": "cli.js"
@@ -140,7 +140,7 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.1.7",
+    "edit-package-json": "^0.1.8",
     "globby": "^10.0.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^3.3.0",
@@ -167,8 +167,8 @@
     "esm": "^3.2.25",
     "execa": "^3.2.0",
     "fs-extra": "^8.1.0",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",

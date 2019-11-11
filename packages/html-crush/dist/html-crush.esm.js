@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 1.9.10
+ * Version: 1.9.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -14,7 +14,7 @@ import { matchRight, matchRightIncl, matchLeft } from 'string-match-left-right';
 import expand from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
-var version = "1.9.10";
+var version = "1.9.11";
 
 const isArr = Array.isArray;
 const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
@@ -632,10 +632,10 @@ function crush(str, originalOpts) {
                   str[i + 4] === "y" &&
                   str[i + 5] === "l" &&
                   str[i + 6] === "e") ||
-                ((str[i] === ">" &&
+                (str[i] === ">" &&
                   (`'"`.includes(str[left(str, i)]) ||
                     str[right(str, i)] === "<")) ||
-                  (str[i] === "/" && str[right(str, i)] === ">"))
+                (str[i] === "/" && str[right(str, i)] === ">")
               ) {
                 whatToAdd = "";
                 if (
@@ -744,10 +744,10 @@ function crush(str, originalOpts) {
         ) {
           if (
             !str[i + 1] ||
-            ((CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
+            (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
               !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
-              CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
-              !str[i].trim().length)
+            CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
+            !str[i].trim().length
           ) {
             if (
               stageFrom !== null &&
@@ -781,21 +781,21 @@ function crush(str, originalOpts) {
               (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
                 (str[i - 1] &&
                   CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i - 1]))) &&
-              (isStr(leftTagName) &&
-                !opts.mindTheInlineTags.includes(tagName) &&
-                (!(
-                  str[i] === "<" &&
-                  matchRight(str, i, opts.mindTheInlineTags, {
-                    cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                  })
-                ) &&
-                  !(
-                    str[i] === "<" &&
-                    matchRight(str, i, opts.mindTheInlineTags, {
-                      trimCharsBeforeMatching: "/",
-                      cb: nextChar => !nextChar || !/\w/.test(nextChar)
-                    })
-                  )))
+              isStr(leftTagName) &&
+              !opts.mindTheInlineTags.includes(tagName) &&
+              !(
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                })
+              ) &&
+              !(
+                str[i] === "<" &&
+                matchRight(str, i, opts.mindTheInlineTags, {
+                  trimCharsBeforeMatching: "/",
+                  cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                })
+              )
             ) {
               stageFrom = i;
               stageTo = i;

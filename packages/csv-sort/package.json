@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "3.0.39",
+  "version": "3.0.40",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "license": "MIT",
   "engines": {
@@ -14,21 +14,21 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "csv",
-    "sort",
-    "fix",
-    "bank",
     "accountancy",
     "accounting",
-    "lloyds",
+    "bank",
+    "columns",
     "crunch",
+    "csv",
+    "file",
+    "files",
+    "fix",
+    "lloyds",
+    "missing",
     "patch",
     "pony",
     "rows",
-    "columns",
-    "missing",
-    "file",
-    "files"
+    "sort"
   ],
   "main": "dist/csv-sort.cjs.js",
   "module": "dist/csv-sort.esm.js",
@@ -138,7 +138,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "csv-split-easy": "^3.0.39",
+    "csv-split-easy": "^3.0.40",
     "currency.js": "^1.2.2",
     "is-numeric": "^0.0.9",
     "lodash.pull": "^4.1.0"
@@ -157,8 +157,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

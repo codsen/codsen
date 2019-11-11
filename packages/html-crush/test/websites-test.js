@@ -47,9 +47,7 @@ test(`08.01-0${
           });
         } catch (error) {
           t.fail(
-            `During minification of URL "${
-              websiteArr[0]
-            }", minification threw an error:\n${error}`
+            `During minification of URL "${websiteArr[0]}", minification threw an error:\n${error}`
           );
         }
 
@@ -77,9 +75,7 @@ test(`08.01-0${
           });
         } catch (error) {
           t.fail(
-            `During minification of URL "${
-              websiteArr[0]
-            }", minification threw an error:\n${error}`
+            `During minification of URL "${websiteArr[0]}", minification threw an error:\n${error}`
           );
         }
 

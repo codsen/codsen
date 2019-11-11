@@ -118,7 +118,12 @@ Here it is in one place:
 For example, four fixed `nbsp`'s:
 
 ```js
-[[6, 11, "&nbsp;"], [11, 18, "&nbsp;"], [27, 34, "&nbsp;"], [34, 41, "&nbsp;"]];
+[
+  [6, 11, "&nbsp;"],
+  [11, 18, "&nbsp;"],
+  [27, 34, "&nbsp;"],
+  [34, 41, "&nbsp;"]
+];
 ```
 
 ## `opts.decode`
@@ -143,7 +148,10 @@ console.log(JSON.stringify(result, null, 4));
 So, normally, the output of this library is **an array** of zero or more arrays (each meaning string index _ranges_), for example:
 
 ```json
-[[1, 2], [3, 4]]
+[
+  [1, 2],
+  [3, 4]
+]
 ```
 
 Above means, delete string from index `1` to `2` and from `3` to `4`.
@@ -234,14 +242,22 @@ Since we give user an option to choose between raw and encoded values, result ca
 
   ```js
   // ranges:
-  [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]];
+  [
+    [0, 5, "\xA0"],
+    [6, 11, "\xA0"],
+    [12, 17, "\xA0"]
+  ];
   ```
 
 - But, when encoded entities are requested, it's just a matter of sticking in the missing semicolon, at indexes `5`, `11` and `17`:
 
   ```js
   // ranges:
-  [[5, 5, ";"], [11, 11, ";"], [17, 17, ";"]];
+  [
+    [5, 5, ";"],
+    [11, 11, ";"],
+    [17, 17, ";"]
+  ];
   ```
 
 **[⬆ back to top](#)**

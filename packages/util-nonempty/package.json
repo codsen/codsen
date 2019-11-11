@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "2.9.46",
+  "version": "2.9.47",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "license": "MIT",
   "engines": {
@@ -14,11 +14,11 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "array",
+    "empty",
     "is",
     "not",
-    "empty",
     "object",
-    "array",
     "string",
     "util"
   ],
@@ -145,8 +145,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

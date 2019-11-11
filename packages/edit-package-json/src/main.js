@@ -445,8 +445,8 @@ function main({ str, path, valToInsert, mode }) {
       valueStartedAt < i &&
       !valueEndedAt &&
       ((str[valueStartedAt] === `"` && str[i] === `"` && str[i - 1] !== `\\`) ||
-        ((str[valueStartedAt] !== `"` && !str[i].trim().length) ||
-          ["}", ","].includes(str[i])))
+        (str[valueStartedAt] !== `"` && !str[i].trim().length) ||
+        ["}", ","].includes(str[i]))
     ) {
       log(`451 catching the end of a value clauses`);
       keyValue = str.slice(

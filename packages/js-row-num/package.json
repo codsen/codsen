@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -14,20 +14,20 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "characters",
-    "replace",
-    "email",
-    "templates",
     "alt",
-    "tags",
     "attributes",
-    "fancy",
-    "simple",
-    "quote",
+    "characters",
     "dash",
+    "email",
+    "encoding",
+    "fancy",
+    "quote",
     "remove",
-    "encoding"
+    "replace",
+    "simple",
+    "string",
+    "tags",
+    "templates"
   ],
   "main": "dist/js-row-num.cjs.js",
   "module": "dist/js-row-num.esm.js",
@@ -138,8 +138,8 @@
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.39",
-    "ranges-push": "^3.6.7"
+    "ranges-apply": "^3.0.40",
+    "ranges-push": "^3.6.8"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -155,8 +155,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

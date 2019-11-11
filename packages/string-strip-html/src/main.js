@@ -1507,14 +1507,13 @@ function stripHtml(str, originalOpts) {
         } else if (
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:
-          ((tag.attributes.length === 0 &&
+          (tag.attributes.length === 0 &&
             tag.name &&
             definitelyTagNames
               .concat(singleLetterTags)
               .includes(tag.name.toLowerCase())) ||
-            // OR there is at least one equals that follow the attribute's name:
-            (tag.attributes &&
-              tag.attributes.some(attrObj => attrObj.equalsAt)))
+          // OR there is at least one equals that follow the attribute's name:
+          (tag.attributes && tag.attributes.some(attrObj => attrObj.equalsAt))
         ) {
           // if this was an ignored tag name, algorithm would have bailed earlier,
           // in stage "catch the ending of the tag name".
@@ -1763,7 +1762,8 @@ function stripHtml(str, originalOpts) {
               );
               if (
                 (!closingFoundAt &&
-                  (cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>")) ||
+                  cdata &&
+                  `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>") ||
                 (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
               ) {
                 closingFoundAt = y;

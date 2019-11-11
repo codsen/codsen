@@ -1,7 +1,7 @@
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.2.3
+ * Version: 1.2.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes
@@ -388,13 +388,13 @@ function convertOne(
     if (
       str[from - 1] &&
       isNumber(str[from - 1]) &&
-      (str[to] &&
-        str[to] !== "'" &&
-        str[to] !== '"' &&
-        str[to] !== rightSingleQuote &&
-        str[to] !== rightDoubleQuote &&
-        str[to] !== leftSingleQuote &&
-        str[to] !== leftDoubleQuote)
+      str[to] &&
+      str[to] !== "'" &&
+      str[to] !== '"' &&
+      str[to] !== rightSingleQuote &&
+      str[to] !== rightDoubleQuote &&
+      str[to] !== leftSingleQuote &&
+      str[to] !== leftDoubleQuote
     ) {
       if (
         convertApostrophes &&

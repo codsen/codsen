@@ -104,7 +104,10 @@ console.log("slice 1: >>>" + str.slice(4, 13) + "<<<");
 console.log("slice 2: >>>" + str.slice(18, 28) + "<<<\n");
 //
 // then instruct this library to replace each with `zzz` and `yyy`:
-str = apply(str, [[4, 13, "zzz"], [18, 28, "yyy"]]);
+str = apply(str, [
+  [4, 13, "zzz"],
+  [18, 28, "yyy"]
+]);
 console.log("str = " + str);
 // => 'aaa zzz bbb yyy ccc',
 ```

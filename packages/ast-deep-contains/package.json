@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "the t.deepEqual alternative for AVA",
   "license": "MIT",
   "engines": {
@@ -14,17 +14,17 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "unit",
-    "test",
-    "tests",
-    "comparison",
-    "function",
-    "deep",
-    "compare",
-    "subsets",
     "ast",
     "ava",
-    "helper"
+    "compare",
+    "comparison",
+    "deep",
+    "function",
+    "helper",
+    "subsets",
+    "test",
+    "tests",
+    "unit"
   ],
   "main": "dist/ast-deep-contains.cjs.js",
   "module": "dist/ast-deep-contains.esm.js",
@@ -133,7 +133,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.43",
+    "ast-monkey-traverse": "^1.11.44",
     "object-path": "^0.11.4",
     "type-detect": "^4.0.8"
   },
@@ -151,8 +151,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

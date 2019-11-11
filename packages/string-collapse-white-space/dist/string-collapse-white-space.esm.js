@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
- * Version: 5.2.2
+ * Version: 5.2.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
@@ -152,7 +152,8 @@ function collapse(str, originalOpts) {
       if (whiteSpaceEndsAt !== null) {
         if (
           i + 1 !== whiteSpaceEndsAt + 1 &&
-          (whiteSpaceEndsAt === str.length - 1 && opts.trimEnd)
+          whiteSpaceEndsAt === str.length - 1 &&
+          opts.trimEnd
         ) {
           finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
         }

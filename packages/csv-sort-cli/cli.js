@@ -93,7 +93,10 @@ function offerAListOfCSVsToPickFrom(stateObj) {
       type: "list",
       name: "overwrite",
       message: "Do you want to overwrite this file with a sorted result?",
-      choices: [{ name: "yes", value: true }, { name: "no", value: false }]
+      choices: [
+        { name: "yes", value: true },
+        { name: "no", value: false }
+      ]
     });
   }
   ui.log.write(chalk.yellow("Please pick a file:"));

@@ -27,8 +27,8 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   }
   if (
     arguments.length >= 3 &&
-    (!isInt(fromIndex, { includeZero: true }) &&
-      !isNumStr(fromIndex, { includeZero: true }))
+    !isInt(fromIndex, { includeZero: true }) &&
+    !isNumStr(fromIndex, { includeZero: true })
   ) {
     throw new TypeError(
       `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`

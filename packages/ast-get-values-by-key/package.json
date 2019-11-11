@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.6.48",
+  "version": "2.6.49",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
@@ -15,21 +15,21 @@
   },
   "keywords": [
     "ast",
-    "posthtml",
-    "read",
-    "write",
     "edit",
     "get",
-    "set",
-    "value",
+    "html",
     "key",
     "object",
+    "parser",
+    "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser",
-    "tree"
+    "read",
+    "set",
+    "tree",
+    "value",
+    "write",
+    "xml"
   ],
   "main": "dist/ast-get-values-by-key.cjs.js",
   "module": "dist/ast-get-values-by-key.esm.js",
@@ -140,7 +140,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.43",
+    "ast-monkey-traverse": "^1.11.44",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^2.0.0"
   },
@@ -158,8 +158,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "object-path": "^0.11.4",
     "prettier": "^1.19.0",

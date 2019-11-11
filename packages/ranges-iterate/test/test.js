@@ -140,14 +140,21 @@ test(`01.06 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string
 test(`01.07 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`, t => {
   let pinged = "";
   let index = 0;
-  i("abcdefghij", [[2, 7, "xyz"], [9, 10, "_"]], ({ i, val }) => {
-    // console.log(
-    //   `144t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    pinged += val;
-    t.is(i, index);
-    index++;
-  });
+  i(
+    "abcdefghij",
+    [
+      [2, 7, "xyz"],
+      [9, 10, "_"]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `144t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      pinged += val;
+      t.is(i, index);
+      index++;
+    }
+  );
   t.is(pinged, `abxyzhi_`, "01.07");
 });
 
@@ -212,14 +219,21 @@ test(`01.12 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to dele
   // input
   let pinged = "";
   let index = 0;
-  i("abcdefghij", [[0, 5], [5, 10]], ({ i, val }) => {
-    // console.log(
-    //   `216t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    pinged += val;
-    t.is(i, index);
-    index++;
-  });
+  i(
+    "abcdefghij",
+    [
+      [0, 5],
+      [5, 10]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `216t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      pinged += val;
+      t.is(i, index);
+      index++;
+    }
+  );
   t.is(pinged, "", "01.12");
 });
 
@@ -228,25 +242,39 @@ test(`01.13 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to d
   // input
   let pinged = "";
   let index = 0;
-  i("abcdefghij", [[0, 6], [4, 10]], ({ i, val }) => {
-    // console.log(
-    //   `232t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    pinged += val;
-    t.is(i, index);
-    index++;
-  });
+  i(
+    "abcdefghij",
+    [
+      [0, 6],
+      [4, 10]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `232t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      pinged += val;
+      t.is(i, index);
+      index++;
+    }
+  );
   t.is(pinged, "", "01.13");
 });
 
 test(`01.14 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`, t => {
-  i("abcdefghij", [[0, 5], [6, 10]], ({ i, val }) => {
-    // console.log(
-    //   `244t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    t.is(i, 0);
-    t.is(val, "f");
-  });
+  i(
+    "abcdefghij",
+    [
+      [0, 5],
+      [6, 10]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `244t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      t.is(i, 0);
+      t.is(val, "f");
+    }
+  );
 });
 
 test(`01.15 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`, t => {
@@ -254,14 +282,21 @@ test(`01.15 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`, t =>
   let pinged = "";
   let index = 0;
   const source = "abcdefghij";
-  i(source, [[0, 0], [1, 1]], ({ i, val }) => {
-    // console.log(
-    //   `258t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    pinged += val;
-    t.is(i, index);
-    index++;
-  });
+  i(
+    source,
+    [
+      [0, 0],
+      [1, 1]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `258t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      pinged += val;
+      t.is(i, index);
+      index++;
+    }
+  );
   t.is(pinged, source, "01.15");
 });
 
@@ -269,14 +304,21 @@ test(`01.16 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent 
   let pinged = "";
   let index = 0;
   const source = "abcdefghij";
-  i(source, [[98, 98], [99, 99]], ({ i, val }) => {
-    // console.log(
-    //   `273t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
-    // );
-    pinged += val;
-    t.is(i, index);
-    index++;
-  });
+  i(
+    source,
+    [
+      [98, 98],
+      [99, 99]
+    ],
+    ({ i, val }) => {
+      // console.log(
+      //   `273t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      // );
+      pinged += val;
+      t.is(i, index);
+      index++;
+    }
+  );
   t.is(pinged, source, "01.16");
 });
 

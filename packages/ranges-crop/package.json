@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "2.0.37",
+  "version": "2.0.38",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "engines": {
@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
     "array",
     "crop",
     "index",
     "indexes",
-    "range",
+    "length",
     "limit",
-    "length"
+    "range",
+    "ranges",
+    "string"
   ],
   "main": "dist/ranges-crop.cjs.js",
   "module": "dist/ranges-crop.esm.js",
@@ -135,7 +135,7 @@
   },
   "dependencies": {
     "is-natural-number": "^4.0.1",
-    "ranges-merge": "^4.2.24"
+    "ranges-merge": "^4.2.25"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -151,12 +151,12 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
-    "ranges-apply": "^3.0.39",
+    "ranges-apply": "^3.0.40",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

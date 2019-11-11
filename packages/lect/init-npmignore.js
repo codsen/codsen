@@ -118,7 +118,10 @@ function askUser(unsureAboutTheseFolders, what = "folder") {
       )} Do you want to include ${what} ${chalk.yellow.bold(
         decodeDot(pathName)
       )} on all .npmignore's?`,
-      choices: [{ name: "no", value: false }, { name: "yes", value: true }]
+      choices: [
+        { name: "no", value: false },
+        { name: "yes", value: true }
+      ]
     }))
   );
 }

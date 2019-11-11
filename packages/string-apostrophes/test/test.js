@@ -299,7 +299,10 @@ test(`02.01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts 
         from: 17
       })
     );
-  t.deepEqual(gatheredRes, [[8, 9, "&ldquo;"], [17, 18, "&rdquo;"]]);
+  t.deepEqual(gatheredRes, [
+    [8, 9, "&ldquo;"],
+    [17, 18, "&rdquo;"]
+  ]);
 });
 
 test(`02.02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: -entities`, t => {

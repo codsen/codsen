@@ -158,10 +158,10 @@ function mergeRanges(arrOfRanges, originalOpts) {
     // if current range is before the preceding-one
     if (
       sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
-      ((!opts.joinRangesThatTouchEdges &&
+      (!opts.joinRangesThatTouchEdges &&
         sortedRanges[i][0] < sortedRanges[i - 1][1]) ||
-        (opts.joinRangesThatTouchEdges &&
-          sortedRanges[i][0] <= sortedRanges[i - 1][1]))
+      (opts.joinRangesThatTouchEdges &&
+        sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
       console.log(`166  sortedRanges[${i}][0] = ${`\u001b[${33}m${
         sortedRanges[i][0]

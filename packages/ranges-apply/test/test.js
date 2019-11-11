@@ -47,7 +47,10 @@ test("01.01 - wrong inputs", t => {
     repl("aaa", [[1, "2"]]);
   });
   t.notThrows(() => {
-    repl("aaa", [[1, "2"], ["3", "4"]]);
+    repl("aaa", [
+      [1, "2"],
+      ["3", "4"]
+    ]);
   });
   t.notThrows(() => {
     repl("aaa", [[1, 2]]);
@@ -74,14 +77,24 @@ test("01.01 - wrong inputs", t => {
   t.regex(error10.message, /THROW_ID_06/);
 
   const error11 = t.throws(() => {
-    repl("sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh", [[10, 20], [15, 16]], 1);
+    repl(
+      "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
+      [
+        [10, 20],
+        [15, 16]
+      ],
+      1
+    );
   });
   t.regex(error11.message, /THROW_ID_04/);
 
   const error12 = t.throws(() => {
     repl(
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
-      [[10, 20], [15, 16]],
+      [
+        [10, 20],
+        [15, 16]
+      ],
       true
     );
   });
@@ -112,7 +125,14 @@ test("02.01 - deletes multiple chunks correctly", t => {
   // console.log('\n===============\n02.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
-  t.deepEqual(repl(str, [[4, 14], [18, 29]]), "aaa bbb ccc", "02.01");
+  t.deepEqual(
+    repl(str, [
+      [4, 14],
+      [18, 29]
+    ]),
+    "aaa bbb ccc",
+    "02.01"
+  );
 });
 
 test("02.02 - replaces multiple chunks correctly", t => {
@@ -121,7 +141,10 @@ test("02.02 - replaces multiple chunks correctly", t => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.deepEqual(
-    repl(str, [[4, 13, "zzz"], [18, 28, "yyy"]]),
+    repl(str, [
+      [4, 13, "zzz"],
+      [18, 28, "yyy"]
+    ]),
     "aaa zzz bbb yyy ccc",
     "02.02"
   );
@@ -133,7 +156,10 @@ test("02.03 - deletes and replaces multiple chunks correctly", t => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.deepEqual(
-    repl(str, [[4, 13], [18, 28, "zzz"]]),
+    repl(str, [
+      [4, 13],
+      [18, 28, "zzz"]
+    ]),
     "aaa  bbb zzz ccc",
     "02.03"
   );
@@ -148,7 +174,14 @@ test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
   // console.log('\n===============\n02.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
-  t.deepEqual(repl(str, [[0, 10], [14, 25]]), "bbb ccc", "02.05");
+  t.deepEqual(
+    repl(str, [
+      [0, 10],
+      [14, 25]
+    ]),
+    "bbb ccc",
+    "02.05"
+  );
 });
 
 test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
@@ -156,7 +189,14 @@ test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
   // console.log('\n===============\n02.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
-  t.deepEqual(repl(str, [[0, 9, "aaa"], [14, 25]]), "aaa bbb ccc", "02.06");
+  t.deepEqual(
+    repl(str, [
+      [0, 9, "aaa"],
+      [14, 25]
+    ]),
+    "aaa bbb ccc",
+    "02.06"
+  );
 });
 
 test("02.07 - replace with ending index zero", t => {
@@ -178,10 +218,27 @@ test("02.08 - null in third arg does nothing", t => {
   // console.log('\n===============\n02.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
-  t.deepEqual(repl(str, [[4, 14, null], [18, 29]]), "aaa bbb ccc", "02.08.01");
-  t.deepEqual(repl(str, [[4, 14], [18, 29, null]]), "aaa bbb ccc", "02.08.02");
   t.deepEqual(
-    repl(str, [[4, 14, null], [18, 29, null]]),
+    repl(str, [
+      [4, 14, null],
+      [18, 29]
+    ]),
+    "aaa bbb ccc",
+    "02.08.01"
+  );
+  t.deepEqual(
+    repl(str, [
+      [4, 14],
+      [18, 29, null]
+    ]),
+    "aaa bbb ccc",
+    "02.08.02"
+  );
+  t.deepEqual(
+    repl(str, [
+      [4, 14, null],
+      [18, 29, null]
+    ]),
     "aaa bbb ccc",
     "02.08.03"
   );
@@ -193,7 +250,10 @@ test("02.09 - replaces multiple chunks correctly", t => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.deepEqual(
-    repl(str, [[4, 13, "zzz"], [18, 28, null]]),
+    repl(str, [
+      [4, 13, "zzz"],
+      [18, 28, null]
+    ]),
     "aaa zzz bbb  ccc",
     "02.09"
   );
@@ -205,7 +265,10 @@ test("02.10 - replaces multiple chunks correctly given in a wrong order", t => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.deepEqual(
-    repl(str, [[18, 28, "yyy"], [4, 13, "zzz"]]),
+    repl(str, [
+      [18, 28, "yyy"],
+      [4, 13, "zzz"]
+    ]),
     "aaa zzz bbb yyy ccc",
     "02.10"
   );
@@ -230,7 +293,10 @@ test("03.02 - multiple replacement pieces", t => {
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
   t.deepEqual(
-    repl("aaa  ccc  eee", [[4, 4, "bbb"], [9, 9, "ddd"]]),
+    repl("aaa  ccc  eee", [
+      [4, 4, "bbb"],
+      [9, 9, "ddd"]
+    ]),
     "aaa bbb ccc ddd eee",
     "03.02"
   );

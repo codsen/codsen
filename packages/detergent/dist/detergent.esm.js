@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.7.0
+ * Version: 5.7.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -1145,7 +1145,7 @@ function processCharacter(
         rangesArr.push(i, y);
       } else if (
         charcode === 8211 ||
-        (charcode === 65533 && (isNumber(str[i - 1]) && isNumber(str[y])))
+        (charcode === 65533 && isNumber(str[i - 1]) && isNumber(str[y]))
       ) {
         applicableOpts.convertDashes = true;
         if (!opts.convertDashes) {
@@ -1236,7 +1236,7 @@ function processCharacter(
         }
       } else if (
         charcode === 8212 ||
-        (charcode === 65533 && (str[i - 1] === " " && str[y] === " "))
+        (charcode === 65533 && str[i - 1] === " " && str[y] === " ")
       ) {
         applicableOpts.convertDashes = true;
         if (str[i - 1] === " " && left(str, i) !== null) {
@@ -1381,7 +1381,7 @@ function processCharacter(
   }
 }
 
-var version = "5.7.0";
+var version = "5.7.1";
 
 function det(str, inputOpts) {
   if (typeof str !== "string") {
@@ -1486,8 +1486,8 @@ function det(str, inputOpts) {
             str[i - 2].toLowerCase() === "h" &&
             str[i - 1].toLowerCase() === "e")) &&
           str[i + 2] &&
-          (str[i + 1].toLowerCase() === "l" &&
-            str[i + 2].toLowerCase() === "l")) ||
+          str[i + 1].toLowerCase() === "l" &&
+          str[i + 2].toLowerCase() === "l") ||
         (str[i - 5] &&
           str[i + 2] &&
           str[i - 5].toLowerCase() === "m" &&

@@ -1347,7 +1347,10 @@ test("08.01 - arrayFirstOnly - nested arrays", t => {
 });
 
 test("08.02 - arrayFirstOnly - arrays within arrays only, no obj", t => {
-  input = [["a", "b", "c"], ["d", ["e"]]];
+  input = [
+    ["a", "b", "c"],
+    ["d", ["e"]]
+  ];
   actual = arrayFirstOnly(input);
   intended = [["a"]];
 

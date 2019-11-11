@@ -1,7 +1,7 @@
 /**
  * string-fix-broken-named-entities
  * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
- * Version: 2.4.11
+ * Version: 2.4.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -289,16 +289,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       matchedLettersCount > 2 &&
       (nbsp.matchedSemicol !== null ||
         !nbsp.ampersandNecessary ||
-        ((isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
-          ((isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) &&
-            largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) ||
-          (nbsp.matchedN !== null &&
-            nbsp.matchedB !== null &&
-            nbsp.matchedS !== null &&
-            nbsp.matchedP !== null &&
-            nbsp.matchedN + 1 === nbsp.matchedB &&
-            nbsp.matchedB + 1 === nbsp.matchedS &&
-            nbsp.matchedS + 1 === nbsp.matchedP))) &&
+        (isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
+        ((isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) &&
+          largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) ||
+        (nbsp.matchedN !== null &&
+          nbsp.matchedB !== null &&
+          nbsp.matchedS !== null &&
+          nbsp.matchedP !== null &&
+          nbsp.matchedN + 1 === nbsp.matchedB &&
+          nbsp.matchedB + 1 === nbsp.matchedS &&
+          nbsp.matchedS + 1 === nbsp.matchedP)) &&
       (!str[i] ||
         (nbsp.matchedN !== null &&
           nbsp.matchedB !== null &&
@@ -448,8 +448,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
-                (!str[tempRes.rightmostChar + 1] ||
-                  ["&"].includes(str[tempRes.rightmostChar + 1])) ||
+                !str[tempRes.rightmostChar + 1] ||
+                ["&"].includes(str[tempRes.rightmostChar + 1]) ||
                 ((uncertain[tempEnt].addSemiIfAmpPresent === true ||
                   (uncertain[tempEnt].addSemiIfAmpPresent &&
                     (!str[tempRes.rightmostChar + 1] ||
@@ -514,11 +514,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
-                (uncertain[tempEnt].addAmpIfSemiPresent === true ||
-                  (uncertain[tempEnt].addAmpIfSemiPresent &&
-                    (!tempRes.leftmostChar ||
-                      (isStr(str[tempRes.leftmostChar - 1]) &&
-                        !str[tempRes.leftmostChar - 1].trim().length)))))
+                uncertain[tempEnt].addAmpIfSemiPresent === true ||
+                (uncertain[tempEnt].addAmpIfSemiPresent &&
+                  (!tempRes.leftmostChar ||
+                    (isStr(str[tempRes.leftmostChar - 1]) &&
+                      !str[tempRes.leftmostChar - 1].trim().length))))
             ) {
               const decodedEntity = decode(`&${tempEnt};`);
               rangesArr2.push({
@@ -677,9 +677,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   const secondChar = right(str, firstChar);
                   if (
                     Object.keys(uncertain).includes(potentialEntity) &&
-                    (isStr(str[firstChar - 1]) &&
-                      !str[firstChar - 1].trim().length &&
-                      uncertain[potentialEntity].addAmpIfSemiPresent !== true)
+                    isStr(str[firstChar - 1]) &&
+                    !str[firstChar - 1].trim().length &&
+                    uncertain[potentialEntity].addAmpIfSemiPresent !== true
                   ) {
                     letterSeqStartAt = null;
                     continue;

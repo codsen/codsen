@@ -1,6 +1,6 @@
 {
   "name": "array-includes-with-glob",
-  "version": "2.12.21",
+  "version": "2.12.22",
   "description": "like _.includes but with wildcards",
   "license": "MIT",
   "engines": {
@@ -15,16 +15,16 @@
   },
   "keywords": [
     "array",
-    "inclues",
-    "string",
-    "glob",
-    "wildcard",
-    "contains",
-    "pattern",
     "asterisk",
-    "include",
+    "contains",
+    "glob",
     "has",
-    "instance"
+    "include",
+    "inclues",
+    "instance",
+    "pattern",
+    "string",
+    "wildcard"
   ],
   "main": "dist/array-includes-with-glob.cjs.js",
   "module": "dist/array-includes-with-glob.esm.js",
@@ -151,8 +151,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

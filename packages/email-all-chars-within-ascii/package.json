@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "2.9.46",
+  "version": "2.9.47",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "license": "MIT",
   "engines": {
@@ -14,14 +14,14 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "email",
-    "templates",
-    "template",
-    "characters",
-    "ascii",
-    "range",
-    "encoded",
     "7bit",
+    "ascii",
+    "characters",
+    "email",
+    "encoded",
+    "range",
+    "template",
+    "templates",
     "validate"
   ],
   "main": "dist/email-all-chars-within-ascii.cjs.js",
@@ -131,7 +131,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.46",
+    "check-types-mini": "^5.7.47",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -148,8 +148,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

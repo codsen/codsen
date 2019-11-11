@@ -105,27 +105,42 @@ test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
 
 test("02.01 - two ranges, edges on defaults", t => {
   t.deepEqual(
-    wthn(1, [[2, 4], [6, 8]]),
+    wthn(1, [
+      [2, 4],
+      [6, 8]
+    ]),
     false,
     "02.01.01 - outside of the range"
   );
   t.deepEqual(
-    wthn(5, [[2, 4], [6, 8]]),
+    wthn(5, [
+      [2, 4],
+      [6, 8]
+    ]),
     false,
     "02.01.02 - outside of the range"
   );
   t.deepEqual(
-    wthn(9, [[2, 4], [6, 8]]),
+    wthn(9, [
+      [2, 4],
+      [6, 8]
+    ]),
     false,
     "02.01.03 - outside of the range"
   );
   t.deepEqual(
-    wthn(3, [[2, 4], [6, 8]]),
+    wthn(3, [
+      [2, 4],
+      [6, 8]
+    ]),
     true,
     "02.01.04 - outside of the range"
   );
   t.deepEqual(
-    wthn(7, [[2, 4], [6, 8]]),
+    wthn(7, [
+      [2, 4],
+      [6, 8]
+    ]),
     true,
     "02.01.05 - outside of the range"
   );
@@ -134,49 +149,112 @@ test("02.01 - two ranges, edges on defaults", t => {
 test("02.02 - two ranges, edges inclusive", t => {
   // same as 02.01
   t.deepEqual(
-    wthn(1, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      1,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     false,
     "02.02.01 - outside of the range"
   );
   t.deepEqual(
-    wthn(5, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      5,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     false,
     "02.02.02 - outside of the range"
   );
   t.deepEqual(
-    wthn(9, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      9,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     false,
     "02.02.03 - outside of the range"
   );
   t.deepEqual(
-    wthn(3, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      3,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.04 - outside of the range"
   );
   t.deepEqual(
-    wthn(7, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      7,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.05 - outside of the range"
   );
 
   // checking range edges:
   t.deepEqual(
-    wthn(2, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      2,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.06"
   );
   t.deepEqual(
-    wthn(4, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      4,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.07"
   );
   t.deepEqual(
-    wthn(6, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      6,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.08"
   );
   t.deepEqual(
-    wthn(8, [[2, 4], [6, 8]], { inclusiveRangeEnds: true }),
+    wthn(
+      8,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "02.02.09"
   );
@@ -184,27 +262,62 @@ test("02.02 - two ranges, edges inclusive", t => {
 
 test("02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults", t => {
   t.deepEqual(
-    wthn(1, [[2, 4], [6, 8]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      1,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "02.03.01 - outside of the range"
   );
   t.deepEqual(
-    wthn(5, [[2, 4], [6, 8]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      5,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "02.03.02 - outside of the range"
   );
   t.deepEqual(
-    wthn(9, [[2, 4], [6, 8]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      9,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "02.03.03 - outside of the range"
   );
   t.deepEqual(
-    wthn(3, [[2, 4], [6, 8]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      3,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     [2, 4],
     "02.03.04 - outside of the range"
   );
   t.deepEqual(
-    wthn(7, [[2, 4], [6, 8]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      7,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     [6, 8],
     "02.03.05 - outside of the range"
   );
@@ -213,83 +326,153 @@ test("02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on default
 test("02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", t => {
   // same as 02.01
   t.deepEqual(
-    wthn(1, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      1,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "02.04.01 - outside of the range"
   );
   t.deepEqual(
-    wthn(5, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      5,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "02.04.02 - outside of the range"
   );
   t.deepEqual(
-    wthn(9, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      9,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "02.04.03 - outside of the range"
   );
   t.deepEqual(
-    wthn(3, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      3,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [2, 4],
     "02.04.04 - outside of the range"
   );
   t.deepEqual(
-    wthn(7, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      7,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [6, 8],
     "02.04.05 - outside of the range"
   );
   // checking range edges:
   t.deepEqual(
-    wthn(2, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      2,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [2, 4],
     "02.04.06"
   );
   t.deepEqual(
-    wthn(4, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      4,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [2, 4],
     "02.04.07"
   );
   t.deepEqual(
-    wthn(6, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      6,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [6, 8],
     "02.04.08"
   );
   t.deepEqual(
-    wthn(8, [[2, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      8,
+      [
+        [2, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [6, 8],
     "02.04.09"
   );
   t.deepEqual(
-    wthn(0, [[0, 4], [6, 8]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      0,
+      [
+        [0, 4],
+        [6, 8]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [0, 4],
     "02.04.10 - zero"
   );
@@ -301,14 +484,30 @@ test("02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive"
 
 test("03.01 - more than two ranges, uneven count, not inclusive", t => {
   t.deepEqual(
-    wthn(5, [[2, 4], [6, 8], [10, 15], [20, 30], [35, 40], [45, 50], [55, 60]]),
+    wthn(5, [
+      [2, 4],
+      [6, 8],
+      [10, 15],
+      [20, 30],
+      [35, 40],
+      [45, 50],
+      [55, 60]
+    ]),
     false,
     "03.01.01 - outside of the range"
   );
   t.deepEqual(
     wthn(
       5,
-      [[2, 4], [6, 8], [10, 15], [20, 30], [35, 40], [45, 50], [55, 60]],
+      [
+        [2, 4],
+        [6, 8],
+        [10, 15],
+        [20, 30],
+        [35, 40],
+        [45, 50],
+        [55, 60]
+      ],
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
@@ -317,7 +516,15 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
   t.deepEqual(
     wthn(
       5,
-      [[2, 4], [6, 8], [10, 15], [20, 30], [35, 40], [45, 50], [55, 60]],
+      [
+        [2, 4],
+        [6, 8],
+        [10, 15],
+        [20, 30],
+        [35, 40],
+        [45, 50],
+        [55, 60]
+      ],
       { inclusiveRangeEnds: true }
     ),
     false,
@@ -326,7 +533,15 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
   t.deepEqual(
     wthn(
       5,
-      [[2, 4], [6, 8], [10, 15], [20, 30], [35, 40], [45, 50], [55, 60]],
+      [
+        [2, 4],
+        [6, 8],
+        [10, 15],
+        [20, 30],
+        [35, 40],
+        [45, 50],
+        [55, 60]
+      ],
       { returnMatchedRangeInsteadOfTrue: true, inclusiveRangeEnds: true }
     ),
     false,
@@ -3562,21 +3777,59 @@ test("03.03 - small ranges - zero", t => {
     true,
     "03.03.03 - inclusive"
   );
-  t.deepEqual(wthn(0, [[0, 1], [2, 3]]), false, "03.03.04");
-  t.deepEqual(wthn(0, [[0, 1], [1, 3]]), false, "03.03.05 - overlap");
-  t.deepEqual(wthn(0, [[0, 1], [0, 3]]), false, "03.03.06 - overlap #2");
   t.deepEqual(
-    wthn(0, [[0, 10], [0, 3]]),
+    wthn(0, [
+      [0, 1],
+      [2, 3]
+    ]),
+    false,
+    "03.03.04"
+  );
+  t.deepEqual(
+    wthn(0, [
+      [0, 1],
+      [1, 3]
+    ]),
+    false,
+    "03.03.05 - overlap"
+  );
+  t.deepEqual(
+    wthn(0, [
+      [0, 1],
+      [0, 3]
+    ]),
+    false,
+    "03.03.06 - overlap #2"
+  );
+  t.deepEqual(
+    wthn(0, [
+      [0, 10],
+      [0, 3]
+    ]),
     false,
     "03.03.06 - overlap and wrong order"
   );
   t.deepEqual(
-    wthn(0, [[0, 10], [0, 3]], { inclusiveRangeEnds: true }),
+    wthn(
+      0,
+      [
+        [0, 10],
+        [0, 3]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "03.03.07 - overlap and wrong order - inclusive"
   );
   t.deepEqual(
-    wthn(0, [[1, 10], [0, 3]], { inclusiveRangeEnds: true }),
+    wthn(
+      0,
+      [
+        [1, 10],
+        [0, 3]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "03.03.08 - overlap and wrong order - inclusive"
   );
@@ -3605,38 +3858,80 @@ test("03.03 - small ranges - zero", t => {
     "03.03.11 - inclusive"
   );
   t.deepEqual(
-    wthn(0, [[0, 1], [2, 3]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      0,
+      [
+        [0, 1],
+        [2, 3]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "03.03.12"
   );
   t.deepEqual(
-    wthn(0, [[0, 1], [1, 3]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      0,
+      [
+        [0, 1],
+        [1, 3]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "03.03.13 - overlap"
   );
   t.deepEqual(
-    wthn(0, [[0, 1], [0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      0,
+      [
+        [0, 1],
+        [0, 3]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "03.03.14 - overlap #2"
   );
   t.deepEqual(
-    wthn(0, [[0, 10], [0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
+    wthn(
+      0,
+      [
+        [0, 10],
+        [0, 3]
+      ],
+      { returnMatchedRangeInsteadOfTrue: true }
+    ),
     false,
     "03.03.15 - overlap and wrong order"
   );
   t.deepEqual(
-    wthn(0, [[0, 10], [0, 3]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      0,
+      [
+        [0, 10],
+        [0, 3]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [0, 10],
     "03.03.16 - overlap and wrong order - inclusive"
   );
   t.deepEqual(
-    wthn(0, [[1, 10], [0, 3]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      0,
+      [
+        [1, 10],
+        [0, 3]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [0, 3],
     "03.03.17 - overlap and wrong order - inclusive"
   );
@@ -3716,42 +4011,106 @@ test("03.05 - identical range endings", t => {
     "03.05.07 - identical range ends, index above"
   );
   t.deepEqual(
-    wthn(1, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: false }),
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: false }
+    ),
     false,
     "03.05.08 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: false }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: false }
+    ),
     false,
     "03.05.09 - identical consecutive"
   );
   t.deepEqual(
-    wthn(3, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: false }),
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: false }
+    ),
     false,
     "03.05.10 - identical consecutive"
   );
   t.deepEqual(
-    wthn(1, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: true }),
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "03.05.11 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: true }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "03.05.12 - identical consecutive"
   );
   t.deepEqual(
-    wthn(3, [[1, 1], [2, 2], [3, 3]], { inclusiveRangeEnds: true }),
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     true,
     "03.05.13 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [3, 3], [4, 4]], { inclusiveRangeEnds: true }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4]
+      ],
+      { inclusiveRangeEnds: true }
+    ),
     false,
     "03.05.14 - identical consecutive with gap"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [3, 3], [4, 4]], { inclusiveRangeEnds: false }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4]
+      ],
+      { inclusiveRangeEnds: false }
+    ),
     false,
     "03.05.15 - identical consecutive with gap"
   );
@@ -3814,66 +4173,130 @@ test("03.05 - identical range endings", t => {
     "03.05.22 - identical range ends, index above"
   );
   t.deepEqual(
-    wthn(1, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: false,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "03.05.23 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: false,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "03.05.24 - identical consecutive"
   );
   t.deepEqual(
-    wthn(3, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: false,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "03.05.25 - identical consecutive"
   );
   t.deepEqual(
-    wthn(1, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [1, 1],
     "03.05.26 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [2, 2],
     "03.05.27 - identical consecutive"
   );
   t.deepEqual(
-    wthn(3, [[1, 1], [2, 2], [3, 3]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     [3, 3],
     "03.05.28 - identical consecutive"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [3, 3], [4, 4]], {
-      inclusiveRangeEnds: true,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4]
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "03.05.29 - identical consecutive with gap"
   );
   t.deepEqual(
-    wthn(2, [[1, 1], [3, 3], [4, 4]], {
-      inclusiveRangeEnds: false,
-      returnMatchedRangeInsteadOfTrue: true
-    }),
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4]
+      ],
+      {
+        inclusiveRangeEnds: false,
+        returnMatchedRangeInsteadOfTrue: true
+      }
+    ),
     false,
     "03.05.30 - identical consecutive with gap"
   );

@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "1.1.24",
+  "version": "1.1.25",
   "description": "Iterate a string and any changes within already existing ranges",
   "license": "MIT",
   "engines": {
@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
-    "ranges",
     "array",
-    "iterate",
     "indexes",
+    "iterate",
     "loop",
-    "through",
     "manage",
     "operations",
-    "perf"
+    "perf",
+    "ranges",
+    "string",
+    "through"
   ],
   "main": "dist/ranges-iterate.cjs.js",
   "module": "dist/ranges-iterate.esm.js",
@@ -148,12 +148,12 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
-    "ranges-apply": "^3.0.39",
-    "ranges-merge": "^4.2.24",
+    "ranges-apply": "^3.0.40",
+    "ranges-merge": "^4.2.25",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

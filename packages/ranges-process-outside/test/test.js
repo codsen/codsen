@@ -106,19 +106,36 @@ test(`01.04 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers rang
 
 test(`01.05 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - 2 ranges`, t => {
   const gather = [];
-  p("abcdefghij", [[0, 5], [7, 8]], idx => {
-    gather.push(idx);
-  });
+  p(
+    "abcdefghij",
+    [
+      [0, 5],
+      [7, 8]
+    ],
+    idx => {
+      gather.push(idx);
+    }
+  );
   t.deepEqual(gather, [5, 6, 8, 9], "01.05");
 });
 
 test(`01.06 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - opposite order (testing ranges-merge)`, t => {
   const gather2 = [];
-  const messy = [[7, 8], [0, 5]];
+  const messy = [
+    [7, 8],
+    [0, 5]
+  ];
   p("abcdefghij", messy, idx => {
     gather2.push(idx);
   });
-  t.deepEqual(messy, [[7, 8], [0, 5]], "01.06.01 - inputs were not mutated");
+  t.deepEqual(
+    messy,
+    [
+      [7, 8],
+      [0, 5]
+    ],
+    "01.06.01 - inputs were not mutated"
+  );
   t.deepEqual(
     gather2,
     [5, 6, 8, 9],
@@ -132,7 +149,10 @@ test(`01.07 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ran
   const error1 = t.throws(() => {
     p(
       "abcdefghij",
-      [[7, 8], [0, 5]],
+      [
+        [7, 8],
+        [0, 5]
+      ],
       idx => {
         gather2.push(idx);
       },
@@ -146,9 +166,16 @@ test(`01.07 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ran
 // range outside the string length
 test(`01.08 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks`, t => {
   const gather = [];
-  p("abcdefghij", [[0, 5], [7, 100]], idx => {
-    gather.push(idx);
-  });
+  p(
+    "abcdefghij",
+    [
+      [0, 5],
+      [7, 100]
+    ],
+    idx => {
+      gather.push(idx);
+    }
+  );
   t.deepEqual(gather, [5, 6], "01.08 - result is the same as in previous test");
 });
 
@@ -163,7 +190,10 @@ test(`01.09 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ran
   const error = t.throws(() => {
     p(
       "abcdefghij",
-      [[0, 5], [7, 100]],
+      [
+        [0, 5],
+        [7, 100]
+      ],
       idx => {
         gather.push(idx);
       },
@@ -228,7 +258,16 @@ test(`01.15 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers rang
     },
     false // skip=false so checks are on
   );
-  t.deepEqual(gather, [[5, 6], [6, 8], [8, 9], [9, 10]], "01.15");
+  t.deepEqual(
+    gather,
+    [
+      [5, 6],
+      [6, 8],
+      [8, 9],
+      [9, 10]
+    ],
+    "01.15"
+  );
 });
 
 test(`01.16 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`, t => {
@@ -242,7 +281,16 @@ test(`01.16 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers rang
     },
     false // skip=false so checks are on
   );
-  t.deepEqual(gather, [[5, 6], [6, 13], [13, 14], [14, 15]], "01.16.02");
+  t.deepEqual(
+    gather,
+    [
+      [5, 6],
+      [6, 13],
+      [13, 14],
+      [14, 15]
+    ],
+    "01.16.02"
+  );
 });
 
 // ==============================

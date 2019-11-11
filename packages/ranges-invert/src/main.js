@@ -168,9 +168,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `203 \u001b[${36}m${`PUSH [${
-          currArr[1]
-        }, ${endingIndex}]`}\u001b[${39}m`
+        `203 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

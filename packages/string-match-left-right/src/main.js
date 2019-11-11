@@ -902,8 +902,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     );
     if (
       mode === "matchRight" &&
-      (isHighSurrogate(str[startingPosition - 1]) &&
-        isLowSurrogate(str[startingPosition]))
+      isHighSurrogate(str[startingPosition - 1]) &&
+      isLowSurrogate(str[startingPosition])
     ) {
       startingPosition += 1;
       console.log(

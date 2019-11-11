@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.10.47",
+  "version": "1.10.48",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {
@@ -14,15 +14,15 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "expand",
     "expander",
-    "range",
-    "of",
     "indexes",
-    "within",
+    "of",
+    "outwards",
+    "range",
+    "string",
     "text",
-    "outwards"
+    "within"
   ],
   "main": "dist/string-range-expander.cjs.js",
   "module": "dist/string-range-expander.esm.js",
@@ -147,8 +147,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

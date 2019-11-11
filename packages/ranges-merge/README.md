@@ -134,11 +134,20 @@ Consider this example (notice an arrow function in the second input argument):
 
 ```js
 console.log(
-  mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
-    progressFn: perc => {
-      console.log(`done: ${perc}`);
+  mergeRanges(
+    [
+      [1, 5],
+      [11, 15],
+      [6, 10],
+      [16, 20],
+      [10, 30]
+    ],
+    {
+      progressFn: perc => {
+        console.log(`done: ${perc}`);
+      }
     }
-  })
+  )
 );
 //
 // done: 0
@@ -217,11 +226,23 @@ Mode `2` is the same to `1` except clashing "insert" values are resolved by dele
 For example,
 
 ```js
-const res1 = mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 1 });
+const res1 = mergeRanges(
+  [
+    [3, 4, "aaa"],
+    [3, 12, "zzz"]
+  ],
+  { mergeType: 1 }
+);
 console.log(res1);
 // => [[3, 12, "aaazzz"]]
 
-const res2 = mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 2 });
+const res2 = mergeRanges(
+  [
+    [3, 4, "aaa"],
+    [3, 12, "zzz"]
+  ],
+  { mergeType: 2 }
+);
 console.log(res2);
 // => [[3, 12, "zzz"]]
 ```

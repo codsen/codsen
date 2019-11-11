@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "1.2.21",
+  "version": "1.2.22",
   "description": "Generate Atomic CSS",
   "license": "MIT",
   "engines": {
@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "email",
-    "templates",
-    "template",
-    "css",
-    "generate",
+    "api",
     "atomic",
     "build",
+    "css",
+    "email",
+    "generate",
     "helper",
-    "tool",
-    "api"
+    "template",
+    "templates",
+    "tool"
   ],
   "main": "dist/generate-atomic-css.cjs.js",
   "module": "dist/generate-atomic-css.esm.js",
@@ -132,9 +132,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-apply": "^3.0.39",
+    "ranges-apply": "^3.0.40",
     "split-lines": "^2.0.0",
-    "string-left-right": "^2.3.7"
+    "string-left-right": "^2.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -150,8 +150,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.6.7",
+  "version": "3.6.8",
   "description": "Manage the array of ranges referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "string",
     "delete",
-    "replace",
+    "from",
+    "many",
     "multiple",
     "ranges",
+    "replace",
     "slice",
     "slices",
-    "many",
-    "from",
-    "splice"
+    "splice",
+    "string"
   ],
   "main": "dist/ranges-push.cjs.js",
   "module": "dist/ranges-push.esm.js",
@@ -135,9 +135,9 @@
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "ranges-merge": "^4.2.24",
-    "string-collapse-leading-whitespace": "^2.0.5",
-    "string-trim-spaces-only": "^2.8.4"
+    "ranges-merge": "^4.2.25",
+    "string-collapse-leading-whitespace": "^2.0.6",
+    "string-trim-spaces-only": "^2.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -153,8 +153,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.25](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.2.24...ranges-merge@4.2.25) (2019-11-11)
+
+**Note:** Version bump only for package ranges-merge
+
+
+
+
+
 ## 4.2.0 (2019-06-01)
 
 ### Features
@@ -71,7 +79,10 @@ Previously `null` would have been turned into a string and shown/concatenated li
 Let's say you got these two ranges:
 
 ```js
-[[5, 6, " "], [1, 10]];
+[
+  [5, 6, " "],
+  [1, 10]
+];
 ```
 
 Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.

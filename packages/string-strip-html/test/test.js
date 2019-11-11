@@ -1003,7 +1003,10 @@ test("08.05 - punctuation after tag - simplified, question mark", t => {
 test("08.06 - punctuation after tag - simplified, question mark", t => {
   t.deepEqual(
     stripHtml("a<b>?</b> c", { returnRangesOnly: true }),
-    [[1, 4], [5, 10, " "]],
+    [
+      [1, 4],
+      [5, 10, " "]
+    ],
     "08.06"
   );
 });
@@ -1059,7 +1062,10 @@ test("08.13 - punctuation after tag - simplified, exclamation mark", t => {
 test("08.14 - punctuation after tag - simplified, exclamation mark", t => {
   t.deepEqual(
     stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
-    [[1, 4], [5, 10, " "]],
+    [
+      [1, 4],
+      [5, 10, " "]
+    ],
     "08.14"
   );
 });
@@ -1107,7 +1113,10 @@ test("08.20 - punctuation after tag - simplified, ellipsis", t => {
 test("08.21 - punctuation after tag - simplified, ellipsis", t => {
   t.deepEqual(
     stripHtml("a<b>...</b> c", { returnRangesOnly: true }),
-    [[1, 4], [7, 12, " "]],
+    [
+      [1, 4],
+      [7, 12, " "]
+    ],
     "08.21"
   );
 });
@@ -2018,7 +2027,10 @@ test("15.01 - opts.returnRangesOnly - anchor wrapping text", t => {
       'Some text <a class="btn btn__large" id="z">click me</a> and more text.',
       { returnRangesOnly: true }
     ),
-    [[9, 43, " "], [51, 56, " "]],
+    [
+      [9, 43, " "],
+      [51, 56, " "]
+    ],
     "15.01.03 - opts"
   );
 });
@@ -2720,7 +2732,10 @@ test("19.02 - opts.cb - baseline, ranges requested", t => {
     stripHtml("<div >abc</ div>", {
       returnRangesOnly: true
     }),
-    [[0, 6], [9, 16]],
+    [
+      [0, 6],
+      [9, 16]
+    ],
     "19.02"
   );
 });
@@ -2769,7 +2784,10 @@ test("19.04 - opts.cb - replace div with tralala", t => {
       returnRangesOnly: true,
       cb
     }),
-    [[0, 6, "<tralala>"], [9, 16, "</tralala>"]],
+    [
+      [0, 6, "<tralala>"],
+      [9, 16, "</tralala>"]
+    ],
     "19.04.02"
   );
 });

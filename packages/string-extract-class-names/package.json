@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.9.7",
+  "version": "5.9.8",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -14,12 +14,12 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "class",
     "css",
     "extract",
-    "class",
     "id",
-    "string",
-    "selector"
+    "selector",
+    "string"
   ],
   "main": "dist/string-extract-class-names.cjs.js",
   "module": "dist/string-extract-class-names.esm.js",
@@ -128,7 +128,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "string-left-right": "^2.3.7"
+    "string-left-right": "^2.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -144,8 +144,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",

@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -14,21 +14,21 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "update",
-    "js",
-    "row",
-    "numbers",
-    "console",
-    "log",
-    "every",
-    "console.log",
-    "debug",
-    "correct",
-    "automatically",
     "automated",
-    "tool",
+    "automatically",
     "cli",
-    "cli-app"
+    "cli-app",
+    "console",
+    "console.log",
+    "correct",
+    "debug",
+    "every",
+    "js",
+    "log",
+    "numbers",
+    "row",
+    "tool",
+    "update"
   ],
   "bin": {
     "jrn": "cli.js",
@@ -132,11 +132,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.21",
+    "arrayiffy-if-string": "^3.11.22",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
-    "js-row-num": "^2.4.4",
+    "js-row-num": "^2.4.5",
     "meow": "^5.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^3.0.1",
@@ -156,8 +156,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "execa": "^3.2.0",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "tempy": "^0.3.0"

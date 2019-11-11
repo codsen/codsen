@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Edit package.json without parsing, as string, keep indentation etc intact",
   "license": "MIT",
   "engines": {
@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "changes",
     "edit",
+    "indentation",
+    "json",
+    "non-parsing",
     "package",
     "package.json",
-    "json",
-    "changes",
-    "indentation",
-    "respect",
-    "non-parsing",
     "parse",
     "read",
+    "respect",
     "write"
   ],
   "main": "dist/edit-package-json.cjs.js",
@@ -140,14 +140,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-apply": "^3.0.39",
-    "string-left-right": "^2.3.7"
+    "ranges-apply": "^3.0.40",
+    "string-left-right": "^2.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ast-monkey-traverse": "^1.11.43",
+    "ast-monkey-traverse": "^1.11.44",
     "ava": "^2.2.7",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
@@ -158,8 +158,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-path": "^0.11.4",

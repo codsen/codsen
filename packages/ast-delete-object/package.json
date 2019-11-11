@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.8.49",
+  "version": "1.8.50",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "engines": {
@@ -14,18 +14,18 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "delete",
-    "object",
-    "key",
-    "value",
     "ast",
-    "tree",
+    "delete",
+    "html",
+    "key",
+    "object",
+    "parser",
     "posthtml",
     "posthtml-tree",
     "posthtmltree",
-    "html",
-    "xml",
-    "parser"
+    "tree",
+    "value",
+    "xml"
   ],
   "main": "dist/ast-delete-object.cjs.js",
   "module": "dist/ast-delete-object.esm.js",
@@ -134,9 +134,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.12.22",
-    "ast-monkey-traverse": "^1.11.43",
-    "check-types-mini": "^5.7.46",
+    "ast-compare": "^1.12.23",
+    "ast-monkey-traverse": "^1.11.44",
+    "check-types-mini": "^5.7.47",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -154,8 +154,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.4",
-    "lect": "^0.10.6",
+    "js-row-num-cli": "^1.6.5",
+    "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "prettier": "^1.19.0",
     "rollup": "^1.26.3",
