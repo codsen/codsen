@@ -132,6 +132,7 @@
     "various": {
       "devDependencies": [
         "browser-sync",
+        "ranges-apply",
         "rollup-plugin-node-builtins",
         "rollup-plugin-node-globals"
       ],
@@ -169,6 +170,7 @@
     "lect": "^0.10.6",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
+    "ranges-apply": "^3.0.39",
     "rollup": "^1.26.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
