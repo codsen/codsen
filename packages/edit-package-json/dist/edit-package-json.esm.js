@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, keep indentation etc intact
- * Version: 0.1.7
+ * Version: 0.1.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
@@ -276,8 +276,8 @@ function main({ str, path, valToInsert, mode }) {
       valueStartedAt < i &&
       !valueEndedAt &&
       ((str[valueStartedAt] === `"` && str[i] === `"` && str[i - 1] !== `\\`) ||
-        ((str[valueStartedAt] !== `"` && !str[i].trim().length) ||
-          ["}", ","].includes(str[i])))
+        (str[valueStartedAt] !== `"` && !str[i].trim().length) ||
+        ["}", ","].includes(str[i]))
     ) {
       log();
       keyValue = str.slice(

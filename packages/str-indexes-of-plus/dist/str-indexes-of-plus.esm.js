@@ -1,7 +1,7 @@
 /**
  * str-indexes-of-plus
  * Search for a string in another string. Get array of indexes. Full Unicode support.
- * Version: 2.9.46
+ * Version: 2.9.47
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
@@ -33,8 +33,8 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   }
   if (
     arguments.length >= 3 &&
-    (!isInt(fromIndex, { includeZero: true }) &&
-      !isNumStr(fromIndex, { includeZero: true }))
+    !isInt(fromIndex, { includeZero: true }) &&
+    !isNumStr(fromIndex, { includeZero: true })
   ) {
     throw new TypeError(
       `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`

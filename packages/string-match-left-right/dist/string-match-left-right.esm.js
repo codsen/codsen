@@ -1,7 +1,7 @@
 /**
  * string-match-left-right
  * Do substrings match what's on the left or right of a given index?
- * Version: 3.11.11
+ * Version: 3.11.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -474,8 +474,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     let startingPosition = position + (mode === "matchRight" ? 1 : 0);
     if (
       mode === "matchRight" &&
-      (isHighSurrogate(str[startingPosition - 1]) &&
-        isLowSurrogate(str[startingPosition]))
+      isHighSurrogate(str[startingPosition - 1]) &&
+      isLowSurrogate(str[startingPosition])
     ) {
       startingPosition += 1;
     }

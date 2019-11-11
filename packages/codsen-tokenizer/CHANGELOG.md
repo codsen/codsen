@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@1.1.1...codsen-tokenizer@1.2.0) (2019-11-11)
+
+
+### Features
+
+* self-closing html tags ([afaff20](https://gitlab.com/codsen/codsen/commit/afaff20539623d463e759d1a78a1ba6a45b7f0aa))
+* split test groups into files and report tag name for html tokens ([014e792](https://gitlab.com/codsen/codsen/commit/014e792786f69fa09d4771c8e24ea5d90c8a8b75))
+
+
+
+
+
 ## 1.1.0 (2019-11-02)
 
 ### Features

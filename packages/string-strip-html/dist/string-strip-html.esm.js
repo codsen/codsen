@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. Detects legit unencoded brackets.
- * Version: 4.3.6
+ * Version: 4.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -870,13 +870,12 @@ function stripHtml(str, originalOpts) {
           attrObj = {};
         } else if (
           !tag.onlyPlausible ||
-          ((tag.attributes.length === 0 &&
+          (tag.attributes.length === 0 &&
             tag.name &&
             definitelyTagNames
               .concat(singleLetterTags)
               .includes(tag.name.toLowerCase())) ||
-            (tag.attributes &&
-              tag.attributes.some(attrObj => attrObj.equalsAt)))
+          (tag.attributes && tag.attributes.some(attrObj => attrObj.equalsAt))
         ) {
           const whiteSpaceCompensation = calculateWhitespaceToInsert(
             str,
@@ -1010,7 +1009,8 @@ function stripHtml(str, originalOpts) {
             for (let y = i; y < len; y++) {
               if (
                 (!closingFoundAt &&
-                  (cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>")) ||
+                  cdata &&
+                  `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>") ||
                 (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
               ) {
                 closingFoundAt = y;

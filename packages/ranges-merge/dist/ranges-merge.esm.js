@@ -1,7 +1,7 @@
 /**
  * ranges-merge
  * Merge and sort arrays which mean string slice ranges
- * Version: 4.2.24
+ * Version: 4.2.25
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
@@ -111,10 +111,10 @@ function mergeRanges(arrOfRanges, originalOpts) {
     }
     if (
       sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
-      ((!opts.joinRangesThatTouchEdges &&
+      (!opts.joinRangesThatTouchEdges &&
         sortedRanges[i][0] < sortedRanges[i - 1][1]) ||
-        (opts.joinRangesThatTouchEdges &&
-          sortedRanges[i][0] <= sortedRanges[i - 1][1]))
+      (opts.joinRangesThatTouchEdges &&
+        sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
       sortedRanges[i - 1][0] = Math.min(
         sortedRanges[i][0],
