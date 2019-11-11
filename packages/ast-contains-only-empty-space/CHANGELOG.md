@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.49](https://gitlab.com/codsen/codsen/compare/ast-contains-only-empty-space@1.8.48...ast-contains-only-empty-space@1.8.49) (2019-11-11)
-
-**Note:** Version bump only for package ast-contains-only-empty-space
-
-
-
-
-
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
