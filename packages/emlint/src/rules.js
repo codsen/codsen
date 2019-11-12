@@ -107,6 +107,106 @@ defineLazyProp(
   () => badCharacterDataLinkEscape
 );
 
+import badCharacterDeviceControlOne from "./rules/bad-character-device-control-one";
+defineLazyProp(
+  builtInRules,
+  "bad-character-device-control-one",
+  () => badCharacterDeviceControlOne
+);
+
+import badCharacterDeviceControlTwo from "./rules/bad-character-device-control-two";
+defineLazyProp(
+  builtInRules,
+  "bad-character-device-control-two",
+  () => badCharacterDeviceControlTwo
+);
+
+import badCharacterDeviceControlThree from "./rules/bad-character-device-control-three";
+defineLazyProp(
+  builtInRules,
+  "bad-character-device-control-three",
+  () => badCharacterDeviceControlThree
+);
+
+import badCharacterDeviceControlFour from "./rules/bad-character-device-control-four";
+defineLazyProp(
+  builtInRules,
+  "bad-character-device-control-four",
+  () => badCharacterDeviceControlFour
+);
+
+import badCharacterNegativeAcknowledge from "./rules/bad-character-negative-acknowledge";
+defineLazyProp(
+  builtInRules,
+  "bad-character-negative-acknowledge",
+  () => badCharacterNegativeAcknowledge
+);
+
+import badCharacterSynchronousIdle from "./rules/bad-character-synchronous-idle";
+defineLazyProp(
+  builtInRules,
+  "bad-character-synchronous-idle",
+  () => badCharacterSynchronousIdle
+);
+
+import badCharacterEndOfTransmissionBlock from "./rules/bad-character-end-of-transmission-block";
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-transmission-block",
+  () => badCharacterEndOfTransmissionBlock
+);
+
+import badCharacterCancel from "./rules/bad-character-cancel";
+defineLazyProp(builtInRules, "bad-character-cancel", () => badCharacterCancel);
+
+import badCharacterEndOfMedium from "./rules/bad-character-end-of-medium";
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-medium",
+  () => badCharacterEndOfMedium
+);
+
+import badCharacterSubstitute from "./rules/bad-character-substitute";
+defineLazyProp(
+  builtInRules,
+  "bad-character-substitute",
+  () => badCharacterSubstitute
+);
+
+import badCharacterEscape from "./rules/bad-character-escape";
+defineLazyProp(builtInRules, "bad-character-escape", () => badCharacterEscape);
+
+import badCharacterInformationSeparatorFour from "./rules/bad-character-information-separator-four";
+defineLazyProp(
+  builtInRules,
+  "bad-character-information-separator-four",
+  () => badCharacterInformationSeparatorFour
+);
+
+import badCharacterInformationSeparatorThree from "./rules/bad-character-information-separator-three";
+defineLazyProp(
+  builtInRules,
+  "bad-character-information-separator-three",
+  () => badCharacterInformationSeparatorThree
+);
+
+import badCharacterInformationSeparatorTwo from "./rules/bad-character-information-separator-two";
+defineLazyProp(
+  builtInRules,
+  "bad-character-information-separator-two",
+  () => badCharacterInformationSeparatorTwo
+);
+
+import badCharacterInformationSeparatorOne from "./rules/bad-character-information-separator-one";
+defineLazyProp(
+  builtInRules,
+  "bad-character-information-separator-one",
+  () => badCharacterInformationSeparatorOne
+);
+
+import badCharacterDelete from "./rules/bad-character-delete";
+defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
+
 // TAG-LEVEL rules
 // -----------------------------------------------------------------------------
 

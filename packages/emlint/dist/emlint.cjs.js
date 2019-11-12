@@ -356,6 +356,294 @@ function badCharacterDataLinkEscape(context) {
   };
 }
 
+function badCharacterDeviceControlOne(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 17) {
+        context.report({
+          ruleId: "bad-character-device-control-one",
+          message: "Bad character - DEVICE CONTROL ONE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDeviceControlTwo(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 18) {
+        context.report({
+          ruleId: "bad-character-device-control-two",
+          message: "Bad character - DEVICE CONTROL TWO.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDeviceControlThree(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 19) {
+        context.report({
+          ruleId: "bad-character-device-control-three",
+          message: "Bad character - DEVICE CONTROL THREE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDeviceControlFour(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 20) {
+        context.report({
+          ruleId: "bad-character-device-control-four",
+          message: "Bad character - DEVICE CONTROL FOUR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNegativeAcknowledge(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 21) {
+        context.report({
+          ruleId: "bad-character-negative-acknowledge",
+          message: "Bad character - NEGATIVE ACKNOWLEDGE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSynchronousIdle(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 22) {
+        context.report({
+          ruleId: "bad-character-synchronous-idle",
+          message: "Bad character - SYNCHRONOUS IDLE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfTransmissionBlock(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 23) {
+        context.report({
+          ruleId: "bad-character-end-of-transmission-block",
+          message: "Bad character - END OF TRANSMISSION BLOCK.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterCancel(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 24) {
+        context.report({
+          ruleId: "bad-character-cancel",
+          message: "Bad character - CANCEL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfMedium(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 25) {
+        context.report({
+          ruleId: "bad-character-end-of-medium",
+          message: "Bad character - END OF MEDIUM.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSubstitute(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 26) {
+        context.report({
+          ruleId: "bad-character-substitute",
+          message: "Bad character - SUBSTITUTE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEscape(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 27) {
+        context.report({
+          ruleId: "bad-character-escape",
+          message: "Bad character - ESCAPE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInformationSeparatorFour(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 28) {
+        context.report({
+          ruleId: "bad-character-information-separator-four",
+          message: "Bad character - INFORMATION SEPARATOR FOUR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInformationSeparatorThree(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 29) {
+        context.report({
+          ruleId: "bad-character-information-separator-three",
+          message: "Bad character - INFORMATION SEPARATOR THREE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInformationSeparatorTwo(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 30) {
+        context.report({
+          ruleId: "bad-character-information-separator-two",
+          message: "Bad character - INFORMATION SEPARATOR TWO.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInformationSeparatorTwo$1(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 31) {
+        context.report({
+          ruleId: "bad-character-information-separator-one",
+          message: "Bad character - INFORMATION SEPARATOR ONE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDelete(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 127) {
+        context.report({
+          ruleId: "bad-character-delete",
+          message: "Bad character - DELETE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
@@ -431,6 +719,54 @@ defineLazyProp(builtInRules, "bad-character-shift-in", function () {
 });
 defineLazyProp(builtInRules, "bad-character-data-link-escape", function () {
   return badCharacterDataLinkEscape;
+});
+defineLazyProp(builtInRules, "bad-character-device-control-one", function () {
+  return badCharacterDeviceControlOne;
+});
+defineLazyProp(builtInRules, "bad-character-device-control-two", function () {
+  return badCharacterDeviceControlTwo;
+});
+defineLazyProp(builtInRules, "bad-character-device-control-three", function () {
+  return badCharacterDeviceControlThree;
+});
+defineLazyProp(builtInRules, "bad-character-device-control-four", function () {
+  return badCharacterDeviceControlFour;
+});
+defineLazyProp(builtInRules, "bad-character-negative-acknowledge", function () {
+  return badCharacterNegativeAcknowledge;
+});
+defineLazyProp(builtInRules, "bad-character-synchronous-idle", function () {
+  return badCharacterSynchronousIdle;
+});
+defineLazyProp(builtInRules, "bad-character-end-of-transmission-block", function () {
+  return badCharacterEndOfTransmissionBlock;
+});
+defineLazyProp(builtInRules, "bad-character-cancel", function () {
+  return badCharacterCancel;
+});
+defineLazyProp(builtInRules, "bad-character-end-of-medium", function () {
+  return badCharacterEndOfMedium;
+});
+defineLazyProp(builtInRules, "bad-character-substitute", function () {
+  return badCharacterSubstitute;
+});
+defineLazyProp(builtInRules, "bad-character-escape", function () {
+  return badCharacterEscape;
+});
+defineLazyProp(builtInRules, "bad-character-information-separator-four", function () {
+  return badCharacterInformationSeparatorFour;
+});
+defineLazyProp(builtInRules, "bad-character-information-separator-three", function () {
+  return badCharacterInformationSeparatorThree;
+});
+defineLazyProp(builtInRules, "bad-character-information-separator-two", function () {
+  return badCharacterInformationSeparatorTwo;
+});
+defineLazyProp(builtInRules, "bad-character-information-separator-one", function () {
+  return badCharacterInformationSeparatorTwo$1;
+});
+defineLazyProp(builtInRules, "bad-character-delete", function () {
+  return badCharacterDelete;
 });
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;

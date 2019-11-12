@@ -116,10 +116,7 @@ test(`01.04 - a single closing tag, space before and after slash`, t => {
         column: 2,
         message: "Bad whitespace.",
         fix: {
-          ranges: [
-            [2, 3],
-            [4, 5]
-          ]
+          ranges: [[2, 3], [4, 5]]
         }
       }
     ],
