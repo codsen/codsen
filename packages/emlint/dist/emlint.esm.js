@@ -569,6 +569,24 @@ function badCharacterDelete(context) {
   };
 }
 
+function badCharacterApplicationProgramCommand(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 159) {
+        context.report({
+          ruleId: "bad-character-application-program-command",
+          message: "Bad character - APPLICATION PROGRAM COMMAND.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
@@ -749,6 +767,11 @@ defineLazyProp(
   () => badCharacterInformationSeparatorTwo$1
 );
 defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
+defineLazyProp(
+  builtInRules,
+  "bad-character-application-program-command",
+  () => badCharacterApplicationProgramCommand
+);
 defineLazyProp(
   builtInRules,
   "tag-space-after-opening-bracket",

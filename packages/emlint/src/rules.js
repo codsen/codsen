@@ -207,6 +207,13 @@ defineLazyProp(
 import badCharacterDelete from "./rules/bad-character-delete";
 defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
 
+import badCharacterApplicationProgramCommand from "./rules/bad-character-application-program-command";
+defineLazyProp(
+  builtInRules,
+  "bad-character-application-program-command",
+  () => badCharacterApplicationProgramCommand
+);
+
 // TAG-LEVEL rules
 // -----------------------------------------------------------------------------
 
