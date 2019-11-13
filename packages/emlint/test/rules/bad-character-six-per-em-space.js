@@ -1,7 +1,7 @@
 // avanotonly
 
-// rule: bad-character-control-0080
-// https://www.fileformat.info/info/unicode/char/0080/index.htm
+// rule: bad-character-six-per-em-space
+// https://www.fileformat.info/info/unicode/char/2006/index.htm
 // -----------------------------------------------------------------------------
 
 import test from "ava";
@@ -12,44 +12,44 @@ import { applyFixes } from "../../t-util/util";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01.01 - detects two CONTROL characters`, t => {
-  const str = "\u0080dlkgjld\u0080j";
+test(`01.01 - detects two SIX-PER-EM SPACE characters`, t => {
+  const str = "\u2006dlkgjld\u2006j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-control-0080": 2
+      "bad-character-six-per-em-space": 2
     }
   });
   deepContains(
     messages,
     [
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-six-per-em-space",
         severity: 2,
         idxFrom: 0,
         idxTo: 1,
         line: 1,
         column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - CONTROL.",
+        message: "Bad character - SIX-PER-EM SPACE.",
         fix: {
-          ranges: [[0, 1]]
+          ranges: [[0, 1, " "]]
         }
       },
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-six-per-em-space",
         severity: 2,
         idxFrom: 8,
         idxTo: 9,
         line: 1,
         column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - CONTROL.",
+        message: "Bad character - SIX-PER-EM SPACE.",
         fix: {
-          ranges: [[8, 9]]
+          ranges: [[8, 9, " "]]
         }
       }
     ],
     t.is,
     t.fail
   );
-  t.is(applyFixes(str, messages), "dlkgjldj");
+  t.is(applyFixes(str, messages), " dlkgjld j");
 });

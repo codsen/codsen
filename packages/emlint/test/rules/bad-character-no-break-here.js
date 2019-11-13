@@ -1,7 +1,7 @@
 // avanotonly
 
-// rule: bad-character-control-0080
-// https://www.fileformat.info/info/unicode/char/0080/index.htm
+// rule: bad-character-no-break-here
+// https://www.fileformat.info/info/unicode/char/0083/index.htm
 // -----------------------------------------------------------------------------
 
 import test from "ava";
@@ -12,37 +12,37 @@ import { applyFixes } from "../../t-util/util";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01.01 - detects two CONTROL characters`, t => {
-  const str = "\u0080dlkgjld\u0080j";
+test(`01.01 - detects two NO BREAK HERE characters`, t => {
+  const str = "\u0083dlkgjld\u0083j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-control-0080": 2
+      "bad-character-no-break-here": 2
     }
   });
   deepContains(
     messages,
     [
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-no-break-here",
         severity: 2,
         idxFrom: 0,
         idxTo: 1,
         line: 1,
         column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - CONTROL.",
+        message: "Bad character - NO BREAK HERE.",
         fix: {
           ranges: [[0, 1]]
         }
       },
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-no-break-here",
         severity: 2,
         idxFrom: 8,
         idxTo: 9,
         line: 1,
         column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - CONTROL.",
+        message: "Bad character - NO BREAK HERE.",
         fix: {
           ranges: [[8, 9]]
         }

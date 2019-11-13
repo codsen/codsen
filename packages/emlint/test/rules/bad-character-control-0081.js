@@ -1,7 +1,7 @@
 // avanotonly
 
-// rule: bad-character-control-0080
-// https://www.fileformat.info/info/unicode/char/0080/index.htm
+// rule: bad-character-control-0081
+// https://www.fileformat.info/info/unicode/char/0081/index.htm
 // -----------------------------------------------------------------------------
 
 import test from "ava";
@@ -13,18 +13,18 @@ import { applyFixes } from "../../t-util/util";
 
 // 1. basic tests
 test(`01.01 - detects two CONTROL characters`, t => {
-  const str = "\u0080dlkgjld\u0080j";
+  const str = "\u0081dlkgjld\u0081j";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "bad-character-control-0080": 2
+      "bad-character-control-0081": 2
     }
   });
   deepContains(
     messages,
     [
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-control-0081",
         severity: 2,
         idxFrom: 0,
         idxTo: 1,
@@ -36,7 +36,7 @@ test(`01.01 - detects two CONTROL characters`, t => {
         }
       },
       {
-        ruleId: "bad-character-control-0080",
+        ruleId: "bad-character-control-0081",
         severity: 2,
         idxFrom: 8,
         idxTo: 9,

@@ -569,6 +569,564 @@ function badCharacterDelete(context) {
   };
 }
 
+function badCharacterControl0080(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 128) {
+        context.report({
+          ruleId: "bad-character-control-0080",
+          message: "Bad character - CONTROL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterControl0081(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 129) {
+        context.report({
+          ruleId: "bad-character-control-0081",
+          message: "Bad character - CONTROL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterBreakPermittedHere(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 130) {
+        context.report({
+          ruleId: "bad-character-break-permitted-here",
+          message: "Bad character - BREAK PERMITTED HERE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNoBreakHere(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 131) {
+        context.report({
+          ruleId: "bad-character-no-break-here",
+          message: "Bad character - NO BREAK HERE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterControl0084(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 132) {
+        context.report({
+          ruleId: "bad-character-control-0084",
+          message: "Bad character - CONTROL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNextLine(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 133) {
+        context.report({
+          ruleId: "bad-character-next-line",
+          message: "Bad character - NEXT LINE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStartOfSelectedArea(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 134) {
+        context.report({
+          ruleId: "bad-character-start-of-selected-area",
+          message: "Bad character - START OF SELECTED AREA.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfSelectedArea(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 135) {
+        context.report({
+          ruleId: "bad-character-end-of-selected-area",
+          message: "Bad character - END OF SELECTED AREA.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterCharacterTabulationSet(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 136) {
+        context.report({
+          ruleId: "bad-character-character-tabulation-set",
+          message: "Bad character - CHARACTER TABULATION SET.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterCharacterTabulationWithJustification(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 137) {
+        context.report({
+          ruleId: "bad-character-character-tabulation-with-justification",
+          message: "Bad character - CHARACTER TABULATION WITH JUSTIFICATION.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterLineTabulationSet(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 138) {
+        context.report({
+          ruleId: "bad-character-line-tabulation-set",
+          message: "Bad character - LINE TABULATION SET.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPartialLineForward(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 139) {
+        context.report({
+          ruleId: "bad-character-partial-line-forward",
+          message: "Bad character - PARTIAL LINE FORWARD.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPartialLineBackward(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 140) {
+        context.report({
+          ruleId: "bad-character-partial-line-backward",
+          message: "Bad character - PARTIAL LINE BACKWARD.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterReverseLineFeed(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 141) {
+        context.report({
+          ruleId: "bad-character-reverse-line-feed",
+          message: "Bad character - REVERSE LINE FEED.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSingleShiftTwo(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 142) {
+        context.report({
+          ruleId: "bad-character-single-shift-two",
+          message: "Bad character - SINGLE SHIFT TWO.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSingleShiftTwo$1(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 143) {
+        context.report({
+          ruleId: "bad-character-single-shift-three",
+          message: "Bad character - SINGLE SHIFT THREE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterDeviceControlString(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 144) {
+        context.report({
+          ruleId: "bad-character-device-control-string",
+          message: "Bad character - DEVICE CONTROL STRING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPrivateUseOne(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 145) {
+        context.report({
+          ruleId: "bad-character-private-use-1",
+          message: "Bad character - PRIVATE USE ONE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPrivateUseTwo(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 146) {
+        context.report({
+          ruleId: "bad-character-private-use-2",
+          message: "Bad character - PRIVATE USE TWO.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSetTransmitState(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 147) {
+        context.report({
+          ruleId: "bad-character-set-transmit-state",
+          message: "Bad character - SET TRANSMIT STATE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterCancelCharacter(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 148) {
+        context.report({
+          ruleId: "bad-character-cancel-character",
+          message: "Bad character - CANCEL CHARACTER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterMessageWaiting(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 149) {
+        context.report({
+          ruleId: "bad-character-message-waiting",
+          message: "Bad character - MESSAGE WAITING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStartOfProtectedArea(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 150) {
+        context.report({
+          ruleId: "bad-character-start-of-protected-area",
+          message: "Bad character - START OF PROTECTED AREA.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEndOfProtectedArea(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 151) {
+        context.report({
+          ruleId: "bad-character-end-of-protected-area",
+          message: "Bad character - END OF PROTECTED AREA.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStartOfString(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 152) {
+        context.report({
+          ruleId: "bad-character-start-of-string",
+          message: "Bad character - START OF STRING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterControl0099(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 153) {
+        context.report({
+          ruleId: "bad-character-control-0099",
+          message: "Bad character - CONTROL.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSingleCharacterIntroducer(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 154) {
+        context.report({
+          ruleId: "bad-character-single-character-introducer",
+          message: "Bad character - SINGLE CHARACTER INTRODUCER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterControlSequenceIntroducer(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 155) {
+        context.report({
+          ruleId: "bad-character-control-sequence-introducer",
+          message: "Bad character - CONTROL SEQUENCE INTRODUCER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterStringTerminator(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 156) {
+        context.report({
+          ruleId: "bad-character-string-terminator",
+          message: "Bad character - STRING TERMINATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterOperatingSystemCommand(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 157) {
+        context.report({
+          ruleId: "bad-character-operating-system-command",
+          message: "Bad character - OPERATING SYSTEM COMMAND.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPrivateMessage(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 158) {
+        context.report({
+          ruleId: "bad-character-private-message",
+          message: "Bad character - PRIVATE MESSAGE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function badCharacterApplicationProgramCommand(context) {
   return {
     character: function(chr, i) {
@@ -580,6 +1138,402 @@ function badCharacterApplicationProgramCommand(context) {
           idxTo: i + 1,
           fix: {
             ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSoftHyphen(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 173) {
+        context.report({
+          ruleId: "bad-character-soft-hyphen",
+          message: "Bad character - SOFT HYPHEN.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNonBreakingSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 160) {
+        context.report({
+          ruleId: "bad-character-non-breaking-space",
+          message: "Bad character - NON-BREAKING SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterOghamSpaceMark(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 5760) {
+        context.report({
+          ruleId: "bad-character-ogham-space-mark",
+          message: "Bad character - OGHAM SPACE MARK.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEnQuad(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8192) {
+        context.report({
+          ruleId: "bad-character-en-quad",
+          message: "Bad character - EN QUAD.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEmQuad(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8193) {
+        context.report({
+          ruleId: "bad-character-em-quad",
+          message: "Bad character - EM QUAD.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEnSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8194) {
+        context.report({
+          ruleId: "bad-character-en-space",
+          message: "Bad character - EN SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterEmSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8195) {
+        context.report({
+          ruleId: "bad-character-em-space",
+          message: "Bad character - EM SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterThreePerEmSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8196) {
+        context.report({
+          ruleId: "bad-character-three-per-em-space",
+          message: "Bad character - THREE-PER-EM SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterFourPerEmSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8197) {
+        context.report({
+          ruleId: "bad-character-four-per-em-space",
+          message: "Bad character - FOUR-PER-EM SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterSixPerEmSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8198) {
+        context.report({
+          ruleId: "bad-character-six-per-em-space",
+          message: "Bad character - SIX-PER-EM SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterFigureSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8199) {
+        context.report({
+          ruleId: "bad-character-figure-space",
+          message: "Bad character - FIGURE SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPunctuationSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8200) {
+        context.report({
+          ruleId: "bad-character-punctuation-space",
+          message: "Bad character - PUNCTUATION SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterThinSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8201) {
+        context.report({
+          ruleId: "bad-character-thin-space",
+          message: "Bad character - THIN SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterHairSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8202) {
+        context.report({
+          ruleId: "bad-character-hair-space",
+          message: "Bad character - HAIR SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterZeroWidthSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8203) {
+        context.report({
+          ruleId: "bad-character-zero-width-space",
+          message: "Bad character - ZERO WIDTH SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterZeroWidthNonJoiner(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8204) {
+        context.report({
+          ruleId: "bad-character-zero-width-non-joiner",
+          message: "Bad character - ZERO WIDTH NON-JOINER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterZeroWidthJoiner(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8205) {
+        context.report({
+          ruleId: "bad-character-zero-width-joiner",
+          message: "Bad character - ZERO WIDTH JOINER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterLeftToRightMark(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8206) {
+        context.report({
+          ruleId: "bad-character-left-to-right-mark",
+          message: "Bad character - LEFT-TO-RIGHT MARK.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterRightToLeftMark(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8207) {
+        context.report({
+          ruleId: "bad-character-right-to-left-mark",
+          message: "Bad character - RIGHT-TO-LEFT MARK.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNarrowNoBreakSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8239) {
+        context.report({
+          ruleId: "bad-character-narrow-no-break-space",
+          message: "Bad character - NARROW NO-BREAK SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterMediumMathematicalSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8287) {
+        context.report({
+          ruleId: "bad-character-medium-mathematical-space",
+          message: "Bad character - MEDIUM MATHEMATICAL SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterIdeographicSpace(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 12288) {
+        context.report({
+          ruleId: "bad-character-ideographic-space",
+          message: "Bad character - IDEOGRAPHIC SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -769,8 +1723,265 @@ defineLazyProp(
 defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
 defineLazyProp(
   builtInRules,
+  "bad-character-control-0080",
+  () => badCharacterControl0080
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-control-0081",
+  () => badCharacterControl0081
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-break-permitted-here",
+  () => badCharacterBreakPermittedHere
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-no-break-here",
+  () => badCharacterNoBreakHere
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-control-0084",
+  () => badCharacterControl0084
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-next-line",
+  () => badCharacterNextLine
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-start-of-selected-area",
+  () => badCharacterStartOfSelectedArea
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-selected-area",
+  () => badCharacterEndOfSelectedArea
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-character-tabulation-set",
+  () => badCharacterCharacterTabulationSet
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-character-tabulation-with-justification",
+  () => badCharacterCharacterTabulationWithJustification
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-line-tabulation-set",
+  () => badCharacterLineTabulationSet
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-partial-line-forward",
+  () => badCharacterPartialLineForward
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-partial-line-backward",
+  () => badCharacterPartialLineBackward
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-reverse-line-feed",
+  () => badCharacterReverseLineFeed
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-single-shift-two",
+  () => badCharacterSingleShiftTwo
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-single-shift-three",
+  () => badCharacterSingleShiftTwo$1
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-device-control-string",
+  () => badCharacterDeviceControlString
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-private-use-1",
+  () => badCharacterPrivateUseOne
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-private-use-2",
+  () => badCharacterPrivateUseTwo
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-set-transmit-state",
+  () => badCharacterSetTransmitState
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-cancel-character",
+  () => badCharacterCancelCharacter
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-message-waiting",
+  () => badCharacterMessageWaiting
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-start-of-protected-area",
+  () => badCharacterStartOfProtectedArea
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-end-of-protected-area",
+  () => badCharacterEndOfProtectedArea
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-start-of-string",
+  () => badCharacterStartOfString
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-control-0099",
+  () => badCharacterControl0099
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-single-character-introducer",
+  () => badCharacterSingleCharacterIntroducer
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-control-sequence-introducer",
+  () => badCharacterControlSequenceIntroducer
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-string-terminator",
+  () => badCharacterStringTerminator
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-operating-system-command",
+  () => badCharacterOperatingSystemCommand
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-private-message",
+  () => badCharacterPrivateMessage
+);
+defineLazyProp(
+  builtInRules,
   "bad-character-application-program-command",
   () => badCharacterApplicationProgramCommand
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-soft-hyphen",
+  () => badCharacterSoftHyphen
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-non-breaking-space",
+  () => badCharacterNonBreakingSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-ogham-space-mark",
+  () => badCharacterOghamSpaceMark
+);
+defineLazyProp(builtInRules, "bad-character-en-quad", () => badCharacterEnQuad);
+defineLazyProp(builtInRules, "bad-character-em-quad", () => badCharacterEmQuad);
+defineLazyProp(
+  builtInRules,
+  "bad-character-en-space",
+  () => badCharacterEnSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-em-space",
+  () => badCharacterEmSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-three-per-em-space",
+  () => badCharacterThreePerEmSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-four-per-em-space",
+  () => badCharacterFourPerEmSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-six-per-em-space",
+  () => badCharacterSixPerEmSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-figure-space",
+  () => badCharacterFigureSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-punctuation-space",
+  () => badCharacterPunctuationSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-thin-space",
+  () => badCharacterThinSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-hair-space",
+  () => badCharacterHairSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-zero-width-space",
+  () => badCharacterZeroWidthSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-zero-width-non-joiner",
+  () => badCharacterZeroWidthNonJoiner
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-zero-width-joiner",
+  () => badCharacterZeroWidthJoiner
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-left-to-right-mark",
+  () => badCharacterLeftToRightMark
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-right-to-left-mark",
+  () => badCharacterRightToLeftMark
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-narrow-no-break-space",
+  () => badCharacterNarrowNoBreakSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-medium-mathematical-space",
+  () => badCharacterMediumMathematicalSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-ideographic-space",
+  () => badCharacterIdeographicSpace
 );
 defineLazyProp(
   builtInRules,
