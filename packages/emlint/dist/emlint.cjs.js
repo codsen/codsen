@@ -1562,6 +1562,240 @@ function badCharacterRightToLeftMark(context) {
   };
 }
 
+function badCharacterLeftToRightEmbedding(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8234) {
+        context.report({
+          ruleId: "bad-character-left-to-right-embedding",
+          message: "Bad character - LEFT-TO-RIGHT EMBEDDING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterRightToLeftEmbedding(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8235) {
+        context.report({
+          ruleId: "bad-character-right-to-left-embedding",
+          message: "Bad character - RIGHT-TO-LEFT EMBEDDING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterPopDirectionalFormatting(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8236) {
+        context.report({
+          ruleId: "bad-character-pop-directional-formatting",
+          message: "Bad character - POP DIRECTIONAL FORMATTING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterLeftToRightOverride(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8237) {
+        context.report({
+          ruleId: "bad-character-left-to-right-override",
+          message: "Bad character - LEFT-TO-RIGHT OVERRIDE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterRightToLeftOverride(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8238) {
+        context.report({
+          ruleId: "bad-character-right-to-left-override",
+          message: "Bad character - RIGHT-TO-LEFT OVERRIDE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterWordJoiner(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8288) {
+        context.report({
+          ruleId: "bad-character-word-joiner",
+          message: "Bad character - WORD JOINER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterFunctionApplication(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8289) {
+        context.report({
+          ruleId: "bad-character-function-application",
+          message: "Bad character - FUNCTION APPLICATION.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInvisibleTimes(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8290) {
+        context.report({
+          ruleId: "bad-character-invisible-times",
+          message: "Bad character - INVISIBLE TIMES.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInvisibleSeparator(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8291) {
+        context.report({
+          ruleId: "bad-character-invisible-separator",
+          message: "Bad character - INVISIBLE SEPARATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInvisiblePlus(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8292) {
+        context.report({
+          ruleId: "bad-character-invisible-plus",
+          message: "Bad character - INVISIBLE PLUS.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterLeftToRightIsolate(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8294) {
+        context.report({
+          ruleId: "bad-character-left-to-right-isolate",
+          message: "Bad character - LEFT-TO-RIGHT ISOLATE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterRightToLeftIsolate(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8295) {
+        context.report({
+          ruleId: "bad-character-right-to-left-isolate",
+          message: "Bad character - RIGHT-TO-LEFT ISOLATE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterFirstStrongIsolate(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8296) {
+        context.report({
+          ruleId: "bad-character-first-strong-isolate",
+          message: "Bad character - FIRST STRONG ISOLATE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function badCharacterNarrowNoBreakSpace(context) {
   return {
     character: function character(chr, i) {
@@ -1892,6 +2126,45 @@ defineLazyProp(builtInRules, "bad-character-left-to-right-mark", function () {
 });
 defineLazyProp(builtInRules, "bad-character-right-to-left-mark", function () {
   return badCharacterRightToLeftMark;
+});
+defineLazyProp(builtInRules, "bad-character-left-to-right-embedding", function () {
+  return badCharacterLeftToRightEmbedding;
+});
+defineLazyProp(builtInRules, "bad-character-right-to-left-embedding", function () {
+  return badCharacterRightToLeftEmbedding;
+});
+defineLazyProp(builtInRules, "bad-character-pop-directional-formatting", function () {
+  return badCharacterPopDirectionalFormatting;
+});
+defineLazyProp(builtInRules, "bad-character-left-to-right-override", function () {
+  return badCharacterLeftToRightOverride;
+});
+defineLazyProp(builtInRules, "bad-character-right-to-left-override", function () {
+  return badCharacterRightToLeftOverride;
+});
+defineLazyProp(builtInRules, "bad-character-word-joiner", function () {
+  return badCharacterWordJoiner;
+});
+defineLazyProp(builtInRules, "bad-character-function-application", function () {
+  return badCharacterFunctionApplication;
+});
+defineLazyProp(builtInRules, "bad-character-invisible-times", function () {
+  return badCharacterInvisibleTimes;
+});
+defineLazyProp(builtInRules, "bad-character-invisible-separator", function () {
+  return badCharacterInvisibleSeparator;
+});
+defineLazyProp(builtInRules, "bad-character-invisible-plus", function () {
+  return badCharacterInvisiblePlus;
+});
+defineLazyProp(builtInRules, "bad-character-left-to-right-isolate", function () {
+  return badCharacterLeftToRightIsolate;
+});
+defineLazyProp(builtInRules, "bad-character-right-to-left-isolate", function () {
+  return badCharacterRightToLeftIsolate;
+});
+defineLazyProp(builtInRules, "bad-character-first-strong-isolate", function () {
+  return badCharacterFirstStrongIsolate;
 });
 defineLazyProp(builtInRules, "bad-character-narrow-no-break-space", function () {
   return badCharacterNarrowNoBreakSpace;

@@ -559,6 +559,113 @@ defineLazyProp(
   () => badCharacterRightToLeftMark
 );
 
+import badCharacterLeftToRightEmbedding from "./rules/bad-character-left-to-right-embedding";
+defineLazyProp(
+  builtInRules,
+  "bad-character-left-to-right-embedding",
+  () => badCharacterLeftToRightEmbedding
+);
+
+import badCharacterRightToLeftEmbedding from "./rules/bad-character-right-to-left-embedding";
+defineLazyProp(
+  builtInRules,
+  "bad-character-right-to-left-embedding",
+  () => badCharacterRightToLeftEmbedding
+);
+
+import badCharacterPopDirectionalFormatting from "./rules/bad-character-pop-directional-formatting";
+defineLazyProp(
+  builtInRules,
+  "bad-character-pop-directional-formatting",
+  () => badCharacterPopDirectionalFormatting
+);
+
+import badCharacterLeftToRightOverride from "./rules/bad-character-left-to-right-override";
+defineLazyProp(
+  builtInRules,
+  "bad-character-left-to-right-override",
+  () => badCharacterLeftToRightOverride
+);
+
+import badCharacterRightToLeftOverride from "./rules/bad-character-right-to-left-override";
+defineLazyProp(
+  builtInRules,
+  "bad-character-right-to-left-override",
+  () => badCharacterRightToLeftOverride
+);
+
+//
+
+import badCharacterWordJoiner from "./rules/bad-character-word-joiner";
+defineLazyProp(
+  builtInRules,
+  "bad-character-word-joiner",
+  () => badCharacterWordJoiner
+);
+
+import badCharacterFunctionApplication from "./rules/bad-character-function-application";
+defineLazyProp(
+  builtInRules,
+  "bad-character-function-application",
+  () => badCharacterFunctionApplication
+);
+
+import badCharacterInvisibleTimes from "./rules/bad-character-invisible-times";
+defineLazyProp(
+  builtInRules,
+  "bad-character-invisible-times",
+  () => badCharacterInvisibleTimes
+);
+
+import badCharacterInvisibleSeparator from "./rules/bad-character-invisible-separator";
+defineLazyProp(
+  builtInRules,
+  "bad-character-invisible-separator",
+  () => badCharacterInvisibleSeparator
+);
+
+import badCharacterInvisiblePlus from "./rules/bad-character-invisible-plus";
+defineLazyProp(
+  builtInRules,
+  "bad-character-invisible-plus",
+  () => badCharacterInvisiblePlus
+);
+
+import badCharacterLeftToRightIsolate from "./rules/bad-character-left-to-right-isolate";
+defineLazyProp(
+  builtInRules,
+  "bad-character-left-to-right-isolate",
+  () => badCharacterLeftToRightIsolate
+);
+
+import badCharacterRightToLeftIsolate from "./rules/bad-character-right-to-left-isolate";
+defineLazyProp(
+  builtInRules,
+  "bad-character-right-to-left-isolate",
+  () => badCharacterRightToLeftIsolate
+);
+
+import badCharacterFirstStrongIsolate from "./rules/bad-character-first-strong-isolate";
+defineLazyProp(
+  builtInRules,
+  "bad-character-first-strong-isolate",
+  () => badCharacterFirstStrongIsolate
+);
+
+import badCharacterPopDirectionalIsolate from "./rules/bad-character-pop-directional-isolate";
+defineLazyProp(
+  builtInRules,
+  "bad-character-pop-directional-isolate",
+  () => badCharacterPopDirectionalIsolate
+);
+
+import badCharacterInhibitSymmetricSwapping from "./rules/bad-character-inhibit-symmetric-swapping";
+defineLazyProp(
+  builtInRules,
+  "bad-character-inhibit-symmetric-swapping",
+  () => badCharacterInhibitSymmetricSwapping
+);
+
 //
 
 import badCharacterNarrowNoBreakSpace from "./rules/bad-character-narrow-no-break-space";
