@@ -666,6 +666,69 @@ defineLazyProp(
   () => badCharacterInhibitSymmetricSwapping
 );
 
+import badCharacterActivateSymmetricSwapping from "./rules/bad-character-activate-symmetric-swapping";
+defineLazyProp(
+  builtInRules,
+  "bad-character-activate-symmetric-swapping",
+  () => badCharacterActivateSymmetricSwapping
+);
+
+import badCharacterInhibitArabicFormShaping from "./rules/bad-character-inhibit-arabic-form-shaping";
+defineLazyProp(
+  builtInRules,
+  "bad-character-inhibit-arabic-form-shaping",
+  () => badCharacterInhibitArabicFormShaping
+);
+
+import badCharacterActivateArabicFormShaping from "./rules/bad-character-activate-arabic-form-shaping";
+defineLazyProp(
+  builtInRules,
+  "bad-character-activate-arabic-form-shaping",
+  () => badCharacterActivateArabicFormShaping
+);
+
+import badCharacterNationalDigitShapes from "./rules/bad-character-national-digit-shapes";
+defineLazyProp(
+  builtInRules,
+  "bad-character-national-digit-shapes",
+  () => badCharacterNationalDigitShapes
+);
+
+import badCharacterNominalDigitShapes from "./rules/bad-character-nominal-digit-shapes";
+defineLazyProp(
+  builtInRules,
+  "bad-character-nominal-digit-shapes",
+  () => badCharacterNominalDigitShapes
+);
+
+import badCharacterZeroWidthNoBreakSpace from "./rules/bad-character-zero-width-no-break-space";
+defineLazyProp(
+  builtInRules,
+  "bad-character-zero-width-no-break-space",
+  () => badCharacterZeroWidthNoBreakSpace
+);
+
+import badCharacterInterlinearAnnotationAnchor from "./rules/bad-character-interlinear-annotation-anchor";
+defineLazyProp(
+  builtInRules,
+  "bad-character-interlinear-annotation-anchor",
+  () => badCharacterInterlinearAnnotationAnchor
+);
+
+import badCharacterInterlinearAnnotationSeparator from "./rules/bad-character-interlinear-annotation-separator";
+defineLazyProp(
+  builtInRules,
+  "bad-character-interlinear-annotation-separator",
+  () => badCharacterInterlinearAnnotationSeparator
+);
+
+import badCharacterInterlinearAnnotationTerminator from "./rules/bad-character-interlinear-annotation-terminator";
+defineLazyProp(
+  builtInRules,
+  "bad-character-interlinear-annotation-terminator",
+  () => badCharacterInterlinearAnnotationTerminator
+);
+
 //
 
 import badCharacterNarrowNoBreakSpace from "./rules/bad-character-narrow-no-break-space";

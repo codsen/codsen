@@ -1796,6 +1796,204 @@ function badCharacterFirstStrongIsolate(context) {
   };
 }
 
+function badCharacterPopDirectionalIsolate(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8297) {
+        context.report({
+          ruleId: "bad-character-pop-directional-isolate",
+          message: "Bad character - FIRST STRONG ISOLATE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInhibitSymmetricSwapping(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8298) {
+        context.report({
+          ruleId: "bad-character-inhibit-symmetric-swapping",
+          message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterActivateSymmetricSwapping(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8299) {
+        context.report({
+          ruleId: "bad-character-activate-symmetric-swapping",
+          message: "Bad character - INHIBIT SYMMETRIC SWAPPING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInhibitArabicFormShaping(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8300) {
+        context.report({
+          ruleId: "bad-character-inhibit-arabic-form-shaping",
+          message: "Bad character - INHIBIT ARABIC FORM SHAPING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterActivateArabicFormShaping(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8301) {
+        context.report({
+          ruleId: "bad-character-activate-arabic-form-shaping",
+          message: "Bad character - ACTIVATE ARABIC FORM SHAPING.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNationalDigitShapes(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8302) {
+        context.report({
+          ruleId: "bad-character-national-digit-shapes",
+          message: "Bad character - NATIONAL DIGIT SHAPES.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterNominalDigitShapes(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 8303) {
+        context.report({
+          ruleId: "bad-character-nominal-digit-shapes",
+          message: "Bad character - NOMINAL DIGIT SHAPES.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterZeroWidthNoBreakSpace(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 65279) {
+        context.report({
+          ruleId: "bad-character-zero-width-no-break-space",
+          message: "Bad character - ZERO WIDTH NO-BREAK SPACE.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInterlinearAnnotationAnchor(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 65529) {
+        context.report({
+          ruleId: "bad-character-interlinear-annotation-anchor",
+          message: "Bad character - INTERLINEAR ANNOTATION ANCHOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInterlinearAnnotationSeparator(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 65530) {
+        context.report({
+          ruleId: "bad-character-interlinear-annotation-separator",
+          message: "Bad character - INTERLINEAR ANNOTATION SEPARATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterInterlinearAnnotationTerminator(context) {
+  return {
+    character: function character(chr, i) {
+      if (chr.charCodeAt(0) === 65531) {
+        context.report({
+          ruleId: "bad-character-interlinear-annotation-terminator",
+          message: "Bad character - INTERLINEAR ANNOTATION TERMINATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function badCharacterNarrowNoBreakSpace(context) {
   return {
     character: function character(chr, i) {
@@ -2165,6 +2363,39 @@ defineLazyProp(builtInRules, "bad-character-right-to-left-isolate", function () 
 });
 defineLazyProp(builtInRules, "bad-character-first-strong-isolate", function () {
   return badCharacterFirstStrongIsolate;
+});
+defineLazyProp(builtInRules, "bad-character-pop-directional-isolate", function () {
+  return badCharacterPopDirectionalIsolate;
+});
+defineLazyProp(builtInRules, "bad-character-inhibit-symmetric-swapping", function () {
+  return badCharacterInhibitSymmetricSwapping;
+});
+defineLazyProp(builtInRules, "bad-character-activate-symmetric-swapping", function () {
+  return badCharacterActivateSymmetricSwapping;
+});
+defineLazyProp(builtInRules, "bad-character-inhibit-arabic-form-shaping", function () {
+  return badCharacterInhibitArabicFormShaping;
+});
+defineLazyProp(builtInRules, "bad-character-activate-arabic-form-shaping", function () {
+  return badCharacterActivateArabicFormShaping;
+});
+defineLazyProp(builtInRules, "bad-character-national-digit-shapes", function () {
+  return badCharacterNationalDigitShapes;
+});
+defineLazyProp(builtInRules, "bad-character-nominal-digit-shapes", function () {
+  return badCharacterNominalDigitShapes;
+});
+defineLazyProp(builtInRules, "bad-character-zero-width-no-break-space", function () {
+  return badCharacterZeroWidthNoBreakSpace;
+});
+defineLazyProp(builtInRules, "bad-character-interlinear-annotation-anchor", function () {
+  return badCharacterInterlinearAnnotationAnchor;
+});
+defineLazyProp(builtInRules, "bad-character-interlinear-annotation-separator", function () {
+  return badCharacterInterlinearAnnotationSeparator;
+});
+defineLazyProp(builtInRules, "bad-character-interlinear-annotation-terminator", function () {
+  return badCharacterInterlinearAnnotationTerminator;
 });
 defineLazyProp(builtInRules, "bad-character-narrow-no-break-space", function () {
   return badCharacterNarrowNoBreakSpace;

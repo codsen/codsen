@@ -4,7 +4,7 @@
 // Catches raw character "INHIBIT SYMMETRIC SWAPPING":
 // https://www.fileformat.info/info/unicode/char/206b/index.htm
 
-function badCharacterInhibitSymmetricSwapping(context) {
+function badCharacterActivateSymmetricSwapping(context) {
   return {
     character: function(chr, i) {
       if (chr.charCodeAt(0) === 8299) {
@@ -22,4 +22,4 @@ function badCharacterInhibitSymmetricSwapping(context) {
   };
 }
 
-export default badCharacterInhibitSymmetricSwapping;
+export default badCharacterActivateSymmetricSwapping;
