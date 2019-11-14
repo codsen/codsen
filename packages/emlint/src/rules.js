@@ -729,6 +729,20 @@ defineLazyProp(
   () => badCharacterInterlinearAnnotationTerminator
 );
 
+import badCharacterLineSeparator from "./rules/bad-character-line-separator";
+defineLazyProp(
+  builtInRules,
+  "bad-character-line-separator",
+  () => badCharacterLineSeparator
+);
+
+import badCharacterParagraphSeparator from "./rules/bad-character-paragraph-separator";
+defineLazyProp(
+  builtInRules,
+  "bad-character-paragraph-separator",
+  () => badCharacterParagraphSeparator
+);
+
 //
 
 import badCharacterNarrowNoBreakSpace from "./rules/bad-character-narrow-no-break-space";

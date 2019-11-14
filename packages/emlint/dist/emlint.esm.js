@@ -1919,6 +1919,42 @@ function badCharacterInterlinearAnnotationTerminator(context) {
   };
 }
 
+function badCharacterLineSeparator(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8232) {
+        context.report({
+          ruleId: "bad-character-line-separator",
+          message: "Bad character - LINE SEPARATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
+function badCharacterParagraphSeparator(context) {
+  return {
+    character: function(chr, i) {
+      if (chr.charCodeAt(0) === 8233) {
+        context.report({
+          ruleId: "bad-character-paragraph-separator",
+          message: "Bad character - PARAGRAPH SEPARATOR.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function badCharacterNarrowNoBreakSpace(context) {
   return {
     character: function(chr, i) {
@@ -2519,6 +2555,16 @@ defineLazyProp(
   builtInRules,
   "bad-character-interlinear-annotation-terminator",
   () => badCharacterInterlinearAnnotationTerminator
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-line-separator",
+  () => badCharacterLineSeparator
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-paragraph-separator",
+  () => badCharacterParagraphSeparator
 );
 defineLazyProp(
   builtInRules,
