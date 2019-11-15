@@ -48,7 +48,7 @@
         "js-row-num-cli": 6,
         "json-comb": 5,
         "json-comb-core": 89,
-        "json-sort-cli": 14,
+        "json-sort-cli": 15,
         "json-variables": 106,
         "lect": 1,
         "lerna-clean-changelogs": 7,
@@ -101,7 +101,7 @@
         "util-nonempty": 9
     },
     "totalPackageCount": 99,
-    "totalTestsCount": 18735,
+    "totalTestsCount": 18736,
     "minTestsCount": 2,
     "minTestsName": "csv-sort-cli",
     "maxTestsCount": 14163,

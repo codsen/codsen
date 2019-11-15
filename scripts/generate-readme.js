@@ -273,11 +273,11 @@ const template = `# Codsen
     A lerna monorepo for our ${allPackages.length -
       ignoreList.length} npm libraries 📦📦📦
 
-We, Codsen Ltd, provide consulting services in email marketing field since 2014.
+We, Codsen Ltd, provide consulting services since 2014.
 
-Our strength is **coding and maintaining email templates**.
+Our two specialties are: **coding and maintaining email templates** and making **process-as-string tooling** in JavaScript.
 
-We coded up and maintain a few npm packages:
+We created and maintain a few npm packages:
 
 ## 💡 Table of Contents
 

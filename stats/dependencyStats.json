@@ -86,7 +86,7 @@
         "object-no-new-keys": 1,
         "object-path": 5,
         "object-set-all-values-to": 1,
-        "p-filter": 1,
+        "p-filter": 2,
         "p-map": 3,
         "p-one": 1,
         "p-progress": 1,

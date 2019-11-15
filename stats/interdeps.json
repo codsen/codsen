@@ -129,7 +129,7 @@
     },
     {
         "name": "chlu",
-        "size": 19578,
+        "size": 19646,
         "imports": [
             "ast-contains-only-empty-space",
             "easy-replace"
@@ -174,7 +174,7 @@
     },
     {
         "name": "detergent",
-        "size": 52936,
+        "size": 52928,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -200,7 +200,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 18214,
+        "size": 18210,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -260,7 +260,7 @@
     },
     {
         "name": "html-crush",
-        "size": 32751,
+        "size": 32695,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -276,7 +276,7 @@
     },
     {
         "name": "html-img-alt",
-        "size": 10667,
+        "size": 10647,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -327,7 +327,7 @@
     },
     {
         "name": "json-sort-cli",
-        "size": 11486,
+        "size": 15210,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -460,7 +460,7 @@
     },
     {
         "name": "ranges-merge",
-        "size": 4937,
+        "size": 4931,
         "imports": [
             "ranges-sort"
         ]
@@ -501,12 +501,12 @@
     },
     {
         "name": "str-indexes-of-plus",
-        "size": 2422,
+        "size": 2418,
         "imports": []
     },
     {
         "name": "string-apostrophes",
-        "size": 18083,
+        "size": 18069,
         "imports": [
             "ranges-apply"
         ]
@@ -523,7 +523,7 @@
     },
     {
         "name": "string-collapse-white-space",
-        "size": 18301,
+        "size": 18309,
         "imports": [
             "ranges-apply",
             "ranges-merge",
@@ -554,7 +554,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 38304,
+        "size": 38264,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -567,7 +567,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 18178,
+        "size": 18174,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -580,7 +580,7 @@
     },
     {
         "name": "string-remove-duplicate-heads-tails",
-        "size": 8140,
+        "size": 8130,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -610,14 +610,14 @@
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1947,
+        "size": 1999,
         "imports": [
             "ranges-is-index-within"
         ]
     },
     {
         "name": "string-strip-html",
-        "size": 33928,
+        "size": 33926,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -626,7 +626,7 @@
     },
     {
         "name": "string-trim-spaces-only",
-        "size": 2095,
+        "size": 2131,
         "imports": []
     },
     {
