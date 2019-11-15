@@ -9,6 +9,7 @@
 
 import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
+import { left } from 'string-left-right';
 import lineColumn from 'line-column';
 
 function badCharacterNull(context) {
@@ -2009,7 +2010,7 @@ function badCharacterIdeographicSpace(context) {
   };
 }
 
-function tagSpaceAfterOpeningBracket(context) {
+function tagSpaceAfterOpeningBracket(context, ...opts) {
   return {
     html: function(node) {
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
@@ -2047,6 +2048,48 @@ function tagSpaceAfterOpeningBracket(context) {
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
           fix: { ranges }
+        });
+      }
+    }
+  };
+}
+
+function tagSpaceBeforeClosingSlash(context, ...opts) {
+  return {
+    html: function(node) {
+      const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      let mode = "never";
+      if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      const closingBracketPos = node.end - 1;
+      const slashPos = left(context.str, closingBracketPos);
+      const leftOfSlashPos = left(context.str, slashPos);
+      if (
+        mode === "never" &&
+        node.selfClosing &&
+        context.str[slashPos] === "/" &&
+        leftOfSlashPos < slashPos - 1
+      ) {
+        context.report({
+          ruleId: "tag-space-before-closing-slash",
+          message: "Bad whitespace.",
+          idxFrom: leftOfSlashPos + 1,
+          idxTo: slashPos,
+          fix: { ranges: [[leftOfSlashPos + 1, slashPos]] }
+        });
+      } else if (
+        mode === "always" &&
+        node.selfClosing &&
+        context.str[slashPos] === "/" &&
+        leftOfSlashPos === slashPos - 1
+      ) {
+        context.report({
+          ruleId: "tag-space-before-closing-slash",
+          message: "Missing space.",
+          idxFrom: slashPos,
+          idxTo: slashPos,
+          fix: { ranges: [[slashPos, slashPos, " "]] }
         });
       }
     }
@@ -2586,6 +2629,11 @@ defineLazyProp(
   "tag-space-after-opening-bracket",
   () => tagSpaceAfterOpeningBracket
 );
+defineLazyProp(
+  builtInRules,
+  "tag-space-before-closing-slash",
+  () => tagSpaceBeforeClosingSlash
+);
 function get(something) {
   return builtInRules[something];
 }
@@ -2975,7 +3023,15 @@ class Linter extends EventEmitter {
         }
       })
       .forEach(rule => {
-        const rulesFunction = get(rule)(this);
+        let rulesFunction;
+        if (
+          Array.isArray(config.rules[rule]) &&
+          config.rules[rule].length > 1
+        ) {
+          rulesFunction = get(rule)(this, ...config.rules[rule].slice(1));
+        } else {
+          rulesFunction = get(rule)(this);
+        }
         Object.keys(rulesFunction).forEach(consumedNode => {
           this.on(consumedNode, (...args) => {
             rulesFunction[consumedNode](...args);

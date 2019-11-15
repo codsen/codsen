@@ -776,6 +776,13 @@ defineLazyProp(
   () => tagSpaceAfterOpeningBracket
 );
 
+import tagSpaceBeforeClosingSlash from "./rules/tag-space-before-closing-slash";
+defineLazyProp(
+  builtInRules,
+  "tag-space-before-closing-slash",
+  () => tagSpaceBeforeClosingSlash
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 

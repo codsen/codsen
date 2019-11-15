@@ -8,7 +8,7 @@
 // <   a href="">
 // <\n\nspan>
 
-function tagSpaceAfterOpeningBracket(context) {
+function tagSpaceAfterOpeningBracket(context, ...opts) {
   return {
     html: function(node) {
       console.log(`014 inside rule: node = ${JSON.stringify(node, null, 4)}`);
@@ -18,6 +18,13 @@ function tagSpaceAfterOpeningBracket(context) {
       console.log(
         `019 ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
           context.str[node.tagNameStartAt],
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `026 tagSpaceAfterOpeningBracket(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
           null,
           4
         )}`
@@ -36,7 +43,7 @@ function tagSpaceAfterOpeningBracket(context) {
               node.start + 1 + gapValue.indexOf("/")
             ]);
             console.log(
-              `039 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
+              `046 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
                 1}, ${node.start + 1 + gapValue.indexOf("/")}]`
             );
           }
@@ -49,7 +56,7 @@ function tagSpaceAfterOpeningBracket(context) {
               node.tagNameStartAt
             ]);
             console.log(
-              `052 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
+              `059 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
                 1 +
                 gapValue.indexOf("/") +
                 1}, ${node.tagNameStartAt}]`
@@ -62,14 +69,14 @@ function tagSpaceAfterOpeningBracket(context) {
             node.tagNameStartAt
           ]);
           console.log(
-            `065 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
+            `072 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
               1 +
               gapValue.indexOf("/") +
               1}, ${node.tagNameStartAt}]`
           );
         }
         console.log(
-          `072 tagSpaceAfterOpeningBracket(): ${JSON.stringify(
+          `079 tagSpaceAfterOpeningBracket(): ${JSON.stringify(
             ranges,
             null,
             4

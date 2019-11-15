@@ -150,10 +150,11 @@
     "ast-deep-contains": "^1.0.0",
     "codsen-tokenizer": "^1.2.0",
     "define-lazy-prop": "^2.0.0",
-    "line-column": "^1.0.2"
+    "line-column": "^1.0.2",
+    "string-left-right": "^2.3.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
     "ava": "^2.2.7",
@@ -169,9 +170,9 @@
     "js-row-num-cli": "^1.6.5",
     "lect": "^0.10.7",
     "nyc": "^14.1.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "ranges-apply": "^3.0.40",
-    "rollup": "^1.26.3",
+    "rollup": "^1.27.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -15,6 +15,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var tokenizer = _interopDefault(require('codsen-tokenizer'));
 var defineLazyProp = _interopDefault(require('define-lazy-prop'));
+var stringLeftRight = require('string-left-right');
 var lineColumn = _interopDefault(require('line-column'));
 
 function _classCallCheck(instance, Constructor) {
@@ -84,6 +85,26 @@ function _possibleConstructorReturn(self, call) {
   }
 
   return _assertThisInitialized(self);
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
 function badCharacterNull(context) {
@@ -2114,6 +2135,45 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
+function tagSpaceBeforeClosingSlash(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    html: function html(node) {
+      var gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      var mode = "never";
+      if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      var closingBracketPos = node.end - 1;
+      var slashPos = stringLeftRight.left(context.str, closingBracketPos);
+      var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
+      if (mode === "never" && node.selfClosing && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+        context.report({
+          ruleId: "tag-space-before-closing-slash",
+          message: "Bad whitespace.",
+          idxFrom: leftOfSlashPos + 1,
+          idxTo: slashPos,
+          fix: {
+            ranges: [[leftOfSlashPos + 1, slashPos]]
+          }
+        });
+      } else if (mode === "always" && node.selfClosing && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+        context.report({
+          ruleId: "tag-space-before-closing-slash",
+          message: "Missing space.",
+          idxFrom: slashPos,
+          idxTo: slashPos,
+          fix: {
+            ranges: [[slashPos, slashPos, " "]]
+          }
+        });
+      }
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -2450,6 +2510,9 @@ defineLazyProp(builtInRules, "bad-character-ideographic-space", function () {
 });
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;
+});
+defineLazyProp(builtInRules, "tag-space-before-closing-slash", function () {
+  return tagSpaceBeforeClosingSlash;
 });
 function get(something) {
   return builtInRules[something];
@@ -2791,10 +2854,16 @@ function (_EventEmitter) {
           return config.rules[ruleName][0] > 0;
         }
       }).forEach(function (rule) {
-        var rulesFunction = get(rule)(_this);
+        var rulesFunction;
+        if (Array.isArray(config.rules[rule]) && config.rules[rule].length > 1) {
+          rulesFunction = get(rule).apply(void 0, [_this].concat(_toConsumableArray(config.rules[rule].slice(1))));
+        } else {
+          rulesFunction = get(rule)(_this);
+        }
         Object.keys(rulesFunction).forEach(function (consumedNode) {
           _this.on(consumedNode, function () {
-            rulesFunction[consumedNode].apply(rulesFunction, arguments);
+            var _rulesFunction;
+            (_rulesFunction = rulesFunction)[consumedNode].apply(_rulesFunction, arguments);
           });
         });
       });

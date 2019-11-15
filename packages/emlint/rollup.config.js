@@ -44,7 +44,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["codsen-tokenizer", "define-lazy-prop", "line-column"],
+      external: [
+        "codsen-tokenizer",
+        "define-lazy-prop",
+        "line-column",
+        "string-left-right"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -61,7 +66,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["codsen-tokenizer", "define-lazy-prop", "line-column"],
+      external: [
+        "codsen-tokenizer",
+        "define-lazy-prop",
+        "line-column",
+        "string-left-right"
+      ],
       plugins: [
         strip({
           sourceMap: false
