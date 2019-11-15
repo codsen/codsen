@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.15.0 (2019-11-15)
+
+### Features
+
+- `-i` or `--indentationCount` — lets you choose how many indentations you want. Unless `-t` or `--tabs` is used, that many spaces will be used. Default is 1 tab or 2 spaces.
+- Clarified the output for `-d` or `--dry` — we only list the filtered files. The list does not mean that filtered JSON files will be sorted or need to be sorted or anything else. This flag is used to check what files you're about to process.
+- `-c` or `--ci` — fix #21 — as per [@widerin](https://gitlab.com/widerin) request, CI mode only checks all files, would their sorted versions differ from the inputs.
+  If any files would be different after sorting, this CLI lists them and exits with a non-zero code.
+  If all is fine, all files seem to be sorted, it doesn't write, only confirms with a message and exits with a zero code.
+- `-s` or `--silent` now is truly silent — when it's enabled, nothing is output to the terminal and you can tell the outcome only by the exit code (normally, a red or green character in front of the current line in the terminal).
+
 ## 1.14.0 (2019-08-08)
 
 ### Features
