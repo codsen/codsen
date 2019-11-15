@@ -1,4 +1,3 @@
-"use strict";
 const util = require("util");
 const ansiStyles = require("ansi-styles");
 const stripAnsi = require("strip-ansi");
@@ -11,7 +10,7 @@ const chalk = require("./chalk").get();
 const avaReactPlugin = { ...reactPlugin, name: "ava-plugin-react" };
 const plugins = [avaReactPlugin];
 
-const forceColor = new chalk.constructor({ enabled: true });
+const forceColor = new chalk.Instance({ enabled: true });
 
 const colorTheme = {
   boolean: ansiStyles.yellow,
@@ -21,14 +20,14 @@ const colorTheme = {
     value: ansiStyles.blue
   },
   diffGutters: {
-    actual: forceColor.red("-") + " ",
-    expected: forceColor.green("+") + " ",
+    actual: `${forceColor.red("-")} `,
+    expected: `${forceColor.green("+")} `,
     padding: "  "
   },
   error: {
     ctor: {
-      open: ansiStyles.grey.open + "(",
-      close: ")" + ansiStyles.grey.close
+      open: `${ansiStyles.grey.open}(`,
+      close: `)${ansiStyles.grey.close}`
     },
     name: ansiStyles.magenta
   },
@@ -51,11 +50,11 @@ const colorTheme = {
     closeBracket: forceColor.grey("}"),
     ctor: ansiStyles.magenta,
     stringTag: {
-      open: ansiStyles.magenta.open + "@",
+      open: `${ansiStyles.magenta.open}@`,
       close: ansiStyles.magenta.close
     },
     secondaryStringTag: {
-      open: ansiStyles.grey.open + "@",
+      open: `${ansiStyles.grey.open}@`,
       close: ansiStyles.grey.close
     }
   },
@@ -70,7 +69,7 @@ const colorTheme = {
       start: forceColor.grey("<"),
       end: forceColor.grey(">"),
       selfClose: forceColor.grey("/"),
-      selfCloseVoid: " " + forceColor.grey("/")
+      selfCloseVoid: ` ${forceColor.grey("/")}`
     },
     closeTag: {
       open: forceColor.grey("</"),
@@ -98,8 +97,8 @@ const colorTheme = {
   },
   regexp: {
     source: {
-      open: ansiStyles.blue.open + "/",
-      close: "/" + ansiStyles.blue.close
+      open: `${ansiStyles.blue.open}/`,
+      close: `/${ansiStyles.blue.close}`
     },
     flags: ansiStyles.yellow
   },

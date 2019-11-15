@@ -1,5 +1,4 @@
-"use strict";
-const Chalk = require("chalk").constructor;
+const Chalk = require("chalk").Instance;
 
 let ctx = null;
 exports.get = () => {

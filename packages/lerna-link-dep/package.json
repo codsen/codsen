@@ -135,7 +135,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "execa": "^3.2.0",
+    "execa": "^3.3.0",
     "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "package-json-editor": "^1.0.1",
@@ -157,7 +157,7 @@
     "js-row-num-cli": "^1.6.5",
     "lect": "^0.10.7",
     "nyc": "^14.1.1",
-    "prettier": "^1.19.0",
+    "prettier": "^1.19.1",
     "tempy": "^0.3.0"
   }
 }

@@ -130,7 +130,7 @@
   },
   "dependencies": {
     "ast-monkey-traverse": "^1.11.44",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
@@ -154,12 +154,12 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "execa": "^3.2.0",
+    "execa": "^3.3.0",
     "js-row-num-cli": "^1.6.5",
     "lect": "^0.10.7",
     "nyc": "^14.1.1",
     "p-map": "^3.0.0",
-    "prettier": "^1.19.0",
+    "prettier": "^1.19.1",
     "tempy": "^0.3.0"
   }
 }
