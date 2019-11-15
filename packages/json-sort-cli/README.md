@@ -61,11 +61,14 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | ----- | --------------- | ----------------------------------------------------------------- |
 | `-n`  | `--nodemodules` | Don't ignore any **n**ode_modules folders and package-lock.json's |
 | `-t`  | `--tabs`        | Use **t**abs for JSON file indentation                            |
-| `-s`  | `--silent`      | Don't show line per each processed file, only total recap         |
+| `-i`  | `--indentationCount`        | How many spaces or tabs to use (default = 2 spaces or 1 tab) |
+| `-s`  | `--silent`      | When on, no output is shown. Only exit codes determine the success or failure. |
 | `-a`  | `--arrays`      | Also sort any arrays if they contain only string elements         |
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
 | `-p`  | `--pack`        | Skip all `package.json` files                                     |
+| `-d`  | `--dry`         | Only output the paths of the files |
+| `-c`  | `--ci `         | Does nothing, exits with non-zero code if files COULD BE sorted, with zero code if no sort needed. |
 
 Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these commands below are the same:
 
@@ -99,6 +102,17 @@ Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.
 - System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
 
 **[⬆ back to top](#)**
+
+## CI mode
+
+When in CI mode, this CLI won't amend the files, only calculate the sorted result, compare the file's contents with it, then exit with a:
+
+- zero code, if sorting would make no difference to a file
+- non-zero code, if sorting would not make any difference
+
+Basically, your scripts with this CLI would fail on unsorted JSON's. Thanks [widerin](https://gitlab.com/widerin) for the idea for this feature.
+
+**CI mode does not write files**, only exits with one code or another.
 
 ## Updating it
 
