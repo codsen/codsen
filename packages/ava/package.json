@@ -47,7 +47,7 @@
     "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
     "@babel/plugin-syntax-optional-catch-binding": "^7.2.0",
     "@concordance/react": "^2.0.0",
-    "ansi-escapes": "^4.2.1",
+    "ansi-escapes": "^4.3.0",
     "ansi-styles": "^4.2.0",
     "arr-flatten": "^1.1.0",
     "array-union": "^2.1.0",
