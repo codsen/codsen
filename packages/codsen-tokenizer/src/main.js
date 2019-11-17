@@ -24,6 +24,24 @@ const defaults = {
   reportProgressFuncTo: 100
 };
 
+// https://html.spec.whatwg.org/multipage/syntax.html#elements-2
+const voidTags = [
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr"
+];
+
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|`;
 
@@ -631,9 +649,10 @@ function tokenizer(str, cb, originalOpts) {
           }`
         );
 
-        // if it was HTML tag, check what was on the left, maybe if was a closing
-        // slash, in which case we need to set token.selfClosing
-        if (token.type === "html" && str[left(str, i)] === "/") {
+        // We evaluate self-closing tags not by presence of slash but evaluating
+        // is the tag name among known self-closing tags. This way, we can later
+        // catch and fix missing closing slashes.
+        if (token.type === "html" && voidTags.includes(token.tagName)) {
           token.selfClosing = true;
           console.log(
             `634 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selfClosing`}\u001b[${39}m`} = ${

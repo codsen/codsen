@@ -46,6 +46,22 @@ const defaults = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+const voidTags = [
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr"
+];
 const espChars = `{}%-$_()*|`;
 function tokenizer(str, cb, originalOpts) {
   if (!isStr(str)) {
@@ -299,7 +315,7 @@ function tokenizer(str, cb, originalOpts) {
     if (!doNothing) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
-        if (token.type === "html" && str[left(str, i)] === "/") {
+        if (token.type === "html" && voidTags.includes(token.tagName)) {
           token.selfClosing = true;
         }
       } else if (
