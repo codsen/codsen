@@ -223,9 +223,11 @@ var allBadCharacterRules = [
 ];
 
 var allTagRules = [
+	"tag-closing-backslash",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
-	"tag-space-between-slash-and-bracket"
+	"tag-space-between-slash-and-bracket",
+	"tag-void-slash"
 ];
 
 function badCharacterNull(context) {
@@ -2270,7 +2272,7 @@ function tagSpaceBeforeClosingSlash(context) {
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
-      if (mode === "never" && node.selfClosing && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+      if (mode === "never" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -2280,7 +2282,7 @@ function tagSpaceBeforeClosingSlash(context) {
             ranges: [[leftOfSlashPos + 1, slashPos]]
           }
         });
-      } else if (mode === "always" && node.selfClosing && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+      } else if (mode === "always" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -2310,6 +2312,112 @@ function tagSpaceBetweenSlashAndBracket(context) {
             ranges: [[idxFrom, node.end - 1]]
           }
         });
+      }
+    }
+  };
+}
+
+var BACKSLASH = "\\";
+function tagClosingBackslash(context) {
+  return {
+    html: function html(node) {
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
+      context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH) {
+        var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
+        var backSlashPos = stringLeftRight.left(context.str, node.end - 1);
+        var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+        var whatToInsert = node["void"] ? "/" : "";
+        if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
+          idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+        }
+        if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
+          idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+          whatToInsert = " ".concat(whatToInsert);
+          if (node["void"] && context.str[idxFrom + 1] === " ") {
+            idxFrom++;
+            whatToInsert = whatToInsert.trim();
+          } else if (!node["void"]) {
+            whatToInsert = whatToInsert.trim();
+          }
+        }
+        if (node["void"] && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
+          whatToInsert = "";
+          idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+          message = "Delete this.";
+        }
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: message,
+          idxFrom: idxFrom,
+          idxTo: node.end - 1,
+          fix: {
+            ranges: [[idxFrom, node.end - 1, whatToInsert]]
+          }
+        });
+      }
+    }
+  };
+}
+
+var BACKSLASH$1 = "\\";
+function tagVoidSlash(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    html: function html(node) {
+      var mode = "always";
+      if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      var closingBracketPos = node.end - 1;
+      var slashPos = stringLeftRight.left(context.str, closingBracketPos);
+      var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
+      if (mode === "never" && node["void"] && context.str[slashPos] === "/") {
+        context.report({
+          ruleId: "tag-void-slash",
+          message: "Remove the slash.",
+          idxFrom: leftOfSlashPos + 1,
+          idxTo: closingBracketPos,
+          fix: {
+            ranges: [[leftOfSlashPos + 1, closingBracketPos]]
+          }
+        });
+      } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && (
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+        if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
+          if (context.str[slashPos + 1] === " ") {
+            context.report({
+              ruleId: "tag-void-slash",
+              message: "Missing slash.",
+              idxFrom: slashPos + 2,
+              idxTo: closingBracketPos,
+              fix: {
+                ranges: [[slashPos + 2, closingBracketPos, "/"]]
+              }
+            });
+          } else {
+            context.report({
+              ruleId: "tag-void-slash",
+              message: "Missing slash.",
+              idxFrom: slashPos + 1,
+              idxTo: closingBracketPos,
+              fix: {
+                ranges: [[slashPos + 1, closingBracketPos, " /"]]
+              }
+            });
+          }
+        } else if (context.processedRulesConfig["tag-space-before-closing-slash"] === undefined || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never" || Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0) {
+          context.report({
+            ruleId: "tag-void-slash",
+            message: "Missing slash.",
+            idxFrom: slashPos + 1,
+            idxTo: closingBracketPos,
+            fix: {
+              ranges: [[slashPos + 1, closingBracketPos, "/"]]
+            }
+          });
+        }
       }
     }
   };
@@ -2657,6 +2765,12 @@ defineLazyProp(builtInRules, "tag-space-before-closing-slash", function () {
 });
 defineLazyProp(builtInRules, "tag-space-between-slash-and-bracket", function () {
   return tagSpaceBetweenSlashAndBracket;
+});
+defineLazyProp(builtInRules, "tag-closing-backslash", function () {
+  return tagClosingBackslash;
+});
+defineLazyProp(builtInRules, "tag-void-slash", function () {
+  return tagVoidSlash;
 });
 function get(something) {
   return builtInRules[something];

@@ -793,6 +793,16 @@ defineLazyProp(
   () => tagSpaceBetweenSlashAndBracket
 );
 
+import tagClosingBackslash from "./rules/tag/tag-closing-backslash";
+defineLazyProp(
+  builtInRules,
+  "tag-closing-backslash",
+  () => tagClosingBackslash
+);
+
+import tagVoidSlash from "./rules/tag/tag-void-slash";
+defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -805,7 +815,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `808 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `818 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -831,7 +841,7 @@ function normaliseRequestedRules(opts) {
     }
   });
   // console.log(
-  //   `834 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `844 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
   //     res,
   //     null,
   //     4

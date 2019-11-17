@@ -107,13 +107,20 @@ class Linter extends EventEmitter {
     // fill in other data points:
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity;
+    console.log(
+      `111 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+        this.processedRulesConfig[obj.ruleId],
+        null,
+        4
+      )}`
+    );
     if (typeof this.processedRulesConfig[obj.ruleId] === "number") {
       severity = this.processedRulesConfig[obj.ruleId];
     } else {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `116 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `123 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(

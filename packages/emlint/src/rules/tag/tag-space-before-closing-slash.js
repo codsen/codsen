@@ -13,19 +13,22 @@ import { left } from "string-left-right";
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
     html: function(node) {
-      console.log(`016 inside rule: node = ${JSON.stringify(node, null, 4)}`);
+      console.log(
+        `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
+      );
+      console.log(`019 inside rule: node = ${JSON.stringify(node, null, 4)}`);
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      console.log(`018 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
+      console.log(`021 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
 
       console.log(
-        `021 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
           context.str[node.tagNameStartAt],
           null,
           4
         )}`
       );
       console.log(
-        `028 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `031 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -39,7 +42,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         mode = opts[0];
       }
       console.log(
-        `042 tagSpaceBeforeClosingSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+        `045 tagSpaceBeforeClosingSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
       );
 
       // PROCESSING:
@@ -48,11 +51,11 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
       const leftOfSlashPos = left(context.str, slashPos);
       if (
         mode === "never" &&
-        node.selfClosing &&
+        node.void &&
         context.str[slashPos] === "/" &&
         leftOfSlashPos < slashPos - 1
       ) {
-        console.log(`055 whitespace present in front of closing slash!`);
+        console.log(`058 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -62,11 +65,11 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         });
       } else if (
         mode === "always" &&
-        node.selfClosing &&
+        node.void &&
         context.str[slashPos] === "/" &&
         leftOfSlashPos === slashPos - 1
       ) {
-        console.log(`069 space missing in front of closing slash!`);
+        console.log(`072 space missing in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
