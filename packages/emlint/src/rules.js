@@ -5,6 +5,9 @@
 // -----------------------------------------------------------------------------
 
 import defineLazyProp from "define-lazy-prop";
+import allBadCharacterRules from "./rules/all-bad-character.json";
+import allTagRules from "./rules/all-tag.json";
+import clone from "lodash.clonedeep";
 const builtInRules = {};
 
 // CHARACTER-LEVEL rules
@@ -797,4 +800,44 @@ function get(something) {
   return builtInRules[something];
 }
 
-export { get };
+// it expands the grouped rules, such as "bad-character", then
+// removes the grouped rule so that only real, single rules
+// are passed to Linter
+function normaliseRequestedRules(opts) {
+  // console.log(
+  //   `808 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //     opts,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  const res = {};
+  // first, if there are group rules such as "bad-character", set
+  // them as a foundation:
+  if (Object.keys(opts).includes("bad-character")) {
+    allBadCharacterRules.forEach(ruleName => {
+      res[ruleName] = opts["bad-character"];
+    });
+  }
+  if (Object.keys(opts).includes("tag")) {
+    allTagRules.forEach(ruleName => {
+      res[ruleName] = opts["tag"];
+    });
+  }
+  // then, a-la Object.assign the rest
+  Object.keys(opts).forEach(ruleName => {
+    if (!["tag", "bad-character"].includes(ruleName)) {
+      res[ruleName] = clone(opts[ruleName]);
+    }
+  });
+  // console.log(
+  //   `834 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+  //     res,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  return res;
+}
+
+export { get, normaliseRequestedRules };

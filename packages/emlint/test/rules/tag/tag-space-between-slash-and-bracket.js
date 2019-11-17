@@ -41,12 +41,42 @@ test(`01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, t => {
   t.is(applyFixes(str, messages), "<br/>");
 });
 
-test(`01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, t => {
+test(`01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, t => {
+  const str = "<br/ >";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2
+    }
+  });
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-space-between-slash-and-bracket",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        line: 1,
+        column: 5,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[4, 5]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+  t.is(applyFixes(str, messages), "<br/>");
+});
+
+test(`01.03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, t => {
   const str = "<br/\t>";
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "tag-space-between-slash-and-bracket": 2
+      tag: 2
     }
   });
   deepContains(

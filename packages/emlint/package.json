@@ -151,6 +151,7 @@
     "codsen-tokenizer": "^1.2.0",
     "define-lazy-prop": "^2.0.0",
     "line-column": "^1.0.2",
+    "lodash.clonedeep": "^4.5.0",
     "string-left-right": "^2.3.8"
   },
   "devDependencies": {

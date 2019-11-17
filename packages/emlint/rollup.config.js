@@ -48,6 +48,7 @@ export default commandLineArgs => {
         "codsen-tokenizer",
         "define-lazy-prop",
         "line-column",
+        "lodash.clonedeep",
         "string-left-right"
       ],
       plugins: [
@@ -70,6 +71,7 @@ export default commandLineArgs => {
         "codsen-tokenizer",
         "define-lazy-prop",
         "line-column",
+        "lodash.clonedeep",
         "string-left-right"
       ],
       plugins: [
