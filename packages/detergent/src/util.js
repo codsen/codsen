@@ -393,6 +393,7 @@ const latinAndNonNonLatinRanges = [
   [178205, 194560]
 ];
 
+// https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 const voidTags = [
   "area",
   "base",
