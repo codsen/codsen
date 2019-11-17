@@ -136,7 +136,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "unescape-js": "^1.1.1"
+    "unescape-js": "^1.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
