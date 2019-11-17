@@ -78,7 +78,8 @@
           const linter = new Linter();
           const messages = linter.verify(this.text1, {
             rules: {
-              "tag-space-before-closing-slash": 1
+              "tag": 2,
+              "bad-character": 2
             }
           });
           // 1. list the messages in the text area:
