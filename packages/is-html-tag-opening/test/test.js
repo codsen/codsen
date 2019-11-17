@@ -1,5 +1,6 @@
 import test from "ava";
 import is from "../dist/is-html-tag-opening.esm";
+const BACKSLASH = "\u005C";
 
 // 01. opening tag
 // -----------------------------------------------------------------------------
@@ -205,4 +206,9 @@ test(`05.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
 test(`05.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `\n<table`;
   t.true(is(s1, 1));
+});
+
+test(`05.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `<br${BACKSLASH}>`;
+  t.true(is(s1, 0));
 });

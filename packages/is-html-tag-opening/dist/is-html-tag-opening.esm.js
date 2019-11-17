@@ -128,8 +128,11 @@ const knownHtmlTags = [
 function isStr(something) {
   return typeof something === "string";
 }
-function isSpace(char) {
-  return char === undefined || (typeof char === "string" && char.trim() === "");
+function isNotLetter(char) {
+  return (
+    char === undefined ||
+    (char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char))
+  );
 }
 function isOpening(str, idx = 0) {
   const r1 = /^<\s*\w+\s*\/?\s*>/g;
@@ -150,7 +153,7 @@ function isOpening(str, idx = 0) {
     str[idx] === "<" &&
     str[idx + 1] &&
     str[idx + 1].trim().length &&
-    matchRight(str, idx, knownHtmlTags, { cb: isSpace })
+    matchRight(str, idx, knownHtmlTags, { cb: isNotLetter })
   ) {
     passed = true;
   }

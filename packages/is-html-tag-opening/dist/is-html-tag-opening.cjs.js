@@ -15,8 +15,8 @@ var knownHtmlTags = ["abbr", "address", "area", "article", "aside", "audio", "ba
 function isStr(something) {
   return typeof something === "string";
 }
-function isSpace(_char) {
-  return _char === undefined || typeof _char === "string" && _char.trim() === "";
+function isNotLetter(_char) {
+  return _char === undefined || _char.toUpperCase() === _char.toLowerCase() && !"0123456789".includes(_char);
 }
 function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -35,7 +35,7 @@ function isOpening(str) {
   } else if (r4.test(whatToTest)) {
     passed = true;
   } else if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, {
-    cb: isSpace
+    cb: isNotLetter
   })) {
     passed = true;
   }
