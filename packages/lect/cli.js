@@ -242,11 +242,11 @@ async function step14(receivedPack) {
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
-  // console.log(`0252 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
+  // console.log(`0245 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
 
   if (isObj(lectrc) && Object.keys(lectrc).length) {
-    // console.log(`0255 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
-    // console.log(`0256 lect: path=${path.resolve("../.lectrc.json")}`);
+    // console.log(`0248 ${`\u001b[${33}m${`lectrc`}\u001b[${39}m`} = ${JSON.stringify(lectrc, null, 4)}`);
+    // console.log(`0249 lect: path=${path.resolve("../.lectrc.json")}`);
 
     await writeJsonFile(path.resolve("../.lectrc.json"), lectrc)
       .then(() => {
@@ -1113,7 +1113,9 @@ async function writePackageJson(receivedPackageJsonObj) {
 async function step10() {
   // log(`${chalk.white("\nSTEP 10 - Edit and write package.json")}`);
   // let newValues = clone(get("package"));
+
   let newValues = clone(pack);
+
   if (isObj(newValues) && Object.keys(newValues).length > 0) {
     // detect non-rollup setups and remove rollup if necessary:
     if (!objectPath.has(pack, "devDependencies.rollup")) {
@@ -1165,7 +1167,7 @@ async function step10() {
       objectPath.set(finalThing, "main", `dist/${pack.name}.cjs.js`);
       objectPath.set(finalThing, "module", `dist/${pack.name}.esm.js`);
       objectPath.set(finalThing, "browser", `dist/${pack.name}.umd.js`);
-      if (objectPath.has(lectrc, "scripts.rollup")) {
+      if (objectPath.has(lectrc, "scripts.rollup") && !isSpecial) {
         objectPath.set(finalThing, "scripts", lectrc.scripts.rollup);
       }
       const defaultDevDeps = get("package.devDependencies");
@@ -1194,7 +1196,6 @@ async function step10() {
     if (!objectPath.has(pack, "browser")) {
       objectPath.del(finalThing, "browser");
     }
-
     // then write out whole thing:
     writePackageJson(finalThing);
   } else {
@@ -1558,7 +1559,7 @@ function step6() {
 
   readmeData.forEach((readmePiece, indx) => {
     // console.log(
-    //   `1601 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    //   `1600 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
     // );
     // console.log(
     //   `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
@@ -1586,7 +1587,7 @@ function step6() {
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
       // if (DEBUG) {
-      //   console.log(`1629 clause #1`);
+      //   console.log(`1628 clause #1`);
       // }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
@@ -1604,7 +1605,7 @@ function step6() {
       readmePiece.heading.startsWith("# ")
     ) {
       // if (DEBUG) {
-      //   console.log(`1647 clause #2`);
+      //   console.log(`1646 clause #2`);
       // }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
@@ -1650,7 +1651,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1693 clause #3`);
+        console.log(`1692 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1819,7 +1820,7 @@ const ${consumedName} = ${camelCase(pack.name)};
       }
     }
   });
-  // console.log(`1862 lect()`);
+  // console.log(`1861 lect()`);
 
   // contributing module
   content += `${
