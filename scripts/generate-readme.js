@@ -48,6 +48,7 @@ const lernaLibsList = [
   "update-versions"
 ];
 const htmlLibsList = [
+  "emlint",
   "string-strip-html",
   "detect-is-it-html-or-xhtml",
   "html-table-patcher",
@@ -257,13 +258,6 @@ const filteredOtherLibsList = allPackages.filter(
     !filteredObjectLibsList.includes(lib) &&
     !filteredLernaLibsList.includes(lib)
 );
-// console.log(
-//   `${`\u001b[${33}m${`filteredOtherLibsList`}\u001b[${39}m`} = ${JSON.stringify(
-//     filteredOtherLibsList,
-//     null,
-//     4
-//   )}`
-// );
 
 // ASSEMBLE THE TEMPLATE
 // =====================

@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 99 npm libraries 📦📦📦
+    A lerna monorepo for our 100 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -84,7 +84,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 ## 💰 HTML Processing Libraries
 
-6 in total.
+7 in total.
 
 They all process HTML and CSS. Except for `html-table-patcher`, all of them process HTML as a string, without parsing. Heck, we even had `html-table-patcher` done in non-parsing style on earlier versions but just because of time shortage went the parsing-way.
 
@@ -96,6 +96,7 @@ It is equally vital to support _mixed code_ because both web page and email temp
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
+| [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Pluggable email template code linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
 | [`detect-is-it-html-or-xhtml`](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) | Answers, is the string input string more an HTML or XHTML (or neither) | [![detect-is-it-html-or-xhtml on npm](https://img.shields.io/npm/v/detect-is-it-html-or-xhtml.svg?style=flat-square)](https://www.npmjs.com/package/detect-is-it-html-or-xhtml) | [packages/detect-is-it-html-or-xhtml](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) |
 | [`html-table-patcher`](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) | Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly | [![html-table-patcher on npm](https://img.shields.io/npm/v/html-table-patcher.svg?style=flat-square)](https://www.npmjs.com/package/html-table-patcher) | [packages/html-table-patcher](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) |
@@ -221,7 +222,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ Miscellaneous Libraries
 
-26 in total.
+27 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -239,6 +240,7 @@ You use them in the Terminal (command line), for example:
 | [`color-shorthand-hex-to-six-digit`](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) |
 | [`detect-is-it-html-or-xhtml`](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) | Answers, is the string input string more an HTML or XHTML (or neither) | [![detect-is-it-html-or-xhtml on npm](https://img.shields.io/npm/v/detect-is-it-html-or-xhtml.svg?style=flat-square)](https://www.npmjs.com/package/detect-is-it-html-or-xhtml) | [packages/detect-is-it-html-or-xhtml](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) |
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
+| [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Pluggable email template code linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
 | [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
