@@ -16,6 +16,7 @@ coverage
 perf
 src
 t-util
+tap
 test
 
 # files:

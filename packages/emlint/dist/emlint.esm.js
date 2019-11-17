@@ -2096,6 +2096,28 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
   };
 }
 
+function tagSpaceBetweenSlashAndBracket(context) {
+  return {
+    html: function(node) {
+      if (
+        Number.isInteger(node.end) &&
+        context.str[node.end - 1] === ">" &&
+        context.str[left(context.str, node.end - 1)] === "/" &&
+        left(context.str, node.end - 1) < node.end - 2
+      ) {
+        const idxFrom = left(context.str, node.end - 1) + 1;
+        context.report({
+          ruleId: "tag-space-between-slash-and-bracket",
+          message: "Bad whitespace.",
+          idxFrom,
+          idxTo: node.end - 1,
+          fix: { ranges: [[idxFrom, node.end - 1]] }
+        });
+      }
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -2633,6 +2655,11 @@ defineLazyProp(
   builtInRules,
   "tag-space-before-closing-slash",
   () => tagSpaceBeforeClosingSlash
+);
+defineLazyProp(
+  builtInRules,
+  "tag-space-between-slash-and-bracket",
+  () => tagSpaceBetweenSlashAndBracket
 );
 function get(something) {
   return builtInRules[something];

@@ -32,13 +32,13 @@
 
     <div id="app">
       <div>
-        <textarea ref="in" class="w50p" v-model="text1" rows="10" placeholder="put dirty html here" style="font-family: monospace;"></textarea>
-        <textarea class="w50p" v-model="cleaned" rows="10" style="font-family: monospace;"></textarea>
+        <textarea ref="in" class="w50p" v-model="text1" rows="10" placeholder="put html here" style="font-family: monospace;"></textarea>
+        <textarea ref="out" class="w50p" v-model="text2" rows="10" style="font-family: monospace;"></textarea>
       </div>
       <br>
       <div>
         found issues:<br>
-        <textarea v-model="list" rows="5" style="width: 98%; height: 25%; font-family: monospace;"></textarea>
+        <textarea v-model="list" rows="10" style="width: 98%; height: 25%; font-family: monospace;"></textarea>
       </div>
     </div>
 
@@ -47,6 +47,7 @@
     <script src="ranges-apply.umd.js"></script>
     <!-- <script src="https://unpkg.com/emlint"></script> -->
     <script>
+    Vue.config.productionTip = false;
     function isStr(something) {
       return typeof something === "string";
     }
@@ -60,7 +61,7 @@
       el: '#app',
       data: {
         text1: "",
-        res: {}
+        list: ""
       },
       mounted: function () {
         console.log(`068 called mounted()`);
@@ -73,39 +74,42 @@
         this.$refs.in.focus();
       },
       computed: {
-        list: function () {
-          console.log(`088 called computed.list()`);
-          if (this.res && Array.isArray(this.res.issues)) {
-            return this.res.issues
-              .map(issueObj => `${issueObj.name} ${JSON.stringify(issueObj.position, null, 0)}`)
-              .join("\n")
+        text2: function () {
+          const linter = new Linter();
+          const messages = linter.verify(this.text1, {
+            rules: {
+              "tag-space-before-closing-slash": 1
+            }
+          });
+          // 1. list the messages in the text area:
+          if (messages && Array.isArray(messages) && messages.length) {
+            this.list = JSON.stringify(messages, null, 4);
+          } else {
+            this.list = "no issues";
           }
-          return "no issues"
-        },
-        cleaned: function () {
-          console.log(`097 called computed.cleaned()`);
-          console.log(`${`\u001b[${33}m${`this.res`}\u001b[${39}m`} = ${JSON.stringify(this.res, null, 4)}`);
+
+          // 2. update the "out" text area:
           if (
             typeof this.text1 === "string" &&
             this.text1.length &&
-            this.res &&
-            Array.isArray(this.res.fix)
+            Array.isArray(messages) &&
+            messages.length
           ) {
-            return rangesApply(this.text1, this.res.fix);
+            return rangesApply(this.text1, messages.reduce((gatheredArr, obj) => {
+              if (obj.fix && obj.fix.ranges && Array.isArray(obj.fix.ranges)) {
+                return gatheredArr.concat(obj.fix.ranges)
+              }
+              return gatheredArr;
+            }, []));
           }
-          console.log('107 returning empty string');
-          return isStr(this.text1) && this.text1.length ? this.text1 : ""
+          console.log('099 nothing to apply');
+          return isStr(this.text1) && this.text1.length ? this.text1 : "";
         }
       },
       watch: {
         text1: function () {
-          console.log(`113 ${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
-          let calculatedRes = "";
-          if (isStr(this.text1) && this.text1.length) {
-            calculatedRes = lint(this.text1);
-          }
-          console.log(`${`\u001b[${33}m${`calculatedRes`}\u001b[${39}m`} = ${JSON.stringify(calculatedRes, null, 4)}`);
-          this.res = calculatedRes;
+          console.log(`113 dump`);
+          // 2. dump the input into the local storage:
           if (isStr(this.text1) && this.text1.length) {
             myStorage.setItem("emlint", this.text1)
           } else {
