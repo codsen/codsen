@@ -181,7 +181,7 @@ function tokenizer(str, cb, originalOpts) {
         tagName: null,
         recognised: null,
         closing: false,
-        selfClosing: false,
+        void: false,
         pureHTML: true,
         esp: []
       },
@@ -315,9 +315,6 @@ function tokenizer(str, cb, originalOpts) {
     if (!doNothing) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
-        if (token.type === "html" && voidTags.includes(token.tagName)) {
-          token.selfClosing = true;
-        }
       } else if (
         token.type === "esp" &&
         token.end === null &&
@@ -344,6 +341,9 @@ function tokenizer(str, cb, originalOpts) {
       if (!isLatinLetter(str[i])) {
         token.tagNameEndAt = i;
         token.tagName = str.slice(token.tagNameStartAt, i);
+        if (voidTags.includes(token.tagName)) {
+          token.void = true;
+        }
       }
     }
     if (

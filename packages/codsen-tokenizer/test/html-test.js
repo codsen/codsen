@@ -70,7 +70,7 @@ test("01.03 - opening tag only", t => {
         tagNameEndAt: 2,
         tagName: "a",
         closing: false,
-        selfClosing: false,
+        void: false,
         start: 0,
         end: 3
       }
@@ -94,7 +94,7 @@ test("01.04 - closing tag only", t => {
         tagNameEndAt: 3,
         tagName: "a",
         closing: true,
-        selfClosing: false,
+        void: false,
         start: 0,
         end: 4
       }
@@ -118,7 +118,7 @@ test("01.05 - self-closing tag only", t => {
         tagNameEndAt: 3,
         tagName: "br",
         closing: false,
-        selfClosing: true,
+        void: true,
         start: 0,
         end: 5
       }
@@ -226,7 +226,7 @@ test("01.10 - tag followed by brackets", t => {
         type: "html",
         tagName: "a",
         closing: false,
-        selfClosing: false,
+        void: false,
         start: 0,
         end: 3
       },
@@ -239,7 +239,7 @@ test("01.10 - tag followed by brackets", t => {
         type: "html",
         tagName: "span",
         closing: false,
-        selfClosing: false,
+        void: false,
         start: 14,
         end: 20
       },
@@ -252,7 +252,7 @@ test("01.10 - tag followed by brackets", t => {
         type: "html",
         tagName: "span",
         closing: true,
-        selfClosing: false,
+        void: false,
         start: 26,
         end: 33
       },
@@ -260,7 +260,7 @@ test("01.10 - tag followed by brackets", t => {
         type: "html",
         tagName: "a",
         closing: true,
-        selfClosing: false,
+        void: false,
         start: 33,
         end: 37
       }
@@ -432,6 +432,26 @@ test("01.14 - xhtml DTD doctype", t => {
         type: "text",
         start: 229,
         end: 230
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("01.15 - void tags", t => {
+  const gathered = [];
+  ct("<br>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 4,
+        void: true
       }
     ],
     t.is,

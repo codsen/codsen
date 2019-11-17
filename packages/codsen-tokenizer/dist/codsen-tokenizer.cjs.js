@@ -144,7 +144,7 @@ function tokenizer(str, cb, originalOpts) {
       tagName: null,
       recognised: null,
       closing: false,
-      selfClosing: false,
+      "void": false,
       pureHTML: true,
       esp: []
     }, token);
@@ -258,9 +258,6 @@ function tokenizer(str, cb, originalOpts) {
     if (!doNothing) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
-        if (token.type === "html" && voidTags.includes(token.tagName)) {
-          token.selfClosing = true;
-        }
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";
         for (var _y = i; _y < len; _y++) {
@@ -278,6 +275,9 @@ function tokenizer(str, cb, originalOpts) {
       if (!isLatinLetter(str[i])) {
         token.tagNameEndAt = i;
         token.tagName = str.slice(token.tagNameStartAt, i);
+        if (voidTags.includes(token.tagName)) {
+          token["void"] = true;
+        }
       }
     }
     if (token.type === "html" && !isNum(token.tagNameStartAt) && isNum(token.start) && token.start < i) {
