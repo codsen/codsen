@@ -8,17 +8,25 @@
  */
 
 import { matchRight } from 'string-match-left-right';
+import { right } from 'string-left-right';
 
+const BACKSLASH = "\u005C";
 const knownHtmlTags = [
+  "a",
   "abbr",
+  "acronym",
   "address",
+  "applet",
   "area",
   "article",
   "aside",
   "audio",
+  "b",
   "base",
+  "basefont",
   "bdi",
   "bdo",
+  "big",
   "blockquote",
   "body",
   "br",
@@ -37,6 +45,7 @@ const knownHtmlTags = [
   "details",
   "dfn",
   "dialog",
+  "dir",
   "div",
   "dl",
   "doctype",
@@ -46,9 +55,13 @@ const knownHtmlTags = [
   "fieldset",
   "figcaption",
   "figure",
+  "font",
   "footer",
   "form",
+  "frame",
+  "frameset",
   "h1",
+  "h1 - h6",
   "h2",
   "h3",
   "h4",
@@ -59,6 +72,7 @@ const knownHtmlTags = [
   "hgroup",
   "hr",
   "html",
+  "i",
   "iframe",
   "img",
   "input",
@@ -78,21 +92,25 @@ const knownHtmlTags = [
   "meta",
   "meter",
   "nav",
+  "noframes",
   "noscript",
   "object",
   "ol",
   "optgroup",
   "option",
   "output",
+  "p",
   "param",
   "picture",
   "pre",
   "progress",
+  "q",
   "rb",
   "rp",
   "rt",
   "rtc",
   "ruby",
+  "s",
   "samp",
   "script",
   "section",
@@ -101,6 +119,7 @@ const knownHtmlTags = [
   "small",
   "source",
   "span",
+  "strike",
   "strong",
   "style",
   "sub",
@@ -119,6 +138,8 @@ const knownHtmlTags = [
   "title",
   "tr",
   "track",
+  "tt",
+  "u",
   "ul",
   "var",
   "video",
@@ -135,10 +156,10 @@ function isNotLetter(char) {
   );
 }
 function isOpening(str, idx = 0) {
-  const r1 = /^<\s*\w+\s*\/?\s*>/g;
+  const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
   const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
-  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  const r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
   if (r1.test(whatToTest)) {
@@ -152,8 +173,26 @@ function isOpening(str, idx = 0) {
   } else if (
     str[idx] === "<" &&
     str[idx + 1] &&
-    str[idx + 1].trim().length &&
-    matchRight(str, idx, knownHtmlTags, { cb: isNotLetter })
+    ((!isNotLetter(str[idx + 1]) &&
+      matchRight(str, idx, knownHtmlTags, {
+        cb: isNotLetter,
+        i: true,
+        trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      })) ||
+      (isNotLetter(str[idx + 1]) &&
+        matchRight(str, idx, knownHtmlTags, {
+          cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
+            return (
+              (char === undefined ||
+                (char.toUpperCase() === char.toLowerCase() &&
+                  !`0123456789`.includes(char))) &&
+              (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
+                str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
+            );
+          },
+          i: true,
+          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+        })))
   ) {
     passed = true;
   }

@@ -133,6 +133,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "string-left-right": "^2.3.8",
     "string-match-left-right": "^3.11.12"
   },
   "devDependencies": {

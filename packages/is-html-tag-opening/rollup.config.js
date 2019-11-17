@@ -42,7 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["string-match-left-right"],
+      external: ["string-left-right", "string-match-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -58,7 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["string-match-left-right"],
+      external: ["string-left-right", "string-match-left-right"],
       plugins: [
         strip({
           sourceMap: false

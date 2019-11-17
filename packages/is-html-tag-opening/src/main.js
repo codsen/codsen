@@ -1,15 +1,22 @@
 import { matchRight } from "string-match-left-right";
-
+import { right } from "string-left-right";
+const BACKSLASH = "\u005C";
 const knownHtmlTags = [
+  "a",
   "abbr",
+  "acronym",
   "address",
+  "applet",
   "area",
   "article",
   "aside",
   "audio",
+  "b",
   "base",
+  "basefont",
   "bdi",
   "bdo",
+  "big",
   "blockquote",
   "body",
   "br",
@@ -28,18 +35,23 @@ const knownHtmlTags = [
   "details",
   "dfn",
   "dialog",
+  "dir",
   "div",
   "dl",
-  "doctype",
+  "doctype", // matching is not case-sensitive and we skip ! and slashes
   "dt",
   "em",
   "embed",
   "fieldset",
   "figcaption",
   "figure",
+  "font",
   "footer",
   "form",
+  "frame",
+  "frameset",
   "h1",
+  "h1 - h6",
   "h2",
   "h3",
   "h4",
@@ -50,6 +62,7 @@ const knownHtmlTags = [
   "hgroup",
   "hr",
   "html",
+  "i",
   "iframe",
   "img",
   "input",
@@ -69,21 +82,25 @@ const knownHtmlTags = [
   "meta",
   "meter",
   "nav",
+  "noframes",
   "noscript",
   "object",
   "ol",
   "optgroup",
   "option",
   "output",
+  "p",
   "param",
   "picture",
   "pre",
   "progress",
+  "q",
   "rb",
   "rp",
   "rt",
   "rtc",
   "ruby",
+  "s",
   "samp",
   "script",
   "section",
@@ -92,6 +109,7 @@ const knownHtmlTags = [
   "small",
   "source",
   "span",
+  "strike",
   "strong",
   "style",
   "sub",
@@ -110,6 +128,8 @@ const knownHtmlTags = [
   "title",
   "tr",
   "track",
+  "tt",
+  "u",
   "ul",
   "var",
   "video",
@@ -129,13 +149,14 @@ function isNotLetter(char) {
 
 function isOpening(str, idx = 0) {
   console.log(
-    `132 ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
+    `151 ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}, "${
+      str[idx]
+    }"`
   );
-  console.log(`134 idx = ${idx}`);
 
   // r1. tag without attributes
   // for example <br>, <br/>
-  const r1 = /^<\s*\w+\s*\/?\s*>/g;
+  const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
 
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
   const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
@@ -144,32 +165,58 @@ function isOpening(str, idx = 0) {
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
 
   // r4. opening tag with attributes,
-  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  const r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
 
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
   if (r1.test(whatToTest)) {
-    console.log(`152 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+    console.log(`172 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r2.test(whatToTest)) {
-    console.log(`155 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+    console.log(`175 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r3.test(whatToTest)) {
-    console.log(`158 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+    console.log(`178 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r4.test(whatToTest)) {
-    console.log(`161 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+    console.log(`181 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (
     str[idx] === "<" &&
     str[idx + 1] &&
-    str[idx + 1].trim().length &&
-    matchRight(str, idx, knownHtmlTags, { cb: isNotLetter })
+    ((!isNotLetter(str[idx + 1]) &&
+      matchRight(str, idx, knownHtmlTags, {
+        cb: isNotLetter,
+        i: true,
+        trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      })) ||
+      (isNotLetter(str[idx + 1]) &&
+        matchRight(str, idx, knownHtmlTags, {
+          // enhanced isNotLetter()
+          cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
+            return (
+              (char === undefined ||
+                (char.toUpperCase() === char.toLowerCase() &&
+                  !`0123456789`.includes(char))) &&
+              (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
+                str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
+            );
+          },
+          i: true,
+          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+        })))
   ) {
     passed = true;
   }
+  console.log(
+    `211 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
+      isNotLetter(str[idx + 1]),
+      null,
+      4
+    )}`
+  );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`172 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`218 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

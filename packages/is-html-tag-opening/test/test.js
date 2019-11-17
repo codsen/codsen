@@ -212,3 +212,38 @@ test(`05.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<br${BACKSLASH}>`;
   t.true(is(s1, 0));
 });
+
+test(`05.06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `< ${BACKSLASH} br ${BACKSLASH} >`;
+  t.true(is(s1, 0));
+});
+
+test(`05.07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `<\t${BACKSLASH}///\t${BACKSLASH}${BACKSLASH}${BACKSLASH} br ${BACKSLASH} >`;
+  t.true(is(s1, 0));
+});
+
+test(`05.08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `let's say that a < b and c > d.`;
+  t.false(is(s1, 17));
+});
+
+test(`05.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `< p >`;
+  t.true(is(s1, 0));
+});
+
+test(`05.10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `< / p >`;
+  t.true(is(s1, 0));
+});
+
+test(`05.11 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `< b / >`;
+  t.true(is(s1, 0));
+});
+
+test(`05.12 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `< ${BACKSLASH} b / >`;
+  t.true(is(s1, 0));
+});
