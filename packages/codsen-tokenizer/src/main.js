@@ -406,15 +406,21 @@ function tokenizer(str, cb, originalOpts) {
 
     // catch the beginning of a token
     // -------------------------------------------------------------------------
+    // below, part:
+    // (token.type !== "esp" || token.tail.includes(str[i]))
+    // means that we won't end ESP token and start HTML token unless anticipated tail
+    // character is matched
+
     if (!doNothing) {
       console.log(`410 FIY, layers.length = ${layers.length}`);
       if (
         !layers.length &&
         str[i] === "<" &&
         (isTagOpening(str, i) ||
-          matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true }))
+          matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true })) &&
+        (token.type !== "esp" || token.tail.includes(str[i]))
       ) {
-        console.log(`417 html tag opening`);
+        console.log(`418 html tag opening`);
 
         if (token.type) {
           dumpCurrentToken(token, i);
@@ -424,7 +430,7 @@ function tokenizer(str, cb, originalOpts) {
         token.type = "html";
 
         console.log(
-          `427 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+          `428 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
             token.start
           }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
         );
@@ -435,21 +441,21 @@ function tokenizer(str, cb, originalOpts) {
         if (matchRight(str, i, "!--")) {
           token.kind = "comment";
           console.log(
-            `438 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `439 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
         } else if (matchRight(str, i, "!doctype", { i: true })) {
           token.kind = "doctype";
           console.log(
-            `445 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `446 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
         } else if (matchRight(str, i, "?xml", { i: true })) {
           token.kind = "xml";
           console.log(
-            `452 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `453 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
@@ -458,7 +464,7 @@ function tokenizer(str, cb, originalOpts) {
         ) {
           token.kind = "style";
           console.log(
-            `461 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `462 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
@@ -470,7 +476,7 @@ function tokenizer(str, cb, originalOpts) {
         espChars.includes(str[i + 1]) &&
         !(str[i] === "-" && str[i + 1] === "-")
       ) {
-        console.log(`473 ESP tag detected`);
+        console.log(`474 ESP tag detected`);
         // we don't look for esp tags in HTML comments because conditionals
         // often have complex contraptions with brackets and pipes that are
         // difficult to catch them all reliably.
@@ -485,10 +491,10 @@ function tokenizer(str, cb, originalOpts) {
           }
         }
         console.log(
-          `488 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wholeEspTagLump = ${wholeEspTagLump}`
+          `489 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wholeEspTagLump = ${wholeEspTagLump}`
         );
         console.log(
-          `491 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+          `492 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
             layers,
             null,
             4
@@ -496,40 +502,40 @@ function tokenizer(str, cb, originalOpts) {
         );
 
         if (!["html", "esp"].includes(token.type)) {
-          console.log("499");
+          console.log("500");
           dumpCurrentToken(token, i);
 
           token.start = i;
           token.type = "esp";
           console.log(
-            `505 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            `506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
               token.start
             }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
           );
           doNothing = i + wholeEspTagLump.length;
           console.log(
-            `511 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            `512 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
           );
           token.tail = flipEspTag(wholeEspTagLump);
           console.log(
-            `515 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tail`}\u001b[${39}m`} = ${
+            `516 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tail`}\u001b[${39}m`} = ${
               token.tail
             }`
           );
         } else if (token.type === "html") {
-          console.log("520");
+          console.log("521");
           // maybe it's closing part of a set?
           if (matchLayerLast(str, i)) {
             layers.pop();
-            console.log(`524 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+            console.log(`525 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
           } else {
-            console.log(`526 ESP tag within HTML tag`);
+            console.log(`527 ESP tag within HTML tag`);
             layers.push({
               type: "esp",
               value: flipEspTag(wholeEspTagLump)
             });
             console.log(
-              `532 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+              `533 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                 {
                   type: "esp",
                   value: flipEspTag(wholeEspTagLump)
@@ -539,7 +545,7 @@ function tokenizer(str, cb, originalOpts) {
               )}`
             );
             console.log(
-              `542 ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+              `543 ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
                 layers,
                 null,
                 4
@@ -547,18 +553,18 @@ function tokenizer(str, cb, originalOpts) {
             );
           }
         } else {
-          console.log("550");
+          console.log("551");
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
-          console.log(`554`);
+          console.log(`555`);
           // 1. if there's whitespace, ping it as text
           if (!str[i].trim().length) {
             token.start = i;
             token.type = "text";
             token.end = right(str, i) || str.length;
             console.log(
-              `561 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              `562 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
                 token.start
               }; ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
                 token.end
@@ -572,7 +578,7 @@ function tokenizer(str, cb, originalOpts) {
               token.start = right(str, i);
               token.type = "css";
               console.log(
-                `575 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                `576 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
                   token.start
                 }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
                   token.type
@@ -581,7 +587,7 @@ function tokenizer(str, cb, originalOpts) {
 
               doNothing = right(str, i);
               console.log(
-                `584 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+                `585 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
               );
             }
           } else {
@@ -589,7 +595,7 @@ function tokenizer(str, cb, originalOpts) {
             token.start = i;
             token.type = "css";
             console.log(
-              `592 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              `593 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
                 token.start
               }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
             );
@@ -598,13 +604,13 @@ function tokenizer(str, cb, originalOpts) {
           // finally, the last default type is "text"
           token.start = i;
           console.log(
-            `601 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            `602 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
               token.start
             }`
           );
           token.type = "text";
           console.log(
-            `607 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+            `608 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
               token.type
             }`
           );
@@ -620,7 +626,7 @@ function tokenizer(str, cb, originalOpts) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
         console.log(
-          `623 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          `624 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
             token.end
           }`
         );
@@ -630,7 +636,7 @@ function tokenizer(str, cb, originalOpts) {
         if (token.type === "html" && str[left(str, i)] === "/") {
           token.selfClosing = true;
           console.log(
-            `633 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selfClosing`}\u001b[${39}m`} = ${
+            `634 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.selfClosing`}\u001b[${39}m`} = ${
               token.selfClosing
             }`
           );
@@ -641,7 +647,7 @@ function tokenizer(str, cb, originalOpts) {
         isStr(token.tail) &&
         token.tail.includes(str[i])
       ) {
-        console.log(`644 POSSIBLE ESP TAILS`);
+        console.log(`645 POSSIBLE ESP TAILS`);
         // extract the whole lump of ESP tag characters:
         let wholeEspTagClosing = "";
         for (let y = i; y < len; y++) {
@@ -651,17 +657,17 @@ function tokenizer(str, cb, originalOpts) {
             break;
           }
         }
-        console.log(`654 wholeEspTagClosing = ${wholeEspTagClosing}`);
+        console.log(`655 wholeEspTagClosing = ${wholeEspTagClosing}`);
 
         token.end = i + wholeEspTagClosing.length;
         console.log(
-          `658 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          `659 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
             token.end
           }`
         );
         doNothing = i + wholeEspTagClosing.length;
         console.log(
-          `664 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+          `665 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
         );
       }
       // END OF if (!doNothing)
@@ -678,14 +684,14 @@ function tokenizer(str, cb, originalOpts) {
       if (!isLatinLetter(str[i])) {
         token.tagNameEndAt = i;
         console.log(
-          `681 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndAt`}\u001b[${39}m`} = ${
+          `682 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndAt`}\u001b[${39}m`} = ${
             token.tagNameEndAt
           }`
         );
 
         token.tagName = str.slice(token.tagNameStartAt, i);
         console.log(
-          `688 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+          `689 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
             token.tagName
           }`
         );
@@ -707,14 +713,14 @@ function tokenizer(str, cb, originalOpts) {
       if (str[i] === "/") {
         token.closing = true;
         console.log(
-          `710 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+          `711 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
             token.closing
           }`
         );
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartAt = i;
         console.log(
-          `717 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartAt`}\u001b[${39}m`} = ${
+          `718 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartAt`}\u001b[${39}m`} = ${
             token.tagNameStartAt
           }`
         );
@@ -723,7 +729,7 @@ function tokenizer(str, cb, originalOpts) {
         if (!token.closing) {
           token.closing = false;
           console.log(
-            `726 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+            `727 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
               token.closing
             }`
           );

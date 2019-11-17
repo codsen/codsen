@@ -184,7 +184,7 @@ function tokenizer(str, cb, originalOpts) {
     if (!doNothing) {
       if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || stringMatchLeftRight.matchRight(str, i, ["!--", "!doctype", "?xml"], {
         i: true
-      }))) {
+      })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
         if (token.type) {
           dumpCurrentToken(token, i);
         }
