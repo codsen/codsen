@@ -76,7 +76,7 @@ allPackages.map(name => {
     fs.readFileSync(path.join("packages", name, "package.json"))
   );
   let size;
-  if (pack.bin) {
+  if (pack.bin && !pack.lect.special) {
     // cli's
     size = fs.readFileSync(path.join("packages", name, `cli.js`)).length;
   } else {

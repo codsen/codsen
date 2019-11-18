@@ -144,7 +144,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 9841,
+        "size": 10034,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -237,6 +237,15 @@
         ]
     },
     {
+        "name": "emlint",
+        "size": 85443,
+        "imports": [
+            "ast-deep-contains",
+            "codsen-tokenizer",
+            "string-left-right"
+        ]
+    },
+    {
         "name": "generate-atomic-css",
         "size": 20642,
         "imports": [
@@ -286,8 +295,9 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 2464,
+        "size": 3534,
         "imports": [
+            "string-left-right",
             "string-match-left-right"
         ]
     },
@@ -348,7 +358,7 @@
     },
     {
         "name": "lect",
-        "size": 72507,
+        "size": 72522,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

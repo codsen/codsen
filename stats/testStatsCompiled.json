@@ -22,7 +22,7 @@
         "check-types-mini": 35,
         "chlu": 44,
         "chlu-cli": 5,
-        "codsen-tokenizer": 37,
+        "codsen-tokenizer": 41,
         "color-shorthand-hex-to-six-digit": 19,
         "csv-sort": 22,
         "csv-sort-cli": 2,
@@ -35,6 +35,7 @@
         "email-all-chars-within-ascii-cli": 5,
         "email-comb": 167,
         "email-homey": 5,
+        "emlint": 169,
         "generate-atomic-css": 83,
         "generate-atomic-css-cli": 3,
         "gulp-email-remove-unused-css": 1,
@@ -43,7 +44,7 @@
         "html-entities-not-email-friendly": 1,
         "html-img-alt": 176,
         "html-table-patcher": 24,
-        "is-html-tag-opening": 34,
+        "is-html-tag-opening": 42,
         "js-row-num": 17,
         "js-row-num-cli": 6,
         "json-comb": 5,
@@ -100,13 +101,13 @@
         "util-array-object-or-both": 5,
         "util-nonempty": 9
     },
-    "totalPackageCount": 99,
-    "totalTestsCount": 18736,
+    "totalPackageCount": 100,
+    "totalTestsCount": 18917,
     "minTestsCount": 2,
     "minTestsName": "csv-sort-cli",
     "maxTestsCount": 14163,
     "maxTestsName": "edit-package-json",
     "testsCountMedian": 19,
     "testsCountArithmeticMean": 189,
-    "testsCountGeometricMean": 21
+    "testsCountGeometricMean": 22
 }
