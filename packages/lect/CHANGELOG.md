@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.11.0](https://gitlab.com/codsen/codsen/compare/lect@0.10.7...lect@0.11.0) (2019-11-18)
-
+## 0.11.0 (2019-11-18)
 
 ### Features
 
-* stop managing package.json scripts automatically on special packages (such as EMLint) ([9e0b9b8](https://gitlab.com/codsen/codsen/commit/9e0b9b86d876086e5f7f6ef76304c771d0cc9a3c))
-
-
-
-
+- stop managing package.json scripts automatically on special packages (such as EMLint) ([9e0b9b8](https://gitlab.com/codsen/codsen/commit/9e0b9b86d876086e5f7f6ef76304c771d0cc9a3c))
 
 ## 0.10.2 (2019-10-21)
 

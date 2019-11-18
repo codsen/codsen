@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.8.4](https://gitlab.com/codsen/codsen/compare/object-flatten-all-arrays@4.8.3...object-flatten-all-arrays@4.8.4) (2019-11-18)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
-
-
-
-
 ## 4.8.1 (2019-10-05)
 
 ### Performance Improvements

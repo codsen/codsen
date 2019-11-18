@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.1.2...is-html-tag-opening@1.2.0) (2019-11-18)
-
+## 1.2.0 (2019-11-18)
 
 ### Features
 
-* improve the algorithm to include way more broken tag cases ([fd94b61](https://gitlab.com/codsen/codsen/commit/fd94b61d39c1a4e4e0275e4e57cbde4b884db4c1))
-* loosen the requirements for the character that follows recognised tag name sequence ([6201e2b](https://gitlab.com/codsen/codsen/commit/6201e2b8a2048a64239bcf4893404eeaba3b3d2b))
-
-
-
-
+- improve the algorithm to include way more broken tag cases ([fd94b61](https://gitlab.com/codsen/codsen/commit/fd94b61d39c1a4e4e0275e4e57cbde4b884db4c1))
+- loosen the requirements for the character that follows recognised tag name sequence ([6201e2b](https://gitlab.com/codsen/codsen/commit/6201e2b8a2048a64239bcf4893404eeaba3b3d2b))
 
 ## 1.1.0 (2019-11-02)
 
