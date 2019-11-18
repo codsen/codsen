@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.0.43",
+  "version": "8.0.44",
   "description": "Preprocessor for JSON to allow keys referencing keys",
   "license": "MIT",
   "engines": {
@@ -138,24 +138,24 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.22",
-    "ast-get-values-by-key": "^2.6.49",
-    "ast-monkey-traverse": "^1.11.44",
+    "arrayiffy-if-string": "^3.11.23",
+    "ast-get-values-by-key": "^2.6.50",
+    "ast-monkey-traverse": "^1.11.45",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^2.0.0",
     "object-path": "^0.11.4",
-    "ranges-apply": "^3.0.40",
-    "ranges-push": "^3.6.8",
-    "string-find-heads-tails": "^3.15.4",
-    "string-match-left-right": "^3.11.12",
-    "string-remove-duplicate-heads-tails": "^3.0.41"
+    "ranges-apply": "^3.0.41",
+    "ranges-push": "^3.6.9",
+    "string-find-heads-tails": "^3.15.5",
+    "string-match-left-right": "^3.11.13",
+    "string-remove-duplicate-heads-tails": "^3.0.42"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ava": "^2.2.7",
+    "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.6.0",
@@ -165,8 +165,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.5",
-    "lect": "^0.10.7",
+    "js-row-num-cli": "^1.6.6",
+    "lect": "^0.11.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.0",

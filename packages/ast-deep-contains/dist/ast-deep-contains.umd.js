@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * the t.deepEqual alternative for AVA
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains

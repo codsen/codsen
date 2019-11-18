@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://gitlab.com/codsen/codsen/compare/string-apostrophes@1.2.4...string-apostrophes@1.2.5) (2019-11-18)
+
+**Note:** Version bump only for package string-apostrophes
+
+
+
+
+
 ## 1.2.0 (2019-10-02)
 
 ### Features

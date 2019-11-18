@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Edit package.json without parsing, as string, keep indentation etc intact",
   "license": "MIT",
   "engines": {
@@ -140,15 +140,15 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-apply": "^3.0.40",
-    "string-left-right": "^2.3.8"
+    "ranges-apply": "^3.0.41",
+    "string-left-right": "^2.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ast-monkey-traverse": "^1.11.44",
-    "ava": "^2.2.7",
+    "ast-monkey-traverse": "^1.11.45",
+    "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.6.0",
@@ -158,8 +158,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.5",
-    "lect": "^0.10.7",
+    "js-row-num-cli": "^1.6.6",
+    "lect": "^0.11.0",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-path": "^0.11.4",

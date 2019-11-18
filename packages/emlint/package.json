@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "engines": {
@@ -146,18 +146,18 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-deep-contains": "^1.0.0",
-    "codsen-tokenizer": "^1.2.0",
+    "ast-deep-contains": "^1.0.1",
+    "codsen-tokenizer": "^1.3.0",
     "define-lazy-prop": "^2.0.0",
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",
-    "string-left-right": "^2.3.8"
+    "string-left-right": "^2.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ava": "^2.2.7",
+    "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.6.0",
@@ -167,11 +167,11 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.5",
-    "lect": "^0.10.7",
+    "js-row-num-cli": "^1.6.6",
+    "lect": "^0.11.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
-    "ranges-apply": "^3.0.40",
+    "ranges-apply": "^3.0.41",
     "rollup": "^1.27.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

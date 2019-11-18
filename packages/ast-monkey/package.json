@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.10.50",
+  "version": "7.10.51",
   "description": "Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
@@ -140,20 +140,20 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.12.23",
-    "ast-monkey-traverse": "^1.11.44",
-    "check-types-mini": "^5.7.47",
+    "ast-compare": "^1.12.24",
+    "ast-monkey-traverse": "^1.11.45",
+    "check-types-mini": "^5.7.48",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "type-detect": "^4.0.8",
-    "util-array-object-or-both": "^2.7.47"
+    "util-array-object-or-both": "^2.7.48"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ava": "^2.2.7",
+    "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.6.0",
@@ -163,8 +163,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.5",
-    "lect": "^0.10.7",
+    "js-row-num-cli": "^1.6.6",
+    "lect": "^0.11.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.0",

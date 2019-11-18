@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://gitlab.com/codsen/codsen/compare/json-sort-cli@1.14.7...json-sort-cli@1.15.0) (2019-11-18)
+
+
+### Features
+
+* cI mode - fixes [#21](https://gitlab.com/codsen/codsen/issues/21) - plus few more tweaks ([bc93a0f](https://gitlab.com/codsen/codsen/commit/bc93a0fd011073db2da87744b219e24983d9fa8d))
+
+
+
+
+
 ## 1.15.0 (2019-11-15)
 
 ### Features

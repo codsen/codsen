@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "the t.deepEqual alternative for AVA",
   "license": "MIT",
   "engines": {
@@ -133,7 +133,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.11.44",
+    "ast-monkey-traverse": "^1.11.45",
     "object-path": "^0.11.4",
     "type-detect": "^4.0.8"
   },
@@ -141,7 +141,7 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "ava": "^2.2.7",
+    "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.6.0",
@@ -151,8 +151,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.5",
-    "lect": "^0.10.7",
+    "js-row-num-cli": "^1.6.6",
+    "lect": "^0.11.0",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.0",
