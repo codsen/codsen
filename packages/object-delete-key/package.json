@@ -164,7 +164,7 @@
     "nyc": "^14.1.1",
     "posthtml-parser": "^0.4.2",
     "prettier": "^1.19.1",
-    "rollup": "^1.27.0",
+    "rollup": "^1.27.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
