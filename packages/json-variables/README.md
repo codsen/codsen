@@ -1,6 +1,6 @@
 # json-variables
 
-> Preprocessor for JSON to allow keys referencing keys
+> It's like SASS variables, but for JSON
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -14,7 +14,8 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Idea - updated for v.7 - full rewrite](#idea-updated-for-v7---full-rewrite)
+- [Idea](#idea)
+- [Features](#features)
 - [API](#api)
 - [Use examples](#use-examples)
 - [Contributing](#contributing)
@@ -61,21 +62,50 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
-## Idea - updated for v.7 - full rewrite
+## Idea
 
-This library allows JSON keys to reference other keys. It is aimed at JSON files which are used as means to store the _data_ part, separate from the template code.
+Do you know [SASS variables](https://sass-lang.com/documentation/variables)? You declare `$red: #dd0b0b;` once and then use that `$red` many times.
 
-- `<=v6.x` was resolving variables from the root to the branch tip. This was apparently a bad idea and `v7.x` fixes that. Now resolving is done from the tips down to the root.
-- `<=v6.x` had data stores but it referenced only the same level as the variable AND root level when checking for values when resolving. This was not good. The `v7.x` now looks every single level upward, from the current to the root, plus data stores on each level. This, combined with tips-to-root resolving means now, for the first time, you have true freedom to cross-reference the variables any way you like (as long as there are no loop in the resolved variable chain). Previously, on `<=v6.x`, the scope of second-level variable references was lost and since resolving started from the root, it instantly received a variable with a lost scope (for data store lookup, for example). Not any more.
-- Using `<=v6.x` in production I also found out how unhelpful the error messages were (not to mention in 90% of the error cases, errors were not real, only resolving algorithm shortcomings). I went extra mile in this rewrite to provide not only the path of the variables being resolved, but also the piece of the _whole source object_.
-- In `v7.x`, I also switched to strictly [`object-path`](https://www.npmjs.com/package/object-path) notation.
-- Additionally, `v7.x` uses the latest tools I created since coding the original core of `json-variables`. For example, variable extraction is now done using a separate library, [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails).
+We did the same for JSON.
 
-I know, these architectural mistakes look no-brainers _now_ but trust me, they were not so apparent when the original `json-variables` idea was conceived. Also, I didn't anticipate this amount of variable-cross-referencing happening in real production, which was beyond anything that unit tests could imitate.
+`json-variables` turns DRY file with special markers `%%_` (which are customiseable):
+
+```json
+{
+  "firstName": "customer.firstName",
+  "message": "Hi %%_firstName_%%",
+  "preheader": "%%_firstName_%%, look what's inside"
+}
+```
+
+into "normal" JSON:
+
+```json
+{
+  "firstName": "{{ customer.firstName }}",
+  "message": "Hi {{ customer.firstName }}",
+  "preheader": "{{ customer.firstName }}, look what's inside"
+}
+```
+
+It's like SASS variables, but for JSON.
+
+This program is used in production — we use it to DRY the JSON files which hold the transactional email templates' content.
+
+**[⬆ back to top](#)**
+
+## Features
+
+- [`object-path`](https://www.npmjs.com/package/object-path) notation
+- `*_data` keys to dump the data nearby (customiseable naming pattern)
+- [Detects](https://github.com/codsen/string-find-heads-tails) existing heads tails and won't wrap twice
+- Battle-tested, used in production to manage email templates
 
 **[⬆ back to top](#)**
 
 ## API
+
+This program gives you a function (`jVar` below) which turns JSON object with references into "normal" JSON object with all values "baked-in".
 
 **jVar(inputObj, \[options])**
 

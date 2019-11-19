@@ -1,7 +1,7 @@
 {
   "name": "json-variables",
   "version": "8.0.44",
-  "description": "Preprocessor for JSON to allow keys referencing keys",
+  "description": "It's like SASS variables, but for JSON",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
