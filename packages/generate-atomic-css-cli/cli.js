@@ -32,10 +32,7 @@ const cli = meow(
     gac "*.html"
     gac -h
     gac --version
-`,
-  {
-    flags: {}
-  }
+`
 );
 updateNotifier({ pkg: cli.pkg }).notify();
 
