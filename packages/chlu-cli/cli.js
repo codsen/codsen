@@ -26,8 +26,12 @@ const cli = meow(
     Just call it in the root, where your package.json is located
 `,
   {
-    alias: {
-      l: "loud"
+    flags: {
+      loud: {
+        type: "boolean",
+        alias: "l",
+        default: false
+      }
     }
   }
 );

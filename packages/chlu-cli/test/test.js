@@ -657,10 +657,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       })
     )
     .then(() =>
-      execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} --loud`,
-        { shell: true }
-      )
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -l`, {
+        shell: true
+      })
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch(err => t.fail(err));
