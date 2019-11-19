@@ -47,6 +47,7 @@ const cli = meow(
   Example:
     jrn -p 2 "*.js"
     jrn --pad="2"
+    jrn --trigger "log"
     jsrownum -h
     jsrownum --version
 `,
@@ -57,6 +58,7 @@ const cli = meow(
         alias: "p"
       },
       trigger: {
+        type: "string",
         alias: "t"
       }
     }
