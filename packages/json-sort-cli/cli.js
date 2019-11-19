@@ -49,15 +49,46 @@ const cli = meow(
     will parse globs. If you put as system globs without quotes, your shell will expand them.
 `,
   {
-    alias: {
-      n: "nodemodules",
-      t: "tabs",
-      s: "silent",
-      a: "arrays",
-      p: "pack",
-      d: "dry",
-      c: "ci",
-      i: "indentationCount"
+    flags: {
+      nodemodules: {
+        type: "boolean",
+        alias: "n",
+        default: true
+      },
+      tabs: {
+        type: "boolean",
+        alias: "t",
+        default: false
+      },
+      silent: {
+        type: "boolean",
+        alias: "s",
+        default: false
+      },
+      arrays: {
+        type: "boolean",
+        alias: "a",
+        default: false
+      },
+      pack: {
+        type: "boolean",
+        alias: "p",
+        default: false
+      },
+      dry: {
+        type: "boolean",
+        alias: "d",
+        default: false
+      },
+      ci: {
+        type: "boolean",
+        alias: "c",
+        default: false
+      },
+      indentationCount: {
+        type: "number",
+        alias: "i"
+      }
     }
   }
 );
@@ -87,7 +118,7 @@ function stripWhitespace(str) {
 function readSortAndWriteOverFile(oneOfPaths) {
   // console.log("\n\n\n\n==========\n\n\n\n");
   // console.log(
-  //   `083 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `121 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
   //     oneOfPaths,
   //     null,
   //     4
@@ -98,7 +129,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then(filesContent => {
       let parsedJson;
       // console.log(
-      //   `094 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `132 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
       //     filesContent,
       //     null,
       //     4
@@ -148,7 +179,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
           // input after processing, then we return an array.
           // In this function, readSortAndWriteOverFile(), path came in,
           // we read it, now we return true if result differs after processing
-          // console.log(`148 returning compared:`);
+          // console.log(`182 returning compared:`);
 
           const stringified = JSON.stringify(
             traverse(obj, (key, val) => {
@@ -170,7 +201,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             cli.flags.t ? "\t".repeat(indentationCount) : indentationCount
           );
           // console.log(
-          //   `169 ${`\u001b[${33}m${`stringified`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `204 ${`\u001b[${33}m${`stringified`}\u001b[${39}m`} = ${JSON.stringify(
           //     stringified,
           //     null,
           //     4
@@ -279,7 +310,7 @@ globby(input, { dot: true })
       process.exit(0);
     }
     // console.log(
-    //   `294 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `321 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
     //     resolvedPathsArray,
     //     null,
     //     4
@@ -312,7 +343,7 @@ globby(input, { dot: true })
       // then reduce again, now actually concatenating them all together
     ).then(received => {
       // console.log(
-      //   `327 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `354 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
       //     received,
       //     null,
       //     4
@@ -337,7 +368,7 @@ globby(input, { dot: true })
   )
   .then(paths => {
     // console.log(
-    //   `352 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `379 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
     //     paths,
     //     null,
     //     4
@@ -372,7 +403,7 @@ globby(input, { dot: true })
       );
     });
     // console.log(
-    //   `387 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `414 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
     //     tempRez,
     //     null,
     //     4
@@ -391,7 +422,7 @@ globby(input, { dot: true })
       if (cli.flags.c) {
         // CI setting
         // console.log(
-        //   `406 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `433 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
         //     received,
         //     null,
         //     4
@@ -401,7 +432,7 @@ globby(input, { dot: true })
           readSortAndWriteOverFile(currentPath)
         ).then(received2 => {
           // console.log(
-          //   `416 ${`\u001b[${33}m${`received2`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `443 ${`\u001b[${33}m${`received2`}\u001b[${39}m`} = ${JSON.stringify(
           //     received2,
           //     null,
           //     4
@@ -432,7 +463,7 @@ globby(input, { dot: true })
           readSortAndWriteOverFile(currentPath)
             .then(received => {
               // console.log(
-              //   `431 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `474 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
               //     received,
               //     null,
               //     4
@@ -464,7 +495,7 @@ globby(input, { dot: true })
         { good: [], bad: [] }
       ).then(counter => {
         // console.log(
-        //   `461 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `506 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
         //     counter,
         //     null,
         //     4

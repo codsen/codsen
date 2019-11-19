@@ -846,7 +846,7 @@ test("01.14 - package.json is not sorted under -p flag", async t => {
 // 02. opts: -c or --ci - the CI mode
 // -----------------------------------------------------------------------------
 
-test("02.01 - CI mode, something to sort", async t => {
+test("02.01 - CI mode, something to sort, -c flag", async t => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -866,6 +866,46 @@ test("02.01 - CI mode, something to sort", async t => {
   )
     .then(
       () => execa("./cli.js", ["-c", tempFolder])
+      // all test files have been written successfully, let's process them with our CLI
+    )
+    .then(stdOutContents => {
+      t.regex(stdOutContents.stdout, /Unsorted files/g);
+      return pMap(testFilePaths, oneOfPaths =>
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+      );
+    })
+    .then(contentsArray => {
+      return pMap(contentsArray, oneOfArrays =>
+        JSON.stringify(oneOfArrays, null, "\t")
+      );
+    })
+    .then(received =>
+      // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+      execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
+    )
+    .catch(err => t.is(err.exitCode, 9));
+});
+
+test("02.02 - CI mode, something to sort, --ci flag", async t => {
+  // 1. fetch us an empty, random, temporary folder:
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+  // The temp folder needs subfolders. Those have to be in place before we start
+  // writing the files:
+  fs.ensureDirSync(path.join(tempFolder, "test1"));
+  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
+  fs.ensureDirSync(path.join(tempFolder, "test2"));
+
+  // asynchronously write all test files
+
+  await pMap(testFilePaths, (oneOfTestFilePaths, testIndex) =>
+    fs.writeJson(
+      path.join(tempFolder, oneOfTestFilePaths),
+      testFileContents[testIndex]
+    )
+  )
+    .then(
+      () => execa("./cli.js", ["--ci", tempFolder])
       // all test files have been written successfully, let's process them with our CLI
     )
     .then(stdOutContents => {
