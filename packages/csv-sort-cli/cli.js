@@ -40,8 +40,12 @@ const cli = meow(
     Just call it in the root, where your csv file is located
 `,
   {
-    alias: {
-      o: "overwrite"
+    flags: {
+      overwrite: {
+        type: "boolean",
+        alias: "o",
+        default: false
+      }
     }
   }
 );
@@ -128,25 +132,10 @@ if (cli.input.length > 0) {
 // value, not in "cli.input[]":
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
 if (Object.keys(cli.flags).length !== 0) {
-  // each non-boolean cli.flags value must be added to the `toDoList`
-  Object.keys(cli.flags).forEach(key => {
-    if (typeof cli.flags[key] !== "boolean") {
-      if (!isArr(cli.flags[key])) {
-        state.toDoList.push(cli.flags[key]);
-      } else {
-        state.toDoList = state.toDoList.concat(
-          cli.flags[key].filter(val => isStr(val))
-        );
-      }
-    }
-  });
-  state.toDoList = uniq(state.toDoList);
+  state.toDoList = uniq(cli.input);
 }
 
-if (
-  Object.keys(cli.flags).length !== 0 &&
-  hasOwnProperty(cli.flags, "overwrite")
-) {
+if (cli.flags.o) {
   // variables that can be misinterpreted as falsey, yet the flag still be in
   // for example, in "csvsort -o false simples.csv simples2.csv",
   // the cli.flags.overwrite === false (WTF?)

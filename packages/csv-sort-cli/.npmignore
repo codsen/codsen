@@ -11,7 +11,10 @@
 
 # folders:
 
+.nyc_output
+coverage
 media
+temp
 test
 
 # files:
