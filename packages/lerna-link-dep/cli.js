@@ -29,11 +29,16 @@ const cli = meow(
   one you're at currently.
 `,
   {
-    alias: {
-      d: "dev"
+    flags: {
+      dev: {
+        type: "boolean",
+        alias: "d",
+        default: false
+      }
     }
   }
 );
+
 updateNotifier({ pkg: cli.pkg }).notify();
 
 // Step #0. take care of -v and -h flags that are left out in meow.

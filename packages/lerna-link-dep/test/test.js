@@ -554,7 +554,7 @@ test(`02.02 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI
   t.deepEqual(cleanupMsg.exitCode, 0, "02.02.06");
 });
 
-test(`02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies`, async t => {
+test(`02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`, async t => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -599,4 +599,51 @@ test(`02.03 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links nor
     );
 
   t.deepEqual(cleanupMsg.exitCode, 0, "02.03.06");
+});
+
+test(`02.04 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`, async t => {
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  // const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  fs.ensureDirSync(path.resolve(tempFolder));
+  fs.ensureDirSync(path.resolve(tempFolder, "a", "node_modules"));
+  fs.ensureDirSync(path.resolve(tempFolder, "b", "node_modules"));
+
+  //
+
+  const cleanupMsg = await fs
+    .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
+    .then(() =>
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+    )
+    .then(() =>
+      execa(
+        `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
+          __dirname,
+          "../",
+          "cli.js"
+        )} b --dev`,
+        {
+          shell: true
+        }
+      )
+    )
+    .then(execasMsg => {
+      t.regex(execasMsg.stdout, /Success/, "02.04.01");
+      t.regex(execasMsg.stdout, /b/, "02.04.02");
+      t.regex(execasMsg.stdout, /linked!/, "02.04.03");
+    })
+    .then(() => fs.readJson(path.join(tempFolder, "a", "package.json")))
+    .then(packageContents => {
+      t.is(packageContents.dependencies, undefined, "02.04.04");
+      t.is(packageContents.devDependencies.b, "^1.0.0", "02.04.05");
+    })
+    .then(() =>
+      execa.command(`rm -rf ${tempFolder}`, {
+        shell: true
+      })
+    );
+
+  t.deepEqual(cleanupMsg.exitCode, 0, "02.04.06");
 });
