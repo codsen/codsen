@@ -57,14 +57,6 @@ const cli = meow(
       tabs: {
         type: "boolean",
         alias: "t"
-      },
-      version: {
-        type: "boolean",
-        alias: "v"
-      },
-      help: {
-        type: "boolean",
-        alias: "h"
       }
     }
   }
