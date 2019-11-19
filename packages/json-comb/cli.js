@@ -44,12 +44,28 @@ const cli = meow(
     will expand them, which might yield different results.
 `,
   {
-    alias: {
-      n: "normalise",
-      i: "ignore",
-      t: "tabs",
-      v: "version",
-      h: "help"
+    flags: {
+      normalise: {
+        type: "boolean",
+        alias: "n",
+        default: false
+      },
+      ignore: {
+        type: "string",
+        alias: "i"
+      },
+      tabs: {
+        type: "boolean",
+        alias: "t"
+      },
+      version: {
+        type: "boolean",
+        alias: "v"
+      },
+      help: {
+        type: "boolean",
+        alias: "h"
+      }
     }
   }
 );

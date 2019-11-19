@@ -199,7 +199,7 @@ test.serial(
         a: "b",
         c: "d"
       })
-      .then(() => execa("./cli.js", ["-n", tempFolder]))
+      .then(() => execa("./cli.js", ["--normalise", tempFolder]))
       .catch(err => t.fail(err));
 
     // CLI will complain no files could be found
