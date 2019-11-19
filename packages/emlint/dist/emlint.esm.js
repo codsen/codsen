@@ -3352,6 +3352,29 @@ class Linter extends EventEmitter {
     this.messages = [];
     this.str = str;
     this.config = config;
+    if (config) {
+      if (typeof config !== "object") {
+        throw new Error(
+          `emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ${typeof config}. It's equal to:\n${JSON.stringify(
+            config,
+            null,
+            4
+          )}`
+        );
+      } else if (!Object.keys(config).length) {
+        return this.messages;
+      } else if (!config.rules || typeof config.rules !== "object") {
+        throw new Error(
+          `emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n${JSON.stringify(
+            config,
+            null,
+            4
+          )}`
+        );
+      }
+    } else {
+      return this.messages;
+    }
     const processedRulesConfig = normaliseRequestedRules(config.rules);
     this.processedRulesConfig = processedRulesConfig;
     Object.keys(processedRulesConfig)

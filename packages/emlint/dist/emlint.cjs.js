@@ -19,6 +19,20 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var stringLeftRight = require('string-left-right');
 var lineColumn = _interopDefault(require('line-column'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -3124,6 +3138,17 @@ function (_EventEmitter) {
       this.messages = [];
       this.str = str;
       this.config = config;
+      if (config) {
+        if (_typeof(config) !== "object") {
+          throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ".concat(_typeof(config), ". It's equal to:\n").concat(JSON.stringify(config, null, 4)));
+        } else if (!Object.keys(config).length) {
+          return this.messages;
+        } else if (!config.rules || _typeof(config.rules) !== "object") {
+          throw new Error("emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n".concat(JSON.stringify(config, null, 4)));
+        }
+      } else {
+        return this.messages;
+      }
       var processedRulesConfig = normaliseRequestedRules(config.rules);
       this.processedRulesConfig = processedRulesConfig;
       Object.keys(processedRulesConfig).filter(function (ruleName) {
