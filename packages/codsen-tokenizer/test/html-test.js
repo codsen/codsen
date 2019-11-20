@@ -458,3 +458,45 @@ test("01.15 - void tags", t => {
     t.fail
   );
 });
+
+test("01.16 - recognised tags", t => {
+  const gathered = [];
+  ct("<content>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 9,
+        void: false,
+        recognised: true
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("01.17 - unrecognised tags", t => {
+  const gathered = [];
+  ct("<contentz>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 10,
+        void: false,
+        recognised: false
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
