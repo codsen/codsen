@@ -138,7 +138,8 @@ var allTagRules = [
 ];
 
 var allBadNamedHTMLEntityRules = [
-	"bad-named-html-entity-malformed-nbsp"
+	"bad-named-html-entity-malformed-nbsp",
+	"bad-named-html-entity-unrecognised"
 ];
 
 function badCharacterNull(context) {
@@ -3500,7 +3501,9 @@ class Linter extends EventEmitter {
           let matchedRulesName;
           let severity;
           if (Object.keys(config.rules).includes("bad-html-entity")) {
-            if (Array.isArray(config.rules["bad-html-entity"])) {
+            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              severity = 1;
+            } else if (Array.isArray(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"][0];
             } else if (Number.isInteger(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"];
@@ -3513,7 +3516,12 @@ class Linter extends EventEmitter {
               }
             })
           ) {
-            if (Array.isArray(config.rules[matchedRulesName])) {
+            if (
+              obj.ruleName === "bad-named-html-entity-unrecognised" &&
+              config.rules["bad-named-html-entity-unrecognised"] === undefined
+            ) {
+              severity = 1;
+            } else if (Array.isArray(config.rules[matchedRulesName])) {
               severity = config.rules[matchedRulesName][0];
             } else if (Number.isInteger(config.rules[matchedRulesName])) {
               severity = config.rules[matchedRulesName];
@@ -3523,6 +3531,12 @@ class Linter extends EventEmitter {
             let message;
             if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
               message = "Malformed NBSP.";
+            } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              message = "Unrecognised named entity.";
+            }
+            let ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]];
+            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              ranges = [];
             }
             this.report({
               severity,
@@ -3531,7 +3545,7 @@ class Linter extends EventEmitter {
               idxFrom: obj.rangeFrom,
               idxTo: obj.rangeTo,
               fix: {
-                ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+                ranges
               }
             });
           }

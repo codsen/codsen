@@ -247,7 +247,8 @@ var allTagRules = [
 ];
 
 var allBadNamedHTMLEntityRules = [
-	"bad-named-html-entity-malformed-nbsp"
+	"bad-named-html-entity-malformed-nbsp",
+	"bad-named-html-entity-unrecognised"
 ];
 
 function badCharacterNull(context) {
@@ -3446,7 +3447,9 @@ function (_EventEmitter) {
             var matchedRulesName;
             var severity;
             if (Object.keys(config.rules).includes("bad-html-entity")) {
-              if (Array.isArray(config.rules["bad-html-entity"])) {
+              if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+                severity = 1;
+              } else if (Array.isArray(config.rules["bad-html-entity"])) {
                 severity = config.rules["bad-html-entity"][0];
               } else if (Number.isInteger(config.rules["bad-html-entity"])) {
                 severity = config.rules["bad-html-entity"];
@@ -3457,7 +3460,9 @@ function (_EventEmitter) {
                 return true;
               }
             })) {
-              if (Array.isArray(config.rules[matchedRulesName])) {
+              if (obj.ruleName === "bad-named-html-entity-unrecognised" && config.rules["bad-named-html-entity-unrecognised"] === undefined) {
+                severity = 1;
+              } else if (Array.isArray(config.rules[matchedRulesName])) {
                 severity = config.rules[matchedRulesName][0];
               } else if (Number.isInteger(config.rules[matchedRulesName])) {
                 severity = config.rules[matchedRulesName];
@@ -3467,6 +3472,12 @@ function (_EventEmitter) {
               var message;
               if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
                 message = "Malformed NBSP.";
+              } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+                message = "Unrecognised named entity.";
+              }
+              var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]];
+              if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+                ranges = [];
               }
               _this.report({
                 severity: severity,
@@ -3475,7 +3486,7 @@ function (_EventEmitter) {
                 idxFrom: obj.rangeFrom,
                 idxTo: obj.rangeTo,
                 fix: {
-                  ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+                  ranges: ranges
                 }
               });
             }

@@ -198,7 +198,12 @@ class Linter extends EventEmitter {
 
           // rule is group, blanket rule
           if (Object.keys(config.rules).includes("bad-html-entity")) {
-            if (Array.isArray(config.rules["bad-html-entity"])) {
+            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              // unrecongnised named HTML entities might be false positives,
+              // mix of ampersand, letters and semicolon, without spaces,
+              // so default level is "warning", not "error":
+              severity = 1;
+            } else if (Array.isArray(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"][0];
             } else if (Number.isInteger(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"];
@@ -218,7 +223,16 @@ class Linter extends EventEmitter {
               }
             })
           ) {
-            if (Array.isArray(config.rules[matchedRulesName])) {
+            if (
+              obj.ruleName === "bad-named-html-entity-unrecognised" &&
+              config.rules["bad-named-html-entity-unrecognised"] === undefined
+            ) {
+              // unless the rule was requested exactly, severity is 1.
+              // This applies to both group blanket rules "bad-html-entity" and
+              // any rules achieved by applying wildcards, for example,
+              // "bad-named-html-entity-*".
+              severity = 1;
+            } else if (Array.isArray(config.rules[matchedRulesName])) {
               severity = config.rules[matchedRulesName][0];
             } else if (Number.isInteger(config.rules[matchedRulesName])) {
               severity = config.rules[matchedRulesName];
@@ -229,6 +243,13 @@ class Linter extends EventEmitter {
             let message;
             if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
               message = "Malformed NBSP.";
+            } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              message = "Unrecognised named entity.";
+            }
+
+            let ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]];
+            if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              ranges = [];
             }
 
             this.report({
@@ -238,7 +259,7 @@ class Linter extends EventEmitter {
               idxFrom: obj.rangeFrom,
               idxTo: obj.rangeTo,
               fix: {
-                ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+                ranges
               }
             });
           }
@@ -247,14 +268,14 @@ class Linter extends EventEmitter {
     }
 
     console.log(
-      `250 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
+      `262 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
     );
     return this.messages;
   }
 
   report(obj) {
     console.log(
-      `257 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+      `269 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
         obj,
         null,
         4
@@ -264,7 +285,7 @@ class Linter extends EventEmitter {
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity = obj.severity; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `267 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `279 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -279,7 +300,7 @@ class Linter extends EventEmitter {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `282 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `294 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
