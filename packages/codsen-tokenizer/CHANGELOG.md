@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.0.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@1.3.0...codsen-tokenizer@2.0.0) (2019-11-20)
-
+## 2.0.0 (2019-11-20)
 
 ### Features
 
-* character callback ([d8ffbbd](https://gitlab.com/codsen/codsen/commit/d8ffbbde9a07644dbc961f7650f10dd2053b2dfc))
-* recognised tags ([f1960f8](https://gitlab.com/codsen/codsen/commit/f1960f8ffa6ebf1f50eb85d6b5b52188d7659d44))
-
+- character callback ([d8ffbbd](https://gitlab.com/codsen/codsen/commit/d8ffbbde9a07644dbc961f7650f10dd2053b2dfc))
+- recognised tags ([f1960f8](https://gitlab.com/codsen/codsen/commit/f1960f8ffa6ebf1f50eb85d6b5b52188d7659d44))
 
 ### BREAKING CHANGES
 
-* options argument is now pushed by one place further
-
-
-
-
+- options argument is now pushed by one place further
 
 ## 1.3.0 (2019-11-18)
 

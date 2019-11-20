@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.16.50](https://gitlab.com/codsen/codsen/compare/chlu-cli@1.16.49...chlu-cli@1.16.50) (2019-11-20)
-
+## 1.16.50 (2019-11-20)
 
 ### Bug Fixes
 
-* update to the latest v4 meow api, fix aliases ([66fda3d](https://gitlab.com/codsen/codsen/commit/66fda3dc8973938f0b947cef684cc0c16c2d95ad))
-
-
-
-
+- update to the latest v4 meow api, fix aliases ([66fda3d](https://gitlab.com/codsen/codsen/commit/66fda3dc8973938f0b947cef684cc0c16c2d95ad))
 
 ## 1.16.38 (2019-08-15)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.31](https://gitlab.com/codsen/codsen/compare/json-comb@0.2.30...json-comb@0.2.31) (2019-11-20)
-
+## 0.2.31 (2019-11-20)
 
 ### Bug Fixes
 
-* update to the latest meow v4 API ([ca7c1f9](https://gitlab.com/codsen/codsen/commit/ca7c1f9b1e28dd7540442fa19f9ca4b7855b9e34))
-
-
-
-
+- update to the latest meow v4 API ([ca7c1f9](https://gitlab.com/codsen/codsen/commit/ca7c1f9b1e28dd7540442fa19f9ca4b7855b9e34))
 
 ## 0.2.0 (2019-06-01)
 

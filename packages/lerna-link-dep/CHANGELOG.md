@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.9](https://gitlab.com/codsen/codsen/compare/lerna-link-dep@1.1.8...lerna-link-dep@1.1.9) (2019-11-20)
-
+## 1.1.9 (2019-11-20)
 
 ### Bug Fixes
 
-* update to the latest v4 meow api, aliases were not working ([eefe19d](https://gitlab.com/codsen/codsen/commit/eefe19d477cbab9bf642bd8a41140e377f28be3b))
-
-
-
-
+- update to the latest v4 meow api, aliases were not working ([eefe19d](https://gitlab.com/codsen/codsen/commit/eefe19d477cbab9bf642bd8a41140e377f28be3b))
 
 ## 1.1.0 (2019-08-15)
 

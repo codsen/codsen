@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.7.3](https://gitlab.com/codsen/codsen/compare/detergent@5.7.2...detergent@5.7.3) (2019-11-20)
-
-**Note:** Version bump only for package detergent
-
-
-
-
-
 ## 5.7.1 (2019-11-11)
 
 ### Bug Fixes

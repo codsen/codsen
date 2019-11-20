@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.51](https://gitlab.com/codsen/codsen/compare/csv-sort-cli@1.9.50...csv-sort-cli@1.9.51) (2019-11-20)
-
+## 1.9.51 (2019-11-20)
 
 ### Bug Fixes
 
-* update the api to follow meow v4 - fixes aliases ([a878008](https://gitlab.com/codsen/codsen/commit/a878008cbb291466382d8a9256fde189b11bef6c))
-
-
-
-
+- update the api to follow meow v4 - fixes aliases ([a878008](https://gitlab.com/codsen/codsen/commit/a878008cbb291466382d8a9256fde189b11bef6c))
 
 ## 1.9.37 (2019-08-15)
 

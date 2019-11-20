@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.50](https://gitlab.com/codsen/codsen/compare/string-convert-indexes@1.9.49...string-convert-indexes@1.9.50) (2019-11-20)
-
-**Note:** Version bump only for package string-convert-indexes
-
-
-
-
-
 ## 1.9.44 (2019-10-02)
 
 ### Performance Improvements
