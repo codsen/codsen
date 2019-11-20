@@ -10,7 +10,7 @@
 import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
-import { left } from 'string-left-right';
+import { left, right } from 'string-left-right';
 import lineColumn from 'line-column';
 
 var allBadCharacterRules = [
@@ -2245,6 +2245,21 @@ const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
     html: function(node) {
+      if (
+        Number.isInteger(node.start) &&
+        context.str[node.start] === "<" &&
+        context.str[right(context.str, node.start)] === BACKSLASH &&
+        Number.isInteger(node.tagNameStartAt)
+      ) {
+        const ranges = [[node.start + 1, node.tagNameStartAt]];
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: "Wrong slash - backslash.",
+          idxFrom: node.start + 1,
+          idxTo: node.tagNameStartAt,
+          fix: { ranges }
+        });
+      }
       if (
         Number.isInteger(node.end) &&
         context.str[node.end - 1] === ">" &&

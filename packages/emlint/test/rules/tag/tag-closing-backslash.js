@@ -695,3 +695,389 @@ test(`03.04 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void
     t.fail
   );
 });
+
+// 04. backslash in front of a void tag name
+// -----------------------------------------------------------------------------
+
+test(`04.01 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts`, t => {
+  const str = `<${BACKSLASH}br>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<br/>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 4,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[4, 4, "/"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`04.02 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, no opts`, t => {
+  const str = `<${BACKSLASH}br/>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<br/>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`04.03 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, t => {
+  const str = `<${BACKSLASH}br\t>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<br/>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[4, 5, "/"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`04.04 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`, t => {
+  const str = `<${BACKSLASH}br>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2,
+      "tag-void-slash": [2, "never"]
+    }
+  });
+  t.is(applyFixes(str, messages), "<br>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`04.05 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, t => {
+  const str = `<${BACKSLASH}br\t>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2,
+      "tag-void-slash": 2,
+      "tag-space-before-closing-slash": [2, "always"]
+    }
+  });
+  t.is(applyFixes(str, messages), "<br />");
+  console.log(
+    `${`\u001b[${33}m${`messages`}\u001b[${39}m`} = ${JSON.stringify(
+      messages,
+      null,
+      4
+    )}`
+  );
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[4, 5, " /"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`04.06 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, t => {
+  const str = `<${BACKSLASH}br >`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2,
+      "tag-void-slash": 2,
+      "tag-space-before-closing-slash": [2, "always"]
+    }
+  });
+  t.is(applyFixes(str, messages), "<br />");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 5,
+        idxTo: 5,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[5, 5, "/"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// 05. backslash in front of a non-void tag name
+// -----------------------------------------------------------------------------
+
+test(`05.01 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, tight`, t => {
+  const str = `<${BACKSLASH}div>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<div>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`05.02 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, leading space`, t => {
+  const str = `< ${BACKSLASH}div>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<div>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 3,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 3]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`05.03 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, trailing space`, t => {
+  const str = `<${BACKSLASH} div>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<div>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 3,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 3]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test(`05.04 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, spaced`, t => {
+  const str = `< ${BACKSLASH} div>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "tag-closing-backslash": 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<div>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 4,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 4]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// 06. extreme case - backslashes on both sides
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, t => {
+  const str = `<${BACKSLASH}br${BACKSLASH}>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2
+    }
+  });
+  t.is(applyFixes(str, messages), "<br/>");
+  console.log(
+    `${`\u001b[${33}m${`messages`}\u001b[${39}m`} = ${JSON.stringify(
+      messages,
+      null,
+      4
+    )}`
+  );
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Replace backslash with slash.",
+        fix: {
+          ranges: [[4, 5, "/"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});

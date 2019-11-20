@@ -2335,6 +2335,18 @@ var BACKSLASH = "\\";
 function tagClosingBackslash(context) {
   return {
     html: function html(node) {
+      if (Number.isInteger(node.start) && context.str[node.start] === "<" && context.str[stringLeftRight.right(context.str, node.start)] === BACKSLASH && Number.isInteger(node.tagNameStartAt)) {
+        var ranges = [[node.start + 1, node.tagNameStartAt]];
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: "Wrong slash - backslash.",
+          idxFrom: node.start + 1,
+          idxTo: node.tagNameStartAt,
+          fix: {
+            ranges: ranges
+          }
+        });
+      }
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH) {
         var message = node["void"] ? "Replace backslash with slash." : "Delete this.";
