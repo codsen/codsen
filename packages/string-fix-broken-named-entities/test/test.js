@@ -2539,7 +2539,7 @@ test(`10.024 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${
 
 // decode on
 
-test(`11.001 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, decode within ASCII range - A`, t => {
+test(`11.001 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode within ASCII range - A`, t => {
   const inp1 = "&#65;";
   t.deepEqual(
     fix(inp1, {
@@ -2560,7 +2560,7 @@ test(`11.001 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   );
 });
 
-test(`11.002 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, decode outside ASCII range - pound`, t => {
+test(`11.002 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, t => {
   const inp1 = "&#163;";
   t.deepEqual(
     fix(inp1, {
@@ -2581,7 +2581,7 @@ test(`11.002 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   );
 });
 
-test(`11.003 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, decode outside ASCII range - non-existing number`, t => {
+test(`11.003 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - non-existing number`, t => {
   const inp1 = "&#99999999999999999;";
   t.deepEqual(
     fix(inp1, {
@@ -2604,7 +2604,7 @@ test(`11.003 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
 
 // decode off
 
-test(`11.004 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, no decode, within ASCII range - A`, t => {
+test(`11.004 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, within ASCII range - A`, t => {
   const inp1 = "&#65;";
   t.deepEqual(
     fix(inp1, {
@@ -2616,7 +2616,7 @@ test(`11.004 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   );
 });
 
-test(`11.005 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, no decode, outside ASCII range - pound`, t => {
+test(`11.005 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - pound`, t => {
   const inp1 = "&#163;";
   t.deepEqual(
     fix(inp1, {
@@ -2628,7 +2628,7 @@ test(`11.005 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   );
 });
 
-test(`11.006 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - pound, no decode, outside ASCII range - non-existing number`, t => {
+test(`11.006 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - non-existing number`, t => {
   const inp1 = "&#99999999999999999;";
   t.deepEqual(
     fix(inp1, {
@@ -2699,7 +2699,7 @@ test(`11.008 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[
   t.deepEqual(fix(inp1, { decode: true }), [[15, 21, "\xA3"]], "11.008.03");
 });
 
-test(`11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - pound, decode outside ASCII range - pound`, t => {
+test(`11.009 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, t => {
   const inp1 = "&#xA3;";
   t.deepEqual(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "11.009.01");
   t.deepEqual(
