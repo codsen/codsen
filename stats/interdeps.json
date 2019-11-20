@@ -137,14 +137,14 @@
     },
     {
         "name": "chlu-cli",
-        "size": 2604,
+        "size": 2678,
         "imports": [
             "chlu"
         ]
     },
     {
         "name": "codsen-tokenizer",
-        "size": 10034,
+        "size": 12245,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -160,7 +160,7 @@
     },
     {
         "name": "csv-sort-cli",
-        "size": 9345,
+        "size": 8957,
         "imports": [
             "csv-sort"
         ]
@@ -238,10 +238,11 @@
     },
     {
         "name": "emlint",
-        "size": 85443,
+        "size": 91272,
         "imports": [
             "ast-deep-contains",
             "codsen-tokenizer",
+            "string-fix-broken-named-entities",
             "string-left-right"
         ]
     },
@@ -255,7 +256,7 @@
     },
     {
         "name": "generate-atomic-css-cli",
-        "size": 4543,
+        "size": 4520,
         "imports": [
             "generate-atomic-css"
         ]
@@ -311,7 +312,7 @@
     },
     {
         "name": "js-row-num-cli",
-        "size": 5285,
+        "size": 5333,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
@@ -319,7 +320,7 @@
     },
     {
         "name": "json-comb",
-        "size": 6547,
+        "size": 6683,
         "imports": [
             "json-comb-core"
         ]
@@ -337,7 +338,7 @@
     },
     {
         "name": "json-sort-cli",
-        "size": 15210,
+        "size": 15776,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -477,7 +478,7 @@
     },
     {
         "name": "ranges-process-outside",
-        "size": 2413,
+        "size": 2414,
         "imports": [
             "ranges-crop",
             "ranges-invert"

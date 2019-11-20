@@ -80,7 +80,7 @@
         "lodash.without": 1,
         "log-symbols": 2,
         "log-update": 1,
-        "matcher": 9,
+        "matcher": 10,
         "meow": 12,
         "object-all-values-equal-to": 1,
         "object-delete-key": 1,
@@ -123,7 +123,7 @@
         "string-collapse-white-space": 1,
         "string-extract-class-names": 1,
         "string-find-heads-tails": 1,
-        "string-fix-broken-named-entities": 1,
+        "string-fix-broken-named-entities": 2,
         "string-left-right": 12,
         "string-match-left-right": 9,
         "string-range-expander": 3,
@@ -216,7 +216,7 @@
             "update-notifier": 12
         },
         {
-            "matcher": 9
+            "matcher": 10
         },
         {
             "fs-extra": 9

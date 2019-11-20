@@ -71,8 +71,8 @@ test("01.02 - sorts a file", async t => {
 
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
 
   // 2. write CSV, process it and read the new file
