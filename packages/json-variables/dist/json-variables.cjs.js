@@ -1,6 +1,6 @@
 /**
  * json-variables
- * Preprocessor for JSON to allow keys referencing keys
+ * It's like SASS variables, but for JSON
  * Version: 8.0.44
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
