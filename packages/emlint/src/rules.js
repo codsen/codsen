@@ -7,6 +7,7 @@
 import defineLazyProp from "define-lazy-prop";
 import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
+import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import clone from "lodash.clonedeep";
 const builtInRules = {};
 
@@ -815,7 +816,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `818 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `819 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -834,14 +835,19 @@ function normaliseRequestedRules(opts) {
       res[ruleName] = opts["tag"];
     });
   }
+  if (Object.keys(opts).includes("bad-html-entity")) {
+    allBadNamedHTMLEntityRules.forEach(ruleName => {
+      res[ruleName] = opts["bad-html-entity"];
+    });
+  }
   // then, a-la Object.assign the rest
   Object.keys(opts).forEach(ruleName => {
-    if (!["tag", "bad-character"].includes(ruleName)) {
+    if (!["tag", "bad-character", "bad-html-entity"].includes(ruleName)) {
       res[ruleName] = clone(opts[ruleName]);
     }
   });
   // console.log(
-  //   `844 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `850 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
   //     res,
   //     null,
   //     4

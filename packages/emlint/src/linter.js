@@ -2,6 +2,8 @@ import tokenizer from "codsen-tokenizer";
 import { get, normaliseRequestedRules } from "./rules.js";
 import EventEmitter from "events";
 import lineColumn from "line-column";
+import stringFixBrokenNamedEntities from "string-fix-broken-named-entities";
+import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 
 class Linter extends EventEmitter {
   verify(str, config) {
@@ -10,7 +12,7 @@ class Linter extends EventEmitter {
     this.config = config;
 
     console.log(
-      `013 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
+      `015 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
         config,
         null,
         4
@@ -48,7 +50,7 @@ class Linter extends EventEmitter {
     // tokenizer emits
     const processedRulesConfig = normaliseRequestedRules(config.rules);
     console.log(
-      `051 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
+      `053 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
         processedRulesConfig,
         null,
         4
@@ -57,6 +59,9 @@ class Linter extends EventEmitter {
     this.processedRulesConfig = processedRulesConfig;
 
     Object.keys(processedRulesConfig)
+      // filter out the rules coming from external packages:
+      .filter(ruleName => !allBadNamedHTMLEntityRules.includes(ruleName))
+      // filter out enabled rules:
       .filter(ruleName => {
         // same config like in ESLint - 0 is off, 1 is warning, 2 is error
         if (typeof processedRulesConfig[ruleName] === "number") {
@@ -67,7 +72,7 @@ class Linter extends EventEmitter {
       })
       .forEach(rule => {
         console.log(
-          `070 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
+          `075 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
         );
         // extract all the options, second array element onwards - length is undertermined
         let rulesFunction;
@@ -87,7 +92,7 @@ class Linter extends EventEmitter {
         Object.keys(rulesFunction).forEach(consumedNode => {
           this.on(consumedNode, (...args) => {
             console.log(
-              `090 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
+              `095 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
                 consumedNode,
                 null,
                 4
@@ -103,36 +108,57 @@ class Linter extends EventEmitter {
       str,
       obj => {
         // tag-level callback
-        console.log(
-          `116 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting tag obj ${JSON.stringify(
-            obj,
-            null,
-            4
-          )}`
-        );
+        // console.log(
+        //   `112 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting tag obj ${JSON.stringify(
+        //     obj,
+        //     null,
+        //     4
+        //   )}`
+        // );
         this.emit(obj.type, obj);
       },
       obj => {
         // character-level callback
-        console.log(
-          `127 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting char obj ${JSON.stringify(
-            obj,
-            null,
-            4
-          )}`
-        );
+        // console.log(
+        //   `123 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting char obj ${JSON.stringify(
+        //     obj,
+        //     null,
+        //     4
+        //   )}`
+        // );
         this.emit("character", obj);
       }
     );
+
+    // rules coming from standalone packages
+    if (
+      Object.keys(processedRulesConfig).some(ruleName =>
+        ruleName.startsWith("bad-named-html-entity-")
+      )
+    ) {
+      // call stringFixBrokenNamedEntities()
+      stringFixBrokenNamedEntities(str, {
+        cb: obj => {
+          console.log(
+            `143 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              obj,
+              null,
+              4
+            )}`
+          );
+        }
+      });
+    }
+
     console.log(
-      `137 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
+      `154 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
     );
     return this.messages;
   }
 
   report(obj) {
     console.log(
-      `144 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+      `161 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
         obj,
         null,
         4
@@ -142,7 +168,7 @@ class Linter extends EventEmitter {
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity;
     console.log(
-      `154 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `171 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -154,7 +180,7 @@ class Linter extends EventEmitter {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `166 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `183 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(

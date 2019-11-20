@@ -30,3 +30,17 @@ fs.writeFileSync(
   path.resolve("src/rules/all-tag.json"),
   JSON.stringify(allTagRules.sort(), null, 2)
 );
+
+// bake the "all-bad-named-html-entity" rules list JSON:
+// since rules come from standalone npm package, "string-fix-broken-named-entities",
+// rules source is embedded into linter.js and we'll have to use unit test
+// files to extract the list automatically:
+
+const allBadNamedHTMLEntityRules = fs
+  .readdirSync(path.resolve("test/rules/bad-html-entity/"))
+  .map(val => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-bad-named-html-entity.json"),
+  JSON.stringify(allBadNamedHTMLEntityRules.sort(), null, 2)
+);
