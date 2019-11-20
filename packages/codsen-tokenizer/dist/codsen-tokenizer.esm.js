@@ -379,6 +379,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }
     if (charCb) {
       pingCharCb({
+        type: token.type,
         chr: str[i],
         i
       });
