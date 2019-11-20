@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.7.2",
+  "version": "5.7.3",
   "description": "a tool to prepare text for pasting into HTML",
   "license": "MIT",
   "engines": {
@@ -153,7 +153,7 @@
     "ranges-push": "^3.6.9",
     "string-apostrophes": "^1.2.5",
     "string-collapse-white-space": "^5.2.4",
-    "string-fix-broken-named-entities": "^2.4.13",
+    "string-fix-broken-named-entities": "^2.4.14",
     "string-left-right": "^2.3.9",
     "string-range-expander": "^1.10.49",
     "string-remove-widows": "^1.5.5",
@@ -175,8 +175,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "is-ci": "^2.0.0",
-    "js-row-num-cli": "^1.6.6",
-    "lect": "^0.11.0",
+    "js-row-num-cli": "^1.6.7",
+    "lect": "^0.11.1",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^14.1.1",
     "object-boolean-combinations": "^2.11.48",

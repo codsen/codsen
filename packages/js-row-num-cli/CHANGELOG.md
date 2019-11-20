@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.7](https://gitlab.com/codsen/codsen/compare/js-row-num-cli@1.6.6...js-row-num-cli@1.6.7) (2019-11-20)
+
+
+### Bug Fixes
+
+* update to the latest meow v4 api - fixes aliases ([5a0a098](https://gitlab.com/codsen/codsen/commit/5a0a098a3dd372f6147750d161f4fea7f1f81ef4))
+
+
+
+
+
 ## 1.6.0 (2019-10-05)
 
 ### Features

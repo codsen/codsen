@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "1.1.32",
+  "version": "1.1.33",
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "engines": {
@@ -158,11 +158,11 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "html-crush": "^1.9.12",
-    "js-row-num-cli": "^1.6.6",
+    "js-row-num-cli": "^1.6.7",
     "json-stringify-safe": "^5.0.1",
-    "lect": "^0.11.0",
+    "lect": "^0.11.1",
     "nyc": "^14.1.1",
-    "object-delete-key": "^1.9.7",
+    "object-delete-key": "^1.9.8",
     "prettier": "^1.19.1",
     "rollup": "^1.27.2",
     "rollup-plugin-ascii": "^0.0.3",
