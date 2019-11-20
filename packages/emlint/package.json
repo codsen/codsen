@@ -151,8 +151,9 @@
     "define-lazy-prop": "^2.0.0",
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",
-    "string-left-right": "^2.3.9",
-    "string-fix-broken-named-entities": "^2.4.13"
+    "matcher": "^2.1.0",
+    "string-fix-broken-named-entities": "^2.4.13",
+    "string-left-right": "^2.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

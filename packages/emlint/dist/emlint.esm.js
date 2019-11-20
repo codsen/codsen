@@ -10,6 +10,7 @@
 import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
+import matcher from 'matcher';
 import { left, right } from 'string-left-right';
 import lineColumn from 'line-column';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
@@ -143,9 +144,6 @@ var allBadNamedHTMLEntityRules = [
 function badCharacterNull(context) {
   return {
     character: function({ chr, i }) {
-      console.log(
-        `011 ${`\u001b[${32}m${`bad-character-null.js`}\u001b[${39}m`}: inside the rule, chr = "${chr}"; i = ${i}`
-      );
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -2144,23 +2142,7 @@ function badCharacterIdeographicSpace(context) {
 function tagSpaceAfterOpeningBracket(context, ...opts) {
   return {
     html: function(node) {
-      console.log(`014 inside rule: node = ${JSON.stringify(node, null, 4)}`);
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      console.log(`016 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
-      console.log(
-        `019 ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
-          context.str[node.tagNameStartAt],
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `026 tagSpaceAfterOpeningBracket(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-          opts,
-          null,
-          4
-        )}`
-      );
       if (
         node.tagNameStartAt > node.start + 1 &&
         (!gapValue.trim().length ||
@@ -2173,10 +2155,6 @@ function tagSpaceAfterOpeningBracket(context, ...opts) {
               node.start + 1,
               node.start + 1 + gapValue.indexOf("/")
             ]);
-            console.log(
-              `046 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
-                1}, ${node.start + 1 + gapValue.indexOf("/")}]`
-            );
           }
           if (
             node.start + 1 + gapValue.indexOf("/") <
@@ -2186,32 +2164,13 @@ function tagSpaceAfterOpeningBracket(context, ...opts) {
               node.start + 1 + gapValue.indexOf("/") + 1,
               node.tagNameStartAt
             ]);
-            console.log(
-              `059 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
-                1 +
-                gapValue.indexOf("/") +
-                1}, ${node.tagNameStartAt}]`
-            );
           }
         } else {
           ranges.push([
             node.start + 1 + gapValue.indexOf("/") + 1,
             node.tagNameStartAt
           ]);
-          console.log(
-            `072 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${node.start +
-              1 +
-              gapValue.indexOf("/") +
-              1}, ${node.tagNameStartAt}]`
-          );
         }
-        console.log(
-          `079 tagSpaceAfterOpeningBracket(): ${JSON.stringify(
-            ranges,
-            null,
-            4
-          )}`
-        );
         context.report({
           ruleId: "tag-space-after-opening-bracket",
           message: "Bad whitespace.",
@@ -2227,33 +2186,11 @@ function tagSpaceAfterOpeningBracket(context, ...opts) {
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
     html: function(node) {
-      console.log(
-        `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
-      );
-      console.log(`019 inside rule: node = ${JSON.stringify(node, null, 4)}`);
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      console.log(`021 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
-      console.log(
-        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
-          context.str[node.tagNameStartAt],
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `031 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-          opts,
-          null,
-          4
-        )}`
-      );
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
-      console.log(
-        `045 tagSpaceBeforeClosingSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
-      );
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
       const leftOfSlashPos = left(context.str, slashPos);
@@ -2263,7 +2200,6 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         context.str[slashPos] === "/" &&
         leftOfSlashPos < slashPos - 1
       ) {
-        console.log(`058 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -2277,7 +2213,6 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         context.str[slashPos] === "/" &&
         leftOfSlashPos === slashPos - 1
       ) {
-        console.log(`072 space missing in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -2300,7 +2235,6 @@ function tagSpaceBetweenSlashAndBracket(context) {
         left(context.str, node.end - 1) < node.end - 2
       ) {
         const idxFrom = left(context.str, node.end - 1) + 1;
-        console.log(`025 whitespace present between slash and bracket!`);
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -2317,23 +2251,12 @@ const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
     html: function(node) {
-      console.log(
-        `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
-      );
-      console.log(
-        `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
-      );
       if (
         Number.isInteger(node.start) &&
         context.str[node.start] === "<" &&
         context.str[right(context.str, node.start)] === BACKSLASH &&
         Number.isInteger(node.tagNameStartAt)
       ) {
-        console.log(`044 backslash in front!`);
         const ranges = [[node.start + 1, node.tagNameStartAt]];
         context.report({
           ruleId: "tag-closing-backslash",
@@ -2354,17 +2277,6 @@ function tagClosingBackslash(context) {
         const backSlashPos = left(context.str, node.end - 1);
         let idxFrom = left(context.str, backSlashPos) + 1;
         let whatToInsert = node.void ? "/" : "";
-        console.log(
-          `079 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
-            idxFrom,
-            null,
-            4
-          )}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = ${JSON.stringify(
-            whatToInsert,
-            null,
-            4
-          )}`
-        );
         if (
           context.processedRulesConfig["tag-space-before-closing-slash"] &&
           ((Number.isInteger(
@@ -2383,9 +2295,6 @@ function tagClosingBackslash(context) {
               ][1] === "never"))
         ) {
           idxFrom = left(context.str, backSlashPos) + 1;
-          console.log(
-            `110 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
-          );
         }
         if (
           Array.isArray(
@@ -2398,29 +2307,13 @@ function tagClosingBackslash(context) {
         ) {
           idxFrom = left(context.str, backSlashPos) + 1;
           whatToInsert = ` ${whatToInsert}`;
-          console.log(
-            `128 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-          );
           if (node.void && context.str[idxFrom + 1] === " ") {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
-            console.log(
-              `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-            );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
-            console.log(
-              `141 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
-            );
           }
         }
-        console.log(
-          `147 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
-            idxFrom,
-            null,
-            4
-          )}`
-        );
         if (
           node.void &&
           Array.isArray(context.processedRulesConfig["tag-void-slash"]) &&
@@ -2447,21 +2340,14 @@ const BACKSLASH$1 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
     html: function(node) {
-      console.log(
-        `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
-      );
       let mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
-      console.log(
-        `024 tagVoidSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
-      );
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
       const leftOfSlashPos = left(context.str, slashPos);
       if (mode === "never" && node.void && context.str[slashPos] === "/") {
-        console.log(`036 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -2488,7 +2374,6 @@ function tagVoidSlash(context, ...opts) {
                   "always"))
           ))
       ) {
-        console.log(`064`);
         if (
           Array.isArray(
             context.processedRulesConfig["tag-space-before-closing-slash"]
@@ -2496,9 +2381,7 @@ function tagVoidSlash(context, ...opts) {
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
-          console.log(`075`);
           if (context.str[slashPos + 1] === " ") {
-            console.log(`080 add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2507,7 +2390,6 @@ function tagVoidSlash(context, ...opts) {
               fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] }
             });
           } else {
-            console.log(`090 add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2530,7 +2412,6 @@ function tagVoidSlash(context, ...opts) {
           ) &&
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
-          console.log(`114 add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
@@ -3098,24 +2979,51 @@ function get(something) {
 }
 function normaliseRequestedRules(opts) {
   const res = {};
-  if (Object.keys(opts).includes("bad-character")) {
+  if (
+    Object.keys(opts).some(ruleName =>
+      ["bad-character", "bad-character*", "bad-character-*"].includes(ruleName)
+    )
+  ) {
     allBadCharacterRules.forEach(ruleName => {
       res[ruleName] = opts["bad-character"];
     });
   }
-  if (Object.keys(opts).includes("tag")) {
+  if (
+    Object.keys(opts).some(ruleName =>
+      ["tag", "tag*", "tag-*"].includes(ruleName)
+    )
+  ) {
     allTagRules.forEach(ruleName => {
       res[ruleName] = opts["tag"];
     });
   }
-  if (Object.keys(opts).includes("bad-named-html-entity")) {
+  if (Object.keys(opts).includes("bad-html-entity")) {
     allBadNamedHTMLEntityRules.forEach(ruleName => {
-      res[ruleName] = opts["bad-named-html-entity"];
+      res[ruleName] = opts["bad-html-entity"];
     });
   }
   Object.keys(opts).forEach(ruleName => {
-    if (!["tag", "bad-character", "bad-named-html-entity"].includes(ruleName)) {
-      res[ruleName] = clone(opts[ruleName]);
+    if (
+      ![
+        "tag",
+        "tag*",
+        "tag-*",
+        "bad-character",
+        "bad-character",
+        "bad-character*",
+        "bad-character-*",
+        "bad-html-entity"
+      ].includes(ruleName)
+    ) {
+      if (Object.keys(builtInRules).includes(ruleName)) {
+        res[ruleName] = clone(opts[ruleName]);
+      } else if (ruleName.includes("*")) {
+        Object.keys(builtInRules).forEach(builtInRule => {
+          if (matcher.isMatch(builtInRule, ruleName)) {
+            res[builtInRule] = clone(opts[ruleName]);
+          }
+        });
+      }
     }
   });
   return res;
@@ -3497,13 +3405,6 @@ class Linter extends EventEmitter {
     this.messages = [];
     this.str = str;
     this.config = config;
-    console.log(
-      `015 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
-        config,
-        null,
-        4
-      )}`
-    );
     if (config) {
       if (typeof config !== "object") {
         throw new Error(
@@ -3528,16 +3429,22 @@ class Linter extends EventEmitter {
       return this.messages;
     }
     const processedRulesConfig = normaliseRequestedRules(config.rules);
-    console.log(
-      `053 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
-        processedRulesConfig,
-        null,
-        4
-      )}`
-    );
     this.processedRulesConfig = processedRulesConfig;
     Object.keys(processedRulesConfig)
-      .filter(ruleName => !allBadNamedHTMLEntityRules.includes(ruleName))
+      .filter(
+        ruleName =>
+          !allBadNamedHTMLEntityRules.includes(ruleName) &&
+          !ruleName.startsWith("bad-named-html-entity-") &&
+          (!ruleName.includes("*") ||
+            !matcher.isMatch(
+              [
+                "bad-malformed-numeric-character-entity",
+                "encoded-html-entity-nbsp",
+                "encoded-numeric-html-entity-reference"
+              ],
+              ruleName
+            ))
+      )
       .filter(ruleName => {
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
@@ -3546,9 +3453,6 @@ class Linter extends EventEmitter {
         }
       })
       .forEach(rule => {
-        console.log(
-          `075 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
-        );
         let rulesFunction;
         if (
           Array.isArray(processedRulesConfig[rule]) &&
@@ -3563,13 +3467,6 @@ class Linter extends EventEmitter {
         }
         Object.keys(rulesFunction).forEach(consumedNode => {
           this.on(consumedNode, (...args) => {
-            console.log(
-              `095 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
-                consumedNode,
-                null,
-                4
-              )}`
-            );
             rulesFunction[consumedNode](...args);
           });
         });
@@ -3584,67 +3481,77 @@ class Linter extends EventEmitter {
       }
     );
     if (
-      Object.keys(processedRulesConfig).some(ruleName =>
-        ruleName.startsWith("bad-named-html-entity-")
+      Object.keys(config.rules).some(
+        ruleName =>
+          ruleName === "bad-html-entity" ||
+          ruleName.startsWith("bad-named-html-entity") ||
+          matcher.isMatch(
+            [
+              "bad-malformed-numeric-character-entity",
+              "encoded-html-entity-nbsp",
+              "encoded-numeric-html-entity-reference"
+            ],
+            ruleName
+          )
       )
     ) {
       stringFixBrokenNamedEntities(str, {
         cb: obj => {
-          console.log(
-            `143 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-              obj,
-              null,
-              4
-            )}`
-          );
+          let matchedRulesName;
+          let severity;
+          if (Object.keys(config.rules).includes("bad-html-entity")) {
+            if (Array.isArray(config.rules["bad-html-entity"])) {
+              severity = config.rules["bad-html-entity"][0];
+            } else if (Number.isInteger(config.rules["bad-html-entity"])) {
+              severity = config.rules["bad-html-entity"];
+            }
+          } else if (
+            Object.keys(config.rules).some(rulesName => {
+              if (matcher.isMatch(obj.ruleName, rulesName)) {
+                matchedRulesName = rulesName;
+                return true;
+              }
+            })
+          ) {
+            if (Array.isArray(config.rules[matchedRulesName])) {
+              severity = config.rules[matchedRulesName][0];
+            } else if (Number.isInteger(config.rules[matchedRulesName])) {
+              severity = config.rules[matchedRulesName];
+            }
+          }
+          if (Number.isInteger(severity)) {
+            let message;
+            if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
+              message = "Malformed NBSP.";
+            }
+            this.report({
+              severity,
+              ruleId: obj.ruleName,
+              message,
+              idxFrom: obj.rangeFrom,
+              idxTo: obj.rangeTo,
+              fix: {
+                ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+              }
+            });
+          }
         }
       });
     }
-    console.log(
-      `154 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
-    );
     return this.messages;
   }
   report(obj) {
-    console.log(
-      `161 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
-        obj,
-        null,
-        4
-      )}`
-    );
     const { line, col } = lineColumn(this.str, obj.idxFrom);
-    let severity;
-    console.log(
-      `171 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
-        this.processedRulesConfig[obj.ruleId],
-        null,
-        4
-      )}`
-    );
-    if (typeof this.processedRulesConfig[obj.ruleId] === "number") {
+    let severity = obj.severity;
+    if (
+      !Number.isInteger(obj.severity) &&
+      typeof this.processedRulesConfig[obj.ruleId] === "number"
+    ) {
       severity = this.processedRulesConfig[obj.ruleId];
-    } else {
+    } else if (!Number.isInteger(obj.severity)) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
-    console.log(
-      `183 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
-        this.messages,
-        null,
-        4
-      )}`
-    );
     this.messages.push(Object.assign({}, { line, column: col, severity }, obj));
-    console.log(
-      `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
-        this.messages,
-        null,
-        4
-      )}`
-    );
   }
 }
 

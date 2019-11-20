@@ -16,6 +16,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var tokenizer = _interopDefault(require('codsen-tokenizer'));
 var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
 var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
@@ -254,7 +255,6 @@ function badCharacterNull(context) {
     character: function character(_ref) {
       var chr = _ref.chr,
           i = _ref.i;
-      console.log("011 ".concat("\x1B[".concat(32, "m", "bad-character-null.js", "\x1B[", 39, "m"), ": inside the rule, chr = \"", chr, "\"; i = ").concat(i));
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -2471,32 +2471,21 @@ function badCharacterIdeographicSpace(context) {
 }
 
 function tagSpaceAfterOpeningBracket(context) {
-  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    opts[_key - 1] = arguments[_key];
-  }
   return {
     html: function html(node) {
-      console.log("014 inside rule: node = ".concat(JSON.stringify(node, null, 4)));
       var gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      console.log("016 gapValue = ".concat(JSON.stringify(gapValue, null, 4)));
-      console.log("019 ".concat("\x1B[".concat(33, "m", "context.str[".concat(node.tagNameStartAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(context.str[node.tagNameStartAt], null, 4)));
-      console.log("026 tagSpaceAfterOpeningBracket(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.tagNameStartAt > node.start + 1 && (!gapValue.trim().length || gapValue !== "/" && gapValue.trim() === "/")) {
         var ranges = [];
         if (gapValue.indexOf("/") !== -1) {
           if (node.start + 1 + gapValue.indexOf("/") > node.start + 1) {
             ranges.push([node.start + 1, node.start + 1 + gapValue.indexOf("/")]);
-            console.log("046 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", node.start + 1, ", ").concat(node.start + 1 + gapValue.indexOf("/"), "]"));
           }
           if (node.start + 1 + gapValue.indexOf("/") < node.tagNameStartAt - 1) {
             ranges.push([node.start + 1 + gapValue.indexOf("/") + 1, node.tagNameStartAt]);
-            console.log("059 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", node.start + 1 + gapValue.indexOf("/") + 1, ", ").concat(node.tagNameStartAt, "]"));
           }
         } else {
           ranges.push([node.start + 1 + gapValue.indexOf("/") + 1, node.tagNameStartAt]);
-          console.log("072 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", node.start + 1 + gapValue.indexOf("/") + 1, ", ").concat(node.tagNameStartAt, "]"));
         }
-        console.log("079 tagSpaceAfterOpeningBracket(): ".concat(JSON.stringify(ranges, null, 4)));
         context.report({
           ruleId: "tag-space-after-opening-bracket",
           message: "Bad whitespace.",
@@ -2517,22 +2506,15 @@ function tagSpaceBeforeClosingSlash(context) {
   }
   return {
     html: function html(node) {
-      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagSpaceBeforeClosingSlash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
-      console.log("019 inside rule: node = ".concat(JSON.stringify(node, null, 4)));
       var gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      console.log("021 gapValue = ".concat(JSON.stringify(gapValue, null, 4)));
-      console.log("024 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(33, "m", "context.str[".concat(node.tagNameStartAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(context.str[node.tagNameStartAt], null, 4)));
-      console.log("031 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       var mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
-      console.log("045 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(35, "m", "calculated mode", "\x1B[", 39, "m"), " = \"", mode, "\""));
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
       if (mode === "never" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
-        console.log("058 whitespace present in front of closing slash!");
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -2543,7 +2525,6 @@ function tagSpaceBeforeClosingSlash(context) {
           }
         });
       } else if (mode === "always" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
-        console.log("072 space missing in front of closing slash!");
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -2564,7 +2545,6 @@ function tagSpaceBetweenSlashAndBracket(context) {
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === "/" && stringLeftRight.left(context.str, node.end - 1) < node.end - 2) {
         var idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
-        console.log("025 whitespace present between slash and bracket!");
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -2583,10 +2563,7 @@ var BACKSLASH = "\\";
 function tagClosingBackslash(context) {
   return {
     html: function html(node) {
-      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagClosingBackslash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
-      console.log("".concat("\x1B[".concat(33, "m", "node", "\x1B[", 39, "m"), " = ", JSON.stringify(node, null, 4)));
       if (Number.isInteger(node.start) && context.str[node.start] === "<" && context.str[stringLeftRight.right(context.str, node.start)] === BACKSLASH && Number.isInteger(node.tagNameStartAt)) {
-        console.log("044 backslash in front!");
         var ranges = [[node.start + 1, node.tagNameStartAt]];
         context.report({
           ruleId: "tag-closing-backslash",
@@ -2604,25 +2581,19 @@ function tagClosingBackslash(context) {
         var backSlashPos = stringLeftRight.left(context.str, node.end - 1);
         var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
         var whatToInsert = node["void"] ? "/" : "";
-        console.log("079 ".concat("\x1B[".concat(35, "m", "initial", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", JSON.stringify(idxFrom, null, 4), "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(whatToInsert, null, 4)));
         if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
-          console.log("110 SET ".concat("\x1B[".concat(32, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom));
         }
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           whatToInsert = " ".concat(whatToInsert);
-          console.log("128 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom, "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"").concat(whatToInsert, "\""));
           if (node["void"] && context.str[idxFrom + 1] === " ") {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
-            console.log("136 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom, "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"").concat(whatToInsert, "\""));
           } else if (!node["void"]) {
             whatToInsert = whatToInsert.trim();
-            console.log("141 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"", whatToInsert, "\""));
           }
         }
-        console.log("147 ".concat("\x1B[".concat(32, "m", "FINAL", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", JSON.stringify(idxFrom, null, 4)));
         if (node["void"] && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
           whatToInsert = "";
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
@@ -2649,17 +2620,14 @@ function tagVoidSlash(context) {
   }
   return {
     html: function html(node) {
-      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagVoidSlash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
       var mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
-      console.log("024 tagVoidSlash(): ".concat("\x1B[".concat(35, "m", "calculated mode", "\x1B[", 39, "m"), " = \"", mode, "\""));
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
       if (mode === "never" && node["void"] && context.str[slashPos] === "/") {
-        console.log("036 whitespace present in front of closing slash!");
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -2671,11 +2639,8 @@ function tagVoidSlash(context) {
         });
       } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && (
       !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
-        console.log("064");
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
-          console.log("075");
           if (context.str[slashPos + 1] === " ") {
-            console.log("080 add slash only");
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2686,7 +2651,6 @@ function tagVoidSlash(context) {
               }
             });
           } else {
-            console.log("090 add space and slash");
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2698,7 +2662,6 @@ function tagVoidSlash(context) {
             });
           }
         } else if (context.processedRulesConfig["tag-space-before-closing-slash"] === undefined || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never" || Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0) {
-          console.log("114 add slash only");
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
@@ -3068,24 +3031,36 @@ function get(something) {
 }
 function normaliseRequestedRules(opts) {
   var res = {};
-  if (Object.keys(opts).includes("bad-character")) {
+  if (Object.keys(opts).some(function (ruleName) {
+    return ["bad-character", "bad-character*", "bad-character-*"].includes(ruleName);
+  })) {
     allBadCharacterRules.forEach(function (ruleName) {
       res[ruleName] = opts["bad-character"];
     });
   }
-  if (Object.keys(opts).includes("tag")) {
+  if (Object.keys(opts).some(function (ruleName) {
+    return ["tag", "tag*", "tag-*"].includes(ruleName);
+  })) {
     allTagRules.forEach(function (ruleName) {
       res[ruleName] = opts["tag"];
     });
   }
-  if (Object.keys(opts).includes("bad-named-html-entity")) {
+  if (Object.keys(opts).includes("bad-html-entity")) {
     allBadNamedHTMLEntityRules.forEach(function (ruleName) {
-      res[ruleName] = opts["bad-named-html-entity"];
+      res[ruleName] = opts["bad-html-entity"];
     });
   }
   Object.keys(opts).forEach(function (ruleName) {
-    if (!["tag", "bad-character", "bad-named-html-entity"].includes(ruleName)) {
-      res[ruleName] = clone(opts[ruleName]);
+    if (!["tag", "tag*", "tag-*", "bad-character", "bad-character", "bad-character*", "bad-character-*", "bad-html-entity"].includes(ruleName)) {
+      if (Object.keys(builtInRules).includes(ruleName)) {
+        res[ruleName] = clone(opts[ruleName]);
+      } else if (ruleName.includes("*")) {
+        Object.keys(builtInRules).forEach(function (builtInRule) {
+          if (matcher.isMatch(builtInRule, ruleName)) {
+            res[builtInRule] = clone(opts[ruleName]);
+          }
+        });
+      }
     }
   });
   return res;
@@ -3420,7 +3395,6 @@ function (_EventEmitter) {
       this.messages = [];
       this.str = str;
       this.config = config;
-      console.log("015 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": verify called for \"", str, "\" and ").concat(JSON.stringify(config, null, 4)));
       if (config) {
         if (_typeof(config) !== "object") {
           throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ".concat(_typeof(config), ". It's equal to:\n").concat(JSON.stringify(config, null, 4)));
@@ -3433,11 +3407,10 @@ function (_EventEmitter) {
         return this.messages;
       }
       var processedRulesConfig = normaliseRequestedRules(config.rules);
-      console.log("053 ".concat("\x1B[".concat(33, "m", "processedRulesConfig", "\x1B[", 39, "m"), " = ", JSON.stringify(processedRulesConfig, null, 4)));
       this.processedRulesConfig = processedRulesConfig;
       Object.keys(processedRulesConfig)
       .filter(function (ruleName) {
-        return !allBadNamedHTMLEntityRules.includes(ruleName);
+        return !allBadNamedHTMLEntityRules.includes(ruleName) && !ruleName.startsWith("bad-named-html-entity-") && (!ruleName.includes("*") || !matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName));
       })
       .filter(function (ruleName) {
         if (typeof processedRulesConfig[ruleName] === "number") {
@@ -3446,7 +3419,6 @@ function (_EventEmitter) {
           return processedRulesConfig[ruleName][0] > 0;
         }
       }).forEach(function (rule) {
-        console.log("075 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": filtering rule ", rule));
         var rulesFunction;
         if (Array.isArray(processedRulesConfig[rule]) && processedRulesConfig[rule].length > 1) {
           rulesFunction = get(rule).apply(void 0, [_this].concat(_toConsumableArray(processedRulesConfig[rule].slice(1))));
@@ -3456,7 +3428,6 @@ function (_EventEmitter) {
         Object.keys(rulesFunction).forEach(function (consumedNode) {
           _this.on(consumedNode, function () {
             var _rulesFunction;
-            console.log("095 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": ", "\x1B[".concat(33, "m", "consumedNode", "\x1B[", 39, "m"), " = ", JSON.stringify(consumedNode, null, 4)));
             (_rulesFunction = rulesFunction)[consumedNode].apply(_rulesFunction, arguments);
           });
         });
@@ -3466,40 +3437,70 @@ function (_EventEmitter) {
       }, function (obj) {
         _this.emit("character", obj);
       });
-      if (Object.keys(processedRulesConfig).some(function (ruleName) {
-        return ruleName.startsWith("bad-named-html-entity-");
+      if (Object.keys(config.rules).some(function (ruleName) {
+        return ruleName === "bad-html-entity" ||
+        ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName);
       })) {
         stringFixBrokenNamedEntities(str, {
           cb: function cb(obj) {
-            console.log("143 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": ", "\x1B[".concat(33, "m", "obj", "\x1B[", 39, "m"), " = ", JSON.stringify(obj, null, 4)));
+            var matchedRulesName;
+            var severity;
+            if (Object.keys(config.rules).includes("bad-html-entity")) {
+              if (Array.isArray(config.rules["bad-html-entity"])) {
+                severity = config.rules["bad-html-entity"][0];
+              } else if (Number.isInteger(config.rules["bad-html-entity"])) {
+                severity = config.rules["bad-html-entity"];
+              }
+            } else if (Object.keys(config.rules).some(function (rulesName) {
+              if (matcher.isMatch(obj.ruleName, rulesName)) {
+                matchedRulesName = rulesName;
+                return true;
+              }
+            })) {
+              if (Array.isArray(config.rules[matchedRulesName])) {
+                severity = config.rules[matchedRulesName][0];
+              } else if (Number.isInteger(config.rules[matchedRulesName])) {
+                severity = config.rules[matchedRulesName];
+              }
+            }
+            if (Number.isInteger(severity)) {
+              var message;
+              if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
+                message = "Malformed NBSP.";
+              }
+              _this.report({
+                severity: severity,
+                ruleId: obj.ruleName,
+                message: message,
+                idxFrom: obj.rangeFrom,
+                idxTo: obj.rangeTo,
+                fix: {
+                  ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+                }
+              });
+            }
           }
         });
       }
-      console.log("154 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": verify() final return is called."));
       return this.messages;
     }
   }, {
     key: "report",
     value: function report(obj) {
-      console.log("161 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": report() called with ", JSON.stringify(obj, null, 4)));
       var _lineColumn = lineColumn(this.str, obj.idxFrom),
           line = _lineColumn.line,
           col = _lineColumn.col;
-      var severity;
-      console.log("171 linter.js: ".concat("\x1B[".concat(33, "m", "this.processedRulesConfig[obj.ruleId]", "\x1B[", 39, "m"), " = ", JSON.stringify(this.processedRulesConfig[obj.ruleId], null, 4)));
-      if (typeof this.processedRulesConfig[obj.ruleId] === "number") {
+      var severity = obj.severity;
+      if (!Number.isInteger(obj.severity) && typeof this.processedRulesConfig[obj.ruleId] === "number") {
         severity = this.processedRulesConfig[obj.ruleId];
-      } else {
+      } else if (!Number.isInteger(obj.severity)) {
         severity = this.processedRulesConfig[obj.ruleId][0];
       }
-      console.log("183 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": line = ", line, "; column = ").concat(col));
-      console.log("".concat("\x1B[".concat(33, "m", "this.messages", "\x1B[", 39, "m"), " BEFORE: ", JSON.stringify(this.messages, null, 4)));
       this.messages.push(Object.assign({}, {
         line: line,
         column: col,
         severity: severity
       }, obj));
-      console.log("".concat("\x1B[".concat(33, "m", "this.messages", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(this.messages, null, 4)));
     }
   }]);
   return Linter;

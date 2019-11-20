@@ -4,6 +4,7 @@ import EventEmitter from "events";
 import lineColumn from "line-column";
 import stringFixBrokenNamedEntities from "string-fix-broken-named-entities";
 import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
+import matcher from "matcher";
 
 class Linter extends EventEmitter {
   verify(str, config) {
@@ -12,7 +13,7 @@ class Linter extends EventEmitter {
     this.config = config;
 
     console.log(
-      `015 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
+      `016 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
         config,
         null,
         4
@@ -50,7 +51,7 @@ class Linter extends EventEmitter {
     // tokenizer emits
     const processedRulesConfig = normaliseRequestedRules(config.rules);
     console.log(
-      `053 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
+      `054 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
         processedRulesConfig,
         null,
         4
@@ -59,8 +60,23 @@ class Linter extends EventEmitter {
     this.processedRulesConfig = processedRulesConfig;
 
     Object.keys(processedRulesConfig)
-      // filter out the rules coming from external packages:
-      .filter(ruleName => !allBadNamedHTMLEntityRules.includes(ruleName))
+      // filter out the rules coming from external packages - they'll be
+      // processed separately, in the callbacks coming out og external packages,
+      // see the section "rules coming from standalone packages".
+      .filter(
+        ruleName =>
+          !allBadNamedHTMLEntityRules.includes(ruleName) &&
+          !ruleName.startsWith("bad-named-html-entity-") &&
+          (!ruleName.includes("*") ||
+            !matcher.isMatch(
+              [
+                "bad-malformed-numeric-character-entity",
+                "encoded-html-entity-nbsp",
+                "encoded-numeric-html-entity-reference"
+              ],
+              ruleName
+            ))
+      )
       // filter out enabled rules:
       .filter(ruleName => {
         // same config like in ESLint - 0 is off, 1 is warning, 2 is error
@@ -72,7 +88,7 @@ class Linter extends EventEmitter {
       })
       .forEach(rule => {
         console.log(
-          `075 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
+          `091 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
         );
         // extract all the options, second array element onwards - length is undertermined
         let rulesFunction;
@@ -92,7 +108,7 @@ class Linter extends EventEmitter {
         Object.keys(rulesFunction).forEach(consumedNode => {
           this.on(consumedNode, (...args) => {
             console.log(
-              `095 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
+              `111 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
                 consumedNode,
                 null,
                 4
@@ -109,7 +125,7 @@ class Linter extends EventEmitter {
       obj => {
         // tag-level callback
         // console.log(
-        //   `112 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting tag obj ${JSON.stringify(
+        //   `128 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting tag obj ${JSON.stringify(
         //     obj,
         //     null,
         //     4
@@ -120,7 +136,7 @@ class Linter extends EventEmitter {
       obj => {
         // character-level callback
         // console.log(
-        //   `123 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting char obj ${JSON.stringify(
+        //   `139 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: emitting char obj ${JSON.stringify(
         //     obj,
         //     null,
         //     4
@@ -130,35 +146,115 @@ class Linter extends EventEmitter {
       }
     );
 
-    // rules coming from standalone packages
+    //
+    //
+    //
+    //
+    //
+    //
+    //                rules coming from standalone packages
+    //
+    //
+    //
+    //
+    //
+    //
+
+    // 1. if any of bad named HTML entity catcher rules is requested, run it
     if (
-      Object.keys(processedRulesConfig).some(ruleName =>
-        ruleName.startsWith("bad-named-html-entity-")
+      Object.keys(config.rules).some(
+        ruleName =>
+          ruleName === "bad-html-entity" || // group blanket setting
+          ruleName.startsWith("bad-named-html-entity") ||
+          matcher.isMatch(
+            [
+              "bad-malformed-numeric-character-entity",
+              "encoded-html-entity-nbsp",
+              "encoded-numeric-html-entity-reference"
+            ],
+            ruleName
+          )
       )
     ) {
-      // call stringFixBrokenNamedEntities()
+      console.log(`179 linter.js: call stringFixBrokenNamedEntities()`);
       stringFixBrokenNamedEntities(str, {
         cb: obj => {
           console.log(
-            `143 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+            `183 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
               obj,
               null,
               4
             )}`
           );
+          // evaluate, does the config have this emitted rule set and enabled
+          let matchedRulesName;
+
+          // A severity value can be under array's first element or as digit,
+          // plus rule itself might be group rule ("bad-html-entity") or
+          // mentioned directly.
+          // The plan is to try to extract severity various ways, later if it's
+          // set, then report the error.
+          let severity;
+
+          // rule is group, blanket rule
+          if (Object.keys(config.rules).includes("bad-html-entity")) {
+            if (Array.isArray(config.rules["bad-html-entity"])) {
+              severity = config.rules["bad-html-entity"][0];
+            } else if (Number.isInteger(config.rules["bad-html-entity"])) {
+              severity = config.rules["bad-html-entity"];
+            }
+          } else if (
+            Object.keys(config.rules).some(rulesName => {
+              console.log(
+                `${`\u001b[${36}m${`--- rulesName: ${rulesName}`}\u001b[${39}m`}`
+              );
+              if (matcher.isMatch(obj.ruleName, rulesName)) {
+                matchedRulesName = rulesName;
+                console.log(
+                  `${`\u001b[${36}m${`"${rulesName}" matched!`}\u001b[${39}m`}`
+                );
+
+                return true;
+              }
+            })
+          ) {
+            if (Array.isArray(config.rules[matchedRulesName])) {
+              severity = config.rules[matchedRulesName][0];
+            } else if (Number.isInteger(config.rules[matchedRulesName])) {
+              severity = config.rules[matchedRulesName];
+            }
+          }
+
+          if (Number.isInteger(severity)) {
+            let message;
+            if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
+              message = "Malformed NBSP.";
+            }
+
+            this.report({
+              severity,
+              ruleId: obj.ruleName,
+              message,
+              idxFrom: obj.rangeFrom,
+              idxTo: obj.rangeTo,
+              fix: {
+                ranges: [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]]
+              }
+            });
+          }
         }
       });
     }
 
     console.log(
-      `154 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
+      `250 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called.`
     );
     return this.messages;
   }
 
   report(obj) {
     console.log(
-      `161 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+      `257 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
         obj,
         null,
         4
@@ -166,21 +262,24 @@ class Linter extends EventEmitter {
     );
     // fill in other data points:
     const { line, col } = lineColumn(this.str, obj.idxFrom);
-    let severity;
+    let severity = obj.severity; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `171 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `267 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
       )}`
     );
-    if (typeof this.processedRulesConfig[obj.ruleId] === "number") {
+    if (
+      !Number.isInteger(obj.severity) &&
+      typeof this.processedRulesConfig[obj.ruleId] === "number"
+    ) {
       severity = this.processedRulesConfig[obj.ruleId];
-    } else {
+    } else if (!Number.isInteger(obj.severity)) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `183 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `282 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(

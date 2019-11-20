@@ -9,6 +9,7 @@ import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
 import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import clone from "lodash.clonedeep";
+import matcher from "matcher";
 const builtInRules = {};
 
 // CHARACTER-LEVEL rules
@@ -816,43 +817,83 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `819 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `820 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
   //   )}`
   // );
   const res = {};
-  // first, if there are group rules such as "bad-character", set
+  // first, if there are known group rules such as "bad-character", set
   // them as a foundation:
-  if (Object.keys(opts).includes("bad-character")) {
+  if (
+    Object.keys(opts).some(ruleName =>
+      ["bad-character", "bad-character*", "bad-character-*"].includes(ruleName)
+    )
+  ) {
     allBadCharacterRules.forEach(ruleName => {
       res[ruleName] = opts["bad-character"];
     });
   }
-  if (Object.keys(opts).includes("tag")) {
+  if (
+    Object.keys(opts).some(ruleName =>
+      ["tag", "tag*", "tag-*"].includes(ruleName)
+    )
+  ) {
     allTagRules.forEach(ruleName => {
       res[ruleName] = opts["tag"];
     });
   }
   if (Object.keys(opts).includes("bad-html-entity")) {
     allBadNamedHTMLEntityRules.forEach(ruleName => {
+      // whole group of rules, not necessarily starting with "bad-html-entity"
+      // will be added. Currently it's the list:
+      //  * bad-named-html-entity-malformed-nbsp
+      //  * bad-named-html-entity-malformed-*
+      //  * bad-named-html-entity-unrecognised
+      //  * bad-named-html-entity-multiple-encoding
+      //  * bad-malformed-numeric-character-entity
+      //  * encoded-html-entity-nbsp
+      //  * encoded-numeric-html-entity-reference
+
       res[ruleName] = opts["bad-html-entity"];
     });
   }
+
   // then, a-la Object.assign the rest
   Object.keys(opts).forEach(ruleName => {
-    if (!["tag", "bad-character", "bad-html-entity"].includes(ruleName)) {
-      res[ruleName] = clone(opts[ruleName]);
+    if (
+      ![
+        "tag",
+        "tag*",
+        "tag-*",
+        "bad-character",
+        "bad-character",
+        "bad-character*",
+        "bad-character-*",
+        "bad-html-entity"
+      ].includes(ruleName)
+    ) {
+      // now, it depends is an exact rule name is being queried or is it wildcard
+      if (Object.keys(builtInRules).includes(ruleName)) {
+        res[ruleName] = clone(opts[ruleName]);
+      } else if (ruleName.includes("*")) {
+        Object.keys(builtInRules).forEach(builtInRule => {
+          if (matcher.isMatch(builtInRule, ruleName)) {
+            res[builtInRule] = clone(opts[ruleName]);
+          }
+        });
+      }
+      // TODO - else clause error messaging - rule is configured but not available
     }
   });
-  // console.log(
-  //   `850 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-  //     res,
-  //     null,
-  //     4
-  //   )}`
-  // );
+  console.log(
+    `891 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      res,
+      null,
+      4
+    )}`
+  );
   return res;
 }
 

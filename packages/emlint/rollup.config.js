@@ -49,6 +49,8 @@ export default commandLineArgs => {
         "define-lazy-prop",
         "line-column",
         "lodash.clonedeep",
+        "matcher",
+        "string-fix-broken-named-entities",
         "string-left-right"
       ],
       plugins: [
@@ -72,6 +74,8 @@ export default commandLineArgs => {
         "define-lazy-prop",
         "line-column",
         "lodash.clonedeep",
+        "matcher",
+        "string-fix-broken-named-entities",
         "string-left-right"
       ],
       plugins: [
