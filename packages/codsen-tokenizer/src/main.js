@@ -45,7 +45,7 @@ const voidTags = [
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|`;
 
-function tokenizer(str, cb, originalOpts) {
+function tokenizer(str, tagCb, charCb, originalOpts) {
   //
   //
   //
@@ -70,10 +70,19 @@ function tokenizer(str, cb, originalOpts) {
       );
     }
   }
-  if (typeof cb !== "function") {
+  if (tagCb && typeof tagCb !== "function") {
     throw new Error(
-      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof cb}, equal to ${JSON.stringify(
-        cb,
+      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof tagCb}, equal to ${JSON.stringify(
+        tagCb,
+        null,
+        4
+      )}`
+    );
+  }
+  if (charCb && typeof charCb !== "function") {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_04] the second input argument, callback function, should be a function but it was given as type ${typeof charCb}, equal to ${JSON.stringify(
+        charCb,
         null,
         4
       )}`
@@ -81,7 +90,7 @@ function tokenizer(str, cb, originalOpts) {
   }
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
-      `codsen-tokenizer: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_05] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
         null,
         4
@@ -105,7 +114,7 @@ function tokenizer(str, cb, originalOpts) {
     typeof opts.reportProgressFunc !== "function"
   ) {
     throw new TypeError(
-      `codsen-tokenizer: [THROW_ID_05] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_06] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
         opts.reportProgressFunc,
         null,
         4
@@ -213,11 +222,22 @@ function tokenizer(str, cb, originalOpts) {
     }
   }
 
-  function pingcb(incomingToken) {
-    console.log(`217 PING cb() with ${JSON.stringify(incomingToken, null, 4)}`);
-    cb(clone(incomingToken));
-    // reset
-    tokenReset();
+  function pingCharCb(incomingToken) {
+    // no cloning, no reset
+    if (charCb) {
+      charCb(incomingToken);
+    }
+  }
+
+  function pingTagCb(incomingToken) {
+    if (tagCb) {
+      console.log(
+        `217 PING tagCb() with ${JSON.stringify(incomingToken, null, 4)}`
+      );
+      tagCb(clone(incomingToken));
+      // reset
+      tokenReset();
+    }
   }
 
   function dumpCurrentToken(token, i) {
@@ -244,7 +264,7 @@ function tokenizer(str, cb, originalOpts) {
           token.end
         }`
       );
-      pingcb(token);
+      pingTagCb(token);
       token.start = left(str, i) + 1;
       token.type = "text";
       console.log(
@@ -260,9 +280,9 @@ function tokenizer(str, cb, originalOpts) {
       console.log(
         `261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
           token.end
-        }; then PING CB()`
+        }; then PING tagCb()`
       );
-      pingcb(token);
+      pingTagCb(token);
     }
   }
 
@@ -358,7 +378,7 @@ function tokenizer(str, cb, originalOpts) {
       if (token.kind === "style") {
         styleStarts = true;
       }
-      // we need to retain the information after tag was dumped to cb() and wiped
+      // we need to retain the information after tag was dumped to tagCb() and wiped
       dumpCurrentToken(token, i);
     }
 
@@ -588,7 +608,7 @@ function tokenizer(str, cb, originalOpts) {
                 token.end
               }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
             );
-            pingcb(token);
+            pingTagCb(token);
 
             // consider <style> ...  EOL - nothing inside, whitespace leading to
             // end of the string
@@ -776,13 +796,30 @@ function tokenizer(str, cb, originalOpts) {
     //
     //
     //
+    // ping charCb
+    // -------------------------------------------------------------------------
+
+    if (charCb) {
+      pingCharCb({
+        chr: str[i],
+        i
+      });
+    }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     // catch end of the string
     // -------------------------------------------------------------------------
 
     // notice there's no "doNothing"
     if (!str[i + 1] && token.start !== null) {
       token.end = i + 1;
-      pingcb(token);
+      pingTagCb(token);
     }
 
     //

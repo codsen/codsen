@@ -61,7 +61,7 @@ var defaults = {
 };
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var espChars = "{}%-$_()*|";
-function tokenizer(str, cb, originalOpts) {
+function tokenizer(str, tagCb, charCb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
@@ -69,15 +69,18 @@ function tokenizer(str, cb, originalOpts) {
       throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (typeof cb !== "function") {
-    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ".concat(_typeof(cb), ", equal to ").concat(JSON.stringify(cb, null, 4)));
+  if (tagCb && typeof tagCb !== "function") {
+    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ".concat(_typeof(tagCb), ", equal to ").concat(JSON.stringify(tagCb, null, 4)));
+  }
+  if (charCb && typeof charCb !== "function") {
+    throw new Error("codsen-tokenizer: [THROW_ID_04] the second input argument, callback function, should be a function but it was given as type ".concat(_typeof(charCb), ", equal to ").concat(JSON.stringify(charCb, null, 4)));
   }
   if (originalOpts && !isObj(originalOpts)) {
-    throw new Error("codsen-tokenizer: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
+    throw new Error("codsen-tokenizer: [THROW_ID_05] the third input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var opts = Object.assign({}, defaults, originalOpts);
   if (opts.reportProgressFunc && typeof opts.reportProgressFunc !== "function") {
-    throw new TypeError("codsen-tokenizer: [THROW_ID_05] opts.reportProgressFunc should be a function but it was given as :\n".concat(JSON.stringify(opts.reportProgressFunc, null, 4), " (").concat(_typeof(opts.reportProgressFunc), ")"));
+    throw new TypeError("codsen-tokenizer: [THROW_ID_06] opts.reportProgressFunc should be a function but it was given as :\n".concat(JSON.stringify(opts.reportProgressFunc, null, 4), " (").concat(_typeof(opts.reportProgressFunc), ")"));
   }
   var currentPercentageDone;
   var lastPercentage = 0;
@@ -121,20 +124,27 @@ function tokenizer(str, cb, originalOpts) {
       });
     }
   }
-  function pingcb(incomingToken) {
-    cb(clone(incomingToken));
-    tokenReset();
+  function pingCharCb(incomingToken) {
+    if (charCb) {
+      charCb(incomingToken);
+    }
+  }
+  function pingTagCb(incomingToken) {
+    if (tagCb) {
+      tagCb(clone(incomingToken));
+      tokenReset();
+    }
   }
   function dumpCurrentToken(token, i) {
     if (token.type !== "text" && token.start !== null && str[i - 1] && !str[i - 1].trim().length) {
       token.end = stringLeftRight.left(str, i) + 1;
-      pingcb(token);
+      pingTagCb(token);
       token.start = stringLeftRight.left(str, i) + 1;
       token.type = "text";
     }
     if (token.start !== null) {
       token.end = i;
-      pingcb(token);
+      pingTagCb(token);
     }
   }
   function initHtmlToken() {
@@ -239,7 +249,7 @@ function tokenizer(str, cb, originalOpts) {
             token.start = i;
             token.type = "text";
             token.end = stringLeftRight.right(str, i) || str.length;
-            pingcb(token);
+            pingTagCb(token);
             if (stringLeftRight.right(str, i)) {
               token.start = stringLeftRight.right(str, i);
               token.type = "css";
@@ -290,9 +300,15 @@ function tokenizer(str, cb, originalOpts) {
         }
       }
     }
+    if (charCb) {
+      pingCharCb({
+        chr: str[i],
+        i: i
+      });
+    }
     if (!str[i + 1] && token.start !== null) {
       token.end = i + 1;
-      pingcb(token);
+      pingTagCb(token);
     }
   }
 }

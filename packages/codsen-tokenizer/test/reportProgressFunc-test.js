@@ -11,6 +11,7 @@ test(`01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null
     token => {
       gathered.push(token);
     },
+    null,
     { reportProgressFunc: null }
   );
   deepContains(
@@ -34,6 +35,7 @@ test(`01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - fals
     token => {
       gathered.push(token);
     },
+    null,
     { reportProgressFunc: false }
   );
   deepContains(
@@ -63,6 +65,7 @@ test(`01.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - shor
       token => {
         gathered.push(token);
       },
+      null,
       { reportProgressFunc: shouldveBeenCalled }
     );
   });
@@ -83,6 +86,7 @@ test(`01.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - long
     ct(
       `aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50),
       () => {},
+      null,
       { reportProgressFunc: countingFunction }
     )
   );
@@ -101,6 +105,7 @@ test(`01.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - cust
     ct(
       `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20),
       () => {},
+      null,
       {
         reportProgressFunc: shouldveBeenCalled,
         reportProgressFuncFrom: 21,
@@ -127,6 +132,7 @@ test(`01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - cust
         50
       ),
       () => {},
+      null,
       {
         reportProgressFunc: countingFunction,
         reportProgressFuncFrom: 21,

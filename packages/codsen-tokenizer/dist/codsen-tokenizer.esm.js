@@ -63,7 +63,7 @@ const voidTags = [
   "wbr"
 ];
 const espChars = `{}%-$_()*|`;
-function tokenizer(str, cb, originalOpts) {
+function tokenizer(str, tagCb, charCb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
@@ -79,10 +79,19 @@ function tokenizer(str, cb, originalOpts) {
       );
     }
   }
-  if (typeof cb !== "function") {
+  if (tagCb && typeof tagCb !== "function") {
     throw new Error(
-      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof cb}, equal to ${JSON.stringify(
-        cb,
+      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof tagCb}, equal to ${JSON.stringify(
+        tagCb,
+        null,
+        4
+      )}`
+    );
+  }
+  if (charCb && typeof charCb !== "function") {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_04] the second input argument, callback function, should be a function but it was given as type ${typeof charCb}, equal to ${JSON.stringify(
+        charCb,
         null,
         4
       )}`
@@ -90,7 +99,7 @@ function tokenizer(str, cb, originalOpts) {
   }
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
-      `codsen-tokenizer: [THROW_ID_04] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_05] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
         null,
         4
@@ -103,7 +112,7 @@ function tokenizer(str, cb, originalOpts) {
     typeof opts.reportProgressFunc !== "function"
   ) {
     throw new TypeError(
-      `codsen-tokenizer: [THROW_ID_05] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_06] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
         opts.reportProgressFunc,
         null,
         4
@@ -152,9 +161,16 @@ function tokenizer(str, cb, originalOpts) {
         .every(char => wholeEspTagLump.includes(char));
     }
   }
-  function pingcb(incomingToken) {
-    cb(clone(incomingToken));
-    tokenReset();
+  function pingCharCb(incomingToken) {
+    if (charCb) {
+      charCb(incomingToken);
+    }
+  }
+  function pingTagCb(incomingToken) {
+    if (tagCb) {
+      tagCb(clone(incomingToken));
+      tokenReset();
+    }
   }
   function dumpCurrentToken(token, i) {
     if (
@@ -164,13 +180,13 @@ function tokenizer(str, cb, originalOpts) {
       !str[i - 1].trim().length
     ) {
       token.end = left(str, i) + 1;
-      pingcb(token);
+      pingTagCb(token);
       token.start = left(str, i) + 1;
       token.type = "text";
     }
     if (token.start !== null) {
       token.end = i;
-      pingcb(token);
+      pingTagCb(token);
     }
   }
   function initHtmlToken() {
@@ -296,7 +312,7 @@ function tokenizer(str, cb, originalOpts) {
             token.start = i;
             token.type = "text";
             token.end = right(str, i) || str.length;
-            pingcb(token);
+            pingTagCb(token);
             if (right(str, i)) {
               token.start = right(str, i);
               token.type = "css";
@@ -361,9 +377,15 @@ function tokenizer(str, cb, originalOpts) {
         }
       }
     }
+    if (charCb) {
+      pingCharCb({
+        chr: str[i],
+        i
+      });
+    }
     if (!str[i + 1] && token.start !== null) {
       token.end = i + 1;
-      pingcb(token);
+      pingTagCb(token);
     }
   }
 }
