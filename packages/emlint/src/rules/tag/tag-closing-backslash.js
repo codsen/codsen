@@ -41,7 +41,7 @@ function tagClosingBackslash(context) {
         context.str[right(context.str, node.start)] === BACKSLASH &&
         Number.isInteger(node.tagNameStartAt)
       ) {
-        console.log(`163 backslash in front!`);
+        console.log(`044 backslash in front!`);
         const ranges = [[node.start + 1, node.tagNameStartAt]];
 
         context.report({
@@ -76,7 +76,7 @@ function tagClosingBackslash(context) {
         let idxFrom = left(context.str, backSlashPos) + 1;
         let whatToInsert = node.void ? "/" : "";
         console.log(
-          `053 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `079 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
@@ -107,7 +107,7 @@ function tagClosingBackslash(context) {
           // include any and all the whitespace to the left as well
           idxFrom = left(context.str, backSlashPos) + 1;
           console.log(
-            `084 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
+            `110 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
           );
         }
 
@@ -125,7 +125,7 @@ function tagClosingBackslash(context) {
           idxFrom = left(context.str, backSlashPos) + 1;
           whatToInsert = ` ${whatToInsert}`;
           console.log(
-            `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            `128 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
           );
           // but if space is already present at the beginning of the range at
           // index left(context.str, backSlashPos) + 1, don't add one there
@@ -133,18 +133,18 @@ function tagClosingBackslash(context) {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
             console.log(
-              `110 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
             console.log(
-              `115 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `141 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           }
         }
 
         console.log(
-          `121 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `147 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
