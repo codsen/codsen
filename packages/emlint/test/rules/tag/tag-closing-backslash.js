@@ -843,13 +843,6 @@ test(`04.05 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no sl
     }
   });
   t.is(applyFixes(str, messages), "<br />");
-  console.log(
-    `${`\u001b[${33}m${`messages`}\u001b[${39}m`} = ${JSON.stringify(
-      messages,
-      null,
-      4
-    )}`
-  );
   deepContains(
     messages,
     [
@@ -1046,13 +1039,6 @@ test(`06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, t 
     }
   });
   t.is(applyFixes(str, messages), "<br/>");
-  console.log(
-    `${`\u001b[${33}m${`messages`}\u001b[${39}m`} = ${JSON.stringify(
-      messages,
-      null,
-      4
-    )}`
-  );
   deepContains(
     messages,
     [

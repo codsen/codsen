@@ -6,7 +6,7 @@
 
 function badCharacterStartOfText(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 2) {
         context.report({
           ruleId: "bad-character-start-of-text",

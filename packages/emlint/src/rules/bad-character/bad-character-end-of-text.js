@@ -6,7 +6,7 @@
 
 function badCharacterEndOfText(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",

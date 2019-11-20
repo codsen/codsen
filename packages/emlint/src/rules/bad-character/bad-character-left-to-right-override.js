@@ -6,7 +6,7 @@
 
 function badCharacterLeftToRightOverride(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8237) {
         context.report({
           ruleId: "bad-character-left-to-right-override",

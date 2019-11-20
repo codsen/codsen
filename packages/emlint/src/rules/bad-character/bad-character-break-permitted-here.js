@@ -6,7 +6,7 @@
 
 function badCharacterBreakPermittedHere(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 130) {
         context.report({
           ruleId: "bad-character-break-permitted-here",

@@ -6,7 +6,7 @@
 
 function badCharacterLineSeparator(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",

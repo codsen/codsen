@@ -6,7 +6,7 @@
 
 function badCharacterEnSpace(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8194) {
         context.report({
           ruleId: "bad-character-en-space",

@@ -6,7 +6,7 @@
 
 function badCharacterCharacterTabulationWithJustification(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 137) {
         context.report({
           ruleId: "bad-character-character-tabulation-with-justification",

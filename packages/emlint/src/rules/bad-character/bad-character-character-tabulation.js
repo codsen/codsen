@@ -6,7 +6,7 @@
 
 function badCharacterTabulation(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
         context.report({
           ruleId: "bad-character-character-tabulation",

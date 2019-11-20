@@ -6,7 +6,7 @@
 
 function badCharacterEndOfMedium(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 25) {
         context.report({
           ruleId: "bad-character-end-of-medium",

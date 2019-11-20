@@ -6,7 +6,7 @@
 
 function badCharacterOperatingSystemCommand(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 157) {
         context.report({
           ruleId: "bad-character-operating-system-command",

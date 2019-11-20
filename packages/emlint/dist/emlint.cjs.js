@@ -246,7 +246,9 @@ var allTagRules = [
 
 function badCharacterNull(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -264,7 +266,9 @@ function badCharacterNull(context) {
 
 function badCharacterStartOfHeading(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 1) {
         context.report({
           ruleId: "bad-character-start-of-heading",
@@ -282,7 +286,9 @@ function badCharacterStartOfHeading(context) {
 
 function badCharacterStartOfText(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 2) {
         context.report({
           ruleId: "bad-character-start-of-text",
@@ -300,7 +306,9 @@ function badCharacterStartOfText(context) {
 
 function badCharacterEndOfText(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",
@@ -318,7 +326,9 @@ function badCharacterEndOfText(context) {
 
 function badCharacterEndOfTransmission(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 4) {
         context.report({
           ruleId: "bad-character-end-of-transmission",
@@ -336,7 +346,9 @@ function badCharacterEndOfTransmission(context) {
 
 function badCharacterEnquiry(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 5) {
         context.report({
           ruleId: "bad-character-enquiry",
@@ -354,7 +366,9 @@ function badCharacterEnquiry(context) {
 
 function badCharacterAcknowledge(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 6) {
         context.report({
           ruleId: "bad-character-acknowledge",
@@ -372,7 +386,9 @@ function badCharacterAcknowledge(context) {
 
 function badCharacterBell(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 7) {
         context.report({
           ruleId: "bad-character-bell",
@@ -390,7 +406,9 @@ function badCharacterBell(context) {
 
 function badCharacterBackspace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8) {
         context.report({
           ruleId: "bad-character-backspace",
@@ -408,7 +426,9 @@ function badCharacterBackspace(context) {
 
 function badCharacterTabulation(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 9) {
         context.report({
           ruleId: "bad-character-character-tabulation",
@@ -426,7 +446,9 @@ function badCharacterTabulation(context) {
 
 function badCharacterLineTabulation(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 11) {
         context.report({
           ruleId: "bad-character-line-tabulation",
@@ -444,7 +466,9 @@ function badCharacterLineTabulation(context) {
 
 function badCharacterFormFeed(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 12) {
         context.report({
           ruleId: "bad-character-form-feed",
@@ -462,7 +486,9 @@ function badCharacterFormFeed(context) {
 
 function badCharacterShiftOut(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
@@ -480,7 +506,9 @@ function badCharacterShiftOut(context) {
 
 function badCharacterShiftIn(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 15) {
         context.report({
           ruleId: "bad-character-shift-in",
@@ -498,7 +526,9 @@ function badCharacterShiftIn(context) {
 
 function badCharacterDataLinkEscape(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 16) {
         context.report({
           ruleId: "bad-character-data-link-escape",
@@ -516,7 +546,9 @@ function badCharacterDataLinkEscape(context) {
 
 function badCharacterDeviceControlOne(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 17) {
         context.report({
           ruleId: "bad-character-device-control-one",
@@ -534,7 +566,9 @@ function badCharacterDeviceControlOne(context) {
 
 function badCharacterDeviceControlTwo(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 18) {
         context.report({
           ruleId: "bad-character-device-control-two",
@@ -552,7 +586,9 @@ function badCharacterDeviceControlTwo(context) {
 
 function badCharacterDeviceControlThree(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 19) {
         context.report({
           ruleId: "bad-character-device-control-three",
@@ -570,7 +606,9 @@ function badCharacterDeviceControlThree(context) {
 
 function badCharacterDeviceControlFour(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 20) {
         context.report({
           ruleId: "bad-character-device-control-four",
@@ -588,7 +626,9 @@ function badCharacterDeviceControlFour(context) {
 
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",
@@ -606,7 +646,9 @@ function badCharacterNegativeAcknowledge(context) {
 
 function badCharacterSynchronousIdle(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 22) {
         context.report({
           ruleId: "bad-character-synchronous-idle",
@@ -624,7 +666,9 @@ function badCharacterSynchronousIdle(context) {
 
 function badCharacterEndOfTransmissionBlock(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 23) {
         context.report({
           ruleId: "bad-character-end-of-transmission-block",
@@ -642,7 +686,9 @@ function badCharacterEndOfTransmissionBlock(context) {
 
 function badCharacterCancel(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 24) {
         context.report({
           ruleId: "bad-character-cancel",
@@ -660,7 +706,9 @@ function badCharacterCancel(context) {
 
 function badCharacterEndOfMedium(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 25) {
         context.report({
           ruleId: "bad-character-end-of-medium",
@@ -678,7 +726,9 @@ function badCharacterEndOfMedium(context) {
 
 function badCharacterSubstitute(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 26) {
         context.report({
           ruleId: "bad-character-substitute",
@@ -696,7 +746,9 @@ function badCharacterSubstitute(context) {
 
 function badCharacterEscape(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 27) {
         context.report({
           ruleId: "bad-character-escape",
@@ -714,7 +766,9 @@ function badCharacterEscape(context) {
 
 function badCharacterInformationSeparatorFour(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 28) {
         context.report({
           ruleId: "bad-character-information-separator-four",
@@ -732,7 +786,9 @@ function badCharacterInformationSeparatorFour(context) {
 
 function badCharacterInformationSeparatorThree(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 29) {
         context.report({
           ruleId: "bad-character-information-separator-three",
@@ -750,7 +806,9 @@ function badCharacterInformationSeparatorThree(context) {
 
 function badCharacterInformationSeparatorTwo(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 30) {
         context.report({
           ruleId: "bad-character-information-separator-two",
@@ -768,7 +826,9 @@ function badCharacterInformationSeparatorTwo(context) {
 
 function badCharacterInformationSeparatorTwo$1(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 31) {
         context.report({
           ruleId: "bad-character-information-separator-one",
@@ -786,7 +846,9 @@ function badCharacterInformationSeparatorTwo$1(context) {
 
 function badCharacterDelete(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 127) {
         context.report({
           ruleId: "bad-character-delete",
@@ -804,7 +866,9 @@ function badCharacterDelete(context) {
 
 function badCharacterControl0080(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 128) {
         context.report({
           ruleId: "bad-character-control-0080",
@@ -822,7 +886,9 @@ function badCharacterControl0080(context) {
 
 function badCharacterControl0081(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 129) {
         context.report({
           ruleId: "bad-character-control-0081",
@@ -840,7 +906,9 @@ function badCharacterControl0081(context) {
 
 function badCharacterBreakPermittedHere(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 130) {
         context.report({
           ruleId: "bad-character-break-permitted-here",
@@ -858,7 +926,9 @@ function badCharacterBreakPermittedHere(context) {
 
 function badCharacterNoBreakHere(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 131) {
         context.report({
           ruleId: "bad-character-no-break-here",
@@ -876,7 +946,9 @@ function badCharacterNoBreakHere(context) {
 
 function badCharacterControl0084(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 132) {
         context.report({
           ruleId: "bad-character-control-0084",
@@ -894,7 +966,9 @@ function badCharacterControl0084(context) {
 
 function badCharacterNextLine(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 133) {
         context.report({
           ruleId: "bad-character-next-line",
@@ -912,7 +986,9 @@ function badCharacterNextLine(context) {
 
 function badCharacterStartOfSelectedArea(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 134) {
         context.report({
           ruleId: "bad-character-start-of-selected-area",
@@ -930,7 +1006,9 @@ function badCharacterStartOfSelectedArea(context) {
 
 function badCharacterEndOfSelectedArea(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 135) {
         context.report({
           ruleId: "bad-character-end-of-selected-area",
@@ -948,7 +1026,9 @@ function badCharacterEndOfSelectedArea(context) {
 
 function badCharacterCharacterTabulationSet(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 136) {
         context.report({
           ruleId: "bad-character-character-tabulation-set",
@@ -966,7 +1046,9 @@ function badCharacterCharacterTabulationSet(context) {
 
 function badCharacterCharacterTabulationWithJustification(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 137) {
         context.report({
           ruleId: "bad-character-character-tabulation-with-justification",
@@ -984,7 +1066,9 @@ function badCharacterCharacterTabulationWithJustification(context) {
 
 function badCharacterLineTabulationSet(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 138) {
         context.report({
           ruleId: "bad-character-line-tabulation-set",
@@ -1002,7 +1086,9 @@ function badCharacterLineTabulationSet(context) {
 
 function badCharacterPartialLineForward(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 139) {
         context.report({
           ruleId: "bad-character-partial-line-forward",
@@ -1020,7 +1106,9 @@ function badCharacterPartialLineForward(context) {
 
 function badCharacterPartialLineBackward(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 140) {
         context.report({
           ruleId: "bad-character-partial-line-backward",
@@ -1038,7 +1126,9 @@ function badCharacterPartialLineBackward(context) {
 
 function badCharacterReverseLineFeed(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 141) {
         context.report({
           ruleId: "bad-character-reverse-line-feed",
@@ -1056,7 +1146,9 @@ function badCharacterReverseLineFeed(context) {
 
 function badCharacterSingleShiftTwo(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 142) {
         context.report({
           ruleId: "bad-character-single-shift-two",
@@ -1074,7 +1166,9 @@ function badCharacterSingleShiftTwo(context) {
 
 function badCharacterSingleShiftTwo$1(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 143) {
         context.report({
           ruleId: "bad-character-single-shift-three",
@@ -1092,7 +1186,9 @@ function badCharacterSingleShiftTwo$1(context) {
 
 function badCharacterDeviceControlString(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 144) {
         context.report({
           ruleId: "bad-character-device-control-string",
@@ -1110,7 +1206,9 @@ function badCharacterDeviceControlString(context) {
 
 function badCharacterPrivateUseOne(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 145) {
         context.report({
           ruleId: "bad-character-private-use-1",
@@ -1128,7 +1226,9 @@ function badCharacterPrivateUseOne(context) {
 
 function badCharacterPrivateUseTwo(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 146) {
         context.report({
           ruleId: "bad-character-private-use-2",
@@ -1146,7 +1246,9 @@ function badCharacterPrivateUseTwo(context) {
 
 function badCharacterSetTransmitState(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 147) {
         context.report({
           ruleId: "bad-character-set-transmit-state",
@@ -1164,7 +1266,9 @@ function badCharacterSetTransmitState(context) {
 
 function badCharacterCancelCharacter(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 148) {
         context.report({
           ruleId: "bad-character-cancel-character",
@@ -1182,7 +1286,9 @@ function badCharacterCancelCharacter(context) {
 
 function badCharacterMessageWaiting(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 149) {
         context.report({
           ruleId: "bad-character-message-waiting",
@@ -1200,7 +1306,9 @@ function badCharacterMessageWaiting(context) {
 
 function badCharacterStartOfProtectedArea(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 150) {
         context.report({
           ruleId: "bad-character-start-of-protected-area",
@@ -1218,7 +1326,9 @@ function badCharacterStartOfProtectedArea(context) {
 
 function badCharacterEndOfProtectedArea(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 151) {
         context.report({
           ruleId: "bad-character-end-of-protected-area",
@@ -1236,7 +1346,9 @@ function badCharacterEndOfProtectedArea(context) {
 
 function badCharacterStartOfString(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 152) {
         context.report({
           ruleId: "bad-character-start-of-string",
@@ -1254,7 +1366,9 @@ function badCharacterStartOfString(context) {
 
 function badCharacterControl0099(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 153) {
         context.report({
           ruleId: "bad-character-control-0099",
@@ -1272,7 +1386,9 @@ function badCharacterControl0099(context) {
 
 function badCharacterSingleCharacterIntroducer(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 154) {
         context.report({
           ruleId: "bad-character-single-character-introducer",
@@ -1290,7 +1406,9 @@ function badCharacterSingleCharacterIntroducer(context) {
 
 function badCharacterControlSequenceIntroducer(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 155) {
         context.report({
           ruleId: "bad-character-control-sequence-introducer",
@@ -1308,7 +1426,9 @@ function badCharacterControlSequenceIntroducer(context) {
 
 function badCharacterStringTerminator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 156) {
         context.report({
           ruleId: "bad-character-string-terminator",
@@ -1326,7 +1446,9 @@ function badCharacterStringTerminator(context) {
 
 function badCharacterOperatingSystemCommand(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 157) {
         context.report({
           ruleId: "bad-character-operating-system-command",
@@ -1344,7 +1466,9 @@ function badCharacterOperatingSystemCommand(context) {
 
 function badCharacterPrivateMessage(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 158) {
         context.report({
           ruleId: "bad-character-private-message",
@@ -1362,7 +1486,9 @@ function badCharacterPrivateMessage(context) {
 
 function badCharacterApplicationProgramCommand(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 159) {
         context.report({
           ruleId: "bad-character-application-program-command",
@@ -1380,7 +1506,9 @@ function badCharacterApplicationProgramCommand(context) {
 
 function badCharacterSoftHyphen(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 173) {
         context.report({
           ruleId: "bad-character-soft-hyphen",
@@ -1398,7 +1526,9 @@ function badCharacterSoftHyphen(context) {
 
 function badCharacterNonBreakingSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 160) {
         context.report({
           ruleId: "bad-character-non-breaking-space",
@@ -1416,7 +1546,9 @@ function badCharacterNonBreakingSpace(context) {
 
 function badCharacterOghamSpaceMark(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 5760) {
         context.report({
           ruleId: "bad-character-ogham-space-mark",
@@ -1434,7 +1566,9 @@ function badCharacterOghamSpaceMark(context) {
 
 function badCharacterEnQuad(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8192) {
         context.report({
           ruleId: "bad-character-en-quad",
@@ -1452,7 +1586,9 @@ function badCharacterEnQuad(context) {
 
 function badCharacterEmQuad(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8193) {
         context.report({
           ruleId: "bad-character-em-quad",
@@ -1470,7 +1606,9 @@ function badCharacterEmQuad(context) {
 
 function badCharacterEnSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8194) {
         context.report({
           ruleId: "bad-character-en-space",
@@ -1488,7 +1626,9 @@ function badCharacterEnSpace(context) {
 
 function badCharacterEmSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8195) {
         context.report({
           ruleId: "bad-character-em-space",
@@ -1506,7 +1646,9 @@ function badCharacterEmSpace(context) {
 
 function badCharacterThreePerEmSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8196) {
         context.report({
           ruleId: "bad-character-three-per-em-space",
@@ -1524,7 +1666,9 @@ function badCharacterThreePerEmSpace(context) {
 
 function badCharacterFourPerEmSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8197) {
         context.report({
           ruleId: "bad-character-four-per-em-space",
@@ -1542,7 +1686,9 @@ function badCharacterFourPerEmSpace(context) {
 
 function badCharacterSixPerEmSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8198) {
         context.report({
           ruleId: "bad-character-six-per-em-space",
@@ -1560,7 +1706,9 @@ function badCharacterSixPerEmSpace(context) {
 
 function badCharacterFigureSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8199) {
         context.report({
           ruleId: "bad-character-figure-space",
@@ -1578,7 +1726,9 @@ function badCharacterFigureSpace(context) {
 
 function badCharacterPunctuationSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8200) {
         context.report({
           ruleId: "bad-character-punctuation-space",
@@ -1596,7 +1746,9 @@ function badCharacterPunctuationSpace(context) {
 
 function badCharacterThinSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8201) {
         context.report({
           ruleId: "bad-character-thin-space",
@@ -1614,7 +1766,9 @@ function badCharacterThinSpace(context) {
 
 function badCharacterHairSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8202) {
         context.report({
           ruleId: "bad-character-hair-space",
@@ -1632,7 +1786,9 @@ function badCharacterHairSpace(context) {
 
 function badCharacterZeroWidthSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8203) {
         context.report({
           ruleId: "bad-character-zero-width-space",
@@ -1650,7 +1806,9 @@ function badCharacterZeroWidthSpace(context) {
 
 function badCharacterZeroWidthNonJoiner(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8204) {
         context.report({
           ruleId: "bad-character-zero-width-non-joiner",
@@ -1668,7 +1826,9 @@ function badCharacterZeroWidthNonJoiner(context) {
 
 function badCharacterZeroWidthJoiner(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8205) {
         context.report({
           ruleId: "bad-character-zero-width-joiner",
@@ -1686,7 +1846,9 @@ function badCharacterZeroWidthJoiner(context) {
 
 function badCharacterLeftToRightMark(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8206) {
         context.report({
           ruleId: "bad-character-left-to-right-mark",
@@ -1704,7 +1866,9 @@ function badCharacterLeftToRightMark(context) {
 
 function badCharacterRightToLeftMark(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8207) {
         context.report({
           ruleId: "bad-character-right-to-left-mark",
@@ -1722,7 +1886,9 @@ function badCharacterRightToLeftMark(context) {
 
 function badCharacterLeftToRightEmbedding(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8234) {
         context.report({
           ruleId: "bad-character-left-to-right-embedding",
@@ -1740,7 +1906,9 @@ function badCharacterLeftToRightEmbedding(context) {
 
 function badCharacterRightToLeftEmbedding(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8235) {
         context.report({
           ruleId: "bad-character-right-to-left-embedding",
@@ -1758,7 +1926,9 @@ function badCharacterRightToLeftEmbedding(context) {
 
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",
@@ -1776,7 +1946,9 @@ function badCharacterPopDirectionalFormatting(context) {
 
 function badCharacterLeftToRightOverride(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8237) {
         context.report({
           ruleId: "bad-character-left-to-right-override",
@@ -1794,7 +1966,9 @@ function badCharacterLeftToRightOverride(context) {
 
 function badCharacterRightToLeftOverride(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8238) {
         context.report({
           ruleId: "bad-character-right-to-left-override",
@@ -1812,7 +1986,9 @@ function badCharacterRightToLeftOverride(context) {
 
 function badCharacterWordJoiner(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8288) {
         context.report({
           ruleId: "bad-character-word-joiner",
@@ -1830,7 +2006,9 @@ function badCharacterWordJoiner(context) {
 
 function badCharacterFunctionApplication(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8289) {
         context.report({
           ruleId: "bad-character-function-application",
@@ -1848,7 +2026,9 @@ function badCharacterFunctionApplication(context) {
 
 function badCharacterInvisibleTimes(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8290) {
         context.report({
           ruleId: "bad-character-invisible-times",
@@ -1866,7 +2046,9 @@ function badCharacterInvisibleTimes(context) {
 
 function badCharacterInvisibleSeparator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8291) {
         context.report({
           ruleId: "bad-character-invisible-separator",
@@ -1884,7 +2066,9 @@ function badCharacterInvisibleSeparator(context) {
 
 function badCharacterInvisiblePlus(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8292) {
         context.report({
           ruleId: "bad-character-invisible-plus",
@@ -1902,7 +2086,9 @@ function badCharacterInvisiblePlus(context) {
 
 function badCharacterLeftToRightIsolate(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8294) {
         context.report({
           ruleId: "bad-character-left-to-right-isolate",
@@ -1920,7 +2106,9 @@ function badCharacterLeftToRightIsolate(context) {
 
 function badCharacterRightToLeftIsolate(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8295) {
         context.report({
           ruleId: "bad-character-right-to-left-isolate",
@@ -1938,7 +2126,9 @@ function badCharacterRightToLeftIsolate(context) {
 
 function badCharacterFirstStrongIsolate(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8296) {
         context.report({
           ruleId: "bad-character-first-strong-isolate",
@@ -1956,7 +2146,9 @@ function badCharacterFirstStrongIsolate(context) {
 
 function badCharacterPopDirectionalIsolate(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8297) {
         context.report({
           ruleId: "bad-character-pop-directional-isolate",
@@ -1974,7 +2166,9 @@ function badCharacterPopDirectionalIsolate(context) {
 
 function badCharacterInhibitSymmetricSwapping(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8298) {
         context.report({
           ruleId: "bad-character-inhibit-symmetric-swapping",
@@ -1992,7 +2186,9 @@ function badCharacterInhibitSymmetricSwapping(context) {
 
 function badCharacterActivateSymmetricSwapping(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8299) {
         context.report({
           ruleId: "bad-character-activate-symmetric-swapping",
@@ -2010,7 +2206,9 @@ function badCharacterActivateSymmetricSwapping(context) {
 
 function badCharacterInhibitArabicFormShaping(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8300) {
         context.report({
           ruleId: "bad-character-inhibit-arabic-form-shaping",
@@ -2028,7 +2226,9 @@ function badCharacterInhibitArabicFormShaping(context) {
 
 function badCharacterActivateArabicFormShaping(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8301) {
         context.report({
           ruleId: "bad-character-activate-arabic-form-shaping",
@@ -2046,7 +2246,9 @@ function badCharacterActivateArabicFormShaping(context) {
 
 function badCharacterNationalDigitShapes(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8302) {
         context.report({
           ruleId: "bad-character-national-digit-shapes",
@@ -2064,7 +2266,9 @@ function badCharacterNationalDigitShapes(context) {
 
 function badCharacterNominalDigitShapes(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8303) {
         context.report({
           ruleId: "bad-character-nominal-digit-shapes",
@@ -2082,7 +2286,9 @@ function badCharacterNominalDigitShapes(context) {
 
 function badCharacterZeroWidthNoBreakSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 65279) {
         context.report({
           ruleId: "bad-character-zero-width-no-break-space",
@@ -2100,7 +2306,9 @@ function badCharacterZeroWidthNoBreakSpace(context) {
 
 function badCharacterInterlinearAnnotationAnchor(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 65529) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-anchor",
@@ -2118,7 +2326,9 @@ function badCharacterInterlinearAnnotationAnchor(context) {
 
 function badCharacterInterlinearAnnotationSeparator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 65530) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-separator",
@@ -2136,7 +2346,9 @@ function badCharacterInterlinearAnnotationSeparator(context) {
 
 function badCharacterInterlinearAnnotationTerminator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 65531) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-terminator",
@@ -2154,7 +2366,9 @@ function badCharacterInterlinearAnnotationTerminator(context) {
 
 function badCharacterLineSeparator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",
@@ -2172,7 +2386,9 @@ function badCharacterLineSeparator(context) {
 
 function badCharacterParagraphSeparator(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8233) {
         context.report({
           ruleId: "bad-character-paragraph-separator",
@@ -2190,7 +2406,9 @@ function badCharacterParagraphSeparator(context) {
 
 function badCharacterNarrowNoBreakSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8239) {
         context.report({
           ruleId: "bad-character-narrow-no-break-space",
@@ -2208,7 +2426,9 @@ function badCharacterNarrowNoBreakSpace(context) {
 
 function badCharacterMediumMathematicalSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 8287) {
         context.report({
           ruleId: "bad-character-medium-mathematical-space",
@@ -2226,7 +2446,9 @@ function badCharacterMediumMathematicalSpace(context) {
 
 function badCharacterIdeographicSpace(context) {
   return {
-    character: function character(chr, i) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
       if (chr.charCodeAt(0) === 12288) {
         context.report({
           ruleId: "bad-character-ideographic-space",
@@ -3183,12 +3405,10 @@ function (_EventEmitter) {
           });
         });
       });
-      var len = str.length;
-      for (var i = 0; i < len; i++) {
-        this.emit("character", str[i], i);
-      }
       tokenizer(str, function (obj) {
         _this.emit(obj.type, obj);
+      }, function (obj) {
+        _this.emit("character", obj);
       });
       return this.messages;
     }

@@ -6,7 +6,7 @@
 
 function badCharacterDelete(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 127) {
         context.report({
           ruleId: "bad-character-delete",

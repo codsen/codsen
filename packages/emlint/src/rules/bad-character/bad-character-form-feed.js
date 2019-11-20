@@ -6,7 +6,7 @@
 
 function badCharacterFormFeed(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 12) {
         context.report({
           ruleId: "bad-character-form-feed",

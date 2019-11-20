@@ -6,7 +6,7 @@
 
 function badCharacterStartOfSelectedArea(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 134) {
         context.report({
           ruleId: "bad-character-start-of-selected-area",

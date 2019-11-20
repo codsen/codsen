@@ -6,7 +6,7 @@
 
 function badCharacterPrivateUseOne(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 145) {
         context.report({
           ruleId: "bad-character-private-use-1",

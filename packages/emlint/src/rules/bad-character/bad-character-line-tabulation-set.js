@@ -6,7 +6,7 @@
 
 function badCharacterLineTabulationSet(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 138) {
         context.report({
           ruleId: "bad-character-line-tabulation-set",

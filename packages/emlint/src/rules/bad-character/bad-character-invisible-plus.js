@@ -6,7 +6,7 @@
 
 function badCharacterInvisiblePlus(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8292) {
         context.report({
           ruleId: "bad-character-invisible-plus",

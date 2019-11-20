@@ -6,7 +6,7 @@
 
 function badCharacterEscape(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 27) {
         context.report({
           ruleId: "bad-character-escape",

@@ -6,7 +6,7 @@
 
 function badCharacterThreePerEmSpace(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8196) {
         context.report({
           ruleId: "bad-character-three-per-em-space",

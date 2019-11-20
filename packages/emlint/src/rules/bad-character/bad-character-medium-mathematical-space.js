@@ -6,7 +6,7 @@
 
 function badCharacterMediumMathematicalSpace(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8287) {
         context.report({
           ruleId: "bad-character-medium-mathematical-space",

@@ -6,7 +6,7 @@
 
 function badCharacterPunctuationSpace(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 8200) {
         context.report({
           ruleId: "bad-character-punctuation-space",

@@ -6,7 +6,7 @@
 
 function badCharacterDeviceControlTwo(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 18) {
         context.report({
           ruleId: "bad-character-device-control-two",

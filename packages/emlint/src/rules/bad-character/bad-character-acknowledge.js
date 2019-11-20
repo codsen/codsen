@@ -6,7 +6,7 @@
 
 function badCharacterAcknowledge(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 6) {
         context.report({
           ruleId: "bad-character-acknowledge",

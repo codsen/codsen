@@ -6,7 +6,7 @@
 
 function badCharacterStartOfProtectedArea(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 150) {
         context.report({
           ruleId: "bad-character-start-of-protected-area",

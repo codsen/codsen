@@ -6,7 +6,7 @@
 
 function badCharacterZeroWidthNoBreakSpace(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 65279) {
         context.report({
           ruleId: "bad-character-zero-width-no-break-space",

@@ -6,7 +6,7 @@
 
 function badCharacterEndOfTransmission(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 4) {
         context.report({
           ruleId: "bad-character-end-of-transmission",

@@ -6,7 +6,7 @@
 
 function badCharacterPartialLineForward(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 139) {
         context.report({
           ruleId: "bad-character-partial-line-forward",

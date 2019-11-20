@@ -6,7 +6,7 @@
 
 function badCharacterSingleCharacterIntroducer(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 154) {
         context.report({
           ruleId: "bad-character-single-character-introducer",

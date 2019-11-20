@@ -6,7 +6,7 @@
 
 function badCharacterInformationSeparatorTwo(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 31) {
         context.report({
           ruleId: "bad-character-information-separator-one",

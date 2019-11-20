@@ -6,7 +6,7 @@
 
 function badCharacterNull(context) {
   return {
-    character: function(chr, i) {
+    character: function({ chr, i }) {
       console.log(
         `011 ${`\u001b[${32}m${`bad-character-null.js`}\u001b[${39}m`}: inside the rule, chr = "${chr}"; i = ${i}`
       );
