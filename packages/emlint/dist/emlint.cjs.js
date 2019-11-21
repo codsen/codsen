@@ -247,7 +247,9 @@ var allTagRules = [
 ];
 
 var allBadNamedHTMLEntityRules = [
+	"bad-malformed-numeric-character-entity",
 	"bad-named-html-entity-malformed-nbsp",
+	"bad-named-html-entity-multiple-encoding",
 	"bad-named-html-entity-unrecognised"
 ];
 
@@ -3474,8 +3476,12 @@ function (_EventEmitter) {
                 message = "Malformed NBSP.";
               } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
                 message = "Unrecognised named entity.";
+              } else if (obj.ruleName === "bad-named-html-entity-multiple-encoding") {
+                message = "HTML entity encoding over and over.";
+              } else if (obj.ruleName === "bad-malformed-numeric-character-entity") {
+                message = "Malformed numeric entity.";
               }
-              var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]];
+              var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded ? obj.rangeValEncoded : ""]];
               if (obj.ruleName === "bad-named-html-entity-unrecognised") {
                 ranges = [];
               }

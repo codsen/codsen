@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 // rule: bad-named-html-entity-unrecognised
 // -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ import { applyFixes } from "../../../t-util/util";
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - group rule`, t => {
+test(`01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`, t => {
   const str = `abc&yo;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -39,7 +39,7 @@ test(`01.01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - group rule`, t => {
   );
 });
 
-test(`01.02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - exact rule, severity level 1`, t => {
+test(`01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`, t => {
   const str = `abc&yo;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -67,7 +67,7 @@ test(`01.02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - exact rule, severit
   );
 });
 
-test(`01.03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - exact rule, severity level 2`, t => {
+test(`01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`, t => {
   const str = `abc&yo;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -95,7 +95,7 @@ test(`01.03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - exact rule, severit
   );
 });
 
-test(`01.04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - rule by wildcard`, t => {
+test(`01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`, t => {
   const str = `abc&yo;def`;
   const linter = new Linter();
   const messages = linter.verify(str, {
