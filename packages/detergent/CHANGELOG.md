@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0](https://gitlab.com/codsen/codsen/compare/detergent@5.7.3...detergent@5.8.0) (2019-11-21)
+
+
+### Features
+
+* opts.cb ([17f232d](https://gitlab.com/codsen/codsen/commit/17f232df0ed6b05803a4da1da3cfd5278a5e6cab))
+
+
+
+
+
 ## 5.7.1 (2019-11-11)
 
 ### Bug Fixes

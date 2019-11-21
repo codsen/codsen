@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Generate Atomic CSS",
   "license": "MIT",
   "engines": {
@@ -132,7 +132,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-apply": "^3.0.41",
+    "ranges-apply": "^3.0.42",
     "split-lines": "^2.0.0",
     "string-left-right": "^2.3.9"
   },
@@ -150,7 +150,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.7",
+    "js-row-num-cli": "^1.6.8",
     "lect": "^0.11.1",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",

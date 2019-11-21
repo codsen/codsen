@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "1.4.31",
+  "version": "1.4.32",
   "description": "Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.",
   "license": "MIT",
   "engines": {
@@ -138,7 +138,7 @@
   "dependencies": {
     "check-types-mini": "^5.7.49",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.41",
+    "ranges-apply": "^3.0.42",
     "ranges-push": "^3.6.9",
     "string-unfancy": "^3.9.48"
   },
@@ -156,7 +156,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.7",
+    "js-row-num-cli": "^1.6.8",
     "lect": "^0.11.1",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
