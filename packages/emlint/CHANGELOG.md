@@ -3,23 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.3.0](https://gitlab.com/codsen/codsen/compare/emlint@2.2.0...emlint@2.3.0) (2019-11-21)
-
+## 2.3.0 (2019-11-21)
 
 ### Bug Fixes
 
-* when bad entity rules are disabled, they do not raise any issues ([6f06ce2](https://gitlab.com/codsen/codsen/commit/6f06ce2429d7cea4c49bd6523e2b2c9fbd6588a8))
-
+- when bad entity rules are disabled, they do not raise any issues ([6f06ce2](https://gitlab.com/codsen/codsen/commit/6f06ce2429d7cea4c49bd6523e2b2c9fbd6588a8))
 
 ### Features
 
-* "bad-malformed-numeric-character-entity" and "bad-named-html-entity-multiple-encoding" ([d071749](https://gitlab.com/codsen/codsen/commit/d07174976c1c080b101079286165c52bac8acb35))
-* add new rule, bad-named-html-entity-not-email-friendly ([0a72fdc](https://gitlab.com/codsen/codsen/commit/0a72fdc451ba051ce114de01e2e3de92da54094b))
-* improvements in malformed entity reporting rules ([d807a45](https://gitlab.com/codsen/codsen/commit/d807a45eba537a62d0296eae8e3626b615c9c1ac))
-
-
-
-
+- "bad-malformed-numeric-character-entity" and "bad-named-html-entity-multiple-encoding" ([d071749](https://gitlab.com/codsen/codsen/commit/d07174976c1c080b101079286165c52bac8acb35))
+- add new rule, bad-named-html-entity-not-email-friendly ([0a72fdc](https://gitlab.com/codsen/codsen/commit/0a72fdc451ba051ce114de01e2e3de92da54094b))
+- improvements in malformed entity reporting rules ([d807a45](https://gitlab.com/codsen/codsen/commit/d807a45eba537a62d0296eae8e3626b615c9c1ac))
 
 ## 2.2.0 (2019-11-20)
 
