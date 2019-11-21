@@ -36,7 +36,7 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function replaceSlicesArr(str, rangesArr, _progressFn) {
+function rangesApply(str, rangesArr, _progressFn) {
   var percentageDone = 0;
   var lastPercentageDone = 0;
   if (arguments.length === 0) {
@@ -132,4 +132,4 @@ function replaceSlicesArr(str, rangesArr, _progressFn) {
   return str;
 }
 
-module.exports = replaceSlicesArr;
+module.exports = rangesApply;
