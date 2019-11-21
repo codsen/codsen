@@ -7,6 +7,7 @@ import {
   version
 } from "../dist/detergent.esm";
 import { det, mixer, allCombinations } from "../t-util/util";
+import deepContains from "ast-deep-contains";
 
 import {
   // rawReplacementMark,
@@ -79,6 +80,37 @@ test(`00.05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, t 
   t.regex(version, /\d+\.\d+\.\d+/g);
 });
 
+test(`00.06 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`, t => {
+  const error2 = t.throws(() => {
+    det(t, 0, `zzz`, { cb: true });
+  });
+  t.regex(error2.message, /THROW_ID_03/gm);
+});
+
+test(`00.07 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - not throws when opts.cb is falsey`, t => {
+  // original function det1():
+  t.notThrows(() => {
+    det1(`zzz`, { cb: null });
+  });
+  t.notThrows(() => {
+    det1(`zzz`, { cb: false });
+  });
+  t.notThrows(() => {
+    det1(`zzz`, { cb: 0 });
+  });
+
+  // mixer det()
+  t.notThrows(() => {
+    det(t, 0, `zzz`, { cb: null });
+  });
+  t.notThrows(() => {
+    det(t, 0, `zzz`, { cb: false });
+  });
+  t.notThrows(() => {
+    det(t, 0, `zzz`, { cb: 0 });
+  });
+});
+
 // ==============================
 // 02. everything about line breaks
 // ==============================
@@ -118,7 +150,7 @@ test(`02.04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
 });
 
 test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, t => {
-  t.deepEqual(
+  deepContains(
     det(t, 0, `a<br/>b`, {
       useXHTML: true
     }),
@@ -139,7 +171,9 @@ test(`02.05 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacem
         stripHtml: true,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -381,7 +415,7 @@ test(`03.07 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
       JSON.stringify(opt, null, 0)
     );
   });
-  t.deepEqual(
+  deepContains(
     det1(`&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`, { convertEntities: 1 }),
     {
       res: "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
@@ -400,7 +434,9 @@ test(`03.07 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
         stripHtml: false,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -426,24 +462,29 @@ test(`03.09 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
       JSON.stringify(opt, null, 0)
     );
   });
-  t.deepEqual(det1(`&nbsp; a b`, { convertEntities: 0 }), {
-    res: `${rawNbsp} a b`,
-    applicableOpts: {
-      fixBrokenEntities: false,
-      removeWidows: false,
-      convertEntities: true,
-      convertDashes: false,
-      convertApostrophes: false,
-      replaceLineBreaks: false,
-      removeLineBreaks: false,
-      useXHTML: false,
-      dontEncodeNonLatin: false,
-      addMissingSpaces: false,
-      convertDotsToEllipsis: false,
-      stripHtml: false,
-      eol: false
-    }
-  });
+  deepContains(
+    det1(`&nbsp; a b`, { convertEntities: 0 }),
+    {
+      res: `${rawNbsp} a b`,
+      applicableOpts: {
+        fixBrokenEntities: false,
+        removeWidows: false,
+        convertEntities: true,
+        convertDashes: false,
+        convertApostrophes: false,
+        replaceLineBreaks: false,
+        removeLineBreaks: false,
+        useXHTML: false,
+        dontEncodeNonLatin: false,
+        addMissingSpaces: false,
+        convertDotsToEllipsis: false,
+        stripHtml: false,
+        eol: false
+      }
+    },
+    t.is,
+    t.fail
+  );
 });
 
 test(`03.10 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=off`, t => {
@@ -481,7 +522,7 @@ test(`03.12 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
     );
   });
 
-  t.deepEqual(
+  deepContains(
     det1(`    ${rawNbsp}     a     ${rawNbsp}           `, {
       convertEntities: 0
     }),
@@ -502,7 +543,9 @@ test(`03.12 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/lea
         stripHtml: false,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -710,7 +753,7 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
     }).applicableOpts.useXHTML
   );
 
-  t.deepEqual(
+  deepContains(
     det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
       removeLineBreaks: 1,
       removeWidows: 1,
@@ -733,7 +776,9 @@ test(`05.04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix s
         stripHtml: false,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -825,7 +870,7 @@ test(`06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - does
     );
   });
 
-  t.deepEqual(
+  deepContains(
     det1(
       "Greek: \u03A1\u03CC\u03B9\u03C3\u03C4\u03BF\u03BD \u03AE\u03C4\u03B1\u03BD \u03B5\u03B4\u03CE / Russian: \u0420\u043E\u0438\u0441\u0442\u043E\u043D / Japanese: \u30ED\u30A4\u30B9\u30C8\u30F3 / Chinese: \u7F85\u4F0A\u65AF\u9813 / Hebrew: \u05E8\u05D5\u05D9\u05E1\u05D8\u05D5\u05DF / Arabic: \u0631\u0648\u064A\u0633\u062A\u0648\u0646",
       {
@@ -851,7 +896,9 @@ test(`06.01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - does
         stripHtml: false,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -1288,14 +1335,14 @@ test(`09.01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, t 
     replaceLineBreaks: 0,
     stripHtml: 1
   }).forEach((opt, n) => {
-    t.deepEqual(
+    t.is(
       det(t, n, "z <ul><li>y", opt).res,
       "z\ny",
       JSON.stringify(opt, null, 0)
     );
   });
 
-  t.deepEqual(
+  deepContains(
     det1("z <ul><li>y", {
       removeLineBreaks: 0,
       removeWidows: 0,
@@ -1319,7 +1366,9 @@ test(`09.01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, t 
         stripHtml: true,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -1341,7 +1390,7 @@ test(`09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
     );
   });
 
-  t.deepEqual(
+  deepContains(
     det1(
       "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
       {
@@ -1367,7 +1416,9 @@ test(`09.02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spac
         stripHtml: true,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 
@@ -1568,7 +1619,7 @@ test(`10.09 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - greater than sign`, t
     t.is(det(t, n, `a > b`, opt).res, "a &gt; b", JSON.stringify(opt, null, 0));
   });
 
-  t.deepEqual(
+  deepContains(
     det1(`a > b`, {
       convertEntities: 1
     }),
@@ -1589,7 +1640,9 @@ test(`10.09 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - greater than sign`, t
         stripHtml: false,
         eol: false
       }
-    }
+    },
+    t.is,
+    t.fail
   );
 });
 

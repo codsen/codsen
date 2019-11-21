@@ -19,6 +19,7 @@ import processOutside from 'ranges-process-outside';
 import collapse from 'string-collapse-white-space';
 import trimSpaces from 'string-trim-spaces-only';
 import stripHtml from 'string-strip-html';
+import invertRanges from 'ranges-invert';
 import isObj from 'lodash.isplainobject';
 import rangesApply from 'ranges-apply';
 import ansiRegex from 'ansi-regex';
@@ -39,7 +40,8 @@ const defaultOpts = {
   stripHtml: true,
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
-  stripHtmlAddNewLine: ["li", "/ul"]
+  stripHtmlAddNewLine: ["li", "/ul"],
+  cb: null
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";
@@ -1394,6 +1396,19 @@ function det(str, inputOpts) {
       `detergent(): [THROW_ID_02] Options object must be a plain object, not ${typeof inputOpts}`
     );
   }
+  if (
+    isObj(inputOpts) &&
+    !!inputOpts.cb &&
+    typeof inputOpts.cb !== "function"
+  ) {
+    throw new Error(
+      `detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ${typeof inputOpts.cb} (value was given as:\n${JSON.stringify(
+        inputOpts.cb,
+        null,
+        0
+      )})`
+    );
+  }
   const opts = Object.assign({}, defaultOpts, inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
@@ -1524,6 +1539,40 @@ function det(str, inputOpts) {
     applicableOpts.fixBrokenEntities = true;
     if (opts.fixBrokenEntities) {
       str = rangesApply(str, entityFixes);
+    }
+  }
+  if (opts.cb) {
+    if (str.includes("<") || str.includes(">")) {
+      const outsideTagRanges = invertRanges(
+        stripHtml(str, {
+          cb: ({ tag, rangesArr }) => {
+            return rangesArr.push(
+              tag.lastOpeningBracketAt,
+              tag.lastClosingBracketAt + 1
+            );
+          },
+          skipHtmlDecoding: true,
+          returnRangesOnly: true
+        }),
+        str.length
+      ).reduce((accumRanges, currRange) => {
+        if (
+          str.slice(currRange[0], currRange[1]) !==
+          opts.cb(str.slice(currRange[0], currRange[1]))
+        ) {
+          return accumRanges.concat([
+            [
+              currRange[0],
+              currRange[1],
+              opts.cb(str.slice(currRange[0], currRange[1]))
+            ]
+          ]);
+        }
+        return accumRanges;
+      }, []);
+      str = rangesApply(str, outsideTagRanges);
+    } else {
+      str = opts.cb(str);
     }
   }
   if (str.includes("<") || str.includes(">")) {
@@ -1748,7 +1797,8 @@ function det(str, inputOpts) {
         brClosingBracketIndexesArr,
         state,
         applicableOpts,
-        endOfLine
+        endOfLine,
+        opts.cb
       ),
     true
   );

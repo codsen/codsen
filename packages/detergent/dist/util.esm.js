@@ -15,7 +15,8 @@ const defaultOpts = {
   stripHtml: true,
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
-  stripHtmlAddNewLine: ["li", "/ul"]
+  stripHtmlAddNewLine: ["li", "/ul"],
+  cb: null
 };
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";

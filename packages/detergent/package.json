@@ -124,6 +124,7 @@
         "label": ""
       },
       "devDependencies": [
+        "ast-deep-contains",
         "is-ci",
         "lodash.clonedeep",
         "object-boolean-combinations",
@@ -145,10 +146,12 @@
   "dependencies": {
     "all-named-html-entities": "^1.2.12",
     "ansi-regex": "^5.0.0",
+    "ast-deep-contains": "^1.0.1",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.9",
     "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.0.41",
+    "ranges-invert": "^2.1.26",
     "ranges-process-outside": "^2.2.10",
     "ranges-push": "^3.6.9",
     "string-apostrophes": "^1.2.5",
@@ -164,6 +167,7 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
+    "ast-deep-contains": "^1.0.1",
     "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",

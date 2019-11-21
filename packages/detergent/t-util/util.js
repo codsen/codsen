@@ -23,6 +23,7 @@ function mixer(ref) {
   delete preppedDefaults.stripHtmlButIgnoreTags;
   delete preppedDefaults.stripHtmlAddNewLine;
   delete preppedDefaults.eol;
+  delete preppedDefaults.cb;
 
   const res = obc(preppedDefaults, ref);
   // restore keys in stripHtmlButIgnoreTags:
@@ -65,6 +66,16 @@ function mixer(ref) {
       obj.eol = defaultOpts.eol;
     });
   }
+  // restore keys in cb:
+  if (ref && ref.cb) {
+    res.forEach(obj => {
+      obj.cb = ref.cb;
+    });
+  } else {
+    res.forEach(obj => {
+      obj.cb = defaultOpts.cb;
+    });
+  }
   return res;
 }
 
@@ -81,7 +92,9 @@ function det(t, n, src, opts = {}) {
     const resolvedOpts = Object.assign({}, exportedOptsObj, opts);
     const tempObj = {};
     Object.keys(resolvedOpts).forEach(key => {
-      if (!["stripHtmlButIgnoreTags", "stripHtmlAddNewLine"].includes(key)) {
+      if (
+        !["stripHtmlButIgnoreTags", "stripHtmlAddNewLine", "cb"].includes(key)
+      ) {
         tempObj[key] = !!resolvedOpts[key];
       }
     });
@@ -212,7 +225,7 @@ function det(t, n, src, opts = {}) {
             )}\n`
           );
         }
-      } else {
+      } else if (key !== "cb") {
         //
         //
         //                      IT'S NOT opts.eol

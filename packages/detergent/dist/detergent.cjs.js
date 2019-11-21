@@ -25,6 +25,7 @@ var processOutside = _interopDefault(require('ranges-process-outside'));
 var collapse = _interopDefault(require('string-collapse-white-space'));
 var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
 var stripHtml = _interopDefault(require('string-strip-html'));
+var invertRanges = _interopDefault(require('ranges-invert'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var rangesApply = _interopDefault(require('ranges-apply'));
 var ansiRegex = _interopDefault(require('ansi-regex'));
@@ -79,7 +80,8 @@ var defaultOpts = {
   stripHtml: true,
   eol: "lf",
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
-  stripHtmlAddNewLine: ["li", "/ul"]
+  stripHtmlAddNewLine: ["li", "/ul"],
+  cb: null
 };
 var leftSingleQuote = "\u2018";
 var rightSingleQuote = "\u2019";
@@ -717,6 +719,9 @@ function det(str, inputOpts) {
   if (inputOpts && !isObj(inputOpts)) {
     throw new Error("detergent(): [THROW_ID_02] Options object must be a plain object, not ".concat(_typeof(inputOpts)));
   }
+  if (isObj(inputOpts) && !!inputOpts.cb && typeof inputOpts.cb !== "function") {
+    throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
+  }
   var opts = Object.assign({}, defaultOpts, inputOpts);
   if (!["lf", "crlf", "cr"].includes(opts.eol)) {
     opts.eol = "lf";
@@ -794,12 +799,33 @@ function det(str, inputOpts) {
       str = rangesApply(str, entityFixes);
     }
   }
+  if (opts.cb) {
+    if (str.includes("<") || str.includes(">")) {
+      var outsideTagRanges = invertRanges(stripHtml(str, {
+        cb: function cb(_ref) {
+          var tag = _ref.tag,
+              rangesArr = _ref.rangesArr;
+          return rangesArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1);
+        },
+        skipHtmlDecoding: true,
+        returnRangesOnly: true
+      }), str.length).reduce(function (accumRanges, currRange) {
+        if (str.slice(currRange[0], currRange[1]) !== opts.cb(str.slice(currRange[0], currRange[1]))) {
+          return accumRanges.concat([[currRange[0], currRange[1], opts.cb(str.slice(currRange[0], currRange[1]))]]);
+        }
+        return accumRanges;
+      }, []);
+      str = rangesApply(str, outsideTagRanges);
+    } else {
+      str = opts.cb(str);
+    }
+  }
   if (str.includes("<") || str.includes(">")) {
-    var cb = function cb(_ref) {
-      var tag = _ref.tag,
-          deleteFrom = _ref.deleteFrom,
-          deleteTo = _ref.deleteTo,
-          proposedReturn = _ref.proposedReturn;
+    var cb = function cb(_ref2) {
+      var tag = _ref2.tag,
+          deleteFrom = _ref2.deleteFrom,
+          deleteTo = _ref2.deleteTo,
+          proposedReturn = _ref2.proposedReturn;
       if (isNum(tag.lastOpeningBracketAt) && isNum(tag.lastClosingBracketAt) && tag.lastOpeningBracketAt < tag.lastClosingBracketAt || tag.slashPresent) {
         applicableOpts.stripHtml = true;
         skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
@@ -893,7 +919,7 @@ function det(str, inputOpts) {
     });
   }
   processOutside(str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {
-    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine);
+    return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine, opts.cb);
   }, true);
   applyAndWipe();
   str = str.replace(/ (<br[/]?>)/g, "$1");

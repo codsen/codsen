@@ -22,6 +22,7 @@
 - [API](#api)
 - [`applicableOpts`](#applicableopts)
 - [Example](#example)
+- [`opts.cb`](#optscb)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -58,9 +59,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                    | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 47 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 52 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 392 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detergent.cjs.js` | 48 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detergent.esm.js` | 53 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detergent.umd.js` | 393 KB |
 
 **[⬆ back to top](#)**
 
@@ -130,24 +131,25 @@ The `det` above is a function. You pass two input arguments to it:
 
 ### API - `det()` options object
 
-| Options object's key     | Type of its value | Default                                   | Description                                                                                                                                                                       |
-| ------------------------ | ----------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                        |                   |                                           |
-| `fixBrokenEntities`      | Boolean           | True                                      | should we try to fix any broken named HTML entities like `&nsp;` ("b" missing)                                                                                                    |
-| `removeWidows`           | Boolean           | True                                      | replace the last space in paragraph with a non-breaking space                                                                                                                     |
-| `convertEntities`        | Boolean           | True                                      | encode all non-[ASCII](https://en.wikipedia.org/wiki/ASCII) chars                                                                                                                 |
-| `convertDashes`          | Boolean           | True                                      | typographically-correct the n/m-dashes                                                                                                                                            |
-| `convertApostrophes`     | Boolean           | True                                      | typographically-correct the apostrophes                                                                                                                                           |
-| `replaceLineBreaks`      | Boolean           | True                                      | replace all line breaks with `br`'s                                                                                                                                               |
-| `removeLineBreaks`       | Boolean           | False                                     | put everything on one line (removes any line breaks, inserting space where necessary)                                                                                             |
-| `useXHTML`               | Boolean           | True                                      | add closing slashes on `br`'s                                                                                                                                                     |
-| `dontEncodeNonLatin`     | Boolean           | True                                      | skip non-latin character encoding (for example, [CJK](https://en.wikipedia.org/wiki/CJK_characters), Alefbet Ivri or Arabic abjad)                                                |
-| `addMissingSpaces`       | Boolean           | True                                      | adds missing spaces after dots/colons/semicolons, unless it's an URL                                                                                                              |
-| `convertDotsToEllipsis`  | Boolean           | True                                      | convert three dots into `&hellip;` - ellipsis character. When set to `false`, all encoded ellipses will be converted to three dots.                                               |
-| `stripHtml`              | Boolean           | True                                      | by default, all HTML tags are stripped (with exception to `opts.keepBoldEtc` - option to ignore `b`, `strong` and other tags). You can turn off HTML tag removal completely here. |
-| `stripHtmlButIgnoreTags` | Array             | `["b", "strong", "i", "em", "br", "sup"]` | List zero or more strings, each meaning a tag name that should not be stripped. For example, `["a", "sup"]`.                                                                      |
-| `stripHtmlAddNewLine`    | Array             | `["li", "/ul"]`                           | List of zero or more tag names which, if stripped, are replaced with a line break. Closing tags must start with slash.                                                            |
-| }                        |                   |                                           |
+| Options object's key     | Type of its value                | Default                                   | Description                                                                                                                                                                       |
+| ------------------------ | -------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                        |                                  |                                           |
+| `fixBrokenEntities`      | Boolean                          | True                                      | should we try to fix any broken named HTML entities like `&nsp;` ("b" missing)                                                                                                    |
+| `removeWidows`           | Boolean                          | True                                      | replace the last space in paragraph with a non-breaking space                                                                                                                     |
+| `convertEntities`        | Boolean                          | True                                      | encode all non-[ASCII](https://en.wikipedia.org/wiki/ASCII) chars                                                                                                                 |
+| `convertDashes`          | Boolean                          | True                                      | typographically-correct the n/m-dashes                                                                                                                                            |
+| `convertApostrophes`     | Boolean                          | True                                      | typographically-correct the apostrophes                                                                                                                                           |
+| `replaceLineBreaks`      | Boolean                          | True                                      | replace all line breaks with `br`'s                                                                                                                                               |
+| `removeLineBreaks`       | Boolean                          | False                                     | put everything on one line (removes any line breaks, inserting space where necessary)                                                                                             |
+| `useXHTML`               | Boolean                          | True                                      | add closing slashes on `br`'s                                                                                                                                                     |
+| `dontEncodeNonLatin`     | Boolean                          | True                                      | skip non-latin character encoding (for example, [CJK](https://en.wikipedia.org/wiki/CJK_characters), Alefbet Ivri or Arabic abjad)                                                |
+| `addMissingSpaces`       | Boolean                          | True                                      | adds missing spaces after dots/colons/semicolons, unless it's an URL                                                                                                              |
+| `convertDotsToEllipsis`  | Boolean                          | True                                      | convert three dots into `&hellip;` - ellipsis character. When set to `false`, all encoded ellipses will be converted to three dots.                                               |
+| `stripHtml`              | Boolean                          | True                                      | by default, all HTML tags are stripped (with exception to `opts.keepBoldEtc` - option to ignore `b`, `strong` and other tags). You can turn off HTML tag removal completely here. |
+| `stripHtmlButIgnoreTags` | Array                            | `["b", "strong", "i", "em", "br", "sup"]` | List zero or more strings, each meaning a tag name that should not be stripped. For example, `["a", "sup"]`.                                                                      |
+| `stripHtmlAddNewLine`    | Array                            | `["li", "/ul"]`                           | List of zero or more tag names which, if stripped, are replaced with a line break. Closing tags must start with slash.                                                            |
+| `cb`                     | something _falsey_ or a function | `null`                                    | Callback function to additionally process characters between tags (like turning letters uppercase)                                                                                |
+| }                        |                                  |                                           |
 
 Here it is in one place:
 
@@ -166,7 +168,8 @@ det("text to clean", {
   convertDotsToEllipsis: true,
   stripHtml: true,
   stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
-  stripHtmlAddNewLine: ["li", "/ul"]
+  stripHtmlAddNewLine: ["li", "/ul"],
+  cb: null
 });
 ```
 
@@ -271,6 +274,19 @@ console.log(res);
 
 **[⬆ back to top](#)**
 
+## `opts.cb`
+
+One of the unique (and complex) features of this program is HTML tag recognition. We process only the text and don't touch the tags, for example, widow word removal won't add non-breaking spaces within your tags if you choose not to strip the HTML.
+
+`opts.cb` lets you perform additional operations on all the string characters outside any HTML tags. We aim to tap detergent.io uppercase-lowercase functionality here but maybe you'll find additional uses.
+
+Here's an example, where we have widow word removal, HTML tags and additionally, with help of `opts.cb`, turn all the letters uppercase (but not on HTML tags):
+
+```js
+```
+
+**[⬆ back to top](#)**
+
 ## Contributing
 
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=detergent%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Adetergent%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
@@ -296,7 +312,7 @@ Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.js
 [node-url]: https://www.npmjs.com/package/detergent
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
-[cov-img]: https://img.shields.io/badge/coverage-90.38%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-90.39%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detergent
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/detergent
