@@ -284,7 +284,7 @@ Here's an example, where we have widow word removal, HTML tags and additionally,
 
 ```js
 const { det } = require("detergent");
-const {res} = det(`aAa\n\nbBb\n\ncCc`, {
+const { res } = det(`aAa\n\nbBb\n\ncCc`, {
   cb: str => str.toUpperCase()
 });
 console.log(res);

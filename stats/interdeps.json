@@ -174,11 +174,13 @@
     },
     {
         "name": "detergent",
-        "size": 52928,
+        "size": 54279,
         "imports": [
             "all-named-html-entities",
+            "ast-deep-contains",
             "html-entities-not-email-friendly",
             "ranges-apply",
+            "ranges-invert",
             "ranges-process-outside",
             "ranges-push",
             "string-apostrophes",
@@ -238,10 +240,10 @@
     },
     {
         "name": "emlint",
-        "size": 91272,
+        "size": 93059,
         "imports": [
-            "ast-deep-contains",
             "codsen-tokenizer",
+            "html-entities-not-email-friendly",
             "string-fix-broken-named-entities",
             "string-left-right"
         ]
@@ -437,7 +439,7 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4669,
+        "size": 4659,
         "imports": [
             "ranges-merge"
         ]
@@ -565,7 +567,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 38264,
+        "size": 38199,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
