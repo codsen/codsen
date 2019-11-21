@@ -3486,16 +3486,21 @@ class Linter extends EventEmitter {
     if (
       Object.keys(config.rules).some(
         ruleName =>
-          ruleName === "bad-html-entity" ||
-          ruleName.startsWith("bad-named-html-entity") ||
-          matcher.isMatch(
-            [
-              "bad-malformed-numeric-character-entity",
-              "encoded-html-entity-nbsp",
-              "encoded-numeric-html-entity-reference"
-            ],
-            ruleName
-          )
+          (ruleName === "bad-html-entity" ||
+            ruleName.startsWith("bad-named-html-entity") ||
+            matcher.isMatch(
+              [
+                "bad-malformed-numeric-character-entity",
+                "encoded-html-entity-nbsp",
+                "encoded-numeric-html-entity-reference"
+              ],
+              ruleName
+            )) &&
+          ((Number.isInteger(config.rules[ruleName]) &&
+            config.rules[ruleName] > 0) ||
+            (Array.isArray(config.rules[ruleName]) &&
+              Number.isInteger(config.rules[ruleName][0]) &&
+              config.rules[ruleName][0] > 0))
       )
     ) {
       stringFixBrokenNamedEntities(str, {

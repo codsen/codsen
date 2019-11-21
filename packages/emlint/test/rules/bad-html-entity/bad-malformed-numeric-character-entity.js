@@ -125,3 +125,59 @@ test(`02.01 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar ins
     t.fail
   );
 });
+
+// 03. disabled rule
+// -----------------------------------------------------------------------------
+
+test(`03.01 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - group rule`, t => {
+  const str = `a&#99999999999999999;z`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-html-entity": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`03.02 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 0`, t => {
+  const str = `a&#99999999999999999;z`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-malformed-numeric-character-entity": [0]
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`03.03 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, with other rules`, t => {
+  const str = `a&#99999999999999999;z<br>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-malformed-numeric-character-entity": [0],
+      "tag-void-slash": [1]
+    }
+  });
+  t.is(applyFixes(str, messages), "a&#99999999999999999;z<br/>");
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "tag-void-slash",
+        severity: 1,
+        idxFrom: 25,
+        idxTo: 25,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[25, 25, "/"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});

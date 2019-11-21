@@ -95,6 +95,42 @@ test(`01.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, t =>
   );
 });
 
+test(`01.04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, t => {
+  const str = `abc&nsp;def`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-html-entity": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`01.05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule - off`, t => {
+  const str = `abc&nsp;def`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-named-html-entity-malformed-nbsp": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`01.06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard - off`, t => {
+  const str = `abc&nsp;def`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-named-html-entity-*": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
 // 02. other malformed entities
 // -----------------------------------------------------------------------------
 
@@ -180,4 +216,40 @@ test(`02.03 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule`, t
     t.is,
     t.fail
   );
+});
+
+test(`02.04 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard - off`, t => {
+  const str = `&pond;1000`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-named-html-entity-*": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`02.05 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule - off`, t => {
+  const str = `&pond;1000`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-html-entity": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
+});
+
+test(`02.06 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule - off`, t => {
+  const str = `&pond;1000`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "bad-named-html-entity-malformed-pound": 0
+    }
+  });
+  t.is(applyFixes(str, messages), str);
+  t.deepEqual(messages, []);
 });

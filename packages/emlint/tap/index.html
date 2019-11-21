@@ -79,7 +79,8 @@
           const messages = linter.verify(this.text1, {
             rules: {
               "tag": 2,
-              "bad-character": 2
+              "bad-character": 2,
+              "bad-html-entity": 2
             }
           });
           // 1. list the messages in the text area:

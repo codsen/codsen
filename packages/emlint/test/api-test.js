@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import test from "ava";
 import { Linter, version as version1 } from "../dist/emlint.esm";
