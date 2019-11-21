@@ -1,10 +1,11 @@
 import tokenizer from "codsen-tokenizer";
-import { get, normaliseRequestedRules } from "./rules.js";
+import { get, normaliseRequestedRules } from "./rules";
 import EventEmitter from "events";
 import lineColumn from "line-column";
 import stringFixBrokenNamedEntities from "string-fix-broken-named-entities";
 import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import matcher from "matcher";
+import { isEnabled } from "./util";
 
 class Linter extends EventEmitter {
   verify(str, config) {
@@ -174,12 +175,7 @@ class Linter extends EventEmitter {
               ],
               ruleName
             )) &&
-          // that rule is enabled
-          ((Number.isInteger(config.rules[ruleName]) &&
-            config.rules[ruleName] > 0) ||
-            (Array.isArray(config.rules[ruleName]) &&
-              Number.isInteger(config.rules[ruleName][0]) &&
-              config.rules[ruleName][0] > 0))
+          isEnabled(config.rules[ruleName])
       )
     ) {
       console.log(`185 linter.js: call stringFixBrokenNamedEntities()`);

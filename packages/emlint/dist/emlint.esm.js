@@ -3403,6 +3403,20 @@ function unwrapListeners(arr) {
   return ret;
 }
 
+function isEnabled(maybeARulesValue) {
+  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
+    return maybeARulesValue;
+  } else if (
+    Array.isArray(maybeARulesValue) &&
+    maybeARulesValue.length &&
+    Number.isInteger(maybeARulesValue[0]) &&
+    maybeARulesValue[0] > 0
+  ) {
+    return maybeARulesValue[0];
+  }
+  return 0;
+}
+
 class Linter extends EventEmitter {
   verify(str, config) {
     this.messages = [];
@@ -3496,11 +3510,7 @@ class Linter extends EventEmitter {
               ],
               ruleName
             )) &&
-          ((Number.isInteger(config.rules[ruleName]) &&
-            config.rules[ruleName] > 0) ||
-            (Array.isArray(config.rules[ruleName]) &&
-              Number.isInteger(config.rules[ruleName][0]) &&
-              config.rules[ruleName][0] > 0))
+          isEnabled(config.rules[ruleName])
       )
     ) {
       stringFixBrokenNamedEntities(str, {

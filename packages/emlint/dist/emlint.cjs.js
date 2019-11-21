@@ -3384,6 +3384,15 @@ function unwrapListeners(arr) {
   return ret;
 }
 
+function isEnabled(maybeARulesValue) {
+  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
+    return maybeARulesValue;
+  } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
+    return maybeARulesValue[0];
+  }
+  return 0;
+}
+
 var Linter =
 function (_EventEmitter) {
   _inherits(Linter, _EventEmitter);
@@ -3442,8 +3451,7 @@ function (_EventEmitter) {
       });
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "bad-html-entity" ||
-        ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName)) && (
-        Number.isInteger(config.rules[ruleName]) && config.rules[ruleName] > 0 || Array.isArray(config.rules[ruleName]) && Number.isInteger(config.rules[ruleName][0]) && config.rules[ruleName][0] > 0);
+        ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName)) && isEnabled(config.rules[ruleName]);
       })) {
         stringFixBrokenNamedEntities(str, {
           cb: function cb(obj) {
