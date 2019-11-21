@@ -2850,44 +2850,78 @@ test(`12.002 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound
 
 test(`13.001 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, no decode`, t => {
   const inp1 = "y &nbsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { name } = obj;
+      gatheredBroken.push(name);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.001");
+  t.deepEqual(gatheredHealthy, [[2, 8]], "13.001.01");
+  t.deepEqual(gatheredBroken, [], "13.001.02");
 });
 
 test(`13.002 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, no decode`, t => {
   const inp1 = "y &nbsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.002");
+  t.deepEqual(gatheredHealthy, [[2, 8]], "13.002.01");
+  t.deepEqual(gatheredBroken, [], "13.002.02");
 });
 
 test(`13.003 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, with callback, with decode`, t => {
   const inp1 = "y &nbsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.003");
+  t.deepEqual(gatheredHealthy, [], "13.003.01");
+  t.deepEqual(gatheredBroken, ["encoded-html-entity-nbsp"], "13.003.02");
 });
 
 test(`13.004 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - one named entity, without callback, with decode`, t => {
   const inp1 = "y &nbsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 8]], "13.004");
+  t.deepEqual(gatheredHealthy, [], "13.004.01"); // <- because it's encoded and user asked unencoded
+});
+
+test(`13.005 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - only healthy entities are pinged to entityCatcherCb`, t => {
+  const inp1 = "y &nbsp; z &nsp;";
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
+  fix(inp1, {
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to])
+  });
+  t.deepEqual(gatheredHealthy, [[2, 8]], "13.005.01");
+  t.deepEqual(
+    gatheredBroken,
+    ["bad-named-html-entity-malformed-nbsp"],
+    "13.005.02"
+  );
 });
 
 //
@@ -2956,79 +2990,66 @@ test(`13.008 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u0
 //
 //
 
-// Two ranges are reported below because we report everything straight away,
-// upon finding, as opposed to issue ranges which get deduped
-
-// For perf reasons, opts.entityCatcherCb can report the same range multiple times
-
 test(`13.009 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, no decode`, t => {
   const inp1 = "y &nsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
   t.deepEqual(
-    gatheredEntityRanges,
-    [
-      [2, 7],
-      [2, 7]
-    ],
-    "13.009"
+    gatheredBroken,
+    ["bad-named-html-entity-malformed-nbsp"],
+    "13.009.01"
   );
+  t.deepEqual(gatheredHealthy, [], "13.009.02");
 });
 
 test(`13.010 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, no decode`, t => {
   const inp1 = "y &nsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
-  t.deepEqual(
-    gatheredEntityRanges,
-    [
-      [2, 7],
-      [2, 7]
-    ],
-    "13.010"
-  );
+  t.deepEqual(gatheredHealthy, [], "13.010.02");
 });
 
 test(`13.011 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, with callback, with decode`, t => {
   const inp1 = "y &nsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
   t.deepEqual(
-    gatheredEntityRanges,
-    [
-      [2, 7],
-      [2, 7]
-    ],
-    "13.011"
+    gatheredBroken,
+    ["bad-named-html-entity-malformed-nbsp"],
+    "13.011.01"
   );
+  t.deepEqual(gatheredHealthy, [], "13.011.02");
 });
 
 test(`13.012 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`nsp`}\u001b[${39}m`} - one broken entity, without callback, with decode`, t => {
   const inp1 = "y &nsp; z";
-  const gatheredEntityRanges = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
-  t.deepEqual(
-    gatheredEntityRanges,
-    [
-      [2, 7],
-      [2, 7]
-    ],
-    "13.012"
-  );
+  t.deepEqual(gatheredHealthy, [], "13.012.02");
 });
 
 //
@@ -3045,44 +3066,64 @@ test(`13.012 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u0
 
 test(`13.013 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, no decode`, t => {
   const inp1 = "y &abcdefg; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.013");
+  t.deepEqual(
+    gatheredBroken,
+    ["bad-named-html-entity-unrecognised"],
+    "13.013.01"
+  );
+  t.deepEqual(gatheredHealthy, [], "13.013.02");
 });
 
 test(`13.014 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, no decode`, t => {
   const inp1 = "y &abcdefg; z";
-  const gatheredEntityRanges = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: false
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.014");
+  t.deepEqual(gatheredHealthy, [], "13.014");
 });
 
 test(`13.015 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, with callback, with decode`, t => {
   const inp1 = "y &abcdefg; z";
-  const gatheredEntityRanges = [];
+  const gatheredBroken = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    cb: obj => obj,
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    cb: obj => {
+      const { ruleName } = obj;
+      gatheredBroken.push(ruleName);
+      return obj;
+    },
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.015");
+  t.deepEqual(
+    gatheredBroken,
+    ["bad-named-html-entity-unrecognised"],
+    "13.015.01"
+  );
+  t.deepEqual(gatheredHealthy, [], "13.015.02");
 });
 
 test(`13.016 - ${`\u001b[${36}m${`opts.entityCatcherCb`}\u001b[${39}m`} - ${`\u001b[${33}m${`abcdefg`}\u001b[${39}m`} - one broken entity, without callback, with decode`, t => {
   const inp1 = "y &abcdefg; z";
-  const gatheredEntityRanges = [];
+  const gatheredHealthy = [];
   fix(inp1, {
-    entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
+    entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     decode: true
   });
-  t.deepEqual(gatheredEntityRanges, [[2, 11]], "13.016");
+  t.deepEqual(gatheredHealthy, [], "13.016");
 });
 
 //

@@ -182,7 +182,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       rangeValDecoded || rangeValEncoded
         ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded]
         : [rangeFrom, rangeTo],
-    progressFn: null
+    progressFn: null,
+    entityCatcherCb: null
   };
   let opts;
   if (originalOpts != null) {
@@ -348,9 +349,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       const beginningOfTheRange = chompedAmpFromLeft
         ? chompedAmpFromLeft
         : nbsp.nameStartsAt;
-      if (opts.entityCatcherCb) {
-        opts.entityCatcherCb(beginningOfTheRange, i);
-      }
       if (
         !falsePositivesArr.some(val =>
           str.slice(beginningOfTheRange).startsWith(val)
@@ -365,15 +363,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeValEncoded: "&nbsp;",
           rangeValDecoded: "\xA0"
         });
-      } else if (opts.decode) {
-        rangesArr2.push({
-          ruleName: "encoded-html-entity-nbsp",
-          entityName: "nbsp",
-          rangeFrom: beginningOfTheRange,
-          rangeTo: i,
-          rangeValEncoded: "&nbsp;",
-          rangeValDecoded: "\xA0"
-        });
+      } else {
+        if (opts.decode) {
+          rangesArr2.push({
+            ruleName: "encoded-html-entity-nbsp",
+            entityName: "nbsp",
+            rangeFrom: beginningOfTheRange,
+            rangeTo: i,
+            rangeValEncoded: "&nbsp;",
+            rangeValDecoded: "\xA0"
+          });
+        } else if (opts.entityCatcherCb) {
+          opts.entityCatcherCb(beginningOfTheRange, i);
+        }
       }
       nbspWipe();
       counter++;
@@ -807,9 +809,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeValEncoded: null,
                     rangeValDecoded: null
                   });
-                  if (opts.entityCatcherCb) {
-                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
-                  }
                 }
               }
             }

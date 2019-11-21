@@ -168,7 +168,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeValDecoded = _ref.rangeValDecoded;
       return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
-    progressFn: null
+    progressFn: null,
+    entityCatcherCb: null
   };
   var opts;
   if (originalOpts != null) {
@@ -244,9 +245,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }, "s", "u", "p")) && str[stringLeftRight.right(str, nbsp.matchedN)].toLowerCase() !== "c") && (nbsp.matchedB === null || onlyContainsNbsp(str, smallestCharFromTheSetAt, largestCharFromTheSetAt + 1) || !(str[smallestCharFromTheSetAt] && str[largestCharFromTheSetAt] && str[smallestCharFromTheSetAt].toLowerCase() === "n" && str[largestCharFromTheSetAt].toLowerCase() === "b"))) {
       var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
       var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
-      if (opts.entityCatcherCb) {
-        opts.entityCatcherCb(beginningOfTheRange, i);
-      }
       if (!falsePositivesArr.some(function (val) {
         return str.slice(beginningOfTheRange).startsWith(val);
       }) && str.slice(beginningOfTheRange, i) !== "&nbsp;") {
@@ -258,15 +256,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           rangeValEncoded: "&nbsp;",
           rangeValDecoded: "\xA0"
         });
-      } else if (opts.decode) {
-        rangesArr2.push({
-          ruleName: "encoded-html-entity-nbsp",
-          entityName: "nbsp",
-          rangeFrom: beginningOfTheRange,
-          rangeTo: i,
-          rangeValEncoded: "&nbsp;",
-          rangeValDecoded: "\xA0"
-        });
+      } else {
+        if (opts.decode) {
+          rangesArr2.push({
+            ruleName: "encoded-html-entity-nbsp",
+            entityName: "nbsp",
+            rangeFrom: beginningOfTheRange,
+            rangeTo: i,
+            rangeValEncoded: "&nbsp;",
+            rangeValDecoded: "\xA0"
+          });
+        } else if (opts.entityCatcherCb) {
+          opts.entityCatcherCb(beginningOfTheRange, i);
+        }
       }
       nbspWipe();
       counter++;
@@ -533,9 +535,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangeValEncoded: null,
                     rangeValDecoded: null
                   });
-                  if (opts.entityCatcherCb) {
-                    opts.entityCatcherCb(whatsOnTheLeft, i + 1);
-                  }
                 }
               }
             }

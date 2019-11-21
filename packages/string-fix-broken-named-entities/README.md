@@ -18,7 +18,8 @@
 - [API - Output](#api-output)
 - [`opts.decode`](#optsdecode)
 - [`opts.cb` - a callback function](#optscb-a-callback-function)
-- [`opts.progressFn` - another callback function](#optsprogressfn-another-callback-function)
+- [`opts.entityCatcherCb`](#optsentitycatchercb)
+- [`opts.progressFn` - progress callback](#optsprogressfn-progress-callback)
 - [Tips](#tips)
 - [Why not regexes?](#why-not-regexes)
 - [Practical use](#practical-use)
@@ -93,6 +94,7 @@ console.log(JSON.stringify(result, null, 4));
 | {                                |                   |           |
 | `decode`                         | Boolean           | `false`   | Fixed values are normally put as HTML-encoded. Set to `true` to get raw characters instead.                                                           |
 | `cb`                             | Function          | see below | Callback function which gives you granular control of the program's output                                                                            |
+| `entityCatcherCb`                | Function          | `null`    | If you set a function here, every encountered entity will be passed to it, see a dedicated chapter below                                              |
 | `progressFn`                     | Function          | `null`    | Used in web worker setups. You pass a function and it gets called one for each natural number `0` to `99`, meaning percentage of the work done so far |
 | }                                |                   |           |
 
@@ -105,6 +107,7 @@ Here it is in one place:
     rangeValDecoded || rangeValEncoded
       ? [rangeFrom, rangeTo, opts.decode ? rangeValDecoded : rangeValEncoded]
       : [rangeFrom, rangeTo],
+  entityCatcherCb: null,
   progressFn: null
 }
 ```
@@ -262,7 +265,29 @@ Since we give user an option to choose between raw and encoded values, result ca
 
 **[⬆ back to top](#)**
 
-## `opts.progressFn` - another callback function
+## `opts.entityCatcherCb`
+
+If broken entities are pinged to `opts.cb()` callback, all healthy entities are pinged to `opts.entityCatcherCb`. It's either one of another:
+
+```js
+const inp1 = "y &nbsp; z &nsp;";
+const gatheredEntityRanges = [];
+fix(inp1, {
+  entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to])
+});
+console.log(
+  `${`\u001b[${33}m${`gatheredEntityRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    gatheredEntityRanges,
+    null,
+    4
+  )}`
+);
+// => [[2, 8]]
+```
+
+**[⬆ back to top](#)**
+
+## `opts.progressFn` - progress callback
 
 In web worker setups, a worker can return "in progress" values. When we put this package into a web worker, this callback function under `opts.progress` will be called with a string, containing a natural number, showing the percentage of the work done so far.
 
@@ -304,18 +329,7 @@ There are [other libraries](https://gitlab.com/codsen/codsen/tree/master#-11-ran
 
 ## Why not regexes?
 
-If you think about it, each regex will perform a search on a string. That's one full traversal of all indexes in a string. No matter how well it's optimised by the Node or browser, it is going to happen. Now, this library traverses the input string **only once** and registers all errors. You can't do that easily with regexes - the resulting regex would get unwieldy and hard to debug.
-
-Furthermore, the rules in this library's algorithm are too complex for regexes, we use an equivalent of lookarounds and heavily rely on surroundings of a particular character we're evaluating. For example, here's how we detect the ending of a **confirmed broken nbsp**:
-
-- we have detected its beginning (with the ampersand or "n" or "b" or "s" or "p" characters in case ampersand was missing)
-- characters in the "chunk" comprise of at least three types of: `["n", "b", "s", "p"]`
-- the chunk includes a semicolon, or one is missing and
-- current character is not a semicolon
-- the character that follows either does not exist (EOL) or is not a semicolon (to catch extra characters between nbsp and semicolon)
-- the ending letter is either: a) outside of a string loop (we traverse string length + 1 to complete all clauses) OR b) one of 2 cases: 1) all letters of a set "n", "b", "s" and "p" have been matched at least once and ending letter is not equal to the one before (no repetition in the ending) OR ending letter is not any of a set: "n", "b", "s" and "p" (case insensitive).
-
-Good luck putting the above in a regex and later troubleshooting it, after a few months.
+Our algorithm is way waay more complex than anything that can be achieved using regexes. We tackle the task using mix of different algorithms: looking for known entity names, counting letters (in nbsp case only) and calculating the minimum-sample which would pass as an nbsp, looking for known broken patterns — many ways. It would be impossible to achieve this using regexes.
 
 **[⬆ back to top](#)**
 
@@ -348,7 +362,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
-[cov-img]: https://img.shields.io/badge/coverage-93.94%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-93.91%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities
