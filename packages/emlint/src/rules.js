@@ -805,6 +805,17 @@ defineLazyProp(
 import tagVoidSlash from "./rules/tag/tag-void-slash";
 defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 
+// BAD-HTML-ENTITY rules
+// -----------------------------------------------------------------------------
+// (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
+
+import htmlEntitiesNotEmailFriendly from "./rules/bad-html-entity/bad-named-html-entity-not-email-friendly";
+defineLazyProp(
+  builtInRules,
+  "bad-named-html-entity-not-email-friendly",
+  () => htmlEntitiesNotEmailFriendly
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -817,7 +828,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `820 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `831 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -888,7 +899,7 @@ function normaliseRequestedRules(opts) {
     }
   });
   console.log(
-    `891 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `902 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

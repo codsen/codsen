@@ -47,6 +47,7 @@ export default commandLineArgs => {
       external: [
         "codsen-tokenizer",
         "define-lazy-prop",
+        "html-entities-not-email-friendly",
         "line-column",
         "lodash.clonedeep",
         "matcher",
@@ -72,6 +73,7 @@ export default commandLineArgs => {
       external: [
         "codsen-tokenizer",
         "define-lazy-prop",
+        "html-entities-not-email-friendly",
         "line-column",
         "lodash.clonedeep",
         "matcher",

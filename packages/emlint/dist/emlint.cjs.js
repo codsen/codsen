@@ -18,6 +18,7 @@ var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
+var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
@@ -250,6 +251,7 @@ var allBadNamedHTMLEntityRules = [
 	"bad-malformed-numeric-character-entity",
 	"bad-named-html-entity-malformed-nbsp",
 	"bad-named-html-entity-multiple-encoding",
+	"bad-named-html-entity-not-email-friendly",
 	"bad-named-html-entity-unrecognised"
 ];
 
@@ -2680,6 +2682,26 @@ function tagVoidSlash(context) {
   };
 }
 
+function htmlEntitiesNotEmailFriendly(context) {
+  return {
+    entity: function entity(_ref) {
+      var idxFrom = _ref.idxFrom,
+          idxTo = _ref.idxTo;
+      if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(context.str.slice(idxFrom + 1, idxTo - 1))) {
+        context.report({
+          ruleId: "bad-named-html-entity-not-email-friendly",
+          message: "Email-unfriendly named HTML entity.",
+          idxFrom: idxFrom,
+          idxTo: idxTo,
+          fix: {
+            ranges: [[idxFrom, idxTo, "&".concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)], ";")]]
+          }
+        });
+      }
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -3028,6 +3050,9 @@ defineLazyProp(builtInRules, "tag-closing-backslash", function () {
 });
 defineLazyProp(builtInRules, "tag-void-slash", function () {
   return tagVoidSlash;
+});
+defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
+  return htmlEntitiesNotEmailFriendly;
 });
 function get(something) {
   return builtInRules[something];
@@ -3393,6 +3418,7 @@ function isEnabled(maybeARulesValue) {
   return 0;
 }
 
+EventEmitter.defaultMaxListeners = 0;
 var Linter =
 function (_EventEmitter) {
   _inherits(Linter, _EventEmitter);
@@ -3422,7 +3448,7 @@ function (_EventEmitter) {
       this.processedRulesConfig = processedRulesConfig;
       Object.keys(processedRulesConfig)
       .filter(function (ruleName) {
-        return !allBadNamedHTMLEntityRules.includes(ruleName) && !ruleName.startsWith("bad-named-html-entity-") && (!ruleName.includes("*") || !matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName));
+        return get(ruleName);
       })
       .filter(function (ruleName) {
         if (typeof processedRulesConfig[ruleName] === "number") {
@@ -3451,7 +3477,7 @@ function (_EventEmitter) {
       });
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "bad-html-entity" ||
-        ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity", "encoded-html-entity-nbsp", "encoded-numeric-html-entity-reference"], ruleName)) && isEnabled(config.rules[ruleName]);
+        ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isEnabled(config.rules[ruleName]) || isEnabled(processedRulesConfig[ruleName]));
       })) {
         stringFixBrokenNamedEntities(str, {
           cb: function cb(obj) {
@@ -3507,6 +3533,12 @@ function (_EventEmitter) {
                 }
               });
             }
+          },
+          entityCatcherCb: function entityCatcherCb(from, to) {
+            _this.emit("entity", {
+              idxFrom: from,
+              idxTo: to
+            });
           }
         });
       }

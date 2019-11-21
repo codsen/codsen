@@ -130,6 +130,7 @@
     "special": true,
     "various": {
       "devDependencies": [
+        "ast-deep-contains",
         "browser-sync",
         "ranges-apply",
         "rollup-plugin-node-builtins",
@@ -146,9 +147,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-deep-contains": "^1.0.1",
     "codsen-tokenizer": "^2.0.0",
     "define-lazy-prop": "^2.0.0",
+    "html-entities-not-email-friendly": "^0.1.9",
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^2.1.0",
@@ -159,6 +160,7 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
+    "ast-deep-contains": "^1.0.1",
     "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",

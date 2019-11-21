@@ -12,6 +12,7 @@ import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
 import { left, right } from 'string-left-right';
+import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import lineColumn from 'line-column';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
@@ -141,6 +142,7 @@ var allBadNamedHTMLEntityRules = [
 	"bad-malformed-numeric-character-entity",
 	"bad-named-html-entity-malformed-nbsp",
 	"bad-named-html-entity-multiple-encoding",
+	"bad-named-html-entity-not-email-friendly",
 	"bad-named-html-entity-unrecognised"
 ];
 
@@ -2428,6 +2430,36 @@ function tagVoidSlash(context, ...opts) {
   };
 }
 
+function htmlEntitiesNotEmailFriendly(context) {
+  return {
+    entity: function({ idxFrom, idxTo }) {
+      if (
+        Object.keys(notEmailFriendly).includes(
+          context.str.slice(idxFrom + 1, idxTo - 1)
+        )
+      ) {
+        context.report({
+          ruleId: "bad-named-html-entity-not-email-friendly",
+          message: "Email-unfriendly named HTML entity.",
+          idxFrom: idxFrom,
+          idxTo: idxTo,
+          fix: {
+            ranges: [
+              [
+                idxFrom,
+                idxTo,
+                `&${
+                  notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)]
+                };`
+              ]
+            ]
+          }
+        });
+      }
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -2977,6 +3009,11 @@ defineLazyProp(
   () => tagClosingBackslash
 );
 defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
+defineLazyProp(
+  builtInRules,
+  "bad-named-html-entity-not-email-friendly",
+  () => htmlEntitiesNotEmailFriendly
+);
 function get(something) {
   return builtInRules[something];
 }
@@ -3417,6 +3454,7 @@ function isEnabled(maybeARulesValue) {
   return 0;
 }
 
+EventEmitter.defaultMaxListeners = 0;
 class Linter extends EventEmitter {
   verify(str, config) {
     this.messages = [];
@@ -3448,20 +3486,7 @@ class Linter extends EventEmitter {
     const processedRulesConfig = normaliseRequestedRules(config.rules);
     this.processedRulesConfig = processedRulesConfig;
     Object.keys(processedRulesConfig)
-      .filter(
-        ruleName =>
-          !allBadNamedHTMLEntityRules.includes(ruleName) &&
-          !ruleName.startsWith("bad-named-html-entity-") &&
-          (!ruleName.includes("*") ||
-            !matcher.isMatch(
-              [
-                "bad-malformed-numeric-character-entity",
-                "encoded-html-entity-nbsp",
-                "encoded-numeric-html-entity-reference"
-              ],
-              ruleName
-            ))
-      )
+      .filter(ruleName => get(ruleName))
       .filter(ruleName => {
         if (typeof processedRulesConfig[ruleName] === "number") {
           return processedRulesConfig[ruleName] > 0;
@@ -3501,16 +3526,14 @@ class Linter extends EventEmitter {
       Object.keys(config.rules).some(
         ruleName =>
           (ruleName === "bad-html-entity" ||
+            ruleName.startsWith("bad-html-entity") ||
             ruleName.startsWith("bad-named-html-entity") ||
             matcher.isMatch(
-              [
-                "bad-malformed-numeric-character-entity",
-                "encoded-html-entity-nbsp",
-                "encoded-numeric-html-entity-reference"
-              ],
+              ["bad-malformed-numeric-character-entity"],
               ruleName
             )) &&
-          isEnabled(config.rules[ruleName])
+          (isEnabled(config.rules[ruleName]) ||
+            isEnabled(processedRulesConfig[ruleName]))
       )
     ) {
       stringFixBrokenNamedEntities(str, {
@@ -3584,6 +3607,9 @@ class Linter extends EventEmitter {
               }
             });
           }
+        },
+        entityCatcherCb: (from, to) => {
+          this.emit("entity", { idxFrom: from, idxTo: to });
         }
       });
     }
