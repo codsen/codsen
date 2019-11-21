@@ -283,6 +283,12 @@ One of the unique (and complex) features of this program is HTML tag recognition
 Here's an example, where we have widow word removal, HTML tags and additionally, with help of `opts.cb`, turn all the letters uppercase (but not on HTML tags):
 
 ```js
+const { det } = require("detergent");
+const {res} = det(`aAa\n\nbBb\n\ncCc`, {
+  cb: str => str.toUpperCase()
+});
+console.log(res);
+// => "AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC"
 ```
 
 **[⬆ back to top](#)**
