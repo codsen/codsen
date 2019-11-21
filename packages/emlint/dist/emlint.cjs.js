@@ -3473,13 +3473,15 @@ function (_EventEmitter) {
             if (Number.isInteger(severity)) {
               var message;
               if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
-                message = "Malformed NBSP.";
+                message = "Malformed NBSP entity.";
               } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
                 message = "Unrecognised named entity.";
               } else if (obj.ruleName === "bad-named-html-entity-multiple-encoding") {
                 message = "HTML entity encoding over and over.";
               } else if (obj.ruleName === "bad-malformed-numeric-character-entity") {
                 message = "Malformed numeric entity.";
+              } else {
+                message = "Malformed ".concat(obj.entityName ? obj.entityName : "named", " entity.");
               }
               var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded ? obj.rangeValEncoded : ""]];
               if (obj.ruleName === "bad-named-html-entity-unrecognised") {

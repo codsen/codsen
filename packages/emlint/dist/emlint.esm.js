@@ -3532,7 +3532,7 @@ class Linter extends EventEmitter {
           if (Number.isInteger(severity)) {
             let message;
             if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
-              message = "Malformed NBSP.";
+              message = "Malformed NBSP entity.";
             } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
               message = "Unrecognised named entity.";
             } else if (
@@ -3543,6 +3543,10 @@ class Linter extends EventEmitter {
               obj.ruleName === "bad-malformed-numeric-character-entity"
             ) {
               message = "Malformed numeric entity.";
+            } else {
+              message = `Malformed ${
+                obj.entityName ? obj.entityName : "named"
+              } entity.`;
             }
             let ranges = [
               [
