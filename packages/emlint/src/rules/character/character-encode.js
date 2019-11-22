@@ -62,9 +62,24 @@ function characterEncode(context, ...opts) {
           )}`
         );
 
+        let charName = "";
+        if (chr.charCodeAt(0) === 160) {
+          charName = " no-break space";
+        } else if (chr.charCodeAt(0) === 38) {
+          charName = " ampersand";
+        } else if (chr.charCodeAt(0) === 60) {
+          charName = " less than";
+        } else if (chr.charCodeAt(0) === 62) {
+          charName = " greater than";
+        } else if (chr.charCodeAt(0) === 34) {
+          charName = " double quotes";
+        } else if (chr.charCodeAt(0) === 163) {
+          charName = " pound sign";
+        }
+
         context.report({
           ruleId: "character-encode",
-          message: "Unencoded character.",
+          message: `Unencoded${charName} character.`,
           idxFrom: i,
           idxTo: i + 1,
           fix: {

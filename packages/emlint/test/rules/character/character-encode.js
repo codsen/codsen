@@ -40,7 +40,7 @@ test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characte
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&pound;"]]
         }
@@ -69,7 +69,7 @@ test(`01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characte
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&pound;"]]
         }
@@ -101,7 +101,7 @@ test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`, t => {
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&pound;"]]
         }
@@ -130,7 +130,7 @@ test(`02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`, t => {
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&#xA3;"]]
         }
@@ -159,7 +159,7 @@ test(`02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`, t => {
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&pound;"]]
         }
@@ -188,7 +188,7 @@ test(`02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`, t
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded pound sign character.",
         fix: {
           ranges: [[0, 1, "&pound;"]]
         }
@@ -310,7 +310,7 @@ test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded less than character.",
         fix: {
           ranges: [[0, 1, "&lt;"]]
         }
@@ -321,7 +321,7 @@ test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 1,
         idxTo: 2,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded greater than character.",
         fix: {
           ranges: [[1, 2, "&gt;"]]
         }
@@ -332,7 +332,7 @@ test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 3,
         idxTo: 4,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded double quotes character.",
         fix: {
           ranges: [[3, 4, "&quot;"]]
         }
@@ -343,7 +343,7 @@ test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 4,
         idxTo: 5,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded ampersand character.",
         fix: {
           ranges: [[4, 5, "&amp;"]]
         }
@@ -372,7 +372,7 @@ test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded less than character.",
         fix: {
           ranges: [[0, 1, "&#x3C;"]]
         }
@@ -383,7 +383,7 @@ test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 1,
         idxTo: 2,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded greater than character.",
         fix: {
           ranges: [[1, 2, "&#x3E;"]]
         }
@@ -394,7 +394,7 @@ test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 3,
         idxTo: 4,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded double quotes character.",
         fix: {
           ranges: [[3, 4, "&#x22;"]]
         }
@@ -405,7 +405,7 @@ test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
         idxFrom: 4,
         idxTo: 5,
         line: 1,
-        message: "Unencoded character.",
+        message: "Unencoded ampersand character.",
         fix: {
           ranges: [[4, 5, "&#x26;"]]
         }
