@@ -501,7 +501,7 @@ test("01.17 - unrecognised tags", t => {
   );
 });
 
-test.only("01.18 - wrong case but still recognised tags", t => {
+test("01.18 - wrong case but still recognised tags", t => {
   const gathered = [];
   ct("</tablE>", obj => {
     gathered.push(obj);
