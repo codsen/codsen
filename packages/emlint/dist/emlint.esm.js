@@ -2485,7 +2485,14 @@ function characterEncode(context, ...opts) {
       if (
         type === "text" &&
         typeof chr === "string" &&
-        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr))
+        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr)) &&
+        (chr.charCodeAt(0) !== 160 ||
+          !Object.keys(context.processedRulesConfig).includes(
+            "bad-character-non-breaking-space"
+          ) ||
+          !isEnabled(
+            context.processedRulesConfig["bad-character-non-breaking-space"]
+          ))
       ) {
         let encodedChr = he.encode(chr, {
           useNamedReferences: mode === "named"

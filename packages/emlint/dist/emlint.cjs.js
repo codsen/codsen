@@ -2725,7 +2725,7 @@ function characterEncode(context) {
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
       }
-      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr))) {
+      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr)) && (chr.charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isEnabled(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
         var encodedChr = he.encode(chr, {
           useNamedReferences: mode === "named"
         });

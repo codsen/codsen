@@ -3,6 +3,7 @@
 
 import he from "he";
 import { notEmailFriendly } from "html-entities-not-email-friendly";
+import { isEnabled } from "../../util";
 
 // Catches characters outside ASCII and suggests encoding.
 // Applies only to "text" scope
@@ -28,7 +29,7 @@ function characterEncode(context, ...opts) {
         mode = opts[0];
       }
       console.log(
-        `031 characterEncode(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+        `032 characterEncode(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
       );
       console.log(
         `notEmailFriendly[${Object.keys(notEmailFriendly)[10]}] = ${
@@ -39,7 +40,14 @@ function characterEncode(context, ...opts) {
       if (
         type === "text" &&
         typeof chr === "string" &&
-        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr))
+        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr)) &&
+        (chr.charCodeAt(0) !== 160 ||
+          !Object.keys(context.processedRulesConfig).includes(
+            "bad-character-non-breaking-space"
+          ) ||
+          !isEnabled(
+            context.processedRulesConfig["bad-character-non-breaking-space"]
+          ))
       ) {
         let encodedChr = he.encode(chr, {
           useNamedReferences: mode === "named"
@@ -55,7 +63,7 @@ function characterEncode(context, ...opts) {
         }
 
         console.log(
-          `058 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
+          `066 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
             encodedChr,
             null,
             4
