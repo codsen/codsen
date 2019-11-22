@@ -197,3 +197,78 @@ test("01.07 - Responsys-style ESP tag", t => {
     t.fail
   );
 });
+
+// heuristically detecting tails and again new heads
+test("01.08 - two nunjucks tags, same pattern set of two, tight", t => {
+  const gathered = [];
+  ct(`{%- a -%}{%- b -%}`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 9
+      },
+      {
+        type: "esp",
+        start: 9,
+        end: 18
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// heuristically detecting tails and again new heads, this time slightly different
+test("01.09 - two nunjucks tags, different pattern set of two, tight", t => {
+  const gathered = [];
+  ct(`{%- if count > 1 -%}{% if count > 1 %}`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 20
+      },
+      {
+        type: "esp",
+        start: 20,
+        end: 38
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// heuristically detecting tails and again new heads
+test.only("01.10 - different set, *|zzz|*", t => {
+  const gathered = [];
+  ct(`*|zzz|**|yyy|*`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 7
+      },
+      {
+        type: "esp",
+        start: 7,
+        end: 14
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
