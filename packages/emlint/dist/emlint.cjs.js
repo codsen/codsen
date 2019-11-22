@@ -19,6 +19,7 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
+var he = _interopDefault(require('he'));
 var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
@@ -2702,6 +2703,40 @@ function htmlEntitiesNotEmailFriendly(context) {
   };
 }
 
+function characterEncode(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    character: function character(_ref) {
+      var type = _ref.type,
+          chr = _ref.chr,
+          i = _ref.i;
+      var mode = "named";
+      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr))) {
+        var encodedChr = he.encode(chr, {
+          useNamedReferences: mode === "named"
+        });
+        if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
+          encodedChr = "&".concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)], ";");
+        }
+        context.report({
+          ruleId: "character-encode",
+          message: "Unencoded character.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, encodedChr]]
+          }
+        });
+      }
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -3053,6 +3088,9 @@ defineLazyProp(builtInRules, "tag-void-slash", function () {
 });
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
+});
+defineLazyProp(builtInRules, "character-encode", function () {
+  return characterEncode;
 });
 function get(something) {
   return builtInRules[something];

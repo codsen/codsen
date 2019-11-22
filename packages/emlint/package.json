@@ -149,6 +149,7 @@
   "dependencies": {
     "codsen-tokenizer": "^2.0.0",
     "define-lazy-prop": "^2.0.0",
+    "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.9",
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",

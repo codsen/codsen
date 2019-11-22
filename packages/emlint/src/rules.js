@@ -816,6 +816,14 @@ defineLazyProp(
   () => htmlEntitiesNotEmailFriendly
 );
 
+// CHARACTER rules
+// -----------------------------------------------------------------------------
+// additional rules running from "character" nodes, more comlex than just
+// matching the Unicode number as "bad-character-*" rules do.
+
+import characterEncode from "./rules/character/character-encode";
+defineLazyProp(builtInRules, "character-encode", () => characterEncode);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -828,7 +836,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `831 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `839 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -899,7 +907,7 @@ function normaliseRequestedRules(opts) {
     }
   });
   console.log(
-    `902 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `910 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

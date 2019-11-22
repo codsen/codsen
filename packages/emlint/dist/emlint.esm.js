@@ -13,6 +13,7 @@ import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
 import { left, right } from 'string-left-right';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
+import he from 'he';
 import lineColumn from 'line-column';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
@@ -2460,6 +2461,44 @@ function htmlEntitiesNotEmailFriendly(context) {
   };
 }
 
+function characterEncode(context, ...opts) {
+  return {
+    character: function({ type, chr, i }) {
+      let mode = "named";
+      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      if (
+        type === "text" &&
+        typeof chr === "string" &&
+        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr))
+      ) {
+        let encodedChr = he.encode(chr, {
+          useNamedReferences: mode === "named"
+        });
+        if (
+          Object.keys(notEmailFriendly).includes(
+            encodedChr.slice(1, encodedChr.length - 1)
+          )
+        ) {
+          encodedChr = `&${
+            notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)]
+          };`;
+        }
+        context.report({
+          ruleId: "character-encode",
+          message: "Unencoded character.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1, encodedChr]]
+          }
+        });
+      }
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -3014,6 +3053,7 @@ defineLazyProp(
   "bad-named-html-entity-not-email-friendly",
   () => htmlEntitiesNotEmailFriendly
 );
+defineLazyProp(builtInRules, "character-encode", () => characterEncode);
 function get(something) {
   return builtInRules[something];
 }
