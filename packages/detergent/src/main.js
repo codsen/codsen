@@ -71,7 +71,8 @@ function det(str, inputOpts) {
   Object.keys(defaultOpts)
     .sort()
     .filter(
-      val => !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags"].includes(val)
+      val =>
+        !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags", "cb"].includes(val)
     )
     .forEach(singleOption => {
       applicableOpts[singleOption] = false;

@@ -728,7 +728,7 @@ function det(str, inputOpts) {
   }
   var applicableOpts = {};
   Object.keys(defaultOpts).sort().filter(function (val) {
-    return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags"].includes(val);
+    return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags", "cb"].includes(val);
   }).forEach(function (singleOption) {
     applicableOpts[singleOption] = false;
   });
