@@ -295,7 +295,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         }
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
-          if (stringLeftRight.right(str, i) || stringLeftRight.left(str, i)) {
+          if (isNumber(stringLeftRight.right(str, i)) || isNumber(stringLeftRight.left(str, i))) {
             applicableOpts.convertApostrophes = true;
             var tempRes = stringApostrophes.convertOne(str, {
               from: i,

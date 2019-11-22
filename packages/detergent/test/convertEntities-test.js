@@ -13,7 +13,7 @@ import {
   rawNbsp
 } from "../dist/util.esm";
 
-// 01. opts.opts.convertEntities
+// 01. opts.convertEntities
 // -----------------------------------------------------------------------------
 
 test(`01.01 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound - convertEntities=on`, t => {
@@ -98,6 +98,26 @@ test(`01.08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspa
       `a - a`,
       JSON.stringify(opt, null, 4)
     );
+  });
+});
+
+test(`01.09 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`, t => {
+  t.is(det1('"', { convertApostrophes: 0, convertEntities: 1 }).res, "&quot;");
+
+  t.is(
+    det1('^"', { convertApostrophes: 0, convertEntities: 1 }).res,
+    "^&quot;"
+  );
+
+  t.is(
+    det1('^`"', { convertApostrophes: 0, convertEntities: 1 }).res,
+    "^`&quot;"
+  );
+
+  mixer({
+    convertEntities: 1
+  }).forEach((opt, n) => {
+    t.is(det(t, n, '^`"', opt).res, "^`&quot;", JSON.stringify(opt, null, 4));
   });
 });
 

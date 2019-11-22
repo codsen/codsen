@@ -716,7 +716,7 @@ function processCharacter(
         }
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
-          if (right(str, i) || left(str, i)) {
+          if (isNumber(right(str, i)) || isNumber(left(str, i))) {
             applicableOpts.convertApostrophes = true;
             const tempRes = convertOne(str, {
               from: i,
