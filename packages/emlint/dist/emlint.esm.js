@@ -133,6 +133,7 @@ var allBadCharacterRules = [
 
 var allTagRules = [
 	"tag-closing-backslash",
+	"tag-name-case",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
 	"tag-space-between-slash-and-bracket",
@@ -2445,6 +2446,29 @@ function tagVoidSlash(context, ...opts) {
   };
 }
 
+function tagNameCase(context) {
+  return {
+    html: function(node) {
+      if (
+        node.tagName &&
+        node.recognised === true &&
+        node.tagName !== node.tagName.toLowerCase()
+      ) {
+        const ranges = [
+          [node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]
+        ];
+        context.report({
+          ruleId: "tag-name-case",
+          message: "Bad tag name case.",
+          idxFrom: node.tagNameStartAt,
+          idxTo: node.tagNameEndAt,
+          fix: { ranges }
+        });
+      }
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
@@ -3083,6 +3107,7 @@ defineLazyProp(
   () => tagClosingBackslash
 );
 defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
+defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(
   builtInRules,
   "bad-named-html-entity-not-email-friendly",
