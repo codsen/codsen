@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "engines": {
@@ -154,7 +154,7 @@
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^2.1.0",
-    "string-fix-broken-named-entities": "^2.4.14",
+    "string-fix-broken-named-entities": "^2.5.0",
     "string-left-right": "^2.3.9"
   },
   "devDependencies": {
@@ -172,11 +172,11 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.7",
+    "js-row-num-cli": "^1.6.8",
     "lect": "^0.11.1",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
-    "ranges-apply": "^3.0.41",
+    "ranges-apply": "^3.0.42",
     "rollup": "^1.27.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

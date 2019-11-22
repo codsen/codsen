@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.5.0 (2019-11-21)
+
+### Features
+
+- release opts.entityCatcherCb - change it to ping only healthy entities + documentation ([d7a76b2](https://gitlab.com/codsen/codsen/commit/d7a76b2948da41eec6054579b51ad595c07af965))
+
 ## 2.4.3 (2019-09-11)
 
 ### Bug Fixes
