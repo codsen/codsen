@@ -500,3 +500,24 @@ test("01.17 - unrecognised tags", t => {
     t.fail
   );
 });
+
+test.only("01.18 - wrong case but still recognised tags", t => {
+  const gathered = [];
+  ct("</tablE>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 8,
+        void: false,
+        recognised: true
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});

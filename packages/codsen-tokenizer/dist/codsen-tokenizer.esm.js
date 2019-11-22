@@ -298,6 +298,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           break;
         }
       }
+      console.log(`216 wholeEspTagLump = ${wholeEspTagLump}`);
       return layers[layers.length - 1].value
         .split("")
         .every(char => wholeEspTagLump.includes(char));
@@ -310,24 +311,50 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   }
   function pingTagCb(incomingToken) {
     if (tagCb) {
+      console.log(
+        `236 PING tagCb() with ${JSON.stringify(incomingToken, null, 4)}`
+      );
       tagCb(clone(incomingToken));
       tokenReset();
     }
   }
   function dumpCurrentToken(token, i) {
+    console.log(
+      `246 ${`\u001b[${35}m${`dumpCurrentToken()`}\u001b[${39}m`}; incoming token=${JSON.stringify(
+        token,
+        null,
+        0
+      )}`
+    );
     if (
       token.type !== "text" &&
       token.start !== null &&
       str[i - 1] &&
       !str[i - 1].trim().length
     ) {
+      console.log(`260 this token indeed had trailing whitespace`);
       token.end = left(str, i) + 1;
+      console.log(
+        `264 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          token.end
+        }`
+      );
       pingTagCb(token);
       token.start = left(str, i) + 1;
       token.type = "text";
+      console.log(
+        `272 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+          token.start
+        }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+      );
     }
     if (token.start !== null) {
       token.end = i;
+      console.log(
+        `282 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          token.end
+        }; then PING tagCb()`
+      );
       pingTagCb(token);
     }
   }
@@ -347,6 +374,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     );
   }
   for (let i = 0; i < len; i++) {
+    console.log(
+      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        str[i] && str[i].trim().length
+          ? str[i]
+          : JSON.stringify(str[i], null, 0)
+      }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+    );
     if (opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (i === midLen) {
@@ -366,13 +400,16 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
+          console.log(`363 DONE ${currentPercentageDone}%`);
         }
       }
     }
     if (Number.isInteger(doNothing) && i >= doNothing) {
       doNothing = false;
+      console.log(`373 TURN OFF doNothing`);
     }
     if (token.end && token.end === i) {
+      console.log(`378 call dumpCurrentToken()`);
       if (token.kind === "style") {
         styleStarts = true;
       }
@@ -385,14 +422,40 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       if (matchLayerLast(str, i)) {
         layers.pop();
+        console.log(`406 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+        console.log(
+          `408 now ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+            layers,
+            null,
+            4
+          )}`
+        );
       } else if (!layers.length || layers[layers.length - 1].type !== "esp") {
         layers.push({
           type: "simple",
           value: str[i]
         });
+        console.log(
+          `427 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            {
+              type: "simple",
+              value: str[i]
+            },
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `437 now ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+            layers,
+            null,
+            4
+          )}`
+        );
       }
     }
     if (!doNothing) {
+      console.log(`454 FIY, layers.length = ${layers.length}`);
       if (
         !layers.length &&
         str[i] === "<" &&
@@ -400,22 +463,48 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true })) &&
         (token.type !== "esp" || token.tail.includes(str[i]))
       ) {
+        console.log(`462 html tag opening`);
         if (token.type) {
           dumpCurrentToken(token, i);
         }
         token.start = i;
         token.type = "html";
+        console.log(
+          `472 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+            token.start
+          }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+        );
         initHtmlToken();
         if (matchRight(str, i, "!--")) {
           token.kind = "comment";
+          console.log(
+            `483 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+              token.kind
+            }`
+          );
         } else if (matchRight(str, i, "!doctype", { i: true })) {
           token.kind = "doctype";
+          console.log(
+            `490 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+              token.kind
+            }`
+          );
         } else if (matchRight(str, i, "?xml", { i: true })) {
           token.kind = "xml";
+          console.log(
+            `497 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+              token.kind
+            }`
+          );
         } else if (
           matchRight(str, i, "style", { i: true, trimCharsBeforeMatching: "/" })
         ) {
           token.kind = "style";
+          console.log(
+            `506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+              token.kind
+            }`
+          );
         }
       } else if (
         !(token.type === "html" && token.kind === "comment") &&
@@ -424,6 +513,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         espChars.includes(str[i + 1]) &&
         !(str[i] === "-" && str[i + 1] === "-")
       ) {
+        console.log(`518 ESP tag detected`);
         let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -432,53 +522,138 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
+        console.log(
+          `533 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wholeEspTagLump = ${wholeEspTagLump}`
+        );
+        console.log(
+          `536 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+            layers,
+            null,
+            4
+          )}`
+        );
         if (!["html", "esp"].includes(token.type)) {
+          console.log("544");
           dumpCurrentToken(token, i);
           token.start = i;
           token.type = "esp";
+          console.log(
+            `550 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              token.start
+            }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+          );
           doNothing = i + wholeEspTagLump.length;
+          console.log(
+            `556 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+          );
           token.tail = flipEspTag(wholeEspTagLump);
+          console.log(
+            `560 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tail`}\u001b[${39}m`} = ${
+              token.tail
+            }`
+          );
         } else if (token.type === "html") {
+          console.log("565");
           if (matchLayerLast(str, i)) {
             layers.pop();
+            console.log(`569 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
           } else {
+            console.log(`571 ESP tag within HTML tag`);
             layers.push({
               type: "esp",
               value: flipEspTag(wholeEspTagLump)
             });
+            console.log(
+              `577 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                {
+                  type: "esp",
+                  value: flipEspTag(wholeEspTagLump)
+                },
+                null,
+                4
+              )}`
+            );
+            console.log(
+              `587 ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+                layers,
+                null,
+                4
+              )}`
+            );
           }
+        } else {
+          console.log("595");
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
+          console.log(`599`);
           if (!str[i].trim().length) {
             token.start = i;
             token.type = "text";
             token.end = right(str, i) || str.length;
+            console.log(
+              `606 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                token.start
+              }; ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+            );
             pingTagCb(token);
             if (right(str, i)) {
               token.start = right(str, i);
               token.type = "css";
+              console.log(
+                `620 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                  token.start
+                }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+                  token.type
+                }`
+              );
               doNothing = right(str, i);
+              console.log(
+                `629 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+              );
             }
           } else {
             token.start = i;
             token.type = "css";
+            console.log(
+              `637 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+                token.start
+              }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
+            );
           }
         } else {
           token.start = i;
+          console.log(
+            `646 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
+              token.start
+            }`
+          );
           token.type = "text";
+          console.log(
+            `652 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${
+              token.type
+            }`
+          );
         }
       }
     }
     if (!doNothing) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
+        console.log(
+          `668 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            token.end
+          }`
+        );
       } else if (
         token.type === "esp" &&
         token.end === null &&
         isStr(token.tail) &&
         token.tail.includes(str[i])
       ) {
+        console.log(`678 POSSIBLE ESP TAILS`);
         let wholeEspTagClosing = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -487,8 +662,17 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
+        console.log(`688 wholeEspTagClosing = ${wholeEspTagClosing}`);
         token.end = i + wholeEspTagClosing.length;
+        console.log(
+          `692 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            token.end
+          }`
+        );
         doNothing = i + wholeEspTagClosing.length;
+        console.log(
+          `698 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+        );
       }
     }
     if (
@@ -498,11 +682,33 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       if (!isLatinLetter(str[i])) {
         token.tagNameEndAt = i;
+        console.log(
+          `715 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndAt`}\u001b[${39}m`} = ${
+            token.tagNameEndAt
+          }`
+        );
         token.tagName = str.slice(token.tagNameStartAt, i);
+        console.log(
+          `722 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+            token.tagName
+          }`
+        );
         if (voidTags.includes(token.tagName)) {
           token.void = true;
+          console.log(
+            `733 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
+              token.void
+            }`
+          );
         }
-        token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName);
+        token.recognised = allHTMLTagsKnownToHumanity.includes(
+          token.tagName.toLowerCase()
+        );
+        console.log(
+          `743 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
+            token.recognised
+          }`
+        );
       }
     }
     if (
@@ -513,14 +719,40 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       if (str[i] === "/") {
         token.closing = true;
+        console.log(
+          `765 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+            token.closing
+          }`
+        );
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartAt = i;
+        console.log(
+          `772 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartAt`}\u001b[${39}m`} = ${
+            token.tagNameStartAt
+          }`
+        );
         if (!token.closing) {
           token.closing = false;
+          console.log(
+            `781 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+              token.closing
+            }`
+          );
         }
       }
     }
     if (charCb) {
+      console.log(
+        `814 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          {
+            type: token.type,
+            chr: str[i],
+            i
+          },
+          null,
+          4
+        )}`
+      );
       pingCharCb({
         type: token.type,
         chr: str[i],
@@ -531,6 +763,19 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       token.end = i + 1;
       pingTagCb(token);
     }
+    console.log(
+      `${`\u001b[${90}m${`==========================================\ntoken: ${JSON.stringify(
+        token,
+        null,
+        0
+      )}${
+        layers.length ? `\nlayers: ${JSON.stringify(layers, null, 0)}` : ""
+      }`}\u001b[${39}m`}${
+        doNothing
+          ? `\n${`\u001b[${31}m${`DO NOTHING UNTIL ${doNothing}`}\u001b[${39}m`}`
+          : ""
+      }`
+    );
   }
 }
 
