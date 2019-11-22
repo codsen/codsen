@@ -52,6 +52,35 @@ test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characte
   t.is(applyFixes(str, messages), "&pound;100");
 });
 
+test(`01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`, t => {
+  const str = "£100";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      all: 1
+    }
+  });
+  deepContains(
+    messages,
+    [
+      {
+        ruleId: "character-encode",
+        severity: 1,
+        idxFrom: 0,
+        idxTo: 1,
+        line: 1,
+        message: "Unencoded character.",
+        fix: {
+          ranges: [[0, 1, "&pound;"]]
+        }
+      }
+    ],
+    t.is,
+    t.fail
+  );
+  t.is(applyFixes(str, messages), "&pound;100");
+});
+
 // 02. basic tests, no config
 // -----------------------------------------------------------------------------
 

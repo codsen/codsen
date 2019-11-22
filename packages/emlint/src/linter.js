@@ -153,7 +153,8 @@ class Linter extends EventEmitter {
     if (
       Object.keys(config.rules).some(
         ruleName =>
-          (ruleName === "bad-html-entity" || // group blanket setting
+          (ruleName === "all" || // group blanket setting
+          ruleName === "bad-html-entity" || // group blanket setting
             ruleName.startsWith("bad-html-entity") ||
             ruleName.startsWith("bad-named-html-entity") ||
             matcher.isMatch(
@@ -278,6 +279,11 @@ class Linter extends EventEmitter {
         }
       });
     }
+
+    // remove all listeners
+    ["html", "css", "text", "esp", "character"].forEach(eventName => {
+      this.removeAllListeners(eventName);
+    });
 
     console.log(
       `283 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(

@@ -147,6 +147,20 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
+function isEnabled(maybeARulesValue) {
+  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
+    return maybeARulesValue;
+  } else if (
+    Array.isArray(maybeARulesValue) &&
+    maybeARulesValue.length &&
+    Number.isInteger(maybeARulesValue[0]) &&
+    maybeARulesValue[0] > 0
+  ) {
+    return maybeARulesValue[0];
+  }
+  return 0;
+}
+
 function badCharacterNull(context) {
   return {
     character: function({ chr, i }) {
@@ -3059,53 +3073,62 @@ function get(something) {
 }
 function normaliseRequestedRules(opts) {
   const res = {};
-  if (
-    Object.keys(opts).some(ruleName =>
-      ["bad-character", "bad-character*", "bad-character-*"].includes(ruleName)
-    )
-  ) {
-    allBadCharacterRules.forEach(ruleName => {
-      res[ruleName] = opts["bad-character"];
+  if (Object.keys(opts).includes("all") && isEnabled(opts.all)) {
+    Object.keys(builtInRules).forEach(ruleName => {
+      res[ruleName] = opts.all;
     });
-  }
-  if (
-    Object.keys(opts).some(ruleName =>
-      ["tag", "tag*", "tag-*"].includes(ruleName)
-    )
-  ) {
-    allTagRules.forEach(ruleName => {
-      res[ruleName] = opts["tag"];
-    });
-  }
-  if (Object.keys(opts).includes("bad-html-entity")) {
-    allBadNamedHTMLEntityRules.forEach(ruleName => {
-      res[ruleName] = opts["bad-html-entity"];
-    });
-  }
-  Object.keys(opts).forEach(ruleName => {
+  } else {
     if (
-      ![
-        "tag",
-        "tag*",
-        "tag-*",
-        "bad-character",
-        "bad-character",
-        "bad-character*",
-        "bad-character-*",
-        "bad-html-entity"
-      ].includes(ruleName)
+      Object.keys(opts).some(ruleName =>
+        ["bad-character", "bad-character*", "bad-character-*"].includes(
+          ruleName
+        )
+      )
     ) {
-      if (Object.keys(builtInRules).includes(ruleName)) {
-        res[ruleName] = clone(opts[ruleName]);
-      } else if (ruleName.includes("*")) {
-        Object.keys(builtInRules).forEach(builtInRule => {
-          if (matcher.isMatch(builtInRule, ruleName)) {
-            res[builtInRule] = clone(opts[ruleName]);
-          }
-        });
-      }
+      allBadCharacterRules.forEach(ruleName => {
+        res[ruleName] = opts["bad-character"];
+      });
     }
-  });
+    if (
+      Object.keys(opts).some(ruleName =>
+        ["tag", "tag*", "tag-*"].includes(ruleName)
+      )
+    ) {
+      allTagRules.forEach(ruleName => {
+        res[ruleName] = opts["tag"];
+      });
+    }
+    if (Object.keys(opts).includes("bad-html-entity")) {
+      allBadNamedHTMLEntityRules.forEach(ruleName => {
+        res[ruleName] = opts["bad-html-entity"];
+      });
+    }
+    Object.keys(opts).forEach(ruleName => {
+      if (
+        ![
+          "all",
+          "tag",
+          "tag*",
+          "tag-*",
+          "bad-character",
+          "bad-character",
+          "bad-character*",
+          "bad-character-*",
+          "bad-html-entity"
+        ].includes(ruleName)
+      ) {
+        if (Object.keys(builtInRules).includes(ruleName)) {
+          res[ruleName] = clone(opts[ruleName]);
+        } else if (ruleName.includes("*")) {
+          Object.keys(builtInRules).forEach(builtInRule => {
+            if (matcher.isMatch(builtInRule, ruleName)) {
+              res[builtInRule] = clone(opts[ruleName]);
+            }
+          });
+        }
+      }
+    });
+  }
   return res;
 }
 
@@ -3480,20 +3503,6 @@ function unwrapListeners(arr) {
   return ret;
 }
 
-function isEnabled(maybeARulesValue) {
-  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
-    return maybeARulesValue;
-  } else if (
-    Array.isArray(maybeARulesValue) &&
-    maybeARulesValue.length &&
-    Number.isInteger(maybeARulesValue[0]) &&
-    maybeARulesValue[0] > 0
-  ) {
-    return maybeARulesValue[0];
-  }
-  return 0;
-}
-
 EventEmitter.defaultMaxListeners = 0;
 class Linter extends EventEmitter {
   verify(str, config) {
@@ -3565,7 +3574,8 @@ class Linter extends EventEmitter {
     if (
       Object.keys(config.rules).some(
         ruleName =>
-          (ruleName === "bad-html-entity" ||
+          (ruleName === "all" ||
+          ruleName === "bad-html-entity" ||
             ruleName.startsWith("bad-html-entity") ||
             ruleName.startsWith("bad-named-html-entity") ||
             matcher.isMatch(
@@ -3653,6 +3663,9 @@ class Linter extends EventEmitter {
         }
       });
     }
+    ["html", "css", "text", "esp", "character"].forEach(eventName => {
+      this.removeAllListeners(eventName);
+    });
     return this.messages;
   }
   report(obj) {
