@@ -200,6 +200,18 @@ test(`02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`, t
   t.is(applyFixes(str, messages), "&pound;100");
 });
 
+test(`02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`, t => {
+  const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "character-encode": 2
+    }
+  });
+  t.deepEqual(messages, []);
+  t.is(applyFixes(str, messages), str);
+});
+
 // 03. Email-unfriendly entities
 // -----------------------------------------------------------------------------
 
