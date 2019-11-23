@@ -137,7 +137,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }
   }
   function dumpCurrentToken(token, i) {
-    if (token.type !== "text" && token.start && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
+    if (token.type !== "text" && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
       token.end = stringLeftRight.left(str, i) + 1;
       pingTagCb(token);
       token.start = stringLeftRight.left(str, i) + 1;
@@ -197,7 +197,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || stringMatchLeftRight.matchRight(str, i, ["!--", "!doctype", "?xml"], {
         i: true
       })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
-        if (token.type && token.start) {
+        if (token.type && Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
         }
         token.start = i;
@@ -281,7 +281,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         }
         if (wholeEspTagClosing.length > token.head.length) {
           var headsFirstChar = token.head[0];
-          if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
+          if (wholeEspTagClosing.endsWith(token.head)) {
+            token.end = i + wholeEspTagClosing.length - token.head.length;
+            doNothing = token.end;
+          } else if (wholeEspTagClosing.startsWith(token.tail)) {
+            token.end = i + token.tail.length;
+            doNothing = token.end;
+          } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
             (function () {
               var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
               var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));

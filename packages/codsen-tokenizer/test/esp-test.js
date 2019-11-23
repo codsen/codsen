@@ -249,9 +249,33 @@ test("01.09 - two nunjucks tags, different pattern set of two, tight", t => {
 });
 
 // heuristically detecting tails and again new heads
-test.only("01.10 - different set, *|zzz|*", t => {
+test("01.10 - different set, *|zzz|*", t => {
   const gathered = [];
   ct(`*|zzz|**|yyy|*`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 7
+      },
+      {
+        type: "esp",
+        start: 7,
+        end: 14
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("01.11 - error, two ESP tags joined, first one ends with heads instead of tails", t => {
+  const gathered = [];
+  ct(`*|zzz*|*|yyy|*`, obj => {
     gathered.push(obj);
   });
   deepContains(

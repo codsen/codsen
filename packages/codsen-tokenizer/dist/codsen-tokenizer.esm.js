@@ -317,7 +317,6 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   function dumpCurrentToken(token, i) {
     if (
       token.type !== "text" &&
-      token.start &&
       token.start !== null &&
       token.start < i &&
       str[i - 1] &&
@@ -402,7 +401,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true })) &&
         (token.type !== "esp" || token.tail.includes(str[i]))
       ) {
-        if (token.type && token.start) {
+        if (token.type && Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
         }
         token.start = i;
@@ -492,7 +491,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         }
         if (wholeEspTagClosing.length > token.head.length) {
           const headsFirstChar = token.head[0];
-          if (
+          if (wholeEspTagClosing.endsWith(token.head)) {
+            token.end = i + wholeEspTagClosing.length - token.head.length;
+            doNothing = token.end;
+          } else if (wholeEspTagClosing.startsWith(token.tail)) {
+            token.end = i + token.tail.length;
+            doNothing = token.end;
+          } else if (
             (!token.tail.includes(headsFirstChar) &&
               wholeEspTagClosing.includes(headsFirstChar)) ||
             wholeEspTagClosing.endsWith(token.head) ||
