@@ -1,4 +1,4 @@
-// avaonly
+// avanotonly
 
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
@@ -652,6 +652,97 @@ test("02.04 - CDATA - messed up 3", t => {
         void: false,
         recognised: true,
         kind: "cdata"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// 03. XML
+// -----------------------------------------------------------------------------
+
+test("03.01 - XML - correct", t => {
+  const gathered = [];
+  ct(`<?xml version="1.0" encoding="UTF-8"?>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 38,
+        void: false,
+        recognised: true,
+        kind: "xml"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("03.02 - XML - incorrect 1", t => {
+  const gathered = [];
+  ct(`< ?xml version="1.0" encoding="UTF-8"?>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 39,
+        void: false,
+        recognised: true,
+        kind: "xml"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("03.02 - XML - incorrect 2", t => {
+  const gathered = [];
+  ct(`<? xml version="1.0" encoding="UTF-8"?>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 39,
+        void: false,
+        recognised: true,
+        kind: "xml"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("03.03 - XML - incorrect 3", t => {
+  const gathered = [];
+  ct(`< ?XML version="1.0" encoding="UTF-8"?>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 39,
+        void: false,
+        recognised: true,
+        kind: "xml"
       }
     ],
     t.is,
