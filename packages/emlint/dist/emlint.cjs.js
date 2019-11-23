@@ -2694,19 +2694,35 @@ function tagVoidSlash(context) {
 }
 
 function tagNameCase(context) {
+  var knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
     html: function html(node) {
-      if (node.tagName && node.recognised === true && node.tagName !== node.tagName.toLowerCase()) {
-        var ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]];
-        context.report({
-          ruleId: "tag-name-case",
-          message: "Bad tag name case.",
-          idxFrom: node.tagNameStartAt,
-          idxTo: node.tagNameEndAt,
-          fix: {
-            ranges: ranges
+      if (node.tagName && node.recognised === true) {
+        if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
+          if (node.tagName !== node.tagName.toUpperCase()) {
+            var ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toUpperCase()]];
+            context.report({
+              ruleId: "tag-name-case",
+              message: "Bad tag name case.",
+              idxFrom: node.tagNameStartAt,
+              idxTo: node.tagNameEndAt,
+              fix: {
+                ranges: ranges
+              }
+            });
           }
-        });
+        } else if (node.tagName !== node.tagName.toLowerCase()) {
+          var _ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]];
+          context.report({
+            ruleId: "tag-name-case",
+            message: "Bad tag name case.",
+            idxFrom: node.tagNameStartAt,
+            idxTo: node.tagNameEndAt,
+            fix: {
+              ranges: _ranges
+            }
+          });
+        }
       }
     }
   };
