@@ -398,7 +398,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         !layers.length &&
         str[i] === "<" &&
         (isTagOpening(str, i) ||
-          matchRight(str, i, ["!--", "!doctype", "?xml"], { i: true })) &&
+          str.startsWith("!--", i + 1) ||
+          matchRight(str, i, ["doctype", "xml", "cdata"], {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })) &&
         (token.type !== "esp" || token.tail.includes(str[i]))
       ) {
         if (token.type && Number.isInteger(token.start)) {
@@ -409,12 +413,32 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         initHtmlToken();
         if (matchRight(str, i, "!--")) {
           token.kind = "comment";
-        } else if (matchRight(str, i, "!doctype", { i: true })) {
+        } else if (
+          matchRight(str, i, "doctype", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })
+        ) {
           token.kind = "doctype";
-        } else if (matchRight(str, i, "?xml", { i: true })) {
+        } else if (
+          matchRight(str, i, "cdata", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })
+        ) {
+          token.kind = "cdata";
+        } else if (
+          matchRight(str, i, "xml", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+          })
+        ) {
           token.kind = "xml";
         } else if (
-          matchRight(str, i, "style", { i: true, trimCharsBeforeMatching: "/" })
+          matchRight(str, i, "style", {
+            i: true,
+            trimCharsBeforeMatching: ["?", "!", "[", " ", "-", "/", "\\"]
+          })
         ) {
           token.kind = "style";
         }
@@ -543,7 +567,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         }
         token.recognised =
           allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) ||
-          ["doctype"].includes(token.tagName.toLowerCase());
+          ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
       }
     }
     if (

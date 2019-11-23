@@ -194,8 +194,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       }
     }
     if (!doNothing) {
-      if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || stringMatchLeftRight.matchRight(str, i, ["!--", "!doctype", "?xml"], {
-        i: true
+      if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+        i: true,
+        trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
         if (token.type && Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
@@ -205,17 +206,24 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         initHtmlToken();
         if (stringMatchLeftRight.matchRight(str, i, "!--")) {
           token.kind = "comment";
-        } else if (stringMatchLeftRight.matchRight(str, i, "!doctype", {
-          i: true
+        } else if (stringMatchLeftRight.matchRight(str, i, "doctype", {
+          i: true,
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "doctype";
-        } else if (stringMatchLeftRight.matchRight(str, i, "?xml", {
-          i: true
+        } else if (stringMatchLeftRight.matchRight(str, i, "cdata", {
+          i: true,
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+        })) {
+          token.kind = "cdata";
+        } else if (stringMatchLeftRight.matchRight(str, i, "xml", {
+          i: true,
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "xml";
         } else if (stringMatchLeftRight.matchRight(str, i, "style", {
           i: true,
-          trimCharsBeforeMatching: "/"
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-", "/", "\\"]
         })) {
           token.kind = "style";
         }
@@ -315,7 +323,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token["void"] = true;
         }
-        token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype"].includes(token.tagName.toLowerCase());
+        token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
       }
     }
     if (token.type === "html" && !isNum(token.tagNameStartAt) && isNum(token.start) && token.start < i) {

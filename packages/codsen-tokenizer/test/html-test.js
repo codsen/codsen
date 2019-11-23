@@ -1,4 +1,4 @@
-// avanotonly
+// avaonly
 
 import test from "ava";
 import ct from "../dist/codsen-tokenizer.esm";
@@ -561,6 +561,97 @@ test("01.20 - correct HTML5 doctype", t => {
         end: 105,
         void: false,
         recognised: true
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+// 02. CDATA
+// -----------------------------------------------------------------------------
+
+test("02.01 - CDATA - correct", t => {
+  const gathered = [];
+  ct(`<![CDATA[x<y]]>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 15,
+        void: false,
+        recognised: true,
+        kind: "cdata"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("02.02 - CDATA - messed up 1", t => {
+  const gathered = [];
+  ct(`<[CDATA[x<y]]>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 14,
+        void: false,
+        recognised: true,
+        kind: "cdata"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("02.03 - CDATA - messed up 2", t => {
+  const gathered = [];
+  ct(`<!CDATA[x<y]]>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 14,
+        void: false,
+        recognised: true,
+        kind: "cdata"
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("02.04 - CDATA - messed up 3", t => {
+  const gathered = [];
+  ct(`<![ CData[x<y]]>`, obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 16,
+        void: false,
+        recognised: true,
+        kind: "cdata"
       }
     ],
     t.is,
