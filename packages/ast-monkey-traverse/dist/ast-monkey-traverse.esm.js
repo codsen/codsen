@@ -21,7 +21,8 @@ function existy(x) {
   return x != null;
 }
 function astMonkeyTraverse(tree1, cb1) {
-  function traverseInner(treeOriginal, callback, innerObj) {
+  const stop = { now: false };
+  function traverseInner(treeOriginal, callback, innerObj, stop) {
     const tree = clone(treeOriginal);
     let i;
     let len;
@@ -32,6 +33,9 @@ function astMonkeyTraverse(tree1, cb1) {
     innerObj.depth += 1;
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
+        if (stop.now) {
+          break;
+        }
         const path = `${innerObj.path}.${i}`;
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
@@ -40,10 +44,12 @@ function astMonkeyTraverse(tree1, cb1) {
             callback(
               tree[i],
               undefined,
-              Object.assign({}, innerObj, { path: trimFirstDot(path) })
+              Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+              stop
             ),
             callback,
-            Object.assign({}, innerObj, { path: trimFirstDot(path) })
+            Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+            stop
           );
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
@@ -58,6 +64,9 @@ function astMonkeyTraverse(tree1, cb1) {
     } else if (isObj(tree)) {
       allKeys = Object.keys(tree);
       for (i = 0, len = allKeys.length; i < len; i++) {
+        if (stop.now) {
+          break;
+        }
         key = allKeys[i];
         const path = `${innerObj.path}.${key}`;
         if (innerObj.depth === 0 && existy(key)) {
@@ -69,10 +78,12 @@ function astMonkeyTraverse(tree1, cb1) {
           callback(
             key,
             tree[key],
-            Object.assign({}, innerObj, { path: trimFirstDot(path) })
+            Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+            stop
           ),
           callback,
-          Object.assign({}, innerObj, { path: trimFirstDot(path) })
+          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          stop
         );
         if (Number.isNaN(res)) {
           delete tree[key];
@@ -83,7 +94,7 @@ function astMonkeyTraverse(tree1, cb1) {
     }
     return tree;
   }
-  return traverseInner(tree1, cb1, {});
+  return traverseInner(tree1, cb1, {}, stop);
 }
 
 export default astMonkeyTraverse;

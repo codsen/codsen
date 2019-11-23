@@ -25,7 +25,10 @@ function existy(x) {
   return x != null;
 }
 function astMonkeyTraverse(tree1, cb1) {
-  function traverseInner(treeOriginal, callback, innerObj) {
+  var stop = {
+    now: false
+  };
+  function traverseInner(treeOriginal, callback, innerObj, stop) {
     var tree = clone(treeOriginal);
     var i;
     var len;
@@ -39,15 +42,18 @@ function astMonkeyTraverse(tree1, cb1) {
     innerObj.depth += 1;
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
+        if (stop.now) {
+          break;
+        }
         var path = "".concat(innerObj.path, ".").concat(i);
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           innerObj.parentType = "array";
           res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
             path: trimFirstDot(path)
-          })), callback, Object.assign({}, innerObj, {
+          }), stop), callback, Object.assign({}, innerObj, {
             path: trimFirstDot(path)
-          }));
+          }), stop);
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
             i -= 1;
@@ -61,6 +67,9 @@ function astMonkeyTraverse(tree1, cb1) {
     } else if (isObj(tree)) {
       allKeys = Object.keys(tree);
       for (i = 0, len = allKeys.length; i < len; i++) {
+        if (stop.now) {
+          break;
+        }
         key = allKeys[i];
         var _path = "".concat(innerObj.path, ".").concat(key);
         if (innerObj.depth === 0 && existy(key)) {
@@ -70,9 +79,9 @@ function astMonkeyTraverse(tree1, cb1) {
         innerObj.parentType = "object";
         res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
           path: trimFirstDot(_path)
-        })), callback, Object.assign({}, innerObj, {
+        }), stop), callback, Object.assign({}, innerObj, {
           path: trimFirstDot(_path)
-        }));
+        }), stop);
         if (Number.isNaN(res)) {
           delete tree[key];
         } else {
@@ -82,7 +91,7 @@ function astMonkeyTraverse(tree1, cb1) {
     }
     return tree;
   }
-  return traverseInner(tree1, cb1, {});
+  return traverseInner(tree1, cb1, {}, stop);
 }
 
 module.exports = astMonkeyTraverse;
