@@ -170,6 +170,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimCharsBeforeMatching: [],
     relaxedApi: false
   };
+  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(isArr(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
+  }
   var opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
@@ -307,6 +310,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     for (var i = 0, len = whatToMatch.length; i < len; i++) {
       special = typeof whatToMatch[i] === "function";
       var whatToMatchVal = whatToMatch[i];
+      var fullCharacterInFront = void 0;
+      var indexOfTheCharacterInFront = void 0;
+      var restOfStringInFront = "";
       var _startingPosition = position;
       if (mode === "matchLeft") {
         if (
@@ -320,9 +326,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
       }
-      var indexOfTheCharacterInFront = void 0;
-      var fullCharacterInFront = void 0;
-      var restOfStringInFront = "";
       if (existy(found) && found > 0) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];

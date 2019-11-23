@@ -190,6 +190,19 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimCharsBeforeMatching: [],
     relaxedApi: false
   };
+  if (
+    isObj(originalOpts) &&
+    Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") &&
+    typeof originalOpts.trimBeforeMatching !== "boolean"
+  ) {
+    throw new Error(
+      `string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${
+        isArr(originalOpts.trimBeforeMatching)
+          ? ` Did you mean to use opts.trimCharsBeforeMatching?`
+          : ""
+      }`
+    );
+  }
   const opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el =>
@@ -392,6 +405,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     for (let i = 0, len = whatToMatch.length; i < len; i++) {
       special = typeof whatToMatch[i] === "function";
       const whatToMatchVal = whatToMatch[i];
+      let fullCharacterInFront;
+      let indexOfTheCharacterInFront;
+      let restOfStringInFront = "";
       let startingPosition = position;
       if (mode === "matchLeft") {
         if (
@@ -427,9 +443,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           ? whatToMatchVal()
           : false;
       }
-      let indexOfTheCharacterInFront;
-      let fullCharacterInFront;
-      let restOfStringInFront = "";
       if (existy(found) && found > 0) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];
