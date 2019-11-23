@@ -897,9 +897,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           );
         }
 
-        token.recognised = allHTMLTagsKnownToHumanity.includes(
-          token.tagName.toLowerCase()
-        );
+        token.recognised =
+          allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) ||
+          ["doctype"].includes(token.tagName.toLowerCase());
         console.log(
           `904 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
             token.recognised

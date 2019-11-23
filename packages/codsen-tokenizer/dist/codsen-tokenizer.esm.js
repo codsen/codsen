@@ -541,9 +541,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token.void = true;
         }
-        token.recognised = allHTMLTagsKnownToHumanity.includes(
-          token.tagName.toLowerCase()
-        );
+        token.recognised =
+          allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) ||
+          ["doctype"].includes(token.tagName.toLowerCase());
       }
     }
     if (

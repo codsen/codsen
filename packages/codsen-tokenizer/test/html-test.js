@@ -521,3 +521,49 @@ test("01.18 - wrong case but still recognised tags", t => {
     t.fail
   );
 });
+
+test("01.19 - correct HTML5 doctype", t => {
+  const gathered = [];
+  ct("<!DOCTYPE html>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 15,
+        void: false,
+        recognised: true
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
+test("01.20 - correct HTML5 doctype", t => {
+  const gathered = [];
+  ct(
+    `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">`,
+    obj => {
+      gathered.push(obj);
+    }
+  );
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 105,
+        void: false,
+        recognised: true
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
