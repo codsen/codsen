@@ -100,7 +100,7 @@
     "package-hash": "^4.0.0",
     "pkg-conf": "^3.1.0",
     "plur": "^3.1.1",
-    "pretty-ms": "^5.0.0",
+    "pretty-ms": "^5.1.0",
     "require-precompiled": "^0.1.0",
     "resolve-cwd": "^3.0.0",
     "slash": "^3.0.0",
@@ -130,7 +130,7 @@
     "signal-exit": "^3.0.2",
     "sinon": "^7.5.0",
     "source-map-fixtures": "^2.1.0",
-    "tap": "^14.10.0",
+    "tap": "^14.10.1",
     "temp-write": "^4.0.0",
     "touch": "^3.1.0",
     "zen-observable": "^0.8.15"
