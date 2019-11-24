@@ -51,26 +51,12 @@ function dropIth(arr, badIdx) {
     return i !== badIdx;
   });
 }
-function strictCompare(tree1, tree2, cb, errCb, opts) {
-  if (typeDetect(tree1) !== typeDetect(tree2)) {
-    errCb("the first input arg is of a type ".concat(typeDetect(tree1).toLowerCase(), " but the second is ").concat(typeDetect(tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
-  } else {
-    traverse(tree2, function (key, val, innerObj) {
-      var current = val !== undefined ? val : key;
-      var path = innerObj.path;
-      if (objectPath.has(tree1, path)) {
-        var retrieved = objectPath.get(tree1, path);
-        if (!isObj(retrieved) && !isArr(retrieved) || !opts.skipContainers) {
-          cb(retrieved, current, path);
-        }
-      } else {
-        errCb("the first input: ".concat(JSON.stringify(tree1, null, 4), "\ndoes not have the path \"").concat(path, "\", we were looking, would it contain a value ").concat(JSON.stringify(current, null, 0), "."));
-      }
-      return current;
-    });
-  }
-}
-function specialCompare(tree1, tree2, cb, errCb, opts) {
+function deepContains(tree1, tree2, cb, errCb, originalOpts) {
+  var defaults = {
+    skipContainers: true,
+    arrayStrictComparison: false
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb("the first input arg is of a type ".concat(typeDetect(tree1).toLowerCase(), " but the second is ").concat(typeDetect(tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
   } else {
@@ -78,7 +64,7 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
       var current = val !== undefined ? val : key;
       var path = innerObj.path;
       if (objectPath.has(tree1, path)) {
-        if (isObj(current) && innerObj.parentType === "array") {
+        if (!opts.arrayStrictComparison && isObj(current) && innerObj.parentType === "array") {
           (function () {
             stop.now = true;
             var arr1 = Array.from(innerObj.path.includes(".") ? objectPath.get(tree1, goUp(path)) : tree1);
@@ -146,7 +132,7 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
                   if (finalCombined[_i2][2] === maxScore) {
                     finalCombined[_i2].forEach(function (matchPairObj, y) {
                       if (y < finalCombined[_i2].length - 1) {
-                        specialCompare(arr1[matchPairObj[1]], arr2[matchPairObj[0]], cb, errCb, opts);
+                        deepContains(arr1[matchPairObj[1]], arr2[matchPairObj[0]], cb, errCb, opts);
                       }
                     });
                     return "break";
@@ -171,17 +157,6 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
       return current;
     });
   }
-}
-function deepContains(tree1, tree2, cb, errCb, originalOpts) {
-  var defaults = {
-    skipContainers: true,
-    arrayStrictComparison: false
-  };
-  var opts = Object.assign({}, defaults, originalOpts);
-  if (opts.arrayStrictComparison) {
-    return strictCompare(tree1, tree2, cb, errCb, opts);
-  }
-  return specialCompare(tree1, tree2, cb, errCb, opts);
 }
 
 module.exports = deepContains;

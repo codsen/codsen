@@ -25,69 +25,12 @@ function dropIth(arr, badIdx) {
   return Array.from(arr).filter((el, i) => i !== badIdx);
 }
 
-function strictCompare(tree1, tree2, cb, errCb, opts) {
-  console.log(`029 strictCompare() called`);
-  if (typeDetect(tree1) !== typeDetect(tree2)) {
-    errCb(
-      `the first input arg is of a type ${typeDetect(
-        tree1
-      ).toLowerCase()} but the second is ${typeDetect(
-        tree2
-      ).toLowerCase()}. Values are - 1st:\n${JSON.stringify(
-        tree1,
-        null,
-        4
-      )}\n2nd:\n${JSON.stringify(tree2, null, 4)}`
-    );
-  } else {
-    // release AST monkey to traverse tree2, check each node's presence in tree1
-    traverse(tree2, (key, val, innerObj) => {
-      const current = val !== undefined ? val : key;
-      // retrieve the path of the current node from the monkey
-      console.log(
-        `048 ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
-          innerObj,
-          null,
-          4
-        )}; typeof current = "${typeof current}"`
-      );
-      const { path } = innerObj;
-      console.log("\n");
-      console.log(
-        `057 ========= ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-          current,
-          null,
-          4
-        )}`
-      );
-      // mind you, value on the path might be falsey such as null, so we check
-      // its existence not by evaluating, is it truthy, but by path existence:
-      if (objectPath.has(tree1, path)) {
-        // if tree1 has that path on tree2, call the callback
-        const retrieved = objectPath.get(tree1, path);
-        if ((!isObj(retrieved) && !isArr(retrieved)) || !opts.skipContainers) {
-          cb(retrieved, current, path);
-        }
-      } else {
-        errCb(
-          `the first input: ${JSON.stringify(
-            tree1,
-            null,
-            4
-          )}\ndoes not have the path "${path}", we were looking, would it contain a value ${JSON.stringify(
-            current,
-            null,
-            0
-          )}.`
-        );
-      }
-      return current;
-    });
-  }
-}
-
-function specialCompare(tree1, tree2, cb, errCb, opts) {
-  console.log(`090 specialCompare() called`);
+function deepContains(tree1, tree2, cb, errCb, originalOpts) {
+  const defaults = {
+    skipContainers: true,
+    arrayStrictComparison: false
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb(
       `the first input arg is of a type ${typeDetect(
@@ -124,7 +67,11 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
 
       if (objectPath.has(tree1, path)) {
         console.log(`126 tree1 does have the path "${path}"`);
-        if (isObj(current) && innerObj.parentType === "array") {
+        if (
+          !opts.arrayStrictComparison &&
+          isObj(current) &&
+          innerObj.parentType === "array"
+        ) {
           console.log(
             `129 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`
           );
@@ -359,7 +306,7 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
                     );
 
                     // ping object pairs recursively:
-                    specialCompare(
+                    deepContains(
                       arr1[matchPairObj[1]],
                       arr2[matchPairObj[0]],
                       cb,
@@ -420,18 +367,6 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
       return current;
     });
   }
-}
-
-function deepContains(tree1, tree2, cb, errCb, originalOpts) {
-  const defaults = {
-    skipContainers: true,
-    arrayStrictComparison: false
-  };
-  const opts = Object.assign({}, defaults, originalOpts);
-  if (opts.arrayStrictComparison) {
-    return strictCompare(tree1, tree2, cb, errCb, opts);
-  }
-  return specialCompare(tree1, tree2, cb, errCb, opts);
 }
 
 // -----------------------------------------------------------------------------

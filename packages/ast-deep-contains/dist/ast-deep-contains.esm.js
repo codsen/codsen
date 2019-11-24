@@ -31,46 +31,12 @@ function goUp(pathStr) {
 function dropIth(arr, badIdx) {
   return Array.from(arr).filter((el, i) => i !== badIdx);
 }
-function strictCompare(tree1, tree2, cb, errCb, opts) {
-  if (typeDetect(tree1) !== typeDetect(tree2)) {
-    errCb(
-      `the first input arg is of a type ${typeDetect(
-        tree1
-      ).toLowerCase()} but the second is ${typeDetect(
-        tree2
-      ).toLowerCase()}. Values are - 1st:\n${JSON.stringify(
-        tree1,
-        null,
-        4
-      )}\n2nd:\n${JSON.stringify(tree2, null, 4)}`
-    );
-  } else {
-    traverse(tree2, (key, val, innerObj) => {
-      const current = val !== undefined ? val : key;
-      const { path } = innerObj;
-      if (objectPath.has(tree1, path)) {
-        const retrieved = objectPath.get(tree1, path);
-        if ((!isObj(retrieved) && !isArr(retrieved)) || !opts.skipContainers) {
-          cb(retrieved, current, path);
-        }
-      } else {
-        errCb(
-          `the first input: ${JSON.stringify(
-            tree1,
-            null,
-            4
-          )}\ndoes not have the path "${path}", we were looking, would it contain a value ${JSON.stringify(
-            current,
-            null,
-            0
-          )}.`
-        );
-      }
-      return current;
-    });
-  }
-}
-function specialCompare(tree1, tree2, cb, errCb, opts) {
+function deepContains(tree1, tree2, cb, errCb, originalOpts) {
+  const defaults = {
+    skipContainers: true,
+    arrayStrictComparison: false
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb(
       `the first input arg is of a type ${typeDetect(
@@ -88,7 +54,11 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
       const current = val !== undefined ? val : key;
       const { path } = innerObj;
       if (objectPath.has(tree1, path)) {
-        if (isObj(current) && innerObj.parentType === "array") {
+        if (
+          !opts.arrayStrictComparison &&
+          isObj(current) &&
+          innerObj.parentType === "array"
+        ) {
           stop.now = true;
           const arr1 = Array.from(
             innerObj.path.includes(".")
@@ -165,7 +135,7 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
               if (finalCombined[i][2] === maxScore) {
                 finalCombined[i].forEach((matchPairObj, y) => {
                   if (y < finalCombined[i].length - 1) {
-                    specialCompare(
+                    deepContains(
                       arr1[matchPairObj[1]],
                       arr2[matchPairObj[0]],
                       cb,
@@ -203,17 +173,6 @@ function specialCompare(tree1, tree2, cb, errCb, opts) {
       return current;
     });
   }
-}
-function deepContains(tree1, tree2, cb, errCb, originalOpts) {
-  const defaults = {
-    skipContainers: true,
-    arrayStrictComparison: false
-  };
-  const opts = Object.assign({}, defaults, originalOpts);
-  if (opts.arrayStrictComparison) {
-    return strictCompare(tree1, tree2, cb, errCb, opts);
-  }
-  return specialCompare(tree1, tree2, cb, errCb, opts);
 }
 
 export default deepContains;
