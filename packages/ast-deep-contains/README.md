@@ -1,6 +1,6 @@
 # ast-deep-contains
 
-> the t.deepEqual alternative for AVA
+> an alternative for AVA's t.deepEqual
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -17,9 +17,9 @@
 
 - [Install](#install)
 - [Idea](#idea)
+- [Example \#1 — checking subset of keys only](#example-1--checking-subset-of-keys-only)
+- [Example \#2 — matching array contents, order is random](#example-2--matching-array-contents-order-is-random)
 - [API](#api)
-- [Contrived Example](#contrived-example)
-- [Real World Example](#real-world-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -58,21 +58,139 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-deep-contains.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-deep-contains.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-deep-contains.umd.js` | 15 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-deep-contains.cjs.js` | 7 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-deep-contains.esm.js` | 7 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-deep-contains.umd.js` | 16 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-For AST's (nested arrays and objects), AVA the unit test runner gives only one comparison method — `t.deepEqual`.
+When writing unit tests, I compare the output of a program with what it _should_ produce. Sometimes, value is set in stone. That's where I use AVA's, [`t.deepEqual`](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#deepequalvalue-expected-message).
 
-It's not practical when new keys are added over time to the "left side" of `t.deepEqual`.
+There are two problems with `t.deepEqual`:
 
-For example, in `codsen-tokenizer` ([npm](https://www.npmjs.com/package/codsen-tokenizer)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/)) which drives the `EMLint` the email linter `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) — pretty much every new linter's rule will require new additions to tokenizer and every new addition to the tokenizer's output will make `deepEqual` comparisons fail.
+1. Sometimes I don't mind if there are **extra keys in the source**. For a graphical example, I assert, is there my dog in my yard and is there my cat in my yard — because I want to shut the gates for the night and pets must be inside. I don't care if there is also a pidgeon in the yard. Assertion should only look for a dog and a cat.
+2. More often than not, when comparing arrays (yard) full of objects (pets), **the element order does not matter**.
 
-This package is not tied to AVA though, callback functions are universal and API can be adapted to other uses.
+So, this is an AVA's `t.deepEqual` alternative, where source can be superset of what's matched, plus, objects in arrays can be of a random order (strict order can be enforced but it's off by default).
+
+Practically, we ping `t.is` for each value pair, skipping objects and arrays (we traverse inside and go for values, not for whole branches, because that would warrant `t.deepEqual`, negating the purpose). Major type mismatches and missing nodes in AST's are pinged to error callback, normally, `t.fail`.
+
+**[⬆ back to top](#)**
+
+## Example \#1 — checking subset of keys only
+
+From `codsen-tokenizer` ([npm](https://www.npmjs.com/package/codsen-tokenizer)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/)) AVA tests:
+
+```js
+import test from "ava";
+import ct from "codsen-tokenizer";
+import deepContains from "ast-deep-contains";
+
+test("01.01 — text-tag-text", t => {
+  const gathered = [];
+  ct("  <a>z", obj => {
+    gathered.push(obj);
+  });
+
+  deepContains(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2
+        // <---- tokenizer reports way more keys than that
+      },
+      {
+        type: "html",
+        start: 2,
+        end: 5
+      },
+      {
+        type: "text",
+        start: 5,
+        end: 6
+      }
+    ],
+    t.is, // each pair of keys is ran by this function
+    t.fail // major failures are pinged to this function
+  );
+});
+```
+
+In example above, reported objects will have more keys than what's compared. Throughout the time, when improving the tokenizer we will surely add even more new keys. All this should not affect the main keys. Using `t.deepEqual` would be a nuisance — I'd have to update all unit tests each time after a new improvement to the tokenizer is done, new key is added.
+
+**[⬆ back to top](#)**
+
+## Example \#2 — matching array contents, order is random
+
+Our linter `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) is pluggable — each rule is a plugin and program's architecture is based on the Observer patten — the main checking function in EMLint is extending the Node's `EventEmitter` class:
+
+```js
+class Linter extends EventEmitter {
+  ...
+}
+```
+
+This means, the nature in which errors are raised is somewhat undetermined. In EMLint unit tests I want to check, were correct errors raised and would the proposed string fixing index ranges fix the input.
+
+Same way with the yard's dog and cat example, I don't care about the _order_ of the pets (linter error objects) — as long each one of the set is reported, happy days.
+
+Behold - a program flags up two backslashes on a void HTML tag — the first backslash should be deleted, second one turned into normal slash — we don't care about the order of the elements as long as all elements were matched, plus there might be extra keys in the source objects — source objects are superset of what we're matching:
+
+```js
+import test from "ava";
+import { Linter } from "emlint";
+import deepContains from "ast-deep-contains"; // <------------ this program
+import { applyFixes } from "t-util/util";
+
+const BACKSLASH = "\u005C";
+
+test(`06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, t => {
+  const str = `<${BACKSLASH}br${BACKSLASH}>`;
+  const linter = new Linter();
+  // call the linter and record the result's error messages:
+  const messages = linter.verify(str, {
+    rules: {
+      tag: 2
+    }
+  });
+  // assertion:
+  deepContains(
+    // <------------ that's this program, ast-deep-contains
+    messages,
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+        // <---- "messages" we're comparing against will have more keys but we don't care
+      },
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Replace backslash with slash.",
+        fix: {
+          ranges: [[4, 5, "/"]]
+        }
+      }
+    ],
+    t.is, // each pair of key values is ran by this function
+    t.fail // major failures are pinged to this function
+  );
+});
+```
+
+The order in which backslashes will be reported does not matter, plus Linter might report more information — that's welcomed but will be ignored, not a cause for error.
 
 **[⬆ back to top](#)**
 
@@ -94,11 +212,21 @@ in other words, it's a function which takes 5 input arguments:
 
 ### Options object
 
-| `options` object's key | Type    | Default | Description                                                                                                                                                            |
-| ---------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                      |         |         |
-| `skipContainers`       | Boolean | `true`  | During traversal, containers (arrays and objects) will be checked for existence and traversed further but callback won't be pinged. Set to `false` to stop doing that. |
-| }                      |         |         |
+| `options` object's key  | Type    | Default | Description                                                                                                                                                            |
+| ----------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                       |         |         |
+| `skipContainers`        | Boolean | `true`  | During traversal, containers (arrays and objects) will be checked for existence and traversed further but callback won't be pinged. Set to `false` to stop doing that. |
+| `arrayStrictComparison` | Boolean | `false` | Objects in the array can be of random order, as long as each one is matched, order does not matter. For strict order, set to `true`.                                   |
+| }                       |         |         |
+
+Here is the defaults object, in one place, if you need to copy it:
+
+```js
+{
+  skipContainers: true,
+  arrayStrictComparison: false
+}
+```
 
 **[⬆ back to top](#)**
 
@@ -132,97 +260,9 @@ Let me repeat, no matter the setting on `opts.skipContainers`, in example above,
 
 **[⬆ back to top](#)**
 
-### Output
+### API's Output
 
 Output is `undefined` — this program is used exclusively through callbacks. Those do the job — function does not return anything.
-
-## Contrived Example
-
-```js
-const gathered = [];
-const errors = [];
-
-deepContains(
-  { a: "1", b: "2", c: "3" },
-  { a: "1", b: "2" },
-  (leftSideVal, rightSideVal) => {
-    gathered.push([leftSideVal, rightSideVal]);
-  },
-  err => {
-    errors.push(err);
-  }
-);
-
-console.log(JSON.stringify(gathered, null, 4));
-// => [["1", "1"], ["2", "2"]]
-
-console.log(JSON.stringify(errors, null, 4));
-// => []
-```
-
-**[⬆ back to top](#)**
-
-## Real World Example
-
-Here's an example from codsen-tokenizer. Tokenizer's API is callback-based, it will feed your callback function with tokens (plain objects), one by one. Unit test is set up so that callback stashes the tokens into an array. AVA would be called to compare the contents of that array.
-
-Now, the fun part is, if we used `t.deepEqual`, if we added new keys in a tokenizer, let's if instead of old set of keys:
-
-```json
-{
-  "type": "text",
-  "start": 0,
-  "end": 2,
-  "tail": null,
-  "kind": null
-}
-```
-
-we added a new key, `tagName`, for example, `t.deepEqual` assertion would fail.
-
-But `deepContains` is fine with that, as long as all paths from the 2nd argument are present in the 1st, it will ping `t.is` with those values (`opts.skipContainers` prevents arrays or objects from being passed into the callback, although paths existence is still checked).
-
-```js
-test("01.01 - text-tag-text", t => {
-  const gathered = [];
-  ct("  <a>z", obj => {
-    gathered.push(obj);
-  });
-
-  deepContains(
-    gathered,
-    [
-      {
-        type: "text",
-        start: 0,
-        end: 2,
-        tail: null,
-        kind: null
-      },
-      {
-        type: "html",
-        start: 2,
-        end: 5,
-        tail: null,
-        kind: null
-      },
-      {
-        type: "text",
-        start: 5,
-        end: 6,
-        tail: null,
-        kind: null
-      }
-    ],
-    t.is,
-    t.fail
-  );
-});
-```
-
-Here you go, an alternative for AVA's `t.deepEqual`.
-
-**[⬆ back to top](#)**
 
 ## Contributing
 
@@ -247,7 +287,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ast-deep-contains
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
-[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-91.25%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-deep-contains
