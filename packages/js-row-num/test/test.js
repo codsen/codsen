@@ -1,5 +1,6 @@
 import test from "ava";
 import fixRowNums from "../dist/js-row-num.esm";
+const BACKSLASH = `\u005C`;
 
 // -----------------------------------------------------------------------------
 // group 01. no throws
@@ -33,7 +34,7 @@ test("01.01 - wrong input is just being returned", t => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-test("02.01 - single straight quotes", t => {
+test("02.01 - single straight quotes - no whitespace", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -48,9 +49,11 @@ zzz
 zzz
 console.log('005 something')
 console.log('006 something')
-`,
-    "02.01.01 - no whitespace"
+`
   );
+});
+
+test("02.02 - single straight quotes - with whitespace", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -65,9 +68,11 @@ zzz
 zzz
 console.log ( ' 005 456 something 123 ')
 console.log('----\n\n\n009 something')
-`,
-    "02.01.02 - with whitespace"
+`
   );
+});
+
+test("02.03 - single straight quotes - tight, no semicolon", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -80,12 +85,11 @@ zzz
 zzz
 zzz
 console.log('005 something')console.log('005 something')
-`,
-    "02.01.03 - tight, no semicolon"
+`
   );
 });
 
-test("02.02 - double quotes", t => {
+test("02.04 - double quotes - tight", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -98,9 +102,11 @@ zzz
 zzz
 zzz
 console.log("005 123 something 456")console.log("----005 something")console.log("---- something")
-`,
-    "02.02.01 - tight"
+`
   );
+});
+
+test("02.05 - double quotes - newlines", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -113,9 +119,11 @@ zzz
 zzz
 zzz
 console.log("005 123 something 456")console.log("----\n\n\n008 something")
-`,
-    "02.02.02 - tight"
+`
   );
+});
+
+test("02.06 - double quotes - with whitespace", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -130,12 +138,11 @@ zzz
 zzz
 console.log ( " 005 123 something 456 " )
 console.log("----\n\n\n 009 something")
-`,
-    "02.02.03 - with whitespace"
+`
   );
 });
 
-test("02.03 - backticks", t => {
+test("02.07 - backticks - tight", t => {
   t.is(
     fixRowNums(`
 zzz
@@ -148,31 +155,34 @@ zzz
 zzz
 zzz
 console.log(\`005 123 something 456\`)console.log(\`----005 something\`)console.log(\`---- something\`)
-`,
-    "02.03.01 - tight"
+`
   );
 });
 
-test("02.04 - console log with ANSI escapes", t => {
+test("02.08 - console log with ANSI escapes - one ANSI escape chunk in front", t => {
   t.is(
     fixRowNums("console.log(`\\u001b[${33}m${`999 z`}\\u001b[${39}m`)"),
-    "console.log(`\\u001b[${33}m${`001 z`}\\u001b[${39}m`)",
-    "02.04.01 - one ANSI escape chunk in front"
+    "console.log(`\\u001b[${33}m${`001 z`}\\u001b[${39}m`)"
   );
+});
+
+test("02.09 - synthetic test where colour is put in deeper curlies for easier visual grepping", t => {
   t.is(
     fixRowNums(
       "console.log(`\\u001b[${012399999999}m${`888 z`}\\u001b[${39}m`)"
     ),
-    "console.log(`\\u001b[${012399999999}m${`001 z`}\\u001b[${39}m`)",
-    "02.04.02 - synthetic test where colour is put in deeper curlies for easier visual grepping"
+    "console.log(`\\u001b[${012399999999}m${`001 z`}\\u001b[${39}m`)"
   );
+});
+
+test("02.10 - synthetic test where colour code is put raw", t => {
   t.is(
     fixRowNums("console.log(`\\u001b[012399999999m${`888 z`}\\u001b[${39}m`)"),
-    "console.log(`\\u001b[012399999999m${`001 z`}\\u001b[${39}m`)",
-    "02.04.03 - synthetic test where colour code is put raw"
+    "console.log(`\\u001b[012399999999m${`001 z`}\\u001b[${39}m`)"
   );
+});
 
-  // bunch of whitespace
+test("02.11 - bunch of whitespace 1", t => {
   t.is(
     fixRowNums(
       "console.log(`\\u001b[${012399999999}m${` \t 888 z`}\\u001b[${39}m`)"
@@ -180,6 +190,9 @@ test("02.04 - console log with ANSI escapes", t => {
     "console.log(`\\u001b[${012399999999}m${` \t 001 z`}\\u001b[${39}m`)",
     "02.04.04 - synthetic test where colour is put in deeper curlies for easier visual grepping"
   );
+});
+
+test("02.12 - bunch of whitespace 2", t => {
   t.is(
     fixRowNums(
       "console.log(`\\u001b[012399999999m${` \t 888 z`}\\u001b[${39}m`)"
@@ -189,7 +202,7 @@ test("02.04 - console log with ANSI escapes", t => {
   );
 });
 
-test("02.05 - updates console.logs within comment blocks", t => {
+test("02.13 - updates console.logs within comment blocks", t => {
   t.is(
     fixRowNums(`
 // console.log(
@@ -200,8 +213,39 @@ test("02.05 - updates console.logs within comment blocks", t => {
 // console.log(
 //   \`003 something
 // \`)
-`,
-    "02.05"
+`
+  );
+});
+
+test("02.14 - \\n in front", t => {
+  t.is(
+    fixRowNums(`
+console.log(
+  \`${BACKSLASH}n111 something\`
+)
+`),
+    `
+console.log(
+  \`${BACKSLASH}n003 something\`
+)
+`
+  );
+});
+
+test("02.15 - automatic 4 digit padding on >45K chars", t => {
+  t.is(
+    fixRowNums(`
+${"12345\n".repeat(10000)}
+console.log(
+  \`${BACKSLASH}n111 something\`
+)
+`),
+    `
+${"12345\n".repeat(10000)}
+console.log(
+  \`${BACKSLASH}n10004 something\`
+)
+`
   );
 });
 

@@ -16,6 +16,7 @@ var applySlices = _interopDefault(require('ranges-apply'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
+var BACKSLASH = "\\";
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
     return str;
@@ -70,7 +71,7 @@ function fixRowNums(str, originalOpts) {
     if (quotes && quotes.start < i && !wasLetterDetected && !digitStartsAt && isDigit(str[i])) {
       digitStartsAt = i;
     }
-    if (quotes && quotes.start < i && !wasLetterDetected && isAZ(str[i])) {
+    if (quotes && quotes.start < i && !wasLetterDetected && isAZ(str[i]) && !(str[i] === "n" && str[i - 1] === BACKSLASH)) {
       if (str[i - 1] === "\\" && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
         var startMarchingForwFrom = void 0;
         if (isDigit(str[i + 6])) {

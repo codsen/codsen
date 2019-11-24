@@ -12,6 +12,7 @@ import applySlices from 'ranges-apply';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
+const BACKSLASH = `\u005C`;
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
     return str;
@@ -82,7 +83,13 @@ function fixRowNums(str, originalOpts) {
     ) {
       digitStartsAt = i;
     }
-    if (quotes && quotes.start < i && !wasLetterDetected && isAZ(str[i])) {
+    if (
+      quotes &&
+      quotes.start < i &&
+      !wasLetterDetected &&
+      isAZ(str[i]) &&
+      !(str[i] === "n" && str[i - 1] === BACKSLASH)
+    ) {
       if (
         str[i - 1] === "\\" &&
         str[i] === "u" &&
