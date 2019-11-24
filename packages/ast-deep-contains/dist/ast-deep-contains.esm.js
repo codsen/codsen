@@ -57,7 +57,8 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
         if (
           !opts.arrayStrictComparison &&
           isObj(current) &&
-          innerObj.parentType === "array"
+          innerObj.parentType === "array" &&
+          innerObj.parent.length > 1
         ) {
           stop.now = true;
           const arr1 = Array.from(

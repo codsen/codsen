@@ -64,7 +64,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
       var current = val !== undefined ? val : key;
       var path = innerObj.path;
       if (objectPath.has(tree1, path)) {
-        if (!opts.arrayStrictComparison && isObj(current) && innerObj.parentType === "array") {
+        if (!opts.arrayStrictComparison && isObj(current) && innerObj.parentType === "array" && innerObj.parent.length > 1) {
           (function () {
             stop.now = true;
             var arr1 = Array.from(innerObj.path.includes(".") ? objectPath.get(tree1, goUp(path)) : tree1);

@@ -454,6 +454,33 @@ test(`03.02 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32
   t.deepEqual(errors, [], "03.02.02");
 });
 
+test(`03.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`, t => {
+  const gathered = [];
+  const errors = [];
+
+  deepContains(
+    [{ key1: "a", key2: "b" }],
+    [{ key1: "a", key2: "b" }],
+    (leftSideVal, rightSideVal) => {
+      gathered.push([leftSideVal, rightSideVal]);
+    },
+    errStr => {
+      errors.push(errStr);
+    },
+    {} // default opts
+  );
+
+  t.deepEqual(
+    gathered,
+    [
+      ["a", "a"],
+      ["b", "b"]
+    ],
+    "03.03.01"
+  );
+  t.deepEqual(errors, [], "03.03.02");
+});
+
 // 04. array and further keys
 // -----------------------------------------------------------------------------
 
