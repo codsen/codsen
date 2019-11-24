@@ -18,6 +18,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
+- [Stopping](#stopping)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -73,7 +74,7 @@ Walk through every single element of an array or key of an object or every strin
 ```js
 const traverse = require("ast-monkey-traverse");
 var ast = [{ a: "a", b: "b" }];
-ast = traverse(ast, function(key, val, innerObj) {
+ast = traverse(ast, function(key, val, innerObj, stop) {
   let current = val !== undefined ? val : key;
   // if you are traversing and "stumbled" upon an object, it will have both "key" and "val"
   // if you are traversing and "stumbled" upon an array, it will have only "key"
@@ -95,16 +96,17 @@ If you want to delete, return `NaN`.
 When you call `traverse()` like this:
 
 ```js
-input = traverse(input, function (key, val, innerObj) {
+input = traverse(input, function (key, val, innerObj, stop) {
   ...
 })
 ```
 
-you get three variables:
+you get four variables:
 
 - `key`
 - `val`
 - `innerObj`
+- `stop` - set `stop.now = true;` to stop the traversal
 
 If `traverse()` is currently traversing a plain object, going each key/value pair, `key` will be the object's current key and `val` will be the value.
 If `traverse()` is currently traversing an array, going through all elements, a `key` will be the current element and `val` will be `null`.
@@ -118,6 +120,45 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 | `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                      |
 | `parentType`            | String                                                | Either `array` if parent is array or `object` if parent is **a plain object** (not the "object" type, which includes functions, arrays etc.).                                                                                                                                                                                                   |
 | `}`                     |                                                       |
+
+**[⬆ back to top](#)**
+
+## Stopping
+
+Normally, you don't want to stop the traversal. For example, here we gather all the traversed paths. Remember the format is universal, you can use it in [`object-path`](https://www.npmjs.com/package/object-path) for example.
+
+```js
+const traverse = require("ast-monkey-traverse");
+const input = { a: "1", b: { c: "2" } };
+const gathered = [];
+traverse(input, (key1, val1, innerObj) => {
+  const current = val1 !== undefined ? val1 : key1;
+  gathered.push(innerObj.path);
+  return current;
+});
+console.log(gathered);
+// => ["a", "b", "b.c"]
+```
+
+Now let's make the monkey to stop at the path "b":
+
+```js
+const traverse = require("ast-monkey-traverse");
+const input = { a: "1", b: { c: "2" } };
+const gathered = [];
+traverse(input, (key1, val1, innerObj, stop) => {
+  const current = val1 !== undefined ? val1 : key1;
+  gathered.push(innerObj.path);
+  if (innerObj.path === "b") {
+    stop.now = true; // <---------------- !!!!!!!!!!
+  }
+  return current;
+});
+console.log(gathered);
+// => ["a", "b"]
+```
+
+Notice how there were no more gathered paths after "b".
 
 **[⬆ back to top](#)**
 
