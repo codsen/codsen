@@ -21,10 +21,12 @@ const objectPath = require("object-path");
 const diff = require("ansi-diff-stream")();
 const isArr = Array.isArray;
 const { set, del } = require("edit-package-json");
+const isOnline = require("is-online");
 
 const { log } = console;
 const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
 const messagePrefix = `\u001b[${90}m${`${sparkles} update-versions: `}\u001b[${39}m`;
+
 const cli = meow(
   `
   Usage:
@@ -77,6 +79,14 @@ if (cli.flags) {
       .sort()
       .map(n => `${n} ${updatedPackages[n]}`)
       .join("\n");
+  }
+
+  const online = await isOnline();
+  if (!online) {
+    console.error(
+      `\n${messagePrefix}${`\u001b[${31}m${`Please check your internet connection.`}\u001b[${39}m`}\n`
+    );
+    process.exit(1);
   }
 
   const pathsPromise = await globby([
@@ -168,7 +178,13 @@ if (cli.flags) {
             }
             try {
               await pacote.manifest(singleDepName).then(pkg => {
-                compiledDepNameVersionPairs[singleDepName] = pkg.version;
+                if (pkg.version === null) {
+                  throw new Error(
+                    `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
+                  );
+                } else {
+                  compiledDepNameVersionPairs[singleDepName] = pkg.version;
+                }
               });
             } catch (err) {
               // no response from npm
@@ -240,8 +256,9 @@ if (cli.flags) {
             }
 
             if (
+              compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-              `^${compiledDepNameVersionPairs[singleDepName]}`
+                `^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
@@ -313,8 +330,9 @@ if (cli.flags) {
             }
 
             if (
+              compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-              `^${compiledDepNameVersionPairs[singleDepName]}`
+                `^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
