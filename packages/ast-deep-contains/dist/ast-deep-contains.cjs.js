@@ -98,37 +98,26 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                   });
                 });
                 var maxScore = 0;
-                var _loop2 = function _loop2(_i, _len) {
+                for (var _i = 0, _len = finalCombined.length; _i < _len; _i++) {
                   var score = 0;
                   finalCombined[_i].forEach(function (mapping) {
                     if (isObj(arr2[mapping[0]]) && isObj(arr1[mapping[1]])) {
-                      score += 2;
-                      if (Object.keys(arr2[mapping[0]]).every(function (key) {
-                        return Object.keys(arr1[mapping[1]]).includes(key);
-                      })) {
-                        score += 4;
-                        if (Object.keys(arr2[mapping[0]]).length === Object.keys(arr1[mapping[1]]).length) {
-                          score += 6;
+                      Object.keys(arr2[mapping[0]]).forEach(function (key) {
+                        if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                          score += 1;
+                          if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                            score += 5;
+                          }
                         }
-                        if (Object.keys(arr2[mapping[0]]).every(function (key) {
-                          return arr1[mapping[1]][key] === arr2[mapping[0]][key];
-                        })) {
-                          score += 8;
-                        }
-                      }
-                    } else if (_typeof(arr2[mapping[0]]) === _typeof(arr1[mapping[1]])) {
-                      score++;
+                      });
                     }
                   });
                   finalCombined[_i].push(score);
                   if (score > maxScore) {
                     maxScore = score;
                   }
-                };
-                for (var _i = 0, _len = finalCombined.length; _i < _len; _i++) {
-                  _loop2(_i);
                 }
-                var _loop3 = function _loop3(_i2, _len2) {
+                var _loop2 = function _loop2(_i2, _len2) {
                   if (finalCombined[_i2][2] === maxScore) {
                     finalCombined[_i2].forEach(function (matchPairObj, y) {
                       if (y < finalCombined[_i2].length - 1) {
@@ -139,7 +128,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                   }
                 };
                 for (var _i2 = 0, _len2 = finalCombined.length; _i2 < _len2; _i2++) {
-                  var _ret = _loop3(_i2);
+                  var _ret = _loop2(_i2);
                   if (_ret === "break") break;
                 }
               })();

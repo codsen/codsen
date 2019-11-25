@@ -100,31 +100,14 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
               let score = 0;
               finalCombined[i].forEach(mapping => {
                 if (isObj(arr2[mapping[0]]) && isObj(arr1[mapping[1]])) {
-                  score += 2;
-                  if (
-                    Object.keys(arr2[mapping[0]]).every(key =>
-                      Object.keys(arr1[mapping[1]]).includes(key)
-                    )
-                  ) {
-                    score += 4;
-                    if (
-                      Object.keys(arr2[mapping[0]]).length ===
-                      Object.keys(arr1[mapping[1]]).length
-                    ) {
-                      score += 6;
+                  Object.keys(arr2[mapping[0]]).forEach(key => {
+                    if (Object.keys(arr1[mapping[1]]).includes(key)) {
+                      score += 1;
+                      if (arr1[mapping[1]][key] === arr2[mapping[0]][key]) {
+                        score += 5;
+                      }
                     }
-                    if (
-                      Object.keys(arr2[mapping[0]]).every(
-                        key => arr1[mapping[1]][key] === arr2[mapping[0]][key]
-                      )
-                    ) {
-                      score += 8;
-                    }
-                  }
-                } else if (
-                  typeof arr2[mapping[0]] === typeof arr1[mapping[1]]
-                ) {
-                  score++;
+                  });
                 }
               });
               finalCombined[i].push(score);

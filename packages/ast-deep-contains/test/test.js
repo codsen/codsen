@@ -481,6 +481,102 @@ test(`03.03 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - o
   t.deepEqual(errors, [], "03.03.02");
 });
 
+test(`03.04 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`, t => {
+  const gathered = [];
+  const errors = [];
+
+  deepContains(
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Replace backslash with slash.",
+        fix: {
+          ranges: [[4, 5, "/"]]
+        }
+      },
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      }
+    ],
+    [
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 1,
+        idxTo: 2,
+        message: "Wrong slash - backslash.",
+        fix: {
+          ranges: [[1, 2]]
+        }
+      },
+      {
+        ruleId: "tag-closing-backslash",
+        severity: 2,
+        idxFrom: 4,
+        idxTo: 5,
+        message: "Replace backslash with slash.",
+        fix: {
+          ranges: [[4, 5, "/"]]
+        }
+      }
+    ],
+    (leftSideVal, rightSideVal) => {
+      gathered.push([leftSideVal, rightSideVal]);
+    },
+    errStr => {
+      errors.push(errStr);
+    },
+    {} // default opts
+  );
+
+  console.log(
+    `${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
+      gathered,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
+      errors,
+      null,
+      4
+    )}`
+  );
+  t.deepEqual(
+    gathered,
+    [
+      ["tag-closing-backslash", "tag-closing-backslash"],
+      [2, 2],
+      [1, 1],
+      [2, 2],
+      ["Wrong slash - backslash.", "Wrong slash - backslash."],
+      [1, 1],
+      [2, 2],
+      ["tag-closing-backslash", "tag-closing-backslash"],
+      [2, 2],
+      [4, 4],
+      [5, 5],
+      ["Replace backslash with slash.", "Replace backslash with slash."],
+      [4, 4],
+      [5, 5],
+      ["/", "/"]
+    ],
+    "03.04.01"
+  );
+  t.deepEqual(errors, [], "03.04.02");
+});
+
 // 04. array and further keys
 // -----------------------------------------------------------------------------
 
