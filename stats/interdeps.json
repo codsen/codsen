@@ -52,7 +52,7 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 1360,
+        "size": 5032,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -104,7 +104,7 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2534,
+        "size": 2751,
         "imports": []
     },
     {
@@ -144,7 +144,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 12245,
+        "size": 14572,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -174,7 +174,7 @@
     },
     {
         "name": "detergent",
-        "size": 54279,
+        "size": 54313,
         "imports": [
             "all-named-html-entities",
             "ast-deep-contains",
@@ -202,7 +202,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 18210,
+        "size": 18211,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -240,7 +240,7 @@
     },
     {
         "name": "emlint",
-        "size": 93059,
+        "size": 96592,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",
@@ -306,7 +306,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 5557,
+        "size": 5670,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -567,7 +567,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 38199,
+        "size": 38198,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -580,7 +580,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 18174,
+        "size": 18620,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -654,7 +654,7 @@
     },
     {
         "name": "update-versions",
-        "size": 11789,
+        "size": 12449,
         "imports": [
             "edit-package-json"
         ]
