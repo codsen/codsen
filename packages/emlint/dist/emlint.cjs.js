@@ -2489,19 +2489,18 @@ function badCharacterIdeographicSpace(context) {
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
-      var gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
-      if (node.tagNameStartAt > node.start + 1 && (!gapValue.trim().length || gapValue !== "/" && gapValue.trim() === "/")) {
-        var ranges = [];
-        if (gapValue.indexOf("/") !== -1) {
-          if (node.start + 1 + gapValue.indexOf("/") > node.start + 1) {
-            ranges.push([node.start + 1, node.start + 1 + gapValue.indexOf("/")]);
-          }
-          if (node.start + 1 + gapValue.indexOf("/") < node.tagNameStartAt - 1) {
-            ranges.push([node.start + 1 + gapValue.indexOf("/") + 1, node.tagNameStartAt]);
-          }
-        } else {
-          ranges.push([node.start + 1 + gapValue.indexOf("/") + 1, node.tagNameStartAt]);
+      var ranges = [];
+      var wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
+      if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim().length) {
+        ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1)]);
+      }
+      if (!context.str[node.tagNameStartAt - 1].trim().length) {
+        var charToTheLeftOfTagNameIdx = stringLeftRight.left(context.str, node.tagNameStartAt);
+        if (charToTheLeftOfTagNameIdx !== node.start) {
+          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartAt]);
         }
+      }
+      if (ranges.length) {
         context.report({
           ruleId: "tag-space-after-opening-bracket",
           message: "Bad whitespace.",
@@ -2579,17 +2578,13 @@ var BACKSLASH = "\\";
 function tagClosingBackslash(context) {
   return {
     html: function html(node) {
-      if (Number.isInteger(node.start) && context.str[node.start] === "<" && context.str[stringLeftRight.right(context.str, node.start)] === BACKSLASH && Number.isInteger(node.tagNameStartAt)) {
-        var ranges = [[node.start + 1, node.tagNameStartAt]];
-        context.report({
-          ruleId: "tag-closing-backslash",
-          message: "Wrong slash - backslash.",
-          idxFrom: node.start + 1,
-          idxTo: node.tagNameStartAt,
-          fix: {
-            ranges: ranges
+      var ranges = [];
+      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartAt) && context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)) {
+        for (var i = node.start; i < node.tagNameStartAt; i++) {
+          if (context.str[i] === BACKSLASH) {
+            ranges.push([i, i + 1]);
           }
-        });
+        }
       }
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH) {
@@ -2622,6 +2617,17 @@ function tagClosingBackslash(context) {
           idxTo: node.end - 1,
           fix: {
             ranges: [[idxFrom, node.end - 1, whatToInsert]]
+          }
+        });
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: "Wrong slash - backslash.",
+          idxFrom: ranges[0][0],
+          idxTo: ranges[ranges.length - 1][1],
+          fix: {
+            ranges: ranges
           }
         });
       }

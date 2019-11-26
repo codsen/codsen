@@ -951,18 +951,18 @@ test(`05.02 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - d
       "tag-closing-backslash": 2
     }
   });
-  t.is(applyFixes(str, messages), "<div>");
+  t.is(applyFixes(str, messages), "< div>");
   deepContains(
     messages,
     [
       {
         ruleId: "tag-closing-backslash",
         severity: 2,
-        idxFrom: 1,
+        idxFrom: 2,
         idxTo: 3,
         message: "Wrong slash - backslash.",
         fix: {
-          ranges: [[1, 3]]
+          ranges: [[2, 3]]
         }
       }
     ],
@@ -979,7 +979,7 @@ test(`05.03 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - d
       "tag-closing-backslash": 2
     }
   });
-  t.is(applyFixes(str, messages), "<div>");
+  t.is(applyFixes(str, messages), "< div>");
   deepContains(
     messages,
     [
@@ -987,10 +987,10 @@ test(`05.03 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - d
         ruleId: "tag-closing-backslash",
         severity: 2,
         idxFrom: 1,
-        idxTo: 3,
+        idxTo: 2,
         message: "Wrong slash - backslash.",
         fix: {
-          ranges: [[1, 3]]
+          ranges: [[1, 2]]
         }
       }
     ],
@@ -1007,18 +1007,18 @@ test(`05.04 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - d
       "tag-closing-backslash": 2
     }
   });
-  t.is(applyFixes(str, messages), "<div>");
+  t.is(applyFixes(str, messages), "<  div>");
   deepContains(
     messages,
     [
       {
         ruleId: "tag-closing-backslash",
         severity: 2,
-        idxFrom: 1,
-        idxTo: 4,
+        idxFrom: 2,
+        idxTo: 3,
         message: "Wrong slash - backslash.",
         fix: {
-          ranges: [[1, 4]]
+          ranges: [[2, 3]]
         }
       }
     ],

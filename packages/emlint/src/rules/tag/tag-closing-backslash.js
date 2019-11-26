@@ -27,6 +27,8 @@ function tagClosingBackslash(context) {
         )}`
       );
 
+      const ranges = [];
+
       //
       //
       //
@@ -37,20 +39,22 @@ function tagClosingBackslash(context) {
 
       if (
         Number.isInteger(node.start) &&
-        context.str[node.start] === "<" &&
-        context.str[right(context.str, node.start)] === BACKSLASH &&
-        Number.isInteger(node.tagNameStartAt)
+        Number.isInteger(node.tagNameStartAt) &&
+        context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)
       ) {
-        console.log(`044 backslash in front!`);
-        const ranges = [[node.start + 1, node.tagNameStartAt]];
-
-        context.report({
-          ruleId: "tag-closing-backslash",
-          message: "Wrong slash - backslash.",
-          idxFrom: node.start + 1,
-          idxTo: node.tagNameStartAt,
-          fix: { ranges }
-        });
+        console.log(`045 backslash in front!`);
+        for (let i = node.start; i < node.tagNameStartAt; i++) {
+          // fish-out all backslashes
+          if (context.str[i] === BACKSLASH) {
+            // just delete the backslash because it doesn't belong here
+            // if there's a need for closing (left) slash, it will be added
+            // by 3rd level rules which can "see" the surrounding tag layout.
+            ranges.push([i, i + 1]);
+            console.log(
+              `060 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
+            );
+          }
+        }
       }
 
       //
@@ -76,7 +80,7 @@ function tagClosingBackslash(context) {
         let idxFrom = left(context.str, backSlashPos) + 1;
         let whatToInsert = node.void ? "/" : "";
         console.log(
-          `079 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `090 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
@@ -107,7 +111,7 @@ function tagClosingBackslash(context) {
           // include any and all the whitespace to the left as well
           idxFrom = left(context.str, backSlashPos) + 1;
           console.log(
-            `110 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
+            `121 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
           );
         }
 
@@ -125,7 +129,7 @@ function tagClosingBackslash(context) {
           idxFrom = left(context.str, backSlashPos) + 1;
           whatToInsert = ` ${whatToInsert}`;
           console.log(
-            `128 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
           );
           // but if space is already present at the beginning of the range at
           // index left(context.str, backSlashPos) + 1, don't add one there
@@ -133,18 +137,18 @@ function tagClosingBackslash(context) {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
             console.log(
-              `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
             console.log(
-              `141 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+              `152 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
             );
           }
         }
 
         console.log(
-          `147 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `158 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
@@ -169,6 +173,18 @@ function tagClosingBackslash(context) {
           idxFrom,
           idxTo: node.end - 1,
           fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] }
+        });
+      }
+
+      // FINALLY,
+
+      if (ranges.length) {
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: "Wrong slash - backslash.",
+          idxFrom: ranges[0][0],
+          idxTo: ranges[ranges.length - 1][1],
+          fix: { ranges }
         });
       }
     }

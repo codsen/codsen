@@ -11,7 +11,7 @@ import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
-import { left, right } from 'string-left-right';
+import { right, left } from 'string-left-right';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -2160,38 +2160,27 @@ function badCharacterIdeographicSpace(context) {
   };
 }
 
-function tagSpaceAfterOpeningBracket(context, ...opts) {
+function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
-      const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      const ranges = [];
+      const wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
       if (
-        node.tagNameStartAt > node.start + 1 &&
-        (!gapValue.trim().length ||
-          (gapValue !== "/" && gapValue.trim() === "/"))
+        typeof context.str[node.start + 1] === "string" &&
+        !context.str[node.start + 1].trim().length
       ) {
-        const ranges = [];
-        if (gapValue.indexOf("/") !== -1) {
-          if (node.start + 1 + gapValue.indexOf("/") > node.start + 1) {
-            ranges.push([
-              node.start + 1,
-              node.start + 1 + gapValue.indexOf("/")
-            ]);
-          }
-          if (
-            node.start + 1 + gapValue.indexOf("/") <
-            node.tagNameStartAt - 1
-          ) {
-            ranges.push([
-              node.start + 1 + gapValue.indexOf("/") + 1,
-              node.tagNameStartAt
-            ]);
-          }
-        } else {
-          ranges.push([
-            node.start + 1 + gapValue.indexOf("/") + 1,
-            node.tagNameStartAt
-          ]);
+        ranges.push([node.start + 1, right(context.str, node.start + 1)]);
+      }
+      if (!context.str[node.tagNameStartAt - 1].trim().length) {
+        const charToTheLeftOfTagNameIdx = left(
+          context.str,
+          node.tagNameStartAt
+        );
+        if (charToTheLeftOfTagNameIdx !== node.start) {
+          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartAt]);
         }
+      }
+      if (ranges.length) {
         context.report({
           ruleId: "tag-space-after-opening-bracket",
           message: "Bad whitespace.",
@@ -2272,20 +2261,17 @@ const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
     html: function(node) {
+      const ranges = [];
       if (
         Number.isInteger(node.start) &&
-        context.str[node.start] === "<" &&
-        context.str[right(context.str, node.start)] === BACKSLASH &&
-        Number.isInteger(node.tagNameStartAt)
+        Number.isInteger(node.tagNameStartAt) &&
+        context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)
       ) {
-        const ranges = [[node.start + 1, node.tagNameStartAt]];
-        context.report({
-          ruleId: "tag-closing-backslash",
-          message: "Wrong slash - backslash.",
-          idxFrom: node.start + 1,
-          idxTo: node.tagNameStartAt,
-          fix: { ranges }
-        });
+        for (let i = node.start; i < node.tagNameStartAt; i++) {
+          if (context.str[i] === BACKSLASH) {
+            ranges.push([i, i + 1]);
+          }
+        }
       }
       if (
         Number.isInteger(node.end) &&
@@ -2351,6 +2337,15 @@ function tagClosingBackslash(context) {
           idxFrom,
           idxTo: node.end - 1,
           fix: { ranges: [[idxFrom, node.end - 1, whatToInsert]] }
+        });
+      }
+      if (ranges.length) {
+        context.report({
+          ruleId: "tag-closing-backslash",
+          message: "Wrong slash - backslash.",
+          idxFrom: ranges[0][0],
+          idxTo: ranges[ranges.length - 1][1],
+          fix: { ranges }
         });
       }
     }
