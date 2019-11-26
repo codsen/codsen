@@ -135,19 +135,19 @@
     "sourceMap": false
   },
   "dependencies": {
-    "execa": "^3.3.0",
+    "execa": "^3.4.0",
     "fs-extra": "^8.1.0",
     "meow": "^5.0.0",
     "package-json-editor": "^1.0.1",
     "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/register": "^7.7.0",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
     "ava": "^2.2.8",
     "babel-plugin-istanbul": "^5.2.0",
-    "eslint": "^6.7.0",
+    "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-ava": "^9.0.0",
     "eslint-plugin-import": "^2.18.2",

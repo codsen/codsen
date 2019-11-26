@@ -1,4 +1,3 @@
-"use strict";
 const concordance = require("concordance");
 const observableToPromise = require("observable-to-promise");
 const isPromise = require("is-promise");
@@ -401,7 +400,6 @@ class Test {
 
   run() {
     this.startedAt = nowAndTimers.now();
-
     const result = this.callFn();
     if (!result.ok) {
       if (!this.detectImproperThrows(result.error)) {
