@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.10.49](https://gitlab.com/codsen/codsen/compare/charcode-is-valid-xml-name-character@1.10.48...charcode-is-valid-xml-name-character@1.10.49) (2019-11-27)
-
-**Note:** Version bump only for package charcode-is-valid-xml-name-character
-
-
-
-
-
 ## 1.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

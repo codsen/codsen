@@ -3,18 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.8.1](https://gitlab.com/codsen/codsen/compare/detergent@5.8.0...detergent@5.8.1) (2019-11-27)
-
+## 5.8.1 (2019-11-27)
 
 ### Bug Fixes
 
-* apostrophes algorithm improvements ([3415b17](https://gitlab.com/codsen/codsen/commit/3415b1704b9b9e1b33d8ec234ba6ea20cd57d1ba))
-* characters are index zero were not included in the clause ([6ad8f5f](https://gitlab.com/codsen/codsen/commit/6ad8f5f7e4d84dd8205392c1882e9b007501d81f))
-* remove cb from reported applicable opts ([f79c469](https://gitlab.com/codsen/codsen/commit/f79c4694580fbd0020a4013bfe403b459745688f))
-
-
-
-
+- apostrophes algorithm improvements ([3415b17](https://gitlab.com/codsen/codsen/commit/3415b1704b9b9e1b33d8ec234ba6ea20cd57d1ba))
+- characters are index zero were not included in the clause ([6ad8f5f](https://gitlab.com/codsen/codsen/commit/6ad8f5f7e4d84dd8205392c1882e9b007501d81f))
+- remove cb from reported applicable opts ([f79c469](https://gitlab.com/codsen/codsen/commit/f79c4694580fbd0020a4013bfe403b459745688f))
 
 ## 5.8.0 (2019-11-21)
 

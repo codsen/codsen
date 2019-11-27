@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.15.6](https://gitlab.com/codsen/codsen/compare/string-find-heads-tails@3.15.5...string-find-heads-tails@3.15.6) (2019-11-27)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-
-
-
-
 ## 3.15.0 (2019-10-02)
 
 ### Features

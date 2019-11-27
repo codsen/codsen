@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.12.0](https://gitlab.com/codsen/codsen/compare/ast-monkey-traverse@1.11.45...ast-monkey-traverse@1.12.0) (2019-11-27)
-
+## 1.12.0 (2019-11-27)
 
 ### Features
 
-* stopping functionality ([ca17aa1](https://gitlab.com/codsen/codsen/commit/ca17aa105824d1dc26bd2a23eae6a3c5aa2a5f24))
-
-
-
-
+- stopping functionality ([ca17aa1](https://gitlab.com/codsen/codsen/commit/ca17aa105824d1dc26bd2a23eae6a3c5aa2a5f24))
 
 ## 1.11.0 (2019-01-31)
 
