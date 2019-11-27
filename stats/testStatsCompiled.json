@@ -28,9 +28,9 @@
         "csv-sort-cli": 2,
         "csv-split-easy": 14,
         "detect-is-it-html-or-xhtml": 17,
-        "detergent": 145,
+        "detergent": 677,
         "easy-replace": 152,
-        "edit-package-json": 14171,
+        "edit-package-json": 14178,
         "email-all-chars-within-ascii": 38,
         "email-all-chars-within-ascii-cli": 5,
         "email-comb": 167,
@@ -102,12 +102,12 @@
         "util-nonempty": 9
     },
     "totalPackageCount": 100,
-    "totalTestsCount": 18641,
+    "totalTestsCount": 19180,
     "minTestsCount": 2,
     "minTestsName": "csv-sort-cli",
-    "maxTestsCount": 14171,
+    "maxTestsCount": 14178,
     "maxTestsName": "edit-package-json",
     "testsCountMedian": 19,
-    "testsCountArithmeticMean": 186,
-    "testsCountGeometricMean": 22
+    "testsCountArithmeticMean": 192,
+    "testsCountGeometricMean": 23
 }

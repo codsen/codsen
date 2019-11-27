@@ -141,8 +141,8 @@
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
     "edit-package-json": "^0.1.10",
-    "is-online": "^8.2.1",
     "globby": "^10.0.1",
+    "is-online": "^8.2.1",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^3.3.0",
     "meow": "^5.0.0",

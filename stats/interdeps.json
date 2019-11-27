@@ -174,7 +174,7 @@
     },
     {
         "name": "detergent",
-        "size": 54313,
+        "size": 54275,
         "imports": [
             "all-named-html-entities",
             "ast-deep-contains",
@@ -240,7 +240,7 @@
     },
     {
         "name": "emlint",
-        "size": 96592,
+        "size": 96513,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",
