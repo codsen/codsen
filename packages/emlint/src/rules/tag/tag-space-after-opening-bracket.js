@@ -11,7 +11,6 @@ import { left, right } from "string-left-right";
 // <\n\nspan>
 
 function tagSpaceAfterOpeningBracket(context) {
-  const possibleOtherCharsBetweenBracketAndName = ["/"];
   return {
     html: function(node) {
       console.log(
@@ -19,7 +18,7 @@ function tagSpaceAfterOpeningBracket(context) {
       );
       console.log(`node = ${JSON.stringify(node, null, 4)}`);
       const ranges = [];
-      const wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
+      // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
 
       // 1. if there's whitespace after opening bracket
       if (

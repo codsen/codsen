@@ -8,7 +8,7 @@
 // <   a href="">
 // <\n\nspan>
 
-import { left, right } from "string-left-right";
+import { left } from "string-left-right";
 const BACKSLASH = "\u005C";
 
 function tagClosingBackslash(context) {

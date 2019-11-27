@@ -2490,7 +2490,6 @@ function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
       var ranges = [];
-      var wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
       if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim().length) {
         ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1)]);
       }

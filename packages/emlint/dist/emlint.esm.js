@@ -2164,7 +2164,6 @@ function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
       const ranges = [];
-      const wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
       if (
         typeof context.str[node.start + 1] === "string" &&
         !context.str[node.start + 1].trim().length
