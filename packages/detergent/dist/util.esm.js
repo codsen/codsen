@@ -427,11 +427,12 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
     useNamedReferences: true
   });
 }
-function isNumber(str) {
+function isNumber(something) {
   return (
-    typeof str === "string" &&
-    str.charCodeAt(0) >= 48 &&
-    str.charCodeAt(0) <= 57
+    (typeof something === "string" &&
+      something.charCodeAt(0) >= 48 &&
+      something.charCodeAt(0) <= 57) ||
+    Number.isInteger(something)
   );
 }
 function isLetter(str) {

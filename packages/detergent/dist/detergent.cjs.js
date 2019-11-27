@@ -112,8 +112,8 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
     useNamedReferences: true
   });
 }
-function isNumber(str) {
-  return typeof str === "string" && str.charCodeAt(0) >= 48 && str.charCodeAt(0) <= 57;
+function isNumber(something) {
+  return typeof something === "string" && something.charCodeAt(0) >= 48 && something.charCodeAt(0) <= 57 || Number.isInteger(something);
 }
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
@@ -295,23 +295,20 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         }
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
-          if (isNumber(stringLeftRight.right(str, i)) || isNumber(stringLeftRight.left(str, i))) {
+          applicableOpts.convertEntities = true;
+          if (isNumber(stringLeftRight.left(str, i)) || isNumber(stringLeftRight.right(str, i))) {
             applicableOpts.convertApostrophes = true;
-            var tempRes = stringApostrophes.convertOne(str, {
-              from: i,
-              convertEntities: opts.convertEntities,
-              convertApostrophes: opts.convertApostrophes,
-              offsetBy: offsetBy
-            });
-            if (tempRes && tempRes.length) {
-              applicableOpts.convertEntities = true;
-              rangesArr.push(tempRes);
-            }
-          } else {
-            applicableOpts.convertEntities = true;
-            if (opts.convertEntities) {
-              rangesArr.push(i, i + 1, "&quot;");
-            }
+          }
+          var tempRes = stringApostrophes.convertOne(str, {
+            from: i,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy: offsetBy
+          });
+          if (tempRes && tempRes.length) {
+            rangesArr.push(tempRes);
+          } else if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&quot;");
           }
         } else if (charcode === 38) {
           if (isLetter(str[i + 1])) {

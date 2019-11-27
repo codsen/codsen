@@ -450,11 +450,12 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
     useNamedReferences: true
   });
 }
-function isNumber(str) {
+function isNumber(something) {
   return (
-    typeof str === "string" &&
-    str.charCodeAt(0) >= 48 &&
-    str.charCodeAt(0) <= 57
+    (typeof something === "string" &&
+      something.charCodeAt(0) >= 48 &&
+      something.charCodeAt(0) <= 57) ||
+    Number.isInteger(something)
   );
 }
 function isLetter(str) {
@@ -716,23 +717,20 @@ function processCharacter(
         }
       } else {
         if (charcode === 32) ; else if (charcode === 34) {
-          if (isNumber(right(str, i)) || isNumber(left(str, i))) {
+          applicableOpts.convertEntities = true;
+          if (isNumber(left(str, i)) || isNumber(right(str, i))) {
             applicableOpts.convertApostrophes = true;
-            const tempRes = convertOne(str, {
-              from: i,
-              convertEntities: opts.convertEntities,
-              convertApostrophes: opts.convertApostrophes,
-              offsetBy
-            });
-            if (tempRes && tempRes.length) {
-              applicableOpts.convertEntities = true;
-              rangesArr.push(tempRes);
-            }
-          } else {
-            applicableOpts.convertEntities = true;
-            if (opts.convertEntities) {
-              rangesArr.push(i, i + 1, "&quot;");
-            }
+          }
+          const tempRes = convertOne(str, {
+            from: i,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy
+          });
+          if (tempRes && tempRes.length) {
+            rangesArr.push(tempRes);
+          } else if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&quot;");
           }
         } else if (charcode === 38) {
           if (isLetter(str[i + 1])) {

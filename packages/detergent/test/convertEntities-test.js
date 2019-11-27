@@ -103,21 +103,34 @@ test(`01.08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspa
 
 test(`01.09 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`, t => {
   t.is(det1('"', { convertApostrophes: 0, convertEntities: 1 }).res, "&quot;");
+});
 
+test(`01.10 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`, t => {
   t.is(
     det1('^"', { convertApostrophes: 0, convertEntities: 1 }).res,
     "^&quot;"
   );
+});
 
+test(`01.11 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`, t => {
   t.is(
     det1('^`"', { convertApostrophes: 0, convertEntities: 1 }).res,
     "^`&quot;"
   );
+});
 
+test(`01.12 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`, t => {
   mixer({
-    convertEntities: 1
+    convertEntities: 1,
+    convertApostrophes: 0
   }).forEach((opt, n) => {
     t.is(det(t, n, '^`"', opt).res, "^`&quot;", JSON.stringify(opt, null, 4));
+  });
+  mixer({
+    convertEntities: 1,
+    convertApostrophes: 1
+  }).forEach((opt, n) => {
+    t.is(det(t, n, '^`"', opt).res, "^`&rdquo;", JSON.stringify(opt, null, 4));
   });
 });
 

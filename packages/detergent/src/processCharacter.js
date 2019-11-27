@@ -565,51 +565,37 @@ function processCharacter(
         } else if (charcode === 34) {
           // IF DOUBLE QUOTE
           console.log(`0567 processCharacter.js: double quote caught`);
-
-          // it depends, are there non-whitespace characters around
-          if (isNumber(right(str, i)) || isNumber(left(str, i))) {
+          applicableOpts.convertEntities = true;
+          console.log(
+            `0573 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
+              applicableOpts.convertEntities
+            }`
+          );
+          if (isNumber(left(str, i)) || isNumber(right(str, i))) {
             applicableOpts.convertApostrophes = true;
             console.log(
               `0573 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
                 applicableOpts.convertApostrophes
               }`
             );
-            const tempRes = convertOne(str, {
-              from: i,
-              convertEntities: opts.convertEntities,
-              convertApostrophes: opts.convertApostrophes,
-              offsetBy
-            });
-            console.log(
-              `0584 ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
-                tempRes,
-                null,
-                4
-              )}`
-            );
-            if (tempRes && tempRes.length) {
-              applicableOpts.convertEntities = true;
-              console.log(
-                `0593 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
-                  applicableOpts.convertEntities
-                }; ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} tempRes = ${JSON.stringify(
-                  tempRes,
-                  null,
-                  4
-                )}`
-              );
-              rangesArr.push(tempRes);
-            }
-          } else {
-            applicableOpts.convertEntities = true;
-            console.log(
-              `0606 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertEntities = ${
-                applicableOpts.convertEntities
-              }`
-            );
-            if (opts.convertEntities) {
-              rangesArr.push(i, i + 1, "&quot;");
-            }
+          }
+          const tempRes = convertOne(str, {
+            from: i,
+            convertEntities: opts.convertEntities,
+            convertApostrophes: opts.convertApostrophes,
+            offsetBy
+          });
+          console.log(
+            `0584 ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
+              tempRes,
+              null,
+              4
+            )}`
+          );
+          if (tempRes && tempRes.length) {
+            rangesArr.push(tempRes);
+          } else if (opts.convertEntities) {
+            rangesArr.push(i, i + 1, "&quot;");
           }
         } else if (charcode === 38) {
           // IF AMPERSAND, the &
