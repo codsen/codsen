@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://gitlab.com/codsen/codsen/compare/update-versions@2.2.8...update-versions@2.3.0) (2019-11-27)
+
+
+### Features
+
+* internet connection check ([6493580](https://gitlab.com/codsen/codsen/commit/649358058a931a4a96baef768f4e45c5da093b63))
+
+
+
+
+
 ## 2.2.0 (2019-10-07)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "5.7.49",
+  "version": "5.7.50",
   "description": "Check the types of your options object's values after user has customised them",
   "license": "MIT",
   "engines": {
@@ -134,8 +134,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.23",
-    "ast-monkey-traverse": "^1.11.45",
+    "arrayiffy-if-string": "^3.11.24",
+    "ast-monkey-traverse": "^1.12.0",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^2.1.0",
@@ -146,7 +146,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
-    "ava": "^2.2.8",
+    "ava": "^2.2.9",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.7.1",
@@ -156,8 +156,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.8",
-    "lect": "^0.11.1",
+    "js-row-num-cli": "^1.6.9",
+    "lect": "^0.11.2",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.5",

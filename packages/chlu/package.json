@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "3.7.50",
+  "version": "3.7.51",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -140,9 +140,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.50",
+    "ast-contains-only-empty-space": "^1.8.51",
     "dehumanize-date": "^2.6.2",
-    "easy-replace": "^3.7.49",
+    "easy-replace": "^3.7.50",
     "emoji-regex": "^8.0.0",
     "get-pkg-repo": "^4.1.0",
     "is-natural-number": "^4.0.1",
@@ -159,7 +159,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
-    "ava": "^2.2.8",
+    "ava": "^2.2.9",
     "babel-plugin-istanbul": "^5.2.0",
     "benchmark": "^2.1.4",
     "eslint": "^6.7.1",
@@ -169,8 +169,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.8",
-    "lect": "^0.11.1",
+    "js-row-num-cli": "^1.6.9",
+    "lect": "^0.11.2",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "rollup": "^1.27.5",

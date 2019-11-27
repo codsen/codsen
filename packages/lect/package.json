@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
@@ -136,10 +136,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.53",
-    "arrayiffy-if-string": "^3.11.23",
-    "ast-monkey-traverse": "^1.11.45",
-    "bitbucket-slug": "^1.9.48",
+    "array-pull-all-with-glob": "^4.12.54",
+    "arrayiffy-if-string": "^3.11.24",
+    "ast-monkey-traverse": "^1.12.0",
+    "bitbucket-slug": "^1.9.49",
     "chalk": "^3.0.0",
     "execa": "^3.4.0",
     "filesize": "^6.0.1",
@@ -158,8 +158,8 @@
     "log-symbols": "^3.0.0",
     "matcher": "^2.1.0",
     "meow": "^5.0.0",
-    "object-delete-key": "^1.9.8",
-    "object-merge-advanced": "^10.11.7",
+    "object-delete-key": "^1.9.9",
+    "object-merge-advanced": "^10.11.8",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
@@ -177,7 +177,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
-    "ava": "^2.2.8",
+    "ava": "^2.2.9",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
@@ -186,8 +186,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
-    "js-row-num-cli": "^1.6.8",
-    "lect": "^0.11.1",
+    "js-row-num-cli": "^1.6.9",
+    "lect": "^0.11.2",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "tempy": "^0.3.0"

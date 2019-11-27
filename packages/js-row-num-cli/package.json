@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -132,11 +132,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.23",
+    "arrayiffy-if-string": "^3.11.24",
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
-    "js-row-num": "^2.4.7",
+    "js-row-num": "^2.5.0",
     "meow": "^5.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^3.0.1",
@@ -146,7 +146,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
-    "ava": "^2.2.8",
+    "ava": "^2.2.9",
     "babel-plugin-istanbul": "^5.2.0",
     "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
@@ -156,8 +156,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "esm": "^3.2.25",
     "execa": "^3.4.0",
-    "js-row-num-cli": "^1.6.8",
-    "lect": "^0.11.1",
+    "js-row-num-cli": "^1.6.9",
+    "lect": "^0.11.2",
     "nyc": "^14.1.1",
     "prettier": "^1.19.1",
     "tempy": "^0.3.0"

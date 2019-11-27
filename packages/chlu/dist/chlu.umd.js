@@ -1,7 +1,7 @@
 /**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
- * Version: 3.7.50
+ * Version: 3.7.51
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.4.7...js-row-num@2.5.0) (2019-11-27)
+
+
+### Features
+
+* ignore new lines in front of a row numbers ([e6d78d6](https://gitlab.com/codsen/codsen/commit/e6d78d6a830f06e5a7910ea266367b0d16dc3fd1))
+
+
+
+
+
 ## 2.4.0 (2019-10-05)
 
 ### Features
