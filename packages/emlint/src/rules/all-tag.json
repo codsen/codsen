@@ -1,5 +1,6 @@
 [
   "tag-closing-backslash",
+  "tag-is-present",
   "tag-name-case",
   "tag-space-after-opening-bracket",
   "tag-space-before-closing-slash",

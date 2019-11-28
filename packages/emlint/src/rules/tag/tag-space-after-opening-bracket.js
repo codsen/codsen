@@ -25,13 +25,13 @@ function tagSpaceAfterOpeningBracket(context) {
         typeof context.str[node.start + 1] === "string" &&
         !context.str[node.start + 1].trim().length
       ) {
-        console.log(`029 whitespace after opening bracket confirmed`);
+        console.log(`028 whitespace after opening bracket confirmed`);
         ranges.push([node.start + 1, right(context.str, node.start + 1)]);
       }
 
       // 2. if there's whitespace before tag name
       if (!context.str[node.tagNameStartAt - 1].trim().length) {
-        console.log(`035 whitespace before tag name confirmed`);
+        console.log(`034 whitespace before tag name confirmed`);
         const charToTheLeftOfTagNameIdx = left(
           context.str,
           node.tagNameStartAt

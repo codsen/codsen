@@ -242,6 +242,7 @@ var allBadCharacterRules = [
 
 var allTagRules = [
 	"tag-closing-backslash",
+	"tag-is-present",
 	"tag-name-case",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
@@ -2733,6 +2734,30 @@ function tagNameCase(context) {
   };
 }
 
+function tagIsPresent(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    html: function html(node) {
+      if (Array.isArray(opts) && opts.length) {
+        var temp = matcher([node.tagName], opts);
+        if (matcher([node.tagName], opts).length) {
+          context.report({
+            ruleId: "tag-is-present",
+            message: "".concat(node.tagName, " is not allowed."),
+            idxFrom: node.start,
+            idxTo: node.end,
+            fix: {
+              ranges: [[node.start, node.end]]
+            }
+          });
+        }
+      }
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function entity(_ref) {
@@ -3152,6 +3177,9 @@ defineLazyProp(builtInRules, "tag-void-slash", function () {
 });
 defineLazyProp(builtInRules, "tag-name-case", function () {
   return tagNameCase;
+});
+defineLazyProp(builtInRules, "tag-is-present", function () {
+  return tagIsPresent;
 });
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
