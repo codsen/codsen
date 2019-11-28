@@ -2588,6 +2588,121 @@ function characterEncode(context, ...opts) {
   };
 }
 
+function characterUnspacedPunctuation(context, ...originalOpts) {
+  const charCodeMapping = {
+    "63": "questionMark",
+    "33": "exclamationMark",
+    "59": "semicolon",
+    "187": "rightDoubleAngleQuotMark",
+    "171": "leftDoubleAngleQuotMark"
+  };
+  return {
+    text: function(node) {
+      const defaults = {
+        questionMark: {
+          whitespaceLeft: "never",
+          whitespaceRight: "always"
+        },
+        exclamationMark: {
+          whitespaceLeft: "never",
+          whitespaceRight: "always"
+        },
+        semicolon: {
+          whitespaceLeft: "never",
+          whitespaceRight: "always"
+        },
+        rightDoubleAngleQuotMark: {
+          whitespaceLeft: "never",
+          whitespaceRight: "always"
+        },
+        leftDoubleAngleQuotMark: {
+          whitespaceLeft: "never",
+          whitespaceRight: "always"
+        }
+      };
+      let opts = Object.assign({}, defaults);
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        typeof originalOpts[0] === "object" &&
+        originalOpts[0] !== null
+      ) {
+        opts = Object.assign({}, defaults, originalOpts[0]);
+      }
+      for (let i = node.start; i < node.end; i++) {
+        const charCode = context.str[i].charCodeAt(0);
+        if (charCodeMapping[String(charCode)]) {
+          const charName = charCodeMapping[String(charCode)];
+          if (
+            opts[charName].whitespaceLeft === "never" &&
+            i &&
+            !context.str[i - 1].trim().length
+          ) {
+            context.report({
+              ruleId: "character-unspaced-punctuation",
+              severity: 1,
+              idxFrom: left(context.str, i) + 1,
+              idxTo: i,
+              message: "Remove the whitespace.",
+              fix: {
+                ranges: [[left(context.str, i) + 1, i]]
+              }
+            });
+          }
+          if (
+            opts[charName].whitespaceRight === "never" &&
+            i < node.end - 1 &&
+            !context.str[i + 1].trim().length
+          ) {
+            context.report({
+              ruleId: "character-unspaced-punctuation",
+              severity: 1,
+              idxFrom: i + 1,
+              idxTo: right(context.str, i),
+              message: "Remove the whitespace.",
+              fix: {
+                ranges: [[i + 1, right(context.str, i)]]
+              }
+            });
+          }
+          if (
+            opts[charName].whitespaceLeft === "always" &&
+            i &&
+            context.str[i - 1].trim().length
+          ) {
+            context.report({
+              ruleId: "character-unspaced-punctuation",
+              severity: 1,
+              idxFrom: i,
+              idxTo: i + 1,
+              message: "Add a space.",
+              fix: {
+                ranges: [[i, i, " "]]
+              }
+            });
+          }
+          if (
+            opts[charName].whitespaceRight === "always" &&
+            i < node.end - 1 &&
+            context.str[i + 1].trim().length
+          ) {
+            context.report({
+              ruleId: "character-unspaced-punctuation",
+              severity: 1,
+              idxFrom: i,
+              idxTo: i + 1,
+              message: "Add a space.",
+              fix: {
+                ranges: [[i + 1, i + 1, " "]]
+              }
+            });
+          }
+        }
+      }
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -3145,6 +3260,11 @@ defineLazyProp(
   () => htmlEntitiesNotEmailFriendly
 );
 defineLazyProp(builtInRules, "character-encode", () => characterEncode);
+defineLazyProp(
+  builtInRules,
+  "character-unspaced-punctuation",
+  () => characterUnspacedPunctuation
+);
 function get(something) {
   return builtInRules[something];
 }

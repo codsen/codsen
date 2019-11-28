@@ -831,6 +831,13 @@ defineLazyProp(
 import characterEncode from "./rules/character/character-encode";
 defineLazyProp(builtInRules, "character-encode", () => characterEncode);
 
+import characterUnspacedPunctuation from "./rules/character/character-unspaced-punctuation";
+defineLazyProp(
+  builtInRules,
+  "character-unspaced-punctuation",
+  () => characterUnspacedPunctuation
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -843,7 +850,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `846 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `853 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -924,7 +931,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `927 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `934 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
