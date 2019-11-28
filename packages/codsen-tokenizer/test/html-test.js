@@ -568,7 +568,7 @@ test("01.20 - correct HTML5 doctype", t => {
   );
 });
 
-test.only("01.21 - tag names with numbers", t => {
+test("01.21 - tag names with numbers", t => {
   const gathered = [];
   ct("<h1>", obj => {
     gathered.push(obj);

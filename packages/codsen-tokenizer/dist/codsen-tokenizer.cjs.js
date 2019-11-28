@@ -120,7 +120,6 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           break;
         }
       }
-      console.log("216 wholeEspTagLump = ".concat(wholeEspTagLump));
       return layers[layers.length - 1].value.split("").every(function (_char) {
         return wholeEspTagLump.includes(_char);
       });
@@ -133,25 +132,19 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   }
   function pingTagCb(incomingToken) {
     if (tagCb) {
-      console.log("236 PING tagCb() with ".concat(JSON.stringify(incomingToken, null, 4)));
       tagCb(clone(incomingToken));
       tokenReset();
     }
   }
   function dumpCurrentToken(token, i) {
-    console.log("246 ".concat("\x1B[".concat(35, "m", "dumpCurrentToken()", "\x1B[", 39, "m"), "; incoming token=", JSON.stringify(token, null, 0), "; i = ", "\x1B[".concat(33, "m", i, "\x1B[", 39, "m")));
     if (token.type !== "text" && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
-      console.log("261 this token indeed had trailing whitespace");
       token.end = stringLeftRight.left(str, i) + 1;
-      console.log("265 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
       pingTagCb(token);
       token.start = stringLeftRight.left(str, i) + 1;
       token.type = "text";
-      console.log("273 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
     }
     if (token.start !== null) {
       token.end = i;
-      console.log("283 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end, "; then PING tagCb()"));
       pingTagCb(token);
     }
   }
@@ -168,7 +161,6 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }, token);
   }
   for (var i = 0; i < len; i++) {
-    console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i] && str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m\n"));
     if (opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (i === midLen) {
@@ -179,16 +171,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (currentPercentageDone !== lastPercentage) {
           lastPercentage = currentPercentageDone;
           opts.reportProgressFunc(currentPercentageDone);
-          console.log("364 DONE ".concat(currentPercentageDone, "%"));
         }
       }
     }
     if (Number.isInteger(doNothing) && i >= doNothing) {
       doNothing = false;
-      console.log("374 TURN OFF doNothing");
     }
     if (token.end && token.end === i) {
-      console.log("379 call dumpCurrentToken()");
       if (token.kind === "style") {
         styleStarts = true;
       }
@@ -197,18 +186,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     if (!doNothing && ["html"].includes(token.type) && ["\"", "'"].includes(str[i])) {
       if (matchLayerLast(str, i)) {
         layers.pop();
-        console.log("407 ".concat("\x1B[".concat(32, "m", "POP", "\x1B[", 39, "m"), " layers"));
-        console.log("409 now ".concat("\x1B[".concat(33, "m", "layers", "\x1B[", 39, "m"), " = ", JSON.stringify(layers, null, 4)));
       } else if (!layers.length || layers[layers.length - 1].type !== "esp") {
         layers.push({
           type: "simple",
           value: str[i]
         });
-        console.log("428 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", JSON.stringify({
-          type: "simple",
-          value: str[i]
-        }, null, 4)));
-        console.log("438 now ".concat("\x1B[".concat(33, "m", "layers", "\x1B[", 39, "m"), " = ", JSON.stringify(layers, null, 4)));
       }
     }
     if (!doNothing) {
@@ -216,47 +198,36 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         i: true,
         trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
-        console.log("466 html tag opening");
         if (token.type && Number.isInteger(token.start)) {
-          console.log("469 call dumpCurrentToken()");
           dumpCurrentToken(token, i);
-        } else {
-          console.log("472 didn't call dumpCurrentToken()");
         }
         token.start = i;
         token.type = "html";
-        console.log("479 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
         initHtmlToken();
         if (stringMatchLeftRight.matchRight(str, i, "!--")) {
           token.kind = "comment";
-          console.log("490 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.kind", "\x1B[", 39, "m"), " = ", token.kind));
         } else if (stringMatchLeftRight.matchRight(str, i, "doctype", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "doctype";
-          console.log("502 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.kind", "\x1B[", 39, "m"), " = ", token.kind));
         } else if (stringMatchLeftRight.matchRight(str, i, "cdata", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "cdata";
-          console.log("514 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.kind", "\x1B[", 39, "m"), " = ", token.kind));
         } else if (stringMatchLeftRight.matchRight(str, i, "xml", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
           token.kind = "xml";
-          console.log("526 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.kind", "\x1B[", 39, "m"), " = ", token.kind));
         } else if (stringMatchLeftRight.matchRight(str, i, "style", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-", "/", "\\"]
         })) {
           token.kind = "style";
-          console.log("538 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.kind", "\x1B[", 39, "m"), " = ", token.kind));
         }
       } else if (!(token.type === "html" && token.kind === "comment") && espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-")) {
-        console.log("550 ESP tag detected");
         var wholeEspTagLump = "";
         for (var y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -265,74 +236,49 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
-        console.log("565 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " wholeEspTagLump = ", wholeEspTagLump));
-        console.log("568 FIY, ".concat("\x1B[".concat(33, "m", "layers", "\x1B[", 39, "m"), " = ", JSON.stringify(layers, null, 4)));
         if (!["html", "esp"].includes(token.type)) {
-          console.log("576");
           dumpCurrentToken(token, i);
           token.start = i;
           token.type = "esp";
-          console.log("582 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
           doNothing = i + wholeEspTagLump.length;
-          console.log("588 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
           token.tail = flipEspTag(wholeEspTagLump);
-          console.log("592 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.tail", "\x1B[", 39, "m"), " = ", token.tail));
           token.head = wholeEspTagLump;
         } else if (token.type === "html") {
-          console.log("598");
           if (matchLayerLast(str, i)) {
             layers.pop();
-            console.log("602 ".concat("\x1B[".concat(32, "m", "POP", "\x1B[", 39, "m"), " layers"));
           } else {
-            console.log("604 ESP tag within HTML tag");
             layers.push({
               type: "esp",
               value: flipEspTag(wholeEspTagLump)
             });
-            console.log("610 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " ", JSON.stringify({
-              type: "esp",
-              value: flipEspTag(wholeEspTagLump)
-            }, null, 4)));
-            console.log("620 ".concat("\x1B[".concat(33, "m", "layers", "\x1B[", 39, "m"), " = ", JSON.stringify(layers, null, 4)));
           }
-        } else {
-          console.log("628");
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
-          console.log("632");
           if (!str[i].trim().length) {
             token.start = i;
             token.type = "text";
             token.end = stringLeftRight.right(str, i) || str.length;
-            console.log("639 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ").concat(token.end, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
             pingTagCb(token);
             if (stringLeftRight.right(str, i)) {
               token.start = stringLeftRight.right(str, i);
               token.type = "css";
-              console.log("653 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
               doNothing = stringLeftRight.right(str, i);
-              console.log("662 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
             }
           } else {
             token.start = i;
             token.type = "css";
-            console.log("670 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start, "; ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ").concat(token.type));
           }
         } else {
           token.start = i;
-          console.log("679 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.start", "\x1B[", 39, "m"), " = ", token.start));
           token.type = "text";
-          console.log("685 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.type", "\x1B[", 39, "m"), " = ", token.type));
         }
       }
     }
     if (!doNothing) {
       if (token.type === "html" && !layers.length && str[i] === ">") {
         token.end = i + 1;
-        console.log("701 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
-        console.log("711 POSSIBLE ESP TAILS");
         var wholeEspTagClosing = "";
         for (var _y = i; _y < len; _y++) {
           if (espChars.includes(str[_y])) {
@@ -341,87 +287,56 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
-        console.log("722 wholeEspTagClosing = ".concat(wholeEspTagClosing));
         if (wholeEspTagClosing.length > token.head.length) {
-          console.log("732 wholeEspTagClosing.length = ".concat("\x1B[".concat(33, "m", wholeEspTagClosing.length, "\x1B[", 39, "m"), " > token.head.length = ", "\x1B[".concat(33, "m", token.head.length, "\x1B[", 39, "m")));
           var headsFirstChar = token.head[0];
           if (wholeEspTagClosing.endsWith(token.head)) {
-            console.log("760 - chunk ends with the same heads");
             token.end = i + wholeEspTagClosing.length - token.head.length;
-            console.log("782 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
             doNothing = token.end;
-            console.log("788 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
           } else if (wholeEspTagClosing.startsWith(token.tail)) {
             token.end = i + token.tail.length;
-            console.log("793 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
             doNothing = token.end;
-            console.log("799 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
           } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
             (function () {
-              console.log("807");
               var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
               var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-              console.log("".concat("\x1B[".concat(33, "m", "firstPartOfWholeEspTagClosing", "\x1B[", 39, "m"), " = ", JSON.stringify(firstPartOfWholeEspTagClosing, null, 4)));
-              console.log("".concat("\x1B[".concat(33, "m", "secondPartOfWholeEspTagClosing", "\x1B[", 39, "m"), " = ", JSON.stringify(secondPartOfWholeEspTagClosing, null, 4)));
               if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (_char2) {
                 return firstPartOfWholeEspTagClosing.includes(_char2);
               })) {
-                console.log("842 definitely tails + new heads");
                 token.end = i + firstPartOfWholeEspTagClosing.length;
-                console.log("845 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
                 doNothing = token.end;
-                console.log("851 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
               }
             })();
           } else {
-            console.log("CASE #2.");
             token.end = i + wholeEspTagClosing.length;
-            console.log("866 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
             doNothing = token.end;
-            console.log("872 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
           }
-          console.log("875");
         } else {
           token.end = i + wholeEspTagClosing.length;
-          console.log("880 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.end", "\x1B[", 39, "m"), " = ", token.end));
           doNothing = token.end;
-          console.log("886 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(31, "m", "doNothing", "\x1B[", 39, "m"), " = ", doNothing));
         }
       }
     }
     if (token.type === "html" && isNum(token.tagNameStartAt) && !isNum(token.tagNameEndAt)) {
       if (!isLatinLetter(str[i]) && !isNum(str[i])) {
         token.tagNameEndAt = i;
-        console.log("905 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.tagNameEndAt", "\x1B[", 39, "m"), " = ", token.tagNameEndAt));
         token.tagName = str.slice(token.tagNameStartAt, i);
-        console.log("912 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.tagName", "\x1B[", 39, "m"), " = ", token.tagName));
         if (voidTags.includes(token.tagName)) {
           token["void"] = true;
-          console.log("923 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.void", "\x1B[", 39, "m"), " = ", token["void"]));
         }
         token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
-        console.log("933 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.recognised", "\x1B[", 39, "m"), " = ", token.recognised));
       }
     }
     if (token.type === "html" && !isNum(token.tagNameStartAt) && isNum(token.start) && token.start < i) {
       if (str[i] === "/") {
         token.closing = true;
-        console.log("955 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.closing", "\x1B[", 39, "m"), " = ", token.closing));
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartAt = i;
-        console.log("962 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.tagNameStartAt", "\x1B[", 39, "m"), " = ", token.tagNameStartAt));
         if (!token.closing) {
           token.closing = false;
-          console.log("971 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "token.closing", "\x1B[", 39, "m"), " = ", token.closing));
         }
       }
     }
     if (charCb) {
-      console.log("1004 ".concat("\x1B[".concat(32, "m", "PING", "\x1B[", 39, "m"), " ", JSON.stringify({
-        type: token.type,
-        chr: str[i],
-        i: i
-      }, null, 4)));
       pingCharCb({
         type: token.type,
         chr: str[i],
@@ -432,7 +347,6 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       token.end = i + 1;
       pingTagCb(token);
     }
-    console.log("".concat("\x1B[".concat(90, "m", "==========================================\ntoken: ".concat(JSON.stringify(token, null, 0)).concat(layers.length ? "\nlayers: ".concat(JSON.stringify(layers, null, 0)) : ""), "\x1B[", 39, "m"), doNothing ? "\n".concat("\x1B[".concat(31, "m", "DO NOTHING UNTIL ".concat(doNothing), "\x1B[", 39, "m")) : ""));
   }
 }
 
