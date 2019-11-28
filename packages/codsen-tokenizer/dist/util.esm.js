@@ -51,6 +51,11 @@ const allHTMLTagsKnownToHumanity = [
   "form",
   "frame",
   "frameset",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
   "h6",
   "head",
   "header",
@@ -179,7 +184,12 @@ function isStr(something) {
   return typeof something === "string";
 }
 function isNum(something) {
-  return typeof something === "number";
+  return (
+    (typeof something === "string" &&
+      something.charCodeAt(0) >= 48 &&
+      something.charCodeAt(0) <= 57) ||
+    Number.isInteger(something)
+  );
 }
 function isLowercase(char) {
   return (

@@ -898,17 +898,18 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       isNum(token.tagNameStartAt) &&
       !isNum(token.tagNameEndAt)
     ) {
-      if (!isLatinLetter(str[i])) {
+      // tag names can be with numbers, h1
+      if (!isLatinLetter(str[i]) && !isNum(str[i])) {
         token.tagNameEndAt = i;
         console.log(
-          `904 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndAt`}\u001b[${39}m`} = ${
+          `905 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndAt`}\u001b[${39}m`} = ${
             token.tagNameEndAt
           }`
         );
 
         token.tagName = str.slice(token.tagNameStartAt, i);
         console.log(
-          `911 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+          `912 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
             token.tagName
           }`
         );
@@ -919,7 +920,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token.void = true;
           console.log(
-            `922 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
+            `923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
               token.void
             }`
           );
@@ -929,7 +930,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) ||
           ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
         console.log(
-          `932 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
+          `933 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
             token.recognised
           }`
         );
@@ -951,14 +952,14 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       if (str[i] === "/") {
         token.closing = true;
         console.log(
-          `954 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+          `955 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
             token.closing
           }`
         );
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartAt = i;
         console.log(
-          `961 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartAt`}\u001b[${39}m`} = ${
+          `962 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartAt`}\u001b[${39}m`} = ${
             token.tagNameStartAt
           }`
         );
@@ -967,7 +968,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (!token.closing) {
           token.closing = false;
           console.log(
-            `970 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+            `971 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
               token.closing
             }`
           );
@@ -1000,7 +1001,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
     if (charCb) {
       console.log(
-        `1003 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+        `1004 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {
             type: token.type,
             chr: str[i],

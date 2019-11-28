@@ -568,6 +568,31 @@ test("01.20 - correct HTML5 doctype", t => {
   );
 });
 
+test.only("01.21 - tag names with numbers", t => {
+  const gathered = [];
+  ct("<h1>", obj => {
+    gathered.push(obj);
+  });
+  deepContains(
+    gathered,
+    [
+      {
+        type: "html",
+        tagNameStartAt: 1,
+        tagNameEndAt: 3,
+        tagName: "h1",
+        closing: false,
+        recognised: true,
+        void: false,
+        start: 0,
+        end: 4
+      }
+    ],
+    t.is,
+    t.fail
+  );
+});
+
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
