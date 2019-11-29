@@ -136,7 +136,6 @@ var allBadCharacterRules = [
 	"bad-character-break-permitted-here",
 	"bad-character-cancel",
 	"bad-character-cancel-character",
-	"bad-character-character-tabulation",
 	"bad-character-character-tabulation-set",
 	"bad-character-character-tabulation-with-justification",
 	"bad-character-control-0080",
@@ -231,6 +230,7 @@ var allBadCharacterRules = [
 	"bad-character-string-terminator",
 	"bad-character-substitute",
 	"bad-character-synchronous-idle",
+	"bad-character-tabulation",
 	"bad-character-thin-space",
 	"bad-character-three-per-em-space",
 	"bad-character-word-joiner",
@@ -448,20 +448,42 @@ function badCharacterBackspace(context) {
 }
 
 function badCharacterTabulation(context) {
+  var mode = "never";
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  if (Array.isArray(originalOpts) && originalOpts[0] && typeof originalOpts[0] === "string" && originalOpts[0].toLowerCase() === "indentationisfine") {
+    mode = "indentationIsFine";
+  }
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
           i = _ref.i;
       if (chr.charCodeAt(0) === 9) {
-        context.report({
-          ruleId: "bad-character-character-tabulation",
-          message: "Bad character - TABULATION.",
-          idxFrom: i,
-          idxTo: i + 1,
-          fix: {
-            ranges: [[i, i + 1, " "]]
+        if (mode === "never") {
+          context.report({
+            ruleId: "bad-character-tabulation",
+            message: "Bad character - TABULATION.",
+            idxFrom: i,
+            idxTo: i + 1,
+            fix: {
+              ranges: [[i, i + 1, " "]]
+            }
+          });
+        } else if (mode === "indentationIsFine") {
+          var charTopOnBreaksIdx = stringLeftRight.leftStopAtNewLines(context.str, i);
+          if (charTopOnBreaksIdx !== null && context.str[charTopOnBreaksIdx].trim().length) {
+            context.report({
+              ruleId: "bad-character-tabulation",
+              message: "Bad character - TABULATION.",
+              idxFrom: i,
+              idxTo: i + 1,
+              fix: {
+                ranges: [[i, i + 1, " "]]
+              }
+            });
           }
-        });
+        }
       }
     }
   };
@@ -2951,7 +2973,7 @@ defineLazyProp(builtInRules, "bad-character-bell", function () {
 defineLazyProp(builtInRules, "bad-character-backspace", function () {
   return badCharacterBackspace;
 });
-defineLazyProp(builtInRules, "bad-character-character-tabulation", function () {
+defineLazyProp(builtInRules, "bad-character-tabulation", function () {
   return badCharacterTabulation;
 });
 defineLazyProp(builtInRules, "bad-character-line-tabulation", function () {

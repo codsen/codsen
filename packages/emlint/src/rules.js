@@ -71,10 +71,10 @@ defineLazyProp(
   () => badCharacterBackspace
 );
 
-import badCharacterTabulation from "./rules/bad-character/bad-character-character-tabulation";
+import badCharacterTabulation from "./rules/bad-character/bad-character-tabulation";
 defineLazyProp(
   builtInRules,
-  "bad-character-character-tabulation",
+  "bad-character-tabulation",
   () => badCharacterTabulation
 );
 

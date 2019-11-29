@@ -11,7 +11,7 @@ import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
-import { right, left } from 'string-left-right';
+import { leftStopAtNewLines, right, left } from 'string-left-right';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -27,7 +27,6 @@ var allBadCharacterRules = [
 	"bad-character-break-permitted-here",
 	"bad-character-cancel",
 	"bad-character-cancel-character",
-	"bad-character-character-tabulation",
 	"bad-character-character-tabulation-set",
 	"bad-character-character-tabulation-with-justification",
 	"bad-character-control-0080",
@@ -122,6 +121,7 @@ var allBadCharacterRules = [
 	"bad-character-string-terminator",
 	"bad-character-substitute",
 	"bad-character-synchronous-idle",
+	"bad-character-tabulation",
 	"bad-character-thin-space",
 	"bad-character-three-per-em-space",
 	"bad-character-word-joiner",
@@ -325,19 +325,46 @@ function badCharacterBackspace(context) {
   };
 }
 
-function badCharacterTabulation(context) {
+function badCharacterTabulation(context, ...originalOpts) {
+  let mode = "never";
+  if (
+    Array.isArray(originalOpts) &&
+    originalOpts[0] &&
+    typeof originalOpts[0] === "string" &&
+    originalOpts[0].toLowerCase() === "indentationisfine"
+  ) {
+    mode = "indentationIsFine";
+  }
   return {
     character: function({ chr, i }) {
       if (chr.charCodeAt(0) === 9) {
-        context.report({
-          ruleId: "bad-character-character-tabulation",
-          message: "Bad character - TABULATION.",
-          idxFrom: i,
-          idxTo: i + 1,
-          fix: {
-            ranges: [[i, i + 1, " "]]
+        if (mode === "never") {
+          context.report({
+            ruleId: "bad-character-tabulation",
+            message: "Bad character - TABULATION.",
+            idxFrom: i,
+            idxTo: i + 1,
+            fix: {
+              ranges: [[i, i + 1, " "]]
+            }
+          });
+        } else if (mode === "indentationIsFine") {
+          const charTopOnBreaksIdx = leftStopAtNewLines(context.str, i);
+          if (
+            charTopOnBreaksIdx !== null &&
+            context.str[charTopOnBreaksIdx].trim().length
+          ) {
+            context.report({
+              ruleId: "bad-character-tabulation",
+              message: "Bad character - TABULATION.",
+              idxFrom: i,
+              idxTo: i + 1,
+              fix: {
+                ranges: [[i, i + 1, " "]]
+              }
+            });
           }
-        });
+        }
       }
     }
   };
@@ -2743,7 +2770,7 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
-  "bad-character-character-tabulation",
+  "bad-character-tabulation",
   () => badCharacterTabulation
 );
 defineLazyProp(
