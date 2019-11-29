@@ -81,6 +81,7 @@
   "bad-character-private-use-1",
   "bad-character-private-use-2",
   "bad-character-punctuation-space",
+  "bad-character-replacement-character",
   "bad-character-reverse-line-feed",
   "bad-character-right-to-left-embedding",
   "bad-character-right-to-left-isolate",

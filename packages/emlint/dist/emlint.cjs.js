@@ -209,6 +209,7 @@ var allBadCharacterRules = [
 	"bad-character-private-use-1",
 	"bad-character-private-use-2",
 	"bad-character-punctuation-space",
+	"bad-character-replacement-character",
 	"bad-character-reverse-line-feed",
 	"bad-character-right-to-left-embedding",
 	"bad-character-right-to-left-isolate",
@@ -2509,6 +2510,26 @@ function badCharacterIdeographicSpace(context) {
   };
 }
 
+function badCharacterReplacementCharacter(context) {
+  return {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+      if (chr.charCodeAt(0) === 65533) {
+        context.report({
+          ruleId: "bad-character-replacement-character",
+          message: "Bad character - REPLACEMENT CHARACTER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
@@ -3278,6 +3299,9 @@ defineLazyProp(builtInRules, "bad-character-medium-mathematical-space", function
 });
 defineLazyProp(builtInRules, "bad-character-ideographic-space", function () {
   return badCharacterIdeographicSpace;
+});
+defineLazyProp(builtInRules, "bad-character-replacement-character", function () {
+  return badCharacterReplacementCharacter;
 });
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;

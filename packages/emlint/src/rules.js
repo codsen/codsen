@@ -772,6 +772,13 @@ defineLazyProp(
   () => badCharacterIdeographicSpace
 );
 
+import badCharacterReplacementCharacter from "./rules/bad-character/bad-character-replacement-character";
+defineLazyProp(
+  builtInRules,
+  "bad-character-replacement-character",
+  () => badCharacterReplacementCharacter
+);
+
 // TAG-LEVEL rules
 // -----------------------------------------------------------------------------
 
@@ -850,7 +857,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `853 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `860 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -931,7 +938,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `934 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `941 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

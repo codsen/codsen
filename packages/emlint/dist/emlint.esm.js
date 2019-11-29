@@ -100,6 +100,7 @@ var allBadCharacterRules = [
 	"bad-character-private-use-1",
 	"bad-character-private-use-2",
 	"bad-character-punctuation-space",
+	"bad-character-replacement-character",
 	"bad-character-reverse-line-feed",
 	"bad-character-right-to-left-embedding",
 	"bad-character-right-to-left-isolate",
@@ -2188,6 +2189,24 @@ function badCharacterIdeographicSpace(context) {
   };
 }
 
+function badCharacterReplacementCharacter(context) {
+  return {
+    character: function({ chr, i }) {
+      if (chr.charCodeAt(0) === 65533) {
+        context.report({
+          ruleId: "bad-character-replacement-character",
+          message: "Bad character - REPLACEMENT CHARACTER.",
+          idxFrom: i,
+          idxTo: i + 1,
+          fix: {
+            ranges: [[i, i + 1]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function(node) {
@@ -3257,6 +3276,11 @@ defineLazyProp(
   builtInRules,
   "bad-character-ideographic-space",
   () => badCharacterIdeographicSpace
+);
+defineLazyProp(
+  builtInRules,
+  "bad-character-replacement-character",
+  () => badCharacterReplacementCharacter
 );
 defineLazyProp(
   builtInRules,
