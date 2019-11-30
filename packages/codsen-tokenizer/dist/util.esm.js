@@ -207,6 +207,13 @@ function isLatinLetter(char) {
 function charSuitableForTagName(char) {
   return isLowerCaseLetter(char) || char === ":";
 }
+function charSuitableForHTMLAttrName(char) {
+  return (
+    isLatinLetter(char) ||
+    (char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57) ||
+    [":", "-"].includes(char)
+  );
+}
 function flipEspTag(str) {
   let res = "";
   for (let i = 0, len = str.length; i < len; i++) {
@@ -221,4 +228,4 @@ function flipEspTag(str) {
   return res;
 }
 
-export { allHTMLTagsKnownToHumanity, charSuitableForTagName, firstChar, flipEspTag, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isUppercaseLetter, lastChar, secondChar, secondToLastChar };
+export { allHTMLTagsKnownToHumanity, charSuitableForHTMLAttrName, charSuitableForTagName, firstChar, flipEspTag, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isUppercaseLetter, lastChar, secondChar, secondToLastChar };

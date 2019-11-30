@@ -222,6 +222,14 @@ function charSuitableForTagName(char) {
   return isLowerCaseLetter(char) || char === ":";
 }
 
+function charSuitableForHTMLAttrName(char) {
+  return (
+    isLatinLetter(char) ||
+    (char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57) ||
+    [":", "-"].includes(char)
+  );
+}
+
 // it flips all brackets backwards and puts characters in the opposite order
 function flipEspTag(str) {
   let res = "";
@@ -238,6 +246,7 @@ function flipEspTag(str) {
 }
 
 export {
+  charSuitableForHTMLAttrName,
   allHTMLTagsKnownToHumanity,
   charSuitableForTagName,
   isLowerCaseLetter,

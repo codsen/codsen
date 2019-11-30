@@ -41,6 +41,9 @@ function isNum(something) {
 function isLatinLetter(_char4) {
   return isStr(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
 }
+function charSuitableForHTMLAttrName(_char6) {
+  return isLatinLetter(_char6) || _char6.charCodeAt(0) >= 48 && _char6.charCodeAt(0) <= 57 || [":", "-"].includes(_char6);
+}
 function flipEspTag(str) {
   var res = "";
   for (var i = 0, len = str.length; i < len; i++) {
@@ -95,12 +98,30 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     start: null,
     end: null,
     tail: null,
-    kind: null
+    kind: null,
+    attribs: []
   };
   function tokenReset() {
     token = Object.assign({}, tokenDefault);
   }
+  var attrib = {};
+  var attribDefault = {
+    attribName: null,
+    attribNameStartAt: null,
+    attribNameEndAt: null,
+    attribOpeningQuoteAt: null,
+    attribClosingQuoteAt: null,
+    attribValue: null,
+    attribValueStartAt: null,
+    attribValueEndAt: null,
+    attribStart: null,
+    attribEnd: null
+  };
+  function attribReset() {
+    attrib = Object.assign({}, attribDefault);
+  }
   tokenReset();
+  attribReset();
   var layers = [];
   function matchLayerLast(str, i) {
     if (!layers.length) {
@@ -316,7 +337,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         }
       }
     }
-    if (token.type === "html" && isNum(token.tagNameStartAt) && !isNum(token.tagNameEndAt)) {
+    if (!doNothing && token.type === "html" && isNum(token.tagNameStartAt) && !isNum(token.tagNameEndAt)) {
       if (!isLatinLetter(str[i]) && !isNum(str[i])) {
         token.tagNameEndAt = i;
         token.tagName = str.slice(token.tagNameStartAt, i);
@@ -326,13 +347,43 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
       }
     }
-    if (token.type === "html" && !isNum(token.tagNameStartAt) && isNum(token.start) && token.start < i) {
+    if (!doNothing && token.type === "html" && !isNum(token.tagNameStartAt) && isNum(token.start) && token.start < i) {
       if (str[i] === "/") {
         token.closing = true;
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartAt = i;
         if (!token.closing) {
           token.closing = false;
+        }
+      }
+    }
+    if (!doNothing && token.type === "html" && isNum(attrib.attribNameStartAt) && i > attrib.attribNameStartAt && attrib.attribNameEndAt === null && !charSuitableForHTMLAttrName(str[i])) {
+      attrib.attribNameEndAt = i;
+      attrib.attribName = str.slice(attrib.attribNameStartAt, i);
+    }
+    if (!doNothing && token.type === "html" && isNum(token.tagNameEndAt) && i > token.tagNameEndAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
+      attrib.attribStart = i;
+      attrib.attribNameStartAt = i;
+    }
+    if (!doNothing && token.type === "html" && isNum(attrib.attribValueStartAt) && i > attrib.attribValueStartAt && attrib.attribValueEndAt === null) {
+      if ("'\"".includes(str[i])) {
+        if (str[attrib.attribOpeningQuoteAt] === str[i]) {
+          attrib.attribClosingQuoteAt = i;
+          attrib.attribValueEndAt = i;
+          attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
+          attrib.attribEnd = i + 1;
+          token.attribs.push(Object.assign({}, attrib));
+          attribReset();
+        }
+      }
+    }
+    if (!doNothing && token.type === "html" && !isNum(attrib.attribValueStartAt) && isNum(attrib.attribNameEndAt) && attrib.attribNameEndAt <= i && str[i].trim().length) {
+      if (str[i] === "=" && !"'\"".includes(str[stringLeftRight.right(str, i)])) {
+        attrib.attribValueStartAt = stringLeftRight.right(str, i);
+      } else if ("'\"".includes(str[i])) {
+        attrib.attribOpeningQuoteAt = i;
+        if (str[i + 1]) {
+          attrib.attribValueStartAt = i + 1;
         }
       }
     }
