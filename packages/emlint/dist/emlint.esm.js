@@ -133,6 +133,7 @@ var allBadCharacterRules = [
 ];
 
 var allTagRules = [
+	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
 	"tag-name-case",
@@ -2545,6 +2546,30 @@ function tagIsPresent(context, ...opts) {
   };
 }
 
+function tagBold(context, ...opts) {
+  return {
+    html: function(node) {
+      let suggested = "strong";
+      if (
+        Array.isArray(opts) &&
+        typeof opts[0] === "string" &&
+        opts[0].toLowerCase() === "b"
+      ) {
+        suggested = "b";
+      }
+      if (node.tagName === "bold") {
+        context.report({
+          ruleId: "tag-bold",
+          message: `Tag "bold" does not exist in HTML.`,
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: { ranges: [[node.tagNameStartAt, node.tagNameEndAt, suggested]] }
+        });
+      }
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
@@ -3305,6 +3330,7 @@ defineLazyProp(
 defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
+defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(
   builtInRules,
   "bad-named-html-entity-not-email-friendly",

@@ -819,6 +819,9 @@ defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 import tagIsPresent from "./rules/tag/tag-is-present";
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 
+import tagBold from "./rules/tag/tag-bold";
+defineLazyProp(builtInRules, "tag-bold", () => tagBold);
+
 // BAD-HTML-ENTITY rules
 // -----------------------------------------------------------------------------
 // (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
@@ -857,7 +860,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `860 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `863 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -938,7 +941,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `941 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `944 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
