@@ -21,6 +21,7 @@ Other siblings of this package:
 - [Usage](#usage)
 - [API](#api)
 - [Rules](#rules)
+- [`opts.overrideRowNum`](#optsoverriderownum)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -123,12 +124,14 @@ API is simple: `string` in, `string` out. No options, everything beyond the 1st 
 
 ### Optional Options Object
 
-| options object's key | Type of its value                       | Default value     | Description                                                                                                        |
-| -------------------- | --------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------ |
-| {                    |                                         |                   |                                                                                                                    |
-| `padStart`           | Zero, natural number or anything falsey | `3`               | Sets how much digits will be padded                                                                                |
-| `triggerKeywords`    | `null` or array of zero or more strings | `["console.log"]` | After this string, first met chunks of numbers will be replaced with padded row number, unless letter is met first |
-| }                    |                                         |                   |                                                                                                                    |
+| options object's key | Type of its value                       | Default value     | Description                                                                                                                                                                                                                        |
+| -------------------- | --------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                    |                                         |                   |                                                                                                                                                                                                                                    |
+| `padStart`           | Zero, natural number or anything falsey | `3`               | Sets how much digits will be padded                                                                                                                                                                                                |
+| `triggerKeywords`    | `null` or array of zero or more strings | `["console.log"]` | After this string, first met chunks of numbers will be replaced with padded row number, unless letter is met first                                                                                                                 |
+| `overrideRowNum`     | integer or something falsey             | `null`            | If you have console.log contents already extracted and know the row number, you can pass that row number here. Multiple `console.log`s on multiple lineswon't be recognised, we assume you'll process each console.log one by one. |
+| `returnRangesOnly`   | boolean                                 | `false`           | When enabled, instead of string, program will return either `null` (no ranges) or an array of one or more range arrays.                                                                                                            |
+| }                    |                                         |                   |                                                                                                                                                                                                                                    |
 
 Here it is all in one place:
 
@@ -184,6 +187,49 @@ fixRowNums(`a\nb\nc\n log(\`1 something\`)`, { triggerKeywords: ["log"] }),
 ```
 
 Above, `log()` is used and it's on the fourth row and padding is default (three).
+
+**[⬆ back to top](#)**
+
+## `opts.overrideRowNum`
+
+If you process each `console.log` one by one (like we do in `eslint-plugin-row-num` ([npm](https://www.npmjs.com/package/eslint-plugin-row-num)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num/))) and you already know the row number, you can use this program to pad it and perform the replacement.
+
+```js
+const fixRowNums = require("js-row-num");
+const res = fixRowNums(
+  `
+console.log('099 something')
+`,
+  {
+    overrideRowNum: 5
+  }
+);
+console.log(res);
+// =>
+// console.log('005 something')
+//
+```
+
+Same with ranges requested, via `opts.returnRangesOnly`:
+
+```js
+const fixRowNums = require("js-row-num");
+const res = fixRowNums(
+  `
+console.log('099 something')
+`,
+  {
+    overrideRowNum: 5,
+    returnRangesOnly: true
+  }
+);
+console.log(res);
+// =>
+// [
+//    [ 15, 18, "005"]
+// ]
+//
+```
 
 **[⬆ back to top](#)**
 
