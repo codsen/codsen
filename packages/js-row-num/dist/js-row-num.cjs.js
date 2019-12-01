@@ -28,6 +28,7 @@ function fixRowNums(str, originalOpts) {
   var defaults = {
     padStart: 3,
     overrideRowNum: null,
+    returnRangesOnly: false,
     triggerKeywords: ["console.log"]
   };
   var opts = Object.assign({}, defaults, originalOpts);
@@ -131,9 +132,6 @@ function fixRowNums(str, originalOpts) {
       continue;
     }
   }
-  if (finalIndexesToDelete.current()) {
-    return apply(str, finalIndexesToDelete.current());
-  }
   quotes = undefined;
   consoleStartsAt = undefined;
   bracketOpensAt = undefined;
@@ -141,6 +139,11 @@ function fixRowNums(str, originalOpts) {
   wasLetterDetected = undefined;
   digitStartsAt = undefined;
   currentRow = undefined;
+  if (opts.returnRangesOnly) {
+    return finalIndexesToDelete.current();
+  } else if (finalIndexesToDelete.current()) {
+    return apply(str, finalIndexesToDelete.current());
+  }
   return str;
 }
 

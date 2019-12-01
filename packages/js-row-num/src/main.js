@@ -16,6 +16,7 @@ function fixRowNums(str, originalOpts) {
   const defaults = {
     padStart: 3,
     overrideRowNum: null,
+    returnRangesOnly: false,
     triggerKeywords: ["console.log"]
   };
   const opts = Object.assign({}, defaults, originalOpts);
@@ -387,10 +388,6 @@ function fixRowNums(str, originalOpts) {
     );
   }
 
-  if (finalIndexesToDelete.current()) {
-    return apply(str, finalIndexesToDelete.current());
-  }
-
   // wipe
   quotes = undefined;
   consoleStartsAt = undefined;
@@ -399,6 +396,12 @@ function fixRowNums(str, originalOpts) {
   wasLetterDetected = undefined;
   digitStartsAt = undefined;
   currentRow = undefined;
+
+  if (opts.returnRangesOnly) {
+    return finalIndexesToDelete.current();
+  } else if (finalIndexesToDelete.current()) {
+    return apply(str, finalIndexesToDelete.current());
+  }
   return str;
 }
 

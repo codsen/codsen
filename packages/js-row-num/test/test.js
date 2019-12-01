@@ -546,3 +546,43 @@ console.log('005 something')
   );
   t.end();
 });
+
+// -----------------------------------------------------------------------------
+// 08. opts.returnRangesOnly
+// -----------------------------------------------------------------------------
+
+t.test("08.01 - opts.returnRangesOnly - normal ops", t => {
+  t.deepEqual(
+    fixRowNums(
+      `
+      zzz
+      zzz
+      zzz
+      console.log('099 something')
+      console.log('1 something')
+      `,
+      { returnRangesOnly: true }
+    ),
+    [
+      [50, 53, "005"],
+      [85, 86, "006"]
+    ]
+  );
+  t.end();
+});
+
+t.test("08.02 - opts.returnRangesOnly - overrides", t => {
+  t.deepEqual(
+    fixRowNums(
+      `
+console.log('099 something')
+`,
+      {
+        overrideRowNum: 5,
+        returnRangesOnly: true
+      }
+    ),
+    [[14, 17, "005"]]
+  );
+  t.end();
+});
