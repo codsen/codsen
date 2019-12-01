@@ -7,10 +7,8 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
  */
 
-import Slices from 'ranges-push';
-import applySlices from 'ranges-apply';
-import clone from 'lodash.clonedeep';
-import isObj from 'lodash.isplainobject';
+import Ranges from 'ranges-push';
+import apply from 'ranges-apply';
 
 const BACKSLASH = `\u005C`;
 function fixRowNums(str, originalOpts) {
@@ -25,21 +23,10 @@ function fixRowNums(str, originalOpts) {
   }
   const defaults = {
     padStart: 3,
+    overrideRowNum: null,
     triggerKeywords: ["console.log"]
   };
-  const opts = clone(defaults);
-  if (isObj(originalOpts)) {
-    if (Object.prototype.hasOwnProperty.call(originalOpts, "triggerKeywords")) {
-      if (Array.isArray(originalOpts.triggerKeywords)) {
-        opts.triggerKeywords = clone(originalOpts.triggerKeywords);
-      } else if (originalOpts.triggerKeywords === null) {
-        opts.triggerKeywords = [];
-      }
-    }
-    if (Object.prototype.hasOwnProperty.call(originalOpts, "padStart")) {
-      opts.padStart = originalOpts.padStart;
-    }
-  }
+  const opts = Object.assign({}, defaults, originalOpts);
   if (
     !opts.padStart ||
     typeof opts.padStart !== "number" ||
@@ -47,7 +34,7 @@ function fixRowNums(str, originalOpts) {
   ) {
     opts.padStart = 0;
   }
-  const finalIndexesToDelete = new Slices();
+  const finalIndexesToDelete = new Ranges();
   let i;
   const len = str.length;
   let quotes = null;
@@ -60,7 +47,10 @@ function fixRowNums(str, originalOpts) {
     opts.padStart = 4;
   }
   for (i = 0; i < len; i++) {
-    if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
+    if (
+      opts.overrideRowNum === null &&
+      (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n"))
+    ) {
       currentRow++;
     }
     if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
@@ -68,8 +58,10 @@ function fixRowNums(str, originalOpts) {
         digitStartsAt,
         i,
         opts.padStart
-          ? String(currentRow).padStart(opts.padStart, "0")
-          : `${currentRow}`
+          ? String(
+              opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow
+            ).padStart(opts.padStart, "0")
+          : `${opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow}`
       );
       digitStartsAt = null;
       wasLetterDetected = true;
@@ -183,6 +175,9 @@ function fixRowNums(str, originalOpts) {
     }
     let caughtKeyword;
     if (
+      opts &&
+      opts.triggerKeywords &&
+      Array.isArray(opts.triggerKeywords) &&
       opts.triggerKeywords.some(keyw => {
         if (str.startsWith(keyw, i)) {
           caughtKeyword = keyw;
@@ -196,7 +191,7 @@ function fixRowNums(str, originalOpts) {
     }
   }
   if (finalIndexesToDelete.current()) {
-    return applySlices(str, finalIndexesToDelete.current());
+    return apply(str, finalIndexesToDelete.current());
   }
   quotes = undefined;
   consoleStartsAt = undefined;

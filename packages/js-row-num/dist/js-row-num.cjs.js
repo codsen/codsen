@@ -11,10 +11,8 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var Slices = _interopDefault(require('ranges-push'));
-var applySlices = _interopDefault(require('ranges-apply'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+var Ranges = _interopDefault(require('ranges-push'));
+var apply = _interopDefault(require('ranges-apply'));
 
 var BACKSLASH = "\\";
 function fixRowNums(str, originalOpts) {
@@ -29,25 +27,14 @@ function fixRowNums(str, originalOpts) {
   }
   var defaults = {
     padStart: 3,
+    overrideRowNum: null,
     triggerKeywords: ["console.log"]
   };
-  var opts = clone(defaults);
-  if (isObj(originalOpts)) {
-    if (Object.prototype.hasOwnProperty.call(originalOpts, "triggerKeywords")) {
-      if (Array.isArray(originalOpts.triggerKeywords)) {
-        opts.triggerKeywords = clone(originalOpts.triggerKeywords);
-      } else if (originalOpts.triggerKeywords === null) {
-        opts.triggerKeywords = [];
-      }
-    }
-    if (Object.prototype.hasOwnProperty.call(originalOpts, "padStart")) {
-      opts.padStart = originalOpts.padStart;
-    }
-  }
+  var opts = Object.assign({}, defaults, originalOpts);
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
     opts.padStart = 0;
   }
-  var finalIndexesToDelete = new Slices();
+  var finalIndexesToDelete = new Ranges();
   var i;
   var len = str.length;
   var quotes = null;
@@ -60,11 +47,11 @@ function fixRowNums(str, originalOpts) {
     opts.padStart = 4;
   }
   for (i = 0; i < len; i++) {
-    if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
+    if (opts.overrideRowNum === null && (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n")) {
       currentRow++;
     }
     if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
-      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? String(currentRow).padStart(opts.padStart, "0") : "".concat(currentRow));
+      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? String(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow));
       digitStartsAt = null;
       wasLetterDetected = true;
     }
@@ -133,7 +120,7 @@ function fixRowNums(str, originalOpts) {
       }
     }
     var caughtKeyword = void 0;
-    if (opts.triggerKeywords.some(function (keyw) {
+    if (opts && opts.triggerKeywords && Array.isArray(opts.triggerKeywords) && opts.triggerKeywords.some(function (keyw) {
       if (str.startsWith(keyw, i)) {
         caughtKeyword = keyw;
         return true;
@@ -145,7 +132,7 @@ function fixRowNums(str, originalOpts) {
     }
   }
   if (finalIndexesToDelete.current()) {
-    return applySlices(str, finalIndexesToDelete.current());
+    return apply(str, finalIndexesToDelete.current());
   }
   quotes = undefined;
   consoleStartsAt = undefined;
