@@ -31,6 +31,18 @@ fs.writeFileSync(
   JSON.stringify(allTagRules.sort(), null, 2)
 );
 
+// bake the "attribute" rules list JSON:
+
+const allAttribRules = fs
+  .readdirSync(path.resolve("src/rules/attribute/"))
+  .filter(val => val.startsWith("attribute-"))
+  .map(val => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-attribute.json"),
+  JSON.stringify(allAttribRules.sort(), null, 2)
+);
+
 // bake the "all-bad-named-html-entity" rules list JSON:
 // since rules come from standalone npm package, "string-fix-broken-named-entities",
 // rules source is embedded into linter.js and we'll have to use unit test

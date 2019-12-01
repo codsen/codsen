@@ -7,6 +7,7 @@
 import defineLazyProp from "define-lazy-prop";
 import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
+import allAttribRules from "./rules/all-attribute.json";
 import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import clone from "lodash.clonedeep";
 import matcher from "matcher";
@@ -822,6 +823,12 @@ defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 import tagBold from "./rules/tag/tag-bold";
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 
+// ATTRIBUTE rules
+// -----------------------------------------------------------------------------
+
+import attributeMalformed from "./rules/attribute/attribute-malformed";
+defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
+
 // BAD-HTML-ENTITY rules
 // -----------------------------------------------------------------------------
 // (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
@@ -860,7 +867,7 @@ function get(something) {
 // are passed to Linter
 function normaliseRequestedRules(opts) {
   // console.log(
-  //   `863 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `874 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
   //     opts,
   //     null,
   //     4
@@ -874,24 +881,45 @@ function normaliseRequestedRules(opts) {
       res[ruleName] = opts.all;
     });
   } else {
+    let temp;
     if (
-      Object.keys(opts).some(ruleName =>
-        ["bad-character", "bad-character*", "bad-character-*"].includes(
-          ruleName
-        )
-      )
+      Object.keys(opts).some(ruleName => {
+        if (
+          ["bad-character", "bad-character*", "bad-character-*"].includes(
+            ruleName
+          )
+        ) {
+          temp = ruleName;
+          return true;
+        }
+      })
     ) {
       allBadCharacterRules.forEach(ruleName => {
-        res[ruleName] = opts["bad-character"];
+        res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName =>
-        ["tag", "tag*", "tag-*"].includes(ruleName)
-      )
+      Object.keys(opts).some(ruleName => {
+        if (["tag", "tag*", "tag-*"].includes(ruleName)) {
+          temp = ruleName;
+          return true;
+        }
+      })
     ) {
       allTagRules.forEach(ruleName => {
-        res[ruleName] = opts["tag"];
+        res[ruleName] = opts[temp];
+      });
+    }
+    if (
+      Object.keys(opts).some(ruleName => {
+        if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
+          temp = ruleName;
+          return true;
+        }
+      })
+    ) {
+      allAttribRules.forEach(ruleName => {
+        res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
@@ -918,6 +946,9 @@ function normaliseRequestedRules(opts) {
           "tag",
           "tag*",
           "tag-*",
+          "attribute",
+          "attribute*",
+          "attribute-*",
           "bad-character",
           "bad-character",
           "bad-character*",
@@ -941,7 +972,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `944 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `979 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

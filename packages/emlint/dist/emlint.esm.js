@@ -143,6 +143,10 @@ var allTagRules = [
 	"tag-void-slash"
 ];
 
+var allAttribRules = [
+	"attribute-malformed"
+];
+
 var allBadNamedHTMLEntityRules = [
 	"bad-malformed-numeric-character-entity",
 	"bad-named-html-entity-malformed-nbsp",
@@ -2570,6 +2574,25 @@ function tagBold(context, ...opts) {
   };
 }
 
+function attributeMalformed(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (
+        node.attribValueStartAt !== null &&
+        context.str[node.attribNameEndAt] !== "="
+      ) {
+        context.report({
+          ruleId: "attribute-malformed",
+          message: `Equal is missing.`,
+          idxFrom: node.attribStart,
+          idxTo: node.attribEnd,
+          fix: { ranges: [[node.attribNameEndAt, node.attribNameEndAt, "="]] }
+        });
+      }
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
@@ -3331,6 +3354,7 @@ defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
+defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(
   builtInRules,
   "bad-named-html-entity-not-email-friendly",
@@ -3352,24 +3376,45 @@ function normaliseRequestedRules(opts) {
       res[ruleName] = opts.all;
     });
   } else {
+    let temp;
     if (
-      Object.keys(opts).some(ruleName =>
-        ["bad-character", "bad-character*", "bad-character-*"].includes(
-          ruleName
-        )
-      )
+      Object.keys(opts).some(ruleName => {
+        if (
+          ["bad-character", "bad-character*", "bad-character-*"].includes(
+            ruleName
+          )
+        ) {
+          temp = ruleName;
+          return true;
+        }
+      })
     ) {
       allBadCharacterRules.forEach(ruleName => {
-        res[ruleName] = opts["bad-character"];
+        res[ruleName] = opts[temp];
       });
     }
     if (
-      Object.keys(opts).some(ruleName =>
-        ["tag", "tag*", "tag-*"].includes(ruleName)
-      )
+      Object.keys(opts).some(ruleName => {
+        if (["tag", "tag*", "tag-*"].includes(ruleName)) {
+          temp = ruleName;
+          return true;
+        }
+      })
     ) {
       allTagRules.forEach(ruleName => {
-        res[ruleName] = opts["tag"];
+        res[ruleName] = opts[temp];
+      });
+    }
+    if (
+      Object.keys(opts).some(ruleName => {
+        if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
+          temp = ruleName;
+          return true;
+        }
+      })
+    ) {
+      allAttribRules.forEach(ruleName => {
+        res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
@@ -3384,6 +3429,9 @@ function normaliseRequestedRules(opts) {
           "tag",
           "tag*",
           "tag-*",
+          "attribute",
+          "attribute*",
+          "attribute-*",
           "bad-character",
           "bad-character",
           "bad-character*",
@@ -3840,6 +3888,20 @@ class Linter extends EventEmitter {
       str,
       obj => {
         this.emit(obj.type, obj);
+        if (
+          obj.type === "html" &&
+          Array.isArray(obj.attribs) &&
+          obj.attribs.length
+        ) {
+          obj.attribs.forEach(attribObj => {
+            this.emit(
+              "attribute",
+              Object.assign({}, attribObj, {
+                tag: Object.assign({}, obj)
+              })
+            );
+          });
+        }
       },
       obj => {
         this.emit("character", obj);

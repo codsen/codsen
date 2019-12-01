@@ -28,7 +28,7 @@ function tagBold(context, ...opts) {
       }
 
       if (node.tagName === "bold") {
-        console.log(`022 RAISE ERROR [${node.start}, ${node.end}]`);
+        console.log(`031 RAISE ERROR [${node.start}, ${node.end}]`);
         context.report({
           ruleId: "tag-bold",
           message: `Tag "bold" does not exist in HTML.`,

@@ -252,6 +252,10 @@ var allTagRules = [
 	"tag-void-slash"
 ];
 
+var allAttribRules = [
+	"attribute-malformed"
+];
+
 var allBadNamedHTMLEntityRules = [
 	"bad-malformed-numeric-character-entity",
 	"bad-named-html-entity-malformed-nbsp",
@@ -2827,6 +2831,24 @@ function tagBold(context) {
   };
 }
 
+function attributeMalformed(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribValueStartAt !== null && context.str[node.attribNameEndAt] !== "=") {
+        context.report({
+          ruleId: "attribute-malformed",
+          message: "Equal is missing.",
+          idxFrom: node.attribStart,
+          idxTo: node.attribEnd,
+          fix: {
+            ranges: [[node.attribNameEndAt, node.attribNameEndAt, "="]]
+          }
+        });
+      }
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function entity(_ref) {
@@ -3353,6 +3375,9 @@ defineLazyProp(builtInRules, "tag-is-present", function () {
 defineLazyProp(builtInRules, "tag-bold", function () {
   return tagBold;
 });
+defineLazyProp(builtInRules, "attribute-malformed", function () {
+  return attributeMalformed;
+});
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
 });
@@ -3372,18 +3397,35 @@ function normaliseRequestedRules(opts) {
       res[ruleName] = opts.all;
     });
   } else {
+    var temp;
     if (Object.keys(opts).some(function (ruleName) {
-      return ["bad-character", "bad-character*", "bad-character-*"].includes(ruleName);
+      if (["bad-character", "bad-character*", "bad-character-*"].includes(ruleName)) {
+        temp = ruleName;
+        return true;
+      }
     })) {
       allBadCharacterRules.forEach(function (ruleName) {
-        res[ruleName] = opts["bad-character"];
+        res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).some(function (ruleName) {
-      return ["tag", "tag*", "tag-*"].includes(ruleName);
+      if (["tag", "tag*", "tag-*"].includes(ruleName)) {
+        temp = ruleName;
+        return true;
+      }
     })) {
       allTagRules.forEach(function (ruleName) {
-        res[ruleName] = opts["tag"];
+        res[ruleName] = opts[temp];
+      });
+    }
+    if (Object.keys(opts).some(function (ruleName) {
+      if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
+        temp = ruleName;
+        return true;
+      }
+    })) {
+      allAttribRules.forEach(function (ruleName) {
+        res[ruleName] = opts[temp];
       });
     }
     if (Object.keys(opts).includes("bad-html-entity")) {
@@ -3392,7 +3434,7 @@ function normaliseRequestedRules(opts) {
       });
     }
     Object.keys(opts).forEach(function (ruleName) {
-      if (!["all", "tag", "tag*", "tag-*", "bad-character", "bad-character", "bad-character*", "bad-character-*", "bad-html-entity"].includes(ruleName)) {
+      if (!["all", "tag", "tag*", "tag-*", "attribute", "attribute*", "attribute-*", "bad-character", "bad-character", "bad-character*", "bad-character-*", "bad-html-entity"].includes(ruleName)) {
         if (Object.keys(builtInRules).includes(ruleName)) {
           res[ruleName] = clone(opts[ruleName]);
         } else if (ruleName.includes("*")) {
@@ -3777,6 +3819,13 @@ function (_EventEmitter) {
       });
       tokenizer(str, function (obj) {
         _this.emit(obj.type, obj);
+        if (obj.type === "html" && Array.isArray(obj.attribs) && obj.attribs.length) {
+          obj.attribs.forEach(function (attribObj) {
+            _this.emit("attribute", Object.assign({}, attribObj, {
+              tag: Object.assign({}, obj)
+            }));
+          });
+        }
       }, function (obj) {
         _this.emit("character", obj);
       });
