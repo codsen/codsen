@@ -1,0 +1,45 @@
+{
+  "name": "eslint-plugin-row-num",
+  "version": "1.0.0",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "description": "updates row numbers in front of each encountered console.log",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "keywords": [
+    "row",
+    "num",
+    "numbers",
+    "console",
+    "log",
+    "update",
+    "row-num",
+    "js-row-num",
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha tests --recursive"
+  },
+  "lect": {
+    "special": true
+  },
+  "dependencies": {
+    "json-stringify-safe": "^5.0.1",
+    "js-row-num": "^2.5.0",
+    "requireindex": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "mocha": "^6.2.2"
+  }
+}
