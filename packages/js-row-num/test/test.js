@@ -35,7 +35,7 @@ t.test(t => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.only(t => {
+t.test(t => {
   t.is(
     fixRowNums(`
 zzz
@@ -596,6 +596,8 @@ console.log('578 something')
 // 09. opts.extractedLogContentsWereGiven
 // -----------------------------------------------------------------------------
 
+// LEADING QUOTE:
+
 t.test(t => {
   t.same(
     fixRowNums(`"099 something 1"`, {
@@ -626,7 +628,7 @@ t.test(t => {
       extractedLogContentsWereGiven: true
     }),
     [[1, 4, "005"]],
-    "09.02 - opts.extractedLogContentsWereGiven - single quotes"
+    "09.02.01 - opts.extractedLogContentsWereGiven - single quotes"
   );
   t.same(
     fixRowNums(`'099 something 1'`, {
@@ -635,7 +637,7 @@ t.test(t => {
       extractedLogContentsWereGiven: true
     }),
     `'005 something 1'`,
-    "09.02 - opts.extractedLogContentsWereGiven - single quotes"
+    "09.02.02 - opts.extractedLogContentsWereGiven - single quotes"
   );
   t.end();
 });
@@ -658,6 +660,95 @@ t.test(t => {
     }),
     "`005 something 1`",
     "09.03.02 - opts.extractedLogContentsWereGiven - backticks"
+  );
+  t.end();
+});
+
+t.test(t => {
+  t.same(
+    fixRowNums(`"9 this should be 1"`, {
+      overrideRowNum: 3,
+      returnRangesOnly: true,
+      extractedLogContentsWereGiven: true
+    }),
+    [[1, 2, "003"]],
+    "09.04.01"
+  );
+  t.same(
+    fixRowNums("`099 something 1`", {
+      overrideRowNum: 3,
+      returnRangesOnly: false,
+      extractedLogContentsWereGiven: true
+    }),
+    "`003 something 1`",
+    "09.04.02"
+  );
+  t.end();
+});
+
+// NO LEADING QUOTE:
+// =================
+
+t.test(t => {
+  t.same(
+    fixRowNums(`012 something 1`, {
+      overrideRowNum: 5,
+      returnRangesOnly: true,
+      extractedLogContentsWereGiven: true
+    }),
+    [[0, 3, "005"]],
+    "09.05.01 - no leading quote + override - ranges"
+  );
+  t.same(
+    fixRowNums(`099 something 1`, {
+      overrideRowNum: 5,
+      returnRangesOnly: false,
+      extractedLogContentsWereGiven: true
+    }),
+    `005 something 1`,
+    "09.05.02 - no leading quote + override - string"
+  );
+  t.end();
+});
+
+t.test(t => {
+  t.same(
+    fixRowNums(`012 something 1`, {
+      returnRangesOnly: true,
+      extractedLogContentsWereGiven: true
+    }),
+    [[0, 3, "001"]],
+    "09.06.01 - no leading quote - no override - ranges"
+  );
+  t.same(
+    fixRowNums(`099 something 1`, {
+      returnRangesOnly: false,
+      extractedLogContentsWereGiven: true
+    }),
+    `001 something 1`,
+    "09.06.02 - no leading quote - no override - string"
+  );
+  t.end();
+});
+
+t.test(t => {
+  t.same(
+    fixRowNums(` 012 something 1`, {
+      overrideRowNum: 5,
+      returnRangesOnly: true,
+      extractedLogContentsWereGiven: true
+    }),
+    [[1, 4, "005"]],
+    "09.07.01 - opts.extractedLogContentsWereGiven - double quotes"
+  );
+  t.same(
+    fixRowNums(` 123 something 1`, {
+      overrideRowNum: 5,
+      returnRangesOnly: false,
+      extractedLogContentsWereGiven: true
+    }),
+    ` 005 something 1`,
+    "09.07.02 - opts.extractedLogContentsWereGiven - double quotes"
   );
   t.end();
 });

@@ -163,7 +163,17 @@ function fixRowNums(str, originalOpts) {
         quotes.start = i;
         quotes.type = str[i];
         wasLetterDetected = false;
-      } else if (str[i] !== "/") {
+      } else if (
+        opts.extractedLogContentsWereGiven &&
+        isDigit(str[i]) &&
+        digitStartsAt === null
+      ) {
+        digitStartsAt = i;
+      } else if (
+        str[i].trim().length &&
+        str[i] !== "/" &&
+        !opts.extractedLogContentsWereGiven
+      ) {
         consoleStartsAt = null;
         bracketOpensAt = null;
         digitStartsAt = null;

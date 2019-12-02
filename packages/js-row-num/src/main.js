@@ -46,7 +46,11 @@ function fixRowNums(str, originalOpts) {
   }
 
   console.log(
-    `049 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${str};\nfinal opts = ${JSON.stringify(
+    `049 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${JSON.stringify(
+      str,
+      null,
+      0
+    )};\n${`\u001b[${35}m${`FINAL`}\u001b[${39}m`} opts: ${JSON.stringify(
       opts,
       null,
       4
@@ -299,7 +303,7 @@ function fixRowNums(str, originalOpts) {
           bracketOpensAt < i)) &&
       str[i].trim().length
     ) {
-      console.log("302");
+      console.log("302 within opening quotes trap clauses");
 
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
@@ -320,7 +324,20 @@ function fixRowNums(str, originalOpts) {
             4
           )}`
         );
-      } else if (str[i] !== "/") {
+      } else if (
+        opts.extractedLogContentsWereGiven &&
+        isDigit(str[i]) &&
+        digitStartsAt === null
+      ) {
+        digitStartsAt = i;
+        console.log(
+          `135 SET ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
+        );
+      } else if (
+        str[i].trim().length &&
+        str[i] !== "/" &&
+        !opts.extractedLogContentsWereGiven
+      ) {
         // wipe
         console.log(
           `326 \u001b[${31}m${`A QUOTE EXPECTED HERE SO WIPE`}\u001b[${39}m`
