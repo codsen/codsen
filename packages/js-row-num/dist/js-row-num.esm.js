@@ -25,7 +25,8 @@ function fixRowNums(str, originalOpts) {
     padStart: 3,
     overrideRowNum: null,
     returnRangesOnly: false,
-    triggerKeywords: ["console.log"]
+    triggerKeywords: ["console.log"],
+    extractedLogContentsWereGiven: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (
@@ -54,7 +55,11 @@ function fixRowNums(str, originalOpts) {
     ) {
       currentRow++;
     }
-    if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
+    if (
+      Number.isInteger(digitStartsAt) &&
+      !isDigit(str[i]) &&
+      i > digitStartsAt
+    ) {
       finalIndexesToDelete.push(
         digitStartsAt,
         i,
@@ -69,15 +74,17 @@ function fixRowNums(str, originalOpts) {
     }
     if (
       quotes &&
+      Number.isInteger(quotes.start) &&
       quotes.start < i &&
       !wasLetterDetected &&
-      !digitStartsAt &&
+      digitStartsAt === null &&
       isDigit(str[i])
     ) {
       digitStartsAt = i;
     }
     if (
       quotes &&
+      Number.isInteger(quotes.start) &&
       quotes.start < i &&
       !wasLetterDetected &&
       isAZ(str[i]) &&
@@ -135,7 +142,7 @@ function fixRowNums(str, originalOpts) {
       }
       wasLetterDetected = true;
     }
-    if (quotes && quotes.start < i && quotes.type === str[i]) {
+    if (quotes !== null && quotes.start < i && quotes.type === str[i]) {
       quotes = null;
       consoleStartsAt = null;
       bracketOpensAt = null;
@@ -143,11 +150,12 @@ function fixRowNums(str, originalOpts) {
       wasLetterDetected = false;
     }
     if (
-      !quotes &&
-      consoleStartsAt &&
-      consoleStartsAt < i &&
-      bracketOpensAt &&
-      bracketOpensAt < i &&
+      quotes === null &&
+      (opts.extractedLogContentsWereGiven ||
+        (consoleStartsAt &&
+          consoleStartsAt < i &&
+          bracketOpensAt &&
+          bracketOpensAt < i)) &&
       str[i].trim().length
     ) {
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
@@ -191,13 +199,13 @@ function fixRowNums(str, originalOpts) {
       continue;
     }
   }
-  quotes = undefined;
-  consoleStartsAt = undefined;
-  bracketOpensAt = undefined;
-  currentRow = undefined;
+  quotes = null;
+  consoleStartsAt = null;
+  bracketOpensAt = null;
+  currentRow = 1;
   wasLetterDetected = undefined;
-  digitStartsAt = undefined;
-  currentRow = undefined;
+  digitStartsAt = null;
+  currentRow = 1;
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();
   } else if (finalIndexesToDelete.current()) {

@@ -17,7 +17,8 @@ function fixRowNums(str, originalOpts) {
     padStart: 3,
     overrideRowNum: null,
     returnRangesOnly: false,
-    triggerKeywords: ["console.log"]
+    triggerKeywords: ["console.log"],
+    extractedLogContentsWereGiven: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -45,7 +46,7 @@ function fixRowNums(str, originalOpts) {
   }
 
   console.log(
-    `1 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${str};\nfinal opts = ${JSON.stringify(
+    `049 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${str};\nfinal opts = ${JSON.stringify(
       opts,
       null,
       4
@@ -65,22 +66,26 @@ function fixRowNums(str, originalOpts) {
       (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n"))
     ) {
       currentRow++;
-      console.log(`001 SET currentRow = ${currentRow}`);
+      console.log(`069 SET currentRow = ${currentRow}`);
     }
 
     // catch the ending of the digits within console.log:
-    if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
+    if (
+      Number.isInteger(digitStartsAt) &&
+      !isDigit(str[i]) &&
+      i > digitStartsAt
+    ) {
       // replace the digits:
-      console.log("001 THING ABOUT TO BE PUSHED:");
+      console.log("079 THING ABOUT TO BE PUSHED:");
       console.log(
-        `001 ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
+        `081 ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
           opts.padStart,
           null,
           4
         )}`
       );
       console.log(
-        `001 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
+        `088 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
           opts.padStart
         } (typeof ${opts.padStart}), "0")`}\u001b[${39}m`} = ${JSON.stringify(
           String(currentRow).padStart(opts.padStart, "0"),
@@ -89,7 +94,7 @@ function fixRowNums(str, originalOpts) {
         )}`
       );
       console.log(
-        `001 ${`\u001b[${33}m${`currentRow`}\u001b[${39}m`} = ${JSON.stringify(
+        `097 ${`\u001b[${33}m${`currentRow`}\u001b[${39}m`} = ${JSON.stringify(
           currentRow,
           null,
           4
@@ -107,32 +112,34 @@ function fixRowNums(str, originalOpts) {
       // then, reset:
       digitStartsAt = null;
       console.log(
-        `001 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
+        `115 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
       );
       // set wasLetterDetected as a decoy to prevent further digit lumps from being edited:
       wasLetterDetected = true;
       console.log(
-        `001 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
+        `120 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
       );
     }
 
     // catch the first digit within console.log:
     if (
       quotes &&
+      Number.isInteger(quotes.start) &&
       quotes.start < i &&
       !wasLetterDetected &&
-      !digitStartsAt &&
+      digitStartsAt === null &&
       isDigit(str[i])
     ) {
       digitStartsAt = i;
       console.log(
-        `001 SET ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
+        `135 SET ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
       );
     }
 
     // catch first letter within console.log:
     if (
       quotes &&
+      Number.isInteger(quotes.start) &&
       quotes.start < i &&
       !wasLetterDetected &&
       isAZ(str[i]) &&
@@ -157,10 +164,10 @@ function fixRowNums(str, originalOpts) {
         (str[i + 4] === "b" || str[i + 5] === "B") &&
         str[i + 5] === "["
       ) {
-        console.log(`001 \u001b[${35}m${`MATCHED`}\u001b[${39}m`);
+        console.log(`167 \u001b[${35}m${`MATCHED`}\u001b[${39}m`);
         // at this moment, we have stuck here:
         //
-        // console.log(`\u001b[${33}m${`001 zzz`}\u001b[${39}m`)
+        // console.log(`\u001b[${33}m${`170 zzz`}\u001b[${39}m`)
         //                    ^
         //           here, at this bracket
 
@@ -182,7 +189,7 @@ function fixRowNums(str, originalOpts) {
         if (isDigit(str[i + 6])) {
           startMarchingForwFrom = i + 6;
           console.log(
-            `001 SET ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+            `192 SET ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
           );
         } else if (
           str[i + 6] === "$" &&
@@ -191,19 +198,19 @@ function fixRowNums(str, originalOpts) {
         ) {
           startMarchingForwFrom = i + 8;
           console.log(
-            `001 SET ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+            `201 SET ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
           );
         }
 
         console.log(
-          `001 FINAL ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+          `206 FINAL ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
         );
 
         // find out where does this (possibly a sequence) of number(s) end:
         let numbersSequenceEndsAt;
         if (startMarchingForwFrom) {
           console.log(
-            `001 \u001b[${36}m${`startMarchingForwFrom`}\u001b[${39}m was set so marching forward`
+            `213 \u001b[${36}m${`startMarchingForwFrom`}\u001b[${39}m was set so marching forward`
           );
           for (let y = startMarchingForwFrom; y < len; y++) {
             console.log(`\u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`);
@@ -213,12 +220,12 @@ function fixRowNums(str, originalOpts) {
               break;
             }
           }
-          console.log(`001 \u001b[${36}m${`stop marching`}\u001b[${39}m`);
+          console.log(`223 \u001b[${36}m${`stop marching`}\u001b[${39}m`);
         }
 
         // answer: at "numbersSequenceEndsAt".
         console.log(
-          `001 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${str[numbersSequenceEndsAt]}`}\u001b[${39}m`
+          `228 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${str[numbersSequenceEndsAt]}`}\u001b[${39}m`
         );
 
         // We're at the next character where digits end. That is:
@@ -244,7 +251,7 @@ function fixRowNums(str, originalOpts) {
         }
 
         console.log(
-          `001 ${`\u001b[${33}m${`ansiSequencesLetterMAt`}\u001b[${39}m`} = ${ansiSequencesLetterMAt};`
+          `254 ${`\u001b[${33}m${`ansiSequencesLetterMAt`}\u001b[${39}m`} = ${ansiSequencesLetterMAt};`
         );
 
         if (!ansiSequencesLetterMAt) {
@@ -259,21 +266,21 @@ function fixRowNums(str, originalOpts) {
           str[ansiSequencesLetterMAt + 3] === "`"
         ) {
           i = ansiSequencesLetterMAt + 3;
-          console.log(`001 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`269 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
           continue;
         }
       }
 
       wasLetterDetected = true;
       console.log(
-        `001 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
+        `276 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
       );
     }
 
     // catch closing quotes console.log( ' -----> ' <------)
-    if (quotes && quotes.start < i && quotes.type === str[i]) {
+    if (quotes !== null && quotes.start < i && quotes.type === str[i]) {
       console.log(
-        `001 \u001b[${31}m${`CLOSING QUOTE DETECTED - WIPE`}\u001b[${39}m`
+        `283 \u001b[${31}m${`CLOSING QUOTE DETECTED - WIPE`}\u001b[${39}m`
       );
       quotes = null;
       consoleStartsAt = null;
@@ -284,14 +291,15 @@ function fixRowNums(str, originalOpts) {
 
     // catch opening quotes console.log( -----> ' <------ ')
     if (
-      !quotes &&
-      consoleStartsAt &&
-      consoleStartsAt < i &&
-      bracketOpensAt &&
-      bracketOpensAt < i &&
+      quotes === null &&
+      (opts.extractedLogContentsWereGiven ||
+        (consoleStartsAt &&
+          consoleStartsAt < i &&
+          bracketOpensAt &&
+          bracketOpensAt < i)) &&
       str[i].trim().length
     ) {
-      console.log("001");
+      console.log("302");
 
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
@@ -299,14 +307,14 @@ function fixRowNums(str, originalOpts) {
         quotes.type = str[i];
         wasLetterDetected = false;
         console.log(
-          `001 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = ${JSON.stringify(
+          `310 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = ${JSON.stringify(
             wasLetterDetected,
             null,
             4
           )}`
         );
         console.log(
-          `001 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
+          `317 SET ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
             quotes,
             null,
             4
@@ -315,7 +323,7 @@ function fixRowNums(str, originalOpts) {
       } else if (str[i] !== "/") {
         // wipe
         console.log(
-          `001 \u001b[${31}m${`A QUOTE EXPECTED HERE SO WIPE`}\u001b[${39}m`
+          `326 \u001b[${31}m${`A QUOTE EXPECTED HERE SO WIPE`}\u001b[${39}m`
         );
         consoleStartsAt = null;
         bracketOpensAt = null;
@@ -333,7 +341,7 @@ function fixRowNums(str, originalOpts) {
       if (str[i] === "(") {
         bracketOpensAt = i;
         console.log(
-          `001 SET ${`\u001b[${33}m${`bracketOpensAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `344 SET ${`\u001b[${33}m${`bracketOpensAt`}\u001b[${39}m`} = ${JSON.stringify(
             bracketOpensAt,
             null,
             4
@@ -341,7 +349,7 @@ function fixRowNums(str, originalOpts) {
         );
       } else {
         // wipe
-        console.log(`001 \u001b[${31}m${`WIPE`}\u001b[${39}m`);
+        console.log(`352 \u001b[${31}m${`WIPE`}\u001b[${39}m`);
         consoleStartsAt = null;
         digitStartsAt = null;
       }
@@ -362,11 +370,11 @@ function fixRowNums(str, originalOpts) {
     ) {
       consoleStartsAt = i + caughtKeyword.length;
       console.log(
-        `001 SET ${`\u001b[${33}m${`consoleStartsAt`}\u001b[${39}m`} = ${consoleStartsAt}`
+        `373 SET ${`\u001b[${33}m${`consoleStartsAt`}\u001b[${39}m`} = ${consoleStartsAt}`
       );
       // offset the index so we don't traverse twice what was traversed already:
       i = i + caughtKeyword.length - 1;
-      console.log(`001 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+      console.log(`377 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
       continue;
     }
 
@@ -389,13 +397,13 @@ function fixRowNums(str, originalOpts) {
   }
 
   // wipe
-  quotes = undefined;
-  consoleStartsAt = undefined;
-  bracketOpensAt = undefined;
-  currentRow = undefined;
+  quotes = null;
+  consoleStartsAt = null;
+  bracketOpensAt = null;
+  currentRow = 1;
   wasLetterDetected = undefined;
-  digitStartsAt = undefined;
-  currentRow = undefined;
+  digitStartsAt = null;
+  currentRow = 1;
 
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();

@@ -29,7 +29,8 @@ function fixRowNums(str, originalOpts) {
     padStart: 3,
     overrideRowNum: null,
     returnRangesOnly: false,
-    triggerKeywords: ["console.log"]
+    triggerKeywords: ["console.log"],
+    extractedLogContentsWereGiven: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
@@ -51,15 +52,15 @@ function fixRowNums(str, originalOpts) {
     if (opts.overrideRowNum === null && (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n")) {
       currentRow++;
     }
-    if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
+    if (Number.isInteger(digitStartsAt) && !isDigit(str[i]) && i > digitStartsAt) {
       finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? String(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow).padStart(opts.padStart, "0") : "".concat(opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow));
       digitStartsAt = null;
       wasLetterDetected = true;
     }
-    if (quotes && quotes.start < i && !wasLetterDetected && !digitStartsAt && isDigit(str[i])) {
+    if (quotes && Number.isInteger(quotes.start) && quotes.start < i && !wasLetterDetected && digitStartsAt === null && isDigit(str[i])) {
       digitStartsAt = i;
     }
-    if (quotes && quotes.start < i && !wasLetterDetected && isAZ(str[i]) && !(str[i] === "n" && str[i - 1] === BACKSLASH)) {
+    if (quotes && Number.isInteger(quotes.start) && quotes.start < i && !wasLetterDetected && isAZ(str[i]) && !(str[i] === "n" && str[i - 1] === BACKSLASH)) {
       if (str[i - 1] === "\\" && str[i] === "u" && str[i + 1] === "0" && str[i + 2] === "0" && str[i + 3] === "1" && (str[i + 4] === "b" || str[i + 5] === "B") && str[i + 5] === "[") {
         var startMarchingForwFrom = void 0;
         if (isDigit(str[i + 6])) {
@@ -93,14 +94,14 @@ function fixRowNums(str, originalOpts) {
       }
       wasLetterDetected = true;
     }
-    if (quotes && quotes.start < i && quotes.type === str[i]) {
+    if (quotes !== null && quotes.start < i && quotes.type === str[i]) {
       quotes = null;
       consoleStartsAt = null;
       bracketOpensAt = null;
       digitStartsAt = null;
       wasLetterDetected = false;
     }
-    if (!quotes && consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i && str[i].trim().length) {
+    if (quotes === null && (opts.extractedLogContentsWereGiven || consoleStartsAt && consoleStartsAt < i && bracketOpensAt && bracketOpensAt < i) && str[i].trim().length) {
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
         quotes.start = i;
@@ -132,13 +133,13 @@ function fixRowNums(str, originalOpts) {
       continue;
     }
   }
-  quotes = undefined;
-  consoleStartsAt = undefined;
-  bracketOpensAt = undefined;
-  currentRow = undefined;
+  quotes = null;
+  consoleStartsAt = null;
+  bracketOpensAt = null;
+  currentRow = 1;
   wasLetterDetected = undefined;
-  digitStartsAt = undefined;
-  currentRow = undefined;
+  digitStartsAt = null;
+  currentRow = 1;
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();
   } else if (finalIndexesToDelete.current()) {
