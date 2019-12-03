@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8.9"
   },
   "description": "updates row numbers in front of each encountered console.log",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -28,18 +28,25 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha tests --recursive"
+    "format": "npm run lect && npm run prettier && npm run lint",
+    "dev": "echo\"\"",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "lect": "lect",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "test": "mocha test --recursive",
+    "unittest": "npm run test",
+    "version": "npm run build && git add ."
   },
   "lect": {
     "special": true
   },
   "dependencies": {
-    "json-stringify-safe": "^5.0.1",
-    "js-row-num": "^2.5.0",
-    "requireindex": "^1.2.0"
+    "import-modules": "^2.0.0",
+    "js-row-num": "^2.5.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.1",
+    "eslint": "^6.7.2",
+    "lect": "^0.11.2",
     "mocha": "^6.2.2"
   }
 }
