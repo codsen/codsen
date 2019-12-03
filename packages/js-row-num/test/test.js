@@ -752,3 +752,86 @@ t.test(t => {
   );
   t.end();
 });
+
+t.test(t => {
+  t.is(
+    fixRowNums(`
+console.log(
+  '044 something'
+)
+`),
+    `
+console.log(
+  '003 something'
+)
+`,
+    "09.08"
+  );
+  t.end();
+});
+
+// line breaks before string itself
+
+t.test(t => {
+  t.is(
+    fixRowNums(
+      `
+console.log(
+  '044 something'
+)
+`,
+      {
+        overrideRowNum: 99
+      }
+    ),
+    `
+console.log(
+  '099 something'
+)
+`,
+    "09.09 - overrideRowNum"
+  );
+  t.end();
+});
+
+t.test(t => {
+  t.is(
+    fixRowNums(
+      `
+console.log(
+  '044 something'
+)
+`,
+      {
+        overrideRowNum: 99
+      }
+    ),
+    `
+console.log(
+  '099 something'
+)
+`,
+    "09.10 - overrideRowNum"
+  );
+  t.end();
+});
+
+t.test(t => {
+  t.same(
+    fixRowNums(
+      `
+
+  '044 something'
+
+`,
+      {
+        overrideRowNum: 99,
+        extractedLogContentsWereGiven: true,
+        returnRangesOnly: true
+      }
+    ),
+    [[5, 8, "099"]],
+    "09.11 - overrideRowNum + extractedLogContentsWereGiven"
+  );
+  t.end();
+});

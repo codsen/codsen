@@ -80,7 +80,7 @@ function fixRowNums(str, originalOpts) {
       i > digitStartsAt
     ) {
       // replace the digits:
-      console.log("079 THING ABOUT TO BE PUSHED:");
+      console.log("083 THING ABOUT TO BE PUSHED:");
       console.log(
         `081 ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
           opts.padStart,
@@ -303,7 +303,7 @@ function fixRowNums(str, originalOpts) {
           bracketOpensAt < i)) &&
       str[i].trim().length
     ) {
-      console.log("302 within opening quotes trap clauses");
+      console.log("306 within opening quotes trap clauses");
 
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         quotes = {};
