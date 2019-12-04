@@ -75,15 +75,15 @@ describe("helpers", function() {
 		});
 
 		it("leaves unique elements untouched", function() {
-			assert.deepEqual(uniqueSort([p, a]), [p, a]);
+			assert.same(uniqueSort([p, a]), [p, a]);
 		});
 
 		it("removes duplicate elements", function() {
-			assert.deepEqual(uniqueSort([p, a, p]), [p, a]);
+			assert.same(uniqueSort([p, a, p]), [p, a]);
 		});
 
 		it("sorts nodes in document order", function() {
-			assert.deepEqual(uniqueSort([a, dom, span, p]), [dom, p, span, a]);
+			assert.same(uniqueSort([a, dom, span, p]), [dom, p, span, a]);
 		});
 	});
 });

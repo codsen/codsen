@@ -14,6 +14,20 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var Ranges = _interopDefault(require('ranges-push'));
 var apply = _interopDefault(require('ranges-apply'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 var BACKSLASH = "\\";
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -25,6 +39,9 @@ function fixRowNums(str, originalOpts) {
   function isAZ(something) {
     return /[A-Za-z]/.test(something);
   }
+  function isObj(something) {
+    return _typeof(something) === "object" && something !== null;
+  }
   var defaults = {
     padStart: 3,
     overrideRowNum: null,
@@ -32,7 +49,7 @@ function fixRowNums(str, originalOpts) {
     triggerKeywords: ["console.log"],
     extractedLogContentsWereGiven: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  var opts = Object.assign(defaults, originalOpts);
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
     opts.padStart = 0;
   }
@@ -124,7 +141,12 @@ function fixRowNums(str, originalOpts) {
       }
     }
     var caughtKeyword = void 0;
-    if (opts && opts.triggerKeywords && Array.isArray(opts.triggerKeywords) && opts.triggerKeywords.some(function (keyw) {
+    if (isObj(opts) && opts.triggerKeywords && Array.isArray(opts.triggerKeywords) && opts.triggerKeywords.some(function (keyw) {
+      if (str.startsWith(keyw, i)) {
+        caughtKeyword = keyw;
+        return true;
+      }
+    }) || opts.triggerKeywords !== null && (!Array.isArray(opts.triggerKeywords) || !opts.triggerKeywords.length) && ["console.log"].some(function (keyw) {
       if (str.startsWith(keyw, i)) {
         caughtKeyword = keyw;
         return true;

@@ -1,46 +1,55 @@
-import test from "ava";
-import fix from "../dist/string-fix-broken-named-entities.esm";
-import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
+const t = require("tap");
+const fix = require("../dist/string-fix-broken-named-entities.cjs");
+const {
+  decode,
+  uncertain,
+  allNamedEntities
+} = require("all-named-html-entities");
 // -----------------------------------------------------------------------------
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-test(`${
-  Object.keys(allNamedEntities).length
-} - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`, t => {
-  Object.keys(allNamedEntities)
-    .filter(
-      entity => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
-    )
-    .forEach((singleEntity, i, arr) => {
-      //
-      // semicolon missing, isolated:
-      //
-      t.deepEqual(
-        fix(`&${singleEntity}`, {
-          cb: obj => obj
-        }),
-        [
-          {
-            ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
-            entityName: singleEntity,
-            rangeFrom: 0,
-            rangeTo: singleEntity.length + 1,
-            rangeValEncoded: `&${singleEntity};`,
-            rangeValDecoded: decode(`&${singleEntity};`)
-          }
-        ],
-        `${singleEntity} - 02; ${i + 1}/${arr.length}`
-      );
-    });
+t.test(
+  `${
+    Object.keys(allNamedEntities).length
+  } - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`,
+  t => {
+    Object.keys(allNamedEntities)
+      .filter(
+        entity => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
+      )
+      .forEach((singleEntity, i, arr) => {
+        //
+        // semicolon missing, isolated:
+        //
+        t.same(
+          fix(`&${singleEntity}`, {
+            cb: obj => obj
+          }),
+          [
+            {
+              ruleName: `bad-named-html-entity-malformed-${singleEntity}`,
+              entityName: singleEntity,
+              rangeFrom: 0,
+              rangeTo: singleEntity.length + 1,
+              rangeValEncoded: `&${singleEntity};`,
+              rangeValDecoded: decode(`&${singleEntity};`)
+            }
+          ],
+          `${singleEntity} - 02; ${i + 1}/${arr.length}`
+        );
+      });
+    t.end();
+  }
+);
+
+t.test("02 - single pi", t => {
+  t.same(fix("&pi"), [[0, 3, "&pi;"]], "02");
+  t.end();
 });
 
-test("02 - single pi", t => {
-  t.deepEqual(fix("&pi"), [[0, 3, "&pi;"]], "02");
-});
-
-test("03 - larger set", t => {
-  t.deepEqual(
+t.test("03 - larger set", t => {
+  t.same(
     fix("aaa&pi&piv&pi&pivaaa"),
     [
       [3, 6, "&pi;"],
@@ -50,10 +59,11 @@ test("03 - larger set", t => {
     ],
     "03"
   );
+  t.end();
 });
 
-test("04 - letters follow tightly", t => {
-  t.deepEqual(
+t.test("04 - letters follow tightly", t => {
+  t.same(
     fix("aaa&ang&angst&ang&angstaaa"),
     [
       [3, 7, "&ang;"],
@@ -63,4 +73,5 @@ test("04 - letters follow tightly", t => {
     ],
     "04"
   );
+  t.end();
 });

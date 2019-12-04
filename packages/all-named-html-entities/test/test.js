@@ -1,5 +1,5 @@
-import test from "ava";
-import {
+const t = require("tap");
+const {
   allNamedEntities,
   entStartsWith,
   entEndsWith,
@@ -10,57 +10,64 @@ import {
   minLength,
   maxLength,
   uncertain
-} from "../dist/all-named-html-entities.esm";
+} = require("../dist/all-named-html-entities.cjs");
 
-test(`01 - entStartsWith is set`, t => {
-  t.true(entStartsWith.A.E[0] === "AElig");
-  // t.true(entStartsWith.A.E[1] === undefined);
+t.test(`01 - entStartsWith is set`, t => {
+  t.ok(entStartsWith.A.E[0] === "AElig");
+  t.ok(entStartsWith.A.E[1] === undefined);
+  t.end();
 });
 
-test(`02 - entStartsWithCaseInsensitive is set`, t => {
+t.test(`02 - entStartsWithCaseInsensitive is set`, t => {
   // it's not a real entity:
-  t.true(entStartsWithCaseInsensitive.a.e[0] === "aelig");
-  t.true(entStartsWithCaseInsensitive.a.e[1] === undefined);
+  t.ok(entStartsWithCaseInsensitive.a.e[0] === "aelig");
+  t.ok(entStartsWithCaseInsensitive.a.e[1] === undefined);
+  t.end();
 });
 
-test(`03 - entEndsWith is set`, t => {
-  t.true(entEndsWith["1"].p[0] === "sup1");
-  t.true(entEndsWith["1"].p[1] === undefined);
+t.test(`03 - entEndsWith is set`, t => {
+  t.ok(entEndsWith["1"].p[0] === "sup1");
+  t.ok(entEndsWith["1"].p[1] === undefined);
+  t.end();
 });
 
-test(`04 - entEndsWithCaseInsensitive is set`, t => {
-  t.true(entEndsWithCaseInsensitive["u"].m[0] === "mu");
-  t.true(entEndsWithCaseInsensitive["u"].m[1] === undefined);
-  t.true(entEndsWithCaseInsensitive["U"] === undefined);
+t.test(`04 - entEndsWithCaseInsensitive is set`, t => {
+  t.ok(entEndsWithCaseInsensitive["u"].m[0] === "mu");
+  t.ok(entEndsWithCaseInsensitive["u"].m[1] === undefined);
+  t.ok(entEndsWithCaseInsensitive["U"] === undefined);
+  t.end();
 });
 
-test(`05 - decode throws if a non-entity is given`, t => {
-  const error1 = t.throws(() => {
+t.test(`05 - decode throws if a non-entity is given`, t => {
+  t.throws(() => {
     decode("zzz");
-  });
-  t.regex(error1.message, /THROW_ID_01/);
+  }, /THROW_ID_01/g);
+  t.end();
 });
 
-test(`06 - decode existing`, t => {
-  t.is(decode("&aleph;"), "\u2135");
+t.test(`06 - decode existing`, t => {
+  t.equal(decode("&aleph;"), "\u2135");
+  t.end();
 });
 
-test(`07 - decode non-existing`, t => {
-  t.is(decode("&lsdjhfkhgjd;"), null);
+t.test(`07 - decode non-existing`, t => {
+  t.equal(decode("&lsdjhfkhgjd;"), null);
+  t.end();
 });
 
-test(`08 - decode numeric`, t => {
+t.test(`08 - decode numeric`, t => {
   // &#x2135; is &aleph; only numeric version of it
-  t.is(decode("&#x2135;"), null);
+  t.equal(decode("&#x2135;"), null);
+  t.end();
 });
 
-test(`09 - brokenNamedEntities.json is OK`, t => {
-  // t.true(typeof brokenNamedEntities === "object");
-  // t.true(Object.keys(brokenNamedEntities).length > 0);
+t.test(`09 - brokenNamedEntities.json is OK`, t => {
+  t.ok(typeof brokenNamedEntities === "object");
+  t.ok(Object.keys(brokenNamedEntities).length > 0);
   Object.keys(brokenNamedEntities).forEach((oneOfEntities, i) => {
     // 1. ensure all are keys unique:
     Object.keys(brokenNamedEntities).forEach((entity, y) =>
-      t.true(
+      t.ok(
         !(entity === oneOfEntities && i !== y),
         `key "${oneOfEntities}" is not unique`
       )
@@ -68,32 +75,37 @@ test(`09 - brokenNamedEntities.json is OK`, t => {
 
     // 2. ensure "oneOfEntities" is not used by any keys:
     Object.keys(brokenNamedEntities).forEach(entity =>
-      t.true(
+      t.ok(
         entity !== brokenNamedEntities[oneOfEntities],
         `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`
       )
     );
   });
+  t.end();
 });
 
-test(`10 - minLength is numeric`, t => {
-  t.true(Number.isInteger(minLength));
-  t.true(minLength > 0);
+t.test(`10 - minLength is numeric`, t => {
+  t.ok(Number.isInteger(minLength));
+  t.ok(minLength > 0);
+  t.end();
 });
 
-test(`11 - maxLength is numeric`, t => {
-  t.true(Number.isInteger(maxLength));
-  t.true(maxLength > 0);
+t.test(`11 - maxLength is numeric`, t => {
+  t.ok(Number.isInteger(maxLength));
+  t.ok(maxLength > 0);
+  t.end();
 });
 
-test(`12 - allNamedEntities checks`, t => {
-  t.true(Object.keys(allNamedEntities).length > 0);
+t.test(`12 - allNamedEntities checks`, t => {
+  t.ok(Object.keys(allNamedEntities).length > 0);
+  t.end();
 });
 
-test(`13 - uncertain list is set`, t => {
-  t.true(!!uncertain.Alpha);
-  t.true(!!uncertain.alpha);
-  t.true(!!uncertain.amp);
-  t.true(!!uncertain.And);
-  t.true(!!uncertain.and);
+t.test(`13 - uncertain list is set`, t => {
+  t.ok(!!uncertain.Alpha);
+  t.ok(!!uncertain.alpha);
+  t.ok(!!uncertain.amp);
+  t.ok(!!uncertain.And);
+  t.ok(!!uncertain.and);
+  t.end();
 });

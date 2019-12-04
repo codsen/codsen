@@ -79,21 +79,6 @@ export default commandLineArgs => {
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["type-detect"],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" })
-      ]
     }
   ];
 

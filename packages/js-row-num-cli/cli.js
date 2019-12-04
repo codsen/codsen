@@ -66,19 +66,18 @@ const cli = meow(
 );
 updateNotifier({ pkg: cli.pkg }).notify();
 
-const paddingVal = existy(cli.flags.pad) ? cli.flags.pad : 3;
-const triggerKeywords = cli.flags.trigger
-  ? arrayiffy(cli.flags.trigger)
-  : undefined;
-
 function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
     .then(filesContent => {
-      return write(
-        oneOfPaths,
-        fixRowNums(filesContent, { padStart: paddingVal, triggerKeywords })
-      ).then(() => {
+      const conf = {
+        padStart: existy(cli.flags.pad) ? cli.flags.pad : 3
+      };
+      if (cli.flags.trigger) {
+        conf.triggerKeywords = arrayiffy(cli.flags.trigger);
+      }
+
+      return write(oneOfPaths, fixRowNums(filesContent, conf)).then(() => {
         log(
           `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
         );

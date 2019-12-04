@@ -30,9 +30,9 @@
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
-    "test": "lerna run unittest --concurrency 1 && npm run readme:generate && npm run info",
-    "test:full": "FORCE_COLOR=1 lerna run test --concurrency 1 && npm run readme:generate && npm run info",
-    "test:only": "FORCE_COLOR=1 lerna run unittest --concurrency 1 && npm run readme:generate && npm run info",
+    "test": "FORCE_COLOR=1 lerna run test && npm run readme:generate && npm run info",
+    "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
+    "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
     "wipe": "rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
   "husky": {
@@ -45,11 +45,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@pectin/cli": "^3.0.1",
     "benchmark": "^2.1.4",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.7.1",
+    "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",

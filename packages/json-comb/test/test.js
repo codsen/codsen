@@ -1,10 +1,10 @@
-import fs from "fs-extra";
-import path from "path";
-import test from "ava";
-import execa from "execa";
-import tempy from "tempy";
-import pMap from "p-map";
-import pack from "../package";
+const fs = require("fs-extra");
+const path = require("path");
+const t = require("tap");
+const execa = require("execa");
+const tempy = require("tempy");
+const pMap = require("p-map");
+const pack = require("../package");
 
 // File contents:
 // -----------------------------------------------------------------------------
@@ -106,35 +106,38 @@ const testFilePaths = [
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-test.serial("01.01 - version output mode", async t => {
+t.test("01.01 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.is(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version);
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.is(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version);
+  t.end();
 });
 
-test.serial("01.02 - help output mode", async t => {
+t.test("01.02 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.regex(reportedVersion1.stdout, /Usage/);
-  t.regex(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Usage/);
+  t.match(reportedVersion1.stdout, /Options/);
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.regex(reportedVersion2.stdout, /Usage/);
-  t.regex(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Usage/);
+  t.match(reportedVersion2.stdout, /Options/);
+  t.end();
 });
 
-test.serial("01.03 - no files found in the given directory [ID_1]", async t => {
+t.test("01.03 - no files found in the given directory [ID_1]", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
-  t.regex(stdOutContents.stdout, /Nothing found!/);
-  t.regex(stdOutContents.stdout, /ID_1/);
+  t.match(stdOutContents.stdout, /Nothing found!/);
+  t.match(stdOutContents.stdout, /ID_1/);
+  t.end();
 });
 
-test.serial(
+t.test(
   "01.04 - normalisation, called on the directory with subdirectories",
   async t => {
     // 1. fetch us an empty, random, temporary folder:
@@ -182,29 +185,28 @@ test.serial(
       )
       .catch(err => t.fail(err));
 
-    t.deepEqual(await processedFileContents, normalisedFileContents);
+    t.same(await processedFileContents, normalisedFileContents);
+    t.end();
   }
 );
 
-test.serial(
-  "01.05 - normalisation stops if one file is given [ID_2]",
-  async t => {
-    // fetch us a random temp folder
-    // const tempFolder = "temp";
-    // fs.ensureDirSync(path.join(tempFolder));
-    const tempFolder = tempy.directory();
+t.test("01.05 - normalisation stops if one file is given [ID_2]", async t => {
+  // fetch us a random temp folder
+  // const tempFolder = "temp";
+  // fs.ensureDirSync(path.join(tempFolder));
+  const tempFolder = tempy.directory();
 
-    const stdOutContents = await fs
-      .writeJson(path.join(tempFolder, "data.json"), {
-        a: "b",
-        c: "d"
-      })
-      .then(() => execa("./cli.js", ["--normalise", tempFolder]))
-      .catch(err => t.fail(err));
+  const stdOutContents = await fs
+    .writeJson(path.join(tempFolder, "data.json"), {
+      a: "b",
+      c: "d"
+    })
+    .then(() => execa("./cli.js", ["--normalise", tempFolder]))
+    .catch(err => t.fail(err));
 
-    // CLI will complain no files could be found
-    t.regex(stdOutContents.stdout, /ID_2/);
-  }
-);
+  // CLI will complain no files could be found
+  t.match(stdOutContents.stdout, /ID_2/);
+  t.end();
+});
 
 // test.todo("01.05 - sort, there's a broken JSON among files");

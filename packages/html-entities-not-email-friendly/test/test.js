@@ -1,6 +1,9 @@
-import test from "ava";
-import { notEmailFriendly } from "../dist/html-entities-not-email-friendly.esm";
+const t = require("tap");
+const {
+  notEmailFriendly
+} = require("../dist/html-entities-not-email-friendly.cjs");
 
-test(`1 - notEmailFriendly is set`, t => {
-  t.true(notEmailFriendly.Abreve === "#x102");
+t.test(`1 - notEmailFriendly is set`, t => {
+  t.ok(notEmailFriendly.Abreve === "#x102");
+  t.end();
 });

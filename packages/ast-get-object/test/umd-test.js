@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import get1 from "../dist/ast-get-object.umd";
-import get2 from "../dist/ast-get-object.cjs";
+const t = require("tap");
+const get1 = require("../dist/ast-get-object.umd");
 
 const source = [
   {
@@ -26,10 +23,7 @@ const res = [
   }
 ];
 
-test("UMD build works fine", t => {
-  t.deepEqual(get1(source, target), res);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(get2(source, target), res);
+t.test("UMD build works fine", t => {
+  t.same(get1(source, target), res);
+  t.end();
 });

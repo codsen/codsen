@@ -1,27 +1,25 @@
-// avanotonly
-
 // rule: tag-space-before-closing-slash
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+const { applyFixes } = require("../../../t-util/util");
+// const astDeepContains = require("ast-deep-contains");
 
 // 1. no opts
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, warning`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": 1
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, warning`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": 1
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 1,
@@ -34,24 +32,23 @@ test(`01.01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, s
           ranges: [[3, 4]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/>");
+    t.end();
+  }
+);
 
-test(`01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, error`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": 2
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, error`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": 2
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 2,
@@ -64,51 +61,58 @@ test(`01.02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, s
           ranges: [[3, 4]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/>");
+    t.end();
+  }
+);
 
-test(`01.03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, warning`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": 1
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, warning`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": 1
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`01.04 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, error`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": 2
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.04 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, error`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": 2
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
 // 02. space present
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, warning`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [1, "never"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.01 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, warning`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [1, "never"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 1,
@@ -121,24 +125,23 @@ test(`02.01 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - spa
           ranges: [[3, 4]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/>");
+    t.end();
+  }
+);
 
-test(`02.02 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, error`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "never", "tralala"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.02 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, error`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "never", "tralala"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 2,
@@ -151,51 +154,58 @@ test(`02.02 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - spa
           ranges: [[3, 4]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/>");
+    t.end();
+  }
+);
 
-test(`02.03 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, warning`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [1, "always"]
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `02.03 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, warning`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [1, "always"]
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`02.04 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, error`, t => {
-  const str = "<br />";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "always"]
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `02.04 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, error`,
+  t => {
+    const str = "<br />";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "always"]
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
 // 03. space missing
 // -----------------------------------------------------------------------------
 
-test(`03.01 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, warning`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [1, "always"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `03.01 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, warning`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [1, "always"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 1,
@@ -208,24 +218,23 @@ test(`03.01 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opt
           ranges: [[3, 3, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br />");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br />");
+    t.end();
+  }
+);
 
-test(`03.02 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, error`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "always"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `03.02 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, error`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "always"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 2,
@@ -238,41 +247,48 @@ test(`03.02 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opt
           ranges: [[3, 3, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br />");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br />");
+    t.end();
+  }
+);
 
-test(`03.03 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, warning`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [1, "never"]
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `03.03 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, warning`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [1, "never"]
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`03.04 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, error`, t => {
-  const str = "<br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "never"]
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `03.04 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, error`,
+  t => {
+    const str = "<br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "never"]
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
 // 04. many tags with different situation
 // -----------------------------------------------------------------------------
 
-test(`04.01 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=always`, t => {
+t.test(`04.01 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=always`, t => {
   const str = "<br/><hr/><hr /><br/>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -280,65 +296,61 @@ test(`04.01 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=always`, t => {
       "tag-space-before-closing-slash": [2, "always"]
     }
   });
-  t.is(messages.length, 3);
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "tag-space-before-closing-slash",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 3,
-        line: 1,
-        column: 4,
-        message: "Missing space.",
-        fix: {
-          ranges: [[3, 3, " "]]
-        }
-      },
-      {
-        ruleId: "tag-space-before-closing-slash",
-        severity: 2,
-        idxFrom: 8,
-        idxTo: 8,
-        line: 1,
-        column: 9,
-        message: "Missing space.",
-        fix: {
-          ranges: [[8, 8, " "]]
-        }
-      },
-      {
-        ruleId: "tag-space-before-closing-slash",
-        severity: 2,
-        idxFrom: 19,
-        idxTo: 19,
-        line: 1,
-        column: 20,
-        message: "Missing space.",
-        fix: {
-          ranges: [[19, 19, " "]]
-        }
+  t.equal(messages.length, 3);
+  t.match(messages, [
+    {
+      ruleId: "tag-space-before-closing-slash",
+      severity: 2,
+      idxFrom: 3,
+      idxTo: 3,
+      line: 1,
+      column: 4,
+      message: "Missing space.",
+      fix: {
+        ranges: [[3, 3, " "]]
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br /><hr /><hr /><br />");
+    },
+    {
+      ruleId: "tag-space-before-closing-slash",
+      severity: 2,
+      idxFrom: 8,
+      idxTo: 8,
+      line: 1,
+      column: 9,
+      message: "Missing space.",
+      fix: {
+        ranges: [[8, 8, " "]]
+      }
+    },
+    {
+      ruleId: "tag-space-before-closing-slash",
+      severity: 2,
+      idxFrom: 19,
+      idxTo: 19,
+      line: 1,
+      column: 20,
+      message: "Missing space.",
+      fix: {
+        ranges: [[19, 19, " "]]
+      }
+    }
+  ]);
+  t.equal(applyFixes(str, messages), "<br /><hr /><hr /><br />");
+  t.end();
 });
 
-test(`04.02 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a space`, t => {
-  const str = "<br/><hr/><hr  /><br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "never"]
-    }
-  });
-  t.is(messages.length, 1);
-  deepContains(
-    messages,
-    [
+t.test(
+  `04.02 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a space`,
+  t => {
+    const str = "<br/><hr/><hr  /><br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "never"]
+      }
+    });
+    t.equal(messages.length, 1);
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 2,
@@ -351,25 +363,24 @@ test(`04.02 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a 
           ranges: [[13, 15]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/><hr/><hr/><br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/><hr/><hr/><br/>");
+    t.end();
+  }
+);
 
-test(`04.03 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a tab`, t => {
-  const str = "<br/><hr/><hr\t/><br/>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-space-before-closing-slash": [2, "never"]
-    }
-  });
-  t.is(messages.length, 1);
-  deepContains(
-    messages,
-    [
+t.test(
+  `04.03 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a tab`,
+  t => {
+    const str = "<br/><hr/><hr\t/><br/>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-space-before-closing-slash": [2, "never"]
+      }
+    });
+    t.equal(messages.length, 1);
+    t.match(messages, [
       {
         ruleId: "tag-space-before-closing-slash",
         severity: 2,
@@ -382,9 +393,8 @@ test(`04.03 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a 
           ranges: [[13, 14]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<br/><hr/><hr/><br/>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<br/><hr/><hr/><br/>");
+    t.end();
+  }
+);

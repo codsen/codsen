@@ -1,13 +1,7 @@
-// avanotonly
+const t = require("tap");
+const csvSort1 = require("../dist/csv-sort.umd");
 
-import test from "ava";
-import csvSort1 from "../dist/csv-sort.umd";
-import csvSort2 from "../dist/csv-sort.cjs";
-
-test("UMD build works fine", t => {
-  t.deepEqual(csvSort1(""), [[""]]);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(csvSort2(""), [[""]]);
+t.test("UMD build works fine", t => {
+  t.same(csvSort1(""), [[""]]);
+  t.end();
 });

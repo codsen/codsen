@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import isEmpty1 from "../dist/ast-is-empty.umd";
-import isEmpty2 from "../dist/ast-is-empty.cjs";
+const t = require("tap");
+const isEmpty1 = require("../dist/ast-is-empty.umd");
 
 const source = [
   {
@@ -11,10 +8,7 @@ const source = [
   }
 ];
 
-test("UMD build works fine", t => {
-  t.true(isEmpty1(source));
-});
-
-test("CJS build works fine", t => {
-  t.true(isEmpty2(source));
+t.test("UMD build works fine", t => {
+  t.ok(isEmpty1(source));
+  t.end();
 });

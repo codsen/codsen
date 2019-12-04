@@ -22,13 +22,13 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     return x != null;
   }
   if (!existy(originalInput)) {
-    throw new Error("ast-delete-object/deleteObj(): Missing input!");
+    throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");
   }
   if (!existy(originalObjToDelete)) {
-    throw new Error("ast-delete-object/deleteObj(): Missing second argument, object to search for and delete!");
+    throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new Error("ast-delete-object/deleteObj(): Third argument, options object, must be an object!");
+    throw new Error("ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!");
   }
   var defaults = {
     matchKeysStrictly: false,
@@ -36,7 +36,7 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: "ast-delete-object/deleteObj():"
+    msg: "ast-delete-object/deleteObj(): [THROW_ID_04*]"
   });
   var input = clone(originalInput);
   var objToDelete = clone(originalObjToDelete);

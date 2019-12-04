@@ -1,6 +1,6 @@
-import test from "ava";
-import clone from "lodash.clonedeep";
-import deleteObj from "../dist/ast-delete-object.esm";
+const t = require("tap");
+const clone = require("lodash.clonedeep");
+const deleteObj = require("../dist/ast-delete-object.cjs");
 
 // (input, objToDelete, strictOrNot)
 
@@ -8,8 +8,8 @@ import deleteObj from "../dist/ast-delete-object.esm";
 // Object within an array(s), not strict
 // ==============================
 
-test("01.01 - delete one object within an array", t => {
-  t.deepEqual(
+t.test("01.01 - delete one object within an array", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -29,7 +29,7 @@ test("01.01 - delete one object within an array", t => {
     ["elem1", "elem4"],
     "01.01.01 - defaults"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -57,7 +57,7 @@ test("01.01 - delete one object within an array", t => {
     ],
     "01.01.02 - strict matching"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -77,7 +77,7 @@ test("01.01 - delete one object within an array", t => {
     ["elem1", "elem4"],
     "01.01.03 - hungry for whitespace"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -105,10 +105,11 @@ test("01.01 - delete one object within an array", t => {
     ],
     "01.01.04 - hungry for whitespace, strict match"
   );
+  t.end();
 });
 
-test("01.02 - delete one object, involves white space", t => {
-  t.deepEqual(
+t.test("01.02 - delete one object, involves white space", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -136,7 +137,7 @@ test("01.02 - delete one object, involves white space", t => {
     ],
     "01.02.01 - won't delete because of white space mismatching strictly"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -164,7 +165,7 @@ test("01.02 - delete one object, involves white space", t => {
     ],
     "01.02.02 - won't delete because of strict match is on"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -184,7 +185,7 @@ test("01.02 - delete one object, involves white space", t => {
     ["elem1", "elem4"],
     "01.02.03 - will delete because match is not strict and hungry is on"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -212,10 +213,11 @@ test("01.02 - delete one object, involves white space", t => {
     ],
     "01.02.04 - won't delete because of strict match, hungry does not matter"
   );
+  t.end();
 });
 
-test("01.03 - multiple findings, object within array", t => {
-  t.deepEqual(
+t.test("01.03 - multiple findings, object within array", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -257,7 +259,7 @@ test("01.03 - multiple findings, object within array", t => {
     ["elem1", "elem4"],
     "01.03.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -327,7 +329,7 @@ test("01.03 - multiple findings, object within array", t => {
     ],
     "01.03.02 - some not deleted because of strict match"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -370,7 +372,7 @@ test("01.03 - multiple findings, object within array", t => {
     ["elem1", "elem4"],
     "01.03.03"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -440,10 +442,11 @@ test("01.03 - multiple findings, object within array", t => {
     ],
     "01.03.04 - some not deleted because of strict match"
   );
+  t.end();
 });
 
-test("01.04 - delete object within an arrays", t => {
-  t.deepEqual(
+t.test("01.04 - delete object within an arrays", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -466,7 +469,7 @@ test("01.04 - delete object within an arrays", t => {
     ["elem1", ["elem2"], "elem5"],
     "01.04.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -502,7 +505,7 @@ test("01.04 - delete object within an arrays", t => {
     ],
     "01.04.02"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -526,7 +529,7 @@ test("01.04 - delete object within an arrays", t => {
     ["elem1", ["elem2"], "elem5"],
     "01.04.03"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -562,11 +565,59 @@ test("01.04 - delete object within an arrays", t => {
     ],
     "01.04.04"
   );
+  t.end();
 });
 
-test("01.05 - delete object within an array, wrong order of keys, pt.1", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "01.05 - delete object within an array, wrong order of keys, pt.1",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "val2",
+            key4: "val4",
+            key3: "val3"
+          },
+          {
+            key3: "val3",
+            key4: "val4",
+            key2: "val2"
+          },
+          "elem4"
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        { matchKeysStrictly: false, hungryForWhitespace: false }
+      ),
+      ["elem1", "elem4"],
+      "01.05.01 - defaults (not strict match, not white space hungry)"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "val2",
+            key4: "val4",
+            key3: "val3"
+          },
+          {
+            key3: "val3",
+            key4: "val4",
+            key2: "val2"
+          },
+          "elem4"
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        { matchKeysStrictly: true, hungryForWhitespace: false }
+      ),
       [
         "elem1",
         {
@@ -581,17 +632,55 @@ test("01.05 - delete object within an array, wrong order of keys, pt.1", t => {
         },
         "elem4"
       ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      { matchKeysStrictly: false, hungryForWhitespace: false }
-    ),
-    ["elem1", "elem4"],
-    "01.05.01 - defaults (not strict match, not white space hungry)"
-  );
-  t.deepEqual(
-    deleteObj(
+      "01.05.02 - strict match"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "val2",
+            key4: "val4",
+            key3: "val3"
+          },
+          {
+            key3: "val3",
+            key4: "val4",
+            key2: "val2"
+          },
+          "elem4"
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        { matchKeysStrictly: false, hungryForWhitespace: true }
+      ),
+      ["elem1", "elem4"],
+      "01.05.03 - whitespace hungry"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "val2",
+            key4: "val4",
+            key3: "val3"
+          },
+          {
+            key3: "val3",
+            key4: "val4",
+            key2: "val2"
+          },
+          "elem4"
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        { matchKeysStrictly: true, hungryForWhitespace: true }
+      ),
       [
         "elem1",
         {
@@ -606,135 +695,77 @@ test("01.05 - delete object within an array, wrong order of keys, pt.1", t => {
         },
         "elem4"
       ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      { matchKeysStrictly: true, hungryForWhitespace: false }
-    ),
-    [
-      "elem1",
-      {
-        key2: "val2",
-        key4: "val4",
-        key3: "val3"
-      },
-      {
-        key3: "val3",
-        key4: "val4",
-        key2: "val2"
-      },
-      "elem4"
-    ],
-    "01.05.02 - strict match"
-  );
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
+      "01.05.04 - white space hungry with strict match"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key3: "val3",
+            key2: "val2"
+          },
+          {
+            key3: "val3",
+            key4: "val4",
+            key2: "val2"
+          },
+          "elem4"
+        ],
         {
           key2: "val2",
-          key4: "val4",
           key3: "val3"
         },
-        {
-          key3: "val3",
-          key4: "val4",
-          key2: "val2"
-        },
-        "elem4"
-      ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      { matchKeysStrictly: false, hungryForWhitespace: true }
-    ),
-    ["elem1", "elem4"],
-    "01.05.03 - whitespace hungry"
-  );
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
-        {
-          key2: "val2",
-          key4: "val4",
-          key3: "val3"
-        },
-        {
-          key3: "val3",
-          key4: "val4",
-          key2: "val2"
-        },
-        "elem4"
-      ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
-    ),
-    [
-      "elem1",
-      {
-        key2: "val2",
-        key4: "val4",
-        key3: "val3"
-      },
-      {
-        key3: "val3",
-        key4: "val4",
-        key2: "val2"
-      },
-      "elem4"
-    ],
-    "01.05.04 - white space hungry with strict match"
-  );
-  t.deepEqual(
-    deleteObj(
+        { matchKeysStrictly: true, hungryForWhitespace: true }
+      ),
       [
         "elem1",
         {
           key3: "val3",
-          key2: "val2"
-        },
-        {
-          key3: "val3",
           key4: "val4",
           key2: "val2"
         },
         "elem4"
       ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
-    ),
-    [
-      "elem1",
-      {
-        key3: "val3",
-        key4: "val4",
-        key2: "val2"
-      },
-      "elem4"
-    ],
-    "01.05.05 - strict match, different input"
-  );
-});
+      "01.05.05 - strict match, different input"
+    );
+    t.end();
+  }
+);
 
-test("01.06 - delete object within an array, wrong order of keys, pt.2", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "01.06 - delete object within an array, wrong order of keys, pt.2",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          {
+            tag: "a",
+            attrs: {
+              class: "animals",
+              href: "#"
+            },
+            content: [
+              "\n    ",
+              {
+                tag: "span",
+                attrs: {
+                  class: "animals__cat",
+                  style: "background: url(cat.png)"
+                },
+                content: ["Cat"]
+              },
+              "\n"
+            ]
+          }
+        ],
+        {
+          class: "animals"
+        }
+      ),
       [
         {
           tag: "a",
-          attrs: {
-            class: "animals",
-            href: "#"
-          },
           content: [
             "\n    ",
             {
@@ -749,33 +780,14 @@ test("01.06 - delete object within an array, wrong order of keys, pt.2", t => {
           ]
         }
       ],
-      {
-        class: "animals"
-      }
-    ),
-    [
-      {
-        tag: "a",
-        content: [
-          "\n    ",
-          {
-            tag: "span",
-            attrs: {
-              class: "animals__cat",
-              style: "background: url(cat.png)"
-            },
-            content: ["Cat"]
-          },
-          "\n"
-        ]
-      }
-    ],
-    "01.06"
-  );
-});
+      "01.06"
+    );
+    t.end();
+  }
+);
 
-test("01.07 - special case, not strict", t => {
-  t.deepEqual(
+t.test("01.07 - special case, not strict", t => {
+  t.same(
     deleteObj(
       {
         key: ["a"]
@@ -789,10 +801,11 @@ test("01.07 - special case, not strict", t => {
     },
     "01.07"
   );
+  t.end();
 });
 
-test("01.08 - special case, strict", t => {
-  t.deepEqual(
+t.test("01.08 - special case, strict", t => {
+  t.same(
     deleteObj(
       {
         key: ["a"]
@@ -807,10 +820,11 @@ test("01.08 - special case, strict", t => {
     },
     "01.08"
   );
+  t.end();
 });
 
-test("01.09 - real-life situation #1", t => {
-  t.deepEqual(
+t.test("01.09 - real-life situation #1", t => {
+  t.same(
     deleteObj(
       {
         stylesheet: {
@@ -850,10 +864,11 @@ test("01.09 - real-life situation #1", t => {
     },
     "01.09"
   );
+  t.end();
 });
 
-test("01.10 - real-life situation #2", t => {
-  t.deepEqual(
+t.test("01.10 - real-life situation #2", t => {
+  t.same(
     deleteObj(
       {
         type: "stylesheet",
@@ -1034,10 +1049,11 @@ test("01.10 - real-life situation #2", t => {
     },
     "01.10"
   );
+  t.end();
 });
 
-test("01.11 - multiple empty values blank arrays #1", t => {
-  t.deepEqual(
+t.test("01.11 - multiple empty values blank arrays #1", t => {
+  t.same(
     deleteObj(
       deleteObj(
         {
@@ -1067,10 +1083,11 @@ test("01.11 - multiple empty values blank arrays #1", t => {
     },
     "01.11"
   );
+  t.end();
 });
 
-test("01.12 - multiple empty values blank arrays #2", t => {
-  t.deepEqual(
+t.test("01.12 - multiple empty values blank arrays #2", t => {
+  t.same(
     deleteObj(
       deleteObj(
         {
@@ -1100,10 +1117,11 @@ test("01.12 - multiple empty values blank arrays #2", t => {
     },
     "01.12"
   );
+  t.end();
 });
 
-test("01.13 - object's value is a blank array, looking in an array", t => {
-  t.deepEqual(
+t.test("01.13 - object's value is a blank array, looking in an array", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -1121,10 +1139,11 @@ test("01.13 - object's value is a blank array, looking in an array", t => {
     ["elem1", "elem4"],
     "01.13"
   );
+  t.end();
 });
 
-test("01.14 - object's value is a blank array, looking in an object", t => {
-  t.deepEqual(
+t.test("01.14 - object's value is a blank array, looking in an object", t => {
+  t.same(
     deleteObj(
       {
         elem1: {
@@ -1142,14 +1161,15 @@ test("01.14 - object's value is a blank array, looking in an object", t => {
     },
     "01.14"
   );
+  t.end();
 });
 
 // ==============================
 // Object within object, not strict
 // ==============================
 
-test("02.01 - delete object within object - simple #1", t => {
-  t.deepEqual(
+t.test("02.01 - delete object within object - simple #1", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1173,10 +1193,11 @@ test("02.01 - delete object within object - simple #1", t => {
     ],
     "02.01"
   );
+  t.end();
 });
 
-test("02.02 - multiple objects to find - simple #1", t => {
-  t.deepEqual(
+t.test("02.02 - multiple objects to find - simple #1", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1205,10 +1226,11 @@ test("02.02 - multiple objects to find - simple #1", t => {
     ],
     "02.02"
   );
+  t.end();
 });
 
-test("02.03 - multiple objects to find within objects", t => {
-  t.deepEqual(
+t.test("02.03 - multiple objects to find within objects", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1241,10 +1263,11 @@ test("02.03 - multiple objects to find within objects", t => {
     ],
     "02.03"
   );
+  t.end();
 });
 
-test("02.04 - real-life scenario", t => {
-  t.deepEqual(
+t.test("02.04 - real-life scenario", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1358,10 +1381,11 @@ test("02.04 - real-life scenario", t => {
     ],
     "02.04"
   );
+  t.end();
 });
 
-test("02.05 - delete object within object - simple #1", t => {
-  t.deepEqual(
+t.test("02.05 - delete object within object - simple #1", t => {
+  t.same(
     deleteObj(
       {
         key1: "val1",
@@ -1381,14 +1405,15 @@ test("02.05 - delete object within object - simple #1", t => {
     },
     "02.05"
   );
+  t.end();
 });
 
 // ==============================
 // Edge cases
 // ==============================
 
-test("03.01 - the input is the finding", t => {
-  t.deepEqual(
+t.test("03.01 - the input is the finding", t => {
+  t.same(
     deleteObj(
       {
         key3: "val3",
@@ -1403,10 +1428,11 @@ test("03.01 - the input is the finding", t => {
     {},
     "03.01.01"
   );
+  t.end();
 });
 
-test("03.02 - the input is boolean", t => {
-  t.deepEqual(
+t.test("03.02 - the input is boolean", t => {
+  t.same(
     deleteObj(true, {
       key3: "val3",
       key4: "val4"
@@ -1414,10 +1440,11 @@ test("03.02 - the input is boolean", t => {
     true,
     "03.02"
   );
+  t.end();
 });
 
-test("03.03 - the input is string", t => {
-  t.deepEqual(
+t.test("03.03 - the input is string", t => {
+  t.same(
     deleteObj("yo", {
       key3: "val3",
       key4: "val4"
@@ -1425,9 +1452,10 @@ test("03.03 - the input is string", t => {
     "yo",
     "03.03"
   );
+  t.end();
 });
 
-test("03.04 - no input - throws", t => {
+t.test("03.04 - no input - throws", t => {
   t.throws(() => {
     deleteObj();
   });
@@ -1441,10 +1469,11 @@ test("03.04 - no input - throws", t => {
   t.throws(() => {
     deleteObj({ a: "z" }, { b: "y" }, 1);
   });
+  t.end();
 });
 
-test("03.05 - the input is the finding (right within array)", t => {
-  t.deepEqual(
+t.test("03.05 - the input is the finding (right within array)", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1460,10 +1489,11 @@ test("03.05 - the input is the finding (right within array)", t => {
     [],
     "03.05"
   );
+  t.end();
 });
 
-test("03.06 - pt1. empty object to find", t => {
-  t.deepEqual(
+t.test("03.06 - pt1. empty object to find", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1482,7 +1512,7 @@ test("03.06 - pt1. empty object to find", t => {
     ],
     "03.06.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -1501,7 +1531,7 @@ test("03.06 - pt1. empty object to find", t => {
     ],
     "03.06.02"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -1520,7 +1550,7 @@ test("03.06 - pt1. empty object to find", t => {
     ],
     "03.06.03"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {
@@ -1539,13 +1569,14 @@ test("03.06 - pt1. empty object to find", t => {
     ],
     "03.06.04"
   );
+  t.end();
 });
 
 // searching for an empty plain object, source contains various empty plain objects
 // -----------------------------------------------------------------------------
 
-test("03.06 - pt2. empty object to find", t => {
-  t.deepEqual(
+t.test("03.06 - pt2. empty object to find", t => {
+  t.same(
     deleteObj(
       [
         {},
@@ -1567,7 +1598,7 @@ test("03.06 - pt2. empty object to find", t => {
     ],
     "03.06.05"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {},
@@ -1589,7 +1620,7 @@ test("03.06 - pt2. empty object to find", t => {
     ],
     "03.06.06 - rare case - both opts on, matching against blank object - will yield positive against other blank objects, disregarding the STRICTLY flag"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {},
@@ -1611,7 +1642,7 @@ test("03.06 - pt2. empty object to find", t => {
     ],
     "03.06.07"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         {},
@@ -1633,13 +1664,14 @@ test("03.06 - pt2. empty object to find", t => {
     ],
     "03.06.08"
   );
+  t.end();
 });
 
 // searching for an empty array, source includes various empty plain objects
 // -----------------------------------------------------------------------------
 
-test("03.06 - pt3. empty object to find", t => {
-  t.deepEqual(
+t.test("03.06 - pt3. empty object to find", t => {
+  t.same(
     deleteObj(
       [
         { a: "\n" },
@@ -1664,7 +1696,7 @@ test("03.06 - pt3. empty object to find", t => {
     ],
     "03.06.09"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         { a: "\n" },
@@ -1686,7 +1718,7 @@ test("03.06 - pt3. empty object to find", t => {
     ],
     "03.06.10"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         { a: "\n" },
@@ -1711,7 +1743,7 @@ test("03.06 - pt3. empty object to find", t => {
     ],
     "03.06.11"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         { a: "\n" },
@@ -1733,9 +1765,10 @@ test("03.06 - pt3. empty object to find", t => {
     ],
     "03.06.12"
   );
+  t.end();
 });
 
-test("03.07 - to find is undefined - throws", t => {
+t.test("03.07 - to find is undefined - throws", t => {
   t.throws(() => {
     deleteObj(
       [
@@ -1747,9 +1780,10 @@ test("03.07 - to find is undefined - throws", t => {
       undefined
     );
   });
+  t.end();
 });
 
-test("03.08 - to find is null - throws", t => {
+t.test("03.08 - to find is null - throws", t => {
   t.throws(() => {
     deleteObj(
       [
@@ -1761,10 +1795,11 @@ test("03.08 - to find is null - throws", t => {
       null
     );
   });
+  t.end();
 });
 
-test("03.09 - to find is string - returns input", t => {
-  t.deepEqual(
+t.test("03.09 - to find is string - returns input", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1782,15 +1817,35 @@ test("03.09 - to find is string - returns input", t => {
     ],
     "03.09"
   );
+  t.end();
 });
 
 // ==============================
 // Object within an array(s), strict
 // ==============================
 
-test("04.01 - won't delete object within an array because of strict mode", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "04.01 - won't delete object within an array because of strict mode",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "val2",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        {
+          matchKeysStrictly: true
+        }
+      ),
       [
         "elem1",
         {
@@ -1800,29 +1855,14 @@ test("04.01 - won't delete object within an array because of strict mode", t => 
         },
         "elem4"
       ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "val2",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "04.01"
-  );
-});
+      "04.01"
+    );
+    t.end();
+  }
+);
 
-test("04.02 - won't find multiple findings because of strict mode", t => {
-  t.deepEqual(
+t.test("04.02 - won't find multiple findings because of strict mode", t => {
+  t.same(
     deleteObj(
       [
         {
@@ -1854,11 +1894,54 @@ test("04.02 - won't find multiple findings because of strict mode", t => {
     ],
     "04.02"
   );
+  t.end();
 });
 
-test("04.03 - strict mode: deletes some and skips some because of strict mode", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "04.03 - strict mode: deletes some and skips some because of strict mode",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          {
+            key2: "val2",
+            key3: "val3",
+            yo: "yo",
+            this: "will be deleted too"
+          },
+          "elem1",
+          {
+            key2: "val2",
+            key3: "val3",
+            del: "as well",
+            array: [
+              "a",
+              "b",
+              "c",
+              {
+                obj: "obj1"
+              }
+            ]
+          },
+          "elem4",
+          {
+            key2: "val2",
+            key3: "val3",
+            and: "this",
+            deleted: {
+              key2: "val2",
+              key3: "val3"
+            }
+          }
+        ],
+        {
+          key2: "val2",
+          key3: "val3"
+        },
+        {
+          matchKeysStrictly: true
+        }
+      ),
       [
         {
           key2: "val2",
@@ -1884,56 +1967,41 @@ test("04.03 - strict mode: deletes some and skips some because of strict mode", 
         {
           key2: "val2",
           key3: "val3",
-          and: "this",
-          deleted: {
-            key2: "val2",
-            key3: "val3"
-          }
+          and: "this"
         }
       ],
-      {
-        key2: "val2",
-        key3: "val3"
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      {
-        key2: "val2",
-        key3: "val3",
-        yo: "yo",
-        this: "will be deleted too"
-      },
-      "elem1",
-      {
-        key2: "val2",
-        key3: "val3",
-        del: "as well",
-        array: [
-          "a",
-          "b",
-          "c",
-          {
-            obj: "obj1"
-          }
-        ]
-      },
-      "elem4",
-      {
-        key2: "val2",
-        key3: "val3",
-        and: "this"
-      }
-    ],
-    "04.03"
-  );
-});
+      "04.03"
+    );
+    t.end();
+  }
+);
 
-test("04.04 - won't delete object within an arrays because of strict mode", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "04.04 - won't delete object within an arrays because of strict mode",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          [
+            "elem2",
+            {
+              key3: "val3",
+              key4: "val4",
+              del: "as well",
+              whatnot: "this doesn't matter"
+            }
+          ],
+          "elem5"
+        ],
+        {
+          key3: "val3",
+          key4: "val4"
+        },
+        {
+          matchKeysStrictly: true
+        }
+      ),
       [
         "elem1",
         [
@@ -1947,37 +2015,18 @@ test("04.04 - won't delete object within an arrays because of strict mode", t =>
         ],
         "elem5"
       ],
-      {
-        key3: "val3",
-        key4: "val4"
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      "elem1",
-      [
-        "elem2",
-        {
-          key3: "val3",
-          key4: "val4",
-          del: "as well",
-          whatnot: "this doesn't matter"
-        }
-      ],
-      "elem5"
-    ],
-    "04.04"
-  );
-});
+      "04.04"
+    );
+    t.end();
+  }
+);
 
 // ==============================
 // Non-strict recognising empty space
 // ==============================
 
-test("05.01 - recognises array containing only empty space - default", t => {
-  t.deepEqual(
+t.test("05.01 - recognises array containing only empty space - default", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -1998,7 +2047,7 @@ test("05.01 - recognises array containing only empty space - default", t => {
     ["elem1", "elem4"],
     "05.01.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2027,10 +2076,11 @@ test("05.01 - recognises array containing only empty space - default", t => {
     ],
     "05.01.02"
   );
+  t.end();
 });
 
-test("05.02 - recognises array containing only empty space - strict", t => {
-  t.deepEqual(
+t.test("05.02 - recognises array containing only empty space - strict", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2059,7 +2109,7 @@ test("05.02 - recognises array containing only empty space - strict", t => {
     ],
     "05.02.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2088,11 +2138,27 @@ test("05.02 - recognises array containing only empty space - strict", t => {
     ],
     "05.02.02"
   );
+  t.end();
 });
 
-test("05.03 - recognises array containing only empty space - not found", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.03 - recognises array containing only empty space - not found",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n  .  "],
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: []
+        }
+      ),
       [
         "elem1",
         {
@@ -2102,25 +2168,14 @@ test("05.03 - recognises array containing only empty space - not found", t => {
         },
         "elem4"
       ],
-      {
-        key2: []
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: ["\n\n \t \n \n  .  "],
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.03"
-  );
-});
+      "05.03"
+    );
+    t.end();
+  }
+);
 
-test("05.04 - two keys in objToDelete - default", t => {
-  t.deepEqual(
+t.test("05.04 - two keys in objToDelete - default", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2162,10 +2217,11 @@ test("05.04 - two keys in objToDelete - default", t => {
       }
     );
   });
+  t.end();
 });
 
-test("05.05 - two keys in objToDelete - strict, not found", t => {
-  t.deepEqual(
+t.test("05.05 - two keys in objToDelete - strict, not found", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2195,7 +2251,7 @@ test("05.05 - two keys in objToDelete - strict, not found", t => {
     ],
     "05.05.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2222,10 +2278,11 @@ test("05.05 - two keys in objToDelete - strict, not found", t => {
     ],
     "05.05.02"
   );
+  t.end();
 });
 
-test("05.06 - two keys in objToDelete - strict", t => {
-  t.deepEqual(
+t.test("05.06 - two keys in objToDelete - strict", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2253,10 +2310,11 @@ test("05.06 - two keys in objToDelete - strict", t => {
     ],
     "05.06"
   );
+  t.end();
 });
 
-test("05.07 - array with strings containing emptiness - default", t => {
-  t.deepEqual(
+t.test("05.07 - array with strings containing emptiness - default", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2282,7 +2340,7 @@ test("05.07 - array with strings containing emptiness - default", t => {
     ],
     "05.07.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2303,10 +2361,11 @@ test("05.07 - array with strings containing emptiness - default", t => {
     ["elem1", "elem4"],
     "05.07.02"
   );
+  t.end();
 });
 
-test("05.08 - array with strings containing emptiness - strict", t => {
-  t.deepEqual(
+t.test("05.08 - array with strings containing emptiness - strict", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2335,10 +2394,11 @@ test("05.08 - array with strings containing emptiness - strict", t => {
     ],
     "05.08"
   );
+  t.end();
 });
 
-test("05.09 - array with strings containing emptiness - strict found", t => {
-  t.deepEqual(
+t.test("05.09 - array with strings containing emptiness - strict found", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2367,7 +2427,7 @@ test("05.09 - array with strings containing emptiness - strict found", t => {
     ],
     "05.09.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2388,11 +2448,51 @@ test("05.09 - array with strings containing emptiness - strict found", t => {
     ["elem1", "elem4"],
     "05.09.02"
   );
+  t.end();
 });
 
-test("05.10 - recognises string containing only empty space (queried array)", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.10 - recognises string containing only empty space (queried array)",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: []
+        },
+        {
+          hungryForWhitespace: true
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.10.01"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: []
+        },
+        {
+          hungryForWhitespace: false
+        }
+      ),
       [
         "elem1",
         {
@@ -2402,49 +2502,14 @@ test("05.10 - recognises string containing only empty space (queried array)", t 
         },
         "elem4"
       ],
-      {
-        key2: []
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.10.01"
-  );
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
-        {
-          key2: "\n\n \t \n \n    ",
-          key3: "val3",
-          key4: "val4"
-        },
-        "elem4"
-      ],
-      {
-        key2: []
-      },
-      {
-        hungryForWhitespace: false
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.10.02"
-  );
-});
+      "05.10.02"
+    );
+    t.end();
+  }
+);
 
-test("05.11 - recognises string containing only empty space - strict", t => {
-  t.deepEqual(
+t.test("05.11 - recognises string containing only empty space - strict", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2473,11 +2538,27 @@ test("05.11 - recognises string containing only empty space - strict", t => {
     ],
     "05.11"
   );
+  t.end();
 });
 
-test("05.12 - recognises string containing only empty space - won't find", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.12 - recognises string containing only empty space - won't find",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n  .  ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          a: []
+        }
+      ),
       [
         "elem1",
         {
@@ -2487,26 +2568,31 @@ test("05.12 - recognises string containing only empty space - won't find", t => 
         },
         "elem4"
       ],
-      {
-        a: []
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n  .  ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.12"
-  );
-});
+      "05.12"
+    );
+    t.end();
+  }
+);
 
-test("05.13 - recognises string containing only empty space - won't find", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.13 - recognises string containing only empty space - won't find",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [],
+          key3: []
+        }
+      ),
       [
         "elem1",
         {
@@ -2516,24 +2602,27 @@ test("05.13 - recognises string containing only empty space - won't find", t => 
         },
         "elem4"
       ],
-      {
-        key2: [],
-        key3: []
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.13.01"
-  );
-  t.deepEqual(
-    deleteObj(
+      "05.13.01"
+    );
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [],
+          key3: []
+        },
+        {
+          hungryForWhitespace: true
+        }
+      ),
       [
         "elem1",
         {
@@ -2543,30 +2632,61 @@ test("05.13 - recognises string containing only empty space - won't find", t => 
         },
         "elem4"
       ],
-      {
-        key2: [],
-        key3: []
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.13.02"
-  );
-});
+      "05.13.02"
+    );
+    t.end();
+  }
+);
 
-test("05.14 - recognises a string containing only empty space (queried array with empty string)", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.14 - recognises a string containing only empty space (queried array with empty string)",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [""]
+        },
+        {
+          hungryForWhitespace: true
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.14"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  "05.15 - a string containing only empty space (queried array) - strict",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [""]
+        },
+        {
+          matchKeysStrictly: true
+        }
+      ),
       [
         "elem1",
         {
@@ -2576,21 +2696,31 @@ test("05.14 - recognises a string containing only empty space (queried array wit
         },
         "elem4"
       ],
-      {
-        key2: [""]
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.14"
-  );
-});
+      "05.15"
+    );
+    t.end();
+  }
+);
 
-test("05.15 - a string containing only empty space (queried array) - strict", t => {
-  t.deepEqual(
-    deleteObj(
+t.test(
+  "05.16 - a string containing only empty space (queried array) - not found",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [""],
+          a: []
+        }
+      ),
       [
         "elem1",
         {
@@ -2600,82 +2730,42 @@ test("05.15 - a string containing only empty space (queried array) - strict", t 
         },
         "elem4"
       ],
-      {
-        key2: [""]
-      },
-      {
-        matchKeysStrictly: true
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.15"
-  );
-});
+      "05.16"
+    );
+    t.end();
+  }
+);
 
-test("05.16 - a string containing only empty space (queried array) - not found", t => {
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
+t.test(
+  "05.17 - recognises string containing only empty space string (queried empty string)",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: "\n\n \t \n \n    ",
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
         {
-          key2: "\n\n \t \n \n    ",
-          key3: "val3",
-          key4: "val4"
+          key2: ""
         },
-        "elem4"
-      ],
-      {
-        key2: [""],
-        a: []
-      }
-    ),
-    [
-      "elem1",
-      {
-        key2: "\n\n \t \n \n    ",
-        key3: "val3",
-        key4: "val4"
-      },
-      "elem4"
-    ],
-    "05.16"
-  );
-});
-
-test("05.17 - recognises string containing only empty space string (queried empty string)", t => {
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
         {
-          key2: "\n\n \t \n \n    ",
-          key3: "val3",
-          key4: "val4"
-        },
-        "elem4"
-      ],
-      {
-        key2: ""
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.17"
-  );
-});
+          hungryForWhitespace: true
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.17"
+    );
+    t.end();
+  }
+);
 
-test("05.18 - multiple string values in objToDelete", t => {
-  t.deepEqual(
+t.test("05.18 - multiple string values in objToDelete", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2697,10 +2787,11 @@ test("05.18 - multiple string values in objToDelete", t => {
     ["elem1", "elem4"],
     "05.18"
   );
+  t.end();
 });
 
-test("05.19 - multiple string values in objToDelete - not found", t => {
-  t.deepEqual(
+t.test("05.19 - multiple string values in objToDelete - not found", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2727,10 +2818,11 @@ test("05.19 - multiple string values in objToDelete - not found", t => {
     ],
     "05.19"
   );
+  t.end();
 });
 
-test("05.20 - multiple string values in objToDelete - strict", t => {
-  t.deepEqual(
+t.test("05.20 - multiple string values in objToDelete - strict", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2768,10 +2860,11 @@ test("05.20 - multiple string values in objToDelete - strict", t => {
     ],
     "05.20"
   );
+  t.end();
 });
 
-test("05.21 - won't find, queried object with empty string value", t => {
-  t.deepEqual(
+t.test("05.21 - won't find, queried object with empty string value", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2797,58 +2890,67 @@ test("05.21 - won't find, queried object with empty string value", t => {
     ],
     "05.21"
   );
+  t.end();
 });
 
-test("05.22 - recognises array of strings each containing only empty space (queried empty string)", t => {
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
+t.test(
+  "05.22 - recognises array of strings each containing only empty space (queried empty string)",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    ", "\n\n \n"],
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
         {
-          key2: ["\n\n \t \n \n    ", "\n\n \n"],
-          key3: "val3",
-          key4: "val4"
+          key2: ""
         },
-        "elem4"
-      ],
-      {
-        key2: ""
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.22"
-  );
-});
-
-test("05.23 - recognises array with multiple strings containing emptiness", t => {
-  t.deepEqual(
-    deleteObj(
-      [
-        "elem1",
         {
-          key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
-          key3: "val3",
-          key4: "val4"
-        },
-        "elem4"
-      ],
-      {
-        key2: [""]
-      },
-      {
-        hungryForWhitespace: true
-      }
-    ),
-    ["elem1", "elem4"],
-    "05.23"
-  );
-});
+          hungryForWhitespace: true
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.22"
+    );
+    t.end();
+  }
+);
 
-test("05.24 - empty array finding empty string", t => {
-  t.deepEqual(
+t.test(
+  "05.23 - recognises array with multiple strings containing emptiness",
+  t => {
+    t.same(
+      deleteObj(
+        [
+          "elem1",
+          {
+            key2: ["\n\n \t \n \n    ", "\n", "\t", "   "],
+            key3: "val3",
+            key4: "val4"
+          },
+          "elem4"
+        ],
+        {
+          key2: [""]
+        },
+        {
+          hungryForWhitespace: true
+        }
+      ),
+      ["elem1", "elem4"],
+      "05.23"
+    );
+    t.end();
+  }
+);
+
+t.test("05.24 - empty array finding empty string", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2874,10 +2976,11 @@ test("05.24 - empty array finding empty string", t => {
     ["elem1", "elem4"],
     "05.24"
   );
+  t.end();
 });
 
-test("05.25 - empty string finding empty array", t => {
-  t.deepEqual(
+t.test("05.25 - empty string finding empty array", t => {
+  t.same(
     deleteObj(
       [
         "elem1",
@@ -2898,10 +3001,11 @@ test("05.25 - empty string finding empty array", t => {
     ["elem1", "elem4"],
     "05.25"
   );
+  t.end();
 });
 
-test("05.26 - object deleted from an array, strict mode", t => {
-  t.deepEqual(
+t.test("05.26 - object deleted from an array, strict mode", t => {
+  t.same(
     deleteObj(
       [{ a: "a" }],
       {
@@ -2912,14 +3016,15 @@ test("05.26 - object deleted from an array, strict mode", t => {
     [],
     "05.26"
   );
+  t.end();
 });
 
 // ==============================
 // Other and random tests
 // ==============================
 
-test("06.01 - real life situation #1", t => {
-  t.deepEqual(
+t.test("06.01 - real life situation #1", t => {
+  t.same(
     deleteObj(
       {
         stylesheet: {
@@ -2946,10 +3051,11 @@ test("06.01 - real life situation #1", t => {
     },
     "06.01"
   );
+  t.end();
 });
 
-test("06.02 - real life situation #2", t => {
-  t.deepEqual(
+t.test("06.02 - real life situation #2", t => {
+  t.same(
     deleteObj(
       {
         stylesheet: {
@@ -2976,10 +3082,11 @@ test("06.02 - real life situation #2", t => {
     },
     "06.02"
   );
+  t.end();
 });
 
-test("06.03 - real life situation #3", t => {
-  t.deepEqual(
+t.test("06.03 - real life situation #3", t => {
+  t.same(
     deleteObj(
       {
         type: "stylesheet",
@@ -3126,10 +3233,11 @@ test("06.03 - real life situation #3", t => {
     },
     "06.03"
   );
+  t.end();
 });
 
-test("06.04 - real life situation #4", t => {
-  t.deepEqual(
+t.test("06.04 - real life situation #4", t => {
+  t.same(
     deleteObj(
       {
         type: "stylesheet",
@@ -3276,10 +3384,11 @@ test("06.04 - real life situation #4", t => {
     },
     "06.04"
   );
+  t.end();
 });
 
-test("06.05 - empty strings within arrays", t => {
-  t.deepEqual(
+t.test("06.05 - empty strings within arrays", t => {
+  t.same(
     deleteObj(
       [
         "",
@@ -3306,7 +3415,7 @@ test("06.05 - empty strings within arrays", t => {
     ],
     "06.05.01 - defaults"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "",
@@ -3328,7 +3437,7 @@ test("06.05 - empty strings within arrays", t => {
     ["", ""], // <<< result
     "06.05.02 - hungryForWhitespace"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "",
@@ -3358,7 +3467,7 @@ test("06.05 - empty strings within arrays", t => {
     ],
     "06.05.03 - matchKeysStrictly"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       [
         "",
@@ -3389,10 +3498,11 @@ test("06.05 - empty strings within arrays", t => {
     ],
     "06.05.04 - matchKeysStrictly + hungryForWhitespace"
   );
+  t.end();
 });
 
-test("06.06 - strict mode, deletes everything", t => {
-  t.deepEqual(
+t.test("06.06 - strict mode, deletes everything", t => {
+  t.same(
     deleteObj(
       {
         a: "a",
@@ -3409,7 +3519,7 @@ test("06.06 - strict mode, deletes everything", t => {
     {},
     "06.06.01"
   );
-  t.deepEqual(
+  t.same(
     deleteObj(
       {
         a: "a",
@@ -3426,23 +3536,25 @@ test("06.06 - strict mode, deletes everything", t => {
     {},
     "06.06.02"
   );
+  t.end();
 });
 
-test("06.07 - treats holes in arrays - ast-monkey will fix them", t => {
-  t.deepEqual(
+t.test("06.07 - treats holes in arrays - ast-monkey will fix them", t => {
+  t.same(
     deleteObj(["a", undefined, "b"], {
       x: "y"
     }),
     ["a", "b"],
     "06.07"
   );
+  t.end();
 });
 
 // ==============================
 // Testing for input arg mutation
 // ==============================
 
-test("07.01 - does not mutate input args", t => {
+t.test("07.01 - does not mutate input args", t => {
   const obj1 = {
     a: "a",
     b: "b"
@@ -3450,7 +3562,7 @@ test("07.01 - does not mutate input args", t => {
   const obj2 = clone(obj1);
   const unneededResult = deleteObj(obj1, obj2, { matchKeysStrictly: true });
   t.pass(unneededResult); // dummy to please linter
-  t.deepEqual(
+  t.same(
     obj1,
     {
       a: "a",
@@ -3458,7 +3570,7 @@ test("07.01 - does not mutate input args", t => {
     },
     "07.01.01"
   ); // real deal
-  t.deepEqual(
+  t.same(
     obj2,
     {
       a: "a",
@@ -3466,23 +3578,25 @@ test("07.01 - does not mutate input args", t => {
     },
     "07.01.02"
   ); // real deal
+  t.end();
 });
 
 // ==========
 // Edge cases
 // ==========
 
-test("08.01 - wrong input args", t => {
+t.test("08.01 - wrong input args", t => {
   t.throws(() => {
     deleteObj({ a: "a" }, { a: "a" }, { matchKeysStrictly: "true" });
-  });
+  }, /THROW_ID_04/g);
   t.throws(() => {
     deleteObj({ a: "a" }, { a: "a" }, { matchKeysStrictly: 1 });
-  });
+  }, /THROW_ID_04/g);
   t.throws(() => {
     deleteObj({ a: "a" }, { a: "a" }, { hungryForWhitespace: "true" });
-  });
+  }, /THROW_ID_04/g);
   t.throws(() => {
     deleteObj({ a: "a" }, { a: "a" }, { hungryForWhitespace: 1 });
-  });
+  }, /THROW_ID_04/g);
+  t.end();
 });

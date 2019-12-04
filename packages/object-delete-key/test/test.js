@@ -1,8 +1,8 @@
 /* eslint-disable no-multi-str */
 
-import test from "ava";
-import parser from "posthtml-parser";
-import deleteKey from "../dist/object-delete-key.esm";
+const t = require("tap");
+const parser = require("posthtml-parser");
+const deleteKey = require("../dist/object-delete-key.cjs");
 
 let actual;
 let intended;
@@ -11,7 +11,7 @@ let intended;
 // One-level plain objects
 // ==============================
 
-test("01.01 - delete a value which is string", t => {
+t.test("01.01 - delete a value which is string", t => {
   actual = deleteKey(
     {
       a: "a",
@@ -26,10 +26,12 @@ test("01.01 - delete a value which is string", t => {
     a: "a"
   };
 
-  t.deepEqual(actual, intended, "01.01");
+  t.same(actual, intended, "01.01");
+
+  t.end();
 });
 
-test("01.02 - delete a value which is plain object", t => {
+t.test("01.02 - delete a value which is plain object", t => {
   actual = deleteKey(
     {
       a: "a",
@@ -44,10 +46,12 @@ test("01.02 - delete a value which is plain object", t => {
     a: "a"
   };
 
-  t.deepEqual(actual, intended, "01.02");
+  t.same(actual, intended, "01.02");
+
+  t.end();
 });
 
-test("01.03 - delete two values, plain objects, cleanup=false", t => {
+t.test("01.03 - delete two values, plain objects, cleanup=false", t => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
@@ -63,10 +67,12 @@ test("01.03 - delete two values, plain objects, cleanup=false", t => {
     a: { e: [{}] }
   };
 
-  t.deepEqual(actual, intended, "01.03");
+  t.same(actual, intended, "01.03");
+
+  t.end();
 });
 
-test("01.04 - delete two values, plain objects, cleanup=true", t => {
+t.test("01.04 - delete two values, plain objects, cleanup=true", t => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
@@ -80,10 +86,11 @@ test("01.04 - delete two values, plain objects, cleanup=true", t => {
   );
   intended = {};
 
-  t.deepEqual(actual, intended, "01.04");
+  t.same(actual, intended, "01.04");
+  t.end();
 });
 
-test("01.05 - delete two values which are plain objects (on default)", t => {
+t.test("01.05 - delete two values which are plain objects (on default)", t => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: "d" } }] },
@@ -96,10 +103,11 @@ test("01.05 - delete two values which are plain objects (on default)", t => {
   );
   intended = {};
 
-  t.deepEqual(actual, intended, "01.05");
+  t.same(actual, intended, "01.05");
+  t.end();
 });
 
-test("01.06 - delete a value which is an array", t => {
+t.test("01.06 - delete a value which is an array", t => {
   actual = deleteKey(
     {
       a: "a",
@@ -114,10 +122,11 @@ test("01.06 - delete a value which is an array", t => {
     a: "a"
   };
 
-  t.deepEqual(actual, intended, "01.06");
+  t.same(actual, intended, "01.06");
+  t.end();
 });
 
-test("01.07 - delete two values which are arrays, cleanup=false", t => {
+t.test("01.07 - delete two values which are arrays, cleanup=false", t => {
   actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
@@ -133,10 +142,11 @@ test("01.07 - delete two values which are arrays, cleanup=false", t => {
     a: { e: [{}] }
   };
 
-  t.deepEqual(actual, intended, "01.07");
+  t.same(actual, intended, "01.07");
+  t.end();
 });
 
-test("01.08 - delete two values which are arrays, cleanup=default", t => {
+t.test("01.08 - delete two values which are arrays, cleanup=default", t => {
   actual = deleteKey(
     {
       a: { e: [{ b: ["c", "d"] }] },
@@ -149,15 +159,16 @@ test("01.08 - delete two values which are arrays, cleanup=default", t => {
   );
   intended = {};
 
-  t.deepEqual(actual, intended, "01.08");
+  t.same(actual, intended, "01.08");
+  t.end();
 });
 
 // ==============================
 // Omit value to target all keys
 // ==============================
 
-test("02.01 - simple plain object, couple instances found", t => {
-  t.deepEqual(
+t.test("02.01 - simple plain object, couple instances found", t => {
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -173,7 +184,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.01 - no settings"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -190,7 +201,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.02 - objects only (same outcome as 2.1.1)"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -209,7 +220,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.03 - arrays only (none found)"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -226,7 +237,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.04 - only=any"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -244,7 +255,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     '02.01.05 - does not touch key within object; cleanup will remove up to and including key "c"'
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "a",
@@ -262,7 +273,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.06 - does not touch key within array"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "apples",
@@ -280,7 +291,7 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.06 - does not touch key within array"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       {
         a: "apples",
@@ -300,10 +311,11 @@ test("02.01 - simple plain object, couple instances found", t => {
     },
     "02.01.07 - same as #06 but without cleanup"
   );
+  t.end();
 });
 
-test("02.02 - nested array/plain objects, multiple instances found", t => {
-  t.deepEqual(
+t.test("02.02 - nested array/plain objects, multiple instances found", t => {
+  t.same(
     deleteKey(
       [
         {
@@ -323,7 +335,7 @@ test("02.02 - nested array/plain objects, multiple instances found", t => {
     [{ a: "a" }],
     "02.02.01, default cleanup"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -344,7 +356,7 @@ test("02.02 - nested array/plain objects, multiple instances found", t => {
     [{ a: "a" }],
     "02.02.02, only=object (same)"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -375,42 +387,47 @@ test("02.02 - nested array/plain objects, multiple instances found", t => {
     ],
     "02.02.03, only=array (nothing done)"
   );
+  t.end();
 });
 
-test("02.03 - nested array/plain objects, multiple instances found, false", t => {
-  t.deepEqual(
-    deleteKey(
+t.test(
+  "02.03 - nested array/plain objects, multiple instances found, false",
+  t => {
+    t.same(
+      deleteKey(
+        [
+          {
+            a: "a",
+            b: "delete this key",
+            c: [{ b: "and this as well" }]
+          },
+          {
+            b: ["and this key too", "together with this"],
+            d: { e: { f: { g: { b: "and this, no matter how deep-nested" } } } }
+          }
+        ],
+        {
+          key: "b",
+          cleanup: false
+        }
+      ),
       [
         {
           a: "a",
-          b: "delete this key",
-          c: [{ b: "and this as well" }]
+          c: [{}]
         },
         {
-          b: ["and this key too", "together with this"],
-          d: { e: { f: { g: { b: "and this, no matter how deep-nested" } } } }
+          d: { e: { f: { g: {} } } }
         }
       ],
-      {
-        key: "b",
-        cleanup: false
-      }
-    ),
-    [
-      {
-        a: "a",
-        c: [{}]
-      },
-      {
-        d: { e: { f: { g: {} } } }
-      }
-    ],
-    "02.03 - cleanup=false"
-  );
-});
+      "02.03 - cleanup=false"
+    );
+    t.end();
+  }
+);
 
-test("02.04 - mixed array and object findings", t => {
-  t.deepEqual(
+t.test("02.04 - mixed array and object findings", t => {
+  t.same(
     deleteKey(
       [
         {
@@ -432,7 +449,7 @@ test("02.04 - mixed array and object findings", t => {
     [{ a: "a" }],
     "02.04.01, default cleanup"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -455,7 +472,7 @@ test("02.04 - mixed array and object findings", t => {
     [{ a: "a" }],
     "02.04.02, only=any"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -477,7 +494,7 @@ test("02.04 - mixed array and object findings", t => {
     ],
     "02.04.03, only=object, mini case"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -510,7 +527,7 @@ test("02.04 - mixed array and object findings", t => {
     ],
     "02.04.04, only=arrays"
   );
-  t.deepEqual(
+  t.same(
     deleteKey(
       [
         {
@@ -541,13 +558,14 @@ test("02.04 - mixed array and object findings", t => {
     ],
     "02.04.05, only=object, bigger example"
   );
+  t.end();
 });
 
 // ==============================
 // Omit key to target all keys with a given value
 // ==============================
 
-test("03.01 - targets all keys by value, cleanup=true", t => {
+t.test("03.01 - targets all keys by value, cleanup=true", t => {
   actual = deleteKey(
     {
       a: "a",
@@ -562,10 +580,11 @@ test("03.01 - targets all keys by value, cleanup=true", t => {
     a: "a"
   };
 
-  t.deepEqual(actual, intended, "03.01");
+  t.same(actual, intended, "03.01");
+  t.end();
 });
 
-test("03.02 - targets all keys by value, cleanup=false", t => {
+t.test("03.02 - targets all keys by value, cleanup=false", t => {
   actual = deleteKey(
     {
       a: "a",
@@ -582,7 +601,8 @@ test("03.02 - targets all keys by value, cleanup=false", t => {
     c: [{}]
   };
 
-  t.deepEqual(actual, intended, "03.02");
+  t.same(actual, intended, "03.02");
+  t.end();
 });
 
 // ======================================
@@ -593,32 +613,36 @@ test("03.02 - targets all keys by value, cleanup=false", t => {
 // empty tag's parent will be deleted just if it does not have any non-empty values in other keys
 // in the following case, key "d" is deleted because it's dead branch.
 // But once we go "upstream" from "d" to higher, we don't touch "cousin" key "b":
-test('04.01 - deletion limited to level where non-empty "uncles" exist', t => {
-  actual = deleteKey(
-    {
+t.test(
+  '04.01 - deletion limited to level where non-empty "uncles" exist',
+  t => {
+    actual = deleteKey(
+      {
+        a: "a",
+        b: [[{}]],
+        c: "c",
+        d: {
+          e: ""
+        }
+      },
+      {
+        key: "e",
+        val: "",
+        cleanup: true
+      }
+    );
+    intended = {
       a: "a",
       b: [[{}]],
-      c: "c",
-      d: {
-        e: ""
-      }
-    },
-    {
-      key: "e",
-      val: "",
-      cleanup: true
-    }
-  );
-  intended = {
-    a: "a",
-    b: [[{}]],
-    c: "c"
-  };
+      c: "c"
+    };
 
-  t.deepEqual(actual, intended, "04.01");
-});
+    t.same(actual, intended, "04.01");
+    t.end();
+  }
+);
 
-test("04.02 - deletion of empty things is limited in arrays too", t => {
+t.test("04.02 - deletion of empty things is limited in arrays too", t => {
   actual = deleteKey(
     [
       [
@@ -646,42 +670,47 @@ test("04.02 - deletion of empty things is limited in arrays too", t => {
     ["c"]
   ];
 
-  t.deepEqual(actual, intended, "04.02");
+  t.same(actual, intended, "04.02");
+  t.end();
 });
 
 // ==============================
 // Throws
 // ==============================
 
-test("05.01 - both key and value missing - throws", t => {
+t.test("05.01 - both key and value missing - throws", t => {
   const error1 = t.throws(() => {
     deleteKey({ a: "a" }, {});
   });
-  t.regex(error1.message, /THROW_ID_04/);
+  t.match(error1.message, /THROW_ID_04/);
+  t.end();
 });
 
-test("05.02 - nonsensical options object - throws", t => {
+t.test("05.02 - nonsensical options object - throws", t => {
   const error1 = t.throws(() => {
     deleteKey({ a: "a" }, { z: "z" });
   });
-  t.regex(error1.message, /THROW_ID_04/);
+  t.match(error1.message, /THROW_ID_04/);
+  t.end();
 });
 
-test("05.03 - nonsensical options object - throws", t => {
+t.test("05.03 - nonsensical options object - throws", t => {
   const error1 = t.throws(() => {
     deleteKey({ a: "a" }, 1);
   });
-  t.regex(error1.message, /THROW_ID_04/);
+  t.match(error1.message, /THROW_ID_04/);
+  t.end();
 });
 
-test("05.04 - no input args - throws", t => {
+t.test("05.04 - no input args - throws", t => {
   const error1 = t.throws(() => {
     deleteKey();
   });
-  t.regex(error1.message, /THROW_ID_01/);
+  t.match(error1.message, /THROW_ID_01/);
+  t.end();
 });
 
-test("05.05 - wrong input args - throws", t => {
+t.test("05.05 - wrong input args - throws", t => {
   const error1 = t.throws(() => {
     deleteKey(
       { a: "a" },
@@ -692,10 +721,11 @@ test("05.05 - wrong input args - throws", t => {
       }
     );
   });
-  t.regex(error1.message, /opts\.key/g);
+  t.match(error1.message, /opts\.key/g);
+  t.end();
 });
 
-test("05.06 - wrong input args - throws", t => {
+t.test("05.06 - wrong input args - throws", t => {
   const error1 = t.throws(() => {
     deleteKey(
       { a: "a" },
@@ -706,21 +736,23 @@ test("05.06 - wrong input args - throws", t => {
       }
     );
   });
-  t.regex(error1.message, /opts\.key/);
+  t.match(error1.message, /opts\.key/);
+  t.end();
 });
 
-test("05.07 - wrong input args - throws", t => {
+t.test("05.07 - wrong input args - throws", t => {
   const error1 = t.throws(() => {
     deleteKey({ a: "a" }, { key: 1 }, "third arg");
   });
-  t.regex(error1.message, /THROW_ID_02/);
+  t.match(error1.message, /THROW_ID_02/);
+  t.end();
 });
 
 // ==============================
 // Tests on real HTML
 // ==============================
 
-test("06.01 - deletes from real parsed HTML", t => {
+t.test("06.01 - deletes from real parsed HTML", t => {
   const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -760,10 +792,11 @@ test("06.01 - deletes from real parsed HTML", t => {
 </body>
 </html>
 `);
-  t.deepEqual(actual, intended, "06.01");
+  t.same(actual, intended, "06.01");
+  t.end();
 });
 
-test("06.02 - real parsed HTML #1", t => {
+t.test("06.02 - real parsed HTML #1", t => {
   actual = deleteKey(
     [
       "<!DOCTYPE html>",
@@ -876,10 +909,11 @@ test("06.02 - real parsed HTML #1", t => {
       ]
     }
   ];
-  t.deepEqual(actual, intended, "06.02");
+  t.same(actual, intended, "06.02");
+  t.end();
 });
 
-test("06.03 - real parsed HTML #2", t => {
+t.test("06.03 - real parsed HTML #2", t => {
   actual = deleteKey(
     [
       {
@@ -903,10 +937,11 @@ test("06.03 - real parsed HTML #2", t => {
       }
     }
   ];
-  t.deepEqual(actual, intended, "06.03");
+  t.same(actual, intended, "06.03");
+  t.end();
 });
 
-test("06.04 - real parsed HTML #3", t => {
+t.test("06.04 - real parsed HTML #3", t => {
   actual = deleteKey(
     {
       a: {
@@ -927,10 +962,11 @@ test("06.04 - real parsed HTML #3", t => {
       e: "f"
     }
   };
-  t.deepEqual(actual, intended, "06.04");
+  t.same(actual, intended, "06.04");
+  t.end();
 });
 
-test("06.05 - real parsed HTML #4", t => {
+t.test("06.05 - real parsed HTML #4", t => {
   actual = deleteKey(
     {
       a: {
@@ -949,14 +985,15 @@ test("06.05 - real parsed HTML #4", t => {
       c: "d"
     }
   };
-  t.deepEqual(actual, intended, "06.05");
+  t.same(actual, intended, "06.05");
+  t.end();
 });
 
 // ======================================
 // Prove input args are not being mutated
 // ======================================
 
-test("07.01 - does not mutate input args", t => {
+t.test("07.01 - does not mutate input args", t => {
   const obj1 = {
     a: "a",
     b: "b"
@@ -966,7 +1003,7 @@ test("07.01 - does not mutate input args", t => {
     val: "b"
   });
   t.pass(unneededRes); // dummy to prevent JS Standard swearing
-  t.deepEqual(
+  t.same(
     obj1,
     {
       a: "a",
@@ -974,13 +1011,14 @@ test("07.01 - does not mutate input args", t => {
     },
     "07.01"
   ); // real deal
+  t.end();
 });
 
 // ===============
 // Tests on arrays
 // ===============
 
-test("08.01 - delete a value which is empty string", t => {
+t.test("08.01 - delete a value which is empty string", t => {
   actual = deleteKey(
     {
       a: ["b", "", "c"]
@@ -993,10 +1031,11 @@ test("08.01 - delete a value which is empty string", t => {
     a: ["b", "c"]
   };
 
-  t.deepEqual(actual, intended, "08.01");
+  t.same(actual, intended, "08.01");
+  t.end();
 });
 
-test("08.02 - delete a value which is non-empty string", t => {
+t.test("08.02 - delete a value which is non-empty string", t => {
   actual = deleteKey(
     {
       a: ["b", "", "c", "b"]
@@ -1009,49 +1048,58 @@ test("08.02 - delete a value which is non-empty string", t => {
     a: ["", "c"]
   };
 
-  t.deepEqual(actual, intended, "08.02");
+  t.same(actual, intended, "08.02");
+  t.end();
 });
 
-test("08.03 - delete a value which is non-empty string, with wildcards", t => {
-  actual = deleteKey(
-    {
-      a: ["beep", "", "c", "boop"]
-    },
-    {
-      key: "b*p"
-    }
-  );
-  intended = {
-    a: ["", "c"]
-  };
+t.test(
+  "08.03 - delete a value which is non-empty string, with wildcards",
+  t => {
+    actual = deleteKey(
+      {
+        a: ["beep", "", "c", "boop"]
+      },
+      {
+        key: "b*p"
+      }
+    );
+    intended = {
+      a: ["", "c"]
+    };
 
-  t.deepEqual(actual, intended, "08.03");
-});
+    t.same(actual, intended, "08.03");
+    t.end();
+  }
+);
 
-test("08.04 - delete a value which is a non-empty string, with wildcards, only on arrays", t => {
-  actual = deleteKey(
-    {
-      a: ["beep", "", "c", "boop"],
+t.test(
+  "08.04 - delete a value which is a non-empty string, with wildcards, only on arrays",
+  t => {
+    actual = deleteKey(
+      {
+        a: ["beep", "", "c", "boop"],
+        bap: "bap"
+      },
+      {
+        key: "b*p",
+        only: "array"
+      }
+    );
+    intended = {
+      a: ["", "c"],
       bap: "bap"
-    },
-    {
-      key: "b*p",
-      only: "array"
-    }
-  );
-  intended = {
-    a: ["", "c"],
-    bap: "bap"
-  };
+    };
 
-  t.deepEqual(actual, intended, "08.04");
-});
+    t.same(actual, intended, "08.04");
+    t.end();
+  }
+);
 
 // ==============================
 // Globbing tests
 // ==============================
 
-test("09.01 - wildcard deletes two keys have string values", t => {
+t.test("09.01 - wildcard deletes two keys have string values", t => {
   // by key
 
   actual = deleteKey(
@@ -1068,7 +1116,7 @@ test("09.01 - wildcard deletes two keys have string values", t => {
     b: "b"
   };
 
-  t.deepEqual(actual, intended, "09.01.02");
+  t.same(actual, intended, "09.01.02");
 
   // by value
   // ---------------------------------------------------------------------------
@@ -1088,7 +1136,7 @@ test("09.01 - wildcard deletes two keys have string values", t => {
     b: "b"
   };
 
-  t.deepEqual(actual, intended, "09.01.02");
+  t.same(actual, intended, "09.01.02");
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
@@ -1112,10 +1160,11 @@ test("09.01 - wildcard deletes two keys have string values", t => {
     b: "b"
   };
 
-  t.deepEqual(actual, intended, "09.01.03");
+  t.same(actual, intended, "09.01.03");
+  t.end();
 });
 
-test("09.02 - wildcard deletes keys with plain object values, by key", t => {
+t.test("09.02 - wildcard deletes keys with plain object values, by key", t => {
   actual = deleteKey(
     {
       apples: "a",
@@ -1130,10 +1179,11 @@ test("09.02 - wildcard deletes keys with plain object values, by key", t => {
     crawls: "e"
   };
 
-  t.deepEqual(actual, intended, "09.02");
+  t.same(actual, intended, "09.02");
+  t.end();
 });
 
-test("09.03 - wildcard delete two values, plain objects", t => {
+t.test("09.03 - wildcard delete two values, plain objects", t => {
   //
   // cleanup=false
   // ---------------------------------------------------------------------------
@@ -1153,7 +1203,7 @@ test("09.03 - wildcard delete two values, plain objects", t => {
     a: { e: [{}] }
   };
 
-  t.deepEqual(actual, intended, "09.03.01");
+  t.same(actual, intended, "09.03.01");
 
   //
   // cleanup=true
@@ -1172,5 +1222,6 @@ test("09.03 - wildcard delete two values, plain objects", t => {
   );
   intended = {};
 
-  t.deepEqual(actual, intended, "09.03.02");
+  t.same(actual, intended, "09.03.02");
+  t.end();
 });

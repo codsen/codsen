@@ -1,14 +1,12 @@
-// avanotonly
-
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+const { applyFixes } = require("../../../t-util/util");
+// const astDeepContains = require("ast-deep-contains");
 
 // 1. no config - nothing happens
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, t => {
+t.test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, t => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -16,11 +14,12 @@ test(`01.01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, t => {
       "tag-is-present": 0
     }
   });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
+  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str);
+  t.end();
 });
 
-test(`01.02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, t => {
+t.test(`01.02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, t => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -28,11 +27,12 @@ test(`01.02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, t => {
       "tag-is-present": 1
     }
   });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
+  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str);
+  t.end();
 });
 
-test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -40,24 +40,25 @@ test(`01.03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, t => {
       "tag-is-present": 2
     }
   });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
+  t.same(messages, []);
+  t.equal(applyFixes(str, messages), str);
+  t.end();
 });
 
 // 02. flagging up tags by their names
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`, t => {
-  const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-is-present": [2, "h1"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
+  t => {
+    const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-is-present": [2, "h1"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-is-present",
         severity: 2,
@@ -78,24 +79,26 @@ test(`02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact matc
           ranges: [[43, 48]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<div><zzz><yo><br/><a></a><script></yo>");
-});
+    ]);
+    t.equal(
+      applyFixes(str, messages),
+      "<div><zzz><yo><br/><a></a><script></yo>"
+    );
+    t.end();
+  }
+);
 
-test(`02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`, t => {
-  const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-is-present": [2, "h*"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
+  t => {
+    const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-is-present": [2, "h*"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "tag-is-present",
         severity: 2,
@@ -116,9 +119,11 @@ test(`02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by w
           ranges: [[43, 48]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<div><zzz><yo><br/><a></a><script></yo>");
-});
+    ]);
+    t.equal(
+      applyFixes(str, messages),
+      "<div><zzz><yo><br/><a></a><script></yo>"
+    );
+    t.end();
+  }
+);

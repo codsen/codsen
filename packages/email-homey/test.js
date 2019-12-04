@@ -1,53 +1,55 @@
-// import childProcess from "child_process";
-import execa from "execa";
-import test from "ava";
-import fs from "fs";
-import path from "path";
+const execa = require("execa");
+const t = require("tap");
+const fs = require("fs");
+const path = require("path");
 
-test.serial("generates the homepage with correct folders", async t => {
+t.test("generates the homepage with correct folders", async t => {
   await fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["fixtures"]);
-  t.deepEqual(
+  t.same(
     fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8")
   );
   await fs.unlink("./fixtures/index.html", () => {});
+  t.end();
 });
 
-test.serial("unused flags are OK", async t => {
+t.test("unused flags are OK", async t => {
   await fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["-x", "-y", "-z", "fixtures"]);
-  t.deepEqual(
+  t.same(
     fs.readFileSync(path.join(__dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(__dirname, "fixtures/reference.html"), "utf8")
   );
   await fs.unlink("./fixtures/index.html", () => {});
+  t.end();
 });
 
-test.serial("empty input", async t => {
+t.test("empty input", async t => {
   // default mode - says nothing
-  t.is(await execa("./cli.js").then(obj => obj.stdout), "");
+  t.equal(await execa("./cli.js").then(obj => obj.stdout), "");
 
   // loud mode - complains:
-  t.regex(
+  t.match(
     await execa("./cli.js", ["-l"]).then(obj => obj.stdout),
     /nothing to work with/i
   );
+  t.end();
 });
 
-test.serial("too many directories given", async t => {
+t.test("too many directories given", async t => {
   // default mode - says nothing
-  t.regex(
+  t.match(
     await execa("./cli.js", ["fixtures", "fixtures2"]).then(obj => obj.stdout),
     /too many/i
   );
-  t.regex(
+  t.match(
     await execa("./cli.js", ["fixtures", "-l", "fixtures2"]).then(
       obj => obj.stdout
     ),
     /too many/i
   );
-  t.regex(
+  t.match(
     await execa("./cli.js", [
       "fixtures",
       "-l",
@@ -58,12 +60,14 @@ test.serial("too many directories given", async t => {
     ]).then(obj => obj.stdout),
     /too many/i
   );
+  t.end();
 });
 
-test.serial("help and version flags work", async t => {
-  t.regex(
+t.test("help and version flags work", async t => {
+  t.match(
     await execa("./cli.js", ["-v"]).then(obj => obj.stdout),
     /\d\.\d\.\d/i
   );
-  t.regex(await execa("./cli.js", ["-h"]).then(obj => obj.stdout), /usage/i);
+  t.match(await execa("./cli.js", ["-h"]).then(obj => obj.stdout), /usage/i);
+  t.end();
 });

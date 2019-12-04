@@ -1,10 +1,10 @@
-import fs from "fs-extra";
-import path from "path";
-import test from "ava";
-import execa from "execa";
-import tempy from "tempy";
+const fs = require("fs-extra");
+const path = require("path");
+const t = require("tap");
+const execa = require("execa");
+const tempy = require("tempy");
 
-test("01.01 - called upon a single file which is healthy", async t => {
+t.test("01.01 - called upon a single file which is healthy", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -29,65 +29,74 @@ test("01.01 - called upon a single file which is healthy", async t => {
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
     { shell: true }
   );
-  t.regex(stdOutContents.stdout, /ALL OK/);
+  t.match(stdOutContents.stdout, /ALL OK/);
+  t.end();
 });
 
-test("01.02 - called upon a single file which contains non-ASCII symbol", async t => {
-  // 1. fetch us an empty, random, temporary folder:
+t.test(
+  "01.02 - called upon a single file which contains non-ASCII symbol",
+  async t => {
+    // 1. fetch us an empty, random, temporary folder:
 
-  // Re-route the test files into `temp/` folder instead for easier access when
-  // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
+    // Re-route the test files into `temp/` folder instead for easier access when
+    // troubleshooting. Just comment out one of two:
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
 
-  // 2. asynchronously write the test file
+    // 2. asynchronously write the test file
 
-  await fs.writeFile(path.join(tempFolder, "test.html"), "£20");
+    await fs.writeFile(path.join(tempFolder, "test.html"), "£20");
 
-  // 3. call the the CLI
+    // 3. call the the CLI
 
-  const error1 = await t.throwsAsync(() =>
-    execa(
-      `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
-      { shell: true }
-    )
-  );
+    // const error1 = await t.throwsAsync(() =>
+    await t.rejects(async () => {
+      const error1 = await execa(
+        `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+        { shell: true }
+      );
+      t.match(error1.stdout, /Non ascii character found/);
+    });
 
-  t.regex(error1.stdout, /Non ascii character found/);
-});
+    t.end();
+  }
+);
 
-test("01.03 - version output mode", async t => {
+t.test("01.03 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.regex(reportedVersion1.stdout.trim(), /\d\.\d/);
+  t.match(reportedVersion1.stdout.trim(), /\d\.\d/);
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.regex(reportedVersion2.stdout.trim(), /\d\.\d/);
+  t.match(reportedVersion2.stdout.trim(), /\d\.\d/);
+  t.end();
 });
 
-test("01.04 - help output mode", async t => {
+t.test("01.04 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.regex(reportedVersion1.stdout, /Usage/);
-  t.regex(reportedVersion1.stdout, /Options/);
-  t.regex(reportedVersion1.stdout, /Instructions/);
+  t.match(reportedVersion1.stdout, /Usage/);
+  t.match(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Instructions/);
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.regex(reportedVersion2.stdout, /Usage/);
-  t.regex(reportedVersion2.stdout, /Options/);
-  t.regex(reportedVersion2.stdout, /Instructions/);
+  t.match(reportedVersion2.stdout, /Usage/);
+  t.match(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Instructions/);
+  t.end();
 });
 
-test("01.05 - no files found in the given directory", async t => {
+t.test("01.05 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // call execa on that empty folder
 
   // CLI will complain no files could be found
-  const error1 = await t.throwsAsync(() =>
-    execa(
+  await t.rejects(async () => {
+    const error1 = await execa(
       `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
       { shell: true }
-    )
-  );
+    );
+    t.match(error1.stdout, /there are no files in this folder/);
+  });
 
-  t.regex(error1.stdout, /there are no files in this folder/);
+  t.end();
 });

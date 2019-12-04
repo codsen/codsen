@@ -1,82 +1,72 @@
-import test from "ava";
-import repl from "../dist/ranges-apply.esm";
+const t = require("tap");
+const repl = require("../dist/ranges-apply.cjs");
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01.01 - wrong inputs", t => {
+t.test("01.01 - wrong inputs", t => {
   // no input
-  const error1 = t.throws(() => {
+  t.throws(() => {
     repl();
-  });
-  t.regex(error1.message, /THROW_ID_01/);
+  }, /THROW_ID_01/g);
 
   // first arg not string
-  const error2 = t.throws(() => {
+  t.throws(() => {
     repl(1);
-  });
-  t.regex(error2.message, /THROW_ID_02/);
+  }, /THROW_ID_02/g);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     repl(1, [[4, 13]]);
-  });
-  t.regex(error3.message, /THROW_ID_02/);
+  }, /THROW_ID_02/g);
 
   // second arg not array
-  const error4 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", 1);
-  });
-  t.regex(error4.message, /THROW_ID_03/);
+  }, /THROW_ID_03/g);
 
   // ranges array contain something else than arrays
-  const error5 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [1]);
-  });
-  t.regex(error5.message, /THROW_ID_05/);
+  }, /THROW_ID_05/g);
 
-  const error6 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [[1, "a"]]);
-  });
-  t.regex(error6.message, /THROW_ID_07/);
+  }, /THROW_ID_07/g);
 
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("aaa", [["1", 2]]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("aaa", [[1, "2"]]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("aaa", [
       [1, "2"],
       ["3", "4"]
     ]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("aaa", [[1, 2]]);
   });
 
-  const error7 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [[1], [10, 20]]);
-  });
-  t.regex(error7.message, /THROW_ID_07/);
+  }, /THROW_ID_07/g);
 
-  const error8 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [[10, 20], [30]]);
-  });
-  t.regex(error8.message, /THROW_ID_07/);
+  }, /THROW_ID_07/g);
 
-  const error9 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [[10.1, 20]]);
-  });
-  t.regex(error9.message, /THROW_ID_06/);
+  }, /THROW_ID_06/g);
 
-  const error10 = t.throws(() => {
+  t.throws(() => {
     repl("aaa", [["10.1", "20"]]);
-  });
-  t.regex(error10.message, /THROW_ID_06/);
+  }, /THROW_ID_06/g);
 
-  const error11 = t.throws(() => {
+  t.throws(() => {
     repl(
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
@@ -85,10 +75,9 @@ test("01.01 - wrong inputs", t => {
       ],
       1
     );
-  });
-  t.regex(error11.message, /THROW_ID_04/);
+  }, /THROW_ID_04/g);
 
-  const error12 = t.throws(() => {
+  t.throws(() => {
     repl(
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
@@ -97,35 +86,36 @@ test("01.01 - wrong inputs", t => {
       ],
       true
     );
-  });
-  t.regex(error12.message, /THROW_ID_04/);
+  }, /THROW_ID_04/g);
+  t.end();
 });
 
-test("01.02 - correct inputs", t => {
+t.test("01.02 - correct inputs", t => {
   // all inputs can be empty as long as types are correct
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("", []);
   });
 
   // opts can be falsey, the absence being hardcoded
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("", [], null);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     repl("", [], undefined);
   });
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 02. normal use, no opts
 // -----------------------------------------------------------------------------
 
-test("02.01 - deletes multiple chunks correctly", t => {
+t.test("02.01 - deletes multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n02.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 14],
       [18, 29]
@@ -133,14 +123,15 @@ test("02.01 - deletes multiple chunks correctly", t => {
     "aaa bbb ccc",
     "02.01"
   );
+  t.end();
 });
 
-test("02.02 - replaces multiple chunks correctly", t => {
+t.test("02.02 - replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n02.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 13, "zzz"],
       [18, 28, "yyy"]
@@ -148,14 +139,15 @@ test("02.02 - replaces multiple chunks correctly", t => {
     "aaa zzz bbb yyy ccc",
     "02.02"
   );
+  t.end();
 });
 
-test("02.03 - deletes and replaces multiple chunks correctly", t => {
+t.test("02.03 - deletes and replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb replace me ccc";
   // console.log('\n===============\n02.03')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 13],
       [18, 28, "zzz"]
@@ -163,18 +155,20 @@ test("02.03 - deletes and replaces multiple chunks correctly", t => {
     "aaa  bbb zzz ccc",
     "02.03"
   );
+  t.end();
 });
 
-test("02.04 - empty ranges array", t => {
-  t.deepEqual(repl("some text", []), "some text", "02.04");
+t.test("02.04 - empty ranges array", t => {
+  t.same(repl("some text", []), "some text", "02.04");
+  t.end();
 });
 
-test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
+t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n02.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [0, 10],
       [14, 25]
@@ -182,14 +176,15 @@ test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
     "bbb ccc",
     "02.05"
   );
+  t.end();
 });
 
-test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
+t.test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n02.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [0, 9, "aaa"],
       [14, 25]
@@ -197,28 +192,30 @@ test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
     "aaa bbb ccc",
     "02.06"
   );
+  t.end();
 });
 
-test("02.07 - replace with ending index zero", t => {
+t.test("02.07 - replace with ending index zero", t => {
   const str = "bbb ccc";
-  t.deepEqual(
+  t.same(
     repl(str, [[0, 0, "aaa "]]),
     "aaa bbb ccc",
     "02.07.01 - both from and to indexes are zeros, because we're adding content in front"
   );
-  t.deepEqual(
+  t.same(
     repl(str, [0, 0, "aaa "]),
     "aaa bbb ccc",
     "02.07.02 - single range, put straight into argument"
   );
+  t.end();
 });
 
-test("02.08 - null in third arg does nothing", t => {
+t.test("02.08 - null in third arg does nothing", t => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n02.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 14, null],
       [18, 29]
@@ -226,7 +223,7 @@ test("02.08 - null in third arg does nothing", t => {
     "aaa bbb ccc",
     "02.08.01"
   );
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 14],
       [18, 29, null]
@@ -234,7 +231,7 @@ test("02.08 - null in third arg does nothing", t => {
     "aaa bbb ccc",
     "02.08.02"
   );
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 14, null],
       [18, 29, null]
@@ -242,14 +239,15 @@ test("02.08 - null in third arg does nothing", t => {
     "aaa bbb ccc",
     "02.08.03"
   );
+  t.end();
 });
 
-test("02.09 - replaces multiple chunks correctly", t => {
+t.test("02.09 - replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n02.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
-  t.deepEqual(
+  t.same(
     repl(str, [
       [4, 13, "zzz"],
       [18, 28, null]
@@ -257,42 +255,49 @@ test("02.09 - replaces multiple chunks correctly", t => {
     "aaa zzz bbb  ccc",
     "02.09"
   );
+  t.end();
 });
 
-test("02.10 - replaces multiple chunks correctly given in a wrong order", t => {
-  const str = "aaa delete me bbb and me too ccc";
-  // console.log('\n===============\n02.10')
-  // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
-  // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
-  t.deepEqual(
-    repl(str, [
-      [18, 28, "yyy"],
-      [4, 13, "zzz"]
-    ]),
-    "aaa zzz bbb yyy ccc",
-    "02.10"
-  );
-});
+t.test(
+  "02.10 - replaces multiple chunks correctly given in a wrong order",
+  t => {
+    const str = "aaa delete me bbb and me too ccc";
+    // console.log('\n===============\n02.10')
+    // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
+    // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
+    t.same(
+      repl(str, [
+        [18, 28, "yyy"],
+        [4, 13, "zzz"]
+      ]),
+      "aaa zzz bbb yyy ccc",
+      "02.10"
+    );
+    t.end();
+  }
+);
 
-test("02.11 - null as replacement range - does nothing", t => {
+t.test("02.11 - null as replacement range - does nothing", t => {
   const str = "zzzzzzzz";
-  t.deepEqual(repl(str, null), str, "02.11.01");
+  t.same(repl(str, null), str, "02.11.01");
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
 
-test("03.01 - basic replacement", t => {
-  t.deepEqual(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "03.01.01");
-  t.deepEqual(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "03.01.02");
+t.test("03.01 - basic replacement", t => {
+  t.same(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "03.01.01");
+  t.same(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "03.01.02");
+  t.end();
 });
 
-test("03.02 - multiple replacement pieces", t => {
+t.test("03.02 - multiple replacement pieces", t => {
   // let str = 'aaa  ccc  eee'
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
-  t.deepEqual(
+  t.same(
     repl("aaa  ccc  eee", [
       [4, 4, "bbb"],
       [9, 9, "ddd"]
@@ -300,20 +305,22 @@ test("03.02 - multiple replacement pieces", t => {
     "aaa bbb ccc ddd eee",
     "03.02"
   );
+  t.end();
 });
 
-test("03.03 - null in replacement op - does nothing", t => {
-  t.deepEqual(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "03.03.01");
-  t.deepEqual(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "03.03.02");
+t.test("03.03 - null in replacement op - does nothing", t => {
+  t.same(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "03.03.01");
+  t.same(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "03.03.02");
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 04. progressFn
 // -----------------------------------------------------------------------------
 
-test("04.01 - progressFn - basic replacement", t => {
+t.test("04.01 - progressFn - basic replacement", t => {
   let count = 0;
-  t.deepEqual(
+  t.same(
     repl("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
       [40, 40, "rrrr"],
       [20, 25, "yyy"],
@@ -337,7 +344,7 @@ test("04.01 - progressFn - basic replacement", t => {
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
     "04.01 - baseline"
   );
-  t.deepEqual(
+  t.same(
     repl(
       "lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj",
       [
@@ -362,12 +369,13 @@ test("04.01 - progressFn - basic replacement", t => {
       ],
       perc => {
         // console.log(`perc = ${perc}`);
-        t.true(typeof perc === "number");
+        t.ok(typeof perc === "number");
         count++;
       }
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
     "04.02 - calls the progress function"
   );
-  t.true(count <= 101, "04.03");
+  t.ok(count <= 101, "04.03");
+  t.end();
 });

@@ -22,7 +22,6 @@ test
 # files:
 
 .babelrc
-.eslintrc.json
 .npmignore
 .prettierignore
 rollup.config.js

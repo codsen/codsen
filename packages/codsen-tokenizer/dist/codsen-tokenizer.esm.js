@@ -298,6 +298,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   }
   let attrib = {};
   const attribDefault = {
+    parent: null,
     attribName: null,
     attribNameStartAt: null,
     attribNameEndAt: null,
@@ -333,9 +334,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           break;
         }
       }
-      return layers[layers.length - 1].value
-        .split("")
-        .every(char => wholeEspTagLump.includes(char));
+      if (
+        layers[layers.length - 1].value
+          .split("")
+          .every(char => wholeEspTagLump.includes(char))
+      ) {
+        return wholeEspTagLump.length;
+      }
     }
   }
   function pingCharCb(incomingToken) {
@@ -501,11 +506,24 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           token.head = wholeEspTagLump;
         } else if (token.type === "html") {
           if (matchLayerLast(str, i)) {
+            const lengthOfClosingEspChunk = matchLayerLast(str, i);
+            if (
+              Array.isArray(layers) &&
+              layers.length &&
+              typeof layers[layers.length - 1] === "object" &&
+              Number.isInteger(layers[layers.length - 1].position)
+            ) {
+              token.esp.push([
+                layers[layers.length - 1].position,
+                i + lengthOfClosingEspChunk
+              ]);
+            }
             layers.pop();
           } else {
             layers.push({
               type: "esp",
-              value: flipEspTag(wholeEspTagLump)
+              value: flipEspTag(wholeEspTagLump),
+              position: i
             });
           }
         }
@@ -632,6 +650,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
+      if (!str[i].trim().length) {
+        attrib.attribEnd = i;
+        token.attribs.push(Object.assign({}, attrib));
+        attribReset();
+      }
     }
     if (
       !doNothing &&
@@ -670,7 +693,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       attrib.attribNameEndAt <= i &&
       str[i].trim().length
     ) {
-      if (str[i] === "=" && !`'"`.includes(str[right(str, i)])) {
+      if (str[i] === "=" && !`'"=`.includes(str[right(str, i)])) {
         attrib.attribValueStartAt = right(str, i);
       } else if (`'"`.includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;

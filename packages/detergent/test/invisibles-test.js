@@ -1,9 +1,11 @@
-// avanotonly
-
-import test from "ava";
-import { det, mixer } from "../t-util/util";
-// import { det as det1 } from "../dist/detergent.esm";
-import {
+const t = require("tap");
+// const detergent = require("../dist/detergent.cjs");
+// const det1 = detergent.det;
+const {
+  det,
+  mixer //, allCombinations
+} = require("../t-util/util");
+const {
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -14,14 +16,15 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} from "../dist/util.esm";
+} = require("../dist/util.cjs");
 
-test(`00 - empty string input`, t => {
-  t.is(det(t, 0, "").res, "");
+t.test(`00 - empty string input`, t => {
+  t.equal(det(t, 0, "").res, "");
+  t.end();
 });
 
-test(`01 - all low ASCII invisible characters are removed`, t => {
-  t.is(
+t.test(`01 - all low ASCII invisible characters are removed`, t => {
+  t.equal(
     det(
       t,
       0,
@@ -30,13 +33,14 @@ test(`01 - all low ASCII invisible characters are removed`, t => {
     "",
     "01"
   );
+  t.end();
 });
 
-test(`02 - hairspace - tight - hairspace changed to space`, t => {
+t.test(`02 - hairspace - tight - hairspace changed to space`, t => {
   mixer({
     removeWidows: 0
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(
         t,
         n,
@@ -47,137 +51,154 @@ test(`02 - hairspace - tight - hairspace changed to space`, t => {
       "02"
     );
   });
+  t.end();
 });
 
-test(`03 - hairspace - tight - hairspace changed to space (lots of spaces)`, t => {
-  mixer({
-    removeWidows: 0
-  }).forEach((opt, n) => {
-    t.is(
-      det(
-        t,
-        n,
-        `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${rawhairspace} a    `,
-        opt
-      ).res,
-      "a a a a a a",
-      "03"
-    );
-  });
-});
+t.test(
+  `03 - hairspace - tight - hairspace changed to space (lots of spaces)`,
+  t => {
+    mixer({
+      removeWidows: 0
+    }).forEach((opt, n) => {
+      t.equal(
+        det(
+          t,
+          n,
+          `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${rawhairspace} a    `,
+          opt
+        ).res,
+        "a a a a a a",
+        "03"
+      );
+    });
+    t.end();
+  }
+);
 
-test(`04 - hairspace - tight - hairspace changed to space: +widows+entities`, t => {
-  mixer({
-    removeWidows: 1,
-    convertEntities: 1
-  }).forEach((opt, n) => {
-    t.is(
-      det(
-        t,
-        n,
-        `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${rawhairspace}f`,
-        opt
-      ).res,
-      "a b c d e&nbsp;f",
-      "04"
-    );
-  });
-});
+t.test(
+  `04 - hairspace - tight - hairspace changed to space: +widows+entities`,
+  t => {
+    mixer({
+      removeWidows: 1,
+      convertEntities: 1
+    }).forEach((opt, n) => {
+      t.equal(
+        det(
+          t,
+          n,
+          `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${rawhairspace}f`,
+          opt
+        ).res,
+        "a b c d e&nbsp;f",
+        "04"
+      );
+    });
+    t.end();
+  }
+);
 
-test("05 - invisible breaks - raw", t => {
+t.test("05 - invisible breaks - raw", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
       "a\nb\nc\nd\ne\nf\ng\nh",
       "05"
     );
   });
+  t.end();
 });
 
-test("06 - invisible breaks - encoded decimal HTML entities", t => {
+t.test("06 - invisible breaks - encoded decimal HTML entities", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(t, n, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
       "a\nb\nc\n\nd",
       "06"
     );
   });
+  t.end();
 });
 
-test("07 - invisible breaks - remove all line breaks on", t => {
+t.test("07 - invisible breaks - remove all line breaks on", t => {
   mixer({
     removeLineBreaks: 1
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(t, n, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
       "ab cd",
       "07"
     );
   });
+  t.end();
 });
 
-test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
+t.test("08 - invisible breaks - replace breaks into XHTML BR's", t => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 1
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
       "a<br/>\nb\nc<br/>\n\nd",
       "08"
     );
   });
+  t.end();
 });
 
-test("09 - invisible breaks - replace breaks into HTML BR's", t => {
+t.test("09 - invisible breaks - replace breaks into HTML BR's", t => {
   mixer({
     replaceLineBreaks: 1,
     removeLineBreaks: 0,
     useXHTML: 0
   }).forEach((opt, n) => {
-    t.is(
+    t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
       "a<br>\nb\nc<br>\n\nd",
       "09"
     );
   });
+  t.end();
 });
 
-test("10 - line feed \\u000A (LF) and o.removeLineBreaks", t => {
+t.test("10 - line feed \\u000A (LF) and o.removeLineBreaks", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
+    t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
   });
+  t.end();
 });
 
-test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", t => {
+t.test("11 - line feed \\u000A (LF) and no o.removeLineBreaks", t => {
   mixer({
     replaceLineBreaks: 0,
     removeLineBreaks: 0,
     convertEntities: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
+    t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
   });
+  t.end();
 });
 
-test("12 - narrow no break space", t => {
+t.test("12 - narrow no break space", t => {
   mixer({
     convertEntities: 0
   }).forEach((opt, n) => {
-    t.is(det(t, n, "a\u202Fb", opt).res, "a b", "12");
+    t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });
   mixer({
     convertEntities: 1
   }).forEach((opt, n) => {
-    t.is(det(t, n, "a\u202Fb", opt).res, "a b", "12");
+    t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });
+  t.end();
 });

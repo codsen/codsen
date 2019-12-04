@@ -1,18 +1,16 @@
-// avanotonly
-
 // rule: bad-character-nominal-digit-shapes
 // https://www.fileformat.info/info/unicode/char/206f/index.htm
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01.01 - detects two NOMINAL DIGIT SHAPES characters`, t => {
+t.test(`01.01 - detects two NOMINAL DIGIT SHAPES characters`, t => {
   const str = "\u206Fdlkgjld\u206Fj";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -20,36 +18,32 @@ test(`01.01 - detects two NOMINAL DIGIT SHAPES characters`, t => {
       "bad-character-nominal-digit-shapes": 2
     }
   });
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "bad-character-nominal-digit-shapes",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        column: 1, // remember columns numbers start from 1, not zero
-        message: "Bad character - NOMINAL DIGIT SHAPES.",
-        fix: {
-          ranges: [[0, 1]]
-        }
-      },
-      {
-        ruleId: "bad-character-nominal-digit-shapes",
-        severity: 2,
-        idxFrom: 8,
-        idxTo: 9,
-        line: 1,
-        column: 9, // remember columns numbers start from 1, not zero
-        message: "Bad character - NOMINAL DIGIT SHAPES.",
-        fix: {
-          ranges: [[8, 9]]
-        }
+  t.match(messages, [
+    {
+      ruleId: "bad-character-nominal-digit-shapes",
+      severity: 2,
+      idxFrom: 0,
+      idxTo: 1,
+      line: 1,
+      column: 1, // remember columns numbers start from 1, not zero
+      message: "Bad character - NOMINAL DIGIT SHAPES.",
+      fix: {
+        ranges: [[0, 1]]
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "dlkgjldj");
+    },
+    {
+      ruleId: "bad-character-nominal-digit-shapes",
+      severity: 2,
+      idxFrom: 8,
+      idxTo: 9,
+      line: 1,
+      column: 9, // remember columns numbers start from 1, not zero
+      message: "Bad character - NOMINAL DIGIT SHAPES.",
+      fix: {
+        ranges: [[8, 9]]
+      }
+    }
+  ]);
+  t.equal(applyFixes(str, messages), "dlkgjldj");
+  t.end();
 });

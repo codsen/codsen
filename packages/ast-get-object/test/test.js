@@ -1,12 +1,12 @@
-import test from "ava";
-import getObj from "../dist/ast-get-object.esm";
+const t = require("tap");
+const getObj = require("../dist/ast-get-object.cjs");
 
 // ==============================
 // GET
 // ==============================
 
-test("01.01 - get - one plain object as result", t => {
-  t.deepEqual(
+t.test("01.01 - get - one plain object as result", t => {
+  t.same(
     getObj(
       [
         {
@@ -32,10 +32,11 @@ test("01.01 - get - one plain object as result", t => {
     ],
     "01.01"
   );
+  t.end();
 });
 
-test("01.02 - get - two plain object as result", t => {
-  t.deepEqual(
+t.test("01.02 - get - two plain object as result", t => {
+  t.same(
     getObj(
       [
         {
@@ -67,10 +68,11 @@ test("01.02 - get - two plain object as result", t => {
     ],
     "01.02"
   );
+  t.end();
 });
 
-test("01.03 - get - topmost level container is object", t => {
-  t.deepEqual(
+t.test("01.03 - get - topmost level container is object", t => {
+  t.same(
     getObj(
       {
         key1: {
@@ -112,10 +114,11 @@ test("01.03 - get - topmost level container is object", t => {
     ],
     "01.03"
   );
+  t.end();
 });
 
-test("01.04 - get - search value is object", t => {
-  t.deepEqual(
+t.test("01.04 - get - search value is object", t => {
+  t.same(
     getObj(
       [
         {
@@ -141,10 +144,11 @@ test("01.04 - get - search value is object", t => {
     ],
     "01.04"
   );
+  t.end();
 });
 
-test("01.05 - get - search value is array", t => {
-  t.deepEqual(
+t.test("01.05 - get - search value is array", t => {
+  t.same(
     getObj(
       [
         {
@@ -170,10 +174,11 @@ test("01.05 - get - search value is array", t => {
     ],
     "01.05"
   );
+  t.end();
 });
 
-test("01.06 - get - search value is nested array", t => {
-  t.deepEqual(
+t.test("01.06 - get - search value is nested array", t => {
+  t.same(
     getObj(
       [
         {
@@ -199,10 +204,11 @@ test("01.06 - get - search value is nested array", t => {
     ],
     "01.06"
   );
+  t.end();
 });
 
-test("01.07 - get - search value is nested object", t => {
-  t.deepEqual(
+t.test("01.07 - get - search value is nested object", t => {
+  t.same(
     getObj(
       [
         {
@@ -248,10 +254,11 @@ test("01.07 - get - search value is nested object", t => {
     ],
     "01.07"
   );
+  t.end();
 });
 
-test("01.08 - get - numerous everything", t => {
-  t.deepEqual(
+t.test("01.08 - get - numerous everything", t => {
+  t.same(
     getObj(
       [
         [
@@ -294,14 +301,15 @@ test("01.08 - get - numerous everything", t => {
     ],
     "01.08"
   );
+  t.end();
 });
 
 // ==============================
 // SET
 // ==============================
 
-test("02.01 - set - one plain object", t => {
-  t.deepEqual(
+t.test("02.01 - set - one plain object", t => {
+  t.same(
     getObj(
       [
         {
@@ -338,10 +346,11 @@ test("02.01 - set - one plain object", t => {
     ],
     "02.01"
   );
+  t.end();
 });
 
-test("02.02 - set - two plain object", t => {
-  t.deepEqual(
+t.test("02.02 - set - two plain object", t => {
+  t.same(
     getObj(
       [
         {
@@ -388,16 +397,55 @@ test("02.02 - set - two plain object", t => {
     ],
     "02.02"
   );
+  t.end();
 });
 
-test("02.03 - set - topmost level object, one value deleted, one changed", t => {
-  t.deepEqual(
-    getObj(
+t.test(
+  "02.03 - set - topmost level object, one value deleted, one changed",
+  t => {
+    t.same(
+      getObj(
+        {
+          key1: {
+            tag: "meta",
+            content: "UTF-8",
+            something: "else"
+          },
+          key2: {
+            tag: "title",
+            attrs: "Text of the title"
+          },
+          key3: [
+            {
+              x: "x",
+              y: "y"
+            },
+            {
+              tag: "meta",
+              content: "ISO-123",
+              something: "as well"
+            }
+          ]
+        },
+        {
+          tag: "meta"
+        },
+        [
+          {
+            tag: "meta",
+            content: "UTF-8"
+          },
+          {
+            tag: "meta",
+            content: "edited",
+            something: "as well"
+          }
+        ]
+      ),
       {
         key1: {
           tag: "meta",
-          content: "UTF-8",
-          something: "else"
+          content: "UTF-8"
         },
         key2: {
           tag: "title",
@@ -410,57 +458,47 @@ test("02.03 - set - topmost level object, one value deleted, one changed", t => 
           },
           {
             tag: "meta",
-            content: "ISO-123",
+            content: "edited",
             something: "as well"
           }
         ]
       },
-      {
-        tag: "meta"
-      },
-      [
-        {
-          tag: "meta",
-          content: "UTF-8"
-        },
-        {
-          tag: "meta",
-          content: "edited",
-          something: "as well"
-        }
-      ]
-    ),
-    {
-      key1: {
-        tag: "meta",
-        content: "UTF-8"
-      },
-      key2: {
-        tag: "title",
-        attrs: "Text of the title"
-      },
-      key3: [
-        {
-          x: "x",
-          y: "y"
-        },
-        {
-          tag: "meta",
-          content: "edited",
-          something: "as well"
-        }
-      ]
-    },
-    "02.03"
-  );
-});
+      "02.03"
+    );
+    t.end();
+  }
+);
 
-test("02.04 - set - search val object, updated val from plain obj to nested arr", t => {
-  t.deepEqual(
-    getObj(
+t.test(
+  "02.04 - set - search val object, updated val from plain obj to nested arr",
+  t => {
+    t.same(
+      getObj(
+        [
+          {
+            tag: { key: "meta" },
+            content: "UTF-8",
+            something: "else"
+          },
+          {
+            tag: "title",
+            attrs: "Text of the title"
+          }
+        ],
+        {
+          tag: { key: "meta" }
+        },
+        [
+          {
+            tag: [["edited"]],
+            content: "UTF-8",
+            something: "else"
+          }
+        ]
+      ),
       [
         {
-          tag: { key: "meta" },
+          tag: [["edited"]],
           content: "UTF-8",
           something: "else"
         },
@@ -469,34 +507,14 @@ test("02.04 - set - search val object, updated val from plain obj to nested arr"
           attrs: "Text of the title"
         }
       ],
-      {
-        tag: { key: "meta" }
-      },
-      [
-        {
-          tag: [["edited"]],
-          content: "UTF-8",
-          something: "else"
-        }
-      ]
-    ),
-    [
-      {
-        tag: [["edited"]],
-        content: "UTF-8",
-        something: "else"
-      },
-      {
-        tag: "title",
-        attrs: "Text of the title"
-      }
-    ],
-    "02.04"
-  );
-});
+      "02.04"
+    );
+    t.end();
+  }
+);
 
-test("02.05 - set - search value is array - updated value array", t => {
-  t.deepEqual(
+t.test("02.05 - set - search value is array - updated value array", t => {
+  t.same(
     getObj(
       [
         {
@@ -533,10 +551,11 @@ test("02.05 - set - search value is array - updated value array", t => {
     ],
     "02.05"
   );
+  t.end();
 });
 
-test("02.06 - set - search value is nested array - deleted finding", t => {
-  t.deepEqual(
+t.test("02.06 - set - search value is nested array - deleted finding", t => {
+  t.same(
     getObj(
       [
         {
@@ -571,10 +590,11 @@ test("02.06 - set - search value is nested array - deleted finding", t => {
     ],
     "02.06"
   );
+  t.end();
 });
 
-test("02.07 - set - edit skipping similar, false search result", t => {
-  t.deepEqual(
+t.test("02.07 - set - edit skipping similar, false search result", t => {
+  t.same(
     getObj(
       [
         {
@@ -641,10 +661,11 @@ test("02.07 - set - edit skipping similar, false search result", t => {
     ],
     "02.07"
   );
+  t.end();
 });
 
-test("02.08 - set - numerous everything, wrong order", t => {
-  t.deepEqual(
+t.test("02.08 - set - numerous everything, wrong order", t => {
+  t.same(
     getObj(
       [
         [
@@ -709,19 +730,21 @@ test("02.08 - set - numerous everything, wrong order", t => {
     ],
     "02.08"
   );
+  t.end();
 });
 
 // ==============================
 // EDGE CASES
 // ==============================
 
-test("03.01 - missing inputs - throws", t => {
+t.test("03.01 - missing inputs - throws", t => {
   t.throws(() => {
     getObj();
-  });
+  }, /THROW_ID_01/g);
+  t.end();
 });
 
-test("03.02 - missing keyValPair", t => {
+t.test("03.02 - missing keyValPair", t => {
   t.throws(() => {
     getObj([
       {
@@ -730,5 +753,6 @@ test("03.02 - missing keyValPair", t => {
         something: "else"
       }
     ]);
-  });
+  }, /THROW_ID_02/g);
+  t.end();
 });

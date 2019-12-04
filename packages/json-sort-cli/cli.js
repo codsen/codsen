@@ -310,7 +310,7 @@ globby(input, { dot: true })
       process.exit(0);
     }
     // console.log(
-    //   `321 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `313 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
     //     resolvedPathsArray,
     //     null,
     //     4
@@ -343,7 +343,7 @@ globby(input, { dot: true })
       // then reduce again, now actually concatenating them all together
     ).then(received => {
       // console.log(
-      //   `354 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `346 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
       //     received,
       //     null,
       //     4
@@ -368,14 +368,14 @@ globby(input, { dot: true })
   )
   .then(paths => {
     // console.log(
-    //   `379 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `371 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
     //     paths,
     //     null,
     //     4
     //   )}`
     // );
     const tempRez = paths.filter(singlePath => {
-      // console.log(`---------\n238 processing: ${singlePath}`);
+      // console.log(`---------\n378 processing: ${singlePath}`);
       // console.log(
       //   `${`\u001b[${33}m${`path.extname(singlePath)`}\u001b[${39}m`} = ${JSON.stringify(
       //     path.extname(singlePath),
@@ -403,7 +403,7 @@ globby(input, { dot: true })
       );
     });
     // console.log(
-    //   `414 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `406 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
     //     tempRez,
     //     null,
     //     4
@@ -422,7 +422,7 @@ globby(input, { dot: true })
       if (cli.flags.c) {
         // CI setting
         // console.log(
-        //   `433 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `425 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
         //     received,
         //     null,
         //     4
@@ -432,7 +432,7 @@ globby(input, { dot: true })
           readSortAndWriteOverFile(currentPath)
         ).then(received2 => {
           // console.log(
-          //   `443 ${`\u001b[${33}m${`received2`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `435 ${`\u001b[${33}m${`received2`}\u001b[${39}m`} = ${JSON.stringify(
           //     received2,
           //     null,
           //     4
@@ -463,7 +463,7 @@ globby(input, { dot: true })
           readSortAndWriteOverFile(currentPath)
             .then(received => {
               // console.log(
-              //   `474 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `466 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
               //     received,
               //     null,
               //     4
@@ -495,7 +495,7 @@ globby(input, { dot: true })
         { good: [], bad: [] }
       ).then(counter => {
         // console.log(
-        //   `506 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `498 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
         //     counter,
         //     null,
         //     4

@@ -1,10 +1,10 @@
-// avanotonly
-
-import test from "ava";
-import path from "path";
-import { readFileSync as read, writeFileSync as write } from "fs";
-import { set, del } from "../dist/edit-package-json.esm";
-import objectPath from "object-path";
+const t = require("tap");
+const path = require("path");
+const fs = require("fs");
+const read = fs.readFileSync;
+const write = fs.writeFileSync;
+const { set, del } = require("../dist/edit-package-json.cjs");
+const objectPath = require("object-path");
 
 function compare(t, testName, pathToProcess, val) {
   const isSet = arguments.length === 4;
@@ -24,7 +24,7 @@ function compare(t, testName, pathToProcess, val) {
       read(path.join(__dirname, "fixtures", `${testName}.control.md`), "utf8"),
       10
     );
-    t.is(
+    t.equal(
       source.trim().length,
       checkme,
       `either delete testfile size control record file, ${testName}.control.md`
@@ -42,10 +42,10 @@ function compare(t, testName, pathToProcess, val) {
     : del(source, pathToProcess);
 
   // 01.
-  t.is(testedResult, result, `01 - string is identical after the operation`);
+  t.equal(testedResult, result, `01 - string is identical after the operation`);
 
   // 02. parsed versions we just compared must be deep-equal
-  t.deepEqual(
+  t.same(
     JSON.parse(testedResult),
     JSON.parse(result),
     `02 - both parsed parties are deep-equal`
@@ -60,7 +60,7 @@ function compare(t, testName, pathToProcess, val) {
   } else {
     objectPath.del(temp, pathToProcess);
   }
-  t.deepEqual(
+  t.same(
     temp,
     JSON.parse(result),
     `03 - objectPath operation is indeed equivalent`
@@ -73,17 +73,41 @@ function compare(t, testName, pathToProcess, val) {
 
 // if there's fourth input argument, it's SET(), if not, it's DEL()
 
-test("deletes a key from package.json - scenario from update-versions package", t =>
-  compare(t, "upd", "lect.various.devDependencies.4"));
+t.test(
+  "deletes a key from package.json - scenario from update-versions package",
+  t => {
+    compare(t, "upd", "lect.various.devDependencies.4");
+    t.end();
+  }
+);
 
-test("deletes a key from key which has a value with escaped quotes - minified", t =>
-  compare(t, "escaped-quotes-minified", "a"));
+t.test(
+  "deletes a key from key which has a value with escaped quotes - minified",
+  t => {
+    compare(t, "escaped-quotes-minified", "a");
+    t.end();
+  }
+);
 
-test("deletes a key from key which has a value with escaped quotes - normal", t =>
-  compare(t, "escaped-quotes", "a"));
+t.test(
+  "deletes a key from key which has a value with escaped quotes - normal",
+  t => {
+    compare(t, "escaped-quotes", "a");
+    t.end();
+  }
+);
 
-test("updates a key 1", t => compare(t, "bug1", "dependencies.yz", "^1.2.17"));
+t.test("updates a key 1", t => {
+  compare(t, "bug1", "dependencies.yz", "^1.2.17");
+  t.end();
+});
 
-test("updates a key 2", t => compare(t, "bug2", "gh.yz", "3"));
+t.test("updates a key 2", t => {
+  compare(t, "bug2", "gh.yz", "3");
+  t.end();
+});
 
-test("updates a key 3", t => compare(t, "bug3", "gh.yz", "3"));
+t.test("updates a key 3", t => {
+  compare(t, "bug3", "gh.yz", "3");
+  t.end();
+});

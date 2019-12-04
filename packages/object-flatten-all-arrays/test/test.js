@@ -1,12 +1,12 @@
-import test from "ava";
-import flattenAllArrays from "../dist/object-flatten-all-arrays.esm";
+const t = require("tap");
+const flattenAllArrays = require("../dist/object-flatten-all-arrays.cjs");
 
 // ==========
 // Normal use
 // ==========
 
-test("01.01 - simple plain object, one array", t => {
-  t.deepEqual(
+t.test("01.01 - simple plain object, one array", t => {
+  t.same(
     flattenAllArrays({
       d: "d",
       b: "b",
@@ -37,10 +37,11 @@ test("01.01 - simple plain object, one array", t => {
     },
     "01.01"
   );
+  t.end();
 });
 
-test("01.02 - simple plain object, two arrays", t => {
-  t.deepEqual(
+t.test("01.02 - simple plain object, two arrays", t => {
+  t.same(
     flattenAllArrays({
       d: "d",
       b: [
@@ -87,10 +88,11 @@ test("01.02 - simple plain object, two arrays", t => {
     },
     "01.02"
   );
+  t.end();
 });
 
-test("01.03 - nested simple plain object, one array", t => {
-  t.deepEqual(
+t.test("01.03 - nested simple plain object, one array", t => {
+  t.same(
     flattenAllArrays([
       {
         d: "d",
@@ -125,10 +127,11 @@ test("01.03 - nested simple plain object, one array", t => {
     ],
     "01.03"
   );
+  t.end();
 });
 
-test("01.04 - nested objects", t => {
-  t.deepEqual(
+t.test("01.04 - nested objects", t => {
+  t.same(
     flattenAllArrays([
       "z1",
       {
@@ -153,10 +156,11 @@ test("01.04 - nested objects", t => {
     ],
     "01.04"
   );
+  t.end();
 });
 
-test("01.05 - multiple nested arrays", t => {
-  t.deepEqual(
+t.test("01.05 - multiple nested arrays", t => {
+  t.same(
     flattenAllArrays([
       [
         [
@@ -219,10 +223,11 @@ test("01.05 - multiple nested arrays", t => {
     ],
     "01.05"
   );
+  t.end();
 });
 
-test("01.06 - array contents are not of the same type", t => {
-  t.deepEqual(
+t.test("01.06 - array contents are not of the same type", t => {
+  t.same(
     flattenAllArrays({
       d: "d",
       b: "b",
@@ -255,7 +260,7 @@ test("01.06 - array contents are not of the same type", t => {
     },
     "01.06.01 - default"
   );
-  t.deepEqual(
+  t.same(
     flattenAllArrays(
       {
         d: "d",
@@ -285,10 +290,11 @@ test("01.06 - array contents are not of the same type", t => {
     },
     "01.06.02 - opts.flattenArraysContainingStringsToBeEmpty"
   );
+  t.end();
 });
 
-test("01.07 - multiple types in an array #1", t => {
-  t.deepEqual(
+t.test("01.07 - multiple types in an array #1", t => {
+  t.same(
     flattenAllArrays({
       d: "d",
       b: "b",
@@ -337,10 +343,11 @@ test("01.07 - multiple types in an array #1", t => {
     },
     "01.07"
   );
+  t.end();
 });
 
-test("01.08 - multiple types in an array #2", t => {
-  t.deepEqual(
+t.test("01.08 - multiple types in an array #2", t => {
+  t.same(
     flattenAllArrays({
       b: [
         {
@@ -375,10 +382,11 @@ test("01.08 - multiple types in an array #2", t => {
     },
     "01.08"
   );
+  t.end();
 });
 
-test("01.09 - simple array, two ojects", t => {
-  t.deepEqual(
+t.test("01.09 - simple array, two ojects", t => {
+  t.same(
     flattenAllArrays([
       {
         a: "a"
@@ -395,10 +403,11 @@ test("01.09 - simple array, two ojects", t => {
     ],
     "01.09"
   );
+  t.end();
 });
 
-test("01.10 - simple array, two nested ojects", t => {
-  t.deepEqual(
+t.test("01.10 - simple array, two nested ojects", t => {
+  t.same(
     flattenAllArrays([
       {
         a: ["a"]
@@ -415,10 +424,11 @@ test("01.10 - simple array, two nested ojects", t => {
     ],
     "01.10"
   );
+  t.end();
 });
 
-test("01.11 - array, mix of ojects, arrays and strings", t => {
-  t.deepEqual(
+t.test("01.11 - array, mix of ojects, arrays and strings", t => {
+  t.same(
     flattenAllArrays([
       "zzz",
       {
@@ -439,7 +449,7 @@ test("01.11 - array, mix of ojects, arrays and strings", t => {
     ],
     "01.11.01 - default"
   );
-  t.deepEqual(
+  t.same(
     flattenAllArrays(
       [
         "zzz",
@@ -458,10 +468,11 @@ test("01.11 - array, mix of ojects, arrays and strings", t => {
     [],
     "01.11.02 - opts"
   );
+  t.end();
 });
 
-test("01.12 - arrays within objects, strings as elements", t => {
-  t.deepEqual(
+t.test("01.12 - arrays within objects, strings as elements", t => {
+  t.same(
     flattenAllArrays({
       a: {
         b: ["c", "d"]
@@ -474,7 +485,7 @@ test("01.12 - arrays within objects, strings as elements", t => {
     },
     "01.12.01 - default"
   );
-  t.deepEqual(
+  t.same(
     flattenAllArrays(
       {
         a: {
@@ -492,41 +503,48 @@ test("01.12 - arrays within objects, strings as elements", t => {
     },
     "01.12.02 - opts"
   );
+  t.end();
 });
 
 // ==========
 // Edge cases
 // ==========
 
-test("02.01 - empty object as input", t => {
-  t.deepEqual(flattenAllArrays({}), {}, "02.01");
+t.test("02.01 - empty object as input", t => {
+  t.same(flattenAllArrays({}), {}, "02.01");
+  t.end();
 });
 
-test("02.02 - empty array as input", t => {
-  t.deepEqual(flattenAllArrays([]), [], "02.02");
+t.test("02.02 - empty array as input", t => {
+  t.same(flattenAllArrays([]), [], "02.02");
+  t.end();
 });
 
-test("02.03 - empty string as input", t => {
-  t.deepEqual(flattenAllArrays(""), "", "02.03");
+t.test("02.03 - empty string as input", t => {
+  t.same(flattenAllArrays(""), "", "02.03");
+  t.end();
 });
 
-test("02.04 - null as input", t => {
-  t.deepEqual(flattenAllArrays(null), null, "02.04");
+t.test("02.04 - null as input", t => {
+  t.same(flattenAllArrays(null), null, "02.04");
+  t.end();
 });
 
-test("02.05 - undefined as input", t => {
-  t.deepEqual(flattenAllArrays(undefined), undefined, "02.05");
+t.test("02.05 - undefined as input", t => {
+  t.same(flattenAllArrays(undefined), undefined, "02.05");
+  t.end();
 });
 
-test("02.06 - nothing in the input", t => {
-  t.deepEqual(flattenAllArrays(), undefined, "02.06");
+t.test("02.06 - nothing in the input", t => {
+  t.same(flattenAllArrays(), undefined, "02.06");
+  t.end();
 });
 
 // ==========================
 // Does not mutate input args
 // ==========================
 
-test("03.01 - does not mutate input args", t => {
+t.test("03.01 - does not mutate input args", t => {
   const obj = {
     d: "d",
     b: "b",
@@ -544,7 +562,7 @@ test("03.01 - does not mutate input args", t => {
   };
   const unneededResult = flattenAllArrays(obj);
   t.pass(unneededResult);
-  t.deepEqual(
+  t.same(
     obj,
     {
       d: "d",
@@ -563,4 +581,5 @@ test("03.01 - does not mutate input args", t => {
     },
     "03.01"
   );
+  t.end();
 });

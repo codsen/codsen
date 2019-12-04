@@ -1,45 +1,51 @@
-import test from "ava";
-import unfancy from "../dist/string-unfancy.esm";
+const t = require("tap");
+const unfancy = require("../dist/string-unfancy.cjs");
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01 - wrong/missing input = throw", t => {
+t.test("01 - wrong/missing input = throw", t => {
   t.throws(() => {
     unfancy();
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     unfancy(1);
-  });
+  }, /THROW_ID_02/g);
   t.throws(() => {
     unfancy(null);
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     unfancy(undefined);
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     unfancy(true);
-  });
+  }, /THROW_ID_02/g);
+
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-test("02.01 - unfancies fancy strings", t => {
-  t.deepEqual(unfancy("“zzz”"), '"zzz"', "02.01");
+t.test("02.01 - unfancies fancy strings", t => {
+  t.same(unfancy("“zzz”"), '"zzz"', "02.01");
+  t.end();
 });
 
-test("02.02 - copes with encoded HTML chars that happen to be fancy", t => {
-  t.deepEqual(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "02.02");
+t.test("02.02 - copes with encoded HTML chars that happen to be fancy", t => {
+  t.same(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "02.02");
+  t.end();
 });
 
-test("02.03 - fancies with triple-encoded HTML", t => {
-  t.deepEqual(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "02.03");
+t.test("02.03 - fancies with triple-encoded HTML", t => {
+  t.same(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "02.03");
+  t.end();
 });
 
-test("02.04 - removes non-breaking spaces", t => {
-  t.deepEqual(unfancy("aaaa&nbsp;&ndash; bbbb"), "aaaa - bbbb", "02.04.01");
-  t.deepEqual(unfancy("aaaa\u00A0\u2013 bbbb"), "aaaa - bbbb", "02.04.02");
+t.test("02.04 - removes non-breaking spaces", t => {
+  t.same(unfancy("aaaa&nbsp;&ndash; bbbb"), "aaaa - bbbb", "02.04.01");
+  t.same(unfancy("aaaa\u00A0\u2013 bbbb"), "aaaa - bbbb", "02.04.02");
+  t.end();
 });

@@ -114,7 +114,7 @@ export default commandLineArgs => {
     // util.js build:
     {
       input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
+      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
       external: ["he"],
       plugins: [
         strip({

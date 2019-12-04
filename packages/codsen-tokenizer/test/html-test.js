@@ -1,19 +1,16 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-test("01.01 - text-tag-text", t => {
+t.test(t => {
   const gathered = [];
   ct("  <a>z", obj => {
     gathered.push(obj);
   });
 
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -32,17 +29,17 @@ test("01.01 - text-tag-text", t => {
         end: 6
       }
     ],
-    t.is,
-    t.fail
+    "01.01 - text-tag-text"
   );
+  t.end();
 });
 
-test("01.02 - text only", t => {
+t.test(t => {
   const gathered = [];
   ct("  ", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -51,17 +48,17 @@ test("01.02 - text only", t => {
         end: 2
       }
     ],
-    t.is,
-    t.fail
+    "01.02 - text only"
   );
+  t.end();
 });
 
-test("01.03 - opening tag only", t => {
+t.test(t => {
   const gathered = [];
   ct("<a>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -75,17 +72,17 @@ test("01.03 - opening tag only", t => {
         end: 3
       }
     ],
-    t.is,
-    t.fail
+    "01.03 - opening tag only"
   );
+  t.end();
 });
 
-test("01.04 - closing tag only", t => {
+t.test(t => {
   const gathered = [];
   ct("</a>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -99,17 +96,17 @@ test("01.04 - closing tag only", t => {
         end: 4
       }
     ],
-    t.is,
-    t.fail
+    "01.04 - closing tag only"
   );
+  t.end();
 });
 
-test("01.05 - self-closing tag only", t => {
+t.test(t => {
   const gathered = [];
   ct("<br/>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -123,17 +120,17 @@ test("01.05 - self-closing tag only", t => {
         end: 5
       }
     ],
-    t.is,
-    t.fail
+    "01.05 - self-closing tag only"
   );
+  t.end();
 });
 
-test("01.06 - multiple tags", t => {
+t.test(t => {
   const gathered = [];
   ct("<a><b><c>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -152,17 +149,17 @@ test("01.06 - multiple tags", t => {
         end: 9
       }
     ],
-    t.is,
-    t.fail
+    "01.06 - multiple tags"
   );
+  t.end();
 });
 
-test("01.07 - closing bracket in the attribute's value", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a alt=">">`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -171,17 +168,17 @@ test("01.07 - closing bracket in the attribute's value", t => {
         end: 11
       }
     ],
-    t.is,
-    t.fail
+    "01.07 - closing bracket in the attribute's value"
   );
+  t.end();
 });
 
-test("01.08 - closing bracket layers of nested quotes", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a alt='"'">"'"'>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -190,17 +187,17 @@ test("01.08 - closing bracket layers of nested quotes", t => {
         end: 17
       }
     ],
-    t.is,
-    t.fail
+    "01.08 - closing bracket layers of nested quotes"
   );
+  t.end();
 });
 
-test("01.09 - bracket as text", t => {
+t.test(t => {
   const gathered = [];
   ct("a < b", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -209,17 +206,17 @@ test("01.09 - bracket as text", t => {
         end: 5
       }
     ],
-    t.is,
-    t.fail
+    "01.09 - bracket as text"
   );
+  t.end();
 });
 
-test("01.10 - tag followed by brackets", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -265,17 +262,17 @@ test("01.10 - tag followed by brackets", t => {
         end: 37
       }
     ],
-    t.is,
-    t.fail
+    "01.10 - tag followed by brackets"
   );
+  t.end();
 });
 
-test("01.11 - html comment", t => {
+t.test(t => {
   const gathered = [];
   ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -300,17 +297,17 @@ test("01.11 - html comment", t => {
         end: 40
       }
     ],
-    t.is,
-    t.fail
+    "01.11 - html comment"
   );
+  t.end();
 });
 
-test("01.12 - html5 doctype", t => {
+t.test(t => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -330,12 +327,12 @@ test("01.12 - html5 doctype", t => {
         end: 17
       }
     ],
-    t.is,
-    t.fail
+    "01.12 - html5 doctype"
   );
+  t.end();
 });
 
-test("01.13 - xhtml doctype", t => {
+t.test(t => {
   const gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -346,7 +343,7 @@ test("01.13 - xhtml doctype", t => {
       gathered.push(obj);
     }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -376,12 +373,12 @@ test("01.13 - xhtml doctype", t => {
         end: 191
       }
     ],
-    t.is,
-    t.fail
+    "01.13 - xhtml doctype"
   );
+  t.end();
 });
 
-test("01.14 - xhtml DTD doctype", t => {
+t.test(t => {
   const gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -393,7 +390,7 @@ test("01.14 - xhtml DTD doctype", t => {
       gathered.push(obj);
     }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -434,17 +431,17 @@ test("01.14 - xhtml DTD doctype", t => {
         end: 230
       }
     ],
-    t.is,
-    t.fail
+    "01.14 - xhtml DTD doctype"
   );
+  t.end();
 });
 
-test("01.15 - void tags", t => {
+t.test(t => {
   const gathered = [];
   ct("<br>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -454,17 +451,17 @@ test("01.15 - void tags", t => {
         void: true
       }
     ],
-    t.is,
-    t.fail
+    "01.15 - void tags"
   );
+  t.end();
 });
 
-test("01.16 - recognised tags", t => {
+t.test(t => {
   const gathered = [];
   ct("<content>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -475,17 +472,17 @@ test("01.16 - recognised tags", t => {
         recognised: true
       }
     ],
-    t.is,
-    t.fail
+    "01.16 - recognised tags"
   );
+  t.end();
 });
 
-test("01.17 - unrecognised tags", t => {
+t.test(t => {
   const gathered = [];
   ct("<contentz>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -496,17 +493,17 @@ test("01.17 - unrecognised tags", t => {
         recognised: false
       }
     ],
-    t.is,
-    t.fail
+    "01.17 - unrecognised tags"
   );
+  t.end();
 });
 
-test("01.18 - wrong case but still recognised tags", t => {
+t.test(t => {
   const gathered = [];
   ct("</tablE>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -517,17 +514,17 @@ test("01.18 - wrong case but still recognised tags", t => {
         recognised: true
       }
     ],
-    t.is,
-    t.fail
+    "01.18 - wrong case but still recognised tags"
   );
+  t.end();
 });
 
-test("01.19 - correct HTML5 doctype", t => {
+t.test(t => {
   const gathered = [];
   ct("<!DOCTYPE html>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -538,12 +535,12 @@ test("01.19 - correct HTML5 doctype", t => {
         recognised: true
       }
     ],
-    t.is,
-    t.fail
+    "01.19 - correct HTML5 doctype"
   );
+  t.end();
 });
 
-test("01.20 - correct HTML5 doctype", t => {
+t.test(t => {
   const gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -552,7 +549,7 @@ test("01.20 - correct HTML5 doctype", t => {
       gathered.push(obj);
     }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -563,17 +560,17 @@ test("01.20 - correct HTML5 doctype", t => {
         recognised: true
       }
     ],
-    t.is,
-    t.fail
+    "01.20 - correct HTML5 doctype"
   );
+  t.end();
 });
 
-test("01.21 - tag names with numbers", t => {
+t.test(t => {
   const gathered = [];
   ct("<h1>", obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -588,20 +585,20 @@ test("01.21 - tag names with numbers", t => {
         end: 4
       }
     ],
-    t.is,
-    t.fail
+    "01.21 - tag names with numbers"
   );
+  t.end();
 });
 
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
-test("02.01 - CDATA - correct", t => {
+t.test(t => {
   const gathered = [];
   ct(`<![CDATA[x<y]]>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -613,17 +610,17 @@ test("02.01 - CDATA - correct", t => {
         kind: "cdata"
       }
     ],
-    t.is,
-    t.fail
+    "02.01 - CDATA - correct"
   );
+  t.end();
 });
 
-test("02.02 - CDATA - messed up 1", t => {
+t.test(t => {
   const gathered = [];
   ct(`<[CDATA[x<y]]>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -635,17 +632,17 @@ test("02.02 - CDATA - messed up 1", t => {
         kind: "cdata"
       }
     ],
-    t.is,
-    t.fail
+    "02.02 - CDATA - messed up 1"
   );
+  t.end();
 });
 
-test("02.03 - CDATA - messed up 2", t => {
+t.test(t => {
   const gathered = [];
   ct(`<!CDATA[x<y]]>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -657,17 +654,17 @@ test("02.03 - CDATA - messed up 2", t => {
         kind: "cdata"
       }
     ],
-    t.is,
-    t.fail
+    "02.03 - CDATA - messed up 2"
   );
+  t.end();
 });
 
-test("02.04 - CDATA - messed up 3", t => {
+t.test(t => {
   const gathered = [];
   ct(`<![ CData[x<y]]>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -679,20 +676,20 @@ test("02.04 - CDATA - messed up 3", t => {
         kind: "cdata"
       }
     ],
-    t.is,
-    t.fail
+    "02.04 - CDATA - messed up 3"
   );
+  t.end();
 });
 
 // 03. XML
 // -----------------------------------------------------------------------------
 
-test("03.01 - XML - correct", t => {
+t.test(t => {
   const gathered = [];
   ct(`<?xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -704,17 +701,17 @@ test("03.01 - XML - correct", t => {
         kind: "xml"
       }
     ],
-    t.is,
-    t.fail
+    "03.01 - XML - correct"
   );
+  t.end();
 });
 
-test("03.02 - XML - incorrect 1", t => {
+t.test(t => {
   const gathered = [];
   ct(`< ?xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -726,17 +723,17 @@ test("03.02 - XML - incorrect 1", t => {
         kind: "xml"
       }
     ],
-    t.is,
-    t.fail
+    "03.02 - XML - incorrect 1"
   );
+  t.end();
 });
 
-test("03.02 - XML - incorrect 2", t => {
+t.test(t => {
   const gathered = [];
   ct(`<? xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -748,17 +745,17 @@ test("03.02 - XML - incorrect 2", t => {
         kind: "xml"
       }
     ],
-    t.is,
-    t.fail
+    "03.02 - XML - incorrect 2"
   );
+  t.end();
 });
 
-test("03.03 - XML - incorrect 3", t => {
+t.test(t => {
   const gathered = [];
   ct(`< ?XML version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -770,7 +767,7 @@ test("03.03 - XML - incorrect 3", t => {
         kind: "xml"
       }
     ],
-    t.is,
-    t.fail
+    "03.03 - XML - incorrect 3"
   );
+  t.end();
 });

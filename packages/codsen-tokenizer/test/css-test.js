@@ -1,18 +1,15 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 
 // 01. CSS
 // -----------------------------------------------------------------------------
 
-test("01.01 - CSS in the head", t => {
+t.test(t => {
   const gathered = [];
   ct(`<style>\n.d-h{z}\n</style>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -43,17 +40,17 @@ test("01.01 - CSS in the head", t => {
         kind: "style"
       }
     ],
-    t.is,
-    t.fail
+    "01.01 - CSS in the head"
   );
+  t.end();
 });
 
-test("01.02 - CSS, no whitespace inside", t => {
+t.test(t => {
   const gathered = [];
   ct(`<meta><style>.d-h{z}</style>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -79,7 +76,7 @@ test("01.02 - CSS, no whitespace inside", t => {
         kind: "style"
       }
     ],
-    t.is,
-    t.fail
+    "01.02 - CSS, no whitespace inside"
   );
+  t.end();
 });

@@ -11,11 +11,12 @@
 
 # folders:
 
+.nyc_output
+coverage
 test
 
 # files:
 
-.eslintrc.json
 .npmignore
 .prettierignore
 testStats.json

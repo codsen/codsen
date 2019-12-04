@@ -5,31 +5,19 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "plugins": [
-    "import"
   ],
   "root": true,
   "rules": {
     "curly": "error",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "perf/**/*.*",
-          "**/*test.js",
-          "test/**/*.*",
-          "rollup.config.js",
-          "scripts/**/*.*"
-        ]
-      }
-    ],
-    "no-console": "off",
     "no-constant-condition": [
       "error",
       {

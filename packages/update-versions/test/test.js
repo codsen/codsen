@@ -1,12 +1,10 @@
-/* eslint ava/prefer-async-await:0 */
-
 const { promisify } = require("util");
 const fs = require("fs-extra");
 const read = fs.readFile;
 const write = promisify(require("write-file-atomic"));
 
 import path from "path";
-import test from "ava";
+const t = require("tap");
 import execa from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
@@ -109,7 +107,7 @@ const test2FileContents = [packTest12Lib3, rootPack];
 // Unit tests
 // -----------------------------------------------------------------------------
 
-test("01 - monorepo", async t => {
+t.test("01 - monorepo", async t => {
   // const tempFolder = "temp";
   const tempFolder = tempy.directory();
 
@@ -156,34 +154,36 @@ test("01 - monorepo", async t => {
       contents = contents.map(arr => JSON.parse(arr));
 
       // lib1:
-      t.regex(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      t.regex(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      t.match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+      t.match(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      t.match(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      t.match(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
       // lib2:
-      t.regex(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
 
       // lib3 in node_modules should be intact:
-      t.is(contents[2].dependencies["check-types-mini"], "*");
-      t.is(contents[2].devDependencies.husky, "latest");
-      t.is(contents[2].devDependencies.commitizen, "*");
-      t.is(contents[2].devDependencies.prettier, "1.16.1");
+      t.equal(contents[2].dependencies["check-types-mini"], "*");
+      t.equal(contents[2].devDependencies.husky, "latest");
+      t.equal(contents[2].devDependencies.commitizen, "*");
+      t.equal(contents[2].devDependencies.prettier, "1.16.1");
 
       // root package.json:
       // at the time of writing this, latest Detergent is 4.0.4. We set original
       // version in root as ^1.0.0, so check is, is the second digit greater than
       // or equal to 4.
-      t.true(
+      t.ok(
         Number.parseInt(contents[3].dependencies.detergent.slice(1, 2)) >= 4
       );
     })
     .catch(err => t.fail(err));
+
+  t.end();
 });
 
-test("02 - normal repo", async t => {
+t.test("02 - normal repo", async t => {
   const tempFolder = tempy.directory();
 
   // 1. create folders:
@@ -226,91 +226,101 @@ test("02 - normal repo", async t => {
       contents = contents.map(arr => JSON.parse(arr));
 
       // node_modules/lib3/package.json:
-      t.is(contents[0].dependencies["check-types-mini"], "*");
-      t.is(contents[0].devDependencies.husky, "latest");
-      t.is(contents[0].devDependencies.commitizen, "*");
-      t.is(contents[0].devDependencies.prettier, "1.16.1");
+      t.equal(contents[0].dependencies["check-types-mini"], "*");
+      t.equal(contents[0].devDependencies.husky, "latest");
+      t.equal(contents[0].devDependencies.commitizen, "*");
+      t.equal(contents[0].devDependencies.prettier, "1.16.1");
 
       // root package.json:
-      t.regex(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      t.regex(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+      t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
     })
     .catch(err => t.fail(err));
+
+  t.end();
 });
 
-test("03 - deletes deps from devdeps if they are among normal deps", async t => {
-  const tempFolder = tempy.directory();
+t.test(
+  "03 - deletes deps from devdeps if they are among normal deps",
+  async t => {
+    const tempFolder = tempy.directory();
 
-  // 0. We need to add redundant deps onto normal deps key in package.json:
-  const tweakedContents = clone(test2FileContents);
-  tweakedContents[1].dependencies.commitizen = "*";
-  // it will contain commitizen on both deps and dev deps
+    // 0. We need to add redundant deps onto normal deps key in package.json:
+    const tweakedContents = clone(test2FileContents);
+    tweakedContents[1].dependencies.commitizen = "*";
+    // it will contain commitizen on both deps and dev deps
 
-  // 1. create folders:
-  fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+    // 1. create folders:
+    fs.ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
 
-  // asynchronously write all test files
+    // asynchronously write all test files
 
-  await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    write(
-      path.join(tempFolder, oneOfTestFilePaths),
-      JSON.stringify(tweakedContents[testIndex], null, 2)
-    )
-  )
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
-        shell: true
-      })
-    )
-    .then(received => {
-      if (
-        received &&
-        received.stdout &&
-        received.stdout.includes("FetchError")
-      ) {
-        t.fail("Internet is down");
-      }
-    })
-    .then(() =>
-      pMap(test2FilePaths, oneOfPaths =>
-        read(path.join(tempFolder, oneOfPaths), "utf8")
+    await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
+      write(
+        path.join(tempFolder, oneOfTestFilePaths),
+        JSON.stringify(tweakedContents[testIndex], null, 2)
       )
     )
-    .then(received =>
-      execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
-        shell: true
-      }).then(() => received)
-    )
-    .then(contents => {
-      // array comes in, but each JSON inside in unparsed and in string format:
-      contents = contents.map(arr => JSON.parse(arr));
-      // root package.json devdeps should not contain the commitizen:
-      t.true(!Object.keys(contents[1].devDependencies).includes("commitizen"));
-    })
-    .catch(err => t.fail(err));
-});
+      .then(() =>
+        execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+          shell: true
+        })
+      )
+      .then(received => {
+        if (
+          received &&
+          received.stdout &&
+          received.stdout.includes("FetchError")
+        ) {
+          t.fail("Internet is down");
+        }
+      })
+      .then(() =>
+        pMap(test2FilePaths, oneOfPaths =>
+          read(path.join(tempFolder, oneOfPaths), "utf8")
+        )
+      )
+      .then(received =>
+        execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+          shell: true
+        }).then(() => received)
+      )
+      .then(contents => {
+        // array comes in, but each JSON inside in unparsed and in string format:
+        contents = contents.map(arr => JSON.parse(arr));
+        // root package.json devdeps should not contain the commitizen:
+        t.ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
+      })
+      .catch(err => t.fail(err));
 
-test("92 - version output mode", async t => {
+    t.end();
+  }
+);
+
+t.test("92 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.is(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version);
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.is(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version);
+  t.end();
 });
 
-test("91 - help output mode", async t => {
+t.test("91 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.regex(reportedVersion1.stdout, /Usage/);
-  t.regex(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Usage/);
+  t.match(reportedVersion1.stdout, /Options/);
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.regex(reportedVersion2.stdout, /Usage/);
-  t.regex(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Usage/);
+  t.match(reportedVersion2.stdout, /Options/);
+
+  t.end();
 });
 
-test("93 - no files found in the given directory", async t => {
+t.test("93 - no files found in the given directory", async t => {
   const tempFolder = tempy.directory();
   // create folder:
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -322,8 +332,10 @@ test("93 - no files found in the given directory", async t => {
   );
 
   // CLI should exit with a non-error code zero:
-  t.is(stdOutContents.exitCode, 0);
+  t.equal(stdOutContents.exitCode, 0);
 
   // delete folder:
   await execa.command(`rm -rf ${path.join(__dirname, "../temp")}`);
+
+  t.end();
 });

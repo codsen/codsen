@@ -21,6 +21,20 @@ var isNaturalNumber = _interopDefault(require('is-natural-number'));
 var astCompare = _interopDefault(require('ast-compare'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function existy(x) {
   return x != null;
 }
@@ -36,9 +50,12 @@ function compareIsEqual(a, b) {
     useWildcards: true
   });
 }
+function isObj(something) {
+  return _typeof(something) === "object" && something !== null;
+}
 function monkey(inputOriginal, opts) {
   if (!existy(inputOriginal)) {
-    throw new Error("ast-monkey/main.js/monkey(): Please provide an input");
+    throw new Error("ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input");
   }
   var input = clone(inputOriginal);
   opts = Object.assign({
@@ -124,20 +141,24 @@ function monkey(inputOriginal, opts) {
   return input;
 }
 function find(input, opts) {
-  if (!notUndef(opts.key) && !notUndef(opts.val)) {
-    throw new Error("ast-monkey/main.js/find(): Please provide opts.key or opts.val");
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input");
+  }
+  if (!isObj(opts) || opts.key === undefined && opts.val === undefined) {
+    throw new Error("ast-monkey/main.js/find(): [THROW_ID_03] Please provide opts.key or opts.val");
   }
   checkTypes(opts, null, {
     schema: {
       key: ["null", "string"],
       val: "any",
       only: ["undefined", "null", "string"]
-    }
+    },
+    msg: "ast-monkey/get(): [THROW_ID_04*]"
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
     opts.only = arrayObjectOrBoth(opts.only, {
-      msg: "ast-monkey/find():",
-      optsVarName: "opts.only"
+      optsVarName: "opts.only",
+      msg: "ast-monkey/find(): [THROW_ID_05*]"
     });
   } else {
     opts.only = "any";
@@ -147,8 +168,14 @@ function find(input, opts) {
   }));
 }
 function get(input, opts) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input");
+  }
+  if (!isObj(opts)) {
+    throw new Error("ast-monkey/main.js/get(): [THROW_ID_07] Please provide the opts");
+  }
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/main.js/get(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/get(): [THROW_ID_08] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), {
@@ -156,29 +183,36 @@ function get(input, opts) {
     })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+      throw new Error("ast-monkey/main.js/get(): [THROW_ID_09] opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   }
   checkTypes(opts, null, {
     schema: {
       index: "number"
-    }
+    },
+    msg: "ast-monkey/get(): [THROW_ID_10*]"
   });
   if (!isNaturalNumber(opts.index, {
     includeZero: true
   })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+    throw new Error("ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   return monkey(input, Object.assign({}, opts, {
     mode: "get"
   }));
 }
 function set(input, opts) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_12] Please provide the input");
+  }
+  if (!isObj(opts)) {
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_13] Please provide the input");
+  }
   if (!existy(opts.key) && !notUndef(opts.val)) {
-    throw new Error("ast-monkey/main.js/set(): Please provide opts.val");
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_14] Please provide opts.val");
   }
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/main.js/set(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_15] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), {
@@ -186,12 +220,12 @@ function set(input, opts) {
     })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+      throw new Error("ast-monkey/main.js/set(): [THROW_ID_16] opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   } else if (!isNaturalNumber(opts.index, {
     includeZero: true
   })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+    throw new Error("ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   if (existy(opts.key) && !notUndef(opts.val)) {
     opts.val = opts.key;
@@ -201,15 +235,22 @@ function set(input, opts) {
       key: [null, "string"],
       val: "any",
       index: "number"
-    }
+    },
+    msg: "ast-monkey/set(): [THROW_ID_18*]"
   });
   return monkey(input, Object.assign({}, opts, {
     mode: "set"
   }));
 }
 function drop(input, opts) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_19] Please provide the input");
+  }
+  if (!isObj(opts)) {
+    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_20] Please provide the input");
+  }
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/main.js/drop(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_21] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), {
@@ -217,42 +258,53 @@ function drop(input, opts) {
     })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+      throw new Error("ast-monkey/main.js/drop(): [THROW_ID_22] opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   }
   if (!isNaturalNumber(opts.index, {
     includeZero: true
   })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
+    throw new Error("ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   checkTypes(opts, null, {
     schema: {
       index: "number"
-    }
+    },
+    msg: "ast-monkey/drop(): [THROW_ID_24*]"
   });
   return monkey(input, Object.assign({}, opts, {
     mode: "drop"
   }));
 }
 function info(input) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/info(): [THROW_ID_25] Please provide the input");
+  }
   return monkey(input, {
     mode: "info"
   });
 }
 function del(input, opts) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/del(): [THROW_ID_26] Please provide the input");
+  }
+  if (!isObj(opts)) {
+    throw new Error("ast-monkey/main.js/del(): [THROW_ID_27] Please provide the opts object");
+  }
   if (!existy(opts.key) && !notUndef(opts.val)) {
-    throw new Error("ast-monkey/main.js/del(): Please provide opts.key or opts.val");
+    throw new Error("ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val");
   }
   checkTypes(opts, null, {
     schema: {
       key: [null, "string"],
       val: "any",
       only: ["undefined", "null", "string"]
-    }
+    },
+    msg: "ast-monkey/drop(): [THROW_ID_29*]"
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
     opts.only = arrayObjectOrBoth(opts.only, {
-      msg: "ast-monkey/del():",
+      msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "opts.only"
     });
   } else {
@@ -263,6 +315,9 @@ function del(input, opts) {
   }));
 }
 function arrayFirstOnly(input) {
+  if (!existy(input)) {
+    throw new Error("ast-monkey/main.js/arrayFirstOnly(): [THROW_ID_31] Please provide the input");
+  }
   return monkey(input, {
     mode: "arrayFirstOnly"
   });

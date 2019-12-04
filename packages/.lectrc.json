@@ -108,43 +108,10 @@
 			"ecmaVersion": 2018,
 			"sourceType": "module"
 		},
-		"plugins": [
-			"ava",
-			"no-unsanitized"
-		],
+		"plugins": [],
 		"root": true,
 		"rules": {
-			"ava/assertion-arguments": "error",
-			"ava/max-asserts": [
-				"off",
-				5
-			],
-			"ava/no-async-fn-without-await": "error",
-			"ava/no-cb-test": "off",
-			"ava/no-duplicate-modifiers": "error",
-			"ava/no-identical-title": "error",
-			"ava/no-invalid-end": "error",
-			"ava/no-nested-tests": "error",
-			"ava/no-only-test": "error",
-			"ava/no-skip-assert": "error",
-			"ava/no-skip-test": "error",
-			"ava/no-statement-after-end": "error",
-			"ava/no-todo-implementation": "error",
-			"ava/no-todo-test": "warn",
-			"ava/no-unknown-modifiers": "error",
-			"ava/prefer-async-await": "error",
-			"ava/prefer-power-assert": "off",
-			"ava/test-ended": "error",
-			"ava/test-title": [
-				"error",
-				"if-multiple"
-			],
-			"ava/use-t": "error",
-			"ava/use-t-well": "error",
-			"ava/use-test": "error",
-			"ava/use-true-false": "error",
 			"curly": "error",
-			"no-console": "off",
 			"no-constant-condition": [
 				"error",
 				{
@@ -180,11 +147,13 @@
 			".editorconfig",
 			".gitattributes",
 			".bithoundrc",
+			".eslintrc.json",
 			".travis.yml",
 			"bitbucket-pipelines.yml",
 			"package-lock.json",
 			"yarn.lock",
-			".DS_Store"
+			".DS_Store",
+			"util.esm.js"
 		],
 		"write_hard": [
 			{
@@ -279,37 +248,19 @@
 		"goodFolders": [
 			"bin",
 			"dist",
-			"lib"
+			"lib",
+			"rules"
 		]
 	},
 	"package": {
-		"ava": {
-			"compileEnhancements": false,
-			"require": [
-				"esm"
-			],
-			"timeout": "99m",
-			"verbose": true
-		},
 		"devDependencies": {
 			"@babel/core": "^7.7.4",
 			"@babel/preset-env": "^7.7.4",
-			"@babel/register": "^7.7.4",
-			"ava": "^2.2.9",
-			"babel-plugin-istanbul": "^5.2.0",
+			"tap": "^14.10.2",
 			"benchmark": "^2.1.4",
-			"eslint": "^6.7.1",
-			"eslint-config-prettier": "^6.7.0",
-			"eslint-plugin-ava": "^9.0.0",
-			"eslint-plugin-import": "^2.18.2",
-			"eslint-plugin-no-unsanitized": "^3.0.2",
-			"eslint-plugin-prettier": "^3.1.1",
-			"esm": "^3.2.25",
 			"js-row-num-cli": "^1.6.9",
 			"lect": "^0.11.2",
-			"nyc": "^14.1.1",
-			"prettier": "^1.19.1",
-			"rollup": "^1.27.5",
+			"rollup": "^1.27.8",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-babel": "^4.3.3",
 			"rollup-plugin-cleanup": "^3.1.1",
@@ -323,23 +274,16 @@
 		"engines": {
 			"node": ">=8.9"
 		},
-		"esm": {
-			"await": true,
-			"cjs": true
+		"tap": {
+			"coverage-report": "json-summary",
+			"timeout": 0
 		},
 		"husky": {
 			"hooks": {
 				"pre-commit": "npm run format && npm test"
 			}
 		},
-		"license": "MIT",
-		"nyc": {
-			"instrument": false,
-			"require": [
-				"@babel/register"
-			],
-			"sourceMap": false
-		}
+		"license": "MIT"
 	},
 	"package_keys": {
 		"write_hard": {
@@ -361,30 +305,29 @@
 	},
 	"scripts": {
 		"cli": {
-			"ava": "ava -d",
-			"coverage": "nyc report --reporter=json-summary",
 			"dev": "echo\"\"",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
-			"lint": "./node_modules/.bin/eslint **/*.js --fix",
-			"prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/ava"
+			"unittest": "./node_modules/.bin/tap --no-only -R 'terse'"
 		},
 		"rollup": {
-			"ava": "ava -d",
-			"build": "rollup -c",
-			"coverage": "nyc report --reporter=json-summary",
+			"build": "rollup -c --silent",
 			"dev": "rollup -c --dev --silent",
+			"devunittest": "npm run dev && ./node_modules/.bin/tap --only",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
-			"lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
 			"perf": "node perf/check",
 			"prepare": "npm run build",
 			"pretest": "npm run build",
-			"prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/nyc ava && npm run coverage && npm run perf",
+			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' && npm run perf",
 			"version": "npm run build && git add ."
 		}
 	},

@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import r1 from "../dist/ranges-apply.umd";
-import r2 from "../dist/ranges-apply.cjs";
+const t = require("tap");
+const r1 = require("../dist/ranges-apply.umd");
 
 const str = "delete me bbb and me too ccc";
 const ranges = [
@@ -11,10 +8,7 @@ const ranges = [
 ];
 const res = "bbb ccc";
 
-test("UMD build works fine", t => {
-  t.deepEqual(r1(str, ranges), res);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(r2(str, ranges), res);
+t.test("UMD build works fine", t => {
+  t.same(r1(str, ranges), res);
+  t.end();
 });

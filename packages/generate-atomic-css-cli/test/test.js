@@ -1,8 +1,8 @@
-import fs from "fs-extra";
-import test from "ava";
-import path from "path";
-import execa from "execa";
-import tempy from "tempy";
+const fs = require("fs-extra");
+const t = require("tap");
+const path = require("path");
+const execa = require("execa");
+const tempy = require("tempy");
 
 //                                  *
 //                                  *
@@ -18,7 +18,7 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-test("01 - there are no usable files at all", async t => {
+t.test("01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "index.html"), "zzz")
@@ -37,7 +37,8 @@ test("01 - there are no usable files at all", async t => {
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch(err => t.fail(err));
   // confirm that the existing file is intact:
-  t.is(await processedFileContents, "zzz");
+  t.equal(await processedFileContents, "zzz");
+  t.end();
 });
 
 //                                  *
@@ -54,7 +55,7 @@ test("01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-test("02 - index.html in the root", async t => {
+t.test("02 - index.html in the root", async t => {
   const originalFile = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -109,7 +110,8 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
     .catch(err => t.fail(err));
 
   // 3. compare:
-  t.is(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
 });
 
 //                                  *
@@ -126,7 +128,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 //                                  *
 //                                  *
 
-test("03 - two files processed by calling glob with wildcard", async t => {
+t.test("03 - two files processed by calling glob with wildcard", async t => {
   const file1 = `111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -178,8 +180,10 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
   );
 
   // 3. compare:
-  t.regex(file1contents, /\.pt3 { padding-top: 3px !important; }/g, "03.01");
-  t.regex(file2contents, /\.mt3 { margin-top: 3px !important; }/g, "03.02"); // both updated
+  t.match(file1contents, /\.pt3 { padding-top: 3px !important; }/g, "03.01");
+  t.match(file2contents, /\.mt3 { margin-top: 3px !important; }/g, "03.02"); // both updated
+
+  t.end();
 });
 
 //                                  *

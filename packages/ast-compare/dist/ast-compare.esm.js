@@ -50,8 +50,6 @@ function isTheTypeLegit(something) {
     isNull(something)
   );
 }
-
-const isArr$1 = Array.isArray;
 function compare(bo, so, originalOpts) {
   if (bo === undefined) {
     throw new TypeError(
@@ -131,7 +129,7 @@ function compare(bo, so, originalOpts) {
     return opts.useWildcards
       ? matcher.isMatch(b, s, { caseSensitive: true })
       : b === s;
-  } else if (isArr$1(b) && isArr$1(s)) {
+  } else if (isArr(b) && isArr(s)) {
     if (
       opts.hungryForWhitespace &&
       empty(s) &&

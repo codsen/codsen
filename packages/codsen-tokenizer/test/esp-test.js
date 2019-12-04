@@ -1,18 +1,15 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 
 // 01. ESP (Email Service Provider) and other templating language tags
 // -----------------------------------------------------------------------------
 
-test("01.01 - ESP literals among text get reported", t => {
+t.test(t => {
   const gathered = [];
   ct(`{% zz %}`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -22,17 +19,17 @@ test("01.01 - ESP literals among text get reported", t => {
         tail: "%}"
       }
     ],
-    t.is,
-    t.fail
+    "01.01 - ESP literals among text get reported"
   );
+  t.end();
 });
 
-test("01.02 - ESP literals among text get reported", t => {
+t.test(t => {
   const gathered = [];
   ct(`ab {% if something %} cd`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -52,17 +49,17 @@ test("01.02 - ESP literals among text get reported", t => {
         end: 24
       }
     ],
-    t.is,
-    t.fail
+    "01.02 - ESP literals among text get reported"
   );
+  t.end();
 });
 
-test("01.03 - ESP literals surrounded by HTML tags", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a>{% if something %}<b>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -82,17 +79,17 @@ test("01.03 - ESP literals surrounded by HTML tags", t => {
         end: 24
       }
     ],
-    t.is,
-    t.fail
+    "01.03 - ESP literals surrounded by HTML tags"
   );
+  t.end();
 });
 
-test("01.04 - ESP literals surrounded by HTML tags", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a>{% if a<b and c>d '"'''' ><><><><><><><><><><>< %}<b>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -112,17 +109,17 @@ test("01.04 - ESP literals surrounded by HTML tags", t => {
         end: 56
       }
     ],
-    t.is,
-    t.fail
+    "01.04 - ESP literals surrounded by HTML tags"
   );
+  t.end();
 });
 
-test("01.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a b="c{{ z("'") }}"><b>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -136,12 +133,12 @@ test("01.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini"
         end: 24
       }
     ],
-    t.is,
-    t.fail
+    "01.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini"
   );
+  t.end();
 });
 
-test("01.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t => {
+t.test(t => {
   const gathered = [];
   ct(
     `<a href="https://zzz.yyy/?api=1&query={{ some_key | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}"><b>`,
@@ -149,7 +146,7 @@ test("01.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
       gathered.push(obj);
     }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -163,17 +160,17 @@ test("01.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2", t =
         end: 173
       }
     ],
-    t.is,
-    t.fail
+    "01.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2"
   );
+  t.end();
 });
 
-test("01.07 - Responsys-style ESP tag", t => {
+t.test(t => {
   const gathered = [];
   ct(`<a>$(something)<b>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -193,18 +190,18 @@ test("01.07 - Responsys-style ESP tag", t => {
         end: 18
       }
     ],
-    t.is,
-    t.fail
+    "01.07 - Responsys-style ESP tag"
   );
+  t.end();
 });
 
 // heuristically detecting tails and again new heads
-test("01.08 - two nunjucks tags, same pattern set of two, tight", t => {
+t.test(t => {
   const gathered = [];
   ct(`{%- a -%}{%- b -%}`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -218,18 +215,18 @@ test("01.08 - two nunjucks tags, same pattern set of two, tight", t => {
         end: 18
       }
     ],
-    t.is,
-    t.fail
+    "01.08 - two nunjucks tags, same pattern set of two, tight"
   );
+  t.end();
 });
 
 // heuristically detecting tails and again new heads, this time slightly different
-test("01.09 - two nunjucks tags, different pattern set of two, tight", t => {
+t.test(t => {
   const gathered = [];
   ct(`{%- if count > 1 -%}{% if count > 1 %}`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -243,18 +240,18 @@ test("01.09 - two nunjucks tags, different pattern set of two, tight", t => {
         end: 38
       }
     ],
-    t.is,
-    t.fail
+    "01.09 - two nunjucks tags, different pattern set of two, tight"
   );
+  t.end();
 });
 
 // heuristically detecting tails and again new heads
-test("01.10 - different set, *|zzz|*", t => {
+t.test(t => {
   const gathered = [];
   ct(`*|zzz|**|yyy|*`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -268,17 +265,17 @@ test("01.10 - different set, *|zzz|*", t => {
         end: 14
       }
     ],
-    t.is,
-    t.fail
+    "01.10 - different set, *|zzz|*"
   );
+  t.end();
 });
 
-test("01.11 - error, two ESP tags joined, first one ends with heads instead of tails", t => {
+t.test(t => {
   const gathered = [];
   ct(`*|zzz*|*|yyy|*`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -292,7 +289,7 @@ test("01.11 - error, two ESP tags joined, first one ends with heads instead of t
         end: 14
       }
     ],
-    t.is,
-    t.fail
+    "01.11 - error, two ESP tags joined, first one ends with heads instead of tails"
   );
+  t.end();
 });

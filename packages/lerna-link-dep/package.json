@@ -36,32 +36,19 @@
     "linkdep": "cli.js"
   },
   "scripts": {
-    "ava": "ava -d",
-    "coverage": "nyc report --reporter=json-summary",
     "dev": "echo\"\"",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "./node_modules/.bin/eslint **/*.js --fix",
-    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/ava"
+    "unittest": "./node_modules/.bin/tap --no-only -R 'terse'"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
-  },
-  "ava": {
-    "compileEnhancements": false,
-    "require": [
-      "esm"
-    ],
-    "timeout": "99m",
-    "verbose": true
-  },
-  "esm": {
-    "await": true,
-    "cjs": true
   },
   "lect": {
     "babelrc": {
@@ -127,12 +114,9 @@
       "travisVersionsOverride": []
     }
   },
-  "nyc": {
-    "instrument": false,
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false
+  "tap": {
+    "coverage-report": "json-summary",
+    "timeout": 0
   },
   "dependencies": {
     "execa": "^3.4.0",
@@ -144,20 +128,16 @@
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
-    "@babel/register": "^7.7.4",
-    "ava": "^2.2.9",
-    "babel-plugin-istanbul": "^5.2.0",
-    "eslint": "^6.7.1",
+    "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-ava": "^9.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "esm": "^3.2.25",
+    "eslint-plugin-row-num": "^1.0.0",
     "js-row-num-cli": "^1.6.9",
     "lect": "^0.11.2",
-    "nyc": "^14.1.1",
     "prettier": "^1.19.1",
+    "tap": "^14.10.2",
     "tempy": "^0.3.0"
   }
 }

@@ -12,6 +12,10 @@ import pull from 'lodash.pull';
 import currency from 'currency.js';
 import isNumeric from 'is-numeric';
 
+const isArr = Array.isArray;
+function existy(x) {
+  return x != null;
+}
 const currencySigns = [
   "د.إ",
   "؋",
@@ -167,11 +171,6 @@ function findtype(something) {
     return "empty";
   }
   return "text";
-}
-
-const isArr = Array.isArray;
-function existy(x) {
-  return x != null;
 }
 function csvSort(input) {
   let content;

@@ -1,8 +1,8 @@
-import fs from "fs-extra";
-import test from "ava";
-import path from "path";
-import execa from "execa";
-import tempy from "tempy";
+const fs = require("fs-extra");
+const t = require("tap");
+const path = require("path");
+const execa = require("execa");
+const tempy = require("tempy");
 
 //                                  *
 //                                  *
@@ -18,19 +18,20 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-test("01.01 - there are no usable files at all", async t => {
+t.test("01.01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), "zzz")
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true
       })
     )
     .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
     .catch(err => t.fail(err));
   // confirm that the existing file is intact:
-  t.is(await processedFileContents, "zzz");
+  t.equal(await processedFileContents, "zzz");
+  t.end();
 });
 
 //                                  *
@@ -47,7 +48,7 @@ test("01.01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-test("01.02 - cli.js in the root", async t => {
+t.test("01.02 - cli.js in the root", async t => {
   const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
 
   const intendedFile = "console.log('001 zzz');\nconsole.log('002 zzz');";
@@ -63,7 +64,7 @@ test("01.02 - cli.js in the root", async t => {
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true
       })
     )
@@ -71,7 +72,8 @@ test("01.02 - cli.js in the root", async t => {
     .catch(err => t.fail(err));
 
   // 3. compare:
-  t.is(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
 });
 
 //                                  *
@@ -88,34 +90,7 @@ test("01.02 - cli.js in the root", async t => {
 //                                  *
 //                                  *
 
-test("01.03/1 - pad override, -p", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
-
-  const intendedFile = "console.log('01 zzz');\nconsole.log('02 zzz');";
-
-  // 1. fetch us an empty, random, temporary folder:
-
-  // Re-route the test files into `temp/` folder instead for easier access when
-  // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-
-  // 2. asynchronously write all test files
-  const processedFileContents = fs
-    .writeFile(path.join(tempFolder, "cli.js"), originalFile)
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 2`, {
-        shell: true
-      })
-    )
-    .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
-    .catch(err => t.fail(err));
-
-  // 3. compare:
-  t.is(await processedFileContents, intendedFile);
-});
-
-test("01.03/2 - pad override, --pad", async t => {
+t.test("01.03/1 - pad override, -p", async t => {
   const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
 
   const intendedFile = "console.log('01 zzz');\nconsole.log('02 zzz');";
@@ -132,7 +107,7 @@ test("01.03/2 - pad override, --pad", async t => {
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js --pad 2`,
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -p 2`,
         {
           shell: true
         }
@@ -142,7 +117,39 @@ test("01.03/2 - pad override, --pad", async t => {
     .catch(err => t.fail(err));
 
   // 3. compare:
-  t.is(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
+});
+
+t.test("01.03/2 - pad override, --pad", async t => {
+  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
+
+  const intendedFile = "console.log('01 zzz');\nconsole.log('02 zzz');";
+
+  // 1. fetch us an empty, random, temporary folder:
+
+  // Re-route the test files into `temp/` folder instead for easier access when
+  // troubleshooting. Just comment out one of two:
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
+
+  // 2. asynchronously write all test files
+  const processedFileContents = fs
+    .writeFile(path.join(tempFolder, "cli.js"), originalFile)
+    .then(() =>
+      execa(
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} --pad 2`,
+        {
+          shell: true
+        }
+      )
+    )
+    .then(() => fs.readFile(path.join(tempFolder, "cli.js"), "utf8"))
+    .catch(err => t.fail(err));
+
+  // 3. compare:
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
 });
 
 //                                  *
@@ -159,7 +166,7 @@ test("01.03/2 - pad override, --pad", async t => {
 //                                  *
 //                                  *
 
-test("01.04 - one file called with glob, another not processed", async t => {
+t.test("01.04 - one file called with glob, another not processed", async t => {
   const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
   const intendedFile = "console.log('0001 zzz');\nconsole.log('0002 zzz');";
 
@@ -180,8 +187,9 @@ test("01.04 - one file called with glob, another not processed", async t => {
       execa(
         `cd ${tempFolder} && ${path.join(
           __dirname,
-          "../"
-        )}/cli.js -p 4 file1.js`,
+          "../",
+          "cli.js"
+        )} -p 4 file1.js`,
         { shell: true }
       )
     )
@@ -194,8 +202,9 @@ test("01.04 - one file called with glob, another not processed", async t => {
   );
 
   // 3. compare:
-  t.is(file1contents, intendedFile);
-  t.is(file2contents, originalFile); // <---- should not been touched!
+  t.equal(file1contents, intendedFile);
+  t.equal(file2contents, originalFile); // <---- should not been touched!
+  t.end();
 });
 
 //                                  *
@@ -212,7 +221,7 @@ test("01.04 - one file called with glob, another not processed", async t => {
 //                                  *
 //                                  *
 
-test("01.05 - two files processed by calling glob with wildcard", async t => {
+t.test("01.05 - two files processed by calling glob with wildcard", async t => {
   const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
   const intendedFile = "console.log('0001 zzz');\nconsole.log('0002 zzz');";
 
@@ -231,7 +240,11 @@ test("01.05 - two files processed by calling glob with wildcard", async t => {
     )
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -p 4 "*.js"`,
+        `cd ${tempFolder} && ${path.join(
+          __dirname,
+          "../",
+          "cli.js"
+        )} -p 4 "*.js"`,
         { shell: true }
       )
     )
@@ -244,8 +257,9 @@ test("01.05 - two files processed by calling glob with wildcard", async t => {
   );
 
   // 3. compare:
-  t.is(file1contents, intendedFile);
-  t.is(file2contents, intendedFile); // both updated
+  t.equal(file1contents, intendedFile);
+  t.equal(file2contents, intendedFile); // both updated
+  t.end();
 });
 
 //                                  *
@@ -262,7 +276,7 @@ test("01.05 - two files processed by calling glob with wildcard", async t => {
 //                                  *
 //                                  *
 
-test('01.06/1 - "t" flag, -t', async t => {
+t.test('01.06/1 - "t" flag, -t', async t => {
   const originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   const intendedFile = "log('001 zzz');\nlog('002 zzz');";
@@ -279,7 +293,7 @@ test('01.06/1 - "t" flag, -t', async t => {
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js -t "log"`,
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -t "log"`,
         {
           shell: true
         }
@@ -289,10 +303,11 @@ test('01.06/1 - "t" flag, -t', async t => {
     .catch(err => t.fail(err));
 
   // 3. compare:
-  t.is(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
 });
 
-test('01.06/2 - "t" flag, --trigger', async t => {
+t.test('01.06/2 - "t" flag, --trigger', async t => {
   const originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   const intendedFile = "log('001 zzz');\nlog('002 zzz');";
@@ -322,7 +337,8 @@ test('01.06/2 - "t" flag, --trigger', async t => {
     .catch(err => t.fail(err));
 
   // 3. compare:
-  t.is(await processedFileContents, intendedFile);
+  t.equal(await processedFileContents, intendedFile);
+  t.end();
 });
 
 //                                  *

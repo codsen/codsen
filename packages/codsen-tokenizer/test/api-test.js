@@ -1,66 +1,64 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-// import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
+// const deepContains = require("ast-deep-contains");
 
 // 00. api
 // -----------------------------------------------------------------------------
 
-test("00.01 - 1st arg missing", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct();
-  });
-  t.truthy(error1.message.includes("THROW_ID_01"));
-});
+  },
+  /THROW_ID_01/g,
+  "00.01 - 1st arg missing"
+);
 
-test("00.02 - 1nd arg of a wrong type", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct(true);
-  });
-  t.truthy(error1.message.includes("THROW_ID_02"));
-});
+  },
+  /THROW_ID_02/g,
+  "00.02 - 1nd arg of a wrong type"
+);
 
-test("00.03 - 2nd arg (tagCb()) wrong", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct("a", "z");
-  });
-  t.truthy(error1.message.includes("THROW_ID_03"));
-});
+  },
+  /THROW_ID_03/g,
+  "00.03 - 2nd arg (tagCb()) wrong"
+);
 
-test("00.04 - 3rd arg (charCb()) wrong", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct("a", () => {}, "z");
-  });
-  t.truthy(error1.message.includes("THROW_ID_04"));
-});
+  },
+  /THROW_ID_04/g,
+  "00.04 - 3rd arg (charCb()) wrong"
+);
 
-test("00.04 - 4th arg (opts) is wrong", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct(
       "a",
       () => {},
       () => {},
       "z"
     );
-  });
-  t.truthy(error1.message.includes("THROW_ID_05"));
-});
+  },
+  /THROW_ID_05/g,
+  "00.05 - 4th arg (opts) is wrong"
+);
 
-test("00.05 - opts.reportProgressFunc is wrong", t => {
-  // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+t.throws(
+  () => {
     ct(
       "a",
       () => {},
       () => {},
       { reportProgressFunc: "z" }
     );
-  });
-  t.truthy(error1.message.includes("THROW_ID_06"));
-});
+  },
+  /THROW_ID_06/g,
+  "00.06 - opts.reportProgressFunc is wrong"
+);

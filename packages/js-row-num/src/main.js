@@ -3,6 +3,13 @@ import apply from "ranges-apply";
 const BACKSLASH = `\u005C`;
 
 function fixRowNums(str, originalOpts) {
+  console.log(
+    `007 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      originalOpts,
+      null,
+      4
+    )}`
+  );
   if (typeof str !== "string" || str.length === 0) {
     return str;
   }
@@ -12,6 +19,9 @@ function fixRowNums(str, originalOpts) {
   function isAZ(something) {
     return /[A-Za-z]/.test(something);
   }
+  function isObj(something) {
+    return typeof something === "object" && something !== null;
+  }
 
   const defaults = {
     padStart: 3,
@@ -20,7 +30,7 @@ function fixRowNums(str, originalOpts) {
     triggerKeywords: ["console.log"],
     extractedLogContentsWereGiven: false
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = Object.assign(defaults, originalOpts);
 
   if (
     !opts.padStart ||
@@ -375,15 +385,24 @@ function fixRowNums(str, originalOpts) {
     // catch console.log
     let caughtKeyword;
     if (
-      opts &&
-      opts.triggerKeywords &&
-      Array.isArray(opts.triggerKeywords) &&
-      opts.triggerKeywords.some(keyw => {
-        if (str.startsWith(keyw, i)) {
-          caughtKeyword = keyw;
-          return true;
-        }
-      })
+      (isObj(opts) &&
+        opts.triggerKeywords &&
+        Array.isArray(opts.triggerKeywords) &&
+        opts.triggerKeywords.some(keyw => {
+          if (str.startsWith(keyw, i)) {
+            caughtKeyword = keyw;
+            return true;
+          }
+        })) ||
+      (opts.triggerKeywords !== null &&
+        (!Array.isArray(opts.triggerKeywords) ||
+          !opts.triggerKeywords.length) &&
+        ["console.log"].some(keyw => {
+          if (str.startsWith(keyw, i)) {
+            caughtKeyword = keyw;
+            return true;
+          }
+        }))
     ) {
       consoleStartsAt = i + caughtKeyword.length;
       console.log(
@@ -413,6 +432,14 @@ function fixRowNums(str, originalOpts) {
     );
   }
 
+  console.log(
+    `417 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
+      finalIndexesToDelete.current(),
+      null,
+      4
+    )}`
+  );
+
   // wipe
   quotes = null;
   consoleStartsAt = null;
@@ -423,10 +450,13 @@ function fixRowNums(str, originalOpts) {
   currentRow = 1;
 
   if (opts.returnRangesOnly) {
+    console.log(`434`);
     return finalIndexesToDelete.current();
   } else if (finalIndexesToDelete.current()) {
+    console.log(`437`);
     return apply(str, finalIndexesToDelete.current());
   }
+  console.log(`440`);
   return str;
 }
 

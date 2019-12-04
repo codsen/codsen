@@ -1,11 +1,11 @@
 {
   "name": "eslint-plugin-row-num",
   "version": "1.0.0",
+  "description": "updates row numbers in front of each encountered console.log",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
   },
-  "description": "updates row numbers in front of each encountered console.log",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num",
   "author": {
@@ -14,39 +14,56 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "row",
+    "console",
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "js-row-num",
+    "log",
     "num",
     "numbers",
-    "console",
-    "log",
-    "update",
+    "row",
     "row-num",
-    "js-row-num",
-    "eslint",
-    "eslintplugin",
-    "eslint-plugin"
+    "update"
   ],
-  "main": "lib/index.js",
+  "main": "dist/eslint-plugin-row-num.cjs.js",
   "scripts": {
-    "format": "npm run lect && npm run prettier && npm run lint",
     "dev": "echo\"\"",
-    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
-    "test": "mocha test --recursive",
-    "unittest": "npm run test",
-    "version": "npm run build && git add ."
+    "test": "npm run lint && npm run unittest && npm run format",
+    "unittest": "mocha --recursively",
+    "version": "git add ."
   },
   "lect": {
     "special": true
+  },
+  "tap": {
+    "coverage-report": "json-summary",
+    "timeout": 0
   },
   "dependencies": {
     "import-modules": "^2.0.0",
     "js-row-num": "^2.5.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.2",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "benchmark": "^2.1.4",
+    "js-row-num-cli": "^1.6.9",
     "lect": "^0.11.2",
-    "mocha": "^6.2.2"
+    "rollup": "^1.27.8",
+    "rollup-plugin-ascii": "^0.0.3",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-banner": "^0.2.1",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-strip": "^1.2.2",
+    "rollup-plugin-terser": "^5.1.2",
+    "tap": "^14.10.2"
   }
 }

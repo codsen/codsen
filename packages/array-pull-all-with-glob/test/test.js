@@ -1,53 +1,59 @@
-import test from "ava";
-import pull from "../dist/array-pull-all-with-glob.esm";
+const t = require("tap");
+const pull = require("../dist/array-pull-all-with-glob.cjs");
 
 // =======
 // no glob
 // =======
 
-test("1.1 - no glob", t => {
-  t.deepEqual(pull(["one", "two", "three"], ["one", "three"]), ["two"], "1.1");
+t.test("1.1 - no glob", t => {
+  t.same(pull(["one", "two", "three"], ["one", "three"]), ["two"], "1.1");
+  t.end();
 });
 
-test("1.2 - won't find", t => {
-  t.deepEqual(
+t.test("1.2 - won't find", t => {
+  t.same(
     pull(["one", "two", "three"], ["something"]),
     ["one", "two", "three"],
     "1.2"
   );
+  t.end();
 });
 
-test("1.3 - empty source array", t => {
-  t.deepEqual(pull([], ["one", "three"]), [], "1.3");
+t.test("1.3 - empty source array", t => {
+  t.same(pull([], ["one", "three"]), [], "1.3");
+  t.end();
 });
 
-test("1.4 - empty source array", t => {
-  t.deepEqual(pull([], []), [], "1.4");
+t.test("1.4 - empty source array", t => {
+  t.same(pull([], []), [], "1.4");
+  t.end();
 });
 
-test("1.5 - no glob, deletes last remaining thing", t => {
-  t.deepEqual(pull(["one"], ["one"]), [], "1.5");
+t.test("1.5 - no glob, deletes last remaining thing", t => {
+  t.same(pull(["one"], ["one"]), [], "1.5");
+  t.end();
 });
 
-test("1.6 - no glob, case sensitive", t => {
-  t.deepEqual(
+t.test("1.6 - no glob, case sensitive", t => {
+  t.same(
     pull(["One", "two", "Three"], ["one", "three"]),
     ["One", "two", "Three"],
     "1.6.1 - default"
   );
-  t.deepEqual(
+  t.same(
     pull(["One", "two", "Three"], ["one", "three"], { caseSensitive: false }),
     ["two"],
     "1.6.2 - opts.caseSensitive"
   );
+  t.end();
 });
 
 // ====
 // glob
 // ====
 
-test("2.1 - glob, normal use", t => {
-  t.deepEqual(
+t.test("2.1 - glob, normal use", t => {
+  t.same(
     pull(
       [
         "module-1",
@@ -62,7 +68,7 @@ test("2.1 - glob, normal use", t => {
     ["only this left"],
     "2.1.1"
   );
-  t.deepEqual(
+  t.same(
     pull(
       [
         "Module-1",
@@ -77,7 +83,7 @@ test("2.1 - glob, normal use", t => {
     ["Module-1", "only this left"],
     "2.1.2"
   );
-  t.deepEqual(
+  t.same(
     pull(
       [
         "Module-1",
@@ -93,10 +99,11 @@ test("2.1 - glob, normal use", t => {
     ["only this left"],
     "2.1.3"
   );
+  t.end();
 });
 
-test("2.2 - asterisk the only input - pulls everything", t => {
-  t.deepEqual(
+t.test("2.2 - asterisk the only input - pulls everything", t => {
+  t.same(
     pull(
       [
         "module-1",
@@ -111,7 +118,7 @@ test("2.2 - asterisk the only input - pulls everything", t => {
     [],
     "2.2.1"
   );
-  t.deepEqual(
+  t.same(
     pull(
       [
         "module-1",
@@ -126,10 +133,11 @@ test("2.2 - asterisk the only input - pulls everything", t => {
     [],
     "2.2.2"
   );
+  t.end();
 });
 
-test("2.3 - asterisk in the source array", t => {
-  t.deepEqual(
+t.test("2.3 - asterisk in the source array", t => {
+  t.same(
     pull(
       ["module-*", "module-**", "something-*", "something-**"],
       ["module-*"]
@@ -137,144 +145,158 @@ test("2.3 - asterisk in the source array", t => {
     ["something-*", "something-**"],
     "2.3"
   );
+  t.end();
 });
 
-test("2.4 - empty arrays as inputs", t => {
-  t.deepEqual(pull([], ["module-*"]), [], "2.4");
+t.test("2.4 - empty arrays as inputs", t => {
+  t.same(pull([], ["module-*"]), [], "2.4");
+  t.end();
 });
 
-test("2.5 - empty array as second arg", t => {
-  t.deepEqual(
+t.test("2.5 - empty array as second arg", t => {
+  t.same(
     pull(["module-*", "module-**", "something-*", "something-**"], []),
     ["module-*", "module-**", "something-*", "something-**"],
     "2.5"
   );
+  t.end();
 });
 
-test("2.6 - pulls normal words in various ways", t => {
-  t.deepEqual(pull(["apples", "oranges"], "apples"), ["oranges"], "2.6.1");
-  t.deepEqual(pull(["apples", "oranges"], ["apples"]), ["oranges"], "2.6.2");
-  t.deepEqual(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "2.6.3");
-  t.deepEqual(pull(["apples", "oranges"], "apples*"), ["oranges"], "2.6.4");
-  t.deepEqual(pull(["apples", "oranges"], "a*"), ["oranges"], "2.6.5");
-  t.deepEqual(pull(["apples", "oranges"], ["a*"]), ["oranges"], "2.6.6");
+t.test("2.6 - pulls normal words in various ways", t => {
+  t.same(pull(["apples", "oranges"], "apples"), ["oranges"], "2.6.1");
+  t.same(pull(["apples", "oranges"], ["apples"]), ["oranges"], "2.6.2");
+  t.same(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "2.6.3");
+  t.same(pull(["apples", "oranges"], "apples*"), ["oranges"], "2.6.4");
+  t.same(pull(["apples", "oranges"], "a*"), ["oranges"], "2.6.5");
+  t.same(pull(["apples", "oranges"], ["a*"]), ["oranges"], "2.6.6");
+  t.end();
 });
 
 // ==========
 // edge cases
 // ==========
 
-test("3.1 - missing one input - throws", t => {
+t.test("3.1 - missing one input - throws", t => {
   t.throws(() => {
     pull(["module-*", "module-**", "something-*", "something-**"]);
-  });
+  }, /THROW_ID_02/g);
+  t.end();
 });
 
-test("3.2 - missing both inputs - throws", t => {
+t.test("3.2 - missing both inputs - throws", t => {
   t.throws(() => {
     pull();
-  });
+  }, /THROW_ID_01/g);
+  t.end();
 });
 
-test("3.3 - against asterisk", t => {
-  t.deepEqual(pull(["a*", "a**", "*******", "*"], ["*"]), [], "3.3");
+t.test("3.3 - against asterisk", t => {
+  t.same(pull(["a*", "a**", "*******", "*"], ["*"]), [], "3.3");
   t.throws(() => {
     pull(["a*", "a**", "*******", null, "*"], ["*"]);
-  }); // because of null, a non-string element in the array
+  }, /THROW_ID_05/g); // because of null, a non-string element in the array
+  t.end();
 });
 
-test("3.4 - against emoji and asterisk", t => {
-  t.deepEqual(
+t.test("3.4 - against emoji and asterisk", t => {
+  t.same(
     pull(["🦄", "🦄*", "🦄**", "*🦄", "*******", "*"], ["🦄*"]),
     ["*🦄", "*******", "*"],
     "3.4"
   );
   t.throws(() => {
     pull(["🦄", "🦄*", "🦄**", "*🦄", "*******", undefined, "*"], ["🦄*"]);
-  }); // because of undefined, a non-string element in the array
+  }, /THROW_ID_05/g); // because of undefined, a non-string element in the array
+  t.end();
 });
 
-test("3.5 - wrong inputs - throws", t => {
+t.test("3.5 - wrong inputs - throws", t => {
   t.throws(() => {
     pull(1, 1);
-  });
+  }, /THROW_ID_03/g);
   t.throws(() => {
     pull(1, ["a"]);
-  });
+  }, /THROW_ID_03/g);
   t.throws(() => {
     pull(["a"], 1);
-  });
+  }, /THROW_ID_04/g);
   t.throws(() => {
     pull(["a", 1], ["b"]);
-  });
+  }, /THROW_ID_05/g);
   t.throws(() => {
     pull(["a", 1], ["b", 1]);
-  });
+  }, /THROW_ID_05/g);
   t.throws(() => {
     pull(["a", "b"], ["b", 1, "c"]);
-  });
+  }, /THROW_ID_06/g);
+
+  t.end();
 });
 
-test("3.6 - missing one input - throws", t => {
+t.test("3.6 - missing one input - throws", t => {
   t.throws(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       1 // not a plain obj
     );
-  });
+  }, /THROW_ID_07/g);
   t.throws(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       true // not a plain obj
     );
-  });
+  }, /THROW_ID_07/g);
   t.throws(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       [] // array - sneaky!
     );
-  });
-  t.notThrows(() => {
+  }, /THROW_ID_07/g);
+  t.doesNotThrow(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       null // null is fine
     );
-  });
-  t.notThrows(() => {
+  }, /THROW_ID_01/g);
+  t.doesNotThrow(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       {} // empty opts
     );
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
       { aaa: true } // unrecognised key
     );
-  });
+  }, /THROW_ID_08/g);
+
+  t.end();
 });
 
-test('3.7 - 1st arg, "originalInput" is an empty array', t => {
-  t.deepEqual(pull([], "z"), [], "3.7.1");
-  t.deepEqual(pull([], ""), [], "3.7.2");
-  t.deepEqual(pull([], ["z"]), [], "3.7.3");
+t.test('3.7 - 1st arg, "originalInput" is an empty array', t => {
+  t.same(pull([], "z"), [], "3.7.1");
+  t.same(pull([], ""), [], "3.7.2");
+  t.same(pull([], ["z"]), [], "3.7.3");
+  t.end();
 });
 
-test('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', t => {
-  t.deepEqual(pull(["apples", "oranges"], ""), ["apples", "oranges"], "3.8.1");
+t.test('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', t => {
+  t.same(pull(["apples", "oranges"], ""), ["apples", "oranges"], "3.8.1");
+  t.end();
 });
 
 // ========================================
 // checks for accidental input arg mutation
 // ========================================
 
-test("4.1 - does not mutate the input args", t => {
+t.test("4.1 - does not mutate the input args", t => {
   const arr1 = ["a", "b", "c"];
   const arr2 = "c";
   const arr3 = ["c"];
@@ -283,7 +305,9 @@ test("4.1 - does not mutate the input args", t => {
 
   const unneededResult2 = pull(arr1, arr3);
   t.pass(unneededResult2); // filler to shut up the linter complaining it's unused
-  t.deepEqual(arr1, ["a", "b", "c"], "4.1.1");
-  t.deepEqual(arr2, "c", "4.1.2");
-  t.deepEqual(arr3, ["c"], "4.1.3");
+  t.same(arr1, ["a", "b", "c"], "4.1.1");
+  t.same(arr2, "c", "4.1.2");
+  t.same(arr3, ["c"], "4.1.3");
+
+  t.end();
 });

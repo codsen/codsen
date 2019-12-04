@@ -1,5 +1,6 @@
-import test from "ava";
+const t = require("tap");
 
-test("01", t => {
-  t.truthy("z");
+t.test("01", t => {
+  t.ok("some day");
+  t.end();
 });

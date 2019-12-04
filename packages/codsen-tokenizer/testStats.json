@@ -1,7 +1,7 @@
 {
     "stats": {
         "byFile": {},
-        "declaredTests": 3,
+        "declaredTests": 5,
         "failedHooks": 0,
         "failedTests": 0,
         "failedWorkers": 0,

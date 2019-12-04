@@ -1,53 +1,59 @@
-// avanotonly
-
 // rule: bad-character-tabulation
 // catches TAB character:
 // https://www.fileformat.info/info/unicode/char/0009/index.htm
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // 1. no config
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`, t => {
-  const str = "\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": 0 // means every TAB will be flagged up
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`,
+  t => {
+    const str = "\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": 0 // means every TAB will be flagged up
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`, t => {
-  const str = "\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": [0] // means every TAB will be flagged up
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`,
+  t => {
+    const str = "\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": [0] // means every TAB will be flagged up
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`, t => {
-  const str = "\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": 1 // means every TAB will be flagged up
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`,
+  t => {
+    const str = "\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": 1 // means every TAB will be flagged up
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "bad-character-tabulation",
         severity: 1,
@@ -72,24 +78,23 @@ test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects t
           ranges: [[8, 9, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), " dlkgjld j");
-});
+    ]);
+    t.equal(applyFixes(str, messages), " dlkgjld j");
+    t.end();
+  }
+);
 
-test(`01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`, t => {
-  const str = "\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": 2 // means every TAB will be flagged up
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`,
+  t => {
+    const str = "\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": 2 // means every TAB will be flagged up
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "bad-character-tabulation",
         severity: 2,
@@ -114,27 +119,26 @@ test(`01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two
           ranges: [[8, 9, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), " dlkgjld j");
-});
+    ]);
+    t.equal(applyFixes(str, messages), " dlkgjld j");
+    t.end();
+  }
+);
 
 // 02. with config
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`, t => {
-  const str = "\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": [1, "never"] // means every TAB will be flagged up
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`,
+  t => {
+    const str = "\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": [1, "never"] // means every TAB will be flagged up
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "bad-character-tabulation",
         severity: 1,
@@ -159,24 +163,23 @@ test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hard
           ranges: [[8, 9, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), " dlkgjld j");
-});
+    ]);
+    t.equal(applyFixes(str, messages), " dlkgjld j");
+    t.end();
+  }
+);
 
-test(`02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`, t => {
-  const str = "\t\t\tdlkgjld\tj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-tabulation": [2, "indentationIsFine"] // btw, setting is not case sensitive
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`,
+  t => {
+    const str = "\t\t\tdlkgjld\tj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-tabulation": [2, "indentationIsFine"] // btw, setting is not case sensitive
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "bad-character-tabulation",
         severity: 2,
@@ -187,9 +190,8 @@ test(`02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab 
           ranges: [[10, 11, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "\t\t\tdlkgjld j");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "\t\t\tdlkgjld j");
+    t.end();
+  }
+);

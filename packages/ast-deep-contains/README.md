@@ -1,17 +1,14 @@
 # ast-deep-contains
 
-> an alternative for AVA's t.deepEqual
+> an alternative for AVA's t.same
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
-
-- Check out the parent library which does even more: `ast-monkey` [npm](https://www.npmjs.com/package/ast-monkey)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/)
 
 ## Table of Contents
 
@@ -66,25 +63,82 @@ This package has three builds in `dist/` folder:
 
 ## Idea
 
-When writing unit tests, I compare the output of a program with what it _should_ produce. Sometimes, value is set in stone. That's where I use AVA's, [`t.deepEqual`](https://github.com/avajs/ava/blob/master/docs/03-assertions.md#deepequalvalue-expected-message).
+This is a fancy assertion to match arrays of objects, where order doesn't matter and the source objects might have extra keys.
 
-There are two problems with `t.deepEqual`:
+Imagine the source, taken from `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)):
 
-1. Sometimes I don't mind if there are **extra keys in the source**. For a graphical example, I assert, is there my dog in my yard and is there my cat in my yard — because I want to shut the gates for the night and pets must be inside. I don't care if there is also a pidgeon in the yard. Assertion should only look for a dog and a cat.
-2. More often than not, when comparing arrays (yard) full of objects (pets), **the element order does not matter**.
+```js
+[
+  {
+    ruleId: "tag-is-present",
+    line: 1,
+    column: 4,
+    severity: 2,
+    idxFrom: 0,
+    idxTo: 4,
+    message: "h1 is not allowed.",
+    fix: {
+      ranges: [[0, 4]]
+    }
+  },
+  {
+    ruleId: "tag-is-present",
+    line: 6,
+    column: 16,
+    severity: 2,
+    idxFrom: 43,
+    idxTo: 48,
+    message: "h1 is not allowed.",
+    fix: {
+      ranges: [[43, 48]]
+    }
+  }
+]
+```
 
-So, this is an AVA's `t.deepEqual` alternative, where source can be superset of what's matched, plus, objects in arrays can be of a random order (strict order can be enforced but it's off by default).
+Matched objects are in wrong order and contain only subset of keys:
 
-Practically, we ping `t.is` for each value pair, skipping objects and arrays (we traverse inside and go for values, not for whole branches, because that would warrant `t.deepEqual`, negating the purpose). Major type mismatches and missing nodes in AST's are pinged to error callback, normally, `t.fail`.
+```js
+[
+  {
+    ruleId: "tag-is-present",
+    idxFrom: 43,
+    idxTo: 48,
+    message: "h1 is not allowed.",
+    fix: {
+      ranges: [[43, 48]]
+    }
+  },
+  {
+    ruleId: "tag-is-present",
+    idxFrom: 0,
+    idxTo: 4,
+    message: "h1 is not allowed.",
+    fix: {
+      ranges: [[0, 4]]
+    }
+  },
+]
+```
 
-**[⬆ back to top](#)**
+Notice how above we don't bother with `line` and `column` values, as well as `severity`. Also, note that key structure is very similar, yet objects are in a wrong order (because rules were raised in such way).
+
+Ava's `t.deepEqual` is exact match so 1) missing keys and 2) wrong object order in the array would be an issue.
+
+Tap's `t.same` would match set/subset keys but would still not be able to detect that two objects are in a wrong order.
+
+Solution is this package.
+
+It will try to match which object is the most similar to the source's, then will not raise errors if source has extra keys.
+
+Matching is passed to your chosen assertion functions, most likely `t.is` and `t.fail`.
 
 ## Example \#1 — checking subset of keys only
 
-From `codsen-tokenizer` ([npm](https://www.npmjs.com/package/codsen-tokenizer)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/)) AVA tests:
+Adapted `codsen-tokenizer` ([npm](https://www.npmjs.com/package/codsen-tokenizer)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/)) tests, if they were in Ava:
 
 ```js
-import test from "ava";
+const t = require("tap");
 import ct from "codsen-tokenizer";
 import deepContains from "ast-deep-contains";
 
@@ -120,7 +174,7 @@ test("01.01 — text-tag-text", t => {
 });
 ```
 
-In example above, reported objects will have more keys than what's compared. Throughout the time, when improving the tokenizer we will surely add even more new keys. All this should not affect the main keys. Using `t.deepEqual` would be a nuisance — I'd have to update all unit tests each time after a new improvement to the tokenizer is done, new key is added.
+In example above, reported objects will have more keys than what's compared. Throughout the time, when improving the tokenizer we will surely add even more new keys. All this should not affect the main keys. Using `t.same` would be a nuisance — I'd have to update all unit tests each time after a new improvement to the tokenizer is done, new key is added.
 
 **[⬆ back to top](#)**
 
@@ -141,53 +195,56 @@ Same way with the yard's dog and cat example, I don't care about the _order_ of 
 Behold - a program flags up two backslashes on a void HTML tag — the first backslash should be deleted, second one turned into normal slash — we don't care about the order of the elements as long as all elements were matched, plus there might be extra keys in the source objects — source objects are superset of what we're matching:
 
 ```js
-import test from "ava";
+const t = require("tap");
 import { Linter } from "emlint";
 import deepContains from "ast-deep-contains"; // <------------ this program
 import { applyFixes } from "t-util/util";
 
 const BACKSLASH = "\u005C";
 
-test(`06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, t => {
-  const str = `<${BACKSLASH}br${BACKSLASH}>`;
-  const linter = new Linter();
-  // call the linter and record the result's error messages:
-  const messages = linter.verify(str, {
-    rules: {
-      tag: 2
-    }
-  });
-  // assertion:
-  deepContains(
-    // <------------ that's this program, ast-deep-contains
-    messages,
-    [
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 1,
-        idxTo: 2,
-        message: "Wrong slash - backslash.",
-        fix: {
-          ranges: [[1, 2]]
-        }
-        // <---- "messages" we're comparing against will have more keys but we don't care
-      },
-      {
-        ruleId: "tag-closing-backslash",
-        severity: 2,
-        idxFrom: 4,
-        idxTo: 5,
-        message: "Replace backslash with slash.",
-        fix: {
-          ranges: [[4, 5, "/"]]
-        }
+t.test(
+  `06.01 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`,
+  t => {
+    const str = `<${BACKSLASH}br${BACKSLASH}>`;
+    const linter = new Linter();
+    // call the linter and record the result's error messages:
+    const messages = linter.verify(str, {
+      rules: {
+        tag: 2
       }
-    ],
-    t.is, // each pair of key values is ran by this function
-    t.fail // major failures are pinged to this function
-  );
-});
+    });
+    // assertion:
+    deepContains(
+      // <------------ that's this program, ast-deep-contains
+      messages,
+      [
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 2,
+          message: "Wrong slash - backslash.",
+          fix: {
+            ranges: [[1, 2]]
+          }
+          // <---- "messages" we're comparing against will have more keys but we don't care
+        },
+        {
+          ruleId: "tag-closing-backslash",
+          severity: 2,
+          idxFrom: 4,
+          idxTo: 5,
+          message: "Replace backslash with slash.",
+          fix: {
+            ranges: [[4, 5, "/"]]
+          }
+        }
+      ],
+      t.is, // each pair of key values is ran by this function
+      t.fail // major failures are pinged to this function
+    );
+  }
+);
 ```
 
 The order in which backslashes will be reported does not matter, plus Linter might report more information — that's welcomed but will be ignored, not a cause for error.
@@ -287,8 +344,6 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ast-deep-contains
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
-[cov-img]: https://img.shields.io/badge/coverage-95%25-brightgreen.svg?style=flat-square
-[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-deep-contains
 [downloads-img]: https://img.shields.io/npm/dm/ast-deep-contains.svg?style=flat-square

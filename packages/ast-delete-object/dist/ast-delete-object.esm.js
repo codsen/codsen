@@ -18,16 +18,18 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     return x != null;
   }
   if (!existy(originalInput)) {
-    throw new Error("ast-delete-object/deleteObj(): Missing input!");
+    throw new Error(
+      "ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!"
+    );
   }
   if (!existy(originalObjToDelete)) {
     throw new Error(
-      "ast-delete-object/deleteObj(): Missing second argument, object to search for and delete!"
+      "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!"
     );
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new Error(
-      "ast-delete-object/deleteObj(): Third argument, options object, must be an object!"
+      "ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!"
     );
   }
   const defaults = {
@@ -35,7 +37,9 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     hungryForWhitespace: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "ast-delete-object/deleteObj():" });
+  checkTypes(opts, defaults, {
+    msg: "ast-delete-object/deleteObj(): [THROW_ID_04*]"
+  });
   let input = clone(originalInput);
   const objToDelete = clone(originalObjToDelete);
   let current;

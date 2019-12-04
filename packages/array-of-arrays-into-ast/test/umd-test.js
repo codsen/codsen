@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import a1 from "../dist/array-of-arrays-into-ast.umd";
-import a2 from "../dist/array-of-arrays-into-ast.cjs";
+const t = require("tap");
+const a1 = require("../dist/array-of-arrays-into-ast.umd");
 
 const source = [[5], [1, 2, 3], [1, 2]];
 const result = {
@@ -19,10 +16,7 @@ const result = {
   5: [null]
 };
 
-test("UMD build works fine", t => {
-  t.deepEqual(a1(source), result);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(a2(source), result);
+t.test("UMD build works fine", t => {
+  t.same(a1(source), result);
+  t.end();
 });

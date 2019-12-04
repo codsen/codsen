@@ -1,19 +1,16 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-test("01.01 - tag and text", t => {
+t.test(t => {
   const gathered = [];
   ct("<a>z1", null, obj => {
     gathered.push(obj);
   });
 
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -42,7 +39,7 @@ test("01.01 - tag and text", t => {
         type: "text"
       }
     ],
-    t.is,
-    t.fail
+    "01.01 - tag and text"
   );
+  t.end();
 });

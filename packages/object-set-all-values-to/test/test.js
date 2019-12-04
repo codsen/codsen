@@ -1,12 +1,12 @@
-import test from "ava";
-import setAllValuesTo from "../dist/object-set-all-values-to.esm";
+const t = require("tap");
+const setAllValuesTo = require("../dist/object-set-all-values-to.cjs");
 
 // ==============================
 // Normal assignments with default value, false
 // ==============================
 
-test("01.01 - input simple plain object, default", t => {
-  t.deepEqual(
+t.test("01.01 - input simple plain object, default", t => {
+  t.same(
     setAllValuesTo({
       a: "a",
       b: "b",
@@ -21,10 +21,11 @@ test("01.01 - input simple plain object, default", t => {
     },
     "01.01"
   );
+  t.end();
 });
 
-test("01.02 - two level nested plain object, default", t => {
-  t.deepEqual(
+t.test("01.02 - two level nested plain object, default", t => {
+  t.same(
     setAllValuesTo({
       a: "a",
       b: "b",
@@ -49,10 +50,11 @@ test("01.02 - two level nested plain object, default", t => {
     },
     "01.02"
   );
+  t.end();
 });
 
-test("01.03 - topmost level input is array, default", t => {
-  t.deepEqual(
+t.test("01.03 - topmost level input is array, default", t => {
+  t.same(
     setAllValuesTo([
       {
         a: "a",
@@ -81,10 +83,11 @@ test("01.03 - topmost level input is array, default", t => {
     ],
     "01.03"
   );
+  t.end();
 });
 
-test("01.04 - many levels of nested arrays, default", t => {
-  t.deepEqual(
+t.test("01.04 - many levels of nested arrays, default", t => {
+  t.same(
     setAllValuesTo([
       [
         [
@@ -197,10 +200,11 @@ test("01.04 - many levels of nested arrays, default", t => {
     ],
     "01.04"
   );
+  t.end();
 });
 
-test("01.05 - array-object-array-object, default", t => {
-  t.deepEqual(
+t.test("01.05 - array-object-array-object, default", t => {
+  t.same(
     setAllValuesTo([
       {
         a: [
@@ -221,10 +225,11 @@ test("01.05 - array-object-array-object, default", t => {
     ],
     "01.05"
   );
+  t.end();
 });
 
-test("01.06 - array has array which has object, default", t => {
-  t.deepEqual(
+t.test("01.06 - array has array which has object, default", t => {
+  t.same(
     setAllValuesTo([
       [
         {
@@ -255,10 +260,11 @@ test("01.06 - array has array which has object, default", t => {
     ],
     "01.06"
   );
+  t.end();
 });
 
-test("01.07 - object has object value, default", t => {
-  t.deepEqual(
+t.test("01.07 - object has object value, default", t => {
+  t.same(
     setAllValuesTo({
       a: {
         b: {
@@ -287,10 +293,11 @@ test("01.07 - object has object value, default", t => {
     },
     "01.07"
   );
+  t.end();
 });
 
-test("01.08 - input is object with only values — arrays, default", t => {
-  t.deepEqual(
+t.test("01.08 - input is object with only values — arrays, default", t => {
+  t.same(
     setAllValuesTo({
       a: ["a"],
       b: ["b"],
@@ -305,30 +312,33 @@ test("01.08 - input is object with only values — arrays, default", t => {
     },
     "01.08"
   );
+  t.end();
 });
 
-test("01.09 - ops within an array, default", t => {
-  t.deepEqual(
+t.test("01.09 - ops within an array, default", t => {
+  t.same(
     setAllValuesTo([["a", { b: "b" }, "c"]]),
     [["a", { b: false }, "c"]],
     "01.09"
   );
+  t.end();
 });
 
-test("01.10 - lots of empty things, default", t => {
-  t.deepEqual(
+t.test("01.10 - lots of empty things, default", t => {
+  t.same(
     setAllValuesTo([{}, {}, {}, { a: "a" }, {}]),
     [{}, {}, {}, { a: false }, {}],
     "01.10"
   );
+  t.end();
 });
 
 // ==============================
 // Custom value assignments
 // ==============================
 
-test("02.01 - input simple plain object, assigning a string", t => {
-  t.deepEqual(
+t.test("02.01 - input simple plain object, assigning a string", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -346,10 +356,11 @@ test("02.01 - input simple plain object, assigning a string", t => {
     },
     "02.01"
   );
+  t.end();
 });
 
-test("02.02 - input simple plain object, assigning a plain object", t => {
-  t.deepEqual(
+t.test("02.02 - input simple plain object, assigning a plain object", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -367,10 +378,11 @@ test("02.02 - input simple plain object, assigning a plain object", t => {
     },
     "02.02"
   );
+  t.end();
 });
 
-test("02.03 - input simple plain object, assigning an array", t => {
-  t.deepEqual(
+t.test("02.03 - input simple plain object, assigning an array", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -388,10 +400,11 @@ test("02.03 - input simple plain object, assigning an array", t => {
     },
     "02.03"
   );
+  t.end();
 });
 
-test("02.04 - input simple plain object, assigning a null", t => {
-  t.deepEqual(
+t.test("02.04 - input simple plain object, assigning a null", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -409,10 +422,11 @@ test("02.04 - input simple plain object, assigning a null", t => {
     },
     "02.04"
   );
+  t.end();
 });
 
-test("02.05 - input simple plain object, assigning a Boolean true", t => {
-  t.deepEqual(
+t.test("02.05 - input simple plain object, assigning a Boolean true", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -430,13 +444,14 @@ test("02.05 - input simple plain object, assigning a Boolean true", t => {
     },
     "02.05"
   );
+  t.end();
 });
 
-test("02.06 - input simple plain object, assigning a function", t => {
+t.test("02.06 - input simple plain object, assigning a function", t => {
   function f() {
     return 1;
   }
-  t.deepEqual(
+  t.same(
     setAllValuesTo(
       [
         [
@@ -464,10 +479,11 @@ test("02.06 - input simple plain object, assigning a function", t => {
     ],
     "02.06"
   );
+  t.end();
 });
 
-test("02.07 - input simple plain object, assigning a plain object", t => {
-  t.deepEqual(
+t.test("02.07 - input simple plain object, assigning a plain object", t => {
+  t.same(
     setAllValuesTo(
       {
         a: "a",
@@ -487,36 +503,40 @@ test("02.07 - input simple plain object, assigning a plain object", t => {
     },
     "02.07"
   );
+  t.end();
 });
 
 // ==============================
 // Edge cases
 // ==============================
 
-test("03.01 - input is string, default value", t => {
-  t.deepEqual(setAllValuesTo("nothing"), "nothing", "03.01");
+t.test("03.01 - input is string, default value", t => {
+  t.same(setAllValuesTo("nothing"), "nothing", "03.01");
+  t.end();
 });
 
-test("03.02 - input is string, value provided", t => {
-  t.deepEqual(setAllValuesTo("nothing", "something"), "nothing", "03.02");
+t.test("03.02 - input is string, value provided", t => {
+  t.same(setAllValuesTo("nothing", "something"), "nothing", "03.02");
+  t.end();
 });
 
-test("03.03 - input is missing but value provided", t => {
-  t.deepEqual(setAllValuesTo(undefined, "a"), undefined, "03.04");
+t.test("03.03 - input is missing but value provided", t => {
+  t.same(setAllValuesTo(undefined, "a"), undefined, "03.04");
+  t.end();
 });
 
 // ==============================
 // Input arg mutation
 // ==============================
 
-test("04.01 - does not mutate input args", t => {
+t.test("04.01 - does not mutate input args", t => {
   const inp = {
     a: "a",
     b: "b"
   };
   const dummyResult = setAllValuesTo(inp);
   t.pass(dummyResult);
-  t.deepEqual(
+  t.same(
     inp,
     {
       a: "a",
@@ -524,4 +544,5 @@ test("04.01 - does not mutate input args", t => {
     },
     "04.01"
   );
+  t.end();
 });

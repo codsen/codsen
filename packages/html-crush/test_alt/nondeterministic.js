@@ -1,10 +1,7 @@
-/* eslint ava/no-ignored-test-files:0, import/no-extraneous-dependencies:0 */
-
-// ava test_alt/nondeterministic.js -- --time=3s
-
-import "@babel/polyfill";
-import test from "ava";
-import { crush as c } from "../dist/html-crush.umd";
+/* eslint import/no-extraneous-dependencies:0 */
+const t = require("tap");
+const { crush } = require("../dist/html-crush.umd");
+const c = crush;
 
 const whitespace = ["\n", "\r", "\r\n", " ", "\t", "       \n \t     \n\n"];
 
@@ -306,7 +303,7 @@ function generate() {
   )}`;
 }
 
-test(`*** non-deterministic tests`, t => {
+t.test(`*** non-deterministic tests`, t => {
   let run = true;
   let counter = 0;
   const startTime = Date.now();
@@ -335,7 +332,7 @@ test(`*** non-deterministic tests`, t => {
         // ensure that both original without whitespace and minified result without
         // whitespace are the same. In other words, no non-whitespace characters
         // were changed. Only whitespace.
-        t.is(
+        t.equal(
           removeWhitespace(generated),
           removeWhitespace(
             c(generated, {
@@ -396,4 +393,5 @@ test(`*** non-deterministic tests`, t => {
       }
     }
   }
+  t.end();
 });

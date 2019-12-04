@@ -1,39 +1,41 @@
-// avanotonly
-
 // rule: character-encode
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`, t => {
-  const str = "fsdhkfdfgh kj ";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": 2
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  t => {
+    const str = "fsdhkfdfgh kj ";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": 2
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": 2
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  t => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": 2
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -45,24 +47,23 @@ test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characte
           ranges: [[0, 1, "&pound;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&pound;100");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&pound;100");
+    t.end();
+  }
+);
 
-test(`01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      all: 1
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
+  t => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        all: 1
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 1,
@@ -74,17 +75,16 @@ test(`01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characte
           ranges: [[0, 1, "&pound;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&pound;100");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&pound;100");
+    t.end();
+  }
+);
 
 // 02. basic tests, no config
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`, t => {
+t.test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`, t => {
   const str = "£100";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -92,38 +92,34 @@ test(`02.01 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`, t => {
       "character-encode": [2, "named"]
     }
   });
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "character-encode",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 1,
-        line: 1,
-        message: "Unencoded pound sign character.",
-        fix: {
-          ranges: [[0, 1, "&pound;"]]
-        }
+  t.match(messages, [
+    {
+      ruleId: "character-encode",
+      severity: 2,
+      idxFrom: 0,
+      idxTo: 1,
+      line: 1,
+      message: "Unencoded pound sign character.",
+      fix: {
+        ranges: [[0, 1, "&pound;"]]
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&pound;100");
+    }
+  ]);
+  t.equal(applyFixes(str, messages), "&pound;100");
+  t.end();
 });
 
-test(`02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "numeric"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
+  t => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "numeric"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -135,24 +131,23 @@ test(`02.02 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`, t => {
           ranges: [[0, 1, "&#xA3;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&#xA3;100");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&#xA3;100");
+    t.end();
+  }
+);
 
-test(`02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
+  t => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -164,24 +159,23 @@ test(`02.03 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`, t => {
           ranges: [[0, 1, "&pound;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&pound;100");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&pound;100");
+    t.end();
+  }
+);
 
-test(`02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`, t => {
-  const str = "£100";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "yo"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
+  t => {
+    const str = "£100";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "yo"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -193,39 +187,42 @@ test(`02.04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`, t
           ranges: [[0, 1, "&pound;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&pound;100");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&pound;100");
+    t.end();
+  }
+);
 
-test(`02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`, t => {
-  const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": 2
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `02.05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
+  t => {
+    const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": 2
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
 // 03. Email-unfriendly entities
 // -----------------------------------------------------------------------------
 
-test(`03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`, t => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": 1
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  t => {
+    const str = "\u0424"; // &Fcy; or Ф
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": 1
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 1,
@@ -237,24 +234,23 @@ test(`03.01 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-f
           ranges: [[0, 1, "&#x424;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&#x424;");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&#x424;");
+    t.end();
+  }
+);
 
-test(`03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`, t => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "named"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  t => {
+    const str = "\u0424"; // &Fcy; or Ф
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "named"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -266,24 +262,23 @@ test(`03.02 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-f
           ranges: [[0, 1, "&#x424;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&#x424;");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&#x424;");
+    t.end();
+  }
+);
 
-test(`03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`, t => {
-  const str = "\u0424"; // &Fcy; or Ф
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "numeric"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
+  t => {
+    const str = "\u0424"; // &Fcy; or Ф
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "numeric"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -295,27 +290,26 @@ test(`03.03 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-f
           ranges: [[0, 1, "&#x424;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&#x424;");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&#x424;");
+    t.end();
+  }
+);
 
 // 04. visible HTML-unfriendly characters within ASCII
 // -----------------------------------------------------------------------------
 
-test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`, t => {
-  const str = `<>'"&`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "named"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
+  t => {
+    const str = `<>'"&`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "named"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -360,24 +354,23 @@ test(`04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
           ranges: [[4, 5, "&amp;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&lt;&gt;'&quot;&amp;");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&lt;&gt;'&quot;&amp;");
+    t.end();
+  }
+);
 
-test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`, t => {
-  const str = `<>'"&`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-encode": [2, "numeric"]
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
+  t => {
+    const str = `<>'"&`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": [2, "numeric"]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-encode",
         severity: 2,
@@ -422,9 +415,8 @@ test(`04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and
           ranges: [[4, 5, "&#x26;"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "&#x3C;&#x3E;'&#x22;&#x26;");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "&#x3C;&#x3E;'&#x22;&#x26;");
+    t.end();
+  }
+);

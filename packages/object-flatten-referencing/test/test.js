@@ -1,36 +1,37 @@
 /* eslint no-template-curly-in-string: 0 */
 
-import test from "ava";
-import ofr from "../dist/object-flatten-referencing.esm";
-import {
+const t = require("tap");
+const ofr = require("../dist/object-flatten-referencing.cjs");
+const {
   flattenObject,
   flattenArr,
   arrayiffyString,
   reclaimIntegerString
-} from "../dist/util.esm";
+} = require("../dist/util.cjs");
 
 // -----------------------------------------------------------------------------
 // 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01.01 - throws when inputs are missing/wrong", t => {
+t.test("01.01 - throws when inputs are missing/wrong", t => {
   t.throws(() => {
     ofr();
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     ofr({ a: "a" });
-  });
+  }, /THROW_ID_02/g);
   t.throws(() => {
     ofr({ a: "a" }, { a: "a" }, 1);
-  });
+  }, /THROW_ID_03/g);
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 02. B.A.U.
 // -----------------------------------------------------------------------------
 
-test("02.01 - defaults - objects, one level", t => {
-  t.deepEqual(
+t.test("02.01 - defaults - objects, one level", t => {
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -47,7 +48,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.01 - defaults wrapping strings"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -68,7 +69,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.02 - heads/tails override, wrapping with empty strings"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -89,7 +90,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.03 - wrapping only with heads; tails empty"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -110,7 +111,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.04 - wrapping only with heads; tails empty"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -130,7 +131,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     '02.01.05 - does not wrap because starts with "key", string opt'
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -150,7 +151,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     '02.01.06 - does not wrap because starts with "key", array opt'
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -170,7 +171,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.07 - does not wrap because ends with 1 or 2"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         thekey1: "val11.val12",
@@ -190,7 +191,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.08 - mix of various wildcards, sources are strings"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         thekey1: { val11: "val12" },
@@ -210,7 +211,7 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.09 - mix of various wildcards, sources are plain objects"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         KEY1: "val11.val12",
@@ -230,10 +231,11 @@ test("02.01 - defaults - objects, one level", t => {
     },
     "02.01.10 - wildcards are case sensitive since v4.3.0"
   );
+  t.end();
 });
 
-test("02.02 - opts.preventDoubleWrapping", t => {
-  t.deepEqual(
+t.test("02.02 - opts.preventDoubleWrapping", t => {
+  t.same(
     ofr(
       {
         key1: "%%_val11.val12_%%",
@@ -250,7 +252,7 @@ test("02.02 - opts.preventDoubleWrapping", t => {
     },
     "02.02.01 - preventDoubleWrapping reading default heads/tails"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "%%_val11.val12_%%",
@@ -270,7 +272,7 @@ test("02.02 - opts.preventDoubleWrapping", t => {
     },
     "02.02.02 - preventDoubleWrapping off"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "{val11.val12}",
@@ -291,7 +293,7 @@ test("02.02 - opts.preventDoubleWrapping", t => {
     },
     "02.02.03 - preventDoubleWrapping reading default heads/tails"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "aaa %%val11.val12%% bbb",
@@ -312,10 +314,11 @@ test("02.02 - opts.preventDoubleWrapping", t => {
     },
     "02.02.04 - preventDoubleWrapping reading default heads/tails"
   );
+  t.end();
 });
 
-test("02.03 - flattens an array value but doesn't touch other one", t => {
-  t.deepEqual(
+t.test("02.03 - flattens an array value but doesn't touch other one", t => {
+  t.same(
     ofr(
       {
         key1: {
@@ -340,7 +343,7 @@ test("02.03 - flattens an array value but doesn't touch other one", t => {
     },
     "02.03.01"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -368,7 +371,7 @@ test("02.03 - flattens an array value but doesn't touch other one", t => {
     },
     "02.03.02"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -397,7 +400,7 @@ test("02.03 - flattens an array value but doesn't touch other one", t => {
     },
     "02.03.03"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -427,7 +430,7 @@ test("02.03 - flattens an array value but doesn't touch other one", t => {
     },
     "02.03.04"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -455,10 +458,11 @@ test("02.03 - flattens an array value but doesn't touch other one", t => {
     },
     "02.03.05 - does not put <br /> at all when flattening arrays"
   );
+  t.end();
 });
 
-test("02.04 - wildcards in opts.dontWrapKeys", t => {
-  t.deepEqual(
+t.test("02.04 - wildcards in opts.dontWrapKeys", t => {
+  t.same(
     ofr(
       {
         key1: {
@@ -486,7 +490,7 @@ test("02.04 - wildcards in opts.dontWrapKeys", t => {
     },
     "02.04.01 - does not wrap the key1 contents"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key3: {
@@ -514,7 +518,7 @@ test("02.04 - wildcards in opts.dontWrapKeys", t => {
     },
     "02.04.02 - opposite key order"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -543,7 +547,7 @@ test("02.04 - wildcards in opts.dontWrapKeys", t => {
     },
     "02.04.03 - does not touch key3 children"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -573,7 +577,7 @@ test("02.04 - wildcards in opts.dontWrapKeys", t => {
     },
     "02.04.04 - does not wrap the key3 children"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -604,10 +608,11 @@ test("02.04 - wildcards in opts.dontWrapKeys", t => {
     },
     "02.04.05 - nothing, because key4 is not top-level"
   );
+  t.end();
 });
 
-test("02.05 - array of input vs string of reference", t => {
-  t.deepEqual(
+t.test("02.05 - array of input vs string of reference", t => {
+  t.same(
     ofr(
       {
         key1: ["val1", "val2", "val3"],
@@ -630,10 +635,11 @@ test("02.05 - array of input vs string of reference", t => {
     },
     "02.05"
   );
+  t.end();
 });
 
-test("02.06 - action within an array's contents", t => {
-  t.deepEqual(
+t.test("02.06 - action within an array's contents", t => {
+  t.same(
     ofr(
       {
         key1: [
@@ -682,10 +688,11 @@ test("02.06 - action within an array's contents", t => {
     },
     "02.06.01"
   );
+  t.end();
 });
 
-test("02.07 - doesn't wrap empty string values", t => {
-  t.deepEqual(
+t.test("02.07 - doesn't wrap empty string values", t => {
+  t.same(
     ofr(
       {
         key1: ["val1", "val2", "val3"],
@@ -708,10 +715,11 @@ test("02.07 - doesn't wrap empty string values", t => {
     },
     "02.07"
   );
+  t.end();
 });
 
-test("02.08 - reference array as value is shorter than input's", t => {
-  t.deepEqual(
+t.test("02.08 - reference array as value is shorter than input's", t => {
+  t.same(
     ofr(
       {
         key1: ["val1", "val2", "val3"],
@@ -734,10 +742,11 @@ test("02.08 - reference array as value is shorter than input's", t => {
     },
     "02.08"
   );
+  t.end();
 });
 
-test("02.09 - one ignore works on multiple keys", t => {
-  t.deepEqual(
+t.test("02.09 - one ignore works on multiple keys", t => {
+  t.same(
     ofr(
       {
         key_aaaa: "something",
@@ -761,7 +770,7 @@ test("02.09 - one ignore works on multiple keys", t => {
     },
     "02.09.01 - defaults on opts.whatToDoWhenReferenceIsMissing"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key_aaaa: "something",
@@ -786,7 +795,7 @@ test("02.09 - one ignore works on multiple keys", t => {
     },
     "02.09.02 - hardcoded defaults on opts.whatToDoWhenReferenceIsMissing"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key_aaaa: "something",
@@ -811,7 +820,7 @@ test("02.09 - one ignore works on multiple keys", t => {
     },
     "02.09.03 - defaults on opts.whatToDoWhenReferenceIsMissing"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key_aaaa: "something",
@@ -836,7 +845,7 @@ test("02.09 - one ignore works on multiple keys", t => {
     },
     '02.09.04 - normal case, where reference is provided for key "wrapme"'
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key_aaaa: { a: "a" },
@@ -861,10 +870,11 @@ test("02.09 - one ignore works on multiple keys", t => {
     },
     "02.09.05 - same as #04 but with objects"
   );
+  t.end();
 });
 
-test("02.10 - deeper level - array VS. string", t => {
-  t.deepEqual(
+t.test("02.10 - deeper level - array VS. string", t => {
+  t.same(
     ofr(
       {
         a_key: [
@@ -904,10 +914,11 @@ test("02.10 - deeper level - array VS. string", t => {
     },
     "02.10"
   );
+  t.end();
 });
 
-test("02.11 - deeper level - array within array VS. string", t => {
-  t.deepEqual(
+t.test("02.11 - deeper level - array within array VS. string", t => {
+  t.same(
     ofr(
       {
         a_key: ["xxxx", ["1111", "2222", "3333"], "yyyy", "zzzz"],
@@ -925,10 +936,11 @@ test("02.11 - deeper level - array within array VS. string", t => {
     },
     "02.11"
   );
+  t.end();
 });
 
-test("02.12 - deeper level - array within array VS. string #2", t => {
-  t.deepEqual(
+t.test("02.12 - deeper level - array within array VS. string #2", t => {
+  t.same(
     ofr(
       {
         a: [
@@ -961,7 +973,7 @@ test("02.12 - deeper level - array within array VS. string #2", t => {
     },
     "02.12.01 - innermost array is first element"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         a: [
@@ -994,10 +1006,11 @@ test("02.12 - deeper level - array within array VS. string #2", t => {
     },
     "02.12.02 - innermost array is second element"
   );
+  t.end();
 });
 
-test("02.13 - one ignore works on multiple keys", t => {
-  t.deepEqual(
+t.test("02.13 - one ignore works on multiple keys", t => {
+  t.same(
     ofr(
       {
         modules: [
@@ -1086,10 +1099,11 @@ test("02.13 - one ignore works on multiple keys", t => {
     },
     "02.13.01"
   );
+  t.end();
 });
 
-test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
-  t.deepEqual(
+t.test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
+  t.same(
     ofr(
       {
         key1: [
@@ -1111,7 +1125,7 @@ test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
     },
     "02.14.01 - default - BRs are detected and no additional BRs are added"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: [
@@ -1134,7 +1148,7 @@ test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
     },
     "02.14.02 - hardcoded default - same as #01"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: [
@@ -1160,7 +1174,7 @@ test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
 
   // NOW COMBOS:
 
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: [
@@ -1184,14 +1198,15 @@ test("02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr", t => {
     },
     "02.14.04 - xhtml = false"
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 03. opts.ignore
 // -----------------------------------------------------------------------------
 
-test("03.01 - opts.ignore & wrapping function", t => {
-  t.deepEqual(
+t.test("03.01 - opts.ignore & wrapping function", t => {
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -1208,7 +1223,7 @@ test("03.01 - opts.ignore & wrapping function", t => {
     },
     "03.01.01 - default behaviour"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -1228,7 +1243,7 @@ test("03.01 - opts.ignore & wrapping function", t => {
     },
     "03.01.02 - does not wrap ignored string"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: "val11.val12",
@@ -1248,10 +1263,11 @@ test("03.01 - opts.ignore & wrapping function", t => {
     },
     "03.01.03 - does not wrap ignored array"
   );
+  t.end();
 });
 
-test("03.02 - flattens an array value but doesn't touch other one", t => {
-  t.deepEqual(
+t.test("03.02 - flattens an array value but doesn't touch other one", t => {
+  t.same(
     ofr(
       {
         key1: {
@@ -1276,7 +1292,7 @@ test("03.02 - flattens an array value but doesn't touch other one", t => {
     },
     "03.02.01"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -1305,7 +1321,7 @@ test("03.02 - flattens an array value but doesn't touch other one", t => {
     },
     "03.02.02"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -1335,7 +1351,7 @@ test("03.02 - flattens an array value but doesn't touch other one", t => {
     },
     "03.02.03 - ignore affects key1, default wrapping"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key1: {
@@ -1367,7 +1383,7 @@ test("03.02 - flattens an array value but doesn't touch other one", t => {
     },
     "03.02.04 - ignore affects key1, custom wrapping"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         key0: {
@@ -1404,14 +1420,15 @@ test("03.02 - flattens an array value but doesn't touch other one", t => {
     },
     "03.02.05 - some ignored, some flattened"
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 04. opts.whatToDoWhenReferenceIsMissing
 // -----------------------------------------------------------------------------
 
-test("04.01 - opts.whatToDoWhenReferenceIsMissing", t => {
-  t.deepEqual(
+t.test("04.01 - opts.whatToDoWhenReferenceIsMissing", t => {
+  t.same(
     ofr(
       {
         a: {
@@ -1433,7 +1450,7 @@ test("04.01 - opts.whatToDoWhenReferenceIsMissing", t => {
     },
     "04.01.01 - no opts - opt. 0 - skips"
   );
-  t.deepEqual(
+  t.same(
     ofr(
       {
         a: {
@@ -1473,7 +1490,7 @@ test("04.01 - opts.whatToDoWhenReferenceIsMissing", t => {
       }
     );
   });
-  t.deepEqual(
+  t.same(
     ofr(
       {
         a: {
@@ -1496,237 +1513,271 @@ test("04.01 - opts.whatToDoWhenReferenceIsMissing", t => {
     },
     "04.01.04 - opts - opt. 2 - flattens to string anyway + wraps if permitted"
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 05. Other cases
 // -----------------------------------------------------------------------------
 
-test("05.01 - double-wrapping prevention when markers have white space", t => {
-  t.deepEqual(
-    ofr(
+t.test(
+  "05.01 - double-wrapping prevention when markers have white space",
+  t => {
+    t.same(
+      ofr(
+        {
+          key1: "%%_val11.val12_%%",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        }
+      ),
       {
         key1: "%%_val11.val12_%%",
-        key2: "val21.val22"
+        key2: "%%_val21.val22_%%"
       },
+      "05.01.01 - base"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "%%_val11.val12_%%", // << notice missing white space around markers
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "%%_ ", // << notice the white space around markers
+          wrapTailsWith: " _%%"
+        }
+      ),
       {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      }
-    ),
-    {
-      key1: "%%_val11.val12_%%",
-      key2: "%%_val21.val22_%%"
-    },
-    "05.01.01 - base"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "%%_val11.val12_%%", // << notice missing white space around markers
-        key2: "val21.val22"
+        key1: "%%_val11.val12_%%",
+        key2: "%%_ val21.val22 _%%"
       },
+      "05.01.02 - whitespace on default heads and tails, checking double wrapping prevention"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "{val11.val12}", // << notice missing white space around markers
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{ ", // << notice the white space around markers
+          wrapTailsWith: " }"
+        }
+      ),
       {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
+        key1: "{val11.val12}", // << not { {val11.val12} }
+        key2: "{ val21.val22 }"
       },
-      {
-        wrapHeadsWith: "%%_ ", // << notice the white space around markers
-        wrapTailsWith: " _%%"
-      }
-    ),
-    {
-      key1: "%%_val11.val12_%%",
-      key2: "%%_ val21.val22 _%%"
-    },
-    "05.01.02 - whitespace on default heads and tails, checking double wrapping prevention"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "{val11.val12}", // << notice missing white space around markers
-        key2: "val21.val22"
-      },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{ ", // << notice the white space around markers
-        wrapTailsWith: " }"
-      }
-    ),
-    {
-      key1: "{val11.val12}", // << not { {val11.val12} }
-      key2: "{ val21.val22 }"
-    },
-    "05.01.03 - whitespace on custom heads and tails, checking double wrapping prevention"
-  );
-});
+      "05.01.03 - whitespace on custom heads and tails, checking double wrapping prevention"
+    );
+    t.end();
+  }
+);
 
-test("05.02 - double-wrapping prevention from setting opts.preventWrappingIfContains", t => {
-  t.deepEqual(
-    ofr(
+t.test(
+  "05.02 - double-wrapping prevention from setting opts.preventWrappingIfContains",
+  t => {
+    t.same(
+      ofr(
+        {
+          key1: "{% if some_module.some_special_value %}some text{% endif %}",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{{ ",
+          wrapTailsWith: " }}"
+        }
+      ),
+      {
+        key1:
+          "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
+        key2: "{{ val21.val22 }}"
+      },
+      "05.02.01 - default - double wrapping on key1 because {%...%} is not recognised"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "{% if some_module.some_special_value %}some text{% endif %}",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{{ ",
+          wrapTailsWith: " }}",
+          preventWrappingIfContains: "{%"
+        }
+      ),
+      {
+        key1: "{% if some_module.some_special_value %}some text{% endif %}",
+        key2: "{{ val21.val22 }}"
+      },
+      "05.02.02 - opts.preventWrappingIfContains, value as string"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "{% if some_module.some_special_value %}some text{% endif %}",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{{ ",
+          wrapTailsWith: " }}",
+          preventWrappingIfContains: ["zzz", "{%"]
+        }
+      ),
+      {
+        key1: "{% if some_module.some_special_value %}some text{% endif %}",
+        key2: "{{ val21.val22 }}"
+      },
+      "05.02.03 - opts.preventWrappingIfContains, value as array"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "{% if some_module.some_special_value %}some text{% endif %}",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{{ ",
+          wrapTailsWith: " }}",
+          preventWrappingIfContains: ["yyy", "zzz"]
+        }
+      ),
+      {
+        key1:
+          "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
+        key2: "{{ val21.val22 }}"
+      },
+      "05.02.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"
+    );
+    t.same(
+      ofr(
+        {
+          key1: "{% if some_module.some_special_value %}some text{% endif %}",
+          key2: "val21.val22"
+        },
+        {
+          key1: "Contact us",
+          key2: "Tel. 0123456789"
+        },
+        {
+          wrapHeadsWith: "{{ ",
+          wrapTailsWith: " }}",
+          preventWrappingIfContains: ["yyy", "zzz"],
+          wrapGlobalFlipSwitch: false
+        }
+      ),
       {
         key1: "{% if some_module.some_special_value %}some text{% endif %}",
         key2: "val21.val22"
       },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{{ ",
-        wrapTailsWith: " }}"
-      }
-    ),
-    {
-      key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
-      key2: "{{ val21.val22 }}"
-    },
-    "05.02.01 - default - double wrapping on key1 because {%...%} is not recognised"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "{% if some_module.some_special_value %}some text{% endif %}",
-        key2: "val21.val22"
-      },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{{ ",
-        wrapTailsWith: " }}",
-        preventWrappingIfContains: "{%"
-      }
-    ),
-    {
-      key1: "{% if some_module.some_special_value %}some text{% endif %}",
-      key2: "{{ val21.val22 }}"
-    },
-    "05.02.02 - opts.preventWrappingIfContains, value as string"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "{% if some_module.some_special_value %}some text{% endif %}",
-        key2: "val21.val22"
-      },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{{ ",
-        wrapTailsWith: " }}",
-        preventWrappingIfContains: ["zzz", "{%"]
-      }
-    ),
-    {
-      key1: "{% if some_module.some_special_value %}some text{% endif %}",
-      key2: "{{ val21.val22 }}"
-    },
-    "05.02.03 - opts.preventWrappingIfContains, value as array"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "{% if some_module.some_special_value %}some text{% endif %}",
-        key2: "val21.val22"
-      },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{{ ",
-        wrapTailsWith: " }}",
-        preventWrappingIfContains: ["yyy", "zzz"]
-      }
-    ),
-    {
-      key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
-      key2: "{{ val21.val22 }}"
-    },
-    "05.02.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"
-  );
-  t.deepEqual(
-    ofr(
-      {
-        key1: "{% if some_module.some_special_value %}some text{% endif %}",
-        key2: "val21.val22"
-      },
-      {
-        key1: "Contact us",
-        key2: "Tel. 0123456789"
-      },
-      {
-        wrapHeadsWith: "{{ ",
-        wrapTailsWith: " }}",
-        preventWrappingIfContains: ["yyy", "zzz"],
-        wrapGlobalFlipSwitch: false
-      }
-    ),
-    {
-      key1: "{% if some_module.some_special_value %}some text{% endif %}",
-      key2: "val21.val22"
-    },
-    "05.02.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on"
-  );
-});
+      "05.02.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on"
+    );
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // 95. util.reclaimIntegerString
 // -----------------------------------------------------------------------------
 
-test("95.01 - util.reclaimIntegerString - does what it says on strings", t => {
-  t.deepEqual(reclaimIntegerString("1"), 1, "95.01.03");
-});
+t.test(
+  "95.01 - util.reclaimIntegerString - does what it says on strings",
+  t => {
+    t.same(reclaimIntegerString("1"), 1, "95.01.03");
+    t.end();
+  }
+);
 
-test("95.02 - util.reclaimIntegerString - doesn't parse non-integer strings", t => {
-  t.deepEqual(reclaimIntegerString("1.1"), "1.1", "95.02");
-});
+t.test(
+  "95.02 - util.reclaimIntegerString - doesn't parse non-integer strings",
+  t => {
+    t.same(reclaimIntegerString("1.1"), "1.1", "95.02");
+    t.end();
+  }
+);
 
-test("95.03 - util.reclaimIntegerString - doesn't parse non-number strings either", t => {
-  t.deepEqual(reclaimIntegerString("zz"), "zz", "95.03");
-});
+t.test(
+  "95.03 - util.reclaimIntegerString - doesn't parse non-number strings either",
+  t => {
+    t.same(reclaimIntegerString("zz"), "zz", "95.03");
+    t.end();
+  }
+);
 
-test("95.04 - util.reclaimIntegerString - doesn't parse booleans", t => {
-  t.deepEqual(reclaimIntegerString(true), true, "95.04");
+t.test("95.04 - util.reclaimIntegerString - doesn't parse booleans", t => {
+  t.same(reclaimIntegerString(true), true, "95.04");
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 96. util.arrayiffyString
 // -----------------------------------------------------------------------------
 
-test("96.01 - util.arrayiffyString - turns string into an array", t => {
-  t.deepEqual(arrayiffyString("zzz"), ["zzz"], "96.01");
+t.test("96.01 - util.arrayiffyString - turns string into an array", t => {
+  t.same(arrayiffyString("zzz"), ["zzz"], "96.01");
+  t.end();
 });
 
-test("96.02 - util.arrayiffyString - turns empty string into an empty array", t => {
-  t.deepEqual(arrayiffyString(""), [], "96.02");
-});
+t.test(
+  "96.02 - util.arrayiffyString - turns empty string into an empty array",
+  t => {
+    t.same(arrayiffyString(""), [], "96.02");
+    t.end();
+  }
+);
 
-test("96.03 - util.arrayiffyString - doesn't touch any other input types", t => {
-  t.deepEqual(arrayiffyString(["a"]), ["a"], "96.03.01");
-  t.deepEqual(arrayiffyString([]), [], "96.03.02");
-  t.deepEqual(arrayiffyString(1), 1, "96.03.03");
-  t.deepEqual(arrayiffyString(null), null, "96.03.04");
-});
+t.test(
+  "96.03 - util.arrayiffyString - doesn't touch any other input types",
+  t => {
+    t.same(arrayiffyString(["a"]), ["a"], "96.03.01");
+    t.same(arrayiffyString([]), [], "96.03.02");
+    t.same(arrayiffyString(1), 1, "96.03.03");
+    t.same(arrayiffyString(null), null, "96.03.04");
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // 98. util.flattenObject
 // -----------------------------------------------------------------------------
 
-test("98.01 - util.flattenObject > empty input", t => {
-  t.deepEqual(flattenObject(), [], "98.01.01");
-  t.deepEqual(flattenObject({}), [], "98.01.02");
+t.test("98.01 - util.flattenObject > empty input", t => {
+  t.same(flattenObject(), [], "98.01.01");
+  t.same(flattenObject({}), [], "98.01.02");
+  t.end();
 });
 
-test("98.02 - util.flattenObject > simple object", t => {
-  t.deepEqual(
+t.test("98.02 - util.flattenObject > simple object", t => {
+  t.same(
     flattenObject(
       {
         a: "b",
@@ -1744,10 +1795,11 @@ test("98.02 - util.flattenObject > simple object", t => {
     ["a.b", "c.d"],
     "98.02"
   );
+  t.end();
 });
 
-test("98.03 - util.flattenObject > nested objects", t => {
-  t.deepEqual(
+t.test("98.03 - util.flattenObject > nested objects", t => {
+  t.same(
     flattenObject(
       {
         a: { b: "c", d: "e" },
@@ -1765,18 +1817,20 @@ test("98.03 - util.flattenObject > nested objects", t => {
     ["a.b.c", "a.d.e", "f.g.h", "f.e.j"],
     "98.03"
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 99. util.flattenArr
 // -----------------------------------------------------------------------------
 
-test("99.01 - util.flattenArr > empty input", t => {
-  t.deepEqual(flattenArr(), "", "99.01");
+t.test("99.01 - util.flattenArr > empty input", t => {
+  t.same(flattenArr(), "", "99.01");
+  t.end();
 });
 
-test("99.02 - util.flattenArr > simple array", t => {
-  t.deepEqual(
+t.test("99.02 - util.flattenArr > simple array", t => {
+  t.same(
     flattenArr(
       ["a", "b", "c"],
       {
@@ -1792,7 +1846,7 @@ test("99.02 - util.flattenArr > simple array", t => {
     "%%_a_%% %%_b_%% %%_c_%%",
     "99.02.01"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", "b", "c"],
       {
@@ -1808,10 +1862,11 @@ test("99.02 - util.flattenArr > simple array", t => {
     "a b c",
     "99.02.02"
   );
+  t.end();
 });
 
-test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
-  t.deepEqual(
+t.test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1829,7 +1884,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
     "99.03.01"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1847,7 +1902,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "a b,c,d e",
     "99.03.02"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1865,7 +1920,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
     "99.03.03"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1885,7 +1940,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
   );
 
   // joinArraysUsingBrs = true
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1903,7 +1958,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%%<br />%%_b_%% %%_c_%% %%_d_%%<br />%%_e_%%",
     "99.03.05"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1921,7 +1976,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "a<br />b c d<br />e",
     "99.03.06"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1939,7 +1994,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%%%%_b_%% %%_c_%% %%_d_%%%%_e_%%",
     "99.03.07"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1959,7 +2014,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
   );
 
   // HTML - no slashes
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1977,7 +2032,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%%<br>%%_b_%% %%_c_%% %%_d_%%<br>%%_e_%%",
     "99.03.09"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -1995,7 +2050,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "a<br>b c d<br>e",
     "99.03.10"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -2013,7 +2068,7 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
     "99.03.11"
   );
-  t.deepEqual(
+  t.same(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
       {
@@ -2031,4 +2086,5 @@ test("99.03 - util.flattenArr + joinArraysUsingBrs", t => {
     "a b,c,d e",
     "99.03.12"
   );
+  t.end();
 });

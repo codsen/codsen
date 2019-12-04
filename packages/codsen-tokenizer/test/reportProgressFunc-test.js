@@ -1,10 +1,7 @@
-// avanotonly
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
-
-test(`01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null`, t => {
+t.test(t => {
   const gathered = [];
   ct(
     "abc",
@@ -14,7 +11,7 @@ test(`01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null
     null,
     { reportProgressFunc: null }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -23,12 +20,12 @@ test(`01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null
         end: 3
       }
     ],
-    t.is,
-    t.fail
+    `01.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - null`
   );
+  t.end();
 });
 
-test(`01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - false`, t => {
+t.test(t => {
   const gathered = [];
   ct(
     "abc",
@@ -38,7 +35,7 @@ test(`01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - fals
     null,
     { reportProgressFunc: false }
   );
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -47,32 +44,36 @@ test(`01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - fals
         end: 3
       }
     ],
-    t.is,
-    t.fail
+    `01.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - false`
   );
+  t.end();
 });
 
-test(`01.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`, t => {
+t.test(t => {
   const gathered = [];
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
 
   // short input string should report only when passing at 50%:
-  const error1 = t.throws(() => {
-    ct(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30),
-      token => {
-        gathered.push(token);
-      },
-      null,
-      { reportProgressFunc: shouldveBeenCalled }
-    );
-  });
-  t.regex(error1.message, /50/);
+  t.throws(
+    () => {
+      ct(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30),
+        token => {
+          gathered.push(token);
+        },
+        null,
+        { reportProgressFunc: shouldveBeenCalled }
+      );
+    },
+    /50/,
+    `01.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
+  );
+  t.end();
 });
 
-test(`01.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`, t => {
+t.test(t => {
   let counter = 0;
   const countingFunction = () => {
     // const countingFunction = val => {
@@ -92,31 +93,39 @@ test(`01.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - long
   );
 
   // 2. check the counter variable:
-  t.truthy(counter);
+  t.ok(
+    counter,
+    `01.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`
+  );
+  t.end();
 });
 
-test(`01.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`, t => {
+t.test(t => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
 
   // short input string should report only when passing at 50%:
-  const error1 = t.throws(() => {
-    ct(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20),
-      () => {},
-      null,
-      {
-        reportProgressFunc: shouldveBeenCalled,
-        reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86
-      }
-    );
-  });
-  t.regex(error1.message, /32/);
+  t.throws(
+    () => {
+      ct(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20),
+        () => {},
+        null,
+        {
+          reportProgressFunc: shouldveBeenCalled,
+          reportProgressFuncFrom: 21,
+          reportProgressFuncTo: 86
+        }
+      );
+    },
+    /32/g,
+    `01.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
+  );
+  t.end();
 });
 
-test(`01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`, t => {
+t.test(t => {
   const gather = [];
   const countingFunction = val => {
     // const countingFunction = val => {
@@ -149,9 +158,14 @@ test(`01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - cust
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach(perc => {
-    t.true(compareTo.includes(perc), String(perc));
+    t.ok(compareTo.includes(perc), String(perc));
   });
-  t.is(gather.length, 86 - 21);
+  t.equal(gather.length, 86 - 21);
 
-  t.deepEqual(gather, compareTo);
+  t.same(
+    gather,
+    compareTo,
+    `01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
+  );
+  t.end();
 });

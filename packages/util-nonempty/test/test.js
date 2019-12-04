@@ -1,54 +1,63 @@
-import test from "ava";
-import nonEmpty from "../dist/util-nonempty.esm";
+const t = require("tap");
+const nonEmpty = require("../dist/util-nonempty.cjs");
 
 // ==============================
 // Precautions
 // ==============================
 
-test("1.1 - inputs missing - returns false", t => {
-  t.is(nonEmpty(), false, "1.1");
+t.test("1.1 - inputs missing - returns false", t => {
+  t.equal(nonEmpty(), false, "1.1");
+  t.end();
 });
 
 // ==============================
 // Normal use
 // ==============================
 
-test("2.1 - Array", t => {
-  t.is(nonEmpty(["a"]), true, "2.1.1");
-  t.is(nonEmpty([]), false, "2.1.2");
+t.test("2.1 - Array", t => {
+  t.equal(nonEmpty(["a"]), true, "2.1.1");
+  t.equal(nonEmpty([]), false, "2.1.2");
+  t.end();
 });
 
-test("2.2 - Plain object", t => {
-  t.is(nonEmpty({ a: "a" }), true, "2.2.1");
-  t.is(nonEmpty({}), false, "2.2.2");
+t.test("2.2 - Plain object", t => {
+  t.equal(nonEmpty({ a: "a" }), true, "2.2.1");
+  t.equal(nonEmpty({}), false, "2.2.2");
+  t.end();
 });
 
-test("2.3 - String", t => {
-  t.is(nonEmpty("a"), true, "2.3.1");
-  t.is(nonEmpty(""), false, "2.3.2");
+t.test("2.3 - String", t => {
+  t.equal(nonEmpty("a"), true, "2.3.1");
+  t.equal(nonEmpty(""), false, "2.3.2");
+  t.end();
 });
 
-test("2.4 - null", t => {
-  t.is(nonEmpty(null), false, "2.4");
+t.test("2.4 - null", t => {
+  t.equal(nonEmpty(null), false, "2.4");
+  t.end();
 });
 
-test('2.5 - hardcoded "undefined" - same as missing input', t => {
-  t.is(nonEmpty(undefined), false, "2.5");
+t.test('2.5 - hardcoded "undefined" - same as missing input', t => {
+  t.equal(nonEmpty(undefined), false, "2.5");
+  t.end();
 });
 
-test("2.5 - boolean - still empty (!)", t => {
-  t.is(nonEmpty(true), false, "2.5.1");
-  t.is(nonEmpty(false), false, "2.5.2");
+t.test("2.5 - boolean - still empty (!)", t => {
+  t.equal(nonEmpty(true), false, "2.5.1");
+  t.equal(nonEmpty(false), false, "2.5.2");
+  t.end();
 });
 
-test("2.6 - function - still empty, no matter what's returned (!)", t => {
+t.test("2.6 - function - still empty, no matter what's returned (!)", t => {
   const f = function dummy() {
     return "a";
   };
-  t.is(nonEmpty(f), false, "2.6");
+  t.equal(nonEmpty(f), false, "2.6");
+  t.end();
 });
 
-test("2.7 - Number", t => {
-  t.is(nonEmpty(10), true, "2.7.1");
-  t.is(nonEmpty(0), true, "2.7.2");
+t.test("2.7 - Number", t => {
+  t.equal(nonEmpty(10), true, "2.7.1");
+  t.equal(nonEmpty(0), true, "2.7.2");
+  t.end();
 });

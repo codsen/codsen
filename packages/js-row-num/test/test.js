@@ -36,28 +36,32 @@ t.test(t => {
 // -----------------------------------------------------------------------------
 
 t.test(t => {
-  t.is(
-    fixRowNums(`
+  const src = `
 zzz
 zzz
 zzz
 console.log('044 something')
 console.log('045 something')
-`),
-    `
+`;
+  const res = `
 zzz
 zzz
 zzz
 console.log('005 something')
 console.log('006 something')
-`,
-    "02.01 - single straight quotes - no whitespace"
+`;
+  t.equal(
+    fixRowNums(src),
+    res,
+    "02.01.01 - single straight quotes - no whitespace"
   );
+  t.equal(fixRowNums(src, { triggerKeywords: undefined }), res, "02.01.02");
+  t.equal(fixRowNums(src, { triggerKeywords: [] }), res, "02.01.03");
   t.end();
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -78,7 +82,7 @@ console.log('----\n\n\n009 something')
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -97,7 +101,7 @@ console.log('005 something')console.log('005 something')
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -116,7 +120,7 @@ console.log("005 123 something 456")console.log("----005 something")console.log(
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -135,7 +139,7 @@ console.log("005 123 something 456")console.log("----\n\n\n008 something")
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -156,7 +160,7 @@ console.log("----\n\n\n 009 something")
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 zzz
 zzz
@@ -175,7 +179,7 @@ console.log(\`005 123 something 456\`)console.log(\`----005 something\`)console.
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("console.log(`\\u001b[${33}m${`178 z`}\\u001b[${39}m`)"),
     "console.log(`\\u001b[${33}m${`001 z`}\\u001b[${39}m`)",
     "02.08 - console log with ANSI escapes - one ANSI escape chunk in front"
@@ -184,7 +188,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       "console.log(`\\u001b[${012399999999}m${`188 z`}\\u001b[${39}m`)"
     ),
@@ -195,7 +199,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("console.log(`\\u001b[012399999999m${`198 z`}\\u001b[${39}m`)"),
     "console.log(`\\u001b[012399999999m${`001 z`}\\u001b[${39}m`)",
     "02.10 - synthetic test where colour code is put raw"
@@ -204,7 +208,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       "console.log(`\\u001b[${012399999999}m${` \t 888 z`}\\u001b[${39}m`)"
     ),
@@ -215,7 +219,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       "console.log(`\\u001b[012399999999m${` \t 888 z`}\\u001b[${39}m`)"
     ),
@@ -226,7 +230,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 // console.log(
 //   \`111 something
@@ -243,7 +247,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 console.log(
   \`${BACKSLASH}n111 something\`
@@ -260,7 +264,7 @@ console.log(
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 ${"12345\n".repeat(10000)}
 console.log(
@@ -278,13 +282,27 @@ console.log(
   t.end();
 });
 
+t.test(t => {
+  t.equal(
+    fixRowNums("console.log('123 zzz');\nconsole.log('123 zzz');", {
+      padStart: 3,
+      overrideRowNum: null,
+      returnRangesOnly: false,
+      extractedLogContentsWereGiven: false
+    }),
+    "console.log('001 zzz');\nconsole.log('002 zzz');",
+    "02.16"
+  );
+  t.end();
+});
+
 // -----------------------------------------------------------------------------
 // group 03. sneaky false positives
 // -----------------------------------------------------------------------------
 
 t.test(t => {
   const str = 'I added a console.log (and then added so-called "quotes").';
-  t.is(
+  t.equal(
     fixRowNums(str),
     str,
     `03.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - text that mentions console.log`
@@ -294,7 +312,7 @@ t.test(t => {
 
 t.test(t => {
   const str = 'console.log("zzz")';
-  t.is(
+  t.equal(
     fixRowNums(str),
     str,
     `03.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no digits at all`
@@ -304,7 +322,7 @@ t.test(t => {
 
 t.test(t => {
   const str = 'console.log "123"';
-  t.is(
+  t.equal(
     fixRowNums(str),
     str,
     `03.03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no opening bracket after console.log`
@@ -315,7 +333,7 @@ t.test(t => {
 t.test(t => {
   let allAscii = new Array(127);
   allAscii = allAscii.map((val, i) => String.fromCharCode(i)).join("");
-  t.is(
+  t.equal(
     fixRowNums(allAscii),
     allAscii,
     `03.04 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - all ASCII symbols`
@@ -328,7 +346,7 @@ t.test(t => {
 // -----------------------------------------------------------------------------
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('331 something')"),
     "zzz\nconsole.log('002 something')",
     "04.01 - control - default is three"
@@ -337,7 +355,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('340 something')", { padStart: 0 }),
     "zzz\nconsole.log('2 something')",
     "04.02"
@@ -346,7 +364,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('349 something')", { padStart: 1 }),
     "zzz\nconsole.log('2 something')",
     "04.03"
@@ -355,7 +373,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('358 something')", { padStart: 2 }),
     "zzz\nconsole.log('02 something')",
     "04.04"
@@ -364,7 +382,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('367 something')", { padStart: 3 }),
     "zzz\nconsole.log('002 something')",
     "04.05"
@@ -373,7 +391,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('376 something')", { padStart: 4 }),
     "zzz\nconsole.log('0002 something')",
     "04.05"
@@ -382,7 +400,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('385 something')", { padStart: 9 }),
     "zzz\nconsole.log('000000002 something')",
     "04.06"
@@ -391,7 +409,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('394 something')", { padStart: 1 }),
     "zzz\nconsole.log('2 something')",
     "04.07 - negative numbers are ignored, default (3) is used"
@@ -402,7 +420,7 @@ t.test(t => {
 // falsey padding value
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('405 something')", { padStart: false }),
     "zzz\nconsole.log('2 something')",
     "04.08 - padding is set to be falsey"
@@ -411,7 +429,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('414 something')", { padStart: null }),
     "zzz\nconsole.log('2 something')",
     "04.09"
@@ -420,7 +438,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzz\nconsole.log('423 something')", { padStart: undefined }),
     "zzz\nconsole.log('2 something')",
     "04.10"
@@ -433,7 +451,7 @@ t.test(t => {
 // -----------------------------------------------------------------------------
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzzz\ryyyy\rconsole.log('436 some text')"),
     "zzzz\ryyyy\rconsole.log('003 some text')",
     `05.01 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - text that uses \\r only as EOL characters`
@@ -442,7 +460,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzzz\nyyyy\nconsole.log('445 some text')"),
     "zzzz\nyyyy\nconsole.log('003 some text')",
     "05.02"
@@ -451,7 +469,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums("zzzz\r\nyyyy\r\nconsole.log('454 some text')"),
     "zzzz\r\nyyyy\r\nconsole.log('003 some text')",
     "05.03"
@@ -462,7 +480,7 @@ t.test(t => {
 // broken ANSI - will not update
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       "console.log(`\\u001b[012399999999${` \t 888 z`}\\u001b[${39}m`)"
     ),
@@ -477,7 +495,7 @@ t.test(t => {
 // -----------------------------------------------------------------------------
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`a\nb\nc\nlog(\`1 something\`)`),
     `a\nb\nc\nlog(\`1 something\`)`,
     `06.01 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - baseline`
@@ -486,7 +504,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`a\nb\nc\nlog(\`1 something\`)`, { triggerKeywords: ["log"] }),
     `a\nb\nc\nlog(\`004 something\`)`,
     `06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works on custom function`
@@ -501,12 +519,12 @@ t.test(t => {
     `a\nb\nc\nlog(\`1 something\`)`
   ];
   sources.forEach((source, idx) => {
-    t.is(
+    t.equal(
       fixRowNums(source, { triggerKeywords: ["zzz"] }),
       source,
       `06.03.0${idx + 1}`
     );
-    t.is(
+    t.equal(
       fixRowNums(source, { triggerKeywords: null }),
       source,
       `06.03.0${idx + 2}`
@@ -520,7 +538,7 @@ t.test(t => {
 // -----------------------------------------------------------------------------
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 console.log('9 something')
 `),
@@ -533,7 +551,7 @@ console.log('002 something')
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       `
 console.log('9 something')
@@ -754,7 +772,7 @@ t.test(t => {
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(`
 console.log(
   '044 something'
@@ -773,7 +791,7 @@ console.log(
 // line breaks before string itself
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       `
 console.log(
@@ -795,7 +813,7 @@ console.log(
 });
 
 t.test(t => {
-  t.is(
+  t.equal(
     fixRowNums(
       `
 console.log(
@@ -816,7 +834,7 @@ console.log(
   t.end();
 });
 
-t.test(t => {
+t.only(t => {
   t.same(
     fixRowNums(
       `

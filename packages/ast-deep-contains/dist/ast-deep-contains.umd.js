@@ -1,6 +1,6 @@
 /**
  * ast-deep-contains
- * an alternative for AVA's t.deepEqual
+ * an alternative for AVA's t.same
  * Version: 1.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

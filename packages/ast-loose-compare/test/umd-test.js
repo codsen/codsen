@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import compare1 from "../dist/ast-loose-compare.umd";
-import compare2 from "../dist/ast-loose-compare.cjs";
+const t = require("tap");
+const compare1 = require("../dist/ast-loose-compare.umd");
 
 const source = {
   a: "a",
@@ -16,10 +13,7 @@ const target = {
   b: undefined
 };
 
-test("UMD build works fine", t => {
+t.test("UMD build works fine", t => {
   t.false(compare1(source, target));
-});
-
-test("CJS build works fine", t => {
-  t.false(compare2(source, target));
+  t.end();
 });

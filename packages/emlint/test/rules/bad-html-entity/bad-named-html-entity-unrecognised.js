@@ -1,28 +1,26 @@
-// avanotonly
-
 // rule: bad-named-html-entity-unrecognised
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-html-entity": 2
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-html-entity": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
       {
         ruleId: "bad-named-html-entity-unrecognised",
         severity: 1, // <------- unrecognised entities might be false positives so default level is "warning"!
@@ -33,24 +31,23 @@ test(`01.01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group ru
           ranges: []
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-named-html-entity-unrecognised": 1
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-named-html-entity-unrecognised": 1
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
       {
         ruleId: "bad-named-html-entity-unrecognised",
         severity: 1,
@@ -61,24 +58,23 @@ test(`01.02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact ru
           ranges: [] // no fixes
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-named-html-entity-unrecognised": 2
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-named-html-entity-unrecognised": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
       {
         ruleId: "bad-named-html-entity-unrecognised",
         severity: 2,
@@ -89,24 +85,23 @@ test(`01.03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact ru
           ranges: [] // no fixes
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-named-html-entity-*": 2
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-named-html-entity-*": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
       {
         ruleId: "bad-named-html-entity-unrecognised",
         severity: 1, // <---- default is warning
@@ -117,44 +112,55 @@ test(`01.04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by 
           ranges: [] // no fixes
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`01.05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule - off`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-html-entity": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `01.05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule - off`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-html-entity": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`01.06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 0`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-named-html-entity-unrecognised": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `01.06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 0`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-named-html-entity-unrecognised": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`01.07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard - off`, t => {
-  const str = `abc&yo;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-named-html-entity-*": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `01.07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard - off`,
+  t => {
+    const str = `abc&yo;def`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-named-html-entity-*": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);

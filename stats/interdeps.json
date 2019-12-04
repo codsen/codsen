@@ -38,7 +38,7 @@
     },
     {
         "name": "ast-compare",
-        "size": 8796,
+        "size": 8760,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -52,14 +52,14 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 5032,
+        "size": 5027,
         "imports": [
             "ast-monkey-traverse"
         ]
     },
     {
         "name": "ast-delete-object",
-        "size": 2101,
+        "size": 2176,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -94,7 +94,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 7765,
+        "size": 9812,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -104,7 +104,7 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2751,
+        "size": 2750,
         "imports": []
     },
     {
@@ -144,7 +144,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 14572,
+        "size": 17838,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -153,14 +153,14 @@
     },
     {
         "name": "csv-sort",
-        "size": 14137,
+        "size": 14136,
         "imports": [
             "csv-split-easy"
         ]
     },
     {
         "name": "csv-sort-cli",
-        "size": 8957,
+        "size": 8857,
         "imports": [
             "csv-sort"
         ]
@@ -240,12 +240,19 @@
     },
     {
         "name": "emlint",
-        "size": 96513,
+        "size": 104221,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",
             "string-fix-broken-named-entities",
             "string-left-right"
+        ]
+    },
+    {
+        "name": "eslint-plugin-row-num",
+        "size": 346,
+        "imports": [
+            "js-row-num"
         ]
     },
     {
@@ -283,7 +290,7 @@
     },
     {
         "name": "html-entities-not-email-friendly",
-        "size": 79285,
+        "size": 79286,
         "imports": []
     },
     {
@@ -306,7 +313,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 5670,
+        "size": 6430,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -314,7 +321,7 @@
     },
     {
         "name": "js-row-num-cli",
-        "size": 5333,
+        "size": 5310,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
@@ -361,7 +368,7 @@
     },
     {
         "name": "lect",
-        "size": 72522,
+        "size": 74729,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -488,7 +495,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7612,
+        "size": 7613,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -552,7 +559,7 @@
     },
     {
         "name": "string-extract-class-names",
-        "size": 3734,
+        "size": 3735,
         "imports": [
             "string-left-right"
         ]
@@ -575,7 +582,7 @@
     },
     {
         "name": "string-left-right",
-        "size": 10992,
+        "size": 10993,
         "imports": []
     },
     {

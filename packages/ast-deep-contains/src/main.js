@@ -148,7 +148,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             //
             //  Once we have table of all combinations, we'll calculate the
             // likeness score of each combination, and whichever is the highest
-            // we'll ping those objects to user-supplied (likely AVA's t.is()) callback.
+            // we'll ping those objects to user-supplied (likely AVA's t.equal()) callback.
             //
 
             // We want to achieve something like this (using example above):

@@ -11,7 +11,9 @@ function detectIsItHTMLOrXhtml(input) {
   }
 
   if (typeof input !== "string") {
-    throw new TypeError("detect-is-it-html-or-xhtml: Input must be string");
+    throw new TypeError(
+      "detect-is-it-html-or-xhtml: [THROW_ID_01] Input must be string"
+    );
   }
 
   let i;

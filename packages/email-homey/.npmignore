@@ -11,11 +11,12 @@
 
 # folders:
 
+.nyc_output
+coverage
 fixtures
 
 # files:
 
-.eslintrc.json
 .npmignore
 .prettierignore
 test.js

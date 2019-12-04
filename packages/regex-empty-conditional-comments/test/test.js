@@ -1,5 +1,5 @@
-import test from "ava";
-import r from "../dist/regex-empty-conditional-comments.esm";
+const t = require("tap");
+const r = require("../dist/regex-empty-conditional-comments.cjs");
 
 const fixture = [
   // outlook-only:
@@ -32,21 +32,21 @@ const fixture = [
 <!--<![endif]-->`
 ];
 
-test("matches each of comments", t => {
+t.test("matches each of comments", t => {
   for (const comment of fixture) {
-    t.regex(comment, r());
+    t.match(comment, r());
   }
 
-  t.notRegex(`<!--a-->`, r());
-  t.notRegex(`<!--[if (gte mso 9)|(IE)]>z<![endif]-->`, r());
-  t.notRegex("<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->", r());
-  t.notRegex(
+  t.notMatch(`<!--a-->`, r());
+  t.notMatch(`<!--[if (gte mso 9)|(IE)]>z<![endif]-->`, r());
+  t.notMatch("<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->", r());
+  t.notMatch(
     `<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->`,
     r()
   );
-  t.notRegex(
+  t.notMatch(
     `<!--[if (gte mso 9)|(IE)]>
   <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
     <tr>
@@ -62,26 +62,27 @@ zzz
   );
 
   // as per https://stackoverflow.com/a/5983063/3943954
-  t.notRegex(
+  t.notMatch(
     `<!--[if !mso]><!-- -->
   content targeted at non-outlook users goes here...
 <!--<![endif]-->`,
     r()
   );
+
+  t.end();
 });
 
-test("returns comment on match", t => {
-  t.deepEqual(
-    "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()),
-    ["<!--[if (gte mso 9)|(IE)]><![endif]-->"]
-  );
-  t.deepEqual(
+t.test("returns comment on match", t => {
+  t.same("<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()), [
+    "<!--[if (gte mso 9)|(IE)]><![endif]-->"
+  ]);
+  t.same(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
   <xml>
   <![endif]-->`.match(r()),
     ["<!--[if !mso]><![endif]-->"]
   );
-  t.deepEqual(
+  t.same(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if !mso]><!-- -->
 
 <!--<![endif]-->`.match(r()),
@@ -92,14 +93,16 @@ test("returns comment on match", t => {
 <!--<![endif]-->`
     ]
   );
+  t.end();
 });
 
-test("deletes comments from code", t => {
-  t.is(
+t.test("deletes comments from code", t => {
+  t.equal(
     `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
       r(),
       ""
     ),
     "zzz  yyy <!-- does not touch this -->"
   );
+  t.end();
 });

@@ -1,39 +1,41 @@
-// avanotonly
-
 // rule: character-unspaced-punctuation
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`, t => {
-  const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-unspaced-punctuation": 0
-    }
-  });
-  t.deepEqual(messages, []);
-  t.is(applyFixes(str, messages), str);
-});
+t.test(
+  `01.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
+  t => {
+    const str = "<a>Click me!Now?Yes!</a>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": 0
+      }
+    });
+    t.same(messages, []);
+    t.equal(applyFixes(str, messages), str);
+    t.end();
+  }
+);
 
-test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`, t => {
-  const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-unspaced-punctuation": 1
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
+  t => {
+    const str = "<a>Click me!Now?Yes!</a>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": 1
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-unspaced-punctuation",
         severity: 1,
@@ -54,43 +56,42 @@ test(`01.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor
           ranges: [[16, 16, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<a>Click me! Now? Yes!</a>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<a>Click me! Now? Yes!</a>");
+    t.end();
+  }
+);
 
 // 02. with config
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, right side missing`, t => {
-  const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-unspaced-punctuation": [
-        1,
-        {
-          questionMark: {
-            whitespaceLeft: "never",
-            whitespaceRight: "always"
-          },
-          exclamationMark: {
-            whitespaceLeft: "never",
-            whitespaceRight: "always"
-          },
-          semicolon: {
-            whitespaceLeft: "never",
-            whitespaceRight: "always"
+t.test(
+  `02.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, right side missing`,
+  t => {
+    const str = "<a>Click me!Now?Yes!</a>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": [
+          1,
+          {
+            questionMark: {
+              whitespaceLeft: "never",
+              whitespaceRight: "always"
+            },
+            exclamationMark: {
+              whitespaceLeft: "never",
+              whitespaceRight: "always"
+            },
+            semicolon: {
+              whitespaceLeft: "never",
+              whitespaceRight: "always"
+            }
           }
-        }
-      ]
-    }
-  });
-  deepContains(
-    messages,
-    [
+        ]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-unspaced-punctuation",
         severity: 1,
@@ -111,40 +112,39 @@ test(`02.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor
           ranges: [[16, 16, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "<a>Click me! Now? Yes!</a>");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "<a>Click me! Now? Yes!</a>");
+    t.end();
+  }
+);
 
-test(`02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, left side missing`, t => {
-  const str = "-Les pommes ou les oranges?-Les pommes!";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "character-unspaced-punctuation": [
-        1,
-        {
-          questionMark: {
-            whitespaceLeft: "always",
-            whitespaceRight: "always"
-          },
-          exclamationMark: {
-            whitespaceLeft: "always",
-            whitespaceRight: "always"
-          },
-          semicolon: {
-            whitespaceLeft: "never",
-            whitespaceRight: "always"
+t.test(
+  `02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, left side missing`,
+  t => {
+    const str = "-Les pommes ou les oranges?-Les pommes!";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": [
+          1,
+          {
+            questionMark: {
+              whitespaceLeft: "always",
+              whitespaceRight: "always"
+            },
+            exclamationMark: {
+              whitespaceLeft: "always",
+              whitespaceRight: "always"
+            },
+            semicolon: {
+              whitespaceLeft: "never",
+              whitespaceRight: "always"
+            }
           }
-        }
-      ]
-    }
-  });
-  deepContains(
-    messages,
-    [
+        ]
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "character-unspaced-punctuation",
         severity: 1,
@@ -175,9 +175,11 @@ test(`02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor
           ranges: [[38, 38, " "]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "-Les pommes ou les oranges ? -Les pommes !");
-});
+    ]);
+    t.equal(
+      applyFixes(str, messages),
+      "-Les pommes ou les oranges ? -Les pommes !"
+    );
+    t.end();
+  }
+);

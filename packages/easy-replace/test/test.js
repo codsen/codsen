@@ -1,12 +1,12 @@
-import test from "ava";
-import er from "../dist/easy-replace.esm";
+const t = require("tap");
+const er = require("../dist/easy-replace.cjs");
 
 // ==============================
 // only the string to search for
 // ==============================
 
-test("1.1 - replace letter with letter", t => {
-  t.is(
+t.test("1.1 - replace letter with letter", t => {
+  t.equal(
     er(
       "a b c",
       {
@@ -23,7 +23,7 @@ test("1.1 - replace letter with letter", t => {
     "a d c",
     "test 1.1"
   );
-  t.is(
+  t.equal(
     er(
       "a b c",
       {
@@ -34,10 +34,11 @@ test("1.1 - replace letter with letter", t => {
     "a d c",
     "test 1.1"
   );
+  t.end();
 });
 
-test("1.2 - replace 1 emoji with 1 emoji", t => {
-  t.is(
+t.test("1.2 - replace 1 emoji with 1 emoji", t => {
+  t.equal(
     er(
       "🐴 🦄 🐴",
       {
@@ -54,10 +55,11 @@ test("1.2 - replace 1 emoji with 1 emoji", t => {
     "🐴 💖 🐴",
     "test 1.2"
   );
+  t.end();
 });
 
-test("1.3 - replace 3 consecutive emoji with emoji", t => {
-  t.is(
+t.test("1.3 - replace 3 consecutive emoji with emoji", t => {
+  t.equal(
     er(
       "a 🦄🦄🦄 a",
       {
@@ -74,10 +76,11 @@ test("1.3 - replace 3 consecutive emoji with emoji", t => {
     "a 💖💖💖 a",
     "test 1.3"
   );
+  t.end();
 });
 
-test("1.4 - gorilla emoji - in escaped JS", t => {
-  t.is(
+t.test("1.4 - gorilla emoji - in escaped JS", t => {
+  t.equal(
     er(
       "ljghdfjkgzh\ud83e\udd8dlkgljd",
       {
@@ -94,10 +97,11 @@ test("1.4 - gorilla emoji - in escaped JS", t => {
     "ljghdfjkgzh Gorilla lkgljd",
     "test 1.4 - http://unicode-table.com/en/1F98D/"
   );
+  t.end();
 });
 
-test("1.5 - gorilla emoji - in raw", t => {
-  t.is(
+t.test("1.5 - gorilla emoji - in raw", t => {
+  t.equal(
     er(
       "ljghdfjkgzh🦍lkgljd",
       {
@@ -114,10 +118,11 @@ test("1.5 - gorilla emoji - in raw", t => {
     "ljghdfjkgzhgorillalkgljd",
     "test 1.5 - http://unicode-table.com/en/1F98D/"
   );
+  t.end();
 });
 
-test("1.6 - won't find a letter", t => {
-  t.is(
+t.test("1.6 - won't find a letter", t => {
+  t.equal(
     er(
       "a b c",
       {
@@ -134,10 +139,11 @@ test("1.6 - won't find a letter", t => {
     "a b c",
     "test 1.6"
   );
+  t.end();
 });
 
-test("1.7 - won't find emoji, with new lines", t => {
-  t.is(
+t.test("1.7 - won't find emoji, with new lines", t => {
+  t.equal(
     er(
       "a\nb\nc",
       {
@@ -154,10 +160,11 @@ test("1.7 - won't find emoji, with new lines", t => {
     "a\nb\nc",
     "test 1.7"
   );
+  t.end();
 });
 
-test("1.8 - replacement with new lines", t => {
-  t.is(
+t.test("1.8 - replacement with new lines", t => {
+  t.equal(
     er(
       "a\nb",
       {
@@ -174,10 +181,11 @@ test("1.8 - replacement with new lines", t => {
     "c\nd",
     "test 1.8"
   );
+  t.end();
 });
 
-test("1.9 - multiple letter findings", t => {
-  t.is(
+t.test("1.9 - multiple letter findings", t => {
+  t.equal(
     er(
       "a a a a a b",
       {
@@ -194,10 +202,11 @@ test("1.9 - multiple letter findings", t => {
     "c c c c c b",
     "test 1.9"
   );
+  t.end();
 });
 
-test("1.10 - single digit of string type replaced", t => {
-  t.is(
+t.test("1.10 - single digit of string type replaced", t => {
+  t.equal(
     er(
       "0",
       {
@@ -214,10 +223,11 @@ test("1.10 - single digit of string type replaced", t => {
     "1",
     "test 1.10"
   );
+  t.end();
 });
 
-test("1.11 - single digit of integer type replaced", t => {
-  t.is(
+t.test("1.11 - single digit of integer type replaced", t => {
+  t.equal(
     er(
       0,
       {
@@ -234,10 +244,11 @@ test("1.11 - single digit of integer type replaced", t => {
     "1",
     "test 1.11"
   );
+  t.end();
 });
 
-test("1.12 - source and replacement are of integer type", t => {
-  t.is(
+t.test("1.12 - source and replacement are of integer type", t => {
+  t.equal(
     er(
       0,
       {
@@ -254,10 +265,11 @@ test("1.12 - source and replacement are of integer type", t => {
     "1",
     "test 1.12"
   );
+  t.end();
 });
 
-test("1.13 - all raw integers: source, replacement and searchFor", t => {
-  t.is(
+t.test("1.13 - all raw integers: source, replacement and searchFor", t => {
+  t.equal(
     er(
       0,
       {
@@ -274,10 +286,11 @@ test("1.13 - all raw integers: source, replacement and searchFor", t => {
     "1",
     "test 1.13"
   );
+  t.end();
 });
 
-test("1.14 - multiple consecutive letter replacements", t => {
-  t.is(
+t.test("1.14 - multiple consecutive letter replacements", t => {
+  t.equal(
     er(
       "aaavvvvccccc",
       {
@@ -294,14 +307,15 @@ test("1.14 - multiple consecutive letter replacements", t => {
     "aaabbbbccccc",
     "test 1.14"
   );
+  t.end();
 });
 
 // ==============================
 // searchFor + leftMaybe
 // ==============================
 
-test("2.1 - left maybe found", t => {
-  t.is(
+t.test("2.1 - left maybe found", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -318,7 +332,7 @@ test("2.1 - left maybe found", t => {
     "ab🦄c",
     "test 2.1"
   );
-  t.is(
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -335,10 +349,11 @@ test("2.1 - left maybe found", t => {
     "ab🦄c",
     "test 2.1"
   );
+  t.end();
 });
 
-test("2.2 - two replacements with one leftmaybe, nearby", t => {
-  t.is(
+t.test("2.2 - two replacements with one leftmaybe, nearby", t => {
+  t.equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -355,7 +370,7 @@ test("2.2 - two replacements with one leftmaybe, nearby", t => {
     "abddc",
     "test 2.2"
   );
-  t.is(
+  t.equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -372,10 +387,11 @@ test("2.2 - two replacements with one leftmaybe, nearby", t => {
     "abddc",
     "test 2.2"
   );
+  t.end();
 });
 
-test("2.3 - two consecutive maybes found/replaced", t => {
-  t.is(
+t.test("2.3 - two consecutive maybes found/replaced", t => {
+  t.equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -392,7 +408,7 @@ test("2.3 - two consecutive maybes found/replaced", t => {
     "abddc",
     "test 2.3"
   );
-  t.is(
+  t.equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -409,10 +425,11 @@ test("2.3 - two consecutive maybes found/replaced", t => {
     "abddc",
     "test 2.3"
   );
+  t.end();
 });
 
-test("2.4 - futile left maybe", t => {
-  t.is(
+t.test("2.4 - futile left maybe", t => {
+  t.equal(
     er(
       "'🐴",
       {
@@ -429,7 +446,7 @@ test("2.4 - futile left maybe", t => {
     "'d",
     "test 2.4"
   );
-  t.is(
+  t.equal(
     er(
       "'🐴",
       {
@@ -446,10 +463,11 @@ test("2.4 - futile left maybe", t => {
     "'d",
     "test 2.4"
   );
+  t.end();
 });
 
-test("2.5 - line break as search string", t => {
-  t.is(
+t.test("2.5 - line break as search string", t => {
+  t.equal(
     er(
       "\n\n\n",
       {
@@ -466,10 +484,11 @@ test("2.5 - line break as search string", t => {
     "aaa",
     "test 2.5"
   );
+  t.end();
 });
 
-test("2.6 - line break as both searchFor and maybe replaced", t => {
-  t.is(
+t.test("2.6 - line break as both searchFor and maybe replaced", t => {
+  t.equal(
     er(
       "\n\n\n",
       {
@@ -486,7 +505,7 @@ test("2.6 - line break as both searchFor and maybe replaced", t => {
     "aaa",
     "test 2.6"
   );
-  t.is(
+  t.equal(
     er(
       "\n\n\n",
       {
@@ -503,10 +522,11 @@ test("2.6 - line break as both searchFor and maybe replaced", t => {
     "aaa",
     "test 2.6"
   );
+  t.end();
 });
 
-test("2.7 - operations on line breaks only", t => {
-  t.is(
+t.test("2.7 - operations on line breaks only", t => {
+  t.equal(
     er(
       "\n\n",
       {
@@ -523,10 +543,11 @@ test("2.7 - operations on line breaks only", t => {
     "\n",
     "test 2.7"
   );
+  t.end();
 });
 
-test("2.8 - three left maybes (found)", t => {
-  t.is(
+t.test("2.8 - three left maybes (found)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -543,10 +564,11 @@ test("2.8 - three left maybes (found)", t => {
     "ab🦄c",
     "test 2.8"
   );
+  t.end();
 });
 
-test("2.9 - three left maybes (not found)", t => {
-  t.is(
+t.test("2.9 - three left maybes (not found)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -563,10 +585,11 @@ test("2.9 - three left maybes (not found)", t => {
     "a🦄🐴🦄c",
     "test 2.9"
   );
+  t.end();
 });
 
-test("2.10 - three left maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("2.10 - three left maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "🐴 a🍺🦄🐴🦄c a🦄🍺🐴🦄c a🦄🐴🦄c a🍺🐴🦄c 🐴",
       {
@@ -583,7 +606,7 @@ test("2.10 - three left maybes (multiple hungry finds)", t => {
     "b a🍺b🦄c a🦄b🦄c ab🦄c ab🦄c b",
     "test 2.10.1"
   );
-  t.is(
+  t.equal(
     er(
       "🐴 a🍺🦄🐴🦄c a🦄🍺🐴🦄c a🦄🐴🦄c a🍺🐴🦄c 🐴",
       {
@@ -600,7 +623,7 @@ test("2.10 - three left maybes (multiple hungry finds)", t => {
     "b a🍺b🦄c a🦄b🦄c ab🦄c ab🦄c b",
     "test 2.10.2"
   );
-  t.is(
+  t.equal(
     er(
       "🐴 a🍺🦄🐴🦄c a🦄🍺🐴🦄c a🦄🐴🦄c a🍺🐴🦄c 🐴",
       {
@@ -617,13 +640,14 @@ test("2.10 - three left maybes (multiple hungry finds)", t => {
     "b a🍺b🦄c a🦄b🦄c ab🦄c ab🦄c b",
     "test 2.10.3"
   );
+  t.end();
 });
 // if leftMaybe is simply merged and not iterated, and is queried to exist
 // explicitly as string on the left side of the searchFor, it will not be found
 // if the order of array is wrong, yet characters are all the same.
 
-test("2.11 - sneaky array conversion situation", t => {
-  t.is(
+t.test("2.11 - sneaky array conversion situation", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -640,10 +664,11 @@ test("2.11 - sneaky array conversion situation", t => {
     "ab🦄c",
     "test 2.11"
   );
+  t.end();
 });
 
-test("2.12 - sneaky array conversion situation", t => {
-  t.is(
+t.test("2.12 - sneaky array conversion situation", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -660,10 +685,11 @@ test("2.12 - sneaky array conversion situation", t => {
     "ab🦄c",
     "test 2.12"
   );
+  t.end();
 });
 
-test("2.13 - normal words, few of them, leftMaybe as array", t => {
-  t.is(
+t.test("2.13 - normal words, few of them, leftMaybe as array", t => {
+  t.equal(
     er(
       "this emotion is really a promotion in motion",
       {
@@ -680,10 +706,11 @@ test("2.13 - normal words, few of them, leftMaybe as array", t => {
     "this test is really a test in test",
     "test 2.13"
   );
+  t.end();
 });
 
-test("2.14 - normal words, few of them, leftMaybe as array", t => {
-  t.is(
+t.test("2.14 - normal words, few of them, leftMaybe as array", t => {
+  t.equal(
     er(
       "this emotion is really a promotion in motion",
       {
@@ -700,10 +727,11 @@ test("2.14 - normal words, few of them, leftMaybe as array", t => {
     "this test is really a test in test",
     "test 2.14"
   );
+  t.end();
 });
 
-test("2.15 - leftMaybe is array, but with only 1 null value", t => {
-  t.is(
+t.test("2.15 - leftMaybe is array, but with only 1 null value", t => {
+  t.equal(
     er(
       "some text",
       {
@@ -720,10 +748,11 @@ test("2.15 - leftMaybe is array, but with only 1 null value", t => {
     "some text",
     "test 2.15"
   );
+  t.end();
 });
 
-test("2.16 - leftMaybe is array, but with only 1 null value", t => {
-  t.is(
+t.test("2.16 - leftMaybe is array, but with only 1 null value", t => {
+  t.equal(
     er(
       "some text",
       {
@@ -740,10 +769,11 @@ test("2.16 - leftMaybe is array, but with only 1 null value", t => {
     "some text",
     "test 2.16"
   );
+  t.end();
 });
 
-test("2.17 - leftMaybe is couple integers in an array", t => {
-  t.is(
+t.test("2.17 - leftMaybe is couple integers in an array", t => {
+  t.equal(
     er(
       "1234",
       {
@@ -760,10 +790,11 @@ test("2.17 - leftMaybe is couple integers in an array", t => {
     "129",
     "test 2.17"
   );
+  t.end();
 });
 
-test("2.18 - leftMaybe is couple integers in an array", t => {
-  t.is(
+t.test("2.18 - leftMaybe is couple integers in an array", t => {
+  t.equal(
     er(
       "1234",
       {
@@ -780,10 +811,11 @@ test("2.18 - leftMaybe is couple integers in an array", t => {
     "129",
     "test 2.18"
   );
+  t.end();
 });
 
-test("2.19 - sneaky case of overlapping leftMaybes", t => {
-  t.is(
+t.test("2.19 - sneaky case of overlapping leftMaybes", t => {
+  t.equal(
     er(
       "this is a word to be searched for",
       {
@@ -800,7 +832,7 @@ test("2.19 - sneaky case of overlapping leftMaybes", t => {
     "this is a word we look for",
     "test 2.19.1 - no flag"
   );
-  t.is(
+  t.equal(
     er(
       "this is a word To Be searched for",
       {
@@ -820,7 +852,7 @@ test("2.19 - sneaky case of overlapping leftMaybes", t => {
     "this is a word we look for",
     "test 2.19.2 - varying case"
   );
-  t.is(
+  t.equal(
     er(
       "this is a word To Be searched for",
       {
@@ -840,14 +872,15 @@ test("2.19 - sneaky case of overlapping leftMaybes", t => {
     "this is a word To Be we look for",
     "test 2.19.3"
   );
+  t.end();
 });
 
 // ==============================
 // searchFor + rightMaybe
 // ==============================
 
-test("3.1 - right maybe found", t => {
-  t.is(
+t.test("3.1 - right maybe found", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -864,7 +897,7 @@ test("3.1 - right maybe found", t => {
     "a🦄bc",
     "test 3.1.1"
   );
-  t.is(
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -881,10 +914,11 @@ test("3.1 - right maybe found", t => {
     "a🦄bc",
     "test 3.1.2"
   );
+  t.end();
 });
 
-test("3.2 - two replacements with one rightmaybe, nearby", t => {
-  t.is(
+t.test("3.2 - two replacements with one rightmaybe, nearby", t => {
+  t.equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -901,7 +935,7 @@ test("3.2 - two replacements with one rightmaybe, nearby", t => {
     "abddc",
     "test 3.2.1"
   );
-  t.is(
+  t.equal(
     er(
       "ab🐴🦄🐴c",
       {
@@ -918,10 +952,11 @@ test("3.2 - two replacements with one rightmaybe, nearby", t => {
     "abddc",
     "test 3.2.2"
   );
+  t.end();
 });
 
-test("3.3 - two consecutive right maybes", t => {
-  t.is(
+t.test("3.3 - two consecutive right maybes", t => {
+  t.equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -938,7 +973,7 @@ test("3.3 - two consecutive right maybes", t => {
     "abddc",
     "test 3.3.1"
   );
-  t.is(
+  t.equal(
     er(
       "ab🦄🐴🦄🐴c",
       {
@@ -955,10 +990,11 @@ test("3.3 - two consecutive right maybes", t => {
     "abddc",
     "test 3.3.2"
   );
+  t.end();
 });
 
-test("3.4 - futile right maybe", t => {
-  t.is(
+t.test("3.4 - futile right maybe", t => {
+  t.equal(
     er(
       "'🐴",
       {
@@ -975,7 +1011,7 @@ test("3.4 - futile right maybe", t => {
     "'d",
     "test 3.4.1"
   );
-  t.is(
+  t.equal(
     er(
       "'🐴",
       {
@@ -992,10 +1028,11 @@ test("3.4 - futile right maybe", t => {
     "'d",
     "test 3.4.2"
   );
+  t.end();
 });
 
-test("3.5 - \\n as search string plus right maybe", t => {
-  t.is(
+t.test("3.5 - \\n as search string plus right maybe", t => {
+  t.equal(
     er(
       "\na\n\n",
       {
@@ -1012,7 +1049,7 @@ test("3.5 - \\n as search string plus right maybe", t => {
     "aaa",
     "test 3.5.1"
   );
-  t.is(
+  t.equal(
     er(
       "\na\n\n",
       {
@@ -1029,10 +1066,11 @@ test("3.5 - \\n as search string plus right maybe", t => {
     "aaa",
     "test 3.5.2"
   );
+  t.end();
 });
 
-test("3.6 - \\n as both searchFor and right maybe, replaced", t => {
-  t.is(
+t.test("3.6 - \\n as both searchFor and right maybe, replaced", t => {
+  t.equal(
     er(
       "\n\n\n",
       {
@@ -1049,7 +1087,7 @@ test("3.6 - \\n as both searchFor and right maybe, replaced", t => {
     "aa",
     "test 3.6.1"
   );
-  t.is(
+  t.equal(
     er(
       "\n\n\n",
       {
@@ -1066,10 +1104,11 @@ test("3.6 - \\n as both searchFor and right maybe, replaced", t => {
     "aa",
     "test 3.6.2"
   );
+  t.end();
 });
 
-test("3.7 - rightMaybe with line breaks", t => {
-  t.is(
+t.test("3.7 - rightMaybe with line breaks", t => {
+  t.equal(
     er(
       "a\n\na",
       {
@@ -1086,7 +1125,7 @@ test("3.7 - rightMaybe with line breaks", t => {
     "b",
     "test 3.7.1"
   );
-  t.is(
+  t.equal(
     er(
       "a\n\na",
       {
@@ -1103,10 +1142,11 @@ test("3.7 - rightMaybe with line breaks", t => {
     "b",
     "test 3.7.2"
   );
+  t.end();
 });
 
-test("3.8 - specific case of semi infinite loop with maybe", t => {
-  t.is(
+t.test("3.8 - specific case of semi infinite loop with maybe", t => {
+  t.equal(
     er(
       "aaaaab",
       {
@@ -1123,7 +1163,7 @@ test("3.8 - specific case of semi infinite loop with maybe", t => {
     "aaaaa",
     "test 3.8.1"
   );
-  t.is(
+  t.equal(
     er(
       "aaaaab",
       {
@@ -1140,10 +1180,11 @@ test("3.8 - specific case of semi infinite loop with maybe", t => {
     "aaaaa",
     "test 3.8.2"
   );
+  t.end();
 });
 
-test("3.9 - three right maybes (some found)", t => {
-  t.is(
+t.test("3.9 - three right maybes (some found)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -1160,10 +1201,11 @@ test("3.9 - three right maybes (some found)", t => {
     "a🦄bc",
     "test 3.9"
   );
+  t.end();
 });
 
-test("3.10 - three right maybes (searchFor not found)", t => {
-  t.is(
+t.test("3.10 - three right maybes (searchFor not found)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -1180,10 +1222,11 @@ test("3.10 - three right maybes (searchFor not found)", t => {
     "a🦄🐴🦄c",
     "test 3.10"
   );
+  t.end();
 });
 
-test("3.11 - three right maybes (maybes not found)", t => {
-  t.is(
+t.test("3.11 - three right maybes (maybes not found)", t => {
+  t.equal(
     er(
       "🍺🦄🐴🦄c",
       {
@@ -1200,10 +1243,11 @@ test("3.11 - three right maybes (maybes not found)", t => {
     "1🦄🐴🦄c",
     "test 3.11"
   );
+  t.end();
 });
 
-test("3.12.1 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.12.1 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "🐴 ",
       {
@@ -1220,10 +1264,11 @@ test("3.12.1 - three right maybes (multiple hungry finds)", t => {
     "b ",
     "test 3.12.1"
   );
+  t.end();
 });
 
-test("3.13 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.13 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄🍺c",
       {
@@ -1240,10 +1285,11 @@ test("3.13 - three right maybes (multiple hungry finds)", t => {
     "a🦄b🍺c",
     "test 3.13"
   );
+  t.end();
 });
 
-test("3.14 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.14 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "a🦄🐴🍺🦄c",
       {
@@ -1260,10 +1306,11 @@ test("3.14 - three right maybes (multiple hungry finds)", t => {
     "a🦄b🦄c",
     "test 3.14"
   );
+  t.end();
 });
 
-test("3.15 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.15 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -1280,10 +1327,11 @@ test("3.15 - three right maybes (multiple hungry finds)", t => {
     "a🦄bc",
     "test 3.15"
   );
+  t.end();
 });
 
-test("3.16 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.16 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "a🦄🐴🦄🍺c a🦄🐴🍺🦄c a🦄🐴🦄c 🐴",
       {
@@ -1300,10 +1348,11 @@ test("3.16 - three right maybes (multiple hungry finds)", t => {
     "a🦄b🍺c a🦄b🦄c a🦄bc b",
     "test 3.16"
   );
+  t.end();
 });
 
-test("3.17 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.17 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
       {
@@ -1320,10 +1369,11 @@ test("3.17 - three right maybes (multiple hungry finds)", t => {
     "🦄b 🦄b 🦄b b",
     "test 3.17"
   );
+  t.end();
 });
 
-test("3.18 - three right maybes (multiple hungry finds)", t => {
-  t.is(
+t.test("3.18 - three right maybes (multiple hungry finds)", t => {
+  t.equal(
     er(
       "🦄y🦄 🦄y🦄 🦄y🦄 y",
       {
@@ -1340,13 +1390,14 @@ test("3.18 - three right maybes (multiple hungry finds)", t => {
     "🦄b 🦄b 🦄b b",
     "test 3.18"
   );
+  t.end();
 });
 // if leftMaybe is simply merged and not iterated, and is queried to exist
 // explicitly as string on the right side of the searchFor, it will not be
 // found if the order of array is wrong, yet characters are all the same.
 
-test("3.19 - sneaky array conversion situation", t => {
-  t.is(
+t.test("3.19 - sneaky array conversion situation", t => {
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -1363,7 +1414,7 @@ test("3.19 - sneaky array conversion situation", t => {
     "a🦄bc",
     "test 3.19-1"
   );
-  t.is(
+  t.equal(
     er(
       "a🦄🐴🦄c",
       {
@@ -1380,10 +1431,11 @@ test("3.19 - sneaky array conversion situation", t => {
     "a🦄bc",
     "test 3.19-2"
   );
+  t.end();
 });
 
-test("3.20 - normal words, few of them, rightMaybe as array", t => {
-  t.is(
+t.test("3.20 - normal words, few of them, rightMaybe as array", t => {
+  t.equal(
     er(
       "this protection is promoting the proper propaganda",
       {
@@ -1400,10 +1452,11 @@ test("3.20 - normal words, few of them, rightMaybe as array", t => {
     "this test is testing the tester test",
     "test 3.20"
   );
+  t.end();
 });
 
-test("3.21 - rightMaybe is array, but with only 1 null value", t => {
-  t.is(
+t.test("3.21 - rightMaybe is array, but with only 1 null value", t => {
+  t.equal(
     er(
       "some text",
       {
@@ -1420,10 +1473,11 @@ test("3.21 - rightMaybe is array, but with only 1 null value", t => {
     "some text",
     "test 3.21"
   );
+  t.end();
 });
 
-test("3.22 - rightMaybe is couple integers in an array", t => {
-  t.is(
+t.test("3.22 - rightMaybe is couple integers in an array", t => {
+  t.equal(
     er(
       "1234",
       {
@@ -1440,10 +1494,11 @@ test("3.22 - rightMaybe is couple integers in an array", t => {
     "194",
     "test 3.22"
   );
+  t.end();
 });
 
-test("3.23 - sneaky case of overlapping rightMaybes", t => {
-  t.is(
+t.test("3.23 - sneaky case of overlapping rightMaybes", t => {
+  t.equal(
     er(
       "this is a word to be searched for",
       {
@@ -1460,10 +1515,11 @@ test("3.23 - sneaky case of overlapping rightMaybes", t => {
     "this is a x searched for",
     "test 3.23"
   );
+  t.end();
 });
 
-test("3.24 - case-insensitive flag", t => {
-  t.is(
+t.test("3.24 - case-insensitive flag", t => {
+  t.equal(
     er(
       "aaaC",
       {
@@ -1483,14 +1539,15 @@ test("3.24 - case-insensitive flag", t => {
     "xC",
     "test 3.24"
   );
+  t.end();
 });
 
 // ==============================
 // searchFor + both left and right
 // ==============================
 
-test("4.1 - left and right maybes as emoji", t => {
-  t.is(
+t.test("4.1 - left and right maybes as emoji", t => {
+  t.equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -1507,7 +1564,7 @@ test("4.1 - left and right maybes as emoji", t => {
     "aza",
     "test 4.1.1"
   );
-  t.is(
+  t.equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -1524,10 +1581,11 @@ test("4.1 - left and right maybes as emoji", t => {
     "aza",
     "test 4.1.2"
   );
+  t.end();
 });
 
-test("4.2 - left and right maybes as text", t => {
-  t.is(
+t.test("4.2 - left and right maybes as text", t => {
+  t.equal(
     er(
       "abc abc abc",
       {
@@ -1544,7 +1602,7 @@ test("4.2 - left and right maybes as text", t => {
     "z z z",
     "test 4.2.1"
   );
-  t.is(
+  t.equal(
     er(
       "abc abc abc",
       {
@@ -1561,10 +1619,11 @@ test("4.2 - left and right maybes as text", t => {
     "z z z",
     "test 4.2.2"
   );
+  t.end();
 });
 
-test("4.3 - left+right maybes, middle & end of word #1", t => {
-  t.is(
+t.test("4.3 - left+right maybes, middle & end of word #1", t => {
+  t.equal(
     er(
       "zzzabc zzzzabczzz abczzzz",
       {
@@ -1581,10 +1640,11 @@ test("4.3 - left+right maybes, middle & end of word #1", t => {
     "zzzz zzzzzzzz zzzzz",
     "test 4.3"
   );
+  t.end();
 });
 
-test("4.4 - left+right maybes, middle & end of word #2", t => {
-  t.is(
+t.test("4.4 - left+right maybes, middle & end of word #2", t => {
+  t.equal(
     er(
       "zzz🦄🐴🦄 zzzz🦄🐴🦄zzz 🦄🐴🦄zzzz",
       {
@@ -1601,10 +1661,11 @@ test("4.4 - left+right maybes, middle & end of word #2", t => {
     "zzzz zzzzzzzz zzzzz",
     "test 4.4"
   );
+  t.end();
 });
 
-test("4.5 - normal words", t => {
-  t.is(
+t.test("4.5 - normal words", t => {
+  t.equal(
     er(
       "aaa some test text testing for somebody",
       {
@@ -1621,14 +1682,15 @@ test("4.5 - normal words", t => {
     "aaa check check check for somebody",
     "test 4.5"
   );
+  t.end();
 });
 
 // ==============================
 // searchFor + only outsides
 // ==============================
 
-test("5.1 - both outsides only, emoji, found", t => {
-  t.is(
+t.test("5.1 - both outsides only, emoji, found", t => {
+  t.equal(
     er(
       "🦄 🐴 🦄",
       {
@@ -1645,7 +1707,7 @@ test("5.1 - both outsides only, emoji, found", t => {
     "🦄 z 🦄",
     "test 5.1.1"
   );
-  t.is(
+  t.equal(
     er(
       "🦄 🐴 🦄",
       {
@@ -1662,10 +1724,11 @@ test("5.1 - both outsides only, emoji, found", t => {
     "🦄 z 🦄",
     "test 5.1.2"
   );
+  t.end();
 });
 
-test("5.2 - both outsides only, emoji, not found", t => {
-  t.is(
+t.test("5.2 - both outsides only, emoji, not found", t => {
+  t.equal(
     er(
       "a 🐴 a",
       {
@@ -1682,10 +1745,11 @@ test("5.2 - both outsides only, emoji, not found", t => {
     "a 🐴 a",
     "test 5.2"
   );
+  t.end();
 });
 
-test("5.3 - both outsides, emoji, not found", t => {
-  t.is(
+t.test("5.3 - both outsides, emoji, not found", t => {
+  t.equal(
     er(
       "🦄 🐴 a",
       {
@@ -1702,10 +1766,11 @@ test("5.3 - both outsides, emoji, not found", t => {
     "🦄 🐴 a",
     "test 5.3"
   );
+  t.end();
 });
 
-test("5.4 - both outsides, emoji, not found #1", t => {
-  t.is(
+t.test("5.4 - both outsides, emoji, not found #1", t => {
+  t.equal(
     er(
       "a 🐴 a🦄",
       {
@@ -1722,10 +1787,11 @@ test("5.4 - both outsides, emoji, not found #1", t => {
     "a 🐴 a🦄",
     "test 5.4"
   );
+  t.end();
 });
 
-test("5.5 - both outsides, emoji, not found #2", t => {
-  t.is(
+t.test("5.5 - both outsides, emoji, not found #2", t => {
+  t.equal(
     er(
       "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
       {
@@ -1742,10 +1808,11 @@ test("5.5 - both outsides, emoji, not found #2", t => {
     "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
     "test 5.5"
   );
+  t.end();
 });
 
-test("5.6 - line break as rightOutside, found", t => {
-  t.is(
+t.test("5.6 - line break as rightOutside, found", t => {
+  t.equal(
     er(
       "aaab\n",
       {
@@ -1762,10 +1829,11 @@ test("5.6 - line break as rightOutside, found", t => {
     "aaac\n",
     "test 5.6"
   );
+  t.end();
 });
 
-test("5.7 - line breaks as both outsides", t => {
-  t.is(
+t.test("5.7 - line breaks as both outsides", t => {
+  t.equal(
     er(
       "aaa\nb\n",
       {
@@ -1782,10 +1850,11 @@ test("5.7 - line breaks as both outsides", t => {
     "aaa\nc\n",
     "test 5.7"
   );
+  t.end();
 });
 
-test("5.8 - \\n as outsides, replacement = undefined", t => {
-  t.is(
+t.test("5.8 - \\n as outsides, replacement = undefined", t => {
+  t.equal(
     er(
       "aaa\nb\n",
       {
@@ -1802,10 +1871,11 @@ test("5.8 - \\n as outsides, replacement = undefined", t => {
     "aaa\n\n",
     "test 5.8"
   );
+  t.end();
 });
 
-test("5.9 - line breaks as outsides, replacement = Bool", t => {
-  t.is(
+t.test("5.9 - line breaks as outsides, replacement = Bool", t => {
+  t.equal(
     er(
       "aaa\nb\n",
       {
@@ -1822,10 +1892,11 @@ test("5.9 - line breaks as outsides, replacement = Bool", t => {
     "aaa\n\n",
     "test 5.9"
   );
+  t.end();
 });
 
-test("5.10 - line breaks as outsides, replacement = null", t => {
-  t.is(
+t.test("5.10 - line breaks as outsides, replacement = null", t => {
+  t.equal(
     er(
       "aaa\nb\n",
       {
@@ -1842,54 +1913,63 @@ test("5.10 - line breaks as outsides, replacement = null", t => {
     "aaa\n\n",
     "test 5.10"
   );
+  t.end();
 });
 
-test("5.11 - left outside requirement not satisfied for replacement to happen", t => {
-  t.is(
-    er("aaaBBBccc", {
-      leftOutsideNot: "",
-      leftOutside: "x",
-      leftMaybe: "",
-      searchFor: "bbb",
-      rightMaybe: "",
-      rightOutside: "z",
-      rightOutsideNot: "",
-      i: {
-        searchFor: true,
-        leftOutside: true
-      }
-    }),
-    "aaaBBBccc",
-    "test 5.11 - did not replace because of o.leftOutside"
-  );
-});
+t.test(
+  "5.11 - left outside requirement not satisfied for replacement to happen",
+  t => {
+    t.equal(
+      er("aaaBBBccc", {
+        leftOutsideNot: "",
+        leftOutside: "x",
+        leftMaybe: "",
+        searchFor: "bbb",
+        rightMaybe: "",
+        rightOutside: "z",
+        rightOutsideNot: "",
+        i: {
+          searchFor: true,
+          leftOutside: true
+        }
+      }),
+      "aaaBBBccc",
+      "test 5.11 - did not replace because of o.leftOutside"
+    );
+    t.end();
+  }
+);
 
-test("5.12 - right outside requirement not satisfied for replacement to happen", t => {
-  t.is(
-    er("aaaBBBccc", {
-      leftOutsideNot: "",
-      leftOutside: "x",
-      leftMaybe: "",
-      searchFor: "bbb",
-      rightMaybe: "",
-      rightOutside: "z",
-      rightOutsideNot: "",
-      i: {
-        searchFor: true,
-        rightOutside: true
-      }
-    }),
-    "aaaBBBccc",
-    "test 5.12 - did not replace because of o.rightOutside"
-  );
-});
+t.test(
+  "5.12 - right outside requirement not satisfied for replacement to happen",
+  t => {
+    t.equal(
+      er("aaaBBBccc", {
+        leftOutsideNot: "",
+        leftOutside: "x",
+        leftMaybe: "",
+        searchFor: "bbb",
+        rightMaybe: "",
+        rightOutside: "z",
+        rightOutsideNot: "",
+        i: {
+          searchFor: true,
+          rightOutside: true
+        }
+      }),
+      "aaaBBBccc",
+      "test 5.12 - did not replace because of o.rightOutside"
+    );
+    t.end();
+  }
+);
 
 // ==============================
 // searchFor + maybes + outsides
 // ==============================
 
-test("6.1 - maybes and outsides, emoji - full set", t => {
-  t.is(
+t.test("6.1 - maybes and outsides, emoji - full set", t => {
+  t.equal(
     er(
       "a🦄🐴💘b",
       {
@@ -1906,10 +1986,11 @@ test("6.1 - maybes and outsides, emoji - full set", t => {
     "a🌟b",
     "test 6.1"
   );
+  t.end();
 });
 
-test("6.2 - maybes + outsides - 1 of maybes not found #1", t => {
-  t.is(
+t.test("6.2 - maybes + outsides - 1 of maybes not found #1", t => {
+  t.equal(
     er(
       "a🦄🐴b",
       {
@@ -1926,10 +2007,11 @@ test("6.2 - maybes + outsides - 1 of maybes not found #1", t => {
     "a🌟b",
     "test 6.2"
   );
+  t.end();
 });
 
-test("6.3 - maybes + outsides - 1 of maybes not found #2", t => {
-  t.is(
+t.test("6.3 - maybes + outsides - 1 of maybes not found #2", t => {
+  t.equal(
     er(
       "a🐴💘b",
       {
@@ -1946,10 +2028,11 @@ test("6.3 - maybes + outsides - 1 of maybes not found #2", t => {
     "a🌟b",
     "test 6.3"
   );
+  t.end();
 });
 
-test("6.4 - maybes and outsides, emoji - neither of maybes", t => {
-  t.is(
+t.test("6.4 - maybes and outsides, emoji - neither of maybes", t => {
+  t.equal(
     er(
       "a🐴b",
       {
@@ -1966,10 +2049,11 @@ test("6.4 - maybes and outsides, emoji - neither of maybes", t => {
     "a🌟b",
     "test 6.4"
   );
+  t.end();
 });
 
-test("6.5 - multiple findings with maybes and outsides", t => {
-  t.is(
+t.test("6.5 - multiple findings with maybes and outsides", t => {
+  t.equal(
     er(
       "a🦄🐴💘b a🦄🐴💘b a🦄🐴💘b",
       {
@@ -1986,10 +2070,11 @@ test("6.5 - multiple findings with maybes and outsides", t => {
     "a🌟b a🌟b a🌟b",
     "test 6.5"
   );
+  t.end();
 });
 
-test("6.6 - multiple findings with maybes and not-outsides", t => {
-  t.is(
+t.test("6.6 - multiple findings with maybes and not-outsides", t => {
+  t.equal(
     er(
       "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🦄🐴💘z",
       {
@@ -2006,10 +2091,11 @@ test("6.6 - multiple findings with maybes and not-outsides", t => {
     "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🌟z",
     "test 6.6"
   );
+  t.end();
 });
 
-test("6.7 - maybes and outsides, arrays", t => {
-  t.is(
+t.test("6.7 - maybes and outsides, arrays", t => {
+  t.equal(
     er(
       "a🦄🐴💘b a💘🐴🦄b a🦄🐴🦄b a💘🐴💘b",
       {
@@ -2026,14 +2112,15 @@ test("6.7 - maybes and outsides, arrays", t => {
     "a🌟b a🌟b a🌟b a🌟b",
     "test 6.7"
   );
+  t.end();
 });
 
 // ==============================
 // no searchFor + no maybes + outsides
 // ==============================
 
-test("7.1 - one rightOutside, not found", t => {
-  t.is(
+t.test("7.1 - one rightOutside, not found", t => {
+  t.equal(
     er(
       "aaa🦄a bbbb🦄 cccc🦄",
       {
@@ -2050,10 +2137,11 @@ test("7.1 - one rightOutside, not found", t => {
     "aaa🦄a bbbb🦄 cccc🦄",
     "test 7.1"
   );
+  t.end();
 });
 
-test("7.2 - one leftOutside, not found", t => {
-  t.is(
+t.test("7.2 - one leftOutside, not found", t => {
+  t.equal(
     er(
       "🦄aaaa 🦄bbbb 🦄cccc",
       {
@@ -2070,10 +2158,11 @@ test("7.2 - one leftOutside, not found", t => {
     "🦄aaaa 🦄bbbb 🦄cccc",
     "test 7.2"
   );
+  t.end();
 });
 
-test("7.3 - one leftOutside, not found + null replacement", t => {
-  t.is(
+t.test("7.3 - one leftOutside, not found + null replacement", t => {
+  t.equal(
     er(
       "aa🦄aa bb🦄bb cc🦄cc",
       {
@@ -2090,10 +2179,11 @@ test("7.3 - one leftOutside, not found + null replacement", t => {
     "aa🦄aa bb🦄bb cc🦄cc",
     "test 7.3"
   );
+  t.end();
 });
 
-test("7.4 - leftOutside and replacement are null", t => {
-  t.is(
+t.test("7.4 - leftOutside and replacement are null", t => {
+  t.equal(
     er(
       "aaaa bbbb cccc",
       {
@@ -2104,10 +2194,11 @@ test("7.4 - leftOutside and replacement are null", t => {
     "aaaa bbbb cccc",
     "test 7.4"
   );
+  t.end();
 });
 
-test("7.5 - left outside and replacement are undefined", t => {
-  t.is(
+t.test("7.5 - left outside and replacement are undefined", t => {
+  t.equal(
     er(
       "aaaa bbbb cccc",
       {
@@ -2118,14 +2209,15 @@ test("7.5 - left outside and replacement are undefined", t => {
     "aaaa bbbb cccc",
     "test 7.5"
   );
+  t.end();
 });
 
 // ==============================
 // infinite loop cases
 // ==============================
 
-test("8.1 - infinite loop, no maybes, emoji", t => {
-  t.is(
+t.test("8.1 - infinite loop, no maybes, emoji", t => {
+  t.equal(
     er(
       "🐴🦄🐴🦄🐴",
       {
@@ -2142,10 +2234,11 @@ test("8.1 - infinite loop, no maybes, emoji", t => {
     "🐴🦄🐴🦄🐴",
     "test 8.1"
   );
+  t.end();
 });
 
-test("8.2 - infinite loop, maybes, multiple findings, emoji", t => {
-  t.is(
+t.test("8.2 - infinite loop, maybes, multiple findings, emoji", t => {
+  t.equal(
     er(
       "🐴🦄🐴🦄🐴",
       {
@@ -2162,10 +2255,11 @@ test("8.2 - infinite loop, maybes, multiple findings, emoji", t => {
     "🐴🐴🐴",
     "test 8.2"
   );
+  t.end();
 });
 
-test("8.3 - infinite loop protection, emoji replaced with itself", t => {
-  t.is(
+t.test("8.3 - infinite loop protection, emoji replaced with itself", t => {
+  t.equal(
     er(
       "🐴",
       {
@@ -2182,10 +2276,11 @@ test("8.3 - infinite loop protection, emoji replaced with itself", t => {
     "🐴",
     "test 8.3"
   );
+  t.end();
 });
 
-test("8.4 - infinite loop protection, right outside", t => {
-  t.is(
+t.test("8.4 - infinite loop protection, right outside", t => {
+  t.equal(
     er(
       "🐴🦄🐴🦄🐴",
       {
@@ -2202,10 +2297,11 @@ test("8.4 - infinite loop protection, right outside", t => {
     "🐴🦄🐴🦄🐴",
     "test 8.4"
   );
+  t.end();
 });
 
-test("8.5 - infinite loop protection, multiples", t => {
-  t.is(
+t.test("8.5 - infinite loop protection, multiples", t => {
+  t.equal(
     er(
       "🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🦄🦄🦄",
       {
@@ -2222,10 +2318,11 @@ test("8.5 - infinite loop protection, multiples", t => {
     "🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🌟🦄",
     "test 8.5"
   );
+  t.end();
 });
 
-test("8.6 - simple infinite loop case", t => {
-  t.is(
+t.test("8.6 - simple infinite loop case", t => {
+  t.equal(
     er(
       "a",
       {
@@ -2242,10 +2339,11 @@ test("8.6 - simple infinite loop case", t => {
     "a",
     "test 8.6"
   );
+  t.end();
 });
 
-test("8.7 - infinite loop, not found", t => {
-  t.is(
+t.test("8.7 - infinite loop, not found", t => {
+  t.equal(
     er(
       "",
       {
@@ -2262,14 +2360,15 @@ test("8.7 - infinite loop, not found", t => {
     "",
     "test 8.7"
   );
+  t.end();
 });
 
 // ==============================
 // missing searchFor value
 // ==============================
 
-test("9.1 - source present, missing searchFor", t => {
-  t.is(
+t.test("9.1 - source present, missing searchFor", t => {
+  t.equal(
     er(
       "aaa",
       {
@@ -2286,10 +2385,11 @@ test("9.1 - source present, missing searchFor", t => {
     "aaa",
     "test 9.1"
   );
+  t.end();
 });
 
-test("9.2 - everything is missing", t => {
-  t.is(
+t.test("9.2 - everything is missing", t => {
+  t.equal(
     er(
       "",
       {
@@ -2306,26 +2406,31 @@ test("9.2 - everything is missing", t => {
     "",
     "test 9.2"
   );
+  t.end();
 });
 
-test("9.3 - everything seriously missing", t => {
-  t.is(er("", {}, ""), "", "test 9.3");
+t.test("9.3 - everything seriously missing", t => {
+  t.equal(er("", {}, ""), "", "test 9.3");
+  t.end();
 });
 
-test("9.4 - everything extremely seriously missing", t => {
-  t.is(er("", {}), "", "test 9.4");
+t.test("9.4 - everything extremely seriously missing", t => {
+  t.equal(er("", {}), "", "test 9.4");
+  t.end();
 });
 
-test("9.5 - everything truly extremely seriously missing", t => {
-  t.is(er(""), "", "test 9.5");
+t.test("9.5 - everything truly extremely seriously missing", t => {
+  t.equal(er(""), "", "test 9.5");
+  t.end();
 });
 
-test("9.6 - everything really truly extremely seriously missing", t => {
-  t.is(er(), "", "test 9.6");
+t.test("9.6 - everything really truly extremely seriously missing", t => {
+  t.equal(er(), "", "test 9.6");
+  t.end();
 });
 
-test("9.7 - leftOutsideNot blocking rightOutsideNot being empty", t => {
-  t.is(
+t.test("9.7 - leftOutsideNot blocking rightOutsideNot being empty", t => {
+  t.equal(
     er(
       "ab a",
       {
@@ -2342,10 +2447,11 @@ test("9.7 - leftOutsideNot blocking rightOutsideNot being empty", t => {
     "ab x",
     "test 9.7"
   );
+  t.end();
 });
 
-test("9.8 - leftOutsideNot is blank array", t => {
-  t.is(
+t.test("9.8 - leftOutsideNot is blank array", t => {
+  t.equal(
     er(
       "ab a",
       {
@@ -2362,10 +2468,11 @@ test("9.8 - leftOutsideNot is blank array", t => {
     "ab x",
     "test 9.8"
   );
+  t.end();
 });
 
-test("9.9 - missing key in properties obj", t => {
-  t.is(
+t.test("9.9 - missing key in properties obj", t => {
+  t.equal(
     er(
       "ab a",
       {
@@ -2381,14 +2488,15 @@ test("9.9 - missing key in properties obj", t => {
     "ab x",
     "test 9.9"
   );
+  t.end();
 });
 
 // ==============================
 // missing replacement value = asking for delete mode
 // ==============================
 
-test("10.1 - empty string as replacement = deletion mode", t => {
-  t.is(
+t.test("10.1 - empty string as replacement = deletion mode", t => {
+  t.equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -2405,10 +2513,11 @@ test("10.1 - empty string as replacement = deletion mode", t => {
     "aa",
     "test 10.1"
   );
+  t.end();
 });
 
-test("10.2 - null as replacement = deletion mode", t => {
-  t.is(
+t.test("10.2 - null as replacement = deletion mode", t => {
+  t.equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -2425,10 +2534,11 @@ test("10.2 - null as replacement = deletion mode", t => {
     "aa",
     "test 10.2"
   );
+  t.end();
 });
 
-test("10.3 - replacement bool, nothing left", t => {
-  t.is(
+t.test("10.3 - replacement bool, nothing left", t => {
+  t.equal(
     er(
       "🐴",
       {
@@ -2445,10 +2555,11 @@ test("10.3 - replacement bool, nothing left", t => {
     "",
     "test 10.3"
   );
+  t.end();
 });
 
-test("10.4 - replacement Bool, nothing left, searchFor Integer", t => {
-  t.is(
+t.test("10.4 - replacement Bool, nothing left, searchFor Integer", t => {
+  t.equal(
     er(
       "2",
       {
@@ -2465,10 +2576,11 @@ test("10.4 - replacement Bool, nothing left, searchFor Integer", t => {
     "",
     "test 10.4"
   );
+  t.end();
 });
 
-test("10.5 - nothing left, replacement undefined", t => {
-  t.is(
+t.test("10.5 - nothing left, replacement undefined", t => {
+  t.equal(
     er(
       "fljlh fdlg ldfhgl abc aldjsdlflkjd ljfl fgklh fl",
       {
@@ -2485,10 +2597,11 @@ test("10.5 - nothing left, replacement undefined", t => {
     "",
     "test 10.5"
   );
+  t.end();
 });
 
-test("10.6 - nothing left - more undefined", t => {
-  t.is(
+t.test("10.6 - nothing left - more undefined", t => {
+  t.equal(
     er(
       "zzz",
       {
@@ -2505,10 +2618,11 @@ test("10.6 - nothing left - more undefined", t => {
     "",
     "test 10.6"
   );
+  t.end();
 });
 
-test("10.7 - emoji, null replacement, both outsides found", t => {
-  t.is(
+t.test("10.7 - emoji, null replacement, both outsides found", t => {
+  t.equal(
     er(
       "a🦄🐴🦄a",
       {
@@ -2525,10 +2639,11 @@ test("10.7 - emoji, null replacement, both outsides found", t => {
     "a🦄🦄a",
     "test 10.7"
   );
+  t.end();
 });
 
-test("10.8 - raw integers everywhere must work too", t => {
-  t.is(
+t.test("10.8 - raw integers everywhere must work too", t => {
+  t.equal(
     er(
       6,
       {
@@ -2545,10 +2660,11 @@ test("10.8 - raw integers everywhere must work too", t => {
     "9",
     "test 10.8"
   );
+  t.end();
 });
 
-test("10.9 - searchFor is an array of 1 element", t => {
-  t.is(
+t.test("10.9 - searchFor is an array of 1 element", t => {
+  t.equal(
     er(
       "a b c",
       {
@@ -2565,10 +2681,11 @@ test("10.9 - searchFor is an array of 1 element", t => {
     "a d c",
     "test 10.9"
   );
+  t.end();
 });
 
-test("10.10 - searchFor is an array of few elements (no find)", t => {
-  t.is(
+t.test("10.10 - searchFor is an array of few elements (no find)", t => {
+  t.equal(
     er(
       "a b c",
       {
@@ -2585,10 +2702,11 @@ test("10.10 - searchFor is an array of few elements (no find)", t => {
     "a b c",
     "test 10.10"
   );
+  t.end();
 });
 
-test("10.11 - searchFor is an array of few elements (won't work)", t => {
-  t.is(
+t.test("10.11 - searchFor is an array of few elements (won't work)", t => {
+  t.equal(
     er(
       "a bx c",
       {
@@ -2605,14 +2723,15 @@ test("10.11 - searchFor is an array of few elements (won't work)", t => {
     "a bx c",
     "test 10.11"
   );
+  t.end();
 });
 
 // ==============================
 // outsides
 // ==============================
 
-test("11.1 - left and right outsides as arrays (majority found)", t => {
-  t.is(
+t.test("11.1 - left and right outsides as arrays (majority found)", t => {
+  t.equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
       {
@@ -2629,10 +2748,11 @@ test("11.1 - left and right outsides as arrays (majority found)", t => {
     "🐴 a🦄c💘a a💘c🦄a a💘c💘a a🦄c🦄a 🐴",
     "test 11.1"
   );
+  t.end();
 });
 
-test("11.2 - left and right outsides as arrays (one found)", t => {
-  t.is(
+t.test("11.2 - left and right outsides as arrays (one found)", t => {
+  t.equal(
     er(
       "🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
       {
@@ -2649,10 +2769,11 @@ test("11.2 - left and right outsides as arrays (one found)", t => {
     "🐴 a🦄c💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
     "test 11.2"
   );
+  t.end();
 });
 
-test("11.3 - outsides as arrays, beyond found maybes", t => {
-  t.is(
+t.test("11.3 - outsides as arrays, beyond found maybes", t => {
+  t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -2669,10 +2790,11 @@ test("11.3 - outsides as arrays, beyond found maybes", t => {
     "🦄🐴 aca aca aca aca 🐴🦄",
     "test 11.3"
   );
+  t.end();
 });
 
-test("11.4 - outsides as arrays blocking maybes", t => {
-  t.is(
+t.test("11.4 - outsides as arrays blocking maybes", t => {
+  t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -2689,10 +2811,11 @@ test("11.4 - outsides as arrays blocking maybes", t => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.4"
   );
+  t.end();
 });
 
-test("11.5 - maybes matching outsides, blocking them", t => {
-  t.is(
+t.test("11.5 - maybes matching outsides, blocking them", t => {
+  t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -2709,10 +2832,11 @@ test("11.5 - maybes matching outsides, blocking them", t => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.5"
   );
+  t.end();
 });
 
-test("11.6 - maybes matching outsides, blocking them", t => {
-  t.is(
+t.test("11.6 - maybes matching outsides, blocking them", t => {
+  t.equal(
     er(
       "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
       {
@@ -2729,10 +2853,11 @@ test("11.6 - maybes matching outsides, blocking them", t => {
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
     "test 11.6"
   );
+  t.end();
 });
 
-test("11.6 - maybes matching outsides, found", t => {
-  t.is(
+t.test("11.6 - maybes matching outsides, found", t => {
+  t.equal(
     er(
       "🦄🐴🦄 a💘🦄🐴💘🦄a a🦄💘🐴🦄💘a a💘💘🐴💘💘a a🦄🦄🐴🦄🦄a 🦄🐴🦄",
       {
@@ -2749,10 +2874,11 @@ test("11.6 - maybes matching outsides, found", t => {
     "🦄🐴🦄 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🦄🐴🦄",
     "test 11.6"
   );
+  t.end();
 });
 
-test("11.6 - maybes matching outsides, mismatching", t => {
-  t.is(
+t.test("11.6 - maybes matching outsides, mismatching", t => {
+  t.equal(
     er(
       "🍺🐴🍺 a💘🍺🐴🌟🦄a a🦄🌟🐴🍺💘a a💘🌟🐴🌟💘a a🦄🍺🐴🍺🦄a 🌟🐴🌟",
       {
@@ -2769,10 +2895,11 @@ test("11.6 - maybes matching outsides, mismatching", t => {
     "🍺🐴🍺 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🌟🐴🌟",
     "test 11.6"
   );
+  t.end();
 });
 
-test("11.7 - rightOutside & with case-insensitive flag", t => {
-  t.is(
+t.test("11.7 - rightOutside & with case-insensitive flag", t => {
+  t.equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -2789,7 +2916,7 @@ test("11.7 - rightOutside & with case-insensitive flag", t => {
     "aaaBBBccc aaazzzCCC aaaCCC",
     "test 11.7.1 - nothing matches, without flag"
   );
-  t.is(
+  t.equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -2809,7 +2936,7 @@ test("11.7 - rightOutside & with case-insensitive flag", t => {
     "aaaBBBccc aaazzzCCC aaaCCC",
     "test 11.7.2 - nothing matches, with flag"
   );
-  t.is(
+  t.equal(
     er(
       "aaaBBBccc aaazzzCCC aaaCCC",
       {
@@ -2829,14 +2956,15 @@ test("11.7 - rightOutside & with case-insensitive flag", t => {
     "aaaBBBccc aaazzzCCC !CCC",
     "test 11.7.3 - one match, with flag"
   );
+  t.end();
 });
 
 // ==============================
 // outsideNot's
 // ==============================
 
-test("12.1 - rightOutsideNot satisfied thus not replaced", t => {
-  t.is(
+t.test("12.1 - rightOutsideNot satisfied thus not replaced", t => {
+  t.equal(
     er(
       "🐴a",
       {
@@ -2853,7 +2981,7 @@ test("12.1 - rightOutsideNot satisfied thus not replaced", t => {
     "🐴a",
     "test 12.1.1"
   );
-  t.is(
+  t.equal(
     er(
       "🐴a",
       {
@@ -2870,10 +2998,11 @@ test("12.1 - rightOutsideNot satisfied thus not replaced", t => {
     "🐴a",
     "test 12.1.2"
   );
+  t.end();
 });
 
-test("12.2 - outsideNot left satisfied thus not replaced", t => {
-  t.is(
+t.test("12.2 - outsideNot left satisfied thus not replaced", t => {
+  t.equal(
     er(
       "a🐴",
       {
@@ -2890,7 +3019,7 @@ test("12.2 - outsideNot left satisfied thus not replaced", t => {
     "a🐴",
     "test 12.2.1"
   );
-  t.is(
+  t.equal(
     er(
       "a🐴",
       {
@@ -2907,10 +3036,11 @@ test("12.2 - outsideNot left satisfied thus not replaced", t => {
     "a🐴",
     "test 12.2.2"
   );
+  t.end();
 });
 
-test("12.3 - outsideNot's satisfied thus not replaced", t => {
-  t.is(
+t.test("12.3 - outsideNot's satisfied thus not replaced", t => {
+  t.equal(
     er(
       "a🐴a",
       {
@@ -2927,10 +3057,11 @@ test("12.3 - outsideNot's satisfied thus not replaced", t => {
     "a🐴a",
     "test 12.3"
   );
+  t.end();
 });
 
-test("12.4 - outsideNot's not satisfied, with 1 maybe replaced", t => {
-  t.is(
+t.test("12.4 - outsideNot's not satisfied, with 1 maybe replaced", t => {
+  t.equal(
     er(
       "zb🐴y",
       {
@@ -2947,10 +3078,11 @@ test("12.4 - outsideNot's not satisfied, with 1 maybe replaced", t => {
     "z🦄y",
     "test 12.4"
   );
+  t.end();
 });
 
-test("12.5 - leftOutsideNot blocked positive leftMaybe", t => {
-  t.is(
+t.test("12.5 - leftOutsideNot blocked positive leftMaybe", t => {
+  t.equal(
     er(
       "zb🐴y",
       {
@@ -2967,10 +3099,11 @@ test("12.5 - leftOutsideNot blocked positive leftMaybe", t => {
     "zb🐴y",
     "test 12.5"
   );
+  t.end();
 });
 
-test("12.6 - rightOutsideNot blocked both L-R maybes", t => {
-  t.is(
+t.test("12.6 - rightOutsideNot blocked both L-R maybes", t => {
+  t.equal(
     er(
       "zb🐴cy",
       {
@@ -2987,10 +3120,11 @@ test("12.6 - rightOutsideNot blocked both L-R maybes", t => {
     "zb🐴cy",
     "test 12.6"
   );
+  t.end();
 });
 
-test("12.7 - rightOutsideNot last char goes outside", t => {
-  t.is(
+t.test("12.7 - rightOutsideNot last char goes outside", t => {
+  t.equal(
     er(
       "cccccccca",
       {
@@ -3007,10 +3141,11 @@ test("12.7 - rightOutsideNot last char goes outside", t => {
     "ccccccccb",
     "test 12.7"
   );
+  t.end();
 });
 
-test("12.8 - right maybe is last char, outsideNot satisfied", t => {
-  t.is(
+t.test("12.8 - right maybe is last char, outsideNot satisfied", t => {
+  t.equal(
     er(
       "cccccccca",
       {
@@ -3027,10 +3162,11 @@ test("12.8 - right maybe is last char, outsideNot satisfied", t => {
     "cccccccc",
     "test 12.8"
   );
+  t.end();
 });
 
-test("12.9 - real life scenario, missing semicol on nbsp #1", t => {
-  t.is(
+t.test("12.9 - real life scenario, missing semicol on nbsp #1", t => {
+  t.equal(
     er(
       "&nbsp; &nbsp &nbsp",
       {
@@ -3047,10 +3183,11 @@ test("12.9 - real life scenario, missing semicol on nbsp #1", t => {
     "&nbsp; &nbsp; &nbsp;",
     "test 12.9"
   );
+  t.end();
 });
 
-test("12.10 - real life scenario, missing semicol on nbsp #2", t => {
-  t.is(
+t.test("12.10 - real life scenario, missing semicol on nbsp #2", t => {
+  t.equal(
     er(
       "&nbsp;&nbsp&nbsp",
       {
@@ -3067,10 +3204,11 @@ test("12.10 - real life scenario, missing semicol on nbsp #2", t => {
     "&nbsp;&nbsp;&nbsp;",
     "test 12.10"
   );
+  t.end();
 });
 
-test("12.11 - real life scenario, missing ampersand, text", t => {
-  t.is(
+t.test("12.11 - real life scenario, missing ampersand, text", t => {
+  t.equal(
     er(
       "tralalalanbsp;nbsp;&nbsp;",
       {
@@ -3087,10 +3225,11 @@ test("12.11 - real life scenario, missing ampersand, text", t => {
     "tralalala&nbsp;&nbsp;&nbsp;",
     "test 12.11"
   );
+  t.end();
 });
 
-test("12.12 - as before but with emoji instead", t => {
-  t.is(
+t.test("12.12 - as before but with emoji instead", t => {
+  t.equal(
     er(
       "🍺🍺👌🍺",
       {
@@ -3107,10 +3246,11 @@ test("12.12 - as before but with emoji instead", t => {
     "🍻🍻👌🍺",
     "test 12.12"
   );
+  t.end();
 });
 
-test("12.13 - rightOutsideNot with L-R maybes", t => {
-  t.is(
+t.test("12.13 - rightOutsideNot with L-R maybes", t => {
+  t.equal(
     er(
       "zb🐴cy",
       {
@@ -3127,10 +3267,11 @@ test("12.13 - rightOutsideNot with L-R maybes", t => {
     "zxy",
     "test 12.13"
   );
+  t.end();
 });
 
-test("12.14 - all of 'em #1", t => {
-  t.is(
+t.test("12.14 - all of 'em #1", t => {
+  t.equal(
     er(
       "zb🐴cy",
       {
@@ -3147,10 +3288,11 @@ test("12.14 - all of 'em #1", t => {
     "zxy",
     "test 12.14"
   );
+  t.end();
 });
 
-test("12.14 - all of 'em #2", t => {
-  t.is(
+t.test("12.14 - all of 'em #2", t => {
+  t.equal(
     er(
       "zb🐴cy",
       {
@@ -3167,14 +3309,15 @@ test("12.14 - all of 'em #2", t => {
     "zxy",
     "test 12.14"
   );
+  t.end();
 });
 
 // ==============================
 // double-check the README's corectness
 // ==============================
 
-test("13.1 - readme example #1", t => {
-  t.is(
+t.test("13.1 - readme example #1", t => {
+  t.equal(
     er(
       "a x c x d",
       {
@@ -3191,10 +3334,11 @@ test("13.1 - readme example #1", t => {
     "a 🦄 c 🦄 d",
     "test 13.1"
   );
+  t.end();
 });
 
-test("13.2 - readme example #2", t => {
-  t.is(
+t.test("13.2 - readme example #2", t => {
+  t.equal(
     er(
       "🐴i🦄 🐴i i🦄 i",
       {
@@ -3211,10 +3355,11 @@ test("13.2 - readme example #2", t => {
     "x x x x",
     "test 13.2"
   );
+  t.end();
 });
 
-test("13.3 - readme example #3", t => {
-  t.is(
+t.test("13.3 - readme example #3", t => {
+  t.equal(
     er(
       "a🦄c x🦄x",
       {
@@ -3231,10 +3376,11 @@ test("13.3 - readme example #3", t => {
     "a🦄c x🐴x",
     "test 13.3"
   );
+  t.end();
 });
 
-test("13.4 - readme example #4", t => {
-  t.is(
+t.test("13.4 - readme example #4", t => {
+  t.equal(
     er(
       "zzzzz  zzzzzz zzzzzz",
       {
@@ -3251,10 +3397,11 @@ test("13.4 - readme example #4", t => {
     "zzzzz zzzzzz zzzzzz",
     "test 13.4"
   );
+  t.end();
 });
 
-test("13.5 - readme example #5", t => {
-  t.is(
+t.test("13.5 - readme example #5", t => {
+  t.equal(
     er(
       "<br /><br/><br />",
       {
@@ -3271,10 +3418,11 @@ test("13.5 - readme example #5", t => {
     "<br /><br /><br />",
     "test 13.5"
   );
+  t.end();
 });
 
-test("13.6 - readme example #6", t => {
-  t.is(
+t.test("13.6 - readme example #6", t => {
+  t.equal(
     er(
       "&nbsp; nbsp &nbsp nbsp;",
       {
@@ -3291,14 +3439,15 @@ test("13.6 - readme example #6", t => {
     "&nbsp; &nbsp; &nbsp; &nbsp;",
     "test 13.6"
   );
+  t.end();
 });
 
 // ==============================
 // random tests from the front lines
 // ==============================
 
-test("14.1 - special case #1", t => {
-  t.is(
+t.test("14.1 - special case #1", t => {
+  t.equal(
     er(
       "&fnof;",
       {
@@ -3315,10 +3464,11 @@ test("14.1 - special case #1", t => {
     "&fnof;",
     "test 14.1"
   );
+  t.end();
 });
 
-test("14.2 - special case #2", t => {
-  t.is(
+t.test("14.2 - special case #2", t => {
+  t.equal(
     er(
       "🐴 a🦄🐴🦄🍺c a🦄🐴🍺🦄c a🦄🐴🦄c a🐴🍺c 🐴",
       {
@@ -3335,14 +3485,15 @@ test("14.2 - special case #2", t => {
     "b a🦄b🍺c a🦄b🦄c a🦄bc abc b",
     "test 14.1"
   );
+  t.end();
 });
 
 // ==============================
 // case-insensitive opts flag
 // ==============================
 
-test("15.1 - case-insensitive flag works", t => {
-  t.is(
+t.test("15.1 - case-insensitive flag works", t => {
+  t.equal(
     er(
       "zzz abbb zzz",
       {
@@ -3359,7 +3510,7 @@ test("15.1 - case-insensitive flag works", t => {
     "zzz yyy zzz",
     "test 15.1.1 - all ok, flag off"
   );
-  t.is(
+  t.equal(
     er(
       "zzz aBBB zzz",
       {
@@ -3376,7 +3527,7 @@ test("15.1 - case-insensitive flag works", t => {
     "zzz aBBB zzz",
     "test 15.1.2 - case mismatch, nothing replaced because flag's off"
   );
-  t.is(
+  t.equal(
     er(
       "zzz aBBB zzz",
       {
@@ -3396,7 +3547,7 @@ test("15.1 - case-insensitive flag works", t => {
     "zzz yyy zzz",
     "test 15.1.3 - case mismatch, but flag allows it, so replace happens"
   );
-  t.is(
+  t.equal(
     er(
       "zzz aBBB zzz bbB zzz aBbBc zzz",
       {
@@ -3416,10 +3567,11 @@ test("15.1 - case-insensitive flag works", t => {
     "zzz yyy zzz yyy zzz yyy zzz",
     "test 15.1.4 - case-insensitive flag, multiple replacements"
   );
+  t.end();
 });
 
-test("test 15.2 - case-insensitive leftMaybe", t => {
-  t.is(
+t.test("test 15.2 - case-insensitive leftMaybe", t => {
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3436,7 +3588,7 @@ test("test 15.2 - case-insensitive leftMaybe", t => {
     "zzz Ayyy zzz",
     "test 15.2.1 - flag off - testing leftMaybe only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3456,7 +3608,7 @@ test("test 15.2 - case-insensitive leftMaybe", t => {
     "zzz yyy zzz",
     "test 15.2.2 - flag on - testing leftMaybe only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3476,7 +3628,7 @@ test("test 15.2 - case-insensitive leftMaybe", t => {
     "zzz Abbb zzz",
     "test 15.2.3 - flag on - testing searchFor + leftMaybe"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3497,10 +3649,11 @@ test("test 15.2 - case-insensitive leftMaybe", t => {
     "zzz yyy zzz",
     "test 15.2.4 - flag on - testing searchFor + leftMaybe"
   );
+  t.end();
 });
 
-test("test 15.3 - case-insensitive rightMaybe", t => {
-  t.is(
+t.test("test 15.3 - case-insensitive rightMaybe", t => {
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3517,7 +3670,7 @@ test("test 15.3 - case-insensitive rightMaybe", t => {
     "zzz yyyC zzz",
     "test 15.3.1 - flag off - testing rightMaybe only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3537,7 +3690,7 @@ test("test 15.3 - case-insensitive rightMaybe", t => {
     "zzz yyy zzz",
     "test 15.3.2 - flag on - testing rightMaybe only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3557,7 +3710,7 @@ test("test 15.3 - case-insensitive rightMaybe", t => {
     "zzz bbbC zzz",
     "test 15.3.3 - flag on - testing searchFor + rightMaybe"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3578,10 +3731,11 @@ test("test 15.3 - case-insensitive rightMaybe", t => {
     "zzz yyy zzz",
     "test 15.3.4 - flag on - testing searchFor + rightMaybe"
   );
+  t.end();
 });
 
-test("test 15.4 - case-insensitive leftOutside", t => {
-  t.is(
+t.test("test 15.4 - case-insensitive leftOutside", t => {
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3598,7 +3752,7 @@ test("test 15.4 - case-insensitive leftOutside", t => {
     "zzz Abbb zzz",
     "test 15.4.1 - flag off - testing leftOutside only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3618,7 +3772,7 @@ test("test 15.4 - case-insensitive leftOutside", t => {
     "zzz Ayyy zzz",
     "test 15.4.2 - flag on - testing leftOutside only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3638,7 +3792,7 @@ test("test 15.4 - case-insensitive leftOutside", t => {
     "zzz Abbb zzz",
     "test 15.4.3 - flag on - testing searchFor + leftOutside"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3659,10 +3813,11 @@ test("test 15.4 - case-insensitive leftOutside", t => {
     "zzz Ayyy zzz",
     "test 15.4.4 - flag on - testing searchFor + leftOutside"
   );
+  t.end();
 });
 
-test("test 15.5 - case-insensitive rightOutside", t => {
-  t.is(
+t.test("test 15.5 - case-insensitive rightOutside", t => {
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3679,7 +3834,7 @@ test("test 15.5 - case-insensitive rightOutside", t => {
     "zzz bbbC zzz",
     "test 15.5.1 - flag off - testing rightOutside only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3699,7 +3854,7 @@ test("test 15.5 - case-insensitive rightOutside", t => {
     "zzz yyyC zzz",
     "test 15.5.2 - flag on - testing rightOutside only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3719,7 +3874,7 @@ test("test 15.5 - case-insensitive rightOutside", t => {
     "zzz bbbC zzz",
     "test 15.5.3 - flag on - testing searchFor + rightOutside"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3740,10 +3895,11 @@ test("test 15.5 - case-insensitive rightOutside", t => {
     "zzz yyyC zzz",
     "test 15.5.4 - flag on - testing searchFor + rightOutside"
   );
+  t.end();
 });
 
-test("test 15.6 - case-insensitive leftOutsideNot", t => {
-  t.is(
+t.test("test 15.6 - case-insensitive leftOutsideNot", t => {
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3760,7 +3916,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", t => {
     "zzz Ayyy zzz",
     "test 15.6.1 - flag off - testing leftOutsideNot only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3780,7 +3936,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", t => {
     "zzz Abbb zzz",
     "test 15.6.2 - flag on - testing leftOutsideNot only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3800,7 +3956,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", t => {
     "zzz Abbb zzz",
     "test 15.6.3 - flag on - testing searchFor + leftOutsideNot"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3821,7 +3977,7 @@ test("test 15.6 - case-insensitive leftOutsideNot", t => {
     "zzz Abbb zzz",
     "test 15.6.4 - flag on - testing searchFor + leftOutsideNot"
   );
-  t.is(
+  t.equal(
     er(
       "zzz Abbb zzz",
       {
@@ -3842,10 +3998,11 @@ test("test 15.6 - case-insensitive leftOutsideNot", t => {
     "zzz Ayyy zzz",
     "test 15.6.5 - flag on - testing searchFor + leftOutsideNot"
   );
+  t.end();
 });
 
-test("test 15.7 - case-insensitive rightOutsideNot", t => {
-  t.is(
+t.test("test 15.7 - case-insensitive rightOutsideNot", t => {
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3862,7 +4019,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", t => {
     "zzz yyyC zzz",
     "test 15.7.1 - flag off - testing rightOutsideNot only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3882,7 +4039,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", t => {
     "zzz bbbC zzz",
     "test 15.7.2 - flag on - testing rightOutsideNot only"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3902,7 +4059,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", t => {
     "zzz bbbC zzz",
     "test 15.7.3 - flag on - testing searchFor + rightOutsideNot"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3923,7 +4080,7 @@ test("test 15.7 - case-insensitive rightOutsideNot", t => {
     "zzz bbbC zzz",
     "test 15.7.4 - flag on - testing searchFor + rightOutsideNot"
   );
-  t.is(
+  t.equal(
     er(
       "zzz bbbC zzz",
       {
@@ -3944,4 +4101,5 @@ test("test 15.7 - case-insensitive rightOutsideNot", t => {
     "zzz yyyC zzz",
     "test 15.7.5 - flag on - testing searchFor + rightOutsideNot"
   );
+  t.end();
 });

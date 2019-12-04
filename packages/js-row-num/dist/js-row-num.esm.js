@@ -21,6 +21,9 @@ function fixRowNums(str, originalOpts) {
   function isAZ(something) {
     return /[A-Za-z]/.test(something);
   }
+  function isObj(something) {
+    return typeof something === "object" && something !== null;
+  }
   const defaults = {
     padStart: 3,
     overrideRowNum: null,
@@ -28,7 +31,7 @@ function fixRowNums(str, originalOpts) {
     triggerKeywords: ["console.log"],
     extractedLogContentsWereGiven: false
   };
-  const opts = Object.assign({}, defaults, originalOpts);
+  const opts = Object.assign(defaults, originalOpts);
   if (
     !opts.padStart ||
     typeof opts.padStart !== "number" ||
@@ -194,15 +197,24 @@ function fixRowNums(str, originalOpts) {
     }
     let caughtKeyword;
     if (
-      opts &&
-      opts.triggerKeywords &&
-      Array.isArray(opts.triggerKeywords) &&
-      opts.triggerKeywords.some(keyw => {
-        if (str.startsWith(keyw, i)) {
-          caughtKeyword = keyw;
-          return true;
-        }
-      })
+      (isObj(opts) &&
+        opts.triggerKeywords &&
+        Array.isArray(opts.triggerKeywords) &&
+        opts.triggerKeywords.some(keyw => {
+          if (str.startsWith(keyw, i)) {
+            caughtKeyword = keyw;
+            return true;
+          }
+        })) ||
+      (opts.triggerKeywords !== null &&
+        (!Array.isArray(opts.triggerKeywords) ||
+          !opts.triggerKeywords.length) &&
+        ["console.log"].some(keyw => {
+          if (str.startsWith(keyw, i)) {
+            caughtKeyword = keyw;
+            return true;
+          }
+        }))
     ) {
       consoleStartsAt = i + caughtKeyword.length;
       i = i + caughtKeyword.length - 1;

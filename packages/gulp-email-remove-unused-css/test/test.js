@@ -1,7 +1,8 @@
-import test from "ava";
-import vs from "vinyl-string";
-import map from "map-stream"; // Lets us write in-line functions in our pipe
-import geruc from "../index";
+const t = require("tap");
+const vs = require("vinyl-string");
+// Lets us write in-line functions in our pipe:
+const map = require("map-stream");
+const geruc = require("../index");
 
 // https://snugug.com/musings/unit-testing-gulp-tasks/
 // * @param {string} input - String contents of the "file"
@@ -30,7 +31,7 @@ function fromString(input, path, func) {
   });
 }
 
-test("removes unused CSS", async t => {
+t.test("removes unused CSS", async t => {
   const source = `
 <!DOCTYPE html>
 <head>
@@ -89,5 +90,6 @@ test("removes unused CSS", async t => {
     "test/source.html",
     geruc
   ).then(output => output.contents.toString());
-  t.is(contents, intended, "Sass compiled as expected");
+  t.equal(contents, intended, "Sass compiled as expected");
+  t.end();
 });

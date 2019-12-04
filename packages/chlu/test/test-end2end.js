@@ -1,7 +1,7 @@
-import { readFileSync } from "fs";
-import path from "path";
-import test from "ava";
-import c from "../dist/chlu.esm";
+const { readFileSync } = require("fs");
+const path = require("path");
+const t = require("tap");
+const c = require("../dist/chlu.cjs");
 
 const fixtures = path.join(__dirname, "fixtures");
 
@@ -28,7 +28,7 @@ function compare(t, name, gitTags = null) {
   //   )}`
   // );
 
-  return t.deepEqual(c(changelog, gitTags, packageJson), expected);
+  return t.same(c(changelog, gitTags, packageJson), expected);
 }
 
 function throws(t, name, gitTags = null) {
@@ -47,55 +47,90 @@ function throws(t, name, gitTags = null) {
 
 // -----------------------------------------------------------------------------
 
-test("00. if no input, will silently return indefined", t => {
-  t.deepEqual(c(), undefined, "00.01");
+t.test("00. if no input, will silently return indefined", t => {
+  t.same(c(), undefined, "00.01");
+  t.end();
 });
 
-test("01. ascending order, with wrong package names", t =>
-  compare(t, "01_asc_order_wrong_package"));
+t.test("01. ascending order, with wrong package names", t => {
+  compare(t, "01_asc_order_wrong_package");
+  t.end();
+});
 
-test("02. ascending order, with correct package names", t =>
-  compare(t, "02_asc_order_correct_package"));
+t.test("02. ascending order, with correct package names", t => {
+  compare(t, "02_asc_order_correct_package");
+  t.end();
+});
 
-test("03. correct package names, no footer links at all", t =>
-  compare(t, "03_no_footer_links"));
+t.test("03. correct package names, no footer links at all", t => {
+  compare(t, "03_no_footer_links");
+  t.end();
+});
 
-test("04. descending order, with wrong package names", t =>
-  compare(t, "04_desc_order_wrong_package"));
+t.test("04. descending order, with wrong package names", t => {
+  compare(t, "04_desc_order_wrong_package");
+  t.end();
+});
 
-test("05. descending order, with correct package names", t =>
-  compare(t, "05_desc_order_correct_package"));
+t.test("05. descending order, with correct package names", t => {
+  compare(t, "05_desc_order_correct_package");
+  t.end();
+});
 
-test("06. there are no linked titles", t => compare(t, "06_not_linked_titles"));
+t.test("06. there are no linked titles", t => {
+  compare(t, "06_not_linked_titles");
+  t.end();
+});
 
-test("07. non-GitHub package.json - throws", t =>
-  throws(t, "07_gitlab_package_json"));
+t.test("07. non-GitHub package.json - throws", t => {
+  throws(t, "07_gitlab_package_json");
+  t.end();
+});
 
-test("08. mid links missing in changelog.md", t =>
-  compare(t, "08_mid_links_missing"));
+t.test("08. mid links missing in changelog.md", t => {
+  compare(t, "08_mid_links_missing");
+  t.end();
+});
 
-test("09. sneaky cases with tight spacing", t =>
-  compare(t, "09_tight_spacing"));
+t.test("09. sneaky cases with tight spacing", t => {
+  compare(t, "09_tight_spacing");
+  t.end();
+});
 
-test("10. redundant footer links present, no git logs in context", t =>
-  compare(t, "10_redundant_links"));
+t.test("10. redundant footer links present, no git logs in context", t => {
+  compare(t, "10_redundant_links");
+  t.end();
+});
 
-test("11. title dates are in wrong formats, no git logs in context", t =>
-  compare(t, "11_wrong_dates"));
+t.test("11. title dates are in wrong formats, no git logs in context", t => {
+  compare(t, "11_wrong_dates");
+  t.end();
+});
 
-test("12. footer links match titles but have wrong versions in URLs", t =>
-  compare(t, "12_wrong_footer_link_versions"));
+t.test("12. footer links match titles but have wrong versions in URLs", t => {
+  compare(t, "12_wrong_footer_link_versions");
+  t.end();
+});
 
-test("13. Real world case - https://github.com/guigrpa/giu/", t =>
-  compare(t, "13_real_world"));
+t.test("13. Real world case - https://github.com/guigrpa/giu/", t => {
+  compare(t, "13_real_world");
+  t.end();
+});
 
-test("14. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/", t =>
-  compare(t, "14_slashes"));
+t.test(
+  "14. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/",
+  t => {
+    compare(t, "14_slashes");
+    t.end();
+  }
+);
 
-test("15. Unrecogniseable date - version gets still linked!", t =>
-  compare(t, "15_bad_date"));
+t.test("15. Unrecogniseable date - version gets still linked!", t => {
+  compare(t, "15_bad_date");
+  t.end();
+});
 
-test("16. Git Tags supplemented", t => {
+t.test("16. Git Tags supplemented", t => {
   const tags = {
     latest: "2017-04-18|v1.3.5",
     all: [
@@ -121,9 +156,10 @@ test("16. Git Tags supplemented", t => {
     ]
   };
   compare(t, "16_git_tags", tags);
+  t.end();
 });
 
-test("17. Unit test from chlu-cli", t => {
+t.test("17. Unit test from chlu-cli", t => {
   const tags = {
     latest: "2018-06-14|v1.3.1",
     all: [
@@ -137,10 +173,13 @@ test("17. Unit test from chlu-cli", t => {
     ]
   };
   compare(t, "17_chlu_cli", tags);
+  t.end();
 });
 
-test(`18. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`, t => {
-  const original = `# Seed Change Log
+t.test(
+  `18. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`,
+  t => {
+    const original = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -190,7 +229,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.4.0]: https://github.com/codsen/correct-lib/compare/v1.3.0...v1.4.0
 `;
 
-  const expected = `# Seed Change Log
+    const expected = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -242,11 +281,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0
 `;
-  t.deepEqual(c(original), expected, "18");
-});
+    t.same(c(original), expected, "18");
 
-test(`19. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`, t => {
-  const original = `# Seed Change Log
+    t.end();
+  }
+);
+
+t.test(
+  `19. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`,
+  t => {
+    const original = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -296,7 +340,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.4.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.4.0%0Dv1.3.0#diff
 `;
 
-  const expected = `# Seed Change Log
+    const expected = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -348,9 +392,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.2.0%0Dv1.1.0#diff
 [1.1.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.1.0%0Dv1.0.0#diff
 `;
-  t.deepEqual(
-    c(original),
-    expected,
-    "18 - result has descending order links because source had one row only"
-  );
-});
+    t.same(
+      c(original),
+      expected,
+      "18 - result has descending order links because source had one row only"
+    );
+    t.end();
+  }
+);

@@ -17,34 +17,34 @@ describe("legacy", function() {
 	describe("getElements", function() {
 		var getElements = DomUtils.getElements;
 		it("returns the node with the specified ID", function() {
-			assert.deepEqual(
+			assert.same(
 				getElements({ id: "asdf" }, fixture, true, 1),
 				[expected.idAsdf]
 			);
 		});
 		it("returns empty array for unknown IDs", function() {
-			assert.deepEqual(getElements({ id: "asdfs" }, fixture, true), []);
+			assert.same(getElements({ id: "asdfs" }, fixture, true), []);
 		});
 		it("returns the nodes with the specified tag name", function() {
-			assert.deepEqual(
+			assert.same(
 				getElements({ tag_name:"tag2" }, fixture, true),
 				expected.tag2
 			);
 		});
 		it("returns empty array for unknown tag names", function() {
-			assert.deepEqual(
+			assert.same(
 				getElements({ tag_name : "asdfs" }, fixture, true),
 				[]
 			);
 		});
 		it("returns the nodes with the specified tag type", function() {
-			assert.deepEqual(
+			assert.same(
 				getElements({ tag_type: "script" }, fixture, true),
 				expected.typeScript
 			);
 		});
 		it("returns empty array for unknown tag types", function() {
-			assert.deepEqual(
+			assert.same(
 				getElements({ tag_type: "video" }, fixture, true),
 				[]
 			);
@@ -67,13 +67,13 @@ describe("legacy", function() {
 	describe("getElementsByTagName", function() {
 		var getElementsByTagName = DomUtils.getElementsByTagName;
 		it("returns the specified nodes", function() {
-			assert.deepEqual(
+			assert.same(
 				getElementsByTagName("tag2", fixture, true),
 				expected.tag2
 			);
 		});
 		it("returns empty array for unknown tag names", function() {
-			assert.deepEqual(
+			assert.same(
 				getElementsByTagName("tag23", fixture, true),
 				[]
 			);
@@ -83,13 +83,13 @@ describe("legacy", function() {
 	describe("getElementsByTagType", function() {
 		var getElementsByTagType = DomUtils.getElementsByTagType;
 		it("returns the specified nodes", function() {
-			assert.deepEqual(
+			assert.same(
 				getElementsByTagType("script", fixture, true),
 				expected.typeScript
 			);
 		});
 		it("returns empty array for unknown tag types", function() {
-			assert.deepEqual(
+			assert.same(
 				getElementsByTagType("video", fixture, true),
 				[]
 			);

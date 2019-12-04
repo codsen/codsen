@@ -1,11 +1,11 @@
-import test from "ava";
-import { helga } from "../dist/helga.esm";
+const t = require("tap");
+const { helga } = require("../dist/helga.cjs");
 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-test("01.01 - just a single word", t => {
-  t.deepEqual(
+t.test("01.01 - just a single word", t => {
+  t.same(
     helga("abc"),
     {
       minified: "abc",
@@ -13,10 +13,11 @@ test("01.01 - just a single word", t => {
     },
     "01.01"
   );
+  t.end();
 });
 
-test("01.02 - converts line breaks - JSON off", t => {
-  t.deepEqual(
+t.test("01.02 - converts line breaks - JSON off", t => {
+  t.same(
     helga("abc\ndef", { targetJSON: false }),
     {
       minified: "abc\ndef",
@@ -24,11 +25,12 @@ test("01.02 - converts line breaks - JSON off", t => {
     },
     "01.02"
   );
+  t.end();
 });
 
-test("01.03 - converts line breaks - JSON on", t => {
+t.test("01.03 - converts line breaks - JSON on", t => {
   // beautified as input:
-  t.deepEqual(
+  t.same(
     helga("abc\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
@@ -38,7 +40,7 @@ test("01.03 - converts line breaks - JSON on", t => {
   );
 
   // minified as input:
-  t.deepEqual(
+  t.same(
     helga("abc\\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
@@ -46,4 +48,5 @@ test("01.03 - converts line breaks - JSON on", t => {
     },
     "01.03.02"
   );
+  t.end();
 });

@@ -1,6 +1,6 @@
 {
     "all": {
-        "all-named-html-entities": 15,
+        "all-named-html-entities": 2,
         "array-group-str-omit-num-char": 12,
         "array-includes-with-glob": 18,
         "array-of-arrays-into-ast": 6,
@@ -22,7 +22,7 @@
         "check-types-mini": 35,
         "chlu": 44,
         "chlu-cli": 5,
-        "codsen-tokenizer": 60,
+        "codsen-tokenizer": 1,
         "color-shorthand-hex-to-six-digit": 19,
         "csv-sort": 22,
         "csv-sort-cli": 2,
@@ -35,7 +35,7 @@
         "email-all-chars-within-ascii-cli": 5,
         "email-comb": 167,
         "email-homey": 5,
-        "emlint": 248,
+        "emlint": 277,
         "generate-atomic-css": 83,
         "generate-atomic-css-cli": 3,
         "gulp-email-remove-unused-css": 1,
@@ -101,13 +101,13 @@
         "util-array-object-or-both": 5,
         "util-nonempty": 9
     },
-    "totalPackageCount": 100,
-    "totalTestsCount": 19180,
+    "totalPackageCount": 101,
+    "totalTestsCount": 19137,
     "minTestsCount": 2,
-    "minTestsName": "csv-sort-cli",
+    "minTestsName": "all-named-html-entities",
     "maxTestsCount": 14178,
     "maxTestsName": "edit-package-json",
     "testsCountMedian": 19,
-    "testsCountArithmeticMean": 192,
-    "testsCountGeometricMean": 23
+    "testsCountArithmeticMean": 189,
+    "testsCountGeometricMean": 21
 }

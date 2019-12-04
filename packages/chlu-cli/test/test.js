@@ -1,8 +1,8 @@
-import fs from "fs-extra";
-import test from "ava";
-import path from "path";
-import execa from "execa";
-import tempy from "tempy";
+const fs = require("fs-extra");
+const t = require("tap");
+const path = require("path");
+const execa = require("execa");
+const tempy = require("tempy");
 
 //                                  *
 //                                  *
@@ -18,7 +18,7 @@ import tempy from "tempy";
 //                                  *
 //                                  *
 
-test("01.01 - there are no usable files at all", async t => {
+t.test("01.01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
   fs.ensureDirSync(path.resolve(tempFolder));
   const processedFileContents = fs
@@ -31,7 +31,8 @@ test("01.01 - there are no usable files at all", async t => {
     .then(() => fs.readFile(path.join(tempFolder, "file.md"), "utf8"))
     .catch(err => t.fail(err));
   // confirm that the existing file is intact:
-  t.deepEqual(await processedFileContents, "zzz");
+  t.same(await processedFileContents, "zzz");
+  t.end();
 });
 
 //                                  *
@@ -48,8 +49,10 @@ test("01.01 - there are no usable files at all", async t => {
 //                                  *
 //                                  *
 
-test("01.02 - only changelog present in the root - default (not --loud)", async t => {
-  const originalChangelog = `# Seed Change Log
+t.test(
+  "01.02 - only changelog present in the root - default (not --loud)",
+  async t => {
+    const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -100,7 +103,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/WRONG/compare/v1.1.1...v1.2.0
 `;
 
-  const intendedChangelog = `# Seed Change Log
+    const intendedChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -153,27 +156,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.1.0]: https://github.com/codsen/WRONG/compare/v1.0.0...v1.1.0
 `;
 
-  // 1. fetch us an empty, random, temporary folder:
+    // 1. fetch us an empty, random, temporary folder:
 
-  // Re-route the test files into `temp/` folder instead for easier access when
-  // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+    // Re-route the test files into `temp/` folder instead for easier access when
+    // troubleshooting. Just comment out one of two:
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
 
-  // 2. asynchronously write all test files
-  const processedFileContents = fs
-    .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-        shell: true
-      })
-    )
-    .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-    .catch(err => t.fail(err));
+    // 2. asynchronously write all test files
+    const processedFileContents = fs
+      .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
+      .then(() =>
+        execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+          shell: true
+        })
+      )
+      .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
+      .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, intendedChangelog);
-});
+    t.same(await processedFileContents, intendedChangelog);
+    t.end();
+  }
+);
 
 //                                  *
 //                                  *
@@ -189,8 +194,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-test("01.03 - package + changelog in the root - default (not --loud)", async t => {
-  const originalChangelog = `# Seed Change Log
+t.test(
+  "01.03 - package + changelog in the root - default (not --loud)",
+  async t => {
+    const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -241,7 +248,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/WRONG/compare/v1.1.1...v1.2.0
 `;
 
-  const intendedChangelog = `# Seed Change Log
+    const intendedChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -294,61 +301,63 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0
 `;
 
-  const inputPackageJson = {
-    name: "correct-lib",
-    version: "1.3.0",
-    description: "Does many fancy things",
-    main: "index.js",
-    scripts: {
-      coverage: "nyc report --reporter=text-lcov | coveralls",
-      precommit: "npm test",
-      test: "standard && nyc --reporter=html --reporter=text ava"
-    },
-    repository: {
-      type: "git",
-      url: "https://github.com/codsen/correct-lib.git"
-    },
-    keywords: [],
-    author: {
-      name: "Roy Revelt",
-      email: "roy@codsen.com",
-      url: "codsen.com"
-    },
-    license: "MIT",
-    bugs: {
-      url: "https://github.com/codsen/correct-lib/issues"
-    },
-    homepage: "https://github.com/codsen/correct-lib#readme",
-    dependencies: {},
-    devDependencies: {}
-  };
+    const inputPackageJson = {
+      name: "correct-lib",
+      version: "1.3.0",
+      description: "Does many fancy things",
+      main: "index.js",
+      scripts: {
+        coverage: "nyc report --reporter=text-lcov | coveralls",
+        precommit: "npm test",
+        test: "standard && nyc --reporter=html --reporter=text ava"
+      },
+      repository: {
+        type: "git",
+        url: "https://github.com/codsen/correct-lib.git"
+      },
+      keywords: [],
+      author: {
+        name: "Roy Revelt",
+        email: "roy@codsen.com",
+        url: "codsen.com"
+      },
+      license: "MIT",
+      bugs: {
+        url: "https://github.com/codsen/correct-lib/issues"
+      },
+      homepage: "https://github.com/codsen/correct-lib#readme",
+      dependencies: {},
+      devDependencies: {}
+    };
 
-  // 1. fetch us an empty, random, temporary folder:
+    // 1. fetch us an empty, random, temporary folder:
 
-  // Re-route the test files into `temp/` folder instead for easier access when
-  // troubleshooting. Just comment out one of two:
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+    // Re-route the test files into `temp/` folder instead for easier access when
+    // troubleshooting. Just comment out one of two:
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
 
-  // 2. asynchronously write all test files
-  const processedFileContents = fs
-    .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
-    .then(() =>
-      fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
-        spaces: 2
-      })
-    )
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
-        shell: true
-      })
-    )
-    .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
-    .catch(err => t.fail(err));
+    // 2. asynchronously write all test files
+    const processedFileContents = fs
+      .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
+      .then(() =>
+        fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson, {
+          spaces: 2
+        })
+      )
+      .then(() =>
+        execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+          shell: true
+        })
+      )
+      .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
+      .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, intendedChangelog);
-});
+    t.same(await processedFileContents, intendedChangelog);
+    t.end();
+  }
+);
 
 //                                  *
 //                                  *
@@ -364,7 +373,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-test("01.04 - only changelog present in the root - loud", async t => {
+t.test("01.04 - only changelog present in the root - loud", async t => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -489,7 +498,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, intendedChangelog);
+  t.same(await processedFileContents, intendedChangelog);
+  t.end();
 });
 
 //                                  *
@@ -506,7 +516,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 //                                  *
 //                                  *
 
-test("01.05 - package + changelog in the root - loud", async t => {
+t.test("01.05 - package + changelog in the root - loud", async t => {
   const originalChangelog = `# Seed Change Log
 All notable changes to this project will be documented in this file.
 
@@ -664,7 +674,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, intendedChangelog);
+  t.same(await processedFileContents, intendedChangelog);
+  t.end();
 });
 
 //                                  *

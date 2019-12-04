@@ -22,6 +22,7 @@ Other siblings of this package:
 - [API](#api)
 - [Rules](#rules)
 - [`opts.overrideRowNum`](#optsoverriderownum)
+- [`opts.triggerKeywords`](#optstriggerkeywords)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -60,7 +61,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 5 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 6 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 6 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 22 KB |
 
@@ -230,6 +231,12 @@ console.log(res);
 // ]
 //
 ```
+
+**[⬆ back to top](#)**
+
+## `opts.triggerKeywords`
+
+Setting `opts.triggerKeywords` to `null` will disable all keywords, program will do nothing. In all other cases, where `opts.triggerKeywords` is an empty array, `undefined` or boolean `false`, the default, `console.log` will kick in and the input will be processed.
 
 **[⬆ back to top](#)**
 

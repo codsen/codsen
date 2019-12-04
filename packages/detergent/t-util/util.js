@@ -1,9 +1,11 @@
-import obc from "object-boolean-combinations";
-import clone from "lodash.clonedeep";
-import { defaultOpts } from "../dist/util.esm";
-import { det as det1, opts as exportedOptsObj } from "../dist/detergent.esm";
-import isCI from "is-ci";
-import objectPath from "object-path";
+const obc = require("object-boolean-combinations");
+const clone = require("lodash.clonedeep");
+const { defaultOpts } = require("../dist/util.cjs");
+const detergent = require("../dist/detergent.cjs");
+const det1 = detergent.det;
+const exportedOptsObj = detergent.opts;
+const isCI = require("is-ci");
+const objectPath = require("object-path");
 
 function mixer(ref) {
   // for quick testing, you can short-wire to test only one set of options, instead
@@ -173,7 +175,7 @@ function det(t, n, src, opts = {}) {
           det1(src, obj2).res !== det1(src, obj3).res ||
           det1(src, obj1).res !== det1(src, obj3).res
         ) {
-          t.truthy(
+          t.ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(
@@ -203,7 +205,7 @@ function det(t, n, src, opts = {}) {
             )}\n`
           );
         } else {
-          t.falsy(
+          t.notOk(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on all different opts.${key} settings:
     "${`\u001b[${33}m${JSON.stringify(
@@ -297,7 +299,7 @@ function det(t, n, src, opts = {}) {
         // );
 
         if (det1(src, obj1).res !== det1(src, obj2).res) {
-          t.truthy(
+          t.ok(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields different results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(
@@ -319,7 +321,7 @@ function det(t, n, src, opts = {}) {
             )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
           );
         } else if (key !== "stripHtml") {
-          t.falsy(
+          t.notOk(
             det1(src, resolvedOpts).applicableOpts[key],
             `${`\u001b[${35}m${`applicableOpts.${key}`}\u001b[${39}m`} is reported wrongly: detergent yields same results on different opts.${key}:
     "${`\u001b[${33}m${JSON.stringify(
@@ -345,4 +347,4 @@ function det(t, n, src, opts = {}) {
 
 const allCombinations = clone(mixer());
 
-export { det, mixer, allCombinations };
+module.exports = { det, mixer, allCombinations };

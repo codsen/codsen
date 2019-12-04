@@ -19,8 +19,6 @@ const pullAll = require("lodash.pullall");
 const uniq = require("lodash.uniq");
 const { name } = require("./package.json");
 
-const isArr = Array.isArray;
-
 const state = {};
 state.toDoList = []; // default
 state.overwrite = false; // default
@@ -54,9 +52,6 @@ updateNotifier({ pkg: cli.pkg }).notify();
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function isStr(something) {
-  return typeof something === "string";
-}
 function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }

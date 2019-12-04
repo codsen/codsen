@@ -11,12 +11,13 @@
 
 # folders:
 
+.nyc_output
+coverage
 media
 test
 
 # files:
 
-.eslintrc.json
 .npmignore
 .prettierignore
 testStats.json

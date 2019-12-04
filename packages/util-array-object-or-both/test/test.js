@@ -1,71 +1,75 @@
-import test from "ava";
-import aoob from "../dist/util-array-object-or-both.esm";
+const t = require("tap");
+const aoob = require("../dist/util-array-object-or-both.cjs");
 
 // ===========
 // precautions
 // ===========
 
-test("1.1 - wrong/missing inputs - throws", t => {
+t.test("1.1 - wrong/missing inputs - throws", t => {
   t.throws(() => {
     aoob();
-  });
+  }, /THROW_ID_01/g);
   t.throws(() => {
     aoob(1);
-  });
+  }, /THROW_ID_02/g);
   t.throws(() => {
     aoob(["a"]);
-  });
-  t.notThrows(() => {
+  }, /THROW_ID_02/g);
+  t.doesNotThrow(() => {
     aoob("any");
   });
   t.throws(() => {
     aoob("any", 1);
-  });
-  t.notThrows(() => {
+  }, /THROW_ID_03/g);
+  t.doesNotThrow(() => {
     aoob("any", null);
   });
+  t.end();
 });
 
 // ===
 // BAU
 // ===
 
-test("2.1 - arrays", t => {
-  t.deepEqual(aoob("array"), "array", "2.1.1");
-  t.deepEqual(aoob("Array"), "array", "2.1.2");
-  t.deepEqual(aoob("\n\nArray\t \t"), "array", "2.1.3");
-  t.deepEqual(aoob("\n\n   a \t"), "array", "2.1.4");
-  t.deepEqual(aoob("\n\n   arr \t"), "array", "2.1.5");
-  t.deepEqual(aoob("\n\n   ARR \t"), "array", "2.1.6");
+t.test("2.1 - arrays", t => {
+  t.same(aoob("array"), "array", "2.1.1");
+  t.same(aoob("Array"), "array", "2.1.2");
+  t.same(aoob("\n\nArray\t \t"), "array", "2.1.3");
+  t.same(aoob("\n\n   a \t"), "array", "2.1.4");
+  t.same(aoob("\n\n   arr \t"), "array", "2.1.5");
+  t.same(aoob("\n\n   ARR \t"), "array", "2.1.6");
+  t.end();
 });
 
-test("2.2 - objects", t => {
-  t.deepEqual(aoob("object"), "object", "2.2.1");
-  t.deepEqual(aoob("Object"), "object", "2.2.2");
-  t.deepEqual(aoob("obj"), "object", "2.2.3");
-  t.deepEqual(aoob("o"), "object", "2.2.4");
-  t.deepEqual(aoob("  object"), "object", "2.2.5");
-  t.deepEqual(aoob("Object   "), "object", "2.2.6");
-  t.deepEqual(aoob("\nobj"), "object", "2.2.7");
-  t.deepEqual(aoob("o\n\n "), "object", "2.2.8");
-  t.deepEqual(aoob(" OBJ"), "object", "2.2.9");
+t.test("2.2 - objects", t => {
+  t.same(aoob("object"), "object", "2.2.1");
+  t.same(aoob("Object"), "object", "2.2.2");
+  t.same(aoob("obj"), "object", "2.2.3");
+  t.same(aoob("o"), "object", "2.2.4");
+  t.same(aoob("  object"), "object", "2.2.5");
+  t.same(aoob("Object   "), "object", "2.2.6");
+  t.same(aoob("\nobj"), "object", "2.2.7");
+  t.same(aoob("o\n\n "), "object", "2.2.8");
+  t.same(aoob(" OBJ"), "object", "2.2.9");
+  t.end();
 });
 
-test("2.3 - any", t => {
-  t.deepEqual(aoob("any"), "any", "2.3.1");
-  t.deepEqual(aoob("all"), "any", "2.3.2");
-  t.deepEqual(aoob("Everything"), "any", "2.3.3");
-  t.deepEqual(aoob("e"), "any", "2.3.4");
-  t.deepEqual(aoob("ANY"), "any", "2.3.5");
-  t.deepEqual(aoob("\n\n all"), "any", "2.3.6");
+t.test("2.3 - any", t => {
+  t.same(aoob("any"), "any", "2.3.1");
+  t.same(aoob("all"), "any", "2.3.2");
+  t.same(aoob("Everything"), "any", "2.3.3");
+  t.same(aoob("e"), "any", "2.3.4");
+  t.same(aoob("ANY"), "any", "2.3.5");
+  t.same(aoob("\n\n all"), "any", "2.3.6");
+  t.end();
 });
 
 // ====
 // opts
 // ====
 
-test("3.1 - opts.msg", t => {
-  t.deepEqual(
+t.test("3.1 - opts.msg", t => {
+  t.same(
     aoob("object", {
       msg: "z"
     }),
@@ -88,4 +92,6 @@ test("3.1 - opts.msg", t => {
       optsVarName: "only"
     });
   }, 'some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.');
+
+  t.end();
 });

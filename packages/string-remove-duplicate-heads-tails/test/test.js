@@ -1,42 +1,44 @@
-import test from "ava";
-import rem from "../dist/string-remove-duplicate-heads-tails.esm";
+const t = require("tap");
+const rem = require("../dist/string-remove-duplicate-heads-tails.cjs");
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01.01 - wrong/missing input = throw", t => {
+t.test("01.01 - wrong/missing input = throw", t => {
   t.throws(() => {
     rem();
-  });
-  t.notThrows(() => {
+  }, /THROW_ID_01/g);
+  t.doesNotThrow(() => {
     rem(1);
   });
+  t.end();
 });
 
-test("01.02 - wrong opts", t => {
+t.test("01.02 - wrong opts", t => {
   t.throws(() => {
     rem("a", "a");
-  });
+  }, /THROW_ID_03/g);
   t.throws(() => {
     rem("a", 1);
-  });
+  }, /THROW_ID_03/g);
   t.throws(() => {
     rem("a {{}} b", {
       heads: ["{{", 1],
       tails: ["}}"]
     });
-  });
+  }, /THROW_ID_04/g);
   t.throws(() => {
     rem("a {{}} b", {
       heads: ["{{"],
       tails: ["}}", 1]
     });
-  });
+  }, /THROW_ID_05/g);
+  t.end();
 });
 
-test("01.03 - empty input string", t => {
-  t.deepEqual(
+t.test("01.03 - empty input string", t => {
+  t.same(
     rem("", {
       heads: "{{",
       tails: "}}"
@@ -44,11 +46,12 @@ test("01.03 - empty input string", t => {
     "",
     "01.03.01"
   );
-  t.deepEqual(rem(""), "", "01.03.02");
+  t.same(rem(""), "", "01.03.02");
+  t.end();
 });
 
-test("01.04 - none of heads or tails found", t => {
-  t.deepEqual(
+t.test("01.04 - none of heads or tails found", t => {
+  t.same(
     rem("aaa {{", {
       heads: "%%",
       tails: "__"
@@ -56,14 +59,15 @@ test("01.04 - none of heads or tails found", t => {
     "aaa {{",
     "01.04.01"
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-test("02.01 - trims wrapped heads and tails", t => {
-  t.deepEqual(
+t.test("02.01 - trims wrapped heads and tails", t => {
+  t.same(
     rem("{{ hi {{ name }}! }}", {
       heads: "{{",
       tails: "}}"
@@ -71,7 +75,7 @@ test("02.01 - trims wrapped heads and tails", t => {
     "hi {{ name }}!",
     "02.01.01"
   );
-  t.deepEqual(
+  t.same(
     rem("{{ hi }} name {{! }}", {
       heads: "{{",
       tails: "}}"
@@ -79,21 +83,26 @@ test("02.01 - trims wrapped heads and tails", t => {
     "{{ hi }} name {{! }}",
     "02.01.02"
   );
+  t.end();
 });
 
-test("02.02 - trims wrapped heads and tails, with space inside heads/tails", t => {
-  t.deepEqual(
-    rem("{{ Hi {{ first_name }}! }}", {
-      heads: "{{ ",
-      tails: " }}"
-    }),
-    "Hi {{ first_name }}!",
-    "02.02 - heads and tails with spaces"
-  );
-});
+t.test(
+  "02.02 - trims wrapped heads and tails, with space inside heads/tails",
+  t => {
+    t.same(
+      rem("{{ Hi {{ first_name }}! }}", {
+        heads: "{{ ",
+        tails: " }}"
+      }),
+      "Hi {{ first_name }}!",
+      "02.02 - heads and tails with spaces"
+    );
+    t.end();
+  }
+);
 
-test("02.03 - trimmed heads and tails in the source still get caught", t => {
-  t.deepEqual(
+t.test("02.03 - trimmed heads and tails in the source still get caught", t => {
+  t.same(
     rem("{{Hi {{ first_name }}!}}", {
       heads: "{{ ",
       tails: " }}"
@@ -101,10 +110,11 @@ test("02.03 - trimmed heads and tails in the source still get caught", t => {
     "Hi {{ first_name }}!",
     "02.03 - with spaces, and those spaces are not on str"
   );
+  t.end();
 });
 
-test("02.04 - excessive whitespace in opts heads/tails doesn't matter", t => {
-  t.deepEqual(
+t.test("02.04 - excessive whitespace in opts heads/tails doesn't matter", t => {
+  t.same(
     rem("{{ Hi {{ first_name }}! }}", {
       heads: "   {{     ",
       tails: "    }}       "
@@ -112,10 +122,11 @@ test("02.04 - excessive whitespace in opts heads/tails doesn't matter", t => {
     "Hi {{ first_name }}!",
     "02.04 - excessive spaces"
   );
+  t.end();
 });
 
-test("02.05 - single curly brace heads/tails", t => {
-  t.deepEqual(
+t.test("02.05 - single curly brace heads/tails", t => {
+  t.same(
     rem("{ Hi { first_name }! }", {
       heads: "{",
       tails: "}"
@@ -123,10 +134,11 @@ test("02.05 - single curly brace heads/tails", t => {
     "Hi { first_name }!",
     "02.05"
   );
+  t.end();
 });
 
-test("02.06 - custom heads and tails, whitespace both sides", t => {
-  t.deepEqual(
+t.test("02.06 - custom heads and tails, whitespace both sides", t => {
+  t.same(
     rem("{Hi { first_name }!}", {
       heads: " { ",
       tails: " } "
@@ -134,10 +146,11 @@ test("02.06 - custom heads and tails, whitespace both sides", t => {
     "Hi { first_name }!",
     "02.06"
   );
+  t.end();
 });
 
-test("02.07 - ends with tails, doesn't start with heads", t => {
-  t.deepEqual(
+t.test("02.07 - ends with tails, doesn't start with heads", t => {
+  t.same(
     rem("Hi {{ first_name }}", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -145,10 +158,11 @@ test("02.07 - ends with tails, doesn't start with heads", t => {
     "Hi {{ first_name }}",
     "02.07"
   );
+  t.end();
 });
 
-test("02.08 - starts with heads, doesn't end with tails", t => {
-  t.deepEqual(
+t.test("02.08 - starts with heads, doesn't end with tails", t => {
+  t.same(
     rem("  {{ first_name }}!  ", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -156,10 +170,11 @@ test("02.08 - starts with heads, doesn't end with tails", t => {
     "{{ first_name }}!",
     "02.08"
   );
+  t.end();
 });
 
-test("02.09 - properly wrapped, heads/tails in array, matched", t => {
-  t.deepEqual(
+t.test("02.09 - properly wrapped, heads/tails in array, matched", t => {
+  t.same(
     rem("  {{ first_name }}  ", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -167,10 +182,11 @@ test("02.09 - properly wrapped, heads/tails in array, matched", t => {
     "{{ first_name }}",
     "02.09"
   );
+  t.end();
 });
 
-test("02.10 - starts with heads, doesn't end with tails", t => {
-  t.deepEqual(
+t.test("02.10 - starts with heads, doesn't end with tails", t => {
+  t.same(
     rem("   {{ a }}{{ b }}   ", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -178,10 +194,11 @@ test("02.10 - starts with heads, doesn't end with tails", t => {
     "{{ a }}{{ b }}",
     "02.10"
   );
+  t.end();
 });
 
-test("02.11 - unclosed heads", t => {
-  t.deepEqual(
+t.test("02.11 - unclosed heads", t => {
+  t.same(
     rem("zzz {{", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -189,10 +206,11 @@ test("02.11 - unclosed heads", t => {
     "zzz {{",
     "02.11"
   );
+  t.end();
 });
 
-test("02.12 - unclosed tails", t => {
-  t.deepEqual(
+t.test("02.12 - unclosed tails", t => {
+  t.same(
     rem("zzz }}", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -200,10 +218,11 @@ test("02.12 - unclosed tails", t => {
     "zzz }}",
     "02.12"
   );
+  t.end();
 });
 
-test("02.13 - ends with empty variable", t => {
-  t.deepEqual(
+t.test("02.13 - ends with empty variable", t => {
+  t.same(
     rem("zzz {{}}", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -211,10 +230,11 @@ test("02.13 - ends with empty variable", t => {
     "zzz",
     "02.13"
   );
+  t.end();
 });
 
-test("02.14 - empty variable with text both sides", t => {
-  t.deepEqual(
+t.test("02.14 - empty variable with text both sides", t => {
+  t.same(
     rem("zzz {{}} yyy", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -222,10 +242,11 @@ test("02.14 - empty variable with text both sides", t => {
     "zzz {{}} yyy",
     "02.14"
   );
+  t.end();
 });
 
-test("02.15 - heads/tails in opposite order", t => {
-  t.deepEqual(
+t.test("02.15 - heads/tails in opposite order", t => {
+  t.same(
     rem(" zzz }}{{ yyy", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -233,10 +254,11 @@ test("02.15 - heads/tails in opposite order", t => {
     "zzz }}{{ yyy",
     "02.15"
   );
+  t.end();
 });
 
-test("02.16 - tails with text on both sides", t => {
-  t.deepEqual(
+t.test("02.16 - tails with text on both sides", t => {
+  t.same(
     rem("zzz }} yyy", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -244,10 +266,11 @@ test("02.16 - tails with text on both sides", t => {
     "zzz }} yyy",
     "02.16"
   );
+  t.end();
 });
 
-test("02.17 - heads with text on both sides", t => {
-  t.deepEqual(
+t.test("02.17 - heads with text on both sides", t => {
+  t.same(
     rem("zzz {{ yyy", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -255,10 +278,11 @@ test("02.17 - heads with text on both sides", t => {
     "zzz {{ yyy",
     "02.17"
   );
+  t.end();
 });
 
-test("02.18 - multiple heads, single tails", t => {
-  t.deepEqual(
+t.test("02.18 - multiple heads, single tails", t => {
+  t.same(
     rem("{{{{ first_name }}!", {
       heads: ["%%-", "{{"],
       tails: ["-%%", "}}"]
@@ -266,10 +290,11 @@ test("02.18 - multiple heads, single tails", t => {
     "{{{{ first_name }}!",
     "02.18"
   );
+  t.end();
 });
 
-test("02.19 - one set of custom heads and tails, single char string", t => {
-  t.deepEqual(
+t.test("02.19 - one set of custom heads and tails, single char string", t => {
+  t.same(
     rem("??z!!", {
       heads: "??",
       tails: "!!"
@@ -277,7 +302,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.01"
   );
-  t.deepEqual(
+  t.same(
     rem("??!! ??z!!", {
       heads: "??",
       tails: "!!"
@@ -285,7 +310,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.02"
   );
-  t.deepEqual(
+  t.same(
     rem("??z!! ??!!", {
       heads: "??",
       tails: "!!"
@@ -293,7 +318,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.03"
   );
-  t.deepEqual(
+  t.same(
     rem("??!! ??z!! ??!!", {
       heads: "??",
       tails: "!!"
@@ -301,7 +326,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.04"
   );
-  t.deepEqual(
+  t.same(
     rem("\t??z!!", {
       heads: "??",
       tails: "!!"
@@ -309,7 +334,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.05"
   );
-  t.deepEqual(
+  t.same(
     rem("??!!\t??z!!", {
       heads: "??",
       tails: "!!"
@@ -317,7 +342,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.06"
   );
-  t.deepEqual(
+  t.same(
     rem("??z!! ??!! ", {
       heads: "??",
       tails: "!!"
@@ -325,7 +350,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.07"
   );
-  t.deepEqual(
+  t.same(
     rem("\t??!! ??z!! ??!!", {
       heads: "??",
       tails: "!!"
@@ -333,7 +358,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "??z!!",
     "02.19.08"
   );
-  t.deepEqual(
+  t.same(
     rem("{{ z }}", {
       heads: "??",
       tails: "!!"
@@ -341,7 +366,7 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "{{ z }}",
     "02.19.09 - checking are defaults not leaking #1"
   );
-  t.deepEqual(
+  t.same(
     rem("{{{{ z }}}}", {
       heads: "??",
       tails: "!!"
@@ -349,11 +374,12 @@ test("02.19 - one set of custom heads and tails, single char string", t => {
     "{{{{ z }}}}",
     "02.19.10 - checking are defaults not leaking #2"
   );
+  t.end();
 });
 
-test("02.20 - two sets of custom heads and tails, single char string", t => {
+t.test("02.20 - two sets of custom heads and tails, single char string", t => {
   // recursively:
-  t.deepEqual(
+  t.same(
     rem("????z!!!!", {
       heads: "??",
       tails: "!!"
@@ -361,10 +387,11 @@ test("02.20 - two sets of custom heads and tails, single char string", t => {
     "??z!!",
     "02.20"
   );
+  t.end();
 });
 
-test("02.21 - words with space, single set of custom heads and tails", t => {
-  t.deepEqual(
+t.test("02.21 - words with space, single set of custom heads and tails", t => {
+  t.same(
     rem("??tralalala!lalala!!", {
       heads: "??",
       tails: "!!"
@@ -372,23 +399,28 @@ test("02.21 - words with space, single set of custom heads and tails", t => {
     "??tralalala!lalala!!",
     "02.21"
   );
+  t.end();
 });
 
-test("02.22 - double wrapped with custom heads and tails, with whitespace", t => {
-  // recursively with spaces
-  t.deepEqual(
-    rem("?? ?? x y !! !!", {
-      heads: "??",
-      tails: "!!"
-    }),
-    "?? x y !!",
-    "02.22"
-  );
-});
+t.test(
+  "02.22 - double wrapped with custom heads and tails, with whitespace",
+  t => {
+    // recursively with spaces
+    t.same(
+      rem("?? ?? x y !! !!", {
+        heads: "??",
+        tails: "!!"
+      }),
+      "?? x y !!",
+      "02.22"
+    );
+    t.end();
+  }
+);
 
-test("02.23 - mixed sets of heads and tails #1", t => {
+t.test("02.23 - mixed sets of heads and tails #1", t => {
   // peels off two outer layers but doesn't touch separate var wrappers
-  t.deepEqual(
+  t.same(
     rem("?? ((( ?? x !! ?? y !! ))) !!", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -396,7 +428,7 @@ test("02.23 - mixed sets of heads and tails #1", t => {
     "?? x !! ?? y !!",
     "02.23.01 - input with spaces"
   );
-  t.deepEqual(
+  t.same(
     rem("?? ((( ?? x !! ?? y !! ))) !!", {
       heads: ["?? ", "((( "],
       tails: [" !!", " )))"]
@@ -404,7 +436,7 @@ test("02.23 - mixed sets of heads and tails #1", t => {
     "?? x !! ?? y !!",
     "02.23.02 - both input and head/tail references with spaces"
   );
-  t.deepEqual(
+  t.same(
     rem("??(((??x!!??y!!)))!!", {
       heads: ["?? ", "((( "],
       tails: [" !!", " )))"]
@@ -412,10 +444,11 @@ test("02.23 - mixed sets of heads and tails #1", t => {
     "??x!!??y!!",
     "02.23.03 - both input and head/tail references with spaces"
   );
+  t.end();
 });
 
-test("02.24 - mixed sets of heads and tails #2", t => {
-  t.deepEqual(
+t.test("02.24 - mixed sets of heads and tails #2", t => {
+  t.same(
     rem("??(((??tralalala!!(((lalala))))))!!", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -423,10 +456,11 @@ test("02.24 - mixed sets of heads and tails #2", t => {
     "??tralalala!!(((lalala)))",
     "02.24"
   );
+  t.end();
 });
 
-test("02.25 - blank heads and tails within second level being removed", t => {
-  t.deepEqual(
+t.test("02.25 - blank heads and tails within second level being removed", t => {
+  t.same(
     rem("??((())) ((( ?? a !! ((( b ))) )))!!", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -434,7 +468,7 @@ test("02.25 - blank heads and tails within second level being removed", t => {
     "?? a !! ((( b )))",
     "02.25.01"
   );
-  t.deepEqual(
+  t.same(
     rem("?? (((  \n  )))   \t\t\t ((( ?? a !! ((( b )))\n ))) !!", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -442,7 +476,7 @@ test("02.25 - blank heads and tails within second level being removed", t => {
     "?? a !! ((( b )))",
     "02.25.02"
   );
-  t.deepEqual(
+  t.same(
     rem("?? (((  \n  )))   \t\t\t ((( ??  !! (((  )))\n ))) !!", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -450,10 +484,11 @@ test("02.25 - blank heads and tails within second level being removed", t => {
     "",
     "02.25.03"
   );
+  t.end();
 });
 
-test("02.26 - removing empty head/tail chunks from around the text #1", t => {
-  t.deepEqual(
+t.test("02.26 - removing empty head/tail chunks from around the text #1", t => {
+  t.same(
     rem("((())) a ((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -461,7 +496,7 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a",
     "02.26.01"
   );
-  t.deepEqual(
+  t.same(
     rem("((())) a ((())) b ((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -469,7 +504,7 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a ((())) b",
     "02.26.02"
   );
-  t.deepEqual(
+  t.same(
     rem("((()))((())) a ((()))((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -477,7 +512,7 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a",
     "02.26.03"
   );
-  t.deepEqual(
+  t.same(
     rem("a((()))((()))b((()))((()))((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -485,7 +520,7 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a((()))((()))b",
     "02.26.04"
   );
-  t.deepEqual(
+  t.same(
     rem(
       " ((( )))     (((    )))     (((  )))    a((()))((()))b     (((   )))  (((  )))     (((     )))  ",
       {
@@ -496,7 +531,7 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a((()))((()))b",
     "02.26.05"
   );
-  t.deepEqual(
+  t.same(
     rem("((()))((()))((()))a((()))((()))b((()))((()))((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -504,40 +539,49 @@ test("02.26 - removing empty head/tail chunks from around the text #1", t => {
     "a((()))((()))b",
     "02.26.06"
   );
+  t.end();
 });
 
-test("02.27 - removing empty head/tail chunks from around the text #2 (touches end)", t => {
-  t.deepEqual(
-    rem("((())) some (((text))) ((()))", {
-      heads: ["??", "((("],
-      tails: ["!!", ")))"]
-    }),
-    "some (((text)))",
-    "02.27"
-  );
-});
+t.test(
+  "02.27 - removing empty head/tail chunks from around the text #2 (touches end)",
+  t => {
+    t.same(
+      rem("((())) some (((text))) ((()))", {
+        heads: ["??", "((("],
+        tails: ["!!", ")))"]
+      }),
+      "some (((text)))",
+      "02.27"
+    );
+    t.end();
+  }
+);
 
-test("02.28 - removing empty head/tail chunks from around the text #3 (touches beginning)", t => {
-  t.deepEqual(
-    rem("((())) (((some))) text ((()))", {
-      heads: ["??", "((("],
-      tails: ["!!", ")))"]
-    }),
-    "(((some))) text",
-    "02.28.01"
-  );
-  t.deepEqual(
-    rem("\t((())) (((some))) text ((()))", {
-      heads: ["??", "((("],
-      tails: ["!!", ")))"]
-    }),
-    "(((some))) text",
-    "02.28.02 - tab would not get trimmed, but since it was standing in the way of empty heads/tails, it was removed"
-  );
-});
+t.test(
+  "02.28 - removing empty head/tail chunks from around the text #3 (touches beginning)",
+  t => {
+    t.same(
+      rem("((())) (((some))) text ((()))", {
+        heads: ["??", "((("],
+        tails: ["!!", ")))"]
+      }),
+      "(((some))) text",
+      "02.28.01"
+    );
+    t.same(
+      rem("\t((())) (((some))) text ((()))", {
+        heads: ["??", "((("],
+        tails: ["!!", ")))"]
+      }),
+      "(((some))) text",
+      "02.28.02 - tab would not get trimmed, but since it was standing in the way of empty heads/tails, it was removed"
+    );
+    t.end();
+  }
+);
 
-test("02.29 - leading letter ruins the removal from the front", t => {
-  t.deepEqual(
+t.test("02.29 - leading letter ruins the removal from the front", t => {
+  t.same(
     rem("\ta ((())) (((some))) text ((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -545,7 +589,7 @@ test("02.29 - leading letter ruins the removal from the front", t => {
     "\ta ((())) (((some))) text",
     '02.29 - because of the "a" the removal is terminated until trailing chunks met'
   );
-  t.deepEqual(
+  t.same(
     rem(" a ((())) (((some))) text ((()))", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -553,10 +597,11 @@ test("02.29 - leading letter ruins the removal from the front", t => {
     "a ((())) (((some))) text",
     "02.29.02"
   );
+  t.end();
 });
 
-test("02.30 - leading line break", t => {
-  t.deepEqual(
+t.test("02.30 - leading line break", t => {
+  t.same(
     rem("aaa\n", {
       heads: ["??", "((("],
       tails: ["!!", ")))"]
@@ -564,10 +609,11 @@ test("02.30 - leading line break", t => {
     "aaa\n",
     "02.30"
   );
+  t.end();
 });
 
-test("02.31 - leading line break", t => {
-  t.deepEqual(
+t.test("02.31 - leading line break", t => {
+  t.same(
     rem("{{ items[0].prepayPin }}", {
       heads: ["{{"],
       tails: ["}}"]
@@ -575,4 +621,5 @@ test("02.31 - leading line break", t => {
     "{{ items[0].prepayPin }}",
     "02.31"
   );
+  t.end();
 });

@@ -1,77 +1,94 @@
-// avanotonly
-
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+const { applyFixes } = require("../../../t-util/util");
 
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-test(`00.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`, t => {
-  const str = `<td nowrap >`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-malformed": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `00.01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  t => {
+    const str = `<td nowrap >`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`00.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`, t => {
-  const str = `<td nowrap>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-malformed": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `00.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  t => {
+    const str = `<td nowrap>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`00.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`, t => {
-  const str = `<td nowrap/>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-malformed": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `00.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  t => {
+    const str = `<td nowrap/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`00.04 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`, t => {
-  const str = `<br nowrap />`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-malformed": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `00.04 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  t => {
+    const str = `<br nowrap />`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
-test(`00.05 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`, t => {
-  const str = `</td nowrap nowrap>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-malformed": 0
-    }
-  });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
-});
+t.test(
+  `00.05 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
+  t => {
+    const str = `</td nowrap nowrap>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
 
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
   const str = `<a b"c" d'e'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -79,11 +96,12 @@ test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
       "attribute-malformed": 0
     }
   });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
+  t.equal(applyFixes(str, messages), str);
+  t.same(messages, []);
+  t.end();
 });
 
-test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
+t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
   const str = `<a b"c" d'e'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -91,37 +109,33 @@ test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
       "attribute-malformed": 1
     }
   });
-  t.is(applyFixes(str, messages), `<a b="c" d='e'>`);
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 1,
-        idxFrom: 3,
-        idxTo: 7,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[4, 4, "="]]
-        }
-      },
-      {
-        ruleId: "attribute-malformed",
-        severity: 1,
-        idxFrom: 8,
-        idxTo: 12,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[9, 9, "="]]
-        }
+  t.equal(applyFixes(str, messages), `<a b="c" d='e'>`);
+  t.match(messages, [
+    {
+      ruleId: "attribute-malformed",
+      severity: 1,
+      idxFrom: 3,
+      idxTo: 7,
+      message: `Equal is missing.`,
+      fix: {
+        ranges: [[4, 4, "="]]
       }
-    ],
-    t.is,
-    t.fail
-  );
+    },
+    {
+      ruleId: "attribute-malformed",
+      severity: 1,
+      idxFrom: 8,
+      idxTo: 12,
+      message: `Equal is missing.`,
+      fix: {
+        ranges: [[9, 9, "="]]
+      }
+    }
+  ]);
+  t.end();
 });
 
-test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = `<a b"c" d'e'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -129,34 +143,30 @@ test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
       "attribute-malformed": 2
     }
   });
-  t.is(applyFixes(str, messages), `<a b="c" d='e'>`);
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 3,
-        idxTo: 7,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[4, 4, "="]]
-        }
-      },
-      {
-        ruleId: "attribute-malformed",
-        severity: 2,
-        idxFrom: 8,
-        idxTo: 12,
-        message: `Equal is missing.`,
-        fix: {
-          ranges: [[9, 9, "="]]
-        }
+  t.equal(applyFixes(str, messages), `<a b="c" d='e'>`);
+  t.match(messages, [
+    {
+      ruleId: "attribute-malformed",
+      severity: 2,
+      idxFrom: 3,
+      idxTo: 7,
+      message: `Equal is missing.`,
+      fix: {
+        ranges: [[4, 4, "="]]
       }
-    ],
-    t.is,
-    t.fail
-  );
+    },
+    {
+      ruleId: "attribute-malformed",
+      severity: 2,
+      idxFrom: 8,
+      idxTo: 12,
+      message: `Equal is missing.`,
+      fix: {
+        ranges: [[9, 9, "="]]
+      }
+    }
+  ]);
+  t.end();
 });
 
 // TODO - both mismatching quote types and equal missing

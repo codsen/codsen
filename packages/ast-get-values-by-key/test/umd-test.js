@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import get1 from "../dist/ast-get-values-by-key.umd";
-import get2 from "../dist/ast-get-values-by-key.cjs";
+const t = require("tap");
+const get1 = require("../dist/ast-get-values-by-key.umd");
 
 const source = [
   {
@@ -34,10 +31,7 @@ const res = [
   { val: "html3", path: "2.tag" }
 ];
 
-test("UMD build works fine", t => {
-  t.deepEqual(get1(source, target), res);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(get2(source, target), res);
+t.test("UMD build works fine", t => {
+  t.same(get1(source, target), res);
+  t.end();
 });

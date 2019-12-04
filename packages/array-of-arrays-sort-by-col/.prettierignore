@@ -1,4 +1,5 @@
 dist/
-test/fixtures
+*.json
+*.mdes
 fixtures/
 *.json

@@ -1,69 +1,51 @@
-import test from "ava";
-import wthn from "../dist/ranges-is-index-within.esm";
-
-// ==============================
-// 0. THROWS
-// ==============================
-
-test("00.01 - native Array methods throw when null is given", t => {
-  const ranges = null;
-  t.throws(() => {
-    ranges.some(arr => arr[0] <= 1 && arr[1] >= 1);
-  });
-});
+const t = require("tap");
+const wthn = require("../dist/ranges-is-index-within.cjs");
 
 // ==============================
 // 01. One range
 // ==============================
 
-test("01.01 - one range, both defaults and inclusive", t => {
-  t.deepEqual(wthn(1, [[0, 3]]), true, "01.01.01 - within range");
-  t.deepEqual(
-    wthn(0, [[0, 3]]),
-    false,
-    "01.01.02 - on the starting of the range"
-  );
-  t.deepEqual(
+t.test("01.01 - one range, both defaults and inclusive", t => {
+  t.same(wthn(1, [[0, 3]]), true, "01.01.01 - within range");
+  t.same(wthn(0, [[0, 3]]), false, "01.01.02 - on the starting of the range");
+  t.same(
     wthn(0, [[0, 3]], { inclusiveRangeEnds: true }),
     true,
     "01.01.03 - on the starting of the range, inclusive"
   );
-  t.deepEqual(
-    wthn(3, [[0, 3]]),
-    false,
-    "01.01.04 - on the ending of the range"
-  );
-  t.deepEqual(
+  t.same(wthn(3, [[0, 3]]), false, "01.01.04 - on the ending of the range");
+  t.same(
     wthn(3, [[0, 3]], { inclusiveRangeEnds: true }),
     true,
     "01.01.05 - on the ending of the range, inclusive"
   );
-  t.deepEqual(wthn(99, [[0, 3]]), false, "01.01.06 - outside of the range");
-  t.deepEqual(
+  t.same(wthn(99, [[0, 3]]), false, "01.01.06 - outside of the range");
+  t.same(
     wthn(99, [[0, 3]], { inclusiveRangeEnds: true }),
     false,
     "01.01.07 - outside of the range, inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(99, null, { inclusiveRangeEnds: true }),
     false,
     "01.01.08 - matching against null"
   );
-  t.deepEqual(wthn(0, null), false, "01.01.09 - matching against null");
+  t.same(wthn(0, null), false, "01.01.09 - matching against null");
+  t.end();
 });
 
-test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
-  t.deepEqual(
+t.test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
+  t.same(
     wthn(1, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     [0, 3],
     "01.02.01 - within range"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "01.02.02 - on the starting of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -71,12 +53,12 @@ test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
     [0, 3],
     "01.02.03 - on the starting of the range, inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(3, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "01.02.04 - on the ending of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(3, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -84,12 +66,12 @@ test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
     [0, 3],
     "01.02.05 - on the ending of the range, inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(99, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "01.02.06 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(99, [[0, 3]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -97,14 +79,15 @@ test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
     false,
     "01.02.07 - outside of the range, inclusive"
   );
+  t.end();
 });
 
 // ==============================
 // 02. Two ranges
 // ==============================
 
-test("02.01 - two ranges, edges on defaults", t => {
-  t.deepEqual(
+t.test("02.01 - two ranges, edges on defaults", t => {
+  t.same(
     wthn(1, [
       [2, 4],
       [6, 8]
@@ -112,7 +95,7 @@ test("02.01 - two ranges, edges on defaults", t => {
     false,
     "02.01.01 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(5, [
       [2, 4],
       [6, 8]
@@ -120,7 +103,7 @@ test("02.01 - two ranges, edges on defaults", t => {
     false,
     "02.01.02 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(9, [
       [2, 4],
       [6, 8]
@@ -128,7 +111,7 @@ test("02.01 - two ranges, edges on defaults", t => {
     false,
     "02.01.03 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(3, [
       [2, 4],
       [6, 8]
@@ -136,7 +119,7 @@ test("02.01 - two ranges, edges on defaults", t => {
     true,
     "02.01.04 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(7, [
       [2, 4],
       [6, 8]
@@ -144,11 +127,12 @@ test("02.01 - two ranges, edges on defaults", t => {
     true,
     "02.01.05 - outside of the range"
   );
+  t.end();
 });
 
-test("02.02 - two ranges, edges inclusive", t => {
+t.test("02.02 - two ranges, edges inclusive", t => {
   // same as 02.01
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -160,7 +144,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     false,
     "02.02.01 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       5,
       [
@@ -172,7 +156,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     false,
     "02.02.02 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       9,
       [
@@ -184,7 +168,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     false,
     "02.02.03 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       3,
       [
@@ -196,7 +180,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     true,
     "02.02.04 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       7,
       [
@@ -210,7 +194,7 @@ test("02.02 - two ranges, edges inclusive", t => {
   );
 
   // checking range edges:
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -222,7 +206,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     true,
     "02.02.06"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       4,
       [
@@ -234,7 +218,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     true,
     "02.02.07"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       6,
       [
@@ -246,7 +230,7 @@ test("02.02 - two ranges, edges inclusive", t => {
     true,
     "02.02.08"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       8,
       [
@@ -258,232 +242,241 @@ test("02.02 - two ranges, edges inclusive", t => {
     true,
     "02.02.09"
   );
+  t.end();
 });
 
-test("02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults", t => {
-  t.deepEqual(
-    wthn(
-      1,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      { returnMatchedRangeInsteadOfTrue: true }
-    ),
-    false,
-    "02.03.01 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      5,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      { returnMatchedRangeInsteadOfTrue: true }
-    ),
-    false,
-    "02.03.02 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      9,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      { returnMatchedRangeInsteadOfTrue: true }
-    ),
-    false,
-    "02.03.03 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      3,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      { returnMatchedRangeInsteadOfTrue: true }
-    ),
-    [2, 4],
-    "02.03.04 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      7,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      { returnMatchedRangeInsteadOfTrue: true }
-    ),
-    [6, 8],
-    "02.03.05 - outside of the range"
-  );
-});
+t.test(
+  "02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
+  t => {
+    t.same(
+      wthn(
+        1,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        { returnMatchedRangeInsteadOfTrue: true }
+      ),
+      false,
+      "02.03.01 - outside of the range"
+    );
+    t.same(
+      wthn(
+        5,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        { returnMatchedRangeInsteadOfTrue: true }
+      ),
+      false,
+      "02.03.02 - outside of the range"
+    );
+    t.same(
+      wthn(
+        9,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        { returnMatchedRangeInsteadOfTrue: true }
+      ),
+      false,
+      "02.03.03 - outside of the range"
+    );
+    t.same(
+      wthn(
+        3,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        { returnMatchedRangeInsteadOfTrue: true }
+      ),
+      [2, 4],
+      "02.03.04 - outside of the range"
+    );
+    t.same(
+      wthn(
+        7,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        { returnMatchedRangeInsteadOfTrue: true }
+      ),
+      [6, 8],
+      "02.03.05 - outside of the range"
+    );
+    t.end();
+  }
+);
 
-test("02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", t => {
-  // same as 02.01
-  t.deepEqual(
-    wthn(
-      1,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    false,
-    "02.04.01 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      5,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    false,
-    "02.04.02 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      9,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    false,
-    "02.04.03 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      3,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [2, 4],
-    "02.04.04 - outside of the range"
-  );
-  t.deepEqual(
-    wthn(
-      7,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [6, 8],
-    "02.04.05 - outside of the range"
-  );
-  // checking range edges:
-  t.deepEqual(
-    wthn(
-      2,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [2, 4],
-    "02.04.06"
-  );
-  t.deepEqual(
-    wthn(
-      4,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [2, 4],
-    "02.04.07"
-  );
-  t.deepEqual(
-    wthn(
-      6,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [6, 8],
-    "02.04.08"
-  );
-  t.deepEqual(
-    wthn(
-      8,
-      [
-        [2, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [6, 8],
-    "02.04.09"
-  );
-  t.deepEqual(
-    wthn(
-      0,
-      [
-        [0, 4],
-        [6, 8]
-      ],
-      {
-        inclusiveRangeEnds: true,
-        returnMatchedRangeInsteadOfTrue: true
-      }
-    ),
-    [0, 4],
-    "02.04.10 - zero"
-  );
-});
+t.test(
+  "02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive",
+  t => {
+    // same as 02.01
+    t.same(
+      wthn(
+        1,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      false,
+      "02.04.01 - outside of the range"
+    );
+    t.same(
+      wthn(
+        5,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      false,
+      "02.04.02 - outside of the range"
+    );
+    t.same(
+      wthn(
+        9,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      false,
+      "02.04.03 - outside of the range"
+    );
+    t.same(
+      wthn(
+        3,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [2, 4],
+      "02.04.04 - outside of the range"
+    );
+    t.same(
+      wthn(
+        7,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [6, 8],
+      "02.04.05 - outside of the range"
+    );
+    // checking range edges:
+    t.same(
+      wthn(
+        2,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [2, 4],
+      "02.04.06"
+    );
+    t.same(
+      wthn(
+        4,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [2, 4],
+      "02.04.07"
+    );
+    t.same(
+      wthn(
+        6,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [6, 8],
+      "02.04.08"
+    );
+    t.same(
+      wthn(
+        8,
+        [
+          [2, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [6, 8],
+      "02.04.09"
+    );
+    t.same(
+      wthn(
+        0,
+        [
+          [0, 4],
+          [6, 8]
+        ],
+        {
+          inclusiveRangeEnds: true,
+          returnMatchedRangeInsteadOfTrue: true
+        }
+      ),
+      [0, 4],
+      "02.04.10 - zero"
+    );
+    t.end();
+  }
+);
 
 // ==============================
 // 03. Many ranges
 // ==============================
 
-test("03.01 - more than two ranges, uneven count, not inclusive", t => {
-  t.deepEqual(
+t.test("03.01 - more than two ranges, uneven count, not inclusive", t => {
+  t.same(
     wthn(5, [
       [2, 4],
       [6, 8],
@@ -496,7 +489,7 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
     false,
     "03.01.01 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       5,
       [
@@ -513,7 +506,7 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
     false,
     "03.01.02 - with opts, outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       5,
       [
@@ -530,7 +523,7 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
     false,
     "03.01.03 - outside of the range"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       5,
       [
@@ -547,10 +540,11 @@ test("03.01 - more than two ranges, uneven count, not inclusive", t => {
     false,
     "03.01.04 - with opts, outside of the range"
   );
+  t.end();
 });
 
-test("03.02 - even more ranges, not inclusive", t => {
-  t.deepEqual(
+t.test("03.02 - even more ranges, not inclusive", t => {
+  t.same(
     wthn(0, [
       [5, 10],
       [15, 20],
@@ -569,7 +563,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.00"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -592,7 +586,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.00-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [
       [5, 10],
       [15, 20],
@@ -611,7 +605,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.01"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -634,7 +628,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.01-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(2, [
       [5, 10],
       [15, 20],
@@ -653,7 +647,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.02"
   );
-  t.deepEqual(
+  t.same(
     wthn(3, [
       [5, 10],
       [15, 20],
@@ -672,7 +666,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.03"
   );
-  t.deepEqual(
+  t.same(
     wthn(4, [
       [5, 10],
       [15, 20],
@@ -691,7 +685,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.04"
   );
-  t.deepEqual(
+  t.same(
     wthn(5, [
       [5, 10],
       [15, 20],
@@ -710,7 +704,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.05"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       5,
       [
@@ -733,7 +727,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.05-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(6, [
       [5, 10],
       [15, 20],
@@ -752,7 +746,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.06"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       6,
       [
@@ -775,7 +769,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [5, 10],
     "03.02.06-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(7, [
       [5, 10],
       [15, 20],
@@ -794,7 +788,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.07"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       7,
       [
@@ -817,7 +811,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [5, 10],
     "03.02.07"
   );
-  t.deepEqual(
+  t.same(
     wthn(8, [
       [5, 10],
       [15, 20],
@@ -836,7 +830,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.08"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       8,
       [
@@ -859,7 +853,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [5, 10],
     "03.02.08-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(9, [
       [5, 10],
       [15, 20],
@@ -878,7 +872,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.09"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       9,
       [
@@ -901,7 +895,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [5, 10],
     "03.02.09-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(10, [
       [5, 10],
       [15, 20],
@@ -920,7 +914,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.10"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       10,
       [
@@ -943,7 +937,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.10-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(11, [
       [5, 10],
       [15, 20],
@@ -962,7 +956,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.11"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       11,
       [
@@ -985,7 +979,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.11-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(12, [
       [5, 10],
       [15, 20],
@@ -1004,7 +998,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.12"
   );
-  t.deepEqual(
+  t.same(
     wthn(13, [
       [5, 10],
       [15, 20],
@@ -1023,7 +1017,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.13"
   );
-  t.deepEqual(
+  t.same(
     wthn(14, [
       [5, 10],
       [15, 20],
@@ -1042,7 +1036,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.14"
   );
-  t.deepEqual(
+  t.same(
     wthn(15, [
       [5, 10],
       [15, 20],
@@ -1061,7 +1055,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.15"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       15,
       [
@@ -1084,7 +1078,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.15-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       15,
       [
@@ -1107,7 +1101,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.15-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       15,
       [
@@ -1130,7 +1124,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [15, 20],
     "03.02.15-4"
   );
-  t.deepEqual(
+  t.same(
     wthn(16, [
       [5, 10],
       [15, 20],
@@ -1149,7 +1143,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.16"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       16,
       [
@@ -1172,7 +1166,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [15, 20],
     "03.02.16-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(17, [
       [5, 10],
       [15, 20],
@@ -1191,7 +1185,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.17"
   );
-  t.deepEqual(
+  t.same(
     wthn(18, [
       [5, 10],
       [15, 20],
@@ -1210,7 +1204,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.18"
   );
-  t.deepEqual(
+  t.same(
     wthn(19, [
       [5, 10],
       [15, 20],
@@ -1229,7 +1223,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.19"
   );
-  t.deepEqual(
+  t.same(
     wthn(20, [
       [5, 10],
       [15, 20],
@@ -1248,7 +1242,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.20"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       20,
       [
@@ -1271,7 +1265,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.20-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       20,
       [
@@ -1294,7 +1288,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.20-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       20,
       [
@@ -1317,7 +1311,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [15, 20],
     "03.02.20-4"
   );
-  t.deepEqual(
+  t.same(
     wthn(21, [
       [5, 10],
       [15, 20],
@@ -1336,7 +1330,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.21"
   );
-  t.deepEqual(
+  t.same(
     wthn(22, [
       [5, 10],
       [15, 20],
@@ -1355,7 +1349,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.22"
   );
-  t.deepEqual(
+  t.same(
     wthn(23, [
       [5, 10],
       [15, 20],
@@ -1374,7 +1368,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.23"
   );
-  t.deepEqual(
+  t.same(
     wthn(24, [
       [5, 10],
       [15, 20],
@@ -1393,7 +1387,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.24"
   );
-  t.deepEqual(
+  t.same(
     wthn(25, [
       [5, 10],
       [15, 20],
@@ -1412,7 +1406,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.25"
   );
-  t.deepEqual(
+  t.same(
     wthn(26, [
       [5, 10],
       [15, 20],
@@ -1431,7 +1425,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.26"
   );
-  t.deepEqual(
+  t.same(
     wthn(27, [
       [5, 10],
       [15, 20],
@@ -1450,7 +1444,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.27"
   );
-  t.deepEqual(
+  t.same(
     wthn(28, [
       [5, 10],
       [15, 20],
@@ -1469,7 +1463,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.28"
   );
-  t.deepEqual(
+  t.same(
     wthn(29, [
       [5, 10],
       [15, 20],
@@ -1488,7 +1482,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.29"
   );
-  t.deepEqual(
+  t.same(
     wthn(30, [
       [5, 10],
       [15, 20],
@@ -1507,7 +1501,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.30"
   );
-  t.deepEqual(
+  t.same(
     wthn(31, [
       [5, 10],
       [15, 20],
@@ -1526,7 +1520,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.31"
   );
-  t.deepEqual(
+  t.same(
     wthn(32, [
       [5, 10],
       [15, 20],
@@ -1545,7 +1539,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.32"
   );
-  t.deepEqual(
+  t.same(
     wthn(33, [
       [5, 10],
       [15, 20],
@@ -1564,7 +1558,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.33"
   );
-  t.deepEqual(
+  t.same(
     wthn(34, [
       [5, 10],
       [15, 20],
@@ -1583,7 +1577,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.34"
   );
-  t.deepEqual(
+  t.same(
     wthn(35, [
       [5, 10],
       [15, 20],
@@ -1602,7 +1596,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.35"
   );
-  t.deepEqual(
+  t.same(
     wthn(36, [
       [5, 10],
       [15, 20],
@@ -1621,7 +1615,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.36"
   );
-  t.deepEqual(
+  t.same(
     wthn(37, [
       [5, 10],
       [15, 20],
@@ -1640,7 +1634,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.37"
   );
-  t.deepEqual(
+  t.same(
     wthn(38, [
       [5, 10],
       [15, 20],
@@ -1659,7 +1653,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.38"
   );
-  t.deepEqual(
+  t.same(
     wthn(39, [
       [5, 10],
       [15, 20],
@@ -1678,7 +1672,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.39"
   );
-  t.deepEqual(
+  t.same(
     wthn(40, [
       [5, 10],
       [15, 20],
@@ -1697,7 +1691,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.40"
   );
-  t.deepEqual(
+  t.same(
     wthn(41, [
       [5, 10],
       [15, 20],
@@ -1716,7 +1710,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.41"
   );
-  t.deepEqual(
+  t.same(
     wthn(42, [
       [5, 10],
       [15, 20],
@@ -1735,7 +1729,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.42"
   );
-  t.deepEqual(
+  t.same(
     wthn(43, [
       [5, 10],
       [15, 20],
@@ -1754,7 +1748,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.43"
   );
-  t.deepEqual(
+  t.same(
     wthn(44, [
       [5, 10],
       [15, 20],
@@ -1773,7 +1767,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.44"
   );
-  t.deepEqual(
+  t.same(
     wthn(45, [
       [5, 10],
       [15, 20],
@@ -1792,7 +1786,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.45"
   );
-  t.deepEqual(
+  t.same(
     wthn(46, [
       [5, 10],
       [15, 20],
@@ -1811,7 +1805,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.46"
   );
-  t.deepEqual(
+  t.same(
     wthn(47, [
       [5, 10],
       [15, 20],
@@ -1830,7 +1824,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.47"
   );
-  t.deepEqual(
+  t.same(
     wthn(48, [
       [5, 10],
       [15, 20],
@@ -1849,7 +1843,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.48"
   );
-  t.deepEqual(
+  t.same(
     wthn(49, [
       [5, 10],
       [15, 20],
@@ -1868,7 +1862,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.49"
   );
-  t.deepEqual(
+  t.same(
     wthn(50, [
       [5, 10],
       [15, 20],
@@ -1887,7 +1881,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.50"
   );
-  t.deepEqual(
+  t.same(
     wthn(51, [
       [5, 10],
       [15, 20],
@@ -1906,7 +1900,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.51"
   );
-  t.deepEqual(
+  t.same(
     wthn(52, [
       [5, 10],
       [15, 20],
@@ -1925,7 +1919,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.52"
   );
-  t.deepEqual(
+  t.same(
     wthn(53, [
       [5, 10],
       [15, 20],
@@ -1944,7 +1938,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.53"
   );
-  t.deepEqual(
+  t.same(
     wthn(54, [
       [5, 10],
       [15, 20],
@@ -1963,7 +1957,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.54"
   );
-  t.deepEqual(
+  t.same(
     wthn(55, [
       [5, 10],
       [15, 20],
@@ -1982,7 +1976,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.55-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       55,
       [
@@ -2005,7 +1999,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.55-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       55,
       [
@@ -2028,7 +2022,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.55-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       55,
       [
@@ -2051,7 +2045,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [55, 60],
     "03.02.55-4"
   );
-  t.deepEqual(
+  t.same(
     wthn(56, [
       [5, 10],
       [15, 20],
@@ -2070,7 +2064,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.56-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       56,
       [
@@ -2093,7 +2087,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [55, 60],
     "03.02.56-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(57, [
       [5, 10],
       [15, 20],
@@ -2112,7 +2106,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.57"
   );
-  t.deepEqual(
+  t.same(
     wthn(58, [
       [5, 10],
       [15, 20],
@@ -2131,7 +2125,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.58"
   );
-  t.deepEqual(
+  t.same(
     wthn(59, [
       [5, 10],
       [15, 20],
@@ -2150,7 +2144,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.59"
   );
-  t.deepEqual(
+  t.same(
     wthn(60, [
       [5, 10],
       [15, 20],
@@ -2169,7 +2163,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.60"
   );
-  t.deepEqual(
+  t.same(
     wthn(61, [
       [5, 10],
       [15, 20],
@@ -2188,7 +2182,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.61"
   );
-  t.deepEqual(
+  t.same(
     wthn(62, [
       [5, 10],
       [15, 20],
@@ -2207,7 +2201,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.62"
   );
-  t.deepEqual(
+  t.same(
     wthn(63, [
       [5, 10],
       [15, 20],
@@ -2226,7 +2220,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.63"
   );
-  t.deepEqual(
+  t.same(
     wthn(64, [
       [5, 10],
       [15, 20],
@@ -2245,7 +2239,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.64-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       64,
       [
@@ -2268,7 +2262,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.64-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(65, [
       [5, 10],
       [15, 20],
@@ -2287,7 +2281,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.65-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       65,
       [
@@ -2310,7 +2304,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.65-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(66, [
       [5, 10],
       [15, 20],
@@ -2329,7 +2323,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.66-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       66,
       [
@@ -2352,7 +2346,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [65, 70],
     "03.02.66-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(67, [
       [5, 10],
       [15, 20],
@@ -2371,7 +2365,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.67"
   );
-  t.deepEqual(
+  t.same(
     wthn(68, [
       [5, 10],
       [15, 20],
@@ -2390,7 +2384,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.68-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       68,
       [
@@ -2413,7 +2407,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [65, 70],
     "03.02.68-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(69, [
       [5, 10],
       [15, 20],
@@ -2432,7 +2426,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.69"
   );
-  t.deepEqual(
+  t.same(
     wthn(70, [
       [5, 10],
       [15, 20],
@@ -2451,7 +2445,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.70"
   );
-  t.deepEqual(
+  t.same(
     wthn(71, [
       [5, 10],
       [15, 20],
@@ -2470,7 +2464,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.71"
   );
-  t.deepEqual(
+  t.same(
     wthn(72, [
       [5, 10],
       [15, 20],
@@ -2489,7 +2483,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.72"
   );
-  t.deepEqual(
+  t.same(
     wthn(73, [
       [5, 10],
       [15, 20],
@@ -2508,7 +2502,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.73"
   );
-  t.deepEqual(
+  t.same(
     wthn(74, [
       [5, 10],
       [15, 20],
@@ -2527,7 +2521,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.74"
   );
-  t.deepEqual(
+  t.same(
     wthn(75, [
       [5, 10],
       [15, 20],
@@ -2546,7 +2540,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.75"
   );
-  t.deepEqual(
+  t.same(
     wthn(76, [
       [5, 10],
       [15, 20],
@@ -2565,7 +2559,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.76-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       76,
       [
@@ -2588,7 +2582,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [75, 80],
     "03.02.76-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(77, [
       [5, 10],
       [15, 20],
@@ -2607,7 +2601,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.77"
   );
-  t.deepEqual(
+  t.same(
     wthn(78, [
       [5, 10],
       [15, 20],
@@ -2626,7 +2620,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.78"
   );
-  t.deepEqual(
+  t.same(
     wthn(79, [
       [5, 10],
       [15, 20],
@@ -2645,7 +2639,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.79"
   );
-  t.deepEqual(
+  t.same(
     wthn(80, [
       [5, 10],
       [15, 20],
@@ -2664,7 +2658,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.80"
   );
-  t.deepEqual(
+  t.same(
     wthn(81, [
       [5, 10],
       [15, 20],
@@ -2683,7 +2677,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.81"
   );
-  t.deepEqual(
+  t.same(
     wthn(82, [
       [5, 10],
       [15, 20],
@@ -2702,7 +2696,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.82"
   );
-  t.deepEqual(
+  t.same(
     wthn(83, [
       [5, 10],
       [15, 20],
@@ -2721,7 +2715,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.83"
   );
-  t.deepEqual(
+  t.same(
     wthn(84, [
       [5, 10],
       [15, 20],
@@ -2740,7 +2734,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.84"
   );
-  t.deepEqual(
+  t.same(
     wthn(85, [
       [5, 10],
       [15, 20],
@@ -2759,7 +2753,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.85"
   );
-  t.deepEqual(
+  t.same(
     wthn(86, [
       [5, 10],
       [15, 20],
@@ -2778,7 +2772,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.86-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       86,
       [
@@ -2801,7 +2795,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [85, 90],
     "03.02.86-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(87, [
       [5, 10],
       [15, 20],
@@ -2820,7 +2814,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.87"
   );
-  t.deepEqual(
+  t.same(
     wthn(88, [
       [5, 10],
       [15, 20],
@@ -2839,7 +2833,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.88"
   );
-  t.deepEqual(
+  t.same(
     wthn(89, [
       [5, 10],
       [15, 20],
@@ -2858,7 +2852,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.89"
   );
-  t.deepEqual(
+  t.same(
     wthn(90, [
       [5, 10],
       [15, 20],
@@ -2877,7 +2871,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.90"
   );
-  t.deepEqual(
+  t.same(
     wthn(91, [
       [5, 10],
       [15, 20],
@@ -2896,7 +2890,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.91"
   );
-  t.deepEqual(
+  t.same(
     wthn(92, [
       [5, 10],
       [15, 20],
@@ -2915,7 +2909,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.92"
   );
-  t.deepEqual(
+  t.same(
     wthn(93, [
       [5, 10],
       [15, 20],
@@ -2934,7 +2928,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.93"
   );
-  t.deepEqual(
+  t.same(
     wthn(94, [
       [5, 10],
       [15, 20],
@@ -2953,7 +2947,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.94"
   );
-  t.deepEqual(
+  t.same(
     wthn(95, [
       [5, 10],
       [15, 20],
@@ -2972,7 +2966,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.95"
   );
-  t.deepEqual(
+  t.same(
     wthn(96, [
       [5, 10],
       [15, 20],
@@ -2991,7 +2985,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.96"
   );
-  t.deepEqual(
+  t.same(
     wthn(97, [
       [5, 10],
       [15, 20],
@@ -3010,7 +3004,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.97-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       97,
       [
@@ -3033,7 +3027,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [95, 100],
     "03.02.97-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(98, [
       [5, 10],
       [15, 20],
@@ -3052,7 +3046,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.98"
   );
-  t.deepEqual(
+  t.same(
     wthn(99, [
       [5, 10],
       [15, 20],
@@ -3071,7 +3065,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.99"
   );
-  t.deepEqual(
+  t.same(
     wthn(100, [
       [5, 10],
       [15, 20],
@@ -3090,7 +3084,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.100-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       100,
       [
@@ -3113,7 +3107,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.100-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       100,
       [
@@ -3136,7 +3130,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.100-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       100,
       [
@@ -3162,7 +3156,7 @@ test("03.02 - even more ranges, not inclusive", t => {
 
   //
 
-  t.deepEqual(
+  t.same(
     wthn(
       105,
       [
@@ -3185,7 +3179,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [105, 110],
     "03.02.105"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       110,
       [
@@ -3208,7 +3202,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.110"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       112,
       [
@@ -3231,7 +3225,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.112"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       116,
       [
@@ -3254,7 +3248,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.116-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       116,
       [
@@ -3277,7 +3271,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [115, 120],
     "03.02.116-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       120,
       [
@@ -3300,7 +3294,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.120"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       124,
       [
@@ -3323,7 +3317,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.124-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       124,
       [
@@ -3346,7 +3340,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.124-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       124,
       [
@@ -3369,7 +3363,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.124-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       124,
       [
@@ -3392,7 +3386,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.124-4"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       126,
       [
@@ -3415,7 +3409,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.126-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       126,
       [
@@ -3438,7 +3432,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     true,
     "03.02.126-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       126,
       [
@@ -3461,7 +3455,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [125, 130],
     "03.02.126-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       126,
       [
@@ -3485,7 +3479,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     "03.02.126-4"
   );
 
-  t.deepEqual(
+  t.same(
     wthn(
       130,
       [
@@ -3508,7 +3502,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.130-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       130,
       [
@@ -3531,7 +3525,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     [125, 130],
     "03.02.130-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       130,
       [
@@ -3554,7 +3548,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.130-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       130,
       [
@@ -3579,7 +3573,7 @@ test("03.02 - even more ranges, not inclusive", t => {
   );
 
   // outside of the range
-  t.deepEqual(
+  t.same(
     wthn(
       131,
       [
@@ -3602,7 +3596,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.131-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       131,
       [
@@ -3625,7 +3619,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.131-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       131,
       [
@@ -3648,7 +3642,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.131-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       131,
       [
@@ -3671,7 +3665,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.131-4"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       132,
       [
@@ -3694,7 +3688,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.132-1"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       132,
       [
@@ -3717,7 +3711,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.132-2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       132,
       [
@@ -3740,7 +3734,7 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.132-3"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       132,
       [
@@ -3763,21 +3757,22 @@ test("03.02 - even more ranges, not inclusive", t => {
     false,
     "03.02.132-4"
   );
+  t.end();
 });
 
-test("03.03 - small ranges - zero", t => {
-  t.deepEqual(wthn(0, [[0, 1]]), false, "03.03.01 - no opts");
-  t.deepEqual(
+t.test("03.03 - small ranges - zero", t => {
+  t.same(wthn(0, [[0, 1]]), false, "03.03.01 - no opts");
+  t.same(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: false }),
     false,
     "03.03.02 - hardcoded opts defaults"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 1]], { inclusiveRangeEnds: true }),
     true,
     "03.03.03 - inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [
       [0, 1],
       [2, 3]
@@ -3785,7 +3780,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.04"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [
       [0, 1],
       [1, 3]
@@ -3793,7 +3788,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.05 - overlap"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [
       [0, 1],
       [0, 3]
@@ -3801,7 +3796,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.06 - overlap #2"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [
       [0, 10],
       [0, 3]
@@ -3809,7 +3804,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.06 - overlap and wrong order"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3821,7 +3816,7 @@ test("03.03 - small ranges - zero", t => {
     true,
     "03.03.07 - overlap and wrong order - inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3836,12 +3831,12 @@ test("03.03 - small ranges - zero", t => {
 
   // returnMatchedRangeInsteadOfTrue: true
 
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 1]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "03.03.09 - no opts"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true
@@ -3849,7 +3844,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.10 - hardcoded opts defaults"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -3857,7 +3852,7 @@ test("03.03 - small ranges - zero", t => {
     [0, 1],
     "03.03.11 - inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3869,7 +3864,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.12"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3881,7 +3876,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.13 - overlap"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3893,7 +3888,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.14 - overlap #2"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3905,7 +3900,7 @@ test("03.03 - small ranges - zero", t => {
     false,
     "03.03.15 - overlap and wrong order"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3920,7 +3915,7 @@ test("03.03 - small ranges - zero", t => {
     [0, 10],
     "03.03.16 - overlap and wrong order - inclusive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       0,
       [
@@ -3935,28 +3930,29 @@ test("03.03 - small ranges - zero", t => {
     [0, 3],
     "03.03.17 - overlap and wrong order - inclusive"
   );
+  t.end();
 });
 
-test("03.04 - small ranges - one", t => {
-  t.deepEqual(wthn(1, [[0, 1]]), false, "03.04.01 - no opts");
-  t.deepEqual(
+t.test("03.04 - small ranges - one", t => {
+  t.same(wthn(1, [[0, 1]]), false, "03.04.01 - no opts");
+  t.same(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: false }),
     false,
     "03.04.02 - hardcoded opts defaults"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [[0, 1]], { inclusiveRangeEnds: true }),
     true,
     "03.04.03 - inclusive"
   );
 
   // opts.returnMatchedRangeInsteadOfTrue
-  t.deepEqual(
+  t.same(
     wthn(1, [[0, 1]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
     "03.04.04"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true
@@ -3964,7 +3960,7 @@ test("03.04 - small ranges - one", t => {
     false,
     "03.04.05 - hardcoded opts defaults"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [[0, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -3972,45 +3968,30 @@ test("03.04 - small ranges - one", t => {
     [0, 1],
     "03.04.06 - inclusive"
   );
+  t.end();
 });
 
-test("03.05 - identical range endings", t => {
-  t.deepEqual(
-    wthn(0, [[0, 0]], { inclusiveRangeEnds: false }),
-    false,
-    "03.05.01"
-  );
-  t.deepEqual(
-    wthn(1, [[1, 1]], { inclusiveRangeEnds: false }),
-    false,
-    "03.05.02"
-  );
-  t.deepEqual(
-    wthn(0, [[0, 0]], { inclusiveRangeEnds: true }),
-    true,
-    "03.05.03"
-  );
-  t.deepEqual(
-    wthn(1, [[1, 1]], { inclusiveRangeEnds: true }),
-    true,
-    "03.05.04"
-  );
-  t.deepEqual(
+t.test("03.05 - identical range endings", t => {
+  t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: false }), false, "03.05.01");
+  t.same(wthn(1, [[1, 1]], { inclusiveRangeEnds: false }), false, "03.05.02");
+  t.same(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "03.05.03");
+  t.same(wthn(1, [[1, 1]], { inclusiveRangeEnds: true }), true, "03.05.04");
+  t.same(
     wthn(0, [[1, 1]], { inclusiveRangeEnds: true }),
     false,
     "03.05.05 - identical range ends, index under"
   );
-  t.deepEqual(
+  t.same(
     wthn(2, [[1, 1]], { inclusiveRangeEnds: true }),
     false,
     "03.05.06 - identical range ends, index above"
   );
-  t.deepEqual(
+  t.same(
     wthn(2, [[1, 1]], { inclusiveRangeEnds: false }),
     false,
     "03.05.07 - identical range ends, index above"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -4023,7 +4004,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.08 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4036,7 +4017,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.09 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       3,
       [
@@ -4049,7 +4030,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.10 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -4062,7 +4043,7 @@ test("03.05 - identical range endings", t => {
     true,
     "03.05.11 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4075,7 +4056,7 @@ test("03.05 - identical range endings", t => {
     true,
     "03.05.12 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       3,
       [
@@ -4088,7 +4069,7 @@ test("03.05 - identical range endings", t => {
     true,
     "03.05.13 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4101,7 +4082,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.14 - identical consecutive with gap"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4116,7 +4097,7 @@ test("03.05 - identical range endings", t => {
   );
 
   // opts.returnMatchedRangeInsteadOfTrue
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true
@@ -4124,7 +4105,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.16"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true
@@ -4132,7 +4113,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.17"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[0, 0]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -4140,7 +4121,7 @@ test("03.05 - identical range endings", t => {
     [0, 0],
     "03.05.18"
   );
-  t.deepEqual(
+  t.same(
     wthn(1, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -4148,7 +4129,7 @@ test("03.05 - identical range endings", t => {
     [1, 1],
     "03.05.19"
   );
-  t.deepEqual(
+  t.same(
     wthn(0, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -4156,7 +4137,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.20 - identical range ends, index under"
   );
-  t.deepEqual(
+  t.same(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: true,
       returnMatchedRangeInsteadOfTrue: true
@@ -4164,7 +4145,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.21 - identical range ends, index above"
   );
-  t.deepEqual(
+  t.same(
     wthn(2, [[1, 1]], {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: true
@@ -4172,7 +4153,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.22 - identical range ends, index above"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -4188,7 +4169,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.23 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4204,7 +4185,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.24 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       3,
       [
@@ -4220,7 +4201,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.25 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       1,
       [
@@ -4236,7 +4217,7 @@ test("03.05 - identical range endings", t => {
     [1, 1],
     "03.05.26 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4252,7 +4233,7 @@ test("03.05 - identical range endings", t => {
     [2, 2],
     "03.05.27 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       3,
       [
@@ -4268,7 +4249,7 @@ test("03.05 - identical range endings", t => {
     [3, 3],
     "03.05.28 - identical consecutive"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4284,7 +4265,7 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.29 - identical consecutive with gap"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       2,
       [
@@ -4300,14 +4281,15 @@ test("03.05 - identical range endings", t => {
     false,
     "03.05.30 - identical consecutive with gap"
   );
+  t.end();
 });
 
 // ==============================
 // 4. AD-HOC
 // ==============================
 
-test("Ad-hoc #1", t => {
-  t.deepEqual(
+t.test("Ad-hoc #1", t => {
+  t.same(
     wthn(
       130,
       [
@@ -4330,7 +4312,7 @@ test("Ad-hoc #1", t => {
     [125, 130],
     "04.01.01"
   );
-  t.deepEqual(
+  t.same(
     wthn(
       130,
       [
@@ -4356,10 +4338,11 @@ test("Ad-hoc #1", t => {
     [125, 130],
     "04.01.02"
   );
+  t.end();
 });
 
-test("Ad-hoc #2", t => {
-  t.deepEqual(
+t.test("Ad-hoc #2", t => {
+  t.same(
     wthn(21, [
       [5, 10],
       [15, 20],
@@ -4378,10 +4361,11 @@ test("Ad-hoc #2", t => {
     false,
     "04.02"
   );
+  t.end();
 });
 
-test("Ad-hoc #3", t => {
-  t.deepEqual(
+t.test("Ad-hoc #3", t => {
+  t.same(
     wthn(6, [
       [5, 10],
       [15, 20],
@@ -4400,4 +4384,5 @@ test("Ad-hoc #3", t => {
     true,
     "04.03"
   );
+  t.end();
 });

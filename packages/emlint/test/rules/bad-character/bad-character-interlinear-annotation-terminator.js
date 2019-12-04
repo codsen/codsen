@@ -1,28 +1,26 @@
-// avanotonly
-
 // rule: bad-character-interlinear-annotation-terminator
 // https://www.fileformat.info/info/unicode/char/fffb/index.htm
 // -----------------------------------------------------------------------------
 
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+
+const { applyFixes } = require("../../../t-util/util");
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01.01 - detects two INTERLINEAR ANNOTATION TERMINATOR characters`, t => {
-  const str = "\uFFFBdlkgjld\uFFFBj";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "bad-character-interlinear-annotation-terminator": 2
-    }
-  });
-  deepContains(
-    messages,
-    [
+t.test(
+  `01.01 - detects two INTERLINEAR ANNOTATION TERMINATOR characters`,
+  t => {
+    const str = "\uFFFBdlkgjld\uFFFBj";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "bad-character-interlinear-annotation-terminator": 2
+      }
+    });
+    t.match(messages, [
       {
         ruleId: "bad-character-interlinear-annotation-terminator",
         severity: 2,
@@ -47,9 +45,8 @@ test(`01.01 - detects two INTERLINEAR ANNOTATION TERMINATOR characters`, t => {
           ranges: [[8, 9]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-  t.is(applyFixes(str, messages), "dlkgjldj");
-});
+    ]);
+    t.equal(applyFixes(str, messages), "dlkgjldj");
+    t.end();
+  }
+);

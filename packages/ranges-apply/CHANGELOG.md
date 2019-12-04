@@ -28,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   const error1 = t.throws(() => {
     repl();
   });
-  t.regex(error1.message, /THROW_ID_01/);
+  t.match(error1.message, /THROW_ID_01/);
   ```
 
 ## 2.7.0 (2018-10-25)

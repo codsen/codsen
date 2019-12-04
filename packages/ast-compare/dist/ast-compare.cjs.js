@@ -61,8 +61,6 @@ function isBlank(something) {
 function isTheTypeLegit(something) {
   return isObj(something) || isStr(something) || isNum(something) || isBool(something) || isArr(something) || isNull(something);
 }
-
-var isArr$1 = Array.isArray;
 function compare(bo, so, originalOpts) {
   if (bo === undefined) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_01] first argument is missing!");
@@ -108,7 +106,7 @@ function compare(bo, so, originalOpts) {
     return opts.useWildcards ? matcher.isMatch(b, s, {
       caseSensitive: true
     }) : b === s;
-  } else if (isArr$1(b) && isArr$1(s)) {
+  } else if (isArr(b) && isArr(s)) {
     if (opts.hungryForWhitespace && empty(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
       return true;
     }

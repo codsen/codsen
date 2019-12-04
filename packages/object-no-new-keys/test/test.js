@@ -1,12 +1,12 @@
-import test from "ava";
-import nnk from "../dist/object-no-new-keys.esm";
+const t = require("tap");
+const nnk = require("../dist/object-no-new-keys.cjs");
 
 // ==========
 // 01. B.A.U.
 // ==========
 
-test("01.01 - first level keys", t => {
-  t.deepEqual(
+t.test("01.01 - first level keys", t => {
+  t.same(
     nnk(
       {
         a: "a",
@@ -20,10 +20,11 @@ test("01.01 - first level keys", t => {
     ["a", "b"],
     "01.01"
   );
+  t.end();
 });
 
-test("01.02 - two level object", t => {
-  t.deepEqual(
+t.test("01.02 - two level object", t => {
+  t.same(
     nnk(
       {
         a: {
@@ -41,10 +42,11 @@ test("01.02 - two level object", t => {
     ["a.b", "x"],
     "01.02"
   );
+  t.end();
 });
 
-test("01.03 - object does not even exist on a reference", t => {
-  t.deepEqual(
+t.test("01.03 - object does not even exist on a reference", t => {
+  t.same(
     nnk(
       {
         a: {
@@ -60,10 +62,11 @@ test("01.03 - object does not even exist on a reference", t => {
     ["a.b", "a.c", "x"],
     "01.03"
   );
+  t.end();
 });
 
-test("01.04 - same as 01.03 but deeper levels", t => {
-  t.deepEqual(
+t.test("01.04 - same as 01.03 but deeper levels", t => {
+  t.same(
     nnk(
       {
         a: {
@@ -86,14 +89,15 @@ test("01.04 - same as 01.03 but deeper levels", t => {
     ["a.b.c.d", "a.b.c.e"],
     "01.04"
   );
+  t.end();
 });
 
 // ====================
 // 02. Involving arrays
 // ====================
 
-test("02.01 - objects within arrays", t => {
-  t.deepEqual(
+t.test("02.01 - objects within arrays", t => {
+  t.same(
     nnk(
       {
         a: [
@@ -114,7 +118,7 @@ test("02.01 - objects within arrays", t => {
     ["a[0].d"],
     "02.01.01 - basic"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -146,7 +150,7 @@ test("02.01 - objects within arrays", t => {
     ["a[0].d", "a[0].f", "a[1].k", "x"],
     "02.01.02 - proper"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -174,7 +178,7 @@ test("02.01 - objects within arrays", t => {
     ["a[0].d", "a[0].f", "a[1].k", "x"],
     "02.01.03 - array in the reference has lesser number of elements (default, MODE #2)"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -203,7 +207,7 @@ test("02.01 - objects within arrays", t => {
     ["a[0].d", "a[0].f", "a[1].c", "a[1].k", "x"],
     "02.01.04 - MODE #1 - array in the reference has lesser number of elements"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -232,10 +236,11 @@ test("02.01 - objects within arrays", t => {
     ["a[0].d", "a[0].f", "a[1].c", "a[1].k", "x"],
     "02.01.05 - same as #4, but with mode identifier as string"
   );
+  t.end();
 });
 
-test("02.02 - other cases", t => {
-  t.deepEqual(
+t.test("02.02 - other cases", t => {
+  t.same(
     nnk(
       [
         {
@@ -248,7 +253,7 @@ test("02.02 - other cases", t => {
     ["[0]"],
     "02.02.01"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -263,7 +268,7 @@ test("02.02 - other cases", t => {
     ["a[0]"],
     "02.02.02"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: [
@@ -278,29 +283,30 @@ test("02.02 - other cases", t => {
     ["a[0].b", "a[0].d"],
     "02.02.03"
   );
+  t.end();
 });
 
 // ========================================
 // 03. Different type inputs, strange cases
 // ========================================
 
-test("03.01 - array vs ..., can be inner recursion situation", t => {
-  t.deepEqual(
+t.test("03.01 - array vs ..., can be inner recursion situation", t => {
+  t.same(
     nnk(["a", "b", "c"]),
     ["[0]", "[1]", "[2]"],
     "03.01.01 - array vs undefined"
   );
-  t.deepEqual(
+  t.same(
     nnk(["a", "b", "c"], "zzz"),
     ["[0]", "[1]", "[2]"],
     "03.01.02 - array vs string"
   );
-  t.deepEqual(
+  t.same(
     nnk(["a", "b", "c"], { z: "zzz" }),
     ["[0]", "[1]", "[2]"],
     "03.01.03 - array vs plain object"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       [
         {
@@ -313,10 +319,11 @@ test("03.01 - array vs ..., can be inner recursion situation", t => {
     ["[0].b", "[0].d"],
     "02.02.04"
   );
+  t.end();
 });
 
-test("03.02 - plain object vs ..., can be inner recursion situation", t => {
-  t.deepEqual(
+t.test("03.02 - plain object vs ..., can be inner recursion situation", t => {
+  t.same(
     nnk({
       a: "a",
       b: "b",
@@ -325,7 +332,7 @@ test("03.02 - plain object vs ..., can be inner recursion situation", t => {
     ["a", "b", "c"],
     "03.02.01 - object vs undefined"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: "a",
@@ -337,10 +344,11 @@ test("03.02 - plain object vs ..., can be inner recursion situation", t => {
     ["a", "b", "c"],
     "03.02.02 - object vs array"
   );
+  t.end();
 });
 
-test("03.03 - more complex plain object vs ...", t => {
-  t.deepEqual(
+t.test("03.03 - more complex plain object vs ...", t => {
+  t.same(
     nnk({
       a: "a",
       b: ["b"],
@@ -351,7 +359,7 @@ test("03.03 - more complex plain object vs ...", t => {
     ["a", "b", "c"],
     "03.03.01 - vs undefined (deeper levels won't be traversed if parents are not matching)"
   );
-  t.deepEqual(
+  t.same(
     nnk(
       {
         a: "a",
@@ -365,26 +373,29 @@ test("03.03 - more complex plain object vs ...", t => {
     ["a", "b", "c"],
     "03.03.02 - vs empty object"
   );
+  t.end();
 });
 
-test("03.04 - more complex plain object vs ...", t => {
-  t.deepEqual(nnk("a", "b"), [], "03.04");
+t.test("03.04 - more complex plain object vs ...", t => {
+  t.same(nnk("a", "b"), [], "03.04");
+  t.end();
 });
 
 // ==========
 // 04. Throws
 // ==========
 
-test("04.01 - mode.opts customised to a wrong type - throws", t => {
+t.test("04.01 - mode.opts customised to a wrong type - throws", t => {
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, { mode: "z" });
   });
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, { mode: 1.5 });
   });
+  t.end();
 });
 
-test("04.02 - mode is given as integer - throws", t => {
+t.test("04.02 - mode is given as integer - throws", t => {
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, 1);
   });
@@ -394,4 +405,5 @@ test("04.02 - mode is given as integer - throws", t => {
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, 2.5);
   });
+  t.end();
 });

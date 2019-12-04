@@ -1,19 +1,16 @@
-// avanotonly
-
-import test from "ava";
-import ct from "../dist/codsen-tokenizer.esm";
-import deepContains from "ast-deep-contains";
+const t = require("tap");
+const ct = require("../dist/codsen-tokenizer.cjs");
 const BACKSLASH = "\u005C";
 
 // 01. rule tag-space-after-opening-bracket
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`, t => {
+t.test(t => {
   const gathered = [];
   ct(`a < b class="">`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -27,20 +24,20 @@ test(`01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`
         end: 15
       }
     ],
-    t.is,
-    t.fail
+    `01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`
   );
+  t.end();
 });
 
 // 02. rule tag-closing-left-slash
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t => {
+t.test(t => {
   const gathered = [];
   ct(`<br${BACKSLASH}>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -49,17 +46,17 @@ test(`02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t
         end: 5
       }
     ],
-    t.is,
-    t.fail
+    `02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`
   );
+  t.end();
 });
 
-test(`02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t => {
+t.test(t => {
   const gathered = [];
   ct(`<${BACKSLASH}br${BACKSLASH}>`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -68,17 +65,17 @@ test(`02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t
         end: 6
       }
     ],
-    t.is,
-    t.fail
+    `02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`
   );
+  t.end();
 });
 
-test(`02.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t => {
+t.test(t => {
   const gathered = [];
   ct(`< ${BACKSLASH} br ${BACKSLASH} >`, obj => {
     gathered.push(obj);
   });
-  deepContains(
+  t.match(
     gathered,
     [
       {
@@ -87,7 +84,7 @@ test(`02.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, t
         end: 10
       }
     ],
-    t.is,
-    t.fail
+    `02.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`
   );
+  t.end();
 });

@@ -10,13 +10,11 @@ const writeJsonFile = require("write-json-file");
 const path = require("path");
 const logSymbols = require("log-symbols");
 const chalk = require("chalk");
-// const getPkgRepo = require("get-pkg-repo");
 const objectPath = require("object-path");
 const deleteKey = require("object-delete-key");
 const format = require("format-package");
 const mergeAdvanced = require("object-merge-advanced");
 const pMap = require("p-map");
-const pacote = require("pacote");
 
 const trim = require("lodash.trim");
 const isObj = require("lodash.isplainobject");
@@ -239,6 +237,48 @@ async function step14(receivedPack) {
   objectPath.del(receivedPack, "lect.contribution_types");
   objectPath.del(receivedPack, "lect.contributors");
 
+  // // if it's a tap-tested package, remove all AVA references
+  // if (objectPath.has(receivedPack, "devDependencies.tap")) {
+  //   objectPath.del(receivedPack, "devDependencies.ava");
+  //   objectPath.del(receivedPack, "scripts.ava");
+  //   objectPath.del(receivedPack, "scripts.coverage");
+  //   objectPath.del(receivedPack, "devDependencies.@babel/register");
+  //   objectPath.del(receivedPack, "devDependencies.babel-plugin-istanbul");
+  //   objectPath.del(receivedPack, "devDependencies.eslint-plugin-ava");
+  //   objectPath.del(receivedPack, "devDependencies.esm");
+  //   objectPath.del(receivedPack, "devDependencies.nyc");
+  //   objectPath.del(receivedPack, "ava");
+  //   objectPath.del(receivedPack, "esm");
+  //   objectPath.del(receivedPack, "nyc");
+  //   // objectPath.set(
+  //   //   receivedPack,
+  //   //   "scripts.unittest",
+  //   //   "./node_modules/.bin/tap && npm run perf"
+  //   // );
+  //
+  //   // this can be either Mocha (eslint-*) or Tap (the rest)
+  //   if (!objectPath.get(receivedPack, "lect.special")) {
+  //     objectPath.set(
+  //       receivedPack,
+  //       "scripts.unittest",
+  //       "./node_modules/.bin/tap --no-only"
+  //     );
+  //     objectPath.set(
+  //       receivedPack,
+  //       "scripts.devunittest",
+  //       "npm run dev && ./node_modules/.bin/tap --only"
+  //     );
+  //   }
+  //   objectPath.set(
+  //     receivedPack,
+  //     "scripts.test",
+  //     "npm run lint && npm run unittest && npm run format"
+  //   );
+  //
+  //   objectPath.set(receivedPack, "tap.coverage-report", "json-summary");
+  //   objectPath.set(receivedPack, "tap.timeout", 0);
+  // }
+
   const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
@@ -383,7 +423,7 @@ function step13() {
     {
       input: "src/${currVal}",
       output: [
-        { file: "dist/${path.parse(currVal).name}.esm.js", format: "es" },
+        { file: "dist/${path.parse(currVal).name}.cjs.js", format: "cjs" },
       ],
       external: [
         ${calculatedExternalImports}
@@ -996,29 +1036,32 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   const packDevDeps = pack.devDependencies;
   // if (DEBUG) {
-  //   console.log(`1006 packDevDeps.ava = ${packDevDeps.ava}`);
+  //   console.log(`0999 packDevDeps.ava = ${packDevDeps.ava}`);
   //   const lectrcDevDeps = receivedPackageJsonObj.devDependencies;
   // }
   const lectrcDevDeps = lectrc.package.devDependencies;
   // if (DEBUG) {
-  //   console.log(`1011 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
+  //   console.log(`1004 lectrcDevDeps.ava = ${lectrcDevDeps.ava}`);
   // }
 
   // console.log("\n-------\n");
 
   Object.keys(receivedPackageJsonObj.devDependencies).forEach(key => {
-    // console.log(`1017 lect: processing ${key}`);
+    // console.log(`1010 lect: processing ${key}`);
     // if a certain dev dependency in package.json does not exist in a reference
     // lectrc list of dev devpendencies, we remove it, unless it is among
     // lect.various.devDependencies[]
+
+    const whitelist = ["tempy", "execa", "tap"];
+
     if (
       !Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
-      (!isArr(pack.lect.various.devDependencies) ||
+      !whitelist.includes(key) &&
+      (!isArr(objectPath.get(pack, "lect.various.devDependencies")) ||
         !pack.lect.various.devDependencies.includes(key)) &&
-      (!(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) ||
-        (key !== "tempy" && key !== "execa"))
+      !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1028 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1024 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1026,7 +1069,7 @@ async function writePackageJson(receivedPackageJsonObj) {
     ) {
       // if existing package.json key is present, keep its value as it is
       lectrc.package.devDependencies[key] = pack.devDependencies[key];
-      // console.log(`1036 lect: ${key} stays ${pack.devDependencies[key]}`);
+      // console.log(`1032 lect: ${key} stays ${pack.devDependencies[key]}`);
     }
     // console.log("\n-------\n");
   });
@@ -1041,7 +1084,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
       !key.startsWith("rollup")
     ) {
-      // console.log(`1051 lect: we'll add a new key ${key} under dev deps`);
+      // console.log(`1047 lect: we'll add a new key ${key} under dev deps`);
       receivedPackageJsonObj.devDependencies[key] = lectrcDevDeps[key];
     }
   });
@@ -1086,7 +1129,7 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
       if (isStr(key) && key.trim().length) {
-        // console.log(`1096 lect cli: key to write hard =${key}`);
+        // console.log(`1092 lect cli: key to write hard =${key}`);
         objectPath.set(
           receivedPackageJsonObj,
           key,
@@ -1161,6 +1204,13 @@ async function step10() {
       concatInsteadOfMerging: false,
       dedupeStringsInArrayValues: true
     });
+    // console.log(
+    //   `1168 lect.js: ${`\u001b[${33}m${`finalThing`}\u001b[${39}m`} = ${JSON.stringify(
+    //     finalThing,
+    //     null,
+    //     4
+    //   )}`
+    // );
 
     // if there's rollup used, set the right dist paths
     if (objectPath.has(pack, "devDependencies.rollup")) {
@@ -1196,6 +1246,7 @@ async function step10() {
     if (!objectPath.has(pack, "browser")) {
       objectPath.del(finalThing, "browser");
     }
+
     // then write out whole thing:
     writePackageJson(finalThing);
   } else {
@@ -1208,43 +1259,43 @@ async function step10() {
 // 9. writing the .eslintrc.json
 
 function step9() {
-  // log(`${chalk.white("\nSTEP 9 - Assemble and write .eslintrc.json")}`);
-  // if eslint is used,
-  if (
-    objectPath.has(pack, "devDependencies.eslint") &&
-    objectPath.has(lectrc, "eslintrc")
-  ) {
-    // log(
-    //   chalk.blue(
-    //     logSymbols.info,
-    //     "eslint used and lectrc given within .lectrc.json"
-    //   )
-    // );
-    // if there's no signs of AVA, exclude all ava ESLint rules:
-    let finalEslintRc = clone(lectrc.eslintrc);
-    if (!objectPath.has(pack, "devDependencies.ava")) {
-      finalEslintRc = deleteKey(finalEslintRc, { key: "ava/*" });
-    }
-
-    writeFileAtomic(
-      ".eslintrc.json",
-      `${JSON.stringify(finalEslintRc, null, 2)}\n`,
-      err => {
-        if (err) {
-          log(
-            chalk.red(
-              logSymbols.error,
-              `there was an error writing .eslintrc: ${err}`
-            )
-          );
-        }
-        // log(chalk.green(logSymbols.success, ".eslintrc.json OK"));
-        step10();
-      }
-    );
-  } else {
-    step10();
-  }
+  // // log(`${chalk.white("\nSTEP 9 - Assemble and write .eslintrc.json")}`);
+  // // if eslint is used,
+  // if (
+  //   objectPath.has(pack, "devDependencies.eslint") &&
+  //   objectPath.has(lectrc, "eslintrc")
+  // ) {
+  //   // log(
+  //   //   chalk.blue(
+  //   //     logSymbols.info,
+  //   //     "eslint used and lectrc given within .lectrc.json"
+  //   //   )
+  //   // );
+  //   // if there's no signs of AVA, exclude all ava ESLint rules:
+  //   let finalEslintRc = clone(lectrc.eslintrc);
+  //   if (!objectPath.has(pack, "devDependencies.ava")) {
+  //     finalEslintRc = deleteKey(finalEslintRc, { key: "ava/*" });
+  //   }
+  //
+  //   writeFileAtomic(
+  //     ".eslintrc.json",
+  //     `${JSON.stringify(finalEslintRc, null, 2)}\n`,
+  //     err => {
+  //       if (err) {
+  //         log(
+  //           chalk.red(
+  //             logSymbols.error,
+  //             `there was an error writing .eslintrc: ${err}`
+  //           )
+  //         );
+  //       }
+  //       // log(chalk.green(logSymbols.success, ".eslintrc.json OK"));
+  //       step10();
+  //     }
+  //   );
+  // } else {
+  step10();
+  // }
 }
 
 // -----------------------------------------------------------------------------
@@ -1559,7 +1610,7 @@ function step6() {
 
   readmeData.forEach((readmePiece, indx) => {
     // console.log(
-    //   `1600 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+    //   `1578 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
     // );
     // console.log(
     //   `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
@@ -1587,7 +1638,7 @@ function step6() {
     // retain any content above the first h1
     if (typeof readmePiece === "string" && indx === 0) {
       // if (DEBUG) {
-      //   console.log(`1628 clause #1`);
+      //   console.log(`1606 clause #1`);
       // }
       content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
         removeRecognisedLintingBadges(readmePiece).trim().length > 0
@@ -1605,7 +1656,7 @@ function step6() {
       readmePiece.heading.startsWith("# ")
     ) {
       // if (DEBUG) {
-      //   console.log(`1646 clause #2`);
+      //   console.log(`1624 clause #2`);
       // }
       // prep the first h tag's contents
       firstHeadingIsDone = true;
@@ -1651,7 +1702,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1692 clause #3`);
+        console.log(`1670 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1820,7 +1871,7 @@ const ${consumedName} = ${camelCase(pack.name)};
       }
     }
   });
-  // console.log(`1861 lect()`);
+  // console.log(`1839 lect()`);
 
   // contributing module
   content += `${
@@ -2027,6 +2078,13 @@ function step5() {
         isObj(pack.lect.babelrc.set)
       ) {
         finalBabelrc = clone(pack.lect.babelrc.set);
+      }
+
+      // if it's a tap-tested package, remove all AVA references
+      if (objectPath.has(pack, "devDependencies.tap")) {
+        // tap-tested libraries don't need instanbul plugins on babel, so
+        // delete the env from babel plugin
+        objectPath.del(finalBabelrc, "env");
       }
 
       // Write out whatever we got so far:

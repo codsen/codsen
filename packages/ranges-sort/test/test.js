@@ -1,11 +1,11 @@
-import test from "ava";
-import srt from "../dist/ranges-sort.esm";
+const t = require("tap");
+const srt = require("../dist/ranges-sort.cjs");
 
 // ==============================
 // 0. THROWS
 // ==============================
 
-test("00.01 - not array", t => {
+t.test("00.01 - not array", t => {
   t.throws(() => {
     srt(null);
   });
@@ -18,9 +18,10 @@ test("00.01 - not array", t => {
   t.throws(() => {
     srt({ e: true });
   });
+  t.end();
 });
 
-test("00.02 - not two arguments in one of ranges", t => {
+t.test("00.02 - not two arguments in one of ranges", t => {
   t.throws(() => {
     srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true });
   });
@@ -45,37 +46,38 @@ test("00.02 - not two arguments in one of ranges", t => {
       }
     );
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     srt([
       [1, 2],
       [4, 5],
       [7, 8]
     ]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     srt([]);
   });
   // with defaults opts
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     srt([[1, 2, 3]]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     srt([
       [1, 2, 3],
       [4, 5, 6]
     ]);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     srt([
       [1, 2],
       [4, 5, 6],
       [7, 8]
     ]);
   });
+  t.end();
 });
 
-test("00.03 - some/all range indexes are not natural numbers", t => {
-  t.notThrows(() => {
+t.test("00.03 - some/all range indexes are not natural numbers", t => {
+  t.doesNotThrow(() => {
     srt([[0, 3]]);
   });
   t.throws(() => {
@@ -96,23 +98,26 @@ test("00.03 - some/all range indexes are not natural numbers", t => {
   t.throws(() => {
     srt([[0.2, 33, 55, 66.7]]);
   });
+  t.end();
 });
 
 // ==============================
 // 01. Sorting
 // ==============================
 
-test("01.01 - no ranges given", t => {
-  t.deepEqual(srt([]), [], "01.01 - copes fine");
+t.test("01.01 - no ranges given", t => {
+  t.same(srt([]), [], "01.01 - copes fine");
+  t.end();
 });
 
-test("01.02 - only one range given", t => {
-  t.deepEqual(srt([[0, 3]]), [[0, 3]], "01.02.01");
-  t.deepEqual(srt([[0, 3, "zzz"]]), [[0, 3, "zzz"]], "01.02.02");
+t.test("01.02 - only one range given", t => {
+  t.same(srt([[0, 3]]), [[0, 3]], "01.02.01");
+  t.same(srt([[0, 3, "zzz"]]), [[0, 3, "zzz"]], "01.02.02");
+  t.end();
 });
 
-test("01.03 - two ranges", t => {
-  t.deepEqual(
+t.test("01.03 - two ranges", t => {
+  t.same(
     srt([
       [0, 3],
       [5, 6]
@@ -123,7 +128,7 @@ test("01.03 - two ranges", t => {
     ],
     "01.03.01"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [5, 6],
       [0, 3]
@@ -134,7 +139,7 @@ test("01.03 - two ranges", t => {
     ],
     "01.03.02"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [0, 3, "zzz"],
       [5, 6]
@@ -145,7 +150,7 @@ test("01.03 - two ranges", t => {
     ],
     "01.03.03"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [5, 6],
       [0, 3, "zzz"]
@@ -156,10 +161,11 @@ test("01.03 - two ranges", t => {
     ],
     "01.03.04"
   );
+  t.end();
 });
 
-test("01.04 - many ranges", t => {
-  t.deepEqual(
+t.test("01.04 - many ranges", t => {
+  t.same(
     srt([
       [0, 3],
       [5, 8],
@@ -172,7 +178,7 @@ test("01.04 - many ranges", t => {
     ],
     "01.04.01"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [5, 8],
       [5, 6],
@@ -185,7 +191,7 @@ test("01.04 - many ranges", t => {
     ],
     "01.04.02"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [0, 8],
       [5, 6],
@@ -198,7 +204,7 @@ test("01.04 - many ranges", t => {
     ],
     "01.04.03"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [5, 6],
       [5, 6]
@@ -209,7 +215,7 @@ test("01.04 - many ranges", t => {
     ],
     "01.04.04 - same ranges"
   );
-  t.deepEqual(
+  t.same(
     srt([
       [5, 6],
       [5, 6, "zzz"]
@@ -229,7 +235,7 @@ test("01.04 - many ranges", t => {
       { strictlyTwoElementsInRangeArrays: true }
     );
   });
-  t.deepEqual(
+  t.same(
     srt([
       [9, 12],
       [9, 15]
@@ -240,20 +246,21 @@ test("01.04 - many ranges", t => {
     ],
     "01.04.07"
   );
+  t.end();
 });
 
 // ==============================
 // 02. Ad-Hoc
 // ==============================
 
-test("02.01 - does not mutate the input arg", t => {
+t.test("02.01 - does not mutate the input arg", t => {
   const original = [
     [5, 6],
     [3, 4],
     [1, 2]
   ];
   srt(original);
-  t.deepEqual(
+  t.same(
     original,
     [
       [5, 6],
@@ -262,14 +269,15 @@ test("02.01 - does not mutate the input arg", t => {
     ],
     "02.01"
   );
+  t.end();
 });
 
 // ==============================
 // 3. EXAMPLES FROM README
 // ==============================
 
-test("03.01 - readme example #1", t => {
-  t.deepEqual(
+t.test("03.01 - readme example #1", t => {
+  t.same(
     srt([
       [5, 6],
       [1, 3]
@@ -280,10 +288,11 @@ test("03.01 - readme example #1", t => {
     ],
     "03.01"
   );
+  t.end();
 });
 
-test("03.02 - readme example #2", t => {
-  t.deepEqual(
+t.test("03.02 - readme example #2", t => {
+  t.same(
     srt([
       [5, 6],
       [5, 3],
@@ -296,34 +305,39 @@ test("03.02 - readme example #2", t => {
     ],
     "03.02"
   );
+  t.end();
 });
 
-test("03.03 - readme example #3", t => {
+t.test("03.03 - readme example #3", t => {
   t.throws(() => {
     srt([[1, 2], []]); // throws, because there's at least one empty range
   });
+  t.end();
 });
 
-test("03.04 - readme example #4", t => {
+t.test("03.04 - readme example #4", t => {
   t.throws(() => {
     srt([["a"]]); // throws, because range is given as string
   });
+  t.end();
 });
 
-test("03.05 - an extra for readme example #4", t => {
+t.test("03.05 - an extra for readme example #4", t => {
   t.throws(() => {
     srt([[1, "a"]]); // throws, because range is given as string
   });
+  t.end();
 });
 
-test("03.06 readme example #5", t => {
+t.test("03.06 readme example #5", t => {
   t.throws(() => {
     srt([[1], [2]]); // throws, because one index is not a range
   });
+  t.end();
 });
 
-test("03.07 readme example #6", t => {
-  t.deepEqual(
+t.test("03.07 readme example #6", t => {
+  t.same(
     srt([
       [3, 4, "aaa", "bbb"],
       [1, 2, "zzz"]
@@ -334,6 +348,7 @@ test("03.07 readme example #6", t => {
     ],
     "03.07 - 3rd argument and onwards are ignored"
   );
+  t.end();
 });
 
 // ==============================
@@ -341,8 +356,8 @@ test("03.07 readme example #6", t => {
 // ==============================
 
 // TODO:
-test("04.01 - calls progress callback correctly", t => {
-  t.deepEqual(
+t.test("04.01 - calls progress callback correctly", t => {
+  t.same(
     srt(
       [
         [0, 3],
@@ -360,7 +375,7 @@ test("04.01 - calls progress callback correctly", t => {
     ],
     "04.01.01 - callback fn is null"
   );
-  t.deepEqual(
+  t.same(
     srt(
       [
         [0, 3],
@@ -378,7 +393,7 @@ test("04.01 - calls progress callback correctly", t => {
     ],
     "04.01.02 - callback fn is false"
   );
-  t.deepEqual(
+  t.same(
     srt(
       [
         [0, 3],
@@ -394,7 +409,7 @@ test("04.01 - calls progress callback correctly", t => {
     ],
     "04.01.03 - empty opts obj"
   );
-  t.deepEqual(
+  t.same(
     srt(
       [
         [0, 3],
@@ -415,4 +430,5 @@ test("04.01 - calls progress callback correctly", t => {
     ],
     "04.01.04 - baseline, no fn to call"
   );
+  t.end();
 });

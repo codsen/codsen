@@ -1,12 +1,10 @@
-/* eslint ava/prefer-async-await:0 */
-
-import fs from "fs-extra";
-import path from "path";
-import test from "ava";
-import execa from "execa";
-import tempy from "tempy";
-import pMap from "p-map";
-import pack from "../package.json";
+const fs = require("fs-extra");
+const path = require("path");
+const t = require("tap");
+const execa = require("execa");
+const tempy = require("tempy");
+const pMap = require("p-map");
+const pack = require("../package.json");
 
 // -----------------------------------------------------------------------------
 
@@ -341,7 +339,7 @@ const prettifiedContents = `{
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-test("01.01 - default sort, called on the whole folder", async t => {
+t.test("01.01 - default sort, called on the whole folder", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -395,10 +393,11 @@ test("01.01 - default sort, called on the whole folder", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, sortedTestFileContents);
+  t.same(await processedFileContents, sortedTestFileContents);
+  t.end();
 });
 
-test("01.02 - sort, -t (tabs) mode", async t => {
+t.test("01.02 - sort, -t (tabs) mode", async t => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -437,10 +436,11 @@ test("01.02 - sort, -t (tabs) mode", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, sortedTabbedTestFileContents);
+  t.same(await processedFileContents, sortedTabbedTestFileContents);
+  t.end();
 });
 
-test("01.03 - sort, there's a broken JSON among files", async t => {
+t.test("01.03 - sort, there's a broken JSON among files", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -481,7 +481,7 @@ test("01.03 - sort, there's a broken JSON among files", async t => {
     )
     .then(() => execa("./cli.js", [tempFolder]))
     .then(receivedStdOut => {
-      t.regex(receivedStdOut.stdout, /broken\.json/);
+      t.match(receivedStdOut.stdout, /broken\.json/);
       return pMap(testFilePaths, oneOfPaths =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       ).then(contentsArray => {
@@ -498,10 +498,11 @@ test("01.03 - sort, there's a broken JSON among files", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, sortedTestFileContents);
+  t.same(await processedFileContents, sortedTestFileContents);
+  t.end();
 });
 
-test("01.04 - silent mode", async t => {
+t.only("01.04 - silent mode", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -517,7 +518,7 @@ test("01.04 - silent mode", async t => {
 
   // 2. asynchronously write all test files
 
-  const processedFileContents = pMap(
+  const processedFileContents = await pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
@@ -542,9 +543,9 @@ test("01.04 - silent mode", async t => {
     )
     .then(() => execa("./cli.js", [tempFolder, "-s"]))
     .then(receivedStdOut => {
-      t.is(receivedStdOut.stdout, "");
-      t.notRegex(receivedStdOut.stdout, /OK/);
-      t.notRegex(receivedStdOut.stdout, /sorted/);
+      t.equal(receivedStdOut.stdout, "");
+      t.notMatch(receivedStdOut.stdout, /OK/);
+      t.notMatch(receivedStdOut.stdout, /sorted/);
       return pMap(testFilePaths, oneOfPaths =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       ).then(contentsArray => {
@@ -561,10 +562,11 @@ test("01.04 - silent mode", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, sortedTestFileContents);
+  t.same(processedFileContents, sortedTestFileContents);
+  t.end();
 });
 
-test("01.05 - fixes minified dotfiles in JSON format", async t => {
+t.test("01.05 - fixes minified dotfiles in JSON format", async t => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -582,10 +584,11 @@ test("01.05 - fixes minified dotfiles in JSON format", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, prettifiedContents);
+  t.same(await processedFileContents, prettifiedContents);
+  t.end();
 });
 
-test("01.06 - topmost level is array", async t => {
+t.test("01.06 - topmost level is array", async t => {
   const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
@@ -618,7 +621,7 @@ test("01.06 - topmost level is array", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(
+  t.same(
     await processedFileContents,
     `[
   {
@@ -631,32 +634,35 @@ test("01.06 - topmost level is array", async t => {
   }
 ]\n`
   );
+  t.end();
 });
 
-test("01.07 - when asked, sorts arrays which contain only strings", async t => {
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+t.test(
+  "01.07 - when asked, sorts arrays which contain only strings",
+  async t => {
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  const processedFileContents = fs
-    .writeFile(
-      pathOfTheTestfile,
-      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
-    )
-    .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-    .then(received =>
-      execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
-        .command(`rm -rf ${tempFolder}`)
-        .then(() => received)
-    )
-    .catch(err => t.fail(err));
+    const processedFileContents = fs
+      .writeFile(
+        pathOfTheTestfile,
+        JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
+      )
+      .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
+      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+      .then(received =>
+        execa
+          // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+          .command(`rm -rf ${tempFolder}`)
+          .then(() => received)
+      )
+      .catch(err => t.fail(err));
 
-  t.deepEqual(
-    await processedFileContents,
-    `[
+    t.same(
+      await processedFileContents,
+      `[
   "a",
   "A",
   "m",
@@ -664,34 +670,40 @@ test("01.07 - when asked, sorts arrays which contain only strings", async t => {
   "z",
   "Z"
 ]\n`
-  );
-});
+    );
+    t.end();
+  }
+);
 
-test("01.08 - when not asked, does not sort arrays which contain only strings", async t => {
-  const tempFolder = tempy.directory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
-  const sourceArr = ["Z", "A", "z", "m", "M", "a"];
+t.test(
+  "01.08 - when not asked, does not sort arrays which contain only strings",
+  async t => {
+    const tempFolder = tempy.directory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    const pathOfTheTestfile = path.join(tempFolder, "sortme.json");
+    const sourceArr = ["Z", "A", "z", "m", "M", "a"];
 
-  const processedFileContents = fs
-    .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
-    .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
-    .then(received =>
-      execa
-        // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
-        .command(`rm -rf ${tempFolder}`)
-        .then(() => received)
-    )
-    .catch(err => t.fail(err));
-  t.deepEqual(
-    await processedFileContents,
-    `${JSON.stringify(sourceArr, null, 2)}\n`
-  );
-});
+    const processedFileContents = fs
+      .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
+      .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
+      .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+      .then(received =>
+        execa
+          // .command(`rm -rf ${path.join(__dirname, "../temp")}`)
+          .command(`rm -rf ${tempFolder}`)
+          .then(() => received)
+      )
+      .catch(err => t.fail(err));
+    t.same(
+      await processedFileContents,
+      `${JSON.stringify(sourceArr, null, 2)}\n`
+    );
+    t.end();
+  }
+);
 
-test("01.09 - array in deeper levels sorted (upon request)", async t => {
+t.test("01.09 - array in deeper levels sorted (upon request)", async t => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -725,7 +737,7 @@ test("01.09 - array in deeper levels sorted (upon request)", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(
+  t.same(
     await processedFileContents,
     `{
   "a": {
@@ -742,29 +754,32 @@ test("01.09 - array in deeper levels sorted (upon request)", async t => {
   }
 }\n`
   );
+  t.end();
 });
 
-test("01.10 - version output mode", async t => {
+t.test("01.10 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
-  t.is(reportedVersion1.stdout, pack.version);
+  t.equal(reportedVersion1.stdout, pack.version);
 
   const reportedVersion2 = await execa("./cli.js", ["--version"]);
-  t.is(reportedVersion2.stdout, pack.version);
+  t.equal(reportedVersion2.stdout, pack.version);
+  t.end();
 });
 
-test("01.11 - help output mode", async t => {
+t.test("01.11 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.regex(reportedVersion1.stdout, /Usage/);
-  t.regex(reportedVersion1.stdout, /Options/);
-  t.regex(reportedVersion1.stdout, /Example/);
+  t.match(reportedVersion1.stdout, /Usage/);
+  t.match(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Example/);
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.regex(reportedVersion2.stdout, /Usage/);
-  t.regex(reportedVersion2.stdout, /Options/);
-  t.regex(reportedVersion2.stdout, /Example/);
+  t.match(reportedVersion2.stdout, /Usage/);
+  t.match(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Example/);
+  t.end();
 });
 
-test("01.12 - no files found in the given directory", async t => {
+t.test("01.12 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -772,13 +787,14 @@ test("01.12 - no files found in the given directory", async t => {
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
-  t.regex(
+  t.match(
     stdOutContents.stdout,
     /The inputs don't lead to any json files! Exiting./
   );
+  t.end();
 });
 
-test("01.13 - package.json is sorted by default", async t => {
+t.test("01.13 - package.json is sorted by default", async t => {
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -804,7 +820,7 @@ test("01.13 - package.json is sorted by default", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(
+  t.same(
     await processedFileContents,
     `{
   "name": "tester",
@@ -813,9 +829,10 @@ test("01.13 - package.json is sorted by default", async t => {
   }
 }\n`
   );
+  t.end();
 });
 
-test("01.14 - package.json is not sorted under -p flag", async t => {
+t.test("01.14 - package.json is not sorted under -p flag", async t => {
   const tempFolder = tempy.directory();
   const source = `{
   "dependencies": {
@@ -840,13 +857,14 @@ test("01.14 - package.json is not sorted under -p flag", async t => {
     )
     .catch(err => t.fail(err));
 
-  t.deepEqual(await processedFileContents, source);
+  t.same(await processedFileContents, source);
+  t.end();
 });
 
 // 02. opts: -c or --ci - the CI mode
 // -----------------------------------------------------------------------------
 
-test("02.01 - CI mode, something to sort, -c flag", async t => {
+t.test("02.01 - CI mode, something to sort, -c flag", async t => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -869,7 +887,7 @@ test("02.01 - CI mode, something to sort, -c flag", async t => {
       // all test files have been written successfully, let's process them with our CLI
     )
     .then(stdOutContents => {
-      t.regex(stdOutContents.stdout, /Unsorted files/g);
+      t.match(stdOutContents.stdout, /Unsorted files/g);
       return pMap(testFilePaths, oneOfPaths =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       );
@@ -883,10 +901,11 @@ test("02.01 - CI mode, something to sort, -c flag", async t => {
       // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
       execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
     )
-    .catch(err => t.is(err.exitCode, 9));
+    .catch(err => t.equal(err.exitCode, 9));
+  t.end();
 });
 
-test("02.02 - CI mode, something to sort, --ci flag", async t => {
+t.test("02.02 - CI mode, something to sort, --ci flag", async t => {
   // 1. fetch us an empty, random, temporary folder:
   const tempFolder = tempy.directory();
   // const tempFolder = "temp";
@@ -909,7 +928,7 @@ test("02.02 - CI mode, something to sort, --ci flag", async t => {
       // all test files have been written successfully, let's process them with our CLI
     )
     .then(stdOutContents => {
-      t.regex(stdOutContents.stdout, /Unsorted files/g);
+      t.match(stdOutContents.stdout, /Unsorted files/g);
       return pMap(testFilePaths, oneOfPaths =>
         fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
       );
@@ -923,5 +942,6 @@ test("02.02 - CI mode, something to sort, --ci flag", async t => {
       // execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
       execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
     )
-    .catch(err => t.is(err.exitCode, 9));
+    .catch(err => t.equal(err.exitCode, 9));
+  t.end();
 });

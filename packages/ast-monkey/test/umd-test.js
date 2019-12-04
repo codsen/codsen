@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import { find as find1 } from "../dist/ast-monkey.umd";
-import { find as find2 } from "../dist/ast-monkey.cjs";
+const t = require("tap");
+const { find } = require("../dist/ast-monkey.umd");
 
 const input = {
   a1: {
@@ -34,10 +31,7 @@ const intended = [
   }
 ];
 
-test("UMD build works fine", t => {
-  t.deepEqual(find1(input, { key: "a*" }), intended);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(find2(input, { key: "a*" }), intended);
+t.test("UMD build works fine", t => {
+  t.same(find(input, { key: "a*" }), intended);
+  t.end();
 });

@@ -97,9 +97,6 @@ function decode(ent) {
     );
   }
   const val = ent.slice(1, ent.length - 1);
-  console.log(
-    `${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${JSON.stringify(val, null, 4)}`
-  );
   return allNamedEntities[val] ? allNamedEntities[val] : null;
 }
 

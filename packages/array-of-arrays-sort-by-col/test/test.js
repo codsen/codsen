@@ -1,8 +1,6 @@
-/* eslint ava/no-only-test:0, no-console:0 */
-
-import test from "ava";
-import sortByCol from "../dist/array-of-arrays-sort-by-col.esm";
-import shuffle from "array-shuffle";
+const t = require("tap");
+const sortByCol = require("../dist/array-of-arrays-sort-by-col.cjs");
+const shuffle = require("array-shuffle");
 
 function mixer(t, tested, reference, idx) {
   // backwards loop for perf:
@@ -15,7 +13,7 @@ function mixer(t, tested, reference, idx) {
     //       : tested.length - i
     //   }`}\u001b[${39}m`} = ${JSON.stringify(tested, null, 0)}`
     // );
-    t.deepEqual(sortByCol(tested, idx), reference);
+    t.same(sortByCol(tested, idx), reference);
   }
   for (let i = tested.length * tested.length; i--; ) {
     const specimen = shuffle(tested);
@@ -27,13 +25,13 @@ function mixer(t, tested, reference, idx) {
     //   }`}\u001b[${39}m`} = ${JSON.stringify(specimen, null, 0)}`
     // );
 
-    t.deepEqual(sortByCol(specimen, idx), reference);
+    t.same(sortByCol(specimen, idx), reference);
   }
 }
 
 // -----------------------------------------------------------------------------
 
-test("1.1 - multiple elements, #1", t => {
+t.test("1.1 - multiple elements, #1", t => {
   mixer(
     t,
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
@@ -79,74 +77,82 @@ test("1.1 - multiple elements, #1", t => {
   const errMsg1 = t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 3);
   });
-  t.truthy(errMsg1.message.includes("THROW_ID_03"));
+  t.ok(errMsg1.message.includes("THROW_ID_03"));
 
   const errMsg2 = t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "3");
   });
-  t.truthy(errMsg2.message.includes("THROW_ID_03"));
+  t.ok(errMsg2.message.includes("THROW_ID_03"));
 
   const errMsg3 = t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 99);
   });
-  t.truthy(errMsg3.message.includes("THROW_ID_03"));
+  t.ok(errMsg3.message.includes("THROW_ID_03"));
 
   const errMsg4 = t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "999");
   });
-  t.truthy(errMsg4.message.includes("THROW_ID_03"));
+  t.ok(errMsg4.message.includes("THROW_ID_03"));
+
+  t.end();
 });
 
-test("1.2.1 - multiple elements, #2", t => {
+t.test("1.2.1 - multiple elements, #2", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]]
   );
+  t.end();
 });
 
-test("1.2.2 - multiple elements, #2", t => {
+t.test("1.2.2 - multiple elements, #2", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
     0
   );
+  t.end();
 });
 
-test("1.2.3 - multiple elements, #2", t => {
+t.test("1.2.3 - multiple elements, #2", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
     1
   );
+  t.end();
 });
 
-test("1.2.4 - multiple elements, #2", t => {
+t.test("1.2.4 - multiple elements, #2", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 9, 0], [1, 8, 2], [1, 7, 5], [1]],
     2
   );
+  t.end();
 });
 
-test("1.2.5 - multiple elements, #2 - axis outside of the range", t => {
+t.test("1.2.5 - multiple elements, #2 - axis outside of the range", t => {
   const errMsg = t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
   });
-  t.truthy(errMsg.message.includes("THROW_ID_03"));
+  t.ok(errMsg.message.includes("THROW_ID_03"));
+  t.end();
 });
 
-test("1.2.6 - multiple elements, #2 - axis outside of the range", t => {
+t.test("1.2.6 - multiple elements, #2 - axis outside of the range", t => {
   const errMsg = t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
   });
-  t.truthy(errMsg.message.includes("THROW_ID_03"));
+  t.ok(errMsg.message.includes("THROW_ID_03"));
+  t.end();
 });
 
-test("1.3 - multiple elements, #3 - opposite order", t => {
+t.test("1.3 - multiple elements, #3 - opposite order", t => {
   mixer(
     t,
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
@@ -170,9 +176,10 @@ test("1.3 - multiple elements, #3 - opposite order", t => {
     [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]],
     2
   );
+  t.end();
 });
 
-test("1.4 - multiple elements, #4 - single elements", t => {
+t.test("1.4 - multiple elements, #4 - single elements", t => {
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]]);
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], 0);
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], "0");
@@ -180,41 +187,45 @@ test("1.4 - multiple elements, #4 - single elements", t => {
   const errMsg1 = t.throws(() => {
     sortByCol([[0], [0], [3], [2], [1]], 1); // second element doesn't exist
   });
-  t.truthy(errMsg1.message.includes("THROW_ID_03"));
+  t.ok(errMsg1.message.includes("THROW_ID_03"));
 
   const errMsg2 = t.throws(() => {
     sortByCol([[0], [0], [3], [2], [1]], 99); // 100-th element doesn't exist
   });
-  t.truthy(errMsg2.message.includes("THROW_ID_03"));
+  t.ok(errMsg2.message.includes("THROW_ID_03"));
+  t.end();
 });
 
-test("1.5.1 - first column indexes contain opposite order values", t => {
+t.test("1.5.1 - first column indexes contain opposite order values", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]]
   ); // defaulting to first elements, that's indexes "0" and they contain values: 1-2-3-undefined
+  t.end();
 });
 
-test("1.5.2 - first column indexes contain opposite order values", t => {
+t.test("1.5.2 - first column indexes contain opposite order values", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     0 // first elements, indexes "0" contain values: 1-2-3-undefined
   );
+  t.end();
 });
 
-test("1.5.3 - first column indexes contain opposite order values", t => {
+t.test("1.5.3 - first column indexes contain opposite order values", t => {
   mixer(
     t,
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[3, 7, 0], [2, 8, 0], [1, 9, 0], [1]],
     1 // second elements, indexes "1" contain values: 7-8-9-undefined
   );
+  t.end();
 });
 
-test("1.5.4 - first column indexes contain opposite order values", t => {
+t.test("1.5.4 - first column indexes contain opposite order values", t => {
   // zero's were done first, so [1] goes last. Since all second indexes are the same
   // across rows, matching containued by comparing using a ripple
   // algorithm, which will start on index column on the left
@@ -226,9 +237,10 @@ test("1.5.4 - first column indexes contain opposite order values", t => {
     [[3, 7, 0], [2, 8, 0], [1, 9, 0], [1]],
     2 // Third elements, indexes "2" contain values: 0-0-0-undefined across rows
   );
+  t.end();
 });
 
-test("1.6 - null over number", t => {
+t.test("1.6 - null over number", t => {
   mixer(
     t,
     [
@@ -252,9 +264,10 @@ test("1.6 - null over number", t => {
     ],
     1
   );
+  t.end();
 });
 
-test("1.7 - just nulls over numbers", t => {
+t.test("1.7 - just nulls over numbers", t => {
   mixer(
     t,
     [
@@ -266,9 +279,10 @@ test("1.7 - just nulls over numbers", t => {
       [null, null, null]
     ]
   );
+  t.end();
 });
 
-test("1.8 - just nulls over numbers", t => {
+t.test("1.8 - just nulls over numbers", t => {
   mixer(t, [[1, 4], [1]], [[1, 4], [1]]);
   mixer(t, [[1, 4], [1]], [[1, 4], [1]], 0);
   mixer(t, [[1, 4], [1]], [[1, 4], [1]], 1);
@@ -308,9 +322,10 @@ test("1.8 - just nulls over numbers", t => {
     ],
     1
   );
+  t.end();
 });
 
-test("1.9 - just nulls over numbers", t => {
+t.test("1.9 - just nulls over numbers", t => {
   mixer(
     t,
     [
@@ -407,9 +422,10 @@ test("1.9 - just nulls over numbers", t => {
     ],
     5
   );
+  t.end();
 });
 
-test("1.10 - value of first ripple-left is null", t => {
+t.test("1.10 - value of first ripple-left is null", t => {
   mixer(
     t,
     [
@@ -445,12 +461,13 @@ test("1.10 - value of first ripple-left is null", t => {
     ],
     1
   );
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 2. edge-cases
 
-test("2.1 - various empty arrays", t => {
+t.test("2.1 - various empty arrays", t => {
   mixer(t, [], []);
   mixer(t, [[]], [[]]);
   mixer(t, [[], []], [[], []]);
@@ -462,32 +479,36 @@ test("2.1 - various empty arrays", t => {
   mixer(t, [[], []], [[], []], 0);
   mixer(t, [[], [], []], [[], [], []], 0);
   mixer(t, [[], [1], []], [[1], [], []], 0);
+
+  t.end();
 });
 
-test("2.2 - throws", t => {
+t.test("2.2 - throws", t => {
   // pinning throws by throw ID:
   const error1 = t.throws(() => {
     sortByCol(1);
   });
-  t.truthy(error1.message.includes("THROW_ID_01"));
+  t.ok(error1.message.includes("THROW_ID_01"));
 
   const error2 = t.throws(() => {
     sortByCol(true);
   });
-  t.truthy(error2.message.includes("THROW_ID_01"));
+  t.ok(error2.message.includes("THROW_ID_01"));
 
   const error3 = t.throws(() => {
     sortByCol("z");
   });
-  t.truthy(error3.message.includes("THROW_ID_01"));
+  t.ok(error3.message.includes("THROW_ID_01"));
 
   const error4 = t.throws(() => {
     sortByCol([], "a");
   });
-  t.truthy(error4.message.includes("THROW_ID_02"));
+  t.ok(error4.message.includes("THROW_ID_02"));
+
+  t.end();
 });
 
-test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
+t.test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
   // pinning throws by throw ID:
   const error1 = t.throws(() => {
     sortByCol(
@@ -498,13 +519,15 @@ test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
       3 // all sub-arrays' max-length=2 since it's zero-indexed
     );
   });
-  t.truthy(error1.message.includes("THROW_ID_03"));
+  t.ok(error1.message.includes("THROW_ID_03"));
+
+  t.end();
 });
 
 // -----------------------------------------------------------------------------
 // 3. sorting by column and clumping of values around the column sorted
 
-test("3.1 - clumping - simple case with values as undefined", t => {
+t.test("3.1 - clumping - simple case with values as undefined", t => {
   mixer(
     t,
     [
@@ -517,55 +540,69 @@ test("3.1 - clumping - simple case with values as undefined", t => {
     ],
     2
   );
+
+  t.end();
 });
 
-test("3.2 - clumping - left side takes priority over right - case #1 - values on both sides", t => {
-  mixer(
-    t,
-    [
-      [null, null, null, 7, 2],
-      [null, null, null, 7, 1],
-      [null, null, 1, 7, null]
-    ],
-    [
-      [null, null, 1, 7, null],
-      [null, null, null, 7, 1],
-      [null, null, null, 7, 2]
-    ],
-    3
-  );
-});
+t.test(
+  "3.2 - clumping - left side takes priority over right - case #1 - values on both sides",
+  t => {
+    mixer(
+      t,
+      [
+        [null, null, null, 7, 2],
+        [null, null, null, 7, 1],
+        [null, null, 1, 7, null]
+      ],
+      [
+        [null, null, 1, 7, null],
+        [null, null, null, 7, 1],
+        [null, null, null, 7, 2]
+      ],
+      3
+    );
+    t.end();
+  }
+);
 
-test("3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col", t => {
-  mixer(
-    t,
-    [
-      [7, 2],
-      [7, 1],
-      [7, null]
-    ],
-    [
-      [7, 1],
-      [7, 2],
-      [7, null]
-    ],
-    0
-  );
-});
+t.test(
+  "3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col",
+  t => {
+    mixer(
+      t,
+      [
+        [7, 2],
+        [7, 1],
+        [7, null]
+      ],
+      [
+        [7, 1],
+        [7, 2],
+        [7, null]
+      ],
+      0
+    );
+    t.end();
+  }
+);
 
-test("3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays)", t => {
-  mixer(
-    t,
-    [
-      [null, null, 2, 7],
-      [null, null, null, 7],
-      [null, null, 1, 7]
-    ],
-    [
-      [null, null, 1, 7],
-      [null, null, 2, 7],
-      [null, null, null, 7]
-    ],
-    3
-  );
-});
+t.test(
+  "3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays)",
+  t => {
+    mixer(
+      t,
+      [
+        [null, null, 2, 7],
+        [null, null, null, 7],
+        [null, null, 1, 7]
+      ],
+      [
+        [null, null, 1, 7],
+        [null, null, 2, 7],
+        [null, null, null, 7]
+      ],
+      3
+    );
+    t.end();
+  }
+);

@@ -1,7 +1,7 @@
 /* eslint max-len:0 */
 
-import test from "ava";
-import { comb } from "../dist/email-comb.esm";
+const t = require("tap");
+const { comb } = require("../dist/email-comb.cjs");
 
 const allKindsOfLineBreaks = /\r?\n|\r/g;
 
@@ -22,7 +22,7 @@ function replaceToR(str) {
 // testing basic class/id removal
 // ==============================
 
-test("01.01 - mvp #1", t => {
+t.test("01.01 - mvp #1", t => {
   const source = `<head>
 <style type="text/css">
   .unused1[z] {a:1;}
@@ -42,12 +42,13 @@ test("01.01 - mvp #1", t => {
 </body>
 `;
 
-  t.is(comb(replaceToN(source)).result, replaceToN(intended), "01.01.01");
-  t.is(comb(replaceToRN(source)).result, replaceToRN(intended), "01.01.02");
-  t.is(comb(replaceToR(source)).result, replaceToR(intended), "01.01.03");
+  t.equal(comb(replaceToN(source)).result, replaceToN(intended), "01.01.01");
+  t.equal(comb(replaceToRN(source)).result, replaceToRN(intended), "01.01.02");
+  t.equal(comb(replaceToR(source)).result, replaceToR(intended), "01.01.03");
+  t.end();
 });
 
-test("01.02 - mvp #2", t => {
+t.test("01.02 - mvp #2", t => {
   const source = `<head>
 <style type="text/css">
 @namespace url(z);
@@ -69,12 +70,13 @@ test("01.02 - mvp #2", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.02.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.02.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.02.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.02.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.02.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.02.03");
+  t.end();
 });
 
-test("01.03 - removes @charset", t => {
+t.test("01.03 - removes @charset", t => {
   const source = `<head>
 @charset "utf-8";
 <style type="text/css">@media (max-width: 600px) {
@@ -100,12 +102,13 @@ test("01.03 - removes @charset", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.03.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.03.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.03.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.03.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.03.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.03.03");
+  t.end();
 });
 
-test("01.04 - multiple classes and id's", t => {
+t.test("01.04 - multiple classes and id's", t => {
   const source = `<style>
 <!--[if mso]>
 <![endif]-->
@@ -126,12 +129,13 @@ test("01.04 - multiple classes and id's", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.04.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.04.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.04.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.04.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.04.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.04.03");
+  t.end();
 });
 
-test("01.05 - mixed classes and non-classes", t => {
+t.test("01.05 - mixed classes and non-classes", t => {
   const source = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -150,12 +154,13 @@ test("01.05 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.05.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.05.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.05.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.05.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.05.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.05.03");
+  t.end();
 });
 
-test("01.06 - mixed classes and non-classes", t => {
+t.test("01.06 - mixed classes and non-classes", t => {
   const source = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -174,12 +179,13 @@ test("01.06 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.06.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.06.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.06.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.06.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.06.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.06.03");
+  t.end();
 });
 
-test("01.07 - sandwitched used and unused", t => {
+t.test("01.07 - sandwitched used and unused", t => {
   const source = `<head>
 <style type="text/css">
   .used1 {z:1;}
@@ -199,12 +205,13 @@ test("01.07 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.is(replaceToN(comb(source).result), replaceToN(intended), "01.07.01");
-  t.is(replaceToRN(comb(source).result), replaceToRN(intended), "01.07.02");
-  t.is(replaceToR(comb(source).result), replaceToR(intended), "01.07.03");
+  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.07.01");
+  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.07.02");
+  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.07.03");
+  t.end();
 });
 
-test("01.08 - sandwitched used and unused", t => {
+t.test("01.08 - sandwitched used and unused", t => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd   { w:1; }
@@ -223,12 +230,13 @@ test("01.08 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.08.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.08.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.08.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.08.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.08.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.08.03");
+  t.end();
 });
 
-test("01.09 - sandwitched used and unused", t => {
+t.test("01.09 - sandwitched used and unused", t => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef, .cd, .cd#ef   { w:1; }
@@ -247,12 +255,13 @@ test("01.09 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.09.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.09.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.09.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.09.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.09.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.09.03");
+  t.end();
 });
 
-test("01.10 - sandwitched used and unused", t => {
+t.test("01.10 - sandwitched used and unused", t => {
   const actual = comb(`<head>
   <style>
     #ab.cd[lang|en]   , .cd#ef { w:1; }
@@ -268,12 +277,13 @@ test("01.10 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.10.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.10.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.10.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.10.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.10.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.10.03");
+  t.end();
 });
 
-test("01.11 - mixed: classes and tag names", t => {
+t.test("01.11 - mixed: classes and tag names", t => {
   const actual = comb(`<head>
 <style>
 /*! .x *//*! .y */
@@ -292,12 +302,13 @@ test("01.11 - mixed: classes and tag names", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.11.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.11.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.11.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.11.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.11.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.11.03");
+  t.end();
 });
 
-test("01.12 - removes unused classes and uglifies at the same time", t => {
+t.test("01.12 - removes unused classes and uglifies at the same time", t => {
   const source = `<head>
 <style>
   .r, .t, .y, .u, .i, .o,
@@ -329,32 +340,33 @@ test("01.12 - removes unused classes and uglifies at the same time", t => {
   const actualNotUglified = comb(source, { uglify: false }).result;
   const actual2 = comb(source, { uglify: 1 }).result;
 
-  t.is(replaceToN(actual), replaceToN(uglified), "01.12.01");
-  t.is(replaceToRN(actual), replaceToRN(uglified), "01.12.02");
-  t.is(replaceToR(actual), replaceToR(uglified), "01.12.03");
+  t.equal(replaceToN(actual), replaceToN(uglified), "01.12.01");
+  t.equal(replaceToRN(actual), replaceToRN(uglified), "01.12.02");
+  t.equal(replaceToR(actual), replaceToR(uglified), "01.12.03");
 
   // uglify option given as number:
-  t.is(replaceToN(actual2), replaceToN(uglified), "01.12.04");
-  t.is(replaceToRN(actual2), replaceToRN(uglified), "01.12.05");
-  t.is(replaceToR(actual2), replaceToR(uglified), "01.12.06");
+  t.equal(replaceToN(actual2), replaceToN(uglified), "01.12.04");
+  t.equal(replaceToRN(actual2), replaceToRN(uglified), "01.12.05");
+  t.equal(replaceToR(actual2), replaceToR(uglified), "01.12.06");
 
   // not uglified:
-  t.is(replaceToN(actualNotUglified), replaceToN(intended), "01.12.07");
-  t.is(replaceToRN(actualNotUglified), replaceToRN(intended), "01.12.08");
-  t.is(replaceToR(actualNotUglified), replaceToR(intended), "01.12.09");
+  t.equal(replaceToN(actualNotUglified), replaceToN(intended), "01.12.07");
+  t.equal(replaceToRN(actualNotUglified), replaceToRN(intended), "01.12.08");
+  t.equal(replaceToR(actualNotUglified), replaceToR(intended), "01.12.09");
 
   // uglification disabled:
   const actual3 = comb(source, { uglify: false }).result;
-  t.is(actual3, intended, "01.12.10");
+  t.equal(actual3, intended, "01.12.10");
 
   const actual4 = comb(source, { uglify: 0 }).result;
-  t.is(actual4, intended, "01.12.11");
+  t.equal(actual4, intended, "01.12.11");
 
   const actual5 = comb(source, { uglify: 1 }).result;
-  t.is(actual5, uglified, "01.12.12");
+  t.equal(actual5, uglified, "01.12.12");
+  t.end();
 });
 
-test("01.13 - adhoc #1", t => {
+t.test("01.13 - adhoc #1", t => {
   const actual = comb(`<style>
   .aa{b: c;}
 </style>
@@ -371,12 +383,13 @@ test("01.13 - adhoc #1", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.13.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.13.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.13.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.13.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.13.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.13.03");
+  t.end();
 });
 
-test("01.14 - adhoc 2", t => {
+t.test("01.14 - adhoc 2", t => {
   const actual = comb(`<head>
 <style type="text/css">
   .aa {z:2;}
@@ -395,12 +408,13 @@ test("01.14 - adhoc 2", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.14.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.14.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.14.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.14.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.14.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.14.03");
+  t.end();
 });
 
-test("01.15 - adhoc 3", t => {
+t.test("01.15 - adhoc 3", t => {
   const actual = comb(`<head>
 <style type="text/css">
   @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
@@ -419,12 +433,13 @@ test("01.15 - adhoc 3", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.15.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.15.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.15.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.15.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.15.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.15.03");
+  t.end();
 });
 
-test("01.16 - mixed classes and non-classes", t => {
+t.test("01.16 - mixed classes and non-classes", t => {
   const actual = comb(`<head>
 <style type="text/css">
   @import;
@@ -444,12 +459,13 @@ test("01.16 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.is(replaceToN(actual), replaceToN(intended), "01.16.01");
-  t.is(replaceToRN(actual), replaceToRN(intended), "01.16.02");
-  t.is(replaceToR(actual), replaceToR(intended), "01.16.03");
+  t.equal(replaceToN(actual), replaceToN(intended), "01.16.01");
+  t.equal(replaceToRN(actual), replaceToRN(intended), "01.16.02");
+  t.equal(replaceToR(actual), replaceToR(intended), "01.16.03");
+  t.end();
 });
 
-test("01.17 - removes classes and id's from HTML5 (normal input)", t => {
+t.test("01.17 - removes classes and id's from HTML5 (normal input)", t => {
   const source = `
 <!DOCTYPE html>
 <head>
@@ -503,10 +519,11 @@ test("01.17 - removes classes and id's from HTML5 (normal input)", t => {
 </html>
 `;
 
-  t.deepEqual(comb(source).result, intended, "01.17");
+  t.same(comb(source).result, intended, "01.17");
+  t.end();
 });
 
-test("01.18 - removes classes and id's from HTML5 - uglifies", t => {
+t.test("01.18 - removes classes and id's from HTML5 - uglifies", t => {
   const actual = comb(
     `
 <!DOCTYPE html>
@@ -567,10 +584,11 @@ test("01.18 - removes classes and id's from HTML5 - uglifies", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.18");
+  t.same(actual, intended, "01.18");
+  t.end();
 });
 
-test("01.19 - deletes blank class/id attrs", t => {
+t.test("01.19 - deletes blank class/id attrs", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -628,11 +646,14 @@ test("01.19 - deletes blank class/id attrs", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.19");
+  t.same(actual, intended, "01.19");
+  t.end();
 });
 
-test("01.20 - class present in both head and body, but head has it joined with nonexistent id", t => {
-  const actual = comb(`
+t.test(
+  "01.20 - class present in both head and body, but head has it joined with nonexistent id",
+  t => {
+    const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -654,7 +675,7 @@ test("01.20 - class present in both head and body, but head has it joined with n
 </html>
 `).result;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -671,10 +692,12 @@ test("01.20 - class present in both head and body, but head has it joined with n
 </body>
 </html>
 `;
-  t.deepEqual(actual, intended, "01.20");
-});
+    t.same(actual, intended, "01.20");
+    t.end();
+  }
+);
 
-test("01.21 - multiple style tags recognised and transformed", t => {
+t.test("01.21 - multiple style tags recognised and transformed", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -728,10 +751,11 @@ test("01.21 - multiple style tags recognised and transformed", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.21");
+  t.same(actual, intended, "01.21");
+  t.end();
 });
 
-test("01.22 - multiple levels of media queries cleaned", t => {
+t.test("01.22 - multiple levels of media queries cleaned", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -794,11 +818,14 @@ test("01.22 - multiple levels of media queries cleaned", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.22");
+  t.same(actual, intended, "01.22");
+  t.end();
 });
 
-test("01.23 - multiple levels of media queries cleaned + @supports wrap", t => {
-  const actual = comb(`
+t.test(
+  "01.23 - multiple levels of media queries cleaned + @supports wrap",
+  t => {
+    const actual = comb(`
 <!DOCTYPE html>
 <head>
 <style type="text/css">
@@ -837,7 +864,7 @@ test("01.23 - multiple levels of media queries cleaned + @supports wrap", t => {
 </html>
 `).result;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <head>
 <style type="text/css">
   @charset "utf-8";
@@ -866,10 +893,12 @@ test("01.23 - multiple levels of media queries cleaned + @supports wrap", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.23");
-});
+    t.same(actual, intended, "01.23");
+    t.end();
+  }
+);
 
-test("01.24 - empty media queries removed", t => {
+t.test("01.24 - empty media queries removed", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -923,10 +952,11 @@ test("01.24 - empty media queries removed", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.24");
+  t.same(actual, intended, "01.24");
+  t.end();
 });
 
-test("01.25 - style tags are outside HEAD", t => {
+t.test("01.25 - style tags are outside HEAD", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <style>
@@ -980,12 +1010,15 @@ test("01.25 - style tags are outside HEAD", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.25");
+  t.same(actual, intended, "01.25");
+  t.end();
 });
 
 // original GitHub issue #3
-test("01.26 - removes media query together with the whole style tag #1", t => {
-  const actual = comb(`<!doctype html>
+t.test(
+  "01.26 - removes media query together with the whole style tag #1",
+  t => {
+    const actual = comb(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1003,7 +1036,7 @@ test("01.26 - removes media query together with the whole style tag #1", t => {
 </html>
 `).result;
 
-  const intended = `<!doctype html>
+    const intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1015,11 +1048,15 @@ test("01.26 - removes media query together with the whole style tag #1", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.26");
-});
+    t.same(actual, intended, "01.26");
+    t.end();
+  }
+);
 
-test("01.27 - removes media query together with the whole style tag #2", t => {
-  const actual = comb(`<!doctype html>
+t.test(
+  "01.27 - removes media query together with the whole style tag #2",
+  t => {
+    const actual = comb(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1038,7 +1075,7 @@ zzz
 </html>
 `).result;
 
-  const intended = `<!doctype html>
+    const intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1057,11 +1094,15 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.27");
-});
+    t.same(actual, intended, "01.27");
+    t.end();
+  }
+);
 
-test("01.28 - removes three media queries together with the style tags", t => {
-  const actual = comb(`<!doctype html>
+t.test(
+  "01.28 - removes three media queries together with the style tags",
+  t => {
+    const actual = comb(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1094,7 +1135,7 @@ test("01.28 - removes three media queries together with the style tags", t => {
 </html>
 `).result;
 
-  const intended = `<!doctype html>
+    const intended = `<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -1106,10 +1147,12 @@ test("01.28 - removes three media queries together with the style tags", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.28");
-});
+    t.same(actual, intended, "01.28");
+    t.end();
+  }
+);
 
-test("01.29 - removes last styles together with the whole style tag", t => {
+t.test("01.29 - removes last styles together with the whole style tag", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1138,10 +1181,11 @@ color:  black;
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.29");
+  t.same(actual, intended, "01.29");
+  t.end();
 });
 
-test("01.30 - media query with asterisk", t => {
+t.test("01.30 - media query with asterisk", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1173,10 +1217,11 @@ test("01.30 - media query with asterisk", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.30");
+  t.same(actual, intended, "01.30");
+  t.end();
 });
 
-test("01.31 - complex media query #1", t => {
+t.test("01.31 - complex media query #1", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1208,10 +1253,11 @@ test("01.31 - complex media query #1", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.31");
+  t.same(actual, intended, "01.31");
+  t.end();
 });
 
-test("01.32 - complex media query #2", t => {
+t.test("01.32 - complex media query #2", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -1243,10 +1289,11 @@ test("01.32 - complex media query #2", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.32");
+  t.same(actual, intended, "01.32");
+  t.end();
 });
 
-test("01.33 - deletes multiple empty style tags", t => {
+t.test("01.33 - deletes multiple empty style tags", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <html lang="en">
@@ -1287,10 +1334,11 @@ test("01.33 - deletes multiple empty style tags", t => {
 </body>
 </html>
 `;
-  t.deepEqual(actual, intended, "01.33");
+  t.same(actual, intended, "01.33");
+  t.end();
 });
 
-test("01.34 - does not touch @font-face", t => {
+t.test("01.34 - does not touch @font-face", t => {
   const actual = comb(`
 <!DOCTYPE html>
 <head>
@@ -1358,11 +1406,14 @@ test("01.34 - does not touch @font-face", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.34");
+  t.same(actual, intended, "01.34");
+  t.end();
 });
 
-test("01.35 - does not touch @import with query strings containing commas", t => {
-  const actual = comb(`
+t.test(
+  "01.35 - does not touch @import with query strings containing commas",
+  t => {
+    const actual = comb(`
 <!DOCTYPE html>
 <head>
 <title>zzzz</title>
@@ -1382,7 +1433,7 @@ test("01.35 - does not touch @import with query strings containing commas", t =>
 </html>
 `).result;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <head>
 <title>zzzz</title>
 <style type="text/css">
@@ -1401,15 +1452,69 @@ test("01.35 - does not touch @import with query strings containing commas", t =>
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.35");
-});
+    t.same(actual, intended, "01.35");
+    t.end();
+  }
+);
 
-test("01.36 - @media contains classes to remove, @import present in the vicinity", t => {
+t.test(
+  "01.36 - @media contains classes to remove, @import present in the vicinity",
+  t => {
+    const actual = comb(
+      `<html lang="en">
+<head>
+<style type="text/css">
+
+  @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
+  @media only screen {
+    .serif {font-family: 'Merriweather', Georgia, serif!important;}
+    .sans-serif {font-family: 'Open Sans', Arial, sans-serif!important;}
+  }
+
+  #outlook a {padding: 0;}
+</style>
+</head>
+<body>
+zzz
+</body>
+</html>
+`,
+      {
+        whitelist: [
+          "#outlook",
+          ".ExternalClass",
+          ".module-*",
+          ".Mso*",
+          ".ReadMsgBody",
+          ".yshortcuts"
+        ]
+      }
+    ).result;
+
+    const intended = `<html lang="en">
+<head>
+<style type="text/css">
+  @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
+  #outlook a {padding: 0;}
+</style>
+</head>
+<body>
+zzz
+</body>
+</html>
+`;
+
+    t.same(actual, intended, "01.36");
+    t.end();
+  }
+);
+
+t.test("01.37 - @charset #1", t => {
   const actual = comb(
     `<html lang="en">
 <head>
 <style type="text/css">
-
+  @charset "utf-8";
   @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
   @media only screen {
     .serif {font-family: 'Merriweather', Georgia, serif!important;}
@@ -1439,54 +1544,6 @@ zzz
   const intended = `<html lang="en">
 <head>
 <style type="text/css">
-  @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
-  #outlook a {padding: 0;}
-</style>
-</head>
-<body>
-zzz
-</body>
-</html>
-`;
-
-  t.deepEqual(actual, intended, "01.36");
-});
-
-test("01.37 - @charset #1", t => {
-  const actual = comb(
-    `<html lang="en">
-<head>
-<style type="text/css">
-  @charset "utf-8";
-  @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
-  @media only screen {
-    .serif {font-family: 'Merriweather', Georgia, serif!important;}
-    .sans-serif {font-family: 'Open Sans', Arial, sans-serif!important;}
-  }
-
-  #outlook a {padding: 0;}
-</style>
-</head>
-<body>
-zzz
-</body>
-</html>
-`,
-    {
-      whitelist: [
-        "#outlook",
-        ".ExternalClass",
-        ".module-*",
-        ".Mso*",
-        ".ReadMsgBody",
-        ".yshortcuts"
-      ]
-    }
-  ).result;
-
-  const intended = `<html lang="en">
-<head>
-<style type="text/css">
   @charset "utf-8";
   @import url('https://fonts.googleapis.com/css?family=Meriweather|Open+Sans');
   #outlook a {padding: 0;}
@@ -1498,10 +1555,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.37");
+  t.same(actual, intended, "01.37");
+  t.end();
 });
 
-test("01.38 - @charset #2", t => {
+t.test("01.38 - @charset #2", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1540,10 +1598,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.38");
+  t.same(actual, intended, "01.38");
+  t.end();
 });
 
-test("01.39 - @charset #3", t => {
+t.test("01.39 - @charset #3", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1584,10 +1643,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.39");
+  t.same(actual, intended, "01.39");
+  t.end();
 });
 
-test("01.40 - @charset #4", t => {
+t.test("01.40 - @charset #4", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1630,10 +1690,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.40");
+  t.same(actual, intended, "01.40");
+  t.end();
 });
 
-test("01.41 - @charset #5", t => {
+t.test("01.41 - @charset #5", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1674,10 +1735,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.41");
+  t.same(actual, intended, "01.41");
+  t.end();
 });
 
-test("01.42 - at-rule is followed by whitespace and another at-rule", t => {
+t.test("01.42 - at-rule is followed by whitespace and another at-rule", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1721,10 +1783,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.42");
+  t.same(actual, intended, "01.42");
+  t.end();
 });
 
-test("01.43 - at-rule is followed by whitespace and another at-rule", t => {
+t.test("01.43 - at-rule is followed by whitespace and another at-rule", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1768,10 +1831,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.43");
+  t.same(actual, intended, "01.43");
+  t.end();
 });
 
-test("01.44 - at-rule followed by closing </style>", t => {
+t.test("01.44 - at-rule followed by closing </style>", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1813,10 +1877,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.44");
+  t.same(actual, intended, "01.44");
+  t.end();
 });
 
-test("01.45 - at-rule followed by semicolon without contents", t => {
+t.test("01.45 - at-rule followed by semicolon without contents", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1860,10 +1925,11 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.45");
+  t.same(actual, intended, "01.45");
+  t.end();
 });
 
-test("01.46 - at-rule with single quotes", t => {
+t.test("01.46 - at-rule with single quotes", t => {
   const actual = comb(
     `<html lang="en">
 <head>
@@ -1908,11 +1974,14 @@ zzz
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.46");
+  t.same(actual, intended, "01.46");
+  t.end();
 });
 
-test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
-  const source = `
+t.test(
+  "01.47 - removes classes wrapped with conditional Outlook comments",
+  t => {
+    const source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1944,12 +2013,12 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
 </html>
 `;
 
-  const actual = comb(source).result;
-  const actualUglified = comb(source, {
-    uglify: true
-  }).result;
+    const actual = comb(source).result;
+    const actualUglified = comb(source, {
+      uglify: true
+    }).result;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1977,7 +2046,7 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
 </html>
 `;
 
-  const intendedUglified = `<!DOCTYPE html>
+    const intendedUglified = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2005,12 +2074,16 @@ test("01.47 - removes classes wrapped with conditional Outlook comments", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.47.01");
-  t.deepEqual(actualUglified, intendedUglified, "01.47.02");
-});
+    t.same(actual, intended, "01.47.01");
+    t.same(actualUglified, intendedUglified, "01.47.02");
+    t.end();
+  }
+);
 
-test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments", t => {
-  const source = `
+t.test(
+  "01.48 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments",
+  t => {
+    const source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2041,7 +2114,7 @@ test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opt
 </html>
 `;
 
-  const cssAndHtmlCommentsRemoved = `<!DOCTYPE html>
+    const cssAndHtmlCommentsRemoved = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2068,7 +2141,7 @@ test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opt
 </body>
 </html>
 `;
-  const htmlRemovedCssNot = `<!DOCTYPE html>
+    const htmlRemovedCssNot = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2096,7 +2169,7 @@ test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opt
 </body>
 </html>
 `;
-  const cssRemovedHtmlNot = `<!DOCTYPE html>
+    const cssRemovedHtmlNot = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2124,7 +2197,7 @@ test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opt
 </body>
 </html>
 `;
-  const neitherCssNorHtml = `<!DOCTYPE html>
+    const neitherCssNorHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2153,47 +2226,54 @@ test("01.48 - removes comments from style blocks - opts.removeHTMLComments + opt
 </body>
 </html>
 `;
-  t.deepEqual(
-    comb(source).result,
-    cssAndHtmlCommentsRemoved,
-    "01.48.01 - defaults"
-  );
-  t.deepEqual(
-    comb(source, { removeCSSComments: true }).result,
-    cssAndHtmlCommentsRemoved,
-    "01.48.02 - hardcoded defaults"
-  );
-  t.deepEqual(
-    comb(source, { removeCSSComments: false }).result,
-    htmlRemovedCssNot,
-    "01.48.03 - off"
-  );
+    t.same(
+      comb(source).result,
+      cssAndHtmlCommentsRemoved,
+      "01.48.01 - defaults"
+    );
+    t.same(
+      comb(source, { removeCSSComments: true }).result,
+      cssAndHtmlCommentsRemoved,
+      "01.48.02 - hardcoded defaults"
+    );
+    t.same(
+      comb(source, { removeCSSComments: false }).result,
+      htmlRemovedCssNot,
+      "01.48.03 - off"
+    );
 
-  t.deepEqual(
-    comb(source, { removeCSSComments: true, removeHTMLComments: true }).result,
-    cssAndHtmlCommentsRemoved,
-    "01.48.04 - html on, css on"
-  );
-  t.deepEqual(
-    comb(source, { removeCSSComments: false, removeHTMLComments: true }).result,
-    htmlRemovedCssNot,
-    "01.48.05 - html on, css off"
-  );
-  t.deepEqual(
-    comb(source, { removeCSSComments: true, removeHTMLComments: false }).result,
-    cssRemovedHtmlNot,
-    "01.48.06 - html off, css on"
-  );
-  t.deepEqual(
-    comb(source, { removeCSSComments: false, removeHTMLComments: false })
-      .result,
-    neitherCssNorHtml,
-    "01.48.07 - html off, css off"
-  );
-});
+    t.same(
+      comb(source, { removeCSSComments: true, removeHTMLComments: true })
+        .result,
+      cssAndHtmlCommentsRemoved,
+      "01.48.04 - html on, css on"
+    );
+    t.same(
+      comb(source, { removeCSSComments: false, removeHTMLComments: true })
+        .result,
+      htmlRemovedCssNot,
+      "01.48.05 - html on, css off"
+    );
+    t.same(
+      comb(source, { removeCSSComments: true, removeHTMLComments: false })
+        .result,
+      cssRemovedHtmlNot,
+      "01.48.06 - html off, css on"
+    );
+    t.same(
+      comb(source, { removeCSSComments: false, removeHTMLComments: false })
+        .result,
+      neitherCssNorHtml,
+      "01.48.07 - html off, css off"
+    );
+    t.end();
+  }
+);
 
-test("01.49 - false real class is commented-out and therefore gets removed", t => {
-  const source = `
+t.test(
+  "01.49 - false real class is commented-out and therefore gets removed",
+  t => {
+    const source = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2222,7 +2302,7 @@ test("01.49 - false real class is commented-out and therefore gets removed", t =
 </html>
 `;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2249,10 +2329,12 @@ test("01.49 - false real class is commented-out and therefore gets removed", t =
 </html>
 `;
 
-  t.deepEqual(comb(source).result, intended, "01.49");
-});
+    t.same(comb(source).result, intended, "01.49");
+    t.end();
+  }
+);
 
-test("01.50 - copes with @font-face within media query", t => {
+t.test("01.50 - copes with @font-face within media query", t => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -2339,10 +2421,11 @@ test("01.50 - copes with @font-face within media query", t => {
 </body>
 </html>
 `;
-  t.deepEqual(comb(source).result, intended, "01.50");
+  t.same(comb(source).result, intended, "01.50");
+  t.end();
 });
 
-test("01.51 - copes with @font-face not within media query", t => {
+t.test("01.51 - copes with @font-face not within media query", t => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -2395,11 +2478,14 @@ test("01.51 - copes with @font-face not within media query", t => {
 </body>
 </html>
 `;
-  t.deepEqual(comb(source).result, intended, "01.51");
+  t.same(comb(source).result, intended, "01.51");
+  t.end();
 });
 
-test("01.52 - peculiar pattern - two classes to be removed, then used class", t => {
-  const source = `
+t.test(
+  "01.52 - peculiar pattern - two classes to be removed, then used class",
+  t => {
+    const source = `
 <html>
   <head>
     <style>
@@ -2424,7 +2510,7 @@ test("01.52 - peculiar pattern - two classes to be removed, then used class", t 
 </html>
 `;
 
-  const intended = `<html>
+    const intended = `<html>
   <head>
     <style>
       @media screen and (max-width:500px){.used-1{width:100%!important}}
@@ -2444,10 +2530,12 @@ test("01.52 - peculiar pattern - two classes to be removed, then used class", t 
   </body>
 </html>
 `;
-  t.deepEqual(comb(source).result, intended, "01.52");
-});
+    t.same(comb(source).result, intended, "01.52");
+    t.end();
+  }
+);
 
-test("01.53 - head CSS is given minified", t => {
+t.test("01.53 - head CSS is given minified", t => {
   const source1 = `<head>
   <style>.col-3{z:2%}.col-4{y:3%}</style>
 </head>
@@ -2482,11 +2570,12 @@ test("01.53 - head CSS is given minified", t => {
 </body>
 </html>
 `;
-  t.deepEqual(comb(source1).result, intended1, "01.53.01");
-  t.deepEqual(comb(source2).result, intended2, "01.53.02");
+  t.same(comb(source1).result, intended1, "01.53.01");
+  t.same(comb(source2).result, intended2, "01.53.02");
+  t.end();
 });
 
-test("01.54 - head CSS is given minified, comma separated", t => {
+t.test("01.54 - head CSS is given minified, comma separated", t => {
   const source1 = `<head>
   <style>.col-12,.col-3,.col-4, .col-6{y:3%}</style>
 </head>
@@ -2524,12 +2613,13 @@ test("01.54 - head CSS is given minified, comma separated", t => {
 </html>
 `;
 
-  t.deepEqual(comb(source1).result, intended, "01.54.01");
-  t.deepEqual(comb(source2).result, intended, "01.54.02");
-  t.deepEqual(comb(source3).result, intended, "01.54.03");
+  t.same(comb(source1).result, intended, "01.54.01");
+  t.same(comb(source2).result, intended, "01.54.02");
+  t.same(comb(source3).result, intended, "01.54.03");
+  t.end();
 });
 
-test("01.55 - head CSS is expanded", t => {
+t.test("01.55 - head CSS is expanded", t => {
   const source = `<head>
   <style>
     .col-12,
@@ -2557,10 +2647,11 @@ test("01.55 - head CSS is expanded", t => {
 </html>
 `;
 
-  t.deepEqual(comb(source).result, intended, "01.55");
+  t.same(comb(source).result, intended, "01.55");
+  t.end();
 });
 
-test("01.56 - retains media queries", t => {
+t.test("01.56 - retains media queries", t => {
   const source = `<head>
 <style>
 .zz{a:1;}
@@ -2583,7 +2674,7 @@ test("01.56 - retains media queries", t => {
 `;
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains set
-  t.is(
+  t.equal(
     comb(source, {
       uglify: false,
       removeHTMLComments: false,
@@ -2592,7 +2683,7 @@ test("01.56 - retains media queries", t => {
     source,
     "01.56.01"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: false,
       removeHTMLComments: true,
@@ -2601,7 +2692,7 @@ test("01.56 - retains media queries", t => {
     source,
     "01.56.02"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true,
       removeHTMLComments: false,
@@ -2610,7 +2701,7 @@ test("01.56 - retains media queries", t => {
     uglified,
     "01.56.03"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true,
       uglified: true,
@@ -2621,7 +2712,7 @@ test("01.56 - retains media queries", t => {
   );
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains empty
-  t.is(
+  t.equal(
     comb(source, {
       uglify: false,
       removeHTMLComments: false,
@@ -2630,7 +2721,7 @@ test("01.56 - retains media queries", t => {
     source,
     "01.56.05"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: false,
       removeHTMLComments: true,
@@ -2639,7 +2730,7 @@ test("01.56 - retains media queries", t => {
     source,
     "01.56.06"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true,
       removeHTMLComments: false,
@@ -2648,7 +2739,7 @@ test("01.56 - retains media queries", t => {
     uglified,
     "01.56.07"
   );
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true,
       removeHTMLComments: true,
@@ -2657,13 +2748,15 @@ test("01.56 - retains media queries", t => {
     uglified,
     "01.56.08"
   );
+  t.end();
 });
 
-test("01.57 - empty string produces empty string", t => {
-  t.deepEqual(comb("").result, "", "01.57");
+t.test("01.57 - empty string produces empty string", t => {
+  t.same(comb("").result, "", "01.57");
+  t.end();
 });
 
-test("01.58 - issue no.2 - mini", t => {
+t.test("01.58 - issue no.2 - mini", t => {
   const source = `<html>
 <head>
 <!--[if gte mso 9]>
@@ -2686,10 +2779,11 @@ test("01.58 - issue no.2 - mini", t => {
 </html>
 `;
 
-  t.is(source, comb(source).result, "01.58");
+  t.equal(source, comb(source).result, "01.58");
+  t.end();
 });
 
-test("01.59 - issue no.2 - full", t => {
+t.test("01.59 - issue no.2 - full", t => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -2755,11 +2849,14 @@ test("01.59 - issue no.2 - full", t => {
 </html>
 `;
 
-  t.is(actual, intended, "01.59");
+  t.equal(actual, intended, "01.59");
+  t.end();
 });
 
-test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t => {
-  const source = `<html>
+t.test(
+  "01.60 - separate style tags, wrapped with Outlook comments - used CSS",
+  t => {
+    const source = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -2787,12 +2884,12 @@ test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t 
 </html>
 `;
 
-  const actual = comb(source).result;
-  const actualUglified = comb(source, {
-    uglify: true
-  }).result;
+    const actual = comb(source).result;
+    const actualUglified = comb(source, {
+      uglify: true
+    }).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -2820,7 +2917,7 @@ test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t 
 </html>
 `;
 
-  const intendedUglified = `<html>
+    const intendedUglified = `<html>
 <head>
 <style>
 #t:hover{z}
@@ -2848,12 +2945,16 @@ test("01.60 - separate style tags, wrapped with Outlook comments - used CSS", t 
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.60.01");
-  t.deepEqual(actualUglified, intendedUglified, "01.60.02");
-});
+    t.same(actual, intended, "01.60.01");
+    t.same(actualUglified, intendedUglified, "01.60.02");
+    t.end();
+  }
+);
 
-test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", t => {
-  const source = `<html>
+t.test(
+  "01.61 - separate style tags, wrapped with Outlook comments - unused CSS",
+  t => {
+    const source = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -2881,12 +2982,12 @@ test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", 
 </html>
 `;
 
-  const actual = comb(source).result;
-  const actualUglified = comb(source, {
-    uglify: true
-  }).result;
+    const actual = comb(source).result;
+    const actualUglified = comb(source, {
+      uglify: true
+    }).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -2910,7 +3011,7 @@ test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", 
 </html>
 `;
 
-  const intendedUglified = `<html>
+    const intendedUglified = `<html>
 <head>
 <style>
 #t:hover{z}
@@ -2934,12 +3035,16 @@ test("01.61 - separate style tags, wrapped with Outlook comments - unused CSS", 
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.61.01");
-  t.deepEqual(actualUglified, intendedUglified, "01.61.02");
-});
+    t.same(actual, intended, "01.61.01");
+    t.same(actualUglified, intendedUglified, "01.61.02");
+    t.end();
+  }
+);
 
-test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS", t => {
-  const source = `<html>
+t.test(
+  "01.62 - separate style tags, wrapped with Outlook comments - part-used CSS",
+  t => {
+    const source = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -2967,19 +3072,19 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
 </html>
 `;
 
-  const actual = comb(source).result;
-  const actualUglified = comb(source, {
-    uglify: true
-  }).result;
-  const actualAllCommentsDeleted = comb(source, {
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
-  }).result;
-  const actualAllCommentsDeletedUglified = comb(source, {
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
-    uglify: true
-  }).result;
+    const actual = comb(source).result;
+    const actualUglified = comb(source, {
+      uglify: true
+    }).result;
+    const actualAllCommentsDeleted = comb(source, {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
+    }).result;
+    const actualAllCommentsDeletedUglified = comb(source, {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
+      uglify: true
+    }).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -3007,7 +3112,7 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
 </html>
 `;
 
-  const intendedUglified = `<html>
+    const intendedUglified = `<html>
 <head>
 <style>
 #t:hover{z}
@@ -3035,7 +3140,7 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
 </html>
 `;
 
-  const intendedAllCommentsDeleted = `<html>
+    const intendedAllCommentsDeleted = `<html>
 <head>
 <style>
 #real-id-1:hover{z}
@@ -3059,7 +3164,7 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
 </html>
 `;
 
-  const intendedAllCommentsDeletedUglified = `<html>
+    const intendedAllCommentsDeletedUglified = `<html>
 <head>
 <style>
 #t:hover{z}
@@ -3083,35 +3188,37 @@ test("01.62 - separate style tags, wrapped with Outlook comments - part-used CSS
 </html>
 `;
 
-  t.deepEqual(actual, intended, "01.62.01");
-  t.deepEqual(actualUglified, intendedUglified, "01.62.02");
-  t.deepEqual(actualAllCommentsDeleted, intendedAllCommentsDeleted, "01.62.03");
-  t.deepEqual(
-    actualAllCommentsDeletedUglified,
-    intendedAllCommentsDeletedUglified,
-    "01.62.04"
-  );
+    t.same(actual, intended, "01.62.01");
+    t.same(actualUglified, intendedUglified, "01.62.02");
+    t.same(actualAllCommentsDeleted, intendedAllCommentsDeleted, "01.62.03");
+    t.same(
+      actualAllCommentsDeletedUglified,
+      intendedAllCommentsDeletedUglified,
+      "01.62.04"
+    );
 
-  // comment removal off:
-  const actualUglifiedCommentsOffAndIgnored = comb(source, {
-    removeHTMLComments: false,
-    doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
-  }).result;
-  t.deepEqual(actualUglifiedCommentsOffAndIgnored, intended, "01.62.05");
+    // comment removal off:
+    const actualUglifiedCommentsOffAndIgnored = comb(source, {
+      removeHTMLComments: false,
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
+    }).result;
+    t.same(actualUglifiedCommentsOffAndIgnored, intended, "01.62.05");
 
-  const actualUglifiedCommentsOff = comb(source, {
-    removeHTMLComments: false
-  }).result;
-  t.deepEqual(actualUglifiedCommentsOff, intended, "01.62.06");
+    const actualUglifiedCommentsOff = comb(source, {
+      removeHTMLComments: false
+    }).result;
+    t.same(actualUglifiedCommentsOff, intended, "01.62.06");
 
-  const actualUglifiedCommentsOffUglify = comb(source, {
-    removeHTMLComments: false,
-    uglify: true
-  }).result;
-  t.deepEqual(actualUglifiedCommentsOffUglify, intendedUglified, "01.62.07");
-});
+    const actualUglifiedCommentsOffUglify = comb(source, {
+      removeHTMLComments: false,
+      uglify: true
+    }).result;
+    t.same(actualUglifiedCommentsOffUglify, intendedUglified, "01.62.07");
+    t.end();
+  }
+);
 
-test("01.63 - comments in the inline styles", t => {
+t.test("01.63 - comments in the inline styles", t => {
   const actual = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3128,10 +3235,11 @@ test("01.63 - comments in the inline styles", t => {
 </body>
 `;
 
-  t.is(actual, intended, "01.63");
+  t.equal(actual, intended, "01.63");
+  t.end();
 });
 
-test("01.64 - dirty code - space between class and =", t => {
+t.test("01.64 - dirty code - space between class and =", t => {
   const actual = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3148,10 +3256,11 @@ test("01.64 - dirty code - space between class and =", t => {
 </body>
 `;
 
-  t.is(actual, intended, "01.64");
+  t.equal(actual, intended, "01.64");
+  t.end();
 });
 
-test("01.65 - dirty code - blank class attribute name", t => {
+t.test("01.65 - dirty code - blank class attribute name", t => {
   const actual1 = comb(`<head>
 <style>
   .aa, .bb { w:1; }
@@ -3182,11 +3291,12 @@ test("01.65 - dirty code - blank class attribute name", t => {
 </body>
 `;
 
-  t.is(actual1, intended1, "01.65.01");
-  t.is(actual2, intended2, "01.65.02");
+  t.equal(actual1, intended1, "01.65.01");
+  t.equal(actual2, intended2, "01.65.02");
+  t.end();
 });
 
-test("01.66 - dirty code - blank class attribute name", t => {
+t.test("01.66 - dirty code - blank class attribute name", t => {
   const actual1 = comb(`<head>
 <style>@media screen and (min-width:1px){.unused {color: red;}}</style>
 </head>
@@ -3200,10 +3310,11 @@ zzz
 </body>
 `;
 
-  t.is(actual1, intended1, "01.66");
+  t.equal(actual1, intended1, "01.66");
+  t.end();
 });
 
-test("01.67 - plus selector", t => {
+t.test("01.67 - plus selector", t => {
   const actual1 = comb(`<style>
 [owa] .klm,
 body[nop] .klm,
@@ -3227,10 +3338,11 @@ u+.a .jb{uvw}
 <u><a class="a"><i class="jb">z</i></a></u>
 `;
 
-  t.is(actual1, intended1, "01.67");
+  t.equal(actual1, intended1, "01.67");
+  t.end();
 });
 
-test("01.68 - double curlies around values", t => {
+t.test("01.68 - double curlies around values", t => {
   const actual1 = comb(`<style>
 .used-1 {
 display: {{ abc.de_fg | hi_jk: 10 }};
@@ -3258,7 +3370,8 @@ display: {{ abc.de_fg | hi_jk: 10 }};
 text
 `;
 
-  t.is(actual1, intended1, "01.68");
+  t.equal(actual1, intended1, "01.68");
+  t.end();
 });
 
 //
@@ -3291,7 +3404,7 @@ text
 //   const intended = `<img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>
 // `
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.01',
@@ -3303,7 +3416,7 @@ text
 //
 //   const intended = '<br><hr><meta>\n'
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.02.01',
@@ -3315,7 +3428,7 @@ text
 //
 //   const intended = '<br/><hr/><meta/>\n'
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.02.02',
@@ -3327,7 +3440,7 @@ text
 //
 //   const intended = '<br/><hr/><meta/>\n'
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.02.03',
@@ -3339,7 +3452,7 @@ text
 //
 //   const intended = '<br><hr><meta>\n'
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.02.04',
@@ -3384,7 +3497,7 @@ text
 // </html>
 // `
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.03',
@@ -3434,7 +3547,7 @@ text
 // </html>
 // `
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.04',
@@ -3484,7 +3597,7 @@ text
 // </html>
 // `
 //
-//   t.deepEqual(
+//   t.same(
 //     const actual,
 //     const intended,
 //     '02.05',
@@ -3516,7 +3629,7 @@ text
 // 3. SHADES OF MESSED UP HTML
 // ==============================
 
-test("03.01 - missing closing TD, TR, TABLE will not throw", t => {
+t.test("03.01 - missing closing TD, TR, TABLE will not throw", t => {
   const actual = comb(`
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
@@ -3530,11 +3643,14 @@ test("03.01 - missing closing TD, TR, TABLE will not throw", t => {
     some text
 `;
 
-  t.deepEqual(actual, intended, "03.01 - does nothing as head has no styles");
+  t.same(actual, intended, "03.01 - does nothing as head has no styles");
+  t.end();
 });
 
-test("03.02 - doesn't remove any other empty attributes besides class/id (mini)", t => {
-  const actual = comb(`<html>
+t.test(
+  "03.02 - doesn't remove any other empty attributes besides class/id (mini)",
+  t => {
+    const actual = comb(`<html>
 <body>
 <tr whatnot="">
 <td class="">
@@ -3543,7 +3659,7 @@ test("03.02 - doesn't remove any other empty attributes besides class/id (mini)"
 </html>
 `).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <body>
 <tr whatnot="">
 <td>
@@ -3552,11 +3668,15 @@ test("03.02 - doesn't remove any other empty attributes besides class/id (mini)"
 </html>
 `;
 
-  t.deepEqual(actual, intended, "03.02");
-});
+    t.same(actual, intended, "03.02");
+    t.end();
+  }
+);
 
-test("03.03 - doesn't remove any other empty attributes besides class/id", t => {
-  const actual = comb(`<html>
+t.test(
+  "03.03 - doesn't remove any other empty attributes besides class/id",
+  t => {
+    const actual = comb(`<html>
 <body>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr whatnot="">
@@ -3569,7 +3689,7 @@ test("03.03 - doesn't remove any other empty attributes besides class/id", t => 
 </html>
 `).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <body>
   <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr whatnot="">
@@ -3582,11 +3702,15 @@ test("03.03 - doesn't remove any other empty attributes besides class/id", t => 
 </html>
 `;
 
-  t.deepEqual(actual, intended, "03.03");
-});
+    t.same(actual, intended, "03.03");
+    t.end();
+  }
+);
 
-test("03.04 - removes classes and id's from HTML even if it's heavily messed up", t => {
-  const actual = comb(`
+t.test(
+  "03.04 - removes classes and id's from HTML even if it's heavily messed up",
+  t => {
+    const actual = comb(`
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, #head-only-id1[whatnot], whatever[lang|en]{width:100% !important;}
@@ -3607,7 +3731,7 @@ test("03.04 - removes classes and id's from HTML even if it's heavily messed up"
 </table>
 </body>`).result;
 
-  const intended = `<title>Dummy HTML</title>
+    const intended = `<title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
   #real-id-1:hover{width:100% !important;}
@@ -3627,14 +3751,16 @@ test("03.04 - removes classes and id's from HTML even if it's heavily messed up"
 </body>
 `;
 
-  t.deepEqual(
-    actual,
-    intended,
-    "03.04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
-  );
-});
+    t.same(
+      actual,
+      intended,
+      "03.04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
+    );
+    t.end();
+  }
+);
 
-test("03.05 - missing last @media curlie", t => {
+t.test("03.05 - missing last @media curlie", t => {
   const source = `<head>
 <style type="text/css">
 @namespace url(z);
@@ -3656,166 +3782,178 @@ test("03.05 - missing last @media curlie", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "03.05");
+  t.equal(comb(source).result, intended, "03.05");
+  t.end();
 });
 
 // ==============================
 // 4. Emoji content
 // ==============================
 
-test("04.01 - doesn't affect emoji characters within the code", t => {
+t.test("04.01 - doesn't affect emoji characters within the code", t => {
   const actual = comb("<td>🦄</td>").result;
   const intended = `<td>🦄</td>
 `;
 
-  t.deepEqual(actual, intended, "04.01");
+  t.same(actual, intended, "04.01");
+  t.end();
 });
 
-test("04.02 - doesn't affect emoji characters within the attribute names", t => {
-  const actual = comb('<td data-emoji="🦄">emoji</td>').result;
-  const intended = `<td data-emoji="🦄">emoji</td>
+t.test(
+  "04.02 - doesn't affect emoji characters within the attribute names",
+  t => {
+    const actual = comb('<td data-emoji="🦄">emoji</td>').result;
+    const intended = `<td data-emoji="🦄">emoji</td>
 `;
 
-  t.deepEqual(actual, intended, "04.02");
-});
+    t.same(actual, intended, "04.02");
+    t.end();
+  }
+);
 
 // ==============================
 // 5. Missing/wrong input args
 // ==============================
 
-test("05.01 - wrong inputs result in throw'ing", t => {
+t.test("05.01 - wrong inputs result in throw'ing", t => {
   // pinning throws by throw ID:
   const error1 = t.throws(() => {
     comb();
   });
-  t.truthy(error1.message.includes("THROW_ID_01"));
+  t.ok(error1.message.includes("THROW_ID_01"));
 
   const error2 = t.throws(() => {
     comb(true);
   });
-  t.truthy(error2.message.includes("THROW_ID_01"));
+  t.ok(error2.message.includes("THROW_ID_01"));
 
   const error3 = t.throws(() => {
     comb(null);
   });
-  t.truthy(error3.message.includes("THROW_ID_01"));
+  t.ok(error3.message.includes("THROW_ID_01"));
 
   const error4 = t.throws(() => {
     comb({ a: "b" });
   });
-  t.truthy(error4.message.includes("THROW_ID_01"));
+  t.ok(error4.message.includes("THROW_ID_01"));
 
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("");
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("a");
   });
+  t.end();
 });
 
-test("05.02 - wrong opts", t => {
+t.test("05.02 - wrong opts", t => {
   const error1 = t.throws(() => {
     comb("", 1);
   });
-  t.truthy(error1.message.includes("THROW_ID_02"));
+  t.ok(error1.message.includes("THROW_ID_02"));
 
   const error2 = t.throws(() => {
     comb("", true);
   });
-  t.truthy(error2.message.includes("THROW_ID_02"));
+  t.ok(error2.message.includes("THROW_ID_02"));
 
   const error3 = t.throws(() => {
     comb("", { whitelist: 1 });
   });
-  t.truthy(error3.message.includes("THROW_ID_03"));
+  t.ok(error3.message.includes("THROW_ID_03"));
 
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("", {});
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("", null);
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("", undefined);
   });
 
   const error4 = t.throws(() => {
     comb("zzz", { whitelist: true });
   });
-  t.truthy(error4.message.includes("THROW_ID_03"));
+  t.ok(error4.message.includes("THROW_ID_03"));
 
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("zzz", { whitelist: [] });
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("zzz", { whitelist: "" });
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("zzz", { whitelist: "a" });
   });
 
   const error5 = t.throws(() => {
     comb("zzz", { whitelist: [true] });
   });
-  t.truthy(error5.message.includes("THROW_ID_04"));
+  t.ok(error5.message.includes("THROW_ID_04"));
 
   // opts.backend
   const error6 = t.throws(() => {
     comb("zzz", { backend: 1 });
   });
-  t.truthy(error6.message.includes("THROW_ID_05"));
+  t.ok(error6.message.includes("THROW_ID_05"));
 
   const error7 = t.throws(() => {
     comb("zzz", { backend: "a" });
   });
-  t.truthy(error7.message.includes("THROW_ID_05"));
+  t.ok(error7.message.includes("THROW_ID_05"));
 
   const error8 = t.throws(() => {
     comb("zzz", { backend: ["a"] }); // sneaky
   });
-  t.truthy(error8.message.includes("THROW_ID_06"));
+  t.ok(error8.message.includes("THROW_ID_06"));
 
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("zzz", { backend: [{}] }); // empty arrays are permitted
   });
   const error9 = t.throws(() => {
     comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
   });
-  t.truthy(error9.message.includes("THROW_ID_07"));
+  t.ok(error9.message.includes("THROW_ID_07"));
+  t.end();
 });
 
-test("05.03 - opts.uglify wrong", t => {
-  t.notThrows(() => {
+t.test("05.03 - opts.uglify wrong", t => {
+  t.doesNotThrow(() => {
     comb("z", { uglify: 0 });
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("z", { uglify: 1 });
   });
   const error1 = t.throws(() => {
     comb("z", { uglify: "z" });
   });
-  t.truthy(error1.message.includes("THROW_ID_08"));
+  t.ok(error1.message.includes("THROW_ID_08"));
+  t.end();
 });
 
-test("05.04 - opts.reportProgressFunc wrong", t => {
-  t.notThrows(() => {
+t.test("05.04 - opts.reportProgressFunc wrong", t => {
+  t.doesNotThrow(() => {
     comb("z", { reportProgressFunc: 0 });
   });
-  t.notThrows(() => {
+  t.doesNotThrow(() => {
     comb("z", { reportProgressFunc: false });
   });
   const error1 = t.throws(() => {
     comb("z", { reportProgressFunc: "z" });
   });
-  t.truthy(error1.message.includes("THROW_ID_09"));
+  t.ok(error1.message.includes("THROW_ID_09"));
+  t.end();
 });
 
 // ==============================
 // 6. Output info object
 // ==============================
 
-test("06.01 - returned correct info object, nothing to delete from body, damaged HTML", t => {
-  const actual = comb(`<!DOCTYPE html>
+t.test(
+  "06.01 - returned correct info object, nothing to delete from body, damaged HTML",
+  t => {
+    const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -3834,21 +3972,23 @@ test("06.01 - returned correct info object, nothing to delete from body, damaged
     <hr>
     <br><br>`);
 
-  t.deepEqual(
-    actual.allInHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
-    "06.01.01"
-  );
-  t.deepEqual(actual.allInBody, [], "06.01.02");
-  t.deepEqual(
-    actual.deletedFromHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
-    "06.01.03"
-  );
-  t.deepEqual(actual.deletedFromBody, [], "06.01.04");
-});
+    t.same(
+      actual.allInHead,
+      ["#non-existent-id", "#other", ".non-existent-class"],
+      "06.01.01"
+    );
+    t.same(actual.allInBody, [], "06.01.02");
+    t.same(
+      actual.deletedFromHead,
+      ["#non-existent-id", "#other", ".non-existent-class"],
+      "06.01.03"
+    );
+    t.same(actual.deletedFromBody, [], "06.01.04");
+    t.end();
+  }
+);
 
-test("06.02 - returned correct info object, clean HTML", t => {
+t.test("06.02 - returned correct info object, clean HTML", t => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -3873,29 +4013,30 @@ test("06.02 - returned correct info object, clean HTML", t => {
 </html>
 `);
 
-  t.deepEqual(
+  t.same(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "06.02.01"
   );
-  t.deepEqual(
+  t.same(
     actual.allInBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
     "06.02.02"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "06.02.03"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
     "06.02.04"
   );
+  t.end();
 });
 
-test("06.03 - as 06.02 but now with whitelist, dirty HTML", t => {
+t.test("06.03 - as 06.02 but now with whitelist, dirty HTML", t => {
   const actual = comb(
     `<!DOCTYPE html>
 <html>
@@ -3924,29 +4065,30 @@ test("06.03 - as 06.02 but now with whitelist, dirty HTML", t => {
       ]
     }
   );
-  t.deepEqual(
+  t.same(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "06.03.01"
   );
-  t.deepEqual(
+  t.same(
     actual.allInBody,
     [".body-only-class-1", ".body-only-class-2"],
     "06.03.02"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromHead,
     [],
     "06.03.03 - nothing removed because of whitelist"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromBody,
     [],
     "06.03.04 - nothing removed because of whitelist"
   );
+  t.end();
 });
 
-test("06.04 - correct classes reported in info/deletedFromBody", t => {
+t.test("06.04 - correct classes reported in info/deletedFromBody", t => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -3968,17 +4110,18 @@ test("06.04 - correct classes reported in info/deletedFromBody", t => {
 </html>
 `);
 
-  t.deepEqual(actual.allInHead, [".unused", ".used"], "06.04.01");
-  t.deepEqual(actual.allInBody, [".used"], "06.04.02");
-  t.deepEqual(actual.deletedFromHead, [".unused", ".used"], "06.04.03");
-  t.deepEqual(
+  t.same(actual.allInHead, [".unused", ".used"], "06.04.01");
+  t.same(actual.allInBody, [".used"], "06.04.02");
+  t.same(actual.deletedFromHead, [".unused", ".used"], "06.04.03");
+  t.same(
     actual.deletedFromBody,
     [".used"],
     "06.04.04 - sneaky case - it is within head, but it is sandwitched with an unused class, so it does not count!"
   );
+  t.end();
 });
 
-test("06.05 - more sandwitched classes/ids cases", t => {
+t.test("06.05 - more sandwitched classes/ids cases", t => {
   const actual = comb(`<!DOCTYPE html>
 <html>
 <head>
@@ -4002,29 +4145,30 @@ test("06.05 - more sandwitched classes/ids cases", t => {
 </html>
 `);
 
-  t.deepEqual(
+  t.same(
     actual.allInHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
     "06.05.01"
   );
-  t.deepEqual(actual.allInBody, ["#used-id", ".used-class"], "06.05.02");
-  t.deepEqual(
+  t.same(actual.allInBody, ["#used-id", ".used-class"], "06.05.02");
+  t.same(
     actual.deletedFromHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
     "06.05.03 - deleted because they'e sandwitched with unused classes/ids"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromBody,
     ["#used-id", ".used-class"],
     "06.05.04 - deleted because they'e sandwitched with unused classes/ids"
   );
+  t.end();
 });
 
 // ==============================
 // 7. Whitelist
 // ==============================
 
-test("07.01 - nothing removed because of settings.whitelist", t => {
+t.test("07.01 - nothing removed because of settings.whitelist", t => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4080,10 +4224,11 @@ test("07.01 - nothing removed because of settings.whitelist", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "07.01");
+  t.same(actual, intended, "07.01");
+  t.end();
 });
 
-test("07.02 - some removed, some whitelisted", t => {
+t.test("07.02 - some removed, some whitelisted", t => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4139,10 +4284,11 @@ test("07.02 - some removed, some whitelisted", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "07.02");
+  t.same(actual, intended, "07.02");
+  t.end();
 });
 
-test("07.03 - case of whitelisting everything", t => {
+t.test("07.03 - case of whitelisting everything", t => {
   const actual = comb(
     `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -4200,10 +4346,11 @@ test("07.03 - case of whitelisting everything", t => {
 </html>
 `;
 
-  t.deepEqual(actual, intended, "07.03");
+  t.same(actual, intended, "07.03");
+  t.end();
 });
 
-test("07.04 - special case - checking adjacent markers #1", t => {
+t.test("07.04 - special case - checking adjacent markers #1", t => {
   const actual = comb(`<style type="text/css">
   .del-1{display: none;}
   .real{display: none;}
@@ -4221,10 +4368,11 @@ zzz
 </body>
 `;
 
-  t.deepEqual(actual, intended, "07.04");
+  t.same(actual, intended, "07.04");
+  t.end();
 });
 
-test("07.05 - special case - checking adjacent markers #2", t => {
+t.test("07.05 - special case - checking adjacent markers #2", t => {
   const actual = comb(`<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
 <body>
 zzz
@@ -4235,11 +4383,12 @@ zzz
 </body>
 `;
 
-  t.deepEqual(actual, intended, "07.05");
+  t.same(actual, intended, "07.05");
+  t.end();
 });
 
 // div~[^whatever] .del-1 {display: none;}
-test("07.06 - special case - checking commas within curly braces", t => {
+t.test("07.06 - special case - checking commas within curly braces", t => {
   const actual = comb(`
 <style type="text/css">
   .used {display: block;}
@@ -4257,14 +4406,15 @@ zzz
 </body>
 `;
 
-  t.deepEqual(actual, intended, "07.06");
+  t.same(actual, intended, "07.06");
+  t.end();
 });
 
 // ==============================
 // 8. Discovered bugs
 // ==============================
 
-test("08.01 - color code hashes within head styles with no selectors", t => {
+t.test("08.01 - color code hashes within head styles with no selectors", t => {
   const actual = comb(`<head>
 <style>
 a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-events: none; cursor: default;}
@@ -4285,14 +4435,15 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 </body>
 `;
 
-  t.deepEqual(
+  t.same(
     actual.result,
     intended,
     "08.01 - there are no classes or id's in the query selector, checking false positives"
   );
+  t.end();
 });
 
-test("08.02 - selectors in head styles without classes or ids", t => {
+t.test("08.02 - selectors in head styles without classes or ids", t => {
   const actual = comb(`<head>
 <style>
 a {color: #525252;}
@@ -4313,14 +4464,15 @@ a {color: #525252;}
 </body>
 `;
 
-  t.deepEqual(
+  t.same(
     actual.result,
     intended,
     "08.02 - there are no classes or id's in the query selector, checking false positives"
   );
+  t.end();
 });
 
-test('08.03 - sneaky attributes that end with characters "id"', t => {
+t.test('08.03 - sneaky attributes that end with characters "id"', t => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4377,26 +4529,31 @@ test('08.03 - sneaky attributes that end with characters "id"', t => {
 </html>
 `;
 
-  t.deepEqual(actual.result, intended, "08.03 - sneaky urlid attribute");
+  t.same(actual.result, intended, "08.03 - sneaky urlid attribute");
+  t.end();
 });
 
-test('08.04 - mini version of 08.05, sneaky attributes ending with "class"', t => {
-  const actual = comb(`<body>
+t.test(
+  '08.04 - mini version of 08.05, sneaky attributes ending with "class"',
+  t => {
+    const actual = comb(`<body>
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
 `);
 
-  const intended = `<body>
+    const intended = `<body>
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
 `;
 
-  t.deepEqual(actual.result, intended, "08.04 - sneaky superclass attribute");
-});
+    t.same(actual.result, intended, "08.04 - sneaky superclass attribute");
+    t.end();
+  }
+);
 
-test('08.05 - sneaky attributes that end with characters "class"', t => {
+t.test('08.05 - sneaky attributes that end with characters "class"', t => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4453,10 +4610,11 @@ test('08.05 - sneaky attributes that end with characters "class"', t => {
 </html>
 `;
 
-  t.deepEqual(actual.result, intended, "08.05 - sneaky superclass attribute");
+  t.same(actual.result, intended, "08.05 - sneaky superclass attribute");
+  t.end();
 });
 
-test("08.06 - color code hashes interpreted correctly, not as id's", t => {
+t.test("08.06 - color code hashes interpreted correctly, not as id's", t => {
   const actual = comb(`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4490,14 +4648,15 @@ test("08.06 - color code hashes interpreted correctly, not as id's", t => {
 
   const intended = ["#head-only-id1", ".mobile_link"];
 
-  t.deepEqual(
+  t.same(
     actual.deletedFromHead,
     intended,
     "08.06 - look for #525252 in head styles, it should not be among results - v2.6.0+"
   );
+  t.end();
 });
 
-test("08.07 - one-letter classes (modern notation)", t => {
+t.test("08.07 - one-letter classes (modern notation)", t => {
   const actual = comb(`<head>
 <style type="text/css">
 .h{display:none !important;}
@@ -4518,14 +4677,11 @@ test("08.07 - one-letter classes (modern notation)", t => {
 </body>
 `;
 
-  t.deepEqual(
-    actual.result,
-    intended,
-    "08.07 - class .h should not get removed"
-  );
+  t.same(actual.result, intended, "08.07 - class .h should not get removed");
+  t.end();
 });
 
-test("08.08 - one-letter classes (old notation)", t => {
+t.test("08.08 - one-letter classes (old notation)", t => {
   const actual = comb(`<head>
 <style type="text/css">
 *[class].h{display:none !important;}
@@ -4546,14 +4702,11 @@ test("08.08 - one-letter classes (old notation)", t => {
 </body>
 `;
 
-  t.deepEqual(
-    actual.result,
-    intended,
-    "08.08 - class .h should not get removed"
-  );
+  t.same(actual.result, intended, "08.08 - class .h should not get removed");
+  t.end();
 });
 
-test("08.09 - one-letter classes - comprehensive comparison", t => {
+t.test("08.09 - one-letter classes - comprehensive comparison", t => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4603,30 +4756,31 @@ test("08.09 - one-letter classes - comprehensive comparison", t => {
     ]
   };
 
-  t.is(
+  t.equal(
     actual.allInHead.sort().join(" - "),
     intended.allInHead.sort().join(" - "),
     "08.09.01 - allInHead"
   );
-  t.is(
+  t.equal(
     actual.allInBody.sort().join(" - "),
     intended.allInBody.sort().join(" - "),
     "08.09.02 - allInBody"
   );
-  t.is(
+  t.equal(
     actual.deletedFromHead.sort().join(" - "),
     intended.deletedFromHead.sort().join(" - "),
     "08.09.03 - deletedFromHead"
   );
-  t.is(
+  t.equal(
     actual.deletedFromBody.sort().join(" - "),
     intended.deletedFromBody.sort().join(" - "),
     "08.09.04 - deletedFromBody"
   );
-  t.is(actual.result, intended.result, "08.09.05 - result");
+  t.equal(actual.result, intended.result, "08.09.05 - result");
+  t.end();
 });
 
-test("08.10 - checking whole results object, all its keys #1", t => {
+t.test("08.10 - checking whole results object, all its keys #1", t => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4655,30 +4809,31 @@ test("08.10 - checking whole results object, all its keys #1", t => {
     deletedFromBody: [".used-1", ".unused-4"]
   };
 
-  t.deepEqual(
+  t.same(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
     "08.10.01 - allInHead"
   );
-  t.deepEqual(
+  t.same(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
     "08.10.02 - allInBody"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
     "08.10.03 - deletedFromHead"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
     "08.10.04 - deletedFromBody"
   );
-  t.deepEqual(actual.result, intended.result, "08.10.05 - result");
+  t.same(actual.result, intended.result, "08.10.05 - result");
+  t.end();
 });
 
-test("08.11 - checking whole results object, all its keys #2", t => {
+t.test("08.11 - checking whole results object, all its keys #2", t => {
   const actual = comb(`<html>
 <head>
   <style>
@@ -4712,40 +4867,42 @@ test("08.11 - checking whole results object, all its keys #2", t => {
     deletedFromBody: [".unused-4"]
   };
 
-  t.deepEqual(
+  t.same(
     actual.allInHead.sort(),
     intended.allInHead.sort(),
     "08.11.01 - allInHead"
   );
-  t.deepEqual(
+  t.same(
     actual.allInBody.sort(),
     intended.allInBody.sort(),
     "08.11.02 - allInBody"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
     "08.11.03 - deletedFromHead"
   );
-  t.deepEqual(
+  t.same(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
     "08.11.04 - deletedFromBody"
   );
-  t.deepEqual(actual.result, intended.result, "08.11.05 - result");
+  t.same(actual.result, intended.result, "08.11.05 - result");
+  t.end();
 });
 
-test("08.12 - Cosmin's reported bug", t => {
+t.test("08.12 - Cosmin's reported bug", t => {
   const srcs = [
     `<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n`,
     `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`
   ];
   srcs.forEach(src => {
-    t.deepEqual(comb(src).result, src);
+    t.same(comb(src).result, src);
   });
+  t.end();
 });
 
-test("08.13 - inner whitespace #1", t => {
+t.test("08.13 - inner whitespace #1", t => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4763,10 +4920,11 @@ test("08.13 - inner whitespace #1", t => {
 <br class="abc">
 </td>
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
-test("08.14 - inner whitespace #2", t => {
+t.test("08.14 - inner whitespace #2", t => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4784,10 +4942,11 @@ test("08.14 - inner whitespace #2", t => {
 <br class="abc">
 </td>
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
-test("08.15 - inner whitespace #3", t => {
+t.test("08.15 - inner whitespace #3", t => {
   const inp = `<style>
 .abc {font-family: cursive;}
 </style>
@@ -4805,10 +4964,11 @@ test("08.15 - inner whitespace #3", t => {
 <br class="abc">
 </td>
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
-test("08.16 - adhoc", t => {
+t.test("08.16 - adhoc", t => {
   const inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
@@ -4828,10 +4988,11 @@ test("08.16 - adhoc", t => {
 <a href="a("'")">
 <td class="klm">
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
-test("08.17 - adhoc", t => {
+t.test("08.17 - adhoc", t => {
   const inp = `<style>
 @media only screen{
   .klm{ font-size:16px !important; }
@@ -4851,10 +5012,11 @@ test("08.17 - adhoc", t => {
 <a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
-test("08.18 - adhoc", t => {
+t.test("08.18 - adhoc", t => {
   const inp = `<style>
 @media screen {
   .sm-border-0 {
@@ -4878,14 +5040,15 @@ test("08.18 - adhoc", t => {
 <span>S's</span>
 <td class="sm-border-0">
 `;
-  t.deepEqual(comb(inp).result, outp);
+  t.same(comb(inp).result, outp);
+  t.end();
 });
 
 // ============================================================
 // 9. Release 2.11.0 - backend variables with spaces as classes
 // ============================================================
 
-test("09.01 - nunjucks variable as a class name", t => {
+t.test("09.01 - nunjucks variable as a class name", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -4912,14 +5075,11 @@ color:  black;
 </html>
 `;
 
-  t.deepEqual(
-    actual,
-    intended,
-    "09.01 - default behaviour - lib will extract var1"
-  );
+  t.same(actual, intended, "09.01 - default behaviour - lib will extract var1");
+  t.end();
 });
 
-test("09.02 - nunjucks variable as a class name", t => {
+t.test("09.02 - nunjucks variable as a class name", t => {
   const actual = comb(`<!doctype html>
 <html>
 <head>
@@ -4950,14 +5110,15 @@ color: black;
 </html>
 `;
 
-  t.deepEqual(
+  t.same(
     actual,
     intended,
     "09.02 - default behaviour - curlies are not legal characters to be used as class names"
   );
+  t.end();
 });
 
-test("09.03 - nunjucks variable as a class name (simplified version)", t => {
+t.test("09.03 - nunjucks variable as a class name (simplified version)", t => {
   const actual = comb(
     `<style>
 .aa {bb: cc;}
@@ -4986,14 +5147,15 @@ test("09.03 - nunjucks variable as a class name (simplified version)", t => {
 </body>
 `;
 
-  t.deepEqual(
+  t.same(
     actual,
     intended,
     "09.03 - we taught it how heads and tails look so it skips them now"
   );
+  t.end();
 });
 
-test("09.04 - nunjucks variable as a class name (full version)", t => {
+t.test("09.04 - nunjucks variable as a class name (full version)", t => {
   const actual = comb(
     `<!doctype html>
 <html>
@@ -5034,52 +5196,59 @@ color:  black;
 </html>
 `;
 
-  t.deepEqual(
+  t.same(
     actual,
     intended,
     "09.04 - we taught it how heads and tails look so it skips them now"
   );
+  t.end();
 });
 
-test("09.05 - nunjucks variables mixed with classes and id's (minimal version)", t => {
-  const actual = comb(
-    `<style>
+t.test(
+  "09.05 - nunjucks variables mixed with classes and id's (minimal version)",
+  t => {
+    const actual = comb(
+      `<style>
 #aa {bb: cc;}
 </style></head>
 <body id="  {{ zz }}   aa {{ yy }} dd{{xx}}">
 </body>
 `,
-    {
-      backend: [
-        {
-          heads: "{{",
-          tails: "}}"
-        },
-        {
-          heads: "{%",
-          tails: "%}"
-        }
-      ]
-    }
-  ).result;
+      {
+        backend: [
+          {
+            heads: "{{",
+            tails: "}}"
+          },
+          {
+            heads: "{%",
+            tails: "%}"
+          }
+        ]
+      }
+    ).result;
 
-  const intended = `<style>
+    const intended = `<style>
 #aa {bb: cc;}
 </style></head>
 <body id="{{ zz }} aa {{ yy }} {{xx}}">
 </body>
 `;
 
-  t.deepEqual(
-    actual,
-    intended,
-    "09.05 - we taught it how heads and tails look so it skips them now"
-  );
-});
+    t.same(
+      actual,
+      intended,
+      "09.05 - we taught it how heads and tails look so it skips them now"
+    );
+    t.end();
+  }
+);
 
-test("09.06 - nunjucks variables mixed with classes and id's (full version)", t => {
-  const actual = comb(
-    `<!DOCTYPE html>
+t.test(
+  "09.06 - nunjucks variables mixed with classes and id's (full version)",
+  t => {
+    const actual = comb(
+      `<!DOCTYPE html>
 <html lang="en">
 <head>
 <style type="text/css">
@@ -5104,17 +5273,17 @@ test("09.06 - nunjucks variables mixed with classes and id's (full version)", t 
 </body>
 </html>
 `,
-    {
-      backend: [
-        {
-          heads: "{{",
-          tails: "}}"
-        }
-      ]
-    }
-  ).result;
+      {
+        backend: [
+          {
+            heads: "{{",
+            tails: "}}"
+          }
+        ]
+      }
+    ).result;
 
-  const intended = `<!DOCTYPE html>
+    const intended = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <style type="text/css">
@@ -5140,14 +5309,16 @@ test("09.06 - nunjucks variables mixed with classes and id's (full version)", t 
 </html>
 `;
 
-  t.deepEqual(actual, intended, "09.06");
-});
+    t.same(actual, intended, "09.06");
+    t.end();
+  }
+);
 
 // ============================================================
 // 10. Various tests
 // ============================================================
 
-test("10.01 - bug #01", t => {
+t.test("10.01 - bug #01", t => {
   const {
     allInBody,
     allInHead,
@@ -5164,9 +5335,9 @@ test("10.01 - bug #01", t => {
 </body>
 `);
 
-  t.deepEqual(allInBody, [], "10.01.01");
-  t.deepEqual(allInHead, [".unused"], "10.01.02");
-  t.deepEqual(
+  t.same(allInBody, [], "10.01.01");
+  t.same(allInHead, [".unused"], "10.01.02");
+  t.same(
     result,
     `<head>
 <style type="text/css">
@@ -5178,11 +5349,12 @@ test("10.01 - bug #01", t => {
 `,
     "10.01.03"
   );
-  t.deepEqual(deletedFromHead, [".unused"], "10.01.04");
-  t.deepEqual(deletedFromBody, [], "10.01.05");
+  t.same(deletedFromHead, [".unused"], "10.01.04");
+  t.same(deletedFromBody, [], "10.01.05");
+  t.end();
 });
 
-test("10.02 - working on early (stage I) per-line removal", t => {
+t.test("10.02 - working on early (stage I) per-line removal", t => {
   const source = `
 <!DOCTYPE html>
 <html lang="en">
@@ -5229,12 +5401,15 @@ test("10.02 - working on early (stage I) per-line removal", t => {
 </html>
 `;
 
-  t.deepEqual(comb(source).result, intended, "10.02");
+  t.same(comb(source).result, intended, "10.02");
+  t.end();
 });
 
 // sneaky matching used/unused class/id names
-test("10.03 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments", t => {
-  const source = `<style>
+t.test(
+  "10.03 - HTML inline CSS comments are removed - commented out selectors - semicols clean and inside comments",
+  t => {
+    const source = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -5242,7 +5417,7 @@ test("10.03 - HTML inline CSS comments are removed - commented out selectors - s
 </body>
 `;
 
-  const intended = `<style>
+    const intended = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -5250,11 +5425,15 @@ test("10.03 - HTML inline CSS comments are removed - commented out selectors - s
 </body>
 `;
 
-  t.is(comb(source).result, intended, "01.03");
-});
+    t.equal(comb(source).result, intended, "01.03");
+    t.end();
+  }
+);
 
-test("10.04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol", t => {
-  const source = `<style>
+t.test(
+  "10.04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol",
+  t => {
+    const source = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -5262,7 +5441,7 @@ test("10.04 - HTML inline CSS comments are removed - commented out selectors - r
 </body>
 `;
 
-  const intended = `<style>
+    const intended = `<style>
   .aa {z:2;}
 </style>
 </head>
@@ -5270,11 +5449,15 @@ test("10.04 - HTML inline CSS comments are removed - commented out selectors - r
 </body>
 `;
 
-  t.is(comb(source).result, intended, "01.04");
-});
+    t.equal(comb(source).result, intended, "01.04");
+    t.end();
+  }
+);
 
-test("10.05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", t => {
-  const source = `<head>
+t.test(
+  "10.05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments",
+  t => {
+    const source = `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
@@ -5283,7 +5466,7 @@ test("10.05 - HTML inline CSS comments are removed - commented out selectors - v
 </body>
 `;
 
-  const intended = `<head>
+    const intended = `<head>
 <style type="text/css">
   .aa {z:2;}
 </style>
@@ -5292,11 +5475,15 @@ test("10.05 - HTML inline CSS comments are removed - commented out selectors - v
 </body>
 `;
 
-  t.is(comb(source).result, intended, "01.05");
-});
+    t.equal(comb(source).result, intended, "01.05");
+    t.end();
+  }
+);
 
-test("10.06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads", t => {
-  const source = `<style>
+t.test(
+  "10.06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads",
+  t => {
+    const source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -5304,15 +5491,17 @@ test("10.06 - Even without backend heads/tails set, it should recognise double c
 </body>
 `;
 
-  const intended = `</head>
+    const intended = `</head>
 <body><a>
 </body>
 `;
 
-  t.is(comb(source).result, intended, "10.06");
-});
+    t.equal(comb(source).result, intended, "10.06");
+    t.end();
+  }
+);
 
-test("10.07 - empty class/id without equals and value gets deleted", t => {
+t.test("10.07 - empty class/id without equals and value gets deleted", t => {
   const source = `<style>
   .aa {bb:2;}
 </style>
@@ -5326,11 +5515,14 @@ test("10.07 - empty class/id without equals and value gets deleted", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "10.07");
+  t.equal(comb(source).result, intended, "10.07");
+  t.end();
 });
 
-test("10.08 - empty class/id with equals but without value gets deleted", t => {
-  const source = `<style>
+t.test(
+  "10.08 - empty class/id with equals but without value gets deleted",
+  t => {
+    const source = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -5338,7 +5530,7 @@ test("10.08 - empty class/id with equals but without value gets deleted", t => {
 </body>
 `;
 
-  const intended = `<style>
+    const intended = `<style>
   .aa {bb:2;}
 </style>
 </head>
@@ -5346,10 +5538,12 @@ test("10.08 - empty class/id with equals but without value gets deleted", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "10.08");
-});
+    t.equal(comb(source).result, intended, "10.08");
+    t.end();
+  }
+);
 
-test("10.09 - cleans spaces within classes and id's", t => {
+t.test("10.09 - cleans spaces within classes and id's", t => {
   const source = `<head>
 <style type="text/css">
   .unused1[z], .unused.used {a:1;}
@@ -5369,19 +5563,21 @@ test("10.09 - cleans spaces within classes and id's", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "10.09");
+  t.equal(comb(source).result, intended, "10.09");
+  t.end();
 });
 
-test("10.10 - does not mangle different-type line endings", t => {
+t.test("10.10 - does not mangle different-type line endings", t => {
   const source1 = "a\n";
   const source2 = "a\r";
   const source3 = "a\r\n";
-  t.is(comb(source1).result, source1, "10.10.01");
-  t.is(comb(source2).result, source2, "10.10.02");
-  t.is(comb(source3).result, source3, "10.10.03");
+  t.equal(comb(source1).result, source1, "10.10.01");
+  t.equal(comb(source2).result, source2, "10.10.02");
+  t.equal(comb(source3).result, source3, "10.10.03");
+  t.end();
 });
 
-test("10.11 - dirty code #1", t => {
+t.test("10.11 - dirty code #1", t => {
   const actual = comb(`<body>
 
 <style>
@@ -5407,14 +5603,15 @@ float:left !important;}
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
 `;
 
-  t.is(actual, intended, "10.11");
+  t.equal(actual, intended, "10.11");
+  t.end();
 });
 
 // ============================================================
 // 11. HTML Comment removal
 // ============================================================
 
-test("11.01 - removes HTML comments - healthy code", t => {
+t.test("11.01 - removes HTML comments - healthy code", t => {
   const source = `<style>
   .a {b:2;}
 </style>
@@ -5445,35 +5642,40 @@ test("11.01 - removes HTML comments - healthy code", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "11.01.01");
-  t.is(
+  t.equal(comb(source).result, intended, "11.01.01");
+  t.equal(
     comb(source, { removeHTMLComments: true }).result,
     intended,
     "11.01.02 - hardcoded default"
   );
-  t.is(comb(source, { removeHTMLComments: false }).result, source, "11.01.03");
+  t.equal(
+    comb(source, { removeHTMLComments: false }).result,
+    source,
+    "11.01.03"
+  );
 
   // uglify on:
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true
     }).result,
     uglified,
     "11.01.04"
   );
-  t.is(
+  t.equal(
     comb(source, { removeHTMLComments: true, uglify: true }).result,
     uglified,
     "11.01.05 - hardcoded default"
   );
-  t.is(
+  t.equal(
     comb(source, { removeHTMLComments: false, uglify: true }).result,
     uglifiedWithComments,
     "11.01.06"
   );
+  t.end();
 });
 
-test("11.02 - removes bogus HTML comments", t => {
+t.test("11.02 - removes bogus HTML comments", t => {
   const source = `<style>
   .a {b:2;}
 </style>
@@ -5497,158 +5699,190 @@ test("11.02 - removes bogus HTML comments", t => {
 </body>
 `;
 
-  t.is(comb(source).result, intended, "11.02.01");
-  t.is(comb(source, { removeHTMLComments: true }).result, intended, "11.02.02");
+  t.equal(comb(source).result, intended, "11.02.01");
+  t.equal(
+    comb(source, { removeHTMLComments: true }).result,
+    intended,
+    "11.02.02"
+  );
   // when HTML comment removal is off, redundant whitespace within the tag is
   // still removed
-  t.is(
+  t.equal(
     comb(source, { removeHTMLComments: false }).result,
     slightlyProcessed,
     "11.02.03"
   );
+  t.end();
 });
 
-test("11.03 - removes HTML comments - healthy code with mso conditional - one liner", t => {
-  const source = `abc<!--[if gte mso 9]><xml></xml><![endif]-->xyz
+t.test(
+  "11.03 - removes HTML comments - healthy code with mso conditional - one liner",
+  t => {
+    const source = `abc<!--[if gte mso 9]><xml></xml><![endif]-->xyz
 `;
 
-  const conditionalRemoved = `abc xyz
+    const conditionalRemoved = `abc xyz
 `;
 
-  t.is(comb(source).result, source, "11.03.01");
-  t.is(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "11.03.02 - hardcoded default"
-  );
-  t.is(comb(source, { removeHTMLComments: false }).result, source, "11.03.03");
-  t.is(
-    comb(source, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"]
-    }).result,
-    source,
-    "11.03.04 - both mso and ie ignores cause a complete skip"
-  );
-  t.is(
-    comb(source, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso"
-    }).result,
-    source,
-    "11.03.05 - mso ignore causes a complete skip"
-  );
-  t.is(
-    comb(source, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie"
-    }).result,
-    conditionalRemoved,
-    "11.03.06 - ie ignore is redundant and comment is removed"
-  );
-  t.is(
-    comb(source, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ""
-    }).result,
-    conditionalRemoved,
-    "11.03.07 - empty string"
-  );
-  t.is(
-    comb(source, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
-    }).result,
-    conditionalRemoved,
-    "11.03.08 - empty array"
-  );
-});
+    t.equal(comb(source).result, source, "11.03.01");
+    t.equal(
+      comb(source, { removeHTMLComments: true }).result,
+      source,
+      "11.03.02 - hardcoded default"
+    );
+    t.equal(
+      comb(source, { removeHTMLComments: false }).result,
+      source,
+      "11.03.03"
+    );
+    t.equal(
+      comb(source, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"]
+      }).result,
+      source,
+      "11.03.04 - both mso and ie ignores cause a complete skip"
+    );
+    t.equal(
+      comb(source, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso"
+      }).result,
+      source,
+      "11.03.05 - mso ignore causes a complete skip"
+    );
+    t.equal(
+      comb(source, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie"
+      }).result,
+      conditionalRemoved,
+      "11.03.06 - ie ignore is redundant and comment is removed"
+    );
+    t.equal(
+      comb(source, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: ""
+      }).result,
+      conditionalRemoved,
+      "11.03.07 - empty string"
+    );
+    t.equal(
+      comb(source, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
+      }).result,
+      conditionalRemoved,
+      "11.03.08 - empty array"
+    );
+    t.end();
+  }
+);
 
-test("11.04 - removes HTML comments - everywhere-except-outlook conditional - type 1", t => {
-  const source = `aaa<!--[if !mso]><!-- -->
+t.test(
+  "11.04 - removes HTML comments - everywhere-except-outlook conditional - type 1",
+  t => {
+    const source = `aaa<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->bbb
 `;
 
-  const completelyStripped = `aaa
+    const completelyStripped = `aaa
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-  t.is(comb(source).result, source, "11.04.01");
-  t.is(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "11.04.02 - hardcoded default"
-  );
-  t.is(comb(source, { removeHTMLComments: false }).result, source, "11.04.03");
-  t.is(
-    comb(source, {
-      removeHTMLComments: true,
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
-    }).result,
-    completelyStripped,
-    "11.04.04 - completely strips all comments, including outlook conditionals"
-  );
-});
+    t.equal(comb(source).result, source, "11.04.01");
+    t.equal(
+      comb(source, { removeHTMLComments: true }).result,
+      source,
+      "11.04.02 - hardcoded default"
+    );
+    t.equal(
+      comb(source, { removeHTMLComments: false }).result,
+      source,
+      "11.04.03"
+    );
+    t.equal(
+      comb(source, {
+        removeHTMLComments: true,
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
+      }).result,
+      completelyStripped,
+      "11.04.04 - completely strips all comments, including outlook conditionals"
+    );
 
-test("11.05 - removes HTML comments - everywhere-except-outlook conditional - type 2", t => {
-  // not <!-- --> but <!-->
+    t.end();
+  }
+);
 
-  const source2 = `aaa<!--[if !mso]><!-->
+t.test(
+  "11.05 - removes HTML comments - everywhere-except-outlook conditional - type 2",
+  t => {
+    // not <!-- --> but <!-->
+
+    const source2 = `aaa<!--[if !mso]><!-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->bbb
 `;
-  const completelyStripped = `aaa
+    const completelyStripped = `aaa
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> bbb
 `;
 
-  t.is(comb(source2).result, source2, "11.05.01");
-  t.is(
-    comb(source2, { removeHTMLComments: true }).result,
-    source2,
-    "11.05.02 - hardcoded default"
-  );
-  t.is(
-    comb(source2, { removeHTMLComments: false }).result,
-    source2,
-    "11.05.03"
-  );
-  t.is(
-    comb(source2, {
-      removeHTMLComments: true,
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
-    }).result,
-    completelyStripped,
-    "11.05.04 - completely strips all comments, including outlook conditionals"
-  );
-});
+    t.equal(comb(source2).result, source2, "11.05.01");
+    t.equal(
+      comb(source2, { removeHTMLComments: true }).result,
+      source2,
+      "11.05.02 - hardcoded default"
+    );
+    t.equal(
+      comb(source2, { removeHTMLComments: false }).result,
+      source2,
+      "11.05.03"
+    );
+    t.equal(
+      comb(source2, {
+        removeHTMLComments: true,
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: []
+      }).result,
+      completelyStripped,
+      "11.05.04 - completely strips all comments, including outlook conditionals"
+    );
+    t.end();
+  }
+);
 
-test("11.06 - removes HTML comments - everywhere-except-outlook conditional - alternative", t => {
-  // theoretical alternatives: mso, ie
-  const source3 = `aaa<!--[if mso]><!-->
+t.test(
+  "11.06 - removes HTML comments - everywhere-except-outlook conditional - alternative",
+  t => {
+    // theoretical alternatives: mso, ie
+    const source3 = `aaa<!--[if mso]><!-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->bbb
 `;
 
-  t.is(
-    comb(source3, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "endif"]
-    }).result,
-    source3,
-    "11.06.01"
-  );
+    t.equal(
+      comb(source3, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "endif"]
+      }).result,
+      source3,
+      "11.06.01"
+    );
 
-  const source4 = `aaa<!--[if ie]><!-->
+    const source4 = `aaa<!--[if ie]><!-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->bbb
 `;
 
-  t.is(
-    comb(source4, {
-      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["ie", "endif"]
-    }).result,
-    source4,
-    "11.06.02"
-  );
-});
+    t.equal(
+      comb(source4, {
+        doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["ie", "endif"]
+      }).result,
+      source4,
+      "11.06.02"
+    );
+    t.end();
+  }
+);
 
-test("11.07 - does not touch a table with conditional comment on the columns", t => {
-  const source = `<table>
+t.test(
+  "11.07 - does not touch a table with conditional comment on the columns",
+  t => {
+    const source = `<table>
   <tr>
     <td>
       zzz
@@ -5665,16 +5899,22 @@ test("11.07 - does not touch a table with conditional comment on the columns", t
 </table>
 `;
 
-  t.is(comb(source).result, source, "11.07.01");
-  t.is(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "11.07.02 - hardcoded default"
-  );
-  t.is(comb(source, { removeHTMLComments: false }).result, source, "11.07.03");
-});
+    t.equal(comb(source).result, source, "11.07.01");
+    t.equal(
+      comb(source, { removeHTMLComments: true }).result,
+      source,
+      "11.07.02 - hardcoded default"
+    );
+    t.equal(
+      comb(source, { removeHTMLComments: false }).result,
+      source,
+      "11.07.03"
+    );
+    t.end();
+  }
+);
 
-test("11.08 - trims commented-out HTML", t => {
+t.test("11.08 - trims commented-out HTML", t => {
   const source = `<table>
 <tr>
   <span>
@@ -5693,24 +5933,30 @@ test("11.08 - trims commented-out HTML", t => {
 </table>
 `;
 
-  t.is(comb(source).result, intended, "11.08.01");
-  t.is(
+  t.equal(comb(source).result, intended, "11.08.01");
+  t.equal(
     comb(source, { removeHTMLComments: true }).result,
     intended,
     "11.08.02 - hardcoded default"
   );
-  t.is(comb(source, { removeHTMLComments: false }).result, source, "11.08.03");
+  t.equal(
+    comb(source, { removeHTMLComments: false }).result,
+    source,
+    "11.08.03"
+  );
+  t.end();
 });
 
-test("11.09 - outer trims - single leading space", t => {
+t.test("11.09 - outer trims - single leading space", t => {
   const source = ` <body>`;
   const intended = `<body>
 `;
 
-  t.is(comb(source).result, intended, "11.09");
+  t.equal(comb(source).result, intended, "11.09");
+  t.end();
 });
 
-test("11.10 - outer trims - doctype with leading line break", t => {
+t.test("11.10 - outer trims - doctype with leading line break", t => {
   const source = `\n<!DOCTYPE html>
 <html>`;
 
@@ -5718,46 +5964,51 @@ test("11.10 - outer trims - doctype with leading line break", t => {
 <html>
 `;
 
-  t.is(
+  t.equal(
     comb(source, { uglify: true, removeIndentations: true }).result,
     intended,
     "11.10"
   );
+  t.end();
 });
 
-test("11.11 - outer trims - trailing line breaks", t => {
+t.test("11.11 - outer trims - trailing line breaks", t => {
   const source = ` <body>\n\n\n`;
   const intended = `<body>
 `;
 
-  t.is(comb(source).result, intended, "11.11");
+  t.equal(comb(source).result, intended, "11.11");
+  t.end();
 });
 
-test("11.12 - comment surrounded by tags", t => {
+t.test("11.12 - comment surrounded by tags", t => {
   const source = ` <strong><!-- --></strong> `;
   const intended = `<strong></strong>
 `;
 
-  t.is(comb(source).result, intended, "11.12");
+  t.equal(comb(source).result, intended, "11.12");
+  t.end();
 });
 
-test("11.13 - leading comment", t => {
+t.test("11.13 - leading comment", t => {
   const source = `<!-- something -->zzz`;
   const intended = `zzz
 `;
 
-  t.is(comb(source).result, intended, "11.13");
+  t.equal(comb(source).result, intended, "11.13");
+  t.end();
 });
 
-test("11.14 - leading spaces #1 - just text", t => {
+t.test("11.14 - leading spaces #1 - just text", t => {
   const source = `  a`;
   const intended = `a
 `;
 
-  t.is(comb(source).result, intended, "11.14");
+  t.equal(comb(source).result, intended, "11.14");
+  t.end();
 });
 
-test("11.15 - leading spaces #2 - no body", t => {
+t.test("11.15 - leading spaces #2 - no body", t => {
   const source = `<style>
     /* Media Queries */
     @media screen and (max-width: 480px) {
@@ -5773,30 +6024,33 @@ test("11.15 - leading spaces #2 - no body", t => {
 </style>
 `;
 
-  t.is(comb(source).result, intended, "11.15");
+  t.equal(comb(source).result, intended, "11.15");
+  t.end();
 });
 
-test("11.16 - outer trims - some leading tabs", t => {
+t.test("11.16 - outer trims - some leading tabs", t => {
   const source = `\n\t\t<body>`;
   const intended = `<body>
 `;
 
-  t.is(comb(source).result, intended, "11.16");
+  t.equal(comb(source).result, intended, "11.16");
+  t.end();
 });
 
-test("11.17 - outer trims - doctype with leading space", t => {
+t.test("11.17 - outer trims - doctype with leading space", t => {
   const source = ` <!DOCTYPE>`;
   const intended = `<!DOCTYPE>
 `;
 
-  t.is(comb(source).result, intended, "11.17");
+  t.equal(comb(source).result, intended, "11.17");
+  t.end();
 });
 
 // ============================================================
 // 12. opts.uglify
 // ============================================================
 
-test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
+t.test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
   const source = `<head>
 <style>
 .abc { w:1; }
@@ -5837,19 +6091,19 @@ test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
 </body>
 `;
 
-  t.is(
+  t.equal(
     comb(source, { uglify: false }).result,
     baseline,
     "12.01.01 - default settings (no uglify, no ignores)"
   );
 
-  t.is(
+  t.equal(
     comb(source, { uglify: true }).result,
     baselineUglified,
     "12.01.02 - uglified, no ignores"
   );
 
-  t.is(
+  t.equal(
     comb(source, {
       uglify: false,
       whitelist: ".zzz*"
@@ -5858,7 +6112,7 @@ test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
     "12.01.03 - no uglify, with ignores"
   );
 
-  t.is(
+  t.equal(
     comb(source, {
       uglify: true,
       whitelist: ".zzz*"
@@ -5866,10 +6120,14 @@ test(`12.01 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, t => {
     ignoresUglified,
     "12.01.04 - uglified + with ignores"
   );
+
+  t.end();
 });
 
-test(`12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`, t => {
-  const actual = `<head>
+t.test(
+  `12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`,
+  t => {
+    const actual = `<head>
 <style>
 .aaa01,
 .aaa02,
@@ -5906,7 +6164,7 @@ test(`12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds li
 </body>
 `;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
 .s,
 .t,
@@ -5943,55 +6201,60 @@ test(`12.02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds li
 </body>
 `;
 
-  t.is(
-    comb(actual, { uglify: false }).result,
-    actual,
-    "12.02.01 - uglify is off"
-  );
+    t.equal(
+      comb(actual, { uglify: false }).result,
+      actual,
+      "12.02.01 - uglify is off"
+    );
 
-  const res = comb(actual, { uglify: true });
-  t.is(res.result, intended, "12.02.02 - uglify is on");
+    const res = comb(actual, { uglify: true });
+    t.equal(res.result, intended, "12.02.02 - uglify is on");
 
-  t.deepEqual(
-    res.log.uglified,
-    [
-      [".aaa01", ".s"],
-      [".aaa02", ".t"],
-      [".aaa03", ".u"],
-      [".aaa04", ".v"],
-      [".aaa05", ".w"],
-      [".aaa06", ".x"],
-      [".aaa07", ".y"],
-      [".aaa08", ".z"],
-      [".aaa09", ".a"],
-      [".aaa10", ".sce"],
-      [".aaa11", ".tdj"],
-      [".aaa12", ".ueq"],
-      [".aaa13", ".vfz"],
-      [".aaa14", ".wga"],
-      [".aaa15", ".xhn"],
-      [".aaa16", ".yi2"],
-      [".aaa17", ".zjj"],
-      [".aaa18", ".akk"],
-      [".aaa19", ".b"],
-      [".aaa20", ".tdjs"],
-      [".aaa21", ".ueq6"],
-      [".aaa22", ".vfzo"],
-      [".aaa23", ".wgaa"],
-      [".aaa24", ".xhn0"],
-      [".aaa25", ".yi2u"],
-      [".aaa26", ".zjjs"],
-      [".aaa27", ".akku"],
-      [".aaa28", ".blw"],
-      [".aaa29", ".c"],
-      [".aaa30", ".ueq6m"]
-    ],
-    "12.02.03"
-  );
-});
+    t.same(
+      res.log.uglified,
+      [
+        [".aaa01", ".s"],
+        [".aaa02", ".t"],
+        [".aaa03", ".u"],
+        [".aaa04", ".v"],
+        [".aaa05", ".w"],
+        [".aaa06", ".x"],
+        [".aaa07", ".y"],
+        [".aaa08", ".z"],
+        [".aaa09", ".a"],
+        [".aaa10", ".sce"],
+        [".aaa11", ".tdj"],
+        [".aaa12", ".ueq"],
+        [".aaa13", ".vfz"],
+        [".aaa14", ".wga"],
+        [".aaa15", ".xhn"],
+        [".aaa16", ".yi2"],
+        [".aaa17", ".zjj"],
+        [".aaa18", ".akk"],
+        [".aaa19", ".b"],
+        [".aaa20", ".tdjs"],
+        [".aaa21", ".ueq6"],
+        [".aaa22", ".vfzo"],
+        [".aaa23", ".wgaa"],
+        [".aaa24", ".xhn0"],
+        [".aaa25", ".yi2u"],
+        [".aaa26", ".zjjs"],
+        [".aaa27", ".akku"],
+        [".aaa28", ".blw"],
+        [".aaa29", ".c"],
+        [".aaa30", ".ueq6m"]
+      ],
+      "12.02.03"
+    );
 
-test(`12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`, t => {
-  const source = `<html>
+    t.end();
+  }
+);
+
+t.test(
+  `12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`,
+  t => {
+    const source = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6004,7 +6267,7 @@ test(`12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 <body id="outlook">
 <a class="myclass">
 `;
-  const intended = `<html>
+    const intended = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6017,7 +6280,7 @@ test(`12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 <body id="outlook">
 <a class="myclass">
 `;
-  const uglified = `<html>
+    const uglified = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6031,24 +6294,28 @@ test(`12.03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 <a class="e">
 `;
 
-  t.is(
-    comb(source, {
-      uglify: false
-    }).result,
-    intended,
-    "12.03.01"
-  );
-  t.is(
-    comb(source, {
-      uglify: true
-    }).result,
-    uglified,
-    "12.03.02"
-  );
-});
+    t.equal(
+      comb(source, {
+        uglify: false
+      }).result,
+      intended,
+      "12.03.01"
+    );
+    t.equal(
+      comb(source, {
+        uglify: true
+      }).result,
+      uglified,
+      "12.03.02"
+    );
+    t.end();
+  }
+);
 
-test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`, t => {
-  const source = `<html>
+t.test(
+  `12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`,
+  t => {
+    const source = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6060,7 +6327,7 @@ test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 </head>
 <body id="outlook"><a>
 `;
-  const intended = `<html>
+    const intended = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6071,7 +6338,7 @@ test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 </head>
 <body id="outlook"><a>
 `;
-  const uglified = `<html>
+    const uglified = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6082,7 +6349,7 @@ test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 </head>
 <body id="k"><a>
 `;
-  const ignored = `<html>
+    const ignored = `<html>
 <head>
 <!--[if mso]>
 <style>
@@ -6095,41 +6362,45 @@ test(`12.04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outl
 <body id="outlook"><a>
 `;
 
-  t.is(
-    comb(source, {
-      uglify: false
-    }).result,
-    intended,
-    "12.04.01"
-  );
-  t.is(
-    comb(source, {
-      uglify: true
-    }).result,
-    uglified,
-    "12.04.02"
-  );
-  // now ignores are set, so deletion is prevented:
-  t.is(
-    comb(source, {
-      uglify: false,
-      whitelist: ["#outlook", ".myclass"]
-    }).result,
-    ignored,
-    "12.04.03"
-  );
-  t.is(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#outlook", ".myclass"]
-    }).result,
-    ignored,
-    "12.04.04"
-  );
-});
+    t.equal(
+      comb(source, {
+        uglify: false
+      }).result,
+      intended,
+      "12.04.01"
+    );
+    t.equal(
+      comb(source, {
+        uglify: true
+      }).result,
+      uglified,
+      "12.04.02"
+    );
+    // now ignores are set, so deletion is prevented:
+    t.equal(
+      comb(source, {
+        uglify: false,
+        whitelist: ["#outlook", ".myclass"]
+      }).result,
+      ignored,
+      "12.04.03"
+    );
+    t.equal(
+      comb(source, {
+        uglify: true,
+        whitelist: ["#outlook", ".myclass"]
+      }).result,
+      ignored,
+      "12.04.04"
+    );
+    t.end();
+  }
+);
 
-test(`12.05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`, t => {
-  const source = `<html>
+t.test(
+  `12.05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`,
+  t => {
+    const source = `<html>
 <head>
 <style>
 #mn a {z}
@@ -6137,26 +6408,30 @@ test(`12.05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`
 </head>
 <body id="mn"><a>
 `;
-  t.is(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#mn", ".op"]
-    }).result,
-    source,
-    "12.05.01"
-  );
-  t.is(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#mn"]
-    }).result,
-    source,
-    "12.05.02"
-  );
-});
+    t.equal(
+      comb(source, {
+        uglify: true,
+        whitelist: ["#mn", ".op"]
+      }).result,
+      source,
+      "12.05.01"
+    );
+    t.equal(
+      comb(source, {
+        uglify: true,
+        whitelist: ["#mn"]
+      }).result,
+      source,
+      "12.05.02"
+    );
+    t.end();
+  }
+);
 
-test(`12.06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`, t => {
-  const source = `<html>
+t.test(
+  `12.06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`,
+  t => {
+    const source = `<html>
 <head>
 <style>
 .mn a {z}
@@ -6164,27 +6439,31 @@ test(`12.06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used class
 </head>
 <body class="mn"><a>
 `;
-  t.is(
-    comb(source, {
-      uglify: true,
-      whitelist: [".mn", ".op"]
-    }).result,
-    source,
-    "12.06.01"
-  );
-  t.is(
-    comb(source, {
-      uglify: true,
-      whitelist: [".mn"]
-    }).result,
-    source,
-    "12.06.02"
-  );
-});
+    t.equal(
+      comb(source, {
+        uglify: true,
+        whitelist: [".mn", ".op"]
+      }).result,
+      source,
+      "12.06.01"
+    );
+    t.equal(
+      comb(source, {
+        uglify: true,
+        whitelist: [".mn"]
+      }).result,
+      source,
+      "12.06.02"
+    );
+    t.end();
+  }
+);
 
-test(`12.07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`, t => {
-  const actual = comb(
-    `<html lang="en">
+t.test(
+  `12.07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`,
+  t => {
+    const actual = comb(
+      `<html lang="en">
 <head>
 <style type="text/css">
   @media only screen {
@@ -6199,20 +6478,20 @@ zzz
 </body>
 </html>
 `,
-    {
-      whitelist: [
-        "#outlook",
-        ".ExternalClass",
-        ".module-*",
-        ".Mso*",
-        ".ReadMsgBody",
-        ".yshortcuts"
-      ],
-      uglify: true
-    }
-  );
+      {
+        whitelist: [
+          "#outlook",
+          ".ExternalClass",
+          ".module-*",
+          ".Mso*",
+          ".ReadMsgBody",
+          ".yshortcuts"
+        ],
+        uglify: true
+      }
+    );
 
-  const intended = `<html lang="en">
+    const intended = `<html lang="en">
 <head>
 <style type="text/css">
   @media only screen {
@@ -6227,457 +6506,476 @@ zzz
 </html>
 `;
 
-  // whatever uglified class is named, it's there, Merriweather font is kept:
-  t.true(actual.result.includes("Merriweather"), "12.07.01");
+    // whatever uglified class is named, it's there, Merriweather font is kept:
+    t.ok(actual.result.includes("Merriweather"), "12.07.01");
 
-  // also, the result contains whitelisted entries...
-  t.true(intended.includes("#outlook"), "12.07.02");
+    // also, the result contains whitelisted entries...
+    t.ok(intended.includes("#outlook"), "12.07.02");
 
-  // ... and uglified legend doesn't contain it
-  t.false(actual.log.uglified.includes("#outlook"), "12.07.03");
+    // ... and uglified legend doesn't contain it
+    t.false(actual.log.uglified.includes("#outlook"), "12.07.03");
 
-  // but there's "serif" uglified value in the uglification legend:
-  t.is(actual.log.uglified.length, 1, "12.07.04");
-});
+    // but there's "serif" uglified value in the uglification legend:
+    t.equal(actual.log.uglified.length, 1, "12.07.04");
+
+    t.end();
+  }
+);
 
 // ============================================================
 // 13. opts.reportProgressFunc
 // ============================================================
 
-test(`13.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`, t => {
-  function shouldveBeenCalled(val) {
-    throw new Error(val);
-  }
-
-  let counter = 0;
-  const countingFunction = () => {
-    // const countingFunction = val => {
-    // console.log(`val received: ${val}`);
-    counter++;
-  };
-
-  t.deepEqual(
-    comb("aaaaaaaaaa").result,
-    "aaaaaaaaaa\n",
-    "13.01.01 - default behaviour"
-  );
-  t.deepEqual(
-    comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
-    "aaaaaaaaaa\n",
-    "13.01.02"
-  );
-  t.deepEqual(
-    comb("aaaaaaaaaa", { reportProgressFunc: false }).result,
-    "aaaaaaaaaa\n",
-    "13.01.03"
-  );
-
-  // short input string should report only when passing at 50%:
-  const error1 = t.throws(() => {
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      { reportProgressFunc: shouldveBeenCalled }
-    );
-  });
-  t.regex(error1.message, /50/);
-
-  // long input (>1000 chars long) should report at each natural number percentage passed:
-
-  // 1. our function will mutate the counter variable:
-  t.pass(
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      { reportProgressFunc: countingFunction }
-    )
-  );
-
-  // 2. check the counter variable:
-  t.true(counter > 50, "13.01.04 - counter called");
-});
-
-test(`13.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`, t => {
-  function shouldveBeenCalled(val) {
-    throw new Error(val);
-  }
-
-  // short input string should report only when passing at 50%:
-  const error1 = t.throws(() => {
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      {
-        reportProgressFunc: shouldveBeenCalled,
-        reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86
-      }
-    );
-  });
-  t.regex(error1.message, /32/);
-});
-
-test(`13.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, t => {
-  const gather = [];
-  const countingFunction = val => {
-    // const countingFunction = val => {
-    // console.log(`val received: ${val}`);
-    gather.push(val);
-  };
-
-  // long input (>1000 chars long) should report at each natural number percentage passed:
-
-  // 1. our function will mutate the counter variable:
-  t.pass(
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      {
-        reportProgressFunc: countingFunction,
-        reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86
-      }
-    )
-  );
-
-  // 2. check the counter variable:
-  const compareTo = [];
-  for (let i = 21; i < 87; i++) {
-    if (i !== 81) {
-      compareTo.push(i);
+t.test(
+  `13.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`,
+  t => {
+    function shouldveBeenCalled(val) {
+      throw new Error(val);
     }
-  }
-  // since we use Math.floor, some percentages can be skipped, so let's just
-  // confirm that no numbers outside of permitted values are reported
-  gather.forEach(perc => t.true(compareTo.includes(perc)));
-  t.is(gather.length, 86 - 21);
 
-  t.deepEqual(gather, compareTo, "13.03");
-});
+    let counter = 0;
+    const countingFunction = () => {
+      // const countingFunction = val => {
+      // console.log(`val received: ${val}`);
+      counter++;
+    };
+
+    t.same(
+      comb("aaaaaaaaaa").result,
+      "aaaaaaaaaa\n",
+      "13.01.01 - default behaviour"
+    );
+    t.same(
+      comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
+      "aaaaaaaaaa\n",
+      "13.01.02"
+    );
+    t.same(
+      comb("aaaaaaaaaa", { reportProgressFunc: false }).result,
+      "aaaaaaaaaa\n",
+      "13.01.03"
+    );
+
+    // short input string should report only when passing at 50%:
+    const error1 = t.throws(() => {
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+        { reportProgressFunc: shouldveBeenCalled }
+      );
+    });
+    t.match(error1.message, /50/);
+
+    // long input (>1000 chars long) should report at each natural number percentage passed:
+
+    // 1. our function will mutate the counter variable:
+    t.pass(
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+        { reportProgressFunc: countingFunction }
+      )
+    );
+
+    // 2. check the counter variable:
+    t.ok(counter > 50, "13.01.04 - counter called");
+
+    t.end();
+  }
+);
+
+t.test(
+  `13.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`,
+  t => {
+    function shouldveBeenCalled(val) {
+      throw new Error(val);
+    }
+
+    // short input string should report only when passing at 50%:
+    const error1 = t.throws(() => {
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+        {
+          reportProgressFunc: shouldveBeenCalled,
+          reportProgressFuncFrom: 21,
+          reportProgressFuncTo: 86
+        }
+      );
+    });
+    t.match(error1.message, /32/);
+
+    t.end();
+  }
+);
+
+t.test(
+  `13.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`,
+  t => {
+    const gather = [];
+    const countingFunction = val => {
+      // const countingFunction = val => {
+      // console.log(`val received: ${val}`);
+      gather.push(val);
+    };
+
+    // long input (>1000 chars long) should report at each natural number percentage passed:
+
+    // 1. our function will mutate the counter variable:
+    t.pass(
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+        {
+          reportProgressFunc: countingFunction,
+          reportProgressFuncFrom: 21,
+          reportProgressFuncTo: 86
+        }
+      )
+    );
+
+    // 2. check the counter variable:
+    const compareTo = [];
+    for (let i = 21; i < 87; i++) {
+      if (i !== 81) {
+        compareTo.push(i);
+      }
+    }
+    // since we use Math.floor, some percentages can be skipped, so let's just
+    // confirm that no numbers outside of permitted values are reported
+    gather.forEach(perc => t.ok(compareTo.includes(perc)));
+    t.equal(gather.length, 86 - 21);
+
+    t.same(gather, compareTo, "13.03");
+    t.end();
+  }
+);
 
 // ============================================================
 // 14. web-dev style-minified templates - quoteless attributes
 // ============================================================
 
-test(`14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, quoteless attr is the last`, t => {
-  const actual = comb(`<head>
+t.test(
+  `14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, quoteless attr is the last`,
+  t => {
+    const actual = comb(`<head>
 <style>
   .aa {z:1;}
 </style>
@@ -6686,7 +6984,7 @@ test(`14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retai
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   .aa {z:1;}
 </style>
@@ -6695,11 +6993,16 @@ test(`14.01 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retai
 </body>
 `;
 
-  t.is(actual, intended, "14.01");
-});
+    t.equal(actual, intended, "14.01");
 
-test(`14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, just patches up`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retained, just patches up`,
+  t => {
+    const actual = comb(`<head>
 <style>
   .aa {z:1;}
 </style>
@@ -6708,7 +7011,7 @@ test(`14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retai
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   .aa {z:1;}
 </style>
@@ -6717,11 +7020,16 @@ test(`14.02 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - retai
 </body>
 `;
 
-  t.is(actual, intended, "14.02");
-});
+    t.equal(actual, intended, "14.02");
 
-test(`14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - removed`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - removed`,
+  t => {
+    const actual = comb(`<head>
 <style>
   .aa-1 {z:2;}
 </style>
@@ -6730,7 +7038,7 @@ test(`14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - remov
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   .aa-1 {z:2;}
 </style>
@@ -6739,11 +7047,16 @@ test(`14.03 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - remov
 </body>
 `;
 
-  t.is(actual, intended, "14.03");
-});
+    t.equal(actual, intended, "14.03");
 
-test(`14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, quoteless attr is the last`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, quoteless attr is the last`,
+  t => {
+    const actual = comb(`<head>
 <style>
   #aa {z:1;}
 </style>
@@ -6752,7 +7065,7 @@ test(`14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   #aa {z:1;}
 </style>
@@ -6761,11 +7074,16 @@ test(`14.04 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained
 </body>
 `;
 
-  t.is(actual, intended, "14.04");
-});
+    t.equal(actual, intended, "14.04");
 
-test(`14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, just patches up`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained, just patches up`,
+  t => {
+    const actual = comb(`<head>
 <style>
   #aa {z:1;}
 </style>
@@ -6774,7 +7092,7 @@ test(`14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   #aa {z:1;}
 </style>
@@ -6783,11 +7101,16 @@ test(`14.05 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - retained
 </body>
 `;
 
-  t.is(actual, intended, "14.05");
-});
+    t.equal(actual, intended, "14.05");
 
-test(`14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`,
+  t => {
+    const actual = comb(`<head>
 <style>
   #aa-1 {z:2;}
 </style>
@@ -6796,7 +7119,7 @@ test(`14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   #aa-1 {z:2;}
 </style>
@@ -6805,11 +7128,16 @@ test(`14.06 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - removed`
 </body>
 `;
 
-  t.is(actual, intended, "14.06");
-});
+    t.equal(actual, intended, "14.06");
 
-test(`14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
+  t => {
+    const actual = comb(`<head>
 <style>
   .aa-1 {z:2;}
 </style>
@@ -6818,7 +7146,7 @@ test(`14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   .aa-1 {z:2;}
 </style>
@@ -6826,11 +7154,16 @@ test(`14.07 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 <body class="aa-1"><a>z</a>
 </body>
 `;
-  t.is(actual, intended, "14.07");
-});
+    t.equal(actual, intended, "14.07");
 
-test(`14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - dashes`,
+  t => {
+    const actual = comb(`<head>
 <style>
   #aa-1 {z:2;}
 </style>
@@ -6839,7 +7172,7 @@ test(`14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   #aa-1 {z:2;}
 </style>
@@ -6847,11 +7180,16 @@ test(`14.08 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 <body id="aa-1"><a>z</a>
 </body>
 `;
-  t.is(actual, intended, "14.08");
-});
+    t.equal(actual, intended, "14.08");
 
-test(`14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - underscores`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one removed, one retainer quoteless neighbour - underscores`,
+  t => {
+    const actual = comb(`<head>
 <style>
   .aa_1 {z:2;}
 </style>
@@ -6860,7 +7198,7 @@ test(`14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   .aa_1 {z:2;}
 </style>
@@ -6868,11 +7206,16 @@ test(`14.09 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - class - one r
 <body class="aa_1"><a>z</a>
 </body>
 `;
-  t.is(actual, intended, "14.09");
-});
+    t.equal(actual, intended, "14.09");
 
-test(`14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one removed, one retainer quoteless neighbour - underscores`, t => {
-  const actual = comb(`<head>
+    t.end();
+  }
+);
+
+t.test(
+  `14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one removed, one retainer quoteless neighbour - underscores`,
+  t => {
+    const actual = comb(`<head>
 <style>
   #aa_1 {z:2;}
 </style>
@@ -6881,7 +7224,7 @@ test(`14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one remo
 </body>
 `).result;
 
-  const intended = `<head>
+    const intended = `<head>
 <style>
   #aa_1 {z:2;}
 </style>
@@ -6889,32 +7232,42 @@ test(`14.10 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - id - one remo
 <body id="aa_1"><a>z</a>
 </body>
 `;
-  t.is(actual, intended, "14.10");
-});
+    t.equal(actual, intended, "14.10");
 
-test(`14.11 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whitespace control`, t => {
-  const actual = comb(`<html>
+    t.end();
+  }
+);
+
+t.test(
+  `14.11 - ${`\u001b[${35}m${`quoteless attr`}\u001b[${39}m`} - trailing whitespace control`,
+  t => {
+    const actual = comb(`<html>
 <head>
 </head>
 <body id=unused-1 align="center">
 <table class=unused-2 align="center">
 `).result;
 
-  const intended = `<html>
+    const intended = `<html>
 <head>
 </head>
 <body align="center">
 <table align="center">
 `;
-  t.is(actual, intended, "14.11");
-});
+    t.equal(actual, intended, "14.11");
+
+    t.end();
+  }
+);
 
 // ============================================================
 // 15 bracket notation
 // ============================================================
 
-test(`15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, t => {
-  const source = `<head>
+t.test(
+  `15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`,
+  t => {
+    const source = `<head>
 <style type="text/css">
   a[class="used"]{x:1;}
   b[class="unused1"]{y:2;}
@@ -6924,7 +7277,7 @@ test(`15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, t
 </body>
 `;
 
-  const intended = `<head>
+    const intended = `<head>
 <style type="text/css">
   a[class="used"]{x:1;}
 </style>
@@ -6933,11 +7286,16 @@ test(`15.01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, t
 </body>
 `;
 
-  t.is(comb(source).result, intended, "15.01");
-});
+    t.equal(comb(source).result, intended, "15.01");
 
-test(`15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`, t => {
-  const source = `<head>
+    t.end();
+  }
+);
+
+t.test(
+  `15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`,
+  t => {
+    const source = `<head>
 <style type="text/css">
   a[id="used"]{x:1;}
   b[id="unused1"]{y:2;}
@@ -6947,7 +7305,7 @@ test(`15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket not
 </body>
 `;
 
-  const intended = `<head>
+    const intended = `<head>
 <style type="text/css">
   a[id="used"]{x:1;}
 </style>
@@ -6956,5 +7314,8 @@ test(`15.02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket not
 </body>
 `;
 
-  t.is(comb(source).result, intended, "15.02");
-});
+    t.equal(comb(source).result, intended, "15.02");
+
+    t.end();
+  }
+);

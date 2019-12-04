@@ -3,9 +3,50 @@ import pullAll from "lodash.pullall";
 import typeDetect from "type-detect";
 import empty from "ast-contains-only-empty-space";
 import matcher from "matcher";
-import { existy, isObj, isStr, isBlank, isTheTypeLegit } from "./util";
+
+// -----------------------------------------------------------------------------
 
 const isArr = Array.isArray;
+
+function existy(x) {
+  return x != null;
+}
+function isObj(something) {
+  return typeDetect(something) === "Object";
+}
+function isStr(something) {
+  return typeDetect(something) === "string";
+}
+function isNum(something) {
+  return typeDetect(something) === "number";
+}
+function isBool(something) {
+  return typeDetect(something) === "boolean";
+}
+function isNull(something) {
+  return something === null;
+}
+function isBlank(something) {
+  if (isObj(something)) {
+    return Object.keys(something).length === 0;
+  } else if (isArr(something) || isStr(something)) {
+    return something.length === 0;
+  }
+  return false;
+}
+function isTheTypeLegit(something) {
+  // same as JSON spec:
+  return (
+    isObj(something) ||
+    isStr(something) ||
+    isNum(something) ||
+    isBool(something) ||
+    isArr(something) ||
+    isNull(something)
+  );
+}
+
+// -----------------------------------------------------------------------------
 
 // bo = bigObject original; so = smallObject original
 function compare(bo, so, originalOpts) {

@@ -1,48 +1,40 @@
-// avanotonly
+const t = require("tap");
+const { Linter, version } = require("../dist/emlint.umd");
 
-import test from "ava";
-import { Linter, version as version1 } from "../dist/emlint.esm";
-import { version as version2 } from "../dist/emlint.cjs";
-import { version as version3 } from "../dist/emlint.umd";
-
-test("shows version from ESM build", t => {
-  t.regex(version1, /\d+\.\d+\.\d+/g);
+t.test("shows version from UMD build", t => {
+  t.match(version, /\d+\.\d+\.\d+/g);
+  t.end();
 });
 
-test("shows version from CJS build", t => {
-  t.regex(version2, /\d+\.\d+\.\d+/g);
-});
-
-test("shows version from UMD build", t => {
-  t.regex(version3, /\d+\.\d+\.\d+/g);
-});
-
-test("config is truthy and is not an object", t => {
+t.test("config is truthy and is not an object", t => {
   const linter = new Linter();
   const error1 = t.throws(() => {
     linter.verify("a", true);
   });
-  t.regex(error1.message, /THROW_ID_01/);
+  t.match(error1.message, /THROW_ID_01/);
+  t.end();
 });
 
-test("config is an empty object", t => {
+t.test("config is an empty object", t => {
   const linter = new Linter();
-  t.deepEqual(linter.verify("a", {}), []);
+  t.same(linter.verify("a", {}), []);
+  t.end();
 });
 
-test("config is falsey", t => {
+t.test("config is falsey", t => {
   const linter = new Linter();
-  t.deepEqual(linter.verify("a", null), []);
-  t.deepEqual(linter.verify("a", false), []);
-  t.deepEqual(linter.verify("a", undefined), []);
-  t.deepEqual(linter.verify("a", 0), []);
-  t.deepEqual(linter.verify("a", []), []);
+  t.same(linter.verify("a", null), []);
+  t.same(linter.verify("a", false), []);
+  t.same(linter.verify("a", undefined), []);
+  t.same(linter.verify("a", 0), []);
+  t.same(linter.verify("a", []), []);
+  t.end();
 });
 
-test(`config is an object with key without "rules" key`, t => {
+t.test(`config is an object with key without "rules" key`, t => {
   const linter = new Linter();
-  const error1 = t.throws(() => {
+  t.throws(() => {
     linter.verify("a", { a: "z" });
-  });
-  t.regex(error1.message, /THROW_ID_02/);
+  }, /THROW_ID_02/g);
+  t.end();
 });

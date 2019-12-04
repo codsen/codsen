@@ -1,14 +1,12 @@
-// avanotonly
-
-import test from "ava";
-import { Linter } from "../../../dist/emlint.esm";
-import deepContains from "ast-deep-contains";
-import { applyFixes } from "../../../t-util/util";
+const t = require("tap");
+const { Linter } = require("../../../dist/emlint.cjs");
+const { applyFixes } = require("../../../t-util/util");
+// const astDeepContains = require("ast-deep-contains");
 
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
+t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -16,11 +14,12 @@ test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
       "tag-bold": 0
     }
   });
-  t.is(applyFixes(str, messages), str);
-  t.deepEqual(messages, []);
+  t.equal(applyFixes(str, messages), str);
+  t.same(messages, []);
+  t.end();
 });
 
-test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
+t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -28,37 +27,33 @@ test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
       "tag-bold": 1
     }
   });
-  t.is(applyFixes(str, messages), "<strong>z</strong>");
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "tag-bold",
-        severity: 1,
-        idxFrom: 0,
-        idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
-        fix: {
-          ranges: [[1, 5, "strong"]]
-        }
-      },
-      {
-        ruleId: "tag-bold",
-        severity: 1,
-        idxFrom: 7,
-        idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
-        fix: {
-          ranges: [[9, 13, "strong"]]
-        }
+  t.equal(applyFixes(str, messages), "<strong>z</strong>");
+  t.match(messages, [
+    {
+      ruleId: "tag-bold",
+      severity: 1,
+      idxFrom: 0,
+      idxTo: 6,
+      message: `Tag "bold" does not exist in HTML.`,
+      fix: {
+        ranges: [[1, 5, "strong"]]
       }
-    ],
-    t.is,
-    t.fail
-  );
+    },
+    {
+      ruleId: "tag-bold",
+      severity: 1,
+      idxFrom: 7,
+      idxTo: 14,
+      message: `Tag "bold" does not exist in HTML.`,
+      fix: {
+        ranges: [[9, 13, "strong"]]
+      }
+    }
+  ]);
+  t.end();
 });
 
-test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = "<bold>z</bold>";
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -66,51 +61,47 @@ test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
       "tag-bold": 2
     }
   });
-  t.is(applyFixes(str, messages), "<strong>z</strong>");
-  deepContains(
-    messages,
-    [
-      {
-        ruleId: "tag-bold",
-        severity: 2,
-        idxFrom: 0,
-        idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
-        fix: {
-          ranges: [[1, 5, "strong"]]
-        }
-      },
-      {
-        ruleId: "tag-bold",
-        severity: 2,
-        idxFrom: 7,
-        idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
-        fix: {
-          ranges: [[9, 13, "strong"]]
-        }
+  t.equal(applyFixes(str, messages), "<strong>z</strong>");
+  t.match(messages, [
+    {
+      ruleId: "tag-bold",
+      severity: 2,
+      idxFrom: 0,
+      idxTo: 6,
+      message: `Tag "bold" does not exist in HTML.`,
+      fix: {
+        ranges: [[1, 5, "strong"]]
       }
-    ],
-    t.is,
-    t.fail
-  );
+    },
+    {
+      ruleId: "tag-bold",
+      severity: 2,
+      idxFrom: 7,
+      idxTo: 14,
+      message: `Tag "bold" does not exist in HTML.`,
+      fix: {
+        ranges: [[9, 13, "strong"]]
+      }
+    }
+  ]);
+  t.end();
 });
 
 // 02. config
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, t => {
-  const str = "<bold>z</bold>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-bold": [2]
-    }
-  });
-  t.is(applyFixes(str, messages), "<strong>z</strong>");
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`,
+  t => {
+    const str = "<bold>z</bold>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-bold": [2]
+      }
+    });
+    t.equal(applyFixes(str, messages), "<strong>z</strong>");
+    t.match(messages, [
       {
         ruleId: "tag-bold",
         severity: 2,
@@ -131,24 +122,23 @@ test(`02.01 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, t => 
           ranges: [[9, 13, "strong"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, t => {
-  const str = "<bold>z</bold>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-bold": [2, "strong"]
-    }
-  });
-  t.is(applyFixes(str, messages), "<strong>z</strong>");
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`,
+  t => {
+    const str = "<bold>z</bold>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-bold": [2, "strong"]
+      }
+    });
+    t.equal(applyFixes(str, messages), "<strong>z</strong>");
+    t.match(messages, [
       {
         ruleId: "tag-bold",
         severity: 2,
@@ -169,24 +159,23 @@ test(`02.02 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`,
           ranges: [[9, 13, "strong"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);
 
-test(`02.03 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, t => {
-  const str = "<bold>z</bold>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "tag-bold": [2, "b"]
-    }
-  });
-  t.is(applyFixes(str, messages), "<b>z</b>");
-  deepContains(
-    messages,
-    [
+t.test(
+  `02.03 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`,
+  t => {
+    const str = "<bold>z</bold>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-bold": [2, "b"]
+      }
+    });
+    t.equal(applyFixes(str, messages), "<b>z</b>");
+    t.match(messages, [
       {
         ruleId: "tag-bold",
         severity: 2,
@@ -207,8 +196,7 @@ test(`02.03 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, t =>
           ranges: [[9, 13, "b"]]
         }
       }
-    ],
-    t.is,
-    t.fail
-  );
-});
+    ]);
+    t.end();
+  }
+);

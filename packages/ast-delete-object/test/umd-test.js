@@ -1,8 +1,5 @@
-// avanotonly
-
-import test from "ava";
-import del1 from "../dist/ast-delete-object.umd";
-import del2 from "../dist/ast-delete-object.cjs";
+const t = require("tap");
+const del1 = require("../dist/ast-delete-object.umd");
 
 const source = [
   "elem1",
@@ -20,10 +17,7 @@ const target = {
 const opts = { matchKeysStrictly: false, hungryForWhitespace: false };
 const res = ["elem1", "elem4"];
 
-test("UMD build works fine", t => {
-  t.deepEqual(del1(source, target, opts), res);
-});
-
-test("CJS build works fine", t => {
-  t.deepEqual(del2(source, target, opts), res);
+t.test("UMD build works fine", t => {
+  t.same(del1(source, target, opts), res);
+  t.end();
 });
