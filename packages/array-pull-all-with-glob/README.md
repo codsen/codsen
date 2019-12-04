@@ -129,14 +129,6 @@ When unused, Optional Options Object can be also passed as a `null` or `undefine
 | ----- | -------------------------------------- |
 | Array | Array of strings with elements removed |
 
-## Test
-
-```bash
-$ npm test
-```
-
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
-
 ## Contributing
 
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=array-pull-all-with-glob%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Aarray-pull-all-with-glob%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
