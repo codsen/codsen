@@ -86,7 +86,31 @@ t.test(t => {
 
 t.test(t => {
   const gathered = [];
-  ct(`<a>{% if a<b and c>d '"'''' ><><><><><><><><><><>< %}<b>`, obj => {
+  ct(`<a b="{% if something %}"><c>`, obj => {
+    gathered.push(obj);
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 26
+      },
+      {
+        type: "html",
+        start: 26,
+        end: 29
+      }
+    ],
+    "01.04"
+  );
+  t.end();
+});
+
+t.test(t => {
+  const gathered = [];
+  ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, obj => {
     gathered.push(obj);
   });
   t.match(
@@ -100,16 +124,16 @@ t.test(t => {
       {
         type: "esp",
         start: 3,
-        end: 53,
+        end: 35,
         tail: "%}"
       },
       {
         type: "html",
-        start: 53,
-        end: 56
+        start: 35,
+        end: 38
       }
     ],
-    "01.04 - ESP literals surrounded by HTML tags"
+    "01.05 - ESP literals surrounded by HTML tags, tight"
   );
   t.end();
 });
@@ -133,7 +157,31 @@ t.test(t => {
         end: 24
       }
     ],
-    "01.05 - ESP tag with sandwiched quotes inside HTML tag's attribute 1 mini"
+    "01.06"
+  );
+  t.end();
+});
+
+t.test(t => {
+  const gathered = [];
+  ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, obj => {
+    gathered.push(obj);
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 49
+      },
+      {
+        type: "html",
+        start: 49,
+        end: 52
+      }
+    ],
+    "01.07"
   );
   t.end();
 });
@@ -141,7 +189,7 @@ t.test(t => {
 t.test(t => {
   const gathered = [];
   ct(
-    `<a href="https://zzz.yyy/?api=1&query={{ some_key | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}"><b>`,
+    `<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}"><b>`,
     obj => {
       gathered.push(obj);
     }
@@ -152,15 +200,15 @@ t.test(t => {
       {
         type: "html",
         start: 0,
-        end: 170
+        end: 111
       },
       {
         type: "html",
-        start: 170,
-        end: 173
+        start: 111,
+        end: 114
       }
     ],
-    "01.06 - ESP tag with sandwiched quotes inside HTML tag's attribute 2"
+    "01.08"
   );
   t.end();
 });
@@ -190,7 +238,7 @@ t.test(t => {
         end: 18
       }
     ],
-    "01.07 - Responsys-style ESP tag"
+    "01.09 - Responsys-style ESP tag"
   );
   t.end();
 });
@@ -215,7 +263,7 @@ t.test(t => {
         end: 18
       }
     ],
-    "01.08 - two nunjucks tags, same pattern set of two, tight"
+    "01.10 - two nunjucks tags, same pattern set of two, tight"
   );
   t.end();
 });
@@ -240,7 +288,7 @@ t.test(t => {
         end: 38
       }
     ],
-    "01.09 - two nunjucks tags, different pattern set of two, tight"
+    "01.11 - two nunjucks tags, different pattern set of two, tight"
   );
   t.end();
 });
@@ -265,7 +313,7 @@ t.test(t => {
         end: 14
       }
     ],
-    "01.10 - different set, *|zzz|*"
+    "01.12 - different set, *|zzz|*"
   );
   t.end();
 });
@@ -289,7 +337,7 @@ t.test(t => {
         end: 14
       }
     ],
-    "01.11 - error, two ESP tags joined, first one ends with heads instead of tails"
+    "01.13 - error, two ESP tags joined, first one ends with heads instead of tails"
   );
   t.end();
 });

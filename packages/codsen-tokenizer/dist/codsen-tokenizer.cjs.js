@@ -65,6 +65,7 @@ var defaults = {
 };
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var espChars = "{}%-$_()*|";
+var espLumpBlacklist = [")|(", "|(", ")("];
 function tokenizer(str, tagCb, charCb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
@@ -124,30 +125,75 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   tokenReset();
   attribReset();
   var layers = [];
-  function matchLayerLast(str, i) {
+  function matchLayerLast(str, i, matchFirstInstead) {
     if (!layers.length) {
       return false;
-    } else if (layers[layers.length - 1].type === "simple") {
-      return str[i] === layers[layers.length - 1].value;
-    } else if (layers[layers.length - 1].type === "esp") {
-      if (!espChars.includes(str[i])) {
-        return false;
-      }
-      var wholeEspTagLump = "";
-      var _len = str.length;
-      for (var y = i; y < _len; y++) {
-        if (espChars.includes(str[y])) {
-          wholeEspTagLump = wholeEspTagLump + str[y];
-        } else {
-          break;
-        }
-      }
-      if (layers[layers.length - 1].value.split("").every(function (_char) {
-        return wholeEspTagLump.includes(_char);
-      })) {
-        return wholeEspTagLump.length;
-      }
     }
+    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
+    if (whichLayerToMatch.type === "simple") {
+      return str[i] === flipEspTag(whichLayerToMatch.value);
+    } else if (whichLayerToMatch.type === "esp") {
+      var _ret = function () {
+        if (!espChars.includes(str[i])) {
+          return {
+            v: false
+          };
+        }
+        var wholeEspTagLump = "";
+        var len = str.length;
+        for (var y = i; y < len; y++) {
+          if (espChars.includes(str[y])) {
+            wholeEspTagLump = wholeEspTagLump + str[y];
+          } else {
+            break;
+          }
+        }
+        if (wholeEspTagLump && whichLayerToMatch.openingLump && wholeEspTagLump.length > whichLayerToMatch.guessedClosingLump.length) {
+          if (wholeEspTagLump.endsWith(whichLayerToMatch.openingLump)) {
+            return {
+              v: wholeEspTagLump.length - whichLayerToMatch.openingLump.length
+            };
+          }
+          var uniqueCharsListFromGuessedClosingLumpArr = whichLayerToMatch.guessedClosingLump.split("").reduce(function (acc, curr) {
+            if (!acc.includes(curr)) {
+              return acc.concat([curr]);
+            }
+            return acc;
+          }, []);
+          var found = 0;
+          var _loop = function _loop(len2, _y) {
+            if (!uniqueCharsListFromGuessedClosingLumpArr.includes(wholeEspTagLump[_y]) && found > 1) {
+              return {
+                v: {
+                  v: _y
+                }
+              };
+            }
+            if (uniqueCharsListFromGuessedClosingLumpArr.includes(wholeEspTagLump[_y])) {
+              found++;
+              uniqueCharsListFromGuessedClosingLumpArr = uniqueCharsListFromGuessedClosingLumpArr.filter(function (el) {
+                return el !== wholeEspTagLump[_y];
+              });
+            }
+          };
+          for (var _y = 0, len2 = wholeEspTagLump.length; _y < len2; _y++) {
+            var _ret2 = _loop(len2, _y);
+            if (_typeof(_ret2) === "object") return _ret2.v;
+          }
+        } else if (
+        whichLayerToMatch.guessedClosingLump.split("").every(function (_char) {
+          return wholeEspTagLump.includes(_char);
+        })) {
+          return {
+            v: wholeEspTagLump.length
+          };
+        }
+      }();
+      if (_typeof(_ret) === "object") return _ret.v;
+    }
+  }
+  function matchLayerFirst(str, i) {
+    return matchLayerLast(str, i, true);
   }
   function pingCharCb(incomingToken) {
     if (charCb) {
@@ -161,14 +207,17 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }
   }
   function dumpCurrentToken(token, i) {
-    if (token.type !== "text" && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
+    if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
       token.end = stringLeftRight.left(str, i) + 1;
       pingTagCb(token);
       token.start = stringLeftRight.left(str, i) + 1;
+      token.end = null;
       token.type = "text";
     }
     if (token.start !== null) {
-      token.end = i;
+      if (token.end === null) {
+        token.end = i;
+      }
       pingTagCb(token);
     }
   }
@@ -206,15 +255,20 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         styleStarts = true;
       }
       dumpCurrentToken(token, i);
+      layers = [];
     }
-    if (!doNothing && ["html"].includes(token.type) && ["\"", "'"].includes(str[i])) {
-      if (matchLayerLast(str, i)) {
-        layers.pop();
-      } else if (!layers.length || layers[layers.length - 1].type !== "esp") {
-        layers.push({
-          type: "simple",
-          value: str[i]
-        });
+    if (!doNothing && ["html", "esp", "css"].includes(token.type)) {
+      if (["\"", "'", "(", ")"].includes(str[i]) && !(
+      ["\"", "'"].includes(str[stringLeftRight.left(str, i)]) && str[stringLeftRight.left(str, i)] === str[stringLeftRight.right(str, i)])) {
+        if (matchLayerLast(str, i)) {
+          layers.pop();
+        } else {
+          layers.push({
+            type: "simple",
+            value: str[i],
+            position: i
+          });
+        }
       }
     }
     if (!doNothing) {
@@ -251,7 +305,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         })) {
           token.kind = "style";
         }
-      } else if (!(token.type === "html" && token.kind === "comment") && espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-")) {
+      } else if (espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-")) {
         var wholeEspTagLump = "";
         for (var y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -260,27 +314,43 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
-        if (!["html", "esp"].includes(token.type)) {
-          dumpCurrentToken(token, i);
-          token.start = i;
-          token.type = "esp";
-          doNothing = i + wholeEspTagLump.length;
-          token.tail = flipEspTag(wholeEspTagLump);
-          token.head = wholeEspTagLump;
-        } else if (token.type === "html") {
-          if (matchLayerLast(str, i)) {
-            var lengthOfClosingEspChunk = matchLayerLast(str, i);
-            if (Array.isArray(layers) && layers.length && _typeof(layers[layers.length - 1]) === "object" && Number.isInteger(layers[layers.length - 1].position)) {
-              token.esp.push([layers[layers.length - 1].position, i + lengthOfClosingEspChunk]);
+        if (!espLumpBlacklist.includes(wholeEspTagLump)) {
+          var lengthOfClosingEspChunk = void 0;
+          if (layers.length && matchLayerLast(str, i)) {
+            lengthOfClosingEspChunk = matchLayerLast(str, i);
+            if (token.type === "esp") {
+              if (token.end === null) {
+                token.end = i + lengthOfClosingEspChunk;
+              }
+              dumpCurrentToken(token, i);
             }
             layers.pop();
+          } else if (layers.length && matchLayerFirst(str, i)) {
+            lengthOfClosingEspChunk = matchLayerFirst(str, i);
+            if (token.type === "esp") {
+              if (token.end === null) {
+                token.end = i + lengthOfClosingEspChunk;
+              }
+              dumpCurrentToken(token, i);
+            }
+            layers = [];
           } else {
             layers.push({
               type: "esp",
-              value: flipEspTag(wholeEspTagLump),
+              openingLump: wholeEspTagLump,
+              guessedClosingLump: flipEspTag(wholeEspTagLump),
               position: i
             });
+            if (!(token.type === "html" && (token.kind === "comment" ||
+            isNum(attrib.attribStart) && attrib.attribEnd === null))) {
+              dumpCurrentToken(token, i);
+              token.start = i;
+              token.type = "esp";
+              token.tail = flipEspTag(wholeEspTagLump);
+              token.head = wholeEspTagLump;
+            }
           }
+          doNothing = i + (lengthOfClosingEspChunk ? lengthOfClosingEspChunk : wholeEspTagLump.length);
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
@@ -309,9 +379,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         token.end = i + 1;
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";
-        for (var _y = i; _y < len; _y++) {
-          if (espChars.includes(str[_y])) {
-            wholeEspTagClosing = wholeEspTagClosing + str[_y];
+        for (var _y2 = i; _y2 < len; _y2++) {
+          if (espChars.includes(str[_y2])) {
+            wholeEspTagClosing = wholeEspTagClosing + str[_y2];
           } else {
             break;
           }
@@ -380,7 +450,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }
     if (!doNothing && token.type === "html" && isNum(attrib.attribValueStartAt) && i > attrib.attribValueStartAt && attrib.attribValueEndAt === null) {
       if ("'\"".includes(str[i])) {
-        if (str[attrib.attribOpeningQuoteAt] === str[i]) {
+        if (str[attrib.attribOpeningQuoteAt] === str[i] && !layers.some(function (layerObj) {
+          return layerObj.type === "esp";
+        })) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
@@ -391,9 +463,10 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       }
     }
     if (!doNothing && token.type === "html" && !isNum(attrib.attribValueStartAt) && isNum(attrib.attribNameEndAt) && attrib.attribNameEndAt <= i && str[i].trim().length) {
-      if (str[i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, i)])) {
-        attrib.attribValueStartAt = stringLeftRight.right(str, i);
-      } else if ("'\"".includes(str[i])) {
+      if (str[i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, i)]) && !espChars.includes(str[stringLeftRight.right(str, i)])
+      ) {
+          attrib.attribValueStartAt = stringLeftRight.right(str, i);
+        } else if ("'\"".includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;
         if (str[i + 1]) {
           attrib.attribValueStartAt = i + 1;
