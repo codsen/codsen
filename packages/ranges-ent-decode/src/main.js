@@ -11,7 +11,7 @@ import isObj from "lodash.isplainobject";
 function chomp(str) {
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   console.log(
-    `015 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
+    `014 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       4
@@ -45,14 +45,14 @@ function decode(str, originalOpts) {
   }
 
   console.log(
-    `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+    `048 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       4
     )}`
   );
   console.log(
-    `059 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `055 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -106,7 +106,7 @@ function decode(str, originalOpts) {
     );
     const chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('113 chomped === "&"');
+      console.log('109 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -115,11 +115,11 @@ function decode(str, originalOpts) {
     } else {
       const decoded = he.decode(chomped, opts);
       console.log(
-        `122 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+        `118 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
       );
       if (decoded !== chomped) {
         console.log(
-          `126 will push "${`\u001b[${33}m${JSON.stringify(
+          `122 will push "${`\u001b[${33}m${JSON.stringify(
             [
               entityRegex.lastIndex - array1[0].length,
               entityRegex.lastIndex,

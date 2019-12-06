@@ -228,7 +228,7 @@ function csvSort(input) {
   let indexAtWhichEmptyCellsStart = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
-    console.log(`073 content[${i}] = ${content[i]}`);
+    console.log(`231 content[${i}] = ${content[i]}`);
     if (!schema) {
       // prevention against last blank row:
       if (content[i].length !== 1 || content[i][0] !== "") {
@@ -541,7 +541,7 @@ function csvSort(input) {
   );
 
   console.log(
-    `386 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
+    `544 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
       resContent,
       null,
       4
@@ -559,7 +559,7 @@ function csvSort(input) {
       `\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)
     );
     console.log(
-      `404 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`
+      `562 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`
     );
 
     for (
@@ -569,7 +569,7 @@ function csvSort(input) {
     ) {
       console.log(`\n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
       console.log(
-        `414 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
+        `572 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
           content[suspectedRowsIndex],
           null,
           0
@@ -586,7 +586,7 @@ function csvSort(input) {
           suspectedColIndex++
         ) {
           console.log(
-            `431 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`
+            `589 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`
           );
           let diffVal = null;
           if (
@@ -600,7 +600,7 @@ function csvSort(input) {
               ]
             );
             console.log(
-              `445 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `603 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                 diffVal,
                 null,
                 4
@@ -614,7 +614,7 @@ function csvSort(input) {
               content[suspectedRowsIndex][balanceColumnIndex]
             );
             console.log(
-              `459 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `617 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
                 totalVal,
                 null,
                 4
@@ -628,7 +628,7 @@ function csvSort(input) {
               resContent[0][balanceColumnIndex]
             ).format();
             console.log(
-              `473 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
+              `631 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
                 topmostResContentBalance,
                 null,
                 4
@@ -665,7 +665,7 @@ function csvSort(input) {
 
           console.log("\n\n\n\n\n");
           console.log(
-            `510 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `668 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
               diffVal,
               null,
               4
@@ -689,7 +689,7 @@ function csvSort(input) {
             diffVal &&
             totalVal.add(diffVal).format() === topmostResContentBalance
           ) {
-            console.log(`534 ADD THIS ROW ABOVE EVERYTHING`);
+            console.log(`692 ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
             resContent.unshift(
@@ -737,7 +737,7 @@ function csvSort(input) {
 
           console.log("----------");
           console.log(
-            `582 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
+            `740 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
               thisRowIsDone,
               null,
               4
@@ -752,7 +752,7 @@ function csvSort(input) {
     }
 
     console.log(
-      `597 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
+      `755 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
         resContent,
         null,
         4

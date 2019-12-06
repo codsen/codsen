@@ -114,7 +114,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   function delLeadingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
     // do heads, from beginning of the input string:
-    console.log("121 calling matchRightIncl()");
+    console.log("117 calling matchRightIncl()");
     const resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
       cb: (char, theRemainderOfTheString, index) => {
@@ -128,7 +128,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       return str1;
     }
     // do tails now:
-    console.log("135 calling matchRightIncl()");
+    console.log("131 calling matchRightIncl()");
     const resultOfAttemptToMatchTails = matchRightIncl(
       str1,
       noteDownTheIndex,
@@ -158,7 +158,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
     // do tails now - match from the end of a string, trimming along:
-    console.log("165 calling matchLeftIncl()");
+    console.log("161 calling matchLeftIncl()");
     const resultOfAttemptToMatchTails = matchLeftIncl(
       str1,
       str1.length - 1,
@@ -177,7 +177,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       return str1;
     }
     // do heads that precede those tails:
-    console.log("184 calling matchLeftIncl()");
+    console.log("180 calling matchLeftIncl()");
     const resultOfAttemptToMatchHeads = matchLeftIncl(
       str1,
       noteDownTheIndex,
@@ -205,7 +205,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
   //                      E A R L Y    E N D I N G
 
-  console.log("212 calling both matchRightIncl() and matchLeftIncl()");
+  console.log("208 calling both matchRightIncl() and matchLeftIncl()");
   if (
     !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
@@ -292,7 +292,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
       // match heads
       let noteDownTheIndex;
-      console.log("299 calling matchRightIncl()");
+      console.log("295 calling matchRightIncl()");
       const resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -309,12 +309,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           itsFirstTail = true;
         }
 
-        console.log(`316 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        console.log(`312 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        console.log("321 calling matchRightIncl()");
+        console.log("317 calling matchRightIncl()");
         const resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
@@ -366,7 +366,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           }
 
           console.log(
-            `\u001b[${33}m${`373 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`369 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
@@ -374,7 +374,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
           console.log(
-            `\u001b[${33}m${`381 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`377 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         }
@@ -384,7 +384,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 4. offset the index
         console.log(
-          `\u001b[${33}m${`391 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`387 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
@@ -435,7 +435,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
 
       // match tails
-      console.log("442 calling matchRightIncl()");
+      console.log("438 calling matchRightIncl()");
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -455,7 +455,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // and we can't peel of those wrappings, hence only the second tail
           // can be added to conditionals' array.
           console.log(
-            `\u001b[${33}m${`462 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`458 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
@@ -486,7 +486,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 2. offset the index
         console.log(
-          `\u001b[${33}m${`493 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`489 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;

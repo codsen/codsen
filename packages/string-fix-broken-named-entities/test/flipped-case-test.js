@@ -85,7 +85,7 @@ t.test(
             }
           } // else {
           //   console.log(
-          //     `086 test.js: "${entityWithFlippedCharacter}" was legit so we skipped checking this messed up case variation`
+          //     `088 test.js: "${entityWithFlippedCharacter}" was legit so we skipped checking this messed up case variation`
           //   );
           // }
         }

@@ -122,14 +122,14 @@ function trimSpaces(s, originalOpts) {
           ]
         };
       }
-      console.log("122 - returning trimmed heads");
+      console.log("125 - returning trimmed heads");
       return {
         res: s.slice(newStart),
         ranges: [[0, newStart]]
       };
     }
     if (newEnd) {
-      console.log("129 - returning trimmed tails");
+      console.log("132 - returning trimmed tails");
       return {
         res: s.slice(0, newEnd),
         ranges: [[newEnd, s.length]]

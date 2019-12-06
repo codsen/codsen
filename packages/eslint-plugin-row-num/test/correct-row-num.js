@@ -5,17 +5,17 @@ const ruleTester = new RuleTester();
 ruleTester.run("correct-row-num", rule, {
   valid: [
     {
-      code: 'console.log("001 one the first row")'
+      code: 'console.log("008 one the first row")'
     },
     {
-      code: '\n\nconsole.log("003 one the first row")'
+      code: '\n\nconsole.log("011 one the first row")'
     }
   ],
 
   invalid: [
     {
-      code: '\n\nconsole.log("9 this should be 1")',
-      output: '\n\nconsole.log("003 this should be 1")',
+      code: '\n\nconsole.log("017 this should be 1")',
+      output: '\n\nconsole.log("018 this should be 1")',
       errors: [
         {
           messageId: "correctRowNum"

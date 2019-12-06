@@ -49,9 +49,9 @@ t.test("01.01 - there are no usable files at all", async t => {
 //                                  *
 
 t.test("01.02 - cli.js in the root", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
+  const originalFile = "console.log('052 zzz');\nconsole.log('052 zzz');";
 
-  const intendedFile = "console.log('001 zzz');\nconsole.log('002 zzz');";
+  const intendedFile = "console.log('054 zzz');\nconsole.log('054 zzz');";
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -91,9 +91,9 @@ t.test("01.02 - cli.js in the root", async t => {
 //                                  *
 
 t.test("01.03/1 - pad override, -p", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
+  const originalFile = "console.log('094 zzz');\nconsole.log('094 zzz');";
 
-  const intendedFile = "console.log('01 zzz');\nconsole.log('02 zzz');";
+  const intendedFile = "console.log('096 zzz');\nconsole.log('096 zzz');";
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -122,9 +122,9 @@ t.test("01.03/1 - pad override, -p", async t => {
 });
 
 t.test("01.03/2 - pad override, --pad", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
+  const originalFile = "console.log('125 zzz');\nconsole.log('125 zzz');";
 
-  const intendedFile = "console.log('01 zzz');\nconsole.log('02 zzz');";
+  const intendedFile = "console.log('127 zzz');\nconsole.log('127 zzz');";
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -167,8 +167,8 @@ t.test("01.03/2 - pad override, --pad", async t => {
 //                                  *
 
 t.test("01.04 - one file called with glob, another not processed", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
-  const intendedFile = "console.log('0001 zzz');\nconsole.log('0002 zzz');";
+  const originalFile = "console.log('170 zzz');\nconsole.log('170 zzz');";
+  const intendedFile = "console.log('171 zzz');\nconsole.log('171 zzz');";
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -222,8 +222,8 @@ t.test("01.04 - one file called with glob, another not processed", async t => {
 //                                  *
 
 t.test("01.05 - two files processed by calling glob with wildcard", async t => {
-  const originalFile = "console.log('123 zzz');\nconsole.log('123 zzz');";
-  const intendedFile = "console.log('0001 zzz');\nconsole.log('0002 zzz');";
+  const originalFile = "console.log('225 zzz');\nconsole.log('225 zzz');";
+  const intendedFile = "console.log('226 zzz');\nconsole.log('226 zzz');";
 
   // 1. fetch us an empty, random, temporary folder:
 

@@ -178,7 +178,7 @@ function wrap(
     console.log("178 +++ WE GONNA WRAP THIS!");
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
   } else if (dontWrapTheseVars) {
-    console.log("\n\n\n180 💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n");
+    console.log("\n\n\n181 💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n");
     console.log(
       `183 placementValue = ${JSON.stringify(placementValue, null, 4)}`
     );
@@ -253,7 +253,7 @@ function findValues(input, varName, path, opts) {
       // 1.1.1. first check data store
       console.log("254: 1.1.0.");
       console.log(
-        `\n267 * datastore = ${JSON.stringify(
+        `\n256 * datastore = ${JSON.stringify(
           currentPath + opts.dataContainerIdentifierTails,
           null,
           4
@@ -293,7 +293,7 @@ function findValues(input, varName, path, opts) {
         // 1.1.1. first check data store
         console.log("294: 1.1.1.");
         console.log(
-          `\n317 * datastore = ${JSON.stringify(
+          `\n296 * datastore = ${JSON.stringify(
             currentPath + opts.dataContainerIdentifierTails,
             null,
             4
@@ -426,7 +426,7 @@ function findValues(input, varName, path, opts) {
 // closed loop.
 function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   console.log(
-    `\u001b[${33}m${`\n\n474 CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`
+    `\u001b[${33}m${`\n\n429 CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`
   );
   console.log(
     `432 incomingBreadCrumbPath = ${JSON.stringify(
@@ -465,7 +465,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   const secretResolvedVarsStash = {};
 
   console.log(
-    `=============================\n517 string = ${JSON.stringify(
+    `=============================\n468 string = ${JSON.stringify(
       string,
       null,
       4
@@ -726,14 +726,14 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // 3. Then, work the finalRangesArr list
   // ================================
   console.log(
-    `\u001b[${33}m${`\n783 END OF rangesApply: finalRangesArr.current() = ${JSON.stringify(
+    `\u001b[${33}m${`\n729 END OF rangesApply: finalRangesArr.current() = ${JSON.stringify(
       finalRangesArr.current(),
       null,
       4
     )}`}\u001b[${39}m`
   );
   console.log(
-    `\u001b[${33}m${`\n791 string was = ${JSON.stringify(
+    `\u001b[${33}m${`\n736 string was = ${JSON.stringify(
       string,
       null,
       4
@@ -950,7 +950,7 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
       );
     }
 
-    console.log(`\n1037 current = ${JSON.stringify(current, null, 4)}`);
+    console.log(`\n953 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Process the current node if it's a string and it contains heads / tails /

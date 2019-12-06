@@ -207,14 +207,14 @@ thePromise
         noErrors = false;
       }
     });
-    // console.log("209");
+    // console.log("210");
     return Promise.resolve(noErrors);
   })
   .then(noErrors => {
-    // console.log("213");
+    // console.log("214");
     return process.exit(noErrors ? 0 : 1);
   })
   .catch(() => {
-    // console.log("217");
+    // console.log("218");
     return Promise.resolve(process.exit(1));
   });

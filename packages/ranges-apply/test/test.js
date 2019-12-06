@@ -112,7 +112,7 @@ t.test("01.02 - correct inputs", t => {
 
 t.test("02.01 - deletes multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
-  // console.log('\n===============\n02.01')
+  // console.log('\n===============\n115.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
   t.same(
@@ -128,7 +128,7 @@ t.test("02.01 - deletes multiple chunks correctly", t => {
 
 t.test("02.02 - replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
-  // console.log('\n===============\n02.02')
+  // console.log('\n===============\n131.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.same(
@@ -144,7 +144,7 @@ t.test("02.02 - replaces multiple chunks correctly", t => {
 
 t.test("02.03 - deletes and replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb replace me ccc";
-  // console.log('\n===============\n02.03')
+  // console.log('\n===============\n147.03')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.same(
@@ -165,7 +165,7 @@ t.test("02.04 - empty ranges array", t => {
 
 t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
   const str = "delete me bbb and me too ccc";
-  // console.log('\n===============\n02.05')
+  // console.log('\n===============\n168.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
   t.same(
@@ -181,7 +181,7 @@ t.test("02.05 - deletes multiple chunks with zero indexes correctly", t => {
 
 t.test("02.06 - replaces multiple chunks with zero indexes correctly", t => {
   const str = "delete me bbb and me too ccc";
-  // console.log('\n===============\n02.06')
+  // console.log('\n===============\n184.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
   t.same(
@@ -212,7 +212,7 @@ t.test("02.07 - replace with ending index zero", t => {
 
 t.test("02.08 - null in third arg does nothing", t => {
   const str = "aaa delete me bbb and me too ccc";
-  // console.log('\n===============\n02.08')
+  // console.log('\n===============\n215.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
   t.same(
@@ -244,7 +244,7 @@ t.test("02.08 - null in third arg does nothing", t => {
 
 t.test("02.09 - replaces multiple chunks correctly", t => {
   const str = "aaa delete me bbb and me too ccc";
-  // console.log('\n===============\n02.09')
+  // console.log('\n===============\n247.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.same(
@@ -262,7 +262,7 @@ t.test(
   "02.10 - replaces multiple chunks correctly given in a wrong order",
   t => {
     const str = "aaa delete me bbb and me too ccc";
-    // console.log('\n===============\n02.10')
+    // console.log('\n===============\n265.10')
     // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
     // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
     t.same(

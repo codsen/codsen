@@ -123,7 +123,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`
     );
     console.log(
-      `129 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
+      `126 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
     );
     //
     //    PART 1. Bean-counting
@@ -143,11 +143,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       if (surrogateDetected !== true) {
         unicodeIndex += 1;
         console.log(
-          `149 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+          `146 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
         );
         surrogateDetected = true;
         console.log(
-          `153 ! surrogateDetected now ${JSON.stringify(
+          `150 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -159,7 +159,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
         // but reset the flag, because astral symbols come in pairs
         surrogateDetected = false;
         console.log(
-          `165 ! surrogateDetected now ${JSON.stringify(
+          `162 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -172,13 +172,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       // bump the counter:
       unicodeIndex += 1;
       console.log(
-        `178 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+        `175 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
       );
       // reset the flag:
       if (surrogateDetected === true) {
         surrogateDetected = false;
         console.log(
-          `184 ! surrogateDetected now ${JSON.stringify(
+          `181 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -260,7 +260,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   //       ==============
 
   console.log("\n\n\n");
-  console.log(`266 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
+  console.log(`263 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
   if (
     isInt(indexes, { includeZero: true }) ||

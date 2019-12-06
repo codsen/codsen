@@ -150,7 +150,7 @@ globby(input)
     // It's a result of a resolved promise.
 
     // console.log(
-    //   `\n\n\n\n146 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `\n\n\n\n153 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     finalPathsToProcessArr,
     //     null,
     //     4
@@ -175,7 +175,7 @@ globby(input)
     let referenceKeyset;
     if (cli.flags.n) {
       // console.log(
-      //   `170 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `178 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
       //     finalPathsToProcessArr,
       //     null,
       //     4
@@ -190,7 +190,7 @@ globby(input)
       return pMap(paths, oneOfPaths => fs.readJson(oneOfPaths))
         .then(allJsonValuesArr => {
           // console.log(
-          //   `187${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `193${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
           //     allJsonValuesArr,
           //     null,
           //     4

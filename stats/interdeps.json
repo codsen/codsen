@@ -144,7 +144,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 17838,
+        "size": 20311,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",

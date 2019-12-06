@@ -418,7 +418,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
     }
 
     console.log(
-      `\n* 371 \u001b[${31}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
+      `\n* 421 \u001b[${31}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
     );
     console.log(
       `* 424 \u001b[${31}m${"charToCompareAgainst"}\u001b[${39}m = ${charToCompareAgainst}`
@@ -757,7 +757,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   if (mode.startsWith("matchLeft")) {
     for (let i = 0, len = whatToMatch.length; i < len; i++) {
       console.log(
-        `\n689 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
+        `\n760 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
       );
 
       special = typeof whatToMatch[i] === "function";
@@ -1023,7 +1023,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
 
     console.log(
-      `\n808 ${`\u001b[${33}m${"fullCharacterAfter"}\u001b[${39}m`} = ${JSON.stringify(
+      `\n1026 ${`\u001b[${33}m${"fullCharacterAfter"}\u001b[${39}m`} = ${JSON.stringify(
         fullCharacterAfter,
         null,
         4

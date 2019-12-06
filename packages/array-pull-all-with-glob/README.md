@@ -56,7 +56,6 @@ This package has three builds in `dist/` folder:
 - [Install](#install)
 - [Pulling](#pulling)
 - [API](#api)
-- [Test](#test)
 - [Contributing](#contributing)
 - [Licence](#licence)
 

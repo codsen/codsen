@@ -618,7 +618,7 @@ t.test(
       .result.split("\n")
       .forEach((line, i) => {
         // console.log(
-        //   `0506: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `0621: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
         //     line,
         //     null,
         //     4
@@ -631,7 +631,7 @@ t.test(
 
     minified8.split("\n").forEach((line, i) => {
       // console.log(
-      //   `0519: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `0634: ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
       //     line,
       //     null,
       //     4

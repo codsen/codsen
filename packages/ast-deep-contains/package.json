@@ -48,7 +48,7 @@
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' | tail -n 2 | tee testStats.md && npm run perf",
     "version": "npm run build && git add ."
   },
   "husky": {

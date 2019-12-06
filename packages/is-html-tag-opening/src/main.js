@@ -149,7 +149,7 @@ function isNotLetter(char) {
 
 function isOpening(str, idx = 0) {
   console.log(
-    `151 ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}, "${
+    `152 ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}, "${
       str[idx]
     }"`
   );
@@ -170,16 +170,16 @@ function isOpening(str, idx = 0) {
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
   if (r1.test(whatToTest)) {
-    console.log(`172 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+    console.log(`173 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r2.test(whatToTest)) {
-    console.log(`175 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+    console.log(`176 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r3.test(whatToTest)) {
-    console.log(`178 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+    console.log(`179 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (r4.test(whatToTest)) {
-    console.log(`181 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+    console.log(`182 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
     passed = true;
   } else if (
     str[idx] === "<" &&
@@ -209,14 +209,14 @@ function isOpening(str, idx = 0) {
     passed = true;
   }
   console.log(
-    `211 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
+    `212 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
       4
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`218 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`219 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

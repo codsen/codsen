@@ -153,7 +153,8 @@
 			"package-lock.json",
 			"yarn.lock",
 			".DS_Store",
-			"util.esm.js"
+			"util.esm.js",
+			"testStats.json"
 		],
 		"write_hard": [
 			{
@@ -216,6 +217,7 @@
 			"test.zip",
 			"test_bak.js",
 			"testStats.json",
+			"testStats.md",
 			"travis.js"
 		],
 		"badFolders": [
@@ -312,7 +314,7 @@
 			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
 			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only -R 'terse'"
+			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' | tail -n 2 | tee testStats.md"
 		},
 		"rollup": {
 			"build": "rollup -c --silent",
@@ -327,7 +329,7 @@
 			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
 			"tap": "tap",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' && npm run perf",
+			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' | tail -n 2 | tee testStats.md && npm run perf",
 			"version": "npm run build && git add ."
 		}
 	},

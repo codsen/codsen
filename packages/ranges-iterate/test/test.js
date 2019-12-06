@@ -69,7 +69,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[2, 7, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `54t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `072t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -87,7 +87,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[2, 2, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `68t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `090t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -107,7 +107,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `84t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `110t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -127,7 +127,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[10, 10, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `100t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `130t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -146,7 +146,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[10, 11, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `115t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `149t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -165,7 +165,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[11, 11, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `130t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `168t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -189,7 +189,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `144t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `192t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         pinged += val;
         t.equal(i, index);
@@ -208,7 +208,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[0, 10, "xyz"]], ({ i, val }) => {
       // console.log(
-      //   `158t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `211t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -226,7 +226,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [[0, 10]], ({ i, val }) => {
       // console.log(
-      //   `172t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `229t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -244,7 +244,7 @@ t.test(
     let index = 0;
     i("abcdefghij", [], ({ i, val }) => {
       // console.log(
-      //   `186t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `247t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -262,7 +262,7 @@ t.test(
     let index = 0;
     i("abcdefghij", null, ({ i, val }) => {
       // console.log(
-      //   `200t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+      //   `265t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
       // );
       pinged += val;
       t.equal(i, index);
@@ -288,7 +288,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `216t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `291t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         pinged += val;
         t.equal(i, index);
@@ -315,7 +315,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `232t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `318t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         pinged += val;
         t.equal(i, index);
@@ -338,7 +338,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `244t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `341t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         t.equal(i, 0);
         t.equal(val, "f");
@@ -363,7 +363,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `258t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `366t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         pinged += val;
         t.equal(i, index);
@@ -389,7 +389,7 @@ t.test(
       ],
       ({ i, val }) => {
         // console.log(
-        //   `273t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+        //   `392t ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
         // );
         pinged += val;
         t.equal(i, index);
@@ -418,7 +418,7 @@ t.test(
 //   let originalRanges = [[2, 7, "xyz"]];
 //   i("abcdefghij", originalRanges, ({ i, val, push }) => {
 //     console.log(
-//       `54 test.js: ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
+//       `421 test.js: ${`\u001b[${32}m${`CB`}\u001b[${39}m`}: i = ${`\u001b[${33}m${i}\u001b[${39}m`}; val = ${`\u001b[${33}m${val}\u001b[${39}m`}`
 //     );
 //     if (i === 5) {
 //       originalRanges = push([5, 8]);

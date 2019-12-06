@@ -1,6 +1,6 @@
 # ast-deep-contains
 
-> an alternative for AVA's t.same
+> an alternative assertion for Ava's t.deepEqual and Tap's t.same
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -93,7 +93,7 @@ Imagine the source, taken from `emlint` ([npm](https://www.npmjs.com/package/eml
       ranges: [[43, 48]]
     }
   }
-]
+];
 ```
 
 Matched objects are in wrong order and contain only subset of keys:
@@ -117,8 +117,8 @@ Matched objects are in wrong order and contain only subset of keys:
     fix: {
       ranges: [[0, 4]]
     }
-  },
-]
+  }
+];
 ```
 
 Notice how above we don't bother with `line` and `column` values, as well as `severity`. Also, note that key structure is very similar, yet objects are in a wrong order (because rules were raised in such way).
@@ -132,6 +132,8 @@ Solution is this package.
 It will try to match which object is the most similar to the source's, then will not raise errors if source has extra keys.
 
 Matching is passed to your chosen assertion functions, most likely `t.is` and `t.fail`.
+
+**[⬆ back to top](#)**
 
 ## Example \#1 — checking subset of keys only
 

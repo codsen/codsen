@@ -445,7 +445,7 @@ function comb(str, opts) {
 
     if (round === 1) {
       console.log(`\n\n\n\n\n\n\n
-                                                       1111111111111111
+                                                       0449
                                                       1:::::::::::::::1
                                                      1::::::::::::::::1
                                                      111::::::::::::::1
@@ -464,7 +464,7 @@ function comb(str, opts) {
 \n\n\n\n\n\n\n`);
     } else {
       console.log(`\n\n\n\n\n\n\n
-                                                         222222222222222
+                                                         0468
                                                         2:::::::::::::::22
                                                         2::::::222222:::::2
                                                         2222222     2:::::2
@@ -3287,7 +3287,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         });
       });
       console.log(
-        `\n1220 headSelectorsCount = ${JSON.stringify(
+        `\n3290 headSelectorsCount = ${JSON.stringify(
           headSelectorsCount,
           null,
           4
@@ -3688,7 +3688,7 @@ ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
   //
 
   console.log(`\n\n\n\n\n\n\n
-                                                              333333333333333
+                                                              3692
                                                             3:::::::::::::::33
                                                             3::::::33333::::::3
                                                             3333333     3:::::3

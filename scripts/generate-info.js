@@ -14,6 +14,7 @@ const newdate = `${year}-${`${month}`.padStart(2, "0")}-${`${day}`.padStart(
   2,
   "0"
 )}`;
+const reg = /(\d+) passed/g;
 
 // FUNCTIONS
 // =========
@@ -102,14 +103,20 @@ allPackages.map(name => {
 
   // compile test stats
   try {
-    const obj = JSON.parse(
-      fs.readFileSync(path.join("packages", name, "testStats.json"))
+    const obj = { name };
+    const fileContents = fs.readFileSync(
+      path.join("packages", name, "testStats.md"),
+      "utf8"
     );
-    obj.name = name;
+    const res = fileContents.match(reg);
+    if (res.length) {
+      obj.suites = Number.parseInt(res[0].slice(0, -7));
+      obj.asserts = Number.parseInt(res[1].slice(0, -7));
+    }
     allStats.push(obj);
   } catch (e) {
     console.log(
-      `! couldn't read/parse ${path.join("packages", name, "testStats.json")}`
+      `! couldn't read/parse ${path.join("packages", name, "testStats.md")}`
     );
   }
 
@@ -150,49 +157,61 @@ allPackages.map(name => {
 const compiledStats = {
   all: {},
   totalPackageCount: allPackages.length,
-  totalTestsCount: 0,
-  minTestsCount: 999999999999,
-  minTestsName: "",
-  maxTestsCount: 0,
-  maxTestsName: "",
-  testsCountMedian: 0,
-  testsCountArithmeticMean: 0,
-  testsCountGeometricMean: 0
+  totalAssertsCount: 0,
+  minAssertsCount: 999999999999,
+  minAssertsName: "",
+  maxAssertsCount: 0,
+  maxAssertsName: "",
+  assertsCountMedian: 0,
+  assertsCountArithmeticMean: 0,
+  assertsCountGeometricMean: 0
 };
 
 allStats.forEach(statsObj => {
-  if (statsObj && statsObj.stats && statsObj.stats.passedTests) {
-    compiledStats.totalTestsCount += statsObj.stats.passedTests;
-    if (statsObj.stats.passedTests > compiledStats.maxTestsCount) {
-      compiledStats.maxTestsCount = statsObj.stats.passedTests;
-      compiledStats.maxTestsName = statsObj.name;
+  console.log(
+    `${`\u001b[${33}m${`statsObj`}\u001b[${39}m`} = ${JSON.stringify(
+      statsObj,
+      null,
+      4
+    )}`
+  );
+  if (
+    typeof statsObj === "object" &&
+    statsObj !== null &&
+    statsObj.asserts &&
+    Number.isInteger(statsObj.asserts)
+  ) {
+    compiledStats.totalAssertsCount += statsObj.asserts;
+    if (statsObj.asserts > compiledStats.maxAssertsCount) {
+      compiledStats.maxAssertsCount = statsObj.asserts;
+      compiledStats.maxAssertsName = statsObj.name;
     }
     if (
-      statsObj.stats.passedTests < compiledStats.minTestsCount &&
-      statsObj.stats.passedTests > 1
+      statsObj.asserts < compiledStats.minAssertsCount &&
+      statsObj.asserts > 1
     ) {
-      compiledStats.minTestsCount = statsObj.stats.passedTests;
-      compiledStats.minTestsName = statsObj.name;
+      compiledStats.minAssertsCount = statsObj.asserts;
+      compiledStats.minAssertsName = statsObj.name;
     }
   }
 });
 
-compiledStats.testsCountArithmeticMean = Math.round(
-  compiledStats.totalTestsCount / allPackages.length
+compiledStats.assertsCountArithmeticMean = Math.round(
+  compiledStats.totalAssertsCount / allPackages.length
 );
 
-compiledStats.testsCountGeometricMean = Math.round(
+compiledStats.assertsCountGeometricMean = Math.round(
   Math.pow(
-    allStats.reduce((accum, curr) => curr.stats.passedTests * accum, 1),
+    allStats.reduce((accum, curr) => curr.asserts * accum, 1),
     1 / allStats.length
   )
 );
 
 allStats.forEach(statsObj => {
-  compiledStats.all[statsObj.name] = statsObj.stats.passedTests;
+  compiledStats.all[statsObj.name] = statsObj.asserts;
 });
 
-compiledStats.testsCountMedian = median(
+compiledStats.assertsCountMedian = median(
   Object.keys(compiledStats.all).map(
     packageName => compiledStats.all[packageName]
   )
@@ -330,7 +349,7 @@ try {
 if (
   !oldHistoricTotals.length ||
   oldHistoricTotals[oldHistoricTotals.length - 1][1] !==
-    compiledStats.totalTestsCount
+    compiledStats.totalAssertsCount
 ) {
   let findingIdx;
   if (
@@ -343,10 +362,10 @@ if (
     })
   ) {
     // edit old if it was on the same date, today
-    oldHistoricTotals[findingIdx][1] = compiledStats.totalTestsCount;
+    oldHistoricTotals[findingIdx][1] = compiledStats.totalAssertsCount;
   } else {
     // push new
-    oldHistoricTotals.push([newdate, compiledStats.totalTestsCount]);
+    oldHistoricTotals.push([newdate, compiledStats.totalAssertsCount]);
   }
   fs.writeFile(
     path.join("stats/oldHistoricTotals.json"),

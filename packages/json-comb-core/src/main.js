@@ -112,7 +112,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
-    `132 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `115 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4

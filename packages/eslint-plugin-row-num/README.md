@@ -42,6 +42,12 @@ updates row numbers in front of each encountered console.log
 
 updates row numbers in front of each encountered console.log
 
+updates row numbers in front of each encountered console.log
+
+updates row numbers in front of each encountered console.log
+
+updates row numbers in front of each encountered console.log
+
 There is also a CLI version of this, `js-row-num-cli` ([npm](https://www.npmjs.com/package/js-row-num-cli)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/))
 See the API, the npm package, `js-row-num` ([npm](https://www.npmjs.com/package/js-row-num)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num/))
 
