@@ -40,17 +40,18 @@
   "module": "dist/emlint.esm.js",
   "browser": "dist/emlint.umd.js",
   "scripts": {
-    "build": "node bin/helper && rollup -c",
+    "build": "node bin/helper && rollup -c --silent",
     "dev": "node bin/helper && rollup -c --dev --silent",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
     "perf": "node perf/check",
     "prepare": "npm run build",
-    "prettier": "prettier '*.{js,css,scss,vue,md}' --write",
+    "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --only",
+    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' && npm run perf",
     "version": "npm run build && git add ."
   },
   "husky": {
