@@ -1,12 +1,15 @@
 const t = require("tap");
 const fixRowNums = require("../dist/js-row-num.cjs");
 const BACKSLASH = `\u005C`;
+// we need to escape to prevent accidental "fixing" of this file through
+// build scripts
+const letterC = "\x63";
 
 // -----------------------------------------------------------------------------
 // group 01. no throws
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test(`01.01 - wrong input is just being returned`, t => {
   t.doesNotThrow(() => {
     fixRowNums();
   });
@@ -14,7 +17,7 @@ t.test(t => {
     fixRowNums(1);
   });
   t.doesNotThrow(() => {
-    fixRowNums("");
+    fixRowNums(``);
   });
   t.doesNotThrow(() => {
     fixRowNums(null);
@@ -35,263 +38,240 @@ t.test(t => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  const src = `
-zzz
-zzz
-zzz
-console.log('043 something')
-console.log('044 something')
-`;
-  const res = `
-zzz
-zzz
-zzz
-console.log('050 something')
-console.log('051 something')
-`;
-  t.equal(
-    fixRowNums(src),
-    res,
-    "02.01.01 - single straight quotes - no whitespace"
-  );
-  t.equal(fixRowNums(src, { triggerKeywords: undefined }), res, "02.01.02");
-  t.equal(fixRowNums(src, { triggerKeywords: [] }), res, "02.01.03");
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
+t.test(`02.01 - single straight quotes - no whitespace`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log ( ' 069 456 something 123 ')
-console.log('----\n\n\n070 something')
+${letterC}onsole.log('099 something')
+${letterC}onsole.log('1 something')
 `),
     `
 zzz
 zzz
 zzz
-console.log ( ' 076 456 something 123 ')
-console.log('----\n\n\n077 something')
-`,
-    "02.02 - single straight quotes - with whitespace"
+${letterC}onsole.log('005 something')
+${letterC}onsole.log('006 something')
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.02 - single straight quotes - with whitespace`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log('090 something')console.log('090 something')
+${letterC}onsole.log ( ' 099 456 something 123 ')
+${letterC}onsole.log('----\n\n\n1 something')
 `),
     `
 zzz
 zzz
 zzz
-console.log('096 something')console.log('096 something')
-`,
-    "02.03 - single straight quotes - tight, no semicolon"
+${letterC}onsole.log ( ' 005 456 something 123 ')
+${letterC}onsole.log('----\n\n\n009 something')
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.03 - single straight quotes - tight, no semicolon`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log("109 123 something 456")console.log("----109 something")console.log("---- something")
+${letterC}onsole.log('099 something')${letterC}onsole.log('1 something')
 `),
     `
 zzz
 zzz
 zzz
-console.log("115 123 something 456")console.log("----115 something")console.log("---- something")
-`,
-    "02.04 - double quotes - tight"
+${letterC}onsole.log('005 something')${letterC}onsole.log('005 something')
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.04 - double quotes - tight`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log("128 123 something 456")console.log("----\n\n\n128 something")
+${letterC}onsole.log("099 123 something 456")${letterC}onsole.log("----0 something")${letterC}onsole.log("---- something")
 `),
     `
 zzz
 zzz
 zzz
-console.log("134 123 something 456")console.log("----\n\n\n134 something")
-`,
-    "02.05 - double quotes - newlines"
+${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----005 something")${letterC}onsole.log("---- something")
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.05 - double quotes - newlines`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log ( " 147 123 something 456 " )
-console.log("----\n\n\n 148 something")
+${letterC}onsole.log("099 123 something 456")${letterC}onsole.log("----\n\n\n0 something")
 `),
     `
 zzz
 zzz
 zzz
-console.log ( " 154 123 something 456 " )
-console.log("----\n\n\n 155 something")
-`,
-    "02.06 - double quotes - with whitespace"
+${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----\n\n\n008 something")
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.06 - double quotes - with whitespace`, t => {
+  t.is(
     fixRowNums(`
 zzz
 zzz
 zzz
-console.log(\`099 123 something 456\`)console.log(\`----0 something\`)console.log(\`---- something\`)
+${letterC}onsole.log ( " 099 123 something 456 " )
+${letterC}onsole.log("----\n\n\n 0 something")
 `),
     `
 zzz
 zzz
 zzz
-console.log(\`005 123 something 456\`)console.log(\`----005 something\`)console.log(\`---- something\`)
-`,
-    "02.07 - backticks - tight"
+${letterC}onsole.log ( " 005 123 something 456 " )
+${letterC}onsole.log("----\n\n\n 009 something")
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
-    fixRowNums("console.log(`\\u001b[${33}m${`183 z`}\\u001b[${39}m`)"),
-    "console.log(`\\u001b[${33}m${`184 z`}\\u001b[${39}m`)",
-    "02.08 - console log with ANSI escapes - one ANSI escape chunk in front"
+t.test(`02.07 - backticks - tight`, t => {
+  t.is(
+    fixRowNums(`
+zzz
+zzz
+zzz
+${letterC}onsole.log(\`099 123 something 456\`)${letterC}onsole.log(\`----0 something\`)${letterC}onsole.log(\`---- something\`)
+`),
+    `
+zzz
+zzz
+zzz
+${letterC}onsole.log(\`005 123 something 456\`)${letterC}onsole.log(\`----005 something\`)${letterC}onsole.log(\`---- something\`)
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(
+  `02.08 - console log with ANSI escapes - one ANSI escape chunk in front`,
+  t => {
+    t.is(
+      fixRowNums("\x63onsole.log(`\\u001b[${33}m${`999 z`}\\u001b[${39}m`)"),
+      "\x63onsole.log(`\\u001b[${33}m${`001 z`}\\u001b[${39}m`)"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.09 - synthetic test where colour is put in deeper curlies for easier visual grepping`,
+  t => {
+    t.is(
+      fixRowNums(
+        "\x63onsole.log(`\\u001b[${012399999999}m${`888 z`}\\u001b[${39}m`)"
+      ),
+      "\x63onsole.log(`\\u001b[${012399999999}m${`001 z`}\\u001b[${39}m`)"
+    );
+    t.end();
+  }
+);
+
+t.test(`02.10 - synthetic test where colour code is put raw`, t => {
+  t.is(
     fixRowNums(
-      "console.log(`\\u001b[${012399999999}m${`193 z`}\\u001b[${39}m`)"
+      "\x63onsole.log(`\\u001b[012399999999m${`888 z`}\\u001b[${39}m`)"
     ),
-    "console.log(`\\u001b[${012399999999}m${`195 z`}\\u001b[${39}m`)",
-    "02.09 - synthetic test where colour is put in deeper curlies for easier visual grepping"
+    "\x63onsole.log(`\\u001b[012399999999m${`001 z`}\\u001b[${39}m`)"
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
-    fixRowNums("console.log(`\\u001b[012399999999m${`203 z`}\\u001b[${39}m`)"),
-    "console.log(`\\u001b[012399999999m${`204 z`}\\u001b[${39}m`)",
-    "02.10 - synthetic test where colour code is put raw"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
+t.test(`02.11 - bunch of whitespace 1`, t => {
+  t.is(
     fixRowNums(
-      "console.log(`\\u001b[${012399999999}m${` \t 888 z`}\\u001b[${39}m`)"
+      `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
     ),
-    "console.log(`\\u001b[${012399999999}m${` \t 001 z`}\\u001b[${39}m`)",
-    "02.11 - colour is put in deeper curlies for easier visual grepping"
+    `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
+    `02.04.04 - synthetic test where colour is put in deeper curlies for easier visual grepping`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.12 - bunch of whitespace 2`, t => {
+  t.is(
     fixRowNums(
-      "console.log(`\\u001b[012399999999m${` \t 888 z`}\\u001b[${39}m`)"
+      `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
     ),
-    "console.log(`\\u001b[012399999999m${` \t 001 z`}\\u001b[${39}m`)",
-    "02.12 - colour code is put raw"
+    `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
+    `02.04.05 - synthetic test where colour code is put raw`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.13 - updates ${letterC}onsole.logs within comment blocks`, t => {
+  t.is(
     fixRowNums(`
-// console.log(
+// ${letterC}onsole.log(
 //   \`111 something
 // \`)
 `),
     `
-// console.log(
+// ${letterC}onsole.log(
 //   \`003 something
 // \`)
-`,
-    "02.13 - updates console.logs within comment blocks"
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.14 - \\n in front`, t => {
+  t.is(
     fixRowNums(`
-console.log(
+${letterC}onsole.log(
   \`${BACKSLASH}n111 something\`
 )
 `),
     `
-console.log(
+${letterC}onsole.log(
   \`${BACKSLASH}n003 something\`
 )
-`,
-    "02.14 - \\n in front"
+`
   );
   t.end();
 });
 
-t.test(t => {
-  t.equal(
+t.test(`02.15 - automatic 4 digit padding on >45K chars`, t => {
+  t.is(
     fixRowNums(`
-${"12345\n".repeat(10000)}
-console.log(
+${`12345\n`.repeat(10000)}
+${letterC}onsole.log(
   \`${BACKSLASH}n111 something\`
 )
 `),
     `
-${"12345\n".repeat(10000)}
-console.log(
+${`12345\n`.repeat(10000)}
+${letterC}onsole.log(
   \`${BACKSLASH}n10004 something\`
 )
-`,
-    "02.15 - automatic 4 digit padding on >45K chars"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("console.log('287 zzz');\nconsole.log('287 zzz');", {
-      padStart: 3,
-      overrideRowNum: null,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: false
-    }),
-    "console.log('293 zzz');\nconsole.log('293 zzz');",
-    "02.16"
+`
   );
   t.end();
 });
@@ -300,556 +280,196 @@ t.test(t => {
 // group 03. sneaky false positives
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  const str = 'I added a console.log (and then added so-called "quotes").';
-  t.equal(
-    fixRowNums(str),
-    str,
-    `03.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - text that mentions console.log`
-  );
-  t.end();
-});
+t.test(
+  `03.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - text that mentions ${letterC}onsole.log`,
+  t => {
+    const str =
+      "I added a ${letterC}onsole.log (and then added so-called `quotes`).";
+    t.is(fixRowNums(str), str, `03.01`);
+    t.end();
+  }
+);
 
-t.test(t => {
-  const str = 'console.log("zzz")';
-  t.equal(
-    fixRowNums(str),
-    str,
-    `03.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no digits at all`
-  );
-  t.end();
-});
+t.test(
+  `03.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no digits at all`,
+  t => {
+    const str = "${letterC}onsole.log(`zzz`)";
+    t.is(fixRowNums(str), str, `03.02`);
+    t.end();
+  }
+);
 
-t.test(t => {
-  const str = 'console.log "123"';
-  t.equal(
-    fixRowNums(str),
-    str,
-    `03.03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no opening bracket after console.log`
-  );
-  t.end();
-});
+t.test(
+  `03.03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - no opening bracket after ${letterC}onsole.log`,
+  t => {
+    const str = "${letterC}onsole.log `123`";
+    t.is(fixRowNums(str), str, `03.03`);
+    t.end();
+  }
+);
 
-t.test(t => {
-  let allAscii = new Array(127);
-  allAscii = allAscii.map((val, i) => String.fromCharCode(i)).join("");
-  t.equal(
-    fixRowNums(allAscii),
-    allAscii,
-    `03.04 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - all ASCII symbols`
-  );
-  t.end();
-});
+t.test(
+  `03.04 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - all ASCII symbols`,
+  t => {
+    let allAscii = new Array(127);
+    allAscii = allAscii.map((val, i) => String.fromCharCode(i)).join(``);
+    t.is(fixRowNums(allAscii), allAscii, `03.04`);
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // group 04. opts
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('350 something')"),
-    "zzz\nconsole.log('351 something')",
-    "04.01 - control - default is three"
-  );
-  t.end();
-});
+t.test(
+  `04.01 - ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} - padding is set to numbers`,
+  t => {
+    const str = `zzz\n${letterC}onsole.log('1 something')`;
+    t.is(
+      fixRowNums(str),
+      `zzz\n${letterC}onsole.log('002 something')`,
+      `04.01.01 - control - default is three`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 0 }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.01.02`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 1 }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.01.03`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 2 }),
+      `zzz\n${letterC}onsole.log('02 something')`,
+      `04.01.04`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 3 }),
+      `zzz\n${letterC}onsole.log('002 something')`,
+      `04.01.05`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 4 }),
+      `zzz\n${letterC}onsole.log('0002 something')`,
+      `04.01.05`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 9 }),
+      `zzz\n${letterC}onsole.log('000000002 something')`,
+      `04.01.06`
+    );
+    t.is(
+      fixRowNums(str, { padStart: 1 }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.01.07 - negative numbers are ignored, default (3) is used`
+    );
+    t.end();
+  }
+);
 
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('359 something')", { padStart: 0 }),
-    "zzz\nconsole.log('360 something')",
-    "04.02"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('368 something')", { padStart: 1 }),
-    "zzz\nconsole.log('369 something')",
-    "04.03"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('377 something')", { padStart: 2 }),
-    "zzz\nconsole.log('378 something')",
-    "04.04"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('386 something')", { padStart: 3 }),
-    "zzz\nconsole.log('387 something')",
-    "04.05"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('395 something')", { padStart: 4 }),
-    "zzz\nconsole.log('396 something')",
-    "04.05"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('404 something')", { padStart: 9 }),
-    "zzz\nconsole.log('405 something')",
-    "04.06"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('413 something')", { padStart: 1 }),
-    "zzz\nconsole.log('414 something')",
-    "04.07 - negative numbers are ignored, default (3) is used"
-  );
-  t.end();
-});
-
-// falsey padding value
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('424 something')", { padStart: false }),
-    "zzz\nconsole.log('425 something')",
-    "04.08 - padding is set to be falsey"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('433 something')", { padStart: null }),
-    "zzz\nconsole.log('434 something')",
-    "04.09"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzz\nconsole.log('442 something')", { padStart: undefined }),
-    "zzz\nconsole.log('443 something')",
-    "04.10"
-  );
-  t.end();
-});
+t.test(
+  `04.02 - ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} - padding is set to be falsey`,
+  t => {
+    const str = `zzz\n${letterC}onsole.log('1 something')`;
+    t.is(
+      fixRowNums(str, { padStart: false }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.02.01`
+    );
+    t.is(
+      fixRowNums(str, { padStart: null }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.02.02`
+    );
+    t.is(
+      fixRowNums(str, { padStart: undefined }),
+      `zzz\n${letterC}onsole.log('2 something')`,
+      `04.02.03`
+    );
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // group 05. ad-hoc
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  t.equal(
-    fixRowNums("zzzz\ryyyy\rconsole.log('455 some text')"),
-    "zzzz\ryyyy\rconsole.log('456 some text')",
-    `05.01 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - text that uses \\r only as EOL characters`
-  );
-  t.end();
-});
+t.test(
+  `05.01 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - text that uses \\r only as EOL characters`,
+  t => {
+    t.is(
+      fixRowNums(`zzzz\ryyyy\r${letterC}onsole.log('1 some text')`),
+      `zzzz\ryyyy\r${letterC}onsole.log('003 some text')`,
+      `05.01.01`
+    );
+    t.is(
+      fixRowNums(`zzzz\nyyyy\n${letterC}onsole.log('1 some text')`),
+      `zzzz\nyyyy\n${letterC}onsole.log('003 some text')`,
+      `05.01.02`
+    );
+    t.is(
+      fixRowNums(`zzzz\r\nyyyy\r\n${letterC}onsole.log('1 some text')`),
+      `zzzz\r\nyyyy\r\n${letterC}onsole.log('003 some text')`,
+      `05.01.03`
+    );
+    t.end();
+  }
+);
 
-t.test(t => {
-  t.equal(
-    fixRowNums("zzzz\nyyyy\nconsole.log('464 some text')"),
-    "zzzz\nyyyy\nconsole.log('465 some text')",
-    "05.02"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums("zzzz\r\nyyyy\r\nconsole.log('473 some text')"),
-    "zzzz\r\nyyyy\r\nconsole.log('474 some text')",
-    "05.03"
-  );
-  t.end();
-});
-
-// broken ANSI - will not update
-
-t.test(t => {
-  t.equal(
-    fixRowNums(
-      "console.log(`\\u001b[012399999999${` \t 888 z`}\\u001b[${39}m`)"
-    ),
-    "console.log(`\\u001b[012399999999${` \t 888 z`}\\u001b[${39}m`)",
-    "05.04 - ANSI opening sequence's m is missing"
-  );
-  t.end();
-});
+t.test(
+  `05.02 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - broken ANSI - will not update`,
+  t => {
+    t.is(
+      fixRowNums(
+        `${letterC}onsole.log(\`\\u001b[012399999999$\{\` \t 888 z\`}\\u001b[$\{39}m\`)`
+      ),
+      `${letterC}onsole.log(\`\\u001b[012399999999$\{\` \t 888 z\`}\\u001b[$\{39}m\`)`,
+      `05.02 - ANSI opening sequence's m is missing`
+    );
+    t.end();
+  }
+);
 
 // -----------------------------------------------------------------------------
 // 06. custom functions via opts.triggerKeywords
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  t.equal(
-    fixRowNums(`a\nb\nc\nlog(\`1 something\`)`),
-    `a\nb\nc\nlog(\`1 something\`)`,
-    `06.01 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - baseline`
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums(`a\nb\nc\nlog(\`1 something\`)`, { triggerKeywords: ["log"] }),
-    `a\nb\nc\nlog(\`004 something\`)`,
-    `06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works on custom function`
-  );
-  t.end();
-});
-
-// non-existing log function
-t.test(t => {
-  const sources = [
-    `a\nb\nc\nconsole.log(\`1 something\`)`,
-    `a\nb\nc\nlog(\`1 something\`)`
-  ];
-  sources.forEach((source, idx) => {
-    t.equal(
-      fixRowNums(source, { triggerKeywords: ["zzz"] }),
-      source,
-      `06.03.0${idx + 1}`
+t.test(
+  `06.01 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - baseline`,
+  t => {
+    t.is(
+      fixRowNums(`a\nb\nc\nlog(\`1 something\`)`),
+      `a\nb\nc\nlog(\`1 something\`)`
     );
-    t.equal(
-      fixRowNums(source, { triggerKeywords: null }),
-      source,
-      `06.03.0${idx + 2}`
+    t.end();
+  }
+);
+
+t.test(
+  `06.02 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - works on custom function`,
+  t => {
+    t.is(
+      fixRowNums(`a\nb\nc\nlog(\`1 something\`)`, { triggerKeywords: [`log`] }),
+      `a\nb\nc\nlog(\`004 something\`)`
     );
-  });
-  t.end();
-});
+    t.end();
+  }
+);
 
-// -----------------------------------------------------------------------------
-// 07. opts.overrideRowNum
-// -----------------------------------------------------------------------------
-
-t.test(t => {
-  t.equal(
-    fixRowNums(`
-console.log('543 something')
-`),
-    `
-console.log('546 something')
-`,
-    "07.01 - opts.overrideRowNum - control"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums(
-      `
-console.log('557 something')
-`,
-      {
-        overrideRowNum: 5
-      }
-    ),
-    `
-console.log('564 something')
-`,
-    "07.02 - opts.overrideRowNum - control"
-  );
-  t.end();
-});
-
-// -----------------------------------------------------------------------------
-// 08. opts.returnRangesOnly
-// -----------------------------------------------------------------------------
-
-t.test(t => {
-  t.same(
-    fixRowNums(
-      `
-      zzz
-      zzz
-      zzz
-      console.log('582 something')
-      console.log('583 something')
-      `,
-      { returnRangesOnly: true }
-    ),
-    [
-      [50, 53, "005"],
-      [85, 88, "006"]
-    ],
-    "08.01 - opts.returnRangesOnly - normal ops"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums(
-      `
-console.log('600 something')
-`,
-      {
-        overrideRowNum: 5,
-        returnRangesOnly: true
-      }
-    ),
-    [[14, 17, "005"]],
-    "08.02 - opts.returnRangesOnly - overrides"
-  );
-  t.end();
-});
-
-// -----------------------------------------------------------------------------
-// 09. opts.extractedLogContentsWereGiven
-// -----------------------------------------------------------------------------
-
-// LEADING QUOTE:
-
-t.test(t => {
-  t.same(
-    fixRowNums(`"099 something 1"`, {
-      overrideRowNum: 5,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[1, 4, "005"]],
-    "09.01.01 - opts.extractedLogContentsWereGiven - double quotes"
-  );
-  t.same(
-    fixRowNums(`"099 something 1"`, {
-      overrideRowNum: 5,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    `"005 something 1"`,
-    "09.01.02 - opts.extractedLogContentsWereGiven - double quotes"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums(`'099 something 1'`, {
-      overrideRowNum: 5,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[1, 4, "005"]],
-    "09.02.01 - opts.extractedLogContentsWereGiven - single quotes"
-  );
-  t.same(
-    fixRowNums(`'099 something 1'`, {
-      overrideRowNum: 5,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    `'005 something 1'`,
-    "09.02.02 - opts.extractedLogContentsWereGiven - single quotes"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums("`099 something 1`", {
-      overrideRowNum: 5,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[1, 4, "005"]],
-    "09.03.01 - opts.extractedLogContentsWereGiven - backticks"
-  );
-  t.same(
-    fixRowNums("`099 something 1`", {
-      overrideRowNum: 5,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    "`005 something 1`",
-    "09.03.02 - opts.extractedLogContentsWereGiven - backticks"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums(`"9 this should be 1"`, {
-      overrideRowNum: 3,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[1, 2, "003"]],
-    "09.04.01"
-  );
-  t.same(
-    fixRowNums("`099 something 1`", {
-      overrideRowNum: 3,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    "`003 something 1`",
-    "09.04.02"
-  );
-  t.end();
-});
-
-// NO LEADING QUOTE:
-// =================
-
-t.test(t => {
-  t.same(
-    fixRowNums(`012 something 1`, {
-      overrideRowNum: 5,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[0, 3, "005"]],
-    "09.05.01 - no leading quote + override - ranges"
-  );
-  t.same(
-    fixRowNums(`099 something 1`, {
-      overrideRowNum: 5,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    `005 something 1`,
-    "09.05.02 - no leading quote + override - string"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums(`012 something 1`, {
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[0, 3, "001"]],
-    "09.06.01 - no leading quote - no override - ranges"
-  );
-  t.same(
-    fixRowNums(`099 something 1`, {
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    `001 something 1`,
-    "09.06.02 - no leading quote - no override - string"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.same(
-    fixRowNums(` 012 something 1`, {
-      overrideRowNum: 5,
-      returnRangesOnly: true,
-      extractedLogContentsWereGiven: true
-    }),
-    [[1, 4, "005"]],
-    "09.07.01 - opts.extractedLogContentsWereGiven - double quotes"
-  );
-  t.same(
-    fixRowNums(` 123 something 1`, {
-      overrideRowNum: 5,
-      returnRangesOnly: false,
-      extractedLogContentsWereGiven: true
-    }),
-    ` 005 something 1`,
-    "09.07.02 - opts.extractedLogContentsWereGiven - double quotes"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums(`
-console.log(
-  '778 something'
-)
-`),
-    `
-console.log(
-  '783 something'
-)
-`,
-    "09.08"
-  );
-  t.end();
-});
-
-// line breaks before string itself
-
-t.test(t => {
-  t.equal(
-    fixRowNums(
-      `
-console.log(
-  '798 something'
-)
-`,
-      {
-        overrideRowNum: 99
-      }
-    ),
-    `
-console.log(
-  '807 something'
-)
-`,
-    "09.09 - overrideRowNum"
-  );
-  t.end();
-});
-
-t.test(t => {
-  t.equal(
-    fixRowNums(
-      `
-console.log(
-  '820 something'
-)
-`,
-      {
-        overrideRowNum: 99
-      }
-    ),
-    `
-console.log(
-  '829 something'
-)
-`,
-    "09.10 - overrideRowNum"
-  );
-  t.end();
-});
-
-t.only(t => {
-  t.same(
-    fixRowNums(
-      `
-
-  '044 something'
-
-`,
-      {
-        overrideRowNum: 99,
-        extractedLogContentsWereGiven: true,
-        returnRangesOnly: true
-      }
-    ),
-    [[5, 8, "099"]],
-    "09.11 - overrideRowNum + extractedLogContentsWereGiven"
-  );
-  t.end();
-});
+t.test(
+  `06.03 - ${`\u001b[${34}m${`opts.triggerKeywords`}\u001b[${39}m`} - non-existing log function`,
+  t => {
+    const sources = [
+      `a\nb\nc\n${letterC}onsole.log(\`1 something\`)`,
+      `a\nb\nc\nlog(\`1 something\`)`
+    ];
+    sources.forEach(source => {
+      t.is(fixRowNums(source, { triggerKeywords: [`zzz`] }), source);
+      t.is(fixRowNums(source, { triggerKeywords: null }), source);
+    });
+    t.end();
+  }
+);
