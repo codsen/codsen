@@ -38,7 +38,16 @@
     "version": "git add ."
   },
   "lect": {
-    "special": true
+    "special": true,
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [
+        "eslint"
+      ]
+    }
   },
   "tap": {
     "coverage-report": "json-summary",

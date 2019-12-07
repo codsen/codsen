@@ -6,66 +6,44 @@ updates row numbers in front of each encountered console.log
 
 updates row numbers in front of each encountered console.log
 
-updates row numbers in front of each encountered console.log
+## Table of Contents
 
-updates row numbers in front of each encountered console.log
+- [Install](#install)
+- [Usage](#usage)
+- [Supported Rules](#supported-rules)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
-updates row numbers in front of each encountered console.log
+## Install
 
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-There is also a CLI version of this, `js-row-num-cli` ([npm](https://www.npmjs.com/package/js-row-num-cli)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/))
-See the API, the npm package, `js-row-num` ([npm](https://www.npmjs.com/package/js-row-num)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num/))
-
-## Installation
-
-You'll first need to install [ESLint](http://eslint.org):
-
-```
-$ npm i eslint --save-dev
+```bash
+npm i eslint-plugin-row-num
 ```
 
-Next, install `eslint-plugin-row-num`:
+Consume via a `require()`:
 
-```
-$ npm install eslint-plugin-row-num --save-dev
+```js
+const  = require("eslint-plugin-row-num");
 ```
 
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-row-num` globally.
+or as an ES Module:
+
+```js
+import  from "eslint-plugin-row-num";
+```
+
+or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/eslint-plugin-row-num/dist/eslint-plugin-row-num.umd.js"></script>
+```
+
+```js
+// in which case you get a global variable "eslintPluginRowNum" which you consume like this:
+const  = eslintPluginRowNum;
+```
+
+This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
