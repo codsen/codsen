@@ -1761,11 +1761,13 @@ function step6() {
 
       let bodyContent = readmePiece.restofit;
       if (trim(readmePiece.heading, "# ").toLowerCase() === "install") {
-        const consumedName = pack.lect.req
+        const consumedName = objectPath.get(pack, "lect.req")
           ? pack.lect.req
           : sourceContainsDefaultExport
           ? camelCase(pack.name)
-          : !pack.name.startsWith("gulp-") && !isCLI
+          : !pack.name.startsWith("gulp-") &&
+            !pack.name.startsWith("eslint-plugin-") &&
+            !isCLI
           ? process.exit(1)
           : "";
 
@@ -1871,7 +1873,7 @@ const ${consumedName} = ${camelCase(pack.name)};
       }
     }
   });
-  // console.log(`1874 lect()`);
+  // console.log(`1876 lect()`);
 
   // contributing module
   content += `${
