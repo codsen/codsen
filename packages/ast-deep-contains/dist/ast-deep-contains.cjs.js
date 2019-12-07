@@ -1,6 +1,6 @@
 /**
  * ast-deep-contains
- * an alternative for AVA's t.same
+ * an alternative assertion for Ava's t.deepEqual and Tap's t.same
  * Version: 1.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
