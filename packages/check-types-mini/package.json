@@ -128,12 +128,12 @@
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
     "js-row-num-cli": "^1.6.9",
     "lect": "^0.11.2",
-    "rollup": "^1.27.8",
+    "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

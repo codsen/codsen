@@ -168,13 +168,13 @@ const compiledStats = {
 };
 
 allStats.forEach(statsObj => {
-  console.log(
-    `${`\u001b[${33}m${`statsObj`}\u001b[${39}m`} = ${JSON.stringify(
-      statsObj,
-      null,
-      4
-    )}`
-  );
+  // console.log(
+  //   `${`\u001b[${33}m${`statsObj`}\u001b[${39}m`} = ${JSON.stringify(
+  //     statsObj,
+  //     null,
+  //     4
+  //   )}`
+  // );
   if (
     typeof statsObj === "object" &&
     statsObj !== null &&

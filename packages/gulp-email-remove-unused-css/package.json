@@ -118,8 +118,8 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",

@@ -119,14 +119,14 @@
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
     "json-comb-core": "^6.6.9",
-    "meow": "^5.0.0",
+    "meow": "^6.0.0",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",

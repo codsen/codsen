@@ -141,7 +141,7 @@
     "lodash.uniq": "^4.5.0",
     "log-symbols": "^3.0.0",
     "matcher": "^2.1.0",
-    "meow": "^5.0.0",
+    "meow": "^6.0.0",
     "object-delete-key": "^1.9.9",
     "object-merge-advanced": "^10.11.8",
     "object-path": "^0.11.4",
@@ -157,8 +157,8 @@
     "write-json-file": "^4.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
