@@ -4,6 +4,10 @@ const path = require("path");
 const execa = require("execa");
 const tempy = require("tempy");
 
+// we need to escape to prevent accidental "fixing" of this file through
+// build scripts
+const letterC = "\x63";
+
 //                                  *
 //                                  *
 //                                  *
@@ -49,9 +53,8 @@ t.test("01.01 - there are no usable files at all", async t => {
 //                                  *
 
 t.test("01.02 - cli.js in the root", async t => {
-  const originalFile = "console.log('052 zzz');\nconsole.log('052 zzz');";
-
-  const intendedFile = "console.log('054 zzz');\nconsole.log('054 zzz');";
+  const originalFile = `${letterC}onsole.log('052 zzz');\n${letterC}onsole.log('052 zzz');`;
+  const intendedFile = `${letterC}onsole.log('001 zzz');\n${letterC}onsole.log('002 zzz');`;
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -91,9 +94,8 @@ t.test("01.02 - cli.js in the root", async t => {
 //                                  *
 
 t.test("01.03/1 - pad override, -p", async t => {
-  const originalFile = "console.log('094 zzz');\nconsole.log('094 zzz');";
-
-  const intendedFile = "console.log('096 zzz');\nconsole.log('096 zzz');";
+  const originalFile = `${letterC}onsole.log('094 zzz');\n${letterC}onsole.log('094 zzz');`;
+  const intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -122,9 +124,8 @@ t.test("01.03/1 - pad override, -p", async t => {
 });
 
 t.test("01.03/2 - pad override, --pad", async t => {
-  const originalFile = "console.log('125 zzz');\nconsole.log('125 zzz');";
-
-  const intendedFile = "console.log('127 zzz');\nconsole.log('127 zzz');";
+  const originalFile = `${letterC}onsole.log('125 zzz');\n${letterC}onsole.log('125 zzz');`;
+  const intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -167,8 +168,8 @@ t.test("01.03/2 - pad override, --pad", async t => {
 //                                  *
 
 t.test("01.04 - one file called with glob, another not processed", async t => {
-  const originalFile = "console.log('170 zzz');\nconsole.log('170 zzz');";
-  const intendedFile = "console.log('171 zzz');\nconsole.log('171 zzz');";
+  const originalFile = `${letterC}onsole.log('170 zzz');\n${letterC}onsole.log('170 zzz');`;
+  const intendedFile = `${letterC}onsole.log('0001 zzz');\n${letterC}onsole.log('0002 zzz');`;
 
   // 1. fetch us an empty, random, temporary folder:
 
@@ -222,8 +223,8 @@ t.test("01.04 - one file called with glob, another not processed", async t => {
 //                                  *
 
 t.test("01.05 - two files processed by calling glob with wildcard", async t => {
-  const originalFile = "console.log('225 zzz');\nconsole.log('225 zzz');";
-  const intendedFile = "console.log('226 zzz');\nconsole.log('226 zzz');";
+  const originalFile = `${letterC}onsole.log('225 zzz');\n${letterC}onsole.log('225 zzz');`;
+  const intendedFile = `${letterC}onsole.log('0001 zzz');\n${letterC}onsole.log('0002 zzz');`;
 
   // 1. fetch us an empty, random, temporary folder:
 
