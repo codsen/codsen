@@ -21,6 +21,7 @@ deploy:
     - git config user.name
     - echo "npm user:"
     - npm whoami
+    - set -o pipefail
     - echo '█████████████████████████████ 1 █████████████████████████████'
     - git status
     - git checkout master

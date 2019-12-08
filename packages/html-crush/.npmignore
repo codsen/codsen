@@ -25,4 +25,4 @@ test_alt
 .npmignore
 .prettierignore
 rollup.config.js
-testStats.json
+testStats.md

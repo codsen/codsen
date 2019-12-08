@@ -24,4 +24,4 @@ test
 .prettierignore
 ideas.md
 rollup.config.js
-testStats.json
+testStats.md

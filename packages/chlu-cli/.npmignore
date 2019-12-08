@@ -22,4 +22,4 @@ test
 .prettierignore
 chlu_adds_missing_diff_links.gif
 feature1.gif
-testStats.json
+testStats.md

@@ -52,7 +52,7 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 5027,
+        "size": 5059,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -368,7 +368,7 @@
     },
     {
         "name": "lect",
-        "size": 74729,
+        "size": 74815,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

@@ -19,4 +19,4 @@ test
 
 .npmignore
 .prettierignore
-testStats.json
+testStats.md

@@ -37,7 +37,7 @@
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' | tail -n 2 | tee testStats.md"
+    "unittest": "set -o pipefail && ./node_modules/.bin/tap --no-only -R 'terse' | tail -n 2 | tee testStats.md"
   },
   "husky": {
     "hooks": {
