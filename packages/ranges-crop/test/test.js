@@ -35,7 +35,7 @@ t.test("00.02 - str len is not a number", t => {
   const error4 = t.throws(() => {
     crop([[1, 2]], false);
   });
-  t.ok(error4.message.includes("THROW_ID_02"));
+  t.ok(error4.message.includes("THROW_ID_0299999"));
   t.end();
 });
 
