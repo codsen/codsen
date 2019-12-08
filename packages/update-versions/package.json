@@ -39,6 +39,7 @@
   },
   "scripts": {
     "dev": "echo\"\"",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
