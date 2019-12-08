@@ -34,6 +34,16 @@ const cli = meow(
         type: "boolean",
         alias: "d",
         default: false
+      },
+      help: {
+        type: "boolean",
+        alias: "h",
+        default: false
+      },
+      version: {
+        type: "boolean",
+        alias: "v",
+        default: false
       }
     }
   }
@@ -44,10 +54,10 @@ updateNotifier({ pkg: cli.pkg }).notify();
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.v) {
+if (cli.flags.version) {
   log(cli.pkg.version);
   process.exit(0);
-} else if (cli.flags.h) {
+} else if (cli.flags.help) {
   log(cli.help);
   process.exit(0);
 }
@@ -321,15 +331,15 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     // -------------------------------------------------------------------------
     if (
       (isNormalDep || isCLI.length) &&
-      ((cli.flags.d &&
+      ((cli.flags.dev &&
         (!askerPackageJsonContents.devDependencies ||
           !askerPackageJsonContents.devDependencies[cli.input[i]])) ||
-        (!cli.flags.d &&
+        (!cli.flags.dev &&
           (!askerPackageJsonContents.dependencies ||
             !askerPackageJsonContents.dependencies[cli.input[i]])))
     ) {
       try {
-        if (cli.flags.d) {
+        if (cli.flags.dev) {
           // user wants dev dep added in package.json
           if (!askerPackageJsonContents.devDependencies) {
             askerPackageJsonContents.devDependencies = {};
