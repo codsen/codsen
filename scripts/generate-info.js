@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+
 const {
   sortAllObjectsSync
 } = require("../packages/json-comb-core/dist/json-comb-core.cjs");
@@ -14,7 +15,6 @@ const newdate = `${year}-${`${month}`.padStart(2, "0")}-${`${day}`.padStart(
   2,
   "0"
 )}`;
-const reg = /(\d+) passed/g;
 
 // FUNCTIONS
 // =========
@@ -103,17 +103,29 @@ allPackages.map(name => {
 
   // compile test stats
   try {
-    const obj = { name };
-    const fileContents = fs.readFileSync(
-      path.join("packages", name, "testStats.md"),
-      "utf8"
-    );
-    const res = fileContents.match(reg);
-    if (res.length) {
-      obj.suites = Number.parseInt(res[0].slice(0, -7));
-      obj.asserts = Number.parseInt(res[1].slice(0, -7));
-    }
-    allStats.push(obj);
+    // const obj = { name };
+    // const fileContents = fs.readFileSync(
+    //   path.join("packages", name, "testStats.md"),
+    //   "utf8"
+    // );
+    // let parsedRes;
+    // const p = new Parser(results => {
+    //   parsedRes = results;
+    // });
+    // console.log(
+    //   `${`\u001b[${33}m${`parsedRes`}\u001b[${39}m`} = ${JSON.stringify(
+    //     parsedRes,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    //
+    // const res = fileContents.match(reg);
+    // if (res.length) {
+    //   obj.suites = Number.parseInt(res[0].slice(0, -7));
+    //   obj.asserts = Number.parseInt(res[1].slice(0, -7));
+    // }
+    // allStats.push(obj);
   } catch (e) {
     console.log(
       `! couldn't read/parse ${path.join("packages", name, "testStats.md")}`
