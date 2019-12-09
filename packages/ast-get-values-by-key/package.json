@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.6.52",
+  "version": "2.6.53",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
@@ -125,7 +125,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.0",
+    "ast-monkey-traverse": "^1.12.1",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^2.1.0"
   },
@@ -133,8 +133,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "object-path": "^0.11.4",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",

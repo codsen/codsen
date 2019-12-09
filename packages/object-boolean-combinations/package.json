@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "2.11.49",
+  "version": "2.11.50",
   "description": "Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.",
   "license": "MIT",
   "engines": {
@@ -123,8 +123,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

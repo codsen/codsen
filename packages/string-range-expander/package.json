@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.10.50",
+  "version": "1.10.51",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {
@@ -122,8 +122,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

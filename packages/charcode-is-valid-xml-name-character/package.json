@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.10.49",
+  "version": "1.10.50",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "license": "MIT",
   "engines": {
@@ -122,14 +122,14 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.14.27"
+    "ranges-is-index-within": "^1.14.28"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

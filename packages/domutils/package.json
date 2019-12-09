@@ -1,6 +1,6 @@
 {
   "name": "domutils-bastardised",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "utilities for working with htmlparser2's dom",
   "license": "BSD-2-Clause",
   "private": "true",

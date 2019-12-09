@@ -1,6 +1,6 @@
 {
   "name": "helga",
-  "version": "1.1.24",
+  "version": "1.1.25",
   "description": "Your next best friend when editing complex nested code",
   "license": "MIT",
   "engines": {
@@ -127,8 +127,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

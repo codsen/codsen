@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.9.10",
+  "version": "5.9.11",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -113,14 +113,14 @@
     "timeout": 0
   },
   "dependencies": {
-    "string-left-right": "^2.3.10"
+    "string-left-right": "^2.3.11"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

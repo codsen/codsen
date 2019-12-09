@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.5.0...js-row-num@2.6.0) (2019-12-09)
+
+
+### Features
+
+* expand the spectrum of patterns recognised under opts.extractedLogContentsWereGiven ([5fc1fe3](https://gitlab.com/codsen/codsen/commit/5fc1fe3e9fece9cbf99a013b9c911768366d80e7))
+* opts.extractedLogContentsWereGiven ([de3a781](https://gitlab.com/codsen/codsen/commit/de3a781cd78ca0d4c276d4f0a177a4da1f4237c2))
+* opts.overrideRowNum ([a81cc76](https://gitlab.com/codsen/codsen/commit/a81cc768f317f54d4456c4891c31ebedf5282b88))
+* opts.returnRangesOnly ([c874453](https://gitlab.com/codsen/codsen/commit/c87445382d887631de6ba048a2e54bb0c65c8f9f))
+
+
+
+
+
 ## 2.6.0 (2019-11-30)
 
 `opts.overrideRowNum` will stop the program from counting row numbers and will place that integer instead.

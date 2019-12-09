@@ -1,13 +1,13 @@
 /**
  * string-uglify
  * Uglify - generate unique short names for sets of strings
- * Version: 1.2.30
+ * Version: 1.2.31
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
  */
 
-var version = "1.2.30";
+var version = "1.2.31";
 
 const isArr = Array.isArray;
 function tellcp(str, idNum) {

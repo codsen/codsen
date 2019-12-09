@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "2.0.40",
+  "version": "2.0.41",
   "description": "Decode HTML entities recursively, get string index ranges of what needs to be replaced where",
   "license": "MIT",
   "engines": {
@@ -122,14 +122,14 @@
   "dependencies": {
     "he": "^1.2.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.2.27"
+    "ranges-merge": "^4.2.28"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

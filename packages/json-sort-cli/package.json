@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "1.15.2",
+  "version": "1.15.3",
   "description": "Command line app to deep sort JSON files, retains package.json special key order",
   "license": "MIT",
   "engines": {
@@ -114,7 +114,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.0",
+    "ast-monkey-traverse": "^1.12.1",
     "chalk": "^3.0.0",
     "format-package": "^5.2.0",
     "fs-extra": "^8.1.0",
@@ -135,10 +135,10 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-row-num": "^1.0.0",
+    "eslint-plugin-row-num": "^1.1.0",
     "execa": "^3.4.0",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "p-map": "^3.0.0",
     "prettier": "^1.19.1",
     "tap": "^14.10.2",

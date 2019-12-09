@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.8.53",
+  "version": "1.8.54",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "engines": {
@@ -119,9 +119,9 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-compare": "^1.12.26",
-    "ast-monkey-traverse": "^1.12.0",
-    "check-types-mini": "^5.7.50",
+    "ast-compare": "^1.12.27",
+    "ast-monkey-traverse": "^1.12.1",
+    "check-types-mini": "^5.7.51",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -129,8 +129,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

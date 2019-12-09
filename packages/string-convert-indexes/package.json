@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.9.51",
+  "version": "1.9.52",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "engines": {
@@ -116,7 +116,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey": "^7.10.53",
+    "ast-monkey": "^7.10.54",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
@@ -126,8 +126,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

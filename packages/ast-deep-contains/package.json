@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "an alternative assertion for Ava's t.deepEqual and Tap's t.same",
   "license": "MIT",
   "engines": {
@@ -124,7 +124,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.0",
+    "ast-monkey-traverse": "^1.12.1",
     "object-path": "^0.11.4",
     "type-detect": "^4.0.8"
   },
@@ -132,8 +132,8 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.9",
-    "lect": "^0.11.2",
+    "js-row-num-cli": "^1.6.10",
+    "lect": "^0.11.3",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
