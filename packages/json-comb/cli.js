@@ -57,6 +57,14 @@ const cli = meow(
       tabs: {
         type: "boolean",
         alias: "t"
+      },
+      version: {
+        type: "boolean",
+        alias: "v"
+      },
+      help: {
+        type: "boolean",
+        alias: "h"
       }
     }
   }
@@ -74,10 +82,10 @@ updateNotifier({ pkg: cli.pkg }).notify();
 // Step #0. Take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.v) {
+if (cli.flags.version) {
   log(cli.pkg.version);
   process.exit(0);
-} else if (cli.flags.h) {
+} else if (cli.flags.help) {
   log(cli.help);
   process.exit(0);
 }
@@ -111,9 +119,9 @@ input = input.concat(
 let paths;
 
 let enforceOpts = {};
-if (cli.flags.i) {
+if (cli.flags.ignore) {
   enforceOpts = {
-    doNotFillThesePathsIfTheyContainPlaceholders: cli.flags.i
+    doNotFillThesePathsIfTheyContainPlaceholders: cli.flags.ignore
   };
 }
 
@@ -150,7 +158,7 @@ globby(input)
     // It's a result of a resolved promise.
 
     // console.log(
-    //   `\n\n\n\n153 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `\n\n\n\n161 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     finalPathsToProcessArr,
     //     null,
     //     4
@@ -173,9 +181,9 @@ globby(input)
     paths = finalPathsToProcessArr; // make a note of the final paths, we'll need it
     let allFileContentsArr;
     let referenceKeyset;
-    if (cli.flags.n) {
+    if (cli.flags.normalise) {
       // console.log(
-      //   `178 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `186 ${`\u001b[${33}m${`finalPathsToProcessArr`}\u001b[${39}m`} = ${JSON.stringify(
       //     finalPathsToProcessArr,
       //     null,
       //     4
@@ -190,7 +198,7 @@ globby(input)
       return pMap(paths, oneOfPaths => fs.readJson(oneOfPaths))
         .then(allJsonValuesArr => {
           // console.log(
-          //   `193${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          //   `201${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
           //     allJsonValuesArr,
           //     null,
           //     4
@@ -216,7 +224,7 @@ globby(input)
             ).then(newValue =>
               fs
                 .writeJson(singlePath, newValue, {
-                  spaces: cli.flags.t ? "\t" : 2
+                  spaces: cli.flags.tabs ? "\t" : 2
                 })
                 .then(() => {
                   log(

@@ -117,12 +117,12 @@ t.test("01.01 - version output mode", async t => {
 
 t.test("01.02 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
-  t.match(reportedVersion1.stdout, /Usage/);
-  t.match(reportedVersion1.stdout, /Options/);
+  t.match(reportedVersion1.stdout, /Usage/g);
+  t.match(reportedVersion1.stdout, /Options/g);
 
   const reportedVersion2 = await execa("./cli.js", ["--help"]);
-  t.match(reportedVersion2.stdout, /Usage/);
-  t.match(reportedVersion2.stdout, /Options/);
+  t.match(reportedVersion2.stdout, /Usage/g);
+  t.match(reportedVersion2.stdout, /Options/g);
   t.end();
 });
 
@@ -132,8 +132,8 @@ t.test("01.03 - no files found in the given directory [ID_1]", async t => {
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
-  t.match(stdOutContents.stdout, /Nothing found!/);
-  t.match(stdOutContents.stdout, /ID_1/);
+  t.match(stdOutContents.stdout, /Nothing found!/g);
+  t.match(stdOutContents.stdout, /ID_1/g);
   t.end();
 });
 
@@ -205,7 +205,7 @@ t.test("01.05 - normalisation stops if one file is given [ID_2]", async t => {
     .catch(err => t.fail(err));
 
   // CLI will complain no files could be found
-  t.match(stdOutContents.stdout, /ID_2/);
+  t.match(stdOutContents.stdout, /ID_2/g);
   t.end();
 });
 
