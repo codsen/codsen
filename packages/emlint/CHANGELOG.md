@@ -3,21 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.5.0](https://gitlab.com/codsen/codsen/compare/emlint@2.4.0...emlint@2.5.0) (2019-12-09)
-
+## 2.5.0 (2019-12-09)
 
 ### Features
 
-* new rule, attribute-malformed + new emitted event type, "attribute" ([6afac3d](https://gitlab.com/codsen/codsen/commit/6afac3db43aff939e4b2eb254ab08b9d0c8fe751))
-* new rule, bad-character-replacement-character ([82b24b8](https://gitlab.com/codsen/codsen/commit/82b24b8d18fc0be5416f6e72c753589564857aa4))
-* new rule, character-unspaced-punctuation ([e60a806](https://gitlab.com/codsen/codsen/commit/e60a8063ec870d64867b47f93aea5a7482268b4e))
-* new rule, tag-bold ([bb907cd](https://gitlab.com/codsen/codsen/commit/bb907cd6f350d4d1c8ca0480106a3780342ab3e2))
-* new rule, tag-is-present ([e627c14](https://gitlab.com/codsen/codsen/commit/e627c141c22e338d87e8d70bcc49bc99e9df0727))
-* rename and beef up rule: bad-character-tabulation ([cd4d0a0](https://gitlab.com/codsen/codsen/commit/cd4d0a0f9ce5c36e69113d544f6c68516f94de77))
-
-
-
-
+- new rule, attribute-malformed + new emitted event type, "attribute" ([6afac3d](https://gitlab.com/codsen/codsen/commit/6afac3db43aff939e4b2eb254ab08b9d0c8fe751))
+- new rule, bad-character-replacement-character ([82b24b8](https://gitlab.com/codsen/codsen/commit/82b24b8d18fc0be5416f6e72c753589564857aa4))
+- new rule, character-unspaced-punctuation ([e60a806](https://gitlab.com/codsen/codsen/commit/e60a8063ec870d64867b47f93aea5a7482268b4e))
+- new rule, tag-bold ([bb907cd](https://gitlab.com/codsen/codsen/commit/bb907cd6f350d4d1c8ca0480106a3780342ab3e2))
+- new rule, tag-is-present ([e627c14](https://gitlab.com/codsen/codsen/commit/e627c141c22e338d87e8d70bcc49bc99e9df0727))
+- rename and beef up rule: bad-character-tabulation ([cd4d0a0](https://gitlab.com/codsen/codsen/commit/cd4d0a0f9ce5c36e69113d544f6c68516f94de77))
 
 ## 2.4.0 (2019-11-27)
 

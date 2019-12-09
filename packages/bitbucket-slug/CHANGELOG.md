@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.50](https://gitlab.com/codsen/codsen/compare/bitbucket-slug@1.9.49...bitbucket-slug@1.9.50) (2019-12-09)
-
-**Note:** Version bump only for package bitbucket-slug
-
-
-
-
-
 ## 1.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

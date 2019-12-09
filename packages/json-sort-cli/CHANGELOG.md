@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.15.3](https://gitlab.com/codsen/codsen/compare/json-sort-cli@1.15.2...json-sort-cli@1.15.3) (2019-12-09)
-
+## 1.15.3 (2019-12-09)
 
 ### Bug Fixes
 
-* update to the latest meow api, no more short aliases ([412bdd4](https://gitlab.com/codsen/codsen/commit/412bdd432dbcc9e23a585132f8d24d2e95efa08e))
-
-
-
-
+- update to the latest meow api, no more short aliases ([412bdd4](https://gitlab.com/codsen/codsen/commit/412bdd432dbcc9e23a585132f8d24d2e95efa08e))
 
 ## 1.15.1 (2019-11-20)
 
