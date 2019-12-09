@@ -329,7 +329,7 @@
     },
     {
         "name": "json-comb",
-        "size": 6683,
+        "size": 6850,
         "imports": [
             "json-comb-core"
         ]
@@ -347,7 +347,7 @@
     },
     {
         "name": "json-sort-cli",
-        "size": 15776,
+        "size": 16260,
         "imports": [
             "ast-monkey-traverse"
         ]

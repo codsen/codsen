@@ -1,363 +1,361 @@
 TAP version 13
-ok 1 - test/test.js # time=486.215ms { # Subtest: 01 - entStartsWith is set
-ok 1 - expect truthy value
-ok 2 - expect truthy value
-1..2
-ok 1 - 01 - entStartsWith is set # time=5.022ms
-  
- # Subtest: 02 - entStartsWithCaseInsensitive is set
-ok 1 - expect truthy value
-ok 2 - expect truthy value
-1..2
-ok 2 - 02 - entStartsWithCaseInsensitive is set # time=7.905ms
-  
- # Subtest: 03 - entEndsWith is set
-ok 1 - expect truthy value
-ok 2 - expect truthy value
-1..2
-ok 3 - 03 - entEndsWith is set # time=1.037ms
-  
- # Subtest: 04 - entEndsWithCaseInsensitive is set
-ok 1 - expect truthy value
-ok 2 - expect truthy value
-ok 3 - expect truthy value
-1..3
-ok 4 - 04 - entEndsWithCaseInsensitive is set # time=1.158ms
-  
- # Subtest: 05 - decode throws if a non-entity is given
-ok 1 - expected to throw
-1..1
-ok 5 - 05 - decode throws if a non-entity is given # time=3.341ms
-  
- # Subtest: 06 - decode existing
-ok 1 - should be equal
-1..1
-ok 6 - 06 - decode existing # time=0.805ms
-  
- # Subtest: 07 - decode non-existing
-ok 1 - should be equal
-1..1
-ok 7 - 07 - decode non-existing # time=1.071ms
-  
- # Subtest: 08 - decode numeric
-ok 1 - should be equal
-1..1
-ok 8 - 08 - decode numeric # time=2.337ms
-  
- # Subtest: 09 - brokenNamedEntities.json is OK
-ok 1 - expect truthy value
-ok 2 - expect truthy value
-ok 3 - key "ound" is not unique
-ok 4 - key "ound" is not unique
-ok 5 - key "ound" is not unique
-ok 6 - key "ound" is not unique
-ok 7 - key "ound" is not unique
-ok 8 - key "ound" is not unique
-ok 9 - key "ound" is not unique
-ok 10 - key "ound" is not unique
-ok 11 - key "ound" is not unique
-ok 12 - key "ound" is not unique
-ok 13 - key "ound" is not unique
-ok 14 - key "ound" is not unique
-ok 15 - key "ound" is not unique
-ok 16 - key "ound" is not unique
-ok 17 - key "ound" is not unique
-ok 18 - key "ound" is not unique
-ok 19 - key "ound" is not unique
-ok 20 - key "ound" is not unique
-ok 21 - key "ound" is not unique
-ok 22 - key "ound" is not unique
-ok 23 - key "ound" is not unique
-ok 24 - key "ound" is not unique
-ok 25 - key "ound" is not unique
-ok 26 - key "ound" is not unique
-ok 27 - key "ound" is not unique
-ok 28 - key "ound" is not unique
-ok 29 - key "ound" is not unique
-ok 30 - key "ound" is not unique
-ok 31 - key "ound" is not unique
-ok 32 - key "ound" is not unique
-ok 33 - value "pound" is used among key names
-ok 34 - value "pound" is used among key names
-ok 35 - value "pound" is used among key names
-ok 36 - value "pound" is used among key names
-ok 37 - value "pound" is used among key names
-ok 38 - value "pound" is used among key names
-ok 39 - value "pound" is used among key names
-ok 40 - value "pound" is used among key names
-ok 41 - value "pound" is used among key names
-ok 42 - value "pound" is used among key names
-ok 43 - value "pound" is used among key names
-ok 44 - value "pound" is used among key names
-ok 45 - value "pound" is used among key names
-ok 46 - value "pound" is used among key names
-ok 47 - value "pound" is used among key names
-ok 48 - value "pound" is used among key names
-ok 49 - value "pound" is used among key names
-ok 50 - value "pound" is used among key names
-ok 51 - value "pound" is used among key names
-ok 52 - value "pound" is used among key names
-ok 53 - value "pound" is used among key names
-ok 54 - value "pound" is used among key names
-ok 55 - value "pound" is used among key names
-ok 56 - value "pound" is used among key names
-ok 57 - value "pound" is used among key names
-ok 58 - value "pound" is used among key names
-ok 59 - value "pound" is used among key names
-ok 60 - value "pound" is used among key names
-ok 61 - value "pound" is used among key names
-ok 62 - value "pound" is used among key names
-ok 63 - key "pond" is not unique
-ok 64 - key "pond" is not unique
-ok 65 - key "pond" is not unique
-ok 66 - key "pond" is not unique
-ok 67 - key "pond" is not unique
-ok 68 - key "pond" is not unique
-ok 69 - key "pond" is not unique
-ok 70 - key "pond" is not unique
-ok 71 - key "pond" is not unique
-ok 72 - key "pond" is not unique
-ok 73 - key "pond" is not unique
-ok 74 - key "pond" is not unique
-ok 75 - key "pond" is not unique
-ok 76 - key "pond" is not unique
-ok 77 - key "pond" is not unique
-ok 78 - key "pond" is not unique
-ok 79 - key "pond" is not unique
-ok 80 - key "pond" is not unique
-ok 81 - key "pond" is not unique
-ok 82 - key "pond" is not unique
-ok 83 - key "pond" is not unique
-ok 84 - key "pond" is not unique
-ok 85 - key "pond" is not unique
-ok 86 - key "pond" is not unique
-ok 87 - key "pond" is not unique
-ok 88 - key "pond" is not unique
-ok 89 - key "pond" is not unique
-ok 90 - key "pond" is not unique
-ok 91 - key "pond" is not unique
-ok 92 - key "pond" is not unique
-ok 93 - value "pound" is used among key names
-ok 94 - value "pound" is used among key names
-ok 95 - value "pound" is used among key names
-ok 96 - value "pound" is used among key names
-ok 97 - value "pound" is used among key names
-ok 98 - value "pound" is used among key names
-ok 99 - value "pound" is used among key names
-ok 100 - value "pound" is used among key names
-ok 101 - value "pound" is used among key names
-ok 102 - value "pound" is used among key names
-ok 103 - value "pound" is used among key names
-ok 104 - value "pound" is used among key names
-ok 105 - value "pound" is used among key names
-ok 106 - value "pound" is used among key names
-ok 107 - value "pound" is used among key names
-ok 108 - value "pound" is used among key names
-ok 109 - value "pound" is used among key names
-ok 110 - value "pound" is used among key names
-ok 111 - value "pound" is used among key names
-ok 112 - value "pound" is used among key names
-ok 113 - value "pound" is used among key names
-ok 114 - value "pound" is used among key names
-ok 115 - value "pound" is used among key names
-ok 116 - value "pound" is used among key names
-ok 117 - value "pound" is used among key names
-ok 118 - value "pound" is used among key names
-ok 119 - value "pound" is used among key names
-ok 120 - value "pound" is used among key names
-ok 121 - value "pound" is used among key names
-ok 122 - value "pound" is used among key names
-ok 123 - key "poubd" is not unique
-ok 124 - key "poubd" is not unique
-ok 125 - key "poubd" is not unique
-ok 126 - key "poubd" is not unique
-ok 127 - key "poubd" is not unique
-ok 128 - key "poubd" is not unique
-ok 129 - key "poubd" is not unique
-ok 130 - key "poubd" is not unique
-ok 131 - key "poubd" is not unique
-ok 132 - key "poubd" is not unique
-ok 133 - key "poubd" is not unique
-ok 134 - key "poubd" is not unique
-ok 135 - key "poubd" is not unique
-ok 136 - key "poubd" is not unique
-ok 137 - key "poubd" is not unique
-ok 138 - key "poubd" is not unique
-ok 139 - key "poubd" is not unique
-ok 140 - key "poubd" is not unique
-ok 141 - key "poubd" is not unique
-ok 142 - key "poubd" is not unique
-ok 143 - key "poubd" is not unique
-ok 144 - key "poubd" is not unique
-ok 145 - key "poubd" is not unique
-ok 146 - key "poubd" is not unique
-ok 147 - key "poubd" is not unique
-ok 148 - key "poubd" is not unique
-ok 149 - key "poubd" is not unique
-ok 150 - key "poubd" is not unique
-ok 151 - key "poubd" is not unique
-ok 152 - key "poubd" is not unique
-ok 153 - value "pound" is used among key names
-ok 154 - value "pound" is used among key names
-ok 155 - value "pound" is used among key names
-ok 156 - value "pound" is used among key names
-ok 157 - value "pound" is used among key names
-ok 158 - value "pound" is used among key names
-ok 159 - value "pound" is used among key names
-ok 160 - value "pound" is used among key names
-ok 161 - value "pound" is used among key names
-ok 162 - value "pound" is used among key names
-ok 163 - value "pound" is used among key names
-ok 164 - value "pound" is used among key names
-ok 165 - value "pound" is used among key names
-ok 166 - value "pound" is used among key names
-ok 167 - value "pound" is used among key names
-ok 168 - value "pound" is used among key names
-ok 169 - value "pound" is used among key names
-ok 170 - value "pound" is used among key names
-ok 171 - value "pound" is used among key names
-ok 172 - value "pound" is used among key names
-ok 173 - value "pound" is used among key names
-ok 174 - value "pound" is used among key names
-ok 175 - value "pound" is used among key names
-ok 176 - value "pound" is used among key names
-ok 177 - value "pound" is used among key names
-ok 178 - value "pound" is used among key names
-ok 179 - value "pound" is used among key names
-ok 180 - value "pound" is used among key names
-ok 181 - value "pound" is used among key names
-ok 182 - value "pound" is used among key names
-ok 183 - key "poud" is not unique
-ok 184 - key "poud" is not unique
-ok 185 - key "poud" is not unique
-ok 186 - key "poud" is not unique
-ok 187 - key "poud" is not unique
-ok 188 - key "poud" is not unique
-ok 189 - key "poud" is not unique
-ok 190 - key "poud" is not unique
-ok 191 - key "poud" is not unique
-ok 192 - key "poud" is not unique
-ok 193 - key "poud" is not unique
-ok 194 - key "poud" is not unique
-ok 195 - key "poud" is not unique
-ok 196 - key "poud" is not unique
-ok 197 - key "poud" is not unique
-ok 198 - key "poud" is not unique
-ok 199 - key "poud" is not unique
-ok 200 - key "poud" is not unique
-ok 201 - key "poud" is not unique
-ok 202 - key "poud" is not unique
-ok 203 - key "poud" is not unique
-ok 204 - key "poud" is not unique
-ok 205 - key "poud" is not unique
-ok 206 - key "poud" is not unique
-ok 207 - key "poud" is not unique
-ok 208 - key "poud" is not unique
-ok 209 - key "poud" is not unique
-ok 210 - key "poud" is not unique
-ok 211 - key "poud" is not unique
-ok 212 - key "poud" is not unique
-ok 213 - value "pound" is used among key names
-ok 214 - value "pound" is used among key names
-ok 215 - value "pound" is used among key names
-ok 216 - value "pound" is used among key names
-ok 217 - value "pound" is used among key names
-ok 218 - value "pound" is used among key names
-ok 219 - value "pound" is used among key names
-ok 220 - value "pound" is used among key names
-ok 221 - value "pound" is used among key names
-ok 222 - value "pound" is used among key names
-ok 223 - value "pound" is used among key names
-ok 224 - value "pound" is used among key names
-ok 225 - value "pound" is used among key names
-ok 226 - value "pound" is used among key names
-ok 227 - value "pound" is used among key names
-ok 228 - value "pound" is used among key names
-ok 229 - value "pound" is used among key names
-ok 230 - value "pound" is used among key names
-ok 231 - value "pound" is used among key names
-ok 232 - value "pound" is used among key names
-ok 233 - value "pound" is used among key names
-ok 234 - value "pound" is used among key names
-ok 235 - value "pound" is used among key names
-ok 236 - value "pound" is used among key names
-ok 237 - value "pound" is used among key names
-ok 238 - value "pound" is used among key names
-ok 239 - value "pound" is used among key names
-ok 240 - value "pound" is used among key names
-ok 241 - value "pound" is used among key names
-ok 242 - value "pound" is used among key names
-ok 243 - key "poumd" is not unique
-ok 244 - key "poumd" is not unique
-ok 245 - key "poumd" is not unique
-ok 246 - key "poumd" is not unique
-ok 247 - key "poumd" is not unique
-ok 248 - key "poumd" is not unique
-ok 249 - key "poumd" is not unique
-ok 250 - key "poumd" is not unique
-ok 251 - key "poumd" is not unique
-ok 252 - key "poumd" is not unique
-ok 253 - key "poumd" is not unique
-ok 254 - key "poumd" is not unique
-ok 255 - key "poumd" is not unique
-ok 256 - key "poumd" is not unique
-ok 257 - key "poumd" is not unique
-ok 258 - key "poumd" is not unique
-ok 259 - key "poumd" is not unique
-ok 260 - key "poumd" is not unique
-ok 261 - key "poumd" is not unique
-ok 262 - key "poumd" is not unique
-ok 263 - key "poumd" is not unique
-ok 264 - key "poumd" is not unique
-ok 265 - key "poumd" is not unique
-ok 266 - key "poumd" is not unique
-ok 267 - key "poumd" is not unique
-ok 268 - key "poumd" is not unique
-ok 269 - key "poumd" is not unique
-ok 270 - key "poumd" is not unique
-ok 271 - key "poumd" is not unique
-ok 272 - key "poumd" is not unique
-ok 273 - value "pound" is used among key names
-ok 274 - value "pound" is used among key names
-ok 275 - value "pound" is used among key names
-ok 276 - value "pound" is used among key names
-ok 277 - value "pound" is used among key names
-ok 278 - value "pound" is used among key names
-ok 279 - value "pound" is used among key names
-ok 280 - value "pound" is used among key names
-ok 281 - value "pound" is used among key names
-ok 282 - value "pound" is used among key names
-ok 283 - value "pound" is used among key names
-ok 284 - value "pound" is used among key names
-ok 285 - value "pound" is used among key names
-ok 286 - value "pound" is used among key names
-ok 287 - value "pound" is used among key names
-ok 288 - value "pound" is used among key names
-ok 289 - value "pound" is used among key names
-ok 290 - value "pound" is used among key names
-ok 291 - value "pound" is used among key names
-ok 292 - value "pound" is used among key names
-ok 293 - value "pound" is used among key names
-ok 294 - value "pound" is used among key names
-ok 295 - value "pound" is used among key names
-ok 296 - value "pound" is used among key names
-ok 297 - value "pound" is used among key names
-ok 298 - value "pound" is used among key names
-ok 299 - value "pound" is used among key names
-ok 300 - value "pound" is used among key names
-ok 301 - value "pound" is used among key names
-ok 302 - value "pound" is used among key names
-ok 303 - key "poun" is not unique
-ok 304 - key "poun" is not unique
-ok 305 - key "poun" is not unique
-ok 306 - key "poun" is not unique
-ok 307 - key "poun" is not unique
-ok 308 - key "poun" is not unique
-ok 309 - key "poun" is not unique
-ok 310 - key "poun" is not unique
-
-# time=2336.824ms
-
+# Subtest: test/test.js
+    # Subtest: 01 - entStartsWith is set
+        ok 1 - expect truthy value
+        ok 2 - expect truthy value
+        1..2
+    ok 1 - 01 - entStartsWith is set # time=16.732ms
+    
+    # Subtest: 02 - entStartsWithCaseInsensitive is set
+        ok 1 - expect truthy value
+        ok 2 - expect truthy value
+        1..2
+    ok 2 - 02 - entStartsWithCaseInsensitive is set # time=2.744ms
+    
+    # Subtest: 03 - entEndsWith is set
+        ok 1 - expect truthy value
+        ok 2 - expect truthy value
+        1..2
+    ok 3 - 03 - entEndsWith is set # time=2.453ms
+    
+    # Subtest: 04 - entEndsWithCaseInsensitive is set
+        ok 1 - expect truthy value
+        ok 2 - expect truthy value
+        ok 3 - expect truthy value
+        1..3
+    ok 4 - 04 - entEndsWithCaseInsensitive is set # time=2.754ms
+    
+    # Subtest: 05 - decode throws if a non-entity is given
+        ok 1 - expected to throw
+        1..1
+    ok 5 - 05 - decode throws if a non-entity is given # time=3.587ms
+    
+    # Subtest: 06 - decode existing
+        ok 1 - should be equal
+        1..1
+    ok 6 - 06 - decode existing # time=0.785ms
+    
+    # Subtest: 07 - decode non-existing
+        ok 1 - should be equal
+        1..1
+    ok 7 - 07 - decode non-existing # time=1.829ms
+    
+    # Subtest: 08 - decode numeric
+        ok 1 - should be equal
+        1..1
+    ok 8 - 08 - decode numeric # time=1.563ms
+    
+    # Subtest: 09 - brokenNamedEntities.json is OK
+        ok 1 - expect truthy value
+        ok 2 - expect truthy value
+        ok 3 - key "ound" is not unique
+        ok 4 - key "ound" is not unique
+        ok 5 - key "ound" is not unique
+        ok 6 - key "ound" is not unique
+        ok 7 - key "ound" is not unique
+        ok 8 - key "ound" is not unique
+        ok 9 - key "ound" is not unique
+        ok 10 - key "ound" is not unique
+        ok 11 - key "ound" is not unique
+        ok 12 - key "ound" is not unique
+        ok 13 - key "ound" is not unique
+        ok 14 - key "ound" is not unique
+        ok 15 - key "ound" is not unique
+        ok 16 - key "ound" is not unique
+        ok 17 - key "ound" is not unique
+        ok 18 - key "ound" is not unique
+        ok 19 - key "ound" is not unique
+        ok 20 - key "ound" is not unique
+        ok 21 - key "ound" is not unique
+        ok 22 - key "ound" is not unique
+        ok 23 - key "ound" is not unique
+        ok 24 - key "ound" is not unique
+        ok 25 - key "ound" is not unique
+        ok 26 - key "ound" is not unique
+        ok 27 - key "ound" is not unique
+        ok 28 - key "ound" is not unique
+        ok 29 - key "ound" is not unique
+        ok 30 - key "ound" is not unique
+        ok 31 - key "ound" is not unique
+        ok 32 - key "ound" is not unique
+        ok 33 - value "pound" is used among key names
+        ok 34 - value "pound" is used among key names
+        ok 35 - value "pound" is used among key names
+        ok 36 - value "pound" is used among key names
+        ok 37 - value "pound" is used among key names
+        ok 38 - value "pound" is used among key names
+        ok 39 - value "pound" is used among key names
+        ok 40 - value "pound" is used among key names
+        ok 41 - value "pound" is used among key names
+        ok 42 - value "pound" is used among key names
+        ok 43 - value "pound" is used among key names
+        ok 44 - value "pound" is used among key names
+        ok 45 - value "pound" is used among key names
+        ok 46 - value "pound" is used among key names
+        ok 47 - value "pound" is used among key names
+        ok 48 - value "pound" is used among key names
+        ok 49 - value "pound" is used among key names
+        ok 50 - value "pound" is used among key names
+        ok 51 - value "pound" is used among key names
+        ok 52 - value "pound" is used among key names
+        ok 53 - value "pound" is used among key names
+        ok 54 - value "pound" is used among key names
+        ok 55 - value "pound" is used among key names
+        ok 56 - value "pound" is used among key names
+        ok 57 - value "pound" is used among key names
+        ok 58 - value "pound" is used among key names
+        ok 59 - value "pound" is used among key names
+        ok 60 - value "pound" is used among key names
+        ok 61 - value "pound" is used among key names
+        ok 62 - value "pound" is used among key names
+        ok 63 - key "pond" is not unique
+        ok 64 - key "pond" is not unique
+        ok 65 - key "pond" is not unique
+        ok 66 - key "pond" is not unique
+        ok 67 - key "pond" is not unique
+        ok 68 - key "pond" is not unique
+        ok 69 - key "pond" is not unique
+        ok 70 - key "pond" is not unique
+        ok 71 - key "pond" is not unique
+        ok 72 - key "pond" is not unique
+        ok 73 - key "pond" is not unique
+        ok 74 - key "pond" is not unique
+        ok 75 - key "pond" is not unique
+        ok 76 - key "pond" is not unique
+        ok 77 - key "pond" is not unique
+        ok 78 - key "pond" is not unique
+        ok 79 - key "pond" is not unique
+        ok 80 - key "pond" is not unique
+        ok 81 - key "pond" is not unique
+        ok 82 - key "pond" is not unique
+        ok 83 - key "pond" is not unique
+        ok 84 - key "pond" is not unique
+        ok 85 - key "pond" is not unique
+        ok 86 - key "pond" is not unique
+        ok 87 - key "pond" is not unique
+        ok 88 - key "pond" is not unique
+        ok 89 - key "pond" is not unique
+        ok 90 - key "pond" is not unique
+        ok 91 - key "pond" is not unique
+        ok 92 - key "pond" is not unique
+        ok 93 - value "pound" is used among key names
+        ok 94 - value "pound" is used among key names
+        ok 95 - value "pound" is used among key names
+        ok 96 - value "pound" is used among key names
+        ok 97 - value "pound" is used among key names
+        ok 98 - value "pound" is used among key names
+        ok 99 - value "pound" is used among key names
+        ok 100 - value "pound" is used among key names
+        ok 101 - value "pound" is used among key names
+        ok 102 - value "pound" is used among key names
+        ok 103 - value "pound" is used among key names
+        ok 104 - value "pound" is used among key names
+        ok 105 - value "pound" is used among key names
+        ok 106 - value "pound" is used among key names
+        ok 107 - value "pound" is used among key names
+        ok 108 - value "pound" is used among key names
+        ok 109 - value "pound" is used among key names
+        ok 110 - value "pound" is used among key names
+        ok 111 - value "pound" is used among key names
+        ok 112 - value "pound" is used among key names
+        ok 113 - value "pound" is used among key names
+        ok 114 - value "pound" is used among key names
+        ok 115 - value "pound" is used among key names
+        ok 116 - value "pound" is used among key names
+        ok 117 - value "pound" is used among key names
+        ok 118 - value "pound" is used among key names
+        ok 119 - value "pound" is used among key names
+        ok 120 - value "pound" is used among key names
+        ok 121 - value "pound" is used among key names
+        ok 122 - value "pound" is used among key names
+        ok 123 - key "poubd" is not unique
+        ok 124 - key "poubd" is not unique
+        ok 125 - key "poubd" is not unique
+        ok 126 - key "poubd" is not unique
+        ok 127 - key "poubd" is not unique
+        ok 128 - key "poubd" is not unique
+        ok 129 - key "poubd" is not unique
+        ok 130 - key "poubd" is not unique
+        ok 131 - key "poubd" is not unique
+        ok 132 - key "poubd" is not unique
+        ok 133 - key "poubd" is not unique
+        ok 134 - key "poubd" is not unique
+        ok 135 - key "poubd" is not unique
+        ok 136 - key "poubd" is not unique
+        ok 137 - key "poubd" is not unique
+        ok 138 - key "poubd" is not unique
+        ok 139 - key "poubd" is not unique
+        ok 140 - key "poubd" is not unique
+        ok 141 - key "poubd" is not unique
+        ok 142 - key "poubd" is not unique
+        ok 143 - key "poubd" is not unique
+        ok 144 - key "poubd" is not unique
+        ok 145 - key "poubd" is not unique
+        ok 146 - key "poubd" is not unique
+        ok 147 - key "poubd" is not unique
+        ok 148 - key "poubd" is not unique
+        ok 149 - key "poubd" is not unique
+        ok 150 - key "poubd" is not unique
+        ok 151 - key "poubd" is not unique
+        ok 152 - key "poubd" is not unique
+        ok 153 - value "pound" is used among key names
+        ok 154 - value "pound" is used among key names
+        ok 155 - value "pound" is used among key names
+        ok 156 - value "pound" is used among key names
+        ok 157 - value "pound" is used among key names
+        ok 158 - value "pound" is used among key names
+        ok 159 - value "pound" is used among key names
+        ok 160 - value "pound" is used among key names
+        ok 161 - value "pound" is used among key names
+        ok 162 - value "pound" is used among key names
+        ok 163 - value "pound" is used among key names
+        ok 164 - value "pound" is used among key names
+        ok 165 - value "pound" is used among key names
+        ok 166 - value "pound" is used among key names
+        ok 167 - value "pound" is used among key names
+        ok 168 - value "pound" is used among key names
+        ok 169 - value "pound" is used among key names
+        ok 170 - value "pound" is used among key names
+        ok 171 - value "pound" is used among key names
+        ok 172 - value "pound" is used among key names
+        ok 173 - value "pound" is used among key names
+        ok 174 - value "pound" is used among key names
+        ok 175 - value "pound" is used among key names
+        ok 176 - value "pound" is used among key names
+        ok 177 - value "pound" is used among key names
+        ok 178 - value "pound" is used among key names
+        ok 179 - value "pound" is used among key names
+        ok 180 - value "pound" is used among key names
+        ok 181 - value "pound" is used among key names
+        ok 182 - value "pound" is used among key names
+        ok 183 - key "poud" is not unique
+        ok 184 - key "poud" is not unique
+        ok 185 - key "poud" is not unique
+        ok 186 - key "poud" is not unique
+        ok 187 - key "poud" is not unique
+        ok 188 - key "poud" is not unique
+        ok 189 - key "poud" is not unique
+        ok 190 - key "poud" is not unique
+        ok 191 - key "poud" is not unique
+        ok 192 - key "poud" is not unique
+        ok 193 - key "poud" is not unique
+        ok 194 - key "poud" is not unique
+        ok 195 - key "poud" is not unique
+        ok 196 - key "poud" is not unique
+        ok 197 - key "poud" is not unique
+        ok 198 - key "poud" is not unique
+        ok 199 - key "poud" is not unique
+        ok 200 - key "poud" is not unique
+        ok 201 - key "poud" is not unique
+        ok 202 - key "poud" is not unique
+        ok 203 - key "poud" is not unique
+        ok 204 - key "poud" is not unique
+        ok 205 - key "poud" is not unique
+        ok 206 - key "poud" is not unique
+        ok 207 - key "poud" is not unique
+        ok 208 - key "poud" is not unique
+        ok 209 - key "poud" is not unique
+        ok 210 - key "poud" is not unique
+        ok 211 - key "poud" is not unique
+        ok 212 - key "poud" is not unique
+        ok 213 - value "pound" is used among key names
+        ok 214 - value "pound" is used among key names
+        ok 215 - value "pound" is used among key names
+        ok 216 - value "pound" is used among key names
+        ok 217 - value "pound" is used among key names
+        ok 218 - value "pound" is used among key names
+        ok 219 - value "pound" is used among key names
+        ok 220 - value "pound" is used among key names
+        ok 221 - value "pound" is used among key names
+        ok 222 - value "pound" is used among key names
+        ok 223 - value "pound" is used among key names
+        ok 224 - value "pound" is used among key names
+        ok 225 - value "pound" is used among key names
+        ok 226 - value "pound" is used among key names
+        ok 227 - value "pound" is used among key names
+        ok 228 - value "pound" is used among key names
+        ok 229 - value "pound" is used among key names
+        ok 230 - value "pound" is used among key names
+        ok 231 - value "pound" is used among key names
+        ok 232 - value "pound" is used among key names
+        ok 233 - value "pound" is used among key names
+        ok 234 - value "pound" is used among key names
+        ok 235 - value "pound" is used among key names
+        ok 236 - value "pound" is used among key names
+        ok 237 - value "pound" is used among key names
+        ok 238 - value "pound" is used among key names
+        ok 239 - value "pound" is used among key names
+        ok 240 - value "pound" is used among key names
+        ok 241 - value "pound" is used among key names
+        ok 242 - value "pound" is used among key names
+        ok 243 - key "poumd" is not unique
+        ok 244 - key "poumd" is not unique
+        ok 245 - key "poumd" is not unique
+        ok 246 - key "poumd" is not unique
+        ok 247 - key "poumd" is not unique
+        ok 248 - key "poumd" is not unique
+        ok 249 - key "poumd" is not unique
+        ok 250 - key "poumd" is not unique
+        ok 251 - key "poumd" is not unique
+        ok 252 - key "poumd" is not unique
+        ok 253 - key "poumd" is not unique
+        ok 254 - key "poumd" is not unique
+        ok 255 - key "poumd" is not unique
+        ok 256 - key "poumd" is not unique
+        ok 257 - key "poumd" is not unique
+        ok 258 - key "poumd" is not unique
+        ok 259 - key "poumd" is not unique
+        ok 260 - key "poumd" is not unique
+        ok 261 - key "poumd" is not unique
+        ok 262 - key "poumd" is not unique
+        ok 263 - key "poumd" is not unique
+        ok 264 - key "poumd" is not unique
+        ok 265 - key "poumd" is not unique
+        ok 266 - key "poumd" is not unique
+        ok 267 - key "poumd" is not unique
+        ok 268 - key "poumd" is not unique
+        ok 269 - key "poumd" is not unique
+        ok 270 - key "poumd" is not unique
+        ok 271 - key "poumd" is not unique
+        ok 272 - key "poumd" is not unique
+        ok 273 - value "pound" is used among key names
+        ok 274 - value "pound" is used among key names
+        ok 275 - value "pound" is used among key names
+        ok 276 - value "pound" is used among key names
+        ok 277 - value "pound" is used among key names
+        ok 278 - value "pound" is used among key names
+        ok 279 - value "pound" is used among key names
+        ok 280 - value "pound" is used among key names
+        ok 281 - value "pound" is used among key names
+        ok 282 - value "pound" is used among key names
+        ok 283 - value "pound" is used among key names
+        ok 284 - value "pound" is used among key names
+        ok 285 - value "pound" is used among key names
+        ok 286 - value "pound" is used among key names
+        ok 287 - value "pound" is used among key names
+        ok 288 - value "pound" is used among key names
+        ok 289 - value "pound" is used among key names
+        ok 290 - value "pound" is used among key names
+        ok 291 - value "pound" is used among key names
+        ok 292 - value "pound" is used among key names
+        ok 293 - value "pound" is used among key names
+        ok 294 - value "pound" is used among key names
+        ok 295 - value "pound" is used among key names
+        ok 296 - value "pound" is used among key names
+        ok 297 - value "pound" is used among key names
+        ok 298 - value "pound" is used among key names
+        ok 299 - value "pound" is used among key names
+        ok 300 - value "pound" is used among key names
+        ok 301 - value "pound" is used among key names
+        ok 302 - value "pound" is used among key names
+        ok 303 - key "poun" is not unique
+        ok 304 - key "poun" is not unique
+        ok 305 - key "poun" is not unique
+        ok 306 - key "poun" is not unique
+        ok 307 - key "poun" is not unique
+        ok 308 - key "poun" is not unique
+        ok 309 - key "poun" is not unique
+        ok 310 - key "poun" is not unique
         ok 311 - key "poun" is not unique
         ok 312 - key "poun" is not unique
         ok 313 - key "poun" is not unique
@@ -1851,25 +1849,25 @@ ok 310 - key "poun" is not unique
         ok 1801 - value "zwnj" is used among key names
         ok 1802 - value "zwnj" is used among key names
         1..1802
-    ok 9 - 09 - brokenNamedEntities.json is OK # time=342.338ms
-
+    ok 9 - 09 - brokenNamedEntities.json is OK # time=670.463ms
+    
     # Subtest: 10 - minLength is numeric
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 10 - 10 - minLength is numeric # time=0.929ms
-
+    ok 10 - 10 - minLength is numeric # time=1.846ms
+    
     # Subtest: 11 - maxLength is numeric
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 11 - 11 - maxLength is numeric # time=0.652ms
-
+    ok 11 - 11 - maxLength is numeric # time=1.696ms
+    
     # Subtest: 12 - allNamedEntities checks
         ok 1 - expect truthy value
         1..1
-    ok 12 - 12 - allNamedEntities checks # time=2.631ms
-
+    ok 12 - 12 - allNamedEntities checks # time=1.693ms
+    
     # Subtest: 13 - uncertain list is set
         ok 1 - expect truthy value
         ok 2 - expect truthy value
@@ -1877,19 +1875,21 @@ ok 310 - key "poun" is not unique
         ok 4 - expect truthy value
         ok 5 - expect truthy value
         1..5
-    ok 13 - 13 - uncertain list is set # time=0.825ms
-
+    ok 13 - 13 - uncertain list is set # time=3.124ms
+    
     1..13
-    # time=486.215ms
+    # time=789.678ms
+ok 1 - test/test.js # time=789.678ms
 
-}
-
-ok 2 - test/umd-test.js # time=10.179ms { # Subtest: UMD build works fine
-ok 1 - expect truthy value
-1..1
-ok 1 - UMD build works fine # time=4.832ms
-  
- 1..1 # time=10.179ms
-}
+# Subtest: test/umd-test.js
+    # Subtest: UMD build works fine
+        ok 1 - expect truthy value
+        1..1
+    ok 1 - UMD build works fine # time=6.072ms
+    
+    1..1
+    # time=17.47ms
+ok 2 - test/umd-test.js # time=17.47ms
 
 1..2
+# time=9463.118ms
