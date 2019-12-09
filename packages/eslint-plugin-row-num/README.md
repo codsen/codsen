@@ -12,6 +12,8 @@ updates row numbers in front of each encountered console.log
 
 updates row numbers in front of each encountered console.log
 
+updates row numbers in front of each encountered console.log
+
 ## Table of Contents
 
 - [Install](#install)

@@ -162,7 +162,7 @@
 				"name": ""
 			},
 			{
-				"contents": "dist/\ntest/fixtures\nfixtures/\n*.json\n",
+				"contents": "dist/\ntest/fixtures\nfixtures/\n*.json\ntestStats.md\n",
 				"name": ".prettierignore"
 			},
 			{

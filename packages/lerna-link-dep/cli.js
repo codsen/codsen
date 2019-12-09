@@ -66,7 +66,7 @@ if (cli.flags.version) {
 // -----------------------------------------------------------------------------
 
 // console.log(
-//   `059 ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
+//   `069 ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
 //     cli.input,
 //     null,
 //     4
