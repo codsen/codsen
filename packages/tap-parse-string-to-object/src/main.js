@@ -164,6 +164,11 @@ function splitBySuite(str) {
   let suiteStartedAt = null;
   let doNothing = false;
 
+  if (!str.includes("{")) {
+    console.log(`168 no curlies! quick end, return whole str`);
+    return [[0, str.length]];
+  }
+
   for (let i = 0; i < len; i++) {
     // Logging:
     // -------------------------------------------------------------------------
@@ -202,7 +207,7 @@ function splitBySuite(str) {
     if (!doNothing && str[i] === "{" && suiteStartedAt === null) {
       suiteStartedAt = i + 1;
       console.log(
-        `205 i=${i} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`suiteStartedAt`}\u001b[${39}m`} = ${suiteStartedAt}`
+        `210 i=${i} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`suiteStartedAt`}\u001b[${39}m`} = ${suiteStartedAt}`
       );
     }
 
@@ -210,7 +215,7 @@ function splitBySuite(str) {
     if (!doNothing && str[i] === "}" && suiteStartedAt !== null) {
       // 1. push to res
       console.log(
-        `213 ${`\u001b[${90}m${`splitBySuite()`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${suiteStartedAt}, ${i}]`
+        `218 ${`\u001b[${90}m${`splitBySuite()`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${suiteStartedAt}, ${i}]`
       );
       res.push([suiteStartedAt, i]);
 
@@ -232,7 +237,7 @@ function splitBySuite(str) {
   console.log(" ");
   console.log(" ");
   console.log(
-    `235 ${`\u001b[${36}m${`splitBySuite()`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `240 ${`\u001b[${36}m${`splitBySuite()`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
@@ -261,17 +266,17 @@ function parse(str) {
   };
 
   const splitRes = splitBySuite(str);
-  // console.log(
-  //   `265 ${`\u001b[${90}m${`parse()`}\u001b[${39}m`} ${`\u001b[${33}m${`splitRes`}\u001b[${39}m`} = ${JSON.stringify(
-  //     splitRes,
-  //     null,
-  //     4
-  //   )}`
-  // );
+  console.log(
+    `270 ${`\u001b[${90}m${`parse()`}\u001b[${39}m`} ${`\u001b[${33}m${`splitRes`}\u001b[${39}m`} = ${JSON.stringify(
+      splitRes,
+      null,
+      4
+    )}`
+  );
   splitRes.forEach(suitesRangeArr => {
     const assertTotals = countAsserts(str, ...suitesRangeArr);
     console.log(
-      `274 ${`\u001b[${90}m${`parse()`}\u001b[${39}m`} ${`\u001b[${33}m${`assertTotals`}\u001b[${39}m`} = ${JSON.stringify(
+      `279 ${`\u001b[${90}m${`parse()`}\u001b[${39}m`} ${`\u001b[${33}m${`assertTotals`}\u001b[${39}m`} = ${JSON.stringify(
         assertTotals,
         null,
         4
@@ -305,7 +310,7 @@ function parse(str) {
   console.log(" ");
   console.log(" ");
   console.log(
-    `308 ${`\u001b[${36}m${`parse()`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `313 ${`\u001b[${36}m${`parse()`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

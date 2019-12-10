@@ -81,6 +81,9 @@ function splitBySuite(str) {
   var res = [];
   var suiteStartedAt = null;
   var doNothing = false;
+  if (!str.includes("{")) {
+    return [[0, str.length]];
+  }
   for (var i = 0; i < len; i++) {
     if (!doNothing && str[i] === "-" && str[i + 1] === "-" && str[i + 2] === "-") {
       doNothing = true;

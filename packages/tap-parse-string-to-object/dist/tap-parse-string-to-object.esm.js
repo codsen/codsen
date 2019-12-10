@@ -72,6 +72,9 @@ function splitBySuite(str) {
   const res = [];
   let suiteStartedAt = null;
   let doNothing = false;
+  if (!str.includes("{")) {
+    return [[0, str.length]];
+  }
   for (let i = 0; i < len; i++) {
     if (
       !doNothing &&
