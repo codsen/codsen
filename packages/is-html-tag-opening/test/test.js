@@ -254,7 +254,7 @@ t.test(
 // 05. ad-hoc
 // -----------------------------------------------------------------------------
 
-t.test(`05.01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.01 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<a b="ccc"<d>`;
   t.ok(is(s1, 0));
   t.false(is(s1, 6));
@@ -262,13 +262,13 @@ t.test(`05.01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
   t.end();
 });
 
-t.test(`05.02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.02 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `a < b`;
   t.false(is(s1, 2));
   t.end();
 });
 
-t.test(`05.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.03 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<span>a < b<span>`;
   t.ok(is(s1, 0));
   t.false(is(s1, 8));
@@ -276,56 +276,62 @@ t.test(`05.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
   t.end();
 });
 
-t.test(`05.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.04 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `\n<table`;
   t.ok(is(s1, 1));
   t.end();
 });
 
-t.test(`05.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.05 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<br${BACKSLASH}>`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.06 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `< ${BACKSLASH} br ${BACKSLASH} >`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.07 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<\t${BACKSLASH}///\t${BACKSLASH}${BACKSLASH}${BACKSLASH} br ${BACKSLASH} >`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.08 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `let's say that a < b and c > d.`;
   t.false(is(s1, 17));
   t.end();
 });
 
-t.test(`05.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.09 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `< p >`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.10 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `< / p >`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.11 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.11 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `< b / >`;
   t.ok(is(s1, 0));
   t.end();
 });
 
-t.test(`05.12 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - ad-hoc`, t => {
+t.test(`05.12 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `< ${BACKSLASH} b / >`;
+  t.ok(is(s1, 0));
+  t.end();
+});
+
+t.test(`05.13 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `</td nowrap yo yo/>`;
   t.ok(is(s1, 0));
   t.end();
 });

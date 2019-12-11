@@ -184,12 +184,17 @@ function isOpening(str, idx = 0) {
   } else if (
     str[idx] === "<" &&
     str[idx + 1] &&
-    ((!isNotLetter(str[idx + 1]) &&
-      matchRight(str, idx, knownHtmlTags, {
+    ((["/", BACKSLASH].includes(str[idx + 1]) &&
+      matchRight(str, idx + 1, knownHtmlTags, {
         cb: isNotLetter,
-        i: true,
-        trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+        i: true
       })) ||
+      (!isNotLetter(str[idx + 1]) &&
+        matchRight(str, idx, knownHtmlTags, {
+          cb: isNotLetter,
+          i: true,
+          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+        })) ||
       (isNotLetter(str[idx + 1]) &&
         matchRight(str, idx, knownHtmlTags, {
           // enhanced isNotLetter()
