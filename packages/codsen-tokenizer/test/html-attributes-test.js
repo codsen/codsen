@@ -406,6 +406,7 @@ t.test(t => {
   t.end();
 });
 
+// slash in the end
 t.test(t => {
   const gathered = [];
   ct(`<td nowrap/>`, obj => {
@@ -446,6 +447,51 @@ t.test(t => {
       }
     ],
     `03.02`
+  );
+  t.end();
+});
+
+// slash in front
+t.test(t => {
+  const gathered = [];
+  ct(`</td nowrap>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 2,
+        tagNameEndAt: 4,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 12,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "nowrap",
+            attribNameStartAt: 5,
+            attribNameEndAt: 11,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 5,
+            attribEnd: 11
+          }
+        ]
+      }
+    ],
+    `03.03`
   );
   t.end();
 });
@@ -514,7 +560,7 @@ t.only(t => {
         ]
       }
     ],
-    `03.03`
+    `03.04`
   );
   t.end();
 });
