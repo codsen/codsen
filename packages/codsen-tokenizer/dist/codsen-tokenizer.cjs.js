@@ -438,7 +438,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     if (!doNothing && token.type === "html" && isNum(attrib.attribNameStartAt) && i > attrib.attribNameStartAt && attrib.attribNameEndAt === null && !charSuitableForHTMLAttrName(str[i])) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
-      if (!str[i].trim().length) {
+      if (!str[i].trim().length || str[i] === ">" || str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
         attrib.attribEnd = i;
         token.attribs.push(Object.assign({}, attrib));
         attribReset();

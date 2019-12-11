@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/api-test.js
+ok 1 - test/api-test.js # time=65.685ms {
     ok 1 - 00.01 - 1st arg missing
     ok 2 - 00.02 - 1nd arg of a wrong type
     ok 3 - 00.03 - 2nd arg (tagCb()) wrong
@@ -7,330 +7,356 @@ TAP version 13
     ok 5 - 00.05 - 4th arg (opts) is wrong
     ok 6 - 00.06 - opts.reportProgressFunc is wrong
     1..6
-    # time=12.123ms
-ok 1 - test/api-test.js # time=12.123ms
+    # time=65.685ms
+}
 
-# Subtest: test/brokenhtml-test.js
-    # Subtest
-        ok 1 - 01.01 - [33mtag-space-after-opening-bracket[39m - 1
-        1..1
-    ok 1 # time=13.096ms
-    
-    # Subtest
-        ok 1 - 02.01 - [33mtag-closing-left-slash[39m - 1
-        1..1
-    ok 2 # time=3.182ms
-    
-    # Subtest
-        ok 1 - 02.02 - [33mtag-closing-left-slash[39m - 1
-        1..1
-    ok 3 # time=2.46ms
-    
-    # Subtest
-        ok 1 - 02.03 - [33mtag-closing-left-slash[39m - 1
-        1..1
-    ok 4 # time=2.466ms
-    
-    1..4
-    # time=89.686ms
-ok 2 - test/brokenhtml-test.js # time=89.686ms
-
-# Subtest: test/char-test.js
+ok 2 - test/char-test.js # time=91.242ms {
     # Subtest
         ok 1 - 01.01 - tag and text
         1..1
-    ok 1 # time=12.157ms
+    ok 1 # time=16.775ms
     
     1..1
-    # time=57.007ms
-ok 3 - test/char-test.js # time=57.007ms
+    # time=91.242ms
+}
 
-# Subtest: test/css-test.js
+ok 3 - test/css-test.js # time=281.571ms {
     # Subtest
         ok 1 - 01.01 - CSS in the head
         1..1
-    ok 1 # time=13.482ms
+    ok 1 # time=112.757ms
     
     # Subtest
         ok 1 - 01.02 - CSS, no whitespace inside
         1..1
-    ok 2 # time=3.798ms
+    ok 2 # time=6.094ms
     
     1..2
-    # time=71.456ms
-ok 4 - test/css-test.js # time=71.456ms
+    # time=281.571ms
+}
 
-# Subtest: test/esp-test.js
+ok 4 - test/brokenhtml-test.js # time=305.839ms {
+    # Subtest
+        ok 1 - 01.01 - [33mtag-space-after-opening-bracket[39m - 1
+        1..1
+    ok 1 # time=107.871ms
+    
+    # Subtest
+        ok 1 - 02.01 - [33mtag-closing-left-slash[39m - 1
+        1..1
+    ok 2 # time=2.728ms
+    
+    # Subtest
+        ok 1 - 02.02 - [33mtag-closing-left-slash[39m - 1
+        1..1
+    ok 3 # time=51.665ms
+    
+    # Subtest
+        ok 1 - 02.03 - [33mtag-closing-left-slash[39m - 1
+        1..1
+    ok 4 # time=4.451ms
+    
+    1..4
+    # time=305.839ms
+}
+
+ok 5 - test/esp-test.js # time=420.727ms {
     # Subtest
         ok 1 - 01.01 - ESP literals among text get reported
         1..1
-    ok 1 # time=10.998ms
+    ok 1 # time=25.088ms
     
     # Subtest
         ok 1 - 01.02 - ESP literals among text get reported
         1..1
-    ok 2 # time=3.055ms
+    ok 2 # time=2.951ms
     
     # Subtest
         ok 1 - 01.03 - ESP literals surrounded by HTML tags
         1..1
-    ok 3 # time=4.866ms
+    ok 3 # time=4.212ms
     
     # Subtest
         ok 1 - 01.04
         1..1
-    ok 4 # time=3.591ms
+    ok 4 # time=2.754ms
     
     # Subtest
         ok 1 - 01.05 - ESP literals surrounded by HTML tags, tight
         1..1
-    ok 5 # time=3.026ms
+    ok 5 # time=2.262ms
     
     # Subtest
         ok 1 - 01.06
         1..1
-    ok 6 # time=3.055ms
+    ok 6 # time=9.652ms
     
     # Subtest
         ok 1 - 01.07
         1..1
-    ok 7 # time=3.328ms
+    ok 7 # time=2.203ms
     
     # Subtest
         ok 1 - 01.08
         1..1
-    ok 8 # time=22.735ms
+    ok 8 # time=2.954ms
     
     # Subtest
         ok 1 - 01.09 - Responsys-style ESP tag
         1..1
-    ok 9 # time=6.453ms
+    ok 9 # time=2.13ms
     
     # Subtest
         ok 1 - 01.10 - two nunjucks tags, same pattern set of two, tight
         1..1
-    ok 10 # time=2.525ms
+    ok 10 # time=1.542ms
     
     # Subtest
         ok 1 - 01.11 - two nunjucks tags, different pattern set of two, tight
         1..1
-    ok 11 # time=2.649ms
+    ok 11 # time=30.851ms
     
     # Subtest
         ok 1 - 01.12 - different set, *|zzz|*
         1..1
-    ok 12 # time=2.026ms
+    ok 12 # time=1.834ms
     
     # Subtest
         ok 1 - 01.13 - error, two ESP tags joined, first one ends with heads instead of tails
         1..1
-    ok 13 # time=1.995ms
+    ok 13 # time=1.29ms
     
     1..13
-    # time=206.842ms
-ok 5 - test/esp-test.js # time=206.842ms
+    # time=420.727ms
+}
 
-# Subtest: test/html-attributes-test.js
+ok 6 - test/html-attributes-test.js # time=246.941ms {
     # Subtest
         ok 1 - 01.01 - [36mbasic[39m - single- and double-quoted attr
         1..1
-    ok 1 # time=14.474ms
+    ok 1 # time=33.782ms
     
     # Subtest
         ok 1 - 01.02 - [36mbasic[39m - value-less attribute
         1..1
-    ok 2 # time=4.253ms
+    ok 2 # time=3.639ms
+    
+    # Subtest
+        ok 1 - 01.03 - [36mbasic[39m - a closing tag
+        1..1
+    ok 3 # time=44.995ms
+    
+    # Subtest
+        ok 1 - 01.04 - [36mbasic[39m - a closing tag
+        1..1
+    ok 4 # time=2.119ms
     
     # Subtest
         ok 1 - 02.01 - [36mbroken[39m - no equals but quotes present
         1..1
-    ok 3 # time=3.584ms
+    ok 5 # time=2.255ms
     
     # Subtest
         ok 1 - 02.03 - [36mbroken[39m - two equals
         1..1
-    ok 4 # time=3.303ms
+    ok 6 # time=2.132ms
     
-    1..4
-    # time=101.773ms
-ok 6 - test/html-attributes-test.js # time=101.773ms
+    # Subtest
+        ok 1 - 03.01
+        1..1
+    ok 7 # time=2.255ms
+    
+    # Subtest
+        ok 1 - 03.02
+        1..1
+    ok 8 # time=2.246ms
+    
+    # "" has `only` set but all tests run
+    # Subtest
+        ok 1 - 03.03
+        1..1
+    ok 9 # time=3.744ms
+    
+    1..9
+    # time=246.941ms
+}
 
-# Subtest: test/html-test.js
+ok 7 - test/html-test.js # time=805.74ms {
     # Subtest
         ok 1 - 01.01 - text-tag-text
         1..1
-    ok 1 # time=15.799ms
+    ok 1 # time=68.683ms
     
     # Subtest
         ok 1 - 01.02 - text only
         1..1
-    ok 2 # time=3.302ms
+    ok 2 # time=1.641ms
     
     # Subtest
         ok 1 - 01.03 - opening tag only
         1..1
-    ok 3 # time=3.467ms
+    ok 3 # time=1.77ms
     
     # Subtest
         ok 1 - 01.04 - closing tag only
         1..1
-    ok 4 # time=3.191ms
+    ok 4 # time=50.267ms
     
     # Subtest
         ok 1 - 01.05 - self-closing tag only
         1..1
-    ok 5 # time=3.17ms
+    ok 5 # time=11.001ms
     
     # Subtest
         ok 1 - 01.06 - multiple tags
         1..1
-    ok 6 # time=3.656ms
+    ok 6 # time=1.973ms
     
     # Subtest
         ok 1 - 01.07 - closing bracket in the attribute's value
         1..1
-    ok 7 # time=12.382ms
+    ok 7 # time=2.166ms
     
     # Subtest
         ok 1 - 01.08 - closing bracket layers of nested quotes
         1..1
-    ok 8 # time=14.837ms
+    ok 8 # time=2.023ms
     
     # Subtest
         ok 1 - 01.09 - bracket as text
         1..1
-    ok 9 # time=20.077ms
+    ok 9 # time=6.787ms
     
     # Subtest
         ok 1 - 01.10 - tag followed by brackets
         1..1
-    ok 10 # time=4.814ms
+    ok 10 # time=16.334ms
     
     # Subtest
         ok 1 - 01.11 - html comment
         1..1
-    ok 11 # time=4.436ms
+    ok 11 # time=3.194ms
     
     # Subtest
         ok 1 - 01.12 - html5 doctype
         1..1
-    ok 12 # time=3.829ms
+    ok 12 # time=3.589ms
     
     # Subtest
         ok 1 - 01.13 - xhtml doctype
         1..1
-    ok 13 # time=6.17ms
+    ok 13 # time=4.416ms
     
     # Subtest
         ok 1 - 01.14 - xhtml DTD doctype
         1..1
-    ok 14 # time=12.893ms
+    ok 14 # time=13.272ms
     
     # Subtest
         ok 1 - 01.15 - void tags
         1..1
-    ok 15 # time=2.904ms
+    ok 15 # time=1.34ms
     
     # Subtest
         ok 1 - 01.16 - recognised tags
         1..1
-    ok 16 # time=2.77ms
+    ok 16 # time=1.548ms
     
     # Subtest
         ok 1 - 01.17 - unrecognised tags
         1..1
-    ok 17 # time=2.933ms
+    ok 17 # time=1.572ms
     
     # Subtest
         ok 1 - 01.18 - wrong case but still recognised tags
         1..1
-    ok 18 # time=3.448ms
+    ok 18 # time=3.132ms
     
     # Subtest
         ok 1 - 01.19 - correct HTML5 doctype
         1..1
-    ok 19 # time=12.743ms
+    ok 19 # time=22.065ms
     
     # Subtest
         ok 1 - 01.20 - correct HTML5 doctype
         1..1
-    ok 20 # time=4.653ms
+    ok 20 # time=38.28ms
     
     # Subtest
         ok 1 - 01.21 - tag names with numbers
         1..1
-    ok 21 # time=3.018ms
+    ok 21 # time=2.09ms
     
     # Subtest
         ok 1 - 02.01 - CDATA - correct
         1..1
-    ok 22 # time=11.798ms
+    ok 22 # time=8.863ms
     
     # Subtest
         ok 1 - 02.02 - CDATA - messed up 1
         1..1
-    ok 23 # time=4.413ms
+    ok 23 # time=3.02ms
     
     # Subtest
         ok 1 - 02.03 - CDATA - messed up 2
         1..1
-    ok 24 # time=6.037ms
+    ok 24 # time=3.737ms
     
     # Subtest
         ok 1 - 02.04 - CDATA - messed up 3
         1..1
-    ok 25 # time=5.114ms
+    ok 25 # time=2.38ms
     
     # Subtest
         ok 1 - 03.01 - XML - correct
         1..1
-    ok 26 # time=16.09ms
+    ok 26 # time=7.266ms
     
     # Subtest
         ok 1 - 03.02 - XML - incorrect 1
         1..1
-    ok 27 # time=14.963ms
+    ok 27 # time=2.103ms
     
     # Subtest
         ok 1 - 03.02 - XML - incorrect 2
         1..1
-    ok 28 # time=10.045ms
+    ok 28 # time=1.879ms
     
     # Subtest
         ok 1 - 03.03 - XML - incorrect 3
         1..1
-    ok 29 # time=12.619ms
+    ok 29 # time=12.992ms
     
     1..29
-    # time=518.816ms
-ok 7 - test/html-test.js # time=518.816ms
+    # time=805.74ms
+}
 
-# Subtest: test/reportProgressFunc-test.js
+ok 8 - test/reportProgressFunc-test.js # time=434.22ms {
     # Subtest
         ok 1 - 01.01 - [36mopts.reportProgressFunc[39m - null
         1..1
-    ok 1 # time=9.968ms
+    ok 1 # time=73.166ms
     
     # Subtest
         ok 1 - 01.02 - [36mopts.reportProgressFunc[39m - false
         1..1
-    ok 2 # time=2.569ms
+    ok 2 # time=28.687ms
     
     # Subtest
         ok 1 - 01.03 - [36mopts.reportProgressFunc[39m - short length reports only at 50%
         1..1
-    ok 3 # time=6.14ms
+    ok 3 # time=5.952ms
     
     # Subtest
         ok 1 - (unnamed test)
         ok 2 - 01.04 - [36mopts.reportProgressFunc[39m - longer length reports at 0-100%
         1..2
-    ok 4 # time=16.449ms
+    ok 4 # time=28.918ms
     
     # Subtest
         ok 1 - 01.05 - [36mopts.reportProgressFunc[39m - custom reporting range, short input
         1..1
-    ok 5 # time=23.442ms
+    ok 5 # time=30.95ms
     
     # Subtest
         ok 1 - (unnamed test)
@@ -402,21 +428,21 @@ ok 7 - test/html-test.js # time=518.816ms
         ok 67 - should be equal
         ok 68 - 01.06 - [36mopts.reportProgressFunc[39m - custom reporting range, longer input
         1..68
-    ok 6 # time=98.331ms
+    ok 6 # time=98.571ms
     
     1..6
-    # time=235.489ms
-ok 8 - test/reportProgressFunc-test.js # time=235.489ms
+    # time=434.22ms
+}
 
-# Subtest: test/umd-test.js
+ok 9 - test/umd-test.js # time=47.953ms {
     # Subtest: UMD build works fine
         ok 1 - expect truthy value
         1..1
-    ok 1 - UMD build works fine # time=10.315ms
+    ok 1 - UMD build works fine # time=15.599ms
     
     1..1
-    # time=76.032ms
-ok 9 - test/umd-test.js # time=76.032ms
+    # time=47.953ms
+}
 
 1..9
-# time=16487.581ms
+# time=8213.247ms

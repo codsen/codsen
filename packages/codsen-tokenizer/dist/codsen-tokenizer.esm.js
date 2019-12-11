@@ -722,7 +722,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
-      if (!str[i].trim().length) {
+      if (
+        !str[i].trim().length ||
+        str[i] === ">" ||
+        (str[i] === "/" && str[right(str, i)] === ">")
+      ) {
         attrib.attribEnd = i;
         token.attribs.push(Object.assign({}, attrib));
         attribReset();

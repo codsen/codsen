@@ -1253,8 +1253,17 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       );
 
       // maybe it's a value-less attribute?
-      if (!str[i].trim().length) {
+      if (
+        !str[i].trim().length ||
+        str[i] === ">" ||
+        (str[i] === "/" && str[right(str, i)] === ">")
+      ) {
         attrib.attribEnd = i;
+        console.log(
+          `1263 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndAt`}\u001b[${39}m`} = ${
+            attrib.attribEnd
+          }`
+        );
 
         // push and wipe
         token.attribs.push(Object.assign({}, attrib));
@@ -1272,11 +1281,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       attrib.attribStart === null &&
       charSuitableForHTMLAttrName(str[i])
     ) {
-      console.log(`1275 inside catch the tag attribute name start clauses`);
+      console.log(`1284 inside catch the tag attribute name start clauses`);
       attrib.attribStart = i;
       attrib.attribNameStartAt = i;
       console.log(
-        `1279 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStart`}\u001b[${39}m`} = ${
+        `1288 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStart`}\u001b[${39}m`} = ${
           attrib.attribStart
         }; ${`\u001b[${33}m${`attrib.attribNameStartAt`}\u001b[${39}m`} = ${
           attrib.attribNameStartAt
@@ -1299,13 +1308,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           str[attrib.attribOpeningQuoteAt] === str[i] &&
           !layers.some(layerObj => layerObj.type === "esp")
         ) {
-          console.log(`1302 opening and closing quotes matched!`);
+          console.log(`1311 opening and closing quotes matched!`);
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
           attrib.attribEnd = i + 1;
           console.log(
-            `1308 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
+            `1317 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
               attrib.attribClosingQuoteAt
             }; ${`\u001b[${33}m${`attrib.attribValueEndAt`}\u001b[${39}m`} = ${
               attrib.attribValueEndAt
@@ -1341,7 +1350,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       ) {
         attrib.attribValueStartAt = right(str, i);
         console.log(
-          `1344 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
+          `1353 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartAt
           }`
         );
@@ -1351,7 +1360,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           attrib.attribValueStartAt = i + 1;
         }
         console.log(
-          `1354 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
+          `1363 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
             attrib.attribOpeningQuoteAt
           }; ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartAt
@@ -1382,7 +1391,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
     if (charCb) {
       console.log(
-        `1385 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+        `1394 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {
             type: token.type,
             chr: str[i],

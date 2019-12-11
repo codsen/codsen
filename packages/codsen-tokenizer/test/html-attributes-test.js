@@ -96,6 +96,69 @@ t.test(t => {
   t.end();
 });
 
+t.test(t => {
+  const gathered = [];
+  ct(`</td>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 2,
+        tagNameEndAt: 4,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 5,
+        tail: null,
+        kind: null,
+        attribs: []
+      }
+    ],
+    `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`
+  );
+  t.end();
+});
+
+// space inside tag
+t.test(t => {
+  const gathered = [];
+  ct(`</td >`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 2,
+        tagNameEndAt: 4,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 6,
+        tail: null,
+        kind: null,
+        attribs: []
+      }
+    ],
+    `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`
+  );
+  t.end();
+});
+
 // TODO
 // t.test(t => {
 //   const gathered = [];
@@ -292,6 +355,166 @@ t.test(t => {
       }
     ],
     `02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`
+  );
+  t.end();
+});
+
+// 03. bool attributes
+// -----------------------------------------------------------------------------
+
+t.test(t => {
+  const gathered = [];
+  ct(`<td nowrap>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 1,
+        tagNameEndAt: 3,
+        tagName: "td",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 11,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "nowrap",
+            attribNameStartAt: 4,
+            attribNameEndAt: 10,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 4,
+            attribEnd: 10
+          }
+        ]
+      }
+    ],
+    `03.01`
+  );
+  t.end();
+});
+
+t.test(t => {
+  const gathered = [];
+  ct(`<td nowrap/>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 1,
+        tagNameEndAt: 3,
+        tagName: "td",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 12,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "nowrap",
+            attribNameStartAt: 4,
+            attribNameEndAt: 10,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 4,
+            attribEnd: 10
+          }
+        ]
+      }
+    ],
+    `03.02`
+  );
+  t.end();
+});
+
+// now crazier
+t.only(t => {
+  const gathered = [];
+  ct(`</td nowrap yo yo/>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartAt: 2,
+        tagNameEndAt: 4,
+        tagName: "td",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 19,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "nowrap",
+            attribNameStartAt: 5,
+            attribNameEndAt: 11,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 5,
+            attribEnd: 11
+          },
+          {
+            attribName: "yo",
+            attribNameStartAt: 12,
+            attribNameEndAt: 14,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 12,
+            attribEnd: 14
+          },
+          {
+            attribName: "yo",
+            attribNameStartAt: 15,
+            attribNameEndAt: 17,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 15,
+            attribEnd: 17
+          }
+        ]
+      }
+    ],
+    `03.03`
   );
   t.end();
 });
