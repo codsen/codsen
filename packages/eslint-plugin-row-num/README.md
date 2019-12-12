@@ -1,61 +1,20 @@
 # eslint-plugin-row-num
 
-updates row numbers in front of each encountered console.log
+> updates row numbers in front of each encountered console.log
 
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
-
-updates row numbers in front of each encountered console.log
+[![Minimum Node version required][node-img]][node-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Downloads/Month][downloads-img]][downloads-url]
+[![Code style: prettier][prettier-img]][prettier-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
-- [Install](#install)
 - [Usage](#usage)
 - [Supported Rules](#supported-rules)
 - [Contributing](#contributing)
 - [Licence](#licence)
-
-## Install
-
-```bash
-npm i eslint-plugin-row-num
-```
-
-Consume via a `require()`:
-
-```js
-const  = require("eslint-plugin-row-num");
-```
-
-or as an ES Module:
-
-```js
-import  from "eslint-plugin-row-num";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/eslint-plugin-row-num/dist/eslint-plugin-row-num.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "eslintPluginRowNum" which you consume like this:
-const  = eslintPluginRowNum;
-```
-
-This package has three builds in `dist/` folder:
-
-**[⬆ back to top](#)**
 
 ## Usage
 
@@ -101,3 +60,16 @@ The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the devel
 MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
+
+[node-img]: https://img.shields.io/node/v/eslint-plugin-row-num.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/eslint-plugin-row-num
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/eslint-plugin-row-num
+[downloads-img]: https://img.shields.io/npm/dm/eslint-plugin-row-num.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/eslint-plugin-row-num
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

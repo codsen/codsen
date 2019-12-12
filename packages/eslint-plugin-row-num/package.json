@@ -29,15 +29,64 @@
   "main": "dist/eslint-plugin-row-num.cjs.js",
   "scripts": {
     "dev": "echo\"\"",
+    "devunittest": "npm run test",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
     "test": "npm run lint && npm run unittest && npm run format",
     "unittest": "mocha --recursively",
     "version": "git add ."
   },
   "lect": {
+    "badges": {
+      "cov": false,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": false,
+      "travis": false,
+      "vulnerabilities": false
+    },
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
     "special": true,
     "various": {
       "back_to_top": {
@@ -45,7 +94,8 @@
         "label": ""
       },
       "devDependencies": [
-        "eslint"
+        "eslint",
+        "mocha"
       ]
     }
   },
@@ -61,8 +111,10 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "benchmark": "^2.1.4",
+    "eslint": "^6.7.2",
     "js-row-num-cli": "^1.6.10",
     "lect": "^0.11.3",
+    "mocha": "^6.2.2",
     "rollup": "^1.27.9",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
