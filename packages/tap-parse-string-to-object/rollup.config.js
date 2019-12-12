@@ -1,3 +1,4 @@
+import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -29,6 +30,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        builtins(),
         resolve(),
         json(),
         commonjs(),
@@ -42,11 +44,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [""],
+      external: ["isstream", "split2", "through2"],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         babel(),
         cleanup({ comments: "istanbul" }),
@@ -58,14 +61,31 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [""],
+      external: ["isstream", "split2", "through2"],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
+      ]
+    },
+
+    // util.js build:
+    {
+      input: "src/util.js",
+      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
+      external: [],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        builtins(),
+        resolve(),
+        json(),
+        cleanup({ comments: "istanbul" })
       ]
     }
   ];

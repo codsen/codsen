@@ -1,15 +1,6 @@
-/**
- * tap-parse-string-to-object
- * Parses raw Tap output, string-to-object
- * Version: 1.1.0
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object
- */
+'use strict';
 
-import isStream from 'isstream';
-import split2 from 'split2';
-import through2 from 'through2';
+Object.defineProperty(exports, '__esModule', { value: true });
 
 function stringPingLineByLine(str, cb) {
   let start = null;
@@ -121,42 +112,5 @@ class Counter {
   }
 }
 
-function externalApi(something) {
-  if (isStream(something)) {
-    return new Promise((resolve, reject) => {
-      const counter = new Counter();
-      something.pipe(split2()).pipe(
-        through2.obj((line, encoding, next) => {
-          counter.readLine(line);
-          next();
-        })
-      );
-      something.on("end", () => {
-        return resolve(counter.getTotal());
-      });
-      something.on("error", reject);
-    });
-  } else if (typeof something === "string") {
-    if (!something.length) {
-      return {
-        ok: true,
-        assertsTotal: 0,
-        assertsPassed: 0,
-        assertsFailed: 0,
-        suitesTotal: 0,
-        suitesPassed: 0,
-        suitesFailed: 0
-      };
-    }
-    const counter = new Counter();
-    stringPingLineByLine(something, line => {
-      counter.readLine(line);
-    });
-    return counter.getTotal();
-  }
-  throw new Error(
-    "tap-parse-string-to-object: [THROW_ID_01] inputs should be either string or stream"
-  );
-}
-
-export default externalApi;
+exports.Counter = Counter;
+exports.stringPingLineByLine = stringPingLineByLine;
