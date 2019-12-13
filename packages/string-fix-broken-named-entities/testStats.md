@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/decode-test.js
+ok 1 - test/decode-test.js # time=4581.265ms {
     # Subtest: 2125 - [36mprogrammatic tests[39m
         ok 1 - Aacute - 05; 1/2124
         ok 2 - aacute - 05; 2/2124
@@ -2126,13 +2126,13 @@ TAP version 13
         ok 2123 - zwj - 05; 2123/2124
         ok 2124 - zwnj - 05; 2124/2124
         1..2124
-    ok 1 - 2125 - [36mprogrammatic tests[39m # time=3745.521ms
+    ok 1 - 2125 - [36mprogrammatic tests[39m # time=4276.411ms
     
     1..1
-    # time=3756.973ms
-ok 1 - test/decode-test.js # time=3756.973ms
+    # time=4581.265ms
+}
 
-# Subtest: test/flipped-case-test.js
+ok 2 - test/flipped-case-test.js # time=36273.017ms {
     # Subtest: 2125 - [36mprogrammatic tests[39m
         ok 1 - "AAcute" - 04; 1/2124
         ok 2 - "AaCute" - 04; 1/2124
@@ -2542,6 +2542,7 @@ ok 1 - test/decode-test.js # time=3756.973ms
         ok 406 - "Backsim" - 04; 83/2124
         ok 407 - "bAcksim" - 04; 83/2124
         ok 408 - "baCksim" - 04; 83/2124
+# time=40435.808ms
         ok 409 - "bacKsim" - 04; 83/2124
         ok 410 - "backSim" - 04; 83/2124
         ok 411 - "backsIm" - 04; 83/2124
@@ -15205,13 +15206,13 @@ ok 1 - test/decode-test.js # time=3756.973ms
         ok 13069 - "zwNj" - 04; 2124/2124
         ok 13070 - "zwnJ" - 04; 2124/2124
         1..13070
-    ok 1 - 2125 - [36mprogrammatic tests[39m # time=24825.993ms
+    ok 1 - 2125 - [36mprogrammatic tests[39m # time=36220.959ms
     
     1..1
-    # time=24836.476ms
-ok 2 - test/flipped-case-test.js # time=24836.476ms
+    # time=36273.017ms
+}
 
-# Subtest: test/missing-amp-test.js
+ok 3 - test/missing-amp-test.js # time=3786.109ms {
     # Subtest: 2125 - [36mprogrammatic tests[39m
         ok 1 - Aacute - 01; 1/1776
         ok 2 - aacute - 01; 2/1776
@@ -16990,12 +16991,12 @@ ok 2 - test/flipped-case-test.js # time=24836.476ms
         ok 1775 - zwj - 01; 1775/1776
         ok 1776 - zwnj - 01; 1776/1776
         1..1776
-    ok 1 - 2125 - [36mprogrammatic tests[39m # time=2206.529ms
+    ok 1 - 2125 - [36mprogrammatic tests[39m # time=3513.674ms
     
     # Subtest: 02 - ad hoc #1
         ok 1 - 02
         1..1
-    ok 2 - 02 - ad hoc #1 # time=2.359ms
+    ok 2 - 02 - ad hoc #1 # time=3.2ms
     
     # Subtest: 03 - false positive prevention
         ok 1 - 03* - [33mFirst we went to a camp;[39m
@@ -17016,13 +17017,13 @@ ok 2 - test/flipped-case-test.js # time=24836.476ms
         ok 16 - 03* - [33mpaste & copy & paste again[39m
         ok 17 - 03.01
         1..17
-    ok 3 - 03 - false positive prevention # time=14.306ms
+    ok 3 - 03 - false positive prevention # time=23.598ms
     
     1..3
-    # time=2256.813ms
-ok 3 - test/missing-amp-test.js # time=2256.813ms
+    # time=3786.109ms
+}
 
-# Subtest: test/missing-semi-test.js
+ok 4 - test/missing-semi-test.js # time=3132.877ms {
     # Subtest: 2125 - [36mprogrammatic tests[39m
         ok 1 - Aacute - 02; 1/1776
         ok 2 - aacute - 02; 2/1776
@@ -18801,254 +18802,254 @@ ok 3 - test/missing-amp-test.js # time=2256.813ms
         ok 1775 - zwj - 02; 1775/1776
         ok 1776 - zwnj - 02; 1776/1776
         1..1776
-    ok 1 - 2125 - [36mprogrammatic tests[39m # time=2148.674ms
+    ok 1 - 2125 - [36mprogrammatic tests[39m # time=2993.454ms
     
     # Subtest: 02 - single pi
         ok 1 - 02
         1..1
-    ok 2 - 02 - single pi # time=2.24ms
+    ok 2 - 02 - single pi # time=2.78ms
     
     # Subtest: 03 - larger set
         ok 1 - 03
         1..1
-    ok 3 - 03 - larger set # time=1.804ms
+    ok 3 - 03 - larger set # time=2.203ms
     
     # Subtest: 04 - letters follow tightly
         ok 1 - 04
         1..1
-    ok 4 - 04 - letters follow tightly # time=1.923ms
+    ok 4 - 04 - letters follow tightly # time=2.179ms
     
     1..4
-    # time=2176.152ms
-ok 4 - test/missing-semi-test.js # time=2176.152ms
+    # time=3132.877ms
+}
 
-# Subtest: test/nbsp-test.js
+ok 5 - test/nbsp-test.js # time=2772.877ms {
     # Subtest: 02.001 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight
         ok 1 - 02.001.01 - letter + nbsp
         ok 2 - 02.001.02 - letter + nbsp + cb
         1..2
-    ok 1 - 02.001 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight # time=13.842ms
+    ok 1 - 02.001 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight # time=36.76ms
     
     # Subtest: 02.002 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced
         ok 1 - 02.002.01 - space + nbsp
         ok 2 - 02.002.02 - space + nbsp + cb
         1..2
-    ok 2 - 02.002 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced # time=3.955ms
+    ok 2 - 02.002 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced # time=6.147ms
     
     # Subtest: 02.003 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks
         ok 1 - 02.003.01 - line break + nbsp
         ok 2 - 02.003.02 - line break + nbsp
         1..2
-    ok 3 - 02.003 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks # time=3.299ms
+    ok 3 - 02.003 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks # time=12.187ms
     
     # Subtest: 02.004 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, isolated
         ok 1 - 02.004.01
         ok 2 - 02.004.02
         1..2
-    ok 4 - 02.004 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, isolated # time=2.619ms
+    ok 4 - 02.004 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, isolated # time=11.505ms
     
     # Subtest: 02.005 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated
         ok 1 - 02.005.01
         ok 2 - 02.005.02
         1..2
-    ok 5 - 02.005 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated # time=3.112ms
+    ok 5 - 02.005 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated # time=4.026ms
     
     # Subtest: 02.006 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated + decode
         ok 1 - 02.006.01 - letter + nbsp
         ok 2 - 02.006.02 - letter + nbsp
         ok 3 - 02.06.03 - letter + nbsp - opposite "decode" setting, cb prevails
         1..3
-    ok 6 - 02.006 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated + decode # time=4.492ms
+    ok 6 - 02.006 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, tight, repeated + decode # time=5.979ms
     
     # Subtest: 02.007 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced, repeated + decode
         ok 1 - 02.007.01 - space + nbsp
         ok 2 - 02.007.02 - space + nbsp
         ok 3 - 02.007.03 - space + nbsp
         1..3
-    ok 7 - 02.007 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced, repeated + decode # time=4.648ms
+    ok 7 - 02.007 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, spaced, repeated + decode # time=20.544ms
     
     # Subtest: 02.008 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks, repeated + decode
         ok 1 - 02.008.01 - line break + nbsp
         ok 2 - 02.008.02 - line break + nbsp
         ok 3 - 02.008.03 - line break + nbsp
         1..3
-    ok 8 - 02.008 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks, repeated + decode # time=4.34ms
+    ok 8 - 02.008 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, linebreaks, repeated + decode # time=6.591ms
     
     # Subtest: 02.009 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, isolated + decode
         ok 1 - 02.009.01
         ok 2 - 02.009.02
         ok 3 - 02.009.03
         1..3
-    ok 9 - 02.009 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, isolated + decode # time=3.143ms
+    ok 9 - 02.009 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, with semicol, isolated + decode # time=5.587ms
     
     # Subtest: 02.010 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol + decode
         ok 1 - 02.010.01
         ok 2 - 02.010.02
         ok 3 - 02.010.03
         1..3
-    ok 10 - 02.010 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol + decode # time=4.247ms
+    ok 10 - 02.010 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol + decode # time=15.377ms
     
     # Subtest: 02.011 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, isolated
         ok 1 - 02.011.01
         1..1
-    ok 11 - 02.011 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, isolated # time=2.103ms
+    ok 11 - 02.011 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, isolated # time=13.166ms
     
     # Subtest: 02.012 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced
         ok 1 - 02.012.01
         ok 2 - 02.012.02
         1..2
-    ok 12 - 02.012 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced # time=3.87ms
+    ok 12 - 02.012 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced # time=15.229ms
     
     # Subtest: 02.013 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight
         ok 1 - 02.013.01 - surrounded by letters
         ok 2 - 02.013.02
         1..2
-    ok 13 - 02.013 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight # time=5.26ms
+    ok 13 - 02.013 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight # time=4.001ms
     
     # Subtest: 02.014 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots
         ok 1 - 02.014.01
         ok 2 - 02.014.02
         1..2
-    ok 14 - 02.014 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots # time=6.262ms
+    ok 14 - 02.014 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots # time=10.67ms
     
     # Subtest: 02.015 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks
         ok 1 - 02.015.01 - surrounded by line breaks
         ok 2 - 02.015.02
         1..2
-    ok 15 - 02.015 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks # time=3.079ms
+    ok 15 - 02.015 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks # time=3.543ms
     
     # Subtest: 02.016 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced
         ok 1 - 02.016.01 - surrounded by spaces
         ok 2 - 02.016.02
         1..2
-    ok 16 - 02.016 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced # time=2.993ms
+    ok 16 - 02.016 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced # time=4.539ms
     
     # Subtest: 02.017 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas
         ok 1 - 02.017.01 - surrounded by colons
         ok 2 - 02.017.02
         1..2
-    ok 17 - 02.017 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas # time=2.853ms
+    ok 17 - 02.017 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas # time=4.778ms
     
     # Subtest: 02.018 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits
         ok 1 - 02.018.01 - surrounded by digits
         ok 2 - 02.018.02
         1..2
-    ok 18 - 02.018 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits # time=5.603ms
+    ok 18 - 02.018 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits # time=3.787ms
     
     # Subtest: 02.019 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs
         ok 1 - 02.019.01 - surrounded by tabs
         ok 2 - 02.019.02
         1..2
-    ok 19 - 02.019 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs # time=4.026ms
+    ok 19 - 02.019 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs # time=14.42ms
     
     # Subtest: 02.020 - [33mnbsp[39m - [32mcorrect spelling[39m - opts.decode is ignored if callback serves decoded
         ok 1 - 02.020.01 - warmup
         ok 2 - 02.020.02
         ok 3 - 02.020.03
         1..3
-    ok 20 - 02.020 - [33mnbsp[39m - [32mcorrect spelling[39m - opts.decode is ignored if callback serves decoded # time=3.597ms
+    ok 20 - 02.020 - [33mnbsp[39m - [32mcorrect spelling[39m - opts.decode is ignored if callback serves decoded # time=12.058ms
     
     # Subtest: 02.021 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced + decode
         ok 1 - 02.021.01 - warmup
         ok 2 - 02.021.02
         ok 3 - 02.021.03
         1..3
-    ok 21 - 02.021 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced + decode # time=4.311ms
+    ok 21 - 02.021 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, spaced + decode # time=4.991ms
     
     # Subtest: 02.022 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight + decode
         ok 1 - 02.022.01 - surrounded by letters
         ok 2 - 02.022.02
         ok 3 - 02.022.03
         1..3
-    ok 22 - 02.022 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight + decode # time=4.066ms
+    ok 22 - 02.022 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tight + decode # time=7.554ms
     
     # Subtest: 02.023 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots + decode
         ok 1 - 02.023.01 - surrounded by dots
         ok 2 - 02.023.02
         ok 3 - 02.023.03
         1..3
-    ok 23 - 02.023 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots + decode # time=5.465ms
+    ok 23 - 02.023 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, dots + decode # time=21.715ms
     
     # Subtest: 02.024 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks + decode
         ok 1 - 02.024.01 - surrounded by line breaks
         ok 2 - 02.024.02
         ok 3 - 02.024.03
         1..3
-    ok 24 - 02.024 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks + decode # time=6.212ms
+    ok 24 - 02.024 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, line breaks + decode # time=6.882ms
     
     # Subtest: 02.025 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced + decode
         ok 1 - 02.025.01 - surrounded by spaces
         ok 2 - 02.025.02
         ok 3 - 02.025.03
         1..3
-    ok 25 - 02.025 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced + decode # time=4.191ms
+    ok 25 - 02.025 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, well spaced + decode # time=5.985ms
     
     # Subtest: 02.026 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas + decode
         ok 1 - 02.026.01 - surrounded by colons
         ok 2 - 02.026.02
         ok 3 - 02.026.03
         1..3
-    ok 26 - 02.026 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas + decode # time=4.339ms
+    ok 26 - 02.026 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, commas + decode # time=10.297ms
     
     # Subtest: 02.027 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits + decode
         ok 1 - 02.027.01 - surrounded by digits
         ok 2 - 02.027.02
         1..2
-    ok 27 - 02.027 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits + decode # time=3.513ms
+    ok 27 - 02.027 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, digits + decode # time=15.728ms
     
     # Subtest: 02.028 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs + decode
         ok 1 - 02.028.01 - surrounded by tabs
         ok 2 - 02.028.02
         1..2
-    ok 28 - 02.028 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs + decode # time=16.404ms
+    ok 28 - 02.028 - [33mnbsp[39m - [32mcorrect spelling[39m - amp, no semicol, tabs + decode # time=16.351ms
     
     # Subtest: 02.029 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol, trailing letter
         ok 1 - 02.029.01
         ok 2 - 02.029.01
         1..2
-    ok 29 - 02.029 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol, trailing letter # time=2.537ms
+    ok 29 - 02.029 - [33mnbsp[39m - [32mcorrect spelling[39m - no amp, no semicol, trailing letter # time=2.211ms
     
     # Subtest: 02.030 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing letter, sandwitched
         ok 1 - 02.030.01 - surrounded by letters
         ok 2 - 02.030.02
         1..2
-    ok 30 - 02.030 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing letter, sandwitched # time=2.917ms
+    ok 30 - 02.030 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing letter, sandwitched # time=3.356ms
     
     # Subtest: 02.031 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing dots, sandwitched
         ok 1 - 02.031.01 - surrounded by dots
         ok 2 - 02.031.02
         1..2
-    ok 31 - 02.031 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing dots, sandwitched # time=3.471ms
+    ok 31 - 02.031 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing dots, sandwitched # time=3.332ms
     
     # Subtest: 02.032 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing linebreaks, sandwitched
         ok 1 - 02.032.01 - surrounded by line breaks
         ok 2 - 02.032.02
         1..2
-    ok 32 - 02.032 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing linebreaks, sandwitched # time=4.353ms
+    ok 32 - 02.032 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing linebreaks, sandwitched # time=3.764ms
     
     # Subtest: 02.033 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing whitespace chunks, sandwitched
         ok 1 - 02.033.01 - surrounded by spaces
         ok 2 - 02.033.02
         1..2
-    ok 33 - 02.033 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing whitespace chunks, sandwitched # time=3.055ms
+    ok 33 - 02.033 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing whitespace chunks, sandwitched # time=3.193ms
     
     # Subtest: 02.034 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight commas, sandwitched
         ok 1 - 02.034.01 - surrounded by colons
         ok 2 - 02.034.02
         1..2
-    ok 34 - 02.034 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight commas, sandwitched # time=4.693ms
+    ok 34 - 02.034 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight commas, sandwitched # time=3.38ms
     
     # Subtest: 02.035 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing digits, sandwitched
         ok 1 - 02.035.01 - surrounded by digits
         ok 2 - 02.035.02
         1..2
-    ok 35 - 02.035 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing digits, sandwitched # time=4.406ms
+    ok 35 - 02.035 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing digits, sandwitched # time=3.357ms
     
     # Subtest: 02.036 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight tabs, sandwitched
         ok 1 - 02.036.01 - surrounded by tabs
         ok 2 - 02.036.02
         1..2
-    ok 36 - 02.036 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight tabs, sandwitched # time=2.762ms
+    ok 36 - 02.036 - [33mnbsp[39m - [31mno amp, no semicol[39m - trailing tight tabs, sandwitched # time=4.207ms
     
     # Subtest: 02.037 - [33mnbsp[39m - [34mincorrect spelling[39m - repeated characters - complete set - [36mrepeated[39m amp, tight, leading letters
         ok 1 - 02.037.01 - duplicate ampersand
@@ -19056,217 +19057,217 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.037.03 - duplicate ampersand
         ok 4 - 02.037.04
         1..4
-    ok 37 - 02.037 - [33mnbsp[39m - [34mincorrect spelling[39m - repeated characters - complete set - [36mrepeated[39m amp, tight, leading letters # time=4.364ms
+    ok 37 - 02.037 - [33mnbsp[39m - [34mincorrect spelling[39m - repeated characters - complete set - [36mrepeated[39m amp, tight, leading letters # time=14.706ms
     
     # Subtest: 02.038 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate n
         ok 1 - 02.038.01 - duplicate n
         ok 2 - 02.038.02
         1..2
-    ok 38 - 02.038 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate n # time=3.009ms
+    ok 38 - 02.038 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate n # time=15.047ms
     
     # Subtest: 02.039 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate b
         ok 1 - 02.039.01 - duplicate b
         ok 2 - 02.039.02
         1..2
-    ok 39 - 02.039 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate b # time=3.479ms
+    ok 39 - 02.039 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate b # time=6.659ms
     
     # Subtest: 02.040 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate s
         ok 1 - 02.040.01 - duplicate s
         ok 2 - 02.040.02
         1..2
-    ok 40 - 02.040 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate s # time=12.393ms
+    ok 40 - 02.040 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate s # time=4.878ms
     
     # Subtest: 02.041 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate p
         ok 1 - 02.041.01 - duplicate p
         ok 2 - 02.041.02
         1..2
-    ok 41 - 02.041 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate p # time=8.153ms
+    ok 41 - 02.041 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m characters - complete set - duplicate p # time=8.837ms
     
     # Subtest: 02.042 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol
         ok 1 - 02.042.01
         ok 2 - 02.042.02
         1..2
-    ok 42 - 02.042 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol # time=2.715ms
+    ok 42 - 02.042 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol # time=11.072ms
     
     # Subtest: 02.043 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + n missing
         ok 1 - 02.043.01
         ok 2 - 02.043.02
         1..2
-    ok 43 - 02.043 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + n missing # time=12.654ms
+    ok 43 - 02.043 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + n missing # time=18.447ms
     
     # Subtest: 02.044 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + b missing
         ok 1 - 02.044.01
         ok 2 - 02.044.02
         1..2
-    ok 44 - 02.044 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + b missing # time=23.131ms
+    ok 44 - 02.044 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + b missing # time=17.022ms
     
     # Subtest: 02.045 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + s missing
         ok 1 - 02.045.01
         ok 2 - 02.045.02
         1..2
-    ok 45 - 02.045 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + s missing # time=3.087ms
+    ok 45 - 02.045 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + s missing # time=4.085ms
     
     # Subtest: 02.046 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + p missing
         ok 1 - 02.046.01
         ok 2 - 02.046.02
         1..2
-    ok 46 - 02.046 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + p missing # time=2.974ms
+    ok 46 - 02.046 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand + p missing # time=5.668ms
     
     # Subtest: 02.047 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand - semicol missing
         ok 1 - 02.047.01
         ok 2 - 02.047.02
         1..2
-    ok 47 - 02.047 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand - semicol missing # time=2.996ms
+    ok 47 - 02.047 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m ampersand - semicol missing # time=3.138ms
     
     # Subtest: 02.048 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - ampersand missing
         ok 1 - 02.048.01
         ok 2 - 02.048.02
         1..2
-    ok 48 - 02.048 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - ampersand missing # time=2.977ms
+    ok 48 - 02.048 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - ampersand missing # time=3.7ms
     
     # Subtest: 02.049 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - b missing
         ok 1 - 02.049.01
         ok 2 - 02.049.02
         1..2
-    ok 49 - 02.049 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - b missing # time=6.54ms
+    ok 49 - 02.049 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - b missing # time=4.887ms
     
     # Subtest: 02.050 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing
         ok 1 - 02.050.01
         ok 2 - 02.050.02
         1..2
-    ok 50 - 02.050 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing # time=5.059ms
+    ok 50 - 02.050 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing # time=4.581ms
     
     # Subtest: 02.051 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing
         ok 1 - 02.051.01
         ok 2 - 02.051.02
         1..2
-    ok 51 - 02.051 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing # time=2.737ms
+    ok 51 - 02.051 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - s missing # time=3.285ms
     
     # Subtest: 02.052 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - semicol missing
         ok 1 - 02.052.01
         ok 2 - 02.052.02
         1..2
-    ok 52 - 02.052 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - semicol missing # time=2.573ms
+    ok 52 - 02.052 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m n - semicol missing # time=3.246ms
     
     # Subtest: 02.053 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - ampersand missing
         ok 1 - 02.053.01
         ok 2 - 02.053.02
         1..2
-    ok 53 - 02.053 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - ampersand missing # time=7.9ms
+    ok 53 - 02.053 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - ampersand missing # time=22.47ms
     
     # Subtest: 02.054 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - n missing
         ok 1 - 02.054.01
         ok 2 - 02.054.02
         1..2
-    ok 54 - 02.054 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - n missing # time=2.925ms
+    ok 54 - 02.054 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - n missing # time=12.466ms
     
     # Subtest: 02.055 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - s missing
         ok 1 - 02.055.01
         ok 2 - 02.055.02
         1..2
-    ok 55 - 02.055 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - s missing # time=2.967ms
+    ok 55 - 02.055 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - s missing # time=8.402ms
     
     # Subtest: 02.056 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - p missing
         ok 1 - 02.056.01
         ok 2 - 02.056.02
         1..2
-    ok 56 - 02.056 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - p missing # time=2.971ms
+    ok 56 - 02.056 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - p missing # time=5.542ms
     
     # Subtest: 02.057 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - semicol missing
         ok 1 - 02.057.01
         ok 2 - 02.057.02
         1..2
-    ok 57 - 02.057 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - semicol missing # time=2.677ms
+    ok 57 - 02.057 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m b - semicol missing # time=4.88ms
     
     # Subtest: 02.058 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - ampersand missing
         ok 1 - 02.058.01
         ok 2 - 02.058.02
         1..2
-    ok 58 - 02.058 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - ampersand missing # time=2.761ms
+    ok 58 - 02.058 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - ampersand missing # time=3.673ms
     
     # Subtest: 02.059 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - n missing
         ok 1 - 02.059.01
         ok 2 - 02.059.02
         1..2
-    ok 59 - 02.059 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - n missing # time=3.374ms
+    ok 59 - 02.059 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - n missing # time=4.473ms
     
     # Subtest: 02.060 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - b missing
         ok 1 - 02.060.01
         ok 2 - 02.060.02
         1..2
-    ok 60 - 02.060 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - b missing # time=4.851ms
+    ok 60 - 02.060 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - b missing # time=18.733ms
     
     # Subtest: 02.061 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - p missing
         ok 1 - 02.061.01
         ok 2 - 02.061.02
         1..2
-    ok 61 - 02.061 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - p missing # time=2.998ms
+    ok 61 - 02.061 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - p missing # time=13.517ms
     
     # Subtest: 02.062 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - semicol missing
         ok 1 - 02.062.01
         ok 2 - 02.062.02
         1..2
-    ok 62 - 02.062 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - semicol missing # time=2.528ms
+    ok 62 - 02.062 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m s - semicol missing # time=3.167ms
     
     # Subtest: 02.063 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - ampersand missing
         ok 1 - 02.063.01
         ok 2 - 02.063.02
         1..2
-    ok 63 - 02.063 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - ampersand missing # time=2.57ms
+    ok 63 - 02.063 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - ampersand missing # time=3.388ms
     
     # Subtest: 02.064 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - n missing
         ok 1 - 02.064.01
         ok 2 - 02.064.02
         1..2
-    ok 64 - 02.064 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - n missing # time=5.341ms
+    ok 64 - 02.064 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - n missing # time=4.813ms
     
     # Subtest: 02.065 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - b missing
         ok 1 - 02.065.01
         ok 2 - 02.065.02
         1..2
-    ok 65 - 02.065 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - b missing # time=4.601ms
+    ok 65 - 02.065 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - b missing # time=23.003ms
     
     # Subtest: 02.066 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - s missing
         ok 1 - 02.066.01
         ok 2 - 02.066.02
         1..2
-    ok 66 - 02.066 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - s missing # time=2.973ms
+    ok 66 - 02.066 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - s missing # time=15.206ms
     
     # Subtest: 02.067 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - semicol missing
         ok 1 - 02.067.01
         ok 2 - 02.067.02
         1..2
-    ok 67 - 02.067 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - semicol missing # time=6.425ms
+    ok 67 - 02.067 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m p - semicol missing # time=15.865ms
     
     # Subtest: 02.068 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - ampersand missing
         ok 1 - 02.068.01
         ok 2 - 02.068.02
         1..2
-    ok 68 - 02.068 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - ampersand missing # time=2.949ms
+    ok 68 - 02.068 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - ampersand missing # time=20.674ms
     
     # Subtest: 02.069 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - n missing
         ok 1 - 02.069.01
         ok 2 - 02.069.02
         1..2
-    ok 69 - 02.069 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - n missing # time=3.303ms
+    ok 69 - 02.069 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - n missing # time=16.668ms
     
     # Subtest: 02.070 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - b missing
         ok 1 - 02.070.01
         ok 2 - 02.070.02
         1..2
-    ok 70 - 02.070 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - b missing # time=13.721ms
+    ok 70 - 02.070 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - b missing # time=13.526ms
     
     # Subtest: 02.071 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - s missing
         ok 1 - 02.071.01
         ok 2 - 02.071.02
         1..2
-    ok 71 - 02.071 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - s missing # time=8.974ms
+    ok 71 - 02.071 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - s missing # time=18.617ms
     
     # Subtest: 02.072 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - p missing
         ok 1 - 02.072.01
         ok 2 - 02.072.02
         1..2
-    ok 72 - 02.072 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - p missing # time=3.102ms
+    ok 72 - 02.072 - [33mnbsp[39m - [34mincorrect spelling[39m - [36mrepeated[39m semicol - p missing # time=3.915ms
     
     # Subtest: 02.073 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the left, EOL on the right
         ok 1 - 02.073.01
@@ -19274,7 +19275,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.073.03
         ok 4 - 02.073.04
         1..4
-    ok 73 - 02.073 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the left, EOL on the right # time=3.825ms
+    ok 73 - 02.073 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the left, EOL on the right # time=5.965ms
     
     # Subtest: 02.074 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the right, EOL on the left
         ok 1 - 02.074.01
@@ -19282,7 +19283,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.074.03
         ok 4 - 02.074.04
         1..4
-    ok 74 - 02.074 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the right, EOL on the left # time=3.69ms
+    ok 74 - 02.074 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - letter on the right, EOL on the left # time=3.926ms
     
     # Subtest: 02.075 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - EOL on both sides
         ok 1 - 02.075.01
@@ -19290,7 +19291,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.075.03
         ok 4 - 02.075.04
         1..4
-    ok 75 - 02.075 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - EOL on both sides # time=3.354ms
+    ok 75 - 02.075 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - EOL on both sides # time=3.42ms
     
     # Subtest: 02.076 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the left
         ok 1 - 02.076.01
@@ -19298,7 +19299,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.076.03
         ok 4 - 02.076.04
         1..4
-    ok 76 - 02.076 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the left # time=5.927ms
+    ok 76 - 02.076 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the left # time=7.242ms
     
     # Subtest: 02.077 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the right
         ok 1 - 02.077.01
@@ -19306,7 +19307,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.077.03
         ok 4 - 02.077.04
         1..4
-    ok 77 - 02.077 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the right # time=3.68ms
+    ok 77 - 02.077 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letter on the right # time=13.81ms
     
     # Subtest: 02.078 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letters outside
         ok 1 - 02.078.01
@@ -19314,7 +19315,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.078.03
         ok 4 - 02.078.04
         1..4
-    ok 78 - 02.078 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letters outside # time=3.784ms
+    ok 78 - 02.078 - [33mnbsp[39m - [35mmissing ampersand and one letter (semicol present)[39m - space on either side, letters outside # time=11.822ms
     
     # Subtest: 02.079 - [33mnbsp[39m - incorrect spelling (ampersand missing), incomplete set
         ok 1 - 02.079.01
@@ -19322,7 +19323,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 3 - 02.079.03
         ok 4 - 02.079.04
         1..4
-    ok 79 - 02.079 - [33mnbsp[39m - incorrect spelling (ampersand missing), incomplete set # time=3.857ms
+    ok 79 - 02.079 - [33mnbsp[39m - incorrect spelling (ampersand missing), incomplete set # time=14.98ms
     
     # Subtest: 02.080 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - n trailing
         ok 1 - 02.080.01
@@ -19336,7 +19337,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 9 - 02.080.09
         ok 10 - 02.080.10
         1..10
-    ok 80 - 02.080 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - n trailing # time=8.495ms
+    ok 80 - 02.080 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - n trailing # time=22.127ms
     
     # Subtest: 02.081 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - b trailing
         ok 1 - 02.081.11
@@ -19350,7 +19351,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 9 - 02.081.19
         ok 10 - 02.081.20
         1..10
-    ok 81 - 02.081 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - b trailing # time=13.784ms
+    ok 81 - 02.081 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - b trailing # time=19.391ms
     
     # Subtest: 02.082 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - s trailing
         ok 1 - 02.082.21
@@ -19364,7 +19365,7 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 9 - 02.082.29
         ok 10 - 02.082.30
         1..10
-    ok 82 - 02.082 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - s trailing # time=13.567ms
+    ok 82 - 02.082 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - s trailing # time=18.116ms
     
     # Subtest: 02.083 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - p trailing
         ok 1 - 02.083.31
@@ -19378,148 +19379,148 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 9 - 02.083.39
         ok 10 - 02.083.40
         1..10
-    ok 83 - 02.083 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - p trailing # time=12.474ms
+    ok 83 - 02.083 - [33mnbsp[39m - [32mat least one of each of the set[39m [n, b, s, p] [32mis present, repetitions[39m - p trailing # time=19.022ms
     
     # Subtest: 02.084 - [33mnbsp[39m - [31mrecursively encoded entities[39m - twice
         ok 1 - 02.084
         1..1
-    ok 84 - 02.084 - [33mnbsp[39m - [31mrecursively encoded entities[39m - twice # time=2.937ms
+    ok 84 - 02.084 - [33mnbsp[39m - [31mrecursively encoded entities[39m - twice # time=2.14ms
     
     # Subtest: 02.085 - [33mnbsp[39m - [31mrecursively encoded entities[39m - thrice
         ok 1 - 02.085
         1..1
-    ok 85 - 02.085 - [33mnbsp[39m - [31mrecursively encoded entities[39m - thrice # time=1.078ms
+    ok 85 - 02.085 - [33mnbsp[39m - [31mrecursively encoded entities[39m - thrice # time=15.495ms
     
     # Subtest: 02.086 - [33mnbsp[39m - [31mrecursively encoded entities[39m - quadruple
         ok 1 - 02.086.01
         1..1
-    ok 86 - 02.086 - [33mnbsp[39m - [31mrecursively encoded entities[39m - quadruple # time=1.565ms
+    ok 86 - 02.086 - [33mnbsp[39m - [31mrecursively encoded entities[39m - quadruple # time=9.261ms
     
     # Subtest: 02.087 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading semicolon, tight
         ok 1 - 02.087.01
         ok 2 - 02.087.02
         1..2
-    ok 87 - 02.087 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading semicolon, tight # time=2.421ms
+    ok 87 - 02.087 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading semicolon, tight # time=7.544ms
     
     # Subtest: 02.088 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space
         ok 1 - 02.088.01
         ok 2 - 02.088.02
         1..2
-    ok 88 - 02.088 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space # time=2.214ms
+    ok 88 - 02.088 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space # time=2.294ms
     
     # Subtest: 02.089 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - decoded
         ok 1 - 02.089.01
         ok 2 - 02.089.02
         1..2
-    ok 89 - 02.089 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - decoded # time=2.304ms
+    ok 89 - 02.089 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - decoded # time=2.484ms
     
     # Subtest: 02.090 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space - decoded
         ok 1 - 02.090.01
         ok 2 - 02.090.02
         1..2
-    ok 90 - 02.090 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space - decoded # time=2.303ms
+    ok 90 - 02.090 - [33mnbsp[39m - [34mcapital N, no ampersand, no semicolon[39m - leading space - decoded # time=2.419ms
     
     # Subtest: 02.091 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - P capital
         ok 1 - 02.091.01
         ok 2 - 02.091.02
         1..2
-    ok 91 - 02.091 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - P capital # time=2.408ms
+    ok 91 - 02.091 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - P capital # time=3.318ms
     
     # Subtest: 02.092 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - S capital
         ok 1 - 02.092.01
         ok 2 - 02.092.02
         1..2
-    ok 92 - 02.092 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - S capital # time=2.358ms
+    ok 92 - 02.092 - [33mnbsp[39m - [35mmissing semicolon when ampersand is present[39m - S capital # time=2.757ms
     
     # Subtest: 02.093 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N capital
         ok 1 - 02.093.01
         ok 2 - 02.093.02
         1..2
-    ok 93 - 02.093 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N capital # time=4.943ms
+    ok 93 - 02.093 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N capital # time=3.657ms
     
     # Subtest: 02.094 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals
         ok 1 - 02.094.01
         ok 2 - 02.094.02
         1..2
-    ok 94 - 02.094 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals # time=2.478ms
+    ok 94 - 02.094 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals # time=2.638ms
     
     # Subtest: 02.095 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals, repetition
         ok 1 - 02.095.01
         ok 2 - 02.095.02
         1..2
-    ok 95 - 02.095 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals, repetition # time=2.455ms
+    ok 95 - 02.095 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N & S capitals, repetition # time=2.763ms
     
     # Subtest: 02.096 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition
         ok 1 - 02.096.01
         ok 2 - 02.096.02
         1..2
-    ok 96 - 02.096 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition # time=2.549ms
+    ok 96 - 02.096 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition # time=2.973ms
     
     # Subtest: 02.097 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, tight
         ok 1 - 02.097.01
         ok 2 - 02.097.02
         1..2
-    ok 97 - 02.097 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, tight # time=2.481ms
+    ok 97 - 02.097 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, tight # time=2.924ms
     
     # Subtest: 02.098 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, spaced
         ok 1 - 02.098.01
         ok 2 - 02.098.02
         1..2
-    ok 98 - 02.098 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, spaced # time=10.483ms
+    ok 98 - 02.098 - [33mnbsp[39m - [36mampersand present, no semicolon[39m - N, S & P capitals, repetition, trailing space, spaced # time=5.648ms
     
     # Subtest: 02.099 - [33mnbsp[39m - [90mswapped letters[39m - full set
         ok 1 - 02.099.01
         ok 2 - 02.099.02
         1..2
-    ok 99 - 02.099 - [33mnbsp[39m - [90mswapped letters[39m - full set # time=3.569ms
+    ok 99 - 02.099 - [33mnbsp[39m - [90mswapped letters[39m - full set # time=18.109ms
     
     # Subtest: 02.100 - [33mnbsp[39m - [90mswapped letters[39m - one missing
         ok 1 - 02.100.01
         ok 2 - 02.100.02
         1..2
-    ok 100 - 02.100 - [33mnbsp[39m - [90mswapped letters[39m - one missing # time=3.389ms
+    ok 100 - 02.100 - [33mnbsp[39m - [90mswapped letters[39m - one missing # time=2.997ms
     
     # Subtest: 02.101 - [33mnbsp[39m - [90mswapped letters[39m - n missing
         ok 1 - 02.101.01
         ok 2 - 02.101.02
         1..2
-    ok 101 - 02.101 - [33mnbsp[39m - [90mswapped letters[39m - n missing # time=3.627ms
+    ok 101 - 02.101 - [33mnbsp[39m - [90mswapped letters[39m - n missing # time=19.851ms
     
     # Subtest: 02.102 - [33mnbsp[39m - [90mswapped letters[39m - b missing
         ok 1 - 02.102.01
         ok 2 - 02.102.02
         1..2
-    ok 102 - 02.102 - [33mnbsp[39m - [90mswapped letters[39m - b missing # time=8.418ms
+    ok 102 - 02.102 - [33mnbsp[39m - [90mswapped letters[39m - b missing # time=23.079ms
     
     # Subtest: 02.103 - [33mnbsp[39m - [90mswapped letters[39m - s missing
         ok 1 - 02.103.01
         ok 2 - 02.103.02
         1..2
-    ok 103 - 02.103 - [33mnbsp[39m - [90mswapped letters[39m - s missing # time=3.256ms
+    ok 103 - 02.103 - [33mnbsp[39m - [90mswapped letters[39m - s missing # time=4.035ms
     
     # Subtest: 02.104 - [33mnbsp[39m - [90mswapped letters[39m - p missing
         ok 1 - 02.104.01
         ok 2 - 02.104.02
         1..2
-    ok 104 - 02.104 - [33mnbsp[39m - [90mswapped letters[39m - p missing # time=5.378ms
+    ok 104 - 02.104 - [33mnbsp[39m - [90mswapped letters[39m - p missing # time=5.614ms
     
     # Subtest: 02.105 - [33mnbsp[39m - very very suspicious cases - last b is considered to be text
         ok 1 - 02.105.01
         ok 2 - 02.105.02
         1..2
-    ok 105 - 02.105 - [33mnbsp[39m - very very suspicious cases - last b is considered to be text # time=14.138ms
+    ok 105 - 02.105 - [33mnbsp[39m - very very suspicious cases - last b is considered to be text # time=2.097ms
     
     # Subtest: 02.106 - [33mnbsp[39m - very very suspicious cases - last z is considered to be text
         ok 1 - 02.106.01
         ok 2 - 02.106.02
         1..2
-    ok 106 - 02.106 - [33mnbsp[39m - very very suspicious cases - last z is considered to be text # time=7.049ms
+    ok 106 - 02.106 - [33mnbsp[39m - very very suspicious cases - last z is considered to be text # time=2.102ms
     
     # Subtest: 02.107 - [33mnbsp[39m - very very suspicious cases - last b is still considered to be text
         ok 1 - 02.107.01
         ok 2 - 02.107.02
         1..2
-    ok 107 - 02.107 - [33mnbsp[39m - very very suspicious cases - last b is still considered to be text # time=2.454ms
+    ok 107 - 02.107 - [33mnbsp[39m - very very suspicious cases - last b is still considered to be text # time=2.086ms
     
     # Subtest: 02.108 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter
         ok 1 - 02.108.01
@@ -19529,49 +19530,49 @@ ok 4 - test/missing-semi-test.js # time=2176.152ms
         ok 5 - 02.108.05
         ok 6 - 02.108.06
         1..6
-    ok 108 - 02.108 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter # time=6.934ms
+    ok 108 - 02.108 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter # time=14.244ms
     
     # Subtest: 02.109 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter plus semicols
         ok 1 - 02.109.01
         ok 2 - 02.109.02
         1..2
-    ok 109 - 02.109 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter plus semicols # time=15.677ms
+    ok 109 - 02.109 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m set plus another letter plus semicols # time=4.766ms
     
     # Subtest: 02.110 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m with one letter missing plus another letter
         ok 1 - 02.110.01
         ok 2 - 02.110.02
         ok 3 - 02.110.03
         1..3
-    ok 110 - 02.110 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m with one letter missing plus another letter # time=7.308ms
+    ok 110 - 02.110 - [33mnbsp[39m - [31mn[39m-[33mb[39m-[32ms[39m-[34mp[39m with one letter missing plus another letter # time=3.641ms
     
     # Subtest: 02.111 - [33mnbsp[39m - missing semicolon gets reported as such
         ok 1 - 02.111
         1..1
-    ok 111 - 02.111 - [33mnbsp[39m - missing semicolon gets reported as such # time=4.355ms
+    ok 111 - 02.111 - [33mnbsp[39m - missing semicolon gets reported as such # time=2.727ms
     
     # Subtest: 02.112 - [33mnbsp[39m - [32mfalse positive[39m - &nspar;
         ok 1 - 02.112.01
         ok 2 - 02.112.02 - cb
         1..2
-    ok 112 - 02.112 - [33mnbsp[39m - [32mfalse positive[39m - &nspar; # time=6.167ms
+    ok 112 - 02.112 - [33mnbsp[39m - [32mfalse positive[39m - &nspar; # time=3.819ms
     
     # Subtest: 02.113 - [33mnbsp[39m - [32mfalse positive[39m - &prnsim;
         ok 1 - 02.113.01
         ok 2 - 02.113.02 - cb
         1..2
-    ok 113 - 02.113 - [33mnbsp[39m - [32mfalse positive[39m - &prnsim; # time=7.552ms
+    ok 113 - 02.113 - [33mnbsp[39m - [32mfalse positive[39m - &prnsim; # time=6.073ms
     
     # Subtest: 02.114 - [33mnbsp[39m - [32mfalse positive[39m - &subplus;
         ok 1 - 02.114.01
         ok 2 - 02.114.02 - cb
         1..2
-    ok 114 - 02.114 - [33mnbsp[39m - [32mfalse positive[39m - &subplus; # time=3.002ms
+    ok 114 - 02.114 - [33mnbsp[39m - [32mfalse positive[39m - &subplus; # time=24.675ms
     
     1..114
-    # time=1198.758ms
-ok 5 - test/nbsp-test.js # time=1198.758ms
+    # time=2772.877ms
+}
 
-# Subtest: test/rogue-spaces-test.js
+ok 6 - test/rogue-spaces-test.js # time=17883.83ms {
     # Subtest: 2125 - [36mprogrammatic tests[39m
         ok 1 - "& Aacute;" - 03; 1/1776
         ok 2 - "&A acute;" - 03; 1/1776
@@ -33829,13 +33830,13 @@ ok 5 - test/nbsp-test.js # time=1198.758ms
         ok 14254 - "&zwn j;" - 03; 1776/1776
         ok 14255 - "&zwnj ;" - 03; 1776/1776
         1..14255
-    ok 1 - 2125 - [36mprogrammatic tests[39m # time=11451.001ms
+    ok 1 - 2125 - [36mprogrammatic tests[39m # time=17821.766ms
     
     1..1
-    # time=11459.764ms
-ok 6 - test/rogue-spaces-test.js # time=11459.764ms
+    # time=17883.83ms
+}
 
-# Subtest: test/test.js
+ok 7 - test/test.js # time=2928.194ms {
     # Subtest: 01.001 - [35mthrows[39m - 1st input arg is wrong
         ok 1 - expected to not throw
         ok 2 - expected to throw
@@ -33849,7 +33850,7 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 10 - expected to throw
         ok 11 - should match pattern provided
         1..11
-    ok 1 - 01.001 - [35mthrows[39m - 1st input arg is wrong # time=14.202ms
+    ok 1 - 01.001 - [35mthrows[39m - 1st input arg is wrong # time=39.828ms
     
     # Subtest: 01.002 - [35mthrows[39m - 2nd input arg is wrong
         ok 1 - expected to throw
@@ -33857,17 +33858,17 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 3 - expected to not throw
         ok 4 - expected to not throw
         1..4
-    ok 2 - 01.002 - [35mthrows[39m - 2nd input arg is wrong # time=3.893ms
+    ok 2 - 01.002 - [35mthrows[39m - 2nd input arg is wrong # time=16.098ms
     
     # Subtest: 01.003 - [35mthrows[39m - opts.cb is not function
         ok 1 - expected to throw
         1..1
-    ok 3 - 01.003 - [35mthrows[39m - opts.cb is not function # time=1.502ms
+    ok 3 - 01.003 - [35mthrows[39m - opts.cb is not function # time=1.463ms
     
     # Subtest: 01.004 - [35mthrows[39m - opts.progressFn is not function
         ok 1 - expected to throw
         1..1
-    ok 4 - 01.004 - [35mthrows[39m - opts.progressFn is not function # time=1.706ms
+    ok 4 - 01.004 - [35mthrows[39m - opts.progressFn is not function # time=1.446ms
     
     # Subtest: 03.001 - [33minsp[39m - false positives
         ok 1 - 03.001.01
@@ -33877,14 +33878,14 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 5 - 03.001.05
         ok 6 - 03.001.06
         1..6
-    ok 5 - 03.001 - [33minsp[39m - false positives # time=6.778ms
+    ok 5 - 03.001 - [33minsp[39m - false positives # time=15.224ms
     
     # Subtest: 03.002 - [33mnbsp[39m - no decode requested
         ok 1 - 03.002.01 - one, surrounded by EOL
         ok 2 - 03.002.02 - two, surrounded by EOL
         ok 3 - 03.002.03 - surrounded by letters
         1..3
-    ok 6 - 03.002 - [33mnbsp[39m - no decode requested # time=5.665ms
+    ok 6 - 03.002 - [33mnbsp[39m - no decode requested # time=16.093ms
     
     # Subtest: 03.003 - [33mnbsp[39m - default callback, decode
         ok 1 - 03.003.01
@@ -33892,44 +33893,44 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 3 - 03.003.03
         ok 4 - 03.003.04
         1..4
-    ok 7 - 03.003 - [33mnbsp[39m - default callback, decode # time=4.617ms
+    ok 7 - 03.003 - [33mnbsp[39m - default callback, decode # time=5.322ms
     
     # Subtest: 03.004 - [33mnbsp[39m - full callback, decode
         ok 1 - 03.004
         1..1
-    ok 8 - 03.004 - [33mnbsp[39m - full callback, decode # time=2.386ms
+    ok 8 - 03.004 - [33mnbsp[39m - full callback, decode # time=3.022ms
     
     # Subtest: 03.005 - [33mnbsp[39m - two, surrounded by EOL
         ok 1 - 03.005
         1..1
-    ok 9 - 03.005 - [33mnbsp[39m - two, surrounded by EOL # time=2.037ms
+    ok 9 - 03.005 - [33mnbsp[39m - two, surrounded by EOL # time=2.07ms
     
     # Subtest: 03.006 - [33mnbsp[39m - surrounded by letters
         ok 1 - 03.006
         1..1
-    ok 10 - 03.006 - [33mnbsp[39m - surrounded by letters # time=2.048ms
+    ok 10 - 03.006 - [33mnbsp[39m - surrounded by letters # time=1.838ms
     
     # Subtest: 03.007 - [33mvarious[39m - various - decode off
         ok 1 - 03.007.01
         ok 2 - 03.007.02
         1..2
-    ok 11 - 03.007 - [33mvarious[39m - various - decode off # time=3.804ms
+    ok 11 - 03.007 - [33mvarious[39m - various - decode off # time=16.177ms
     
     # Subtest: 03.008 - [33mvarious[39m - hairsp - decode on
         ok 1 - 03.008
         1..1
-    ok 12 - 03.008 - [33mvarious[39m - hairsp - decode on # time=2.693ms
+    ok 12 - 03.008 - [33mvarious[39m - hairsp - decode on # time=6.202ms
     
     # Subtest: 03.009 - [33mvarious[39m - VeryThinSpace - decode on
         ok 1 - 03.009
         1..1
-    ok 13 - 03.009 - [33mvarious[39m - VeryThinSpace - decode on # time=2.388ms
+    ok 13 - 03.009 - [33mvarious[39m - VeryThinSpace - decode on # time=12.074ms
     
     # Subtest: 03.010 - [33mvarious[39m - healthy &pound;
         ok 1 - 03.010.01
         ok 2 - 03.010.02
         1..2
-    ok 14 - 03.010 - [33mvarious[39m - healthy &pound; # time=2.717ms
+    ok 14 - 03.010 - [33mvarious[39m - healthy &pound; # time=5.461ms
     
     # Subtest: 04.001 - [36msemicolon missing[39m - [32mang[39m - no decode, spaced
         ok 1 - 04.001.01
@@ -33938,185 +33939,185 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 4 - 04.001.04
         ok 5 - 04.001.05
         1..5
-    ok 15 - 04.001 - [36msemicolon missing[39m - [32mang[39m - no decode, spaced # time=6.86ms
+    ok 15 - 04.001 - [36msemicolon missing[39m - [32mang[39m - no decode, spaced # time=17.876ms
     
     # Subtest: 04.002 - [36msemicolon missing[39m - [32mang[39m - no decode, tight
         ok 1 - 04.002
         1..1
-    ok 16 - 04.002 - [36msemicolon missing[39m - [32mang[39m - no decode, tight # time=2.039ms
+    ok 16 - 04.002 - [36msemicolon missing[39m - [32mang[39m - no decode, tight # time=15.703ms
     
     # Subtest: 04.003 - [36msemicolon missing[39m - [32mangst[39m - no decode, tight
         ok 1 - 04.003.01 - spaces are obligatory
         ok 2 - 04.003.02
         ok 3 - 04.003.03
         1..3
-    ok 17 - 04.003 - [36msemicolon missing[39m - [32mangst[39m - no decode, tight # time=4.554ms
+    ok 17 - 04.003 - [36msemicolon missing[39m - [32mangst[39m - no decode, tight # time=18.465ms
     
     # Subtest: 04.004 - [36msemicolon missing[39m - [32mpi[39m - no decode, tight
         ok 1 - 04.004 - won't fix, it's a dubious case
         1..1
-    ok 18 - 04.004 - [36msemicolon missing[39m - [32mpi[39m - no decode, tight # time=4.316ms
+    ok 18 - 04.004 - [36msemicolon missing[39m - [32mpi[39m - no decode, tight # time=1.739ms
     
     # Subtest: 04.005 - [36msemicolon missing[39m - [32mpiv[39m - no decode, tight
         ok 1 - 04.005
         1..1
-    ok 19 - 04.005 - [36msemicolon missing[39m - [32mpiv[39m - no decode, tight # time=1.922ms
+    ok 19 - 04.005 - [36msemicolon missing[39m - [32mpiv[39m - no decode, tight # time=2.036ms
     
     # Subtest: 04.006 - [36msemicolon missing[39m - [32mPi[39m - no decode, tight
         ok 1 - 04.006 - also won't fix, it's not conclusive
         1..1
-    ok 20 - 04.006 - [36msemicolon missing[39m - [32mPi[39m - no decode, tight # time=1.75ms
+    ok 20 - 04.006 - [36msemicolon missing[39m - [32mPi[39m - no decode, tight # time=2.156ms
     
     # Subtest: 04.007 - [36msemicolon missing[39m - [32msigma[39m - no decode, tight
         ok 1 - 04.007 - not conclusive
         1..1
-    ok 21 - 04.007 - [36msemicolon missing[39m - [32msigma[39m - no decode, tight # time=5.035ms
+    ok 21 - 04.007 - [36msemicolon missing[39m - [32msigma[39m - no decode, tight # time=2.988ms
     
     # Subtest: 04.008 - [36msemicolon missing[39m - [32msub[39m - no decode, tight
         ok 1 - 04.008
         1..1
-    ok 22 - 04.008 - [36msemicolon missing[39m - [32msub[39m - no decode, tight # time=2.453ms
+    ok 22 - 04.008 - [36msemicolon missing[39m - [32msub[39m - no decode, tight # time=11.775ms
     
     # Subtest: 04.009 - [36msemicolon missing[39m - [32msup[39m - no decode, tight
         ok 1 - 04.009
         1..1
-    ok 23 - 04.009 - [36msemicolon missing[39m - [32msup[39m - no decode, tight # time=2.424ms
+    ok 23 - 04.009 - [36msemicolon missing[39m - [32msup[39m - no decode, tight # time=4.889ms
     
     # Subtest: 04.010 - [36msemicolon missing[39m - [32mtheta[39m - no decode, tight
         ok 1 - 04.010
         1..1
-    ok 24 - 04.010 - [36msemicolon missing[39m - [32mtheta[39m - no decode, tight # time=1.858ms
+    ok 24 - 04.010 - [36msemicolon missing[39m - [32mtheta[39m - no decode, tight # time=11.266ms
     
     # Subtest: 04.011 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, linebreaked
         ok 1 - 04.011
         1..1
-    ok 25 - 04.011 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, linebreaked # time=4.344ms
+    ok 25 - 04.011 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, linebreaked # time=11.682ms
     
     # Subtest: 04.012 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, tight
         ok 1 - 04.001.12
         ok 2 - 04.012 - joins
         1..2
-    ok 26 - 04.012 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, tight # time=2.795ms
+    ok 26 - 04.012 - [36msemicolon missing[39m - [32mthinsp[39m - no decode, tight # time=7.995ms
     
     # Subtest: 04.013 - [36msemicolon missing[39m - [32mang[39m - with decode, spaced
         ok 1 - 04.013
         1..1
-    ok 27 - 04.013 - [36msemicolon missing[39m - [32mang[39m - with decode, spaced # time=2.104ms
+    ok 27 - 04.013 - [36msemicolon missing[39m - [32mang[39m - with decode, spaced # time=9.606ms
     
     # Subtest: 04.014 - [36msemicolon missing[39m - [32mang[39m - with decode, tight
         ok 1 - 04.014
         1..1
-    ok 28 - 04.014 - [36msemicolon missing[39m - [32mang[39m - with decode, tight # time=15.118ms
+    ok 28 - 04.014 - [36msemicolon missing[39m - [32mang[39m - with decode, tight # time=5.128ms
     
     # Subtest: 04.015 - [36msemicolon missing[39m - [32mangst[39m - with decode, tight
         ok 1 - 04.015.01
         ok 2 - 04.015.02
         ok 3 - 04.015.03
         1..3
-    ok 29 - 04.015 - [36msemicolon missing[39m - [32mangst[39m - with decode, tight # time=10.907ms
+    ok 29 - 04.015 - [36msemicolon missing[39m - [32mangst[39m - with decode, tight # time=5.72ms
     
     # Subtest: 04.016 - [36msemicolon missing[39m - [32mpi[39m - with decode, tight
         ok 1 - 04.016
         1..1
-    ok 30 - 04.016 - [36msemicolon missing[39m - [32mpi[39m - with decode, tight # time=1.714ms
+    ok 30 - 04.016 - [36msemicolon missing[39m - [32mpi[39m - with decode, tight # time=1.658ms
     
     # Subtest: 04.017 - [36msemicolon missing[39m - [32mpiv[39m - with decode, tight
         ok 1 - 04.017
         1..1
-    ok 31 - 04.017 - [36msemicolon missing[39m - [32mpiv[39m - with decode, tight # time=2.109ms
+    ok 31 - 04.017 - [36msemicolon missing[39m - [32mpiv[39m - with decode, tight # time=2.23ms
     
     # Subtest: 04.018 - [36msemicolon missing[39m - [32mPi[39m - with decode, tight
         ok 1 - 04.018
         1..1
-    ok 32 - 04.018 - [36msemicolon missing[39m - [32mPi[39m - with decode, tight # time=1.763ms
+    ok 32 - 04.018 - [36msemicolon missing[39m - [32mPi[39m - with decode, tight # time=1.744ms
     
     # Subtest: 04.019 - [36msemicolon missing[39m - [32msigma[39m - with decode, tight
         ok 1 - 04.019
         1..1
-    ok 33 - 04.019 - [36msemicolon missing[39m - [32msigma[39m - with decode, tight # time=2.162ms
+    ok 33 - 04.019 - [36msemicolon missing[39m - [32msigma[39m - with decode, tight # time=1.956ms
     
     # Subtest: 04.020 - [36msemicolon missing[39m - [32msub[39m - with decode, tight
         ok 1 - 04.020
         1..1
-    ok 34 - 04.020 - [36msemicolon missing[39m - [32msub[39m - with decode, tight # time=2.254ms
+    ok 34 - 04.020 - [36msemicolon missing[39m - [32msub[39m - with decode, tight # time=2.346ms
     
     # Subtest: 04.021 - [36msemicolon missing[39m - [32msup[39m - with decode, tight
         ok 1 - 04.021
         1..1
-    ok 35 - 04.021 - [36msemicolon missing[39m - [32msup[39m - with decode, tight # time=2.389ms
+    ok 35 - 04.021 - [36msemicolon missing[39m - [32msup[39m - with decode, tight # time=2.668ms
     
     # Subtest: 04.022 - [36msemicolon missing[39m - [32mtheta[39m - with decode, tight
         ok 1 - 04.022
         1..1
-    ok 36 - 04.022 - [36msemicolon missing[39m - [32mtheta[39m - with decode, tight # time=1.958ms
+    ok 36 - 04.022 - [36msemicolon missing[39m - [32mtheta[39m - with decode, tight # time=1.86ms
     
     # Subtest: 04.023 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, line breaked
         ok 1 - 04.023
         1..1
-    ok 37 - 04.023 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, line breaked # time=2.097ms
+    ok 37 - 04.023 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, line breaked # time=2.659ms
     
     # Subtest: 04.024 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, isolated
         ok 1 - 04.024
         1..1
-    ok 38 - 04.024 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, isolated # time=1.669ms
+    ok 38 - 04.024 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, isolated # time=1.628ms
     
     # Subtest: 04.025 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, tight
         ok 1 - 04.025.13 - joins
         1..1
-    ok 39 - 04.025 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, tight # time=1.892ms
+    ok 39 - 04.025 - [36msemicolon missing[39m - [32mthinsp[39m - with decode, tight # time=1.94ms
     
     # Subtest: 04.026 - [36mrogue character[39m - [32mpound[39m - in front of semicolon
         ok 1 - 04.026.01
         ok 2 - 04.026.02
         1..2
-    ok 40 - 04.026 - [36mrogue character[39m - [32mpound[39m - in front of semicolon # time=4.826ms
+    ok 40 - 04.026 - [36mrogue character[39m - [32mpound[39m - in front of semicolon # time=6.642ms
     
     # Subtest: 05.001 - [34mdouble-encoding[39m - [32m&amp;[39m - no consecutive &amp;
         ok 1 - 05.001
         1..1
-    ok 41 - 05.001 - [34mdouble-encoding[39m - [32m&amp;[39m - no consecutive &amp; # time=1.655ms
+    ok 41 - 05.001 - [34mdouble-encoding[39m - [32m&amp;[39m - no consecutive &amp; # time=2.073ms
     
     # Subtest: 05.002 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp;
         ok 1 - 05.002
         1..1
-    ok 42 - 05.002 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; # time=4.169ms
+    ok 42 - 05.002 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; # time=2.459ms
     
     # Subtest: 05.003 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight
         ok 1 - 05.003
         1..1
-    ok 43 - 05.003 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight # time=1.99ms
+    ok 43 - 05.003 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight # time=2.889ms
     
     # Subtest: 05.004 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight
         ok 1 - 05.004
         1..1
-    ok 44 - 05.004 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight # time=10.075ms
+    ok 44 - 05.004 - [34mdouble-encoding[39m - [32m&amp;[39m - consecutive &amp; tight # time=2.459ms
     
     # Subtest: 05.005 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #1
         ok 1 - 05.005
         1..1
-    ok 45 - 05.005 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #1 # time=1.888ms
+    ok 45 - 05.005 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #1 # time=1.63ms
     
     # Subtest: 05.006 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #2
         ok 1 - 05.006
         1..1
-    ok 46 - 05.006 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #2 # time=1.805ms
+    ok 46 - 05.006 - [34mdouble-encoding[39m - [32m&amp;[39m - B&Q #2 # time=1.863ms
     
     # Subtest: 05.007 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - no cb
         ok 1 - 05.007 - double encoded
         1..1
-    ok 47 - 05.007 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - no cb # time=2.304ms
+    ok 47 - 05.007 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - no cb # time=2.493ms
     
     # Subtest: 05.008 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - with cb
         ok 1 - 05.008.01
         ok 2 - 05.008.02 - double encoded
         1..2
-    ok 48 - 05.008 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - with cb # time=2.565ms
+    ok 48 - 05.008 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - double encoded - with cb # time=4.082ms
     
     # Subtest: 05.009 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - triple encoded
         ok 1 - 05.009.01
         ok 2 - 05.009.02
         1..2
-    ok 49 - 05.009 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - triple encoded # time=2.57ms
+    ok 49 - 05.009 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - triple encoded # time=3.524ms
     
     # Subtest: 05.010 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand - no cb
         ok 1 - 05.010.01
@@ -34124,35 +34125,35 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 3 - 05.010.03
         ok 4 - 05.010.04
         1..4
-    ok 50 - 05.010 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand - no cb # time=5.416ms
+    ok 50 - 05.010 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand - no cb # time=4.734ms
     
     # Subtest: 05.011 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand
         ok 1 - 05.011.01
         ok 2 - 05.011.02
         1..2
-    ok 51 - 05.011 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand # time=2.841ms
+    ok 51 - 05.011 - [34mdouble-encoding[39m - [32mnbsp[39m - combo with malformed nbsp - missing opening ampersand # time=3.622ms
     
     # Subtest: 05.012 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2
         ok 1 - 05.012
         1..1
-    ok 52 - 05.012 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2 # time=9.149ms
+    ok 52 - 05.012 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2 # time=9.567ms
     
     # Subtest: 05.013 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb
         ok 1 - 05.013.01
         ok 2 - 05.013.02
         1..2
-    ok 53 - 05.013 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb # time=8.222ms
+    ok 53 - 05.013 - [34mdouble-encoding[39m - [32mnsp[39m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb # time=11.603ms
     
     # Subtest: 05.014 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #1
         ok 1 - 05.014
         1..1
-    ok 54 - 05.014 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #1 # time=1.662ms
+    ok 54 - 05.014 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #1 # time=2.506ms
     
     # Subtest: 05.015 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #2
         ok 1 - 05.015.01
         ok 2 - 05.015.02
         1..2
-    ok 55 - 05.015 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #2 # time=2.335ms
+    ok 55 - 05.015 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #2 # time=5.111ms
     
     # Subtest: 05.016 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #3
         ok 1 - 05.016.01
@@ -34162,18 +34163,18 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 5 - 05.016.04
         ok 6 - 05.016.05
         1..6
-    ok 56 - 05.016 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #3 # time=5.435ms
+    ok 56 - 05.016 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #3 # time=6.633ms
     
     # Subtest: 05.017 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #4
         ok 1 - 05.017
         1..1
-    ok 57 - 05.017 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #4 # time=1.642ms
+    ok 57 - 05.017 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #4 # time=1.522ms
     
     # Subtest: 05.018 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #5
         ok 1 - 05.018.01
         ok 2 - 05.018.02
         1..2
-    ok 58 - 05.018 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #5 # time=2.158ms
+    ok 58 - 05.018 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #5 # time=3.145ms
     
     # Subtest: 05.019 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #6
         ok 1 - 05.019.01
@@ -34183,17 +34184,17 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 5 - 05.019.05
         ok 6 - 05.019.06
         1..6
-    ok 59 - 05.019 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #6 # time=5.269ms
+    ok 59 - 05.019 - [34mdouble-encoding[39m - [32misolated nbs[39m - simple case #6 # time=15.277ms
     
     # Subtest: 06.001 - [31mopts.cb[39m - [33mdefault callback[39m mimicking non-cb result
         ok 1 - 06.001 - letter + nbsp
         1..1
-    ok 60 - 06.001 - [31mopts.cb[39m - [33mdefault callback[39m mimicking non-cb result # time=1.965ms
+    ok 60 - 06.001 - [31mopts.cb[39m - [33mdefault callback[39m mimicking non-cb result # time=8.4ms
     
     # Subtest: 06.002 - [31mopts.cb[39m - [33memlint issue spec[39m callback
         ok 1 - 06.002
         1..1
-    ok 61 - 06.002 - [31mopts.cb[39m - [33memlint issue spec[39m callback # time=2.131ms
+    ok 61 - 06.002 - [31mopts.cb[39m - [33memlint issue spec[39m callback # time=9.684ms
     
     # Subtest: 07.001 - [32mopts.progressFn[39m - reports progress
         ok 1 - 07.001.01 - baseline
@@ -34272,144 +34273,144 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 74 - 07.001.02 - calls the progress function
         ok 75 - 07.001.03
         1..75
-    ok 62 - 07.001 - [32mopts.progressFn[39m - reports progress # time=63.979ms
+    ok 62 - 07.001 - [32mopts.progressFn[39m - reports progress # time=64.161ms
     
     # Subtest: 08.001 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - no decode, spaced
         ok 1 - 08.001.01
         ok 2 - 08.001.02
         1..2
-    ok 63 - 08.001 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - no decode, spaced # time=7.927ms
+    ok 63 - 08.001 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - no decode, spaced # time=18.672ms
     
     # Subtest: 08.002 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - legit word same as entity name, ending with semicol
         ok 1 - 08.002
         1..1
-    ok 64 - 08.002 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - legit word same as entity name, ending with semicol # time=2.148ms
+    ok 64 - 08.002 - [33mmissing amp[39m - [32macute[39m vs [32maacute[39m - legit word same as entity name, ending with semicol # time=13.047ms
     
     # Subtest: 08.003 - [33mmissing amp[39m - minimal isolated, named, rarrpl
         ok 1 - 08.003.01
         ok 2 - 08.003.02
         1..2
-    ok 65 - 08.003 - [33mmissing amp[39m - minimal isolated, named, rarrpl # time=2.219ms
+    ok 65 - 08.003 - [33mmissing amp[39m - minimal isolated, named, rarrpl # time=2.228ms
     
     # Subtest: 08.004 - [33mmissing amp[39m - &block; vs. display:block
         ok 1 - 08.004
         1..1
-    ok 66 - 08.004 - [33mmissing amp[39m - &block; vs. display:block # time=6.773ms
+    ok 66 - 08.004 - [33mmissing amp[39m - &block; vs. display:block # time=3.766ms
     
     # Subtest: 09.001 - [35mnbsp[39m - [36mnbsp[39m - space after ampersand
         ok 1 - 09.001.01
         1..1
-    ok 67 - 09.001 - [35mnbsp[39m - [36mnbsp[39m - space after ampersand # time=1.695ms
+    ok 67 - 09.001 - [35mnbsp[39m - [36mnbsp[39m - space after ampersand # time=1.884ms
     
     # Subtest: 09.002 - [35mnbsp[39m - [36mnbsp[39m - space before semicolon
         ok 1 - 09.002.01
         1..1
-    ok 68 - 09.002 - [35mnbsp[39m - [36mnbsp[39m - space before semicolon # time=1.923ms
+    ok 68 - 09.002 - [35mnbsp[39m - [36mnbsp[39m - space before semicolon # time=1.726ms
     
     # Subtest: 09.003 - [35mnbsp[39m - [36mnbsp[39m - space before and after semicolon
         ok 1 - 09.003.01
         1..1
-    ok 69 - 09.003 - [35mnbsp[39m - [36mnbsp[39m - space before and after semicolon # time=1.778ms
+    ok 69 - 09.003 - [35mnbsp[39m - [36mnbsp[39m - space before and after semicolon # time=1.842ms
     
     # Subtest: 10.001 - [34mother cases[39m - [32munrecognised[39m - one
         ok 1 - 10.001
         1..1
-    ok 70 - 10.001 - [34mother cases[39m - [32munrecognised[39m - one # time=1.701ms
+    ok 70 - 10.001 - [34mother cases[39m - [32munrecognised[39m - one # time=1.784ms
     
     # Subtest: 10.002 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity
         ok 1 - 10.002.01
         ok 2 - 10.002.02
         1..2
-    ok 71 - 10.002 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity # time=2.275ms
+    ok 71 - 10.002 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity # time=2.538ms
     
     # Subtest: 10.003 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity, cb() separately
         ok 1 - 10.003
         1..1
-    ok 72 - 10.003 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity, cb() separately # time=1.709ms
+    ok 72 - 10.003 - [34mother cases[39m - [32mrecognised[39m - recognised broken entity, cb() separately # time=1.837ms
     
     # Subtest: 10.004 - [34mother cases[39m - [32mrecognised[39m - legit entity but with whitespace
         ok 1 - 10.004.01
         ok 2 - 10.004.02
         1..2
-    ok 73 - 10.004 - [34mother cases[39m - [32mrecognised[39m - legit entity but with whitespace # time=2.626ms
+    ok 73 - 10.004 - [34mother cases[39m - [32mrecognised[39m - legit entity but with whitespace # time=3.268ms
     
     # Subtest: 10.005 - [34mother cases[39m - [32mrecognised[39m - legit entity but with capital letter
         ok 1 - 10.005.01
         ok 2 - 10.005.02
         1..2
-    ok 74 - 10.005 - [34mother cases[39m - [32mrecognised[39m - legit entity but with capital letter # time=6.808ms
+    ok 74 - 10.005 - [34mother cases[39m - [32mrecognised[39m - legit entity but with capital letter # time=14.762ms
     
     # Subtest: 10.006 - [34mother cases[39m - [32mrecognised[39m - legit healthy entity should not raise any issues
         ok 1 - 10.006.01
         ok 2 - 10.006
         1..2
-    ok 75 - 10.006 - [34mother cases[39m - [32mrecognised[39m - legit healthy entity should not raise any issues # time=2.368ms
+    ok 75 - 10.006 - [34mother cases[39m - [32mrecognised[39m - legit healthy entity should not raise any issues # time=8.289ms
     
     # Subtest: 10.007 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity
         ok 1 - 10.007
         1..1
-    ok 76 - 10.007 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity # time=2.332ms
+    ok 76 - 10.007 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity # time=16.739ms
     
     # Subtest: 10.008 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity
         ok 1 - 10.008
         1..1
-    ok 77 - 10.008 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity # time=2.037ms
+    ok 77 - 10.008 - [34mother cases[39m - [32mrecognised[39m - combo of a sneaky legit semicolon and missing semicolon on entity # time=12.226ms
     
     # Subtest: 10.009 - [34mother cases[39m - [32mrecognised[39m - only first two characters match legit entity
         ok 1 - 10.009
         1..1
-    ok 78 - 10.009 - [34mother cases[39m - [32mrecognised[39m - only first two characters match legit entity # time=1.747ms
+    ok 78 - 10.009 - [34mother cases[39m - [32mrecognised[39m - only first two characters match legit entity # time=1.807ms
     
     # Subtest: 10.010 - [34mother cases[39m - [32mrecognised[39m - case issues
         ok 1 - 10.010
         1..1
-    ok 79 - 10.010 - [34mother cases[39m - [32mrecognised[39m - case issues # time=1.804ms
+    ok 79 - 10.010 - [34mother cases[39m - [32mrecognised[39m - case issues # time=1.597ms
     
     # Subtest: 10.011 - [34mother cases[39m - [32mrecognised[39m - space before semicolon
         ok 1 - 10.011
         1..1
-    ok 80 - 10.011 - [34mother cases[39m - [32mrecognised[39m - space before semicolon # time=1.756ms
+    ok 80 - 10.011 - [34mother cases[39m - [32mrecognised[39m - space before semicolon # time=1.861ms
     
     # Subtest: 10.012 - [34mother cases[39m - [32mrecognised[39m - twoheadrightarrow wrong case only
         ok 1 - 10.012
         1..1
-    ok 81 - 10.012 - [34mother cases[39m - [32mrecognised[39m - twoheadrightarrow wrong case only # time=2.471ms
+    ok 81 - 10.012 - [34mother cases[39m - [32mrecognised[39m - twoheadrightarrow wrong case only # time=2.792ms
     
     # Subtest: 10.013 - [34mother cases[39m - [32mrecognised[39m - legit entities with capital letter and known existing alternative with all lowercase
         ok 1 - 10.013
         1..1
-    ok 82 - 10.013 - [34mother cases[39m - [32mrecognised[39m - legit entities with capital letter and known existing alternative with all lowercase # time=1.728ms
+    ok 82 - 10.013 - [34mother cases[39m - [32mrecognised[39m - legit entities with capital letter and known existing alternative with all lowercase # time=1.795ms
     
     # Subtest: 10.014 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &ac d;
         ok 1 - 10.014
         1..1
-    ok 83 - 10.014 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &ac d; # time=1.695ms
+    ok 83 - 10.014 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &ac d; # time=1.716ms
     
     # Subtest: 10.015 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Acd;
         ok 1 - 10.015
         1..1
-    ok 84 - 10.015 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Acd; # time=2.266ms
+    ok 84 - 10.015 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Acd; # time=5.475ms
     
     # Subtest: 10.016 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Aelig; - ambiguous case
         ok 1 - 10.016
         1..1
-    ok 85 - 10.016 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Aelig; - ambiguous case # time=2.302ms
+    ok 85 - 10.016 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &Aelig; - ambiguous case # time=2.774ms
     
     # Subtest: 10.017 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing
         ok 1 - 10.017
         1..1
-    ok 86 - 10.017 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing # time=1.538ms
+    ok 86 - 10.017 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing # time=1.692ms
     
     # Subtest: 10.018 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &xcap; - named entity starts with x
         ok 1 - 10.018.01
         ok 2 - 10.018.02
         1..2
-    ok 87 - 10.018 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &xcap; - named entity starts with x # time=2.693ms
+    ok 87 - 10.018 - [34mother cases[39m - [32mrecognised[39m - ad hoc - &xcap; - named entity starts with x # time=13.676ms
     
     # Subtest: 10.019 - [34mother cases[39m - [32mrecognised[39m - ad hoc 1
         ok 1 - should be equivalent
         1..1
-    ok 88 - 10.019 - [34mother cases[39m - [32mrecognised[39m - ad hoc 1 # time=1.5ms
+    ok 88 - 10.019 - [34mother cases[39m - [32mrecognised[39m - ad hoc 1 # time=5.059ms
     
     # Subtest: 10.020 - [34mother cases[39m - [32mrecognised[39m - ad hoc 2
         ok 1 - "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;" - 0
@@ -34422,253 +34423,252 @@ ok 6 - test/rogue-spaces-test.js # time=11459.764ms
         ok 8 - "&nbsp;  &nbsp;  &nbsp;    a  &nbsp;  &nbsp;  &nbsp;" - 7
         ok 9 - "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;" - 8
         1..9
-    ok 89 - 10.020 - [34mother cases[39m - [32mrecognised[39m - ad hoc 2 # time=17.124ms
+    ok 89 - 10.020 - [34mother cases[39m - [32mrecognised[39m - ad hoc 2 # time=41.652ms
     
     # Subtest: 10.021 - [34mother cases[39m - [32mrecognised[39m - ad hoc 3
         ok 1 - should be equivalent
         1..1
-    ok 90 - 10.021 - [34mother cases[39m - [32mrecognised[39m - ad hoc 3 # time=1.913ms
+    ok 90 - 10.021 - [34mother cases[39m - [32mrecognised[39m - ad hoc 3 # time=2.337ms
     
     # Subtest: 10.022 - [34mother cases[39m - [32mrecognised[39m - ad hoc 4
         ok 1 - should be equivalent
         1..1
-    ok 91 - 10.022 - [34mother cases[39m - [32mrecognised[39m - ad hoc 4 # time=10.34ms
+    ok 91 - 10.022 - [34mother cases[39m - [32mrecognised[39m - ad hoc 4 # time=5.417ms
     
     # Subtest: 10.023 - [34mother cases[39m - [32mrecognised[39m - ad hoc 5
         ok 1 - should be equivalent
         1..1
-    ok 92 - 10.023 - [34mother cases[39m - [32mrecognised[39m - ad hoc 5 # time=2.864ms
+    ok 92 - 10.023 - [34mother cases[39m - [32mrecognised[39m - ad hoc 5 # time=2.801ms
     
     # Subtest: 10.024 - [34mother cases[39m - [32mrecognised[39m - ad hoc 6
         ok 1 - should be equivalent
         1..1
-    ok 93 - 10.024 - [34mother cases[39m - [32mrecognised[39m - ad hoc 6 # time=2.622ms
+    ok 93 - 10.024 - [34mother cases[39m - [32mrecognised[39m - ad hoc 6 # time=2.927ms
     
     # Subtest: 11.001 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode within ASCII range - A
         ok 1 - 11.001
         1..1
-    ok 94 - 11.001 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode within ASCII range - A # time=1.8ms
+    ok 94 - 11.001 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode within ASCII range - A # time=1.566ms
     
     # Subtest: 11.002 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - pound
         ok 1 - 11.002
         1..1
-    ok 95 - 11.002 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - pound # time=1.707ms
+    ok 95 - 11.002 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - pound # time=1.676ms
     
     # Subtest: 11.003 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - non-existing number
         ok 1 - 11.003
         1..1
-    ok 96 - 11.003 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - non-existing number # time=3.322ms
+    ok 96 - 11.003 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decode outside ASCII range - non-existing number # time=2.277ms
     
     # Subtest: 11.004 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, within ASCII range - A
         ok 1 - 11.004
         1..1
-    ok 97 - 11.004 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, within ASCII range - A # time=1.483ms
+    ok 97 - 11.004 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, within ASCII range - A # time=1.232ms
     
     # Subtest: 11.005 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - pound
         ok 1 - 11.005
         1..1
-    ok 98 - 11.005 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - pound # time=3.782ms
+    ok 98 - 11.005 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - pound # time=1.235ms
     
     # Subtest: 11.006 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - non-existing number
         ok 1 - 11.006
         1..1
-    ok 99 - 11.006 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - non-existing number # time=3.996ms
+    ok 99 - 11.006 - [33mnumeric entities[39m - [31mdecimal pattern[39m - no decode, outside ASCII range - non-existing number # time=7.606ms
     
     # Subtest: 11.007 - [33mnumeric entities[39m - [31mdecimal pattern[39m - dollar instead of hash
         ok 1 - 11.007
         1..1
-    ok 100 - 11.007 - [33mnumeric entities[39m - [31mdecimal pattern[39m - dollar instead of hash # time=1.764ms
+    ok 100 - 11.007 - [33mnumeric entities[39m - [31mdecimal pattern[39m - dollar instead of hash # time=1.539ms
     
     # Subtest: 11.008 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decoding text with healthy numeric entities
         ok 1 - 11.008.001
         ok 2 - 11.008.002
         ok 3 - 11.008.03
         1..3
-    ok 101 - 11.008 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decoding text with healthy numeric entities # time=10.51ms
+    ok 101 - 11.008 - [33mnumeric entities[39m - [31mdecimal pattern[39m - decoding text with healthy numeric entities # time=11.914ms
     
     # Subtest: 11.009 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - decode outside ASCII range - pound
         ok 1 - 11.009.01
         ok 2 - 11.009.02
         1..2
-    ok 102 - 11.009 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - decode outside ASCII range - pound # time=2.344ms
+    ok 102 - 11.009 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - decode outside ASCII range - pound # time=2.219ms
     
     # Subtest: 11.010 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, no decode - pound
         ok 1 - 11.010
         1..1
-    ok 103 - 11.010 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, no decode - pound # time=1.531ms
+    ok 103 - 11.010 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, no decode - pound # time=1.405ms
     
     # Subtest: 11.011 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, with decode - pound
         ok 1 - 11.011.01
         ok 2 - 11.011.02
         1..2
-    ok 104 - 11.011 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, with decode - pound # time=2.094ms
+    ok 104 - 11.011 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - swapped hash and x, with decode - pound # time=5.371ms
     
     # Subtest: 11.012 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - &#x pattern with hash missing
         ok 1 - 11.012
         1..1
-    ok 105 - 11.012 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - &#x pattern with hash missing # time=1.643ms
+    ok 105 - 11.012 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - &#x pattern with hash missing # time=1.448ms
     
     # Subtest: 11.013 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - missing ampersand
         ok 1 - 11.013
         1..1
-    ok 106 - 11.013 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - missing ampersand # time=1.831ms
+    ok 106 - 11.013 - [33mnumeric entities[39m - [34mhexidecimal pattern[39m - missing ampersand # time=10.984ms
     
     # Subtest: 12.001 - [36mfalse positives[39m - legit pound, no decode
         ok 1 - 12.001
         1..1
-    ok 107 - 12.001 - [36mfalse positives[39m - legit pound, no decode # time=1.509ms
+    ok 107 - 12.001 - [36mfalse positives[39m - legit pound, no decode # time=1.289ms
     
     # Subtest: 12.002 - [36mfalse positives[39m - legit pound, no decode
         ok 1 - 12.002
         1..1
-    ok 108 - 12.002 - [36mfalse positives[39m - legit pound, no decode # time=1.358ms
+    ok 108 - 12.002 - [36mfalse positives[39m - legit pound, no decode # time=1.457ms
     
     # Subtest: 13.001 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, no decode
         ok 1 - 13.001.01
         ok 2 - 13.001.02
         1..2
-    ok 109 - 13.001 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, no decode # time=2.141ms
+    ok 109 - 13.001 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, no decode # time=1.84ms
     
     # Subtest: 13.002 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, no decode
         ok 1 - 13.002.01
         ok 2 - 13.002.02
         1..2
-    ok 110 - 13.002 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, no decode # time=2.048ms
+    ok 110 - 13.002 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, no decode # time=2.229ms
     
     # Subtest: 13.003 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, with decode
         ok 1 - 13.003.01
         ok 2 - 13.003.02
         1..2
-    ok 111 - 13.003 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, with decode # time=3.962ms
+    ok 111 - 13.003 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, with callback, with decode # time=1.739ms
     
     # Subtest: 13.004 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, with decode
         ok 1 - 13.004.01
         1..1
-    ok 112 - 13.004 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, with decode # time=4.065ms
+    ok 112 - 13.004 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - one named entity, without callback, with decode # time=1.31ms
     
     # Subtest: 13.005 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - only healthy entities are pinged to entityCatcherCb
         ok 1 - 13.005.01
         ok 2 - 13.005.02
         1..2
-    ok 113 - 13.005 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - only healthy entities are pinged to entityCatcherCb # time=3.794ms
+    ok 113 - 13.005 - [36mopts.entityCatcherCb[39m - [33mnbsp[39m - only healthy entities are pinged to entityCatcherCb # time=3.135ms
     
     # Subtest: 13.005 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, no decode
         ok 1 - 13.005
         1..1
-    ok 114 - 13.005 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, no decode # time=1.82ms
+    ok 114 - 13.005 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, no decode # time=1.835ms
     
     # Subtest: 13.006 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, no decode
         ok 1 - 13.006
         1..1
-    ok 115 - 13.006 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, no decode # time=1.733ms
+    ok 115 - 13.006 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, no decode # time=9.229ms
     
     # Subtest: 13.007 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, with decode
         ok 1 - 13.007
         1..1
-    ok 116 - 13.007 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, with decode # time=6.728ms
+    ok 116 - 13.007 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, with callback, with decode # time=2.644ms
     
     # Subtest: 13.008 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, with decode
         ok 1 - 13.008
         1..1
-    ok 117 - 13.008 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, with decode # time=1.746ms
+    ok 117 - 13.008 - [36mopts.entityCatcherCb[39m - [33misindot[39m - one named entity, without callback, with decode # time=1.835ms
     
     # Subtest: 13.009 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, no decode
         ok 1 - 13.009.01
         ok 2 - 13.009.02
         1..2
-    ok 118 - 13.009 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, no decode # time=4.054ms
+    ok 118 - 13.009 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, no decode # time=2.307ms
     
     # Subtest: 13.010 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, no decode
         ok 1 - 13.010.02
         1..1
-    ok 119 - 13.010 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, no decode # time=1.626ms
+    ok 119 - 13.010 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, no decode # time=1.791ms
     
     # Subtest: 13.011 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, with decode
         ok 1 - 13.011.01
         ok 2 - 13.011.02
         1..2
-    ok 120 - 13.011 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, with decode # time=2.078ms
+    ok 120 - 13.011 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, with callback, with decode # time=2.203ms
     
     # Subtest: 13.012 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, with decode
         ok 1 - 13.012.02
         1..1
-    ok 121 - 13.012 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, with decode # time=1.646ms
+    ok 121 - 13.012 - [36mopts.entityCatcherCb[39m - [33mnsp[39m - one broken entity, without callback, with decode # time=2.586ms
     
     # Subtest: 13.013 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, no decode
         ok 1 - 13.013.01
         ok 2 - 13.013.02
         1..2
-    ok 122 - 13.013 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, no decode # time=1.888ms
+    ok 122 - 13.013 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, no decode # time=23.805ms
     
     # Subtest: 13.014 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, no decode
         ok 1 - 13.014
         1..1
-    ok 123 - 13.014 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, no decode # time=1.651ms
+    ok 123 - 13.014 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, no decode # time=1.362ms
     
     # Subtest: 13.015 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, with decode
         ok 1 - 13.015.01
         ok 2 - 13.015.02
         1..2
-    ok 124 - 13.015 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, with decode # time=1.816ms
+    ok 124 - 13.015 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, with callback, with decode # time=1.812ms
     
     # Subtest: 13.016 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, with decode
         ok 1 - 13.016
         1..1
-    ok 125 - 13.016 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, with decode # time=2.704ms
+    ok 125 - 13.016 - [36mopts.entityCatcherCb[39m - [33mabcdefg[39m - one broken entity, without callback, with decode # time=1.892ms
     
     # Subtest: 13.017 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, no decode
         ok 1 - 13.017
         1..1
-    ok 126 - 13.017 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, no decode # time=3.439ms
+    ok 126 - 13.017 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, no decode # time=2.441ms
     
     # Subtest: 13.018 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, no decode
         ok 1 - 13.018
         1..1
-    ok 127 - 13.018 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, no decode # time=1.552ms
+    ok 127 - 13.018 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, no decode # time=13.152ms
     
     # Subtest: 13.019 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, with decode
         ok 1 - 13.019
         1..1
-    ok 128 - 13.019 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, with decode # time=1.46ms
+    ok 128 - 13.019 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, with callback, with decode # time=1.376ms
     
     # Subtest: 13.020 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, with decode
         ok 1 - 13.020
         1..1
-    ok 129 - 13.020 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, with decode # time=1.46ms
+    ok 129 - 13.020 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one decimal numeric entity, without callback, with decode # time=1.494ms
     
     # Subtest: 13.021 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity
         ok 1 - 13.021
         1..1
-    ok 130 - 13.021 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity # time=1.405ms
+    ok 130 - 13.021 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity # time=1.339ms
     
     # Subtest: 13.022 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity
         ok 1 - 13.022
         1..1
-    ok 131 - 13.022 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity # time=1.554ms
+    ok 131 - 13.022 - [36mopts.entityCatcherCb[39m - [33m#65[39m - one broken decimal numeric entity # time=1.691ms
     
     # Subtest: 13.021 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, no decode
         ok 1 - 13.021
         1..1
-    ok 132 - 13.021 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, no decode # time=1.419ms
+    ok 132 - 13.021 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, no decode # time=9.381ms
     
     # Subtest: 13.022 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, no decode
         ok 1 - 13.022
         1..1
-    ok 133 - 13.022 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, no decode # time=1.386ms
+    ok 133 - 13.022 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, no decode # time=1.343ms
     
     # Subtest: 13.023 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, with decode
         ok 1 - 13.023
         1..1
-    ok 134 - 13.023 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, with decode # time=1.577ms
+    ok 134 - 13.023 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, with callback, with decode # time=1.462ms
     
     # Subtest: 13.024 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, with decode
         ok 1 - 13.024
         1..1
-    ok 135 - 13.024 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, with decode # time=3.614ms
+    ok 135 - 13.024 - [36mopts.entityCatcherCb[39m - [33mx#A3[39m - one decimal numeric entity, without callback, with decode # time=1.494ms
     
     1..135
-    # time=1174.083ms
-ok 7 - test/test.js # time=1174.083ms
+    # time=2928.194ms
+}
 
 1..7
-# time=58405.105ms

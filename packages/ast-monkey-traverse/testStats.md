@@ -1,31 +1,31 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=298.05ms {
     # Subtest: 01.01 - [36mtraverse[39m - use traverse to delete one key from an array
         ok 1 - 01.01.01
         ok 2 - 01.01.02
         ok 3 - 01.01.03
         1..3
-    ok 1 - 01.01 - [36mtraverse[39m - use traverse to delete one key from an array # time=21.886ms
+    ok 1 - 01.01 - [36mtraverse[39m - use traverse to delete one key from an array # time=26.672ms
     
     # Subtest: 01.02 - [36mtraverse[39m - more deletion from arrays
         ok 1 - 01.02
         1..1
-    ok 2 - 01.02 - [36mtraverse[39m - more deletion from arrays # time=3.372ms
+    ok 2 - 01.02 - [36mtraverse[39m - more deletion from arrays # time=2.403ms
     
     # Subtest: 01.03 - [36mtraverse[39m - use traverse, passing null, write over values
         ok 1 - 01.03
         1..1
-    ok 3 - 01.03 - [36mtraverse[39m - use traverse, passing null, write over values # time=3.402ms
+    ok 3 - 01.03 - [36mtraverse[39m - use traverse, passing null, write over values # time=23.245ms
     
     # Subtest: 01.04 - [36mtraverse[39m - traverse automatically patches up holes in arrays
         ok 1 - 01.04
         1..1
-    ok 4 - 01.04 - [36mtraverse[39m - traverse automatically patches up holes in arrays # time=2.813ms
+    ok 4 - 01.04 - [36mtraverse[39m - traverse automatically patches up holes in arrays # time=1.336ms
     
     # Subtest: 01.05 - [36mtraverse[39m - delete key-value pair from plain object in root
         ok 1 - 01.05
         1..1
-    ok 5 - 01.05 - [36mtraverse[39m - delete key-value pair from plain object in root # time=22.054ms
+    ok 5 - 01.05 - [36mtraverse[39m - delete key-value pair from plain object in root # time=1.557ms
     
     # Subtest: 01.06 - [36mtraverse[39m - only traversal, #1
         ok 1 - a
@@ -34,7 +34,7 @@ TAP version 13
         ok 4 - a.2
         ok 5 - (unnamed test)
         1..5
-    ok 6 - 01.06 - [36mtraverse[39m - only traversal, #1 # time=6.551ms
+    ok 6 - 01.06 - [36mtraverse[39m - only traversal, #1 # time=2.787ms
     
     # Subtest: 01.07 - [36mtraverse[39m - only traversal, #2
         ok 1 - a
@@ -59,7 +59,7 @@ TAP version 13
         ok 20 - a.f.g.l.2
         ok 21 - (unnamed test)
         1..21
-    ok 7 - 01.07 - [36mtraverse[39m - only traversal, #2 # time=24.746ms
+    ok 7 - 01.07 - [36mtraverse[39m - only traversal, #2 # time=29.395ms
     
     # Subtest: 01.08 - [36mtraverse[39m - only traversal, #3
         ok 1 - 0
@@ -68,41 +68,41 @@ TAP version 13
         ok 4 - 2.a
         ok 5 - (unnamed test)
         1..5
-    ok 8 - 01.08 - [36mtraverse[39m - only traversal, #3 # time=5.438ms
+    ok 8 - 01.08 - [36mtraverse[39m - only traversal, #3 # time=2.355ms
     
     # Subtest: 02.01 - [31mstopping[39m - objects - a reference traversal
         ok 1 - should be equivalent
         1..1
-    ok 9 - 02.01 - [31mstopping[39m - objects - a reference traversal # time=3.045ms
+    ok 9 - 02.01 - [31mstopping[39m - objects - a reference traversal # time=1.294ms
     
     # Subtest: 02.02 - [31mstopping[39m - objects - after "b"
         ok 1 - should be equivalent
         1..1
-    ok 10 - 02.02 - [31mstopping[39m - objects - after "b" # time=2.977ms
+    ok 10 - 02.02 - [31mstopping[39m - objects - after "b" # time=1.209ms
     
     # Subtest: 02.03 - [31mstopping[39m - arrays - a reference traversal
         ok 1 - should be equivalent
         1..1
-    ok 11 - 02.03 - [31mstopping[39m - arrays - a reference traversal # time=2.713ms
+    ok 11 - 02.03 - [31mstopping[39m - arrays - a reference traversal # time=7.419ms
     
     # Subtest: 02.04 - [31mstopping[39m - arrays - after "b"
         ok 1 - should be equivalent
         1..1
-    ok 12 - 02.04 - [31mstopping[39m - arrays - after "b" # time=2.57ms
+    ok 12 - 02.04 - [31mstopping[39m - arrays - after "b" # time=1.092ms
     
     1..12
-    # time=292.106ms
-ok 1 - test/test.js # time=292.106ms
+    # time=298.05ms
+}
 
-# Subtest: test/umd-test.js
+ok 2 - test/umd-test.js # time=19.247ms {
     # Subtest: UMD build works fine
         ok 1 - should be equivalent
         1..1
-    ok 1 - UMD build works fine # time=29.49ms
+    ok 1 - UMD build works fine # time=12.569ms
     
     1..1
-    # time=35.741ms
-ok 2 - test/umd-test.js # time=35.741ms
+    # time=19.247ms
+}
 
 1..2
-# time=5645.919ms
+# time=2622.567ms

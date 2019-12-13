@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=66.092ms {
     # Subtest: 01.01 - isProduction4()
         ok 1 - 01.01.01
         ok 2 - 01.01.02
@@ -11,7 +11,7 @@ TAP version 13
         ok 8 - 01.01.07
         ok 9 - 01.01.08
         1..9
-    ok 1 - 01.01 - isProduction4() # time=12.729ms
+    ok 1 - 01.01 - isProduction4() # time=10.441ms
     
     # Subtest: 01.02 - validFirstChar() same as isProduction4()
         ok 1 - 01.02.01
@@ -24,7 +24,7 @@ TAP version 13
         ok 8 - 01.02.07
         ok 9 - 01.02.08
         1..9
-    ok 2 - 01.02 - validFirstChar() same as isProduction4() # time=6.43ms
+    ok 2 - 01.02 - validFirstChar() same as isProduction4() # time=4.275ms
     
     # Subtest: 02.01 - isProduction4a()
         ok 1 - 02.01.01
@@ -36,7 +36,7 @@ TAP version 13
         ok 7 - 02.01.07
         ok 8 - 02.01.08
         1..8
-    ok 3 - 02.01 - isProduction4a() # time=4.982ms
+    ok 3 - 02.01 - isProduction4a() # time=3.336ms
     
     # Subtest: 02.02 - validSecondCharOnwards() same as isProduction4a()
         ok 1 - 02.02.01
@@ -48,11 +48,11 @@ TAP version 13
         ok 7 - 02.02.07
         ok 8 - 02.02.08
         1..8
-    ok 4 - 02.02 - validSecondCharOnwards() same as isProduction4a() # time=4.687ms
+    ok 4 - 02.02 - validSecondCharOnwards() same as isProduction4a() # time=3.837ms
     
     1..4
-    # time=113.579ms
-ok 1 - test/test.js # time=113.579ms
+    # time=66.092ms
+}
 
 1..1
-# time=2232.588ms
+# time=2718.493ms

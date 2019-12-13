@@ -57,7 +57,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/str-indexes-of-plus.cjs.js` | 3 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/str-indexes-of-plus.esm.js` | 2 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/str-indexes-of-plus.umd.js` | 6 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/str-indexes-of-plus.umd.js` | 7 KB |
 
 **[⬆ back to top](#)**
 

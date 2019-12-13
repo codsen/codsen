@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=1205.44ms {
     # Subtest: 1.1 - multiple elements, #1
         ok 1 - should be equivalent
         ok 2 - should be equivalent
@@ -150,7 +150,7 @@ TAP version 13
         ok 147 - expected to throw
         ok 148 - expect truthy value
         1..148
-    ok 1 - 1.1 - multiple elements, #1 # time=185.196ms
+    ok 1 - 1.1 - multiple elements, #1 # time=182.231ms
     
     # Subtest: 1.2.1 - multiple elements, #2
         ok 1 - should be equivalent
@@ -174,7 +174,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 2 - 1.2.1 - multiple elements, #2 # time=32.713ms
+    ok 2 - 1.2.1 - multiple elements, #2 # time=30.415ms
     
     # Subtest: 1.2.2 - multiple elements, #2
         ok 1 - should be equivalent
@@ -198,7 +198,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 3 - 1.2.2 - multiple elements, #2 # time=21.967ms
+    ok 3 - 1.2.2 - multiple elements, #2 # time=26.58ms
     
     # Subtest: 1.2.3 - multiple elements, #2
         ok 1 - should be equivalent
@@ -222,7 +222,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 4 - 1.2.3 - multiple elements, #2 # time=20.842ms
+    ok 4 - 1.2.3 - multiple elements, #2 # time=22.467ms
     
     # Subtest: 1.2.4 - multiple elements, #2
         ok 1 - should be equivalent
@@ -246,19 +246,19 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 5 - 1.2.4 - multiple elements, #2 # time=15.546ms
+    ok 5 - 1.2.4 - multiple elements, #2 # time=15.837ms
     
     # Subtest: 1.2.5 - multiple elements, #2 - axis outside of the range
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 6 - 1.2.5 - multiple elements, #2 - axis outside of the range # time=2.557ms
+    ok 6 - 1.2.5 - multiple elements, #2 - axis outside of the range # time=1.213ms
     
     # Subtest: 1.2.6 - multiple elements, #2 - axis outside of the range
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 7 - 1.2.6 - multiple elements, #2 - axis outside of the range # time=5.038ms
+    ok 7 - 1.2.6 - multiple elements, #2 - axis outside of the range # time=2.938ms
     
     # Subtest: 1.3 - multiple elements, #3 - opposite order
         ok 1 - should be equivalent
@@ -342,7 +342,7 @@ TAP version 13
         ok 79 - should be equivalent
         ok 80 - should be equivalent
         1..80
-    ok 8 - 1.3 - multiple elements, #3 - opposite order # time=276.751ms
+    ok 8 - 1.3 - multiple elements, #3 - opposite order # time=125.204ms
     
     # Subtest: 1.4 - multiple elements, #4 - single elements
         ok 1 - should be equivalent
@@ -440,11 +440,12 @@ TAP version 13
         ok 93 - expected to throw
         ok 94 - expect truthy value
         1..94
-    ok 9 - 1.4 - multiple elements, #4 - single elements # time=75.498ms
+    ok 9 - 1.4 - multiple elements, #4 - single elements # time=81.914ms
     
     # Subtest: 1.5.1 - first column indexes contain opposite order values
         ok 1 - should be equivalent
         ok 2 - should be equivalent
+# time=4221.502ms
         ok 3 - should be equivalent
         ok 4 - should be equivalent
         ok 5 - should be equivalent
@@ -464,7 +465,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 10 - 1.5.1 - first column indexes contain opposite order values # time=11.721ms
+    ok 10 - 1.5.1 - first column indexes contain opposite order values # time=13.816ms
     
     # Subtest: 1.5.2 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -488,7 +489,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 11 - 1.5.2 - first column indexes contain opposite order values # time=12.329ms
+    ok 11 - 1.5.2 - first column indexes contain opposite order values # time=11.91ms
     
     # Subtest: 1.5.3 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -512,7 +513,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 12 - 1.5.3 - first column indexes contain opposite order values # time=13.301ms
+    ok 12 - 1.5.3 - first column indexes contain opposite order values # time=18.286ms
     
     # Subtest: 1.5.4 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -536,7 +537,7 @@ TAP version 13
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 13 - 1.5.4 - first column indexes contain opposite order values # time=21.075ms
+    ok 13 - 1.5.4 - first column indexes contain opposite order values # time=21.989ms
     
     # Subtest: 1.6 - null over number
         ok 1 - should be equivalent
@@ -552,7 +553,7 @@ TAP version 13
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 14 - 1.6 - null over number # time=7.398ms
+    ok 14 - 1.6 - null over number # time=7.445ms
     
     # Subtest: 1.7 - just nulls over numbers
         ok 1 - should be equivalent
@@ -562,7 +563,7 @@ TAP version 13
         ok 5 - should be equivalent
         ok 6 - should be equivalent
         1..6
-    ok 15 - 1.7 - just nulls over numbers # time=10.802ms
+    ok 15 - 1.7 - just nulls over numbers # time=4.734ms
     
     # Subtest: 1.8 - just nulls over numbers
         ok 1 - should be equivalent
@@ -602,7 +603,7 @@ TAP version 13
         ok 35 - should be equivalent
         ok 36 - should be equivalent
         1..36
-    ok 16 - 1.8 - just nulls over numbers # time=43.625ms
+    ok 16 - 1.8 - just nulls over numbers # time=38.333ms
     
     # Subtest: 1.9 - just nulls over numbers
         ok 1 - should be equivalent
@@ -726,7 +727,7 @@ TAP version 13
         ok 119 - should be equivalent
         ok 120 - should be equivalent
         1..120
-    ok 17 - 1.9 - just nulls over numbers # time=120.367ms
+    ok 17 - 1.9 - just nulls over numbers # time=185.359ms
     
     # Subtest: 1.10 - value of first ripple-left is null
         ok 1 - should be equivalent
@@ -748,7 +749,7 @@ TAP version 13
         ok 17 - should be equivalent
         ok 18 - should be equivalent
         1..18
-    ok 18 - 1.10 - value of first ripple-left is null # time=12.965ms
+    ok 18 - 1.10 - value of first ripple-left is null # time=12.088ms
     
     # Subtest: 2.1 - various empty arrays
         ok 1 - should be equivalent
@@ -816,7 +817,7 @@ TAP version 13
         ok 63 - should be equivalent
         ok 64 - should be equivalent
         1..64
-    ok 19 - 2.1 - various empty arrays # time=64.476ms
+    ok 19 - 2.1 - various empty arrays # time=34.621ms
     
     # Subtest: 2.2 - throws
         ok 1 - expected to throw
@@ -828,13 +829,13 @@ TAP version 13
         ok 7 - expected to throw
         ok 8 - expect truthy value
         1..8
-    ok 20 - 2.2 - throws # time=4.592ms
+    ok 20 - 2.2 - throws # time=4.614ms
     
     # Subtest: 2.3 - throws when sort-by value is outside of any sub-arrays
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 21 - 2.3 - throws when sort-by value is outside of any sub-arrays # time=8.022ms
+    ok 21 - 2.3 - throws when sort-by value is outside of any sub-arrays # time=1.047ms
     
     # Subtest: 3.1 - clumping - simple case with values as undefined
         ok 1 - should be equivalent
@@ -844,7 +845,7 @@ TAP version 13
         ok 5 - should be equivalent
         ok 6 - should be equivalent
         1..6
-    ok 22 - 3.1 - clumping - simple case with values as undefined # time=6.186ms
+    ok 22 - 3.1 - clumping - simple case with values as undefined # time=3.226ms
     
     # Subtest: 3.2 - clumping - left side takes priority over right - case #1 - values on both sides
         ok 1 - should be equivalent
@@ -860,7 +861,7 @@ TAP version 13
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 23 - 3.2 - clumping - left side takes priority over right - case #1 - values on both sides # time=23.517ms
+    ok 23 - 3.2 - clumping - left side takes priority over right - case #1 - values on both sides # time=9.851ms
     
     # Subtest: 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col
         ok 1 - should be equivalent
@@ -876,7 +877,7 @@ TAP version 13
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 24 - 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col # time=6.788ms
+    ok 24 - 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col # time=8.396ms
     
     # Subtest: 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays)
         ok 1 - should be equivalent
@@ -892,21 +893,20 @@ TAP version 13
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 25 - 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays) # time=18.413ms
+    ok 25 - 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays) # time=15.755ms
     
     1..25
-    # time=1202.075ms
-ok 1 - test/test.js # time=1202.075ms
+    # time=1205.44ms
+}
 
-# Subtest: test/umd-test.js
+ok 2 - test/umd-test.js # time=31.744ms {
     # Subtest: UMD build works fine
         ok 1 - should be equivalent
         1..1
-    ok 1 - UMD build works fine # time=9.74ms
+    ok 1 - UMD build works fine # time=16.279ms
     
     1..1
-    # time=16.076ms
-ok 2 - test/umd-test.js # time=16.076ms
+    # time=31.744ms
+}
 
 1..2
-# time=6983.596ms

@@ -31,7 +31,7 @@
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
+    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
     "perf": "node perf/check",
     "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",

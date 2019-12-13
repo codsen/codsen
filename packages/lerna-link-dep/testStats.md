@@ -1,11 +1,11 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=12388.834ms {
     # Subtest: 01.01 - [35merrors[39m - requested package does not exist (ERROR_01)
         ok 1 - 01.01.01
         ok 2 - 01.01.02
         ok 3 - 01.01.03
         1..3
-    ok 1 - 01.01 - [35merrors[39m - requested package does not exist (ERROR_01) # time=1212.223ms
+    ok 1 - 01.01 - [35merrors[39m - requested package does not exist (ERROR_01) # time=1248.642ms
     
     # Subtest: 01.02 - [35merrors[39m - couldn't read a's package.json (ERROR_02)
         ok 1 - 01.02.01
@@ -13,7 +13,7 @@ TAP version 13
         ok 3 - 01.02.03
         ok 4 - 01.02.04
         1..4
-    ok 2 - 01.02 - [35merrors[39m - couldn't read a's package.json (ERROR_02) # time=604.537ms
+    ok 2 - 01.02 - [35merrors[39m - couldn't read a's package.json (ERROR_02) # time=980.048ms
     
     # Subtest: 01.03 - [35merrors[39m - couldn't read b's package.json (ERROR_03)
         ok 1 - 01.03.01
@@ -21,14 +21,14 @@ TAP version 13
         ok 3 - 01.03.03
         ok 4 - 01.03.04
         1..4
-    ok 3 - 01.03 - [35merrors[39m - couldn't read b's package.json (ERROR_03) # time=591.828ms
+    ok 3 - 01.03 - [35merrors[39m - couldn't read b's package.json (ERROR_03) # time=955.521ms
     
     # Subtest: 01.04 - [35merrors[39m - normal dep, symlink already exists (ERROR_04)
         ok 1 - 01.04.01
         ok 2 - 01.04.02
         ok 3 - 01.04.03
         1..3
-    ok 4 - 01.04 - [35merrors[39m - normal dep, symlink already exists (ERROR_04) # time=635.733ms
+    ok 4 - 01.04 - [35merrors[39m - normal dep, symlink already exists (ERROR_04) # time=992.029ms
     
     # Subtest: 01.05 - [35merrors[39m - error while trying to parse package.json (ERROR_06)
         ok 1 - 01.05.01
@@ -36,7 +36,7 @@ TAP version 13
         ok 3 - 01.05.03
         ok 4 - 01.05.04
         1..4
-    ok 5 - 01.05 - [35merrors[39m - error while trying to parse package.json (ERROR_06) # time=584.275ms
+    ok 5 - 01.05 - [35merrors[39m - error while trying to parse package.json (ERROR_06) # time=1051.647ms
     
     # Subtest: 01.06 - [35merrors[39m - dep is a CLI, one of symlinks already exists (ERROR_08)
         ok 1 - 01.06.01
@@ -45,7 +45,7 @@ TAP version 13
         ok 4 - 01.06.04
         ok 5 - 01.06.04
         1..5
-    ok 6 - 01.06 - [35merrors[39m - dep is a CLI, one of symlinks already exists (ERROR_08) # time=681.888ms
+    ok 6 - 01.06 - [35merrors[39m - dep is a CLI, one of symlinks already exists (ERROR_08) # time=1153.078ms
     
     # Subtest: 01.07 - [35merrors[39m - package.json had no main/module/browser/bin fields (ERROR_10)
         ok 1 - 01.07.01
@@ -53,7 +53,7 @@ TAP version 13
         ok 3 - 01.07.03
         ok 4 - 01.07.04
         1..4
-    ok 7 - 01.07 - [35merrors[39m - package.json had no main/module/browser/bin fields (ERROR_10) # time=581.306ms
+    ok 7 - 01.07 - [35merrors[39m - package.json had no main/module/browser/bin fields (ERROR_10) # time=1138.649ms
     
     # Subtest: 02.01 - [33mmain functionality[39m - links normal deps
         ok 1 - 02.01.01
@@ -62,7 +62,7 @@ TAP version 13
         ok 4 - 02.01.04
         ok 5 - 02.01.05
         1..5
-    ok 8 - 02.01 - [33mmain functionality[39m - links normal deps # time=600.8ms
+    ok 8 - 02.01 - [33mmain functionality[39m - links normal deps # time=1117.669ms
     
     # Subtest: 02.02 - [33mmain functionality[39m - links CLI deps
         ok 1 - 02.02.01
@@ -72,7 +72,7 @@ TAP version 13
         ok 5 - 02.02.05
         ok 6 - 02.02.06
         1..6
-    ok 9 - 02.02 - [33mmain functionality[39m - links CLI deps # time=590.379ms
+    ok 9 - 02.02 - [33mmain functionality[39m - links CLI deps # time=1157.054ms
     
     # Subtest: 02.03 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, -d flag
         ok 1 - 02.03.01
@@ -82,7 +82,7 @@ TAP version 13
         ok 5 - 02.03.05
         ok 6 - 02.03.06
         1..6
-    ok 10 - 02.03 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, -d flag # time=615.218ms
+    ok 10 - 02.03 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, -d flag # time=1193.38ms
     
     # Subtest: 02.04 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, --dev flag
         ok 1 - 02.04.01
@@ -92,11 +92,11 @@ TAP version 13
         ok 5 - 02.04.05
         ok 6 - 02.04.06
         1..6
-    ok 11 - 02.04 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, --dev flag # time=716.727ms
+    ok 11 - 02.04 - [33mmain functionality[39m - links normal deps, adds them as devDependencies, --dev flag # time=1387.986ms
     
     1..11
-    # time=7432.465ms
-ok 1 - test/test.js # time=7432.465ms
+    # time=12388.834ms
+}
 
 1..1
-# time=9549.678ms
+# time=15391.721ms

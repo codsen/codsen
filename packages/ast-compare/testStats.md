@@ -1,34 +1,34 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=788.686ms {
     # Subtest: 01.01 - both inputs missing
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 1 - 01.01 - both inputs missing # time=12.048ms
+    ok 1 - 01.01 - both inputs missing # time=16.9ms
     
     # Subtest: 01.02 - second input missing
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 2 - 01.02 - second input missing # time=4.274ms
+    ok 2 - 01.02 - second input missing # time=2.248ms
     
     # Subtest: 01.03 - first input missing
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 3 - 01.03 - first input missing # time=3.514ms
+    ok 3 - 01.03 - first input missing # time=1.753ms
     
     # Subtest: 01.04 - null as input
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 4 - 01.04 - null as input # time=3.484ms
+    ok 4 - 01.04 - null as input # time=1.812ms
     
     # Subtest: 01.05 - falsey inputs
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 5 - 01.05 - falsey inputs # time=3.22ms
+    ok 5 - 01.05 - falsey inputs # time=2.71ms
     
     # Subtest: 01.06 - undefined in a second-level depth
         ok 1 - expected to throw
@@ -36,13 +36,13 @@ TAP version 13
         ok 3 - expected to throw
         ok 4 - expected to throw
         1..4
-    ok 6 - 01.06 - undefined in a second-level depth # time=14.213ms
+    ok 6 - 01.06 - undefined in a second-level depth # time=11.54ms
     
     # Subtest: 01.07 - wrong types of input args
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 7 - 01.07 - wrong types of input args # time=3.492ms
+    ok 7 - 01.07 - wrong types of input args # time=1.506ms
     
     # Subtest: 02.01 - simple plain objects
         ok 1 - 02.01.01
@@ -61,7 +61,7 @@ TAP version 13
         ok 14 - 02.01.14 - keys match exactly, different white space matched
         ok 15 - 02.01.15 - keys match exactly, different white space matched
         1..15
-    ok 8 - 02.01 - simple plain objects # time=13.885ms
+    ok 8 - 02.01 - simple plain objects # time=15.585ms
     
     # Subtest: 02.02 - comparison of empty plain objects
         ok 1 - 02.02.01
@@ -77,36 +77,36 @@ TAP version 13
         ok 11 - 02.02.11
         ok 12 - 02.02.12
         1..12
-    ok 9 - 02.02 - comparison of empty plain objects # time=9.673ms
+    ok 9 - 02.02 - comparison of empty plain objects # time=9.057ms
     
     # Subtest: 02.03 - comparing two empty plain objects
         ok 1 - 02.03.01
         ok 2 - 02.03.02
         ok 3 - 02.03.03
         1..3
-    ok 10 - 02.03 - comparing two empty plain objects # time=1.69ms
+    ok 10 - 02.03 - comparing two empty plain objects # time=6.124ms
     
     # Subtest: 02.04 - catching row 199 for 100% coverage
         ok 1 - 02.04.01
         1..1
-    ok 11 - 02.04 - catching row 199 for 100% coverage # time=3.19ms
+    ok 11 - 02.04 - catching row 199 for 100% coverage # time=1.752ms
     
     # Subtest: 02.05 - sneaky similarity
         ok 1 - 02.05.01
         ok 2 - 02.05.02
         ok 3 - 02.05.03
         1..3
-    ok 12 - 02.05 - sneaky similarity # time=4.854ms
+    ok 12 - 02.05 - sneaky similarity # time=2.087ms
     
     # Subtest: 02.06 - big object has one element extra
         ok 1 - 02.06
         1..1
-    ok 13 - 02.06 - big object has one element extra # time=2.407ms
+    ok 13 - 02.06 - big object has one element extra # time=0.998ms
     
     # Subtest: 02.07 - small object has one element extra
         ok 1 - 02.07
         1..1
-    ok 14 - 02.07 - small object has one element extra # time=2.571ms
+    ok 14 - 02.07 - small object has one element extra # time=1.198ms
     
     # Subtest: 02.08 - object values are arrays, one has a string, another has none
         ok 1 - 02.08.01 - relying on default
@@ -116,7 +116,7 @@ TAP version 13
         ok 5 - 02.08.05 - same, default hardcoded
         ok 6 - 02.08.06 - matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result
         1..6
-    ok 15 - 02.08 - object values are arrays, one has a string, another has none # time=6.353ms
+    ok 15 - 02.08 - object values are arrays, one has a string, another has none # time=3.978ms
     
     # Subtest: 02.09 - empty object with keys vs object with no keys
         ok 1 - 02.09.01
@@ -124,7 +124,7 @@ TAP version 13
         ok 3 - 02.09.03
         ok 4 - 02.09.04
         1..4
-    ok 16 - 02.09 - empty object with keys vs object with no keys # time=5.887ms
+    ok 16 - 02.09 - empty object with keys vs object with no keys # time=2.885ms
     
     # Subtest: 02.10 - Boolean and numeric values
         ok 1 - 02.10.01 - control - booleans and numbers as obj values
@@ -132,14 +132,14 @@ TAP version 13
         ok 3 - expected to throw
         ok 4 - expected to throw
         1..4
-    ok 17 - 02.10 - Boolean and numeric values # time=4.673ms
+    ok 17 - 02.10 - Boolean and numeric values # time=2.193ms
     
     # Subtest: 02.11 - s is zero length, b is empty
         ok 1 - 02.11.01 - defaults
         ok 2 - 02.11.02 - opts.hungryForWhitespace
         ok 3 - 02.11.03 - opts.hungryForWhitespace, no keys array vs array with all empty vales
         1..3
-    ok 18 - 02.11 - s is zero length, b is empty # time=4.304ms
+    ok 18 - 02.11 - s is zero length, b is empty # time=2.374ms
     
     # Subtest: 02.12 - matching empty arrays
         ok 1 - 02.12.01 - blank vs. normal - defaults
@@ -151,47 +151,47 @@ TAP version 13
         ok 7 - 02.12.07 - blank vs. normal - both opts
         ok 8 - 02.12.08 - blank vs. empty - both opts
         1..8
-    ok 19 - 02.12 - matching empty arrays # time=6.905ms
+    ok 19 - 02.12 - matching empty arrays # time=4.843ms
     
     # Subtest: 03.01 - simple nested plain objects
         ok 1 - 03.01
         1..1
-    ok 20 - 03.01 - simple nested plain objects # time=1.161ms
+    ok 20 - 03.01 - simple nested plain objects # time=1.022ms
     
     # Subtest: 03.02 - simple nested plain objects + array wrapper
         ok 1 - 03.02
         1..1
-    ok 21 - 03.02 - simple nested plain objects + array wrapper # time=3.446ms
+    ok 21 - 03.02 - simple nested plain objects + array wrapper # time=1.637ms
     
     # Subtest: 03.03 - simple nested plain objects, won't find
         ok 1 - 03.03
         1..1
-    ok 22 - 03.03 - simple nested plain objects, won't find # time=3.494ms
+    ok 22 - 03.03 - simple nested plain objects, won't find # time=1.198ms
     
     # Subtest: 03.04 - simple nested plain objects + array wrapper, won't find
         ok 1 - 03.04
         1..1
-    ok 23 - 03.04 - simple nested plain objects + array wrapper, won't find # time=5.482ms
+    ok 23 - 03.04 - simple nested plain objects + array wrapper, won't find # time=1.16ms
     
     # Subtest: 03.05 - obj, multiple nested levels, bigObj has more
         ok 1 - 03.05
         1..1
-    ok 24 - 03.05 - obj, multiple nested levels, bigObj has more # time=3.818ms
+    ok 24 - 03.05 - obj, multiple nested levels, bigObj has more # time=1.92ms
     
     # Subtest: 03.06 - obj, multiple nested levels, equal
         ok 1 - 03.06
         1..1
-    ok 25 - 03.06 - obj, multiple nested levels, equal # time=12.026ms
+    ok 25 - 03.06 - obj, multiple nested levels, equal # time=1.582ms
     
     # Subtest: 03.07 - obj, multiple nested levels, smallObj has more
         ok 1 - 03.07
         1..1
-    ok 26 - 03.07 - obj, multiple nested levels, smallObj has more # time=7.655ms
+    ok 26 - 03.07 - obj, multiple nested levels, smallObj has more # time=1.321ms
     
     # Subtest: 03.08 - obj, deeper level doesn't match
         ok 1 - 03.08
         1..1
-    ok 27 - 03.08 - obj, deeper level doesn't match # time=2.263ms
+    ok 27 - 03.08 - obj, deeper level doesn't match # time=1.101ms
     
     # Subtest: 03.09 - empty string and empty nested object
         ok 1 - 03.09.01 - defaults
@@ -200,13 +200,13 @@ TAP version 13
         ok 4 - 03.09.04 - hungryForWhitespace + matchStrictly
         ok 5 - 03.09.04 - hungryForWhitespace + matchStrictly
         1..5
-    ok 28 - 03.09 - empty string and empty nested object # time=10.1ms
+    ok 28 - 03.09 - empty string and empty nested object # time=2.813ms
     
     # Subtest: 03.10 - multiple keys
         ok 1 - 03.10.01
         ok 2 - 03.10.02
         1..2
-    ok 29 - 03.10 - multiple keys # time=3.617ms
+    ok 29 - 03.10 - multiple keys # time=3.017ms
     
     # Subtest: 04.01 - simple arrays with strings
         ok 1 - 04.01.01
@@ -220,19 +220,19 @@ TAP version 13
         ok 9 - 04.01.09
         ok 10 - 04.01.10
         1..10
-    ok 30 - 04.01 - simple arrays with strings # time=12.656ms
+    ok 30 - 04.01 - simple arrays with strings # time=5.234ms
     
     # Subtest: 04.02 - simple arrays with plain objects
         ok 1 - 04.02.01
         ok 2 - 04.02.02
         1..2
-    ok 31 - 04.02 - simple arrays with plain objects # time=2.864ms
+    ok 31 - 04.02 - simple arrays with plain objects # time=1.9ms
     
     # Subtest: 04.03 - arrays, nested with strings and objects
         ok 1 - 04.03.01
         ok 2 - 04.03.02
         1..2
-    ok 32 - 04.03 - arrays, nested with strings and objects # time=5.13ms
+    ok 32 - 04.03 - arrays, nested with strings and objects # time=5.349ms
     
     # Subtest: 04.04 - comparing empty arrays (variations)
         ok 1 - 04.04.01
@@ -246,7 +246,7 @@ TAP version 13
         ok 9 - 04.04.09
         ok 10 - 04.04.10
         1..10
-    ok 33 - 04.04 - comparing empty arrays (variations) # time=7.708ms
+    ok 33 - 04.04 - comparing empty arrays (variations) # time=15.498ms
     
     # Subtest: 04.05 - empty arrays within obj key values
         ok 1 - 04.05.01
@@ -255,7 +255,7 @@ TAP version 13
         ok 4 - 04.05.04
         ok 5 - 04.05.05
         1..5
-    ok 34 - 04.05 - empty arrays within obj key values # time=11.576ms
+    ok 34 - 04.05 - empty arrays within obj key values # time=3.15ms
     
     # Subtest: 04.06 - empty arrays vs empty objects
         ok 1 - 04.06.01
@@ -265,7 +265,7 @@ TAP version 13
         ok 5 - 04.06.05
         ok 6 - 04.06.06
         1..6
-    ok 35 - 04.06 - empty arrays vs empty objects # time=23.529ms
+    ok 35 - 04.06 - empty arrays vs empty objects # time=5.065ms
     
     # Subtest: 04.07 - empty arrays vs empty strings
         ok 1 - 04.07.01
@@ -273,7 +273,7 @@ TAP version 13
         ok 3 - 04.07.03
         ok 4 - 04.07.04
         1..4
-    ok 36 - 04.07 - empty arrays vs empty strings # time=3.867ms
+    ok 36 - 04.07 - empty arrays vs empty strings # time=2.143ms
     
     # Subtest: 04.08 - two arrays, matches middle, string within
         ok 1 - 04.08.01
@@ -287,7 +287,7 @@ TAP version 13
         ok 9 - 04.08.05
         ok 10 - 04.08.05 opposite
         1..10
-    ok 37 - 04.08 - two arrays, matches middle, string within # time=2.76ms
+    ok 37 - 04.08 - two arrays, matches middle, string within # time=4.121ms
     
     # Subtest: 04.09 - two arrays, matches middle, objects within
         ok 1 - 04.09.01
@@ -306,14 +306,14 @@ TAP version 13
         ok 14 - 04.09.09
         ok 15 - 04.09.10
         1..15
-    ok 38 - 04.09 - two arrays, matches middle, objects within # time=12.434ms
+    ok 38 - 04.09 - two arrays, matches middle, objects within # time=11.847ms
     
     # Subtest: 04.10 - two arrays, one empty, string within
         ok 1 - 04.10.01
         ok 2 - 04.10.02
         ok 3 - 04.10.03
         1..3
-    ok 39 - 04.10 - two arrays, one empty, string within # time=9.788ms
+    ok 39 - 04.10 - two arrays, one empty, string within # time=4.197ms
     
     # Subtest: 05.01 - simple strings
         ok 1 - 05.01.01
@@ -325,18 +325,18 @@ TAP version 13
         ok 7 - 05.01.07
         ok 8 - 05.01.08
         1..8
-    ok 40 - 05.01 - simple strings # time=11.571ms
+    ok 40 - 05.01 - simple strings # time=3.54ms
     
     # Subtest: 05.02 - strings compared and fails
         ok 1 - 05.02.01
         ok 2 - 05.02.02
         1..2
-    ok 41 - 05.02 - strings compared and fails # time=2.252ms
+    ok 41 - 05.02 - strings compared and fails # time=1.077ms
     
     # Subtest: 05.03 - strings in arrays compared, positive
         ok 1 - 05.03
         1..1
-    ok 42 - 05.03 - strings in arrays compared, positive # time=1.56ms
+    ok 42 - 05.03 - strings in arrays compared, positive # time=0.86ms
     
     # Subtest: 05.04 - string against empty array or empty string within an array
         ok 1 - 05.04.01
@@ -344,7 +344,7 @@ TAP version 13
         ok 3 - 05.04.03
         ok 4 - 05.04.04
         1..4
-    ok 43 - 05.04 - string against empty array or empty string within an array # time=3.558ms
+    ok 43 - 05.04 - string against empty array or empty string within an array # time=1.817ms
     
     # Subtest: 05.05 - string vs empty space
         ok 1 - 05.05.01
@@ -352,7 +352,7 @@ TAP version 13
         ok 3 - 05.05.03
         ok 4 - 05.05.04
         1..4
-    ok 44 - 05.05 - string vs empty space # time=3.001ms
+    ok 44 - 05.05 - string vs empty space # time=1.584ms
     
     # Subtest: 05.06 - empty space vs different empty space
         ok 1 - 05.06.01
@@ -360,60 +360,60 @@ TAP version 13
         ok 3 - 05.06.03
         ok 4 - 05.06.04
         1..4
-    ok 45 - 05.06 - empty space vs different empty space # time=2.947ms
+    ok 45 - 05.06 - empty space vs different empty space # time=1.641ms
     
     # Subtest: 05.07 - two arrays, one empty
         ok 1 - 05.07.01 - in root, defaults
         ok 2 - 05.07.02 - in root, defaults
         ok 3 - 05.07.03 - in root, defaults, opposite from #2
         1..3
-    ok 46 - 05.07 - two arrays, one empty # time=4.015ms
+    ok 46 - 05.07 - two arrays, one empty # time=1.565ms
     
     # Subtest: 05.08 - opts.matchStrictly
         ok 1 - 05.08.01 - key count mismatch
         ok 2 - 05.08.01 - key count mismatch
         1..2
-    ok 47 - 05.08 - opts.matchStrictly # time=2.208ms
+    ok 47 - 05.08 - opts.matchStrictly # time=1.784ms
     
     # Subtest: 06.01 - null vs null
         ok 1 - 06.01.01
         1..1
-    ok 48 - 06.01 - null vs null # time=1.691ms
+    ok 48 - 06.01 - null vs null # time=0.784ms
     
     # Subtest: 06.02 - real-life #1
         ok 1 - 06.02.01
         ok 2 - 06.02.02
         ok 3 - 06.02.03
         1..3
-    ok 49 - 06.02 - real-life #1 # time=3.387ms
+    ok 49 - 06.02 - real-life #1 # time=1.966ms
     
     # Subtest: 06.03 - real-life #2
         ok 1 - 06.03.01
         ok 2 - 06.03.02
         1..2
-    ok 50 - 06.03 - real-life #2 # time=2.294ms
+    ok 50 - 06.03 - real-life #2 # time=1.294ms
     
     # Subtest: 06.05 - function as input
         ok 1 - expected to throw
         1..1
-    ok 51 - 06.05 - function as input # time=1.629ms
+    ok 51 - 06.05 - function as input # time=0.875ms
     
     # Subtest: 06.06 - sneaky function within object literal
         ok 1 - expected to throw
         1..1
-    ok 52 - 06.06 - sneaky function within object literal # time=1.716ms
+    ok 52 - 06.06 - sneaky function within object literal # time=1.568ms
     
     # Subtest: 06.07 - another sneaky function within object literal
         ok 1 - expected to throw
         1..1
-    ok 53 - 06.07 - another sneaky function within object literal # time=1.766ms
+    ok 53 - 06.07 - another sneaky function within object literal # time=1.748ms
     
     # Subtest: 06.08 - real-life #3
         ok 1 - 06.08.01
         ok 2 - 06.08.02
         ok 3 - 06.08.03
         1..3
-    ok 54 - 06.08 - real-life #3 # time=12.175ms
+    ok 54 - 06.08 - real-life #3 # time=17.172ms
     
     # Subtest: 06.09 - real-life #3 reduced case
         ok 1 - 06.09.01
@@ -421,7 +421,7 @@ TAP version 13
         ok 3 - 06.09.03
         ok 4 - 06.09.04
         1..4
-    ok 55 - 06.09 - real-life #3 reduced case # time=12.318ms
+    ok 55 - 06.09 - real-life #3 reduced case # time=2.727ms
     
     # Subtest: 06.10 - input args of mismatching type - easy win
         ok 1 - 06.10.01
@@ -433,13 +433,13 @@ TAP version 13
         ok 7 - 06.10.07
         ok 8 - 06.10.08
         1..8
-    ok 56 - 06.10 - input args of mismatching type - easy win # time=5.656ms
+    ok 56 - 06.10 - input args of mismatching type - easy win # time=3.275ms
     
     # Subtest: 07.01 - fourth argument doesn't break anything
         ok 1 - 07.01.01
         ok 2 - 07.01.02
         1..2
-    ok 57 - 07.01 - fourth argument doesn't break anything # time=2.034ms
+    ok 57 - 07.01 - fourth argument doesn't break anything # time=1.166ms
     
     # Subtest: 08.01 - hungryForWhitespace, empty strings within arrays
         ok 1 - 08.01.01
@@ -447,7 +447,7 @@ TAP version 13
         ok 3 - 08.01.03
         ok 4 - 08.01.04
         1..4
-    ok 58 - 08.01 - hungryForWhitespace, empty strings within arrays # time=3.393ms
+    ok 58 - 08.01 - hungryForWhitespace, empty strings within arrays # time=2.385ms
     
     # Subtest: 09.01 - wildcards against values within object
         ok 1 - 09.01.01 - default
@@ -459,7 +459,7 @@ TAP version 13
         ok 7 - 09.01.07 - weird
         ok 8 - 09.01.08 - weird, false anyway
         1..8
-    ok 59 - 09.01 - wildcards against values within object # time=6.079ms
+    ok 59 - 09.01 - wildcards against values within object # time=6.483ms
     
     # Subtest: 09.02 - wildcards against keys within object
         ok 1 - 09.02.01 - default
@@ -467,36 +467,36 @@ TAP version 13
         ok 3 - 09.02.03 - won't find, despite wildcards, which are turned off
         ok 4 - 09.02.04 - won't find, despite wildcards, which are turned on
         1..4
-    ok 60 - 09.02 - wildcards against keys within object # time=3.439ms
+    ok 60 - 09.02 - wildcards against keys within object # time=3.342ms
     
     # Subtest: 09.03 - wildcards in deeper levels
         ok 1 - 09.03.01 - default (control), wildcards are turned off
         ok 2 - 09.03.02 - default (control), wildcards are turned off
         1..2
-    ok 61 - 09.03 - wildcards in deeper levels # time=3.063ms
+    ok 61 - 09.03 - wildcards in deeper levels # time=2.709ms
     
     # Subtest: 09.04 - wildcards in deeper levels within arrays
         ok 1 - 09.04.01
         ok 2 - 09.04.02
         ok 3 - 09.04.03
         ok 4 - 09.04.04
+# time=3143.154ms
         ok 5 - 09.04.05
         1..5
-    ok 62 - 09.04 - wildcards in deeper levels within arrays # time=4.443ms
+    ok 62 - 09.04 - wildcards in deeper levels within arrays # time=4.323ms
     
     1..62
-    # time=900.88ms
-ok 1 - test/test.js # time=900.88ms
+    # time=788.686ms
+}
 
-# Subtest: test/umd-test.js
+ok 2 - test/umd-test.js # time=20.917ms {
     # Subtest: UMD build works fine
         ok 1 - expect truthy value
         1..1
-    ok 1 - UMD build works fine # time=10.286ms
+    ok 1 - UMD build works fine # time=13.156ms
     
     1..1
-    # time=19.161ms
-ok 2 - test/umd-test.js # time=19.161ms
+    # time=20.917ms
+}
 
 1..2
-# time=7180.423ms

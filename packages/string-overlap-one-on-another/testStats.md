@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=101.974ms {
     # Subtest: 01.01 - wrong inputs throw
         ok 1 - expected to throw
         ok 2 - expected to throw
@@ -7,7 +7,7 @@ TAP version 13
         ok 4 - expected to throw
         ok 5 - expected to throw
         1..5
-    ok 1 - 01.01 - wrong inputs throw # time=13.726ms
+    ok 1 - 01.01 - wrong inputs throw # time=16.848ms
     
     # Subtest: 02.01 - no offset
         ok 1 - 02.01.01
@@ -19,7 +19,7 @@ TAP version 13
         ok 7 - 02.01.07
         ok 8 - 02.01.08
         1..8
-    ok 2 - 02.01 - no offset # time=6.818ms
+    ok 2 - 02.01 - no offset # time=11.894ms
     
     # Subtest: 02.02 - empty strings
         ok 1 - 02.02.01
@@ -30,7 +30,7 @@ TAP version 13
         ok 6 - 02.02.06
         ok 7 - 02.02.07
         1..7
-    ok 3 - 02.02 - empty strings # time=5.226ms
+    ok 3 - 02.02 - empty strings # time=4.176ms
     
     # Subtest: 02.03 - positive offset
         ok 1 - 02.03.01
@@ -44,7 +44,7 @@ TAP version 13
         ok 9 - 02.03.09
         ok 10 - 02.03.10
         1..10
-    ok 4 - 02.03 - positive offset # time=35.038ms
+    ok 4 - 02.03 - positive offset # time=4.473ms
     
     # Subtest: 02.04 - negative offset
         ok 1 - 02.04.01
@@ -56,11 +56,11 @@ TAP version 13
         ok 7 - 02.04.07
         ok 8 - 02.04.08
         1..8
-    ok 5 - 02.04 - negative offset # time=9.457ms
+    ok 5 - 02.04 - negative offset # time=5.289ms
     
     1..5
-    # time=172.858ms
-ok 1 - test/test.js # time=172.858ms
+    # time=101.974ms
+}
 
 1..1
-# time=2628.677ms
+# time=3152.084ms

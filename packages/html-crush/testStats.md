@@ -1,5 +1,5 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=2952.184ms {
     # Subtest: 00.01 - [34mthrows[39m - when first arg is wrong
         ok 1 - expected to throw
         ok 2 - should match pattern provided
@@ -8,7 +8,7 @@ TAP version 13
         ok 5 - should match pattern provided
         ok 6 - should match pattern provided
         1..6
-    ok 1 - 00.01 - [34mthrows[39m - when first arg is wrong # time=15.492ms
+    ok 1 - 00.01 - [34mthrows[39m - when first arg is wrong # time=22.077ms
     
     # Subtest: 00.02 - [34mthrows[39m - when second arg is wrong
         ok 1 - expected to throw
@@ -18,7 +18,7 @@ TAP version 13
         ok 5 - should match pattern provided
         ok 6 - should match pattern provided
         1..6
-    ok 2 - 00.02 - [34mthrows[39m - when second arg is wrong # time=5.305ms
+    ok 2 - 00.02 - [34mthrows[39m - when second arg is wrong # time=4.368ms
     
     # Subtest: 00.04 - [34mthrows[39m - when opts.breakToTheLeftOf contains non-string elements
         ok 1 - expected to throw
@@ -29,124 +29,124 @@ TAP version 13
         ok 6 - expected to not throw
         ok 7 - expected to not throw
         1..7
-    ok 3 - 00.04 - [34mthrows[39m - when opts.breakToTheLeftOf contains non-string elements # time=6.18ms
+    ok 3 - 00.04 - [34mthrows[39m - when opts.breakToTheLeftOf contains non-string elements # time=5.25ms
     
     # Subtest: 01.01 - [33msmall tests[39m - deletes trailing space
         ok 1 - 01.01.01
         ok 2 - 01.01.02
         ok 3 - 01.01.03
         1..3
-    ok 4 - 01.01 - [33msmall tests[39m - deletes trailing space # time=10.881ms
+    ok 4 - 01.01 - [33msmall tests[39m - deletes trailing space # time=22.569ms
     
     # Subtest: 01.02 - [33msmall tests[39m - retains trailing linebreak
         ok 1 - 01.02.01
         1..1
-    ok 5 - 01.02 - [33msmall tests[39m - retains trailing linebreak # time=2.21ms
+    ok 5 - 01.02 - [33msmall tests[39m - retains trailing linebreak # time=2.841ms
     
     # Subtest: 01.03 - [33msmall tests[39m - trailing line break
         ok 1 - 01.03
         1..1
-    ok 6 - 01.03 - [33msmall tests[39m - trailing line break # time=2.858ms
+    ok 6 - 01.03 - [33msmall tests[39m - trailing line break # time=2.376ms
     
     # Subtest: 01.04 - [33msmall tests[39m - multiple line breaks
         ok 1 - 01.04
         1..1
-    ok 7 - 01.04 - [33msmall tests[39m - multiple line breaks # time=2.538ms
+    ok 7 - 01.04 - [33msmall tests[39m - multiple line breaks # time=2.602ms
     
     # Subtest: 01.05 - [33msmall tests[39m - ends with character
         ok 1 - 01.05
         1..1
-    ok 8 - 01.05 - [33msmall tests[39m - ends with character # time=2.31ms
+    ok 8 - 01.05 - [33msmall tests[39m - ends with character # time=2.6ms
     
     # Subtest: 01.06 - [33msmall tests[39m - string sequence breaks in front of space
         ok 1 - 01.06 - clone of 02.11.09
         1..1
-    ok 9 - 01.06 - [33msmall tests[39m - string sequence breaks in front of space # time=11.32ms
+    ok 9 - 01.06 - [33msmall tests[39m - string sequence breaks in front of space # time=6.816ms
     
     # Subtest: 01.07 - [33msmall tests[39m - what happens when it's impossible to break and exceeding line length limit is inevitable
         ok 1 - 01.07
         1..1
-    ok 10 - 01.07 - [33msmall tests[39m - what happens when it's impossible to break and exceeding line length limit is inevitable # time=12.411ms
+    ok 10 - 01.07 - [33msmall tests[39m - what happens when it's impossible to break and exceeding line length limit is inevitable # time=7.463ms
     
     # Subtest: 01.08 - [33msmall tests[39m - stacks lines when limiter is on
         ok 1 - 01.08
         1..1
-    ok 11 - 01.08 - [33msmall tests[39m - stacks lines when limiter is on # time=5.511ms
+    ok 11 - 01.08 - [33msmall tests[39m - stacks lines when limiter is on # time=3.078ms
     
     # Subtest: 01.09 - [33msmall tests[39m - stacks along with wiping whitespace
         ok 1 - 01.09
         1..1
-    ok 12 - 01.09 - [33msmall tests[39m - stacks along with wiping whitespace # time=4.256ms
+    ok 12 - 01.09 - [33msmall tests[39m - stacks along with wiping whitespace # time=2.033ms
     
     # Subtest: 01.10 - [33msmall tests[39m - stacks unbreakable chunks, each over limit
         ok 1 - 01.10
         1..1
-    ok 13 - 01.10 - [33msmall tests[39m - stacks unbreakable chunks, each over limit # time=2.308ms
+    ok 13 - 01.10 - [33msmall tests[39m - stacks unbreakable chunks, each over limit # time=2.024ms
     
     # Subtest: 01.11 - [33msmall tests[39m - stacks tags, wipes whitespace
         ok 1 - 01.11.01 - inline tags
         ok 2 - 01.11.02 - not inline tags
         1..2
-    ok 14 - 01.11 - [33msmall tests[39m - stacks tags, wipes whitespace # time=7.236ms
+    ok 14 - 01.11 - [33msmall tests[39m - stacks tags, wipes whitespace # time=8.529ms
     
     # Subtest: 01.12 - [33msmall tests[39m - tags and limiting
         ok 1 - 01.12.01
         ok 2 - 01.12.02 - not inline tags
         1..2
-    ok 15 - 01.12 - [33msmall tests[39m - tags and limiting # time=6.546ms
+    ok 15 - 01.12 - [33msmall tests[39m - tags and limiting # time=11.111ms
     
     # Subtest: 01.13 - [33msmall tests[39m - more tags and limiting
         ok 1 - 01.13.01 - inline tags
         ok 2 - 01.13.02 - non-inline tags
         1..2
-    ok 16 - 01.13 - [33msmall tests[39m - more tags and limiting # time=30.69ms
+    ok 16 - 01.13 - [33msmall tests[39m - more tags and limiting # time=22.15ms
     
     # Subtest: 01.14 - [33msmall tests[39m - tags and limiting = 8
         ok 1 - 01.14
         1..1
-    ok 17 - 01.14 - [33msmall tests[39m - tags and limiting = 8 # time=6.176ms
+    ok 17 - 01.14 - [33msmall tests[39m - tags and limiting = 8 # time=2.474ms
     
     # Subtest: 01.15 - [33msmall tests[39m - tags and limiting = 10
         ok 1 - 01.15
         1..1
-    ok 18 - 01.15 - [33msmall tests[39m - tags and limiting = 10 # time=4.761ms
+    ok 18 - 01.15 - [33msmall tests[39m - tags and limiting = 10 # time=13.141ms
     
     # Subtest: 01.16 - [33msmall tests[39m - tags and limiting = 14
         ok 1 - 01.16
         1..1
-    ok 19 - 01.16 - [33msmall tests[39m - tags and limiting = 14 # time=2.224ms
+    ok 19 - 01.16 - [33msmall tests[39m - tags and limiting = 14 # time=8.227ms
     
     # Subtest: 01.17 - [33msmall tests[39m - tag sequence without whitespace is wrapped
         ok 1 - 01.17 - duplicates 02.10.01
         1..1
-    ok 20 - 01.17 - [33msmall tests[39m - tag sequence without whitespace is wrapped # time=2.538ms
+    ok 20 - 01.17 - [33msmall tests[39m - tag sequence without whitespace is wrapped # time=3.799ms
     
     # Subtest: 01.18 - [33msmall tests[39m - tag sequence completely wrapped
         ok 1 - 01.18
         1..1
-    ok 21 - 01.18 - [33msmall tests[39m - tag sequence completely wrapped # time=2.499ms
+    ok 21 - 01.18 - [33msmall tests[39m - tag sequence completely wrapped # time=3.192ms
     
     # Subtest: 01.19 - [33msmall tests[39m - string sequence breaks in front of space
         ok 1 - clone of 02.05.14
         1..1
-    ok 22 - 01.19 - [33msmall tests[39m - string sequence breaks in front of space # time=2.732ms
+    ok 22 - 01.19 - [33msmall tests[39m - string sequence breaks in front of space # time=3.022ms
     
     # Subtest: 01.20 - [33msmall tests[39m - tags, end with character
         ok 1 - 01.20.01
         ok 2 - 01.20.02
         1..2
-    ok 23 - 01.20 - [33msmall tests[39m - tags, end with character # time=24.009ms
+    ok 23 - 01.20 - [33msmall tests[39m - tags, end with character # time=19.212ms
     
     # Subtest: 01.21 - [33msmall tests[39m - comments
         ok 1 - 01.21.01
         1..1
-    ok 24 - 01.21 - [33msmall tests[39m - comments # time=7.632ms
+    ok 24 - 01.21 - [33msmall tests[39m - comments # time=2.431ms
     
     # Subtest: 02.01 - [35mBAU[39m - nothing to minify
         ok 1 - 02.01.01
         ok 2 - 02.01.02
         1..2
-    ok 25 - 02.01 - [35mBAU[39m - nothing to minify # time=2.144ms
+    ok 25 - 02.01 - [35mBAU[39m - nothing to minify # time=1.651ms
     
     # Subtest: 02.02 - [35mBAU[39m - minimal string of few words
         ok 1 - 02.02.01 - defaults: remove both indentations and linebreaks
@@ -156,7 +156,7 @@ TAP version 13
         ok 5 - 02.02.05 - line breaks on
         ok 6 - 02.02.06 - line breaks on
         1..6
-    ok 26 - 02.02 - [35mBAU[39m - minimal string of few words # time=31.42ms
+    ok 26 - 02.02 - [35mBAU[39m - minimal string of few words # time=16.49ms
     
     # Subtest: 02.03 - [35mBAU[39m - trailing linebreaks (or their absence) at the EOF are respected
         ok 1 - 02.03.01 - default settings, single trailing line breaks at EOF
@@ -166,7 +166,7 @@ TAP version 13
         ok 5 - 02.03.05 - default settings, double trailing line breaks at EOF
         ok 6 - 02.03.06 - default settings, no trailing line breaks at EOF
         1..6
-    ok 27 - 02.03 - [35mBAU[39m - trailing linebreaks (or their absence) at the EOF are respected # time=49.344ms
+    ok 27 - 02.03 - [35mBAU[39m - trailing linebreaks (or their absence) at the EOF are respected # time=12.071ms
     
     # Subtest: 02.04 - [35mBAU[39m - opts.lineLengthLimit
         ok 1 - 02.04.01 - default settings
@@ -194,7 +194,7 @@ TAP version 13
         ok 23 - row #5
         ok 24 - row #6
         1..24
-    ok 28 - 02.04 - [35mBAU[39m - opts.lineLengthLimit # time=50.572ms
+    ok 28 - 02.04 - [35mBAU[39m - opts.lineLengthLimit # time=32.906ms
     
     # Subtest: 02.05 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - spaces
         ok 1 - 02.05.01-1
@@ -219,7 +219,7 @@ TAP version 13
         ok 20 - 02.05.19 - two chunks can stay on one line generously
         ok 21 - 02.05.20 - two chunks can stay on one line generously
         1..21
-    ok 29 - 02.05 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - spaces # time=32.479ms
+    ok 29 - 02.05 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - spaces # time=31.293ms
     
     # Subtest: 02.06 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - linebreaks
         ok 1 - 02.06.01
@@ -237,7 +237,7 @@ TAP version 13
         ok 13 - 02.06.13 - the very edge
         ok 14 - 02.06.14
         1..14
-    ok 30 - 02.06 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - linebreaks # time=15.208ms
+    ok 30 - 02.06 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - linebreaks # time=29.811ms
     
     # Subtest: 02.07 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - double linebreaks
         ok 1 - 02.07.01
@@ -254,7 +254,7 @@ TAP version 13
         ok 12 - 02.07.12
         ok 13 - 02.07.13 - the very edge
         1..13
-    ok 31 - 02.07 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - double linebreaks # time=15.149ms
+    ok 31 - 02.07 - [35mBAU[39m - when chunk of characters without break points is longer than line limit - double linebreaks # time=17.608ms
     
     # Subtest: 02.08 - [35mBAU[39m - tags with single space between them
         ok 1 - 02.08.01 - same but with tags
@@ -267,7 +267,7 @@ TAP version 13
         ok 8 - 02.08.08
         ok 9 - 02.08.09
         1..9
-    ok 32 - 02.08 - [35mBAU[39m - tags with single space between them # time=13.091ms
+    ok 32 - 02.08 - [35mBAU[39m - tags with single space between them # time=20.295ms
     
     # Subtest: 02.09 - [35mBAU[39m - breaking between tags
         ok 1 - 02.09.01
@@ -283,7 +283,7 @@ TAP version 13
         ok 11 - 02.09.11
         ok 12 - 02.09.12
         1..12
-    ok 33 - 02.09 - [35mBAU[39m - breaking between tags # time=19.965ms
+    ok 33 - 02.09 - [35mBAU[39m - breaking between tags # time=19.628ms
     
     # Subtest: 02.10 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 8
         ok 1 - 02.10.01
@@ -293,7 +293,7 @@ TAP version 13
         ok 5 - 02.10.05
         ok 6 - 02.10.06
         1..6
-    ok 34 - 02.10 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 8 # time=8.945ms
+    ok 34 - 02.10 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 8 # time=12.556ms
     
     # Subtest: 02.11 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 12
         ok 1 - 02.11.01
@@ -313,7 +313,7 @@ TAP version 13
         ok 15 - 02.11.15
         ok 16 - 02.11.16
         1..16
-    ok 35 - 02.11 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 12 # time=21.885ms
+    ok 35 - 02.11 - [35mBAU[39m - break-position-friendly characters, not suitable for break yet - line limit 12 # time=30.271ms
     
     # Subtest: 02.12 - [35mBAU[39m - script tags are skipped
         ok 1 - 02.12.01
@@ -321,7 +321,7 @@ TAP version 13
         ok 3 - 02.12.03
         ok 4 - 02.12.04
         1..4
-    ok 36 - 02.12 - [35mBAU[39m - script tags are skipped # time=8.731ms
+    ok 36 - 02.12 - [35mBAU[39m - script tags are skipped # time=5.738ms
     
     # Subtest: 02.13 - [35mBAU[39m - unfinished script tags are skipped too
         ok 1 - 02.13.01
@@ -329,7 +329,7 @@ TAP version 13
         ok 3 - 02.13.03
         ok 4 - 02.13.04
         1..4
-    ok 37 - 02.13 - [35mBAU[39m - unfinished script tags are skipped too # time=4.456ms
+    ok 37 - 02.13 - [35mBAU[39m - unfinished script tags are skipped too # time=4.558ms
     
     # Subtest: 02.14 - [35mBAU[39m - code-pre blocks are not touched
         ok 1 - 02.14.01
@@ -337,7 +337,7 @@ TAP version 13
         ok 3 - 02.14.03
         ok 4 - 02.14.04
         1..4
-    ok 38 - 02.14 - [35mBAU[39m - code-pre blocks are not touched # time=5.211ms
+    ok 38 - 02.14 - [35mBAU[39m - code-pre blocks are not touched # time=5.758ms
     
     # Subtest: 02.15 - [35mBAU[39m - CDATA blocks are not touched
         ok 1 - 02.15.01
@@ -345,7 +345,7 @@ TAP version 13
         ok 3 - 02.15.03
         ok 4 - 02.15.04
         1..4
-    ok 39 - 02.15 - [35mBAU[39m - CDATA blocks are not touched # time=5.241ms
+    ok 39 - 02.15 - [35mBAU[39m - CDATA blocks are not touched # time=6.912ms
     
     # Subtest: 02.16 - [35mBAU[39m - whitespace in front of </script>
         ok 1 - 02.16.01
@@ -359,7 +359,7 @@ TAP version 13
         ok 9 - 02.16.09
         ok 10 - 02.16.10
         1..10
-    ok 40 - 02.16 - [35mBAU[39m - whitespace in front of </script> # time=10.008ms
+    ok 40 - 02.16 - [35mBAU[39m - whitespace in front of </script> # time=10.492ms
     
     # Subtest: 02.17 - [35mBAU[39m - single linebreak is not replaced with a single space
         ok 1 - 02.17.01
@@ -367,7 +367,7 @@ TAP version 13
         ok 3 - 02.17.03
         ok 4 - 02.17.04
         1..4
-    ok 41 - 02.17 - [35mBAU[39m - single linebreak is not replaced with a single space # time=3.274ms
+    ok 41 - 02.17 - [35mBAU[39m - single linebreak is not replaced with a single space # time=7.606ms
     
     # Subtest: 02.18 - [35mBAU[39m - single linebreak is deleted though
         ok 1 - 02.18.01
@@ -375,20 +375,20 @@ TAP version 13
         ok 3 - 02.18.03
         ok 4 - 02.18.04
         1..4
-    ok 42 - 02.18 - [35mBAU[39m - single linebreak is deleted though # time=4.445ms
+    ok 42 - 02.18 - [35mBAU[39m - single linebreak is deleted though # time=3.973ms
     
     # Subtest: 02.19 - [35mBAU[39m - breaking to the right of style tag
         ok 1 - 02.19.01
         ok 2 - 02.19.02
         ok 3 - 02.19.03
         1..3
-    ok 43 - 02.19 - [35mBAU[39m - breaking to the right of style tag # time=18.751ms
+    ok 43 - 02.19 - [35mBAU[39m - breaking to the right of style tag # time=28.654ms
     
     # Subtest: 02.20 - [35mBAU[39m - doesn't delete whitespace with linebreaks between curlies
         ok 1 - 02.20.01
         ok 2 - 02.20.02
         1..2
-    ok 44 - 02.20 - [35mBAU[39m - doesn't delete whitespace with linebreaks between curlies # time=2.586ms
+    ok 44 - 02.20 - [35mBAU[39m - doesn't delete whitespace with linebreaks between curlies # time=2.625ms
     
     # Subtest: 03.01 - [36mopts.reportProgressFunc[39m - calls the progress function
         ok 1 - 03.01.01 - default behaviour
@@ -399,7 +399,7 @@ TAP version 13
         ok 6 - (unnamed test)
         ok 7 - 03.01.04 - counter called
         1..7
-    ok 45 - 03.01 - [36mopts.reportProgressFunc[39m - calls the progress function # time=52.656ms
+    ok 45 - 03.01 - [36mopts.reportProgressFunc[39m - calls the progress function # time=97.618ms
     
     # Subtest: 03.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range
         ok 1 - (unnamed test)
@@ -469,32 +469,32 @@ TAP version 13
         ok 65 - checking: 84%
         ok 66 - should be equal
         1..66
-    ok 46 - 03.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range # time=397.229ms
+    ok 46 - 03.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range # time=508.39ms
     
     # Subtest: 04.01 - [33mopts.removeIndentations[39m - collapses whitespace on removeIndentations
         ok 1 - 04.01
         1..1
-    ok 47 - 04.01 - [33mopts.removeIndentations[39m - collapses whitespace on removeIndentations # time=10.231ms
+    ok 47 - 04.01 - [33mopts.removeIndentations[39m - collapses whitespace on removeIndentations # time=1.532ms
     
     # Subtest: 04.02 - [33mopts.removeIndentations[39m - trailing whitespace on removeIndentations
         ok 1 - 04.02
         1..1
-    ok 48 - 04.02 - [33mopts.removeIndentations[39m - trailing whitespace on removeIndentations # time=4.808ms
+    ok 48 - 04.02 - [33mopts.removeIndentations[39m - trailing whitespace on removeIndentations # time=1.476ms
     
     # Subtest: 04.03 - [33mopts.removeIndentations[39m - leading whitespace
         ok 1 - 04.03
         1..1
-    ok 49 - 04.03 - [33mopts.removeIndentations[39m - leading whitespace # time=6.1ms
+    ok 49 - 04.03 - [33mopts.removeIndentations[39m - leading whitespace # time=2.849ms
     
     # Subtest: 05.01 - [32mAPI's defaults[39m - plain object is exported and contains correct keys
         ok 1 - 05.01
         1..1
-    ok 50 - 05.01 - [32mAPI's defaults[39m - plain object is exported and contains correct keys # time=8.914ms
+    ok 50 - 05.01 - [32mAPI's defaults[39m - plain object is exported and contains correct keys # time=2.882ms
     
     # Subtest: 05.02 - [32mAPI's defaults[39m - plain object is exported
         ok 1 - 05.02
         1..1
-    ok 51 - 05.02 - [32mAPI's defaults[39m - plain object is exported # time=2.301ms
+    ok 51 - 05.02 - [32mAPI's defaults[39m - plain object is exported # time=0.985ms
     
     # Subtest: 06.01 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (no whitespace involved)
         ok 1 - 06.01.01 - no linebreak removal
@@ -508,7 +508,7 @@ TAP version 13
         ok 9 - 06.01.09
         ok 10 - 06.01.10
         1..10
-    ok 52 - 06.01 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (no whitespace involved) # time=23.556ms
+    ok 52 - 06.01 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (no whitespace involved) # time=19.367ms
     
     # Subtest: 06.02 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (whitespace involved)
         ok 1 - 06.02.01
@@ -522,7 +522,7 @@ TAP version 13
         ok 9 - 06.02.09 - nothing in given breakpoints is useful
         ok 10 - 06.02.10
         1..10
-    ok 53 - 06.02 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (whitespace involved) # time=56.772ms
+    ok 53 - 06.02 - [34mopts.breakToTheLeftOf[39m - breaks based on breakpoints (whitespace involved) # time=12.439ms
     
     # Subtest: 07.01 - [34mCSS minification[39m - minifies around class names - minimal
         ok 1 - 07.01.01
@@ -530,7 +530,7 @@ TAP version 13
         ok 3 - 07.01.03
         ok 4 - 07.01.04
         1..4
-    ok 54 - 07.01 - [34mCSS minification[39m - minifies around class names - minimal # time=20.071ms
+    ok 54 - 07.01 - [34mCSS minification[39m - minifies around class names - minimal # time=7.722ms
     
     # Subtest: 07.02 - [34mCSS minification[39m - minifies around class names - spaces
         ok 1 - 07.02.01
@@ -538,7 +538,7 @@ TAP version 13
         ok 3 - 07.02.03
         ok 4 - 07.02.04
         1..4
-    ok 55 - 07.02 - [34mCSS minification[39m - minifies around class names - spaces # time=27.241ms
+    ok 55 - 07.02 - [34mCSS minification[39m - minifies around class names - spaces # time=10.334ms
     
     # Subtest: 07.03 - [34mCSS minification[39m - minifies around class names - element > element
         ok 1 - 07.03.01
@@ -547,7 +547,7 @@ TAP version 13
         ok 4 - 07.03.04
         ok 5 - 07.03.05
         1..5
-    ok 56 - 07.03 - [34mCSS minification[39m - minifies around class names - element > element # time=33.543ms
+    ok 56 - 07.03 - [34mCSS minification[39m - minifies around class names - element > element # time=13.846ms
     
     # Subtest: 07.04 - [34mCSS minification[39m - minifies around class names - element + element
         ok 1 - 07.04.01
@@ -556,7 +556,7 @@ TAP version 13
         ok 4 - 07.04.04
         ok 5 - 07.04.05
         1..5
-    ok 57 - 07.04 - [34mCSS minification[39m - minifies around class names - element + element # time=24.065ms
+    ok 57 - 07.04 - [34mCSS minification[39m - minifies around class names - element + element # time=27.779ms
     
     # Subtest: 07.05 - [34mCSS minification[39m - minifies around class names - element ~ element
         ok 1 - 07.05.01
@@ -565,13 +565,13 @@ TAP version 13
         ok 4 - 07.05.04
         ok 5 - 07.05.05
         1..5
-    ok 58 - 07.05 - [34mCSS minification[39m - minifies around class names - element ~ element # time=28.771ms
+    ok 58 - 07.05 - [34mCSS minification[39m - minifies around class names - element ~ element # time=16.889ms
     
     # Subtest: 07.06 - [34mCSS minification[39m - removes CSS comments
         ok 1 - 07.06.01
         ok 2 - 07.06.02
         1..2
-    ok 59 - 07.06 - [34mCSS minification[39m - removes CSS comments # time=11.459ms
+    ok 59 - 07.06 - [34mCSS minification[39m - removes CSS comments # time=5.832ms
     
     # Subtest: 07.07 - [34mCSS minification[39m - removes whitespace in front of !important
         ok 1 - 07.07.01 - no space
@@ -579,7 +579,7 @@ TAP version 13
         ok 3 - 07.07.03 - two spaces
         ok 4 - 07.07.04 - resembling real life
         1..4
-    ok 60 - 07.07 - [34mCSS minification[39m - removes whitespace in front of !important # time=14.628ms
+    ok 60 - 07.07 - [34mCSS minification[39m - removes whitespace in front of !important # time=8.351ms
     
     # Subtest: 07.08 - [34mCSS minification[39m - removes whitespace in front of <script>
         ok 1 - 07.08.01
@@ -587,27 +587,27 @@ TAP version 13
         ok 3 - 07.08.03
         ok 4 - 07.08.04
         1..4
-    ok 61 - 07.08 - [34mCSS minification[39m - removes whitespace in front of <script> # time=19.554ms
+    ok 61 - 07.08 - [34mCSS minification[39m - removes whitespace in front of <script> # time=9.551ms
     
     # Subtest: 07.09 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals
         ok 1 - should be equivalent
         1..1
-    ok 62 - 07.09 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals # time=12.481ms
+    ok 62 - 07.09 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals # time=6.961ms
     
     # Subtest: 07.10 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off
         ok 1 - should be equivalent
         1..1
-    ok 63 - 07.10 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off # time=12.266ms
+    ok 63 - 07.10 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off # time=4.36ms
     
     # Subtest: 07.11 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix
         ok 1 - should be equivalent
         1..1
-    ok 64 - 07.11 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix # time=18.283ms
+    ok 64 - 07.11 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix # time=12.957ms
     
     # Subtest: 07.12 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off
         ok 1 - should be equivalent
         1..1
-    ok 65 - 07.12 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off # time=22.959ms
+    ok 65 - 07.12 - [34mCSS minification[39m - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off # time=11.3ms
     
     # Subtest: 08.01 - [34minline CSS minification[39m - one tag, minimal - double quotes
         ok 1 - 08.01.01
@@ -615,82 +615,82 @@ TAP version 13
         ok 3 - 08.01.03 - indentations are removed on default settings
         ok 4 - 08.01.04 - indentations off
         1..4
-    ok 66 - 08.01 - [34minline CSS minification[39m - one tag, minimal - double quotes # time=22.396ms
+    ok 66 - 08.01 - [34minline CSS minification[39m - one tag, minimal - double quotes # time=6.576ms
     
     # Subtest: 08.02 - [34minline CSS minification[39m - inline CSS comments
         ok 1 - 08.02
         1..1
-    ok 67 - 08.02 - [34minline CSS minification[39m - inline CSS comments # time=12.329ms
+    ok 67 - 08.02 - [34minline CSS minification[39m - inline CSS comments # time=2.599ms
     
     # Subtest: 08.03 - [34minline CSS minification[39m - line length limit falls in the middle of inline CSS comment
         ok 1 - 08.03
         1..1
-    ok 68 - 08.03 - [34minline CSS minification[39m - line length limit falls in the middle of inline CSS comment # time=34.323ms
+    ok 68 - 08.03 - [34minline CSS minification[39m - line length limit falls in the middle of inline CSS comment # time=2.562ms
     
     # Subtest: 08.04 - [34minline CSS minification[39m - line length becomes all right because of truncation
         ok 1 - 08.04 - deletion makes it to be within a limit
         1..1
-    ok 69 - 08.04 - [34minline CSS minification[39m - line length becomes all right because of truncation # time=7.411ms
+    ok 69 - 08.04 - [34minline CSS minification[39m - line length becomes all right because of truncation # time=2.574ms
     
     # Subtest: 08.05 - [34minline CSS minification[39m - leading whitespace inside double quotes
         ok 1 - 08.05
         1..1
-    ok 70 - 08.05 - [34minline CSS minification[39m - leading whitespace inside double quotes # time=8.152ms
+    ok 70 - 08.05 - [34minline CSS minification[39m - leading whitespace inside double quotes # time=2.701ms
     
     # Subtest: 08.06 - [34minline CSS minification[39m - leading whitespace inside single quotes
         ok 1 - 08.06
         1..1
-    ok 71 - 08.06 - [34minline CSS minification[39m - leading whitespace inside single quotes # time=7.888ms
+    ok 71 - 08.06 - [34minline CSS minification[39m - leading whitespace inside single quotes # time=2.489ms
     
     # Subtest: 09.01 - [32minline tags[39m - style on sup #1
         ok 1 - 09.01
         1..1
-    ok 72 - 09.01 - [32minline tags[39m - style on sup #1 # time=12.937ms
+    ok 72 - 09.01 - [32minline tags[39m - style on sup #1 # time=1.836ms
     
     # Subtest: 09.02 - [32minline tags[39m - style on sup #2
         ok 1 - 09.02
         1..1
-    ok 73 - 09.02 - [32minline tags[39m - style on sup #2 # time=10.308ms
+    ok 73 - 09.02 - [32minline tags[39m - style on sup #2 # time=2.204ms
     
     # Subtest: 09.03 - [32minline tags[39m - two spans with space - space retained
         ok 1 - 09.03
         1..1
-    ok 74 - 09.03 - [32minline tags[39m - two spans with space - space retained # time=6.328ms
+    ok 74 - 09.03 - [32minline tags[39m - two spans with space - space retained # time=2.256ms
     
     # Subtest: 09.04 - [32minline tags[39m - two spans without space - fine
         ok 1 - 09.04
         1..1
-    ok 75 - 09.04 - [32minline tags[39m - two spans without space - fine # time=6.865ms
+    ok 75 - 09.04 - [32minline tags[39m - two spans without space - fine # time=3.537ms
     
     # Subtest: 09.06 - [32minline tags[39m - inside tag
         ok 1 - 09.06
         1..1
-    ok 76 - 09.06 - [32minline tags[39m - inside tag # time=2.671ms
+    ok 76 - 09.06 - [32minline tags[39m - inside tag # time=1.452ms
     
     # Subtest: 09.07 - [32minline tags[39m - nameless attr
         ok 1 - 09.07.01
         ok 2 - 09.07.02
         1..2
-    ok 77 - 09.07 - [32minline tags[39m - nameless attr # time=7.683ms
+    ok 77 - 09.07 - [32minline tags[39m - nameless attr # time=2.781ms
     
     # Subtest: 09.08 - [32minline tags[39m - style attr
         ok 1 - 09.08.01
         ok 2 - 09.08.02
         1..2
-    ok 78 - 09.08 - [32minline tags[39m - style attr # time=7.499ms
+    ok 78 - 09.08 - [32minline tags[39m - style attr # time=4.237ms
     
     # Subtest: 09.09 - [32minline tags[39m - two spans
         ok 1 - 09.09.01
         ok 2 - 09.09.02
         ok 3 - 09.09.03
         1..3
-    ok 79 - 09.09 - [32minline tags[39m - two spans # time=22.988ms
+    ok 79 - 09.09 - [32minline tags[39m - two spans # time=16.984ms
     
     # Subtest: 09.10 - [32minline tags[39m - span + sup
         ok 1 - 09.10.01
         ok 2 - 09.10.02
         1..2
-    ok 80 - 09.10 - [32minline tags[39m - span + sup # time=11.608ms
+    ok 80 - 09.10 - [32minline tags[39m - span + sup # time=5.152ms
     
     # Subtest: 09.11 - [32minline tags[39m - won't line break between two inline tags
         ok 1 - 09.11.01 - limit = 1
@@ -730,29 +730,29 @@ TAP version 13
         ok 35 - 09.11.035 - limit = 35
         ok 36 - 09.11.036 - limit = 36
         1..36
-    ok 81 - 09.11 - [32minline tags[39m - won't line break between two inline tags # time=107.236ms
+    ok 81 - 09.11 - [32minline tags[39m - won't line break between two inline tags # time=102.513ms
     
     # Subtest: 09.12 - [32minline tags[39m - 012 pt.2
         ok 1 - 09.12
         1..1
-    ok 82 - 09.12 - [32minline tags[39m - 012 pt.2 # time=12.836ms
+    ok 82 - 09.12 - [32minline tags[39m - 012 pt.2 # time=5.453ms
     
     # Subtest: 09.13 - [32minline tags[39m - will line break between mixed #1
         ok 1 - 09.13.01
         ok 2 - 09.13.02
         1..2
-    ok 83 - 09.13 - [32minline tags[39m - will line break between mixed #1 # time=12.38ms
+    ok 83 - 09.13 - [32minline tags[39m - will line break between mixed #1 # time=3.524ms
     
     # Subtest: 09.14 - [32minline tags[39m - will line break between mixed, #2
         ok 1 - 09.14
         1..1
-    ok 84 - 09.14 - [32minline tags[39m - will line break between mixed, #2 # time=6.27ms
+    ok 84 - 09.14 - [32minline tags[39m - will line break between mixed, #2 # time=2.146ms
     
     # Subtest: 09.15 - [32minline tags[39m - will line break between mixed, space, #1
         ok 1 - 09.15.01
         ok 2 - 09.15.02
         1..2
-    ok 85 - 09.15 - [32minline tags[39m - will line break between mixed, space, #1 # time=6.84ms
+    ok 85 - 09.15 - [32minline tags[39m - will line break between mixed, space, #1 # time=3.741ms
     
     # Subtest: 09.16 - [32minline tags[39m - will line break between mixed, space, #2
         ok 1 - 09.16.01
@@ -761,7 +761,7 @@ TAP version 13
         ok 4 - 09.16.04
         ok 5 - 09.16.05
         1..5
-    ok 86 - 09.16 - [32minline tags[39m - will line break between mixed, space, #2 # time=14.53ms
+    ok 86 - 09.16 - [32minline tags[39m - will line break between mixed, space, #2 # time=14.467ms
     
     # Subtest: 09.17 - [32minline tags[39m - space between inline tags
         ok 1 - 09.17.01
@@ -772,7 +772,7 @@ TAP version 13
         ok 6 - 09.17.06
         ok 7 - 09.17.07
         1..7
-    ok 87 - 09.17 - [32minline tags[39m - space between inline tags # time=18.666ms
+    ok 87 - 09.17 - [32minline tags[39m - space between inline tags # time=13.175ms
     
     # Subtest: 09.18 - [32minline tags[39m - excessive whitespace between inline tags #1
         ok 1 - 09.18.01
@@ -786,18 +786,18 @@ TAP version 13
         ok 9 - 09.18.09
         ok 10 - 09.18.10
         1..10
-    ok 88 - 09.18 - [32minline tags[39m - excessive whitespace between inline tags #1 # time=24.934ms
+    ok 88 - 09.18 - [32minline tags[39m - excessive whitespace between inline tags #1 # time=28.376ms
     
     # Subtest: 09.19 - [32minline tags[39m - div and sup
         ok 1 - 09.19.01
         ok 2 - 09.19.02
         1..2
-    ok 89 - 09.19 - [32minline tags[39m - div and sup # time=6.872ms
+    ok 89 - 09.19 - [32minline tags[39m - div and sup # time=3.685ms
     
     # Subtest: 09.20 - [32minline tags[39m - div and sup, escessive whitespace
         ok 1 - 09.20
         1..1
-    ok 90 - 09.20 - [32minline tags[39m - div and sup, escessive whitespace # time=6.632ms
+    ok 90 - 09.20 - [32minline tags[39m - div and sup, escessive whitespace # time=2.593ms
     
     # Subtest: 09.21 - [32minline tags[39m - div and sup, escessive whitespace
         ok 1 - 09.21.01 - limit = 10
@@ -818,7 +818,7 @@ TAP version 13
         ok 16 - 09.21.02
         ok 17 - 09.21.03
         1..17
-    ok 91 - 09.21 - [32minline tags[39m - div and sup, escessive whitespace # time=105.644ms
+    ok 91 - 09.21 - [32minline tags[39m - div and sup, escessive whitespace # time=61.284ms
     
     # Subtest: 09.22 - [32minline tags[39m - multiple wrapped inline tags
         ok 1 - 09.22.01
@@ -865,92 +865,92 @@ TAP version 13
         ok 42 - 09.22.03* - lineLengthLimit: i = 40
         ok 43 - 09.22.03* - lineLengthLimit: i = 41
         1..43
-    ok 92 - 09.22 - [32minline tags[39m - multiple wrapped inline tags # time=160.161ms
+    ok 92 - 09.22 - [32minline tags[39m - multiple wrapped inline tags # time=141.46ms
     
     # Subtest: 09.23 - [32minline tags[39m - first tag name letters resemble legit inline tags
         ok 1 - 09.23.01
         ok 2 - 09.23.02
         1..2
-    ok 93 - 09.23 - [32minline tags[39m - first tag name letters resemble legit inline tags # time=17.976ms
+    ok 93 - 09.23 - [32minline tags[39m - first tag name letters resemble legit inline tags # time=5.794ms
     
     # Subtest: 09.24 - [32minline tags[39m - spanner is not span
         ok 1 - 09.24.01
         ok 2 - 09.24.02
         ok 3 - 09.24.03 - insurance against whitespace-hungry matching components
         1..3
-    ok 94 - 09.24 - [32minline tags[39m - spanner is not span # time=16.559ms
+    ok 94 - 09.24 - [32minline tags[39m - spanner is not span # time=16.993ms
     
     # Subtest: 10.01 - [33mtag inner whitespace[39m - whitespace before closing bracket on opening tag
         ok 1 - 10.01.01
         ok 2 - 10.01.02
         ok 3 - 10.01.03
         1..3
-    ok 95 - 10.01 - [33mtag inner whitespace[39m - whitespace before closing bracket on opening tag # time=6.486ms
+    ok 95 - 10.01 - [33mtag inner whitespace[39m - whitespace before closing bracket on opening tag # time=2.514ms
     
     # Subtest: 10.02 - [33mtag inner whitespace[39m - div - block level
         ok 1 - 10.02
         1..1
-    ok 96 - 10.02 - [33mtag inner whitespace[39m - div - block level # time=2.054ms
+    ok 96 - 10.02 - [33mtag inner whitespace[39m - div - block level # time=1.457ms
     
     # Subtest: 10.03 - [33mtag inner whitespace[39m - a - inline tag
         ok 1 - 10.03
         1..1
-    ok 97 - 10.03 - [33mtag inner whitespace[39m - a - inline tag # time=5.866ms
+    ok 97 - 10.03 - [33mtag inner whitespace[39m - a - inline tag # time=1.148ms
     
     # Subtest: 10.04 - [33mtag inner whitespace[39m - removeLineBreaks = off
         ok 1 - 10.04
         1..1
-    ok 98 - 10.04 - [33mtag inner whitespace[39m - removeLineBreaks = off # time=5.864ms
+    ok 98 - 10.04 - [33mtag inner whitespace[39m - removeLineBreaks = off # time=1.301ms
     
     # Subtest: 10.05 - [33mtag inner whitespace[39m - all opts off, inline tag
         ok 1 - 10.05
         1..1
-    ok 99 - 10.05 - [33mtag inner whitespace[39m - all opts off, inline tag # time=0.976ms
+    ok 99 - 10.05 - [33mtag inner whitespace[39m - all opts off, inline tag # time=1.268ms
     
     # Subtest: 10.06 - [33mtag inner whitespace[39m - all opts off, block level tag
         ok 1 - 10.06
         1..1
-    ok 100 - 10.06 - [33mtag inner whitespace[39m - all opts off, block level tag # time=1.003ms
+    ok 100 - 10.06 - [33mtag inner whitespace[39m - all opts off, block level tag # time=1.32ms
     
     # Subtest: 10.07 - [33mtag inner whitespace[39m - before closing slash
         ok 1 - 10.07
         1..1
-    ok 101 - 10.07 - [33mtag inner whitespace[39m - before closing slash # time=3.958ms
+    ok 101 - 10.07 - [33mtag inner whitespace[39m - before closing slash # time=1.586ms
     
     # Subtest: 10.08 - [33mtag inner whitespace[39m - after closing slash
         ok 1 - 10.08
         1..1
-    ok 102 - 10.08 - [33mtag inner whitespace[39m - after closing slash # time=5.797ms
+    ok 102 - 10.08 - [33mtag inner whitespace[39m - after closing slash # time=2.965ms
     
     # Subtest: 10.09 - [33mtag inner whitespace[39m - around closing slash
         ok 1 - 10.09
         1..1
-    ok 103 - 10.09 - [33mtag inner whitespace[39m - around closing slash # time=6.2ms
+    ok 103 - 10.09 - [33mtag inner whitespace[39m - around closing slash # time=1.518ms
     
     # Subtest: 10.10 - [33mtag inner whitespace[39m - around closing slash - non inline tag
         ok 1 - 10.10
         1..1
-    ok 104 - 10.10 - [33mtag inner whitespace[39m - around closing slash - non inline tag # time=1.923ms
+    ok 104 - 10.10 - [33mtag inner whitespace[39m - around closing slash - non inline tag # time=1.531ms
     
     # Subtest: 99.01 - [90madhoc 1[39m - a peculiar set of characters
         ok 1 - 99.01 - a peculiar set of characters
         1..1
-    ok 105 - 99.01 - [90madhoc 1[39m - a peculiar set of characters # time=12.955ms
+    ok 105 - 99.01 - [90madhoc 1[39m - a peculiar set of characters # time=4.533ms
     
     # Subtest: 99.02 - [90madhoc 2[39m - another peculiar set of characters
         ok 1 - 99.02 - another peculiar set of characters
         1..1
-    ok 106 - 99.02 - [90madhoc 2[39m - another peculiar set of characters # time=16.517ms
+    ok 106 - 99.02 - [90madhoc 2[39m - another peculiar set of characters # time=6.665ms
     
     # Subtest: 99.03 - [90madhoc 3[39m - yet another peculiar set of chars
         ok 1 - 99.03 - another peculiar set of characters
         1..1
-    ok 107 - 99.03 - [90madhoc 3[39m - yet another peculiar set of chars # time=29.343ms
+    ok 107 - 99.03 - [90madhoc 3[39m - yet another peculiar set of chars # time=21.046ms
     
     # Subtest: 99.04 - [90madhoc 4[39m - result's keyset is consistent
         ok 1 - 99.04
         1..1
-    ok 108 - 99.04 - [90madhoc 4[39m - result's keyset is consistent # time=2.247ms
+    ok 108 - 99.04 - [90madhoc 4[39m - result's keyset is consistent # time=0.919ms
     
     # Subtest: 99.05 - [90madhoc 5[39m - raw non-breaking spaces
         ok 1 - 99.05.01
@@ -962,81 +962,81 @@ TAP version 13
         ok 7 - 99.05.07
         ok 8 - 99.05.08
         1..8
-    ok 109 - 99.05 - [90madhoc 5[39m - raw non-breaking spaces # time=18.767ms
+    ok 109 - 99.05 - [90madhoc 5[39m - raw non-breaking spaces # time=8.349ms
     
     # Subtest: 99.06 - [90madhoc 6[39m - raw non-breaking spaces
         ok 1 - 99.06.01
         ok 2 - 99.06.02
         ok 3 - 99.06.03
         1..3
-    ok 110 - 99.06 - [90madhoc 6[39m - raw non-breaking spaces # time=9.734ms
+    ok 110 - 99.06 - [90madhoc 6[39m - raw non-breaking spaces # time=2.99ms
     
     # Subtest: 99.07 - [90madhoc 7[39m - line length control
         ok 1 - 99.07
         1..1
-    ok 111 - 99.07 - [90madhoc 7[39m - line length control # time=6.897ms
+    ok 111 - 99.07 - [90madhoc 7[39m - line length control # time=3.357ms
     
     # Subtest: 99.08 - [90madhoc 8[39m - nunjucks
         ok 1 - 99.08
         1..1
-    ok 112 - 99.08 - [90madhoc 8[39m - nunjucks # time=6.801ms
+    ok 112 - 99.08 - [90madhoc 8[39m - nunjucks # time=3.752ms
     
     # Subtest: 99.09 - [90madhoc 9[39m - nunjucks
         ok 1 - 99.09
         1..1
-    ok 113 - 99.09 - [90madhoc 9[39m - nunjucks # time=9.564ms
+    ok 113 - 99.09 - [90madhoc 9[39m - nunjucks # time=3.962ms
     
     1..113
-    # time=3505.443ms
-ok 1 - test/test.js # time=3505.443ms
+    # time=2952.184ms
+}
 
-# Subtest: test/umd-test.js
+ok 2 - test/umd-test.js # time=34.954ms {
     # Subtest: UMD build works fine
         ok 1 - should be equal
         ok 2 - should match pattern provided
         ok 3 - expect truthy value
         1..3
-    ok 1 - UMD build works fine # time=31.768ms
+    ok 1 - UMD build works fine # time=27.163ms
     
     1..1
-    # time=38.09ms
-ok 2 - test/umd-test.js # time=38.09ms
+    # time=34.954ms
+}
 
-# Subtest: test/websites-test.js
-    # Subtest: 08.01-06 - [90mreal websites[39m
-        ok 1 - 08.03.01 - fetched non-empty, valid HTML source from "https://en.wikipedia.org/wiki/Doughnut"
-        ok 2 - 08.03.02 - minified size is the same or less (0% size savings)
-    064.03.03 - the Wikipedia page about doughnuts - only indentations removed: 0% size savings
-        ok 3 - 08.03.04 - minified size is the same or less (1% size savings)
-    092.03.05 - the Wikipedia page about doughnuts - linebreaks removed: 1% size savings
+ok 3 - test/websites-test.js # time=17735.467ms {
     099.06.xx - Non-existent URL - [31mcould not fetch the web page! Moving on...[39m
-        ok 4 - request to https://sjhgldgldgjdlfgldgldflkgjd.com/ failed, reason: getaddrinfo ENOTFOUND sjhgldgldgjdlfgldgldflkgjd.com
-        ok 5 - 08.02.01 - fetched non-empty, valid HTML source from "https://detergent.io"
-        ok 6 - 08.02.02 - minified size is the same or less (7% size savings)
+    # Subtest: 08.01-06 - [90mreal websites[39m
+        ok 1 - request to https://sjhgldgldgjdlfgldgldflkgjd.com/ failed, reason: getaddrinfo ENOTFOUND sjhgldgldgjdlfgldgldflkgjd.com
+        ok 2 - 08.02.01 - fetched non-empty, valid HTML source from "https://detergent.io"
+        ok 3 - 08.02.02 - minified size is the same or less (7% size savings)
     064.02.03 - Detergent.io website - only indentations removed: 7% size savings
-        ok 7 - 08.02.04 - minified size is the same or less (7% size savings)
+        ok 4 - 08.02.04 - minified size is the same or less (7% size savings)
     092.02.05 - Detergent.io website - linebreaks removed: 7% size savings
-        ok 8 - 08.01.01 - fetched non-empty, valid HTML source from "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/"
-        ok 9 - 08.01.02 - minified size is the same or less (0% size savings)
-    064.01.03 - html-crush on GitLab - only indentations removed: 0% size savings
-        ok 10 - 08.01.04 - minified size is the same or less (1% size savings)
-    092.01.05 - html-crush on GitLab - linebreaks removed: 1% size savings
-        ok 11 - 08.05.01 - fetched non-empty, valid HTML source from "https://www.mozilla.org/en-GB/"
-        ok 12 - 08.05.02 - minified size is the same or less (15% size savings)
+        ok 5 - 08.05.01 - fetched non-empty, valid HTML source from "https://www.mozilla.org/en-GB/"
+        ok 6 - 08.05.02 - minified size is the same or less (15% size savings)
     064.05.03 - Mozilla UK homepage - only indentations removed: 15% size savings
-        ok 13 - 08.05.04 - minified size is the same or less (16% size savings)
+        ok 7 - 08.05.04 - minified size is the same or less (16% size savings)
     092.05.05 - Mozilla UK homepage - linebreaks removed: 16% size savings
-        ok 14 - 08.04.01 - fetched non-empty, valid HTML source from "http://www.muji.eu/"
-        ok 15 - 08.04.02 - minified size is the same or less (8% size savings)
+        ok 8 - 08.04.01 - fetched non-empty, valid HTML source from "http://www.muji.eu/"
+        ok 9 - 08.04.02 - minified size is the same or less (8% size savings)
     064.04.03 - Muji EU online store - only indentations removed: 8% size savings
-        ok 16 - 08.04.04 - minified size is the same or less (10% size savings)
+        ok 10 - 08.04.04 - minified size is the same or less (10% size savings)
     092.04.05 - Muji EU online store - linebreaks removed: 10% size savings
+        ok 11 - 08.01.01 - fetched non-empty, valid HTML source from "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/"
+        ok 12 - 08.01.02 - minified size is the same or less (0% size savings)
+    064.01.03 - html-crush on GitLab - only indentations removed: 0% size savings
+        ok 13 - 08.01.04 - minified size is the same or less (1% size savings)
+    092.01.05 - html-crush on GitLab - linebreaks removed: 1% size savings
+        ok 14 - 08.03.01 - fetched non-empty, valid HTML source from "https://en.wikipedia.org/wiki/Doughnut"
+        ok 15 - 08.03.02 - minified size is the same or less (0% size savings)
+    064.03.03 - the Wikipedia page about doughnuts - only indentations removed: 0% size savings
+        ok 16 - 08.03.04 - minified size is the same or less (1% size savings)
+    092.03.05 - the Wikipedia page about doughnuts - linebreaks removed: 1% size savings
         1..16
-    ok 1 - 08.01-06 - [90mreal websites[39m # time=11791.724ms
+    ok 1 - 08.01-06 - [90mreal websites[39m # time=17727.931ms
     
     1..1
-    # time=12197.001ms
-ok 3 - test/websites-test.js # time=12197.001ms
+    # time=17735.467ms
+}
 
 1..3
-# time=24007.989ms
+# time=20401.525ms

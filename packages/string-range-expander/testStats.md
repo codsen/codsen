@@ -1,64 +1,64 @@
 TAP version 13
-# Subtest: test/test.js
+ok 1 - test/test.js # time=595.583ms {
     # Subtest: 00.01 - throws on Boolean input
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 1 - 00.01 - throws on Boolean input # time=34.178ms
+    ok 1 - 00.01 - throws on Boolean input # time=16.846ms
     
     # Subtest: 00.02 - throws on missing input
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 2 - 00.02 - throws on missing input # time=3.428ms
+    ok 2 - 00.02 - throws on missing input # time=2.63ms
     
     # Subtest: 00.03 - throws on null input
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 3 - 00.03 - throws on null input # time=2.785ms
+    ok 3 - 00.03 - throws on null input # time=1.858ms
     
     # Subtest: 00.03 - throws on string input
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 4 - 00.03 - throws on string input # time=2.545ms
+    ok 4 - 00.03 - throws on string input # time=2.399ms
     
     # Subtest: 00.04 - throws on empty plain object
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 5 - 00.04 - throws on empty plain object # time=2.604ms
+    ok 5 - 00.04 - throws on empty plain object # time=2.043ms
     
     # Subtest: 00.05 - throws when "from" is not a number
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 6 - 00.05 - throws when "from" is not a number # time=2.253ms
+    ok 6 - 00.05 - throws when "from" is not a number # time=1.438ms
     
     # Subtest: 00.06 - throws when "to" is not a number
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 7 - 00.06 - throws when "to" is not a number # time=1.025ms
+    ok 7 - 00.06 - throws when "to" is not a number # time=3.222ms
     
     # Subtest: 00.07 - throws when "from" is outside the str boundaries
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 8 - 00.07 - throws when "from" is outside the str boundaries # time=0.982ms
+    ok 8 - 00.07 - throws when "from" is outside the str boundaries # time=1.596ms
     
     # Subtest: 00.08 - throws when "to" is way outside the str boundaries
         ok 1 - expected to throw
         ok 2 - expect truthy value
         ok 3 - expected to not throw
         1..3
-    ok 9 - 00.08 - throws when "to" is way outside the str boundaries # time=3.28ms
+    ok 9 - 00.08 - throws when "to" is way outside the str boundaries # time=2.137ms
     
     # Subtest: 00.09 - throws when opts.extendToOneSide is unrecognised
         ok 1 - expected to throw
@@ -66,7 +66,7 @@ TAP version 13
         ok 3 - expected to throw
         ok 4 - expect truthy value
         1..4
-    ok 10 - 00.09 - throws when opts.extendToOneSide is unrecognised # time=3.063ms
+    ok 10 - 00.09 - throws when opts.extendToOneSide is unrecognised # time=2.226ms
     
     # Subtest: 01.01 - nothing to expand
         ok 1 - 01.01.01
@@ -88,7 +88,7 @@ TAP version 13
         ok 17 - 01.01.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default
         ok 18 - 01.01.18 - combo, no whitespace
         1..18
-    ok 11 - 01.01 - nothing to expand # time=14.784ms
+    ok 11 - 01.01 - nothing to expand # time=20.859ms
     
     # Subtest: 01.02 - expanding from the middle of a gap
         ok 1 - 01.02.01
@@ -105,7 +105,7 @@ TAP version 13
         ok 12 - 01.02.12
         ok 13 - 01.02.13
         1..13
-    ok 12 - 01.02 - expanding from the middle of a gap # time=9.596ms
+    ok 12 - 01.02 - expanding from the middle of a gap # time=17.015ms
     
     # Subtest: 01.03 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled
         ok 1 - 01.03.01
@@ -113,13 +113,13 @@ TAP version 13
         ok 3 - 01.03.03
         ok 4 - 01.03.04
         1..4
-    ok 13 - 01.03 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled # time=3.499ms
+    ok 13 - 01.03 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled # time=4.022ms
     
     # Subtest: 01.04 - both ends are equal
         ok 1 - 01.04.01
         ok 2 - 01.04.02
         1..2
-    ok 14 - 01.04 - both ends are equal # time=2.302ms
+    ok 14 - 01.04 - both ends are equal # time=1.745ms
     
     # Subtest: 01.05 - addSingleSpaceToPreventAccidentalConcatenation
         ok 1 - 01.05.01
@@ -132,7 +132,7 @@ TAP version 13
         ok 8 - 01.05.08 - false-true
         ok 9 - 01.05.09 - false-false
         1..9
-    ok 15 - 01.05 - addSingleSpaceToPreventAccidentalConcatenation # time=6.363ms
+    ok 15 - 01.05 - addSingleSpaceToPreventAccidentalConcatenation # time=6.005ms
     
     # Subtest: 01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation
         ok 1 - 01.06.01
@@ -140,7 +140,7 @@ TAP version 13
         ok 3 - 01.06.03
         ok 4 - 01.06.04
         1..4
-    ok 16 - 01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation # time=4.021ms
+    ok 16 - 01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation # time=13.142ms
     
     # Subtest: 01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation
         ok 1 - 01.07.01
@@ -148,7 +148,7 @@ TAP version 13
         ok 3 - 01.07.03
         ok 4 - 01.07.04
         1..4
-    ok 17 - 01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation # time=3.598ms
+    ok 17 - 01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation # time=10.162ms
     
     # Subtest: 01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation
         ok 1 - 01.08.01
@@ -157,7 +157,7 @@ TAP version 13
         ok 4 - 01.08.04
         ok 5 - 01.08.05
         1..5
-    ok 18 - 01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation # time=8.569ms
+    ok 18 - 01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation # time=5.925ms
     
     # Subtest: 01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored
         ok 1 - 01.09.01 - baseline
@@ -172,7 +172,7 @@ TAP version 13
         ok 10 - 01.09.08
         ok 11 - 01.09.09
         1..11
-    ok 19 - 01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored # time=15.84ms
+    ok 19 - 01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored # time=10.213ms
     
     # Subtest: 02.01 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, both sides extended
         ok 1 - 02.01.01
@@ -180,7 +180,7 @@ TAP version 13
         ok 3 - 02.01.03
         ok 4 - 02.01.04
         1..4
-    ok 20 - 02.01 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, both sides extended # time=8ms
+    ok 20 - 02.01 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, both sides extended # time=5.469ms
     
     # Subtest: 02.02 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, mismatching value
         ok 1 - 02.02.01
@@ -190,14 +190,14 @@ TAP version 13
         ok 5 - 02.02.05
         ok 6 - 02.02.06
         1..6
-    ok 21 - 02.02 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, mismatching value # time=5.097ms
+    ok 21 - 02.02 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - normal use, mismatching value # time=5.258ms
     
     # Subtest: 02.03 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - range within characters, no whitespace
         ok 1 - 02.03.01
         ok 2 - 02.03.02
         ok 3 - 02.03.03
         1..3
-    ok 22 - 02.03 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - range within characters, no whitespace # time=2.771ms
+    ok 22 - 02.03 - [33mopts.ifLeftSideIncludesThisThenCropTightly[39m - range within characters, no whitespace # time=5.914ms
     
     # Subtest: 03.01 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, both sides extended
         ok 1 - 03.01.01
@@ -205,7 +205,7 @@ TAP version 13
         ok 3 - 03.01.03
         ok 4 - 03.01.04
         1..4
-    ok 23 - 03.01 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, both sides extended # time=4.855ms
+    ok 23 - 03.01 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, both sides extended # time=38.71ms
     
     # Subtest: 03.02 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, mismatching value
         ok 1 - 03.02.01
@@ -215,14 +215,14 @@ TAP version 13
         ok 5 - 03.02.05
         ok 6 - 03.02.06
         1..6
-    ok 24 - 03.02 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, mismatching value # time=4.185ms
+    ok 24 - 03.02 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - normal use, mismatching value # time=4.042ms
     
     # Subtest: 03.03 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - range within characters, no whitespace
         ok 1 - 03.03.01
         ok 2 - 03.03.02
         ok 3 - 03.03.03
         1..3
-    ok 25 - 03.03 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - range within characters, no whitespace # time=2.653ms
+    ok 25 - 03.03 - [33mopts.ifRightSideIncludesThisThenCropTightly[39m - range within characters, no whitespace # time=11.89ms
     
     # Subtest: 04.01 - [33mopts.ifLeftSideIncludesThisCropItToo[39m - combo with tight crop
         ok 1 - 04.01.01 - control #1
@@ -232,7 +232,7 @@ TAP version 13
         ok 5 - 04.01.05
         ok 6 - 04.01.06
         1..6
-    ok 26 - 04.01 - [33mopts.ifLeftSideIncludesThisCropItToo[39m - combo with tight crop # time=4.449ms
+    ok 26 - 04.01 - [33mopts.ifLeftSideIncludesThisCropItToo[39m - combo with tight crop # time=11.588ms
     
     # Subtest: 05.01 - [33mopts.extendToOneSide[39m - one side only
         ok 1 - 05.01.01 - default, a control
@@ -240,7 +240,7 @@ TAP version 13
         ok 3 - 05.01.03 - right only
         ok 4 - 05.01.04 - left only
         1..4
-    ok 27 - 05.01 - [33mopts.extendToOneSide[39m - one side only # time=4.576ms
+    ok 27 - 05.01 - [33mopts.extendToOneSide[39m - one side only # time=3.466ms
     
     # Subtest: 06.01 - [33mopts.wipeAllWhitespaceOnLeft[39m - extends to both sides
         ok 1 - 06.01.01 - a control
@@ -248,26 +248,26 @@ TAP version 13
         ok 3 - 06.01.03 - right
         ok 4 - 06.01.04 - both
         1..4
-    ok 28 - 06.01 - [33mopts.wipeAllWhitespaceOnLeft[39m - extends to both sides # time=6.521ms
+    ok 28 - 06.01 - [33mopts.wipeAllWhitespaceOnLeft[39m - extends to both sides # time=2.81ms
     
     # Subtest: 07.01 - [36mvarious[39m - adhoc #1
         ok 1 - 07.01
         1..1
-    ok 29 - 07.01 - [36mvarious[39m - adhoc #1 # time=1.745ms
+    ok 29 - 07.01 - [36mvarious[39m - adhoc #1 # time=1.223ms
     
     # Subtest: 07.02 - [36mvarious[39m - adhoc #2
         ok 1 - 07.02
         1..1
-    ok 30 - 07.02 - [36mvarious[39m - adhoc #2 # time=1.623ms
+    ok 30 - 07.02 - [36mvarious[39m - adhoc #2 # time=1.274ms
     
     # Subtest: 07.03 - [36mvarious[39m - adhoc #3
         ok 1 - 07.03
         1..1
-    ok 31 - 07.03 - [36mvarious[39m - adhoc #3 # time=2.127ms
+    ok 31 - 07.03 - [36mvarious[39m - adhoc #3 # time=2.855ms
     
     1..31
-    # time=380.327ms
-ok 1 - test/test.js # time=380.327ms
+    # time=595.583ms
+}
 
 1..1
-# time=2923.232ms
+# time=3805.836ms

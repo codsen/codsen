@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 101 npm libraries 📦📦📦
+    A lerna monorepo for our 102 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -222,7 +222,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ Miscellaneous Libraries
 
-28 in total.
+29 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -252,6 +252,7 @@ You use them in the Terminal (command line), for example:
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
+| [`tap-parse-string-to-object`](https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object/) | Parses raw Tap output, string-to-object | [![tap-parse-string-to-object on npm](https://img.shields.io/npm/v/tap-parse-string-to-object.svg?style=flat-square)](https://www.npmjs.com/package/tap-parse-string-to-object) | [packages/tap-parse-string-to-object](https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object/) |
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |
 | [`util-nonempty`](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) |
 
