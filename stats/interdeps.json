@@ -368,7 +368,7 @@
     },
     {
         "name": "lect",
-        "size": 74815,
+        "size": 74587,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",

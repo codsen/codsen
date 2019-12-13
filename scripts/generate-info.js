@@ -169,7 +169,7 @@ allPackages.forEach(async name => {
   }
 });
 
-const compiledStats = {
+const compiledAssertionCounts = {
   all: {},
   totalPackageCount: allPackages.length,
   totalAssertsCount: 0,
@@ -196,26 +196,26 @@ allStats.forEach(statsObj => {
     statsObj.asserts &&
     Number.isInteger(statsObj.asserts)
   ) {
-    compiledStats.totalAssertsCount += statsObj.asserts;
-    if (statsObj.asserts > compiledStats.maxAssertsCount) {
-      compiledStats.maxAssertsCount = statsObj.asserts;
-      compiledStats.maxAssertsName = statsObj.name;
+    compiledAssertionCounts.totalAssertsCount += statsObj.asserts;
+    if (statsObj.asserts > compiledAssertionCounts.maxAssertsCount) {
+      compiledAssertionCounts.maxAssertsCount = statsObj.asserts;
+      compiledAssertionCounts.maxAssertsName = statsObj.name;
     }
     if (
-      statsObj.asserts < compiledStats.minAssertsCount &&
+      statsObj.asserts < compiledAssertionCounts.minAssertsCount &&
       statsObj.asserts > 1
     ) {
-      compiledStats.minAssertsCount = statsObj.asserts;
-      compiledStats.minAssertsName = statsObj.name;
+      compiledAssertionCounts.minAssertsCount = statsObj.asserts;
+      compiledAssertionCounts.minAssertsName = statsObj.name;
     }
   }
 });
 
-compiledStats.assertsCountArithmeticMean = Math.round(
-  compiledStats.totalAssertsCount / allPackages.length
+compiledAssertionCounts.assertsCountArithmeticMean = Math.round(
+  compiledAssertionCounts.totalAssertsCount / allPackages.length
 );
 
-compiledStats.assertsCountGeometricMean = Math.round(
+compiledAssertionCounts.assertsCountGeometricMean = Math.round(
   Math.pow(
     allStats.reduce((accum, curr) => curr.asserts * accum, 1),
     1 / allStats.length
@@ -223,18 +223,18 @@ compiledStats.assertsCountGeometricMean = Math.round(
 );
 
 allStats.forEach(statsObj => {
-  compiledStats.all[statsObj.name] = statsObj.asserts;
+  compiledAssertionCounts.all[statsObj.name] = statsObj.asserts;
 });
 
-compiledStats.assertsCountMedian = median(
-  Object.keys(compiledStats.all).map(
-    packageName => compiledStats.all[packageName]
+compiledAssertionCounts.assertsCountMedian = median(
+  Object.keys(compiledAssertionCounts.all).map(
+    packageName => compiledAssertionCounts.all[packageName]
   )
 );
 
 // console.log(
-//   `253 generate-info.js: ${`\u001b[${33}m${`compiledStats`}\u001b[${39}m`} = ${JSON.stringify(
-//     compiledStats,
+//   `253 generate-info.js: ${`\u001b[${33}m${`compiledAssertionCounts`}\u001b[${39}m`} = ${JSON.stringify(
+//     compiledAssertionCounts,
 //     null,
 //     4
 //   )}`
@@ -320,14 +320,14 @@ fs.writeFile(
 );
 
 fs.writeFile(
-  path.resolve("stats/testStatsCompiled.json"),
-  JSON.stringify(compiledStats, null, 4),
+  path.resolve("stats/compiledAssertionCounts.json"),
+  JSON.stringify(compiledAssertionCounts, null, 4),
   err => {
     if (err) {
       throw err;
     }
     console.log(
-      `\u001b[${32}m${`testStatsCompiled.json written OK`}\u001b[${39}m`
+      `\u001b[${32}m${`compiledAssertionCounts.json written OK`}\u001b[${39}m`
     );
   }
 );
@@ -364,7 +364,7 @@ try {
 if (
   !oldHistoricTotals.length ||
   oldHistoricTotals[oldHistoricTotals.length - 1][1] !==
-    compiledStats.totalAssertsCount
+    compiledAssertionCounts.totalAssertsCount
 ) {
   let findingIdx;
   if (
@@ -377,10 +377,14 @@ if (
     })
   ) {
     // edit old if it was on the same date, today
-    oldHistoricTotals[findingIdx][1] = compiledStats.totalAssertsCount;
+    oldHistoricTotals[findingIdx][1] =
+      compiledAssertionCounts.totalAssertsCount;
   } else {
     // push new
-    oldHistoricTotals.push([newdate, compiledStats.totalAssertsCount]);
+    oldHistoricTotals.push([
+      newdate,
+      compiledAssertionCounts.totalAssertsCount
+    ]);
   }
   fs.writeFile(
     path.join("stats/oldHistoricTotals.json"),
