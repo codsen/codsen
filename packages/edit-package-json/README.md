@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -232,6 +233,8 @@ Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-pa
 [node-url]: https://www.npmjs.com/package/edit-package-json
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
+[cov-img]: https://img.shields.io/badge/coverage-98.27%25-brightgreen.svg?style=flat-square
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/edit-package-json
 [downloads-img]: https://img.shields.io/npm/dm/edit-package-json.svg?style=flat-square

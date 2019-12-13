@@ -178,6 +178,8 @@ Icons mapping in util.js/`defaultTypes` taken from [all-contributors-cli](https:
 [node-url]: https://www.npmjs.com/package/lect
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lect
+[cov-img]: https://img.shields.io/badge/coverage-Unknown%25-red.svg?style=flat-square
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lect
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/lect
 [downloads-img]: https://img.shields.io/npm/dm/lect.svg?style=flat-square

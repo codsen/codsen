@@ -203,6 +203,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/lerna-clean-changelogs
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
+[cov-img]: https://img.shields.io/badge/coverage-95.56%25-brightgreen.svg?style=flat-square
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/lerna-clean-changelogs
 [downloads-img]: https://img.shields.io/npm/dm/lerna-clean-changelogs.svg?style=flat-square

@@ -1394,17 +1394,6 @@ function step6() {
   let topBadgesString = "";
   let bottomBadgesString = "";
 
-  // if package.json ("pack" variable) has no "coverage" script, automatically
-  // don't add the cov badge.
-  if (
-    showCoverageBadge &&
-    (!objectPath.has(pack, "scripts.coverage") ||
-      (objectPath.has(pack, "scripts.unittest") &&
-        !pack.scripts.unittest.includes("nyc")))
-  ) {
-    showCoverageBadge = false;
-  }
-
   // if this is a CLI app, don't show the Runkit badge
   let showRunkitBadge = true;
   if (!isSpecial && isCLI && !(pack.lect && pack.lect.special)) {
@@ -2304,16 +2293,19 @@ function step1() {
       path.resolve("coverage", "coverage-summary.json"),
       "utf8"
     );
-    // console.log(`received coverage:\n${JSON.stringify(content, null, 4)}`);
     if (content) {
       try {
         coverageValues = JSON.parse(content);
+        // console.log(
+        //   `received coverage:\n${JSON.stringify(coverageValues, null, 4)}`
+        // );
         if (
-          !(
-            isObj(coverageValues) &&
-            objectPath.get(coverageValues, "total.lines.pct") !== "Unknown"
-          )
+          !isObj(coverageValues) ||
+          !objectPath.get(coverageValues, "total.lines.pct")
         ) {
+          console.log(
+            `no coverage value found, setting showCoverageBadge = false`
+          );
           showCoverageBadge = false;
           log(`${chalk.yellow(logSymbols.info, `skipping coverage`)}`);
         }
