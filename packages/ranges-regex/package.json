@@ -126,12 +126,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
     "js-row-num-cli": "^1.6.10",
     "lect": "^0.11.3",
     "ranges-apply": "^3.0.44",
-    "rollup": "^1.27.9",
+    "rollup": "^1.27.12",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
@@ -140,7 +140,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.2",
-    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-terser": "^5.1.3",
     "tap": "^14.10.2"
   }
 }

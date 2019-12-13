@@ -15,7 +15,12 @@
   },
   "plugins": [
   ],
-  "root": true,
+  "ignorePatterns": [
+    "**/eslint-plugin-row-num/rules/utils/**",
+    "dist/",
+    "rollup.config.js",
+    "tap/**"
+  ],
   "rules": {
     "curly": "error",
     "no-constant-condition": [

@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const parse = require("tap-parse-string-to-object");
 
 const {
   sortAllObjectsSync
@@ -72,7 +73,10 @@ const interdep = [];
 const allStats = [];
 const dependencyStats = { dependencies: {}, devDependencies: {} };
 
-allPackages.map(name => {
+allPackages.forEach(name => {
+  // console.log(
+  //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
+  // );
   const pack = JSON.parse(
     fs.readFileSync(path.join("packages", name, "package.json"))
   );
@@ -103,29 +107,47 @@ allPackages.map(name => {
 
   // compile test stats
   try {
-    // const obj = { name };
-    // const fileContents = fs.readFileSync(
-    //   path.join("packages", name, "testStats.md"),
-    //   "utf8"
-    // );
-    // let parsedRes;
-    // const p = new Parser(results => {
-    //   parsedRes = results;
-    // });
+    const obj = { name };
+    const fileContents = fs.readFileSync(
+      path.join("packages", name, "testStats.md"),
+      "utf8"
+    );
     // console.log(
-    //   `${`\u001b[${33}m${`parsedRes`}\u001b[${39}m`} = ${JSON.stringify(
-    //     parsedRes,
+    //   `114 ${`\u001b[${33}m${`fileContents.length`}\u001b[${39}m`} = ${JSON.stringify(
+    //     fileContents.length,
     //     null,
     //     4
     //   )}`
     // );
-    //
-    // const res = fileContents.match(reg);
-    // if (res.length) {
-    //   obj.suites = Number.parseInt(res[0].slice(0, -7));
-    //   obj.asserts = Number.parseInt(res[1].slice(0, -7));
+    const res = parse(fileContents);
+    // console.log(
+    //   `122 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    //     res,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    // {
+    //   ok: true,
+    //   assertsTotal: 8,
+    //   assertsPassed: 8,
+    //   assertsFailed: 0,
+    //   suitesTotal: 2,
+    //   suitesPassed: 2,
+    //   suitesFailed: 0
     // }
-    // allStats.push(obj);
+    if (typeof res === "object" && res.ok === true) {
+      obj.suites = res.suitesTotal;
+      obj.asserts = res.assertsTotal;
+    }
+    // console.log(
+    //   `142 FINAL ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+    //     obj,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    allStats.push(obj);
   } catch (e) {
     console.log(
       `! couldn't read/parse ${path.join("packages", name, "testStats.md")}`
@@ -230,7 +252,7 @@ compiledStats.assertsCountMedian = median(
 );
 
 // console.log(
-//   `202 generate-info.js: ${`\u001b[${33}m${`compiledStats`}\u001b[${39}m`} = ${JSON.stringify(
+//   `253 generate-info.js: ${`\u001b[${33}m${`compiledStats`}\u001b[${39}m`} = ${JSON.stringify(
 //     compiledStats,
 //     null,
 //     4

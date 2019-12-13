@@ -21,3 +21,4 @@ lerna-debug.log
 /packages/ava/.nyc_output
 /packages/ava/coverage
 ideas.md
+testStats.md

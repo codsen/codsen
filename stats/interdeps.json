@@ -336,7 +336,7 @@
     },
     {
         "name": "json-comb-core",
-        "size": 13668,
+        "size": 13669,
         "imports": [
             "object-fill-missing-keys",
             "object-flatten-all-arrays",
@@ -397,7 +397,7 @@
     },
     {
         "name": "object-delete-key",
-        "size": 2350,
+        "size": 2351,
         "imports": [
             "ast-is-empty",
             "ast-monkey",
@@ -637,7 +637,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33926,
+        "size": 33927,
         "imports": [
             "ranges-apply",
             "ranges-push",
