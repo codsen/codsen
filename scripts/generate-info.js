@@ -73,7 +73,7 @@ const interdep = [];
 const allStats = [];
 const dependencyStats = { dependencies: {}, devDependencies: {} };
 
-allPackages.forEach(name => {
+allPackages.forEach(async name => {
   // console.log(
   //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
   // );
@@ -106,53 +106,34 @@ allPackages.forEach(name => {
   });
 
   // compile test stats
-  try {
-    const obj = { name };
-    const fileContents = fs.readFileSync(
-      path.join("packages", name, "testStats.md"),
-      "utf8"
-    );
-    // console.log(
-    //   `114 ${`\u001b[${33}m${`fileContents.length`}\u001b[${39}m`} = ${JSON.stringify(
-    //     fileContents.length,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    const res = parse(fileContents);
-    // console.log(
-    //   `122 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-    //     res,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    // {
-    //   ok: true,
-    //   assertsTotal: 8,
-    //   assertsPassed: 8,
-    //   assertsFailed: 0,
-    //   suitesTotal: 2,
-    //   suitesPassed: 2,
-    //   suitesFailed: 0
-    // }
-    if (typeof res === "object" && res.ok === true) {
-      obj.suites = res.suitesTotal;
-      obj.asserts = res.assertsTotal;
-    }
-    // console.log(
-    //   `142 FINAL ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-    //     obj,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    allStats.push(obj);
-  } catch (e) {
-    console.log(
-      `! couldn't read/parse ${path.join("packages", name, "testStats.md")}`
-    );
-  }
+  // try {
+  //   const obj = { name };
+  //   fs.accessSync(path.join("packages", name, "testStats.md"), fs.F_OK);
+  //   const fileContents = fs.createReadStream(
+  //     path.join("packages", name, "testStats.md")
+  //   );
+  //   const res = await parse(fileContents);
+  //   if (typeof res === "object" && res.ok === true) {
+  //     obj.suites = res.suitesTotal;
+  //     obj.asserts = res.assertsTotal;
+  //   }
+  //   // console.log(
+  //   //   `142 FINAL ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+  //   //     obj,
+  //   //     null,
+  //   //     4
+  //   //   )}`
+  //   // );
+  //   allStats.push(obj);
+  // } catch (e) {
+  //   console.log(
+  //     `! couldn't read/parse ${path.join(
+  //       "packages",
+  //       name,
+  //       "testStats.md"
+  //     )}\n${e}`
+  //   );
+  // }
 
   // compile dependency stats
   if (Object.prototype.hasOwnProperty.call(pack, "dependencies")) {
