@@ -59,21 +59,46 @@ function fixRowNums(str, originalOpts) {
       currentRow++;
     }
     if (
-      Number.isInteger(digitStartsAt) &&
-      !isDigit(str[i]) &&
-      i > digitStartsAt
+      !opts.extractedLogContentsWereGiven &&
+      quotes !== null &&
+      quotes.start < i &&
+      quotes.type === str[i]
     ) {
-      finalIndexesToDelete.push(
-        digitStartsAt,
-        i,
-        opts.padStart
-          ? String(
-              opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow
-            ).padStart(opts.padStart, "0")
-          : `${opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow}`
-      );
+      quotes = null;
+      consoleStartsAt = null;
+      bracketOpensAt = null;
       digitStartsAt = null;
-      wasLetterDetected = true;
+      wasLetterDetected = false;
+    }
+    if (
+      quotes === null &&
+      (opts.extractedLogContentsWereGiven ||
+        (consoleStartsAt &&
+          consoleStartsAt < i &&
+          bracketOpensAt &&
+          bracketOpensAt < i)) &&
+      str[i].trim().length
+    ) {
+      if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
+        quotes = {};
+        quotes.start = i;
+        quotes.type = str[i];
+        wasLetterDetected = false;
+      } else if (
+        opts.extractedLogContentsWereGiven &&
+        isDigit(str[i]) &&
+        digitStartsAt === null
+      ) {
+        digitStartsAt = i;
+      } else if (
+        str[i].trim().length &&
+        str[i] !== "/" &&
+        !opts.extractedLogContentsWereGiven
+      ) {
+        consoleStartsAt = null;
+        bracketOpensAt = null;
+        digitStartsAt = null;
+      }
     }
     if (
       quotes &&
@@ -84,6 +109,23 @@ function fixRowNums(str, originalOpts) {
       isDigit(str[i])
     ) {
       digitStartsAt = i;
+    }
+    if (
+      Number.isInteger(digitStartsAt) &&
+      (!isDigit(str[i]) || !str[i + 1]) &&
+      (i > digitStartsAt || !str[i + 1])
+    ) {
+      finalIndexesToDelete.push(
+        digitStartsAt,
+        !isDigit(str[i]) ? i : i + 1,
+        opts.padStart
+          ? String(
+              opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow
+            ).padStart(opts.padStart, "0")
+          : `${opts.overrideRowNum !== null ? opts.overrideRowNum : currentRow}`
+      );
+      digitStartsAt = null;
+      wasLetterDetected = true;
     }
     if (
       quotes &&
@@ -144,43 +186,6 @@ function fixRowNums(str, originalOpts) {
         }
       }
       wasLetterDetected = true;
-    }
-    if (quotes !== null && quotes.start < i && quotes.type === str[i]) {
-      quotes = null;
-      consoleStartsAt = null;
-      bracketOpensAt = null;
-      digitStartsAt = null;
-      wasLetterDetected = false;
-    }
-    if (
-      quotes === null &&
-      (opts.extractedLogContentsWereGiven ||
-        (consoleStartsAt &&
-          consoleStartsAt < i &&
-          bracketOpensAt &&
-          bracketOpensAt < i)) &&
-      str[i].trim().length
-    ) {
-      if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
-        quotes = {};
-        quotes.start = i;
-        quotes.type = str[i];
-        wasLetterDetected = false;
-      } else if (
-        opts.extractedLogContentsWereGiven &&
-        isDigit(str[i]) &&
-        digitStartsAt === null
-      ) {
-        digitStartsAt = i;
-      } else if (
-        str[i].trim().length &&
-        str[i] !== "/" &&
-        !opts.extractedLogContentsWereGiven
-      ) {
-        consoleStartsAt = null;
-        bracketOpensAt = null;
-        digitStartsAt = null;
-      }
     }
     if (
       !bracketOpensAt &&

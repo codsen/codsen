@@ -433,6 +433,150 @@ t.test(
   }
 );
 
+t.test(
+  `05.03 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - no text`,
+  t => {
+    t.is(
+      fixRowNums("1", {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      "124",
+      `05.03`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.04 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - no text`,
+  t => {
+    t.same(
+      fixRowNums("1", {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[0, 1, "124"]],
+      `05.04`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.05 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - with text`,
+  t => {
+    t.is(
+      fixRowNums("1 something", {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      "124 something",
+      `05.05`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.06 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - with text`,
+  t => {
+    t.same(
+      fixRowNums("1 something", {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[0, 1, "124"]],
+      `05.06`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.07 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text`,
+  t => {
+    t.is(
+      fixRowNums(`"1"`, {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      `"124"`,
+      `05.07`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.08 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is number`,
+  t => {
+    t.same(
+      fixRowNums(`"1"`, {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[1, 2, "124"]],
+      `05.08`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is text`,
+  t => {
+    t.same(
+      fixRowNums(`"1"`, {
+        overrideRowNum: "124", // <----- text, not number
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[1, 2, "124"]],
+      `05.09`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.10 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - with text`,
+  t => {
+    t.is(
+      fixRowNums(`"1 something"`, {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      `"124 something"`,
+      `05.10`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.11 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - with text`,
+  t => {
+    t.same(
+      fixRowNums(`"1 something"`, {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[1, 2, "124"]],
+      `05.11`
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // 06. custom functions via opts.triggerKeywords
 // -----------------------------------------------------------------------------
