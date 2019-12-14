@@ -1,40 +1,127 @@
-const rule = require("../rules/correct-row-num");
-const RuleTester = require("eslint").RuleTester;
-
-const ruleTester = new RuleTester();
+const t = require("tap");
+const Linter = require("eslint").Linter;
+const linter = new Linter();
+const correctRowNumRule = require("../rules/correct-row-num");
+linter.defineRule("row-num/correct-row-num", correctRowNumRule);
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
 const letterC = "\x63";
+const backtick = "\x60";
 
-ruleTester.run("correct-row-num", rule, {
-  valid: [
-    {
-      code: `${letterC}onsole.log("001 on the first row")`
-    },
-    {
-      code: `\n\n${letterC}onsole.log("003 on the third row")`
-    }
-  ],
+console.log(`linter.version = ${linter.version}`);
 
-  invalid: [
-    {
-      code: `\n\n${letterC}onsole.log("045 this should be 1")`,
-      output: `\n\n${letterC}onsole.log("003 this should be 1")`,
-      errors: [
-        {
-          messageId: "correctRowNum"
+// 01. basic tests
+// -----------------------------------------------------------------------------
+
+t.test(
+  `01.01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - double quotes`,
+  t => {
+    t.match(
+      linter.verifyAndFix(`\n${letterC}onsole.log("9 something")`, {
+        rules: {
+          "row-num/correct-row-num": "error"
         }
-      ]
+      }),
+      {
+        fixed: true,
+        output: `\n${letterC}onsole.log("002 something")`
+        // messages: []
+      }
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - single quotes`,
+  t => {
+    t.match(
+      linter.verifyAndFix(`\n${letterC}onsole.log('9 something')`, {
+        rules: {
+          "row-num/correct-row-num": "error"
+        }
+      }),
+      {
+        fixed: true,
+        output: `\n${letterC}onsole.log('002 something')`
+        // messages: []
+      }
+    );
+
+    t.end();
+  }
+);
+
+// Think:
+// \nconsole.log('9 something')
+t.test(`01.03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, t => {
+  t.same(
+    linter.verifyAndFix(
+      `\n${letterC}onsole.log(${backtick}9 something${backtick})`,
+      {
+        parserOptions: { ecmaVersion: 6 },
+        rules: {
+          "row-num/correct-row-num": "error"
+        }
+      }
+    ),
+    {
+      fixed: true,
+      output: `\n${letterC}onsole.log(${backtick}002 something${backtick})`,
+      messages: []
     }
-    // {
-    //   code: `${letterC}onsole.log(\n"9"\n);`,
-    //   output: `${letterC}onsole.log(\n"002"\n);`,
-    //   errors: [
-    //     {
-    //       messageId: "correctRowNum"
-    //     }
-    //   ]
-    // }
-  ]
+  );
+
+  t.end();
+});
+
+t.test(`01.04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, t => {
+  t.same(
+    linter.verifyAndFix(
+      `\n${letterC}onsole.log(\n${backtick}9 something${backtick}\n)`,
+      {
+        parserOptions: { ecmaVersion: 6 },
+        rules: {
+          "row-num/correct-row-num": "error"
+        }
+      }
+    ),
+    {
+      fixed: true,
+      output: `\n${letterC}onsole.log(\n${backtick}003 something${backtick}\n)`,
+      messages: []
+    }
+  );
+
+  t.end();
+});
+
+// 02. false positives
+// -----------------------------------------------------------------------------
+
+t.test(`02.01 - false positives - various tests`, t => {
+  [
+    `const z = "something"`,
+    `const z = "something\n01"`,
+    `const z = "99 aaaaa"`,
+    `const z = "something 01"`,
+    `const z = "01 something 01"`,
+    `const z = "01 something 01\n"`,
+    `const z = "\t01 something 01\n"`
+  ].forEach(testStr => {
+    t.match(
+      linter.verifyAndFix(testStr, {
+        rules: {
+          "row-num/correct-row-num": "error"
+        }
+      }),
+      {
+        fixed: false,
+        output: testStr
+      }
+    );
+  });
+  t.end();
 });

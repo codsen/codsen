@@ -28,15 +28,20 @@
   ],
   "main": "dist/eslint-plugin-row-num.cjs.js",
   "scripts": {
+    "build": "echo\"\"",
     "dev": "echo\"\"",
-    "devunittest": "npm run test",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
+    "perf": "echo\"\"",
+    "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write",
+    "tap": "tap",
+    "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "mocha --recursively",
-    "version": "git add ."
+    "unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md && npm run perf",
+    "version": "npm run build && git add ."
   },
   "lect": {
     "badges": {
@@ -114,7 +119,6 @@
     "eslint": "^6.7.2",
     "js-row-num-cli": "^1.6.10",
     "lect": "^0.11.3",
-    "mocha": "^6.2.2",
     "rollup": "^1.27.12",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
