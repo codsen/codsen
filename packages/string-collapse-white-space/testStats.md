@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=7493.355ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - [31mthrows[39m - wrong/missing input = throw
         ok 1 - expected to throw
         ok 2 - expected to throw
@@ -7,7 +7,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 4 - expected to throw
         ok 5 - expected to throw
         1..5
-    ok 1 - 01.01 - [31mthrows[39m - wrong/missing input = throw # time=10.529ms
+    ok 1 - 01.01 - [31mthrows[39m - wrong/missing input = throw # time=11.031ms
     
     # Subtest: 01.02 - [31mthrows[39m - wrong opts = throw
         ok 1 - expected to throw
@@ -15,227 +15,227 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 3 - expected to not throw
         ok 4 - expected to not throw
         1..4
-    ok 2 - 01.02 - [31mthrows[39m - wrong opts = throw # time=3.714ms
+    ok 2 - 01.02 - [31mthrows[39m - wrong opts = throw # time=4.544ms
     
     # Subtest: 01.03 - [31mthrows[39m - empty string
         ok 1 - 01.03
         1..1
-    ok 3 - 01.03 - [31mthrows[39m - empty string # time=1.343ms
+    ok 3 - 01.03 - [31mthrows[39m - empty string # time=1.699ms
     
     # Subtest: 01.04 - [31mthrows[39m - only letter characters, no white space
         ok 1 - 01.04
         1..1
-    ok 4 - 01.04 - [31mthrows[39m - only letter characters, no white space # time=1.193ms
+    ok 4 - 01.04 - [31mthrows[39m - only letter characters, no white space # time=1.579ms
     
     # Subtest: 02.01 - [33mnormal use[39m - simple sequences of spaces within string
         ok 1 - 02.01.01 - nothing to collapse
         1..1
-    ok 5 - 02.01 - [33mnormal use[39m - simple sequences of spaces within string # time=1.922ms
+    ok 5 - 02.01 - [33mnormal use[39m - simple sequences of spaces within string # time=1.625ms
     
     # Subtest: 02.02 - [33mnormal use[39m - simple sequences of spaces within string
         ok 1 - should be equal
         1..1
-    ok 6 - 02.02 - [33mnormal use[39m - simple sequences of spaces within string # time=3.521ms
+    ok 6 - 02.02 - [33mnormal use[39m - simple sequences of spaces within string # time=2.713ms
     
     # Subtest: 02.03 - [33mnormal use[39m - simple sequences of spaces within string
         ok 1 - should be equal
         1..1
-    ok 7 - 02.03 - [33mnormal use[39m - simple sequences of spaces within string # time=1.707ms
+    ok 7 - 02.03 - [33mnormal use[39m - simple sequences of spaces within string # time=0.999ms
     
     # Subtest: 02.04 - [33mnormal use[39m - sequences of spaces outside of string - defaults
         ok 1 - 02.02.01 - nothing to collapse, only trim
         1..1
-    ok 8 - 02.04 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.241ms
+    ok 8 - 02.04 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.673ms
     
     # Subtest: 02.05 - [33mnormal use[39m - sequences of spaces outside of string - defaults
         ok 1 - 02.02.02 - trims single spaces
         1..1
-    ok 9 - 02.05 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=2.985ms
+    ok 9 - 02.05 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.592ms
     
     # Subtest: 02.06 - [33mnormal use[39m - sequences of spaces outside of string - defaults
         ok 1 - 02.02.03 - trims single tabs
         1..1
-    ok 10 - 02.06 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=3.05ms
+    ok 10 - 02.06 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=11.345ms
     
     # Subtest: 02.07 - [33mnormal use[39m - sequences of spaces outside of string - defaults
         ok 1 - should be equal
         1..1
-    ok 11 - 02.07 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=2.563ms
+    ok 11 - 02.07 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.642ms
     
     # Subtest: 02.08 - [33mnormal use[39m - sequences of spaces outside of string - defaults
         ok 1 - should be equal
         1..1
-    ok 12 - 02.08 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.421ms
+    ok 12 - 02.08 - [33mnormal use[39m - sequences of spaces outside of string - defaults # time=1.79ms
     
     # Subtest: 02.09 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - 02.03.01 - nothing to collapse, only trim
         1..1
-    ok 13 - 02.09 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.229ms
+    ok 13 - 02.09 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.61ms
     
     # Subtest: 02.10 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - 02.03.02 - trims single spaces
         1..1
-    ok 14 - 02.10 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.268ms
+    ok 14 - 02.10 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.835ms
     
     # Subtest: 02.11 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - 02.03.03 - trims single tabs
         1..1
-    ok 15 - 02.11 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=2.844ms
+    ok 15 - 02.11 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.514ms
     
     # Subtest: 02.12 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 16 - 02.12 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=2.536ms
+    ok 16 - 02.12 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=2.871ms
     
     # Subtest: 02.13 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - should be equal
         1..1
-    ok 17 - 02.13 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=2.389ms
+    ok 17 - 02.13 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.531ms
     
     # Subtest: 02.14 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart
         ok 1 - should be equal
         1..1
-    ok 18 - 02.14 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.482ms
+    ok 18 - 02.14 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimStart # time=1.59ms
     
     # Subtest: 02.15 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - 02.04.01 - nothing to collapse, only trim
         1..1
-    ok 19 - 02.15 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.202ms
+    ok 19 - 02.15 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.481ms
     
     # Subtest: 02.16 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - 02.04.02 - trims single spaces
         1..1
-    ok 20 - 02.16 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.162ms
+    ok 20 - 02.16 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.577ms
     
     # Subtest: 02.17 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - 02.04.03 - trims single tabs
         1..1
-    ok 21 - 02.17 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=6.709ms
+    ok 21 - 02.17 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.488ms
     
     # Subtest: 02.18 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 22 - 02.18 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=2.901ms
+    ok 22 - 02.18 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=2.664ms
     
     # Subtest: 02.19 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 23 - 02.19 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=2.878ms
+    ok 23 - 02.19 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=2.87ms
     
     # Subtest: 02.20 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - should be equal
         1..1
-    ok 24 - 02.20 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=3.476ms
+    ok 24 - 02.20 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.531ms
     
     # Subtest: 02.21 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd
         ok 1 - should be equal
         1..1
-    ok 25 - 02.21 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.373ms
+    ok 25 - 02.21 - [33mnormal use[39m - sequences of spaces outside of string - opts.trimEnd # time=1.586ms
     
     # Subtest: 02.22 - [33mnormal use[39m - sequences of line breaks
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 26 - 02.22 - [33mnormal use[39m - sequences of line breaks # time=2.014ms
+    ok 26 - 02.22 - [33mnormal use[39m - sequences of line breaks # time=2.489ms
     
     # Subtest: 02.23 - [33mnormal use[39m - sequences of line breaks
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 27 - 02.23 - [33mnormal use[39m - sequences of line breaks # time=2.414ms
+    ok 27 - 02.23 - [33mnormal use[39m - sequences of line breaks # time=3.027ms
     
     # Subtest: 02.24 - [33mnormal use[39m - tag and linebreak chain
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 28 - 02.24 - [33mnormal use[39m - tag and linebreak chain # time=4.048ms
+    ok 28 - 02.24 - [33mnormal use[39m - tag and linebreak chain # time=8.581ms
     
     # Subtest: 02.25 - [33mnormal use[39m - tag and linebreak chain
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 29 - 02.25 - [33mnormal use[39m - tag and linebreak chain # time=4.063ms
+    ok 29 - 02.25 - [33mnormal use[39m - tag and linebreak chain # time=2.971ms
     
     # Subtest: 02.26 - [33mnormal use[39m - tag and linebreak chain
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 30 - 02.26 - [33mnormal use[39m - tag and linebreak chain # time=3.035ms
+    ok 30 - 02.26 - [33mnormal use[39m - tag and linebreak chain # time=3.016ms
     
     # Subtest: 03.01 - [32madvanced[39m - trimming mixed lumps of trimmable characters
         ok 1 - should be equal
         1..1
-    ok 31 - 03.01 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=1.342ms
+    ok 31 - 03.01 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=1.689ms
     
     # Subtest: 03.02 - [32madvanced[39m - trimming mixed lumps of trimmable characters
         ok 1 - should be equal
         1..1
-    ok 32 - 03.02 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=1.345ms
+    ok 32 - 03.02 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=7.784ms
     
     # Subtest: 03.03 - [32madvanced[39m - trimming mixed lumps of trimmable characters
         ok 1 - should be equal
         1..1
-    ok 33 - 03.03 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=7.722ms
+    ok 33 - 03.03 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=7.884ms
     
     # Subtest: 03.04 - [32madvanced[39m - trimming mixed lumps of trimmable characters
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 34 - 03.04 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=3.123ms
+    ok 34 - 03.04 - [32madvanced[39m - trimming mixed lumps of trimmable characters # time=10.77ms
     
     # Subtest: 03.05 - [32madvanced[39m - trims mixed white space lump into empty string
         ok 1 - should be equal
         1..1
-    ok 35 - 03.05 - [32madvanced[39m - trims mixed white space lump into empty string # time=1.432ms
+    ok 35 - 03.05 - [32madvanced[39m - trims mixed white space lump into empty string # time=6.726ms
     
     # Subtest: 03.06 - [32madvanced[39m - trims mixed white space lump into empty string
         ok 1 - should be equal
         1..1
-    ok 36 - 03.06 - [32madvanced[39m - trims mixed white space lump into empty string # time=1.053ms
+    ok 36 - 03.06 - [32madvanced[39m - trims mixed white space lump into empty string # time=1.622ms
     
     # Subtest: 03.07 - [32madvanced[39m - trims mixed white space lump into empty string
         ok 1 - should be equal
         1..1
-    ok 37 - 03.07 - [32madvanced[39m - trims mixed white space lump into empty string # time=1.066ms
+    ok 37 - 03.07 - [32madvanced[39m - trims mixed white space lump into empty string # time=1.504ms
     
     # Subtest: 03.08 - [32madvanced[39m - trims mixed white space lump into empty string
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 38 - 03.08 - [32madvanced[39m - trims mixed white space lump into empty string # time=2.051ms
+    ok 38 - 03.08 - [32madvanced[39m - trims mixed white space lump into empty string # time=3.14ms
     
     # Subtest: 03.09 - [32madvanced[39m - trim involving non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 39 - 03.09 - [32madvanced[39m - trim involving non-breaking spaces # time=1.319ms
+    ok 39 - 03.09 - [32madvanced[39m - trim involving non-breaking spaces # time=1.408ms
     
     # Subtest: 03.10 - [32madvanced[39m - trim involving non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 40 - 03.10 - [32madvanced[39m - trim involving non-breaking spaces # time=4.641ms
+    ok 40 - 03.10 - [32madvanced[39m - trim involving non-breaking spaces # time=1.512ms
     
     # Subtest: 03.11 - [32madvanced[39m - trim involving non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 41 - 03.11 - [32madvanced[39m - trim involving non-breaking spaces # time=1.149ms
+    ok 41 - 03.11 - [32madvanced[39m - trim involving non-breaking spaces # time=0.683ms
     
     # Subtest: 03.12 - [32madvanced[39m - trim involving non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 42 - 03.12 - [32madvanced[39m - trim involving non-breaking spaces # time=4.439ms
+    ok 42 - 03.12 - [32madvanced[39m - trim involving non-breaking spaces # time=0.661ms
     
     # Subtest: 03.13 - [32madvanced[39m - bracket
         ok 1 - should be equal
@@ -243,7 +243,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 43 - 03.13 - [32madvanced[39m - bracket # time=2.31ms
+    ok 43 - 03.13 - [32madvanced[39m - bracket # time=3.17ms
     
     # Subtest: 03.14 - [32madvanced[39m - bracket
         ok 1 - should be equal
@@ -251,14 +251,14 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 44 - 03.14 - [32madvanced[39m - bracket # time=4.173ms
+    ok 44 - 03.14 - [32madvanced[39m - bracket # time=4.141ms
     
     # Subtest: 04.01 - [36mline trimming[39m - does not trim each lines because it's default setting
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 45 - 04.01 - [36mline trimming[39m - does not trim each lines because it's default setting # time=17.377ms
+    ok 45 - 04.01 - [36mline trimming[39m - does not trim each lines because it's default setting # time=3.094ms
     
     # Subtest: 04.02 - [36mline trimming[39m - trim setting on, trims every line
         ok 1 - EOL crlf
@@ -268,7 +268,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 5 - EOL lf
         ok 6 - EOL lf
         1..6
-    ok 46 - 04.02 - [36mline trimming[39m - trim setting on, trims every line # time=9.917ms
+    ok 46 - 04.02 - [36mline trimming[39m - trim setting on, trims every line # time=5.326ms
     
     # Subtest: 04.03 - [36mline trimming[39m - line and outer trims and non-breaking spaces
         ok 1 - EOL crlf
@@ -281,7 +281,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 8 - 04.03.02 - trimLines = 1, trimnbsp = 0
         ok 9 - 04.03.03 - trimLines = 1, trimnbsp = 1
         1..9
-    ok 47 - 04.03 - [36mline trimming[39m - line and outer trims and non-breaking spaces # time=16.346ms
+    ok 47 - 04.03 - [36mline trimming[39m - line and outer trims and non-breaking spaces # time=23.141ms
     
     # Subtest: 04.04 - [36mline trimming[39m - line and outer trims and \r
         ok 1 - EOL crlf - 1
@@ -294,184 +294,183 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 8 - EOL lf - 2
         ok 9 - EOL lf - 3
         1..9
-    ok 48 - 04.04 - [36mline trimming[39m - line and outer trims and \r # time=27.014ms
+    ok 48 - 04.04 - [36mline trimming[39m - line and outer trims and \r # time=51.157ms
     
     # Subtest: 04.05 - [36mline trimming[39m - line and outer trims
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 49 - 04.05 - [36mline trimming[39m - line and outer trims # time=7.571ms
+    ok 49 - 04.05 - [36mline trimming[39m - line and outer trims # time=5.186ms
     
     # Subtest: 05.01 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: whitespace everywhere
         ok 1 - should be equal
         1..1
-    ok 50 - 05.01 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: whitespace everywhere # time=1.654ms
+    ok 50 - 05.01 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: whitespace everywhere # time=1.92ms
     
     # Subtest: 05.02 - [34mopts.recogniseHTML[39m - [35mHTML[39m - longer
         ok 1 - should be equal
         1..1
-    ok 51 - 05.02 - [34mopts.recogniseHTML[39m - [35mHTML[39m - longer # time=1.618ms
+    ok 51 - 05.02 - [34mopts.recogniseHTML[39m - [35mHTML[39m - longer # time=1.683ms
     
     # Subtest: 05.03 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: as 01, but no trim
         ok 1 - should be equal
         1..1
-    ok 52 - 05.03 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: as 01, but no trim # time=1.208ms
+    ok 52 - 05.03 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: as 01, but no trim # time=8.342ms
     
     # Subtest: 05.04 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: tab and carriage return within html tag. Pretty messed up, isn't it?
         ok 1 - should be equal
         1..1
-    ok 53 - 05.04 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: tab and carriage return within html tag. Pretty messed up, isn't it? # time=1.243ms
+    ok 53 - 05.04 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: tab and carriage return within html tag. Pretty messed up, isn't it? # time=8.311ms
     
     # Subtest: 05.05 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 03, but with more non-space white space for trimming
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 54 - 05.05 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 03, but with more non-space white space for trimming # time=3.691ms
+    ok 54 - 05.05 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 03, but with more non-space white space for trimming # time=3.389ms
     
     # Subtest: 05.06 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 04 but with sprinkled spaces
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 55 - 05.06 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 04 but with sprinkled spaces # time=4.193ms
+    ok 55 - 05.06 - [34mopts.recogniseHTML[39m - [35mHTML[39m - defaults: like 04 but with sprinkled spaces # time=3.613ms
     
     # Subtest: 05.07 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - defaults
         ok 1 - should be equal
         1..1
-    ok 56 - 05.07 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - defaults # time=1.236ms
+    ok 56 - 05.07 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - defaults # time=1.447ms
     
     # Subtest: 05.08 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - HTML
         ok 1 - should be equal
         1..1
-    ok 57 - 05.08 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - HTML # time=1.27ms
+    ok 57 - 05.08 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - HTML # time=1.426ms
     
     # Subtest: 05.09 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but no trim
         ok 1 - should be equal
         1..1
-    ok 58 - 05.09 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but no trim # time=1.122ms
+    ok 58 - 05.09 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but no trim # time=1.374ms
     
     # Subtest: 05.10 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - tab and carriage return within html tag
         ok 1 - should be equal
         1..1
-    ok 59 - 05.10 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - tab and carriage return within html tag # time=1.03ms
+    ok 59 - 05.10 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - tab and carriage return within html tag # time=1.322ms
     
     # Subtest: 05.11 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with more non-space white space for trimming
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 60 - 05.11 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with more non-space white space for trimming # time=7.315ms
-# time=10305.894ms
+    ok 60 - 05.11 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with more non-space white space for trimming # time=2.501ms
     
     # Subtest: 05.12 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with sprinkled spaces
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 61 - 05.12 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with sprinkled spaces # time=6.6ms
+    ok 61 - 05.12 - [34mopts.recogniseHTML[39m - [35mHTML[39m - recognition is off - like before but with sprinkled spaces # time=5.444ms
     
     # Subtest: 05.13 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - no attr
         ok 1 - should be equal
         1..1
-    ok 62 - 05.13 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - no attr # time=1.409ms
+    ok 62 - 05.13 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - no attr # time=1.58ms
     
     # Subtest: 05.14 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - with attr
         ok 1 - should be equal
         1..1
-    ok 63 - 05.14 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - with attr # time=2.143ms
+    ok 63 - 05.14 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - with attr # time=1.616ms
     
     # Subtest: 05.15 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, just spaces
         ok 1 - should be equal
         1..1
-    ok 64 - 05.15 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, just spaces # time=1.232ms
+    ok 64 - 05.15 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, just spaces # time=1.791ms
     
     # Subtest: 05.16 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR before slash
         ok 1 - should be equal
         1..1
-    ok 65 - 05.16 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR before slash # time=1.163ms
+    ok 65 - 05.16 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR before slash # time=1.406ms
     
     # Subtest: 05.17 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR after slash
         ok 1 - should be equal
         1..1
-    ok 66 - 05.17 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR after slash # time=1.185ms
+    ok 66 - 05.17 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, CR after slash # time=1.401ms
     
     # Subtest: 05.18 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #1
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 67 - 05.18 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #1 # time=4.267ms
+    ok 67 - 05.18 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #1 # time=2.966ms
     
     # Subtest: 05.19 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #2
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 68 - 05.19 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #2 # time=2.975ms
+    ok 68 - 05.19 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #2 # time=2.955ms
     
     # Subtest: 05.20 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #3
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 69 - 05.20 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #3 # time=2.747ms
+    ok 69 - 05.20 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #3 # time=6.966ms
     
     # Subtest: 05.21 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #4
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 70 - 05.21 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #4 # time=4.936ms
+    ok 70 - 05.21 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - inner tag whitespace, many mixed #4 # time=5.45ms
     
     # Subtest: 05.22 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic
         ok 1 - should be equal
         1..1
-    ok 71 - 05.22 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic # time=1.226ms
+    ok 71 - 05.22 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic # time=1.388ms
     
     # Subtest: 05.23 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic with attr
         ok 1 - should be equal
         1..1
-    ok 72 - 05.23 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic with attr # time=1.348ms
+    ok 72 - 05.23 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - basic with attr # time=1.498ms
     
     # Subtest: 05.24 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, spaces
         ok 1 - should be equal
         1..1
-    ok 73 - 05.24 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, spaces # time=3.112ms
+    ok 73 - 05.24 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, spaces # time=1.406ms
     
     # Subtest: 05.25 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, tab and CR before slash
         ok 1 - should be equal
         1..1
-    ok 74 - 05.25 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, tab and CR before slash # time=0.903ms
+    ok 74 - 05.25 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - inner tag whitespace, tab and CR before slash # time=1.319ms
     
     # Subtest: 05.27 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #1
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 75 - 05.27 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #1 # time=2.427ms
+    ok 75 - 05.27 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #1 # time=2.569ms
     
     # Subtest: 05.28 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #2
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 76 - 05.28 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #2 # time=2.404ms
+    ok 76 - 05.28 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #2 # time=2.628ms
     
     # Subtest: 05.29 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #3
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 77 - 05.29 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #3 # time=2.369ms
+    ok 77 - 05.29 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #3 # time=2.615ms
     
     # Subtest: 05.30 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #4
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 78 - 05.30 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #4 # time=5.895ms
+    ok 78 - 05.30 - [34mopts.recogniseHTML[39m - [36mXHTML[39m - recognition is off - mixed inner whitespace #4 # time=6.961ms
     
     # Subtest: 05.31 - [35mtesting all recognised[39m - inner whitespace
         ok 1 - 05.31.0
@@ -593,7 +592,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.31.116
         ok 118 - 05.31.117
         1..118
-    ok 79 - 05.31 - [35mtesting all recognised[39m - inner whitespace # time=113.024ms
+    ok 79 - 05.31 - [35mtesting all recognised[39m - inner whitespace # time=118.635ms
     
     # Subtest: 05.32 - [35mtesting all recognised[39m - inner whitespace
         ok 1 - 05.32.0
@@ -715,7 +714,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.32.116
         ok 118 - 05.32.117
         1..118
-    ok 80 - 05.32 - [35mtesting all recognised[39m - inner whitespace # time=104.451ms
+    ok 80 - 05.32 - [35mtesting all recognised[39m - inner whitespace # time=115.29ms
     
     # Subtest: 05.33 - [35mtesting all recognised[39m - letter in front, inner whitespace, spaces
         ok 1 - 05.33.0
@@ -837,7 +836,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.33.116
         ok 118 - 05.33.117
         1..118
-    ok 81 - 05.33 - [35mtesting all recognised[39m - letter in front, inner whitespace, spaces # time=172.844ms
+    ok 81 - 05.33 - [35mtesting all recognised[39m - letter in front, inner whitespace, spaces # time=194.101ms
     
     # Subtest: 05.34 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight
         ok 1 - 05.34.0
@@ -959,7 +958,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.34.116
         ok 118 - 05.34.117
         1..118
-    ok 82 - 05.34 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight # time=127.453ms
+    ok 82 - 05.34 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight # time=253.279ms
     
     # Subtest: 05.35 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight
         ok 1 - 05.35.0
@@ -1081,7 +1080,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.35.116
         ok 118 - 05.35.117
         1..118
-    ok 83 - 05.35 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight # time=69.94ms
+    ok 83 - 05.35 - [35mtesting all recognised[39m - letter in front, inner whitespace, tight # time=113.366ms
     
     # Subtest: 05.36 - [35mtesting all recognised[39m - no opening bracket
         ok 1 - 05.36.0
@@ -1203,7 +1202,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.36.116
         ok 118 - 05.36.117
         1..118
-    ok 84 - 05.36 - [35mtesting all recognised[39m - no opening bracket # time=89.616ms
+    ok 84 - 05.36 - [35mtesting all recognised[39m - no opening bracket # time=112.331ms
     
     # Subtest: 05.37 - [35mtesting all recognised[39m - space-tag name
         ok 1 - 05.37.0
@@ -1325,7 +1324,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.37.116
         ok 118 - 05.37.117
         1..118
-    ok 85 - 05.37 - [35mtesting all recognised[39m - space-tag name # time=75.913ms
+    ok 85 - 05.37 - [35mtesting all recognised[39m - space-tag name # time=125.153ms
     
     # Subtest: 05.38 - [35mtesting all recognised[39m - string starts with tagname
         ok 1 - 05.38.0
@@ -1447,7 +1446,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.38.116
         ok 118 - 05.38.117
         1..118
-    ok 86 - 05.38 - [35mtesting all recognised[39m - string starts with tagname # time=73.378ms
+    ok 86 - 05.38 - [35mtesting all recognised[39m - string starts with tagname # time=103.762ms
     
     # Subtest: 05.39 - [35mtesting all recognised[39m - checking case when tag is at the end of string
         ok 1 - 05.39.0
@@ -1569,7 +1568,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.39.116
         ok 118 - 05.39.117
         1..118
-    ok 87 - 05.39 - [35mtesting all recognised[39m - checking case when tag is at the end of string # time=69.843ms
+    ok 87 - 05.39 - [35mtesting all recognised[39m - checking case when tag is at the end of string # time=115.174ms
     
     # Subtest: 05.40 - [35mtesting all recognised[39m - checking case when tag is at the end of string
         ok 1 - 05.40.0
@@ -1691,7 +1690,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.40.116
         ok 118 - 05.40.117
         1..118
-    ok 88 - 05.40 - [35mtesting all recognised[39m - checking case when tag is at the end of string # time=54.5ms
+    ok 88 - 05.40 - [35mtesting all recognised[39m - checking case when tag is at the end of string # time=138.655ms
     
     # Subtest: 05.41 - [35mtesting all recognised[39m - two closing brackets
         ok 1 - 05.41.0
@@ -1813,203 +1812,203 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 117 - 05.41.116
         ok 118 - 05.41.117
         1..118
-    ok 89 - 05.41 - [35mtesting all recognised[39m - two closing brackets # time=118.734ms
+    ok 89 - 05.41 - [35mtesting all recognised[39m - two closing brackets # time=146.894ms
     
     # Subtest: 05.42 - testing against false positives #1
         ok 1 - should be equal
         1..1
-    ok 90 - 05.42 - testing against false positives #1 # time=1.169ms
+    ok 90 - 05.42 - testing against false positives #1 # time=1.332ms
     
     # Subtest: 05.43 - testing against false positives #2 - the "< b" part is sneaky close to the real thing
         ok 1 - should be equal
         1..1
-    ok 91 - 05.43 - testing against false positives #2 - the "< b" part is sneaky close to the real thing # time=1.606ms
+    ok 91 - 05.43 - testing against false positives #2 - the "< b" part is sneaky close to the real thing # time=1.621ms
     
     # Subtest: 05.44 - testing against false positives #3 - with asterisks
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 92 - 05.44 - testing against false positives #3 - with asterisks # time=3.305ms
+    ok 92 - 05.44 - testing against false positives #3 - with asterisks # time=11.181ms
     
     # Subtest: 05.45 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left
         ok 1 - should be equal
         1..1
-    ok 93 - 05.45 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left # time=1.278ms
+    ok 93 - 05.45 - going from right to left, tag was recognised but string follows to the left - unrecognised string to the left # time=4.688ms
     
     # Subtest: 05.46 - going from right to left, tag was recognised but string follows to the left - even valid HTML tag to the left
         ok 1 - should be equal
         1..1
-    ok 94 - 05.46 - going from right to left, tag was recognised but string follows to the left - even valid HTML tag to the left # time=1.277ms
+    ok 94 - 05.46 - going from right to left, tag was recognised but string follows to the left - even valid HTML tag to the left # time=10.999ms
     
     # Subtest: 05.47 - HTML closing tag
         ok 1 - should be equal
         1..1
-    ok 95 - 05.47 - HTML closing tag # time=1.669ms
+    ok 95 - 05.47 - HTML closing tag # time=1.538ms
     
     # Subtest: 05.48 - HTML closing tag, more attrs
         ok 1 - should be equal
         1..1
-    ok 96 - 05.48 - HTML closing tag, more attrs # time=1.733ms
+    ok 96 - 05.48 - HTML closing tag, more attrs # time=1.93ms
     
     # Subtest: 05.49 - HTML closing tag, word wrapped
         ok 1 - should be equal
         1..1
-    ok 97 - 05.49 - HTML closing tag, word wrapped # time=1.338ms
+    ok 97 - 05.49 - HTML closing tag, word wrapped # time=1.388ms
     
     # Subtest: 05.50 - some weird letter casing
         ok 1 - should be equal
         1..1
-    ok 98 - 05.50 - some weird letter casing # time=1.674ms
+    ok 98 - 05.50 - some weird letter casing # time=4.973ms
     
     # Subtest: 05.51 - adhoc case #1
         ok 1 - should be equal
         1..1
-    ok 99 - 05.51 - adhoc case #1 # time=1.297ms
+    ok 99 - 05.51 - adhoc case #1 # time=5.765ms
     
     # Subtest: 05.52 - adhoc case #2
         ok 1 - should be equal
         1..1
-    ok 100 - 05.52 - adhoc case #2 # time=7.334ms
+    ok 100 - 05.52 - adhoc case #2 # time=4.942ms
     
     # Subtest: 05.53 - adhoc case #3
         ok 1 - should be equal
         1..1
-    ok 101 - 05.53 - adhoc case #3 # time=0.839ms
+    ok 101 - 05.53 - adhoc case #3 # time=1.168ms
     
     # Subtest: 05.54 - adhoc case #4
         ok 1 - should be equal
         1..1
-    ok 102 - 05.54 - adhoc case #4 # time=0.834ms
+    ok 102 - 05.54 - adhoc case #4 # time=1.224ms
     
     # Subtest: 05.55 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition
         ok 1 - should be equal
         1..1
-    ok 103 - 05.55 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition # time=2.19ms
+    ok 103 - 05.55 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition # time=6.015ms
     
     # Subtest: 05.56 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition, recogniseHTML=off
         ok 1 - should be equal
         1..1
-    ok 104 - 05.56 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition, recogniseHTML=off # time=1.332ms
+    ok 104 - 05.56 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition, recogniseHTML=off # time=8.604ms
     
     # Subtest: 06.01 - [33mopts.removeEmptyLines[39m - one - remove
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 105 - 06.01 - [33mopts.removeEmptyLines[39m - one - remove # time=1.489ms
+    ok 105 - 06.01 - [33mopts.removeEmptyLines[39m - one - remove # time=2.114ms
     
     # Subtest: 06.02 - [33mopts.removeEmptyLines[39m - one - don't remove
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 106 - 06.02 - [33mopts.removeEmptyLines[39m - one - don't remove # time=1.457ms
+    ok 106 - 06.02 - [33mopts.removeEmptyLines[39m - one - don't remove # time=7.624ms
     
     # Subtest: 06.03 - [33mopts.removeEmptyLines[39m - two, spaced - remove
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 107 - 06.03 - [33mopts.removeEmptyLines[39m - two, spaced - remove # time=2.011ms
+    ok 107 - 06.03 - [33mopts.removeEmptyLines[39m - two, spaced - remove # time=6.271ms
     
     # Subtest: 06.04 - [33mopts.removeEmptyLines[39m - two, spaced - don't remove
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 108 - 06.04 - [33mopts.removeEmptyLines[39m - two, spaced - don't remove # time=1.734ms
+    ok 108 - 06.04 - [33mopts.removeEmptyLines[39m - two, spaced - don't remove # time=5.692ms
     
     # Subtest: 06.05 - [33mopts.removeEmptyLines[39m - empty lines removal off + per-line trimming off
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 109 - 06.05 - [33mopts.removeEmptyLines[39m - empty lines removal off + per-line trimming off # time=1.673ms
+    ok 109 - 06.05 - [33mopts.removeEmptyLines[39m - empty lines removal off + per-line trimming off # time=5.099ms
     
     # Subtest: 06.06 - [33mopts.removeEmptyLines[39m - \n - empty lines removal off + per-line trimming off - multiple spaces
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 110 - 06.06 - [33mopts.removeEmptyLines[39m - \n - empty lines removal off + per-line trimming off - multiple spaces # time=1.958ms
+    ok 110 - 06.06 - [33mopts.removeEmptyLines[39m - \n - empty lines removal off + per-line trimming off - multiple spaces # time=2.328ms
     
     # Subtest: 06.07 - [33mopts.removeEmptyLines[39m - advanced
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 111 - 06.07 - [33mopts.removeEmptyLines[39m - advanced # time=7.858ms
+    ok 111 - 06.07 - [33mopts.removeEmptyLines[39m - advanced # time=18.673ms
     
     # Subtest: 06.08 - [33mopts.removeEmptyLines[39m - leading/trailing empty lines
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 112 - 06.08 - [33mopts.removeEmptyLines[39m - leading/trailing empty lines # time=1.539ms
+    ok 112 - 06.08 - [33mopts.removeEmptyLines[39m - leading/trailing empty lines # time=7.41ms
     
     # Subtest: 07.01 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=off
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 113 - 07.01 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=off # time=1.377ms
+    ok 113 - 07.01 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=off # time=6.983ms
     
     # Subtest: 07.02 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=on
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 114 - 07.02 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=on # time=1.714ms
+    ok 114 - 07.02 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines, removeEmptyLines=on # time=5.831ms
     
     # Subtest: 07.05 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 115 - 07.05 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1 # time=13.147ms
+    ok 115 - 07.05 - [34mopts.limitConsecutiveEmptyLinesTo[39m - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1 # time=1.081ms
     
     # Subtest: 07.06 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 116 - 07.06 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1 # time=1.453ms
+    ok 116 - 07.06 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1 # time=3.596ms
     
     # Subtest: 07.07 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 117 - 07.07 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2 # time=1.565ms
+    ok 117 - 07.07 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2 # time=1.911ms
     
     # Subtest: 07.08 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 118 - 07.08 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3 # time=1.455ms
+    ok 118 - 07.08 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3 # time=7.727ms
     
     # Subtest: 07.09 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 119 - 07.09 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99 # time=2.267ms
+    ok 119 - 07.09 - [34mopts.limitConsecutiveEmptyLinesTo[39m - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99 # time=8.571ms
     
     # Subtest: 07.10 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=off
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 120 - 07.10 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=off # time=2.422ms
+    ok 120 - 07.10 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=off # time=7.101ms
     
     # Subtest: 07.11 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=on
         ok 1 - EOL crlf
         ok 2 - EOL cr
         ok 3 - EOL lf
         1..3
-    ok 121 - 07.11 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=on # time=1.453ms
+    ok 121 - 07.11 - [34mopts.limitConsecutiveEmptyLinesTo[39m - space on a blank line, LF, trimLines=on # time=5.24ms
     
     # Subtest: 08.01 - [35mopts.returnRangesOnly[39m - there was something to remove
         ok 1 - EOL crlf
@@ -2019,19 +2018,19 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 5 - EOL lf
         ok 6 - EOL lf
         1..6
-    ok 122 - 08.01 - [35mopts.returnRangesOnly[39m - there was something to remove # time=3.497ms
+    ok 122 - 08.01 - [35mopts.returnRangesOnly[39m - there was something to remove # time=12.637ms
     
     # Subtest: 08.02 - [35mopts.returnRangesOnly[39m - there was something to remove
         ok 1 - should be equivalent
         1..1
-    ok 123 - 08.02 - [35mopts.returnRangesOnly[39m - there was something to remove # time=9.58ms
+    ok 123 - 08.02 - [35mopts.returnRangesOnly[39m - there was something to remove # time=11.434ms
     
     # Subtest: 08.03 - [35mopts.returnRangesOnly[39m - there was nothing to remove #1
         ok 1 - 08.02.01 - defaults
         ok 2 - 08.02.02 - hardcoded default
         ok 3 - should be equivalent
         1..3
-    ok 124 - 08.03 - [35mopts.returnRangesOnly[39m - there was nothing to remove #1 # time=1.773ms
+    ok 124 - 08.03 - [35mopts.returnRangesOnly[39m - there was nothing to remove #1 # time=6.585ms
     
     # Subtest: 08.04 - [35mopts.returnRangesOnly[39m - there was nothing to remove #2
         ok 1 - EOL crlf
@@ -2044,7 +2043,7 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 8 - EOL lf
         ok 9 - EOL lf
         1..9
-    ok 125 - 08.04 - [35mopts.returnRangesOnly[39m - there was nothing to remove #2 # time=3.191ms
+    ok 125 - 08.04 - [35mopts.returnRangesOnly[39m - there was nothing to remove #2 # time=13.529ms
     
     # Subtest: 09.XX - [36mGENERATED TESTS[39m
         ok 1 - should be equal
@@ -12048,20 +12047,21 @@ ok 1 - test/test.js # time=7493.355ms {
         ok 9999 - should be equal
         ok 10000 - should be equal
         1..10000
-    ok 126 - 09.XX - [36mGENERATED TESTS[39m # time=4874.687ms
+    ok 126 - 09.XX - [36mGENERATED TESTS[39m # time=4797.264ms
     
     1..126
-    # time=7493.355ms
-}
+    # time=7723.754ms
+ok 1 - test/test.js # time=7723.754ms
 
-ok 2 - test/umd-test.js # time=21.645ms {
+# Subtest: test/umd-test.js
     # Subtest: UMD build works fine
         ok 1 - should be equal
         1..1
-    ok 1 - UMD build works fine # time=13.687ms
+    ok 1 - UMD build works fine # time=8.704ms
     
     1..1
-    # time=21.645ms
-}
+    # time=57.926ms
+ok 2 - test/umd-test.js # time=57.926ms
 
 1..2
+# time=13630.438ms

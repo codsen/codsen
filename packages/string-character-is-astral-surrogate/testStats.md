@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=104.878ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - wrong/missing input = throw
         ok 1 - expected to throw
         ok 2 - expected to throw
@@ -8,19 +8,19 @@ ok 1 - test/test.js # time=104.878ms {
         ok 5 - expected to throw
         ok 6 - expected to throw
         1..6
-    ok 1 - 01.01 - wrong/missing input = throw # time=14.109ms
+    ok 1 - 01.01 - wrong/missing input = throw # time=11.027ms
     
     # Subtest: 02.01 - undefined yields false
         ok 1 - 02.01.01
         ok 2 - 02.01.02
         1..2
-    ok 2 - 02.01 - undefined yields false # time=4.646ms
+    ok 2 - 02.01 - undefined yields false # time=3.886ms
     
     # Subtest: 02.02 - empty string yields false
         ok 1 - 02.02.01
         ok 2 - 02.02.02
         1..2
-    ok 3 - 02.02 - empty string yields false # time=1.783ms
+    ok 3 - 02.02 - empty string yields false # time=2.596ms
     
     # Subtest: 02.03 - isHighSurrogate()
         ok 1 - 02.03.01
@@ -28,7 +28,7 @@ ok 1 - test/test.js # time=104.878ms {
         ok 3 - 02.03.03
         ok 4 - 02.03.04
         1..4
-    ok 4 - 02.03 - isHighSurrogate() # time=2.676ms
+    ok 4 - 02.03 - isHighSurrogate() # time=3.299ms
     
     # Subtest: 02.04 - isLowSurrogate()
         ok 1 - 02.04.01
@@ -36,11 +36,11 @@ ok 1 - test/test.js # time=104.878ms {
         ok 3 - 02.04.03
         ok 4 - 02.04.04
         1..4
-    ok 5 - 02.04 - isLowSurrogate() # time=2.737ms
+    ok 5 - 02.04 - isLowSurrogate() # time=3.269ms
     
     1..5
-    # time=104.878ms
-}
+    # time=110.753ms
+ok 1 - test/test.js # time=110.753ms
 
 1..1
-# time=3031.894ms
+# time=2217.903ms

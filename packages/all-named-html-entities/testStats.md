@@ -1,49 +1,49 @@
 TAP version 13
-ok 1 - test/test.js # time=618.283ms {
+# Subtest: test/test.js
     # Subtest: 01 - entStartsWith is set
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 1 - 01 - entStartsWith is set # time=9.505ms
+    ok 1 - 01 - entStartsWith is set # time=7.535ms
     
     # Subtest: 02 - entStartsWithCaseInsensitive is set
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 2 - 02 - entStartsWithCaseInsensitive is set # time=1.899ms
+    ok 2 - 02 - entStartsWithCaseInsensitive is set # time=2.77ms
     
     # Subtest: 03 - entEndsWith is set
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 3 - 03 - entEndsWith is set # time=2.41ms
+    ok 3 - 03 - entEndsWith is set # time=2.287ms
     
     # Subtest: 04 - entEndsWithCaseInsensitive is set
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 4 - 04 - entEndsWithCaseInsensitive is set # time=1.673ms
+    ok 4 - 04 - entEndsWithCaseInsensitive is set # time=2.603ms
     
     # Subtest: 05 - decode throws if a non-entity is given
         ok 1 - expected to throw
         1..1
-    ok 5 - 05 - decode throws if a non-entity is given # time=3.795ms
+    ok 5 - 05 - decode throws if a non-entity is given # time=3.231ms
     
     # Subtest: 06 - decode existing
         ok 1 - should be equal
         1..1
-    ok 6 - 06 - decode existing # time=1.311ms
+    ok 6 - 06 - decode existing # time=1.547ms
     
     # Subtest: 07 - decode non-existing
         ok 1 - should be equal
         1..1
-    ok 7 - 07 - decode non-existing # time=0.935ms
+    ok 7 - 07 - decode non-existing # time=4.128ms
     
     # Subtest: 08 - decode numeric
         ok 1 - should be equal
         1..1
-    ok 8 - 08 - decode numeric # time=0.916ms
+    ok 8 - 08 - decode numeric # time=1.598ms
     
     # Subtest: 09 - brokenNamedEntities.json is OK
         ok 1 - expect truthy value
@@ -356,7 +356,6 @@ ok 1 - test/test.js # time=618.283ms {
         ok 308 - key "poun" is not unique
         ok 309 - key "poun" is not unique
         ok 310 - key "poun" is not unique
-# time=3535.886ms
         ok 311 - key "poun" is not unique
         ok 312 - key "poun" is not unique
         ok 313 - key "poun" is not unique
@@ -1850,24 +1849,24 @@ ok 1 - test/test.js # time=618.283ms {
         ok 1801 - value "zwnj" is used among key names
         ok 1802 - value "zwnj" is used among key names
         1..1802
-    ok 9 - 09 - brokenNamedEntities.json is OK # time=425.815ms
+    ok 9 - 09 - brokenNamedEntities.json is OK # time=642.082ms
     
     # Subtest: 10 - minLength is numeric
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 10 - 10 - minLength is numeric # time=1.216ms
+    ok 10 - 10 - minLength is numeric # time=1.5ms
     
     # Subtest: 11 - maxLength is numeric
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         1..2
-    ok 11 - 11 - maxLength is numeric # time=0.784ms
+    ok 11 - 11 - maxLength is numeric # time=1.596ms
     
     # Subtest: 12 - allNamedEntities checks
         ok 1 - expect truthy value
         1..1
-    ok 12 - 12 - allNamedEntities checks # time=1.174ms
+    ok 12 - 12 - allNamedEntities checks # time=1.449ms
     
     # Subtest: 13 - uncertain list is set
         ok 1 - expect truthy value
@@ -1876,20 +1875,21 @@ ok 1 - test/test.js # time=618.283ms {
         ok 4 - expect truthy value
         ok 5 - expect truthy value
         1..5
-    ok 13 - 13 - uncertain list is set # time=1.327ms
+    ok 13 - 13 - uncertain list is set # time=2.336ms
     
     1..13
-    # time=618.283ms
-}
+    # time=745.359ms
+ok 1 - test/test.js # time=745.359ms
 
-ok 2 - test/umd-test.js # time=47.89ms {
+# Subtest: test/umd-test.js
     # Subtest: UMD build works fine
         ok 1 - expect truthy value
         1..1
-    ok 1 - UMD build works fine # time=7.333ms
+    ok 1 - UMD build works fine # time=6.006ms
     
     1..1
-    # time=47.89ms
-}
+    # time=12.263ms
+ok 2 - test/umd-test.js # time=12.263ms
 
 1..2
+# time=8461.904ms

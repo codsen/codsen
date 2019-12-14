@@ -1,10 +1,10 @@
 TAP version 13
-ok 1 - test/test.js # time=281.855ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - empty string
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 1 - 01.01 - empty string # time=17.058ms
+    ok 1 - 01.01 - empty string # time=10.44ms
     
     # Subtest: 01.02 - indexes outside of the reference string
         ok 1 - 01.02.01
@@ -24,7 +24,7 @@ ok 1 - test/test.js # time=281.855ms {
         ok 15 - 01.02.15
         ok 16 - 01.02.16
         1..16
-    ok 2 - 01.02 - indexes outside of the reference string # time=31.947ms
+    ok 2 - 01.02 - indexes outside of the reference string # time=18.922ms
     
     # Subtest: 01.03 - negative indexes are ignored
         ok 1 - 01.03.01
@@ -32,13 +32,13 @@ ok 1 - test/test.js # time=281.855ms {
         ok 3 - 01.03.03
         ok 4 - 01.03.04
         1..4
-    ok 3 - 01.03 - negative indexes are ignored # time=2.977ms
+    ok 3 - 01.03 - negative indexes are ignored # time=3.434ms
     
     # Subtest: 01.04 - opts is not a plain object
         ok 1 - expected to throw
         ok 2 - expected to throw
         1..2
-    ok 4 - 01.04 - opts is not a plain object # time=2.178ms
+    ok 4 - 01.04 - opts is not a plain object # time=2.35ms
     
     # Subtest: 01.05 - missing input args
         ok 1 - expected to throw
@@ -46,7 +46,7 @@ ok 1 - test/test.js # time=281.855ms {
         ok 3 - expected to throw
         ok 4 - expected to throw
         1..4
-    ok 5 - 01.05 - missing input args # time=2.875ms
+    ok 5 - 01.05 - missing input args # time=1.974ms
     
     # Subtest: 02.01 - two astral characters offsetting the rest
         ok 1 - 02.01.01 - all unique
@@ -63,18 +63,18 @@ ok 1 - test/test.js # time=281.855ms {
         ok 12 - 02.01.06.01 - you don't want such case, notice how fourth index in source, 3 gets left untouched now
         ok 13 - 02.01.06.02
         1..13
-    ok 6 - 02.01 - two astral characters offsetting the rest # time=74.119ms
+    ok 6 - 02.01 - two astral characters offsetting the rest # time=64.687ms
     
     # Subtest: 02.02 - a stray astral surrogate without second counterpart counts as symbol
         ok 1 - 02.02
         1..1
-    ok 7 - 02.02 - a stray astral surrogate without second counterpart counts as symbol # time=11.967ms
+    ok 7 - 02.02 - a stray astral surrogate without second counterpart counts as symbol # time=12.653ms
     
     # Subtest: 02.03 - one letter string
         ok 1 - 02.03.01
         ok 2 - 02.03.02
         1..2
-    ok 8 - 02.03 - one letter string # time=2.848ms
+    ok 8 - 02.03 - one letter string # time=7.325ms
     
     # Subtest: 02.04 - single astral symbol
         ok 1 - 02.04.01
@@ -85,7 +85,7 @@ ok 1 - test/test.js # time=281.855ms {
         ok 6 - 02.04.02
         ok 7 - expected to throw
         1..7
-    ok 9 - 02.04 - single astral symbol # time=4.842ms
+    ok 9 - 02.04 - single astral symbol # time=4.973ms
     
     # Subtest: 02.05 - multiple consecutive astral symbols
         ok 1 - 02.05.01
@@ -93,11 +93,11 @@ ok 1 - test/test.js # time=281.855ms {
         ok 3 - 02.05.03
         ok 4 - 02.05.04
         1..4
-    ok 10 - 02.05 - multiple consecutive astral symbols # time=2.341ms
+    ok 10 - 02.05 - multiple consecutive astral symbols # time=3.262ms
     
     1..10
-    # time=281.855ms
-}
+    # time=235.125ms
+ok 1 - test/test.js # time=235.125ms
 
 1..1
-# time=3202.8ms
+# time=2768.142ms

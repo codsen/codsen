@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=2502.697ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - throws
         ok 1 - expected to throw
         ok 2 - expect truthy value
@@ -58,7 +58,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 55 - expect truthy value
         ok 56 - expect truthy value
         1..56
-    ok 1 - 01.01 - throws # time=40.413ms
+    ok 1 - 01.01 - throws # time=38.03ms
     
     # Subtest: 02.01 - [33mmatchLeftIncl()[39m      on a simple string
         ok 1 - 02.01.01 - pointless, but still
@@ -74,7 +74,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 11 - should be equal
         ok 12 - should be equal
         1..12
-    ok 2 - 02.01 - [33mmatchLeftIncl()[39m      on a simple string # time=20.354ms
+    ok 2 - 02.01 - [33mmatchLeftIncl()[39m      on a simple string # time=8.461ms
     
     # Subtest: 02.02 - [33mmatchLeftIncl()[39m      case insensitive
         ok 1 - 02.02.01 - control
@@ -82,13 +82,13 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - 02.02.04 - source is uppercase, needle is lowercase
         1..4
-    ok 3 - 02.02 - [33mmatchLeftIncl()[39m      case insensitive # time=3.182ms
+    ok 3 - 02.02 - [33mmatchLeftIncl()[39m      case insensitive # time=3.322ms
     
     # Subtest: 02.03 - [33mmatchLeftIncl()[39m      left substring to check is longer than what's on the left
         ok 1 - should be equal
         ok 2 - 02.03.02 - opts should not affect anything here
         1..2
-    ok 4 - 02.03 - [33mmatchLeftIncl()[39m      left substring to check is longer than what's on the left # time=1.658ms
+    ok 4 - 02.03 - [33mmatchLeftIncl()[39m      left substring to check is longer than what's on the left # time=2.283ms
     
     # Subtest: 02.04 - [33mmatchLeftIncl()[39m     cb gives outside index which is outside of string length
         ok 1 - should be equal
@@ -96,7 +96,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - 02.04
         1..4
-    ok 5 - 02.04 - [33mmatchLeftIncl()[39m     cb gives outside index which is outside of string length # time=2.25ms
+    ok 5 - 02.04 - [33mmatchLeftIncl()[39m     cb gives outside index which is outside of string length # time=3.112ms
     
     # Subtest: 03.01 - [31mmatchLeft()[39m          on a simple string
         ok 1 - should be equal
@@ -108,13 +108,13 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 7 - should be equal
         ok 8 - should be equal
         1..8
-    ok 6 - 03.01 - [31mmatchLeft()[39m          on a simple string # time=4.546ms
+    ok 6 - 03.01 - [31mmatchLeft()[39m          on a simple string # time=5.345ms
     
     # Subtest: 03.02 - [31mmatchLeft()[39m          case insensitive
         ok 1 - 03.02.01 - control
         ok 2 - 03.02.02 - opts.i
         1..2
-    ok 7 - 03.02 - [31mmatchLeft()[39m          case insensitive # time=1.497ms
+    ok 7 - 03.02 - [31mmatchLeft()[39m          case insensitive # time=2.227ms
     
     # Subtest: 04.01 - [35mmatchRightIncl()[39m     on a simple string, non zero arg
         ok 1 - should be equal
@@ -128,7 +128,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 9 - should be equal
         ok 10 - should be equal
         1..10
-    ok 8 - 04.01 - [35mmatchRightIncl()[39m     on a simple string, non zero arg # time=5.161ms
+    ok 8 - 04.01 - [35mmatchRightIncl()[39m     on a simple string, non zero arg # time=8.646ms
     
     # Subtest: 04.02 - [35mmatchRightIncl()[39m     on a simple string, index zero
         ok 1 - should be equal
@@ -136,7 +136,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 9 - 04.02 - [35mmatchRightIncl()[39m     on a simple string, index zero # time=1.973ms
+    ok 9 - 04.02 - [35mmatchRightIncl()[39m     on a simple string, index zero # time=2.908ms
     
     # Subtest: 04.03 - [35mmatchRightIncl()[39m     on a simple string, case insensitive
         ok 1 - should be equal
@@ -144,7 +144,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 10 - 04.03 - [35mmatchRightIncl()[39m     on a simple string, case insensitive # time=2.491ms
+    ok 10 - 04.03 - [35mmatchRightIncl()[39m     on a simple string, case insensitive # time=3.095ms
     
     # Subtest: 04.04 - [35mmatchRightIncl()[39m     cb gives outside index which is outside of string length
         ok 1 - should be equal
@@ -152,7 +152,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - 04.04
         1..4
-    ok 11 - 04.04 - [35mmatchRightIncl()[39m     cb gives outside index which is outside of string length # time=1.972ms
+    ok 11 - 04.04 - [35mmatchRightIncl()[39m     cb gives outside index which is outside of string length # time=2.728ms
     
     # Subtest: 05.01 - [32mmatchRight()[39m         on a simple string, non zero arg
         ok 1 - should be equal
@@ -167,7 +167,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 10 - should be equal
         ok 11 - should be equal
         1..11
-    ok 12 - 05.01 - [32mmatchRight()[39m         on a simple string, non zero arg # time=9.016ms
+    ok 12 - 05.01 - [32mmatchRight()[39m         on a simple string, non zero arg # time=18.638ms
     
     # Subtest: 05.02 - [32mmatchRight()[39m         on a simple string, non zero arg
         ok 1 - should be equal
@@ -175,7 +175,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 13 - 05.02 - [32mmatchRight()[39m         on a simple string, non zero arg # time=3.265ms
+    ok 13 - 05.02 - [32mmatchRight()[39m         on a simple string, non zero arg # time=5.437ms
     
     # Subtest: 05.03 - [32mmatchRight()[39m         on a simple string, case insensitive
         ok 1 - should be equal
@@ -183,13 +183,13 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - should be equal
         ok 4 - should be equal
         1..4
-    ok 14 - 05.03 - [32mmatchRight()[39m         on a simple string, case insensitive # time=3.185ms
+    ok 14 - 05.03 - [32mmatchRight()[39m         on a simple string, case insensitive # time=2.933ms
     
     # Subtest: 05.04 - [32mmatchRight()[39m         adhoc test #1
         ok 1 - should be equal
         ok 2 - should be equal
         1..2
-    ok 15 - 05.04 - [32mmatchRight()[39m         adhoc test #1 # time=1.359ms
+    ok 15 - 05.04 - [32mmatchRight()[39m         adhoc test #1 # time=1.838ms
     
     # Subtest: 06.01 - [36mopts.cb()[39m            callback is called back. haha!
         ok 1 - should be equal
@@ -204,7 +204,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 10 - should be equal
         ok 11 - should be equal
         1..11
-    ok 16 - 06.01 - [36mopts.cb()[39m            callback is called back. haha! # time=6.831ms
+    ok 16 - 06.01 - [36mopts.cb()[39m            callback is called back. haha! # time=6.638ms
     
     # Subtest: 06.02 - [36mopts.cb()[39m            opts.matchLeft() - various combos
         ok 1 - should be equal
@@ -214,7 +214,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - should be equal
         ok 6 - should be equal
         1..6
-    ok 17 - 06.02 - [36mopts.cb()[39m            opts.matchLeft() - various combos # time=3.32ms
+    ok 17 - 06.02 - [36mopts.cb()[39m            opts.matchLeft() - various combos # time=3.951ms
     
     # Subtest: 06.03 - [36mopts.cb()[39m            opts.matchLeftIncl() - callback and trimming
         ok 1 - should be equal
@@ -229,7 +229,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 10 - should be equal
         ok 11 - should be equal
         1..11
-    ok 18 - 06.03 - [36mopts.cb()[39m            opts.matchLeftIncl() - callback and trimming # time=7.874ms
+    ok 18 - 06.03 - [36mopts.cb()[39m            opts.matchLeftIncl() - callback and trimming # time=13.142ms
     
     # Subtest: 06.03 - [36mopts.cb()[39m            callback is called back, pt.1
         ok 1 - 06.03.01.01
@@ -240,7 +240,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 6 - should be equal
         ok 7 - should be equal
         1..7
-    ok 19 - 06.03 - [36mopts.cb()[39m            callback is called back, pt.1 # time=6.269ms
+    ok 19 - 06.03 - [36mopts.cb()[39m            callback is called back, pt.1 # time=7.793ms
     
     # Subtest: 06.04 - [36mopts.cb()[39m            callback is called, pt.2
         ok 1 - should be equal
@@ -260,7 +260,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 15 - should be equal
         ok 16 - should be equal
         1..16
-    ok 20 - 06.04 - [36mopts.cb()[39m            callback is called, pt.2 # time=10.661ms
+    ok 20 - 06.04 - [36mopts.cb()[39m            callback is called, pt.2 # time=10.218ms
     
     # Subtest: 06.05 - [36mopts.cb()[39m            matchRight - third callback argument (index)
         ok 1 - should be equal
@@ -282,7 +282,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 17 - should be equal
         ok 18 - should be equal
         1..18
-    ok 21 - 06.05 - [36mopts.cb()[39m            matchRight - third callback argument (index) # time=7.413ms
+    ok 21 - 06.05 - [36mopts.cb()[39m            matchRight - third callback argument (index) # time=8.186ms
     
     # Subtest: 06.06 - [36mopts.cb()[39m            matchLeft -  third callback argument (index)
         ok 1 - should be equal
@@ -292,7 +292,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - should be equal
         ok 6 - should be equal
         1..6
-    ok 22 - 06.06 - [36mopts.cb()[39m            matchLeft -  third callback argument (index) # time=3.319ms
+    ok 22 - 06.06 - [36mopts.cb()[39m            matchLeft -  third callback argument (index) # time=5.08ms
     
     # Subtest: 07.01 - [34mopts.trimCharsBeforeMatching[39m       pt.1
         ok 1 - should be equal
@@ -307,7 +307,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 10 - should be equal
         ok 11 - should be equal
         1..11
-    ok 23 - 07.01 - [34mopts.trimCharsBeforeMatching[39m       pt.1 # time=7.62ms
+    ok 23 - 07.01 - [34mopts.trimCharsBeforeMatching[39m       pt.1 # time=6.913ms
     
     # Subtest: 07.02 - [34mopts.trimCharsBeforeMatching[39m       pt.2
         ok 1 - should be equal
@@ -341,7 +341,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 29 - should be equal
         ok 30 - should be equal
         1..30
-    ok 24 - 07.02 - [34mopts.trimCharsBeforeMatching[39m       pt.2 # time=16.264ms
+    ok 24 - 07.02 - [34mopts.trimCharsBeforeMatching[39m       pt.2 # time=18.248ms
     
     # Subtest: 07.03 - [34mopts.trimCharsBeforeMatching[39m       throws
         ok 1 - should be equal
@@ -353,7 +353,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 7 - should be equal
         ok 8 - expected to throw
         1..8
-    ok 25 - 07.03 - [34mopts.trimCharsBeforeMatching[39m       throws # time=4.162ms
+    ok 25 - 07.03 - [34mopts.trimCharsBeforeMatching[39m       throws # time=7.282ms
     
     # Subtest: 07.04 - [34memoji[39m - [36mmarching across emoji[39m - matchRight()
         ok 1 - should be equal
@@ -367,7 +367,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 9 - should be equal
         ok 10 - 07.04.07* - pinning all cb values
         1..10
-    ok 26 - 07.04 - [34memoji[39m - [36mmarching across emoji[39m - matchRight() # time=4.115ms
+    ok 26 - 07.04 - [34memoji[39m - [36mmarching across emoji[39m - matchRight() # time=16.092ms
     
     # Subtest: 07.05 - [34memoji[39m - [35mtrimming emoji[39m - matchLeft()
         ok 1 - should be equal
@@ -399,7 +399,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 27 - should be equal
         ok 28 - 07.05.25*
         1..28
-    ok 27 - 07.05 - [34memoji[39m - [35mtrimming emoji[39m - matchLeft() # time=21.499ms
+    ok 27 - 07.05 - [34memoji[39m - [35mtrimming emoji[39m - matchLeft() # time=43.763ms
     
     # Subtest: 07.06 - [34memoji[39m - [35mtrimming emoji[39m - matchRight()
         ok 1 - should be equal
@@ -423,7 +423,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 19 - 07.06.20
         ok 20 - 07.06.17*
         1..20
-    ok 28 - 07.06 - [34memoji[39m - [35mtrimming emoji[39m - matchRight() # time=27.424ms
+    ok 28 - 07.06 - [34memoji[39m - [35mtrimming emoji[39m - matchRight() # time=21.683ms
     
     # Subtest: 07.07 - [34memoji[39m - [35mtrimming emoji[39m - matchLeftIncl()
         ok 1 - should be equal
@@ -434,7 +434,6 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 6 - should be equal
         ok 7 - should be equal
         ok 8 - 07.07.05*
-# time=5577.792ms
         ok 9 - should be equal
         ok 10 - should be equal
         ok 11 - should be equal
@@ -460,7 +459,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 31 - should be equal
         ok 32 - 07.07.26*
         1..32
-    ok 29 - 07.07 - [34memoji[39m - [35mtrimming emoji[39m - matchLeftIncl() # time=23.291ms
+    ok 29 - 07.07 - [34memoji[39m - [35mtrimming emoji[39m - matchLeftIncl() # time=16.069ms
     
     # Subtest: 07.08 - [34memoji[39m - [35mtrimming emoji[39m - matchRightIncl()
         ok 1 - should be equal
@@ -496,7 +495,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 31 - should be equal
         ok 32 - 07.07.30*
         1..32
-    ok 30 - 07.08 - [34memoji[39m - [35mtrimming emoji[39m - matchRightIncl() # time=9.981ms
+    ok 30 - 07.08 - [34memoji[39m - [35mtrimming emoji[39m - matchRightIncl() # time=14.403ms
     
     # Subtest: 08.01 - new in v1.5.0 - [33msecond arg in callback[39m - matchRight()
         ok 1 - 08.01.02
@@ -515,7 +514,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 14 - should be equal
         ok 15 - should be equal
         1..15
-    ok 31 - 08.01 - new in v1.5.0 - [33msecond arg in callback[39m - matchRight() # time=8.149ms
+    ok 31 - 08.01 - new in v1.5.0 - [33msecond arg in callback[39m - matchRight() # time=9.361ms
     
     # Subtest: 08.02 - new in v1.5.0 - [33msecond arg in callback[39m - matchRightIncl()
         ok 1 - 08.02.01
@@ -524,7 +523,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 4 - 08.02.04
         ok 5 - 08.02.05
         1..5
-    ok 32 - 08.02 - new in v1.5.0 - [33msecond arg in callback[39m - matchRightIncl() # time=3.326ms
+    ok 32 - 08.02 - new in v1.5.0 - [33msecond arg in callback[39m - matchRightIncl() # time=5.837ms
     
     # Subtest: 08.03 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeft()
         ok 1 - 08.03.01
@@ -533,7 +532,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 4 - 08.03.04
         ok 5 - 08.03.05
         1..5
-    ok 33 - 08.03 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeft() # time=2.336ms
+    ok 33 - 08.03 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeft() # time=1.694ms
     
     # Subtest: 08.04 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeftIncl()
         ok 1 - 08.04.01
@@ -543,7 +542,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - should be equal
         ok 6 - 08.04.06 - cheeky - nothing for callback to hang onto
         1..6
-    ok 34 - 08.04 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeftIncl() # time=2.701ms
+    ok 34 - 08.04 - new in v1.5.0 - [33msecond arg in callback[39m - matchLeftIncl() # time=3.744ms
     
     # Subtest: 09.01 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()
         ok 1 - expect truthy value
@@ -551,7 +550,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - expected to throw
         ok 4 - expect truthy value
         1..4
-    ok 35 - 09.01 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft() # time=12.776ms
+    ok 35 - 09.01 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft() # time=2.997ms
     
     # Subtest: 09.02 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()
         ok 1 - expect falsey value
@@ -559,7 +558,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - expected to throw
         ok 4 - expect truthy value
         1..4
-    ok 36 - 09.02 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl() # time=2.067ms
+    ok 36 - 09.02 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl() # time=3.126ms
     
     # Subtest: 09.03 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()
         ok 1 - expect truthy value
@@ -567,7 +566,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - expected to throw
         ok 4 - expect truthy value
         1..4
-    ok 37 - 09.03 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight() # time=2.616ms
+    ok 37 - 09.03 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight() # time=4.141ms
     
     # Subtest: 09.04 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl()
         ok 1 - expect falsey value
@@ -575,14 +574,14 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 3 - expected to throw
         ok 4 - expect truthy value
         1..4
-    ok 38 - 09.04 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() # time=4.68ms
+    ok 38 - 09.04 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() # time=3.275ms
     
     # Subtest: 09.05 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight() other cb args
         ok 1 - expect truthy value
         ok 2 - expect truthy value
         ok 3 - expect truthy value
         1..3
-    ok 39 - 09.05 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight() other cb args # time=1.813ms
+    ok 39 - 09.05 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight() other cb args # time=2.655ms
     
     # Subtest: 09.06 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [33mopts.trimBeforeMatching[39m
         ok 1 - expect falsey value
@@ -592,7 +591,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect truthy value
         ok 6 - expect truthy value
         1..6
-    ok 40 - 09.06 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [33mopts.trimBeforeMatching[39m # time=3.16ms
+    ok 40 - 09.06 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [33mopts.trimBeforeMatching[39m # time=12.966ms
     
     # Subtest: 09.07 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [33mopts.trimBeforeMatching[39m
         ok 1 - expect falsey value
@@ -602,7 +601,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect truthy value
         ok 6 - expect truthy value
         1..6
-    ok 41 - 09.07 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [33mopts.trimBeforeMatching[39m # time=4.86ms
+    ok 41 - 09.07 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [33mopts.trimBeforeMatching[39m # time=4.123ms
     
     # Subtest: 09.08 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [33mopts.trimBeforeMatching[39m
         ok 1 - expect falsey value
@@ -612,7 +611,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect truthy value
         ok 6 - expect truthy value
         1..6
-    ok 42 - 09.08 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [33mopts.trimBeforeMatching[39m # time=4.25ms
+    ok 42 - 09.08 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [33mopts.trimBeforeMatching[39m # time=6.559ms
     
     # Subtest: 09.09 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m
         ok 1 - expect falsey value
@@ -622,37 +621,37 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect truthy value
         ok 6 - expect truthy value
         1..6
-    ok 43 - 09.09 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m # time=8.119ms
+    ok 43 - 09.09 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m # time=3.839ms
     
     # Subtest: 09.10 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m - trims to nothing
         ok 1 - expect truthy value
         ok 2 - expect falsey value
         1..2
-    ok 44 - 09.10 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m - trims to nothing # time=1.328ms
+    ok 44 - 09.10 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [33mopts.trimBeforeMatching[39m - trims to nothing # time=1.913ms
     
     # Subtest: 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [35mopts.trimCharsBeforeMatching[39m
         ok 1 - expect falsey value
         ok 2 - expect truthy value
         1..2
-    ok 45 - 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [35mopts.trimCharsBeforeMatching[39m # time=1.443ms
+    ok 45 - 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  + [35mopts.trimCharsBeforeMatching[39m # time=3.864ms
     
     # Subtest: 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [35mopts.trimCharsBeforeMatching[39m
         ok 1 - expect falsey value
         ok 2 - expect truthy value
         1..2
-    ok 46 - 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [35mopts.trimCharsBeforeMatching[39m # time=1.408ms
+    ok 46 - 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRightIncl() + [35mopts.trimCharsBeforeMatching[39m # time=1.995ms
     
     # Subtest: 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [35mopts.trimCharsBeforeMatching[39m
         ok 1 - expect falsey value
         ok 2 - expect truthy value
         1..2
-    ok 47 - 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [35mopts.trimCharsBeforeMatching[39m # time=1.395ms
+    ok 47 - 09.11 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      + [35mopts.trimCharsBeforeMatching[39m # time=1.978ms
     
     # Subtest: 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [35mopts.trimCharsBeforeMatching[39m
         ok 1 - expect falsey value
         ok 2 - expect truthy value
         1..2
-    ok 48 - 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [35mopts.trimCharsBeforeMatching[39m # time=1.403ms
+    ok 48 - 09.12 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     + [35mopts.trimCharsBeforeMatching[39m # time=2.059ms
     
     # Subtest: 09.13 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      - [32memoji[39m + [36mtrims[39m
         ok 1 - expect falsey value
@@ -662,7 +661,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect falsey value
         ok 6 - expect truthy value
         1..6
-    ok 49 - 09.13 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      - [32memoji[39m + [36mtrims[39m # time=8.765ms
+    ok 49 - 09.13 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeft()      - [32memoji[39m + [36mtrims[39m # time=5.383ms
     
     # Subtest: 09.14 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     - [32memoji[39m + [36mtrims[39m
         ok 1 - expect falsey value
@@ -700,7 +699,7 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 33 - expect falsey value
         ok 34 - expect truthy value
         1..34
-    ok 50 - 09.14 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     - [32memoji[39m + [36mtrims[39m # time=23.338ms
+    ok 50 - 09.14 - [36mopts.cb()[39m   [32mcallback only[39m - matchRight()     - [32memoji[39m + [36mtrims[39m # time=18.551ms
     
     # Subtest: 09.15 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  - [32memoji[39m + [36mtrims[39m
         ok 1 - should be equal
@@ -710,598 +709,599 @@ ok 1 - test/test.js # time=2502.697ms {
         ok 5 - expect falsey value
         ok 6 - expect truthy value
         1..6
-    ok 51 - 09.15 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  - [32memoji[39m + [36mtrims[39m # time=6.027ms
+    ok 51 - 09.15 - [36mopts.cb()[39m   [32mcallback only[39m - matchLeftIncl()  - [32memoji[39m + [36mtrims[39m # time=3.649ms
     
     # Subtest: 10.01 - [32mmatchLeft()[39m       [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 52 - 10.01 - [32mmatchLeft()[39m       [33mEOL[39m matching # time=3.295ms
+    ok 52 - 10.01 - [32mmatchLeft()[39m       [33mEOL[39m matching # time=4.191ms
     
     # Subtest: 10.02 - [32mmatchLeft()[39m       [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 53 - 10.02 - [32mmatchLeft()[39m       [33mEOL[39m matching # time=3.343ms
+    ok 53 - 10.02 - [32mmatchLeft()[39m       [33mEOL[39m matching # time=1.429ms
     
     # Subtest: 10.03 - [32mmatchLeft()[39m       [33mEOL[39m matching - cb blocking result
         ok 1 - should be equal
         1..1
-    ok 54 - 10.03 - [32mmatchLeft()[39m       [33mEOL[39m matching - cb blocking result # time=1.169ms
+    ok 54 - 10.03 - [32mmatchLeft()[39m       [33mEOL[39m matching - cb blocking result # time=1.466ms
     
     # Subtest: 10.04 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb
         ok 1 - should be equal
         1..1
-    ok 55 - 10.04 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb # time=1.082ms
+    ok 55 - 10.04 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb # time=1.338ms
     
     # Subtest: 10.05 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb
         ok 1 - should be equivalent
         1..1
-    ok 56 - 10.05 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb # time=3.012ms
+    ok 56 - 10.05 - [32mmatchLeft()[39m       [33mEOL[39m matching - useless cb # time=2.435ms
     
     # Subtest: 10.06 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control
         ok 1 - should be equal
         1..1
-    ok 57 - 10.06 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=0.879ms
+    ok 57 - 10.06 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=1.616ms
     
     # Subtest: 10.07 - [32mmatchLeft()[39m       [33mEOL[39m matching - CHEEKY!!!
         ok 1 - should be equal
         1..1
-    ok 58 - 10.07 - [32mmatchLeft()[39m       [33mEOL[39m matching - CHEEKY!!! # time=1.348ms
+    ok 58 - 10.07 - [32mmatchLeft()[39m       [33mEOL[39m matching - CHEEKY!!! # time=1.622ms
     
     # Subtest: 10.08 - [32mmatchLeft()[39m       [33mEOL[39m matching - !!!
         ok 1 - should be equal
         1..1
-    ok 59 - 10.08 - [32mmatchLeft()[39m       [33mEOL[39m matching - !!! # time=4.066ms
+    ok 59 - 10.08 - [32mmatchLeft()[39m       [33mEOL[39m matching - !!! # time=1.42ms
     
     # Subtest: 10.09 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on
         ok 1 - should be equal
         1..1
-    ok 60 - 10.09 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=1.017ms
+    ok 60 - 10.09 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=1.524ms
     
     # Subtest: 10.10 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control
         ok 1 - should be equal
         1..1
-    ok 61 - 10.10 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=0.927ms
+    ok 61 - 10.10 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=1.546ms
     
     # Subtest: 10.11 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on
         ok 1 - should be equal
         1..1
-    ok 62 - 10.11 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=1.037ms
+    ok 62 - 10.11 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=1.567ms
     
     # Subtest: 10.12 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control
         ok 1 - should be equal
         1..1
-    ok 63 - 10.12 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=0.906ms
+    ok 63 - 10.12 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opts control # time=1.394ms
     
     # Subtest: 10.13 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on
         ok 1 - should be equal
         1..1
-    ok 64 - 10.13 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=18.044ms
+    ok 64 - 10.13 - [32mmatchLeft()[39m       [33mEOL[39m matching - whitespace trim opt on # time=1.374ms
     
     # Subtest: 11.01 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m
         ok 1 - should be equal
         1..1
-    ok 65 - 11.01 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=0.838ms
+    ok 65 - 11.01 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=1.513ms
     
     # Subtest: 11.02 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m
         ok 1 - should be equal
         1..1
-    ok 66 - 11.02 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=0.839ms
+    ok 66 - 11.02 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=1.414ms
     
     # Subtest: 11.03 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m
         ok 1 - should be equal
         1..1
-    ok 67 - 11.03 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=0.896ms
+    ok 67 - 11.03 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=1.229ms
     
     # Subtest: 11.04 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m
         ok 1 - should be equal
         1..1
-    ok 68 - 11.04 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=0.929ms
+    ok 68 - 11.04 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=1.304ms
     
     # Subtest: 11.05 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m
         ok 1 - should be equal
         1..1
-    ok 69 - 11.05 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=0.856ms
+    ok 69 - 11.05 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m # time=1.276ms
     
     # Subtest: 11.06 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m whitespace trims - whitespace trim opts control - one special
         ok 1 - should be equal
         1..1
-    ok 70 - 11.06 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m whitespace trims - whitespace trim opts control - one special # time=0.913ms
+    ok 70 - 11.06 - [32mmatchLeft()[39m       [33mEOL mixed with strings[39m whitespace trims - whitespace trim opts control - one special # time=1.521ms
     
     # Subtest: 12.01 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.07 - whitespace trim opts control - two specials
         1..1
-    ok 71 - 12.01 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.946ms
+    ok 71 - 12.01 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.29ms
     
     # Subtest: 12.02 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.08 - whitespace trim opts control - special mixed with cheeky
         1..1
-    ok 72 - 12.02 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.08ms
+    ok 72 - 12.02 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.549ms
     
     # Subtest: 12.03 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.09 - whitespace trim opts control - cheeky only
         1..1
-    ok 73 - 12.03 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.907ms
+    ok 73 - 12.03 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.285ms
     
     # Subtest: 12.04 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.10 - CHEEKY!!!
         1..1
-    ok 74 - 12.04 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=7.407ms
+    ok 74 - 12.04 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.328ms
     
     # Subtest: 12.05 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - should be equal
         1..1
-    ok 75 - 12.05 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.906ms
+    ok 75 - 12.05 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.298ms
     
     # Subtest: 12.06 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.12 - CHEEKY!!!
         1..1
-    ok 76 - 12.06 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.951ms
+    ok 76 - 12.06 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=9.136ms
     
     # Subtest: 12.07 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - should be equal
         1..1
-    ok 77 - 12.07 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.924ms
+    ok 77 - 12.07 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=6.415ms
     
     # Subtest: 12.08 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.14 - whitespace trim opt on
         1..1
-    ok 78 - 12.08 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.021ms
+    ok 78 - 12.08 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.63ms
     
     # Subtest: 12.09 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.15 - whitespace trim opt on
         1..1
-    ok 79 - 12.09 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.007ms
+    ok 79 - 12.09 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=1.52ms
     
     # Subtest: 12.10 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.16 - whitespace trim opt on
         1..1
-    ok 80 - 12.10 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.943ms
+    ok 80 - 12.10 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=6.511ms
     
     # Subtest: 12.11 - [32mmatchLeft()[39m       [33mwhitespace trims[39m
         ok 1 - 12.02.17 - whitespace trim opt on
         1..1
-    ok 81 - 12.11 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=0.993ms
+    ok 81 - 12.11 - [32mmatchLeft()[39m       [33mwhitespace trims[39m # time=4.467ms
     
     # Subtest: 13.01 - [32mmatchLeft()[39m       [33mcharacter trims[39m
         ok 1 - 10.02.18 - whitespace trim opts control
         1..1
-    ok 82 - 13.01 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=0.879ms
+    ok 82 - 13.01 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.732ms
     
     # Subtest: 13.02 - [32mmatchLeft()[39m       [33mcharacter trims[39m
         ok 1 - 10.02.19 - whitespace trim opt on
         1..1
-    ok 83 - 13.02 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.026ms
+    ok 83 - 13.02 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.313ms
     
     # Subtest: 13.03 - [32mmatchLeft()[39m       [33mcharacter trims[39m
         ok 1 - 10.02.20 - whitespace trim opts control
         1..1
-    ok 84 - 13.03 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=0.932ms
+    ok 84 - 13.03 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.249ms
     
     # Subtest: 13.04 - [32mmatchLeft()[39m       [33mcharacter trims[39m
         ok 1 - 10.02.21 - z caught
         1..1
-    ok 85 - 13.04 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=0.893ms
+    ok 85 - 13.04 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.174ms
     
     # Subtest: 13.05 - [32mmatchLeft()[39m       [33mcharacter trims[39m
         ok 1 - 10.02.22 - whitespace trim opt on
         1..1
-    ok 86 - 13.05 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=0.991ms
+    ok 86 - 13.05 - [32mmatchLeft()[39m       [33mcharacter trims[39m # time=1.353ms
     
     # Subtest: 14.01 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.23 - whitespace trim opts control
         1..1
-    ok 87 - 14.01 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=0.858ms
+    ok 87 - 14.01 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.244ms
     
     # Subtest: 14.02 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.24 - whitespace trim opt on
         1..1
-    ok 88 - 14.02 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=4.735ms
+    ok 88 - 14.02 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.393ms
     
     # Subtest: 14.03 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.25 - whitespace trim opts control
         1..1
-    ok 89 - 14.03 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=0.914ms
+    ok 89 - 14.03 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.284ms
     
     # Subtest: 14.04 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.26 - whitespace trim opt on
         1..1
-    ok 90 - 14.04 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=0.97ms
+    ok 90 - 14.04 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.29ms
     
     # Subtest: 14.05 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.27 - whitespace trim opts control
         1..1
-    ok 91 - 14.05 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=0.975ms
+    ok 91 - 14.05 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.931ms
     
     # Subtest: 14.06 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - 10.02.28 - whitespace trim opt on
         1..1
-    ok 92 - 14.06 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=0.997ms
+    ok 92 - 14.06 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=3.103ms
     
     # Subtest: 14.07 - [32mmatchLeft()[39m       [33mtrim combos[39m
         ok 1 - should be equal
         1..1
-    ok 93 - 14.07 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=1.015ms
+    ok 93 - 14.07 - [32mmatchLeft()[39m       [33mtrim combos[39m # time=5.265ms
     
     # Subtest: 15.01 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 94 - 15.01 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=0.846ms
+    ok 94 - 15.01 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=1.189ms
     
     # Subtest: 15.02 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 95 - 15.02 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=11.315ms
+    ok 95 - 15.02 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=10.456ms
     
     # Subtest: 15.03 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching
         ok 1 - 10.03.03 - cb blocking result
         1..1
-    ok 96 - 15.03 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=12.655ms
+    ok 96 - 15.03 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=2.717ms
     
     # Subtest: 15.04 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching
         ok 1 - 10.03.04 - useless cb
         1..1
-    ok 97 - 15.04 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=0.869ms
+    ok 97 - 15.04 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching # time=1.572ms
     
     # Subtest: 15.05 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims
         ok 1 - 10.03.06 - whitespace trim opts control
         1..1
-    ok 98 - 15.05 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=0.845ms
+    ok 98 - 15.05 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=1.175ms
     
     # Subtest: 15.06 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims
         ok 1 - should be equal
         ok 2 - should be equal
         1..2
-    ok 99 - 15.06 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=1.038ms
+    ok 99 - 15.06 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=1.493ms
     
     # Subtest: 15.07 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims
         ok 1 - 10.03.09 - whitespace trim opt on
         1..1
-    ok 100 - 15.07 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=0.931ms
+    ok 100 - 15.07 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - whitespace trims # time=1.509ms
     
     # Subtest: 15.08 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims
         ok 1 - 10.03.10 - whitespace trim opts control
         1..1
-    ok 101 - 15.08 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims # time=0.823ms
+    ok 101 - 15.08 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims # time=1.278ms
     
     # Subtest: 15.09 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims
         ok 1 - 10.03.11 - whitespace trim opt on
         1..1
-    ok 102 - 15.09 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims # time=0.891ms
+    ok 102 - 15.09 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - character trims # time=1.301ms
     
     # Subtest: 15.10 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos
         ok 1 - 10.03.12 - whitespace trim opts control
         1..1
-    ok 103 - 15.10 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos # time=0.809ms
+    ok 103 - 15.10 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos # time=1.172ms
     
     # Subtest: 15.11 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos
         ok 1 - 10.03.13 - whitespace trim opt on
         1..1
-    ok 104 - 15.11 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos # time=5.462ms
+    ok 104 - 15.11 - [32mmatchLeftIncl()[39m   [33mEOL[39m matching - trim combos # time=0.641ms
     
     # Subtest: 16.01 - [32mmatchRight()[39m      [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 105 - 16.01 - [32mmatchRight()[39m      [33mEOL[39m matching # time=0.709ms
+    ok 105 - 16.01 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.142ms
     
     # Subtest: 16.02 - [32mmatchRight()[39m      [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 106 - 16.02 - [32mmatchRight()[39m      [33mEOL[39m matching # time=0.798ms
+    ok 106 - 16.02 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.131ms
     
     # Subtest: 16.03 - [32mmatchRight()[39m      [33mEOL[39m matching
         ok 1 - 10.04.03 - cb blocking result
         1..1
-    ok 107 - 16.03 - [32mmatchRight()[39m      [33mEOL[39m matching # time=0.991ms
+    ok 107 - 16.03 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.216ms
     
     # Subtest: 16.04 - [32mmatchRight()[39m      [33mEOL[39m matching
         ok 1 - 10.04.04 - useless cb, just confirms the incoming truthy result
         1..1
-    ok 108 - 16.04 - [32mmatchRight()[39m      [33mEOL[39m matching # time=0.903ms
+    ok 108 - 16.04 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.214ms
     
     # Subtest: 16.05 - [32mmatchRight()[39m      [33mEOL[39m matching
         ok 1 - 10.04.05 - useless cb
         1..1
-    ok 109 - 16.05 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.221ms
+    ok 109 - 16.05 - [32mmatchRight()[39m      [33mEOL[39m matching # time=1.455ms
     
     # Subtest: 16.06 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims
         ok 1 - 10.04.06-1
         1..1
-    ok 110 - 16.06 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=1.143ms
+    ok 110 - 16.06 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=1.144ms
     
     # Subtest: 16.07 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims
         ok 1 - 10.04.06-2
         1..1
-    ok 111 - 16.07 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=0.871ms
+    ok 111 - 16.07 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=1.131ms
     
     # Subtest: 16.08 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims
         ok 1 - 10.04.07 - CHEEKY!!!
         1..1
-    ok 112 - 16.08 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=0.804ms
+    ok 112 - 16.08 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=9.914ms
     
     # Subtest: 16.09 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims
         ok 1 - 10.04.08 - !!!
         1..1
-    ok 113 - 16.09 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=0.788ms
+    ok 113 - 16.09 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=4.492ms
     
     # Subtest: 16.10 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims
         ok 1 - 10.04.09 - whitespace trim opt on
         1..1
-    ok 114 - 16.10 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=0.99ms
+    ok 114 - 16.10 - [32mmatchRight()[39m      [33mEOL[39m matching - whitespace trims # time=1.786ms
     
     # Subtest: 16.11 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims
         ok 1 - 10.04.10 - whitespace trim opts control
         1..1
-    ok 115 - 16.11 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims # time=1.585ms
+    ok 115 - 16.11 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims # time=1.172ms
     
     # Subtest: 16.12 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims
         ok 1 - 10.04.11 - whitespace trim opt on
         1..1
-    ok 116 - 16.12 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims # time=3.372ms
+    ok 116 - 16.12 - [32mmatchRight()[39m      [33mEOL[39m matching - character trims # time=1.356ms
     
     # Subtest: 16.13 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos
         ok 1 - 10.04.12 - whitespace trim opts control
         1..1
-    ok 117 - 16.13 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos # time=0.892ms
+    ok 117 - 16.13 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos # time=1.129ms
     
     # Subtest: 16.14 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos
         ok 1 - 10.04.13 - whitespace trim opt on
         1..1
-    ok 118 - 16.14 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos # time=0.937ms
+    ok 118 - 16.14 - [32mmatchRight()[39m      [33mEOL[39m matching - trim combos # time=1.23ms
     
     # Subtest: 17.01 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings
         ok 1 - should be equal
         1..1
-    ok 119 - 17.01 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=0.781ms
+    ok 119 - 17.01 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.096ms
     
     # Subtest: 17.02 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings
         ok 1 - should be equal
         1..1
-    ok 120 - 17.02 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=0.83ms
+    ok 120 - 17.02 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.132ms
     
     # Subtest: 17.03 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings
         ok 1 - should be equal
         1..1
-    ok 121 - 17.03 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.475ms
+    ok 121 - 17.03 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.121ms
     
     # Subtest: 17.04 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings
         ok 1 - should be equal
         1..1
-    ok 122 - 17.04 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=0.809ms
+    ok 122 - 17.04 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.421ms
     
     # Subtest: 17.05 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings
         ok 1 - should be equal
         1..1
-    ok 123 - 17.05 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=0.786ms
+    ok 123 - 17.05 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings # time=1.15ms
     
     # Subtest: 17.06 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.06 - whitespace trim opts control - one special
         1..1
-    ok 124 - 17.06 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=3.693ms
+    ok 124 - 17.06 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.144ms
     
     # Subtest: 17.07 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.07 - whitespace trim opts control - two specials
         1..1
-    ok 125 - 17.07 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.881ms
+    ok 125 - 17.07 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.145ms
     
     # Subtest: 17.08 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.08 - whitespace trim opts control - special mixed with cheeky
         1..1
-    ok 126 - 17.08 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.797ms
+    ok 126 - 17.08 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.183ms
     
     # Subtest: 17.09 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.09 - whitespace trim opts control - cheeky only
         1..1
-    ok 127 - 17.09 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.805ms
+    ok 127 - 17.09 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=4.478ms
     
     # Subtest: 17.10 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.10 - CHEEKY!!!
         1..1
-    ok 128 - 17.10 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=6.434ms
+    ok 128 - 17.10 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.165ms
     
     # Subtest: 17.11 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - should be equal
         1..1
-    ok 129 - 17.11 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.819ms
+    ok 129 - 17.11 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.121ms
     
     # Subtest: 17.12 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.12 - CHEEKY!!!
         1..1
-    ok 130 - 17.12 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.9ms
+    ok 130 - 17.12 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.137ms
     
     # Subtest: 17.13 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - should be equal
         1..1
-    ok 131 - 17.13 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.903ms
+    ok 131 - 17.13 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=4.844ms
     
     # Subtest: 17.14 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.14 - array
         1..1
-    ok 132 - 17.14 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.854ms
+    ok 132 - 17.14 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=10.952ms
     
     # Subtest: 17.15 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.15 - other values to match
         1..1
-    ok 133 - 17.15 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=1.164ms
+    ok 133 - 17.15 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=6.462ms
     
     # Subtest: 17.16 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.16 - two identical arrow functions in array, both positive
         1..1
-    ok 134 - 17.16 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=0.88ms
+    ok 134 - 17.16 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=4.819ms
     
     # Subtest: 17.17 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims
         ok 1 - 10.05.17 - two arrow f's in arrray + non-found
         1..1
-    ok 135 - 17.17 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=3.608ms
+    ok 135 - 17.17 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - whitespace trims # time=2.608ms
     
     # Subtest: 17.18 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims
         ok 1 - 10.05.18 - trim off
         1..1
-    ok 136 - 17.18 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=0.797ms
+    ok 136 - 17.18 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=1.184ms
     
     # Subtest: 17.19 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims
         ok 1 - 10.05.19 - character trim opt on
         1..1
-    ok 137 - 17.19 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=0.902ms
+    ok 137 - 17.19 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=1.307ms
     
     # Subtest: 17.20 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims
         ok 1 - 10.05.20 - wrong character to trim
         1..1
-    ok 138 - 17.20 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=0.85ms
+    ok 138 - 17.20 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=3.372ms
     
     # Subtest: 17.21 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims
         ok 1 - 10.05.21 - z caught first, before EOL
         1..1
-    ok 139 - 17.21 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=0.829ms
+    ok 139 - 17.21 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=1.158ms
     
     # Subtest: 17.22 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims
         ok 1 - 10.05.22 - whitespace trim opt on
         1..1
-    ok 140 - 17.22 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=0.93ms
+    ok 140 - 17.22 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - character trims # time=1.312ms
     
     # Subtest: 17.23 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.23 - whitespace trim opts control
         1..1
-    ok 141 - 17.23 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=0.895ms
+    ok 141 - 17.23 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.127ms
     
     # Subtest: 17.24 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.24 - whitespace trim opt on
         1..1
-    ok 142 - 17.24 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=0.87ms
+    ok 142 - 17.24 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.257ms
     
     # Subtest: 17.25 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.25 - whitespace trim opts control
         1..1
-    ok 143 - 17.25 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=0.842ms
+    ok 143 - 17.25 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.338ms
     
     # Subtest: 17.26 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.26 - whitespace trim opt on
         1..1
-    ok 144 - 17.26 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=0.897ms
+    ok 144 - 17.26 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.308ms
     
     # Subtest: 17.27 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.27 - whitespace trim opts control
         1..1
-    ok 145 - 17.27 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=2.783ms
+    ok 145 - 17.27 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.225ms
     
     # Subtest: 17.28 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.28 - unused char to trim
         1..1
-    ok 146 - 17.28 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=2.116ms
+    ok 146 - 17.28 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.218ms
     
     # Subtest: 17.29 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos
         ok 1 - 10.05.29 - y stands in the way
         1..1
-    ok 147 - 17.29 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=5.517ms
+    ok 147 - 17.29 - [32mmatchRight()[39m      [33mEOL[39m EOL mixed with strings - trim combos # time=1.246ms
     
     # Subtest: 18.01 - [32mmatchRightIncl()[39m  [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 148 - 18.01 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=0.751ms
+    ok 148 - 18.01 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=1.247ms
     
     # Subtest: 18.02 - [32mmatchRightIncl()[39m  [33mEOL[39m matching
         ok 1 - should be equal
         1..1
-    ok 149 - 18.02 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=0.81ms
+    ok 149 - 18.02 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=1.168ms
     
     # Subtest: 18.03 - [32mmatchRightIncl()[39m  [33mEOL[39m matching
         ok 1 - 10.06.03 - cb blocking, but still useless, result was false before cb kicked in
         1..1
-    ok 150 - 18.03 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=0.89ms
+    ok 150 - 18.03 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=1.241ms
     
     # Subtest: 18.04 - [32mmatchRightIncl()[39m  [33mEOL[39m matching
         ok 1 - 10.06.04 - useless cb
         1..1
-    ok 151 - 18.04 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=0.922ms
+    ok 151 - 18.04 - [32mmatchRightIncl()[39m  [33mEOL[39m matching # time=2.802ms
     
     # Subtest: 18.05 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims
         ok 1 - 10.06.05 - whitespace trim opts control
         1..1
-    ok 152 - 18.05 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=0.843ms
+    ok 152 - 18.05 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=1.178ms
     
     # Subtest: 18.06 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims
         ok 1 - should be equal
         1..1
-    ok 153 - 18.06 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=0.822ms
+    ok 153 - 18.06 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=1.123ms
     
     # Subtest: 18.07 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims
         ok 1 - should be equal
         1..1
-    ok 154 - 18.07 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=3.552ms
+    ok 154 - 18.07 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=1.117ms
     
     # Subtest: 18.08 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims
         ok 1 - 10.06.08 - whitespace trim opt on
         1..1
-    ok 155 - 18.08 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=0.875ms
+    ok 155 - 18.08 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - whitespace trims # time=1.18ms
     
     # Subtest: 18.09 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims
         ok 1 - 10.06.10 - whitespace trim opts control
         1..1
-    ok 156 - 18.09 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims # time=0.79ms
+    ok 156 - 18.09 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims # time=1.132ms
     
     # Subtest: 18.10 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims
         ok 1 - 10.06.11 - whitespace trim opt on
         1..1
-    ok 157 - 18.10 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims # time=0.95ms
+    ok 157 - 18.10 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - character trims # time=1.222ms
     
     # Subtest: 18.11 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos
         ok 1 - 10.06.12 - whitespace trim opts control
         1..1
-    ok 158 - 18.11 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos # time=0.76ms
+    ok 158 - 18.11 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos # time=1.18ms
     
     # Subtest: 18.12 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos
         ok 1 - 10.06.13 - whitespace trim + character trim
         1..1
-    ok 159 - 18.12 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos # time=0.902ms
+    ok 159 - 18.12 - [32mmatchRightIncl()[39m  [33mEOL[39m matching - trim combos # time=1.196ms
     
     # Subtest: 13.01 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 160 - 13.01 - [35mADHOC[39m, tests set #01 # time=0.719ms
+    ok 160 - 13.01 - [35mADHOC[39m, tests set #01 # time=1.209ms
     
     # Subtest: 13.02 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 161 - 13.02 - [35mADHOC[39m, tests set #01 # time=0.935ms
+    ok 161 - 13.02 - [35mADHOC[39m, tests set #01 # time=1.306ms
     
     # Subtest: 13.03 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 162 - 13.03 - [35mADHOC[39m, tests set #01 # time=0.809ms
+    ok 162 - 13.03 - [35mADHOC[39m, tests set #01 # time=1.366ms
     
     # Subtest: 13.04 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 163 - 13.04 - [35mADHOC[39m, tests set #01 # time=0.823ms
+    ok 163 - 13.04 - [35mADHOC[39m, tests set #01 # time=1.233ms
     
     # Subtest: 13.05 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 164 - 13.05 - [35mADHOC[39m, tests set #01 # time=0.854ms
+    ok 164 - 13.05 - [35mADHOC[39m, tests set #01 # time=1.316ms
     
     # Subtest: 13.06 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 165 - 13.06 - [35mADHOC[39m, tests set #01 # time=0.868ms
+    ok 165 - 13.06 - [35mADHOC[39m, tests set #01 # time=1.372ms
     
     # Subtest: 13.07 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         1..1
-    ok 166 - 13.07 - [35mADHOC[39m, tests set #01 # time=0.96ms
+    ok 166 - 13.07 - [35mADHOC[39m, tests set #01 # time=1.268ms
     
     # Subtest: 13.08 - [35mADHOC[39m, tests set #01
         ok 1 - should be equal
         ok 2 - should be equal
         ok 3 - should be equal
         1..3
-    ok 167 - 13.08 - [35mADHOC[39m, tests set #01 # time=2.003ms
+    ok 167 - 13.08 - [35mADHOC[39m, tests set #01 # time=1.884ms
     
     # Subtest: 13.09 - [35mADHOC[39m, set #02
         ok 1 - should be equal
         1..1
-    ok 168 - 13.09 - [35mADHOC[39m, set #02 # time=0.968ms
+    ok 168 - 13.09 - [35mADHOC[39m, set #02 # time=1.296ms
     
     1..168
-    # time=2502.697ms
-}
+    # time=1602.469ms
+ok 1 - test/test.js # time=1602.469ms
 
 1..1
+# time=4473.518ms

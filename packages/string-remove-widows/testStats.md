@@ -1,53 +1,53 @@
 TAP version 13
-ok 1 - test/test.js # time=1985.223ms {
+# Subtest: test/test.js
     # Subtest: 00.01 - [36mapi bits[39m - exported removeWidows() is a function
         ok 1 - 00.01
         1..1
-    ok 1 - 00.01 - [36mapi bits[39m - exported removeWidows() is a function # time=9.137ms
+    ok 1 - 00.01 - [36mapi bits[39m - exported removeWidows() is a function # time=6.762ms
     
     # Subtest: 00.02 - [36mapi bits[39m - exported version is a semver version
         ok 1 - 00.02
         1..1
-    ok 2 - 00.02 - [36mapi bits[39m - exported version is a semver version # time=2.297ms
+    ok 2 - 00.02 - [36mapi bits[39m - exported version is a semver version # time=2.202ms
     
     # Subtest: 00.03 - [36mapi bits[39m - sanity check
         ok 1 - 00.03.01
         ok 2 - 00.03.02
         1..2
-    ok 3 - 00.03 - [36mapi bits[39m - sanity check # time=1.608ms
+    ok 3 - 00.03 - [36mapi bits[39m - sanity check # time=2.36ms
     
     # Subtest: 00.04 - [36mapi bits[39m - empty opts obj
         ok 1 - should be equal
         1..1
-    ok 4 - 00.04 - [36mapi bits[39m - empty opts obj # time=5.343ms
+    ok 4 - 00.04 - [36mapi bits[39m - empty opts obj # time=3.952ms
     
     # Subtest: 01.01 - [32mbasic tests[39m - most basic
         ok 1 - should be equal
         ok 2 - should be equivalent
         ok 3 - should be equivalent
         1..3
-    ok 5 - 01.01 - [32mbasic tests[39m - most basic # time=10.227ms
+    ok 5 - 01.01 - [32mbasic tests[39m - most basic # time=6.974ms
     
     # Subtest: 01.02 - [32mbasic tests[39m - most basic
         ok 1 - should be equal
         ok 2 - should be equivalent
         ok 3 - should be equivalent
         1..3
-    ok 6 - 01.02 - [32mbasic tests[39m - most basic # time=3.429ms
+    ok 6 - 01.02 - [32mbasic tests[39m - most basic # time=5.865ms
     
     # Subtest: 01.03 - [32mbasic tests[39m - single sentence, no full stop
         ok 1 - 01.03.01 - html`, `css`, `js
         ok 2 - 01.03.02 - html`, `css`, `js
         ok 3 - 01.03.03 - html`, `css`, `js
         1..3
-    ok 7 - 01.03 - [32mbasic tests[39m - single sentence, no full stop # time=2.593ms
+    ok 7 - 01.03 - [32mbasic tests[39m - single sentence, no full stop # time=4.02ms
     
     # Subtest: 01.04 - [32mbasic tests[39m - single sentence, full stop
         ok 1 - 01.04.01 - html`, `css`, `js
         ok 2 - 01.04.02 - html`, `css`, `js
         ok 3 - 01.04.03 - html`, `css`, `js
         1..3
-    ok 8 - 01.04 - [32mbasic tests[39m - single sentence, full stop # time=3.74ms
+    ok 8 - 01.04 - [32mbasic tests[39m - single sentence, full stop # time=3.501ms
     
     # Subtest: 01.05 - [32mbasic tests[39m - paragraphs, full stops
         ok 1 - 01.05.01 - html`, `css`, `js - LF`, `CR`, `CRLF - convertEntities=true
@@ -57,7 +57,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 5 - 01.05.05 - html`, `css`, `js - LF`, `CR`, `CRLF - convertEntities=false
         ok 6 - 01.05.06 - html`, `css`, `js - LF`, `CR`, `CRLF - convertEntities=true
         1..6
-    ok 9 - 01.05 - [32mbasic tests[39m - paragraphs, full stops # time=17.392ms
+    ok 9 - 01.05 - [32mbasic tests[39m - paragraphs, full stops # time=9.719ms
     
     # Subtest: 01.06 - [32mbasic tests[39m - raw non-breaking space already there
         ok 1 - 01.06.01 - html`, `css`, `js
@@ -67,7 +67,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 5 - 01.06.03 - html`, `css`, `js
         ok 6 - should be equivalent
         1..6
-    ok 10 - 01.06 - [32mbasic tests[39m - raw non-breaking space already there # time=5.403ms
+    ok 10 - 01.06 - [32mbasic tests[39m - raw non-breaking space already there # time=5.444ms
     
     # Subtest: 01.07 - [32mbasic tests[39m - paragraphs, coming already fixed
         ok 1 - 01.07.01 - html`, `css`, `js - LF`, `CR`, `CRLF
@@ -75,7 +75,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 3 - 01.07.03 - html`, `css`, `js - LF`, `CR`, `CRLF - removeWidowPreventionMeasures
         ok 4 - 01.07.04 - html`, `css`, `js - LF`, `CR`, `CRLF - removeWidowPreventionMeasures
         1..4
-    ok 11 - 01.07 - [32mbasic tests[39m - paragraphs, coming already fixed # time=9.687ms
+    ok 11 - 01.07 - [32mbasic tests[39m - paragraphs, coming already fixed # time=6.455ms
     
     # Subtest: 01.08 - [32mbasic tests[39m - paragraphs, coming already fixed and encoded but in wrong format
         ok 1 - 01.08.01 - requested lang. html`, `css`, `js - existing lang. html`, `css`, `js - LF`, `CR`, `CRLF
@@ -85,7 +85,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 5 - 01.08.03 - requested lang. html`, `css`, `js - existing lang. undefined - LF`, `CR`, `CRLF
         ok 6 - 01.08.04 - requested lang. html`, `css`, `js - existing lang. undefined - LF`, `CR`, `CRLF
         1..6
-    ok 12 - 01.08 - [32mbasic tests[39m - paragraphs, coming already fixed and encoded but in wrong format # time=31.099ms
+    ok 12 - 01.08 - [32mbasic tests[39m - paragraphs, coming already fixed and encoded but in wrong format # time=34.319ms
     
     # Subtest: 01.09 - [32mbasic tests[39m - single word
         ok 1 - 01.09.01 - html`, `css`, `js
@@ -94,7 +94,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 4 - 01.09.04 - html`, `css`, `js
         ok 5 - 01.09.05 - html`, `css`, `js
         1..5
-    ok 13 - 01.09 - [32mbasic tests[39m - single word # time=7.189ms
+    ok 13 - 01.09 - [32mbasic tests[39m - single word # time=13.315ms
     
     # Subtest: 01.10 - [32mbasic tests[39m - doesn't touch empty strings
         ok 1 - 01.10 - ""
@@ -118,85 +118,85 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 19 - 01.10 - "\r \t \r"
         ok 20 - 01.10 - "\r\n \t \r\n"
         1..20
-    ok 14 - 01.10 - [32mbasic tests[39m - doesn't touch empty strings # time=9.32ms
+    ok 14 - 01.10 - [32mbasic tests[39m - doesn't touch empty strings # time=15.887ms
     
     # Subtest: 01.11 - [32mbasic tests[39m - doesn't break within tag
         ok 1 - 01.11
         1..1
-    ok 15 - 01.11 - [32mbasic tests[39m - doesn't break within tag # time=5.766ms
+    ok 15 - 01.11 - [32mbasic tests[39m - doesn't break within tag # time=9.352ms
     
     # Subtest: 01.12 - [32mbasic tests[39m - doesn't add nbsp after line breaks
         ok 1 - 01.12
         1..1
-    ok 16 - 01.12 - [32mbasic tests[39m - doesn't add nbsp after line breaks # time=1.242ms
+    ok 16 - 01.12 - [32mbasic tests[39m - doesn't add nbsp after line breaks # time=1.813ms
     
     # Subtest: 01.13 - [32mbasic tests[39m - line breaks and spaces
         ok 1 - 01.13
         1..1
-    ok 17 - 01.13 - [32mbasic tests[39m - line breaks and spaces # time=1.691ms
+    ok 17 - 01.13 - [32mbasic tests[39m - line breaks and spaces # time=4.106ms
     
     # Subtest: 01.14 - [32mbasic tests[39m - ad hoc case
         ok 1 - should be equivalent
         1..1
-    ok 18 - 01.14 - [32mbasic tests[39m - ad hoc case # time=2.853ms
+    ok 18 - 01.14 - [32mbasic tests[39m - ad hoc case # time=7.752ms
     
     # Subtest: 01.15 - [32mbasic tests[39m - non-widow nbsp is decoded and reported correctly, mixed with widow case
         ok 1 - should be equal
         ok 2 - should be equivalent
         1..2
-    ok 19 - 01.15 - [32mbasic tests[39m - non-widow nbsp is decoded and reported correctly, mixed with widow case # time=2.697ms
+    ok 19 - 01.15 - [32mbasic tests[39m - non-widow nbsp is decoded and reported correctly, mixed with widow case # time=6.624ms
     
     # Subtest: 01.16 - [32mbasic tests[39m - non-widow nbsp only
         ok 1 - should be equal
         ok 2 - should be equivalent
         1..2
-    ok 20 - 01.16 - [32mbasic tests[39m - non-widow nbsp only # time=4.713ms
+    ok 20 - 01.16 - [32mbasic tests[39m - non-widow nbsp only # time=6.333ms
     
     # Subtest: 01.17 - [32mbasic tests[39m - nbsp only, nothing else
         ok 1 - should be equal
         ok 2 - should be equivalent
         1..2
-    ok 21 - 01.17 - [32mbasic tests[39m - nbsp only, nothing else # time=1.944ms
+    ok 21 - 01.17 - [32mbasic tests[39m - nbsp only, nothing else # time=3.564ms
     
     # Subtest: 02.01 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string no full stop
         ok 1 - should be equal
         1..1
-    ok 22 - 02.01 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string no full stop # time=2.621ms
+    ok 22 - 02.01 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string no full stop # time=4.075ms
     
     # Subtest: 02.02 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string with full stop
         ok 1 - should be equal
         1..1
-    ok 23 - 02.02 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string with full stop # time=5.505ms
+    ok 23 - 02.02 - [33mopts.convertEntities[39m - four chunks of text - entities, one line string with full stop # time=7.09ms
     
     # Subtest: 02.03 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string no full stop
         ok 1 - should be equal
         1..1
-    ok 24 - 02.03 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string no full stop # time=4.608ms
+    ok 24 - 02.03 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string no full stop # time=12.364ms
     
     # Subtest: 02.04 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string with full stop
         ok 1 - should be equal
         1..1
-    ok 25 - 02.04 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string with full stop # time=1.366ms
+    ok 25 - 02.04 - [33mopts.convertEntities[39m - four chunks of text - no entities, one line string with full stop # time=5.633ms
     
     # Subtest: 02.05 - [33mopts.convertEntities[39m - single line break - widow fix needed
         ok 1 - should be equal
         1..1
-    ok 26 - 02.05 - [33mopts.convertEntities[39m - single line break - widow fix needed # time=1.977ms
+    ok 26 - 02.05 - [33mopts.convertEntities[39m - single line break - widow fix needed # time=8.051ms
     
     # Subtest: 02.06 - [33mopts.convertEntities[39m - single line break -  - one line break, with full stop - widow fix needed
         ok 1 - should be equal
         1..1
-    ok 27 - 02.06 - [33mopts.convertEntities[39m - single line break -  - one line break, with full stop - widow fix needed # time=2.267ms
+    ok 27 - 02.06 - [33mopts.convertEntities[39m - single line break -  - one line break, with full stop - widow fix needed # time=6.912ms
     
     # Subtest: 02.07 - [33mopts.convertEntities[39m - trailing space
         ok 1 - should be equal
         1..1
-    ok 28 - 02.07 - [33mopts.convertEntities[39m - trailing space # time=2.013ms
+    ok 28 - 02.07 - [33mopts.convertEntities[39m - trailing space # time=2.098ms
     
     # Subtest: 02.08 - [33mopts.convertEntities[39m - trailing tabs
         ok 1 - should be equal
         1..1
-    ok 29 - 02.08 - [33mopts.convertEntities[39m - trailing tabs # time=2.047ms
+    ok 29 - 02.08 - [33mopts.convertEntities[39m - trailing tabs # time=2.39ms
     
     # Subtest: 02.09 - [33mopts.convertEntities[39m - nbsp's not added within hidden HTML tags
         ok 1 - 02.09.01
@@ -204,82 +204,82 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 3 - 02.09.03
         ok 4 - 02.09.04
         1..4
-    ok 30 - 02.09 - [33mopts.convertEntities[39m - nbsp's not added within hidden HTML tags # time=42.019ms
+    ok 30 - 02.09 - [33mopts.convertEntities[39m - nbsp's not added within hidden HTML tags # time=32.06ms
     
     # Subtest: 02.10 - [33mopts.convertEntities[39m - numeric HTML entity #160
         ok 1 - should be equal
         1..1
-    ok 31 - 02.10 - [33mopts.convertEntities[39m - numeric HTML entity #160 # time=1.85ms
+    ok 31 - 02.10 - [33mopts.convertEntities[39m - numeric HTML entity #160 # time=1.915ms
     
     # Subtest: 02.11 - [33mopts.convertEntities[39m - numeric HTML entity #160
         ok 1 - should be equal
         1..1
-    ok 32 - 02.11 - [33mopts.convertEntities[39m - numeric HTML entity #160 # time=1.498ms
+    ok 32 - 02.11 - [33mopts.convertEntities[39m - numeric HTML entity #160 # time=1.771ms
     
     # Subtest: 02.12 - [33mopts.convertEntities[39m - doesn't touch other nbsp's
         ok 1 - should be equal
         1..1
-    ok 33 - 02.12 - [33mopts.convertEntities[39m - doesn't touch other nbsp's # time=1.616ms
+    ok 33 - 02.12 - [33mopts.convertEntities[39m - doesn't touch other nbsp's # time=1.729ms
     
     # Subtest: 02.13 - [33mopts.convertEntities[39m - doesn't touch other nbsp's
         ok 1 - should be equal
         1..1
-    ok 34 - 02.13 - [33mopts.convertEntities[39m - doesn't touch other nbsp's # time=1.785ms
+    ok 34 - 02.13 - [33mopts.convertEntities[39m - doesn't touch other nbsp's # time=5.782ms
     
     # Subtest: 02.14 - [33mopts.convertEntities[39m - two spaces
         ok 1 - should be equal
         1..1
-    ok 35 - 02.14 - [33mopts.convertEntities[39m - two spaces # time=1.928ms
+    ok 35 - 02.14 - [33mopts.convertEntities[39m - two spaces # time=17.198ms
     
     # Subtest: 02.15 - [33mopts.convertEntities[39m - two spaces
         ok 1 - should be equal
         1..1
-    ok 36 - 02.15 - [33mopts.convertEntities[39m - two spaces # time=1.616ms
+    ok 36 - 02.15 - [33mopts.convertEntities[39m - two spaces # time=9.386ms
     
     # Subtest: 02.16 - [33mopts.convertEntities[39m - tabs
         ok 1 - should be equal
         1..1
-    ok 37 - 02.16 - [33mopts.convertEntities[39m - tabs # time=1.855ms
+    ok 37 - 02.16 - [33mopts.convertEntities[39m - tabs # time=7.95ms
     
     # Subtest: 02.17 - [33mopts.convertEntities[39m - tabs
         ok 1 - should be equal
         1..1
-    ok 38 - 02.17 - [33mopts.convertEntities[39m - tabs # time=1.903ms
+    ok 38 - 02.17 - [33mopts.convertEntities[39m - tabs # time=0.964ms
     
     # Subtest: 02.18 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 39 - 02.18 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=1.662ms
+    ok 39 - 02.18 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=6.218ms
     
     # Subtest: 02.19 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 40 - 02.19 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=1.821ms
+    ok 40 - 02.19 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=1.706ms
     
     # Subtest: 02.20 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 41 - 02.20 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=1.874ms
+    ok 41 - 02.20 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=5.76ms
     
     # Subtest: 02.21 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 42 - 02.21 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=1.707ms
+    ok 42 - 02.21 - [33mopts.convertEntities[39m - converts non-widow non-breaking spaces # time=5.736ms
     
     # Subtest: 02.22 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 43 - 02.22 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=1.468ms
+    ok 43 - 02.22 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=8.794ms
     
     # Subtest: 02.23 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 44 - 02.23 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=1.495ms
+    ok 44 - 02.23 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=2.179ms
     
     # Subtest: 02.24 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces
         ok 1 - should be equal
         1..1
-    ok 45 - 02.24 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=4.488ms
+    ok 45 - 02.24 - [33mopts.convertEntities[39m - removeWidowPreventionMeasures - converts non-widow non-breaking spaces # time=5.757ms
     
     # Subtest: 03.01 - [31mopts.hyphens[39m - in front of dashes
         ok 1 - 03.01.01 - — - html`, `css`, `js
@@ -295,19 +295,19 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 11 - 03.01.03 - - - html`, `css`, `js
         ok 12 - 03.01.04 - - - html`, `css`, `js
         1..12
-    ok 46 - 03.01 - [31mopts.hyphens[39m - in front of dashes # time=31.449ms
+    ok 46 - 03.01 - [31mopts.hyphens[39m - in front of dashes # time=31.369ms
     
     # Subtest: 03.02 - [31mopts.hyphens[39m - hyphen is minus where currency follows
         ok 1 - 03.02.00 - — - html`, `css`, `js
         ok 2 - 03.02.01 - – - html`, `css`, `js
         ok 3 - 03.02.02 - - - html`, `css`, `js
         1..3
-    ok 47 - 03.02 - [31mopts.hyphens[39m - hyphen is minus where currency follows # time=4.259ms
+    ok 47 - 03.02 - [31mopts.hyphens[39m - hyphen is minus where currency follows # time=6.52ms
     
     # Subtest: 03.03 - [31mopts.hyphens[39m - with &nbsp; and double space
         ok 1 - 03.03.00 - html`, `css`, `js
         1..1
-    ok 48 - 03.03 - [31mopts.hyphens[39m - with &nbsp; and double space # time=4.769ms
+    ok 48 - 03.03 - [31mopts.hyphens[39m - with &nbsp; and double space # time=1.873ms
     
     # Subtest: 04.01 - [34mline endings[39m - does not mangle string with consistent line endings
         ok 1 - 04.01.01.01 - html`, `css`, `js - raw - two LF`, `CR`, `CRLF
@@ -315,7 +315,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 3 - 04.01.03.03 - html`, `css`, `js - raw - two LF`, `CR`, `CRLF - trailing line breaks
         ok 4 - 04.01.04.04 - html`, `css`, `js - encoded - two LF`, `CR`, `CRLF - trailing line breaks
         1..4
-    ok 49 - 04.01 - [34mline endings[39m - does not mangle string with consistent line endings # time=40.05ms
+    ok 49 - 04.01 - [34mline endings[39m - does not mangle string with consistent line endings # time=22.93ms
     
     # Subtest: 05.01 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and nothing happens
         ok 1 - 05.01.01 - templating chunks
@@ -324,222 +324,221 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 4 - 05.01.04 - templating chunks
         ok 5 - 05.01.05 - templating chunks
         1..5
-    ok 50 - 05.01 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and nothing happens # time=8.484ms
+    ok 50 - 05.01 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and nothing happens # time=13.221ms
     
     # Subtest: 05.02 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented
         ok 1 - 05.02.01 - words under threshold outside templating chunk which completes the threshold
         ok 2 - 05.02.02
         1..2
-    ok 51 - 05.02 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented # time=4.375ms
+    ok 51 - 05.02 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented # time=9.157ms
     
     # Subtest: 05.03 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented
         ok 1 - 05.03.01 - min word count threshold + ignore jinja combo
         ok 2 - 05.03.02 - min word count threshold + ignore jinja combo
         ok 3 - 05.03.01 - min word count threshold + ignore jinja combo
-# time=4793.138ms
         ok 4 - 05.03.02 - min word count threshold + ignore jinja combo
         1..4
-    ok 52 - 05.03 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented # time=12.167ms
+    ok 52 - 05.03 - [35mopts.ignore, nunjucks[39m - widow removal detects template code and widows are prevented # time=17.735ms
     
     # Subtest: 06.01 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 53 - 06.01 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.949ms
+    ok 53 - 06.01 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=7.678ms
     
     # Subtest: 06.02 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 54 - 06.02 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=2.057ms
+    ok 54 - 06.02 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=2.026ms
     
     # Subtest: 06.03 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 55 - 06.03 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.902ms
+    ok 55 - 06.03 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=2.272ms
     
     # Subtest: 06.04 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 56 - 06.04 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.912ms
+    ok 56 - 06.04 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.89ms
     
     # Subtest: 06.05 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes
         ok 1 - should be equal
         1..1
-    ok 57 - 06.05 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=2.444ms
+    ok 57 - 06.05 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=2.063ms
     
     # Subtest: 06.06 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes
         ok 1 - should be equal
         1..1
-    ok 58 - 06.06 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=2.68ms
+    ok 58 - 06.06 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=4.568ms
     
     # Subtest: 06.07 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 59 - 06.07 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=2.405ms
+    ok 59 - 06.07 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=2.022ms
     
     # Subtest: 06.08 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 60 - 06.08 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=1.019ms
+    ok 60 - 06.08 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=1.444ms
     
     # Subtest: 06.09 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 61 - 06.09 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=2.267ms
+    ok 61 - 06.09 - [36mopts.UKPostcodes[39m - line ends with a postcode (full stop) # time=2.025ms
     
     # Subtest: 06.10 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 62 - 06.10 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.445ms
+    ok 62 - 06.10 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.002ms
     
     # Subtest: 06.11 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) - default minimum word count (4) kicks in
         ok 1 - should be equal
         1..1
-    ok 63 - 06.11 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) - default minimum word count (4) kicks in # time=1.344ms
+    ok 63 - 06.11 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) - default minimum word count (4) kicks in # time=1.542ms
     
     # Subtest: 06.12 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 64 - 06.12 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.01ms
+    ok 64 - 06.12 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.064ms
     
     # Subtest: 06.13 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 65 - 06.13 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.31ms
+    ok 65 - 06.13 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.066ms
     
     # Subtest: 06.14 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 66 - 06.14 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.237ms
+    ok 66 - 06.14 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=31.479ms
     
     # Subtest: 06.15 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop)
         ok 1 - should be equal
         1..1
-    ok 67 - 06.15 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=2.421ms
+    ok 67 - 06.15 - [36mopts.UKPostcodes[39m - [33mjs[39m - line ends with a postcode (full stop) # time=5.208ms
     
     # Subtest: 06.16 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures
         ok 1 - should be equal
         1..1
-    ok 68 - 06.16 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=2.962ms
+    ok 68 - 06.16 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=2.465ms
     
     # Subtest: 06.17 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures
         ok 1 - should be equal
         1..1
-    ok 69 - 06.17 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=3.931ms
+    ok 69 - 06.17 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=4.884ms
     
     # Subtest: 06.18 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures
         ok 1 - should be equal
         1..1
-    ok 70 - 06.18 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=2.278ms
+    ok 70 - 06.18 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=9.2ms
     
     # Subtest: 06.19 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures
         ok 1 - should be equal
         1..1
-    ok 71 - 06.19 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=2.635ms
+    ok 71 - 06.19 - [36mopts.UKPostcodes[39m - vs. removeWidowPreventionMeasures # time=5.788ms
     
     # Subtest: 06.20 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji
         ok 1 - should be equal
         1..1
-    ok 72 - 06.20 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=3.319ms
+    ok 72 - 06.20 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=5.509ms
     
     # Subtest: 06.21 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji
         ok 1 - should be equal
         1..1
-    ok 73 - 06.21 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=2.638ms
+    ok 73 - 06.21 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=2.144ms
     
     # Subtest: 06.22 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji
         ok 1 - should be equal
         1..1
-    ok 74 - 06.22 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=2.697ms
+    ok 74 - 06.22 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=2.094ms
     
     # Subtest: 06.23 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji
         ok 1 - should be equal
         1..1
-    ok 75 - 06.23 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=2.796ms
+    ok 75 - 06.23 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, horse emoji # time=11.448ms
     
     # Subtest: 06.24 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode
         ok 1 - should be equal
         1..1
-    ok 76 - 06.24 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode # time=2.193ms
+    ok 76 - 06.24 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode # time=11.33ms
     
     # Subtest: 06.25 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode
         ok 1 - should be equal
         1..1
-    ok 77 - 06.25 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode # time=1.913ms
+    ok 77 - 06.25 - [36mopts.UKPostcodes[39m - improperly formatted UK postcode # time=6.006ms
     
     # Subtest: 06.26 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 78 - 06.26 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.893ms
+    ok 78 - 06.26 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.946ms
     
     # Subtest: 06.27 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps
         ok 1 - should be equal
         1..1
-    ok 79 - 06.27 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=1.857ms
+    ok 79 - 06.27 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, in caps # time=5.807ms
     
     # Subtest: 06.28 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes
         ok 1 - should be equal
         1..1
-    ok 80 - 06.28 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=1.695ms
+    ok 80 - 06.28 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=5.676ms
     
     # Subtest: 06.29 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes
         ok 1 - should be equal
         1..1
-    ok 81 - 06.29 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=2.415ms
+    ok 81 - 06.29 - [36mopts.UKPostcodes[39m - multiple properly formatted postcodes # time=5.47ms
     
     # Subtest: 06.30 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji
         ok 1 - should be equal
         1..1
-    ok 82 - 06.30 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji # time=5.717ms
+    ok 82 - 06.30 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji # time=2.305ms
     
     # Subtest: 06.31 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji
         ok 1 - should be equal
         1..1
-    ok 83 - 06.31 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji # time=4.372ms
+    ok 83 - 06.31 - [36mopts.UKPostcodes[39m - properly formatted UK postcode, some emoji # time=11.141ms
     
     # Subtest: 07.01 - [31mopts.removeWidowPreventionMeasures[39m - baseline
         ok 1 - 07.01
         1..1
-    ok 84 - 07.01 - [31mopts.removeWidowPreventionMeasures[39m - baseline # time=56.984ms
+    ok 84 - 07.01 - [31mopts.removeWidowPreventionMeasures[39m - baseline # time=26.29ms
     
     # Subtest: 07.02 - [31mopts.removeWidowPreventionMeasures[39m - comes in without nbsp's
         ok 1 - 07.02
         1..1
-    ok 85 - 07.02 - [31mopts.removeWidowPreventionMeasures[39m - comes in without nbsp's # time=28.917ms
+    ok 85 - 07.02 - [31mopts.removeWidowPreventionMeasures[39m - comes in without nbsp's # time=21.772ms
     
     # Subtest: 07.03 - [31mopts.removeWidowPreventionMeasures[39m - comes in with nbsp's
         ok 1 - 07.03.01 - html`, `css`, `js - LF`, `CR`, `CRLF - convertEntities=true
         1..1
-    ok 86 - 07.03 - [31mopts.removeWidowPreventionMeasures[39m - comes in with nbsp's # time=27.28ms
+    ok 86 - 07.03 - [31mopts.removeWidowPreventionMeasures[39m - comes in with nbsp's # time=21.169ms
     
     # Subtest: 08.01 - [32mopts.minWordCount[39m - opts.minWordCount = zero
         ok 1 - should be equal
         1..1
-    ok 87 - 08.01 - [32mopts.minWordCount[39m - opts.minWordCount = zero # time=1.427ms
+    ok 87 - 08.01 - [32mopts.minWordCount[39m - opts.minWordCount = zero # time=2.692ms
     
     # Subtest: 08.02 - [32mopts.minWordCount[39m - opts.minWordCount = falsey
         ok 1 - should be equal
         1..1
-    ok 88 - 08.02 - [32mopts.minWordCount[39m - opts.minWordCount = falsey # time=1.405ms
+    ok 88 - 08.02 - [32mopts.minWordCount[39m - opts.minWordCount = falsey # time=0.798ms
     
     # Subtest: 08.03 - [32mopts.minWordCount[39m - opts.minWordCount = falsey
         ok 1 - should be equal
         1..1
-    ok 89 - 08.03 - [32mopts.minWordCount[39m - opts.minWordCount = falsey # time=1.246ms
+    ok 89 - 08.03 - [32mopts.minWordCount[39m - opts.minWordCount = falsey # time=10.241ms
     
     # Subtest: 08.04 - [32mopts.minWordCount[39m - setting is less than words in the input
         ok 1 - should be equal
         1..1
-    ok 90 - 08.04 - [32mopts.minWordCount[39m - setting is less than words in the input # time=3.59ms
+    ok 90 - 08.04 - [32mopts.minWordCount[39m - setting is less than words in the input # time=4.59ms
     
     # Subtest: 08.05 - [32mopts.minWordCount[39m - setting is equal to words count in the input
         ok 1 - should be equal
         1..1
-    ok 91 - 08.05 - [32mopts.minWordCount[39m - setting is equal to words count in the input # time=2.119ms
+    ok 91 - 08.05 - [32mopts.minWordCount[39m - setting is equal to words count in the input # time=7.951ms
     
     # Subtest: 08.06 - [32mopts.minWordCount[39m - setting is more than words in the input
         ok 1 - should be equal
         1..1
-    ok 92 - 08.06 - [32mopts.minWordCount[39m - setting is more than words in the input # time=1.286ms
+    ok 92 - 08.06 - [32mopts.minWordCount[39m - setting is more than words in the input # time=5.293ms
     
     # Subtest: 09.01 - [33mopts.minCharCount[39m - opts.minCharCount = zero
         ok 1 - 09.01.01 - default word count 4 kicks in and makes program skip this
@@ -549,7 +548,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 5 - 09.01.05
         ok 6 - 09.01.06
         1..6
-    ok 93 - 09.01 - [33mopts.minCharCount[39m - opts.minCharCount = zero # time=3.985ms
+    ok 93 - 09.01 - [33mopts.minCharCount[39m - opts.minCharCount = zero # time=9.68ms
     
     # Subtest: 09.02 - [33mopts.minCharCount[39m - opts.minCharCount = falsey
         ok 1 - 09.02.01
@@ -558,7 +557,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 4 - 09.02.04
         ok 5 - 09.02.05
         1..5
-    ok 94 - 09.02 - [33mopts.minCharCount[39m - opts.minCharCount = falsey # time=4.878ms
+    ok 94 - 09.02 - [33mopts.minCharCount[39m - opts.minCharCount = falsey # time=10.145ms
     
     # Subtest: 10.01 - [36mopts.reportProgressFunc[39m - calls the progress function
         ok 1 - 10.01.01 - default behaviour
@@ -567,7 +566,7 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 4 - (unnamed test)
         ok 5 - 10.01.04 - counter called
         1..5
-    ok 95 - 10.01 - [36mopts.reportProgressFunc[39m - calls the progress function # time=88.39ms
+    ok 95 - 10.01 - [36mopts.reportProgressFunc[39m - calls the progress function # time=89.235ms
     
     # Subtest: 10.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range
         ok 1 - (unnamed test)
@@ -639,27 +638,28 @@ ok 1 - test/test.js # time=1985.223ms {
         ok 67 - checking: 64%
         ok 68 - should be equal
         1..68
-    ok 96 - 10.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range # time=318.906ms
+    ok 96 - 10.02 - [36mopts.reportProgressFunc[39m - adjusted from-to range # time=333.733ms
     
     # Subtest: 11.01 - [33mopts.tagRanges[39m - accepts known tag ranges and ignores everything
         ok 1 - 11.01 - everything ignored because everything is a tag
         1..1
-    ok 97 - 11.01 - [33mopts.tagRanges[39m - accepts known tag ranges and ignores everything # time=8.774ms
+    ok 97 - 11.01 - [33mopts.tagRanges[39m - accepts known tag ranges and ignores everything # time=18.561ms
     
     # Subtest: 11.02 - [33mopts.tagRanges[39m - widow space between tags
         ok 1 - 11.02.01 - default behaviour
         ok 2 - 11.02 - tags skipped
         1..2
-    ok 98 - 11.02 - [33mopts.tagRanges[39m - widow space between tags # time=4.103ms
+    ok 98 - 11.02 - [33mopts.tagRanges[39m - widow space between tags # time=10.401ms
     
     # Subtest: 11.03 - [33mopts.tagRanges[39m - widow space between tags
         ok 1 - 11.03.01
         ok 2 - 11.03.02
         1..2
-    ok 99 - 11.03 - [33mopts.tagRanges[39m - widow space between tags # time=6.31ms
+    ok 99 - 11.03 - [33mopts.tagRanges[39m - widow space between tags # time=8.292ms
     
     1..99
-    # time=1985.223ms
-}
+    # time=2107.958ms
+ok 1 - test/test.js # time=2107.958ms
 
 1..1
+# time=5087.309ms

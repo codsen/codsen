@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=407.561ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - one range, both defaults and inclusive
         ok 1 - 01.01.01 - within range
         ok 2 - 01.01.02 - on the starting of the range
@@ -11,7 +11,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 8 - 01.01.08 - matching against null
         ok 9 - 01.01.09 - matching against null
         1..9
-    ok 1 - 01.01 - one range, both defaults and inclusive # time=24.627ms
+    ok 1 - 01.01 - one range, both defaults and inclusive # time=14.709ms
     
     # Subtest: 01.02 - one range, opts.returnMatchedRangeInsteadOfTrue
         ok 1 - 01.02.01 - within range
@@ -22,7 +22,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 6 - 01.02.06 - outside of the range
         ok 7 - 01.02.07 - outside of the range, inclusive
         1..7
-    ok 2 - 01.02 - one range, opts.returnMatchedRangeInsteadOfTrue # time=16.519ms
+    ok 2 - 01.02 - one range, opts.returnMatchedRangeInsteadOfTrue # time=7.484ms
     
     # Subtest: 02.01 - two ranges, edges on defaults
         ok 1 - 02.01.01 - outside of the range
@@ -31,7 +31,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 4 - 02.01.04 - outside of the range
         ok 5 - 02.01.05 - outside of the range
         1..5
-    ok 3 - 02.01 - two ranges, edges on defaults # time=2.969ms
+    ok 3 - 02.01 - two ranges, edges on defaults # time=3.911ms
     
     # Subtest: 02.02 - two ranges, edges inclusive
         ok 1 - 02.02.01 - outside of the range
@@ -44,7 +44,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 8 - 02.02.08
         ok 9 - 02.02.09
         1..9
-    ok 4 - 02.02 - two ranges, edges inclusive # time=4.714ms
+    ok 4 - 02.02 - two ranges, edges inclusive # time=5.632ms
     
     # Subtest: 02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults
         ok 1 - 02.03.01 - outside of the range
@@ -53,7 +53,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 4 - 02.03.04 - outside of the range
         ok 5 - 02.03.05 - outside of the range
         1..5
-    ok 5 - 02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults # time=2.972ms
+    ok 5 - 02.03 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults # time=6.394ms
     
     # Subtest: 02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive
         ok 1 - 02.04.01 - outside of the range
@@ -67,7 +67,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 9 - 02.04.09
         ok 10 - 02.04.10 - zero
         1..10
-    ok 6 - 02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive # time=7.612ms
+    ok 6 - 02.04 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive # time=6.703ms
     
     # Subtest: 03.01 - more than two ranges, uneven count, not inclusive
         ok 1 - 03.01.01 - outside of the range
@@ -75,7 +75,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 3 - 03.01.03 - outside of the range
         ok 4 - 03.01.04 - with opts, outside of the range
         1..4
-    ok 7 - 03.01 - more than two ranges, uneven count, not inclusive # time=2.285ms
+    ok 7 - 03.01 - more than two ranges, uneven count, not inclusive # time=3.015ms
     
     # Subtest: 03.02 - even more ranges, not inclusive
         ok 1 - 03.02.00
@@ -236,7 +236,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 156 - 03.02.132-3
         ok 157 - 03.02.132-4
         1..157
-    ok 8 - 03.02 - even more ranges, not inclusive # time=81.003ms
+    ok 8 - 03.02 - even more ranges, not inclusive # time=98.066ms
     
     # Subtest: 03.03 - small ranges - zero
         ok 1 - 03.03.01 - no opts
@@ -258,7 +258,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 17 - 03.03.16 - overlap and wrong order - inclusive
         ok 18 - 03.03.17 - overlap and wrong order - inclusive
         1..18
-    ok 9 - 03.03 - small ranges - zero # time=12.759ms
+    ok 9 - 03.03 - small ranges - zero # time=9.011ms
     
     # Subtest: 03.04 - small ranges - one
         ok 1 - 03.04.01 - no opts
@@ -268,7 +268,7 @@ ok 1 - test/test.js # time=407.561ms {
         ok 5 - 03.04.05 - hardcoded opts defaults
         ok 6 - 03.04.06 - inclusive
         1..6
-    ok 10 - 03.04 - small ranges - one # time=2.606ms
+    ok 10 - 03.04 - small ranges - one # time=22.945ms
     
     # Subtest: 03.05 - identical range endings
         ok 1 - 03.05.01
@@ -302,27 +302,27 @@ ok 1 - test/test.js # time=407.561ms {
         ok 29 - 03.05.29 - identical consecutive with gap
         ok 30 - 03.05.30 - identical consecutive with gap
         1..30
-    ok 11 - 03.05 - identical range endings # time=13.093ms
+    ok 11 - 03.05 - identical range endings # time=16.189ms
     
     # Subtest: Ad-hoc #1
         ok 1 - 04.01.01
         ok 2 - 04.01.02
         1..2
-    ok 12 - Ad-hoc #1 # time=1.505ms
+    ok 12 - Ad-hoc #1 # time=2.21ms
     
     # Subtest: Ad-hoc #2
         ok 1 - 04.02
         1..1
-    ok 13 - Ad-hoc #2 # time=1.076ms
+    ok 13 - Ad-hoc #2 # time=1.59ms
     
     # Subtest: Ad-hoc #3
         ok 1 - 04.03
         1..1
-    ok 14 - Ad-hoc #3 # time=1.03ms
+    ok 14 - Ad-hoc #3 # time=1.594ms
     
     1..14
-    # time=407.561ms
-}
+    # time=349.266ms
+ok 1 - test/test.js # time=349.266ms
 
 1..1
-# time=3010.271ms
+# time=2476.613ms

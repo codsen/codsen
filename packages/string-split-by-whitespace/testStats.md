@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=123.692ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - wrong/missing input = throw
         ok 1 - expected to throw
         ok 2 - expected to throw
@@ -7,17 +7,17 @@ ok 1 - test/test.js # time=123.692ms {
         ok 4 - 01.01.04
         ok 5 - 01.01.05
         1..5
-    ok 1 - 01.01 - wrong/missing input = throw # time=17.937ms
+    ok 1 - 01.01 - wrong/missing input = throw # time=12.399ms
     
     # Subtest: 01.02 - empty string as input
         ok 1 - 01.02
         1..1
-    ok 2 - 01.02 - empty string as input # time=2.588ms
+    ok 2 - 01.02 - empty string as input # time=2.652ms
     
     # Subtest: 01.03 - opts contain non-array elements
         ok 1 - expected to throw
         1..1
-    ok 3 - 01.03 - opts contain non-array elements # time=2.401ms
+    ok 3 - 01.03 - opts contain non-array elements # time=1.936ms
     
     # Subtest: 02.01 - splits two
         ok 1 - 02.01.01
@@ -30,7 +30,7 @@ ok 1 - test/test.js # time=123.692ms {
         ok 8 - 02.01.08
         ok 9 - 02.01.09
         1..9
-    ok 4 - 02.01 - splits two # time=7.64ms
+    ok 4 - 02.01 - splits two # time=8.302ms
     
     # Subtest: 02.02 - single substring
         ok 1 - 02.02.01
@@ -40,31 +40,31 @@ ok 1 - test/test.js # time=123.692ms {
         ok 5 - 02.02.05
         ok 6 - 02.02.06
         1..6
-    ok 5 - 02.02 - single substring # time=3.137ms
+    ok 5 - 02.02 - single substring # time=4.562ms
     
     # Subtest: 03.01 - opts.ignoreRanges offset the start
         ok 1 - 03.01.01
         1..1
-    ok 6 - 03.01 - opts.ignoreRanges offset the start # time=2.275ms
+    ok 6 - 03.01 - opts.ignoreRanges offset the start # time=14.854ms
     
     # Subtest: 03.02 - starts from the middle of a string
         ok 1 - 03.02.01
         1..1
-    ok 7 - 03.02 - starts from the middle of a string # time=1.364ms
+    ok 7 - 03.02 - starts from the middle of a string # time=8.69ms
     
     # Subtest: 03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails
         ok 1 - 03.03.01
         1..1
-    ok 8 - 03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails # time=4.16ms
+    ok 8 - 03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails # time=4.326ms
     
     # Subtest: 03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables
         ok 1 - 03.04
         1..1
-    ok 9 - 03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables # time=2.126ms
+    ok 9 - 03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables # time=2.171ms
     
     1..9
-    # time=123.692ms
-}
+    # time=190.557ms
+ok 1 - test/test.js # time=190.557ms
 
 1..1
-# time=1955.16ms
+# time=2362.946ms

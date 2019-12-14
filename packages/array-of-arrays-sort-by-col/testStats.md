@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=1205.44ms {
+# Subtest: test/test.js
     # Subtest: 1.1 - multiple elements, #1
         ok 1 - should be equivalent
         ok 2 - should be equivalent
@@ -150,7 +150,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 147 - expected to throw
         ok 148 - expect truthy value
         1..148
-    ok 1 - 1.1 - multiple elements, #1 # time=182.231ms
+    ok 1 - 1.1 - multiple elements, #1 # time=150.814ms
     
     # Subtest: 1.2.1 - multiple elements, #2
         ok 1 - should be equivalent
@@ -174,7 +174,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 2 - 1.2.1 - multiple elements, #2 # time=30.415ms
+    ok 2 - 1.2.1 - multiple elements, #2 # time=27.274ms
     
     # Subtest: 1.2.2 - multiple elements, #2
         ok 1 - should be equivalent
@@ -198,7 +198,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 3 - 1.2.2 - multiple elements, #2 # time=26.58ms
+    ok 3 - 1.2.2 - multiple elements, #2 # time=18.452ms
     
     # Subtest: 1.2.3 - multiple elements, #2
         ok 1 - should be equivalent
@@ -222,7 +222,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 4 - 1.2.3 - multiple elements, #2 # time=22.467ms
+    ok 4 - 1.2.3 - multiple elements, #2 # time=16.741ms
     
     # Subtest: 1.2.4 - multiple elements, #2
         ok 1 - should be equivalent
@@ -246,19 +246,19 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 5 - 1.2.4 - multiple elements, #2 # time=15.837ms
+    ok 5 - 1.2.4 - multiple elements, #2 # time=13.01ms
     
     # Subtest: 1.2.5 - multiple elements, #2 - axis outside of the range
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 6 - 1.2.5 - multiple elements, #2 - axis outside of the range # time=1.213ms
+    ok 6 - 1.2.5 - multiple elements, #2 - axis outside of the range # time=1.981ms
     
     # Subtest: 1.2.6 - multiple elements, #2 - axis outside of the range
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 7 - 1.2.6 - multiple elements, #2 - axis outside of the range # time=2.938ms
+    ok 7 - 1.2.6 - multiple elements, #2 - axis outside of the range # time=1.978ms
     
     # Subtest: 1.3 - multiple elements, #3 - opposite order
         ok 1 - should be equivalent
@@ -342,7 +342,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 79 - should be equivalent
         ok 80 - should be equivalent
         1..80
-    ok 8 - 1.3 - multiple elements, #3 - opposite order # time=125.204ms
+    ok 8 - 1.3 - multiple elements, #3 - opposite order # time=245.067ms
     
     # Subtest: 1.4 - multiple elements, #4 - single elements
         ok 1 - should be equivalent
@@ -440,12 +440,11 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 93 - expected to throw
         ok 94 - expect truthy value
         1..94
-    ok 9 - 1.4 - multiple elements, #4 - single elements # time=81.914ms
+    ok 9 - 1.4 - multiple elements, #4 - single elements # time=78.549ms
     
     # Subtest: 1.5.1 - first column indexes contain opposite order values
         ok 1 - should be equivalent
         ok 2 - should be equivalent
-# time=4221.502ms
         ok 3 - should be equivalent
         ok 4 - should be equivalent
         ok 5 - should be equivalent
@@ -465,7 +464,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 10 - 1.5.1 - first column indexes contain opposite order values # time=13.816ms
+    ok 10 - 1.5.1 - first column indexes contain opposite order values # time=14.558ms
     
     # Subtest: 1.5.2 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -489,7 +488,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 11 - 1.5.2 - first column indexes contain opposite order values # time=11.91ms
+    ok 11 - 1.5.2 - first column indexes contain opposite order values # time=11.709ms
     
     # Subtest: 1.5.3 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -513,7 +512,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 12 - 1.5.3 - first column indexes contain opposite order values # time=18.286ms
+    ok 12 - 1.5.3 - first column indexes contain opposite order values # time=15.632ms
     
     # Subtest: 1.5.4 - first column indexes contain opposite order values
         ok 1 - should be equivalent
@@ -537,7 +536,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 19 - should be equivalent
         ok 20 - should be equivalent
         1..20
-    ok 13 - 1.5.4 - first column indexes contain opposite order values # time=21.989ms
+    ok 13 - 1.5.4 - first column indexes contain opposite order values # time=24.807ms
     
     # Subtest: 1.6 - null over number
         ok 1 - should be equivalent
@@ -553,7 +552,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 14 - 1.6 - null over number # time=7.445ms
+    ok 14 - 1.6 - null over number # time=6.886ms
     
     # Subtest: 1.7 - just nulls over numbers
         ok 1 - should be equivalent
@@ -563,7 +562,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 5 - should be equivalent
         ok 6 - should be equivalent
         1..6
-    ok 15 - 1.7 - just nulls over numbers # time=4.734ms
+    ok 15 - 1.7 - just nulls over numbers # time=10.044ms
     
     # Subtest: 1.8 - just nulls over numbers
         ok 1 - should be equivalent
@@ -603,7 +602,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 35 - should be equivalent
         ok 36 - should be equivalent
         1..36
-    ok 16 - 1.8 - just nulls over numbers # time=38.333ms
+    ok 16 - 1.8 - just nulls over numbers # time=38.669ms
     
     # Subtest: 1.9 - just nulls over numbers
         ok 1 - should be equivalent
@@ -727,7 +726,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 119 - should be equivalent
         ok 120 - should be equivalent
         1..120
-    ok 17 - 1.9 - just nulls over numbers # time=185.359ms
+    ok 17 - 1.9 - just nulls over numbers # time=116.609ms
     
     # Subtest: 1.10 - value of first ripple-left is null
         ok 1 - should be equivalent
@@ -749,7 +748,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 17 - should be equivalent
         ok 18 - should be equivalent
         1..18
-    ok 18 - 1.10 - value of first ripple-left is null # time=12.088ms
+    ok 18 - 1.10 - value of first ripple-left is null # time=10.061ms
     
     # Subtest: 2.1 - various empty arrays
         ok 1 - should be equivalent
@@ -817,7 +816,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 63 - should be equivalent
         ok 64 - should be equivalent
         1..64
-    ok 19 - 2.1 - various empty arrays # time=34.621ms
+    ok 19 - 2.1 - various empty arrays # time=62.722ms
     
     # Subtest: 2.2 - throws
         ok 1 - expected to throw
@@ -829,13 +828,13 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 7 - expected to throw
         ok 8 - expect truthy value
         1..8
-    ok 20 - 2.2 - throws # time=4.614ms
+    ok 20 - 2.2 - throws # time=6.934ms
     
     # Subtest: 2.3 - throws when sort-by value is outside of any sub-arrays
         ok 1 - expected to throw
         ok 2 - expect truthy value
         1..2
-    ok 21 - 2.3 - throws when sort-by value is outside of any sub-arrays # time=1.047ms
+    ok 21 - 2.3 - throws when sort-by value is outside of any sub-arrays # time=10.344ms
     
     # Subtest: 3.1 - clumping - simple case with values as undefined
         ok 1 - should be equivalent
@@ -845,7 +844,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 5 - should be equivalent
         ok 6 - should be equivalent
         1..6
-    ok 22 - 3.1 - clumping - simple case with values as undefined # time=3.226ms
+    ok 22 - 3.1 - clumping - simple case with values as undefined # time=5.721ms
     
     # Subtest: 3.2 - clumping - left side takes priority over right - case #1 - values on both sides
         ok 1 - should be equivalent
@@ -861,7 +860,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 23 - 3.2 - clumping - left side takes priority over right - case #1 - values on both sides # time=9.851ms
+    ok 23 - 3.2 - clumping - left side takes priority over right - case #1 - values on both sides # time=24.683ms
     
     # Subtest: 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col
         ok 1 - should be equivalent
@@ -877,7 +876,7 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 24 - 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col # time=8.396ms
+    ok 24 - 3.3 - clumping - left side takes priority over right - case #2 - axis is 0th col # time=6.962ms
     
     # Subtest: 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays)
         ok 1 - should be equivalent
@@ -893,20 +892,21 @@ ok 1 - test/test.js # time=1205.44ms {
         ok 11 - should be equivalent
         ok 12 - should be equivalent
         1..12
-    ok 25 - 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays) # time=15.755ms
+    ok 25 - 3.4 - clumping - left side takes priority over right - case #3 - sort axis is last value (equal length subarrays) # time=21.526ms
     
     1..25
-    # time=1205.44ms
-}
+    # time=1107.231ms
+ok 1 - test/test.js # time=1107.231ms
 
-ok 2 - test/umd-test.js # time=31.744ms {
+# Subtest: test/umd-test.js
     # Subtest: UMD build works fine
         ok 1 - should be equivalent
         1..1
-    ok 1 - UMD build works fine # time=16.279ms
+    ok 1 - UMD build works fine # time=17.311ms
     
     1..1
-    # time=31.744ms
-}
+    # time=23.547ms
+ok 2 - test/umd-test.js # time=23.547ms
 
 1..2
+# time=6075.935ms

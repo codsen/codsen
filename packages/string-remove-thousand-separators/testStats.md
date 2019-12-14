@@ -1,5 +1,5 @@
 TAP version 13
-ok 1 - test/test.js # time=243.747ms {
+# Subtest: test/test.js
     # Subtest: 01.01 - removes Swiss-style thousand separators, single quotes
         ok 1 - 01.01.01 - normal
         ok 2 - 01.01.02 - one decimal place - padds to two decimal places (default)
@@ -10,7 +10,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 7 - 01.01.07 - one decimal place - does not pad to two decimal places (off)
         ok 8 - 01.01.08 - inconsistent thousand separators - bails
         1..8
-    ok 1 - 01.01 - removes Swiss-style thousand separators, single quotes # time=26.84ms
+    ok 1 - 01.01 - removes Swiss-style thousand separators, single quotes # time=36.854ms
     
     # Subtest: 01.02 - removes Russian-style thousand separators, spaces
         ok 1 - 01.02.01
@@ -22,7 +22,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 7 - 01.02.07 - basically everything's off.
         ok 8 - 01.02.08 - inconsistent thousand separators - bail
         1..8
-    ok 2 - 01.02 - removes Russian-style thousand separators, spaces # time=6.426ms
+    ok 2 - 01.02 - removes Russian-style thousand separators, spaces # time=7.768ms
     
     # Subtest: 01.03 - removes UK/US-style thousand separators, commas
         ok 1 - 01.03.01
@@ -34,7 +34,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 7 - 01.03.07 - does nothing, basically
         ok 8 - 01.03.08 - bails because of inconsistent thousand separators
         1..8
-    ok 3 - 01.03 - removes UK/US-style thousand separators, commas # time=5.415ms
+    ok 3 - 01.03 - removes UK/US-style thousand separators, commas # time=6.466ms
     
     # Subtest: 01.04 - removes opposite-style thousand separators, commas
         ok 1 - 01.04.01 - removes separators
@@ -46,7 +46,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 7 - 01.04.05 - neither removes separators not pads because opts turned off both
         ok 8 - 01.04.06 - bails when encounters inconsistent thousand separators
         1..8
-    ok 4 - 01.04 - removes opposite-style thousand separators, commas # time=6.379ms
+    ok 4 - 01.04 - removes opposite-style thousand separators, commas # time=6.118ms
     
     # Subtest: 02.01 - false - includes some text characters
         ok 1 - 02.02.01 - does nothing because there are letters
@@ -57,7 +57,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 6 - 02.02.06 - does not freak out if it's text-only
         ok 7 - 02.02.07 - does not freak out if it's empty-text-only
         1..7
-    ok 5 - 02.01 - false - includes some text characters # time=3.695ms
+    ok 5 - 02.01 - false - includes some text characters # time=4.273ms
     
     # Subtest: 02.02 - false - mixed thousand separators, two dots one comma
         ok 1 - 02.02.01
@@ -65,7 +65,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 3 - 02.02.03
         ok 4 - 02.02.04
         1..4
-    ok 6 - 02.02 - false - mixed thousand separators, two dots one comma # time=2.522ms
+    ok 6 - 02.02 - false - mixed thousand separators, two dots one comma # time=3.148ms
     
     # Subtest: 02.03 - false - few sneaky cases
         ok 1 - 02.03.01 - the first char after thousands separator is wrong
@@ -77,7 +77,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 7 - 02.03.07
         ok 8 - 02.03.08
         1..8
-    ok 7 - 02.03 - false - few sneaky cases # time=7.62ms
+    ok 7 - 02.03 - false - few sneaky cases # time=5.339ms
     
     # Subtest: 02.04 - trims
         ok 1 - 02.04.01 - trims double quotes
@@ -85,7 +85,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 3 - 02.04.03 - trims whitespace quotes
         ok 4 - 02.04.04 - still trims before bails
         1..4
-    ok 8 - 02.04 - trims # time=2.711ms
+    ok 8 - 02.04 - trims # time=3.51ms
     
     # Subtest: 03.01 - converts Russian-style notation into UK-one
         ok 1 - 03.01.01 - one decimal place
@@ -105,14 +105,14 @@ ok 1 - test/test.js # time=243.747ms {
         ok 15 - 03.01.15 - forces style, padding kicks in by default but does not remove thousand separators, just as explicitly requested
         ok 16 - 03.01.16 - forces style but does nothing else (padding or thousand separator removal)
         1..16
-    ok 9 - 03.01 - converts Russian-style notation into UK-one # time=12.597ms
+    ok 9 - 03.01 - converts Russian-style notation into UK-one # time=11.736ms
     
     # Subtest: 99.01 - throws when the inputs are missing
         ok 1 - expected to throw
         ok 2 - expected to not throw
         ok 3 - expected to not throw
         1..3
-    ok 10 - 99.01 - throws when the inputs are missing # time=9.735ms
+    ok 10 - 99.01 - throws when the inputs are missing # time=3.716ms
     
     # Subtest: 99.02 - throws when first arg is not string
         ok 1 - expected to throw
@@ -121,7 +121,7 @@ ok 1 - test/test.js # time=243.747ms {
         ok 4 - expected to throw
         ok 5 - expected to throw
         1..5
-    ok 11 - 99.02 - throws when first arg is not string # time=6.136ms
+    ok 11 - 99.02 - throws when first arg is not string # time=4.121ms
     
     # Subtest: 99.03 - throws when second arg is not a plain object
         ok 1 - expected to not throw
@@ -131,21 +131,21 @@ ok 1 - test/test.js # time=243.747ms {
         ok 5 - expected to throw
         ok 6 - expected to throw
         1..6
-    ok 12 - 99.03 - throws when second arg is not a plain object # time=8.03ms
+    ok 12 - 99.03 - throws when second arg is not a plain object # time=4.383ms
     
     1..12
-    # time=243.747ms
-}
+    # time=171.314ms
+ok 1 - test/test.js # time=171.314ms
 
-ok 2 - test/umd-test.js # time=30.649ms {
+# Subtest: test/umd-test.js
     # Subtest: UMD build works fine
         ok 1 - should be equivalent
         1..1
-    ok 1 - UMD build works fine # time=20.424ms
+    ok 1 - UMD build works fine # time=11.251ms
     
     1..1
-    # time=30.649ms
-}
+    # time=17.319ms
+ok 2 - test/umd-test.js # time=17.319ms
 
 1..2
-# time=3517.675ms
+# time=5597.395ms

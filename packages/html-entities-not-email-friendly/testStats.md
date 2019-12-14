@@ -1,13 +1,13 @@
 TAP version 13
-ok 1 - test/test.js # time=112.107ms {
+# Subtest: test/test.js
     # Subtest: 1 - notEmailFriendly is set
         ok 1 - expect truthy value
         1..1
-    ok 1 - 1 - notEmailFriendly is set # time=104.517ms
+    ok 1 - 1 - notEmailFriendly is set # time=6.998ms
     
     1..1
-    # time=112.107ms
-}
+    # time=15.802ms
+ok 1 - test/test.js # time=15.802ms
 
 1..1
-# time=2978.74ms
+# time=3756.606ms
