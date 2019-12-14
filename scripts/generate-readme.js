@@ -269,9 +269,7 @@ const template = `# Codsen
 
 We, Codsen Ltd, provide consulting services since 2014.
 
-Our two specialties are: **coding and maintaining email templates** and making **process-as-string tooling** in JavaScript.
-
-We created and maintain a few npm packages:
+In 2019, people downloaded our libraries [3 million times](https://npm-stat.com/charts.html?author=royston)!
 
 ## 💡 Table of Contents
 

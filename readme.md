@@ -4,9 +4,7 @@
 
 We, Codsen Ltd, provide consulting services since 2014.
 
-Our two specialties are: **coding and maintaining email templates** and making **process-as-string tooling** in JavaScript.
-
-We created and maintain a few npm packages:
+In 2019, people downloaded our libraries [3 million times](https://npm-stat.com/charts.html?author=royston)!
 
 ## 💡 Table of Contents
 
@@ -241,7 +239,7 @@ You use them in the Terminal (command line), for example:
 | [`detect-is-it-html-or-xhtml`](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) | Answers, is the string input string more an HTML or XHTML (or neither) | [![detect-is-it-html-or-xhtml on npm](https://img.shields.io/npm/v/detect-is-it-html-or-xhtml.svg?style=flat-square)](https://www.npmjs.com/package/detect-is-it-html-or-xhtml) | [packages/detect-is-it-html-or-xhtml](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) |
 | [`email-homey`](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://gitlab.com/codsen/codsen/tree/master/packages/email-homey/) |
 | [`emlint`](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) | Pluggable email template code linter | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/) |
-| [`eslint-plugin-row-num`](https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num/) | updates row numbers in front of each encountered console.log | [![eslint-plugin-row-num on npm](https://img.shields.io/npm/v/eslint-plugin-row-num.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-row-num) | [packages/eslint-plugin-row-num](https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num/) |
+| [`eslint-plugin-row-num`](https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num/) | ESLint rule to update row numbers on each console.log | [![eslint-plugin-row-num on npm](https://img.shields.io/npm/v/eslint-plugin-row-num.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-row-num) | [packages/eslint-plugin-row-num](https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num/) |
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
 | [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
