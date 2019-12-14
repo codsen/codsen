@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-row-num",
   "version": "1.1.0",
-  "description": "updates row numbers in front of each encountered console.log",
+  "description": "ESLint rule to update row numbers on each console.log",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
