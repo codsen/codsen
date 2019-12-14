@@ -1,7 +1,7 @@
 /**
  * object-no-new-keys
  * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * Version: 2.8.6
+ * Version: 2.8.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys

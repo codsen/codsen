@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.0.47",
+  "version": "8.0.48",
   "description": "It's like SASS variables, but for JSON",
   "license": "MIT",
   "engines": {
@@ -123,25 +123,25 @@
     "timeout": 0
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.25",
-    "ast-get-values-by-key": "^2.6.53",
-    "ast-monkey-traverse": "^1.12.1",
+    "arrayiffy-if-string": "^3.11.26",
+    "ast-get-values-by-key": "^2.6.54",
+    "ast-monkey-traverse": "^1.12.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^2.1.0",
     "object-path": "^0.11.4",
-    "ranges-apply": "^3.0.44",
-    "ranges-push": "^3.6.11",
-    "string-find-heads-tails": "^3.15.7",
-    "string-match-left-right": "^3.11.15",
-    "string-remove-duplicate-heads-tails": "^3.0.44"
+    "ranges-apply": "^3.0.45",
+    "ranges-push": "^3.6.12",
+    "string-find-heads-tails": "^3.15.8",
+    "string-match-left-right": "^3.11.16",
+    "string-remove-duplicate-heads-tails": "^3.0.45"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.10",
-    "lect": "^0.11.3",
+    "js-row-num-cli": "^1.6.11",
+    "lect": "^0.11.4",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

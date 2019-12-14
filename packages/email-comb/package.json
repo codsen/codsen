@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "3.8.17",
+  "version": "3.8.18",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {
@@ -120,28 +120,28 @@
     "timeout": 0
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.55",
-    "ast-is-empty": "^1.9.51",
+    "array-pull-all-with-glob": "^4.12.56",
+    "ast-is-empty": "^1.9.52",
     "lodash.intersection": "^4.4.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^2.1.0",
-    "ranges-apply": "^3.0.44",
-    "ranges-push": "^3.6.11",
-    "regex-empty-conditional-comments": "^1.8.50",
-    "string-extract-class-names": "^5.9.11",
-    "string-left-right": "^2.3.11",
-    "string-match-left-right": "^3.11.15",
-    "string-range-expander": "^1.10.51",
-    "string-uglify": "^1.2.31"
+    "ranges-apply": "^3.0.45",
+    "ranges-push": "^3.6.12",
+    "regex-empty-conditional-comments": "^1.8.51",
+    "string-extract-class-names": "^5.9.12",
+    "string-left-right": "^2.3.12",
+    "string-match-left-right": "^3.11.16",
+    "string-range-expander": "^1.10.52",
+    "string-uglify": "^1.2.32"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.10",
-    "lect": "^0.11.3",
+    "js-row-num-cli": "^1.6.11",
+    "lect": "^0.11.4",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

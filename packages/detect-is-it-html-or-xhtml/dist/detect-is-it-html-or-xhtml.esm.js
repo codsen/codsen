@@ -1,7 +1,7 @@
 /**
  * detect-is-it-html-or-xhtml
  * Answers, is the string input string more an HTML or XHTML (or neither)
- * Version: 3.9.50
+ * Version: 3.9.51
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml

@@ -1,7 +1,7 @@
 /**
  * tap-parse-string-to-object
  * Parses raw Tap output, string-to-object
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object

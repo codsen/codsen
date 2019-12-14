@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://gitlab.com/codsen/codsen/compare/js-row-num@2.6.0...js-row-num@2.7.0) (2019-12-14)
+
+
+### Bug Fixes
+
+* fix the regression of letters in front of digits not causing a bailout ([d141967](https://gitlab.com/codsen/codsen/commit/d14196750fa3b83d049bbd573fe0851ef150120f))
+* set up Tap as a test runner, write many more unit tests and fix all remaining issues ([58e1471](https://gitlab.com/codsen/codsen/commit/58e147195282077df7ad20efb00dac95976ac24d))
+
+
+### Features
+
+* fix the digit recognition when they're given in quotes only or as num only ([b787c1e](https://gitlab.com/codsen/codsen/commit/b787c1ed86671311a21f842e42f2305e5914b15b))
+
+
+
+
+
 ## 2.6.0 (2019-12-09)
 
 ### Features

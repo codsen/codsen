@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.6.11",
+  "version": "3.6.12",
   "description": "Manage the array of ranges referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
@@ -120,16 +120,16 @@
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "ranges-merge": "^4.2.28",
-    "string-collapse-leading-whitespace": "^2.0.9",
-    "string-trim-spaces-only": "^2.8.8"
+    "ranges-merge": "^4.2.29",
+    "string-collapse-leading-whitespace": "^2.0.10",
+    "string-trim-spaces-only": "^2.8.9"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.10",
-    "lect": "^0.11.3",
+    "js-row-num-cli": "^1.6.11",
+    "lect": "^0.11.4",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

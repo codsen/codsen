@@ -1,7 +1,7 @@
 /**
  * ranges-ent-decode
  * Decode HTML entities recursively, get string index ranges of what needs to be replaced where
- * Version: 2.0.41
+ * Version: 2.0.42
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode

@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
@@ -121,10 +121,10 @@
     "timeout": 0
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.55",
-    "arrayiffy-if-string": "^3.11.25",
-    "ast-monkey-traverse": "^1.12.1",
-    "bitbucket-slug": "^1.9.50",
+    "array-pull-all-with-glob": "^4.12.56",
+    "arrayiffy-if-string": "^3.11.26",
+    "ast-monkey-traverse": "^1.12.2",
+    "bitbucket-slug": "^1.9.51",
     "chalk": "^3.0.0",
     "execa": "^3.4.0",
     "filesize": "^6.0.1",
@@ -143,8 +143,8 @@
     "log-symbols": "^3.0.0",
     "matcher": "^2.1.0",
     "meow": "^6.0.0",
-    "object-delete-key": "^1.9.10",
-    "object-merge-advanced": "^10.11.9",
+    "object-delete-key": "^1.9.11",
+    "object-merge-advanced": "^10.11.10",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
@@ -165,9 +165,9 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-row-num": "^1.1.0",
-    "js-row-num-cli": "^1.6.10",
-    "lect": "^0.11.3",
+    "eslint-plugin-row-num": "^1.1.1",
+    "js-row-num-cli": "^1.6.11",
+    "lect": "^0.11.4",
     "prettier": "^1.19.1",
     "tap": "^14.10.2",
     "tempy": "^0.3.0"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.2.2...is-html-tag-opening@1.3.0) (2019-12-14)
+
+
+### Features
+
+* add one more type of char arrangement - slash in front, confirmed tag name follows ([8d1ecc9](https://gitlab.com/codsen/codsen/commit/8d1ecc913457ebce02a3b1559ddcb8726ab1284a))
+
+
+
+
+
 ## 1.2.0 (2019-11-18)
 
 ### Features

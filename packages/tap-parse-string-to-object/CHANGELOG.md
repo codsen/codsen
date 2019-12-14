@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/codsen/codsen/compare/tap-parse-string-to-object@1.1.0...tap-parse-string-to-object@1.2.0) (2019-12-14)
+
+
+### Features
+
+* recognise raw tap with single suite, no curlies ([d7daf96](https://gitlab.com/codsen/codsen/commit/d7daf96e62661022b2bdee00e0ae5029d9c697b6))
+* support stream inputs, in which case, return promise of an object ([70a34cf](https://gitlab.com/codsen/codsen/commit/70a34cf6c07c5674b7f20f723ba0b098ffa3a9b1))
+
+
+
+
+
 ## 1.1.0 (2019-12-09)
 
 ### Features
