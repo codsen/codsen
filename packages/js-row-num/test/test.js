@@ -577,6 +577,38 @@ t.test(
   }
 );
 
+t.test(
+  `05.12 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with backticks - no text`,
+  t => {
+    t.is(
+      fixRowNums("`1`", {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      "`124`",
+      `05.12`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.13 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with backticks - no text, override rownum is number`,
+  t => {
+    t.same(
+      fixRowNums("`1`", {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[1, 2, "124"]],
+      `05.13`
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // 06. custom functions via opts.triggerKeywords
 // -----------------------------------------------------------------------------
