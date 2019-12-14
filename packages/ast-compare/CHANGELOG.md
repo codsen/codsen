@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.12.28](https://gitlab.com/codsen/codsen/compare/ast-compare@1.12.27...ast-compare@1.12.28) (2019-12-14)
-
-**Note:** Version bump only for package ast-compare
-
-
-
-
-
 ## 1.12.19 (2019-10-07)
 
 ### Performance Improvements
