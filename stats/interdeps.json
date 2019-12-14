@@ -313,7 +313,7 @@
     },
     {
         "name": "js-row-num",
-        "size": 6430,
+        "size": 6690,
         "imports": [
             "ranges-apply",
             "ranges-push"

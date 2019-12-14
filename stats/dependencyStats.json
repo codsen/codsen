@@ -173,7 +173,6 @@
         "lodash.clonedeep": 4,
         "lodash.isequal": 1,
         "map-stream": 1,
-        "mocha": 1,
         "node-fetch": 1,
         "object-boolean-combinations": 1,
         "object-delete-key": 1,
