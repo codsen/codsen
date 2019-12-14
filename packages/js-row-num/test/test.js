@@ -284,7 +284,7 @@ t.test(
   `03.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - text that mentions ${letterC}onsole.log`,
   t => {
     const str =
-      "I added a ${letterC}onsole.log (and then added so-called `quotes`).";
+      "I added a ${letterC}onsole.log (and then added 3 so-called `quotes`).";
     t.is(fixRowNums(str), str, `03.01`);
     t.end();
   }
@@ -318,12 +318,21 @@ t.test(
   }
 );
 
+t.test(
+  `03.05 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - letter, then digit`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(fixRowNums(str), str, `03.05`);
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 // group 04. opts
 // -----------------------------------------------------------------------------
 
 t.test(
-  `04.01 - ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} - padding is set to numbers`,
+  `04.01 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to numbers`,
   t => {
     const str = `zzz\n${letterC}onsole.log('1 something')`;
     t.is(
@@ -371,7 +380,7 @@ t.test(
 );
 
 t.test(
-  `04.02 - ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} - padding is set to be falsey`,
+  `04.02 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to be falsey`,
   t => {
     const str = `zzz\n${letterC}onsole.log('1 something')`;
     t.is(
@@ -388,6 +397,127 @@ t.test(
       fixRowNums(str, { padStart: undefined }),
       `zzz\n${letterC}onsole.log('2 something')`,
       `04.02.03`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.03 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - letter then digit`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(
+      fixRowNums(str, {
+        padStart: 10
+      }),
+      str,
+      `04.03`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.04 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(
+      fixRowNums(str, {
+        overrideRowNum: 10
+      }),
+      str,
+      `04.04`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.05 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.returnRangesOnly`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(
+      fixRowNums(str, {
+        returnRangesOnly: true
+      }),
+      null,
+      `04.05`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.06 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.returnRangesOnly +`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(
+      fixRowNums(str, {
+        padStart: 9,
+        returnRangesOnly: true
+      }),
+      null,
+      `04.06`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.07 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
+  t => {
+    const str = `\nconsole.log("a 1")`;
+    t.is(
+      fixRowNums(str, {
+        extractedLogContentsWereGiven: true
+      }),
+      str,
+      `04.07`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.08 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
+  t => {
+    const str = `\n"a 1"`;
+    t.is(
+      fixRowNums(str, {
+        extractedLogContentsWereGiven: true
+      }),
+      str,
+      `04.08`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.09 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
+  t => {
+    const str = `a 1`;
+    t.is(
+      fixRowNums(str, {
+        extractedLogContentsWereGiven: true
+      }),
+      str,
+      `04.09`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.10 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`,
+  t => {
+    const str = "`a 1`";
+    t.is(
+      fixRowNums(str, {
+        extractedLogContentsWereGiven: true
+      }),
+      str,
+      `04.10`
     );
     t.end();
   }
@@ -604,6 +734,56 @@ t.test(
       }),
       [[1, 2, "124"]],
       `05.13`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.14 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - only number, with surrounding whitespace`,
+  t => {
+    t.same(
+      fixRowNums("\n1\n", {
+        overrideRowNum: 124,
+        returnRangesOnly: true,
+        extractedLogContentsWereGiven: true
+      }),
+      [[1, 2, "124"]],
+      `05.14`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.15 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 1`,
+  t => {
+    const source = "\\u001b[${32}m${`z`}\\u001b[${39}m";
+    t.same(
+      fixRowNums(source, {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      source,
+      `05.15`
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.16 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 2`,
+  t => {
+    const source = "some text 1 and more text";
+    t.same(
+      fixRowNums(source, {
+        overrideRowNum: 124,
+        returnRangesOnly: false,
+        extractedLogContentsWereGiven: true
+      }),
+      source,
+      `05.16`
     );
     t.end();
   }

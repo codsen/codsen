@@ -84,12 +84,15 @@ function fixRowNums(str, originalOpts) {
         quotes.start = i;
         quotes.type = str[i];
         wasLetterDetected = false;
-      } else if (
-        opts.extractedLogContentsWereGiven &&
-        isDigit(str[i]) &&
-        digitStartsAt === null
-      ) {
-        digitStartsAt = i;
+      } else if (opts.extractedLogContentsWereGiven && digitStartsAt === null) {
+        if (isDigit(str[i])) {
+          if (str[i - 2] && str[i - 1] === "u" && str[i - 2] === "\\") {
+            break;
+          }
+          digitStartsAt = i;
+        } else {
+          break;
+        }
       } else if (
         str[i].trim().length &&
         str[i] !== "/" &&
