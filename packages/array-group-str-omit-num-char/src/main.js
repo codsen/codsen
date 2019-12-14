@@ -121,9 +121,8 @@ function groupStr(originalArr, originalOpts) {
     }
   }
 
-  console.log();
   console.log(
-    `126 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
+    `125 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
       compiledObj,
       null,
       4
