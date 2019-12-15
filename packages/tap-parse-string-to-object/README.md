@@ -67,9 +67,14 @@ This library is a basic raw [Tap](https://node-tap.org/) parser, string-to-objec
 
 It is aimed to parse Tap raw test output saved into files using `tap -o`.
 
-Existing Tap parsers like [tap-parser](https://www.npmjs.com/package/tap-parser) are aimed at operations in the terminal, they consume piped output there and return streams.
+Existing Tap parsers like [tap-parser](https://www.npmjs.com/package/tap-parser) are aimed at operations in the terminal; they consume piped output there and return streams.
 
-This program is similar to `JSON.parse`: it takes a raw string and outputs a plain object, like:
+This program is similar to `JSON.parse` except that it works synchronously and asynchronously, depending on what you give:
+
+* if you (synchronously) give it a **string**, it will (synchronously) output a plain object
+* if you (synchronously) give it a **stream** of a raw Tap string, it will output a promise of a plain object
+
+In both cases, the plain object will look like this:
 
 ```js
 {
@@ -85,7 +90,7 @@ This program is similar to `JSON.parse`: it takes a raw string and outputs a pla
 
 It is not fancy — it won't give you test names — but it will extract the totals of all asserts and all suites.
 
-We are going to use it ourselves to compile stats of all out unit tests.
+We are going to use it ourselves to compile stats of all our unit tests.
 
 **[⬆ back to top](#)**
 
@@ -210,16 +215,16 @@ ok 1 - UMD build works fine # time=10.033ms
 
 ## API
 
-API depends what you give as an input:
+API depends on what you give as an input:
 
 * if you (synchronously) provide a `string`, you'll (synchronously) receive a plain object
 * if you provide (synchronously) provide a stream, you'll receive a promise of a plain object
 
-The whole idea with streams is that raw test output files can be big — for example `detergent`'s ([npm](https://www.npmjs.com/package/detergent)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)) raw Tap output is around 250MB, there are ~750,000 assertions there. Reading and processing a such file synchronously would cripple even 8-core Intel i9 laptop. But the same file can be easily processed with streams.
+The whole idea with streams is that raw test output files can be big — for example `detergent`'s ([npm](https://www.npmjs.com/package/detergent)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)) raw Tap output is around 250MB, there are ~750,000 assertions there. Reading and processing such file synchronously would cripple even 8-core Intel i9 laptop. But the same file can be easily processed with streams.
 
-However, we keep the string input as an alternative for peoples' convenience: maybe somebody just wants to play around and doesn't want to `await`? Be our guest, synchronous result is given, just put a string into the inputs.
+However, we keep the string input as an alternative for peoples' convenience: maybe somebody just wants to play around and doesn't want to `await`? Be our guest — the synchronous result is given; just (synchronously) put a string into the inputs (promise yielding a string won't do).
 
-In both cases, result is similar to the described above:
+In both cases, the result is similar to the described above:
 
 ```JSON
 {
