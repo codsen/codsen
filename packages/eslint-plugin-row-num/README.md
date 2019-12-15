@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="eslint-plugin-row-num" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/eslint-plugin-row-num/media/repo_logo.png" width="480" align="center">
+  <img alt="eslint-plugin-row-num" src="https://glcdn.githack.com/codsen/codsen/raw/master/packages/eslint-plugin-row-num/media/repo_logo.gif" width="603" align="center">
 </div>
 
 <div align="center"><p>ESLint rule to update row numbers on each console.log</p></div>
