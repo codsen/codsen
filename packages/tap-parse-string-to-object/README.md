@@ -238,6 +238,14 @@ In both cases, the result is similar to the described above:
 }
 ```
 
+## Parser's Algorithm
+
+We wrote our own little parser. In essence, it counts all lines that (when trimmed) start with "ok" and "not ok", with condition that those lines are consecutive and located after a line which contains a string "# Subtest".
+
+Each opening curlie brace bumps the suite count.
+
+The exception for all above is chunks we skip — everything between line with three dashes (`---`) and line with three dots (`...`).
+
 ## Contributing
 
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=tap-parse-string-to-object%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Atap-parse-string-to-object%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
