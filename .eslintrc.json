@@ -7,14 +7,14 @@
     "eslint:recommended",
     "plugin:prettier/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:row-num/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-  ],
+  "plugins": ["row-num"],
   "ignorePatterns": [
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
@@ -41,6 +41,7 @@
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prefer-template": "error",
+    "row-num/correct-row-num": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [

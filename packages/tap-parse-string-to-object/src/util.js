@@ -142,14 +142,14 @@ class Counter {
         if (this.thereWereFailuresInThisSuite) {
           this.total.suitesFailed = this.total.suitesFailed + 1;
           console.log(
-            `144 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
+            `145 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
               this.total.suitesFailed
             }`
           );
         } else {
           this.total.suitesPassed = this.total.suitesPassed + 1;
           console.log(
-            `151 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
+            `152 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
               this.total.suitesPassed
             }`
           );
@@ -160,7 +160,7 @@ class Counter {
       this.thereWereFailuresInThisSuite = false;
 
       console.log(
-        `162 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
+        `163 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
           this.total.suitesTotal
         }; this.thereWereFailuresInThisSuite = false`
       );
@@ -171,7 +171,7 @@ class Counter {
     if (!this.doNothing && !this.canCount && lineStr.includes(magicKeyw)) {
       this.canCount = true;
       console.log(
-        `173 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.canCount = ${
+        `174 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.canCount = ${
           this.canCount
         }`
       );
@@ -189,7 +189,7 @@ class Counter {
       ) {
         this.total.suitesTotal = this.total.suitesTotal + 1;
         console.log(
-          `191 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
+          `192 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = ${
             this.total.suitesTotal
           }`
         );
@@ -200,7 +200,7 @@ class Counter {
           // if it's first suite's opening curlie
           this.thereWereFailuresInThisSuite = false;
           console.log(
-            `202 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.thereWereFailuresInThisSuite = ${
+            `203 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.thereWereFailuresInThisSuite = ${
               this.thereWereFailuresInThisSuite
             }`
           );
@@ -208,7 +208,7 @@ class Counter {
           this.total.suitesFailed = this.total.suitesFailed + 1;
           this.thereWereFailuresInThisSuite = false;
           console.log(
-            `210 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
+            `211 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = ${
               this.total.suitesFailed
             }; this.thereWereFailuresInThisSuite = ${
               this.thereWereFailuresInThisSuite
@@ -217,7 +217,7 @@ class Counter {
         } else {
           this.total.suitesPassed = this.total.suitesPassed + 1;
           console.log(
-            `219 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
+            `220 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = ${
               this.total.suitesPassed
             }`
           );
@@ -267,7 +267,7 @@ class Counter {
       this.total.suitesFailed = this.total.suitesFailed + 1;
       this.thereWereFailuresInThisSuite = false;
       console.log(
-        `269 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} this.total.suitesFailed = ${
+        `270 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} this.total.suitesFailed = ${
           this.total.suitesFailed
         }; this.thereWereFailuresInThisSuite = ${
           this.thereWereFailuresInThisSuite
@@ -279,26 +279,26 @@ class Counter {
 
     if (!this.total.suitesTotal && this.total.assertsTotal) {
       console.log(
-        `281 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${36}m${`SUITE TOTALS ARE ZERO, LET'S FIX THIS`}\u001b[${39}m`}`
+        `282 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${36}m${`SUITE TOTALS ARE ZERO, LET'S FIX THIS`}\u001b[${39}m`}`
       );
       this.total.suitesTotal = 1;
       console.log(
-        `285 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = 1`
+        `286 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesTotal = 1`
       );
       if (this.thereWereFailuresInThisSuite) {
         this.total.suitesFailed = 1;
         console.log(
-          `290 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = 1`
+          `291 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesFailed = 1`
         );
       } else {
         this.total.suitesPassed = 1;
         console.log(
-          `295 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = 1`
+          `296 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`SET `}\u001b[${39}m`} this.total.suitesPassed = 1`
         );
       }
     }
     console.log(
-      `300 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:\n${JSON.stringify(
+      `301 ${`\u001b[${35}m${`█`}\u001b[${39}m`} ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:\n${JSON.stringify(
         this.total,
         null,
         4

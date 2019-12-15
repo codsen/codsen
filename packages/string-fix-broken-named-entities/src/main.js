@@ -21,7 +21,7 @@ const isArr = Array.isArray;
  */
 function stringFixBrokenNamedEntities(str, originalOpts) {
   console.log(
-    `0024 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+    `024 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       0
@@ -43,7 +43,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
     for (let i = from; i < to; i++) {
       console.log(
-        `0046 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str[${i}] = "${str[i]}"`}\u001b[${39}m`}`
+        `046 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str[${i}] = "${str[i]}"`}\u001b[${39}m`}`
       );
       if (str[i].trim().length) {
         charTrimmed += str[i];
@@ -66,7 +66,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     let probablyNumeric = false;
 
     console.log(
-      `0069 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
+      `069 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
         charTrimmed[0],
         null,
         4
@@ -284,7 +284,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           entityObj => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
         );
         console.log(
-          `0287 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `287 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4
@@ -376,7 +376,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     } else {
       opts = Object.assign({}, defaults, originalOpts);
       console.log(
-        `0379 stringFixBrokenNamedEntities: new ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `379 stringFixBrokenNamedEntities: new ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -414,7 +414,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     );
   }
   console.log(
-    `0417 stringFixBrokenNamedEntities: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} used: ${JSON.stringify(
+    `417 stringFixBrokenNamedEntities: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} used: ${JSON.stringify(
       opts,
       null,
       4
@@ -517,7 +517,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     //            |
     //            |
     console.log(
-      `0520 stringFixBrokenNamedEntities: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+      `520 stringFixBrokenNamedEntities: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
         str[i] && str[i].trim().length
           ? str[i]
           : JSON.stringify(str[i], null, 4)
@@ -540,10 +540,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
         console.log(
-          `0543 stringFixBrokenNamedEntities: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`
+          `543 stringFixBrokenNamedEntities: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`
         );
       } else {
-        console.log(`0546 stringFixBrokenNamedEntities: continue`);
+        console.log(`546 stringFixBrokenNamedEntities: continue`);
         counter++;
         continue;
       }
@@ -568,14 +568,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     smallestCharFromTheSetAt = Math.min(...setOfValues);
     largestCharFromTheSetAt = Math.max(...setOfValues);
     console.log(
-      `0571 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`smallestCharFromTheSetAt`}\u001b[${39}m`} = ${JSON.stringify(
+      `571 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`smallestCharFromTheSetAt`}\u001b[${39}m`} = ${JSON.stringify(
         smallestCharFromTheSetAt,
         null,
         4
       )}`
     );
     console.log(
-      `0578 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`largestCharFromTheSetAt`}\u001b[${39}m`} = ${JSON.stringify(
+      `578 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`largestCharFromTheSetAt`}\u001b[${39}m`} = ${JSON.stringify(
         largestCharFromTheSetAt,
         null,
         4
@@ -642,11 +642,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         ))
     ) {
       console.log(
-        `0645 stringFixBrokenNamedEntities: ${`\u001b[${90}m${`within nbsp clauses`}\u001b[${39}m`}`
+        `645 stringFixBrokenNamedEntities: ${`\u001b[${90}m${`within nbsp clauses`}\u001b[${39}m`}`
       );
 
       console.log(
-        `0649 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `649 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
           nbsp.nameStartsAt,
           null,
           4
@@ -664,7 +664,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       );
 
       console.log(
-        `0667 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`chompedAmpFromLeft`}\u001b[${39}m`} = ${JSON.stringify(
+        `667 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`chompedAmpFromLeft`}\u001b[${39}m`} = ${JSON.stringify(
           chompedAmpFromLeft,
           null,
           4
@@ -675,7 +675,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         : nbsp.nameStartsAt;
 
       console.log(
-        `0678 stringFixBrokenNamedEntities: ${`\u001b[${31}m${`██`}\u001b[${39}m`} beginningOfTheRange = ${JSON.stringify(
+        `678 stringFixBrokenNamedEntities: ${`\u001b[${31}m${`██`}\u001b[${39}m`} beginningOfTheRange = ${JSON.stringify(
           beginningOfTheRange,
           null,
           4
@@ -690,7 +690,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         str.slice(beginningOfTheRange, i) !== "&nbsp;"
       ) {
         console.log(
-          `0693 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+          `693 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
             {
               ruleName: "bad-named-html-entity-malformed-nbsp",
               entityName: "nbsp",
@@ -715,7 +715,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // also, if it must be decoded this healthy nbsp is wrong
         if (opts.decode) {
           console.log(
-            `0718 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            `718 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
               {
                 ruleName: "encoded-html-entity-nbsp",
                 entityName: "nbsp",
@@ -739,14 +739,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (opts.entityCatcherCb) {
           // call the general entity callback if it's given
           console.log(
-            `0742 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} opts.entityCatcherCb(${`\u001b[${36}m${beginningOfTheRange}\u001b[${39}m`}, ${`\u001b[${36}m${i}\u001b[${39}m`})`
+            `742 stringFixBrokenNamedEntities: ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} opts.entityCatcherCb(${`\u001b[${36}m${beginningOfTheRange}\u001b[${39}m`}, ${`\u001b[${36}m${i}\u001b[${39}m`})`
           );
           opts.entityCatcherCb(beginningOfTheRange, i);
         }
       }
       nbspWipe();
       console.log(
-        `0749 stringFixBrokenNamedEntities: WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`
+        `749 stringFixBrokenNamedEntities: WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`
       );
       counter++;
 
@@ -754,13 +754,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (str[i] === "&" && str[i + 1] !== "&") {
         nbsp.nameStartsAt = i;
         console.log(
-          `0757 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+          `757 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
             nbsp.nameStartsAt
           }`
         );
         nbsp.ampersandNecessary = false;
         console.log(
-          `0763 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
+          `763 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
             nbsp.ampersandNecessary
           }`
         );
@@ -779,7 +779,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     ) {
       nbspWipe();
       console.log(
-        `0782 stringFixBrokenNamedEntities: WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`
+        `782 stringFixBrokenNamedEntities: WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`
       );
       counter++;
       continue outerloop;
@@ -804,7 +804,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         (str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i])))
     ) {
       console.log(
-        `0807 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`
+        `807 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`
       );
       if (
         i > letterSeqStartAt + 1 &&
@@ -812,7 +812,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       ) {
         const potentialEntity = str.slice(letterSeqStartAt, i);
         console.log(
-          `0815 stringFixBrokenNamedEntities: ${`\u001b[${35}m${`██ CARVED A SEQUENCE:\n${potentialEntity}`}\u001b[${39}m`}`
+          `815 stringFixBrokenNamedEntities: ${`\u001b[${35}m${`██ CARVED A SEQUENCE:\n${potentialEntity}`}\u001b[${39}m`}`
         );
         const whatsOnTheLeft = left(str, letterSeqStartAt);
         const whatsEvenMoreToTheLeft = whatsOnTheLeft
@@ -831,7 +831,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           console.log(
-            `0834 ${`\u001b[${35}m${`semicol might be missing`}\u001b[${39}m`}`
+            `834 ${`\u001b[${35}m${`semicol might be missing`}\u001b[${39}m`}`
           );
           // check, what's the index of the character to the right of
           // str[whatsOnTheLeft], is it any of the known named HTML entities.
@@ -840,13 +840,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             ? right(str, letterSeqStartAt)
             : null;
           console.log(
-            `0843 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
+            `843 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
           );
           // we'll tap the "entStartsWith" from npm package "all-named-html-entities"
           // which gives a plain object of named entities, all grouped by first
           // and second character first. This reduces amount of matching needed.
           console.log(
-            `0849 ██ ${secondChar !== null &&
+            `849 ██ ${secondChar !== null &&
               Object.prototype.hasOwnProperty.call(
                 entStartsWith,
                 str[firstChar]
@@ -876,7 +876,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               str[secondChar]
             )
           ) {
-            console.log(`0879`);
+            console.log(`879`);
             let tempEnt;
             let tempRes;
 
@@ -900,7 +900,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               []
             );
             console.log(
-              `0903 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
+              `903 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
                 temp1,
                 null,
                 4
@@ -908,7 +908,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             );
             temp1 = removeGappedFromMixedCases(temp1);
             console.log(
-              `0911 ${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
+              `911 ${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
                 temp1,
                 null,
                 4
@@ -918,7 +918,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               ({ tempEnt, tempRes } = temp1);
             }
             console.log(
-              `0921 ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt}; ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
+              `921 ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt}; ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
                 tempRes,
                 null,
                 4
@@ -926,7 +926,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             );
 
             console.log(
-              `0929 ${`\u001b[${33}m${`["&"].includes(str[tempRes.rightmostChar + 1])`}\u001b[${39}m`} = ${
+              `929 ${`\u001b[${33}m${`["&"].includes(str[tempRes.rightmostChar + 1])`}\u001b[${39}m`} = ${
                 tempRes && tempRes.rightmostChar
                   ? JSON.stringify(
                       ["&"].includes(str[tempRes.rightmostChar + 1]),
@@ -948,7 +948,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   str[tempRes.leftmostChar - 1] === "&"))
             ) {
               console.log(
-                `0951 ${`\u001b[${35}m${`entity ${tempEnt} is indeed on the right of index ${i}, the situation is: ${JSON.stringify(
+                `951 ${`\u001b[${35}m${`entity ${tempEnt} is indeed on the right of index ${i}, the situation is: ${JSON.stringify(
                   tempRes,
                   null,
                   4
@@ -958,7 +958,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               const decodedEntity = decode(`&${tempEnt};`);
 
               console.log(
-                `0961 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                `961 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                   {
                     ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
                     entityName: tempEnt,

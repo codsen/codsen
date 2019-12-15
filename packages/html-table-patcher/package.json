@@ -133,7 +133,6 @@
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
     "html-crush": "^1.9.16",
-    "js-row-num-cli": "^1.6.11",
     "json-stringify-safe": "^5.0.1",
     "lect": "^0.11.4",
     "object-delete-key": "^1.9.11",

@@ -214,14 +214,14 @@ function isOpening(str, idx = 0) {
     passed = true;
   }
   console.log(
-    `212 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
+    `217 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
       4
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`219 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`224 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

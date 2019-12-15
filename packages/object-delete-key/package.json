@@ -134,7 +134,6 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.11",
     "lect": "^0.11.4",
     "posthtml-parser": "^0.4.2",
     "rollup": "^1.27.13",

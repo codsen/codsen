@@ -146,7 +146,6 @@
     "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.11",
     "lect": "^0.11.4",
     "node-fetch": "^2.6.0",
     "p-map": "^3.0.0",
