@@ -89,7 +89,9 @@ We are going to use it ourselves to compile stats of all out unit tests.
 
 **[⬆ back to top](#)**
 
-## Usage
+## Synchronous Example
+
+String-in, plain object-out:
 
 ```js
 const parseRawTap = require("tap-parse-string-to-object");
@@ -138,11 +140,98 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 
 **[⬆ back to top](#)**
 
+## Asynchronous Example
+
+Stream-in, promise of a plain object-out:
+
+```js
+const fs = require("fs");
+const path = require("path");
+const parseRawTap = require("tap-parse-string-to-object");
+
+// notice we put this async IIFE to be able to await the promise:
+(async () => {
+  // 1. define file's contents
+  const filesContent = `TAP version 13
+ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
+ok 1 - 01.01.01
+ok 2 - 01.01.02
+1..2
+ok 1 - 01.01 - string input # time=7.697ms
+
+# Subtest: 01.02 - non-string input
+ok 1 - 01.02.01
+ok 2 - 01.02.02
+ok 3 - 01.02.03
+ok 4 - 01.02.04
+ok 5 - 01.02.05
+1..5
+ok 2 - 01.02 - non-string input # time=2.791ms
+
+1..2 # time=22.582ms
+}
+
+ok 2 - test/umd-test.js # time=16.522ms { # Subtest: UMD build works fine
+ok 1 - should be equivalent
+1..1
+ok 1 - UMD build works fine # time=10.033ms
+
+1..1 # time=16.522ms
+}
+
+1..2
+
+# time=1816.082ms
+`;
+
+  // 2. write the test file
+  await fs.writeFile(path.resolve("sampleTestStats.md"), filesContent);
+
+  // 3. now read it again, but as a stream
+  const contentsAsStream = fs.createReadStream(
+    path.resolve("sampleTestStats.md")
+  );
+
+  // 4. a promise (which we await) is returned and it yields a plain object:
+  const result = await parse(contentsAsStream);
+  console.log(JSON.stringify(result, null, 4))
+  // => {
+  //      ok: true,
+  //      assertsTotal: 8,
+  //      assertsPassed: 8,
+  //      assertsFailed: 0,
+  //      suitesTotal: 2,
+  //      suitesPassed: 2,
+  //      suitesFailed: 0
+  //    }
+
+})();
+```
+
 ## API
 
-API is simple: `string` in, `object` out.
+API depends what you give as an input:
 
-Caveat: if the input is not a `string` it will `throw`.
+* if you (synchronously) provide a `string`, you'll (synchronously) receive a plain object
+* if you provide (synchronously) provide a stream, you'll receive a promise of a plain object
+
+The whole idea with streams is that raw test output files can be big — for example `detergent`'s ([npm](https://www.npmjs.com/package/detergent)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)) raw Tap output is around 250MB, there are ~750,000 assertions there. Reading and processing a such file synchronously would cripple even 8-core Intel i9 laptop. But the same file can be easily processed with streams.
+
+However, we keep the string input as an alternative for peoples' convenience: maybe somebody just wants to play around and doesn't want to `await`? Be our guest, synchronous result is given, just put a string into the inputs.
+
+In both cases, result is similar to the described above:
+
+```JSON
+{
+  ok: true,
+  assertsTotal: 8,
+  assertsPassed: 8,
+  assertsFailed: 0,
+  suitesTotal: 2,
+  suitesPassed: 2,
+  suitesFailed: 0
+}
+```
 
 ## Contributing
 

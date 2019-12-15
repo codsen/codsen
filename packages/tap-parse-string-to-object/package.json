@@ -1,7 +1,7 @@
 {
   "name": "tap-parse-string-to-object",
   "version": "1.2.0",
-  "description": "Parses raw Tap output, string-to-object",
+  "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
