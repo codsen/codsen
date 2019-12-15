@@ -71,8 +71,8 @@ Existing Tap parsers like [tap-parser](https://www.npmjs.com/package/tap-parser)
 
 This program is similar to `JSON.parse` except that it works synchronously and asynchronously, depending on what you give:
 
-* if you (synchronously) give it a **string**, it will (synchronously) output a plain object
-* if you (synchronously) give it a **stream** of a raw Tap string, it will output a promise of a plain object
+* if you (synchronously) give it a **string**, it will (synchronously) output a **plain object**
+* if you (synchronously) give it a **stream** of a raw Tap string, it will output a promise of a **plain object**
 
 In both cases, the plain object will look like this:
 
