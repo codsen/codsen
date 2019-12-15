@@ -427,7 +427,7 @@
     },
     {
         "name": "object-merge-advanced",
-        "size": 14746,
+        "size": 14747,
         "imports": [
             "array-includes-with-glob",
             "arrayiffy-if-string",
@@ -538,7 +538,7 @@
     },
     {
         "name": "string-collapse-leading-whitespace",
-        "size": 3396,
+        "size": 3397,
         "imports": []
     },
     {
