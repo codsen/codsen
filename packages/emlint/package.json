@@ -42,6 +42,8 @@
   "scripts": {
     "build": "node bin/helper && rollup -c --silent",
     "dev": "node bin/helper && rollup -c --dev --silent",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute/attribute-validate-width.js\" --only",
+    "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
@@ -151,6 +153,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.1",
+    "js-row-num-cli": "^1.6.11",
     "lect": "^0.11.4",
     "prettier": "^1.19.1",
     "ranges-apply": "^3.0.45",

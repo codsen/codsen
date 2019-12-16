@@ -253,7 +253,8 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
-	"attribute-malformed"
+	"attribute-malformed",
+	"attribute-validate-width"
 ];
 
 var allBadNamedHTMLEntityRules = [
@@ -264,6 +265,10 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
+var knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
+function isObj(something) {
+  return something !== null && _typeof(something) === "object";
+}
 function isEnabled(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
@@ -271,6 +276,98 @@ function isEnabled(maybeARulesValue) {
     return maybeARulesValue[0];
   }
   return 0;
+}
+function validateDigitAndUnit(str, idxOffset, opts) {
+  var errorArr = [];
+  var charStart = 0;
+  var charEnd = str.length;
+  var gatheredRanges = [];
+  if (!str[0].trim().length) {
+    charStart = stringLeftRight.right(str);
+    if (charStart === null) {
+      charEnd = null;
+      errorArr.push({
+        idxFrom: idxOffset,
+        idxTo: idxOffset + str.length,
+        message: "Missing value.",
+        fix: null
+      });
+    } else {
+      gatheredRanges.push([idxOffset, idxOffset + charStart]);
+    }
+  }
+  if (charEnd && !str[str.length - 1].trim().length) {
+    charEnd = stringLeftRight.left(str, str.length - 1);
+    gatheredRanges.push([idxOffset + charEnd + 1, idxOffset + str.length]);
+  }
+  if (gatheredRanges.length) {
+    errorArr.push({
+      idxFrom: gatheredRanges[0][0],
+      idxTo: gatheredRanges[gatheredRanges.length - 1][1],
+      message: "Remove whitespace.",
+      fix: {
+        ranges: gatheredRanges
+      }
+    });
+    gatheredRanges = [];
+  }
+  if (Number.isInteger(charStart)) {
+    if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Digits missing.",
+        fix: null
+      });
+    } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Units missing.",
+        fix: null
+      });
+    } else {
+      for (var i = charStart; i < charEnd; i++) {
+        if (!"0123456789".includes(str[i])) {
+          var endPart = str.slice(i);
+          if (isObj(opts) && Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart)) {
+            if (endPart === "px") {
+              errorArr.push({
+                idxFrom: idxOffset + i,
+                idxTo: idxOffset + charEnd,
+                message: "Remove px.",
+                fix: {
+                  ranges: [[idxOffset + i, idxOffset + charEnd]]
+                }
+              });
+            } else {
+              errorArr.push({
+                idxFrom: idxOffset + i,
+                idxTo: idxOffset + charEnd,
+                message: "Bad unit.",
+                fix: null
+              });
+            }
+          } else if (!knownUnits.includes(endPart)) {
+            var message = "Unrecognised unit.";
+            if (/\d/.test(endPart)) {
+              message = "Messy value.";
+            } else if (knownUnits.includes(endPart.trim())) {
+              message = "Rogue whitespace.";
+            }
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message: message,
+              fix: null
+            });
+          }
+          break;
+        }
+      }
+    }
+  }
+  return errorArr;
 }
 
 function badCharacterNull(context) {
@@ -2849,6 +2946,22 @@ function attributeMalformed(context) {
   };
 }
 
+function attributeValidateWidth(context) {
+  return {
+    attribute: function attribute(node) {
+      var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+        badUnits: ["px"],
+        noUnitsIsFine: true
+      });
+      errorArr.forEach(function (errorObj) {
+        context.report(Object.assign({}, errorObj, {
+          ruleId: "attribute-validate-width"
+        }));
+      });
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function entity(_ref) {
@@ -3378,6 +3491,9 @@ defineLazyProp(builtInRules, "tag-bold", function () {
 defineLazyProp(builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
 });
+defineLazyProp(builtInRules, "attribute-validate-width", function () {
+  return attributeValidateWidth;
+});
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
 });
@@ -3822,7 +3938,7 @@ function (_EventEmitter) {
         if (obj.type === "html" && Array.isArray(obj.attribs) && obj.attribs.length) {
           obj.attribs.forEach(function (attribObj) {
             _this.emit("attribute", Object.assign({}, attribObj, {
-              tag: Object.assign({}, obj)
+              parent: Object.assign({}, obj)
             }));
           });
         }

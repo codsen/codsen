@@ -829,6 +829,13 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 import attributeMalformed from "./rules/attribute/attribute-malformed";
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 
+import attributeValidateWidth from "./rules/attribute/attribute-validate-width";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-width",
+  () => attributeValidateWidth
+);
+
 // BAD-HTML-ENTITY rules
 // -----------------------------------------------------------------------------
 // (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
@@ -972,7 +979,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `975 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `982 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

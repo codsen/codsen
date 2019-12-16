@@ -11,7 +11,7 @@ import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
-import { leftStopAtNewLines, right, left } from 'string-left-right';
+import { right, left, leftStopAtNewLines } from 'string-left-right';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -144,7 +144,8 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
-	"attribute-malformed"
+	"attribute-malformed",
+	"attribute-validate-width"
 ];
 
 var allBadNamedHTMLEntityRules = [
@@ -155,6 +156,26 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-unrecognised"
 ];
 
+const knownUnits = [
+  "cm",
+  "mm",
+  "in",
+  "px",
+  "pt",
+  "pc",
+  "em",
+  "ex",
+  "ch",
+  "rem",
+  "vw",
+  "vh",
+  "vmin",
+  "vmax",
+  "%"
+];
+function isObj(something) {
+  return something !== null && typeof something === "object";
+}
 function isEnabled(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
@@ -167,6 +188,107 @@ function isEnabled(maybeARulesValue) {
     return maybeARulesValue[0];
   }
   return 0;
+}
+function validateDigitAndUnit(str, idxOffset, opts) {
+  const errorArr = [];
+  let charStart = 0;
+  let charEnd = str.length;
+  let gatheredRanges = [];
+  if (!str[0].trim().length) {
+    charStart = right(str);
+    if (charStart === null) {
+      charEnd = null;
+      errorArr.push({
+        idxFrom: idxOffset,
+        idxTo: idxOffset + str.length,
+        message: `Missing value.`,
+        fix: null
+      });
+    } else {
+      gatheredRanges.push([idxOffset, idxOffset + charStart]);
+    }
+  }
+  if (charEnd && !str[str.length - 1].trim().length) {
+    charEnd = left(str, str.length - 1);
+    gatheredRanges.push([idxOffset + charEnd + 1, idxOffset + str.length]);
+  }
+  if (gatheredRanges.length) {
+    errorArr.push({
+      idxFrom: gatheredRanges[0][0],
+      idxTo: gatheredRanges[gatheredRanges.length - 1][1],
+      message: `Remove whitespace.`,
+      fix: { ranges: gatheredRanges }
+    });
+    gatheredRanges = [];
+  }
+  if (Number.isInteger(charStart)) {
+    if (
+      !"0123456789".includes(str[charStart]) &&
+      !"0123456789".includes(str[charEnd - 1])
+    ) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Digits missing.`,
+        fix: null
+      });
+    } else if (
+      "0123456789".includes(str[charStart]) &&
+      "0123456789".includes(str[charEnd - 1]) &&
+      !opts.noUnitsIsFine
+    ) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Units missing.`,
+        fix: null
+      });
+    } else {
+      for (let i = charStart; i < charEnd; i++) {
+        if (!"0123456789".includes(str[i])) {
+          const endPart = str.slice(i);
+          if (
+            isObj(opts) &&
+            Array.isArray(opts.badUnits) &&
+            opts.badUnits.includes(endPart)
+          ) {
+            if (endPart === "px") {
+              errorArr.push({
+                idxFrom: idxOffset + i,
+                idxTo: idxOffset + charEnd,
+                message: `Remove px.`,
+                fix: {
+                  ranges: [[idxOffset + i, idxOffset + charEnd]]
+                }
+              });
+            } else {
+              errorArr.push({
+                idxFrom: idxOffset + i,
+                idxTo: idxOffset + charEnd,
+                message: `Bad unit.`,
+                fix: null
+              });
+            }
+          } else if (!knownUnits.includes(endPart)) {
+            let message = "Unrecognised unit.";
+            if (/\d/.test(endPart)) {
+              message = "Messy value.";
+            } else if (knownUnits.includes(endPart.trim())) {
+              message = "Rogue whitespace.";
+            }
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message,
+              fix: null
+            });
+          }
+          break;
+        }
+      }
+    }
+  }
+  return errorArr;
 }
 
 function badCharacterNull(context) {
@@ -2593,6 +2715,28 @@ function attributeMalformed(context, ...opts) {
   };
 }
 
+function attributeValidateWidth(context, ...opts) {
+  return {
+    attribute: function(node) {
+      const errorArr = validateDigitAndUnit(
+        node.attribValue,
+        node.attribValueStartAt,
+        {
+          badUnits: ["px"],
+          noUnitsIsFine: true
+        }
+      );
+      errorArr.forEach(errorObj => {
+        context.report(
+          Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-width"
+          })
+        );
+      });
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
@@ -3357,6 +3501,11 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(
   builtInRules,
+  "attribute-validate-width",
+  () => attributeValidateWidth
+);
+defineLazyProp(
+  builtInRules,
   "bad-named-html-entity-not-email-friendly",
   () => htmlEntitiesNotEmailFriendly
 );
@@ -3897,7 +4046,7 @@ class Linter extends EventEmitter {
             this.emit(
               "attribute",
               Object.assign({}, attribObj, {
-                tag: Object.assign({}, obj)
+                parent: Object.assign({}, obj)
               })
             );
           });

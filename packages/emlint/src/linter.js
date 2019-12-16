@@ -131,7 +131,7 @@ class Linter extends EventEmitter {
             this.emit(
               "attribute",
               Object.assign({}, attribObj, {
-                tag: Object.assign({}, obj)
+                parent: Object.assign({}, obj)
               })
             );
           });
