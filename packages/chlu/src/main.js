@@ -1,10 +1,8 @@
 /* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
 
-import splitLines from "split-lines";
 import getPkgRepo from "get-pkg-repo";
 import semverCompare from "semver-compare";
 import empty from "ast-contains-only-empty-space";
-import insert from "just-insert";
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
 import includes from "lodash.includes";
@@ -51,7 +49,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   console.log(
-    `054 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+    `052 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
       gitTags,
       null,
       4
@@ -113,7 +111,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // package.json might come in falsey in case it's unavailable
   if (packageJsonContents) {
     console.log(
-      `116 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
+      `114 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
         packageJsonContents,
         null,
         4
@@ -153,7 +151,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       );
     }
     console.log(
-      `156 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
+      `154 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
         packageJson,
         null,
         4
@@ -186,7 +184,8 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   //   "## [1.2.0] - 2017-04-24"
   // - record all url links at the bottom, like:
   //   "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0"
-  const linesArr = splitLines(changelogMd);
+
+  const linesArr = changelogMd.split(/\r?\n/);
 
   let titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   console.log(
@@ -424,7 +423,11 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       4
     )}`
   );
-  newLinesArr = insert(linesArr, temp, whereToPlaceIt);
+  // newLinesArr = insert(linesArr, temp, whereToPlaceIt);
+  // newLinesArr = linesArr.splice(whereToPlaceIt, 0, temp);
+  newLinesArr = linesArr
+    .slice(0, whereToPlaceIt)
+    .concat(temp.concat(linesArr.slice(whereToPlaceIt)));
   console.log(
     `CHLU MAIN 329 AFTER INSERTING temp into linesArr: ${`\u001b[${33}m${`newLinesArr`}\u001b[${39}m`} = ${JSON.stringify(
       newLinesArr,
@@ -494,7 +497,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             processedGitTags.versionsOnly.length - 1
           ];
         console.log(
-          `497 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+          `500 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
             processedGitTags.versionsOnly,
             null,
             4
@@ -506,12 +509,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly
         );
         console.log(
-          `509 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+          `512 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
         );
       }
     } else {
       console.log(
-        `514 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+        `517 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
       );
       // if the Git data is not available, use existing parsed Changelog data.
 
@@ -571,7 +574,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       mode: "set"
     });
     console.log(
-      `574 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+      `577 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
         footerLinks[i].content,
         null,
         4

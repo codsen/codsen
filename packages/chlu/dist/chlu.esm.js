@@ -7,11 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
  */
 
-import splitLines from 'split-lines';
 import getPkgRepo from 'get-pkg-repo';
 import semverCompare from 'semver-compare';
 import empty from 'ast-contains-only-empty-space';
-import insert from 'just-insert';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import includes from 'lodash.includes';
@@ -61,7 +59,11 @@ function isTitle(str) {
     return false;
   } else if (!isStr(str)) {
     throw new TypeError(
-      "chlu/util.js/isTitle(): [THROW_ID_01] The input must be string"
+      `chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (${typeof str})`
     );
   }
   let stringInFrontOfVersion;
@@ -385,7 +387,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   let titles = [];
   let footerLinks = [];
   let newLinesArr = [];
-  const linesArr = splitLines(changelogMd);
+  const linesArr = changelogMd.split(/\r?\n/);
   let titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
@@ -532,7 +534,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   if (ascending) {
     temp = temp.reverse();
   }
-  newLinesArr = insert(linesArr, temp, whereToPlaceIt);
+  newLinesArr = linesArr
+    .slice(0, whereToPlaceIt)
+    .concat(temp.concat(linesArr.slice(whereToPlaceIt)));
   temp = getTitlesAndFooterLinks(newLinesArr);
   titles = temp.titles;
   footerLinks = temp.footerLinks;

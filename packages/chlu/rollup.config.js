@@ -51,14 +51,12 @@ export default commandLineArgs => {
         "emoji-regex",
         "get-pkg-repo",
         "is-natural-number",
-        "just-insert",
         "lodash.clonedeep",
         "lodash.includes",
         "lodash.isplainobject",
         "lodash.min",
         "lodash.trim",
-        "semver-compare",
-        "split-lines"
+        "semver-compare"
       ],
       plugins: [
         strip({
@@ -83,14 +81,12 @@ export default commandLineArgs => {
         "emoji-regex",
         "get-pkg-repo",
         "is-natural-number",
-        "just-insert",
         "lodash.clonedeep",
         "lodash.includes",
         "lodash.isplainobject",
         "lodash.min",
         "lodash.trim",
-        "semver-compare",
-        "split-lines"
+        "semver-compare"
       ],
       plugins: [
         strip({

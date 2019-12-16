@@ -50,7 +50,11 @@ function isTitle(str) {
     return false;
   } else if (!isStr(str)) {
     throw new TypeError(
-      "chlu/util.js/isTitle(): [THROW_ID_01] The input must be string"
+      `chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ${JSON.stringify(
+        str,
+        null,
+        4
+      )} (${typeof str})`
     );
   }
   let stringInFrontOfVersion;

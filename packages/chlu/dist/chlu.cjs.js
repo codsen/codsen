@@ -11,11 +11,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var splitLines = _interopDefault(require('split-lines'));
 var getPkgRepo = _interopDefault(require('get-pkg-repo'));
 var semverCompare = _interopDefault(require('semver-compare'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var insert = _interopDefault(require('just-insert'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var includes = _interopDefault(require('lodash.includes'));
@@ -72,7 +70,7 @@ function isTitle(str) {
   if (str === undefined) {
     return false;
   } else if (!isStr(str)) {
-    throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string");
+    throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string - it was given as ".concat(JSON.stringify(str, null, 4), " (").concat(_typeof(str), ")"));
   }
   var stringInFrontOfVersion;
   if (existy(str.match(versionWithoutBracketsRegex))) {
@@ -302,7 +300,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var titles = [];
   var footerLinks = [];
   var newLinesArr = [];
-  var linesArr = splitLines(changelogMd);
+  var linesArr = changelogMd.split(/\r?\n/);
   var titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
@@ -410,7 +408,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   if (ascending) {
     temp = temp.reverse();
   }
-  newLinesArr = insert(linesArr, temp, whereToPlaceIt);
+  newLinesArr = linesArr.slice(0, whereToPlaceIt).concat(temp.concat(linesArr.slice(whereToPlaceIt)));
   temp = getTitlesAndFooterLinks(newLinesArr);
   titles = temp.titles;
   footerLinks = temp.footerLinks;
