@@ -276,6 +276,46 @@ ${letterC}onsole.log(
   t.end();
 });
 
+t.test(`02.16 - num - dot - num`, t => {
+  t.is(
+    fixRowNums(`
+zzz
+zzz
+zzz
+${letterC}onsole.log('051.1 something')
+${letterC}onsole.log('052.2 something')
+`),
+    `
+zzz
+zzz
+zzz
+${letterC}onsole.log('005.1 something')
+${letterC}onsole.log('006.2 something')
+`
+  );
+  t.end();
+});
+
+t.test(`02.17 - num - colon - space - num`, t => {
+  t.is(
+    fixRowNums(`
+zzz
+zzz
+zzz
+${letterC}onsole.log('051: 1 something')
+${letterC}onsole.log('052: 2 something')
+`),
+    `
+zzz
+zzz
+zzz
+${letterC}onsole.log('005: 1 something')
+${letterC}onsole.log('006: 2 something')
+`
+  );
+  t.end();
+});
+
 // -----------------------------------------------------------------------------
 // group 03. sneaky false positives
 // -----------------------------------------------------------------------------
