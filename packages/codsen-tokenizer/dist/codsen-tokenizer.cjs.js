@@ -304,7 +304,8 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         })) {
           token.kind = "style";
         }
-      } else if (espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-")) {
+      } else if (espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(str[i] === "-" && str[i + 1] === "-") && !(
+      "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length))) {
         var wholeEspTagLump = "";
         for (var y = i; y < len; y++) {
           if (espChars.includes(str[y])) {

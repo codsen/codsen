@@ -4,137 +4,117 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 // 01. ESP (Email Service Provider) and other templating language tags
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test("01.01 - ESP literals among text get reported", t => {
   const gathered = [];
   ct(`{% zz %}`, obj => {
     gathered.push(obj);
   });
-  t.match(
-    gathered,
-    [
-      {
-        type: "esp",
-        start: 0,
-        end: 8,
-        tail: "%}"
-      }
-    ],
-    "01.01 - ESP literals among text get reported"
-  );
+  t.match(gathered, [
+    {
+      type: "esp",
+      start: 0,
+      end: 8,
+      tail: "%}"
+    }
+  ]);
   t.end();
 });
 
-t.test(t => {
+t.test("01.02 - ESP literals among text get reported", t => {
   const gathered = [];
   ct(`ab {% if something %} cd`, obj => {
     gathered.push(obj);
   });
-  t.match(
-    gathered,
-    [
-      {
-        type: "text",
-        start: 0,
-        end: 3
-      },
-      {
-        type: "esp",
-        start: 3,
-        end: 21,
-        tail: "%}"
-      },
-      {
-        type: "text",
-        start: 21,
-        end: 24
-      }
-    ],
-    "01.02 - ESP literals among text get reported"
-  );
+  t.match(gathered, [
+    {
+      type: "text",
+      start: 0,
+      end: 3
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 21,
+      tail: "%}"
+    },
+    {
+      type: "text",
+      start: 21,
+      end: 24
+    }
+  ]);
   t.end();
 });
 
-t.test(t => {
+t.test("01.03 - ESP literals surrounded by HTML tags", t => {
   const gathered = [];
   ct(`<a>{% if something %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.match(
-    gathered,
-    [
-      {
-        type: "html",
-        start: 0,
-        end: 3
-      },
-      {
-        type: "esp",
-        start: 3,
-        end: 21,
-        tail: "%}"
-      },
-      {
-        type: "html",
-        start: 21,
-        end: 24
-      }
-    ],
-    "01.03 - ESP literals surrounded by HTML tags"
-  );
+  t.match(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 21,
+      tail: "%}"
+    },
+    {
+      type: "html",
+      start: 21,
+      end: 24
+    }
+  ]);
   t.end();
 });
 
-t.test(t => {
+t.test("01.04", t => {
   const gathered = [];
   ct(`<a b="{% if something %}"><c>`, obj => {
     gathered.push(obj);
   });
-  t.match(
-    gathered,
-    [
-      {
-        type: "html",
-        start: 0,
-        end: 26
-      },
-      {
-        type: "html",
-        start: 26,
-        end: 29
-      }
-    ],
-    "01.04"
-  );
+  t.match(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 26
+    },
+    {
+      type: "html",
+      start: 26,
+      end: 29
+    }
+  ]);
   t.end();
 });
 
-t.test(t => {
+t.test("01.05 - ESP literals surrounded by HTML tags, tight", t => {
   const gathered = [];
   ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.match(
-    gathered,
-    [
-      {
-        type: "html",
-        start: 0,
-        end: 3
-      },
-      {
-        type: "esp",
-        start: 3,
-        end: 35,
-        tail: "%}"
-      },
-      {
-        type: "html",
-        start: 35,
-        end: 38
-      }
-    ],
-    "01.05 - ESP literals surrounded by HTML tags, tight"
-  );
+  t.match(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 3
+    },
+    {
+      type: "esp",
+      start: 3,
+      end: 35,
+      tail: "%}"
+    },
+    {
+      type: "html",
+      start: 35,
+      end: 38
+    }
+  ]);
   t.end();
 });
 
@@ -338,6 +318,43 @@ t.test(t => {
       }
     ],
     "01.13 - error, two ESP tags joined, first one ends with heads instead of tails"
+  );
+  t.end();
+});
+
+// 02. false positives
+// -----------------------------------------------------------------------------
+
+t.test(t => {
+  const gathered = [];
+  ct(`<table width="100%%">`, obj => {
+    gathered.push(obj);
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        tagName: "table",
+        start: 0,
+        end: 21,
+        attribs: [
+          {
+            attribName: "width",
+            attribNameStartAt: 7,
+            attribNameEndAt: 12,
+            attribOpeningQuoteAt: 13,
+            attribClosingQuoteAt: 19,
+            attribValue: "100%%",
+            attribValueStartAt: 14,
+            attribValueEndAt: 19,
+            attribStart: 7,
+            attribEnd: 20
+          }
+        ]
+      }
+    ],
+    "02.01"
   );
   t.end();
 });

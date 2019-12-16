@@ -541,7 +541,15 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         espChars.includes(str[i]) &&
         str[i + 1] &&
         espChars.includes(str[i + 1]) &&
-        !(str[i] === "-" && str[i + 1] === "-")
+        !(str[i] === "-" && str[i + 1] === "-") &&
+        !(
+          (
+            "0123456789".includes(str[left(str, i)]) &&
+            (!str[i + 2] ||
+              [`"`, `'`, ";"].includes(str[i + 2]) ||
+              !str[i + 2].trim().length)
+          )
+        )
       ) {
         let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
