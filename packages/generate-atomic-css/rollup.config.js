@@ -42,7 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ranges-apply", "split-lines", "string-left-right"],
+      external: ["ranges-apply", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -58,7 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ranges-apply", "split-lines", "string-left-right"],
+      external: ["ranges-apply", "string-left-right"],
       plugins: [
         strip({
           sourceMap: false
@@ -73,7 +73,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.cjs.js", format: "cjs" }],
-      external: ["split-lines", "string-left-right"],
+      external: ["string-left-right"],
       plugins: [
         strip({
           sourceMap: false

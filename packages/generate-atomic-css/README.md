@@ -467,7 +467,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/generate-atomic-css
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
-[cov-img]: https://img.shields.io/badge/coverage-90.03%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-89.97%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/generate-atomic-css

@@ -11,10 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringLeftRight = require('string-left-right');
-var split = _interopDefault(require('split-lines'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -429,7 +426,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo) {
   var trim = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
   var generatedCount = arguments.length > 5 ? arguments[5] : undefined;
   var pad = arguments.length > 6 ? arguments[6] : undefined;
-  return trimBlankLinesFromLinesArray(split(str).map(function (rowStr, i, arr) {
+  return trimBlankLinesFromLinesArray(str.split(/\r?\n/).map(function (rowStr, i, arr) {
     return rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount, pad) : bump(rowStr, generatedCount);
   }), trim).join("\n");
 }

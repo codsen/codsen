@@ -8,7 +8,6 @@
  */
 
 import { right, left, leftSeq, rightSeq } from 'string-left-right';
-import split from 'split-lines';
 
 var version = "1.2.27";
 
@@ -482,18 +481,21 @@ function prepConfig(
   pad
 ) {
   return trimBlankLinesFromLinesArray(
-    split(str).map((rowStr, i, arr) =>
-      rowStr.includes("$$$")
-        ? prepLine(
-            rowStr,
-            progressFn,
-            progressFrom + ((progressTo - progressFrom) / arr.length) * i,
-            progressFrom + ((progressTo - progressFrom) / arr.length) * (i + 1),
-            generatedCount,
-            pad
-          )
-        : bump(rowStr, generatedCount)
-    ),
+    str
+      .split(/\r?\n/)
+      .map((rowStr, i, arr) =>
+        rowStr.includes("$$$")
+          ? prepLine(
+              rowStr,
+              progressFn,
+              progressFrom + ((progressTo - progressFrom) / arr.length) * i,
+              progressFrom +
+                ((progressTo - progressFrom) / arr.length) * (i + 1),
+              generatedCount,
+              pad
+            )
+          : bump(rowStr, generatedCount)
+      ),
     trim
   ).join("\n");
 }
