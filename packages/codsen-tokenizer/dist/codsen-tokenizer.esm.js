@@ -299,7 +299,6 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   }
   let attrib = {};
   const attribDefault = {
-    parent: null,
     attribName: null,
     attribNameStartAt: null,
     attribNameEndAt: null,
