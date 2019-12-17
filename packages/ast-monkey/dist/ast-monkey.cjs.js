@@ -17,7 +17,6 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var arrayObjectOrBoth = _interopDefault(require('util-array-object-or-both'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var types = _interopDefault(require('type-detect'));
-var isNaturalNumber = _interopDefault(require('is-natural-number'));
 var astCompare = _interopDefault(require('ast-compare'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
@@ -178,7 +177,7 @@ function get(input, opts) {
     throw new Error("ast-monkey/main.js/get(): [THROW_ID_08] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), {
+    if (Number.isInteger(parseFloat(opts.index, 10), {
       includeZero: true
     })) {
       opts.index = parseInt(opts.index, 10);
@@ -192,7 +191,7 @@ function get(input, opts) {
     },
     msg: "ast-monkey/get(): [THROW_ID_10*]"
   });
-  if (!isNaturalNumber(opts.index, {
+  if (!Number.isInteger(opts.index, {
     includeZero: true
   })) {
     throw new Error("ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ".concat(opts.index));
@@ -215,14 +214,14 @@ function set(input, opts) {
     throw new Error("ast-monkey/main.js/set(): [THROW_ID_15] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), {
+    if (Number.isInteger(parseFloat(opts.index, 10), {
       includeZero: true
     })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error("ast-monkey/main.js/set(): [THROW_ID_16] opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
-  } else if (!isNaturalNumber(opts.index, {
+  } else if (!Number.isInteger(opts.index, {
     includeZero: true
   })) {
     throw new Error("ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ".concat(opts.index));
@@ -253,7 +252,7 @@ function drop(input, opts) {
     throw new Error("ast-monkey/main.js/drop(): [THROW_ID_21] Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), {
+    if (Number.isInteger(parseFloat(opts.index, 10), {
       includeZero: true
     })) {
       opts.index = parseInt(opts.index, 10);
@@ -261,7 +260,7 @@ function drop(input, opts) {
       throw new Error("ast-monkey/main.js/drop(): [THROW_ID_22] opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   }
-  if (!isNaturalNumber(opts.index, {
+  if (!Number.isInteger(opts.index, {
     includeZero: true
   })) {
     throw new Error("ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ".concat(opts.index));

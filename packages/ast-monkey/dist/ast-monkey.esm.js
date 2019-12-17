@@ -11,7 +11,6 @@ import clone from 'lodash.clonedeep';
 import arrayObjectOrBoth from 'util-array-object-or-both';
 import checkTypes from 'check-types-mini';
 import types from 'type-detect';
-import isNaturalNumber from 'is-natural-number';
 import astCompare from 'ast-compare';
 import traverse from 'ast-monkey-traverse';
 export { default as traverse } from 'ast-monkey-traverse';
@@ -177,7 +176,7 @@ function get(input, opts) {
     );
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (Number.isInteger(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
@@ -191,7 +190,7 @@ function get(input, opts) {
     },
     msg: "ast-monkey/get(): [THROW_ID_10*]"
   });
-  if (!isNaturalNumber(opts.index, { includeZero: true })) {
+  if (!Number.isInteger(opts.index, { includeZero: true })) {
     throw new Error(
       `ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ${opts.index}`
     );
@@ -220,14 +219,14 @@ function set(input, opts) {
     );
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (Number.isInteger(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
         `ast-monkey/main.js/set(): [THROW_ID_16] opts.index must be a natural number. It was given as: ${opts.index}`
       );
     }
-  } else if (!isNaturalNumber(opts.index, { includeZero: true })) {
+  } else if (!Number.isInteger(opts.index, { includeZero: true })) {
     throw new Error(
       `ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ${opts.index}`
     );
@@ -262,7 +261,7 @@ function drop(input, opts) {
     );
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (Number.isInteger(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
@@ -270,7 +269,7 @@ function drop(input, opts) {
       );
     }
   }
-  if (!isNaturalNumber(opts.index, { includeZero: true })) {
+  if (!Number.isInteger(opts.index, { includeZero: true })) {
     throw new Error(
       `ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ${opts.index}`
     );
