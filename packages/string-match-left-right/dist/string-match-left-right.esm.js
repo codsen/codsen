@@ -7,9 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
  */
 
-import isNaturalNumber from 'is-natural-number';
-import isObj from 'lodash.isplainobject';
-import isFun from 'lodash.isfunction';
 import arrayiffy from 'arrayiffy-if-string';
 import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
@@ -191,7 +188,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     relaxedApi: false
   };
   if (
-    isObj(originalOpts) &&
+    typeof originalOpts === "object" &&
+    originalOpts !== null &&
     Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") &&
     typeof originalOpts.trimBeforeMatching !== "boolean"
   ) {
@@ -243,7 +241,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       `string-match-left-right/${mode}(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!`
     );
   }
-  if (!isNaturalNumber(position, { includeZero: true })) {
+  if (!(Number.isInteger(position) && position >= 0)) {
     if (opts.relaxedApi) {
       return false;
     }
@@ -263,7 +261,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
-  } else if (isFun(originalWhatToMatch)) {
+  } else if (typeof originalWhatToMatch === "function") {
     whatToMatch = [];
     whatToMatch.push(originalWhatToMatch);
   } else {
@@ -275,7 +273,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}`
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && typeof originalOpts !== "object") {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(
         originalOpts,

@@ -13,9 +13,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNaturalNumber = _interopDefault(require('is-natural-number'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var isFun = _interopDefault(require('lodash.isfunction'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringCharacterIsAstralSurrogate = require('string-character-is-astral-surrogate');
 
@@ -170,7 +167,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimCharsBeforeMatching: [],
     relaxedApi: false
   };
-  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (_typeof(originalOpts) === "object" && originalOpts !== null && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(isArr(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
   var opts = Object.assign({}, defaults, originalOpts);
@@ -201,9 +198,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!"));
   }
-  if (!isNaturalNumber(position, {
-    includeZero: true
-  })) {
+  if (!(Number.isInteger(position) && position >= 0)) {
     if (opts.relaxedApi) {
       return false;
     }
@@ -217,13 +212,13 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
-  } else if (isFun(originalWhatToMatch)) {
+  } else if (typeof originalWhatToMatch === "function") {
     whatToMatch = [];
     whatToMatch.push(originalWhatToMatch);
   } else {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && _typeof(originalOpts) !== "object") {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (!existy(whatToMatch) ||
