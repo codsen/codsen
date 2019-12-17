@@ -9,11 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var isNatNum = _interopDefault(require('is-natural-number'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -42,13 +37,13 @@ function overlap(str1, str2, originalOpts) {
   };
   if (!originalOpts) {
     opts = defaults;
-  } else if (!isObj(originalOpts)) {
+  } else if (_typeof(originalOpts) !== "object") {
     throw new Error("string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof(originalOpts), "\""));
   } else {
     opts = Object.assign({}, defaults, originalOpts);
     if (!opts.offset) {
       opts.offset = 0;
-    } else if (!isNatNum(Math.abs(opts.offset))) {
+    } else if (!Number.isInteger(Math.abs(opts.offset))) {
       throw new Error("string-overlap-one-on-another: [THROW_ID_04] The second input argument must be a string but it was given as ".concat(JSON.stringify(str2, null, 4), ", which is type \"").concat(_typeof(str2), "\""));
     }
     if (!opts.offsetFillerCharacter && opts.offsetFillerCharacter !== "") {

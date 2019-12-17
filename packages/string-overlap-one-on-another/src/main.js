@@ -1,6 +1,3 @@
-import isObj from "lodash.isplainobject";
-import isNatNum from "is-natural-number";
-
 function overlap(str1, str2, originalOpts) {
   if (typeof str1 !== "string") {
     throw new Error(
@@ -30,7 +27,7 @@ function overlap(str1, str2, originalOpts) {
   if (!originalOpts) {
     // it's fine because we won't overwrite opts:
     opts = defaults;
-  } else if (!isObj(originalOpts)) {
+  } else if (typeof originalOpts !== "object") {
     throw new Error(
       `string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as ${JSON.stringify(
         str2,
@@ -42,7 +39,7 @@ function overlap(str1, str2, originalOpts) {
     opts = Object.assign({}, defaults, originalOpts);
     if (!opts.offset) {
       opts.offset = 0;
-    } else if (!isNatNum(Math.abs(opts.offset))) {
+    } else if (!Number.isInteger(Math.abs(opts.offset))) {
       throw new Error(
         `string-overlap-one-on-another: [THROW_ID_04] The second input argument must be a string but it was given as ${JSON.stringify(
           str2,
