@@ -2,7 +2,6 @@
 
 import cmp from "semver-compare";
 import clone from "lodash.clonedeep";
-import isNum from "is-natural-number";
 import trim from "lodash.trim";
 import easyReplace from "easy-replace";
 import emojiRegexLib from "emoji-regex";
@@ -187,7 +186,7 @@ function setRow(rowsArray, index, content) {
 }
 
 function getRow(rowsArray, index) {
-  if (!existy(index) || !isNum(index)) {
+  if (!existy(index) || !Number.isInteger(index)) {
     throw new TypeError(
       `chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it's given as: ${typeof index} and equal: ${JSON.stringify(
         index,

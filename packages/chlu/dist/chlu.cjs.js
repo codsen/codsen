@@ -19,7 +19,6 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 var includes = _interopDefault(require('lodash.includes'));
 var min = _interopDefault(require('lodash.min'));
 var dd = _interopDefault(require('dehumanize-date'));
-var isNum = _interopDefault(require('is-natural-number'));
 var trim = _interopDefault(require('lodash.trim'));
 var easyReplace = _interopDefault(require('easy-replace'));
 var emojiRegexLib = _interopDefault(require('emoji-regex'));
@@ -159,7 +158,7 @@ function setRow(rowsArray, index, content) {
   return res;
 }
 function getRow(rowsArray, index) {
-  if (!existy(index) || !isNum(index)) {
+  if (!existy(index) || !Number.isInteger(index)) {
     throw new TypeError("chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it's given as: ".concat(_typeof(index), " and equal: ").concat(JSON.stringify(index, null, 4)));
   }
   if (!existy(rowsArray) || !isArr(rowsArray)) {

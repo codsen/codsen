@@ -50,7 +50,6 @@ export default commandLineArgs => {
         "easy-replace",
         "emoji-regex",
         "get-pkg-repo",
-        "is-natural-number",
         "lodash.clonedeep",
         "lodash.includes",
         "lodash.isplainobject",
@@ -80,7 +79,6 @@ export default commandLineArgs => {
         "easy-replace",
         "emoji-regex",
         "get-pkg-repo",
-        "is-natural-number",
         "lodash.clonedeep",
         "lodash.includes",
         "lodash.isplainobject",
@@ -106,7 +104,6 @@ export default commandLineArgs => {
       external: [
         "easy-replace",
         "emoji-regex",
-        "is-natural-number",
         "lodash.clonedeep",
         "lodash.trim",
         "semver-compare"
