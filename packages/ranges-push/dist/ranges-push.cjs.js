@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
-var isInt = _interopDefault(require('is-natural-number'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
@@ -150,11 +149,7 @@ function () {
       if (isNum(addVal)) {
         addVal = String(addVal);
       }
-      if (isInt(from, {
-        includeZero: true
-      }) && isInt(to, {
-        includeZero: true
-      })) {
+      if (isNum(from) && isNum(to)) {
         if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
         }
@@ -178,9 +173,7 @@ function () {
           this.slices.push(whatToPush);
         }
       } else {
-        if (!isInt(from, {
-          includeZero: true
-        })) {
+        if (!(isNum(from) && from >= 0)) {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
         } else {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));

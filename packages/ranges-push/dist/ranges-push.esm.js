@@ -10,7 +10,6 @@
 import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
 import isNumStr from 'is-natural-number-string';
 import mergeRanges from 'ranges-merge';
-import isInt from 'is-natural-number';
 import clone from 'lodash.clonedeep';
 
 function existy(x) {
@@ -114,10 +113,7 @@ class Ranges {
     if (isNum(addVal)) {
       addVal = String(addVal);
     }
-    if (
-      isInt(from, { includeZero: true }) &&
-      isInt(to, { includeZero: true })
-    ) {
+    if (isNum(from) && isNum(to)) {
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError(
           `ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
@@ -171,7 +167,7 @@ class Ranges {
         this.slices.push(whatToPush);
       }
     } else {
-      if (!isInt(from, { includeZero: true })) {
+      if (!(isNum(from) && from >= 0)) {
         throw new TypeError(
           `ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(
             from,
