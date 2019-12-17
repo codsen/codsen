@@ -8,7 +8,6 @@
  */
 
 import clone from 'lodash.clonedeep';
-import isNaturalNumber from 'is-natural-number';
 import isNaturalNumberString from 'is-natural-number-string';
 
 const isArr = Array.isArray;
@@ -25,7 +24,7 @@ function sortBySubarray(arr, axis = 0) {
       )}`
     );
   }
-  if (!isNaturalNumber(axis, { includeZero: true })) {
+  if (!Number.isInteger(axis, { includeZero: true })) {
     if (isNaturalNumberString(axis, { includeZero: true })) {
       axis = parseInt(axis, 10);
     } else {

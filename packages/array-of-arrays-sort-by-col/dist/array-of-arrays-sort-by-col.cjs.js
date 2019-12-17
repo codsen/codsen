@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var clone = _interopDefault(require('lodash.clonedeep'));
-var isNaturalNumber = _interopDefault(require('is-natural-number'));
 var isNaturalNumberString = _interopDefault(require('is-natural-number-string'));
 
 function _typeof(obj) {
@@ -58,7 +57,7 @@ function sortBySubarray(arr) {
   if (!isArr(arr)) {
     throw new Error("array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ".concat(_typeof(arr), ", equal to:\n").concat(JSON.stringify(arr, null, 0)));
   }
-  if (!isNaturalNumber(axis, {
+  if (!Number.isInteger(axis, {
     includeZero: true
   })) {
     if (isNaturalNumberString(axis, {
