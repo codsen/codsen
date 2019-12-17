@@ -9,10 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var splitLines = _interopDefault(require('split-lines'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -43,7 +39,7 @@ function c(changelogContents) {
   if (changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
     var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
     changelogContents = changelogContents.trim();
-    var linesArr = splitLines(changelogContents);
+    var linesArr = changelogContents.split(/\r?\n/);
     linesArr.forEach(function (line, i) {
       if (line.startsWith("#")) {
         linesArr[i] = line.replace(/(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g, "$1 $2");

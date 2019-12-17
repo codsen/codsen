@@ -7,8 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
  */
 
-import splitLines from 'split-lines';
-
 var version = "1.3.43";
 
 function isStr(something) {
@@ -38,7 +36,7 @@ function c(changelogContents) {
       (changelogContents[changelogContents.length - 1] === "\n" ||
         changelogContents[changelogContents.length - 1] === "\r");
     changelogContents = changelogContents.trim();
-    const linesArr = splitLines(changelogContents);
+    const linesArr = changelogContents.split(/\r?\n/);
     linesArr.forEach((line, i) => {
       if (line.startsWith("#")) {
         linesArr[i] = line.replace(

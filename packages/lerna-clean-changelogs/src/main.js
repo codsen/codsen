@@ -1,5 +1,4 @@
 import { version } from "../package.json";
-import splitLines from "split-lines";
 
 function isStr(something) {
   return typeof something === "string";
@@ -33,7 +32,7 @@ function c(changelogContents) {
         changelogContents[changelogContents.length - 1] === "\r");
 
     changelogContents = changelogContents.trim();
-    const linesArr = splitLines(changelogContents);
+    const linesArr = changelogContents.split(/\r?\n/);
     // console.log(
     //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     linesArr,
@@ -111,7 +110,7 @@ function c(changelogContents) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `114 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `113 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       } else {
@@ -127,7 +126,7 @@ function c(changelogContents) {
       if (linesArr[i].trim().length) {
         lastLineWasEmpty = false;
         console.log(
-          `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `129 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }
