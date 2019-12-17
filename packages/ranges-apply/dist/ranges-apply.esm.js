@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
  */
 
-import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import rangesMerge from 'ranges-merge';
 
@@ -55,9 +54,9 @@ function rangesApply(str, rangesArr, progressFn) {
   }
   if (
     isArr(rangesArr) &&
-    (isInt(rangesArr[0], { includeZero: true }) ||
+    (Number.isInteger(rangesArr[0], { includeZero: true }) ||
       isNumStr(rangesArr[0], { includeZero: true })) &&
-    (isInt(rangesArr[1], { includeZero: true }) ||
+    (Number.isInteger(rangesArr[1], { includeZero: true }) ||
       isNumStr(rangesArr[1], { includeZero: true }))
   ) {
     rangesArr = [rangesArr];
@@ -81,7 +80,7 @@ function rangesApply(str, rangesArr, progressFn) {
         )}, which is ${typeof el}`
       );
     }
-    if (!isInt(el[0], { includeZero: true })) {
+    if (!Number.isInteger(el[0], { includeZero: true })) {
       if (isNumStr(el[0], { includeZero: true })) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
@@ -98,7 +97,7 @@ function rangesApply(str, rangesArr, progressFn) {
         );
       }
     }
-    if (!isInt(el[1], { includeZero: true })) {
+    if (!Number.isInteger(el[1], { includeZero: true })) {
       if (isNumStr(el[1], { includeZero: true })) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {

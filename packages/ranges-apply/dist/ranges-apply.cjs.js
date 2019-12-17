@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var rangesMerge = _interopDefault(require('ranges-merge'));
 
@@ -53,11 +52,11 @@ function rangesApply(str, rangesArr, _progressFn) {
   if (_progressFn && typeof _progressFn !== "function") {
     throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
   }
-  if (isArr(rangesArr) && (isInt(rangesArr[0], {
+  if (isArr(rangesArr) && (Number.isInteger(rangesArr[0], {
     includeZero: true
   }) || isNumStr(rangesArr[0], {
     includeZero: true
-  })) && (isInt(rangesArr[1], {
+  })) && (Number.isInteger(rangesArr[1], {
     includeZero: true
   }) || isNumStr(rangesArr[1], {
     includeZero: true
@@ -77,7 +76,7 @@ function rangesApply(str, rangesArr, _progressFn) {
     if (!isArr(el)) {
       throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
     }
-    if (!isInt(el[0], {
+    if (!Number.isInteger(el[0], {
       includeZero: true
     })) {
       if (isNumStr(el[0], {
@@ -88,7 +87,7 @@ function rangesApply(str, rangesArr, _progressFn) {
         throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
       }
     }
-    if (!isInt(el[1], {
+    if (!Number.isInteger(el[1], {
       includeZero: true
     })) {
       if (isNumStr(el[1], {
