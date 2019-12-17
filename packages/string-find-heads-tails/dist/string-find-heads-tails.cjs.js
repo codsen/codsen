@@ -11,12 +11,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var stringMatchLeftRight = require('string-match-left-right');
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var includes = _interopDefault(require('lodash.includes'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -44,7 +41,7 @@ function mandatory(i) {
 }
 function strFindHeadsTails(str, heads, tails, opts) {
   if (existy(opts)) {
-    if (!isObj(opts)) {
+    if (_typeof(opts) !== "object") {
       throw new TypeError("string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(opts), ", equal to: ").concat(opts));
     } else if (isNumStr(opts.fromIndex, {
       includeZero: true
@@ -184,15 +181,13 @@ function strFindHeadsTails(str, heads, tails, opts) {
   }
   var s = opts.source === defaults.source;
   if (opts.throwWhenSomethingWrongIsDetected && !opts.allowWholeValueToBeOnlyHeadsOrTails) {
-    if (includes(arrayiffy(heads), str)) {
+    if (arrayiffy(heads).includes(str)) {
       throw new Error("".concat(opts.source).concat(s ? ": [THROW_ID_16]" : "", " the whole input string can't be equal to ").concat(isStr(heads) ? "" : "one of ", "heads (").concat(str, ")!"));
-    } else if (includes(arrayiffy(tails), str)) {
+    } else if (arrayiffy(tails).includes(str)) {
       throw new Error("".concat(opts.source).concat(s ? ": [THROW_ID_17]" : "", " the whole input string can't be equal to ").concat(isStr(tails) ? "" : "one of ", "tails (").concat(str, ")!"));
     }
   }
-  if (!isInt(opts.fromIndex, {
-    includeZero: true
-  }) && !isNumStr(opts.fromIndex, {
+  if (!(Number.isInteger(opts.fromIndex) && opts.fromIndex >= 0) && !isNumStr(opts.fromIndex, {
     includeZero: true
   })) {
     throw new TypeError("".concat(opts.source).concat(s ? ": [THROW_ID_18]" : "", " the fourth input argument must be a natural number! Currently it's: ").concat(opts.fromIndex));

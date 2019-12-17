@@ -7,12 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
  */
 
-import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import { matchRightIncl } from 'string-match-left-right';
 import arrayiffy from 'arrayiffy-if-string';
-import isObj from 'lodash.isplainobject';
-import includes from 'lodash.includes';
 
 function existy(x) {
   return x != null;
@@ -28,7 +25,7 @@ function mandatory(i) {
 }
 function strFindHeadsTails(str, heads, tails, opts) {
   if (existy(opts)) {
-    if (!isObj(opts)) {
+    if (typeof opts !== "object") {
       throw new TypeError(
         `string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it's: ${typeof opts}, equal to: ${opts}`
       );
@@ -217,7 +214,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     opts.throwWhenSomethingWrongIsDetected &&
     !opts.allowWholeValueToBeOnlyHeadsOrTails
   ) {
-    if (includes(arrayiffy(heads), str)) {
+    if (arrayiffy(heads).includes(str)) {
       throw new Error(
         `${opts.source}${
           s ? ": [THROW_ID_16]" : ""
@@ -225,7 +222,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           isStr(heads) ? "" : "one of "
         }heads (${str})!`
       );
-    } else if (includes(arrayiffy(tails), str)) {
+    } else if (arrayiffy(tails).includes(str)) {
       throw new Error(
         `${opts.source}${
           s ? ": [THROW_ID_17]" : ""
@@ -236,7 +233,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     }
   }
   if (
-    !isInt(opts.fromIndex, { includeZero: true }) &&
+    !(Number.isInteger(opts.fromIndex) && opts.fromIndex >= 0) &&
     !isNumStr(opts.fromIndex, { includeZero: true })
   ) {
     throw new TypeError(

@@ -44,10 +44,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "arrayiffy-if-string",
-        "is-natural-number",
         "is-natural-number-string",
-        "lodash.includes",
-        "lodash.isplainobject",
         "string-match-left-right"
       ],
       plugins: [
@@ -67,10 +64,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "arrayiffy-if-string",
-        "is-natural-number",
         "is-natural-number-string",
-        "lodash.includes",
-        "lodash.isplainobject",
         "string-match-left-right"
       ],
       plugins: [
