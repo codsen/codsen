@@ -11,8 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var toArr = _interopDefault(require('lodash.toarray'));
-var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 
 function _typeof(obj) {
@@ -45,7 +43,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (!isStr(searchValue)) {
     throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ".concat(_typeof(searchValue)));
   }
-  if (arguments.length >= 3 && !isInt(fromIndex, {
+  if (arguments.length >= 3 && !Number.isInteger(fromIndex, {
     includeZero: true
   }) && !isNumStr(fromIndex, {
     includeZero: true
@@ -57,8 +55,8 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   })) {
     fromIndex = Number(fromIndex);
   }
-  var strArr = toArr(str);
-  var searchValueArr = toArr(searchValue);
+  var strArr = Array.from(str);
+  var searchValueArr = Array.from(searchValue);
   if (strArr.length === 0 || searchValueArr.length === 0 || existy(fromIndex) && fromIndex >= strArr.length) {
     return [];
   }

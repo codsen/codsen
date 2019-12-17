@@ -7,8 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
  */
 
-import toArr from 'lodash.toarray';
-import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 
 function existy(x) {
@@ -33,7 +31,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   }
   if (
     arguments.length >= 3 &&
-    !isInt(fromIndex, { includeZero: true }) &&
+    !Number.isInteger(fromIndex, { includeZero: true }) &&
     !isNumStr(fromIndex, { includeZero: true })
   ) {
     throw new TypeError(
@@ -43,8 +41,8 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (isNumStr(fromIndex, { includeZero: true })) {
     fromIndex = Number(fromIndex);
   }
-  const strArr = toArr(str);
-  const searchValueArr = toArr(searchValue);
+  const strArr = Array.from(str);
+  const searchValueArr = Array.from(searchValue);
   if (
     strArr.length === 0 ||
     searchValueArr.length === 0 ||

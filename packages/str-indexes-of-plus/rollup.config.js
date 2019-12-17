@@ -42,11 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "is-natural-number",
-        "is-natural-number-string",
-        "lodash.toarray"
-      ],
+      external: ["is-natural-number-string"],
       plugins: [
         strip({
           sourceMap: false
@@ -62,11 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "is-natural-number",
-        "is-natural-number-string",
-        "lodash.toarray"
-      ],
+      external: ["is-natural-number-string"],
       plugins: [
         strip({
           sourceMap: false
