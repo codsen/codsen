@@ -1,4 +1,3 @@
-import isNatNum from "is-natural-number";
 import mergeRanges from "ranges-merge";
 
 const isArr = Array.isArray;
@@ -23,7 +22,7 @@ function rangesCrop(arrOfRanges, strLen) {
     );
   }
   // strLen validation
-  if (!isNatNum(strLen, { includeZero: true })) {
+  if (!Number.isInteger(strLen, { includeZero: true })) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
@@ -42,8 +41,8 @@ function rangesCrop(arrOfRanges, strLen) {
   if (
     !arrOfRanges.every((rangeArr, indx) => {
       if (
-        !isNatNum(rangeArr[0], { includeZero: true }) ||
-        !isNatNum(rangeArr[1], { includeZero: true })
+        !Number.isInteger(rangeArr[0], { includeZero: true }) ||
+        !Number.isInteger(rangeArr[1], { includeZero: true })
       ) {
         culpritsIndex = indx;
         return false;
@@ -100,7 +99,7 @@ function rangesCrop(arrOfRanges, strLen) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `103 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `102 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
       arrOfRanges,
       null,
       4
@@ -115,26 +114,26 @@ function rangesCrop(arrOfRanges, strLen) {
     .map(singleRangeArr => {
       if (singleRangeArr[1] > strLen) {
         console.log(
-          `118 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
+          `117 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
         );
         if (singleRangeArr[2] !== undefined) {
           console.log(
-            `122 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            `121 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         console.log(
-          `127 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+          `126 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
         );
         return [singleRangeArr[0], strLen];
       }
       console.log(
-        `132 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+        `131 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
       );
       return singleRangeArr;
     });
   console.log(
-    `137 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+    `136 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

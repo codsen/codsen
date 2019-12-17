@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
  */
 
-import isNatNum from 'is-natural-number';
 import mergeRanges from 'ranges-merge';
 
 const isArr = Array.isArray;
@@ -27,7 +26,7 @@ function rangesCrop(arrOfRanges, strLen) {
       )}`
     );
   }
-  if (!isNatNum(strLen, { includeZero: true })) {
+  if (!Number.isInteger(strLen, { includeZero: true })) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
@@ -43,8 +42,8 @@ function rangesCrop(arrOfRanges, strLen) {
   if (
     !arrOfRanges.every((rangeArr, indx) => {
       if (
-        !isNatNum(rangeArr[0], { includeZero: true }) ||
-        !isNatNum(rangeArr[1], { includeZero: true })
+        !Number.isInteger(rangeArr[0], { includeZero: true }) ||
+        !Number.isInteger(rangeArr[1], { includeZero: true })
       ) {
         culpritsIndex = indx;
         return false;

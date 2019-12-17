@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNatNum = _interopDefault(require('is-natural-number'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
@@ -39,7 +38,7 @@ function rangesCrop(arrOfRanges, strLen) {
   if (!isArr(arrOfRanges)) {
     throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
-  if (!isNatNum(strLen, {
+  if (!Number.isInteger(strLen, {
     includeZero: true
   })) {
     throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
@@ -49,9 +48,9 @@ function rangesCrop(arrOfRanges, strLen) {
   }
   var culpritsIndex;
   if (!arrOfRanges.every(function (rangeArr, indx) {
-    if (!isNatNum(rangeArr[0], {
+    if (!Number.isInteger(rangeArr[0], {
       includeZero: true
-    }) || !isNatNum(rangeArr[1], {
+    }) || !Number.isInteger(rangeArr[1], {
       includeZero: true
     })) {
       culpritsIndex = indx;
