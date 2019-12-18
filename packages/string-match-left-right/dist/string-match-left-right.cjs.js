@@ -30,12 +30,8 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function existy(x) {
   return x != null;
-}
-function isStr(something) {
-  return typeof something === "string";
 }
 function isAstral(_char) {
   if (typeof _char !== "string") {
@@ -168,12 +164,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     relaxedApi: false
   };
   if (_typeof(originalOpts) === "object" && originalOpts !== null && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(isArr(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
+    throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
   var opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr(el) ? el : String(el);
+    return typeof el === "string" ? el : String(el);
   });
   var culpritsIndex;
   var culpritsVal;
@@ -187,7 +183,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   })) {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
   }
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     if (opts.relaxedApi) {
       return false;
     }
@@ -206,9 +202,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   var whatToMatch;
   var special;
-  if (isStr(originalWhatToMatch)) {
+  if (typeof originalWhatToMatch === "string") {
     whatToMatch = [originalWhatToMatch];
-  } else if (isArr(originalWhatToMatch)) {
+  } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -222,9 +218,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (!existy(whatToMatch) ||
-  !isArr(whatToMatch) ||
-  isArr(whatToMatch) && !whatToMatch.length ||
-  isArr(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && whatToMatch[0].trim().length === 0
+  !Array.isArray(whatToMatch) ||
+  Array.isArray(whatToMatch) && !whatToMatch.length ||
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && typeof whatToMatch[0] === "string" && whatToMatch[0].trim().length === 0
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex;

@@ -10,12 +10,8 @@
 import arrayiffy from 'arrayiffy-if-string';
 import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
-const isArr = Array.isArray;
 function existy(x) {
   return x != null;
-}
-function isStr(something) {
-  return typeof something === "string";
 }
 function isAstral(char) {
   if (typeof char !== "string") {
@@ -195,7 +191,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   ) {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${
-        isArr(originalOpts.trimBeforeMatching)
+        Array.isArray(originalOpts.trimBeforeMatching)
           ? ` Did you mean to use opts.trimCharsBeforeMatching?`
           : ""
       }`
@@ -204,7 +200,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el =>
-    isStr(el) ? el : String(el)
+    typeof el === "string" ? el : String(el)
   );
   let culpritsIndex;
   let culpritsVal;
@@ -222,7 +218,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
     );
   }
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     if (opts.relaxedApi) {
       return false;
     }
@@ -255,9 +251,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   let whatToMatch;
   let special;
-  if (isStr(originalWhatToMatch)) {
+  if (typeof originalWhatToMatch === "string") {
     whatToMatch = [originalWhatToMatch];
-  } else if (isArr(originalWhatToMatch)) {
+  } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -284,11 +280,11 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   if (
     !existy(whatToMatch) ||
-    !isArr(whatToMatch) ||
-    (isArr(whatToMatch) && !whatToMatch.length) ||
-    (isArr(whatToMatch) &&
+    !Array.isArray(whatToMatch) ||
+    (Array.isArray(whatToMatch) && !whatToMatch.length) ||
+    (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
-      isStr(whatToMatch[0]) &&
+      typeof whatToMatch[0] === "string" &&
       whatToMatch[0].trim().length === 0)
   ) {
     if (typeof opts.cb === "function") {
