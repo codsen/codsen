@@ -60,7 +60,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-loose-compare.cjs.js` | 3 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-loose-compare.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-loose-compare.umd.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-loose-compare.umd.js` | 13 KB |
 
 **[⬆ back to top](#)**
 
@@ -231,7 +231,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ast-loose-compare
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
-[cov-img]: https://img.shields.io/badge/coverage-96.97%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-96.92%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-loose-compare

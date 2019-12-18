@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var isString = _interopDefault(require('lodash.isstring'));
 var isPlainObject = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
@@ -76,7 +75,7 @@ function looseCompare(bigObj, smallObj, res) {
     if (Object.keys(smallObj).length > 0) {
       var keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
-        if (Array.isArray(smallObj[keysArr[i]]) || isPlainObject(smallObj[keysArr[i]]) || isString(smallObj[keysArr[i]])) {
+        if (Array.isArray(smallObj[keysArr[i]]) || isPlainObject(smallObj[keysArr[i]]) || typeof smallObj[keysArr[i]] === "string") {
           res = looseCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
           if (!res) {
             return false;
@@ -95,7 +94,7 @@ function looseCompare(bigObj, smallObj, res) {
       res = false;
       return false;
     }
-  } else if (isString(bigObj) && isString(smallObj)) {
+  } else if (typeof bigObj === "string" && typeof smallObj === "string") {
     if (bigObj !== smallObj) {
       if (empty(smallObj) && empty(bigObj)) {
         return true;

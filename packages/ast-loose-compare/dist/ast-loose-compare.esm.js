@@ -8,7 +8,6 @@
  */
 
 import empty from 'ast-contains-only-empty-space';
-import isString from 'lodash.isstring';
 import isPlainObject from 'lodash.isplainobject';
 
 function looseCompare(bigObj, smallObj, res) {
@@ -64,7 +63,7 @@ function looseCompare(bigObj, smallObj, res) {
         if (
           Array.isArray(smallObj[keysArr[i]]) ||
           isPlainObject(smallObj[keysArr[i]]) ||
-          isString(smallObj[keysArr[i]])
+          typeof smallObj[keysArr[i]] === "string"
         ) {
           res = looseCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
           if (!res) {
@@ -88,7 +87,7 @@ function looseCompare(bigObj, smallObj, res) {
       res = false;
       return false;
     }
-  } else if (isString(bigObj) && isString(smallObj)) {
+  } else if (typeof bigObj === "string" && typeof smallObj === "string") {
     if (bigObj !== smallObj) {
       if (empty(smallObj) && empty(bigObj)) {
         return true;
