@@ -131,7 +131,6 @@
     "emoji-regex": "^8.0.0",
     "get-pkg-repo": "^4.1.0",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.min": "^4.0.1",
     "lodash.trim": "^4.5.1",

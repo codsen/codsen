@@ -12,7 +12,6 @@ import semverCompare from 'semver-compare';
 import empty from 'ast-contains-only-empty-space';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
-import includes from 'lodash.includes';
 import min from 'lodash.min';
 import dd from 'dehumanize-date';
 import trim from 'lodash.trim';
@@ -445,21 +444,13 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   }
   const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
   let unusedFooterLinks = footerLinks.filter(
-    link =>
-      !includes(
-        titles.map(title => title.version),
-        link.version
-      )
+    link => !titles.map(title => title.version).includes(link.version)
   );
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(
-      link =>
-        !includes(
-          titles.map(title => title.version),
-          link.version
-        )
+      link => !titles.map(title => title.version).includes(link.version)
     );
   }
   const missingFooterLinks = [];

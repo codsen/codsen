@@ -16,7 +16,6 @@ var semverCompare = _interopDefault(require('semver-compare'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
-var includes = _interopDefault(require('lodash.includes'));
 var min = _interopDefault(require('lodash.min'));
 var dd = _interopDefault(require('dehumanize-date'));
 var trim = _interopDefault(require('lodash.trim'));
@@ -341,17 +340,17 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     return el.version;
   }).sort(semverCompare);
   var unusedFooterLinks = footerLinks.filter(function (link) {
-    return !includes(titles.map(function (title) {
+    return !titles.map(function (title) {
       return title.version;
-    }), link.version);
+    }).includes(link.version);
   });
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
     unusedFooterLinks = footerLinks.filter(function (link) {
-      return !includes(titles.map(function (title) {
+      return !titles.map(function (title) {
         return title.version;
-      }), link.version);
+      }).includes(link.version);
     });
   }
   var missingFooterLinks = [];
