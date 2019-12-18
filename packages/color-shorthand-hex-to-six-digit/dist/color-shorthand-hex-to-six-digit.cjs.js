@@ -13,10 +13,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var r = _interopDefault(require('hex-color-regex'));
 var isPlainObject = _interopDefault(require('lodash.isplainobject'));
-var isString = _interopDefault(require('lodash.isstring'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
-var isArray = Array.isArray;
 function conv(originalInput) {
   var input = clone(originalInput);
   function toFullHex(hex, findings, offset, string) {
@@ -26,9 +24,9 @@ function conv(originalInput) {
     }
     return hex.toLowerCase();
   }
-  if (isString(originalInput)) {
+  if (typeof originalInput === "string") {
     input = input.replace(r(), toFullHex);
-  } else if (isArray(input)) {
+  } else if (Array.isArray(input)) {
     for (var i = 0, len = input.length; i < len; i++) {
       input[i] = conv(input[i]);
     }

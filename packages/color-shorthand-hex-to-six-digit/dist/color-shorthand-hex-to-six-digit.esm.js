@@ -9,10 +9,8 @@
 
 import r from 'hex-color-regex';
 import isPlainObject from 'lodash.isplainobject';
-import isString from 'lodash.isstring';
 import clone from 'lodash.clonedeep';
 
-const { isArray } = Array;
 function conv(originalInput) {
   let input = clone(originalInput);
   function toFullHex(hex, findings, offset, string) {
@@ -27,9 +25,9 @@ function conv(originalInput) {
     }
     return hex.toLowerCase();
   }
-  if (isString(originalInput)) {
+  if (typeof originalInput === "string") {
     input = input.replace(r(), toFullHex);
-  } else if (isArray(input)) {
+  } else if (Array.isArray(input)) {
     for (let i = 0, len = input.length; i < len; i++) {
       input[i] = conv(input[i]);
     }

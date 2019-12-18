@@ -1,11 +1,6 @@
-/* eslint no-param-reassign:0 */
-
 import r from "hex-color-regex";
 import isPlainObject from "lodash.isplainobject";
-import isString from "lodash.isstring";
 import clone from "lodash.clonedeep";
-
-const { isArray } = Array;
 
 function conv(originalInput) {
   // prevent any input argument mutation:
@@ -30,9 +25,9 @@ function conv(originalInput) {
   // action
   // ====================
 
-  if (isString(originalInput)) {
+  if (typeof originalInput === "string") {
     input = input.replace(r(), toFullHex);
-  } else if (isArray(input)) {
+  } else if (Array.isArray(input)) {
     for (let i = 0, len = input.length; i < len; i++) {
       input[i] = conv(input[i]);
     }
