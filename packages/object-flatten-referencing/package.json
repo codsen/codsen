@@ -119,7 +119,6 @@
   "dependencies": {
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^2.1.0",
     "str-indexes-of-plus": "^2.9.51"
@@ -128,6 +127,7 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "benchmark": "^2.1.4",
+    "js-row-num-cli": "^1.6.11",
     "lect": "^0.11.4",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",

@@ -13,7 +13,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var clone = _interopDefault(require('lodash.clonedeep'));
 var search = _interopDefault(require('str-indexes-of-plus'));
-var includes = _interopDefault(require('lodash.includes'));
 var matcher = _interopDefault(require('matcher'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var isStringInt = _interopDefault(require('is-string-int'));
@@ -182,7 +181,7 @@ function outer(originalInput1, originalReference1, opts1) {
     if (isObj(input)) {
       Object.keys(input).forEach(function (key) {
         var currentPath = currentRoot + (currentRoot.length === 0 ? key : ".".concat(key));
-        if (opts.ignore.length === 0 || !includes(opts.ignore, key)) {
+        if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true;
             if (opts.dontWrapKeys.length > 0) {

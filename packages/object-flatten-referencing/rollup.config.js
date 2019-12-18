@@ -45,7 +45,6 @@ export default commandLineArgs => {
       external: [
         "is-string-int",
         "lodash.clonedeep",
-        "lodash.includes",
         "lodash.isplainobject",
         "matcher",
         "str-indexes-of-plus"
@@ -68,7 +67,6 @@ export default commandLineArgs => {
       external: [
         "is-string-int",
         "lodash.clonedeep",
-        "lodash.includes",
         "lodash.isplainobject",
         "matcher",
         "str-indexes-of-plus"

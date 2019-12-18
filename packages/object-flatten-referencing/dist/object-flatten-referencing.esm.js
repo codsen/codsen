@@ -9,7 +9,6 @@
 
 import clone from 'lodash.clonedeep';
 import search from 'str-indexes-of-plus';
-import includes from 'lodash.includes';
 import matcher from 'matcher';
 import isObj from 'lodash.isplainobject';
 import isStringInt from 'is-string-int';
@@ -206,7 +205,7 @@ function outer(originalInput1, originalReference1, opts1) {
       Object.keys(input).forEach(key => {
         const currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
-        if (opts.ignore.length === 0 || !includes(opts.ignore, key)) {
+        if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true;
             if (opts.dontWrapKeys.length > 0) {

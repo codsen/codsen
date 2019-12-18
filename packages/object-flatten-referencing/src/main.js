@@ -1,6 +1,5 @@
 import clone from "lodash.clonedeep";
 import search from "str-indexes-of-plus";
-import includes from "lodash.includes";
 import matcher from "matcher";
 import isObj from "lodash.isplainobject";
 import {
@@ -102,7 +101,7 @@ function outer(originalInput1, originalReference1, opts1) {
         const currentPath =
           currentRoot + (currentRoot.length === 0 ? key : `.${key}`);
         // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
-        if (opts.ignore.length === 0 || !includes(opts.ignore, key)) {
+        if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true; // reset it for the new key.
             if (opts.dontWrapKeys.length > 0) {
