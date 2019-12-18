@@ -13,7 +13,6 @@ const util = require("util");
 const matcher = require("matcher");
 const partition = require("lodash.partition");
 const inquirer = require("inquirer");
-const replace = require("replace-string");
 const objectPath = require("object-path");
 
 const readdir = util.promisify(fs.readdir);
@@ -90,18 +89,18 @@ const encodingStr = "dhe1o2r3t4e5h6j7d8f9g";
 
 function encodeDot(something) {
   if (typeof something === "string") {
-    return replace(something, ".", encodingStr);
+    return something.replace(/\./g, encodingStr);
   } else if (isArr(something)) {
-    return something.map(val => replace(val, ".", encodingStr));
+    return something.map(val => val.replace(/\./g, encodingStr));
   }
   throw new Error("lect/init-npmignore.js > encodeDot(): bad input");
 }
 
 function decodeDot(something) {
   if (typeof something === "string") {
-    return replace(something, encodingStr, ".");
+    return something.replace(RegExp(encodingStr, "g"), ".");
   } else if (isArr(something)) {
-    return something.map(val => replace(val, encodingStr, "."));
+    return something.map(val => val.replace(RegExp(encodingStr, "g"), "."));
   }
   throw new Error(
     `lect/init-npmignore.js > decodeDot(): bad input, ${typeof something}`

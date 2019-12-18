@@ -9,24 +9,16 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var toArray = _interopDefault(require('lodash.toarray'));
-var checkTypes = _interopDefault(require('check-types-mini'));
-
-function existy(something) {
-  return something != null;
-}
-function isBool(something) {
-  return typeof something === "boolean";
-}
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
+  function existy(something) {
+    return something != null;
+  }
   if (typeof whereToLook !== "string" || whereToLook.length === 0 || typeof whatToLookFor !== "string" || whatToLookFor.length === 0) {
     return [];
   }
   var foundIndexArray = [];
-  var arrWhereToLook = toArray(whereToLook);
-  var arrWhatToLookFor = toArray(whatToLookFor);
+  var arrWhereToLook = Array.from(whereToLook);
+  var arrWhatToLookFor = Array.from(whatToLookFor);
   var found;
   for (var i = 0; i < arrWhereToLook.length; i++) {
     if (opts.i) {
@@ -58,11 +50,14 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   return foundIndexArray;
 }
 function stringise(incoming) {
-  if (!existy(incoming) || isBool(incoming)) {
+  function existy(something) {
+    return something != null;
+  }
+  if (!existy(incoming) || typeof incoming === "boolean") {
     return [""];
   } else if (Array.isArray(incoming)) {
     return incoming.filter(function (el) {
-      return existy(el) && !isBool(el);
+      return existy(el) && typeof el !== "boolean";
     }).map(function (el) {
       return String(el);
     }).filter(function (el) {
@@ -73,14 +68,14 @@ function stringise(incoming) {
 }
 function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
   var matched = true;
-  var charsArray = toArray(elem);
+  var charsArray = Array.from(elem);
   for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
     if (i) {
-      if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()) {
+      if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - Array.from(elem).length + i2].toLowerCase()) {
         matched = false;
         break;
       }
-    } else if (charsArray[i2] !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
+    } else if (charsArray[i2] !== arrSource[foundBeginningIndex - Array.from(elem).length + i2]) {
       matched = false;
       break;
     }
@@ -89,7 +84,7 @@ function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
 }
 function iterateRight(elem, arrSource, foundEndingIndex, i) {
   var matched = true;
-  var charsArray = toArray(elem);
+  var charsArray = Array.from(elem);
   for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
     if (i) {
       if (charsArray[i2].toLowerCase() !== arrSource[foundEndingIndex + i2].toLowerCase()) {
@@ -116,21 +111,6 @@ function er(originalSource, options, originalReplacement) {
     }
   };
   var opts = Object.assign({}, defaults, options);
-  checkTypes(opts, defaults, {
-    schema: {
-      leftOutsideNot: ["string", "number", "null", "undefined"],
-      leftOutside: ["string", "number", "null", "undefined"],
-      leftMaybe: ["string", "number", "null", "undefined"],
-      searchFor: ["string", "number"],
-      rightMaybe: ["string", "number", "null", "undefined"],
-      rightOutside: ["string", "number", "null", "undefined"],
-      rightOutsideNot: ["string", "number", "null", "undefined"]
-    },
-    msg: "easy-replace/module.exports():",
-    optsVarName: "options",
-    acceptArrays: true,
-    acceptArraysIgnore: ["i"]
-  });
   var source = stringise(originalSource);
   opts.leftOutsideNot = stringise(opts.leftOutsideNot);
   opts.leftOutside = stringise(opts.leftOutside);
@@ -140,7 +120,7 @@ function er(originalSource, options, originalReplacement) {
   opts.rightOutside = stringise(opts.rightOutside);
   opts.rightOutsideNot = stringise(opts.rightOutsideNot);
   var replacement = stringise(originalReplacement);
-  var arrSource = toArray(source[0]);
+  var arrSource = Array.from(source[0]);
   var foundBeginningIndex;
   var foundEndingIndex;
   var matched;
@@ -153,11 +133,11 @@ function er(originalSource, options, originalReplacement) {
   for (var resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
     var oneOfFoundIndexes = allResults[resIndex];
     foundBeginningIndex = oneOfFoundIndexes;
-    foundEndingIndex = oneOfFoundIndexes + toArray(opts.searchFor).length;
+    foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
     if (opts.leftMaybe.length > 0) {
       for (var i = 0, len = opts.leftMaybe.length; i < len; i++) {
         matched = true;
-        var splitLeftMaybe = toArray(opts.leftMaybe[i]);
+        var splitLeftMaybe = Array.from(opts.leftMaybe[i]);
         for (var i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           if (opts.i.leftMaybe) {
             if (splitLeftMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2].toLowerCase()) {
@@ -177,20 +157,20 @@ function er(originalSource, options, originalReplacement) {
     if (opts.rightMaybe.length > 0) {
       for (var _i2 = 0, _len = opts.rightMaybe.length; _i2 < _len; _i2++) {
         matched = true;
-        var splitRightMaybe = toArray(opts.rightMaybe[_i2]);
+        var splitRightMaybe = Array.from(opts.rightMaybe[_i2]);
         for (var _i3 = 0, _len2 = splitRightMaybe.length; _i3 < _len2; _i3++) {
           if (opts.i.rightMaybe) {
-            if (splitRightMaybe[_i3].toLowerCase() !== arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + _i3].toLowerCase()) {
+            if (splitRightMaybe[_i3].toLowerCase() !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + _i3].toLowerCase()) {
               matched = false;
               break;
             }
-          } else if (splitRightMaybe[_i3] !== arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + _i3]) {
+          } else if (splitRightMaybe[_i3] !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + _i3]) {
             matched = false;
             break;
           }
         }
-        if (matched && foundEndingIndex < oneOfFoundIndexes + toArray(opts.searchFor).length + splitRightMaybe.length) {
-          foundEndingIndex = oneOfFoundIndexes + toArray(opts.searchFor).length + splitRightMaybe.length;
+        if (matched && foundEndingIndex < oneOfFoundIndexes + Array.from(opts.searchFor).length + splitRightMaybe.length) {
+          foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length + splitRightMaybe.length;
         }
       }
     }

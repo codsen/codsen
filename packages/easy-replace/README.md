@@ -54,11 +54,11 @@ const er = easyReplace;
 
 This package has three builds in `dist/` folder:
 
-| Type                                                                                                    | Key in `package.json` | Path                       | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/easy-replace.cjs.js` | 9 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/easy-replace.esm.js` | 10 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/easy-replace.umd.js` | 34 KB |
+| Type                                                                                                    | Key in `package.json` | Path                       | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/easy-replace.cjs.js` | 9 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/easy-replace.esm.js` | 9 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/easy-replace.umd.js` | 4 KB |
 
 **[⬆ back to top](#)**
 

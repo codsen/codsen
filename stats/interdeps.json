@@ -26,10 +26,8 @@
     },
     {
         "name": "array-pull-all-with-glob",
-        "size": 3268,
-        "imports": [
-            "check-types-mini"
-        ]
+        "size": 2964,
+        "imports": []
     },
     {
         "name": "arrayiffy-if-string",
@@ -94,7 +92,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 9812,
+        "size": 9769,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -129,7 +127,7 @@
     },
     {
         "name": "chlu",
-        "size": 19646,
+        "size": 19704,
         "imports": [
             "ast-contains-only-empty-space",
             "easy-replace"
@@ -144,7 +142,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 20411,
+        "size": 20620,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -195,10 +193,8 @@
     },
     {
         "name": "easy-replace",
-        "size": 10066,
-        "imports": [
-            "check-types-mini"
-        ]
+        "size": 9500,
+        "imports": []
     },
     {
         "name": "edit-package-json",
@@ -240,7 +236,7 @@
     },
     {
         "name": "emlint",
-        "size": 104221,
+        "size": 108012,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",
@@ -257,7 +253,7 @@
     },
     {
         "name": "generate-atomic-css",
-        "size": 20642,
+        "size": 20669,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -380,7 +376,7 @@
     },
     {
         "name": "lerna-clean-changelogs",
-        "size": 2961,
+        "size": 2925,
         "imports": []
     },
     {
@@ -446,14 +442,14 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4659,
+        "size": 4664,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-crop",
-        "size": 3326,
+        "size": 3308,
         "imports": [
             "ranges-merge"
         ]
@@ -495,7 +491,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7613,
+        "size": 7502,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -521,7 +517,7 @@
     },
     {
         "name": "str-indexes-of-plus",
-        "size": 2418,
+        "size": 2364,
         "imports": []
     },
     {
@@ -566,7 +562,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 12966,
+        "size": 12868,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
@@ -587,7 +583,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 18620,
+        "size": 18556,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"

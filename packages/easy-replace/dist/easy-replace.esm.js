@@ -7,16 +7,10 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace
  */
 
-import toArray from 'lodash.toarray';
-import checkTypes from 'check-types-mini';
-
-function existy(something) {
-  return something != null;
-}
-function isBool(something) {
-  return typeof something === "boolean";
-}
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
+  function existy(something) {
+    return something != null;
+  }
   if (
     typeof whereToLook !== "string" ||
     whereToLook.length === 0 ||
@@ -26,8 +20,8 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
     return [];
   }
   const foundIndexArray = [];
-  const arrWhereToLook = toArray(whereToLook);
-  const arrWhatToLookFor = toArray(whatToLookFor);
+  const arrWhereToLook = Array.from(whereToLook);
+  const arrWhatToLookFor = Array.from(whatToLookFor);
   let found;
   for (let i = 0; i < arrWhereToLook.length; i++) {
     if (opts.i) {
@@ -66,11 +60,14 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   return foundIndexArray;
 }
 function stringise(incoming) {
-  if (!existy(incoming) || isBool(incoming)) {
+  function existy(something) {
+    return something != null;
+  }
+  if (!existy(incoming) || typeof incoming === "boolean") {
     return [""];
   } else if (Array.isArray(incoming)) {
     return incoming
-      .filter(el => existy(el) && !isBool(el))
+      .filter(el => existy(el) && typeof el !== "boolean")
       .map(el => String(el))
       .filter(el => el.length > 0);
   }
@@ -78,19 +75,21 @@ function stringise(incoming) {
 }
 function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
   let matched = true;
-  const charsArray = toArray(elem);
+  const charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     if (i) {
       if (
         charsArray[i2].toLowerCase() !==
-        arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()
+        arrSource[
+          foundBeginningIndex - Array.from(elem).length + i2
+        ].toLowerCase()
       ) {
         matched = false;
         break;
       }
     } else if (
       charsArray[i2] !==
-      arrSource[foundBeginningIndex - toArray(elem).length + i2]
+      arrSource[foundBeginningIndex - Array.from(elem).length + i2]
     ) {
       matched = false;
       break;
@@ -100,7 +99,7 @@ function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
 }
 function iterateRight(elem, arrSource, foundEndingIndex, i) {
   let matched = true;
-  const charsArray = toArray(elem);
+  const charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     if (i) {
       if (
@@ -130,21 +129,6 @@ function er(originalSource, options, originalReplacement) {
     }
   };
   const opts = Object.assign({}, defaults, options);
-  checkTypes(opts, defaults, {
-    schema: {
-      leftOutsideNot: ["string", "number", "null", "undefined"],
-      leftOutside: ["string", "number", "null", "undefined"],
-      leftMaybe: ["string", "number", "null", "undefined"],
-      searchFor: ["string", "number"],
-      rightMaybe: ["string", "number", "null", "undefined"],
-      rightOutside: ["string", "number", "null", "undefined"],
-      rightOutsideNot: ["string", "number", "null", "undefined"]
-    },
-    msg: "easy-replace/module.exports():",
-    optsVarName: "options",
-    acceptArrays: true,
-    acceptArraysIgnore: ["i"]
-  });
   const source = stringise(originalSource);
   opts.leftOutsideNot = stringise(opts.leftOutsideNot);
   opts.leftOutside = stringise(opts.leftOutside);
@@ -154,7 +138,7 @@ function er(originalSource, options, originalReplacement) {
   opts.rightOutside = stringise(opts.rightOutside);
   opts.rightOutsideNot = stringise(opts.rightOutsideNot);
   const replacement = stringise(originalReplacement);
-  const arrSource = toArray(source[0]);
+  const arrSource = Array.from(source[0]);
   let foundBeginningIndex;
   let foundEndingIndex;
   let matched;
@@ -171,11 +155,11 @@ function er(originalSource, options, originalReplacement) {
   ) {
     const oneOfFoundIndexes = allResults[resIndex];
     foundBeginningIndex = oneOfFoundIndexes;
-    foundEndingIndex = oneOfFoundIndexes + toArray(opts.searchFor).length;
+    foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
     if (opts.leftMaybe.length > 0) {
       for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         matched = true;
-        const splitLeftMaybe = toArray(opts.leftMaybe[i]);
+        const splitLeftMaybe = Array.from(opts.leftMaybe[i]);
         for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           if (opts.i.leftMaybe) {
             if (
@@ -206,13 +190,13 @@ function er(originalSource, options, originalReplacement) {
     if (opts.rightMaybe.length > 0) {
       for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         matched = true;
-        const splitRightMaybe = toArray(opts.rightMaybe[i]);
+        const splitRightMaybe = Array.from(opts.rightMaybe[i]);
         for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
           if (opts.i.rightMaybe) {
             if (
               splitRightMaybe[i2].toLowerCase() !==
               arrSource[
-                oneOfFoundIndexes + toArray(opts.searchFor).length + i2
+                oneOfFoundIndexes + Array.from(opts.searchFor).length + i2
               ].toLowerCase()
             ) {
               matched = false;
@@ -220,7 +204,9 @@ function er(originalSource, options, originalReplacement) {
             }
           } else if (
             splitRightMaybe[i2] !==
-            arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + i2]
+            arrSource[
+              oneOfFoundIndexes + Array.from(opts.searchFor).length + i2
+            ]
           ) {
             matched = false;
             break;
@@ -230,12 +216,12 @@ function er(originalSource, options, originalReplacement) {
           matched &&
           foundEndingIndex <
             oneOfFoundIndexes +
-              toArray(opts.searchFor).length +
+              Array.from(opts.searchFor).length +
               splitRightMaybe.length
         ) {
           foundEndingIndex =
             oneOfFoundIndexes +
-            toArray(opts.searchFor).length +
+            Array.from(opts.searchFor).length +
             splitRightMaybe.length;
         }
       }

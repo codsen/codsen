@@ -3,10 +3,8 @@ no-loop-func:0, prefer-destructuring:0 */
 
 const fs = require("fs-extra");
 const objectPath = require("object-path");
-const replace = require("replace-string");
 const pify = require("pify");
 const request = pify(require("request"));
-const split = require("split-lines");
 const trim = require("lodash.trim");
 const isObj = require("lodash.isplainobject");
 const filesize = require("filesize");
@@ -43,7 +41,8 @@ function resolveVars(str, pack, parsedPack) {
   };
   return Object.keys(mappings).reduce(
     (accumulator, mappingsKey) =>
-      replace(accumulator, mappingsKey, mappings[mappingsKey]),
+      // replace(accumulator, mappingsKey, mappings[mappingsKey]),
+      accumulator.replace(RegExp(mappingsKey, "g"), mappings[mappingsKey]),
     str
   );
 }
@@ -71,7 +70,7 @@ function extractSrc(str) {
 // -----------------------------------------------------------------------------
 
 function removeRecognisedLintingBadges(str, lectrc) {
-  const theSplit = split(str);
+  const theSplit = str.split(/\r?\n/);
   // insurance in case the .lectrc.json does not have the key "header.rightFloatedBadge" set:
   if (!objectPath.has(lectrc, "header.rightFloatedBadge")) {
     return str;
@@ -87,7 +86,7 @@ function removeRecognisedLintingBadges(str, lectrc) {
 // -----------------------------------------------------------------------------
 
 function replaceNpmInstallRow(str, pack) {
-  const theSplit = split(str);
+  const theSplit = str.split(/\r?\n/);
   return theSplit
     .map((rowsContent, index) => {
       if (
@@ -107,8 +106,9 @@ function replaceNpmInstallRow(str, pack) {
 // -----------------------------------------------------------------------------
 
 function replaceNpxRow(str, pack) {
-  const theSplit = split(str);
-  return split(str)
+  const theSplit = str.split(/\r?\n/);
+  return str
+    .split(/\r?\n/)
     .map((rowsContent, index) => {
       if (
         trim(rowsContent, "$ ").startsWith("npx") &&
@@ -152,7 +152,7 @@ function extractStringUnderBadges(str) {
   if (typeof str !== "string") {
     return str;
   }
-  const theSplit = split(str);
+  const theSplit = str.split(/\r?\n/);
   theSplit.forEach((row, i) => {
     if (`${row[0]}${row[1]}${row[2]}` === "[![") {
       lastBadgeRow = i;
@@ -236,7 +236,7 @@ function replaceRollupInfoTableAndItsHeader(str, pack, lectrc) {
   // removal part
   // ============
   if (str.includes("|") && str.includes("--")) {
-    const theSplit = split(str);
+    const theSplit = str.split(/\r?\n/);
     // First, look for the line under the table title.
     // Thing like:
     // "----------------|-----------------------|-------|--------"
@@ -371,20 +371,21 @@ function parseReadme(str) {
 
   // at this moment we have the readme sliced by heading (h1, h2 or h3)
   return gatheredContent.map(chunk => {
-    const res = split(chunk);
+    const res = chunk.split(/\r?\n/);
     if (
       res.length > 0 &&
       res[0] !== undefined &&
       res[0].trim().length > 0 &&
       res[0].includes("#")
     ) {
-      const heading = split(chunk)[0];
-      const restofit = split(chunk)
+      const heading = chunk.split(/\r?\n/)[0];
+      const restofit = chunk
+        .split(/\r?\n/)
         .filter((el, i) => i !== 0)
         .filter(
           el =>
             !(
-              replace(el, "&nbsp;", " ").includes("back to top") &&
+              el.replace(/&nbsp;/g, " ").includes("back to top") &&
               el.includes("[")
             )
         )

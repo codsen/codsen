@@ -29,7 +29,6 @@ const GithubSlugger = require("github-slugger");
 const slugger = new GithubSlugger();
 
 const findRecursivelyUp = require("find-file-recursively-up");
-const replace = require("replace-string");
 const inquirer = require("inquirer");
 // const matcher = require('matcher')
 const {
@@ -1061,7 +1060,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1064 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1063 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1691,7 +1690,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1694 clause #3`);
+        console.log(`1693 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1711,7 +1710,7 @@ function step6() {
               !val.includes("###") &&
               !val.includes("###")
           )
-          .map(val => replace(val, "##", "").trim())
+          .map(val => val.replace(/##/g, "").trim())
           .filter(val => !val.toLowerCase().includes("table of contents"))
           .map(val => {
             return {

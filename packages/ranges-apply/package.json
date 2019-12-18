@@ -117,7 +117,6 @@
     "timeout": 0
   },
   "dependencies": {
-    "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "ranges-merge": "^4.2.29"
   },
