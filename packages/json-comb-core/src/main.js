@@ -1,5 +1,3 @@
-/* eslint no-param-reassign:0 */
-
 import flattenAllArrays from "object-flatten-all-arrays";
 import fillMissingKeys from "object-fill-missing-keys";
 import setAllValuesTo from "object-set-all-values-to";
@@ -112,7 +110,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   console.log(
-    `115 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `113 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4
