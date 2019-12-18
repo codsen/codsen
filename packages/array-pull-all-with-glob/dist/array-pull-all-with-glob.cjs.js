@@ -12,8 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var matcher = _interopDefault(require('matcher'));
-var checkTypes = _interopDefault(require('check-types-mini'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -29,23 +27,17 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
-function pullAllWithGlob(originalInput, originalToBeRemoved) {
-  var originalOpts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  function existy(x) {
-    return x != null;
-  }
+function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  if (!existy(originalInput)) {
-    throw new Error("array-pull-all-with-glob: [THROW_ID_01] first argument is missing!");
+  if (!Array.isArray(originalInput)) {
+    throw new Error("array-pull-all-with-glob: [THROW_ID_01] first argument must be an array! Currently it's ".concat(_typeof(originalInput), ", equal to: ").concat(JSON.stringify(originalInput, null, 4)));
+  } else if (!originalInput.length) {
+    return [];
   }
-  if (!existy(originalToBeRemoved)) {
+  if (originalToBeRemoved == null) {
     throw new Error("array-pull-all-with-glob: [THROW_ID_02] second argument is missing!");
-  }
-  if (!isArr(originalInput)) {
-    throw new Error("array-pull-all-with-glob: [THROW_ID_03] first argument must be an array! Currently it's ".concat(_typeof(originalInput), ", equal to: ").concat(JSON.stringify(originalInput, null, 4)));
   }
   var toBeRemoved;
   if (typeof originalToBeRemoved === "string") {
@@ -53,12 +45,12 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
       return originalInput;
     }
     toBeRemoved = [originalToBeRemoved];
-  } else if (isArr(originalToBeRemoved)) {
+  } else if (Array.isArray(originalToBeRemoved)) {
     if (originalToBeRemoved.length === 0) {
       return originalInput;
     }
     toBeRemoved = Array.from(originalToBeRemoved);
-  } else if (!isArr(originalToBeRemoved)) {
+  } else if (!Array.isArray(originalToBeRemoved)) {
     throw new Error("array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it's ".concat(_typeof(originalToBeRemoved), ", equal to: ").concat(JSON.stringify(originalToBeRemoved, null, 4)));
   }
   if (originalInput.length === 0 || originalToBeRemoved.length === 0) {
@@ -74,7 +66,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   })) {
     throw new Error("array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ".concat(JSON.stringify(toBeRemoved, null, 4)));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && (Array.isArray(originalOpts) || _typeof(originalOpts) !== "object")) {
     throw new Error("array-pull-all-with-glob: [THROW_ID_07] third argument, options object is not a plain object but ".concat(Array.isArray(originalOpts) ? "array" : _typeof(originalOpts)));
   }
   var opts;
@@ -86,10 +78,6 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   } else {
     opts = Object.assign({}, defaults, originalOpts);
   }
-  checkTypes(opts, defaults, {
-    msg: "newLibrary/yourFunction(): [THROW_ID_08]",
-    optsVarName: "opts"
-  });
   return Array.from(originalInput).filter(function (originalVal) {
     return !toBeRemoved.some(function (remVal) {
       return matcher.isMatch(originalVal, remVal, {

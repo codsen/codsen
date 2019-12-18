@@ -176,13 +176,6 @@ t.test("2.6 - pulls normal words in various ways", t => {
 // edge cases
 // ==========
 
-t.test("3.1 - missing one input - throws", t => {
-  t.throws(() => {
-    pull(["module-*", "module-**", "something-*", "something-**"]);
-  }, /THROW_ID_02/g);
-  t.end();
-});
-
 t.test("3.2 - missing both inputs - throws", t => {
   t.throws(() => {
     pull();
@@ -213,10 +206,10 @@ t.test("3.4 - against emoji and asterisk", t => {
 t.test("3.5 - wrong inputs - throws", t => {
   t.throws(() => {
     pull(1, 1);
-  }, /THROW_ID_03/g);
+  }, /THROW_ID_01/g);
   t.throws(() => {
     pull(1, ["a"]);
-  }, /THROW_ID_03/g);
+  }, /THROW_ID_01/g);
   t.throws(() => {
     pull(["a"], 1);
   }, /THROW_ID_04/g);
@@ -269,13 +262,6 @@ t.test("3.6 - missing one input - throws", t => {
       {} // empty opts
     );
   }, /THROW_ID_01/g);
-  t.throws(() => {
-    pull(
-      ["one", "two", "three"],
-      ["one", "three"],
-      { aaa: true } // unrecognised key
-    );
-  }, /THROW_ID_08/g);
 
   t.end();
 });
@@ -287,7 +273,7 @@ t.test('3.7 - 1st arg, "originalInput" is an empty array', t => {
   t.end();
 });
 
-t.test('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', t => {
+t.only('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', t => {
   t.same(pull(["apples", "oranges"], ""), ["apples", "oranges"], "3.8.1");
   t.end();
 });
