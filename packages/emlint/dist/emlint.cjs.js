@@ -3045,6 +3045,31 @@ function attributeMalformed(context) {
   };
 }
 
+function attributeValidateAbbr(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "abbr") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-abbr",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-abbr"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateAccept(context) {
   return {
     attribute: function attribute(node) {
@@ -3657,6 +3682,9 @@ defineLazyProp(builtInRules, "tag-bold", function () {
 });
 defineLazyProp(builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
+});
+defineLazyProp(builtInRules, "attribute-validate-abbr", function () {
+  return attributeValidateAbbr;
 });
 defineLazyProp(builtInRules, "attribute-validate-accept", function () {
   return attributeValidateAccept;

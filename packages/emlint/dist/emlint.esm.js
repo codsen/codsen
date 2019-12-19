@@ -2826,6 +2826,35 @@ function attributeMalformed(context, ...opts) {
   };
 }
 
+function attributeValidateAbbr(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "abbr") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-abbr",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-abbr"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateAccept(context, ...opts) {
   return {
     attribute: function(node) {
@@ -3713,6 +3742,11 @@ defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-abbr",
+  () => attributeValidateAbbr
+);
 defineLazyProp(
   builtInRules,
   "attribute-validate-accept",
