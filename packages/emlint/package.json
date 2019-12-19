@@ -42,7 +42,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c --silent",
     "dev": "node bin/helper && rollup -c --dev --silent",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute/attribute-validate-width.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute/attribute-validate-border.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
@@ -167,6 +167,6 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.2",
     "rollup-plugin-terser": "^5.1.3",
-    "tap": "^14.10.4"
+    "tap": "^14.10.5"
   }
 }

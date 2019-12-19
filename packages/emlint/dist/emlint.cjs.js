@@ -254,6 +254,7 @@ var allTagRules = [
 
 var allAttribRules = [
 	"attribute-malformed",
+	"attribute-validate-border",
 	"attribute-validate-width"
 ];
 
@@ -266,22 +267,12 @@ var allBadNamedHTMLEntityRules = [
 ];
 
 var knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
-function isObj(something) {
-  return something !== null && _typeof(something) === "object";
-}
-function isEnabled(maybeARulesValue) {
-  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
-    return maybeARulesValue;
-  } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
-    return maybeARulesValue[0];
-  }
-  return 0;
-}
-function validateDigitAndUnit(str, idxOffset, opts) {
-  var errorArr = [];
+
+function checkForWhitespace(str, idxOffset) {
   var charStart = 0;
   var charEnd = str.length;
   var gatheredRanges = [];
+  var errorArr = [];
   if (!str[0].trim().length) {
     charStart = stringLeftRight.right(str);
     if (charStart === null) {
@@ -311,6 +302,29 @@ function validateDigitAndUnit(str, idxOffset, opts) {
     });
     gatheredRanges = [];
   }
+  return {
+    charStart: charStart,
+    charEnd: charEnd,
+    errorArr: errorArr
+  };
+}
+
+function isObj(something) {
+  return something !== null && _typeof(something) === "object";
+}
+function isEnabled(maybeARulesValue) {
+  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
+    return maybeARulesValue;
+  } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
+    return maybeARulesValue[0];
+  }
+  return 0;
+}
+function validateDigitAndUnit(str, idxOffset, opts) {
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      charStart = _checkForWhitespace.charStart,
+      charEnd = _checkForWhitespace.charEnd,
+      errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
     if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
       errorArr.push({
@@ -364,6 +378,26 @@ function validateDigitAndUnit(str, idxOffset, opts) {
           }
           break;
         }
+      }
+    }
+  }
+  return errorArr;
+}
+function validateDigitOnly(str, idxOffset) {
+  var _checkForWhitespace2 = checkForWhitespace(str, idxOffset),
+      charStart = _checkForWhitespace2.charStart,
+      charEnd = _checkForWhitespace2.charEnd,
+      errorArr = _checkForWhitespace2.errorArr;
+  if (Number.isInteger(charStart)) {
+    for (var i = charStart; i < charEnd; i++) {
+      if (!"0123456789".includes(str[i])) {
+        errorArr.push({
+          idxFrom: idxOffset + i,
+          idxTo: idxOffset + charEnd,
+          message: "Should be integer".concat(/[a-zA-Z]/g.test(str) ? ", no letters" : "", "."),
+          fix: null
+        });
+        break;
       }
     }
   }
@@ -2962,6 +2996,19 @@ function attributeValidateWidth(context) {
   };
 }
 
+function attributeValidateBorder(context) {
+  return {
+    attribute: function attribute(node) {
+      var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt);
+      errorArr.forEach(function (errorObj) {
+        context.report(Object.assign({}, errorObj, {
+          ruleId: "attribute-validate-border"
+        }));
+      });
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function entity(_ref) {
@@ -3493,6 +3540,9 @@ defineLazyProp(builtInRules, "attribute-malformed", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;
+});
+defineLazyProp(builtInRules, "attribute-validate-border", function () {
+  return attributeValidateBorder;
 });
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;

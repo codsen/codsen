@@ -145,6 +145,7 @@ var allTagRules = [
 
 var allAttribRules = [
 	"attribute-malformed",
+	"attribute-validate-border",
 	"attribute-validate-width"
 ];
 
@@ -173,27 +174,12 @@ const knownUnits = [
   "vmax",
   "%"
 ];
-function isObj(something) {
-  return something !== null && typeof something === "object";
-}
-function isEnabled(maybeARulesValue) {
-  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
-    return maybeARulesValue;
-  } else if (
-    Array.isArray(maybeARulesValue) &&
-    maybeARulesValue.length &&
-    Number.isInteger(maybeARulesValue[0]) &&
-    maybeARulesValue[0] > 0
-  ) {
-    return maybeARulesValue[0];
-  }
-  return 0;
-}
-function validateDigitAndUnit(str, idxOffset, opts) {
-  const errorArr = [];
+
+function checkForWhitespace(str, idxOffset) {
   let charStart = 0;
   let charEnd = str.length;
   let gatheredRanges = [];
+  const errorArr = [];
   if (!str[0].trim().length) {
     charStart = right(str);
     if (charStart === null) {
@@ -221,6 +207,27 @@ function validateDigitAndUnit(str, idxOffset, opts) {
     });
     gatheredRanges = [];
   }
+  return { charStart, charEnd, errorArr };
+}
+
+function isObj(something) {
+  return something !== null && typeof something === "object";
+}
+function isEnabled(maybeARulesValue) {
+  if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
+    return maybeARulesValue;
+  } else if (
+    Array.isArray(maybeARulesValue) &&
+    maybeARulesValue.length &&
+    Number.isInteger(maybeARulesValue[0]) &&
+    maybeARulesValue[0] > 0
+  ) {
+    return maybeARulesValue[0];
+  }
+  return 0;
+}
+function validateDigitAndUnit(str, idxOffset, opts) {
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
     if (
       !"0123456789".includes(str[charStart]) &&
@@ -285,6 +292,25 @@ function validateDigitAndUnit(str, idxOffset, opts) {
           }
           break;
         }
+      }
+    }
+  }
+  return errorArr;
+}
+function validateDigitOnly(str, idxOffset) {
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  if (Number.isInteger(charStart)) {
+    for (let i = charStart; i < charEnd; i++) {
+      if (!"0123456789".includes(str[i])) {
+        errorArr.push({
+          idxFrom: idxOffset + i,
+          idxTo: idxOffset + charEnd,
+          message: `Should be integer${
+            /[a-zA-Z]/g.test(str) ? ", no letters" : ""
+          }.`,
+          fix: null
+        });
+        break;
       }
     }
   }
@@ -2737,6 +2763,23 @@ function attributeValidateWidth(context, ...opts) {
   };
 }
 
+function attributeValidateBorder(context, ...opts) {
+  return {
+    attribute: function(node) {
+      const errorArr = validateDigitOnly(
+        node.attribValue,
+        node.attribValueStartAt);
+      errorArr.forEach(errorObj => {
+        context.report(
+          Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-border"
+          })
+        );
+      });
+    }
+  };
+}
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
@@ -3503,6 +3546,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-width",
   () => attributeValidateWidth
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-border",
+  () => attributeValidateBorder
 );
 defineLazyProp(
   builtInRules,

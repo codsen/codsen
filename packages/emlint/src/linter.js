@@ -4,7 +4,7 @@ import EventEmitter from "events";
 import lineColumn from "line-column";
 import stringFixBrokenNamedEntities from "string-fix-broken-named-entities";
 import matcher from "matcher";
-import { isEnabled } from "./util";
+import { isEnabled } from "./util/util";
 
 EventEmitter.defaultMaxListeners = 0;
 

@@ -12,7 +12,7 @@ import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import clone from "lodash.clonedeep";
 import matcher from "matcher";
 const builtInRules = {};
-import { isEnabled } from "./util";
+import { isEnabled } from "./util/util";
 
 // CHARACTER-LEVEL rules
 // -----------------------------------------------------------------------------
@@ -836,6 +836,13 @@ defineLazyProp(
   () => attributeValidateWidth
 );
 
+import attributeValidateBorder from "./rules/attribute/attribute-validate-border";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-border",
+  () => attributeValidateBorder
+);
+
 // BAD-HTML-ENTITY rules
 // -----------------------------------------------------------------------------
 // (some of them, only plugin-based-ones - the rest are on linter.js, directly on a callback)
@@ -979,7 +986,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `982 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `989 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

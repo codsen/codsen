@@ -1,4 +1,5 @@
 [
   "attribute-malformed",
+  "attribute-validate-border",
   "attribute-validate-width"
 ]

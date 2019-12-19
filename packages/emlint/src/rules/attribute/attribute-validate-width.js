@@ -1,9 +1,7 @@
 // rule: attribute-validate-width
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util";
-
-// it flags up malformed HTML attributes
+import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateWidth(context, ...opts) {
   return {
@@ -12,7 +10,7 @@ function attributeValidateWidth(context, ...opts) {
         `███████████████████████████████████████ attributeValidateWidth() ███████████████████████████████████████`
       );
       console.log(
-        `015 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -31,11 +29,11 @@ function attributeValidateWidth(context, ...opts) {
         }
       );
       console.log(
-        `034 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        `032 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
       );
 
       errorArr.forEach(errorObj => {
-        console.log(`038 RAISE ERROR`);
+        console.log(`036 RAISE ERROR`);
         context.report(
           Object.assign({}, errorObj, {
             ruleId: "attribute-validate-width"

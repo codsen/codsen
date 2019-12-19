@@ -3,7 +3,7 @@
 
 import he from "he";
 import { notEmailFriendly } from "html-entities-not-email-friendly";
-import { isEnabled } from "../../util";
+import { isEnabled } from "../../util/util";
 
 // Catches characters outside ASCII and suggests encoding.
 // Applies only to "text" scope
