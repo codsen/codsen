@@ -85,7 +85,7 @@
     },
     {
         "name": "ast-loose-compare",
-        "size": 2933,
+        "size": 2923,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -127,7 +127,7 @@
     },
     {
         "name": "chlu",
-        "size": 19704,
+        "size": 19594,
         "imports": [
             "ast-contains-only-empty-space",
             "easy-replace"
@@ -364,7 +364,7 @@
     },
     {
         "name": "lect",
-        "size": 74587,
+        "size": 74544,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -416,7 +416,7 @@
     },
     {
         "name": "object-flatten-referencing",
-        "size": 11424,
+        "size": 11383,
         "imports": [
             "str-indexes-of-plus"
         ]
@@ -583,7 +583,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 18556,
+        "size": 18548,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"

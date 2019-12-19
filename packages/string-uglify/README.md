@@ -86,7 +86,7 @@ Problem with this algorithm is that when you add or remove some classes from cod
 
 Practically, this means, if you add a single new class high-enough, there will be code changes _all over the file_.
 
-Besides being simple, the second strength of this algorithm is that length-wise, class/id names are the shortest possible.
+Besides being simple, the second strength of such algorithm is that length-wise, class/id names are the shortest possible.
 
 **[⬆ back to top](#)**
 
