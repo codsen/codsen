@@ -236,7 +236,7 @@
     },
     {
         "name": "emlint",
-        "size": 108012,
+        "size": 109253,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",

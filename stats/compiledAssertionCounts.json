@@ -35,7 +35,7 @@
         "email-all-chars-within-ascii-cli": 11,
         "email-comb": 421,
         "email-homey": 9,
-        "emlint": 615,
+        "emlint": 639,
         "eslint-plugin-row-num": 11,
         "generate-atomic-css": 233,
         "generate-atomic-css-cli": 4,
@@ -104,7 +104,7 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 102,
-    "totalAssertsCount": 818712,
+    "totalAssertsCount": 818736,
     "minAssertsCount": 4,
     "minAssertsName": "csv-sort-cli",
     "maxAssertsCount": 746764,
