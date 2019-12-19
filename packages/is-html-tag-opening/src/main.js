@@ -159,7 +159,7 @@ function isOpening(str, idx = 0) {
   const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
 
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
-  const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
+  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"]/g;
 
   // r3. closing/self-closing tags
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;

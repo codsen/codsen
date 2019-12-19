@@ -335,3 +335,15 @@ t.test(`05.13 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   t.ok(is(s1, 0));
   t.end();
 });
+
+t.test(`05.14 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `<zzz accept="utf-8" yyy>`;
+  t.ok(is(s1, 0));
+  t.end();
+});
+
+t.test(`05.15 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
+  const s1 = `<zzz accept-charset="utf-8" yyy>`;
+  t.ok(is(s1, 0));
+  t.end();
+});
