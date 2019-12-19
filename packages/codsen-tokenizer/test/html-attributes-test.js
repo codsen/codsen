@@ -4,15 +4,15 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 // 01. basic - double quoted attributes
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  const gathered = [];
-  ct(`<a b="c" d='e'>`, obj => {
-    gathered.push(obj);
-  });
+t.test(
+  `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`,
+  t => {
+    const gathered = [];
+    ct(`<a b="c" d='e'>`, obj => {
+      gathered.push(obj);
+    });
 
-  t.match(
-    gathered,
-    [
+    t.match(gathered, [
       {
         type: "html",
         start: 0,
@@ -44,21 +44,20 @@ t.test(t => {
           }
         ]
       }
-    ],
-    `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`
-  );
-  t.end();
-});
+    ]);
+    t.end();
+  }
+);
 
-t.test(t => {
-  const gathered = [];
-  ct(`<td nowrap class="z">`, obj => {
-    gathered.push(obj);
-  });
+t.test(
+  `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`,
+  t => {
+    const gathered = [];
+    ct(`<td nowrap class="z">`, obj => {
+      gathered.push(obj);
+    });
 
-  t.match(
-    gathered,
-    [
+    t.match(gathered, [
       {
         type: "html",
         start: 0,
@@ -90,21 +89,20 @@ t.test(t => {
           }
         ]
       }
-    ],
-    `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`
-  );
-  t.end();
-});
+    ]);
+    t.end();
+  }
+);
 
-t.test(t => {
-  const gathered = [];
-  ct(`</td>`, obj => {
-    gathered.push(obj);
-  });
+t.test(
+  `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
+  t => {
+    const gathered = [];
+    ct(`</td>`, obj => {
+      gathered.push(obj);
+    });
 
-  t.match(
-    gathered,
-    [
+    t.match(gathered, [
       {
         tagNameStartAt: 2,
         tagNameEndAt: 4,
@@ -121,22 +119,21 @@ t.test(t => {
         kind: null,
         attribs: []
       }
-    ],
-    `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`
-  );
-  t.end();
-});
+    ]);
+    t.end();
+  }
+);
 
 // space inside tag
-t.test(t => {
-  const gathered = [];
-  ct(`</td >`, obj => {
-    gathered.push(obj);
-  });
+t.test(
+  `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
+  t => {
+    const gathered = [];
+    ct(`</td >`, obj => {
+      gathered.push(obj);
+    });
 
-  t.match(
-    gathered,
-    [
+    t.match(gathered, [
       {
         tagNameStartAt: 2,
         tagNameEndAt: 4,
@@ -153,14 +150,13 @@ t.test(t => {
         kind: null,
         attribs: []
       }
-    ],
-    `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`
-  );
-  t.end();
-});
+    ]);
+    t.end();
+  }
+);
 
 // TODO
-// t.test(t => {
+// t.test(`01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditional class`, t => {
 //   const gathered = [];
 //   ct(`<td{% if something %} class="z"{% endif %} id="y">`, obj => {
 //     gathered.push(obj);
@@ -212,7 +208,6 @@ t.test(t => {
 //         ]
 //       }
 //     ],
-//     `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditional class`
 //   );
 //   t.end();
 // });
@@ -220,15 +215,15 @@ t.test(t => {
 // 02. broken
 // -----------------------------------------------------------------------------
 
-t.test(t => {
-  const gathered = [];
-  ct(`<a b"c" d'e'>`, obj => {
-    gathered.push(obj);
-  });
+t.test(
+  `02.01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`,
+  t => {
+    const gathered = [];
+    ct(`<a b"c" d'e'>`, obj => {
+      gathered.push(obj);
+    });
 
-  t.match(
-    gathered,
-    [
+    t.match(gathered, [
       {
         type: "html",
         start: 0,
@@ -260,14 +255,13 @@ t.test(t => {
           }
         ]
       }
-    ],
-    `02.01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`
-  );
-  t.end();
-});
+    ]);
+    t.end();
+  }
+);
 
 // TODO
-// t.test(t => {
+// t.test(`02.02 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no opening quotes but equals present`, t => {
 //   const gathered = [];
 //   ct(`<a b=c" d=e'>`, obj => {
 //     gathered.push(obj);
@@ -308,259 +302,287 @@ t.test(t => {
 //         ]
 //       }
 //     ],
-//     `02.02 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no opening quotes but equals present`
 //   );
 //   t.end();
 // });
 
-t.test(t => {
+t.test(`02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`, t => {
   const gathered = [];
   ct(`<a b=="c" d=='e'>`, obj => {
     gathered.push(obj);
   });
 
-  t.match(
-    gathered,
-    [
-      {
-        type: "html",
-        start: 0,
-        end: 17,
-        attribs: [
-          {
-            attribName: "b",
-            attribNameStartAt: 3,
-            attribNameEndAt: 4,
-            attribOpeningQuoteAt: 6,
-            attribClosingQuoteAt: 8,
-            attribValue: "c",
-            attribValueStartAt: 7,
-            attribValueEndAt: 8,
-            attribStart: 3,
-            attribEnd: 9
-          },
-          {
-            attribName: "d",
-            attribNameStartAt: 10,
-            attribNameEndAt: 11,
-            attribOpeningQuoteAt: 13,
-            attribClosingQuoteAt: 15,
-            attribValue: "e",
-            attribValueStartAt: 14,
-            attribValueEndAt: 15,
-            attribStart: 10,
-            attribEnd: 16
-          }
-        ]
-      }
-    ],
-    `02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`
-  );
+  t.match(gathered, [
+    {
+      type: "html",
+      start: 0,
+      end: 17,
+      attribs: [
+        {
+          attribName: "b",
+          attribNameStartAt: 3,
+          attribNameEndAt: 4,
+          attribOpeningQuoteAt: 6,
+          attribClosingQuoteAt: 8,
+          attribValue: "c",
+          attribValueStartAt: 7,
+          attribValueEndAt: 8,
+          attribStart: 3,
+          attribEnd: 9
+        },
+        {
+          attribName: "d",
+          attribNameStartAt: 10,
+          attribNameEndAt: 11,
+          attribOpeningQuoteAt: 13,
+          attribClosingQuoteAt: 15,
+          attribValue: "e",
+          attribValueStartAt: 14,
+          attribValueEndAt: 15,
+          attribStart: 10,
+          attribEnd: 16
+        }
+      ]
+    }
+  ]);
   t.end();
 });
 
 // 03. bool attributes
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test(`03.01`, t => {
   const gathered = [];
   ct(`<td nowrap>`, obj => {
     gathered.push(obj);
   });
 
-  t.match(
-    gathered,
-    [
-      {
-        tagNameStartAt: 1,
-        tagNameEndAt: 3,
-        tagName: "td",
-        recognised: true,
-        closing: false,
-        void: false,
-        pureHTML: true,
-        esp: [],
-        type: "html",
-        start: 0,
-        end: 11,
-        tail: null,
-        kind: null,
-        attribs: [
-          {
-            attribName: "nowrap",
-            attribNameStartAt: 4,
-            attribNameEndAt: 10,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 4,
-            attribEnd: 10
-          }
-        ]
-      }
-    ],
-    `03.01`
-  );
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 3,
+      tagName: "td",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 11,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "nowrap",
+          attribNameStartAt: 4,
+          attribNameEndAt: 10,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 4,
+          attribEnd: 10
+        }
+      ]
+    }
+  ]);
   t.end();
 });
 
-// slash in the end
-t.test(t => {
+t.test(`03.02 - slash in the end`, t => {
   const gathered = [];
   ct(`<td nowrap/>`, obj => {
     gathered.push(obj);
   });
 
-  t.match(
-    gathered,
-    [
-      {
-        tagNameStartAt: 1,
-        tagNameEndAt: 3,
-        tagName: "td",
-        recognised: true,
-        closing: false,
-        void: false,
-        pureHTML: true,
-        esp: [],
-        type: "html",
-        start: 0,
-        end: 12,
-        tail: null,
-        kind: null,
-        attribs: [
-          {
-            attribName: "nowrap",
-            attribNameStartAt: 4,
-            attribNameEndAt: 10,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 4,
-            attribEnd: 10
-          }
-        ]
-      }
-    ],
-    `03.02`
-  );
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 3,
+      tagName: "td",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 12,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "nowrap",
+          attribNameStartAt: 4,
+          attribNameEndAt: 10,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 4,
+          attribEnd: 10
+        }
+      ]
+    }
+  ]);
   t.end();
 });
 
-// slash in front
-t.test(t => {
+t.test(`03.03 - slash in front`, t => {
   const gathered = [];
   ct(`</td nowrap>`, obj => {
     gathered.push(obj);
   });
 
-  t.match(
-    gathered,
-    [
-      {
-        tagNameStartAt: 2,
-        tagNameEndAt: 4,
-        tagName: "td",
-        recognised: true,
-        closing: true,
-        void: false,
-        pureHTML: true,
-        esp: [],
-        type: "html",
-        start: 0,
-        end: 12,
-        tail: null,
-        kind: null,
-        attribs: [
-          {
-            attribName: "nowrap",
-            attribNameStartAt: 5,
-            attribNameEndAt: 11,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 5,
-            attribEnd: 11
-          }
-        ]
-      }
-    ],
-    `03.03`
-  );
+  t.match(gathered, [
+    {
+      tagNameStartAt: 2,
+      tagNameEndAt: 4,
+      tagName: "td",
+      recognised: true,
+      closing: true,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 12,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "nowrap",
+          attribNameStartAt: 5,
+          attribNameEndAt: 11,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 5,
+          attribEnd: 11
+        }
+      ]
+    }
+  ]);
   t.end();
 });
 
-// now crazier
-t.only(t => {
+t.test(`03.04 - now crazier`, t => {
   const gathered = [];
   ct(`</td nowrap yo yo/>`, obj => {
     gathered.push(obj);
   });
 
-  t.match(
-    gathered,
-    [
-      {
-        tagNameStartAt: 2,
-        tagNameEndAt: 4,
-        tagName: "td",
-        recognised: true,
-        closing: true,
-        void: false,
-        pureHTML: true,
-        esp: [],
-        type: "html",
-        start: 0,
-        end: 19,
-        tail: null,
-        kind: null,
-        attribs: [
-          {
-            attribName: "nowrap",
-            attribNameStartAt: 5,
-            attribNameEndAt: 11,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 5,
-            attribEnd: 11
-          },
-          {
-            attribName: "yo",
-            attribNameStartAt: 12,
-            attribNameEndAt: 14,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 12,
-            attribEnd: 14
-          },
-          {
-            attribName: "yo",
-            attribNameStartAt: 15,
-            attribNameEndAt: 17,
-            attribOpeningQuoteAt: null,
-            attribClosingQuoteAt: null,
-            attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
-            attribStart: 15,
-            attribEnd: 17
-          }
-        ]
-      }
-    ],
-    `03.04`
-  );
+  t.match(gathered, [
+    {
+      tagNameStartAt: 2,
+      tagNameEndAt: 4,
+      tagName: "td",
+      recognised: true,
+      closing: true,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 19,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "nowrap",
+          attribNameStartAt: 5,
+          attribNameEndAt: 11,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 5,
+          attribEnd: 11
+        },
+        {
+          attribName: "yo",
+          attribNameStartAt: 12,
+          attribNameEndAt: 14,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 12,
+          attribEnd: 14
+        },
+        {
+          attribName: "yo",
+          attribNameStartAt: 15,
+          attribNameEndAt: 17,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 15,
+          attribEnd: 17
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
+t.test(`03.05 - unrecognised tag`, t => {
+  const gathered = [];
+  ct(`<zzz accept-charset="utf-8" yyy>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "zzz",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 32,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "accept-charset",
+          attribNameStartAt: 5,
+          attribNameEndAt: 19,
+          attribOpeningQuoteAt: 20,
+          attribClosingQuoteAt: 26,
+          attribValue: "utf-8",
+          attribValueStartAt: 21,
+          attribValueEndAt: 26,
+          attribStart: 5,
+          attribEnd: 27
+        },
+        {
+          attribName: "yyy",
+          attribNameStartAt: 28,
+          attribNameEndAt: 31,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 28,
+          attribEnd: 31
+        }
+      ]
+    }
+  ]);
   t.end();
 });
