@@ -829,11 +829,14 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 import attributeMalformed from "./rules/attribute/attribute-malformed";
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 
-import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
+// ATTRIBUTE-VALIDATE- rules
+// -----------------------------------------------------------------------------
+
+import attributeValidateAccept from "./rules/attribute-validate/attribute-validate-accept";
 defineLazyProp(
   builtInRules,
-  "attribute-validate-width",
-  () => attributeValidateWidth
+  "attribute-validate-accept",
+  () => attributeValidateAccept
 );
 
 import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
@@ -841,6 +844,13 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-border",
   () => attributeValidateBorder
+);
+
+import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-width",
+  () => attributeValidateWidth
 );
 
 // BAD-HTML-ENTITY rules
@@ -986,7 +996,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `989 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `999 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

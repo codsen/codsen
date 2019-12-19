@@ -18,6 +18,8 @@ var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
+var isRegExp = _interopDefault(require('lodash.isregexp'));
+var db = _interopDefault(require('mime-db'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
 var lineColumn = _interopDefault(require('line-column'));
@@ -307,6 +309,16 @@ function checkForWhitespace(str, idxOffset) {
   };
 }
 
+function includesWithRegex(arr, whatToMatch) {
+  if (!Array.isArray(arr) || !arr.length) {
+    return false;
+  }
+  return arr.some(function (val) {
+    return typeof val === "string" && whatToMatch === val || isRegExp(val) && val.test(whatToMatch);
+  });
+}
+
+var wholeExtensionRegex = /^\.\w+$/g;
 function isObj(something) {
   return something !== null && _typeof(something) === "object";
 }
@@ -396,6 +408,61 @@ function validateDigitOnly(str, idxOffset, opts) {
           fix: null
         });
         break;
+      }
+    }
+  }
+  return errorArr;
+}
+function validateString(str, idxOffset, opts) {
+  var _checkForWhitespace3 = checkForWhitespace(str, idxOffset),
+      charStart = _checkForWhitespace3.charStart,
+      charEnd = _checkForWhitespace3.charEnd,
+      errorArr = _checkForWhitespace3.errorArr;
+  if (Number.isInteger(charStart)) {
+    if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
+      if (str.slice(charStart, charEnd).includes(",,")) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Consecutive commas.",
+          fix: null
+        });
+      } else if (opts.noSpaceAfterComma && /,\s/g.test(str.slice(charStart, charEnd))) {
+        var ranges = [];
+        for (var i = charStart; i < charEnd; i++) {
+          if (str[i] === "," && !str[i + 1].trim().length) {
+            ranges.push([idxOffset + i + 1, idxOffset + (stringLeftRight.right(str, i + 1) || str.length)]);
+          }
+        }
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Whitespace after comma.",
+          fix: {
+            ranges: ranges
+          }
+        });
+      } else {
+        str.slice(charStart, charEnd).split(",").forEach(function (oneOfValues) {
+          if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
+            errorArr.push({
+              idxFrom: idxOffset + charStart,
+              idxTo: idxOffset + charEnd,
+              message: "Unrecognised value: ".concat(oneOfValues),
+              fix: null
+            });
+          }
+        });
+      }
+    } else {
+      if (!includesWithRegex(opts.quickPermittedValues,
+      str.slice(charStart, charEnd)) && !opts.permittedValues.includes(str.slice(charStart, charEnd))) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Unrecognised value.",
+          fix: null
+        });
       }
     }
   }
@@ -2978,16 +3045,20 @@ function attributeMalformed(context) {
   };
 }
 
-function attributeValidateWidth(context) {
+function attributeValidateAccept(context) {
   return {
     attribute: function attribute(node) {
-      var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
-        badUnits: ["px"],
-        noUnitsIsFine: true
+      var errorArr = validateString(node.attribValue,
+      node.attribValueStartAt,
+      {
+        quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
+        permittedValues: Object.keys(db),
+        canBeCommaSeparated: true,
+        noSpaceAfterComma: true
       });
       errorArr.forEach(function (errorObj) {
         context.report(Object.assign({}, errorObj, {
-          ruleId: "attribute-validate-width"
+          ruleId: "attribute-validate-accept"
         }));
       });
     }
@@ -3003,6 +3074,22 @@ function attributeValidateBorder(context) {
       errorArr.forEach(function (errorObj) {
         context.report(Object.assign({}, errorObj, {
           ruleId: "attribute-validate-border"
+        }));
+      });
+    }
+  };
+}
+
+function attributeValidateWidth(context) {
+  return {
+    attribute: function attribute(node) {
+      var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+        badUnits: ["px"],
+        noUnitsIsFine: true
+      });
+      errorArr.forEach(function (errorObj) {
+        context.report(Object.assign({}, errorObj, {
+          ruleId: "attribute-validate-width"
         }));
       });
     }
@@ -3538,11 +3625,14 @@ defineLazyProp(builtInRules, "tag-bold", function () {
 defineLazyProp(builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
 });
-defineLazyProp(builtInRules, "attribute-validate-width", function () {
-  return attributeValidateWidth;
+defineLazyProp(builtInRules, "attribute-validate-accept", function () {
+  return attributeValidateAccept;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;
+});
+defineLazyProp(builtInRules, "attribute-validate-width", function () {
+  return attributeValidateWidth;
 });
 defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", function () {
   return htmlEntitiesNotEmailFriendly;
