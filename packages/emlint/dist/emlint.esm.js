@@ -2875,20 +2875,31 @@ function attributeValidateAccept(context, ...opts) {
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
-      const errorArr = validateDigitOnly(
-        node.attribValue,
-        node.attribValueStartAt,
-        {
-          type: "integer"
+      if (node.attribName === "border") {
+        if (!["table", "img", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-border",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
         }
-      );
-      errorArr.forEach(errorObj => {
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-border"
-          })
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer"
+          }
         );
-      });
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-border"
+            })
+          );
+        });
+      }
     }
   };
 }
@@ -2896,21 +2907,46 @@ function attributeValidateBorder(context, ...opts) {
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
-      const errorArr = validateDigitAndUnit(
-        node.attribValue,
-        node.attribValueStartAt,
-        {
-          badUnits: ["px"],
-          noUnitsIsFine: true
+      if (node.attribName === "width") {
+        if (
+          ![
+            "hr",
+            "iframe",
+            "img",
+            "object",
+            "table",
+            "td",
+            "th",
+            "applet",
+            "col",
+            "colgroup",
+            "pre"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-width",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
         }
-      );
-      errorArr.forEach(errorObj => {
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-width"
-          })
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            badUnits: ["px"],
+            noUnitsIsFine: true
+          }
         );
-      });
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-width"
+            })
+          );
+        });
+      }
     }
   };
 }

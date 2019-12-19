@@ -3079,14 +3079,25 @@ function attributeValidateAccept(context) {
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
-      var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
-        type: "integer"
-      });
-      errorArr.forEach(function (errorObj) {
-        context.report(Object.assign({}, errorObj, {
-          ruleId: "attribute-validate-border"
-        }));
-      });
+      if (node.attribName === "border") {
+        if (!["table", "img", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-border",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          type: "integer"
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-border"
+          }));
+        });
+      }
     }
   };
 }
@@ -3094,15 +3105,26 @@ function attributeValidateBorder(context) {
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
-      var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
-        badUnits: ["px"],
-        noUnitsIsFine: true
-      });
-      errorArr.forEach(function (errorObj) {
-        context.report(Object.assign({}, errorObj, {
-          ruleId: "attribute-validate-width"
-        }));
-      });
+      if (node.attribName === "width") {
+        if (!["hr", "iframe", "img", "object", "table", "td", "th", "applet", "col", "colgroup", "pre"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-width",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          badUnits: ["px"],
+          noUnitsIsFine: true
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-width"
+          }));
+        });
+      }
     }
   };
 }

@@ -418,3 +418,56 @@ t.test(
     t.end();
   }
 );
+
+// 03. wrong parent tag
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
+  t => {
+    const str = `<br width="100">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-width": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-width",
+        idxFrom: 4,
+        idxTo: 15,
+        message: `Tag "br" can't have this attribute.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
+  t => {
+    const str = `<zzz width="100">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-width": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-width",
+        idxFrom: 5,
+        idxTo: 16,
+        message: `Tag "zzz" can't have this attribute.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);

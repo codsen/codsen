@@ -312,7 +312,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `04.01 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - recognised tag`,
+  `04.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
     const str = `<div accept=".jpg">`;
     const linter = new Linter();
@@ -337,7 +337,7 @@ t.test(
 );
 
 t.test(
-  `04.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - unrecognised tag`,
+  `04.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   t => {
     const str = `<zzz accept=".jpg" yyy>`;
     const linter = new Linter();

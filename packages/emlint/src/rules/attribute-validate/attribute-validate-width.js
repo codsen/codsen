@@ -20,26 +20,53 @@ function attributeValidateWidth(context, ...opts) {
       //   `015 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
-      const errorArr = validateDigitAndUnit(
-        node.attribValue,
-        node.attribValueStartAt,
-        {
-          badUnits: ["px"],
-          noUnitsIsFine: true
+      if (node.attribName === "width") {
+        // validate the parent
+        if (
+          ![
+            "hr",
+            "iframe",
+            "img",
+            "object",
+            "table",
+            "td",
+            "th",
+            "applet",
+            "col",
+            "colgroup",
+            "pre"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-width",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
         }
-      );
-      console.log(
-        `032 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-      );
 
-      errorArr.forEach(errorObj => {
-        console.log(`036 RAISE ERROR`);
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-width"
-          })
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            badUnits: ["px"],
+            noUnitsIsFine: true
+          }
         );
-      });
+        console.log(
+          `058 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
+
+        errorArr.forEach(errorObj => {
+          console.log(`062 RAISE ERROR`);
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-width"
+            })
+          );
+        });
+      }
     }
   };
 }

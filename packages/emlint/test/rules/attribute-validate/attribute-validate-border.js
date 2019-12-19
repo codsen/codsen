@@ -277,3 +277,56 @@ t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
   ]);
   t.end();
 });
+
+// 04. wrong parent tag
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
+  t => {
+    const str = `<div border="0">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-border": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-border",
+        idxFrom: 5,
+        idxTo: 15,
+        message: `Tag "div" can't have this attribute.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
+  t => {
+    const str = `<zzz border="0" yyy>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-border": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-border",
+        idxFrom: 5,
+        idxTo: 15,
+        message: `Tag "zzz" can't have this attribute.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);

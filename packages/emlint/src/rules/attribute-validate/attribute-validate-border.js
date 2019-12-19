@@ -20,25 +20,38 @@ function attributeValidateBorder(context, ...opts) {
       //   `015 attributeValidateBorder(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
-      const errorArr = validateDigitOnly(
-        node.attribValue,
-        node.attribValueStartAt,
-        {
-          type: "integer"
+      if (node.attribName === "border") {
+        // validate the parent
+        if (!["table", "img", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-border",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
         }
-      );
-      console.log(
-        `031 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-      );
 
-      errorArr.forEach(errorObj => {
-        console.log(`035 RAISE ERROR`);
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-border"
-          })
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer"
+          }
         );
-      });
+        console.log(
+          `043 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
+
+        errorArr.forEach(errorObj => {
+          console.log(`047 RAISE ERROR`);
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-border"
+            })
+          );
+        });
+      }
     }
   };
 }
