@@ -271,7 +271,7 @@ function validateString(str, idxOffset, opts) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Unrecognised value.`,
+          message: `Unrecognised value: "${str.slice(charStart, charEnd)}".`,
           fix: null
         });
       }

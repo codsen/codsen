@@ -42,7 +42,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c --silent",
     "dev": "node bin/helper && rollup -c --dev --silent",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-accept.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-accept-charset.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",

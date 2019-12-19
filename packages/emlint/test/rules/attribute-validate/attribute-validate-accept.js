@@ -275,7 +275,7 @@ t.test(
         ruleId: "attribute-validate-accept",
         idxFrom: 15,
         idxTo: 22,
-        message: `Unrecognised value.`,
+        message: `Unrecognised value: "tralala".`,
         fix: null
       }
     ]);
@@ -300,7 +300,7 @@ t.test(
         ruleId: "attribute-validate-accept",
         idxFrom: 15,
         idxTo: 20,
-        message: `Unrecognised value.`,
+        message: `Unrecognised value: "..jpg".`,
         fix: null
       }
     ]);
