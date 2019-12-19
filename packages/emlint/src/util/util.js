@@ -145,7 +145,7 @@ function validateDigitAndUnit(str, idxOffset, opts) {
   return errorArr;
 }
 
-function validateDigitOnly(str, idxOffset) {
+function validateDigitOnly(str, idxOffset, opts) {
   console.log(
     `150 ${`\u001b[${35}m${`validateDigitOnly() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
@@ -159,7 +159,11 @@ function validateDigitOnly(str, idxOffset) {
   // now that we know where non-whitespace chars are, evaluate them
   if (Number.isInteger(charStart)) {
     for (let i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i])) {
+      if (
+        !"0123456789".includes(str[i]) &&
+        (opts.type === "integer" ||
+          (opts.type === "rational" && !["."].includes(str[i])))
+      ) {
         errorArr.push({
           idxFrom: idxOffset + i,
           idxTo: idxOffset + charEnd,

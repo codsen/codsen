@@ -253,9 +253,7 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
-	"attribute-malformed",
-	"attribute-validate-border",
-	"attribute-validate-width"
+	"attribute-malformed"
 ];
 
 var allBadNamedHTMLEntityRules = [
@@ -383,14 +381,14 @@ function validateDigitAndUnit(str, idxOffset, opts) {
   }
   return errorArr;
 }
-function validateDigitOnly(str, idxOffset) {
+function validateDigitOnly(str, idxOffset, opts) {
   var _checkForWhitespace2 = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace2.charStart,
       charEnd = _checkForWhitespace2.charEnd,
       errorArr = _checkForWhitespace2.errorArr;
   if (Number.isInteger(charStart)) {
     for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i])) {
+      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i]))) {
         errorArr.push({
           idxFrom: idxOffset + i,
           idxTo: idxOffset + charEnd,
@@ -2999,7 +2997,9 @@ function attributeValidateWidth(context) {
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
-      var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt);
+      var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        type: "integer"
+      });
       errorArr.forEach(function (errorObj) {
         context.report(Object.assign({}, errorObj, {
           ruleId: "attribute-validate-border"

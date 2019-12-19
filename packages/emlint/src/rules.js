@@ -829,14 +829,14 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 import attributeMalformed from "./rules/attribute/attribute-malformed";
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 
-import attributeValidateWidth from "./rules/attribute/attribute-validate-width";
+import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
 defineLazyProp(
   builtInRules,
   "attribute-validate-width",
   () => attributeValidateWidth
 );
 
-import attributeValidateBorder from "./rules/attribute/attribute-validate-border";
+import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
 defineLazyProp(
   builtInRules,
   "attribute-validate-border",
