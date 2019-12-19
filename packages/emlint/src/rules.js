@@ -839,6 +839,13 @@ defineLazyProp(
   () => attributeValidateAbbr
 );
 
+import attributeValidateAcceptCharset from "./rules/attribute-validate/attribute-validate-accept-charset";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-accept-charset",
+  () => attributeValidateAcceptCharset
+);
+
 import attributeValidateAccept from "./rules/attribute-validate/attribute-validate-accept";
 defineLazyProp(
   builtInRules,
@@ -846,11 +853,11 @@ defineLazyProp(
   () => attributeValidateAccept
 );
 
-import attributeValidateAcceptCharset from "./rules/attribute-validate/attribute-validate-accept-charset";
+import attributeValidateAccesskey from "./rules/attribute-validate/attribute-validate-accesskey";
 defineLazyProp(
   builtInRules,
-  "attribute-validate-accept-charset",
-  () => attributeValidateAcceptCharset
+  "attribute-validate-accesskey",
+  () => attributeValidateAccesskey
 );
 
 import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
@@ -1010,7 +1017,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1013 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1020 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

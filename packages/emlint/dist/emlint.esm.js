@@ -3114,6 +3114,41 @@ function attributeValidateAbbr(context, ...opts) {
   };
 }
 
+function attributeValidateAcceptCharset(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "accept-charset") {
+        if (!["form"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-accept-charset",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            canBeCommaSeparated: true,
+            noSpaceAfterComma: true,
+            quickPermittedValues: ["UNKNOWN"],
+            permittedValues: knownCharsets
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-accept-charset"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateAccept(context, ...opts) {
   return {
     attribute: function(node) {
@@ -3160,33 +3195,54 @@ function attributeValidateAccept(context, ...opts) {
   };
 }
 
-function attributeValidateAcceptCharset(context, ...opts) {
+function attributeValidateAccesskey(context, ...opts) {
   return {
     attribute: function(node) {
-      if (node.attribName === "accept-charset") {
-        if (!["form"].includes(node.parent.tagName)) {
+      if (node.attribName === "accesskey") {
+        if (
+          ![
+            "a",
+            "area",
+            "button",
+            "input",
+            "label",
+            "legend",
+            "textarea"
+          ].includes(node.parent.tagName)
+        ) {
           context.report({
-            ruleId: "attribute-validate-accept-charset",
+            ruleId: "attribute-validate-accesskey",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
             fix: null
           });
         }
-        const errorArr = validateString(
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt,
-          {
-            canBeCommaSeparated: true,
-            noSpaceAfterComma: true,
-            quickPermittedValues: ["UNKNOWN"],
-            permittedValues: knownCharsets
-          }
+          node.attribValueStartAt
         );
+        if (Number.isInteger(charStart)) {
+          const extractedValue = context.str.slice(
+            node.attribValueStartAt + charStart,
+            node.attribValueStartAt + charEnd
+          );
+          if (
+            extractedValue.length > 1 &&
+            !(extractedValue.startsWith("&") && extractedValue.endsWith(";"))
+          ) {
+            errorArr.push({
+              idxFrom: node.attribValueStartAt + charStart,
+              idxTo: node.attribValueStartAt + charEnd,
+              message: `Should be a single character (escaped or not).`,
+              fix: null
+            });
+          }
+        }
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accept-charset"
+              ruleId: "attribute-validate-accesskey"
             })
           );
         });
@@ -4043,13 +4099,18 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
+  "attribute-validate-accept-charset",
+  () => attributeValidateAcceptCharset
+);
+defineLazyProp(
+  builtInRules,
   "attribute-validate-accept",
   () => attributeValidateAccept
 );
 defineLazyProp(
   builtInRules,
-  "attribute-validate-accept-charset",
-  () => attributeValidateAcceptCharset
+  "attribute-validate-accesskey",
+  () => attributeValidateAccesskey
 );
 defineLazyProp(
   builtInRules,

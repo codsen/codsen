@@ -3071,6 +3071,35 @@ function attributeValidateAbbr(context) {
   };
 }
 
+function attributeValidateAcceptCharset(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "accept-charset") {
+        if (!["form"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-accept-charset",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue, node.attribValueStartAt, {
+          canBeCommaSeparated: true,
+          noSpaceAfterComma: true,
+          quickPermittedValues: ["UNKNOWN"],
+          permittedValues: knownCharsets
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-accept-charset"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateAccept(context) {
   return {
     attribute: function attribute(node) {
@@ -3102,28 +3131,37 @@ function attributeValidateAccept(context) {
   };
 }
 
-function attributeValidateAcceptCharset(context) {
+function attributeValidateAccesskey(context) {
   return {
     attribute: function attribute(node) {
-      if (node.attribName === "accept-charset") {
-        if (!["form"].includes(node.parent.tagName)) {
+      if (node.attribName === "accesskey") {
+        if (!["a", "area", "button", "input", "label", "legend", "textarea"].includes(node.parent.tagName)) {
           context.report({
-            ruleId: "attribute-validate-accept-charset",
+            ruleId: "attribute-validate-accesskey",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
         }
-        var errorArr = validateString(node.attribValue, node.attribValueStartAt, {
-          canBeCommaSeparated: true,
-          noSpaceAfterComma: true,
-          quickPermittedValues: ["UNKNOWN"],
-          permittedValues: knownCharsets
-        });
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (Number.isInteger(charStart)) {
+          var extractedValue = context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd);
+          if (extractedValue.length > 1 && !(extractedValue.startsWith("&") && extractedValue.endsWith(";"))) {
+            errorArr.push({
+              idxFrom: node.attribValueStartAt + charStart,
+              idxTo: node.attribValueStartAt + charEnd,
+              message: "Should be a single character (escaped or not).",
+              fix: null
+            });
+          }
+        }
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-accept-charset"
+            ruleId: "attribute-validate-accesskey"
           }));
         });
       }
@@ -3716,11 +3754,14 @@ defineLazyProp(builtInRules, "attribute-malformed", function () {
 defineLazyProp(builtInRules, "attribute-validate-abbr", function () {
   return attributeValidateAbbr;
 });
+defineLazyProp(builtInRules, "attribute-validate-accept-charset", function () {
+  return attributeValidateAcceptCharset;
+});
 defineLazyProp(builtInRules, "attribute-validate-accept", function () {
   return attributeValidateAccept;
 });
-defineLazyProp(builtInRules, "attribute-validate-accept-charset", function () {
-  return attributeValidateAcceptCharset;
+defineLazyProp(builtInRules, "attribute-validate-accesskey", function () {
+  return attributeValidateAccesskey;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;
