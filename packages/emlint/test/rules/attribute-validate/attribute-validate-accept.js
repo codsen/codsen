@@ -85,7 +85,7 @@ t.test(
   }
 );
 
-t.test(
+t.only(
   `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, spelled out type`,
   t => {
     const str = `<input accept="text/css">`; // <-- notice single quotes
@@ -268,6 +268,7 @@ t.test(
         "attribute-validate-accept": 2
       }
     });
+    // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
@@ -292,6 +293,7 @@ t.test(
         "attribute-validate-accept": 2
       }
     });
+    // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
@@ -299,6 +301,59 @@ t.test(
         idxFrom: 15,
         idxTo: 20,
         message: `Unrecognised value.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+// 04. wrong parent tag
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - recognised tag`,
+  t => {
+    const str = `<div accept=".jpg">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-accept": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-accept",
+        idxFrom: 5,
+        idxTo: 18,
+        message: `Tag "div" can't have this attribute.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - unrecognised tag`,
+  t => {
+    const str = `<zzz accept=".jpg" yyy>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-accept": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-accept",
+        idxFrom: 5,
+        idxTo: 18,
+        message: `Tag "zzz" can't have this attribute.`,
         fix: null
       }
     ]);

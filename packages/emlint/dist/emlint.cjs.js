@@ -3048,19 +3048,30 @@ function attributeMalformed(context) {
 function attributeValidateAccept(context) {
   return {
     attribute: function attribute(node) {
-      var errorArr = validateString(node.attribValue,
-      node.attribValueStartAt,
-      {
-        quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
-        permittedValues: Object.keys(db),
-        canBeCommaSeparated: true,
-        noSpaceAfterComma: true
-      });
-      errorArr.forEach(function (errorObj) {
-        context.report(Object.assign({}, errorObj, {
-          ruleId: "attribute-validate-accept"
-        }));
-      });
+      if (node.attribName === "accept") {
+        if (!["form", "input"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-accept",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
+          permittedValues: Object.keys(db),
+          canBeCommaSeparated: true,
+          noSpaceAfterComma: true
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-accept"
+          }));
+        });
+      }
     }
   };
 }
