@@ -262,11 +262,16 @@ function validateString(str, idxOffset, opts) {
         `262 no comma, the whole value will be matched against the reference list`
       );
       if (
-        !includesWithRegex(
-          opts.quickPermittedValues, // array of strings or regexes
-          str.slice(charStart, charEnd)
-        ) &&
-        !opts.permittedValues.includes(str.slice(charStart, charEnd))
+        (!Array.isArray(opts.quickPermittedValues) ||
+          !includesWithRegex(
+            opts.quickPermittedValues,
+            str.slice(charStart, charEnd)
+          )) &&
+        (!Array.isArray(opts.permittedValues) ||
+          !includesWithRegex(
+            opts.permittedValues,
+            str.slice(charStart, charEnd)
+          ))
       ) {
         errorArr.push({
           idxFrom: idxOffset + charStart,

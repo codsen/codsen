@@ -644,11 +644,16 @@ function validateString(str, idxOffset, opts) {
       }
     } else {
       if (
-        !includesWithRegex(
-          opts.quickPermittedValues,
-          str.slice(charStart, charEnd)
-        ) &&
-        !opts.permittedValues.includes(str.slice(charStart, charEnd))
+        (!Array.isArray(opts.quickPermittedValues) ||
+          !includesWithRegex(
+            opts.quickPermittedValues,
+            str.slice(charStart, charEnd)
+          )) &&
+        (!Array.isArray(opts.permittedValues) ||
+          !includesWithRegex(
+            opts.permittedValues,
+            str.slice(charStart, charEnd)
+          ))
       ) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
@@ -3296,6 +3301,127 @@ function attributeValidateAction(context, ...opts) {
   };
 }
 
+function attributeValidateAlign(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "align") {
+        if (
+          ![
+            "applet",
+            "caption",
+            "iframe",
+            "img",
+            "input",
+            "object",
+            "legend",
+            "table",
+            "hr",
+            "div",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "p",
+            "col",
+            "colgroup",
+            "tbody",
+            "td",
+            "tfoot",
+            "th",
+            "thead",
+            "tr"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-align",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        let errorArr = [];
+        if (["legend", "caption"].includes(node.parent.tagName.toLowerCase())) {
+          errorArr = validateString(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              permittedValues: ["top", "bottom", "left", "right"],
+              canBeCommaSeparated: false
+            }
+          );
+        } else if (
+          ["applet", "iframe", "img", "input", "object"].includes(
+            node.parent.tagName.toLowerCase()
+          )
+        ) {
+          errorArr = validateString(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              permittedValues: ["top", "middle", "bottom", "left", "right"],
+              canBeCommaSeparated: false
+            }
+          );
+        } else if (
+          ["table", "hr"].includes(node.parent.tagName.toLowerCase())
+        ) {
+          errorArr = validateString(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              permittedValues: ["left", "center", "right"],
+              canBeCommaSeparated: false
+            }
+          );
+        } else if (
+          ["div", "h1", "h2", "h3", "h4", "h5", "h6", "p"].includes(
+            node.parent.tagName.toLowerCase()
+          )
+        ) {
+          errorArr = validateString(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              permittedValues: ["left", "center", "right", "justify"],
+              canBeCommaSeparated: false
+            }
+          );
+        } else if (
+          [
+            "col",
+            "colgroup",
+            "tbody",
+            "td",
+            "tfoot",
+            "th",
+            "thead",
+            "tr"
+          ].includes(node.parent.tagName.toLowerCase())
+        ) {
+          errorArr = validateString(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              permittedValues: ["left", "center", "right", "justify", "char"],
+              canBeCommaSeparated: false
+            }
+          );
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-align"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4161,6 +4287,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-action",
   () => attributeValidateAction
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-align",
+  () => attributeValidateAlign
 );
 defineLazyProp(
   builtInRules,
