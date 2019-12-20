@@ -14,6 +14,7 @@ import matcher from 'matcher';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isRegExp from 'lodash.isregexp';
 import db from 'mime-db';
+import isUrl from 'is-url-superb';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -454,8 +455,8 @@ function checkForWhitespace(str, idxOffset) {
     }
   }
   if (charEnd && !str[str.length - 1].trim().length) {
-    charEnd = left(str, str.length - 1);
-    gatheredRanges.push([idxOffset + charEnd + 1, idxOffset + str.length]);
+    charEnd = left(str, str.length - 1) + 1;
+    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
   if (gatheredRanges.length) {
     errorArr.push({
@@ -3251,6 +3252,50 @@ function attributeValidateAccesskey(context, ...opts) {
   };
 }
 
+function attributeValidateAction(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "action") {
+        if (!["form"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-action",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        if (
+          !isUrl(
+            context.str.slice(
+              node.attribValueStartAt + charStart,
+              node.attribValueStartAt + charEnd
+            )
+          )
+        ) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: `Should be an URI.`,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-action"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4111,6 +4156,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-accesskey",
   () => attributeValidateAccesskey
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-action",
+  () => attributeValidateAction
 );
 defineLazyProp(
   builtInRules,

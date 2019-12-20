@@ -34,7 +34,7 @@ function checkForWhitespace(str, idxOffset) {
   }
   // ...right side:
   if (charEnd && !str[str.length - 1].trim().length) {
-    charEnd = left(str, str.length - 1);
+    charEnd = left(str, str.length - 1) + 1;
     console.log(
       `039 ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
         charEnd,
@@ -42,7 +42,7 @@ function checkForWhitespace(str, idxOffset) {
         4
       )}`
     );
-    gatheredRanges.push([idxOffset + charEnd + 1, idxOffset + str.length]);
+    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
   console.log(
     `048 ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(

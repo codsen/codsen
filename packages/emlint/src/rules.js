@@ -860,6 +860,13 @@ defineLazyProp(
   () => attributeValidateAccesskey
 );
 
+import attributeValidateAction from "./rules/attribute-validate/attribute-validate-action";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-action",
+  () => attributeValidateAction
+);
+
 import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
 defineLazyProp(
   builtInRules,
@@ -1017,7 +1024,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1020 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1027 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

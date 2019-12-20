@@ -20,6 +20,7 @@ var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
 var isRegExp = _interopDefault(require('lodash.isregexp'));
 var db = _interopDefault(require('mime-db'));
+var isUrl = _interopDefault(require('is-url-superb'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
 var lineColumn = _interopDefault(require('line-column'));
@@ -289,8 +290,8 @@ function checkForWhitespace(str, idxOffset) {
     }
   }
   if (charEnd && !str[str.length - 1].trim().length) {
-    charEnd = stringLeftRight.left(str, str.length - 1);
-    gatheredRanges.push([idxOffset + charEnd + 1, idxOffset + str.length]);
+    charEnd = stringLeftRight.left(str, str.length - 1) + 1;
+    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
   if (gatheredRanges.length) {
     errorArr.push({
@@ -3169,6 +3170,41 @@ function attributeValidateAccesskey(context) {
   };
 }
 
+function attributeValidateAction(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "action") {
+        if (!["form"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-action",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be an URI.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-action"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
@@ -3762,6 +3798,9 @@ defineLazyProp(builtInRules, "attribute-validate-accept", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-accesskey", function () {
   return attributeValidateAccesskey;
+});
+defineLazyProp(builtInRules, "attribute-validate-action", function () {
+  return attributeValidateAction;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;
