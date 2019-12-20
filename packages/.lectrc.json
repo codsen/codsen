@@ -256,8 +256,8 @@
 	},
 	"package": {
 		"devDependencies": {
-			"@babel/core": "^7.7.5",
-			"@babel/preset-env": "^7.7.6",
+			"@babel/core": "^7.7.7",
+			"@babel/preset-env": "^7.7.7",
 			"tap": "^14.10.5",
 			"benchmark": "^2.1.4",
 			"js-row-num-cli": "^1.6.11",
