@@ -148,8 +148,8 @@
     "string-trim-spaces-only": "^2.8.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
     "is-ci": "^2.0.0",
     "lect": "^0.11.4",

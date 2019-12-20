@@ -131,8 +131,8 @@
     "util-array-object-or-both": "^2.7.51"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
     "lect": "^0.11.4",
     "posthtml-parser": "^0.4.2",

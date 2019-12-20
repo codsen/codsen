@@ -136,6 +136,7 @@
     "define-lazy-prop": "^2.0.0",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.12",
+    "is-url-superb": "^3.0.0",
     "line-column": "^1.0.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isregexp": "^4.0.1",
@@ -144,8 +145,8 @@
     "string-left-right": "^2.3.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "ast-deep-contains": "^1.1.2",
     "benchmark": "^2.1.4",
     "eslint": "^6.7.2",

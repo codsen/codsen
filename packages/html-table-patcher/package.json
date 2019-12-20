@@ -129,8 +129,8 @@
     "html-dom-parser": "^0.2.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
     "html-crush": "^1.9.16",
     "json-stringify-safe": "^5.0.1",

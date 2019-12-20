@@ -123,8 +123,8 @@
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "array-shuffle": "^1.0.1",
     "benchmark": "^2.1.4",
     "js-row-num-cli": "^1.6.11",
