@@ -17,9 +17,9 @@ function checkForWhitespace(str, idxOffset) {
 
   // tackle the inner wrapping whitespace first
   // ...left side:
-  if (!str[0].trim().length) {
+  if (!str.length || !str[0].trim().length) {
     charStart = right(str); // returns digit or null - index of next non whitespace char on the right
-    if (charStart === null) {
+    if (!str.length || charStart === null) {
       // it's just whitespace here
       charEnd = null;
       errorArr.push({
