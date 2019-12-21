@@ -3537,6 +3537,60 @@ function attributeValidateAlink(context) {
   };
 }
 
+function attributeValidateArchive(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "archive") {
+        if (!["applet", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-archive",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        var trimmedAttrVal = node.attribValue;
+        if (errorArr.length) {
+          trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
+        }
+        if (node.parent.tagName === "applet") {
+          trimmedAttrVal.split(",").forEach(function (uriStr) {
+            if (!isUrl(uriStr)) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt,
+                idxTo: node.attribValueEndAt,
+                message: "Should be comma-separated list of URI's.",
+                fix: null
+              });
+            }
+          });
+        } else if (node.parent.tagName === "object") {
+          trimmedAttrVal.split(" ").forEach(function (uriStr) {
+            if (!isUrl(uriStr)) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt,
+                idxTo: node.attribValueEndAt,
+                message: "Should be space-separated list of URI's.",
+                fix: null
+              });
+            }
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-archive"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
@@ -4139,6 +4193,9 @@ defineLazyProp(builtInRules, "attribute-validate-align", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-alink", function () {
   return attributeValidateAlink;
+});
+defineLazyProp(builtInRules, "attribute-validate-archive", function () {
+  return attributeValidateArchive;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;

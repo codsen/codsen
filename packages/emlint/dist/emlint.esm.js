@@ -3723,6 +3723,62 @@ function attributeValidateAlink(context, ...opts) {
   };
 }
 
+function attributeValidateArchive(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "archive") {
+        if (!["applet", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-archive",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        let trimmedAttrVal = node.attribValue;
+        if (errorArr.length) {
+          trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
+        }
+        if (node.parent.tagName === "applet") {
+          trimmedAttrVal.split(",").forEach(uriStr => {
+            if (!isUrl(uriStr)) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt,
+                idxTo: node.attribValueEndAt,
+                message: `Should be comma-separated list of URI's.`,
+                fix: null
+              });
+            }
+          });
+        } else if (node.parent.tagName === "object") {
+          trimmedAttrVal.split(" ").forEach(uriStr => {
+            if (!isUrl(uriStr)) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt,
+                idxTo: node.attribValueEndAt,
+                message: `Should be space-separated list of URI's.`,
+                fix: null
+              });
+            }
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-archive"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4598,6 +4654,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-alink",
   () => attributeValidateAlink
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-archive",
+  () => attributeValidateArchive
 );
 defineLazyProp(
   builtInRules,
