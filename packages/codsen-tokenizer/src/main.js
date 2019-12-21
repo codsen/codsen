@@ -46,7 +46,7 @@ const voidTags = [
 
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|`;
-const espLumpBlacklist = [")|(", "|(", ")("];
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "%)", "*)"];
 
 function tokenizer(str, tagCb, charCb, originalOpts) {
   //

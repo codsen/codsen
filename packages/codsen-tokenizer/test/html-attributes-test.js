@@ -391,6 +391,46 @@ t.test(
   }
 );
 
+t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
+  const gathered = [];
+  ct(`<body alink="rgb()">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 5,
+      tagName: "body",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 20,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "alink",
+          attribNameStartAt: 6,
+          attribNameEndAt: 11,
+          attribOpeningQuoteAt: 12,
+          attribClosingQuoteAt: 18,
+          attribValue: "rgb()",
+          attribValueStartAt: 13,
+          attribValueEndAt: 18,
+          attribStart: 6,
+          attribEnd: 19
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
 // 03. bool attributes
 // -----------------------------------------------------------------------------
 

@@ -222,7 +222,7 @@ const voidTags = [
   "wbr"
 ];
 const espChars = `{}%-$_()*|`;
-const espLumpBlacklist = [")|(", "|(", ")("];
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "%)", "*)"];
 function tokenizer(str, tagCb, charCb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {

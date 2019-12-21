@@ -65,7 +65,7 @@ var defaults = {
 };
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var espChars = "{}%-$_()*|";
-var espLumpBlacklist = [")|(", "|(", ")("];
+var espLumpBlacklist = [")|(", "|(", ")(", "()", "%)", "*)"];
 function tokenizer(str, tagCb, charCb, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
