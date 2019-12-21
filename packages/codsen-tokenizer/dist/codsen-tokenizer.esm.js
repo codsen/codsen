@@ -754,7 +754,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       !doNothing &&
       token.type === "html" &&
       isNum(attrib.attribValueStartAt) &&
-      i > attrib.attribValueStartAt &&
+      i >= attrib.attribValueStartAt &&
       attrib.attribValueEndAt === null
     ) {
       if (`'"`.includes(str[i])) {

@@ -448,7 +448,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       attrib.attribStart = i;
       attrib.attribNameStartAt = i;
     }
-    if (!doNothing && token.type === "html" && isNum(attrib.attribValueStartAt) && i > attrib.attribValueStartAt && attrib.attribValueEndAt === null) {
+    if (!doNothing && token.type === "html" && isNum(attrib.attribValueStartAt) && i >= attrib.attribValueStartAt && attrib.attribValueEndAt === null) {
       if ("'\"".includes(str[i])) {
         if (str[attrib.attribOpeningQuoteAt] === str[i] && !layers.some(function (layerObj) {
           return layerObj.type === "esp";

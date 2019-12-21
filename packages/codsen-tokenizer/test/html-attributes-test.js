@@ -348,6 +348,49 @@ t.test(`02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`, t => {
   t.end();
 });
 
+t.test(
+  `02.04 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - empty attr value`,
+  t => {
+    const gathered = [];
+    ct(`<body alink="">`, obj => {
+      gathered.push(obj);
+    });
+
+    t.match(gathered, [
+      {
+        tagNameStartAt: 1,
+        tagNameEndAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        type: "html",
+        start: 0,
+        end: 15,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "alink",
+            attribNameStartAt: 6,
+            attribNameEndAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 13,
+            attribValue: "",
+            attribValueStartAt: 13,
+            attribValueEndAt: 13,
+            attribStart: 6,
+            attribEnd: 14
+          }
+        ]
+      }
+    ]);
+    t.end();
+  }
+);
+
 // 03. bool attributes
 // -----------------------------------------------------------------------------
 
