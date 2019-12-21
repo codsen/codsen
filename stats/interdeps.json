@@ -142,7 +142,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 20620,
+        "size": 20639,
         "imports": [
             "is-html-tag-opening",
             "string-left-right",
@@ -236,7 +236,7 @@
     },
     {
         "name": "emlint",
-        "size": 109253,
+        "size": 137073,
         "imports": [
             "codsen-tokenizer",
             "html-entities-not-email-friendly",
@@ -301,7 +301,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 3696,
+        "size": 3705,
         "imports": [
             "string-left-right",
             "string-match-left-right"

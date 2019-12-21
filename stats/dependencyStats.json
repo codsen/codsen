@@ -56,6 +56,7 @@
         "is-numeric": 2,
         "is-online": 1,
         "is-string-int": 1,
+        "is-url-superb": 1,
         "isstream": 1,
         "js-row-num": 2,
         "json-comb-core": 1,
@@ -67,8 +68,8 @@
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 41,
-        "lodash.isregexp": 1,
+        "lodash.isplainobject": 42,
+        "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
         "lodash.partition": 1,
@@ -107,6 +108,7 @@
         "ranges-sort": 1,
         "regex-empty-conditional-comments": 1,
         "request": 1,
+        "rgba-regex": 1,
         "runes": 1,
         "semver-compare": 2,
         "semver-regex": 1,
@@ -161,7 +163,7 @@
         "fs-extra": 3,
         "html-crush": 1,
         "is-ci": 1,
-        "js-row-num-cli": 23,
+        "js-row-num-cli": 26,
         "json-stringify-safe": 1,
         "lect": 102,
         "lodash.clonedeep": 4,
@@ -196,7 +198,7 @@
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 41
+            "lodash.isplainobject": 42
         },
         {
             "lodash.clonedeep": 26
