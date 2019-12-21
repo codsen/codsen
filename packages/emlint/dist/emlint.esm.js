@@ -3864,6 +3864,45 @@ function attributeValidateBackground(context, ...opts) {
   };
 }
 
+function attributeValidateBgcolor(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "bgcolor") {
+        if (
+          !["table", "tr", "td", "th", "body"].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-bgcolor",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateColor(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            namedCssLevel1OK: true,
+            namedCssLevel2PlusOK: true,
+            hexThreeOK: false,
+            hexFourOK: false,
+            hexSixOK: true,
+            hexEightOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-bgcolor"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4754,6 +4793,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-background",
   () => attributeValidateBackground
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-bgcolor",
+  () => attributeValidateBgcolor
 );
 defineLazyProp(
   builtInRules,
