@@ -3969,6 +3969,39 @@ function attributeValidateCellpadding(context, ...opts) {
   };
 }
 
+function attributeValidateCellspacing(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "cellspacing") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-cellspacing",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            percOK: true
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-cellspacing"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4842,6 +4875,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-cellpadding",
   () => attributeValidateCellpadding
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-cellspacing",
+  () => attributeValidateCellspacing
 );
 defineLazyProp(
   builtInRules,
