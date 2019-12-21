@@ -162,7 +162,7 @@ See the usage example above.
 
 **[⬆ back to top](#)**
 
-### uglifyById() - copied and uglifies array and returns uglified element by requested id
+### uglifyById() - clones and uglifies array and returns uglified element by requested id
 
 Input — two arguments: array and natural number index.
 
