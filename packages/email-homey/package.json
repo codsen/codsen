@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "2.7.47",
+  "version": "2.7.48",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "license": "MIT",
   "engines": {
@@ -130,10 +130,10 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.1",
+    "eslint-plugin-row-num": "^1.1.2",
     "execa": "^4.0.0",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "prettier": "^1.19.1",
     "tap": "^14.10.5"
   }

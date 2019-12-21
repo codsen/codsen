@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-sort-by-col",
-  "version": "2.11.26",
+  "version": "2.11.27",
   "description": "sort array of arrays by column, rippling the sorting outwards from that column",
   "license": "MIT",
   "engines": {
@@ -127,8 +127,8 @@
     "@babel/preset-env": "^7.7.7",
     "array-shuffle": "^1.0.1",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

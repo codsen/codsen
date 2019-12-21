@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
@@ -125,7 +125,7 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.1.13",
+    "edit-package-json": "^0.1.14",
     "globby": "^10.0.1",
     "is-online": "^8.2.1",
     "lodash.isplainobject": "^4.0.6",
@@ -146,11 +146,11 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.1",
+    "eslint-plugin-row-num": "^1.1.2",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "lodash.clonedeep": "^4.5.0",
     "p-map": "^3.0.0",
     "prettier": "^1.19.1",

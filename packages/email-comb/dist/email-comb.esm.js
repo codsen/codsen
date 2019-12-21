@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.8.18
+ * Version: 3.8.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -23,7 +23,7 @@ import Ranges from 'ranges-push';
 import uniq from 'lodash.uniq';
 import matcher from 'matcher';
 
-var version = "3.8.18";
+var version = "3.8.19";
 
 const isArr = Array.isArray;
 const defaults = {

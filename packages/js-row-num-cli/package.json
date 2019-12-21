@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -121,7 +121,7 @@
     "fs-extra": "^8.1.0",
     "globby": "^10.0.1",
     "is-d": "^1.0.0",
-    "js-row-num": "^2.7.0",
+    "js-row-num": "^2.7.1",
     "meow": "^6.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^4.0.0",
@@ -135,10 +135,10 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.1",
+    "eslint-plugin-row-num": "^1.1.2",
     "execa": "^4.0.0",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "prettier": "^1.19.1",
     "tap": "^14.10.5",
     "tempy": "^0.3.0"

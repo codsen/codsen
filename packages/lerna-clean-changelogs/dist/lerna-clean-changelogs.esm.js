@@ -1,13 +1,13 @@
 /**
  * lerna-clean-changelogs
  * Cleans all the crap from Lerna and Conventional Commits-generated changelogs
- * Version: 1.3.43
+ * Version: 1.3.44
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
  */
 
-var version = "1.3.43";
+var version = "1.3.44";
 
 function isStr(something) {
   return typeof something === "string";

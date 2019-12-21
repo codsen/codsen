@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "engines": {
@@ -132,7 +132,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "codsen-tokenizer": "^2.3.0",
+    "codsen-tokenizer": "^2.3.1",
     "define-lazy-prop": "^2.0.0",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.12",
@@ -143,7 +143,7 @@
     "lodash.isregexp": "^4.0.1",
     "matcher": "^2.1.0",
     "rgba-regex": "^1.0.0",
-    "string-fix-broken-named-entities": "^2.5.3",
+    "string-fix-broken-named-entities": "^2.5.4",
     "string-left-right": "^2.3.12"
   },
   "devDependencies": {
@@ -156,11 +156,11 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.1",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "eslint-plugin-row-num": "^1.1.2",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "prettier": "^1.19.1",
-    "ranges-apply": "^3.0.45",
+    "ranges-apply": "^3.0.46",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

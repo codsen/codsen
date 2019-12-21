@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "3.7.53",
+  "version": "3.7.54",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -127,7 +127,7 @@
   "dependencies": {
     "ast-contains-only-empty-space": "^1.8.53",
     "dehumanize-date": "^2.6.2",
-    "easy-replace": "^3.7.52",
+    "easy-replace": "^3.7.53",
     "emoji-regex": "^8.0.0",
     "get-pkg-repo": "^4.1.0",
     "lodash.clonedeep": "^4.5.0",
@@ -140,8 +140,8 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.11",
-    "lect": "^0.11.4",
+    "js-row-num-cli": "^1.6.12",
+    "lect": "^0.11.5",
     "rollup": "^1.27.13",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
