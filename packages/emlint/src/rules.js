@@ -888,6 +888,13 @@ defineLazyProp(
   () => attributeValidateArchive
 );
 
+import attributeValidateAxis from "./rules/attribute-validate/attribute-validate-axis";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-axis",
+  () => attributeValidateAxis
+);
+
 import attributeValidateBorder from "./rules/attribute-validate/attribute-validate-border";
 defineLazyProp(
   builtInRules,
@@ -1045,7 +1052,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1048 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1055 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

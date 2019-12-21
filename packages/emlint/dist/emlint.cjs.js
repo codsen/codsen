@@ -3591,6 +3591,31 @@ function attributeValidateArchive(context) {
   };
 }
 
+function attributeValidateAxis(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "axis") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-axis",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-axis"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
@@ -4196,6 +4221,9 @@ defineLazyProp(builtInRules, "attribute-validate-alink", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-archive", function () {
   return attributeValidateArchive;
+});
+defineLazyProp(builtInRules, "attribute-validate-axis", function () {
+  return attributeValidateAxis;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;

@@ -3779,6 +3779,35 @@ function attributeValidateArchive(context, ...opts) {
   };
 }
 
+function attributeValidateAxis(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "axis") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-axis",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-axis"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4659,6 +4688,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-archive",
   () => attributeValidateArchive
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-axis",
+  () => attributeValidateAxis
 );
 defineLazyProp(
   builtInRules,
