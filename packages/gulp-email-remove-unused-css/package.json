@@ -128,6 +128,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.1",
+    "js-row-num-cli": "^1.6.11",
     "lect": "^0.11.4",
     "map-stream": "^0.0.7",
     "prettier": "^1.19.1",

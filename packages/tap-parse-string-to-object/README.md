@@ -1,6 +1,6 @@
 # tap-parse-string-to-object
 
-> Parses raw Tap output, string-to-object
+> Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -15,8 +15,10 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [Usage](#usage)
+- [Synchronous Example](#synchronous-example)
+- [Asynchronous Example](#asynchronous-example)
 - [API](#api)
+- [Parser's Algorithm](#parsers-algorithm)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -71,8 +73,8 @@ Existing Tap parsers like [tap-parser](https://www.npmjs.com/package/tap-parser)
 
 This program is similar to `JSON.parse` except that it works synchronously and asynchronously, depending on what you give:
 
-* if you (synchronously) give it a **string**, it will (synchronously) output a **plain object**
-* if you (synchronously) give it a **stream** of a raw Tap string, it will output a promise of a **plain object**
+- if you (synchronously) give it a **string**, it will (synchronously) output a **plain object**
+- if you (synchronously) give it a **stream** of a raw Tap string, it will output a promise of a **plain object**
 
 In both cases, the plain object will look like this:
 
@@ -199,7 +201,7 @@ ok 1 - UMD build works fine # time=10.033ms
 
   // 4. a promise (which we await) is returned and it yields a plain object:
   const result = await parse(contentsAsStream);
-  console.log(JSON.stringify(result, null, 4))
+  console.log(JSON.stringify(result, null, 4));
   // => {
   //      ok: true,
   //      assertsTotal: 8,
@@ -209,16 +211,17 @@ ok 1 - UMD build works fine # time=10.033ms
   //      suitesPassed: 2,
   //      suitesFailed: 0
   //    }
-
 })();
 ```
+
+**[⬆ back to top](#)**
 
 ## API
 
 API depends on what you give as an input:
 
-* if you (synchronously) provide a `string`, you'll (synchronously) receive a plain object
-* if you provide (synchronously) provide a stream, you'll receive a promise of a plain object
+- if you (synchronously) provide a `string`, you'll (synchronously) receive a plain object
+- if you provide (synchronously) provide a stream, you'll receive a promise of a plain object
 
 The whole idea with streams is that raw test output files can be big — for example `detergent`'s ([npm](https://www.npmjs.com/package/detergent)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/)) raw Tap output is around 250MB, there are ~750,000 assertions there. Reading and processing such file synchronously would cripple even 8-core Intel i9 laptop. But the same file can be easily processed with streams.
 
@@ -238,6 +241,8 @@ In both cases, the result is similar to the described above:
 }
 ```
 
+**[⬆ back to top](#)**
+
 ## Parser's Algorithm
 
 We wrote our own little parser. In essence, it counts all lines that (when trimmed) start with "ok" and "not ok", with condition that those lines are consecutive and located after a line which contains a string "# Subtest".
@@ -245,6 +250,8 @@ We wrote our own little parser. In essence, it counts all lines that (when trimm
 Each opening curlie brace bumps the suite count.
 
 The exception for all above is chunks we skip — everything between line with three dashes (`---`) and line with three dots (`...`).
+
+**[⬆ back to top](#)**
 
 ## Contributing
 
