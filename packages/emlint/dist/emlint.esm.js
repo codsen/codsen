@@ -608,6 +608,7 @@ const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
 function checkForWhitespace(str, idxOffset) {
   let charStart = 0;
   let charEnd = str.length;
+  let trimmedVal;
   let gatheredRanges = [];
   const errorArr = [];
   if (!str.length || !str[0].trim().length) {
@@ -628,7 +629,9 @@ function checkForWhitespace(str, idxOffset) {
     charEnd = left(str, str.length - 1) + 1;
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
-  if (gatheredRanges.length) {
+  if (!gatheredRanges.length) {
+    trimmedVal = str;
+  } else {
     errorArr.push({
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
@@ -636,8 +639,9 @@ function checkForWhitespace(str, idxOffset) {
       fix: { ranges: gatheredRanges }
     });
     gatheredRanges = [];
+    trimmedVal = str.trim();
   }
-  return { charStart, charEnd, errorArr };
+  return { charStart, charEnd, errorArr, trimmedVal };
 }
 
 function validateDigitAndUnit(str, idxOffset, opts) {
@@ -3808,6 +3812,58 @@ function attributeValidateAxis(context, ...opts) {
   };
 }
 
+function attributeValidateBackground(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "background") {
+        if (!["body", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-background",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        if (!isUrl(trimmedVal)) {
+          if (
+            !Array.from(trimmedVal).some(char => !char.trim().length) &&
+            /\w\.\w/.test(trimmedVal) &&
+            /[^\\/]+$/.test(trimmedVal)
+          ) {
+            if (!(Array.isArray(opts) && opts.includes("localOK"))) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt + charStart,
+                idxTo: node.attribValueStartAt + charEnd,
+                message: `Should be an external URI.`,
+                fix: null
+              });
+            }
+          } else {
+            errorArr.push({
+              idxFrom: node.attribValueStartAt + charStart,
+              idxTo: node.attribValueStartAt + charEnd,
+              message: `Should be an URI.`,
+              fix: null
+            });
+          }
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-background"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4693,6 +4749,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-axis",
   () => attributeValidateAxis
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-background",
+  () => attributeValidateBackground
 );
 defineLazyProp(
   builtInRules,

@@ -443,6 +443,7 @@ var sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
 function checkForWhitespace(str, idxOffset) {
   var charStart = 0;
   var charEnd = str.length;
+  var trimmedVal;
   var gatheredRanges = [];
   var errorArr = [];
   if (!str.length || !str[0].trim().length) {
@@ -463,7 +464,9 @@ function checkForWhitespace(str, idxOffset) {
     charEnd = stringLeftRight.left(str, str.length - 1) + 1;
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
-  if (gatheredRanges.length) {
+  if (!gatheredRanges.length) {
+    trimmedVal = str;
+  } else {
     errorArr.push({
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
@@ -473,11 +476,13 @@ function checkForWhitespace(str, idxOffset) {
       }
     });
     gatheredRanges = [];
+    trimmedVal = str.trim();
   }
   return {
     charStart: charStart,
     charEnd: charEnd,
-    errorArr: errorArr
+    errorArr: errorArr,
+    trimmedVal: trimmedVal
   };
 }
 
@@ -3616,6 +3621,58 @@ function attributeValidateAxis(context) {
   };
 }
 
+function attributeValidateBackground(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "background") {
+        if (!["body", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-background",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr,
+            trimmedVal = _checkForWhitespace.trimmedVal;
+        if (!isUrl(trimmedVal)) {
+          if (!Array.from(trimmedVal).some(function (_char) {
+            return !_char.trim().length;
+          }) && /\w\.\w/.test(trimmedVal) && /[^\\/]+$/.test(trimmedVal)) {
+            if (!(Array.isArray(opts) && opts.includes("localOK"))) {
+              errorArr.push({
+                idxFrom: node.attribValueStartAt + charStart,
+                idxTo: node.attribValueStartAt + charEnd,
+                message: "Should be an external URI.",
+                fix: null
+              });
+            }
+          } else {
+            errorArr.push({
+              idxFrom: node.attribValueStartAt + charStart,
+              idxTo: node.attribValueStartAt + charEnd,
+              message: "Should be an URI.",
+              fix: null
+            });
+          }
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-background"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateBorder(context) {
   return {
     attribute: function attribute(node) {
@@ -4224,6 +4281,9 @@ defineLazyProp(builtInRules, "attribute-validate-archive", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-axis", function () {
   return attributeValidateAxis;
+});
+defineLazyProp(builtInRules, "attribute-validate-background", function () {
+  return attributeValidateBackground;
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;
