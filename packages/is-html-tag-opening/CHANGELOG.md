@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.4.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.3.0...is-html-tag-opening@1.4.0) (2019-12-21)
-
+## 1.4.0 (2019-12-21)
 
 ### Features
 
-* recognise unknown html attributes with dashes ([d13d043](https://gitlab.com/codsen/codsen/commit/d13d043a22f4bc25f8d4fba627fce04c8d06baeb))
-
-
-
-
+- recognise unknown html attributes with dashes ([d13d043](https://gitlab.com/codsen/codsen/commit/d13d043a22f4bc25f8d4fba627fce04c8d06baeb))
 
 ## 1.3.0 (2019-12-14)
 
