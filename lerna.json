@@ -2,14 +2,15 @@
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "[skip ci] chore: Release"
+      "message": "[skip ci] chore: release"
     }
   },
   "ignoreChanges": [
-    "packages/*/CHANGELOG.md",
-    "packages/*/package.json",
-    "packages/*/testStats.json",
-    "packages/*/perf/*"
+    "**/CHANGELOG.md",
+    "**/node_modules/**",
+    "**/package.json",
+    "**/*.md",
+    "**/perf/**"
   ],
   "lifecycle": {
     "version": "npm run build && git add ."
