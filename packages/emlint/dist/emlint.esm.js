@@ -723,13 +723,14 @@ function validateDigitOnly(str, idxOffset, opts) {
       if (
         !"0123456789".includes(str[i]) &&
         (opts.type === "integer" ||
-          (opts.type === "rational" && !["."].includes(str[i])))
+          (opts.type === "rational" && !["."].includes(str[i]))) &&
+        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1))
       ) {
         errorArr.push({
           idxFrom: idxOffset + i,
           idxTo: idxOffset + charEnd,
-          message: `Should be integer${
-            /[a-zA-Z]/g.test(str) ? ", no letters" : ""
+          message: `Should be ${opts.type}${
+            opts.percOK ? `, either no units or percentage` : ", no units"
           }.`,
           fix: null
         });
@@ -3935,6 +3936,39 @@ function attributeValidateBorder(context, ...opts) {
   };
 }
 
+function attributeValidateCellpadding(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "cellpadding") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-cellpadding",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            percOK: true
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-cellpadding"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4803,6 +4837,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-border",
   () => attributeValidateBorder
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-cellpadding",
+  () => attributeValidateCellpadding
 );
 defineLazyProp(
   builtInRules,

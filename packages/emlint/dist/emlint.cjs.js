@@ -557,11 +557,11 @@ function validateDigitOnly(str, idxOffset, opts) {
       errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
     for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i]))) {
+      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i])) && (!opts.percOK || !(str[i] === "%" && charEnd === i + 1))) {
         errorArr.push({
           idxFrom: idxOffset + i,
           idxTo: idxOffset + charEnd,
-          message: "Should be integer".concat(/[a-zA-Z]/g.test(str) ? ", no letters" : "", "."),
+          message: "Should be ".concat(opts.type).concat(opts.percOK ? ", either no units or percentage" : ", no units", "."),
           fix: null
         });
         break;
@@ -3730,6 +3730,33 @@ function attributeValidateBorder(context) {
   };
 }
 
+function attributeValidateCellpadding(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "cellpadding") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-cellpadding",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          percOK: true
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-cellpadding"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -4321,6 +4348,9 @@ defineLazyProp(builtInRules, "attribute-validate-bgcolor", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-border", function () {
   return attributeValidateBorder;
+});
+defineLazyProp(builtInRules, "attribute-validate-cellpadding", function () {
+  return attributeValidateCellpadding;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;

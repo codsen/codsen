@@ -6,13 +6,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 0`,
+  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cellpadding, error level 0`,
   t => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 0
+        "attribute-validate-cellpadding": 0
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -22,13 +22,13 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 1`,
+  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cellpadding, error level 1`,
   t => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 1
+        "attribute-validate-cellpadding": 1
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -38,13 +38,13 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 2`,
+  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cellpadding, error level 2`,
   t => {
     const str = `<table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -54,13 +54,29 @@ t.test(
 );
 
 t.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy border`,
+  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy cellpadding, px without units`,
   t => {
-    const str = `<table border='0'>`; // <-- notice single quotes
+    const str = `<table cellpadding='0'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy cellpadding, percentages`,
+  t => {
+    const str = `<table cellpadding="10%">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-cellpadding": 2
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -75,22 +91,22 @@ t.test(
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   t => {
-    const str = `<table border=" 0">`;
+    const str = `<table cellpadding=" 0">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table border="0">`);
+    t.equal(applyFixes(str, messages), `<table cellpadding="0">`);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 15,
-        idxTo: 16,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 20,
+        idxTo: 21,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[15, 16]]
+          ranges: [[20, 21]]
         }
       }
     ]);
@@ -101,22 +117,22 @@ t.test(
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   t => {
-    const str = `<table border="0 ">`;
+    const str = `<table cellpadding="0 ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table border="0">`);
+    t.equal(applyFixes(str, messages), `<table cellpadding="0">`);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 16,
-        idxTo: 17,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 21,
+        idxTo: 22,
         message: `Remove whitespace.`,
         fix: {
-          ranges: [[16, 17]]
+          ranges: [[21, 22]]
         }
       }
     ]);
@@ -127,24 +143,24 @@ t.test(
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   t => {
-    const str = `<table border="  0  ">`;
+    const str = `<table cellpadding="  0  ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table border="0">`);
+    t.equal(applyFixes(str, messages), `<table cellpadding="0">`);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 15,
-        idxTo: 20,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 20,
+        idxTo: 25,
         message: `Remove whitespace.`,
         fix: {
           ranges: [
-            [15, 17],
-            [18, 20]
+            [20, 22],
+            [23, 25]
           ]
         }
       }
@@ -156,20 +172,20 @@ t.test(
 t.test(
   `02.04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   t => {
-    const str = `<table border="  \t">`;
+    const str = `<table cellpadding="  \t">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 15,
-        idxTo: 18,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 20,
+        idxTo: 23,
         message: `Missing value.`,
         fix: null
       }
@@ -184,21 +200,21 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`,
   t => {
-    const str = `<table border="z">`;
+    const str = `<table cellpadding="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 15,
-        idxTo: 16,
-        message: `Should be integer, no units.`,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 20,
+        idxTo: 21,
+        message: `Should be integer, either no units or percentage.`,
         fix: null
       }
     ]);
@@ -209,21 +225,21 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`,
   t => {
-    const str = `<table border=".">`;
+    const str = `<table cellpadding=".">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 15,
-        idxTo: 16,
-        message: `Should be integer, no units.`,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 20,
+        idxTo: 21,
+        message: `Should be integer, either no units or percentage.`,
         fix: null
       }
     ]);
@@ -234,21 +250,21 @@ t.test(
 t.test(
   `03.03 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`,
   t => {
-    const str = `<table border="1.5">`;
+    const str = `<table cellpadding="1.5">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
-        idxFrom: 16, // <--- starts at the first non-digit char
-        idxTo: 18,
-        message: `Should be integer, no units.`,
+        ruleId: "attribute-validate-cellpadding",
+        idxFrom: 21, // <--- starts at the first non-digit char
+        idxTo: 23,
+        message: `Should be integer, either no units or percentage.`,
         fix: null
       }
     ]);
@@ -257,21 +273,21 @@ t.test(
 );
 
 t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
-  const str = `<table border="1px">`;
+  const str = `<table cellpadding="1px">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "attribute-validate-border": 2
+      "attribute-validate-cellpadding": 2
     }
   });
   // can't fix:
   t.equal(applyFixes(str, messages), str);
   t.match(messages, [
     {
-      ruleId: "attribute-validate-border",
-      idxFrom: 16, // <--- starts at the first non-digit char
-      idxTo: 18,
-      message: `Should be integer, no units.`,
+      ruleId: "attribute-validate-cellpadding",
+      idxFrom: 21, // <--- starts at the first non-digit char
+      idxTo: 23,
+      message: `Should be integer, either no units or percentage.`,
       fix: null
     }
   ]);
@@ -284,20 +300,20 @@ t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
 t.test(
   `04.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<div border="0">`;
+    const str = `<div cellpadding="0">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
+        ruleId: "attribute-validate-cellpadding",
         idxFrom: 5,
-        idxTo: 15,
+        idxTo: 20,
         message: `Tag "div" can't have this attribute.`,
         fix: null
       }
@@ -309,20 +325,20 @@ t.test(
 t.test(
   `04.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   t => {
-    const str = `<zzz border="0" yyy>`;
+    const str = `<zzz cellpadding="0" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-border": 2
+        "attribute-validate-cellpadding": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-border",
+        ruleId: "attribute-validate-cellpadding",
         idxFrom: 5,
-        idxTo: 15,
+        idxTo: 20,
         message: `Tag "zzz" can't have this attribute.`,
         fix: null
       }
