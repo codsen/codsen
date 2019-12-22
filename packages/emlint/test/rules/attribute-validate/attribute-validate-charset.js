@@ -199,3 +199,25 @@ t.test(
     t.end();
   }
 );
+
+t.test(`03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - empty`, t => {
+  const str = `<script charset="">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-charset": 2
+    }
+  });
+  // can't fix:
+  t.equal(applyFixes(str, messages), str);
+  t.match(messages, [
+    {
+      ruleId: "attribute-validate-charset",
+      idxFrom: 17,
+      idxTo: 17,
+      message: `Missing value.`,
+      fix: null
+    }
+  ]);
+  t.end();
+});
