@@ -769,6 +769,17 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           token.attribs.push(Object.assign({}, attrib));
           attribReset();
         }
+      } else if (
+        attrib.attribOpeningQuoteAt === null &&
+        (!str[i].trim().length ||
+          ["/", ">"].includes(str[i]) ||
+          (espChars.includes(str[i]) && espChars.includes(str[i + 1])))
+      ) {
+        attrib.attribValueEndAt = i;
+        attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
+        attrib.attribEnd = i;
+        token.attribs.push(Object.assign({}, attrib));
+        attribReset();
       }
     }
     if (

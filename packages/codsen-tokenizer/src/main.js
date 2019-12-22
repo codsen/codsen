@@ -1314,17 +1314,18 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       console.log(`1315 inside catching end of a tag attr clauses`);
       if (`'"`.includes(str[i])) {
+        // TODO - detect mismatching quotes
         if (
           str[attrib.attribOpeningQuoteAt] === str[i] &&
           !layers.some(layerObj => layerObj.type === "esp")
         ) {
-          console.log(`1321 opening and closing quotes matched!`);
+          console.log(`1322 opening and closing quotes matched!`);
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
           attrib.attribEnd = i + 1;
           console.log(
-            `1327 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
+            `1328 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
               attrib.attribClosingQuoteAt
             }; ${`\u001b[${33}m${`attrib.attribValueEndAt`}\u001b[${39}m`} = ${
               attrib.attribValueEndAt
@@ -1339,10 +1340,36 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           token.attribs.push(Object.assign({}, attrib));
           attribReset();
         }
+      } else if (
+        attrib.attribOpeningQuoteAt === null &&
+        (!str[i].trim().length ||
+          ["/", ">"].includes(str[i]) ||
+          (espChars.includes(str[i]) && espChars.includes(str[i + 1])))
+      ) {
+        // ^ either whitespace or tag's closing or ESP literal's start ends
+        // the attribute's value if there are no quotes
+        console.log(`1351 opening quote was missing, terminate attr val here`);
+
+        attrib.attribValueEndAt = i;
+        attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
+        attrib.attribEnd = i;
+        console.log(
+          `1357 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndAt`}\u001b[${39}m`} = ${
+            attrib.attribValueEndAt
+          }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
+            attrib.attribValue
+          }; ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
+            attrib.attribEnd
+          }`
+        );
+
+        // 2. push and wipe
+        token.attribs.push(Object.assign({}, attrib));
+        attribReset();
       }
     }
 
-    // Catch the start of a tag value:
+    // Catch the start of a tag attribute's value:
     // -------------------------------------------------------------------------
 
     if (
@@ -1353,6 +1380,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       attrib.attribNameEndAt <= i &&
       str[i].trim().length
     ) {
+      console.log(`1383 inside catching attr value start clauses`);
       if (
         str[i] === "=" &&
         !`'"=`.includes(str[right(str, i)]) &&
@@ -1360,7 +1388,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       ) {
         attrib.attribValueStartAt = right(str, i);
         console.log(
-          `1363 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
+          `1391 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartAt
           }`
         );
@@ -1370,7 +1398,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           attrib.attribValueStartAt = i + 1;
         }
         console.log(
-          `1373 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
+          `1401 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
             attrib.attribOpeningQuoteAt
           }; ${`\u001b[${33}m${`attrib.attribValueStartAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartAt
@@ -1401,7 +1429,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
     if (charCb) {
       console.log(
-        `1404 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+        `1432 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {
             type: token.type,
             chr: str[i],

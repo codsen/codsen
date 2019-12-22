@@ -669,3 +669,138 @@ t.test(`03.05 - unrecognised tag`, t => {
   ]);
   t.end();
 });
+
+// 04. erroneous code
+// -----------------------------------------------------------------------------
+
+t.test(`04.01 - attr value without quotes`, t => {
+  const gathered = [];
+  ct(`<abc de=fg hi="jkl">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "abc",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 20,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "de",
+          attribNameStartAt: 5,
+          attribNameEndAt: 7,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: "fg",
+          attribValueStartAt: 8,
+          attribValueEndAt: 10,
+          attribStart: 5,
+          attribEnd: 10
+        },
+        {
+          attribName: "hi",
+          attribNameStartAt: 11,
+          attribNameEndAt: 13,
+          attribOpeningQuoteAt: 14,
+          attribClosingQuoteAt: 18,
+          attribValue: "jkl",
+          attribValueStartAt: 15,
+          attribValueEndAt: 18,
+          attribStart: 11,
+          attribEnd: 19
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
+t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
+  const gathered = [];
+  ct(`<abc de=fg/>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "abc",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 12,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "de",
+          attribNameStartAt: 5,
+          attribNameEndAt: 7,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: "fg",
+          attribValueStartAt: 8,
+          attribValueEndAt: 10,
+          attribStart: 5,
+          attribEnd: 10
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
+t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
+  const gathered = [];
+  ct(`<abc de=fg>`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "abc",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      type: "html",
+      start: 0,
+      end: 11,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "de",
+          attribNameStartAt: 5,
+          attribNameEndAt: 7,
+          attribOpeningQuoteAt: null,
+          attribClosingQuoteAt: null,
+          attribValue: "fg",
+          attribValueStartAt: 8,
+          attribValueEndAt: 10,
+          attribStart: 5,
+          attribEnd: 10
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
