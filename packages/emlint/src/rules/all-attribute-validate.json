@@ -14,5 +14,6 @@
   "attribute-validate-cellpadding",
   "attribute-validate-cellspacing",
   "attribute-validate-char",
+  "attribute-validate-charoff",
   "attribute-validate-width"
 ]

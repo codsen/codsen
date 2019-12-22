@@ -557,7 +557,7 @@ function validateDigitOnly(str, idxOffset, opts) {
       errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
     for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i])) && (!opts.percOK || !(str[i] === "%" && charEnd === i + 1))) {
+      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i])) && (!opts.percOK || !(str[i] === "%" && charEnd === i + 1)) && (!opts.negativeOK || str[i] !== "-")) {
         errorArr.push({
           idxFrom: idxOffset + i,
           idxTo: idxOffset + charEnd,
@@ -3822,6 +3822,44 @@ function attributeValidateChar(context) {
   };
 }
 
+function attributeValidateCharoff(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "charoff") {
+        if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-charoff",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          percOK: false,
+          negativeOK: true
+        });
+        if (!node.parent.attribs.some(function (attribObj) {
+          return attribObj.attribName === "char";
+        })) {
+          errorArr.push({
+            idxFrom: node.parent.start,
+            idxTo: node.parent.end,
+            message: "Attribute \"char\" missing.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-charoff"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -4422,6 +4460,9 @@ defineLazyProp(builtInRules, "attribute-validate-cellspacing", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-char", function () {
   return attributeValidateChar;
+});
+defineLazyProp(builtInRules, "attribute-validate-charoff", function () {
+  return attributeValidateCharoff;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;

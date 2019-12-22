@@ -724,7 +724,8 @@ function validateDigitOnly(str, idxOffset, opts) {
         !"0123456789".includes(str[i]) &&
         (opts.type === "integer" ||
           (opts.type === "rational" && !["."].includes(str[i]))) &&
-        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1))
+        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1)) &&
+        (!opts.negativeOK || str[i] !== "-")
       ) {
         errorArr.push({
           idxFrom: idxOffset + i,
@@ -4051,6 +4052,63 @@ function attributeValidateChar(context, ...opts) {
   };
 }
 
+function attributeValidateCharoff(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "charoff") {
+        if (
+          ![
+            "col",
+            "colgroup",
+            "tbody",
+            "td",
+            "tfoot",
+            "th",
+            "thead",
+            "tr"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-charoff",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            percOK: false,
+            negativeOK: true
+          }
+        );
+        if (
+          !node.parent.attribs.some(
+            attribObj => attribObj.attribName === "char"
+          )
+        ) {
+          errorArr.push({
+            idxFrom: node.parent.start,
+            idxTo: node.parent.end,
+            message: `Attribute "char" missing.`,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-charoff"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4934,6 +4992,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-char",
   () => attributeValidateChar
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-charoff",
+  () => attributeValidateCharoff
 );
 defineLazyProp(
   builtInRules,

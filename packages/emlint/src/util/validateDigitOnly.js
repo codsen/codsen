@@ -2,9 +2,10 @@ import checkForWhitespace from "./checkForWhitespace";
 
 // opts.type: integer|rational
 // opts.percOK: true|false
+// opts.negativeOK: true|false
 function validateDigitOnly(str, idxOffset, opts) {
   console.log(
-    `007 ${`\u001b[${35}m${`validateDigitOnly() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+    `008 ${`\u001b[${35}m${`validateDigitOnly() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
       null,
       4
@@ -20,10 +21,11 @@ function validateDigitOnly(str, idxOffset, opts) {
         !"0123456789".includes(str[i]) &&
         (opts.type === "integer" ||
           (opts.type === "rational" && !["."].includes(str[i]))) &&
-        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1))
+        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1)) &&
+        (!opts.negativeOK || str[i] !== "-")
       ) {
         console.log(
-          `026 ${`\u001b[${36}m${`looping`}\u001b[${39}m`} ${`\u001b[${33}m${`str[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+          `028 ${`\u001b[${36}m${`looping`}\u001b[${39}m`} ${`\u001b[${33}m${`str[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
             str[i],
             null,
             0
