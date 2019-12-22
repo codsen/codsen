@@ -13,5 +13,6 @@
   "attribute-validate-border",
   "attribute-validate-cellpadding",
   "attribute-validate-cellspacing",
+  "attribute-validate-char",
   "attribute-validate-width"
 ]

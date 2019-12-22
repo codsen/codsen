@@ -3394,10 +3394,10 @@ function attributeValidateAccesskey(context) {
         var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
+            errorArr = _checkForWhitespace.errorArr,
+            trimmedVal = _checkForWhitespace.trimmedVal;
         if (Number.isInteger(charStart)) {
-          var extractedValue = context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd);
-          if (extractedValue.length > 1 && !(extractedValue.startsWith("&") && extractedValue.endsWith(";"))) {
+          if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
             errorArr.push({
               idxFrom: node.attribValueStartAt + charStart,
               idxTo: node.attribValueStartAt + charEnd,
@@ -3777,6 +3777,44 @@ function attributeValidateCellspacing(context) {
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-cellspacing"
+          }));
+        });
+      }
+    }
+  };
+}
+
+function attributeValidateChar(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "char") {
+        if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-char",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr,
+            trimmedVal = _checkForWhitespace.trimmedVal;
+        if (Number.isInteger(charStart)) {
+          if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
+            errorArr.push({
+              idxFrom: node.attribValueStartAt + charStart,
+              idxTo: node.attribValueStartAt + charEnd,
+              message: "Should be a single character.",
+              fix: null
+            });
+          }
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-char"
           }));
         });
       }
@@ -4381,6 +4419,9 @@ defineLazyProp(builtInRules, "attribute-validate-cellpadding", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-cellspacing", function () {
   return attributeValidateCellspacing;
+});
+defineLazyProp(builtInRules, "attribute-validate-char", function () {
+  return attributeValidateChar;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;

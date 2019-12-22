@@ -1,13 +1,13 @@
-// rule: attribute-validate-accesskey
+// rule: attribute-validate-char
 // -----------------------------------------------------------------------------
 
 import checkForWhitespace from "../../util/checkForWhitespace";
 
-function attributeValidateAccesskey(context, ...opts) {
+function attributeValidateChar(context, ...opts) {
   return {
     attribute: function(node) {
       console.log(
-        `███████████████████████████████████████ attributeValidateAccesskey() ███████████████████████████████████████`
+        `███████████████████████████████████████ attributeValidateChar() ███████████████████████████████████████`
       );
       console.log(
         `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -17,28 +17,25 @@ function attributeValidateAccesskey(context, ...opts) {
         )}`
       );
       console.log(
-        `020 attributeValidateAccesskey(): node = ${JSON.stringify(
-          node,
-          null,
-          4
-        )}`
+        `020 attributeValidateChar(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      if (node.attribName === "accesskey") {
+      if (node.attribName === "char") {
         // validate the parent
         if (
           ![
-            "a",
-            "area",
-            "button",
-            "input",
-            "label",
-            "legend",
-            "textarea"
+            "col",
+            "colgroup",
+            "tbody",
+            "td",
+            "tfoot",
+            "th",
+            "thead",
+            "tr"
           ].includes(node.parent.tagName)
         ) {
           context.report({
-            ruleId: "attribute-validate-accesskey",
+            ruleId: "attribute-validate-char",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
@@ -46,22 +43,20 @@ function attributeValidateAccesskey(context, ...opts) {
           });
         }
 
-        // only check for rogue whitespace - value can be any string
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartAt
         );
         console.log(
-          `055 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `051 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
           )}`
         );
         if (Number.isInteger(charStart)) {
-          // the value must be a character, raw or escaped, from a document's
-          // charset
-          // https://www.w3.org/TR/html4/interact/forms.html#adef-accesskey
+          // the value must be a character, raw or escaped, from ISO10646
+          // https://www.w3.org/TR/html4/sgml/dtd.html#Character
           if (
             trimmedVal.length > 1 &&
             !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
@@ -69,17 +64,17 @@ function attributeValidateAccesskey(context, ...opts) {
             errorArr.push({
               idxFrom: node.attribValueStartAt + charStart,
               idxTo: node.attribValueStartAt + charEnd,
-              message: `Should be a single character (escaped or not).`,
+              message: `Should be a single character.`,
               fix: null
             });
           }
         }
 
         errorArr.forEach(errorObj => {
-          console.log(`079 RAISE ERROR`);
+          console.log(`074 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-accesskey"
+              ruleId: "attribute-validate-char"
             })
           );
         });
@@ -88,4 +83,4 @@ function attributeValidateAccesskey(context, ...opts) {
   };
 }
 
-export default attributeValidateAccesskey;
+export default attributeValidateChar;

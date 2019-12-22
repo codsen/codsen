@@ -930,6 +930,13 @@ defineLazyProp(
   () => attributeValidateCellspacing
 );
 
+import attributeValidateChar from "./rules/attribute-validate/attribute-validate-char";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-char",
+  () => attributeValidateChar
+);
+
 import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
 defineLazyProp(
   builtInRules,
@@ -1080,7 +1087,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1083 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1090 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
