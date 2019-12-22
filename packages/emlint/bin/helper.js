@@ -43,6 +43,30 @@ fs.writeFileSync(
   JSON.stringify(allAttribRules.sort(), null, 2)
 );
 
+// bake the "attribute-validate-" rules list JSON:
+
+const allAttribValidateRules = fs
+  .readdirSync(path.resolve("src/rules/attribute-validate/"))
+  .filter(val => val.startsWith("attribute-validate-"))
+  .map(val => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-attribute-validate.json"),
+  JSON.stringify(allAttribValidateRules.sort(), null, 2)
+);
+
+// bake the "character-" rules list JSON:
+
+const allCharacter = fs
+  .readdirSync(path.resolve("src/rules/character/"))
+  .filter(val => val.startsWith("character-"))
+  .map(val => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-character.json"),
+  JSON.stringify(allCharacter.sort(), null, 2)
+);
+
 // bake the "all-bad-named-html-entity" rules list JSON:
 // since rules come from standalone npm package, "string-fix-broken-named-entities",
 // rules source is embedded into linter.js and we'll have to use unit test
