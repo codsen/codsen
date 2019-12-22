@@ -24,7 +24,7 @@ function isNotLetter(_char) {
 function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
-  var r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"]/g;
+  var r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
   var r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
   var r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
   var whatToTest = idx ? str.slice(idx) : str;

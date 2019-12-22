@@ -159,7 +159,7 @@ function isOpening(str, idx = 0) {
   const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
 
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
-  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"]/g;
+  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
 
   // r3. closing/self-closing tags
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
@@ -213,15 +213,17 @@ function isOpening(str, idx = 0) {
   ) {
     passed = true;
   }
+  //
   console.log(
-    `217 ${`\u001b[${33}m${`isNotLetter(str[idx + 1])`}\u001b[${39}m`} = ${JSON.stringify(
+    `218 ${`\u001b[${33}m${`isNotLetter(str[${idx +
+      1}])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
       4
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`224 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`226 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

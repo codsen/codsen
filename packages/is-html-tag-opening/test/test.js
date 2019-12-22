@@ -306,36 +306,6 @@ t.test(`05.08 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   t.end();
 });
 
-t.test(`05.09 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
-  const s1 = `< p >`;
-  t.ok(is(s1, 0));
-  t.end();
-});
-
-t.test(`05.10 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
-  const s1 = `< / p >`;
-  t.ok(is(s1, 0));
-  t.end();
-});
-
-t.test(`05.11 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
-  const s1 = `< b / >`;
-  t.ok(is(s1, 0));
-  t.end();
-});
-
-t.test(`05.12 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
-  const s1 = `< ${BACKSLASH} b / >`;
-  t.ok(is(s1, 0));
-  t.end();
-});
-
-t.test(`05.13 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
-  const s1 = `</td nowrap yo yo/>`;
-  t.ok(is(s1, 0));
-  t.end();
-});
-
 t.test(`05.14 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<zzz accept="utf-8" yyy>`;
   t.ok(is(s1, 0));
@@ -347,3 +317,64 @@ t.test(`05.15 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   t.ok(is(s1, 0));
   t.end();
 });
+
+// 06. broken code
+// -----------------------------------------------------------------------------
+
+// rogue space cases
+
+t.test(
+  `06.01 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - spaces around`,
+  t => {
+    const s1 = `< p >`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
+
+t.test(
+  `06.02 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - spaces around`,
+  t => {
+    const s1 = `< / p >`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
+
+t.test(
+  `06.03 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - spaces around`,
+  t => {
+    const s1 = `< b / >`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
+
+t.test(
+  `06.04 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - spaces around`,
+  t => {
+    const s1 = `< ${BACKSLASH} b / >`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
+
+t.test(
+  `06.05 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - spaces around`,
+  t => {
+    const s1 = `</td nowrap yo yo/>`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
+
+// missing bits cases
+
+t.test(
+  `06.06 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - quotes missing`,
+  t => {
+    const s1 = `<abc de=fg hi="jkl">`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);

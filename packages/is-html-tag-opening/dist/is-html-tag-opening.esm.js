@@ -157,7 +157,7 @@ function isNotLetter(char) {
 }
 function isOpening(str, idx = 0) {
   const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
-  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"]/g;
+  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
   const r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
   const whatToTest = idx ? str.slice(idx) : str;
