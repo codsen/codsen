@@ -4109,6 +4109,41 @@ function attributeValidateCharoff(context, ...opts) {
   };
 }
 
+function attributeValidateCharset(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "charset") {
+        if (!["a", "link", "script"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-charset",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false,
+            quickPermittedValues: [],
+            permittedValues: knownCharsets
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-charset"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -4997,6 +5032,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-charoff",
   () => attributeValidateCharoff
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-charset",
+  () => attributeValidateCharset
 );
 defineLazyProp(
   builtInRules,

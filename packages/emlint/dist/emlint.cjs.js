@@ -3860,6 +3860,35 @@ function attributeValidateCharoff(context) {
   };
 }
 
+function attributeValidateCharset(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "charset") {
+        if (!["a", "link", "script"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-charset",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue, node.attribValueStartAt, {
+          canBeCommaSeparated: false,
+          noSpaceAfterComma: false,
+          quickPermittedValues: [],
+          permittedValues: knownCharsets
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-charset"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -4463,6 +4492,9 @@ defineLazyProp(builtInRules, "attribute-validate-char", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-charoff", function () {
   return attributeValidateCharoff;
+});
+defineLazyProp(builtInRules, "attribute-validate-charset", function () {
+  return attributeValidateCharset;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;
