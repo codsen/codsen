@@ -16,5 +16,6 @@
   "attribute-validate-char",
   "attribute-validate-charoff",
   "attribute-validate-charset",
+  "attribute-validate-checked",
   "attribute-validate-width"
 ]
