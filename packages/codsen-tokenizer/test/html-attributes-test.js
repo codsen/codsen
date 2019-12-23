@@ -973,3 +973,120 @@ t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
   ]);
   t.end();
 });
+
+t.test(
+  `05.03 - two errors: space before equal and closing quotes missing`,
+  t => {
+    const gathered = [];
+    ct(`<input type="radio" checked =">`, obj => {
+      gathered.push(obj);
+    });
+
+    t.match(gathered, [
+      {
+        type: "html",
+        tagNameStartAt: 1,
+        tagNameEndAt: 6,
+        tagName: "input",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
+        esp: [],
+        start: 0,
+        end: 31,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "type",
+            attribNameStartAt: 7,
+            attribNameEndAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValue: "radio",
+            attribValueStartAt: 13,
+            attribValueEndAt: 18,
+            attribStart: 7,
+            attribEnd: 19
+          },
+          {
+            attribName: "checked",
+            attribNameStartAt: 20,
+            attribNameEndAt: 27,
+            attribOpeningQuoteAt: 29,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 20,
+            attribEnd: 30
+          }
+        ]
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `05.04 - two errors: space before equal and closing quotes missing, text follows`,
+  t => {
+    const gathered = [];
+    ct(`<input type="radio" checked ="> x y z `, obj => {
+      gathered.push(obj);
+    });
+
+    t.match(gathered, [
+      {
+        type: "html",
+        tagNameStartAt: 1,
+        tagNameEndAt: 6,
+        tagName: "input",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
+        esp: [],
+        start: 0,
+        end: 31,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "type",
+            attribNameStartAt: 7,
+            attribNameEndAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValue: "radio",
+            attribValueStartAt: 13,
+            attribValueEndAt: 18,
+            attribStart: 7,
+            attribEnd: 19
+          },
+          {
+            attribName: "checked",
+            attribNameStartAt: 20,
+            attribNameEndAt: 27,
+            attribOpeningQuoteAt: 29,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 20,
+            attribEnd: 30
+          }
+        ]
+      },
+      {
+        type: "text",
+        start: 31,
+        end: 38,
+        tail: null,
+        kind: null
+      }
+    ]);
+    t.end();
+  }
+);

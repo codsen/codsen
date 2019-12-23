@@ -1461,57 +1461,71 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
       let thisIsRealEnding = false;
 
-      // Traverse then
-      for (let y = i + 1; y < len; y++) {
-        console.log(
-          `1467 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
-            str[y],
-            null,
-            0
-          )}`}\u001b[${39}m`}`
-        );
-
-        // if we reach the closing counterpart of the quotes, terminate
-        if (
-          attrib.attribOpeningQuoteAt !== null &&
-          str[y] === str[attrib.attribOpeningQuoteAt]
-        ) {
+      if (str[i + 1]) {
+        // Traverse then
+        for (let y = i + 1; y < len; y++) {
           console.log(
-            `1480 closing quote (${
-              str[attrib.attribOpeningQuoteAt]
-            }) found, ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+            `1468 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+              str[y],
+              null,
+              0
+            )}`}\u001b[${39}m`}`
           );
-          if (y !== i + 1 && str[y - 1] !== "=") {
+
+          // if we reach the closing counterpart of the quotes, terminate
+          if (
+            attrib.attribOpeningQuoteAt !== null &&
+            str[y] === str[attrib.attribOpeningQuoteAt]
+          ) {
+            console.log(
+              `1481 closing quote (${
+                str[attrib.attribOpeningQuoteAt]
+              }) found, ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+            );
+            if (y !== i + 1 && str[y - 1] !== "=") {
+              thisIsRealEnding = true;
+              console.log(
+                `1488 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              );
+            }
+            break;
+          } else if (str[y] === ">") {
+            // must be real tag closing, we just tackle missing quotes
+            // TODO - missing closing quotes
+            break;
+          } else if (str[y] === "<") {
             thisIsRealEnding = true;
             console.log(
-              `1487 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              `1499 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
             );
+
+            // TODO - pop only if type === "simple" and it's the same opening
+            // quotes of this attribute
+            layers.pop();
+            console.log(
+              `1506 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
+                layers,
+                null,
+                4
+              )}`
+            );
+
+            console.log(`1513 break`);
+            break;
+          } else if (!str[y + 1]) {
+            // if end was reached and nothing caught, that's also positive sign
+            thisIsRealEnding = true;
+            console.log(
+              `1519 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+            );
+
+            console.log(`1522 break`);
+            break;
           }
-          break;
-        } else if (str[y] === ">") {
-          // must be real tag closing, we just tackle missing quotes
-          // TODO - missing closing quotes
-          break;
-        } else if (str[y] === "<") {
-          thisIsRealEnding = true;
-          console.log(
-            `1498 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
-          );
-
-          // TODO - pop only if type === "simple" and it's the same opening
-          // quotes of this attribute
-          layers.pop();
-          console.log(
-            `1505 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
-              layers,
-              null,
-              4
-            )}`
-          );
-
-          console.log(`1512 break`);
-          break;
         }
+      } else {
+        console.log(`1527 string ends so this was the bracket`);
+        thisIsRealEnding = true;
       }
 
       //
@@ -1526,7 +1540,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       if (thisIsRealEnding) {
         token.end = i + 1;
         console.log(
-          `1529 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          `1543 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
             token.end
           }`
         );
@@ -1548,14 +1562,14 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
         attrib.attribEnd = i;
         console.log(
-          `1551 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
+          `1565 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
             attrib.attribEnd
           }`
         );
 
         // 2. push and wipe
         console.log(
-          `1558 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
+          `1572 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
         );
         token.attribs.push(clone(attrib));
         attribReset();
@@ -1584,7 +1598,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
 
     if (charCb) {
       console.log(
-        `1587 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+        `1601 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {
             type: token.type,
             chr: str[i],

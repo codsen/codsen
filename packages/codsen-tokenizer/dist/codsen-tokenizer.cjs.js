@@ -485,19 +485,26 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     }
     if (str[i] === ">" && token.type === "html" && attrib.attribStart !== null && attrib.attribEnd === null) {
       var thisIsRealEnding = false;
-      for (var _y3 = i + 1; _y3 < len; _y3++) {
-        if (attrib.attribOpeningQuoteAt !== null && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
-          if (_y3 !== i + 1 && str[_y3 - 1] !== "=") {
+      if (str[i + 1]) {
+        for (var _y3 = i + 1; _y3 < len; _y3++) {
+          if (attrib.attribOpeningQuoteAt !== null && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+            if (_y3 !== i + 1 && str[_y3 - 1] !== "=") {
+              thisIsRealEnding = true;
+            }
+            break;
+          } else if (str[_y3] === ">") {
+            break;
+          } else if (str[_y3] === "<") {
             thisIsRealEnding = true;
+            layers.pop();
+            break;
+          } else if (!str[_y3 + 1]) {
+            thisIsRealEnding = true;
+            break;
           }
-          break;
-        } else if (str[_y3] === ">") {
-          break;
-        } else if (str[_y3] === "<") {
-          thisIsRealEnding = true;
-          layers.pop();
-          break;
         }
+      } else {
+        thisIsRealEnding = true;
       }
       if (thisIsRealEnding) {
         token.end = i + 1;

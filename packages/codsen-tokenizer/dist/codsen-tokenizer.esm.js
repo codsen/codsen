@@ -814,22 +814,29 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       attrib.attribEnd === null
     ) {
       let thisIsRealEnding = false;
-      for (let y = i + 1; y < len; y++) {
-        if (
-          attrib.attribOpeningQuoteAt !== null &&
-          str[y] === str[attrib.attribOpeningQuoteAt]
-        ) {
-          if (y !== i + 1 && str[y - 1] !== "=") {
+      if (str[i + 1]) {
+        for (let y = i + 1; y < len; y++) {
+          if (
+            attrib.attribOpeningQuoteAt !== null &&
+            str[y] === str[attrib.attribOpeningQuoteAt]
+          ) {
+            if (y !== i + 1 && str[y - 1] !== "=") {
+              thisIsRealEnding = true;
+            }
+            break;
+          } else if (str[y] === ">") {
+            break;
+          } else if (str[y] === "<") {
             thisIsRealEnding = true;
+            layers.pop();
+            break;
+          } else if (!str[y + 1]) {
+            thisIsRealEnding = true;
+            break;
           }
-          break;
-        } else if (str[y] === ">") {
-          break;
-        } else if (str[y] === "<") {
-          thisIsRealEnding = true;
-          layers.pop();
-          break;
         }
+      } else {
+        thisIsRealEnding = true;
       }
       if (thisIsRealEnding) {
         token.end = i + 1;
