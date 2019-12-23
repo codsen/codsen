@@ -804,3 +804,172 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
   ]);
   t.end();
 });
+
+// 05. terminating unclosed string value (content within quotes)
+// -----------------------------------------------------------------------------
+
+// TODO
+// INTERVENTION NEEDED:
+
+// <abc de="> "a" > "z"
+// <abc de="> a "text" b <div class="z">
+// <abc de=" \n<div class="z">
+// <abc de=" text<div class="z">
+// <abc de="> < fgh>
+// <abc de="> <fgh kl = "mn">
+
+// <abc de=> text <def>
+// <abc de=> fg="hi" <def>
+// <abc de=> fg=hi" <def>
+
+// <abc de=<def>
+// <abc de=''<def>
+// <abc de=""<def>
+// <abc de='<def>
+// <abc de="<def>
+//
+// <abc de= <def>
+// <abc de='' <def>
+// <abc de="" <def>
+// <abc de=' <def>
+// <abc de=" <def>
+//
+// <abc de=' fg="hi'<jkl>
+
+// MINOR ERRORS:
+
+// <abc de =">"> text
+// <abc de =">"> text<div class="z">
+// <abc de =">'> text
+// <abc de =">'> text<div class="z">
+// <abc de =">' fg = 'hi"> text
+// <abc de =">' fg = 'hi"> text <div class="z">
+
+t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
+  const gathered = [];
+  ct(`<abc de =">\ntext<div class="z">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      type: "html",
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "abc",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      start: 0,
+      end: 11,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "de",
+          attribNameStartAt: 5,
+          attribNameEndAt: 7,
+          attribOpeningQuoteAt: 9,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 5,
+          attribEnd: 10
+        }
+      ]
+    },
+    {
+      type: "text",
+      start: 11,
+      end: 16,
+      tail: null,
+      kind: null,
+      attribs: []
+    },
+    {
+      type: "html",
+      tagNameStartAt: 17,
+      tagNameEndAt: 20,
+      tagName: "div",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      start: 16,
+      end: 31,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "class",
+          attribNameStartAt: 21,
+          attribNameEndAt: 26,
+          attribOpeningQuoteAt: 27,
+          attribClosingQuoteAt: 29,
+          attribValue: "z",
+          attribValueStartAt: 28,
+          attribValueEndAt: 29,
+          attribStart: 21,
+          attribEnd: 30
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
+// TODO
+// <abc de=">"a"
+// <abc de=">">
+// <abc de=">" fg="a">
+
+t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
+  const gathered = [];
+  ct(`<abc de="> "a" > "z"`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      type: "html",
+      tagNameStartAt: 1,
+      tagNameEndAt: 4,
+      tagName: "abc",
+      recognised: false,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      start: 0,
+      end: 10,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "de",
+          attribNameStartAt: 5,
+          attribNameEndAt: 7,
+          attribOpeningQuoteAt: 8,
+          attribClosingQuoteAt: null,
+          attribValue: null,
+          attribValueStartAt: null,
+          attribValueEndAt: null,
+          attribStart: 5,
+          attribEnd: 9
+        }
+      ]
+    },
+    {
+      type: "text",
+      start: 10,
+      end: 20,
+      tail: null,
+      kind: null
+    }
+  ]);
+  t.end();
+});

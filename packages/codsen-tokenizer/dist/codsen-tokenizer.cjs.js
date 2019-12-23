@@ -103,7 +103,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     attribs: []
   };
   function tokenReset() {
-    token = Object.assign({}, tokenDefault);
+    token = clone(tokenDefault);
   }
   var attrib = {};
   var attribDefault = {
@@ -119,7 +119,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     attribEnd: null
   };
   function attribReset() {
-    attrib = Object.assign({}, attribDefault);
+    attrib = clone(attribDefault);
   }
   tokenReset();
   attribReset();
@@ -278,6 +278,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (token.type && Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
         }
+        tokenReset();
         token.start = i;
         token.type = "html";
         initHtmlToken();
@@ -369,8 +370,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             token.type = "css";
           }
         } else {
+          attribReset();
           token.start = i;
           token.type = "text";
+          token.attribs = [];
+          attribReset();
         }
       }
     }
@@ -438,9 +442,9 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     if (!doNothing && token.type === "html" && isNum(attrib.attribNameStartAt) && i > attrib.attribNameStartAt && attrib.attribNameEndAt === null && !charSuitableForHTMLAttrName(str[i])) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
-      if (!str[i].trim().length || str[i] === ">" || str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
+      if (!str[i].trim().length && str[stringLeftRight.right(str, i)] === "=") ; else if (!str[i].trim().length || str[i] === ">" || str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
         attrib.attribEnd = i;
-        token.attribs.push(Object.assign({}, attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
       }
     }
@@ -457,14 +461,14 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           attrib.attribValueEndAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
           attrib.attribEnd = i + 1;
-          token.attribs.push(Object.assign({}, attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       } else if (attrib.attribOpeningQuoteAt === null && (!str[i].trim().length || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
         attrib.attribValueEndAt = i;
         attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
         attrib.attribEnd = i;
-        token.attribs.push(Object.assign({}, attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
       }
     }
@@ -477,6 +481,35 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (str[i + 1]) {
           attrib.attribValueStartAt = i + 1;
         }
+      }
+    }
+    if (str[i] === ">" && token.type === "html" && attrib.attribStart !== null && attrib.attribEnd === null) {
+      var thisIsRealEnding = false;
+      for (var _y3 = i + 1; _y3 < len; _y3++) {
+        if (attrib.attribOpeningQuoteAt !== null && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+          if (_y3 !== i + 1 && str[_y3 - 1] !== "=") {
+            thisIsRealEnding = true;
+          }
+          break;
+        } else if (str[_y3] === ">") {
+          break;
+        } else if (str[_y3] === "<") {
+          thisIsRealEnding = true;
+          layers.pop();
+          break;
+        }
+      }
+      if (thisIsRealEnding) {
+        token.end = i + 1;
+        if (Number.isInteger(attrib.attribValueStartAt) && attrib.attribValueStartAt < i && str.slice(attrib.attribValueStartAt, i).trim().length) {
+          attrib.attribValueEndAt = i;
+          attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
+        } else {
+          attrib.attribValueStartAt = null;
+        }
+        attrib.attribEnd = i;
+        token.attribs.push(clone(attrib));
+        attribReset();
       }
     }
     if (charCb) {

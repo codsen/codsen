@@ -295,7 +295,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     attribs: []
   };
   function tokenReset() {
-    token = Object.assign({}, tokenDefault);
+    token = clone(tokenDefault);
   }
   let attrib = {};
   const attribDefault = {
@@ -311,7 +311,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     attribEnd: null
   };
   function attribReset() {
-    attrib = Object.assign({}, attribDefault);
+    attrib = clone(attribDefault);
   }
   tokenReset();
   attribReset();
@@ -503,6 +503,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (token.type && Number.isInteger(token.start)) {
           dumpCurrentToken(token, i);
         }
+        tokenReset();
         token.start = i;
         token.type = "html";
         initHtmlToken();
@@ -623,8 +624,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             token.type = "css";
           }
         } else {
+          attribReset();
           token.start = i;
           token.type = "text";
+          token.attribs = [];
+          attribReset();
         }
       }
     }
@@ -729,13 +733,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
-      if (
+      if (!str[i].trim().length && str[right(str, i)] === "=") ; else if (
         !str[i].trim().length ||
         str[i] === ">" ||
         (str[i] === "/" && str[right(str, i)] === ">")
       ) {
         attrib.attribEnd = i;
-        token.attribs.push(Object.assign({}, attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
       }
     }
@@ -766,7 +770,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           attrib.attribValueEndAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
           attrib.attribEnd = i + 1;
-          token.attribs.push(Object.assign({}, attrib));
+          token.attribs.push(clone(attrib));
           attribReset();
         }
       } else if (
@@ -778,7 +782,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         attrib.attribValueEndAt = i;
         attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
         attrib.attribEnd = i;
-        token.attribs.push(Object.assign({}, attrib));
+        token.attribs.push(clone(attrib));
         attribReset();
       }
     }
@@ -801,6 +805,47 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         if (str[i + 1]) {
           attrib.attribValueStartAt = i + 1;
         }
+      }
+    }
+    if (
+      str[i] === ">" &&
+      token.type === "html" &&
+      attrib.attribStart !== null &&
+      attrib.attribEnd === null
+    ) {
+      let thisIsRealEnding = false;
+      for (let y = i + 1; y < len; y++) {
+        if (
+          attrib.attribOpeningQuoteAt !== null &&
+          str[y] === str[attrib.attribOpeningQuoteAt]
+        ) {
+          if (y !== i + 1 && str[y - 1] !== "=") {
+            thisIsRealEnding = true;
+          }
+          break;
+        } else if (str[y] === ">") {
+          break;
+        } else if (str[y] === "<") {
+          thisIsRealEnding = true;
+          layers.pop();
+          break;
+        }
+      }
+      if (thisIsRealEnding) {
+        token.end = i + 1;
+        if (
+          Number.isInteger(attrib.attribValueStartAt) &&
+          attrib.attribValueStartAt < i &&
+          str.slice(attrib.attribValueStartAt, i).trim().length
+        ) {
+          attrib.attribValueEndAt = i;
+          attrib.attribValue = str.slice(attrib.attribValueStartAt, i);
+        } else {
+          attrib.attribValueStartAt = null;
+        }
+        attrib.attribEnd = i;
+        token.attribs.push(clone(attrib));
+        attribReset();
       }
     }
     if (charCb) {
