@@ -1,7 +1,7 @@
 // rule: attribute-validate-bgcolor
 // -----------------------------------------------------------------------------
 
-import { validateColor } from "../../util/util";
+import validateColor from "../../util/validateColor";
 
 function attributeValidateBgcolor(context, ...opts) {
   return {

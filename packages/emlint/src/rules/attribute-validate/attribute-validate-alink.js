@@ -1,7 +1,7 @@
 // rule: attribute-validate-alink
 // -----------------------------------------------------------------------------
 
-import { validateColor } from "../../util/util";
+import validateColor from "../../util/validateColor";
 
 function attributeValidateAlink(context, ...opts) {
   return {

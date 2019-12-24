@@ -102,67 +102,67 @@ t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
 });
 
 t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
-  const str = `<a b"c" d'e'>`;
+  const str = `<a bcd"e" fgh'i'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "attribute-malformed": 1
     }
   });
-  t.equal(applyFixes(str, messages), `<a b="c" d='e'>`);
+  t.equal(applyFixes(str, messages), `<a bcd="e" fgh='i'>`);
   t.match(messages, [
     {
       ruleId: "attribute-malformed",
       severity: 1,
       idxFrom: 3,
-      idxTo: 7,
+      idxTo: 9,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[4, 4, "="]]
+        ranges: [[6, 6, "="]]
       }
     },
     {
       ruleId: "attribute-malformed",
       severity: 1,
-      idxFrom: 8,
-      idxTo: 12,
+      idxFrom: 10,
+      idxTo: 16,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[9, 9, "="]]
+        ranges: [[13, 13, "="]]
       }
     }
   ]);
   t.end();
 });
 
-t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
-  const str = `<a b"c" d'e'>`;
+t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
+  const str = `<a bcd"e" fgh'i'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "attribute-malformed": 2
     }
   });
-  t.equal(applyFixes(str, messages), `<a b="c" d='e'>`);
+  t.equal(applyFixes(str, messages), `<a bcd="e" fgh='i'>`);
   t.match(messages, [
     {
       ruleId: "attribute-malformed",
       severity: 2,
       idxFrom: 3,
-      idxTo: 7,
+      idxTo: 9,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[4, 4, "="]]
+        ranges: [[6, 6, "="]]
       }
     },
     {
       ruleId: "attribute-malformed",
       severity: 2,
-      idxFrom: 8,
-      idxTo: 12,
+      idxFrom: 10,
+      idxTo: 16,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[9, 9, "="]]
+        ranges: [[13, 13, "="]]
       }
     }
   ]);
@@ -170,3 +170,29 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
 });
 
 // TODO - both mismatching quote types and equal missing
+
+// 02. mis-typed
+// -----------------------------------------------------------------------------
+
+t.only(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+  const str = `<td clas="w100p">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-malformed": 2
+    }
+  });
+  t.equal(applyFixes(str, messages), `<td class="w100p">`);
+  t.match(messages, [
+    {
+      ruleId: "attribute-malformed",
+      idxFrom: 4,
+      idxTo: 8,
+      message: `Probably meant "class".`,
+      fix: {
+        ranges: [[4, 8, "class"]]
+      }
+    }
+  ]);
+  t.end();
+});

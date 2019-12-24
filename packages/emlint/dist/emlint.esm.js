@@ -14,6 +14,8 @@ import matcher from 'matcher';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isObj from 'lodash.isplainobject';
 import isRegExp from 'lodash.isregexp';
+import { allHtmlAttribs } from 'html-all-known-attributes';
+import leven from 'leven';
 import db from 'mime-db';
 import isUrl from 'is-url-superb';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
@@ -825,93 +827,6 @@ function validateString(str, idxOffset, opts) {
           fix: null
         });
       }
-    }
-  }
-  return errorArr;
-}
-
-function validateColor(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
-    const attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
-    if (
-      attrVal.length > 1 &&
-      isLetter(attrVal[0]) &&
-      isLetter(attrVal[1]) &&
-      Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
-    ) {
-      if (!opts.namedCssLevel1OK) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Named colors (CSS Level 1) not allowed.`,
-          fix: {
-            ranges: [
-              [
-                idxOffset + charStart,
-                idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
-        });
-      } else if (
-        !opts.namedCssLevel2PlusOK &&
-        (!opts.namedCssLevel1OK ||
-          !Object.keys(basicColorNames).includes(attrVal.toLowerCase()))
-      ) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Named colors (CSS Level 2+) not allowed.`,
-          fix: {
-            ranges: [
-              [
-                idxOffset + charStart,
-                idxOffset + charEnd,
-                extendedColorNames[attrVal.toLowerCase()]
-              ]
-            ]
-          }
-        });
-      }
-    } else if (attrVal.startsWith("#")) {
-      if (attrVal.length !== 7) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Hex color code should be 6 digits-long.`,
-          fix: null
-        });
-      } else if (!sixDigitHexColorRegex.test(attrVal)) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Unrecognised hex code.`,
-          fix: null
-        });
-      } else if (!opts.hexSixOK) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Hex colors not allowed.`,
-          fix: null
-        });
-      }
-    } else if (attrVal.startsWith("rgb(")) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `rgb() is not allowed.`,
-        fix: null
-      });
-    } else {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `Unrecognised color value.`,
-        fix: null
-      });
     }
   }
   return errorArr;
@@ -3370,6 +3285,28 @@ function attributeDuplicate(context, ...opts) {
 function attributeMalformed(context, ...opts) {
   return {
     attribute: function(node) {
+      if (!node.attribNameRecognised) {
+        for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
+          if (leven(allHtmlAttribs[i], node.attribName) === 1) {
+            context.report({
+              ruleId: "attribute-malformed",
+              message: `Probably meant "${allHtmlAttribs[i]}".`,
+              idxFrom: node.attribNameStartAt,
+              idxTo: node.attribNameEndAt,
+              fix: {
+                ranges: [
+                  [
+                    node.attribNameStartAt,
+                    node.attribNameEndAt,
+                    allHtmlAttribs[i]
+                  ]
+                ]
+              }
+            });
+            break;
+          }
+        }
+      }
       if (
         node.attribValueStartAt !== null &&
         context.str[node.attribNameEndAt] !== "="
@@ -3711,6 +3648,93 @@ function attributeValidateAlign(context, ...opts) {
       }
     }
   };
+}
+
+function validateColor(str, idxOffset, opts) {
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  if (Number.isInteger(charStart)) {
+    const attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
+    if (
+      attrVal.length > 1 &&
+      isLetter(attrVal[0]) &&
+      isLetter(attrVal[1]) &&
+      Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
+    ) {
+      if (!opts.namedCssLevel1OK) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Named colors (CSS Level 1) not allowed.`,
+          fix: {
+            ranges: [
+              [
+                idxOffset + charStart,
+                idxOffset + charEnd,
+                extendedColorNames[attrVal.toLowerCase()]
+              ]
+            ]
+          }
+        });
+      } else if (
+        !opts.namedCssLevel2PlusOK &&
+        (!opts.namedCssLevel1OK ||
+          !Object.keys(basicColorNames).includes(attrVal.toLowerCase()))
+      ) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Named colors (CSS Level 2+) not allowed.`,
+          fix: {
+            ranges: [
+              [
+                idxOffset + charStart,
+                idxOffset + charEnd,
+                extendedColorNames[attrVal.toLowerCase()]
+              ]
+            ]
+          }
+        });
+      }
+    } else if (attrVal.startsWith("#")) {
+      if (attrVal.length !== 7) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Hex color code should be 6 digits-long.`,
+          fix: null
+        });
+      } else if (!sixDigitHexColorRegex.test(attrVal)) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Unrecognised hex code.`,
+          fix: null
+        });
+      } else if (!opts.hexSixOK) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Hex colors not allowed.`,
+          fix: null
+        });
+      }
+    } else if (attrVal.startsWith("rgb(")) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `rgb() is not allowed.`,
+        fix: null
+      });
+    } else {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Unrecognised color value.`,
+        fix: null
+      });
+    }
+  }
+  return errorArr;
 }
 
 function attributeValidateAlink(context, ...opts) {
