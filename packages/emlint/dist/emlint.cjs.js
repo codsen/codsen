@@ -3973,6 +3973,41 @@ function attributeValidateChecked(context) {
   };
 }
 
+function attributeValidateCite(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "cite") {
+        if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-cite",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be an URI.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-cite"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -4582,6 +4617,9 @@ defineLazyProp(builtInRules, "attribute-validate-charset", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-checked", function () {
   return attributeValidateChecked;
+});
+defineLazyProp(builtInRules, "attribute-validate-cite", function () {
+  return attributeValidateCite;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;
