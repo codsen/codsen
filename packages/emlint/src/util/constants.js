@@ -625,11 +625,14 @@ const extendedColorNames = {
 
 const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
 
+const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+
 export {
-  knownHTMLAttribs,
   knownUnits,
   knownCharsets,
+  classNameRegex,
   basicColorNames,
+  knownHTMLAttribs,
   extendedColorNames,
   sixDigitHexColorRegex
 };
