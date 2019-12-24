@@ -257,6 +257,7 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
+	"attribute-duplicate",
 	"attribute-malformed"
 ];
 
@@ -3276,6 +3277,29 @@ function tagBold(context) {
   };
 }
 
+function attributeDuplicate(context) {
+  return {
+    html: function html(node) {
+      if (Array.isArray(node.attribs) && node.attribs.length > 1) {
+        var attrsGatheredSoFar = [];
+        for (var i = 0, len = node.attribs.length; i < len; i++) {
+          if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
+            attrsGatheredSoFar.push(node.attribs[i].attribName);
+          } else {
+            context.report({
+              ruleId: "attribute-duplicate",
+              message: "Duplicate attribute \"".concat(node.attribs[i].attribName, "\"."),
+              idxFrom: node.attribs[i].attribStart,
+              idxTo: node.attribs[i].attribEnd,
+              fix: null
+            });
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeMalformed(context) {
   return {
     attribute: function attribute(node) {
@@ -4684,6 +4708,9 @@ defineLazyProp(builtInRules, "tag-is-present", function () {
 });
 defineLazyProp(builtInRules, "tag-bold", function () {
   return tagBold;
+});
+defineLazyProp(builtInRules, "attribute-duplicate", function () {
+  return attributeDuplicate;
 });
 defineLazyProp(builtInRules, "attribute-malformed", function () {
   return attributeMalformed;

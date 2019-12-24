@@ -826,6 +826,9 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 // ATTRIBUTE rules
 // -----------------------------------------------------------------------------
 
+import attributeDuplicate from "./rules/attribute/attribute-duplicate";
+defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
+
 import attributeMalformed from "./rules/attribute/attribute-malformed";
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 
@@ -1129,7 +1132,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1132 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1135 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

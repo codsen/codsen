@@ -148,6 +148,7 @@ var allTagRules = [
 ];
 
 var allAttribRules = [
+	"attribute-duplicate",
 	"attribute-malformed"
 ];
 
@@ -3343,6 +3344,29 @@ function tagBold(context, ...opts) {
   };
 }
 
+function attributeDuplicate(context, ...opts) {
+  return {
+    html: function(node) {
+      if (Array.isArray(node.attribs) && node.attribs.length > 1) {
+        const attrsGatheredSoFar = [];
+        for (let i = 0, len = node.attribs.length; i < len; i++) {
+          if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
+            attrsGatheredSoFar.push(node.attribs[i].attribName);
+          } else {
+            context.report({
+              ruleId: "attribute-duplicate",
+              message: `Duplicate attribute "${node.attribs[i].attribName}".`,
+              idxFrom: node.attribs[i].attribStart,
+              idxTo: node.attribs[i].attribEnd,
+              fix: null
+            });
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeMalformed(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5263,6 +5287,7 @@ defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
 defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
 defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
 defineLazyProp(builtInRules, "tag-bold", () => tagBold);
+defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
 defineLazyProp(
   builtInRules,
