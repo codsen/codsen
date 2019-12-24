@@ -43,6 +43,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "html-all-known-attributes",
         "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",
@@ -65,6 +66,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "html-all-known-attributes",
         "is-html-tag-opening",
         "lodash.clonedeep",
         "lodash.isplainobject",

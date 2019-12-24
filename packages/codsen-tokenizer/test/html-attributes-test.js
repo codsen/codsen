@@ -1090,3 +1090,38 @@ t.test(
     t.end();
   }
 );
+
+// 06. recognised and not recognised
+// -----------------------------------------------------------------------------
+
+t.test(`06.01 - two attrs, one recognised one not`, t => {
+  const gathered = [];
+  ct(`<table class="aa" bbb="cc">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      type: "html",
+      tagName: "table",
+      recognised: true,
+      start: 0,
+      end: 27,
+      attribs: [
+        {
+          attribName: "class",
+          attribNameRecognised: true,
+          attribStart: 7,
+          attribEnd: 17
+        },
+        {
+          attribName: "bbb",
+          attribNameRecognised: false,
+          attribStart: 18,
+          attribEnd: 26
+        }
+      ]
+    }
+  ]);
+  t.end();
+});

@@ -11,6 +11,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
@@ -108,6 +109,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   var attrib = {};
   var attribDefault = {
     attribName: null,
+    attribNameRecognised: null,
     attribNameStartAt: null,
     attribNameEndAt: null,
     attribOpeningQuoteAt: null,
@@ -442,6 +444,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     if (!doNothing && token.type === "html" && isNum(attrib.attribNameStartAt) && i > attrib.attribNameStartAt && attrib.attribNameEndAt === null && !charSuitableForHTMLAttrName(str[i])) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
+      attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.includes(attrib.attribName);
       if (!str[i].trim().length && str[stringLeftRight.right(str, i)] === "=") ; else if (!str[i].trim().length || str[i] === ">" || str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
         attrib.attribEnd = i;
         token.attribs.push(clone(attrib));

@@ -7,6 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
  */
 
+import { allHtmlAttribs } from 'html-all-known-attributes';
 import { matchRight } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
 import isTagOpening from 'is-html-tag-opening';
@@ -300,6 +301,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   let attrib = {};
   const attribDefault = {
     attribName: null,
+    attribNameRecognised: null,
     attribNameStartAt: null,
     attribNameEndAt: null,
     attribOpeningQuoteAt: null,
@@ -733,6 +735,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     ) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
+      attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName);
       if (!str[i].trim().length && str[right(str, i)] === "=") ; else if (
         !str[i].trim().length ||
         str[i] === ">" ||
