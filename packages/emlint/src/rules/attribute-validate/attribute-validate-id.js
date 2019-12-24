@@ -1,14 +1,14 @@
-// rule: attribute-validate-class
+// rule: attribute-validate-id
 // -----------------------------------------------------------------------------
 
 import checkClassOrIdValue from "../../util/checkClassOrIdValue";
 import checkForWhitespace from "../../util/checkForWhitespace";
 
-function attributeValidateClass(context, ...opts) {
+function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
       console.log(
-        `███████████████████████████████████████ attributeValidateClass() ███████████████████████████████████████`
+        `███████████████████████████████████████ attributeValidateId() ███████████████████████████████████████`
       );
       console.log(
         `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -18,26 +18,18 @@ function attributeValidateClass(context, ...opts) {
         )}`
       );
       console.log(
-        `021 attributeValidateClass(): node = ${JSON.stringify(node, null, 4)}`
+        `021 attributeValidateId(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      if (node.attribName === "class") {
+      if (node.attribName === "id") {
         // validate the parent
         if (
-          [
-            "base",
-            "basefont",
-            "head",
-            "html",
-            "meta",
-            "param",
-            "script",
-            "style",
-            "title"
-          ].includes(node.parent.tagName)
+          ["base", "head", "html", "meta", "script", "style", "title"].includes(
+            node.parent.tagName
+          )
         ) {
           context.report({
-            ruleId: "attribute-validate-class",
+            ruleId: "attribute-validate-id",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
@@ -49,7 +41,7 @@ function attributeValidateClass(context, ...opts) {
             node.attribValueStartAt
           );
           console.log(
-            `052 \n${`\u001b[${33}m${`node.attribValueStartAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `044 \n${`\u001b[${33}m${`node.attribValueStartAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               node.attribValueStartAt + charStart,
               null,
               4
@@ -64,6 +56,10 @@ function attributeValidateClass(context, ...opts) {
             )}`
           );
 
+          console.log(
+            `060 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
+          );
+
           checkClassOrIdValue(
             context.str,
             node.attribValueStartAt + charStart,
@@ -73,7 +69,7 @@ function attributeValidateClass(context, ...opts) {
           );
 
           console.log(
-            `076 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `072 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -81,10 +77,10 @@ function attributeValidateClass(context, ...opts) {
           );
 
           errorArr.forEach(errorObj => {
-            console.log(`084 RAISE ERROR`);
+            console.log(`080 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-class"
+                ruleId: "attribute-validate-id"
               })
             );
           });
@@ -94,4 +90,4 @@ function attributeValidateClass(context, ...opts) {
   };
 }
 
-export default attributeValidateClass;
+export default attributeValidateId;
