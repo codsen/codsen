@@ -1,6 +1,8 @@
-# ast-monkey-traverse
+<div align="center">
+  <h1>🐒<br>ast-monkey-traverse</h1>
+</div>
 
-> Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+<div align="center"><p>Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -125,7 +127,7 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 
 ## Stopping
 
-Normally, you don't want to stop the traversal. For example, here we gather all the traversed paths. Remember the format is universal, you can use it in [`object-path`](https://www.npmjs.com/package/object-path) for example.
+Here's how to stop the traversal. Let's gather all the traversed paths first. By the way, paths are marked in [object-path](https://www.npmjs.com/package/object-path) notation (arrays use dots too, `a.1.b` instead of `a[1].b`).
 
 ```js
 const traverse = require("ast-monkey-traverse");
@@ -139,6 +141,8 @@ traverse(input, (key1, val1, innerObj) => {
 console.log(gathered);
 // => ["a", "b", "b.c"]
 ```
+
+All paths were gathered: `["a", "b", "b.c"]`.
 
 Now let's make the monkey to stop at the path "b":
 
@@ -158,7 +162,7 @@ console.log(gathered);
 // => ["a", "b"]
 ```
 
-Notice how there were no more gathered paths after "b".
+Notice how there were no more gathered paths after "b", only `["a", "b"]`.
 
 **[⬆ back to top](#)**
 
@@ -185,7 +189,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ast-monkey-traverse
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
-[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-Unknown%25-red.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey-traverse

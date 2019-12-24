@@ -48,18 +48,18 @@
     "benchmark": "^2.1.4",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.1",
+    "eslint-plugin-row-num": "^1.1.2",
     "husky": "^3.1.0",
-    "lect": "^0.11.4",
+    "lect": "^0.11.5",
     "lerna": "^3.19.0",
-    "lerna-clean-changelogs-cli": "^1.2.44",
+    "lerna-clean-changelogs-cli": "^1.2.45",
     "npm-watch": "^0.6.0",
     "prettier": "^1.19.1",
-    "tap-parse-string-to-object": "^1.2.0"
+    "tap-parse-string-to-object": "^1.2.1"
   }
 }

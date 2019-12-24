@@ -1,6 +1,8 @@
-# ast-monkey
+<div align="center">
+  <h1>🐒<br>ast-monkey</h1>
+</div>
 
-> Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+<div align="center"><p>Traverse and edit AST's (like parsed HTML or anything nested)</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -11,7 +13,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- If you only need traversal function, install just it: [ast-monkey-traverse](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)
+- If you only need traversal function, install just it: `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse/))
 
 ## Table of Contents
 
@@ -79,21 +81,58 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+## Context
+
+A single HTML tag `<td>a</td>` can be parsed using `htmlparser2` into an AST (see the [playground](https://astexplorer.net/)):
+
+```json
+[
+  {
+    "type": "tag",
+    "name": "td",
+    "attribs": {},
+    "children": [
+      {
+        "data": "a",
+        "type": "text",
+        "next": null,
+        "startIndex": 4,
+        "prev": null,
+        "parent": "[Circular ~.0]",
+        "endIndex": 5
+      }
+    ],
+    "next": null,
+    "startIndex": 0,
+    "prev": null,
+    "parent": null,
+    "endIndex": 10
+  }
+]
+```
+
+`ast-monkey` performs operations on such nested arrays and objects like the one above ↑↑↑.
+
+## The challenge
+
+Operations on AST's — Abstract Syntax Trees — or anything deeply nested are difficult. **The main problem** is going "up the branch": querying the parent and sibling nodes.
+
+**Second problem**, AST's get VERY BIG very quickly. A single tag, `<td>a</td>`, 10 characters produced 398 characters of AST above.
+
+**The first problem**, the "Going up", is often solved by putting circular references in the parsed tree, notice `"parent": "[Circular ~.0]",` in the tree above. This way, you can query `.parent` like `tag.nestedTag.parent[2]`. Problem is, a) it's not standard JSON, you can't even `JSON.stringify` (specialised stringification packages do exist); b) so what that you "dipped" to some branch and went back up — it's only a _tactical_ move and nothing _strategical_.
+
+This program goes another way, it uses indexing and "breadcrumb" paths. For example, you traverse and find that node you want is index `58`, whole path being `[2, 14, 16, 58]`. You save the path down. After the traversal is done, you fetch the monkey to delete the bloody index `58`. You can also use a `for` loop on breadcrumb index array, `[2, 14, 16, 58]` and fetch and check parent `16` and grandparent `14`. Lots of possibilities. Method [.find()](#find) searches using key or value or both, and method [.get()](#get) searches using a known index. That's the strategy.
+
+By the way, **the second problem**, the AST size challenge, is something we have to live with. Parsers that don't use circular paths produce smaller trees. From practice, it's handy to evaluate AST's visually, using GUI applications, such as https://astexplorer.net/
+
 ## Idea
 
-The main purpose of this library is to do operations on parsed HTML, but more and more I'm [using](#traverse) it everywhere else where I have nested arrays and/or plain objects.
+Conceptually, we use two systems to fetch paths:
 
-Working with parsed HTML (AST trees) is hard when you want to go "up" the branches because "AST-walking" algorithms usually just go through all the nodes, from the first one to the last one.
+1. Our unique, number-based indexing system — each encountered node is numbered, for example, `58` (along with "breadcrumb" path, an array of integers, for example, `[2, 14, 16, 58]`). If you know the number you can get monkey to fetch you the node at that number.
+2. [object-path](https://www.npmjs.com/package/object-path) notation, as in `foo.1.bar` (instead of `foo[1].bar`). The dot marking system is also powerful, it is used in many our programs, althouh it has some shortcomings ([no dots in key names](https://github.com/mariocasciaro/object-path/issues/96), for example).
 
-`ast-monkey`'s primary purpose is to help in those cases when you want to go _up the branches_ — to be able to query what is the current node's parent (and optionally all the way up).
-
-`ast-monkey`'s secondary purpose is to give us a reliable, tested [traversal function](#traverse), so you don't have to write yours each time. I took the idea from PostHTML traversal but rewrote it adding more powerful features (such as reporting the current depth in the AST).
-
-`ast-monkey` algorithm assigns indexes to every traversed node so that you can visit it again. Also, [.find()](#find) will record the "bread crumb"-style indexes path to each found node. This, combined with [.get()](#get) function allows you to traverse the tree "up", from the found child node up all the way until its topmost parent node is reached.
-
-Using this library, you can delete the particular piece of AST (method [.drop()](#drop)) or overwrite (method [.set()](#set)). You can also perform searches by object's/array's `key`, `value` or both (method [.find()](#find)). You can retrieve all contents of any piece of AST by index (method [.get()](#get)) or list all indexes (method [.info()](#info)).
-
-Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
+[Traversal](#traverse) function will report both ways.
 
 **[⬆ back to top](#)**
 
