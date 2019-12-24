@@ -4301,17 +4301,25 @@ function attributeValidateCite(context, ...opts) {
 function checkClassOrIdValue(str, from, to, errorArr, typeName) {
   let nameStartsAt = null;
   let nameEndsAt = null;
+  const listOfUniqueNames = [];
   for (let i = from; i < to; i++) {
     if (nameStartsAt === null && str[i].trim().length) {
       nameStartsAt = i;
       if (nameEndsAt !== null && str.slice(nameEndsAt, i) !== " ") {
-        if (str[nameEndsAt] === " ") ; else if (str[i - 1] === " ") ;
+        let ranges;
+        if (str[nameEndsAt] === " ") {
+          ranges = [[nameEndsAt + 1, i]];
+        } else if (str[i - 1] === " ") {
+          ranges = [[nameEndsAt, i - 1]];
+        } else {
+          ranges = [[nameEndsAt, i, " "]];
+        }
         errorArr.push({
           idxFrom: nameEndsAt,
           idxTo: i,
           message: `Should be a single space.`,
           fix: {
-            ranges: [[nameEndsAt, i, " "]]
+            ranges
           }
         });
         nameEndsAt = null;
@@ -4319,14 +4327,37 @@ function checkClassOrIdValue(str, from, to, errorArr, typeName) {
     }
     if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === to)) {
       nameEndsAt = i + 1 === to ? i + 1 : i;
-      if (
-        !classNameRegex.test(str.slice(nameStartsAt, i + 1 === to ? i + 1 : i))
-      ) {
+      const extractedName = str.slice(nameStartsAt, i + 1 === to ? i + 1 : i);
+      if (!classNameRegex.test(extractedName)) {
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
           message: `Wrong ${typeName} name.`,
           fix: null
+        });
+      }
+      if (!listOfUniqueNames.includes(extractedName)) {
+        listOfUniqueNames.push(extractedName);
+      } else {
+        let deleteFrom = nameStartsAt;
+        let deleteTo = i + 1 === to ? i + 1 : i;
+        const nonWhitespaceCharOnTheRight = right(str, deleteTo);
+        if (
+          deleteTo >= to ||
+          !nonWhitespaceCharOnTheRight ||
+          nonWhitespaceCharOnTheRight > to
+        ) {
+          deleteFrom = left(str, nameStartsAt) + 1;
+        } else {
+          deleteTo = nonWhitespaceCharOnTheRight;
+        }
+        errorArr.push({
+          idxFrom: nameStartsAt,
+          idxTo: i + 1 === to ? i + 1 : i,
+          message: `Duplicate ${typeName} "${extractedName}".`,
+          fix: {
+            ranges: [[deleteFrom, deleteTo]]
+          }
         });
       }
       nameStartsAt = null;
