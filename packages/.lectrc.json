@@ -91,7 +91,7 @@
 	],
 	"contributing": {
 		"header": "## Contributing",
-		"restofit": "- If you see an error, [raise an issue](<%ISSUELINK%>).\n- If you want a new feature but can't code it up yourself, also [raise an issue](<%ISSUELINK%>). Let's discuss it.\n- If you tried to use this package, but something didn't work out, also [raise an issue](<%ISSUELINK%>). We'll try to help.\n- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.\n\nIn monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).\n\nThe npm script \"`dev`\", the `\"dev\": \"rollup -c --dev --silent\"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s."
+		"restofit": "- If you see an error, [raise an issue](<%ISSUELINK%>).\n- If you want a new feature but can't code it up yourself, also [raise an issue](<%ISSUELINK%>). Let's discuss it.\n- If you tried to use this package, but something didn't work out, also [raise an issue](<%ISSUELINK%>). We'll try to help.\n- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.\n\nIn monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).\n\nThe npm script \"`dev`\", the `\"dev\": \"rollup -c --dev\"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s."
 	},
 	"eslintrc": {
 		"env": {
@@ -262,7 +262,7 @@
 			"benchmark": "^2.1.4",
 			"js-row-num-cli": "^1.6.12",
 			"lect": "^0.11.5",
-			"rollup": "^1.27.13",
+			"rollup": "^1.27.14",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-babel": "^4.3.3",
 			"rollup-plugin-cleanup": "^3.1.1",
@@ -318,8 +318,8 @@
 			"unittest": "./node_modules/.bin/tap --no-only -R 'terse' -o testStats.md"
 		},
 		"rollup": {
-			"build": "rollup -c --silent",
-			"dev": "rollup -c --dev --silent",
+			"build": "rollup -c",
+			"dev": "rollup -c --dev",
 			"devunittest": "npm run dev && ./node_modules/.bin/tap --only",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",

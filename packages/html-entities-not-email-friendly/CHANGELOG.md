@@ -8,7 +8,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - initial release ([8186969](https://gitlab.com/codsen/codsen/commit/8186969))
-
-## 1.0.0 (2019-08-26)
-
-- ✨ First public release
