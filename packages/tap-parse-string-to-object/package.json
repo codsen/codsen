@@ -32,8 +32,8 @@
   "module": "dist/tap-parse-string-to-object.esm.js",
   "browser": "dist/tap-parse-string-to-object.umd.js",
   "scripts": {
-    "build": "rollup -c --silent",
-    "dev": "rollup -c --dev --silent",
+    "build": "rollup -c",
+    "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",

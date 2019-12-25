@@ -27,8 +27,8 @@
   "module": "dist/string-match-left-right.esm.js",
   "browser": "dist/string-match-left-right.umd.js",
   "scripts": {
-    "build": "rollup -c --silent",
-    "dev": "rollup -c --dev --silent",
+    "build": "rollup -c",
+    "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",

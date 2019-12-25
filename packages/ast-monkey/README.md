@@ -18,6 +18,8 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Context](#context)
+- [The challenge](#the-challenge)
 - [Idea](#idea)
 - [API](#api)
 - [The name of this library](#the-name-of-this-library)
@@ -76,7 +78,7 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 9 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey.umd.js` | 42 KB |
 
 **[⬆ back to top](#)**
@@ -113,6 +115,8 @@ A single HTML tag `<td>a</td>` can be parsed using `htmlparser2` into an AST (se
 
 `ast-monkey` performs operations on such nested arrays and objects like the one above ↑↑↑.
 
+**[⬆ back to top](#)**
+
 ## The challenge
 
 Operations on AST's — Abstract Syntax Trees — or anything deeply nested are difficult. **The main problem** is going "up the branch": querying the parent and sibling nodes.
@@ -124,6 +128,8 @@ Operations on AST's — Abstract Syntax Trees — or anything deeply nested are 
 This program goes another way, it uses indexing and "breadcrumb" paths. For example, you traverse and find that node you want is index `58`, whole path being `[2, 14, 16, 58]`. You save the path down. After the traversal is done, you fetch the monkey to delete the bloody index `58`. You can also use a `for` loop on breadcrumb index array, `[2, 14, 16, 58]` and fetch and check parent `16` and grandparent `14`. Lots of possibilities. Method [.find()](#find) searches using key or value or both, and method [.get()](#get) searches using a known index. That's the strategy.
 
 By the way, **the second problem**, the AST size challenge, is something we have to live with. Parsers that don't use circular paths produce smaller trees. From practice, it's handy to evaluate AST's visually, using GUI applications, such as https://astexplorer.net/
+
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -729,7 +735,7 @@ HTML is parsed into nested objects and arrays which are called Abstract Syntax T
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).
 
-The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
+The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
 **[⬆ back to top](#)**
 

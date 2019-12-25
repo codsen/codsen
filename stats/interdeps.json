@@ -92,7 +92,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 9769,
+        "size": 9714,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -142,8 +142,9 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 22577,
+        "size": 22749,
         "imports": [
+            "html-all-known-attributes",
             "is-html-tag-opening",
             "string-left-right",
             "string-match-left-right"
@@ -236,9 +237,10 @@
     },
     {
         "name": "emlint",
-        "size": 155975,
+        "size": 158649,
         "imports": [
             "codsen-tokenizer",
+            "html-all-known-attributes",
             "html-entities-not-email-friendly",
             "string-fix-broken-named-entities",
             "string-left-right"
@@ -272,6 +274,11 @@
         "imports": [
             "email-comb"
         ]
+    },
+    {
+        "name": "html-all-known-attributes",
+        "size": 14360,
+        "imports": []
     },
     {
         "name": "html-crush",

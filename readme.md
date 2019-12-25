@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 102 npm libraries 📦📦📦
+    A lerna monorepo for our 103 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -82,7 +82,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 ## 💰 HTML Processing Libraries
 
-7 in total.
+8 in total.
 
 They all process HTML and CSS. Except for `html-table-patcher`, all of them process HTML as a string, without parsing. Heck, we even had `html-table-patcher` done in non-parsing style on earlier versions but just because of time shortage went the parsing-way.
 
@@ -99,6 +99,7 @@ It is equally vital to support _mixed code_ because both web page and email temp
 | [`detect-is-it-html-or-xhtml`](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) | Answers, is the string input string more an HTML or XHTML (or neither) | [![detect-is-it-html-or-xhtml on npm](https://img.shields.io/npm/v/detect-is-it-html-or-xhtml.svg?style=flat-square)](https://www.npmjs.com/package/detect-is-it-html-or-xhtml) | [packages/detect-is-it-html-or-xhtml](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) |
 | [`html-table-patcher`](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) | Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly | [![html-table-patcher on npm](https://img.shields.io/npm/v/html-table-patcher.svg?style=flat-square)](https://www.npmjs.com/package/html-table-patcher) | [packages/html-table-patcher](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) |
 | [`is-html-tag-opening`](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/) | Is given opening bracket a beginning of a tag? | [![is-html-tag-opening on npm](https://img.shields.io/npm/v/is-html-tag-opening.svg?style=flat-square)](https://www.npmjs.com/package/is-html-tag-opening) | [packages/is-html-tag-opening](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/) |
+| [`html-all-known-attributes`](https://gitlab.com/codsen/codsen/tree/master/packages/html-all-known-attributes/) | All HTML attributes known to the humanity | [![html-all-known-attributes on npm](https://img.shields.io/npm/v/html-all-known-attributes.svg?style=flat-square)](https://www.npmjs.com/package/html-all-known-attributes) | [packages/html-all-known-attributes](https://gitlab.com/codsen/codsen/tree/master/packages/html-all-known-attributes/) |
 | [`html-entities-not-email-friendly`](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) | All HTML entities which are not email template friendly | [![html-entities-not-email-friendly on npm](https://img.shields.io/npm/v/html-entities-not-email-friendly.svg?style=flat-square)](https://www.npmjs.com/package/html-entities-not-email-friendly) | [packages/html-entities-not-email-friendly](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) |
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 
@@ -220,7 +221,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ Miscellaneous Libraries
 
-29 in total.
+30 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -243,6 +244,7 @@ You use them in the Terminal (command line), for example:
 | [`generate-atomic-css`](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) | Generate Atomic CSS | [![generate-atomic-css on npm](https://img.shields.io/npm/v/generate-atomic-css.svg?style=flat-square)](https://www.npmjs.com/package/generate-atomic-css) | [packages/generate-atomic-css](https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css/) |
 | [`gulp-email-remove-unused-css`](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css/) |
 | [`helga`](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) | Your next best friend when editing complex nested code | [![helga on npm](https://img.shields.io/npm/v/helga.svg?style=flat-square)](https://www.npmjs.com/package/helga) | [packages/helga](https://gitlab.com/codsen/codsen/tree/master/packages/helga/) |
+| [`html-all-known-attributes`](https://gitlab.com/codsen/codsen/tree/master/packages/html-all-known-attributes/) | All HTML attributes known to the humanity | [![html-all-known-attributes on npm](https://img.shields.io/npm/v/html-all-known-attributes.svg?style=flat-square)](https://www.npmjs.com/package/html-all-known-attributes) | [packages/html-all-known-attributes](https://gitlab.com/codsen/codsen/tree/master/packages/html-all-known-attributes/) |
 | [`html-entities-not-email-friendly`](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) | All HTML entities which are not email template friendly | [![html-entities-not-email-friendly on npm](https://img.shields.io/npm/v/html-entities-not-email-friendly.svg?style=flat-square)](https://www.npmjs.com/package/html-entities-not-email-friendly) | [packages/html-entities-not-email-friendly](https://gitlab.com/codsen/codsen/tree/master/packages/html-entities-not-email-friendly/) |
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 | [`html-table-patcher`](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) | Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly | [![html-table-patcher on npm](https://img.shields.io/npm/v/html-table-patcher.svg?style=flat-square)](https://www.npmjs.com/package/html-table-patcher) | [packages/html-table-patcher](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) |
@@ -264,7 +266,7 @@ You use them in the Terminal (command line), for example:
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).
 
-The npm script within each package's `package.json` "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
+The npm script within each package's `package.json` "`dev`", the `"dev": "rollup -c --dev"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
 **[⬆ back to top](#codsen)**
 

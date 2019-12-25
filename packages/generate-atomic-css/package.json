@@ -29,8 +29,8 @@
   "module": "dist/generate-atomic-css.esm.js",
   "browser": "dist/generate-atomic-css.umd.js",
   "scripts": {
-    "build": "rollup -c --silent",
-    "dev": "rollup -c --dev --silent",
+    "build": "rollup -c",
+    "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
