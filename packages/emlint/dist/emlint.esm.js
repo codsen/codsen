@@ -4585,6 +4585,50 @@ function attributeValidateCode(context, ...opts) {
   };
 }
 
+function attributeValidateCodebase(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "codebase") {
+        if (!["applet", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-codebase",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        if (
+          !isUrl(
+            context.str.slice(
+              node.attribValueStartAt + charStart,
+              node.attribValueStartAt + charEnd
+            )
+          )
+        ) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: `Should be an URI.`,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-codebase"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5550,6 +5594,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-code",
   () => attributeValidateCode
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-codebase",
+  () => attributeValidateCodebase
 );
 defineLazyProp(
   builtInRules,

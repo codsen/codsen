@@ -4241,6 +4241,41 @@ function attributeValidateCode(context) {
   };
 }
 
+function attributeValidateCodebase(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "codebase") {
+        if (!["applet", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-codebase",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be an URI.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-codebase"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4898,6 +4933,9 @@ defineLazyProp(builtInRules, "attribute-validate-clear", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-code", function () {
   return attributeValidateCode;
+});
+defineLazyProp(builtInRules, "attribute-validate-codebase", function () {
+  return attributeValidateCodebase;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
