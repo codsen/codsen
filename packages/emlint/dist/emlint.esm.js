@@ -4694,6 +4694,43 @@ function attributeValidateCodetype(context, ...opts) {
   };
 }
 
+function attributeValidateColor(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "color") {
+        if (!["basefont", "font"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-color",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateColor(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            namedCssLevel1OK: true,
+            namedCssLevel2PlusOK: true,
+            hexThreeOK: false,
+            hexFourOK: false,
+            hexSixOK: true,
+            hexEightOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-color"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5669,6 +5706,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-codetype",
   () => attributeValidateCodetype
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-color",
+  () => attributeValidateColor
 );
 defineLazyProp(
   builtInRules,
