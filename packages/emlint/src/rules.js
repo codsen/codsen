@@ -982,6 +982,13 @@ defineLazyProp(
   () => attributeValidateClassid
 );
 
+import attributeValidateClear from "./rules/attribute-validate/attribute-validate-clear";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-clear",
+  () => attributeValidateClear
+);
+
 import attributeValidateId from "./rules/attribute-validate/attribute-validate-id";
 defineLazyProp(
   builtInRules,
@@ -1139,7 +1146,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1142 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1149 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

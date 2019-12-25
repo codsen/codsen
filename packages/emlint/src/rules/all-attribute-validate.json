@@ -20,6 +20,7 @@
   "attribute-validate-cite",
   "attribute-validate-class",
   "attribute-validate-classid",
+  "attribute-validate-clear",
   "attribute-validate-id",
   "attribute-validate-width"
 ]

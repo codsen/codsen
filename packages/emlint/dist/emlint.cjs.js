@@ -4179,6 +4179,41 @@ function attributeValidateClassid(context) {
   };
 }
 
+function attributeValidateClassid$1(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "clear") {
+        if (node.parent.tagName !== "br") {
+          context.report({
+            ruleId: "attribute-validate-clear",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!["left", "all", "right", "none"].includes(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be: left|all|right|none.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-clear"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4830,6 +4865,9 @@ defineLazyProp(builtInRules, "attribute-validate-class", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-classid", function () {
   return attributeValidateClassid;
+});
+defineLazyProp(builtInRules, "attribute-validate-clear", function () {
+  return attributeValidateClassid$1;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
