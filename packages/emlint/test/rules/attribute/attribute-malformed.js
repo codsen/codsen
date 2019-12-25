@@ -174,7 +174,7 @@ t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
 // 02. mis-typed
 // -----------------------------------------------------------------------------
 
-t.only(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = `<td clas="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {

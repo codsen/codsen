@@ -19,6 +19,7 @@
   "attribute-validate-checked",
   "attribute-validate-cite",
   "attribute-validate-class",
+  "attribute-validate-classid",
   "attribute-validate-id",
   "attribute-validate-width"
 ]

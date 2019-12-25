@@ -3132,7 +3132,7 @@ function tagNameCase(context) {
     html: function html(node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
-          if (node.tagName !== node.tagName.toUpperCase()) {
+          if (context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !== node.tagName.toUpperCase()) {
             var ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toUpperCase()]];
             context.report({
               ruleId: "tag-name-case",
@@ -3144,8 +3144,8 @@ function tagNameCase(context) {
               }
             });
           }
-        } else if (node.tagName !== node.tagName.toLowerCase()) {
-          var _ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]];
+        } else if (context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !== node.tagName) {
+          var _ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName]];
           context.report({
             ruleId: "tag-name-case",
             message: "Bad tag name case.",
@@ -4144,6 +4144,41 @@ function attributeValidateClass(context) {
   };
 }
 
+function attributeValidateClassid(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "classid") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-classid",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be an URI.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-classid"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4792,6 +4827,9 @@ defineLazyProp(builtInRules, "attribute-validate-cite", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-class", function () {
   return attributeValidateClass;
+});
+defineLazyProp(builtInRules, "attribute-validate-classid", function () {
+  return attributeValidateClassid;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

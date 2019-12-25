@@ -3183,7 +3183,10 @@ function tagNameCase(context) {
     html: function(node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
-          if (node.tagName !== node.tagName.toUpperCase()) {
+          if (
+            context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+            node.tagName.toUpperCase()
+          ) {
             const ranges = [
               [
                 node.tagNameStartAt,
@@ -3199,9 +3202,12 @@ function tagNameCase(context) {
               fix: { ranges }
             });
           }
-        } else if (node.tagName !== node.tagName.toLowerCase()) {
+        } else if (
+          context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+          node.tagName
+        ) {
           const ranges = [
-            [node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]
+            [node.tagNameStartAt, node.tagNameEndAt, node.tagName]
           ];
           context.report({
             ruleId: "tag-name-case",
@@ -4462,6 +4468,50 @@ function attributeValidateClass(context, ...opts) {
   };
 }
 
+function attributeValidateClassid(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "classid") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-classid",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        if (
+          !isUrl(
+            context.str.slice(
+              node.attribValueStartAt + charStart,
+              node.attribValueStartAt + charEnd
+            )
+          )
+        ) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: `Should be an URI.`,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-classid"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5412,6 +5462,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-class",
   () => attributeValidateClass
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-classid",
+  () => attributeValidateClassid
 );
 defineLazyProp(
   builtInRules,

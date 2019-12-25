@@ -19,33 +19,31 @@ function tagNameCase(context) {
       );
 
       if (node.tagName && node.recognised === true) {
-        console.log(`022 recognised tag`);
+        console.log(`022 tagNameCase(): recognised tag`);
 
         console.log(
-          `${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
+          `025 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
             knownUpperCaseTags.includes(node.tagName.toUpperCase()),
             null,
             4
           )}`
         );
         console.log(
-          `${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
+          `032 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
             node.tagName,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `${`\u001b[${33}m${`node.tagName.toUpperCase()`}\u001b[${39}m`} = ${JSON.stringify(
-            node.tagName.toUpperCase(),
             null,
             4
           )}`
         );
 
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
-          if (node.tagName !== node.tagName.toUpperCase()) {
-            console.log(`048 wrong tag case!`);
+          // node.tagName will arrive lowercased, so we have to retrieve
+          // the real characters by slicing from ranges
+          if (
+            context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+            node.tagName.toUpperCase()
+          ) {
+            console.log(`046 tagNameCase(): wrong tag case!`);
             const ranges = [
               [
                 node.tagNameStartAt,
@@ -63,10 +61,13 @@ function tagNameCase(context) {
             });
           }
           // else - FINE
-        } else if (node.tagName !== node.tagName.toLowerCase()) {
-          console.log(`067 wrong tag case!`);
+        } else if (
+          context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+          node.tagName
+        ) {
+          console.log(`068 tagNameCase(): wrong tag case!`);
           const ranges = [
-            [node.tagNameStartAt, node.tagNameEndAt, node.tagName.toLowerCase()]
+            [node.tagNameStartAt, node.tagNameEndAt, node.tagName]
           ];
 
           context.report({

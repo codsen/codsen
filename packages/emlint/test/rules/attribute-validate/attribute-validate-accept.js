@@ -85,7 +85,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, spelled out type`,
   t => {
     const str = `<input accept="text/css">`; // <-- notice single quotes
