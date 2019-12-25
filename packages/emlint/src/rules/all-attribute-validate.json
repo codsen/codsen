@@ -21,6 +21,7 @@
   "attribute-validate-class",
   "attribute-validate-classid",
   "attribute-validate-clear",
+  "attribute-validate-code",
   "attribute-validate-id",
   "attribute-validate-width"
 ]

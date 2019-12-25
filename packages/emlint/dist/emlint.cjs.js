@@ -4214,6 +4214,33 @@ function attributeValidateClassid$1(context) {
   };
 }
 
+function attributeValidateCode(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "code") {
+        if (node.parent.tagName !== "applet") {
+          context.report({
+            ruleId: "attribute-validate-code",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-code"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4868,6 +4895,9 @@ defineLazyProp(builtInRules, "attribute-validate-classid", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-clear", function () {
   return attributeValidateClassid$1;
+});
+defineLazyProp(builtInRules, "attribute-validate-code", function () {
+  return attributeValidateCode;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
