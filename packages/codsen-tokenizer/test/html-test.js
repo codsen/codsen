@@ -101,9 +101,10 @@ t.test(t => {
   t.end();
 });
 
+// notice the tag name case is upper:
 t.test(t => {
   const gathered = [];
-  ct("<br/>", obj => {
+  ct("<BR/>", obj => {
     gathered.push(obj);
   });
   t.match(

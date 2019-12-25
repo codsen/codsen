@@ -49,11 +49,11 @@ t.test(
   }
 );
 
-t.test(
+t.only(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`,
   t => {
     const gathered = [];
-    ct(`<td nowrap class="z">`, obj => {
+    ct(`<TD nowrap class="z">`, obj => {
       gathered.push(obj);
     });
 
@@ -98,7 +98,7 @@ t.test(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   t => {
     const gathered = [];
-    ct(`</td>`, obj => {
+    ct(`</Td>`, obj => {
       gathered.push(obj);
     });
 
@@ -129,7 +129,7 @@ t.test(
   `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   t => {
     const gathered = [];
-    ct(`</td >`, obj => {
+    ct(`</tD >`, obj => {
       gathered.push(obj);
     });
 

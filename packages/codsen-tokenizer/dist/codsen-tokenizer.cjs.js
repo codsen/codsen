@@ -424,7 +424,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     if (!doNothing && token.type === "html" && isNum(token.tagNameStartAt) && !isNum(token.tagNameEndAt)) {
       if (!isLatinLetter(str[i]) && !isNum(str[i])) {
         token.tagNameEndAt = i;
-        token.tagName = str.slice(token.tagNameStartAt, i);
+        token.tagName = str.slice(token.tagNameStartAt, i).toLowerCase();
         if (voidTags.includes(token.tagName)) {
           token["void"] = true;
         }

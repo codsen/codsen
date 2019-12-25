@@ -1181,7 +1181,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
           }`
         );
 
-        token.tagName = str.slice(token.tagNameStartAt, i);
+        token.tagName = str.slice(token.tagNameStartAt, i).toLowerCase();
         console.log(
           `1186 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
             token.tagName
