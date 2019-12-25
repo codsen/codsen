@@ -4276,6 +4276,37 @@ function attributeValidateCodebase(context) {
   };
 }
 
+function attributeValidateCodetype(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "codetype") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-codetype",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
+          permittedValues: Object.keys(db),
+          canBeCommaSeparated: false,
+          noSpaceAfterComma: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-codetype"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4936,6 +4967,9 @@ defineLazyProp(builtInRules, "attribute-validate-code", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-codebase", function () {
   return attributeValidateCodebase;
+});
+defineLazyProp(builtInRules, "attribute-validate-codetype", function () {
+  return attributeValidateCodetype;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

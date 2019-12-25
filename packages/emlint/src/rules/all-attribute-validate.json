@@ -23,6 +23,7 @@
   "attribute-validate-clear",
   "attribute-validate-code",
   "attribute-validate-codebase",
+  "attribute-validate-codetype",
   "attribute-validate-id",
   "attribute-validate-width"
 ]
