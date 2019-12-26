@@ -584,57 +584,61 @@ function includesWithRegex(arr, whatToMatch) {
   });
 }
 
+function processCommaSeparatedList(str, charStart, charEnd, idxOffset, errorArr, opts) {
+  if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
+    if (str.slice(charStart, charEnd).includes(",,")) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Consecutive commas.",
+        fix: null
+      });
+    } else if (opts.noSpaceAfterComma && /,\s/g.test(str.slice(charStart, charEnd))) {
+      var ranges = [];
+      for (var i = charStart; i < charEnd; i++) {
+        if (str[i] === "," && !str[i + 1].trim().length) {
+          ranges.push([idxOffset + i + 1, idxOffset + stringLeftRight.right(str, i + 1) || str.length]);
+        }
+      }
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Whitespace after comma.",
+        fix: {
+          ranges: ranges
+        }
+      });
+    } else {
+      str.slice(charStart, charEnd).split(",").forEach(function (oneOfValues) {
+        if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
+          errorArr.push({
+            idxFrom: idxOffset + charStart,
+            idxTo: idxOffset + charEnd,
+            message: "Unrecognised value: ".concat(oneOfValues),
+            fix: null
+          });
+        }
+      });
+    }
+  } else {
+    if ((!Array.isArray(opts.quickPermittedValues) || !includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd))) && (!Array.isArray(opts.permittedValues) || !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\"."),
+        fix: null
+      });
+    }
+  }
+}
+
 function validateString(str, idxOffset, opts) {
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
       errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
-    if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
-      if (str.slice(charStart, charEnd).includes(",,")) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: "Consecutive commas.",
-          fix: null
-        });
-      } else if (opts.noSpaceAfterComma && /,\s/g.test(str.slice(charStart, charEnd))) {
-        var ranges = [];
-        for (var i = charStart; i < charEnd; i++) {
-          if (str[i] === "," && !str[i + 1].trim().length) {
-            ranges.push([idxOffset + i + 1, idxOffset + (stringLeftRight.right(str, i + 1) || str.length)]);
-          }
-        }
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: "Whitespace after comma.",
-          fix: {
-            ranges: ranges
-          }
-        });
-      } else {
-        str.slice(charStart, charEnd).split(",").forEach(function (oneOfValues) {
-          if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
-            errorArr.push({
-              idxFrom: idxOffset + charStart,
-              idxTo: idxOffset + charEnd,
-              message: "Unrecognised value: ".concat(oneOfValues),
-              fix: null
-            });
-          }
-        });
-      }
-    } else {
-      if ((!Array.isArray(opts.quickPermittedValues) || !includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd))) && (!Array.isArray(opts.permittedValues) || !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\"."),
-          fix: null
-        });
-      }
-    }
+    processCommaSeparatedList(str, charStart, charEnd, idxOffset, errorArr, opts);
   }
   return errorArr;
 }

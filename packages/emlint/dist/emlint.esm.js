@@ -757,77 +757,89 @@ function includesWithRegex(arr, whatToMatch) {
   );
 }
 
+function processCommaSeparatedList(
+  str,
+  charStart,
+  charEnd,
+  idxOffset,
+  errorArr,
+  opts
+) {
+  if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
+    if (str.slice(charStart, charEnd).includes(",,")) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Consecutive commas.`,
+        fix: null
+      });
+    } else if (
+      opts.noSpaceAfterComma &&
+      /,\s/g.test(str.slice(charStart, charEnd))
+    ) {
+      const ranges = [];
+      for (let i = charStart; i < charEnd; i++) {
+        if (str[i] === "," && !str[i + 1].trim().length) {
+          ranges.push([
+            idxOffset + i + 1,
+            idxOffset + right(str, i + 1) || str.length
+          ]);
+        }
+      }
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Whitespace after comma.`,
+        fix: {
+          ranges
+        }
+      });
+    } else {
+      str
+        .slice(charStart, charEnd)
+        .split(",")
+        .forEach(oneOfValues => {
+          if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
+            errorArr.push({
+              idxFrom: idxOffset + charStart,
+              idxTo: idxOffset + charEnd,
+              message: `Unrecognised value: ${oneOfValues}`,
+              fix: null
+            });
+          }
+        });
+    }
+  } else {
+    if (
+      (!Array.isArray(opts.quickPermittedValues) ||
+        !includesWithRegex(
+          opts.quickPermittedValues,
+          str.slice(charStart, charEnd)
+        )) &&
+      (!Array.isArray(opts.permittedValues) ||
+        !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))
+    ) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Unrecognised value: "${str.slice(charStart, charEnd)}".`,
+        fix: null
+      });
+    }
+  }
+}
+
 function validateString(str, idxOffset, opts) {
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
-    if (
-      opts.canBeCommaSeparated &&
-      str.slice(charStart, charEnd).includes(",")
-    ) {
-      if (str.slice(charStart, charEnd).includes(",,")) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Consecutive commas.`,
-          fix: null
-        });
-      } else if (
-        opts.noSpaceAfterComma &&
-        /,\s/g.test(str.slice(charStart, charEnd))
-      ) {
-        const ranges = [];
-        for (let i = charStart; i < charEnd; i++) {
-          if (str[i] === "," && !str[i + 1].trim().length) {
-            ranges.push([
-              idxOffset + i + 1,
-              idxOffset + (right(str, i + 1) || str.length)
-            ]);
-          }
-        }
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Whitespace after comma.`,
-          fix: {
-            ranges
-          }
-        });
-      } else {
-        str
-          .slice(charStart, charEnd)
-          .split(",")
-          .forEach(oneOfValues => {
-            if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
-              errorArr.push({
-                idxFrom: idxOffset + charStart,
-                idxTo: idxOffset + charEnd,
-                message: `Unrecognised value: ${oneOfValues}`,
-                fix: null
-              });
-            }
-          });
-      }
-    } else {
-      if (
-        (!Array.isArray(opts.quickPermittedValues) ||
-          !includesWithRegex(
-            opts.quickPermittedValues,
-            str.slice(charStart, charEnd)
-          )) &&
-        (!Array.isArray(opts.permittedValues) ||
-          !includesWithRegex(
-            opts.permittedValues,
-            str.slice(charStart, charEnd)
-          ))
-      ) {
-        errorArr.push({
-          idxFrom: idxOffset + charStart,
-          idxTo: idxOffset + charEnd,
-          message: `Unrecognised value: "${str.slice(charStart, charEnd)}".`,
-          fix: null
-        });
-      }
-    }
+    processCommaSeparatedList(
+      str,
+      charStart,
+      charEnd,
+      idxOffset,
+      errorArr,
+      opts
+    );
   }
   return errorArr;
 }
