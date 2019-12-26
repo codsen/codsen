@@ -22,6 +22,7 @@ function processCommaSeparated(str, originalOpts) {
   const defaults = {
     from: 0,
     to: str.length,
+    offset: 0,
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
     oneSpaceAfterCommaOK: false,
@@ -35,6 +36,9 @@ function processCommaSeparated(str, originalOpts) {
   }
   if (!Number.isInteger(originalOpts.to)) {
     opts.to = str.length;
+  }
+  if (!Number.isInteger(originalOpts.offset)) {
+    opts.offset = 0;
   }
   let chunkStartsAt = null;
   let whitespaceStartsAt = null;
@@ -54,7 +58,9 @@ function processCommaSeparated(str, originalOpts) {
           separatorsArr.forEach((separatorsIdx, orderNumber) => {
             if (orderNumber) {
               opts.errCb(
-                [[separatorsIdx, separatorsIdx + 1]],
+                [
+                  [separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]
+                ],
                 "Remove separator."
               );
             }
@@ -73,12 +79,18 @@ function processCommaSeparated(str, originalOpts) {
     ) {
       const chunk = str.slice(
         chunkStartsAt,
-        i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i
+        i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length
+          ? i + 1
+          : i
       );
       if (typeof opts.cb === "function") {
         opts.cb(
-          chunkStartsAt,
-          i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i
+          chunkStartsAt + opts.offset,
+          (i + 1 === opts.to &&
+          str[i] !== opts.separator &&
+          str[i].trim().length
+            ? i + 1
+            : i) + opts.offset
         );
       }
       chunkStartsAt = null;
@@ -90,20 +102,28 @@ function processCommaSeparated(str, originalOpts) {
       whitespaceStartsAt !== null &&
       (str[i].trim().length || i + 1 === opts.to)
     ) {
-      if (!opts.leadingWhitespaceOK && whitespaceStartsAt === opts.from) {
-        if (typeof opts.errCb === "function") {
+      if (whitespaceStartsAt === opts.from) {
+        if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb(
-            [[whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i]],
+            [
+              [
+                whitespaceStartsAt + opts.offset,
+                (i + 1 === opts.to ? i + 1 : i) + opts.offset
+              ]
+            ],
             "Remove whitespace."
           );
         }
       } else if (
-        !opts.trailingWhitespaceOK &&
         i + 1 === opts.to &&
-        str[i] !== opts.separator
+        str[i] !== opts.separator &&
+        str[i].trim().length
       ) {
-        if (typeof opts.errCb === "function") {
-          opts.errCb([[whitespaceStartsAt, i + 1]], "Remove whitespace.");
+        if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
+          opts.errCb(
+            [[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]],
+            "Remove whitespace."
+          );
         }
       } else if (
         !opts.oneSpaceAfterCommaOK ||
@@ -115,8 +135,14 @@ function processCommaSeparated(str, originalOpts) {
         )
       ) {
         let startingIdx = whitespaceStartsAt;
-        const endingIdx =
-          i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i;
+        let endingIdx = i;
+        if (
+          i + 1 === opts.to &&
+          str[i] !== opts.separator &&
+          !str[i].trim().length
+        ) {
+          endingIdx++;
+        }
         let whatToAdd = "";
         if (opts.oneSpaceAfterCommaOK) {
           if (
@@ -130,25 +156,34 @@ function processCommaSeparated(str, originalOpts) {
         }
         if (whatToAdd.length) {
           opts.errCb(
-            [[startingIdx, endingIdx, whatToAdd]],
+            [[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]],
             "Remove whitespace."
           );
         } else {
-          opts.errCb([[startingIdx, endingIdx]], "Remove whitespace.");
+          opts.errCb(
+            [[startingIdx + opts.offset, endingIdx + opts.offset]],
+            "Remove whitespace."
+          );
         }
       }
       whitespaceStartsAt = null;
     }
     if (str[i] === opts.separator) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
-        opts.errCb([[i, i + 1]], "Remove separator.");
+        opts.errCb(
+          [[i + opts.offset, i + 1 + opts.offset]],
+          "Remove separator."
+        );
       } else {
         separatorsArr.push(i);
       }
     }
     if (i + 1 === opts.to) {
       separatorsArr.forEach(separatorsIdx => {
-        opts.errCb([[separatorsIdx, separatorsIdx + 1]], "Remove separator.");
+        opts.errCb(
+          [[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]],
+          "Remove separator."
+        );
       });
     }
   }

@@ -32,6 +32,7 @@ function processCommaSeparated(str, originalOpts) {
   var defaults = {
     from: 0,
     to: str.length,
+    offset: 0,
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
     oneSpaceAfterCommaOK: false,
@@ -46,6 +47,9 @@ function processCommaSeparated(str, originalOpts) {
   if (!Number.isInteger(originalOpts.to)) {
     opts.to = str.length;
   }
+  if (!Number.isInteger(originalOpts.offset)) {
+    opts.offset = 0;
+  }
   var chunkStartsAt = null;
   var whitespaceStartsAt = null;
   var firstNonwhitespaceNonseparatorCharFound = false;
@@ -59,7 +63,7 @@ function processCommaSeparated(str, originalOpts) {
         if (separatorsArr.length > 1) {
           separatorsArr.forEach(function (separatorsIdx, orderNumber) {
             if (orderNumber) {
-              opts.errCb([[separatorsIdx, separatorsIdx + 1]], "Remove separator.");
+              opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.");
             }
           });
         }
@@ -68,9 +72,9 @@ function processCommaSeparated(str, originalOpts) {
       chunkStartsAt = i;
     }
     if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && (!str[i].trim().length || opts.separator && str[i] === opts.separator) || i + 1 === opts.to)) {
-      var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i);
+      var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i);
       if (typeof opts.cb === "function") {
-        opts.cb(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i);
+        opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i) + opts.offset);
       }
       chunkStartsAt = null;
     }
@@ -78,17 +82,20 @@ function processCommaSeparated(str, originalOpts) {
       whitespaceStartsAt = i;
     }
     if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
-      if (!opts.leadingWhitespaceOK && whitespaceStartsAt === opts.from) {
-        if (typeof opts.errCb === "function") {
-          opts.errCb([[whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i]], "Remove whitespace.");
+      if (whitespaceStartsAt === opts.from) {
+        if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
+          opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.");
         }
-      } else if (!opts.trailingWhitespaceOK && i + 1 === opts.to && str[i] !== opts.separator) {
-        if (typeof opts.errCb === "function") {
-          opts.errCb([[whitespaceStartsAt, i + 1]], "Remove whitespace.");
+      } else if (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length) {
+        if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
+          opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.");
         }
       } else if (!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) {
         var startingIdx = whitespaceStartsAt;
-        var endingIdx = i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i;
+        var endingIdx = i;
+        if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim().length) {
+          endingIdx++;
+        }
         var whatToAdd = "";
         if (opts.oneSpaceAfterCommaOK) {
           if (str[whitespaceStartsAt] === " " && str[whitespaceStartsAt - 1] === opts.separator) {
@@ -98,23 +105,23 @@ function processCommaSeparated(str, originalOpts) {
           }
         }
         if (whatToAdd.length) {
-          opts.errCb([[startingIdx, endingIdx, whatToAdd]], "Remove whitespace.");
+          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]], "Remove whitespace.");
         } else {
-          opts.errCb([[startingIdx, endingIdx]], "Remove whitespace.");
+          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], "Remove whitespace.");
         }
       }
       whitespaceStartsAt = null;
     }
     if (str[i] === opts.separator) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
-        opts.errCb([[i, i + 1]], "Remove separator.");
+        opts.errCb([[i + opts.offset, i + 1 + opts.offset]], "Remove separator.");
       } else {
         separatorsArr.push(i);
       }
     }
     if (i + 1 === opts.to) {
       separatorsArr.forEach(function (separatorsIdx) {
-        opts.errCb([[separatorsIdx, separatorsIdx + 1]], "Remove separator.");
+        opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.");
       });
     }
   }

@@ -356,3 +356,192 @@ t.test(
     t.end();
   }
 );
+
+// 03. opts.leadingWhitespaceOK
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - from-to ranges`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept=" .jpg">`,
+      {
+        from: 15,
+        to: 20,
+        leadingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.01.01");
+    t.match(gatheredErrors, [], "03.01.02");
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      ` .jpg`,
+      {
+        leadingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[1, 5]], "03.02.01");
+    t.match(gatheredErrors, [], "03.02.02");
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - whole string + offset`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      ` .jpg`,
+      {
+        leadingWhitespaceOK: true,
+        offset: 15
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.03.01");
+    t.match(gatheredErrors, [], "03.03.02");
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept=" .jpg ">`,
+      {
+        from: 15,
+        to: 21,
+        leadingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.04.01");
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[20, 21]],
+          message: "Remove whitespace."
+        }
+      ],
+      "03.04.02"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept=" .jpg ">`,
+      {
+        from: 15,
+        to: 21,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.05.01");
+    t.match(gatheredErrors, [], "03.05.02"); // <--- none
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept=" .jpg ">`,
+      {
+        from: 15,
+        to: 21,
+        trailingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.06.01");
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[15, 16]],
+          message: "Remove whitespace."
+        }
+      ],
+      "03.06.02"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept=" .jpg  ">`,
+      {
+        from: 15,
+        to: 22,
+        leadingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [[16, 20]], "03.07.01");
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[20, 22]],
+          message: "Remove whitespace."
+        }
+      ],
+      "03.07.02"
+    );
+
+    t.end();
+  }
+);
