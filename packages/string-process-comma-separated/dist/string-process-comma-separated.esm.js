@@ -55,7 +55,7 @@ function processCommaSeparated(str, originalOpts) {
             if (orderNumber) {
               opts.errCb(
                 [separatorsIdx, separatorsIdx + 1],
-                "Remove the separator."
+                "Remove separator."
               );
             }
           });
@@ -94,7 +94,7 @@ function processCommaSeparated(str, originalOpts) {
         if (typeof opts.errCb === "function") {
           opts.errCb(
             [whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i],
-            "Remove the whitespace."
+            "Remove whitespace."
           );
         }
       } else if (
@@ -103,7 +103,7 @@ function processCommaSeparated(str, originalOpts) {
         str[i] !== opts.separator
       ) {
         if (typeof opts.errCb === "function") {
-          opts.errCb([whitespaceStartsAt, i + 1], "Remove the whitespace.");
+          opts.errCb([whitespaceStartsAt, i + 1], "Remove whitespace.");
         }
       } else if (
         !opts.oneSpaceAfterCommaOK ||
@@ -129,26 +129,23 @@ function processCommaSeparated(str, originalOpts) {
           }
         }
         if (whatToAdd.length) {
-          opts.errCb(
-            [startingIdx, endingIdx, whatToAdd],
-            "Remove the whitespace."
-          );
+          opts.errCb([startingIdx, endingIdx, whatToAdd], "Remove whitespace.");
         } else {
-          opts.errCb([startingIdx, endingIdx], "Remove the whitespace.");
+          opts.errCb([startingIdx, endingIdx], "Remove whitespace.");
         }
       }
       whitespaceStartsAt = null;
     }
     if (str[i] === opts.separator) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
-        opts.errCb([i, i + 1], "Remove the separator.");
+        opts.errCb([i, i + 1], "Remove separator.");
       } else {
         separatorsArr.push(i);
       }
     }
     if (i + 1 === opts.to) {
       separatorsArr.forEach(separatorsIdx => {
-        opts.errCb([separatorsIdx, separatorsIdx + 1], "Remove the separator.");
+        opts.errCb([separatorsIdx, separatorsIdx + 1], "Remove separator.");
       });
     }
   }

@@ -56,25 +56,37 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                                         | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------- | ---- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-process-comma-separated.cjs.js` | 4 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-process-comma-separated.esm.js` | 5 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-process-comma-separated.esm.js` | 4 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-process-comma-separated.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
 
 ## Purpose
 
-To give you some context, imagine processing HTML attribute values: `<FRAMESET rows="50%, 50%">`
+Imagine, you need to extract and validate `50%` and `50%` of HTML attribute values: `<FRAMESET rows="50%, 50%">`.
 
-This program is used to extract chunks of strings from potentially comma-separated list of string (it might be a single value, without commas).
+The first algorithm idea seems simple:
+
+```js
+str
+  .split(",")
+  .forEach(oneOfValues => {
+    ...
+  })
+```
+
+But in real life, the proper extraction is quite complex and you need to cover all error cases:
+
+- There might be surrounding whitespace `<FRAMESET rows=" 50%, 50% ">`
+- There might be spaces after the comma - it might be OK or not - `<FRAMESET rows=" 50%, 50% ">`
+- Plain errors like leading comma - `<FRAMESET rows=" ,, 50%, 50% ">`
+- There might be non-space characters that look like space like [NBSP](http://www.fileformat.info/info/unicode/char/00a0/index.htm)
+
+This program helps to extract chunks of strings from potentially comma-separated list of string (it might be a single value, without commas).
 
 Separator is configurable via `opts.separator`, so it might be not comma if you wish.
 
-The extraction is quite complex and thus warrants a standalone program:
-
-- There might be surrounding whitespace `<FRAMESET rows=" 50%, 50% ">` - program will report exact indexes of chunks
-- There might be spaces after the comma - it might be OK or not - the program will let you customise its behaviour by opts and report error accordingly
-- Plain errors like leading comma - `<FRAMESET rows=" , 50%, 50% ">` - error callback function will be pinged with an error name and location indexes
-- There might be non-space characters that look like space
+Errors are pinged to a separate callback function.
 
 **[⬆ back to top](#)**
 
@@ -82,9 +94,9 @@ The extraction is quite complex and thus warrants a standalone program:
 
 Same thing like in `Array.forEach`, we use callbacks, which allows you to tailor what happens with the values that the program gives you.
 
-Here is quite a contrived example, too complex to be real, but it shows the capabilities of the algorithm:
+Here is quite a contrived example, too crazy to be real, but it shows the capabilities of the algorithm:
 
-Instead of expected
+Instead of expected,
 
 ```html
 `<frameset rows="50%,50%">`</frameset>
@@ -96,7 +108,7 @@ we have:
 `<frameset rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`</frameset>
 ```
 
-The program above extracts both values `50%` (string index ranges are fed to the callback, [20, 23] and [27, 30]) and reports all rogue spaces, tabs and commas.
+The program above extracts both values `50%` (string index ranges are fed to the callback, [20, 23] and [27, 30]) and reports all rogue spaces, tabs, non-breaking space and commas.
 
 ```js
 const processCommaSeparated = require("string-process-comma-separated");
@@ -151,11 +163,13 @@ This program saves you time from having to tackle all those possible error cases
 | `input`        | String           | yes         | Input string                           |
 | `opts`         | Plain object     | yes         | Options Object. See below for its API. |
 
-If input arguments are supplied have any other types, an error will be `throw`n.
+If input arguments are supplied have any other types, an error will be `throw`n. Empty string or no options object (thus no callbacks) is fine, program will exit early.
 
 **[⬆ back to top](#)**
 
 ### Options Object
+
+Main thing, you must pass the callbacks in the options object, `cb` and `errCb`:
 
 | An Options Object's key | Type of its value      | Default      | Description                                              |
 | ----------------------- | ---------------------- | ------------ | -------------------------------------------------------- |
