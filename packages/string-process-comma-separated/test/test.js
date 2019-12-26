@@ -147,7 +147,7 @@ t.test(
     );
     t.match(
       gatheredErrors,
-      [{ ranges: [20, 21], message: "Remove whitespace." }],
+      [{ ranges: [[20, 21]], message: "Remove whitespace." }],
       "02.03.02"
     );
 
@@ -182,10 +182,10 @@ t.test(
     t.match(
       gatheredErrors,
       [
-        { ranges: [16, 17], message: "Remove separator." },
-        { ranges: [25, 27], message: "Remove whitespace." },
-        { ranges: [24, 25], message: "Remove separator." },
-        { ranges: [27, 28], message: "Remove separator." }
+        { ranges: [[16, 17]], message: "Remove separator." },
+        { ranges: [[25, 27]], message: "Remove whitespace." },
+        { ranges: [[24, 25]], message: "Remove separator." },
+        { ranges: [[27, 28]], message: "Remove separator." }
       ],
       "02.04.02"
     );
@@ -221,16 +221,16 @@ t.test(
     t.match(
       gatheredErrors,
       [
-        { ranges: [16, 17], message: "Remove whitespace." },
-        { ranges: [17, 18], message: "Remove separator." },
-        { ranges: [18, 19], message: "Remove separator." },
-        { ranges: [19, 20], message: "Remove whitespace." },
-        { ranges: [23, 24], message: "Remove whitespace." },
-        { ranges: [25, 27], message: "Remove whitespace." },
-        { ranges: [30, 31], message: "Remove whitespace." },
-        { ranges: [32, 34], message: "Remove whitespace." },
-        { ranges: [31, 32], message: "Remove separator." },
-        { ranges: [34, 35], message: "Remove separator." }
+        { ranges: [[16, 17]], message: "Remove whitespace." },
+        { ranges: [[17, 18]], message: "Remove separator." },
+        { ranges: [[18, 19]], message: "Remove separator." },
+        { ranges: [[19, 20]], message: "Remove whitespace." },
+        { ranges: [[23, 24]], message: "Remove whitespace." },
+        { ranges: [[25, 27]], message: "Remove whitespace." },
+        { ranges: [[30, 31]], message: "Remove whitespace." },
+        { ranges: [[32, 34]], message: "Remove whitespace." },
+        { ranges: [[31, 32]], message: "Remove separator." },
+        { ranges: [[34, 35]], message: "Remove separator." }
       ],
       "02.05.02"
     );
@@ -267,7 +267,7 @@ t.test(
       [
         {
           message: "Remove whitespace.",
-          ranges: [20, 22]
+          ranges: [[20, 22]]
         }
       ],
       "02.06.02"
@@ -307,7 +307,7 @@ t.test(
       [
         {
           message: "Remove whitespace.",
-          ranges: [21, 22]
+          ranges: [[21, 22]]
         }
       ],
       "02.07.02"
@@ -347,7 +347,7 @@ t.test(
       [
         {
           message: "Remove whitespace.",
-          ranges: [20, 22, " "]
+          ranges: [[20, 22, " "]]
         }
       ],
       "02.08.02"

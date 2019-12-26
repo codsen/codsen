@@ -83,7 +83,7 @@ function processCommaSeparated(str, originalOpts) {
           separatorsArr.forEach((separatorsIdx, orderNumber) => {
             if (orderNumber) {
               opts.errCb(
-                [separatorsIdx, separatorsIdx + 1],
+                [[separatorsIdx, separatorsIdx + 1]],
                 "Remove separator."
               );
             }
@@ -172,7 +172,7 @@ function processCommaSeparated(str, originalOpts) {
             )}`
           );
           opts.errCb(
-            [whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i],
+            [[whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i]],
             "Remove whitespace."
           );
         }
@@ -191,7 +191,7 @@ function processCommaSeparated(str, originalOpts) {
               4
             )}`
           );
-          opts.errCb([whitespaceStartsAt, i + 1], "Remove whitespace.");
+          opts.errCb([[whitespaceStartsAt, i + 1]], "Remove whitespace.");
         }
       } else if (
         !opts.oneSpaceAfterCommaOK ||
@@ -239,9 +239,12 @@ function processCommaSeparated(str, originalOpts) {
         }
 
         if (whatToAdd.length) {
-          opts.errCb([startingIdx, endingIdx, whatToAdd], "Remove whitespace.");
+          opts.errCb(
+            [[startingIdx, endingIdx, whatToAdd]],
+            "Remove whitespace."
+          );
         } else {
-          opts.errCb([startingIdx, endingIdx], "Remove whitespace.");
+          opts.errCb([[startingIdx, endingIdx]], "Remove whitespace.");
         }
       }
 
@@ -251,16 +254,16 @@ function processCommaSeparated(str, originalOpts) {
 
     // catch the separator
     if (str[i] === opts.separator) {
-      console.log(`254 separator caught`);
+      console.log(`257 separator caught`);
       if (!firstNonwhitespaceNonseparatorCharFound) {
         console.log(
-          `257 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `260 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [i, i + 1, "Remove separator."],
             null,
             4
           )}`
         );
-        opts.errCb([i, i + 1], "Remove separator.");
+        opts.errCb([[i, i + 1]], "Remove separator.");
       } else {
         separatorsArr.push(i);
       }
@@ -289,7 +292,7 @@ function processCommaSeparated(str, originalOpts) {
     // catch the end of the string
     if (i + 1 === opts.to) {
       separatorsArr.forEach(separatorsIdx => {
-        opts.errCb([separatorsIdx, separatorsIdx + 1], "Remove separator.");
+        opts.errCb([[separatorsIdx, separatorsIdx + 1]], "Remove separator.");
       });
     }
 
