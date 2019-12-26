@@ -10,12 +10,14 @@
 function processCommaSeparated(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error(
-      `string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof s}, equal to:\n${JSON.stringify(
+      `string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
         4
       )}`
     );
+  } else if (!str.length || (!originalOpts.cb && !originalOpts.errCb)) {
+    return;
   }
   const defaults = {
     from: 0,

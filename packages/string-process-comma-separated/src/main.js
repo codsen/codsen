@@ -10,12 +10,15 @@ function processCommaSeparated(str, originalOpts) {
   // insurance:
   if (typeof str !== "string") {
     throw new Error(
-      `string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof s}, equal to:\n${JSON.stringify(
+      `string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
         4
       )}`
     );
+  } else if (!str.length || (!originalOpts.cb && !originalOpts.errCb)) {
+    // if input str is empty or there are no callbacks, exit early
+    return;
   }
   // opts preparation:
   const defaults = {
@@ -39,7 +42,7 @@ function processCommaSeparated(str, originalOpts) {
   }
 
   console.log(
-    `042 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `045 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -70,7 +73,7 @@ function processCommaSeparated(str, originalOpts) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
         firstNonwhitespaceNonseparatorCharFound = true;
         console.log(
-          `073 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${firstNonwhitespaceNonseparatorCharFound}`
+          `076 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${firstNonwhitespaceNonseparatorCharFound}`
         );
       }
 
@@ -88,13 +91,13 @@ function processCommaSeparated(str, originalOpts) {
         }
         separatorsArr = [];
         console.log(
-          `091 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`
+          `094 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`
         );
       }
 
       chunkStartsAt = i;
       console.log(
-        `097 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        `100 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
       );
     }
 
@@ -106,19 +109,19 @@ function processCommaSeparated(str, originalOpts) {
           (opts.separator && str[i] === opts.separator))) ||
         i + 1 === opts.to)
     ) {
-      console.log(`109 chunk ends`);
+      console.log(`112 chunk ends`);
       const chunk = str.slice(
         chunkStartsAt,
         i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i
       );
       console.log(
-        `115 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`
+        `118 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`
       );
 
       // ping the cb
       if (typeof opts.cb === "function") {
         console.log(
-          `121 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `124 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [
               chunkStartsAt,
               i + 1 === opts.to && str[i] !== opts.separator ? i + 1 : i
@@ -136,7 +139,7 @@ function processCommaSeparated(str, originalOpts) {
       // reset
       chunkStartsAt = null;
       console.log(
-        `139 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        `142 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
       );
     }
 
@@ -144,7 +147,7 @@ function processCommaSeparated(str, originalOpts) {
     if (!str[i].trim().length && whitespaceStartsAt === null) {
       whitespaceStartsAt = i;
       console.log(
-        `147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+        `150 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
       );
     }
 
@@ -153,13 +156,13 @@ function processCommaSeparated(str, originalOpts) {
       whitespaceStartsAt !== null &&
       (str[i].trim().length || i + 1 === opts.to)
     ) {
-      console.log(`156 whitespace ends`);
+      console.log(`159 whitespace ends`);
 
       if (!opts.leadingWhitespaceOK && whitespaceStartsAt === opts.from) {
         // if it's leading whitespace, that is, starts at index zero
         if (typeof opts.errCb === "function") {
           console.log(
-            `162 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `165 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 [whitespaceStartsAt, i + 1 === opts.to ? i + 1 : i],
                 "Remove the whitespace."
@@ -182,7 +185,7 @@ function processCommaSeparated(str, originalOpts) {
         // (right before opts.to)
         if (typeof opts.errCb === "function") {
           console.log(
-            `185 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `188 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [[whitespaceStartsAt, i + 1], "Remove the whitespace."],
               null,
               4
@@ -202,7 +205,7 @@ function processCommaSeparated(str, originalOpts) {
         // exclude single space after a comma, with condition that something
         // non-whitespacey follows
         console.log(
-          `205 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `208 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [
               [
                 whitespaceStartsAt,
@@ -251,10 +254,10 @@ function processCommaSeparated(str, originalOpts) {
 
     // catch the separator
     if (str[i] === opts.separator) {
-      console.log(`254 separator caught`);
+      console.log(`257 separator caught`);
       if (!firstNonwhitespaceNonseparatorCharFound) {
         console.log(
-          `257 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `260 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [i, i + 1, "Remove the separator."],
             null,
             4

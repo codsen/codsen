@@ -25,7 +25,9 @@ function _typeof(obj) {
 
 function processCommaSeparated(str, originalOpts) {
   if (typeof str !== "string") {
-    throw new Error("string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ".concat(typeof s === "undefined" ? "undefined" : _typeof(s), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
+    throw new Error("string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ".concat(_typeof(str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
+  } else if (!str.length || !originalOpts.cb && !originalOpts.errCb) {
+    return;
   }
   var defaults = {
     from: 0,

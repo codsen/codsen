@@ -26,6 +26,48 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
 // 01. edge cases - unusual, broken or strange inputs
 // -----------------------------------------------------------------------------
 
+t.test(
+  `01.01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      "",
+      {
+        from: null, // <-- implied to process the whole string
+        to: null // <-- implied to process the whole string
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(gatheredChunks, [], "01.01.01");
+    t.match(gatheredErrors, [], "01.01.02");
+
+    t.end();
+  }
+);
+
+t.test(
+  `01.02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
+  t => {
+    t.doesNotThrow(() => {
+      processCommaSeparated("");
+    });
+    t.end();
+  }
+);
+
+t.test(
+  `01.03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
+  t => {
+    t.throws(() => {
+      processCommaSeparated(true);
+    }, /THROW_ID_01/);
+    t.end();
+  }
+);
+
 // 02. B.A.U
 // -----------------------------------------------------------------------------
 
