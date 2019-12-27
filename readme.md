@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 103 npm libraries 📦📦📦
+    A lerna monorepo for our 104 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -107,7 +107,7 @@ It is equally vital to support _mixed code_ because both web page and email temp
 
 ## 🎻 String Processing Libraries
 
-27 in total.
+28 in total.
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -133,6 +133,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) | Look what's to the left or the right of a given index within a string | [![string-left-right on npm](https://img.shields.io/npm/v/string-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-left-right) | [packages/string-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) |
 | [`string-match-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) | Do substrings match what's on the left or right of a given index? | [![string-match-left-right on npm](https://img.shields.io/npm/v/string-match-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-match-left-right) | [packages/string-match-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) |
 | [`string-overlap-one-on-another`](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) | Lay one string on top of another, with an optional offset | [![string-overlap-one-on-another on npm](https://img.shields.io/npm/v/string-overlap-one-on-another.svg?style=flat-square)](https://www.npmjs.com/package/string-overlap-one-on-another) | [packages/string-overlap-one-on-another](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) |
+| [`string-process-comma-separated`](https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated/) | Extracts chunks from possibly comma or whatever-separated string | [![string-process-comma-separated on npm](https://img.shields.io/npm/v/string-process-comma-separated.svg?style=flat-square)](https://www.npmjs.com/package/string-process-comma-separated) | [packages/string-process-comma-separated](https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated/) |
 | [`string-remove-duplicate-heads-tails`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) | Detect and (recursively) remove head and tail wrappings around the input string | [![string-remove-duplicate-heads-tails on npm](https://img.shields.io/npm/v/string-remove-duplicate-heads-tails.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-duplicate-heads-tails) | [packages/string-remove-duplicate-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) |
 | [`string-remove-thousand-separators`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) | Detects and removes thousand separators (dot/comma/quote/space) from string-type digits | [![string-remove-thousand-separators on npm](https://img.shields.io/npm/v/string-remove-thousand-separators.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-thousand-separators) | [packages/string-remove-thousand-separators](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators/) |
 | [`string-remove-widows`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) | Helps to prevent widow words in a text | [![string-remove-widows on npm](https://img.shields.io/npm/v/string-remove-widows.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-widows) | [packages/string-remove-widows](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows/) |

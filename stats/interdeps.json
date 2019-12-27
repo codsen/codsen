@@ -142,7 +142,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 22749,
+        "size": 22763,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -237,13 +237,14 @@
     },
     {
         "name": "emlint",
-        "size": 158649,
+        "size": 167069,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
             "string-fix-broken-named-entities",
-            "string-left-right"
+            "string-left-right",
+            "string-process-comma-separated"
         ]
     },
     {
@@ -595,6 +596,11 @@
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
         ]
+    },
+    {
+        "name": "string-process-comma-separated",
+        "size": 5395,
+        "imports": []
     },
     {
         "name": "string-range-expander",

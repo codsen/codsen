@@ -35,7 +35,7 @@
         "email-all-chars-within-ascii-cli": 11,
         "email-comb": 421,
         "email-homey": 9,
-        "emlint": 1224,
+        "emlint": 1352,
         "eslint-plugin-row-num": 11,
         "generate-atomic-css": 233,
         "generate-atomic-css-cli": 4,
@@ -90,6 +90,7 @@
         "string-left-right": 332,
         "string-match-left-right": 603,
         "string-overlap-one-on-another": 38,
+        "string-process-comma-separated": 34,
         "string-range-expander": 141,
         "string-remove-duplicate-heads-tails": 61,
         "string-remove-thousand-separators": 86,
@@ -104,13 +105,13 @@
         "util-array-object-or-both": 31,
         "util-nonempty": 14
     },
-    "totalPackageCount": 103,
-    "totalAssertsCount": 805272,
+    "totalPackageCount": 104,
+    "totalAssertsCount": 805434,
     "minAssertsCount": 2,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 746763,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 50,
-    "assertsCountArithmeticMean": 7818,
+    "assertsCountArithmeticMean": 7745,
     "assertsCountGeometricMean": 61
 }
