@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.10.56",
+  "version": "7.10.57",
   "description": "Traverse and edit AST's (like parsed HTML or anything nested)",
   "license": "MIT",
   "engines": {
@@ -138,7 +138,7 @@
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
     "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.5",
+    "lect": "^0.11.6",
     "rollup": "^1.27.14",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

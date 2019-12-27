@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.11.5",
+  "version": "0.11.6",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "engines": {
@@ -143,7 +143,7 @@
     "log-symbols": "^3.0.0",
     "matcher": "^2.1.0",
     "meow": "^6.0.0",
-    "object-delete-key": "^1.9.12",
+    "object-delete-key": "^1.9.13",
     "object-merge-advanced": "^10.11.10",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
@@ -165,7 +165,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.2",
     "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.5",
+    "lect": "^0.11.6",
     "prettier": "^1.19.1",
     "tap": "^14.10.5",
     "tempy": "^0.3.0"

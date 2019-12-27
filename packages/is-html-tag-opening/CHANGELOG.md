@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.4.0...is-html-tag-opening@1.5.0) (2019-12-27)
+
+
+### Features
+
+* recognise tags that have attributes with no quotes ([cfe677c](https://gitlab.com/codsen/codsen/commit/cfe677cf76c23a9a27ddd2f3fb6533cf7b366621))
+
+
+
+
+
 ## 1.4.0 (2019-12-21)
 
 ### Features
