@@ -171,18 +171,18 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 Main thing, you must pass the callbacks in the options object, `cb` and `errCb`:
 
-| An Options Object's key | Type of its value      | Default      | Description                                              |
-| ----------------------- | ---------------------- | ------------ | -------------------------------------------------------- |
+| An Options Object's key | Type of its value      | Default      | Description                                                                                                                  |
+| ----------------------- | ---------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | {                       |                        |              |
-| `from`                  | Integer or falsey      | `0`          | Where in the string does the comma-separated chunk start |
-| `to`                    | Integer or falsey      | `str.length` | Where in the string does the comma-separated chunk end   |
-| `offset`                    | Integer or falsey      | `0` | Handy when you've been given cropped string and want to report real indexes. Offset adds that number to each reported index. |
-| `leadingWhitespaceOK`   | Boolean                | `false`      | Is whitespace at the beginning of the range OK?          |
-| `trailingWhitespaceOK`  | Boolean                | `false`      | Is whitespace at the end of the range OK?                |
-| `oneSpaceAfterCommaOK`  | Boolean                | `false`      | Can values have space after comma?                       |
-| `separator`             | String, non-whitespace | `,`          | What is the separator character?                         |
-| `cb`                    | Function               | `null`       | Function to ping the extracted value ranges to           |
-| `errCb`                 | Function               | `null`       | Function to ping the errors to                           |
+| `from`                  | Integer or falsey      | `0`          | Where in the string does the comma-separated chunk start                                                                     |
+| `to`                    | Integer or falsey      | `str.length` | Where in the string does the comma-separated chunk end                                                                       |
+| `offset`                | Integer or falsey      | `0`          | Handy when you've been given cropped string and want to report real indexes. Offset adds that number to each reported index. |
+| `leadingWhitespaceOK`   | Boolean                | `false`      | Is whitespace at the beginning of the range OK?                                                                              |
+| `trailingWhitespaceOK`  | Boolean                | `false`      | Is whitespace at the end of the range OK?                                                                                    |
+| `oneSpaceAfterCommaOK`  | Boolean                | `false`      | Can values have space after comma?                                                                                           |
+| `separator`             | String, non-whitespace | `,`          | What is the separator character?                                                                                             |
+| `cb`                    | Function               | `null`       | Function to ping the extracted value ranges to                                                                               |
+| `errCb`                 | Function               | `null`       | Function to ping the errors to                                                                                               |
 | }                       |                        |              |
 
 Here is the default options object in one place:
