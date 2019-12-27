@@ -60,7 +60,8 @@ export default commandLineArgs => {
         "mime-db",
         "rgba-regex",
         "string-fix-broken-named-entities",
-        "string-left-right"
+        "string-left-right",
+        "string-process-comma-separated"
       ],
       plugins: [
         strip({
@@ -94,7 +95,8 @@ export default commandLineArgs => {
         "mime-db",
         "rgba-regex",
         "string-fix-broken-named-entities",
-        "string-left-right"
+        "string-left-right",
+        "string-process-comma-separated"
       ],
       plugins: [
         strip({

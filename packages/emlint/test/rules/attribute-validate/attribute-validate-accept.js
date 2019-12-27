@@ -243,14 +243,20 @@ t.test(
     t.match(messages, [
       {
         ruleId: "attribute-validate-accept",
-        idxFrom: 15,
-        idxTo: 31,
-        message: `Whitespace after comma.`,
+        idxFrom: 20,
+        idxTo: 21,
+        message: `Remove whitespace.`,
         fix: {
-          ranges: [
-            [20, 21],
-            [26, 27]
-          ]
+          ranges: [[20, 21]]
+        }
+      },
+      {
+        ruleId: "attribute-validate-accept",
+        idxFrom: 26,
+        idxTo: 27,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[26, 27]]
         }
       }
     ]);

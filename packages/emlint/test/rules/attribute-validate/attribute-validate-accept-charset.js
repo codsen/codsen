@@ -180,9 +180,9 @@ t.test(
     t.match(messages, [
       {
         ruleId: "attribute-validate-accept-charset",
-        idxFrom: 22,
-        idxTo: 34,
-        message: `Whitespace after comma.`,
+        idxFrom: 28,
+        idxTo: 29,
+        message: `Remove whitespace.`,
         fix: {
           ranges: [[28, 29]]
         }

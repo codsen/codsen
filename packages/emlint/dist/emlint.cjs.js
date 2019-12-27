@@ -19,6 +19,7 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
 var stringLeftRight = require('string-left-right');
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var processCommaSeparated = _interopDefault(require('string-process-comma-separated'));
 var isRegExp = _interopDefault(require('lodash.isregexp'));
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
@@ -580,56 +581,8 @@ function includesWithRegex(arr, whatToMatch) {
     return false;
   }
   return arr.some(function (val) {
-    return typeof val === "string" && whatToMatch === val || isRegExp(val) && val.test(whatToMatch);
+    return isRegExp(val) && whatToMatch.match(val) || typeof val === "string" && whatToMatch === val;
   });
-}
-
-function processCommaSeparatedList(str, charStart, charEnd, idxOffset, errorArr, opts) {
-  if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
-    if (str.slice(charStart, charEnd).includes(",,")) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: "Consecutive commas.",
-        fix: null
-      });
-    } else if (opts.noSpaceAfterComma && /,\s/g.test(str.slice(charStart, charEnd))) {
-      var ranges = [];
-      for (var i = charStart; i < charEnd; i++) {
-        if (str[i] === "," && !str[i + 1].trim().length) {
-          ranges.push([idxOffset + i + 1, idxOffset + stringLeftRight.right(str, i + 1) || str.length]);
-        }
-      }
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: "Whitespace after comma.",
-        fix: {
-          ranges: ranges
-        }
-      });
-    } else {
-      str.slice(charStart, charEnd).split(",").forEach(function (oneOfValues) {
-        if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
-          errorArr.push({
-            idxFrom: idxOffset + charStart,
-            idxTo: idxOffset + charEnd,
-            message: "Unrecognised value: ".concat(oneOfValues),
-            fix: null
-          });
-        }
-      });
-    }
-  } else {
-    if ((!Array.isArray(opts.quickPermittedValues) || !includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd))) && (!Array.isArray(opts.permittedValues) || !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\"."),
-        fix: null
-      });
-    }
-  }
 }
 
 function validateString(str, idxOffset, opts) {
@@ -638,7 +591,41 @@ function validateString(str, idxOffset, opts) {
       charEnd = _checkForWhitespace.charEnd,
       errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
-    processCommaSeparatedList(str, charStart, charEnd, idxOffset, errorArr, opts);
+    if (opts.canBeCommaSeparated) {
+      processCommaSeparated(str, {
+        offset: idxOffset,
+        oneSpaceAfterCommaOK: false,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true,
+        cb: function cb(idxFrom, idxTo) {
+          if (!(Array.isArray(opts.quickPermittedValues) && includesWithRegex(opts.quickPermittedValues, str.slice(idxFrom - idxOffset, idxTo - idxOffset)) || Array.isArray(opts.permittedValues) && includesWithRegex(opts.permittedValues, str.slice(idxFrom - idxOffset, idxTo - idxOffset)))) {
+            errorArr.push({
+              idxFrom: idxFrom,
+              idxTo: idxTo,
+              message: "Unrecognised value: \"".concat(str.slice(idxFrom - idxOffset, idxTo - idxOffset), "\"."),
+              fix: null
+            });
+          }
+        },
+        errCb: function errCb(ranges, message) {
+          errorArr.push({
+            idxFrom: ranges[0][0],
+            idxTo: ranges[ranges.length - 1][1],
+            message: message,
+            fix: {
+              ranges: ranges
+            }
+          });
+        }
+      });
+    } else if ((!Array.isArray(opts.quickPermittedValues) || !includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd))) && (!Array.isArray(opts.permittedValues) || !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\"."),
+        fix: null
+      });
+    }
   }
   return errorArr;
 }

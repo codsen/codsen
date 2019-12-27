@@ -7,18 +7,17 @@ function processCommaSeparatedList(
   charEnd,
   idxOffset,
   errorArr,
-  opts,
-  cb
+  opts
 ) {
   if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
     console.log(
-      `015 validateString(): comma spotted, value will be split and each chunk matched`
+      `014 validateString(): comma spotted, value will be split and each chunk matched`
     );
     // but first, some insurance..
 
     // maybe there is more than one consecutive comma?
     if (/,\s*,/g.test(str.slice(charStart, charEnd))) {
-      console.log(`021 double commas`);
+      console.log(`020 double commas`);
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
@@ -29,7 +28,7 @@ function processCommaSeparatedList(
       opts.noSpaceAfterComma &&
       /,\s/g.test(str.slice(charStart, charEnd))
     ) {
-      console.log(`032 spaces found`);
+      console.log(`031 spaces found`);
       // fish them all out
       const ranges = [];
       for (let i = charStart; i < charEnd; i++) {
@@ -41,7 +40,7 @@ function processCommaSeparatedList(
         }
       }
       console.log(
-        `044 final ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+        `043 final ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
           ranges,
           null,
           4
@@ -56,7 +55,7 @@ function processCommaSeparatedList(
         }
       });
     } else {
-      console.log(`059 validate the value`);
+      console.log(`058 validate the value`);
       // we can validate the value then
       str
         .slice(charStart, charEnd)
@@ -75,7 +74,7 @@ function processCommaSeparatedList(
     }
   } else {
     console.log(
-      `078 validateString(): no comma, the whole value will be matched against the reference list`
+      `077 validateString(): no comma, the whole value will be matched against the reference list`
     );
     if (
       (!Array.isArray(opts.quickPermittedValues) ||

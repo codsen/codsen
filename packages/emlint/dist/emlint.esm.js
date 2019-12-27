@@ -13,6 +13,7 @@ import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isObj from 'lodash.isplainobject';
+import processCommaSeparated from 'string-process-comma-separated';
 import isRegExp from 'lodash.isregexp';
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import leven from 'leven';
@@ -752,65 +753,58 @@ function includesWithRegex(arr, whatToMatch) {
   }
   return arr.some(
     val =>
-      (typeof val === "string" && whatToMatch === val) ||
-      (isRegExp(val) && val.test(whatToMatch))
+      (isRegExp(val) && whatToMatch.match(val)) ||
+      (typeof val === "string" && whatToMatch === val)
   );
 }
 
-function processCommaSeparatedList(
-  str,
-  charStart,
-  charEnd,
-  idxOffset,
-  errorArr,
-  opts
-) {
-  if (opts.canBeCommaSeparated && str.slice(charStart, charEnd).includes(",")) {
-    if (str.slice(charStart, charEnd).includes(",,")) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `Consecutive commas.`,
-        fix: null
-      });
-    } else if (
-      opts.noSpaceAfterComma &&
-      /,\s/g.test(str.slice(charStart, charEnd))
-    ) {
-      const ranges = [];
-      for (let i = charStart; i < charEnd; i++) {
-        if (str[i] === "," && !str[i + 1].trim().length) {
-          ranges.push([
-            idxOffset + i + 1,
-            idxOffset + right(str, i + 1) || str.length
-          ]);
-        }
-      }
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `Whitespace after comma.`,
-        fix: {
-          ranges
-        }
-      });
-    } else {
-      str
-        .slice(charStart, charEnd)
-        .split(",")
-        .forEach(oneOfValues => {
-          if (!includesWithRegex(opts.permittedValues, oneOfValues)) {
+function validateString(str, idxOffset, opts) {
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  if (Number.isInteger(charStart)) {
+    if (opts.canBeCommaSeparated) {
+      processCommaSeparated(str, {
+        offset: idxOffset,
+        oneSpaceAfterCommaOK: false,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true,
+        cb: (idxFrom, idxTo) => {
+          if (
+            !(
+              (Array.isArray(opts.quickPermittedValues) &&
+                includesWithRegex(
+                  opts.quickPermittedValues,
+                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
+                )) ||
+              (Array.isArray(opts.permittedValues) &&
+                includesWithRegex(
+                  opts.permittedValues,
+                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
+                ))
+            )
+          ) {
             errorArr.push({
-              idxFrom: idxOffset + charStart,
-              idxTo: idxOffset + charEnd,
-              message: `Unrecognised value: ${oneOfValues}`,
+              idxFrom: idxFrom,
+              idxTo: idxTo,
+              message: `Unrecognised value: "${str.slice(
+                idxFrom - idxOffset,
+                idxTo - idxOffset
+              )}".`,
               fix: null
             });
           }
-        });
-    }
-  } else {
-    if (
+        },
+        errCb: (ranges, message) => {
+          errorArr.push({
+            idxFrom: ranges[0][0],
+            idxTo: ranges[ranges.length - 1][1],
+            message,
+            fix: {
+              ranges
+            }
+          });
+        }
+      });
+    } else if (
       (!Array.isArray(opts.quickPermittedValues) ||
         !includesWithRegex(
           opts.quickPermittedValues,
@@ -826,20 +820,6 @@ function processCommaSeparatedList(
         fix: null
       });
     }
-  }
-}
-
-function validateString(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
-    processCommaSeparatedList(
-      str,
-      charStart,
-      charEnd,
-      idxOffset,
-      errorArr,
-      opts
-    );
   }
   return errorArr;
 }
