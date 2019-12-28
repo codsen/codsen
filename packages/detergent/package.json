@@ -153,7 +153,7 @@
     "benchmark": "^2.1.4",
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.5",
+    "lect": "^0.11.6",
     "lodash.clonedeep": "^4.5.0",
     "object-boolean-combinations": "^2.11.51",
     "object-path": "^0.11.4",
