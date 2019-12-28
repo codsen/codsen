@@ -13,7 +13,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- Check out the parent library which does even more: [ast-monkey](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/)
+- Check out the parent library which does even more: `ast-monkey` ([npm](https://www.npmjs.com/package/ast-monkey)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey/))
 
 ## Table of Contents
 
