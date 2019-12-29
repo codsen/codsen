@@ -317,7 +317,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             break;
           }
         }
-        if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "single" || layers[layers.length - 1].value !== str[i + wholeEspTagLump.length])) {
+        if (!espLumpBlacklist.includes(wholeEspTagLump) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "simple" || layers[layers.length - 1].value !== str[i + wholeEspTagLump.length])) {
           var lengthOfClosingEspChunk = void 0;
           if (layers.length && matchLayerLast(str, i)) {
             lengthOfClosingEspChunk = matchLayerLast(str, i);

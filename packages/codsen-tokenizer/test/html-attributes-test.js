@@ -1091,7 +1091,7 @@ t.test(
   }
 );
 
-t.only(`05.05 - two asterisks as an attribute's value`, t => {
+t.test(`05.05 - two asterisks as an attribute's value`, t => {
   const gathered = [];
   ct(`<frameset cols="**">`, obj => {
     gathered.push(obj);
@@ -1124,6 +1124,46 @@ t.only(`05.05 - two asterisks as an attribute's value`, t => {
           attribValueEndAt: 18,
           attribStart: 10,
           attribEnd: 19
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
+
+t.test(`05.06 - many asterisks as an attribute's value`, t => {
+  const gathered = [];
+  ct(`<frameset cols="******">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      type: "html",
+      tagNameStartAt: 1,
+      tagNameEndAt: 9,
+      tagName: "frameset",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      start: 0,
+      end: 24,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "cols",
+          attribNameStartAt: 10,
+          attribNameEndAt: 14,
+          attribOpeningQuoteAt: 15,
+          attribClosingQuoteAt: 22,
+          attribValue: "******",
+          attribValueStartAt: 16,
+          attribValueEndAt: 22,
+          attribStart: 10,
+          attribEnd: 23
         }
       ]
     }
