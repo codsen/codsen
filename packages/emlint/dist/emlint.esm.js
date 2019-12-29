@@ -11,9 +11,9 @@ import tokenizer from 'codsen-tokenizer';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
+import processCommaSeparated from 'string-process-comma-separated';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isObj from 'lodash.isplainobject';
-import processCommaSeparated from 'string-process-comma-separated';
 import isRegExp from 'lodash.isregexp';
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import leven from 'leven';
@@ -162,6 +162,45 @@ var allBadNamedHTMLEntityRules = [
 	"bad-named-html-entity-not-email-friendly",
 	"bad-named-html-entity-unrecognised"
 ];
+
+function checkForWhitespace(str, idxOffset) {
+  let charStart = 0;
+  let charEnd = str.length;
+  let trimmedVal;
+  let gatheredRanges = [];
+  const errorArr = [];
+  if (!str.length || !str[0].trim().length) {
+    charStart = right(str);
+    if (!str.length || charStart === null) {
+      charEnd = null;
+      errorArr.push({
+        idxFrom: idxOffset,
+        idxTo: idxOffset + str.length,
+        message: `Missing value.`,
+        fix: null
+      });
+    } else {
+      gatheredRanges.push([idxOffset, idxOffset + charStart]);
+    }
+  }
+  if (charEnd && !str[str.length - 1].trim().length) {
+    charEnd = left(str, str.length - 1) + 1;
+    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
+  }
+  if (!gatheredRanges.length) {
+    trimmedVal = str;
+  } else {
+    errorArr.push({
+      idxFrom: gatheredRanges[0][0],
+      idxTo: gatheredRanges[gatheredRanges.length - 1][1],
+      message: `Remove whitespace.`,
+      fix: { ranges: gatheredRanges }
+    });
+    gatheredRanges = [];
+    trimmedVal = str.trim();
+  }
+  return { charStart, charEnd, errorArr, trimmedVal };
+}
 
 const knownUnits = [
   "cm",
@@ -610,111 +649,136 @@ const extendedColorNames = {
 const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
 const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 
-function checkForWhitespace(str, idxOffset) {
-  let charStart = 0;
-  let charEnd = str.length;
-  let trimmedVal;
-  let gatheredRanges = [];
-  const errorArr = [];
-  if (!str.length || !str[0].trim().length) {
-    charStart = right(str);
-    if (!str.length || charStart === null) {
-      charEnd = null;
-      errorArr.push({
-        idxFrom: idxOffset,
-        idxTo: idxOffset + str.length,
-        message: `Missing value.`,
-        fix: null
-      });
-    } else {
-      gatheredRanges.push([idxOffset, idxOffset + charStart]);
-    }
-  }
-  if (charEnd && !str[str.length - 1].trim().length) {
-    charEnd = left(str, str.length - 1) + 1;
-    gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
-  }
-  if (!gatheredRanges.length) {
-    trimmedVal = str;
-  } else {
+function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
+  if (
+    !"0123456789".includes(str[charStart]) &&
+    !"0123456789".includes(str[charEnd - 1])
+  ) {
     errorArr.push({
-      idxFrom: gatheredRanges[0][0],
-      idxTo: gatheredRanges[gatheredRanges.length - 1][1],
-      message: `Remove whitespace.`,
-      fix: { ranges: gatheredRanges }
+      idxFrom: idxOffset + charStart,
+      idxTo: idxOffset + charEnd,
+      message: opts.customGenericValueError || `Digits missing.`,
+      fix: null
     });
-    gatheredRanges = [];
-    trimmedVal = str.trim();
-  }
-  return { charStart, charEnd, errorArr, trimmedVal };
-}
-
-function validateDigitAndUnit(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
-    if (
-      !"0123456789".includes(str[charStart]) &&
-      !"0123456789".includes(str[charEnd - 1])
-    ) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `Digits missing.`,
-        fix: null
-      });
-    } else if (
-      "0123456789".includes(str[charStart]) &&
-      "0123456789".includes(str[charEnd - 1]) &&
-      !opts.noUnitsIsFine
-    ) {
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: `Units missing.`,
-        fix: null
-      });
-    } else {
-      for (let i = charStart; i < charEnd; i++) {
-        if (!"0123456789".includes(str[i])) {
-          const endPart = str.slice(i);
-          if (
-            isObj(opts) &&
-            Array.isArray(opts.badUnits) &&
-            opts.badUnits.includes(endPart)
-          ) {
-            if (endPart === "px") {
-              errorArr.push({
-                idxFrom: idxOffset + i,
-                idxTo: idxOffset + charEnd,
-                message: `Remove px.`,
-                fix: {
-                  ranges: [[idxOffset + i, idxOffset + charEnd]]
-                }
-              });
-            } else {
-              errorArr.push({
-                idxFrom: idxOffset + i,
-                idxTo: idxOffset + charEnd,
-                message: `Bad unit.`,
-                fix: null
-              });
-            }
-          } else if (!knownUnits.includes(endPart)) {
-            let message = "Unrecognised unit.";
-            if (/\d/.test(endPart)) {
-              message = "Messy value.";
-            } else if (knownUnits.includes(endPart.trim())) {
-              message = "Rogue whitespace.";
-            }
+  } else if (
+    "0123456789".includes(str[charStart]) &&
+    "0123456789".includes(str[charEnd - 1]) &&
+    !opts.noUnitsIsFine
+  ) {
+    errorArr.push({
+      idxFrom: idxOffset + charStart,
+      idxTo: idxOffset + charEnd,
+      message: opts.customGenericValueError || `Units missing.`,
+      fix: null
+    });
+  } else {
+    for (let i = charStart; i < charEnd; i++) {
+      if (
+        !"0123456789".includes(str[i]) &&
+        (opts.type !== "rational" || str[i] !== ".")
+      ) {
+        const endPart = str.slice(i, charEnd);
+        if (
+          isObj(opts) &&
+          ((Array.isArray(opts.theOnlyGoodUnits) &&
+            !opts.theOnlyGoodUnits.includes(endPart)) ||
+            (Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart)))
+        ) {
+          if (endPart === "px") {
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message,
+              message: `Remove px.`,
+              fix: {
+                ranges: [[idxOffset + i, idxOffset + charEnd]]
+              }
+            });
+          } else {
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message: opts.customGenericValueError || `Bad unit.`,
               fix: null
             });
           }
-          break;
+        } else if (!knownUnits.includes(endPart)) {
+          let message = "Unrecognised unit.";
+          if (/\d/.test(endPart)) {
+            message = "Messy value.";
+          } else if (knownUnits.includes(endPart.trim())) {
+            message = "Rogue whitespace.";
+          }
+          errorArr.push({
+            idxFrom: idxOffset + i,
+            idxTo: idxOffset + charEnd,
+            message,
+            fix: null
+          });
         }
+        break;
+      }
+    }
+  }
+}
+function validateDigitAndUnit(str, idxOffset, originalOpts) {
+  const defaultOpts = {
+    whitelistValues: [],
+    badUnits: [],
+    noUnitsIsFine: true,
+    canBeCommaSeparated: false,
+    type: "integer",
+    customGenericValueError: null
+  };
+  const opts = Object.assign({}, defaultOpts, originalOpts);
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  if (Number.isInteger(charStart)) {
+    if (opts.canBeCommaSeparated) {
+      processCommaSeparated(str, {
+        offset: idxOffset,
+        oneSpaceAfterCommaOK: false,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true,
+        cb: (idxFrom, idxTo) => {
+          if (
+            !Array.isArray(opts.whitelistValues) ||
+            !opts.whitelistValues.includes(
+              str.slice(idxFrom - idxOffset, idxTo - idxOffset)
+            )
+          ) {
+            validateValue({
+              str,
+              opts,
+              charStart: idxFrom - idxOffset,
+              charEnd: idxTo - idxOffset,
+              idxOffset,
+              errorArr
+            });
+          }
+        },
+        errCb: (ranges, message) => {
+          errorArr.push({
+            idxFrom: ranges[0][0],
+            idxTo: ranges[ranges.length - 1][1],
+            message,
+            fix: {
+              ranges
+            }
+          });
+        }
+      });
+    } else {
+      if (
+        !Array.isArray(opts.whitelistValues) ||
+        !opts.whitelistValues.includes(str.slice(charStart, charEnd))
+      ) {
+        validateValue({
+          str,
+          opts,
+          charStart,
+          charEnd,
+          idxOffset,
+          errorArr
+        });
       }
     }
   }
@@ -4723,6 +4787,59 @@ function attributeValidateColor(context, ...opts) {
   };
 }
 
+function attributeValidateCols(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "cols") {
+        if (!["frameset", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-cols",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        let errorArr = [];
+        if (node.parent.tagName === "frameset") {
+          errorArr = validateDigitAndUnit(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              whitelistValues: ["*"],
+              theOnlyGoodUnits: ["%"],
+              badUnits: ["px"],
+              noUnitsIsFine: true,
+              canBeCommaSeparated: true,
+              type: "rational",
+              customGenericValueError: "Should be: pixels|%|*."
+            }
+          );
+        } else if (node.parent.tagName === "textarea") {
+          errorArr = validateDigitOnly(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              type: "integer",
+              percOK: false,
+              negativeOK: false
+            }
+          );
+        }
+        if (Array.isArray(errorArr) && errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-cols"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5703,6 +5820,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-color",
   () => attributeValidateColor
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-cols",
+  () => attributeValidateCols
 );
 defineLazyProp(
   builtInRules,
