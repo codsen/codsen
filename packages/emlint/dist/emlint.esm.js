@@ -4955,6 +4955,35 @@ function attributeValidateCompact(context, ...originalOpts) {
   };
 }
 
+function attributeValidateContent(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "content") {
+        if (node.parent.tagName !== "meta") {
+          context.report({
+            ruleId: "attribute-validate-content",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-content"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5983,6 +6012,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-compact",
   () => attributeValidateCompact
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-content",
+  () => attributeValidateContent
 );
 defineLazyProp(
   builtInRules,
