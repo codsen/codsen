@@ -1,13 +1,13 @@
-// rule: attribute-validate-border
+// rule: attribute-validate-colspan
 // -----------------------------------------------------------------------------
 
 import { validateDigitOnly } from "../../util/util";
 
-function attributeValidateBorder(context, ...opts) {
+function attributeValidateColspan(context, ...opts) {
   return {
     attribute: function(node) {
       console.log(
-        `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
+        `███████████████████████████████████████ attributeValidateColspan() ███████████████████████████████████████`
       );
       console.log(
         `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -17,14 +17,14 @@ function attributeValidateBorder(context, ...opts) {
         )}`
       );
       // console.log(
-      //   `015 attributeValidateBorder(): node = ${JSON.stringify(node, null, 4)}`
+      //   `015 attributeValidateColspan(): node = ${JSON.stringify(node, null, 4)}`
       // );
 
-      if (node.attribName === "border") {
+      if (node.attribName === "colspan") {
         // validate the parent
-        if (!["table", "img", "object"].includes(node.parent.tagName)) {
+        if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
-            ruleId: "attribute-validate-border",
+            ruleId: "attribute-validate-colspan",
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
@@ -48,7 +48,7 @@ function attributeValidateBorder(context, ...opts) {
           console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-border"
+              ruleId: "attribute-validate-colspan"
             })
           );
         });
@@ -57,4 +57,4 @@ function attributeValidateBorder(context, ...opts) {
   };
 }
 
-export default attributeValidateBorder;
+export default attributeValidateColspan;

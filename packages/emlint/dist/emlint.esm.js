@@ -4029,7 +4029,8 @@ function attributeValidateBorder(context, ...opts) {
           node.attribValue,
           node.attribValueStartAt,
           {
-            type: "integer"
+            type: "integer",
+            negativeOK: false
           }
         );
         errorArr.forEach(errorObj => {
@@ -4835,6 +4836,39 @@ function attributeValidateCols(context, ...opts) {
             );
           });
         }
+      }
+    }
+  };
+}
+
+function attributeValidateColspan(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "colspan") {
+        if (!["th", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-colspan",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            negativeOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-colspan"
+            })
+          );
+        });
       }
     }
   };
@@ -5825,6 +5859,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-cols",
   () => attributeValidateCols
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-colspan",
+  () => attributeValidateColspan
 );
 defineLazyProp(
   builtInRules,

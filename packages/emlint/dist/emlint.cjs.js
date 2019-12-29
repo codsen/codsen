@@ -3810,7 +3810,8 @@ function attributeValidateBorder(context) {
           });
         }
         var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
-          type: "integer"
+          type: "integer",
+          negativeOK: false
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -4425,6 +4426,33 @@ function attributeValidateCols(context) {
             }));
           });
         }
+      }
+    }
+  };
+}
+
+function attributeValidateColspan(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "colspan") {
+        if (!["th", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-colspan",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          negativeOK: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-colspan"
+          }));
+        });
       }
     }
   };
@@ -5099,6 +5127,9 @@ defineLazyProp(builtInRules, "attribute-validate-color", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-cols", function () {
   return attributeValidateCols;
+});
+defineLazyProp(builtInRules, "attribute-validate-colspan", function () {
+  return attributeValidateColspan;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
