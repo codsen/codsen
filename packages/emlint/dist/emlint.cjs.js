@@ -4488,6 +4488,33 @@ function attributeValidateId(context) {
   };
 }
 
+function attributeValidateRowspan(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "rowspan") {
+        if (!["th", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rowspan",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          negativeOK: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-rowspan"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -5133,6 +5160,9 @@ defineLazyProp(builtInRules, "attribute-validate-colspan", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
+});
+defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
+  return attributeValidateRowspan;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;

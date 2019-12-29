@@ -4915,6 +4915,39 @@ function attributeValidateId(context, ...opts) {
   };
 }
 
+function attributeValidateRowspan(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "rowspan") {
+        if (!["th", "td"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rowspan",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitOnly(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            negativeOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-rowspan"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5869,6 +5902,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-id",
   () => attributeValidateId
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rowspan",
+  () => attributeValidateRowspan
 );
 defineLazyProp(
   builtInRules,
