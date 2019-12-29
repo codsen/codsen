@@ -49,7 +49,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`,
   t => {
     const gathered = [];
@@ -1090,6 +1090,46 @@ t.test(
     t.end();
   }
 );
+
+t.only(`05.05 - two asterisks as an attribute's value`, t => {
+  const gathered = [];
+  ct(`<frameset cols="**">`, obj => {
+    gathered.push(obj);
+  });
+
+  t.match(gathered, [
+    {
+      type: "html",
+      tagNameStartAt: 1,
+      tagNameEndAt: 9,
+      tagName: "frameset",
+      recognised: true,
+      closing: false,
+      void: false,
+      pureHTML: true,
+      esp: [],
+      start: 0,
+      end: 20,
+      tail: null,
+      kind: null,
+      attribs: [
+        {
+          attribName: "cols",
+          attribNameStartAt: 10,
+          attribNameEndAt: 14,
+          attribOpeningQuoteAt: 15,
+          attribClosingQuoteAt: 18,
+          attribValue: "**",
+          attribValueStartAt: 16,
+          attribValueEndAt: 18,
+          attribStart: 10,
+          attribEnd: 19
+        }
+      ]
+    }
+  ]);
+  t.end();
+});
 
 // 06. recognised and not recognised
 // -----------------------------------------------------------------------------
