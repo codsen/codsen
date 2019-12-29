@@ -27,6 +27,7 @@
   "attribute-validate-color",
   "attribute-validate-cols",
   "attribute-validate-colspan",
+  "attribute-validate-compact",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

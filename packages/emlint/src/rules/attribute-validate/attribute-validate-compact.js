@@ -1,13 +1,13 @@
-// rule: attribute-validate-checked
+// rule: attribute-validate-compact
 // -----------------------------------------------------------------------------
 
 import validateVoid from "../../util/validateVoid";
 
-function attributeValidateChecked(context, ...originalOpts) {
+function attributeValidateCompact(context, ...originalOpts) {
   return {
     attribute: function(node) {
       console.log(
-        `███████████████████████████████████████ attributeValidateChecked() ███████████████████████████████████████`
+        `███████████████████████████████████████ attributeValidateCompact() ███████████████████████████████████████`
       );
       console.log(
         `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -17,7 +17,7 @@ function attributeValidateChecked(context, ...originalOpts) {
         )}`
       );
       console.log(
-        `020 attributeValidateChecked(): node = ${JSON.stringify(
+        `020 attributeValidateCompact(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -40,9 +40,9 @@ function attributeValidateChecked(context, ...originalOpts) {
 
       const errorArr = [];
 
-      if (node.attribName === "checked") {
+      if (node.attribName === "compact") {
         // validate the parent
-        if (node.parent.tagName !== "input") {
+        if (!["dir", "dl", "menu", "ol", "ul"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStart,
             idxTo: node.attribEnd,
@@ -56,9 +56,7 @@ function attributeValidateChecked(context, ...originalOpts) {
             context,
             errorArr,
             Object.assign({}, opts, {
-              enforceSiblingAttributes: {
-                type: ["checkbox", "radio"]
-              }
+              enforceSiblingAttributes: null
             })
           );
         }
@@ -66,10 +64,10 @@ function attributeValidateChecked(context, ...originalOpts) {
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
-            console.log(`069 RAISE ERROR`);
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
-                ruleId: "attribute-validate-checked"
+                ruleId: "attribute-validate-compact"
               })
             );
           });
@@ -79,4 +77,4 @@ function attributeValidateChecked(context, ...originalOpts) {
   };
 }
 
-export default attributeValidateChecked;
+export default attributeValidateCompact;

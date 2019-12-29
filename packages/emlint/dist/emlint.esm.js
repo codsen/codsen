@@ -4256,9 +4256,115 @@ function attributeValidateCharset(context, ...opts) {
   };
 }
 
-function attributeValidateChecked(context, ...opts) {
+function validateVoid(node, context, errorArr, opts) {
+  if (opts.xhtml) {
+    let quotesType = `"`;
+    if (
+      node.attribOpeningQuoteAt !== null &&
+      context.str[node.attribOpeningQuoteAt] === `'`
+    ) {
+      quotesType = `'`;
+    } else if (
+      node.attribClosingQuoteAt !== null &&
+      context.str[node.attribClosingQuoteAt] === `'`
+    ) {
+      quotesType = `'`;
+    }
+    if (
+      node.attribValue !== node.attribName ||
+      context.str.slice(node.attribNameEndAt, node.attribEnd) !==
+        `=${quotesType}${node.attribName}${quotesType}`
+    ) {
+      errorArr.push({
+        idxFrom: node.attribNameStartAt,
+        idxTo: node.attribNameEndAt,
+        message: `It's XHTML, add value, ="${node.attribName}".`,
+        fix: {
+          ranges: [
+            [
+              node.attribNameEndAt,
+              node.attribEnd,
+              `=${quotesType}${node.attribName}${quotesType}`
+            ]
+          ]
+        }
+      });
+    }
+  } else if (node.attribValue !== null) {
+    errorArr.push({
+      idxFrom: node.attribNameEndAt,
+      idxTo: node.attribEnd,
+      message: `Should have no value.`,
+      fix: {
+        ranges: [[node.attribNameEndAt, node.attribEnd]]
+      }
+    });
+  }
+  if (
+    isObj(opts.enforceSiblingAttributes) &&
+    Object.keys(opts.enforceSiblingAttributes).length
+  ) {
+    Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
+      if (
+        Array.isArray(node.parent.attribs) &&
+        !node.parent.attribs.some(
+          attribObj => attribObj.attribName === siblingAttr
+        )
+      ) {
+        errorArr.push({
+          idxFrom: node.parent.start,
+          idxTo: node.parent.end,
+          message: `Should have attribute "${siblingAttr}".`,
+          fix: null
+        });
+      } else if (
+        opts.enforceSiblingAttributes[siblingAttr] &&
+        Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) &&
+        Array.isArray(node.parent.attribs) &&
+        !node.parent.attribs.some(
+          attribObj =>
+            attribObj.attribName === siblingAttr &&
+            opts.enforceSiblingAttributes[siblingAttr].includes(
+              attribObj.attribValue
+            )
+        )
+      ) {
+        let idxFrom;
+        let idxTo;
+        for (let i = 0, len = node.parent.attribs.length; i < len; i++) {
+          if (node.parent.attribs[i].attribName === siblingAttr) {
+            idxFrom = node.parent.attribs[i].attribValueStartAt;
+            idxTo = node.parent.attribs[i].attribValueEndAt;
+            break;
+          }
+        }
+        errorArr.push({
+          idxFrom,
+          idxTo,
+          message: `Only tags with ${opts.enforceSiblingAttributes[siblingAttr]
+            .map(val => `"${val}"`)
+            .join(" or ")} attributes can be ${node.attribName}.`,
+          fix: null
+        });
+      }
+    });
+  }
+  return errorArr;
+}
+
+function attributeValidateChecked(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
       const errorArr = [];
       if (node.attribName === "checked") {
         if (node.parent.tagName !== "input") {
@@ -4269,97 +4375,26 @@ function attributeValidateChecked(context, ...opts) {
             fix: null
           });
         } else {
-          if (
-            Array.isArray(opts) &&
-            opts.length &&
-            opts.some(val => val.toLowerCase() === "xhtml")
-          ) {
-            let quotesType = `"`;
-            if (
-              node.attribOpeningQuoteAt !== null &&
-              context.str[node.attribOpeningQuoteAt] === `'`
-            ) {
-              quotesType = `'`;
-            } else if (
-              node.attribClosingQuoteAt !== null &&
-              context.str[node.attribClosingQuoteAt] === `'`
-            ) {
-              quotesType = `'`;
-            }
-            if (
-              node.attribValue !== "checked" ||
-              context.str.slice(node.attribNameEndAt, node.attribEnd) !==
-                `=${quotesType}checked${quotesType}`
-            ) {
-              errorArr.push({
-                idxFrom: node.attribNameStartAt,
-                idxTo: node.attribNameEndAt,
-                message: `It's XHTML, add value, ="checked".`,
-                fix: {
-                  ranges: [
-                    [
-                      node.attribNameEndAt,
-                      node.attribEnd,
-                      `=${quotesType}checked${quotesType}`
-                    ]
-                  ]
-                }
-              });
-            }
-          } else if (node.attribValue !== null) {
-            errorArr.push({
-              idxFrom: node.attribNameEndAt,
-              idxTo: node.attribEnd,
-              message: `Should have no value.`,
-              fix: {
-                ranges: [[node.attribNameEndAt, node.attribEnd]]
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: {
+                type: ["checkbox", "radio"]
               }
-            });
-          }
-          if (
-            Array.isArray(node.parent.attribs) &&
-            !node.parent.attribs.some(
-              attribObj => attribObj.attribName === "type"
-            )
-          ) {
-            errorArr.push({
-              idxFrom: node.parent.start,
-              idxTo: node.parent.end,
-              message: `Should have attribute "type".`,
-              fix: null
-            });
-          } else if (
-            Array.isArray(node.parent.attribs) &&
-            !node.parent.attribs.some(
-              attribObj =>
-                attribObj.attribName === "type" &&
-                ["checkbox", "radio"].includes(attribObj.attribValue)
-            )
-          ) {
-            let idxFrom;
-            let idxTo;
-            for (let i = 0, len = node.parent.attribs.length; i < len; i++) {
-              if (node.parent.attribs[i].attribName === "type") {
-                idxFrom = node.parent.attribs[i].attribValueStartAt;
-                idxTo = node.parent.attribs[i].attribValueEndAt;
-                break;
-              }
-            }
-            errorArr.push({
-              idxFrom,
-              idxTo,
-              message: `Only "checkbox" or "radio" types can be checked.`,
-              fix: null
-            });
-          }
-        }
-        errorArr.forEach(errorObj => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-checked"
             })
           );
-        });
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-checked"
+              })
+            );
+          });
+        }
       }
     }
   };
@@ -4869,6 +4904,52 @@ function attributeValidateColspan(context, ...opts) {
             })
           );
         });
+      }
+    }
+  };
+}
+
+function attributeValidateCompact(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
+      const errorArr = [];
+      if (node.attribName === "compact") {
+        if (!["dir", "dl", "menu", "ol", "ul"].includes(node.parent.tagName)) {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: null
+            })
+          );
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-compact"
+              })
+            );
+          });
+        }
       }
     }
   };
@@ -5897,6 +5978,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-colspan",
   () => attributeValidateColspan
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-compact",
+  () => attributeValidateCompact
 );
 defineLazyProp(
   builtInRules,

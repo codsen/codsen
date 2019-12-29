@@ -6,7 +6,7 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 0`,
+  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 0`,
   t => {
     const str = `<form><input>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
@@ -22,7 +22,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 1`,
+  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 1`,
   t => {
     const str = `<form><input>`;
     const linter = new Linter();
@@ -38,7 +38,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 2`,
+  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no checked, error level 2`,
   t => {
     const str = `<form><input>`;
     const linter = new Linter();
@@ -346,7 +346,7 @@ t.test(`03.05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong type`, t => {
       ruleId: "attribute-validate-checked",
       idxFrom: 13,
       idxTo: 18,
-      message: `Only "checkbox" or "radio" types can be checked.`,
+      message: `Only tags with "checkbox" or "radio" attributes can be checked.`,
       fix: null
     }
   ]);
