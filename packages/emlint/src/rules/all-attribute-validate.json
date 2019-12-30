@@ -30,6 +30,7 @@
   "attribute-validate-compact",
   "attribute-validate-content",
   "attribute-validate-coords",
+  "attribute-validate-data",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

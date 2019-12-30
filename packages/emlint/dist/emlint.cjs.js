@@ -4650,6 +4650,41 @@ function attributeValidateCoords(context) {
   };
 }
 
+function attributeValidateData(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "data") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-data",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: "Should be an URI.",
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-data"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5359,6 +5394,9 @@ defineLazyProp(builtInRules, "attribute-validate-content", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-coords", function () {
   return attributeValidateCoords;
+});
+defineLazyProp(builtInRules, "attribute-validate-data", function () {
+  return attributeValidateData;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

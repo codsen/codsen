@@ -5115,6 +5115,50 @@ function attributeValidateCoords(context, ...opts) {
   };
 }
 
+function attributeValidateData(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "data") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-data",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        if (
+          !isUrl(
+            context.str.slice(
+              node.attribValueStartAt + charStart,
+              node.attribValueStartAt + charEnd
+            )
+          )
+        ) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: `Should be an URI.`,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-data"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6154,6 +6198,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-coords",
   () => attributeValidateCoords
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-data",
+  () => attributeValidateData
 );
 defineLazyProp(
   builtInRules,
