@@ -1,7 +1,7 @@
 // rule: attribute-validate-charoff
 // -----------------------------------------------------------------------------
 
-import { validateDigitOnly } from "../../util/util";
+import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateCharoff(context, ...opts) {
   return {
@@ -47,17 +47,18 @@ function attributeValidateCharoff(context, ...opts) {
           });
         }
 
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            percOK: false,
-            negativeOK: true
+            negativeOK: true,
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           }
         );
         console.log(
-          `060 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `061 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         // tag has to have "char" attribute:
@@ -75,7 +76,7 @@ function attributeValidateCharoff(context, ...opts) {
         }
 
         errorArr.forEach(errorObj => {
-          console.log(`078 RAISE ERROR`);
+          console.log(`079 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-charoff"

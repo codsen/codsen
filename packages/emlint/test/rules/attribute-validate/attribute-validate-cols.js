@@ -683,3 +683,27 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `04.09 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - negative number`,
+  t => {
+    const str = `<textarea cols="-1">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-cols": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-cols",
+        idxFrom: 16,
+        idxTo: 18,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);

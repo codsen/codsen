@@ -280,15 +280,17 @@ t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
       "attribute-validate-cellpadding": 2
     }
   });
-  // can't fix:
-  t.equal(applyFixes(str, messages), str);
+  // will fix:
+  t.equal(applyFixes(str, messages), `<table cellpadding="1">`);
   t.match(messages, [
     {
       ruleId: "attribute-validate-cellpadding",
       idxFrom: 21, // <--- starts at the first non-digit char
       idxTo: 23,
-      message: `Should be integer, either no units or percentage.`,
-      fix: null
+      message: `Remove px.`,
+      fix: {
+        ranges: [[21, 23]]
+      }
     }
   ]);
   t.end();

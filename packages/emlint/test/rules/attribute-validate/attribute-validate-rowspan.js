@@ -280,15 +280,17 @@ t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
       "attribute-validate-rowspan": 2
     }
   });
-  // can't fix:
-  t.equal(applyFixes(str, messages), str);
+  // will fix:
+  t.equal(applyFixes(str, messages), `<td rowspan="1">`);
   t.match(messages, [
     {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 14, // <--- starts at the first non-digit char
       idxTo: 16,
-      message: `Should be integer, no units.`,
-      fix: null
+      message: `Remove px.`,
+      fix: {
+        ranges: [[14, 16]]
+      }
     }
   ]);
   t.end();

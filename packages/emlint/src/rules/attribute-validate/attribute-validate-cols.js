@@ -1,7 +1,6 @@
 // rule: attribute-validate-cols
 // -----------------------------------------------------------------------------
 
-import validateDigitOnly from "../../util/validateDigitOnly";
 import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateCols(context, ...opts) {
@@ -11,7 +10,7 @@ function attributeValidateCols(context, ...opts) {
         `███████████████████████████████████████ attributeValidateCols() ███████████████████████████████████████`
       );
       console.log(
-        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -34,7 +33,7 @@ function attributeValidateCols(context, ...opts) {
         }
 
         console.log(
-          `037 attributeValidateCols(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+          `036 attributeValidateCols(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
             node.attribValue,
             null,
             4
@@ -57,7 +56,7 @@ function attributeValidateCols(context, ...opts) {
             }
           );
           console.log(
-            `060 attributeValidateCols(): received errorArr = ${JSON.stringify(
+            `059 attributeValidateCols(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -65,17 +64,17 @@ function attributeValidateCols(context, ...opts) {
           );
         } else if (node.parent.tagName === "textarea") {
           // each character must be a digit
-          errorArr = validateDigitOnly(
+          errorArr = validateDigitAndUnit(
             node.attribValue,
             node.attribValueStartAt,
             {
               type: "integer",
-              percOK: false,
-              negativeOK: false
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units."
             }
           );
           console.log(
-            `078 attributeValidateCols(): received errorArr = ${JSON.stringify(
+            `077 attributeValidateCols(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -85,7 +84,7 @@ function attributeValidateCols(context, ...opts) {
 
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(errorObj => {
-            console.log(`088 RAISE ERROR`);
+            console.log(`087 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-cols"

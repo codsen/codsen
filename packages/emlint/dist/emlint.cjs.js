@@ -499,10 +499,16 @@ function validateValue(_ref) {
       idxOffset = _ref.idxOffset,
       errorArr = _ref.errorArr;
   if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
+    var message = "Digits missing.";
+    if (opts.customGenericValueError) {
+      message = opts.customGenericValueError;
+    } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
+      message = "Should be integer, no units.";
+    }
     errorArr.push({
       idxFrom: idxOffset + charStart,
       idxTo: idxOffset + charEnd,
-      message: opts.customGenericValueError || "Digits missing.",
+      message: message,
       fix: null
     });
   } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
@@ -514,7 +520,7 @@ function validateValue(_ref) {
     });
   } else {
     for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i]) && (opts.type !== "rational" || str[i] !== ".")) {
+      if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0))) {
         var endPart = str.slice(i, charEnd);
         if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
           if (endPart === "px") {
@@ -527,24 +533,32 @@ function validateValue(_ref) {
               }
             });
           } else {
+            var _message = "Bad unit.";
+            if (str.includes("--")) {
+              _message = "Repeated minus.";
+            } else if (opts.customGenericValueError) {
+              _message = opts.customGenericValueError;
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
+              _message = "Should be integer, no units.";
+            }
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message: opts.customGenericValueError || "Bad unit.",
+              message: _message,
               fix: null
             });
           }
         } else if (!knownUnits.includes(endPart)) {
-          var message = "Unrecognised unit.";
+          var _message2 = "Unrecognised unit.";
           if (/\d/.test(endPart)) {
-            message = "Messy value.";
+            _message2 = "Messy value.";
           } else if (knownUnits.includes(endPart.trim())) {
-            message = "Rogue whitespace.";
+            _message2 = "Rogue whitespace.";
           }
           errorArr.push({
             idxFrom: idxOffset + i,
             idxTo: idxOffset + charEnd,
-            message: message,
+            message: _message2,
             fix: null
           });
         }
@@ -555,11 +569,13 @@ function validateValue(_ref) {
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
   var defaultOpts = {
+    type: "integer",
     whitelistValues: [],
+    theOnlyGoodUnits: null,
+    negativeOK: false,
     badUnits: [],
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
-    type: "integer",
     customGenericValueError: null
   };
   var opts = Object.assign({}, defaultOpts, originalOpts);
@@ -607,27 +623,6 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           idxOffset: idxOffset,
           errorArr: errorArr
         });
-      }
-    }
-  }
-  return errorArr;
-}
-
-function validateDigitOnly(str, idxOffset, opts) {
-  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
-      charStart = _checkForWhitespace.charStart,
-      charEnd = _checkForWhitespace.charEnd,
-      errorArr = _checkForWhitespace.errorArr;
-  if (Number.isInteger(charStart)) {
-    for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i]) && (opts.type === "integer" || opts.type === "rational" && !["."].includes(str[i])) && (!opts.percOK || !(str[i] === "%" && charEnd === i + 1)) && (!opts.negativeOK || str[i] !== "-")) {
-        errorArr.push({
-          idxFrom: idxOffset + i,
-          idxTo: idxOffset + charEnd,
-          message: "Should be ".concat(opts.type).concat(opts.percOK ? ", either no units or percentage" : ", no units", "."),
-          fix: null
-        });
-        break;
       }
     }
   }
@@ -3820,9 +3815,10 @@ function attributeValidateBorder(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          negativeOK: false
+          negativeOK: false,
+          theOnlyGoodUnits: []
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -3847,9 +3843,12 @@ function attributeValidateCellpadding(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          percOK: true
+          negativeOK: false,
+          theOnlyGoodUnits: ["%"],
+          badUnits: ["px"],
+          customGenericValueError: "Should be integer, either no units or percentage."
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -3874,9 +3873,12 @@ function attributeValidateCellspacing(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          percOK: true
+          negativeOK: false,
+          theOnlyGoodUnits: ["%"],
+          badUnits: ["px"],
+          customGenericValueError: "Should be integer, either no units or percentage."
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -3939,10 +3941,11 @@ function attributeValidateCharoff(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          percOK: false,
-          negativeOK: true
+          negativeOK: true,
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units."
         });
         if (!node.parent.attribs.some(function (attribObj) {
           return attribObj.attribName === "char";
@@ -4447,10 +4450,10 @@ function attributeValidateCols(context) {
             customGenericValueError: "Should be: pixels|%|*."
           });
         } else if (node.parent.tagName === "textarea") {
-          errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
             type: "integer",
-            percOK: false,
-            negativeOK: false
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           });
         }
         if (Array.isArray(errorArr) && errorArr.length) {
@@ -4478,9 +4481,10 @@ function attributeValidateColspan(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          negativeOK: false
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units."
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
@@ -4602,9 +4606,10 @@ function attributeValidateRowspan(context) {
             fix: null
           });
         }
-        var errorArr = validateDigitOnly(node.attribValue, node.attribValueStartAt, {
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
           type: "integer",
-          negativeOK: false
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units."
         });
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {

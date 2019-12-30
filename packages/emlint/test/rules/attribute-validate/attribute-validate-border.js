@@ -264,15 +264,17 @@ t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
       "attribute-validate-border": 2
     }
   });
-  // can't fix:
-  t.equal(applyFixes(str, messages), str);
+  // can fix:
+  t.equal(applyFixes(str, messages), `<table border="1">`);
   t.match(messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 16, // <--- starts at the first non-digit char
       idxTo: 18,
-      message: `Should be integer, no units.`,
-      fix: null
+      message: `Remove px.`,
+      fix: {
+        ranges: [[16, 18]]
+      }
     }
   ]);
   t.end();

@@ -1,6 +1,5 @@
 // validation functions
 import validateDigitAndUnit from "./validateDigitAndUnit";
-import validateDigitOnly from "./validateDigitOnly";
 import validateString from "./validateString";
 const wholeExtensionRegex = /^\.\w+$/g;
 
@@ -34,7 +33,6 @@ export {
   wholeExtensionRegex,
   isEnabled,
   validateDigitAndUnit,
-  validateDigitOnly,
   validateString,
   isLetter
 };

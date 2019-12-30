@@ -1,7 +1,7 @@
 // rule: attribute-validate-cellspacing
 // -----------------------------------------------------------------------------
 
-import { validateDigitOnly } from "../../util/util";
+import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateCellpadding(context, ...opts) {
   return {
@@ -32,20 +32,24 @@ function attributeValidateCellpadding(context, ...opts) {
           });
         }
 
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            percOK: true
+            negativeOK: false,
+            theOnlyGoodUnits: ["%"],
+            badUnits: ["px"],
+            customGenericValueError:
+              "Should be integer, either no units or percentage."
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach(errorObj => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-cellpadding"

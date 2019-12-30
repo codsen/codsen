@@ -1,7 +1,7 @@
 // rule: attribute-validate-border
 // -----------------------------------------------------------------------------
 
-import { validateDigitOnly } from "../../util/util";
+import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateBorder(context, ...opts) {
   return {
@@ -32,20 +32,21 @@ function attributeValidateBorder(context, ...opts) {
           });
         }
 
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            negativeOK: false
+            negativeOK: false,
+            theOnlyGoodUnits: [] // empty array means no units allowed
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach(errorObj => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-border"

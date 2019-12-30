@@ -296,6 +296,30 @@ t.test(`03.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - dot`, t => {
   t.end();
 });
 
+t.test(
+  `03.06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`,
+  t => {
+    const str = `<td align="char" char="," charoff="--2">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-charoff": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-charoff",
+        idxFrom: 36,
+        idxTo: 38,
+        message: `Repeated minus.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
 // 04. parent tag must have "char" attribute
 // -----------------------------------------------------------------------------
 

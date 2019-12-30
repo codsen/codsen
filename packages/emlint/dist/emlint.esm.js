@@ -654,10 +654,20 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
     !"0123456789".includes(str[charStart]) &&
     !"0123456789".includes(str[charEnd - 1])
   ) {
+    let message = `Digits missing.`;
+    if (opts.customGenericValueError) {
+      message = opts.customGenericValueError;
+    } else if (
+      Array.isArray(opts.theOnlyGoodUnits) &&
+      !opts.theOnlyGoodUnits.length &&
+      opts.type === "integer"
+    ) {
+      message = `Should be integer, no units.`;
+    }
     errorArr.push({
       idxFrom: idxOffset + charStart,
       idxTo: idxOffset + charEnd,
-      message: opts.customGenericValueError || `Digits missing.`,
+      message,
       fix: null
     });
   } else if (
@@ -675,7 +685,8 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
     for (let i = charStart; i < charEnd; i++) {
       if (
         !"0123456789".includes(str[i]) &&
-        (opts.type !== "rational" || str[i] !== ".")
+        (str[i] !== "." || opts.type !== "rational") &&
+        (str[i] !== "-" || !(opts.negativeOK && i === 0))
       ) {
         const endPart = str.slice(i, charEnd);
         if (
@@ -694,10 +705,22 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
               }
             });
           } else {
+            let message = `Bad unit.`;
+            if (str.includes("--")) {
+              message = `Repeated minus.`;
+            } else if (opts.customGenericValueError) {
+              message = opts.customGenericValueError;
+            } else if (
+              Array.isArray(opts.theOnlyGoodUnits) &&
+              !opts.theOnlyGoodUnits.length &&
+              opts.type === "integer"
+            ) {
+              message = `Should be integer, no units.`;
+            }
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message: opts.customGenericValueError || `Bad unit.`,
+              message,
               fix: null
             });
           }
@@ -722,11 +745,13 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
   const defaultOpts = {
+    type: "integer",
     whitelistValues: [],
+    theOnlyGoodUnits: null,
+    negativeOK: false,
     badUnits: [],
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
-    type: "integer",
     customGenericValueError: null
   };
   const opts = Object.assign({}, defaultOpts, originalOpts);
@@ -779,32 +804,6 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           idxOffset,
           errorArr
         });
-      }
-    }
-  }
-  return errorArr;
-}
-
-function validateDigitOnly(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
-    for (let i = charStart; i < charEnd; i++) {
-      if (
-        !"0123456789".includes(str[i]) &&
-        (opts.type === "integer" ||
-          (opts.type === "rational" && !["."].includes(str[i]))) &&
-        (!opts.percOK || !(str[i] === "%" && charEnd === i + 1)) &&
-        (!opts.negativeOK || str[i] !== "-")
-      ) {
-        errorArr.push({
-          idxFrom: idxOffset + i,
-          idxTo: idxOffset + charEnd,
-          message: `Should be ${opts.type}${
-            opts.percOK ? `, either no units or percentage` : ", no units"
-          }.`,
-          fix: null
-        });
-        break;
       }
     }
   }
@@ -4036,12 +4035,13 @@ function attributeValidateBorder(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            negativeOK: false
+            negativeOK: false,
+            theOnlyGoodUnits: []
           }
         );
         errorArr.forEach(errorObj => {
@@ -4069,12 +4069,16 @@ function attributeValidateCellpadding(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            percOK: true
+            negativeOK: false,
+            theOnlyGoodUnits: ["%"],
+            badUnits: ["px"],
+            customGenericValueError:
+              "Should be integer, either no units or percentage."
           }
         );
         errorArr.forEach(errorObj => {
@@ -4102,12 +4106,16 @@ function attributeValidateCellspacing(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            percOK: true
+            negativeOK: false,
+            theOnlyGoodUnits: ["%"],
+            badUnits: ["px"],
+            customGenericValueError:
+              "Should be integer, either no units or percentage."
           }
         );
         errorArr.forEach(errorObj => {
@@ -4199,13 +4207,14 @@ function attributeValidateCharoff(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            percOK: false,
-            negativeOK: true
+            negativeOK: true,
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           }
         );
         if (
@@ -4863,13 +4872,13 @@ function attributeValidateCols(context, ...opts) {
             }
           );
         } else if (node.parent.tagName === "textarea") {
-          errorArr = validateDigitOnly(
+          errorArr = validateDigitAndUnit(
             node.attribValue,
             node.attribValueStartAt,
             {
               type: "integer",
-              percOK: false,
-              negativeOK: false
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units."
             }
           );
         }
@@ -4900,12 +4909,13 @@ function attributeValidateColspan(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            negativeOK: false
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           }
         );
         errorArr.forEach(errorObj => {
@@ -5049,12 +5059,13 @@ function attributeValidateRowspan(context, ...opts) {
             fix: null
           });
         }
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            negativeOK: false
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           }
         );
         errorArr.forEach(errorObj => {

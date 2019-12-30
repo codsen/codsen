@@ -1,7 +1,7 @@
 // rule: attribute-validate-colspan
 // -----------------------------------------------------------------------------
 
-import { validateDigitOnly } from "../../util/util";
+import { validateDigitAndUnit } from "../../util/util";
 
 function attributeValidateColspan(context, ...opts) {
   return {
@@ -32,20 +32,21 @@ function attributeValidateColspan(context, ...opts) {
           });
         }
 
-        const errorArr = validateDigitOnly(
+        const errorArr = validateDigitAndUnit(
           node.attribValue,
           node.attribValueStartAt,
           {
             type: "integer",
-            negativeOK: false
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach(errorObj => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-colspan"
