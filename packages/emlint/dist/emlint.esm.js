@@ -911,13 +911,18 @@ function validateString(str, idxOffset, opts) {
         }
       });
     } else if (
-      (!Array.isArray(opts.quickPermittedValues) ||
-        !includesWithRegex(
-          opts.quickPermittedValues,
-          str.slice(charStart, charEnd)
-        )) &&
-      (!Array.isArray(opts.permittedValues) ||
-        !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))
+      !(
+        (Array.isArray(opts.quickPermittedValues) &&
+          includesWithRegex(
+            opts.quickPermittedValues,
+            str.slice(charStart, charEnd)
+          )) ||
+        (Array.isArray(opts.permittedValues) &&
+          includesWithRegex(
+            opts.permittedValues,
+            str.slice(charStart, charEnd)
+          ))
+      )
     ) {
       errorArr.push({
         idxFrom: idxOffset + charStart,
@@ -931,6 +936,7 @@ function validateString(str, idxOffset, opts) {
 }
 
 const wholeExtensionRegex = /^\.\w+$/g;
+const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 function isLetter(str) {
   return (
     typeof str === "string" &&
@@ -5159,6 +5165,41 @@ function attributeValidateData(context, ...opts) {
   };
 }
 
+function attributeValidateDatetime(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "datetime") {
+        if (!["del", "ins"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-datetime",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            quickPermittedValues: [isoDateRegex],
+            permittedValues: null,
+            canBeCommaSeparated: false,
+            noSpaceAfterComma: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-datetime"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6203,6 +6244,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-data",
   () => attributeValidateData
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-datetime",
+  () => attributeValidateDatetime
 );
 defineLazyProp(
   builtInRules,

@@ -96,14 +96,27 @@ function validateString(str, idxOffset, opts) {
         }
       });
     } else if (
-      (!Array.isArray(opts.quickPermittedValues) ||
-        !includesWithRegex(
-          opts.quickPermittedValues,
-          str.slice(charStart, charEnd)
-        )) &&
-      (!Array.isArray(opts.permittedValues) ||
-        !includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))
+      !(
+        (Array.isArray(opts.quickPermittedValues) &&
+          includesWithRegex(
+            opts.quickPermittedValues,
+            str.slice(charStart, charEnd)
+          )) ||
+        (Array.isArray(opts.permittedValues) &&
+          includesWithRegex(
+            opts.permittedValues,
+            str.slice(charStart, charEnd)
+          ))
+      )
     ) {
+      console.log(`112 validateString(): single value clauses`);
+      console.log(
+        `114 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${str.slice(
+          charStart,
+          charEnd
+        )}\u001b[${39}m`}`
+      );
+
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
@@ -114,7 +127,7 @@ function validateString(str, idxOffset, opts) {
   }
 
   console.log(
-    `117 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `130 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
       errorArr,
       null,
       4
