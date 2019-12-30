@@ -34,39 +34,51 @@ function validateString(str, idxOffset, opts) {
           console.log(
             `035 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
           );
+
+          const extractedValue = str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          );
           console.log(
-            `038 ██ EXTRACTED VALUE: ${JSON.stringify(
-              str.slice(idxFrom - idxOffset, idxTo - idxOffset),
-              null,
-              0
-            )}`
+            `043 ██ EXTRACTED VALUE: ${JSON.stringify(extractedValue, null, 0)}`
           );
 
+          let message = `Unrecognised value: "${str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          )}".`;
+          let fix = null;
           if (
             !(
-              (Array.isArray(opts.quickPermittedValues) &&
-                includesWithRegex(
-                  opts.quickPermittedValues,
-                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-                )) ||
-              (Array.isArray(opts.permittedValues) &&
-                includesWithRegex(
-                  opts.permittedValues,
-                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-                ))
+              includesWithRegex(opts.quickPermittedValues, extractedValue) ||
+              includesWithRegex(opts.permittedValues, extractedValue)
             )
           ) {
+            // check maybe it's a letter case issue
+            if (
+              includesWithRegex(
+                opts.quickPermittedValues,
+                extractedValue.toLowerCase()
+              ) ||
+              includesWithRegex(
+                opts.permittedValues,
+                extractedValue.toLowerCase()
+              )
+            ) {
+              message = `Should be lowercase;`;
+              fix = {
+                ranges: [[idxFrom, idxTo, extractedValue.toLowerCase()]]
+              };
+            }
+
             errorArr.push({
               idxFrom: idxFrom,
               idxTo: idxTo,
-              message: `Unrecognised value: "${str.slice(
-                idxFrom - idxOffset,
-                idxTo - idxOffset
-              )}".`,
-              fix: null
+              message,
+              fix
             });
             console.log(
-              `069 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              `081 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
                 errorArr,
                 null,
                 4
@@ -76,7 +88,7 @@ function validateString(str, idxOffset, opts) {
         },
         errCb: (ranges, message) => {
           console.log(
-            `079 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+            `091 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
           );
           errorArr.push({
             idxFrom: ranges[0][0],
@@ -87,7 +99,7 @@ function validateString(str, idxOffset, opts) {
             }
           });
           console.log(
-            `090 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `102 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -109,25 +121,45 @@ function validateString(str, idxOffset, opts) {
           ))
       )
     ) {
-      console.log(`112 validateString(): single value clauses`);
+      console.log(`124 validateString(): single value clauses`);
+      const extractedValue = str.slice(charStart, charEnd);
       console.log(
-        `114 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${str.slice(
-          charStart,
-          charEnd
-        )}\u001b[${39}m`}`
+        `127 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${extractedValue}\u001b[${39}m`}`
       );
+
+      let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
+      let fix = null;
+      // check maybe it's a letter case issue
+      if (
+        includesWithRegex(
+          opts.quickPermittedValues,
+          extractedValue.toLowerCase()
+        ) ||
+        includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
+      ) {
+        message = `Should be lowercase.`;
+        fix = {
+          ranges: [
+            [
+              idxOffset + charStart,
+              idxOffset + charEnd,
+              extractedValue.toLowerCase()
+            ]
+          ]
+        };
+      }
 
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `Unrecognised value: "${str.slice(charStart, charEnd)}".`,
-        fix: null
+        message,
+        fix
       });
     }
   }
 
   console.log(
-    `130 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `162 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
       errorArr,
       null,
       4

@@ -34,6 +34,7 @@
   "attribute-validate-datetime",
   "attribute-validate-declare",
   "attribute-validate-defer",
+  "attribute-validate-dir",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

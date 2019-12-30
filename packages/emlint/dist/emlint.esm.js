@@ -874,28 +874,41 @@ function validateString(str, idxOffset, opts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
+          const extractedValue = str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          );
+          let message = `Unrecognised value: "${str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          )}".`;
+          let fix = null;
           if (
             !(
-              (Array.isArray(opts.quickPermittedValues) &&
-                includesWithRegex(
-                  opts.quickPermittedValues,
-                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-                )) ||
-              (Array.isArray(opts.permittedValues) &&
-                includesWithRegex(
-                  opts.permittedValues,
-                  str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-                ))
+              includesWithRegex(opts.quickPermittedValues, extractedValue) ||
+              includesWithRegex(opts.permittedValues, extractedValue)
             )
           ) {
+            if (
+              includesWithRegex(
+                opts.quickPermittedValues,
+                extractedValue.toLowerCase()
+              ) ||
+              includesWithRegex(
+                opts.permittedValues,
+                extractedValue.toLowerCase()
+              )
+            ) {
+              message = `Should be lowercase;`;
+              fix = {
+                ranges: [[idxFrom, idxTo, extractedValue.toLowerCase()]]
+              };
+            }
             errorArr.push({
               idxFrom: idxFrom,
               idxTo: idxTo,
-              message: `Unrecognised value: "${str.slice(
-                idxFrom - idxOffset,
-                idxTo - idxOffset
-              )}".`,
-              fix: null
+              message,
+              fix
             });
           }
         },
@@ -924,11 +937,32 @@ function validateString(str, idxOffset, opts) {
           ))
       )
     ) {
+      const extractedValue = str.slice(charStart, charEnd);
+      let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
+      let fix = null;
+      if (
+        includesWithRegex(
+          opts.quickPermittedValues,
+          extractedValue.toLowerCase()
+        ) ||
+        includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
+      ) {
+        message = `Should be lowercase.`;
+        fix = {
+          ranges: [
+            [
+              idxOffset + charStart,
+              idxOffset + charEnd,
+              extractedValue.toLowerCase()
+            ]
+          ]
+        };
+      }
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `Unrecognised value: "${str.slice(charStart, charEnd)}".`,
-        fix: null
+        message,
+        fix
       });
     }
   }
@@ -5292,6 +5326,51 @@ function attributeValidateDefer(context, ...originalOpts) {
   };
 }
 
+function attributeValidateDir(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "dir") {
+        if (
+          [
+            "applet",
+            "base",
+            "basefont",
+            "br",
+            "frame",
+            "frameset",
+            "iframe",
+            "param",
+            "script"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-dir",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["ltr", "rtl"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-dir"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6351,6 +6430,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-defer",
   () => attributeValidateDefer
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-dir",
+  () => attributeValidateDir
 );
 defineLazyProp(
   builtInRules,

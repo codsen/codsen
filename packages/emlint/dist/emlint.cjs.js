@@ -679,12 +679,21 @@ function validateString(str, idxOffset, opts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
-          if (!(Array.isArray(opts.quickPermittedValues) && includesWithRegex(opts.quickPermittedValues, str.slice(idxFrom - idxOffset, idxTo - idxOffset)) || Array.isArray(opts.permittedValues) && includesWithRegex(opts.permittedValues, str.slice(idxFrom - idxOffset, idxTo - idxOffset)))) {
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
+          var message = "Unrecognised value: \"".concat(str.slice(idxFrom - idxOffset, idxTo - idxOffset), "\".");
+          var fix = null;
+          if (!(includesWithRegex(opts.quickPermittedValues, extractedValue) || includesWithRegex(opts.permittedValues, extractedValue))) {
+            if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
+              message = "Should be lowercase;";
+              fix = {
+                ranges: [[idxFrom, idxTo, extractedValue.toLowerCase()]]
+              };
+            }
             errorArr.push({
               idxFrom: idxFrom,
               idxTo: idxTo,
-              message: "Unrecognised value: \"".concat(str.slice(idxFrom - idxOffset, idxTo - idxOffset), "\"."),
-              fix: null
+              message: message,
+              fix: fix
             });
           }
         },
@@ -700,11 +709,20 @@ function validateString(str, idxOffset, opts) {
         }
       });
     } else if (!(Array.isArray(opts.quickPermittedValues) && includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd)) || Array.isArray(opts.permittedValues) && includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
+      var extractedValue = str.slice(charStart, charEnd);
+      var message = "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\".");
+      var fix = null;
+      if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
+        message = "Should be lowercase.";
+        fix = {
+          ranges: [[idxOffset + charStart, idxOffset + charEnd, extractedValue.toLowerCase()]]
+        };
+      }
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\"."),
-        fix: null
+        message: message,
+        fix: fix
       });
     }
   }
@@ -4797,6 +4815,35 @@ function attributeValidateDefer(context) {
   };
 }
 
+function attributeValidateDir(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "dir") {
+        if (["applet", "base", "basefont", "br", "frame", "frameset", "iframe", "param", "script"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-dir",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: ["ltr", "rtl"],
+          canBeCommaSeparated: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-dir"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5518,6 +5565,9 @@ defineLazyProp(builtInRules, "attribute-validate-declare", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-defer", function () {
   return attributeValidateDefer;
+});
+defineLazyProp(builtInRules, "attribute-validate-dir", function () {
+  return attributeValidateDir;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
