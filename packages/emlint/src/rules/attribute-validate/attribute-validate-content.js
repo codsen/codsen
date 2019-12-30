@@ -73,4 +73,6 @@ function attributeValidateContent(context, ...opts) {
   };
 }
 
+// TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+
 export default attributeValidateContent;

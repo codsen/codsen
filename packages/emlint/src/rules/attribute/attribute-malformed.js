@@ -29,9 +29,11 @@ function attributeMalformed(context, ...opts) {
         console.log(
           `030 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
         );
+
+        let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
-            console.log(`034 RAISE ERROR`);
+            console.log(`036 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
@@ -47,8 +49,21 @@ function attributeMalformed(context, ...opts) {
                 ]
               }
             });
+            somethingMatched = true;
             break;
           }
+        }
+
+        if (!somethingMatched) {
+          // the attribute was not recognised
+          console.log(`059 RAISE ERROR`);
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `Unrecognised attribute "${node.attribName}".`,
+            idxFrom: node.attribNameStartAt,
+            idxTo: node.attribNameEndAt,
+            fix: null
+          });
         }
       }
 
@@ -56,7 +71,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueStartAt !== null &&
         context.str[node.attribNameEndAt] !== "="
       ) {
-        console.log(`059 RAISE ERROR`);
+        console.log(`074 RAISE ERROR`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,

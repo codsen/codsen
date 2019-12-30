@@ -121,5 +121,3 @@ t.test(
     t.end();
   }
 );
-
-// TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta

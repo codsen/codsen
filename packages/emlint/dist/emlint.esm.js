@@ -3348,6 +3348,7 @@ function attributeMalformed(context, ...opts) {
   return {
     attribute: function(node) {
       if (!node.attribNameRecognised) {
+        let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
             context.report({
@@ -3365,8 +3366,18 @@ function attributeMalformed(context, ...opts) {
                 ]
               }
             });
+            somethingMatched = true;
             break;
           }
+        }
+        if (!somethingMatched) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: `Unrecognised attribute "${node.attribName}".`,
+            idxFrom: node.attribNameStartAt,
+            idxTo: node.attribNameEndAt,
+            fix: null
+          });
         }
       }
       if (

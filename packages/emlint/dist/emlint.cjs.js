@@ -3286,6 +3286,7 @@ function attributeMalformed(context) {
   return {
     attribute: function attribute(node) {
       if (!node.attribNameRecognised) {
+        var somethingMatched = false;
         for (var i = 0, len = htmlAllKnownAttributes.allHtmlAttribs.length; i < len; i++) {
           if (leven(htmlAllKnownAttributes.allHtmlAttribs[i], node.attribName) === 1) {
             context.report({
@@ -3297,8 +3298,18 @@ function attributeMalformed(context) {
                 ranges: [[node.attribNameStartAt, node.attribNameEndAt, htmlAllKnownAttributes.allHtmlAttribs[i]]]
               }
             });
+            somethingMatched = true;
             break;
           }
+        }
+        if (!somethingMatched) {
+          context.report({
+            ruleId: "attribute-malformed",
+            message: "Unrecognised attribute \"".concat(node.attribName, "\"."),
+            idxFrom: node.attribNameStartAt,
+            idxTo: node.attribNameEndAt,
+            fix: null
+          });
         }
       }
       if (node.attribValueStartAt !== null && context.str[node.attribNameEndAt] !== "=") {

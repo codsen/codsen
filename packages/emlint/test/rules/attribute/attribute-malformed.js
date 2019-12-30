@@ -102,33 +102,33 @@ t.test(`01.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, t => {
 });
 
 t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
-  const str = `<a bcd"e" fgh'i'>`;
+  const str = `<a class"b" id'c'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "attribute-malformed": 1
     }
   });
-  t.equal(applyFixes(str, messages), `<a bcd="e" fgh='i'>`);
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`);
   t.match(messages, [
     {
       ruleId: "attribute-malformed",
       severity: 1,
       idxFrom: 3,
-      idxTo: 9,
+      idxTo: 11,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[6, 6, "="]]
+        ranges: [[8, 8, "="]]
       }
     },
     {
       ruleId: "attribute-malformed",
       severity: 1,
-      idxFrom: 10,
-      idxTo: 16,
+      idxFrom: 12,
+      idxTo: 17,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[13, 13, "="]]
+        ranges: [[14, 14, "="]]
       }
     }
   ]);
@@ -136,33 +136,33 @@ t.test(`01.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
 });
 
 t.test(`01.03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, t => {
-  const str = `<a bcd"e" fgh'i'>`;
+  const str = `<a class"b" id'c'>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "attribute-malformed": 2
     }
   });
-  t.equal(applyFixes(str, messages), `<a bcd="e" fgh='i'>`);
+  t.equal(applyFixes(str, messages), `<a class="b" id='c'>`);
   t.match(messages, [
     {
       ruleId: "attribute-malformed",
       severity: 2,
       idxFrom: 3,
-      idxTo: 9,
+      idxTo: 11,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[6, 6, "="]]
+        ranges: [[8, 8, "="]]
       }
     },
     {
       ruleId: "attribute-malformed",
       severity: 2,
-      idxFrom: 10,
-      idxTo: 16,
+      idxFrom: 12,
+      idxTo: 17,
       message: `Equal is missing.`,
       fix: {
-        ranges: [[13, 13, "="]]
+        ranges: [[14, 14, "="]]
       }
     }
   ]);
@@ -192,6 +192,28 @@ t.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
       fix: {
         ranges: [[4, 8, "class"]]
       }
+    }
+  ]);
+  t.end();
+});
+
+t.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+  const str = `<td zzzz="w100p">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-malformed": 1
+    }
+  });
+  // can't fix:
+  t.equal(applyFixes(str, messages), str);
+  t.match(messages, [
+    {
+      ruleId: "attribute-malformed",
+      idxFrom: 4,
+      idxTo: 8,
+      message: `Unrecognised attribute "zzzz".`,
+      fix: null
     }
   ]);
   t.end();
