@@ -750,6 +750,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     theOnlyGoodUnits: null,
     negativeOK: false,
     badUnits: [],
+    enforceCount: null,
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
     customGenericValueError: null
@@ -758,17 +759,20 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
+      const extractedValues = [];
       processCommaSeparated(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
+          const extractedValue = str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          );
           if (
             !Array.isArray(opts.whitelistValues) ||
-            !opts.whitelistValues.includes(
-              str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-            )
+            !opts.whitelistValues.includes(extractedValue)
           ) {
             validateValue({
               str,
@@ -779,6 +783,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               errorArr
             });
           }
+          extractedValues.push(extractedValue);
         },
         errCb: (ranges, message) => {
           errorArr.push({
@@ -791,6 +796,44 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           });
         }
       });
+      if (
+        Number.isInteger(opts.enforceCount) &&
+        extractedValues.length !== opts.enforceCount
+      ) {
+        errorArr.push({
+          idxFrom: charStart + idxOffset,
+          idxTo: charEnd + idxOffset,
+          message: `There should be ${opts.enforceCount} values.`,
+          fix: null
+        });
+      } else if (
+        typeof opts.enforceCount === "string" &&
+        ["even", "odd", "uneven", "noneven"].includes(
+          opts.enforceCount.toLowerCase()
+        )
+      ) {
+        if (
+          opts.enforceCount.toLowerCase() === "even" &&
+          extractedValues.length % 2 !== 0
+        ) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: `Should be an even number of values but found ${extractedValues.length}.`,
+            fix: null
+          });
+        } else if (
+          opts.enforceCount.toLowerCase() !== "even" &&
+          extractedValues.length % 2 === 0
+        ) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: `Should be an odd number of values but found ${extractedValues.length}.`,
+            fix: null
+          });
+        }
+      }
     } else {
       if (
         !Array.isArray(opts.whitelistValues) ||
@@ -5005,6 +5048,73 @@ function attributeValidateContent(context, ...opts) {
   };
 }
 
+function attributeValidateCoords(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "coords") {
+        if (!["area", "a"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-coords",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          if (
+            !Array.isArray(node.parent.attribs) ||
+            !node.parent.attribs.length ||
+            !node.parent.attribs.some(attrObj => attrObj.attribName === "shape")
+          ) {
+            context.report({
+              ruleId: "attribute-validate-coords",
+              idxFrom: node.parent.start,
+              idxTo: node.parent.end,
+              message: `Missing "shape" attribute.`,
+              fix: null
+            });
+          } else {
+            const shapeAttr = node.parent.attribs.filter(
+              attrObj => attrObj.attribName === "shape"
+            )[0];
+            let enforceCount = null;
+            if (shapeAttr.attribValue === "rect") {
+              enforceCount = 4;
+            } else if (shapeAttr.attribValue === "circle") {
+              enforceCount = 3;
+            } else if (shapeAttr.attribValue === "poly") {
+              enforceCount = "even";
+            }
+            const errorArr = validateDigitAndUnit(
+              node.attribValue,
+              node.attribValueStartAt,
+              {
+                whitelistValues: null,
+                theOnlyGoodUnits: [],
+                badUnits: null,
+                noUnitsIsFine: true,
+                canBeCommaSeparated: true,
+                enforceCount,
+                type: "integer",
+                customGenericValueError: "Should be integer, no units."
+              }
+            );
+            if (Array.isArray(errorArr) && errorArr.length) {
+              errorArr.forEach(errorObj => {
+                context.report(
+                  Object.assign({}, errorObj, {
+                    ruleId: "attribute-validate-coords"
+                  })
+                );
+              });
+            }
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6039,6 +6149,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-content",
   () => attributeValidateContent
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-coords",
+  () => attributeValidateCoords
 );
 defineLazyProp(
   builtInRules,

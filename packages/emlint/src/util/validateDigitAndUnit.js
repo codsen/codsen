@@ -188,6 +188,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     theOnlyGoodUnits: null,
     negativeOK: false,
     badUnits: [],
+    enforceCount: null,
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
     customGenericValueError: null
@@ -198,14 +199,14 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   // we get trimmed string start and end positions, also an encountered errors array
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   console.log(
-    `201 validateDigitAndUnit(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+    `202 validateDigitAndUnit(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
       charStart,
       null,
       4
     )}`
   );
   console.log(
-    `208 validateDigitAndUnit(): ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+    `209 validateDigitAndUnit(): ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
       charEnd,
       null,
       4
@@ -216,9 +217,11 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
       console.log(
-        `219 validateDigitAndUnit(): opts.canBeCommaSeparated clauses`
+        `220 validateDigitAndUnit(): opts.canBeCommaSeparated clauses`
       );
       // split by comma and process each
+      const extractedValues = [];
+
       processCommaSeparated(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
@@ -226,22 +229,25 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
           console.log(
-            `229 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+            `232 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
           );
           console.log(
-            `232 ██ EXTRACTED VALUE: ${JSON.stringify(
+            `235 ██ EXTRACTED VALUE: ${JSON.stringify(
               str.slice(idxFrom - idxOffset, idxTo - idxOffset),
               null,
               0
             )}`
           );
 
+          const extractedValue = str.slice(
+            idxFrom - idxOffset,
+            idxTo - idxOffset
+          );
+
           // if the value is not whitelisted, evaluate it
           if (
             !Array.isArray(opts.whitelistValues) ||
-            !opts.whitelistValues.includes(
-              str.slice(idxFrom - idxOffset, idxTo - idxOffset)
-            )
+            !opts.whitelistValues.includes(extractedValue)
           ) {
             validateValue({
               str,
@@ -252,10 +258,12 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               errorArr
             });
           }
+
+          extractedValues.push(extractedValue);
         },
         errCb: (ranges, message) => {
           console.log(
-            `258 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+            `266 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
           );
           errorArr.push({
             idxFrom: ranges[0][0],
@@ -266,7 +274,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             }
           });
           console.log(
-            `269 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `277 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -274,9 +282,78 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           );
         }
       });
+
+      // enforce the "extractedValues" count
+      console.log(
+        `288 validateDigitAndUnit(): ${`\u001b[${33}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
+          extractedValues,
+          null,
+          4
+        )}`
+      );
+
+      if (
+        Number.isInteger(opts.enforceCount) &&
+        extractedValues.length !== opts.enforceCount
+      ) {
+        errorArr.push({
+          idxFrom: charStart + idxOffset,
+          idxTo: charEnd + idxOffset,
+          message: `There should be ${opts.enforceCount} values.`,
+          fix: null
+        });
+        console.log(
+          `306 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
+      } else if (
+        typeof opts.enforceCount === "string" &&
+        ["even", "odd", "uneven", "noneven"].includes(
+          opts.enforceCount.toLowerCase()
+        )
+      ) {
+        if (
+          opts.enforceCount.toLowerCase() === "even" &&
+          extractedValues.length % 2 !== 0
+        ) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: `Should be an even number of values but found ${extractedValues.length}.`,
+            fix: null
+          });
+          console.log(
+            `329 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+        } else if (
+          opts.enforceCount.toLowerCase() !== "even" &&
+          extractedValues.length % 2 === 0
+        ) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: `Should be an odd number of values but found ${extractedValues.length}.`,
+            fix: null
+          });
+          console.log(
+            `346 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+        }
+      }
     } else {
       console.log(
-        `279 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole`
+        `356 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole`
       );
       // if the value is not whitelisted, evaluate it
       if (

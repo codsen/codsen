@@ -574,6 +574,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     theOnlyGoodUnits: null,
     negativeOK: false,
     badUnits: [],
+    enforceCount: null,
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
     customGenericValueError: null
@@ -585,13 +586,15 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
       errorArr = _checkForWhitespace.errorArr;
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
+      var extractedValues = [];
       processCommaSeparated(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
-          if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(idxFrom - idxOffset, idxTo - idxOffset))) {
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
+          if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
             validateValue({
               str: str,
               opts: opts,
@@ -601,6 +604,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               errorArr: errorArr
             });
           }
+          extractedValues.push(extractedValue);
         },
         errCb: function errCb(ranges, message) {
           errorArr.push({
@@ -613,6 +617,30 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           });
         }
       });
+      if (Number.isInteger(opts.enforceCount) && extractedValues.length !== opts.enforceCount) {
+        errorArr.push({
+          idxFrom: charStart + idxOffset,
+          idxTo: charEnd + idxOffset,
+          message: "There should be ".concat(opts.enforceCount, " values."),
+          fix: null
+        });
+      } else if (typeof opts.enforceCount === "string" && ["even", "odd", "uneven", "noneven"].includes(opts.enforceCount.toLowerCase())) {
+        if (opts.enforceCount.toLowerCase() === "even" && extractedValues.length % 2 !== 0) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: "Should be an even number of values but found ".concat(extractedValues.length, "."),
+            fix: null
+          });
+        } else if (opts.enforceCount.toLowerCase() !== "even" && extractedValues.length % 2 === 0) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: "Should be an odd number of values but found ".concat(extractedValues.length, "."),
+            fix: null
+          });
+        }
+      }
     } else {
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
         validateValue({
@@ -4563,6 +4591,65 @@ function attributeValidateContent(context) {
   };
 }
 
+function attributeValidateCoords(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "coords") {
+        if (!["area", "a"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-coords",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          if (!Array.isArray(node.parent.attribs) || !node.parent.attribs.length || !node.parent.attribs.some(function (attrObj) {
+            return attrObj.attribName === "shape";
+          })) {
+            context.report({
+              ruleId: "attribute-validate-coords",
+              idxFrom: node.parent.start,
+              idxTo: node.parent.end,
+              message: "Missing \"shape\" attribute.",
+              fix: null
+            });
+          } else {
+            var shapeAttr = node.parent.attribs.filter(function (attrObj) {
+              return attrObj.attribName === "shape";
+            })[0];
+            var enforceCount = null;
+            if (shapeAttr.attribValue === "rect") {
+              enforceCount = 4;
+            } else if (shapeAttr.attribValue === "circle") {
+              enforceCount = 3;
+            } else if (shapeAttr.attribValue === "poly") {
+              enforceCount = "even";
+            }
+            var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              whitelistValues: null,
+              theOnlyGoodUnits: [],
+              badUnits: null,
+              noUnitsIsFine: true,
+              canBeCommaSeparated: true,
+              enforceCount: enforceCount,
+              type: "integer",
+              customGenericValueError: "Should be integer, no units."
+            });
+            if (Array.isArray(errorArr) && errorArr.length) {
+              errorArr.forEach(function (errorObj) {
+                context.report(Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-coords"
+                }));
+              });
+            }
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5269,6 +5356,9 @@ defineLazyProp(builtInRules, "attribute-validate-compact", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-content", function () {
   return attributeValidateContent;
+});
+defineLazyProp(builtInRules, "attribute-validate-coords", function () {
+  return attributeValidateCoords;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
