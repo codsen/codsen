@@ -32,6 +32,7 @@
   "attribute-validate-coords",
   "attribute-validate-data",
   "attribute-validate-datetime",
+  "attribute-validate-declare",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

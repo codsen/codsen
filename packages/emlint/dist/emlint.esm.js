@@ -5200,6 +5200,52 @@ function attributeValidateDatetime(context, ...opts) {
   };
 }
 
+function attributeValidateDeclare(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
+      const errorArr = [];
+      if (node.attribName === "declare") {
+        if (node.parent.tagName !== "object") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: null
+            })
+          );
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-declare"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6249,6 +6295,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-datetime",
   () => attributeValidateDatetime
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-declare",
+  () => attributeValidateDeclare
 );
 defineLazyProp(
   builtInRules,
