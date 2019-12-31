@@ -117,11 +117,7 @@ function processCommaSeparated(str, originalOpts) {
             "Remove whitespace."
           );
         }
-      } else if (
-        i + 1 === opts.to &&
-        str[i] !== opts.separator &&
-        str[i].trim().length
-      ) {
+      } else if (!str[i].trim().length && i + 1 === opts.to) {
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb(
             [[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]],

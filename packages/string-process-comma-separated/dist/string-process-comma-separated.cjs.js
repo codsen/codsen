@@ -91,7 +91,7 @@ function processCommaSeparated(str, originalOpts) {
         if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.");
         }
-      } else if (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length) {
+      } else if (!str[i].trim().length && i + 1 === opts.to) {
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.");
         }

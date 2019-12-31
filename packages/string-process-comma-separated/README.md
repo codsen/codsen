@@ -352,7 +352,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-process-comma-separated
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
-[cov-img]: https://img.shields.io/badge/coverage-91.03%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.31%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-process-comma-separated

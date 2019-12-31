@@ -646,6 +646,60 @@ t.test(
   }
 );
 
+t.test(
+  `03.08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - more complex`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    const offset = 17;
+    helper(
+      `,http://codsen.com, tralala , `,
+      {
+        offset,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true,
+        oneSpaceAfterCommaOK: false,
+        innerWhitespaceAllowed: false
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(
+      gatheredChunks,
+      [
+        [offset + 1, offset + 18],
+        [offset + 20, offset + 27]
+      ],
+      "03.08.01"
+    );
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[offset + 0, offset + 1]],
+          message: "Remove separator."
+        },
+        {
+          ranges: [[offset + 19, offset + 20]],
+          message: "Remove whitespace."
+        },
+        {
+          ranges: [[offset + 27, offset + 28]],
+          message: "Remove whitespace."
+        },
+        {
+          ranges: [[offset + 28, offset + 29]],
+          message: "Remove separator."
+        }
+      ],
+      "03.08.02"
+    );
+
+    t.end();
+  }
+);
+
 // 04. opts.innerWhitespaceAllowed
 // -----------------------------------------------------------------------------
 

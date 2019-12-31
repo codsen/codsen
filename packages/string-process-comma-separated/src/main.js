@@ -190,9 +190,10 @@ function processCommaSeparated(str, originalOpts) {
       console.log(`190 whitespace ends`);
 
       if (whitespaceStartsAt === opts.from) {
+        console.log(`193 leading whitespace clauses`);
         if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
           console.log(
-            `195 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `196 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 [
                   whitespaceStartsAt + opts.offset,
@@ -215,16 +216,13 @@ function processCommaSeparated(str, originalOpts) {
           );
         }
         // else - fine
-      } else if (
-        i + 1 === opts.to &&
-        str[i] !== opts.separator &&
-        str[i].trim().length
-      ) {
+      } else if (!str[i].trim().length && i + 1 === opts.to) {
         // if it's trailing whitespace, we're on the last character
         // (right before opts.to)
+        console.log(`222 trailing whitespace clauses`);
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           console.log(
-            `227 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `225 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [[whitespaceStartsAt, i + 1], "Remove whitespace."],
               null,
               4
@@ -253,7 +251,9 @@ function processCommaSeparated(str, originalOpts) {
             str[whitespaceStartsAt - 1] !== opts.separator
           ))
       ) {
-        console.log(`256 ███████████████████████████████████████`);
+        console.log(
+          `255 ███████████████████████████████████████ regular whitespace clauses`
+        );
         // exclude single space after a comma, with condition that something
         // non-whitespacey follows
 
