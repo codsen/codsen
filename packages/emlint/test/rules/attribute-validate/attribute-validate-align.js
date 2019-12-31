@@ -251,7 +251,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 15,
         idxTo: 22,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "top|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -276,7 +276,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 16,
         idxTo: 20,
-        message: `Unrecognised value: "top,".`,
+        message: `Should be "top|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -301,7 +301,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 15,
         idxTo: 21,
-        message: `Unrecognised value: "middle".`,
+        message: `Should be "top|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -345,7 +345,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 19,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "top|middle|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -370,7 +370,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 16,
-        message: `Unrecognised value: "top,".`,
+        message: `Should be "top|middle|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -395,7 +395,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 19,
-        message: `Unrecognised value: "justify".`,
+        message: `Should be "top|middle|bottom|left|right".`,
         fix: null
       }
     ]);
@@ -436,7 +436,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 14,
         idxTo: 21,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "left|center|right".`,
         fix: null
       }
     ]);
@@ -461,7 +461,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 14,
         idxTo: 19,
-        message: `Unrecognised value: "left,".`,
+        message: `Should be "left|center|right".`,
         fix: null
       }
     ]);
@@ -486,7 +486,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 14,
         idxTo: 17,
-        message: `Unrecognised value: "top".`,
+        message: `Should be "left|center|right".`,
         fix: null
       }
     ]);
@@ -527,7 +527,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 19,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "left|center|right|justify".`,
         fix: null
       }
     ]);
@@ -552,7 +552,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 17,
-        message: `Unrecognised value: "left,".`,
+        message: `Should be "left|center|right|justify".`,
         fix: null
       }
     ]);
@@ -577,7 +577,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 12,
         idxTo: 15,
-        message: `Unrecognised value: "top".`,
+        message: `Should be "left|center|right|justify".`,
         fix: null
       }
     ]);
@@ -618,7 +618,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 11,
         idxTo: 18,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "left|center|right|justify|char".`,
         fix: null
       }
     ]);
@@ -643,7 +643,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 22,
         idxTo: 27,
-        message: `Unrecognised value: "left,".`,
+        message: `Should be "left|center|right|justify|char".`,
         fix: null
       }
     ]);
@@ -668,7 +668,7 @@ t.test(
         ruleId: "attribute-validate-align",
         idxFrom: 11,
         idxTo: 14,
-        message: `Unrecognised value: "top".`,
+        message: `Should be "left|center|right|justify|char".`,
         fix: null
       }
     ]);

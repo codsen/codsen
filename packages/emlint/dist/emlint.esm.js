@@ -864,6 +864,59 @@ function includesWithRegex(arr, whatToMatch) {
   );
 }
 
+function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
+  const extractedValue = str.slice(charStart, charEnd);
+  if (
+    !(
+      includesWithRegex(opts.quickPermittedValues, extractedValue) ||
+      includesWithRegex(opts.permittedValues, extractedValue)
+    )
+  ) {
+    let fix = null;
+    let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
+    if (
+      includesWithRegex(
+        opts.quickPermittedValues,
+        extractedValue.toLowerCase()
+      ) ||
+      includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
+    ) {
+      message = `Should be lowercase.`;
+      fix = {
+        ranges: [
+          [
+            charStart + idxOffset,
+            charEnd + idxOffset,
+            extractedValue.toLowerCase()
+          ]
+        ]
+      };
+    } else if (
+      Array.isArray(opts.quickPermittedValues) &&
+      opts.quickPermittedValues.length &&
+      opts.quickPermittedValues.length < 6 &&
+      opts.quickPermittedValues.every(val => typeof val === "string") &&
+      (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length)
+    ) {
+      message = `Should be "${opts.quickPermittedValues.join("|")}".`;
+    } else if (
+      Array.isArray(opts.permittedValues) &&
+      opts.permittedValues.length &&
+      opts.permittedValues.length < 6 &&
+      opts.permittedValues.every(val => typeof val === "string") &&
+      (!Array.isArray(opts.quickPermittedValues) ||
+        !opts.quickPermittedValues.length)
+    ) {
+      message = `Should be "${opts.permittedValues.join("|")}".`;
+    }
+    errorArr.push({
+      idxFrom: charStart + idxOffset,
+      idxTo: charEnd + idxOffset,
+      message,
+      fix
+    });
+  }
+}
 function validateString(str, idxOffset, opts) {
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
@@ -878,39 +931,14 @@ function validateString(str, idxOffset, opts) {
             idxFrom - idxOffset,
             idxTo - idxOffset
           );
-          let message = `Unrecognised value: "${str.slice(
+          validateValue$1(
+            str,
+            idxOffset,
+            opts,
             idxFrom - idxOffset,
-            idxTo - idxOffset
-          )}".`;
-          let fix = null;
-          if (
-            !(
-              includesWithRegex(opts.quickPermittedValues, extractedValue) ||
-              includesWithRegex(opts.permittedValues, extractedValue)
-            )
-          ) {
-            if (
-              includesWithRegex(
-                opts.quickPermittedValues,
-                extractedValue.toLowerCase()
-              ) ||
-              includesWithRegex(
-                opts.permittedValues,
-                extractedValue.toLowerCase()
-              )
-            ) {
-              message = `Should be lowercase;`;
-              fix = {
-                ranges: [[idxFrom, idxTo, extractedValue.toLowerCase()]]
-              };
-            }
-            errorArr.push({
-              idxFrom: idxFrom,
-              idxTo: idxTo,
-              message,
-              fix
-            });
-          }
+            idxTo - idxOffset,
+            errorArr
+          );
         },
         errCb: (ranges, message) => {
           errorArr.push({
@@ -923,47 +951,9 @@ function validateString(str, idxOffset, opts) {
           });
         }
       });
-    } else if (
-      !(
-        (Array.isArray(opts.quickPermittedValues) &&
-          includesWithRegex(
-            opts.quickPermittedValues,
-            str.slice(charStart, charEnd)
-          )) ||
-        (Array.isArray(opts.permittedValues) &&
-          includesWithRegex(
-            opts.permittedValues,
-            str.slice(charStart, charEnd)
-          ))
-      )
-    ) {
+    } else {
       const extractedValue = str.slice(charStart, charEnd);
-      let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
-      let fix = null;
-      if (
-        includesWithRegex(
-          opts.quickPermittedValues,
-          extractedValue.toLowerCase()
-        ) ||
-        includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
-      ) {
-        message = `Should be lowercase.`;
-        fix = {
-          ranges: [
-            [
-              idxOffset + charStart,
-              idxOffset + charEnd,
-              extractedValue.toLowerCase()
-            ]
-          ]
-        };
-      }
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message,
-        fix
-      });
+      validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;

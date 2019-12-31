@@ -226,7 +226,7 @@ t.test(
         ruleId: "attribute-validate-dir",
         idxFrom: 9,
         idxTo: 16,
-        message: `Unrecognised value: "tralala".`,
+        message: `Should be "ltr|rtl".`,
         fix: null
       }
     ]);

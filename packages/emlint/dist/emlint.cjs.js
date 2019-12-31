@@ -666,6 +666,33 @@ function includesWithRegex(arr, whatToMatch) {
   });
 }
 
+function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
+  var extractedValue = str.slice(charStart, charEnd);
+  if (!(includesWithRegex(opts.quickPermittedValues, extractedValue) || includesWithRegex(opts.permittedValues, extractedValue))) {
+    var fix = null;
+    var message = "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\".");
+    if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
+      message = "Should be lowercase.";
+      fix = {
+        ranges: [[charStart + idxOffset, charEnd + idxOffset, extractedValue.toLowerCase()]]
+      };
+    } else if (Array.isArray(opts.quickPermittedValues) && opts.quickPermittedValues.length && opts.quickPermittedValues.length < 6 && opts.quickPermittedValues.every(function (val) {
+      return typeof val === "string";
+    }) && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length)) {
+      message = "Should be \"".concat(opts.quickPermittedValues.join("|"), "\".");
+    } else if (Array.isArray(opts.permittedValues) && opts.permittedValues.length && opts.permittedValues.length < 6 && opts.permittedValues.every(function (val) {
+      return typeof val === "string";
+    }) && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length)) {
+      message = "Should be \"".concat(opts.permittedValues.join("|"), "\".");
+    }
+    errorArr.push({
+      idxFrom: charStart + idxOffset,
+      idxTo: charEnd + idxOffset,
+      message: message,
+      fix: fix
+    });
+  }
+}
 function validateString(str, idxOffset, opts) {
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
@@ -680,22 +707,8 @@ function validateString(str, idxOffset, opts) {
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          var message = "Unrecognised value: \"".concat(str.slice(idxFrom - idxOffset, idxTo - idxOffset), "\".");
-          var fix = null;
-          if (!(includesWithRegex(opts.quickPermittedValues, extractedValue) || includesWithRegex(opts.permittedValues, extractedValue))) {
-            if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
-              message = "Should be lowercase;";
-              fix = {
-                ranges: [[idxFrom, idxTo, extractedValue.toLowerCase()]]
-              };
-            }
-            errorArr.push({
-              idxFrom: idxFrom,
-              idxTo: idxTo,
-              message: message,
-              fix: fix
-            });
-          }
+          validateValue$1(str, idxOffset, opts, idxFrom - idxOffset,
+          idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
           errorArr.push({
@@ -708,22 +721,9 @@ function validateString(str, idxOffset, opts) {
           });
         }
       });
-    } else if (!(Array.isArray(opts.quickPermittedValues) && includesWithRegex(opts.quickPermittedValues, str.slice(charStart, charEnd)) || Array.isArray(opts.permittedValues) && includesWithRegex(opts.permittedValues, str.slice(charStart, charEnd)))) {
+    } else {
       var extractedValue = str.slice(charStart, charEnd);
-      var message = "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\".");
-      var fix = null;
-      if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
-        message = "Should be lowercase.";
-        fix = {
-          ranges: [[idxOffset + charStart, idxOffset + charEnd, extractedValue.toLowerCase()]]
-        };
-      }
-      errorArr.push({
-        idxFrom: idxOffset + charStart,
-        idxTo: idxOffset + charEnd,
-        message: message,
-        fix: fix
-      });
+      validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
