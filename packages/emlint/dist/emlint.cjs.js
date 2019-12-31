@@ -678,11 +678,11 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
       };
     } else if (Array.isArray(opts.quickPermittedValues) && opts.quickPermittedValues.length && opts.quickPermittedValues.length < 6 && opts.quickPermittedValues.every(function (val) {
       return typeof val === "string";
-    }) && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length)) {
+    }) && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) && opts.quickPermittedValues.join("|").length < 40) {
       message = "Should be \"".concat(opts.quickPermittedValues.join("|"), "\".");
     } else if (Array.isArray(opts.permittedValues) && opts.permittedValues.length && opts.permittedValues.length < 6 && opts.permittedValues.every(function (val) {
       return typeof val === "string";
-    }) && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length)) {
+    }) && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length) && opts.permittedValues.join("|").length < 40) {
       message = "Should be \"".concat(opts.permittedValues.join("|"), "\".");
     }
     errorArr.push({
@@ -4889,6 +4889,36 @@ function attributeValidateDisabled(context) {
   };
 }
 
+function attributeValidateEnctype(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "enctype") {
+        if (node.parent.tagName !== "form") {
+          context.report({
+            ruleId: "attribute-validate-enctype",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          quickPermittedValues: ["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"],
+          permittedValues: Object.keys(db),
+          canBeCommaSeparated: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-enctype"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5616,6 +5646,9 @@ defineLazyProp(builtInRules, "attribute-validate-dir", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-disabled", function () {
   return attributeValidateDisabled;
+});
+defineLazyProp(builtInRules, "attribute-validate-enctype", function () {
+  return attributeValidateEnctype;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

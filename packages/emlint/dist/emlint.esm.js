@@ -896,7 +896,8 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
       opts.quickPermittedValues.length &&
       opts.quickPermittedValues.length < 6 &&
       opts.quickPermittedValues.every(val => typeof val === "string") &&
-      (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length)
+      (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) &&
+      opts.quickPermittedValues.join("|").length < 40
     ) {
       message = `Should be "${opts.quickPermittedValues.join("|")}".`;
     } else if (
@@ -905,7 +906,8 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
       opts.permittedValues.length < 6 &&
       opts.permittedValues.every(val => typeof val === "string") &&
       (!Array.isArray(opts.quickPermittedValues) ||
-        !opts.quickPermittedValues.length)
+        !opts.quickPermittedValues.length) &&
+      opts.permittedValues.join("|").length < 40
     ) {
       message = `Should be "${opts.permittedValues.join("|")}".`;
     }
@@ -5421,6 +5423,44 @@ function attributeValidateDisabled(context, ...originalOpts) {
   };
 }
 
+function attributeValidateEnctype(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "enctype") {
+        if (node.parent.tagName !== "form") {
+          context.report({
+            ruleId: "attribute-validate-enctype",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            quickPermittedValues: [
+              "application/x-www-form-urlencoded",
+              "multipart/form-data",
+              "text/plain"
+            ],
+            permittedValues: Object.keys(db),
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-enctype"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6490,6 +6530,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-disabled",
   () => attributeValidateDisabled
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-enctype",
+  () => attributeValidateEnctype
 );
 defineLazyProp(
   builtInRules,
