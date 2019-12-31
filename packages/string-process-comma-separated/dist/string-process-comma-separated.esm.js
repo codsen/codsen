@@ -26,6 +26,7 @@ function processCommaSeparated(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
     oneSpaceAfterCommaOK: false,
+    innerWhitespaceAllowed: false,
     separator: ",",
     cb: null,
     errCb: null
@@ -44,7 +45,11 @@ function processCommaSeparated(str, originalOpts) {
   let whitespaceStartsAt = null;
   let firstNonwhitespaceNonseparatorCharFound = false;
   let separatorsArr = [];
+  let lastNonWhitespaceCharAt = null;
   for (let i = opts.from; i < opts.to; i++) {
+    if (str[i].trim().length && str[i] !== opts.separator) {
+      lastNonWhitespaceCharAt = i;
+    }
     if (
       chunkStartsAt === null &&
       str[i].trim().length &&
@@ -72,9 +77,7 @@ function processCommaSeparated(str, originalOpts) {
     }
     if (
       Number.isInteger(chunkStartsAt) &&
-      ((i > chunkStartsAt &&
-        (!str[i].trim().length ||
-          (opts.separator && str[i] === opts.separator))) ||
+      ((i > chunkStartsAt && opts.separator && str[i] === opts.separator) ||
         i + 1 === opts.to)
     ) {
       const chunk = str.slice(
@@ -90,7 +93,7 @@ function processCommaSeparated(str, originalOpts) {
           str[i] !== opts.separator &&
           str[i].trim().length
             ? i + 1
-            : i) + opts.offset
+            : lastNonWhitespaceCharAt + 1) + opts.offset
         );
       }
       chunkStartsAt = null;
@@ -126,13 +129,21 @@ function processCommaSeparated(str, originalOpts) {
           );
         }
       } else if (
-        !opts.oneSpaceAfterCommaOK ||
-        !(
-          str[i].trim().length &&
-          i > opts.from + 1 &&
-          str[i - 1] === " " &&
-          str[i - 2] === ","
-        )
+        (!opts.oneSpaceAfterCommaOK ||
+          !(
+            str[i].trim().length &&
+            i > opts.from + 1 &&
+            str[i - 1] === " " &&
+            str[i - 2] === ","
+          )) &&
+        (!opts.innerWhitespaceAllowed ||
+          !(
+            firstNonwhitespaceNonseparatorCharFound &&
+            str[whitespaceStartsAt - 1] &&
+            str[i].trim().length &&
+            str[i] !== opts.separator &&
+            str[whitespaceStartsAt - 1] !== opts.separator
+          ))
       ) {
         let startingIdx = whitespaceStartsAt;
         let endingIdx = i;
@@ -154,15 +165,30 @@ function processCommaSeparated(str, originalOpts) {
             whatToAdd = " ";
           }
         }
+        let fixable = true;
+        let message = "Remove whitespace.";
+        if (
+          !opts.innerWhitespaceAllowed &&
+          firstNonwhitespaceNonseparatorCharFound &&
+          str[whitespaceStartsAt - 1] &&
+          str[i].trim().length &&
+          str[i] !== opts.separator &&
+          str[whitespaceStartsAt - 1] !== opts.separator
+        ) {
+          fixable = false;
+          message = "Bad whitespace.";
+        }
         if (whatToAdd.length) {
           opts.errCb(
             [[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]],
-            "Remove whitespace."
+            message,
+            fixable
           );
         } else {
           opts.errCb(
             [[startingIdx + opts.offset, endingIdx + opts.offset]],
-            "Remove whitespace."
+            message,
+            fixable
           );
         }
       }

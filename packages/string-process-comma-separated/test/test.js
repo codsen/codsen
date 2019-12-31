@@ -645,3 +645,91 @@ t.test(
     t.end();
   }
 );
+
+// 04. opts.innerWhitespaceAllowed
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept="abc,def ghi, jkl ">`,
+      {
+        from: 15,
+        to: 32,
+        truetrailingWhitespaceOK: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(
+      gatheredChunks,
+      [
+        [15, 18],
+        [19, 26],
+        [28, 31]
+      ],
+      "04.01.01"
+    );
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[22, 23]],
+          message: "Bad whitespace."
+        },
+        {
+          ranges: [[27, 28]],
+          message: "Remove whitespace."
+        }
+      ],
+      "04.01.02"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - trailing whitespace`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<input accept="abc,def ghi, jkl ">`,
+      {
+        from: 15,
+        to: 32,
+        truetrailingWhitespaceOK: true,
+        innerWhitespaceAllowed: true
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(
+      gatheredChunks,
+      [
+        [15, 18],
+        [19, 26],
+        [28, 31]
+      ],
+      "04.02.01"
+    );
+    t.match(
+      gatheredErrors,
+      [
+        {
+          ranges: [[27, 28]],
+          message: "Remove whitespace."
+        }
+      ],
+      "04.02.02"
+    );
+
+    t.end();
+  }
+);

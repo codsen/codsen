@@ -36,6 +36,7 @@ function processCommaSeparated(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false,
     oneSpaceAfterCommaOK: false,
+    innerWhitespaceAllowed: false,
     separator: ",",
     cb: null,
     errCb: null
@@ -54,7 +55,11 @@ function processCommaSeparated(str, originalOpts) {
   var whitespaceStartsAt = null;
   var firstNonwhitespaceNonseparatorCharFound = false;
   var separatorsArr = [];
+  var lastNonWhitespaceCharAt = null;
   for (var i = opts.from; i < opts.to; i++) {
+    if (str[i].trim().length && str[i] !== opts.separator) {
+      lastNonWhitespaceCharAt = i;
+    }
     if (chunkStartsAt === null && str[i].trim().length && (!opts.separator || str[i] !== opts.separator)) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
         firstNonwhitespaceNonseparatorCharFound = true;
@@ -71,10 +76,10 @@ function processCommaSeparated(str, originalOpts) {
       }
       chunkStartsAt = i;
     }
-    if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && (!str[i].trim().length || opts.separator && str[i] === opts.separator) || i + 1 === opts.to)) {
+    if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
       var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i);
       if (typeof opts.cb === "function") {
-        opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : i) + opts.offset);
+        opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
       }
       chunkStartsAt = null;
     }
@@ -90,7 +95,7 @@ function processCommaSeparated(str, originalOpts) {
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.");
         }
-      } else if (!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) {
+      } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
         var startingIdx = whitespaceStartsAt;
         var endingIdx = i;
         if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim().length) {
@@ -104,10 +109,16 @@ function processCommaSeparated(str, originalOpts) {
             whatToAdd = " ";
           }
         }
+        var fixable = true;
+        var message = "Remove whitespace.";
+        if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
+          fixable = false;
+          message = "Bad whitespace.";
+        }
         if (whatToAdd.length) {
-          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]], "Remove whitespace.");
+          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]], message, fixable);
         } else {
-          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], "Remove whitespace.");
+          opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], message, fixable);
         }
       }
       whitespaceStartsAt = null;
