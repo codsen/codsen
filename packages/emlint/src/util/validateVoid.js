@@ -1,6 +1,6 @@
 import isObj from "lodash.isplainobject";
 
-function validateVoid(node, context, errorArr, opts) {
+function validateVoid(node, context, errorArr, originalOpts) {
   console.log(
     `005 ${`\u001b[${35}m${`validateVoid() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
@@ -8,6 +8,13 @@ function validateVoid(node, context, errorArr, opts) {
       4
     )}`
   );
+
+  const defaults = {
+    xhtml: false,
+    enforceSiblingAttributes: null
+  };
+
+  const opts = Object.assign({}, defaults, originalOpts);
 
   //
   // further validation only applicable to input tags:
@@ -36,11 +43,11 @@ function validateVoid(node, context, errorArr, opts) {
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       console.log(
-        `039 ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
+        `046 ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
       );
 
       console.log(
-        `043 ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
+        `050 ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
           [
             node.attribNameEndAt,
             node.attribEnd,
@@ -81,10 +88,10 @@ function validateVoid(node, context, errorArr, opts) {
     isObj(opts.enforceSiblingAttributes) &&
     Object.keys(opts.enforceSiblingAttributes).length
   ) {
-    console.log(`084 validateVoid(): sibling attributes enforced`);
+    console.log(`091 validateVoid(): sibling attributes enforced`);
     Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
       console.log(
-        `087 validateVoid(): checking presence of attribute "${siblingAttr}"`
+        `094 validateVoid(): checking presence of attribute "${siblingAttr}"`
       );
       if (
         Array.isArray(node.parent.attribs) &&

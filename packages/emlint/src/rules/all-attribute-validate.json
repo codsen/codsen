@@ -35,6 +35,7 @@
   "attribute-validate-declare",
   "attribute-validate-defer",
   "attribute-validate-dir",
+  "attribute-validate-disabled",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

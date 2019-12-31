@@ -4349,7 +4349,12 @@ function attributeValidateCharset(context, ...opts) {
   };
 }
 
-function validateVoid(node, context, errorArr, opts) {
+function validateVoid(node, context, errorArr, originalOpts) {
+  const defaults = {
+    xhtml: false,
+    enforceSiblingAttributes: null
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   if (opts.xhtml) {
     let quotesType = `"`;
     if (
@@ -5356,6 +5361,61 @@ function attributeValidateDir(context, ...opts) {
             })
           );
         });
+      }
+    }
+  };
+}
+
+function attributeValidateDisabled(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
+      const errorArr = [];
+      if (node.attribName === "disabled") {
+        if (
+          ![
+            "button",
+            "input",
+            "optgroup",
+            "option",
+            "select",
+            "textarea"
+          ].includes(node.parent.tagName)
+        ) {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: null
+            })
+          );
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-disabled"
+              })
+            );
+          });
+        }
       }
     }
   };
@@ -6425,6 +6485,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-dir",
   () => attributeValidateDir
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-disabled",
+  () => attributeValidateDisabled
 );
 defineLazyProp(
   builtInRules,
