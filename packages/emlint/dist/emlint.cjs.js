@@ -4919,6 +4919,33 @@ function attributeValidateEnctype(context) {
   };
 }
 
+function attributeValidateFace(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "face") {
+        if (node.parent.tagName !== "font") {
+          context.report({
+            ruleId: "attribute-validate-face",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-face"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5649,6 +5676,9 @@ defineLazyProp(builtInRules, "attribute-validate-disabled", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-enctype", function () {
   return attributeValidateEnctype;
+});
+defineLazyProp(builtInRules, "attribute-validate-face", function () {
+  return attributeValidateFace;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

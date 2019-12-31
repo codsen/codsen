@@ -1,6 +1,13 @@
 function processCommaSeparated(str, originalOpts) {
   console.log(
-    `003 INCOMING ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} keys: ${JSON.stringify(
+    `003 processCommaSeparated: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
+      str,
+      null,
+      0
+    )}`
+  );
+  console.log(
+    `010 processCommaSeparated: INCOMING ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} keys: ${JSON.stringify(
       Object.keys(originalOpts),
       null,
       0
@@ -46,7 +53,7 @@ function processCommaSeparated(str, originalOpts) {
   }
 
   console.log(
-    `049 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `056 processCommaSeparated: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -77,7 +84,7 @@ function processCommaSeparated(str, originalOpts) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
         firstNonwhitespaceNonseparatorCharFound = true;
         console.log(
-          `080 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${firstNonwhitespaceNonseparatorCharFound}`
+          `087 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${firstNonwhitespaceNonseparatorCharFound}`
         );
       }
 
@@ -97,13 +104,13 @@ function processCommaSeparated(str, originalOpts) {
         }
         separatorsArr = [];
         console.log(
-          `100 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`
+          `107 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`
         );
       }
 
       chunkStartsAt = i;
       console.log(
-        `106 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        `113 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
       );
     }
 
@@ -115,7 +122,7 @@ function processCommaSeparated(str, originalOpts) {
           (opts.separator && str[i] === opts.separator))) ||
         i + 1 === opts.to)
     ) {
-      console.log(`118 chunk ends`);
+      console.log(`125 chunk ends`);
       const chunk = str.slice(
         chunkStartsAt,
         i + 1 === opts.to && str[i] !== opts.separator && str[i].trim().length
@@ -123,13 +130,13 @@ function processCommaSeparated(str, originalOpts) {
           : i
       );
       console.log(
-        `126 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`
+        `133 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`
       );
 
       // ping the cb
       if (typeof opts.cb === "function") {
         console.log(
-          `132 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `139 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [
               chunkStartsAt + opts.offset,
               (i + 1 === opts.to &&
@@ -155,7 +162,7 @@ function processCommaSeparated(str, originalOpts) {
       // reset
       chunkStartsAt = null;
       console.log(
-        `158 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        `165 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
       );
     }
 
@@ -163,7 +170,7 @@ function processCommaSeparated(str, originalOpts) {
     if (!str[i].trim().length && whitespaceStartsAt === null) {
       whitespaceStartsAt = i;
       console.log(
-        `166 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+        `173 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
       );
     }
 
@@ -172,12 +179,12 @@ function processCommaSeparated(str, originalOpts) {
       whitespaceStartsAt !== null &&
       (str[i].trim().length || i + 1 === opts.to)
     ) {
-      console.log(`175 whitespace ends`);
+      console.log(`182 whitespace ends`);
 
       if (whitespaceStartsAt === opts.from) {
         if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
           console.log(
-            `180 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `187 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 [
                   whitespaceStartsAt + opts.offset,
@@ -209,7 +216,7 @@ function processCommaSeparated(str, originalOpts) {
         // (right before opts.to)
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           console.log(
-            `212 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `219 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [[whitespaceStartsAt, i + 1], "Remove whitespace."],
               null,
               4
@@ -233,7 +240,7 @@ function processCommaSeparated(str, originalOpts) {
         // exclude single space after a comma, with condition that something
         // non-whitespacey follows
         console.log(
-          `236 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `243 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [
               [
                 whitespaceStartsAt,
@@ -265,7 +272,7 @@ function processCommaSeparated(str, originalOpts) {
         //   : i;
 
         console.log(
-          `268 ${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+          `275 ${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
             endingIdx,
             null,
             4
@@ -306,10 +313,10 @@ function processCommaSeparated(str, originalOpts) {
 
     // catch the separator
     if (str[i] === opts.separator) {
-      console.log(`309 separator caught`);
+      console.log(`316 separator caught`);
       if (!firstNonwhitespaceNonseparatorCharFound) {
         console.log(
-          `312 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+          `319 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [i, i + 1, "Remove separator."],
             null,
             4

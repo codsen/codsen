@@ -5461,6 +5461,35 @@ function attributeValidateEnctype(context, ...opts) {
   };
 }
 
+function attributeValidateFace(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "face") {
+        if (node.parent.tagName !== "font") {
+          context.report({
+            ruleId: "attribute-validate-face",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-face"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6535,6 +6564,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-enctype",
   () => attributeValidateEnctype
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-face",
+  () => attributeValidateFace
 );
 defineLazyProp(
   builtInRules,

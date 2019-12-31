@@ -37,6 +37,7 @@
   "attribute-validate-dir",
   "attribute-validate-disabled",
   "attribute-validate-enctype",
+  "attribute-validate-face",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-width"

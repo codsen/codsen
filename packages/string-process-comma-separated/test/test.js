@@ -357,6 +357,106 @@ t.test(
   }
 );
 
+t.test(
+  `02.09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `<applet archive=",http://codsen.com, tralala , ">`,
+      {
+        from: 17,
+        to: 46,
+        oneSpaceAfterCommaOK: false
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(
+      gatheredChunks,
+      [
+        [18, 35],
+        [37, 44]
+      ],
+      "02.09.01"
+    );
+    t.match(
+      gatheredErrors,
+      [
+        {
+          message: "Remove separator.",
+          ranges: [[17, 18]]
+        },
+        {
+          message: "Remove whitespace.",
+          ranges: [[36, 37]]
+        },
+        {
+          message: "Remove whitespace.",
+          ranges: [[44, 45]]
+        },
+        {
+          message: "Remove separator.",
+          ranges: [[45, 46]]
+        }
+      ],
+      "02.09.02"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `02.10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - with URL, offset`,
+  t => {
+    const gatheredChunks = [];
+    const gatheredErrors = [];
+    helper(
+      `,http://codsen.com, tralala ,`,
+      {
+        oneSpaceAfterCommaOK: false
+      },
+      gatheredChunks,
+      gatheredErrors
+    );
+
+    t.match(
+      gatheredChunks,
+      [
+        [1, 18],
+        [20, 27]
+      ],
+      "02.10.01"
+    );
+    t.match(
+      gatheredErrors,
+      [
+        {
+          message: "Remove separator.",
+          ranges: [[0, 1]]
+        },
+        {
+          message: "Remove whitespace.",
+          ranges: [[19, 20]]
+        },
+        {
+          message: "Remove whitespace.",
+          ranges: [[27, 28]]
+        },
+        {
+          message: "Remove separator.",
+          ranges: [[28, 29]]
+        }
+      ],
+      "02.10.02"
+    );
+
+    t.end();
+  }
+);
+
 // 03. opts.leadingWhitespaceOK
 // -----------------------------------------------------------------------------
 
