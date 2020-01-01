@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.4.0...codsen-tokenizer@2.5.0) (2020-01-01)
+
+
+### Bug Fixes
+
+* whole attribute's value can't be an opening or closing ESP lump ([051f2b6](https://gitlab.com/codsen/codsen/commit/051f2b609ea83daab5ba97d3821aac5625b9b9b0))
+
+
+### Features
+
+* further improvements to attribute value recognition ([313f091](https://gitlab.com/codsen/codsen/commit/313f09175ab393715dcb64ba27d2aa6c09723e1a))
+
+
+
+
+
 ## 2.4.0 (2019-12-27)
 
 ### Features

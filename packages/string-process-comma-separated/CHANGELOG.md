@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/codsen/codsen/compare/string-process-comma-separated@1.1.0...string-process-comma-separated@1.2.0) (2020-01-01)
+
+
+### Bug Fixes
+
+* errCb argument fixable tests and functionality ([f89ebc0](https://gitlab.com/codsen/codsen/commit/f89ebc03858734e67e4ffd4db9a89b4116fa07ea))
+* trailing whitespace clause fix ([9ef1181](https://gitlab.com/codsen/codsen/commit/9ef1181c20e15b135b791ccc53343d135241cf22))
+
+
+### Features
+
+* opts.innerWhitespaceAllowed ([65dfb1f](https://gitlab.com/codsen/codsen/commit/65dfb1fa5fed0b201b3e5001d418b49b5f94917c))
+
+
+
+
+
 ## 1.1.0 (2019-12-27)
 
 ### Bug Fixes
