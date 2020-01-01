@@ -46,6 +46,7 @@ function processCommaSeparated(str, originalOpts) {
   let firstNonwhitespaceNonseparatorCharFound = false;
   let separatorsArr = [];
   let lastNonWhitespaceCharAt = null;
+  let fixable = true;
   for (let i = opts.from; i < opts.to; i++) {
     if (str[i].trim().length && str[i] !== opts.separator) {
       lastNonWhitespaceCharAt = i;
@@ -66,7 +67,8 @@ function processCommaSeparated(str, originalOpts) {
                 [
                   [separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]
                 ],
-                "Remove separator."
+                "Remove separator.",
+                fixable
               );
             }
           });
@@ -114,14 +116,16 @@ function processCommaSeparated(str, originalOpts) {
                 (i + 1 === opts.to ? i + 1 : i) + opts.offset
               ]
             ],
-            "Remove whitespace."
+            "Remove whitespace.",
+            fixable
           );
         }
       } else if (!str[i].trim().length && i + 1 === opts.to) {
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
           opts.errCb(
             [[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]],
-            "Remove whitespace."
+            "Remove whitespace.",
+            fixable
           );
         }
       } else if (
@@ -161,7 +165,6 @@ function processCommaSeparated(str, originalOpts) {
             whatToAdd = " ";
           }
         }
-        let fixable = true;
         let message = "Remove whitespace.";
         if (
           !opts.innerWhitespaceAllowed &&
@@ -187,6 +190,7 @@ function processCommaSeparated(str, originalOpts) {
             fixable
           );
         }
+        fixable = true;
       }
       whitespaceStartsAt = null;
     }
@@ -194,7 +198,8 @@ function processCommaSeparated(str, originalOpts) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
         opts.errCb(
           [[i + opts.offset, i + 1 + opts.offset]],
-          "Remove separator."
+          "Remove separator.",
+          fixable
         );
       } else {
         separatorsArr.push(i);
@@ -204,7 +209,8 @@ function processCommaSeparated(str, originalOpts) {
       separatorsArr.forEach(separatorsIdx => {
         opts.errCb(
           [[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]],
-          "Remove separator."
+          "Remove separator.",
+          fixable
         );
       });
     }

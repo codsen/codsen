@@ -56,6 +56,7 @@ function processCommaSeparated(str, originalOpts) {
   var firstNonwhitespaceNonseparatorCharFound = false;
   var separatorsArr = [];
   var lastNonWhitespaceCharAt = null;
+  var fixable = true;
   for (var i = opts.from; i < opts.to; i++) {
     if (str[i].trim().length && str[i] !== opts.separator) {
       lastNonWhitespaceCharAt = i;
@@ -68,7 +69,7 @@ function processCommaSeparated(str, originalOpts) {
         if (separatorsArr.length > 1) {
           separatorsArr.forEach(function (separatorsIdx, orderNumber) {
             if (orderNumber) {
-              opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.");
+              opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
             }
           });
         }
@@ -89,11 +90,11 @@ function processCommaSeparated(str, originalOpts) {
     if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
       if (whitespaceStartsAt === opts.from) {
         if (!opts.leadingWhitespaceOK && typeof opts.errCb === "function") {
-          opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.");
+          opts.errCb([[whitespaceStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]], "Remove whitespace.", fixable);
         }
       } else if (!str[i].trim().length && i + 1 === opts.to) {
         if (!opts.trailingWhitespaceOK && typeof opts.errCb === "function") {
-          opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.");
+          opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
         }
       } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim().length && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
         var startingIdx = whitespaceStartsAt;
@@ -109,7 +110,6 @@ function processCommaSeparated(str, originalOpts) {
             whatToAdd = " ";
           }
         }
-        var fixable = true;
         var message = "Remove whitespace.";
         if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim().length && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
           fixable = false;
@@ -120,19 +120,20 @@ function processCommaSeparated(str, originalOpts) {
         } else {
           opts.errCb([[startingIdx + opts.offset, endingIdx + opts.offset]], message, fixable);
         }
+        fixable = true;
       }
       whitespaceStartsAt = null;
     }
     if (str[i] === opts.separator) {
       if (!firstNonwhitespaceNonseparatorCharFound) {
-        opts.errCb([[i + opts.offset, i + 1 + opts.offset]], "Remove separator.");
+        opts.errCb([[i + opts.offset, i + 1 + opts.offset]], "Remove separator.", fixable);
       } else {
         separatorsArr.push(i);
       }
     }
     if (i + 1 === opts.to) {
       separatorsArr.forEach(function (separatorsIdx) {
-        opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.");
+        opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
       });
     }
   }
