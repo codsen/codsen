@@ -69,11 +69,13 @@ function attributeValidateClass(context, ...opts) {
             node.attribValueStartAt + charStart,
             node.attribValueStartAt + charEnd,
             errorArr, // might be mutated, more errors pushed into
-            node.attribName
+            {
+              typeName: node.attribName // class|id|for
+            }
           );
 
           console.log(
-            `076 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `078 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -81,7 +83,7 @@ function attributeValidateClass(context, ...opts) {
           );
 
           errorArr.forEach(errorObj => {
-            console.log(`084 RAISE ERROR`);
+            console.log(`086 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-class"

@@ -4206,7 +4206,11 @@ function attributeValidateCite(context) {
   };
 }
 
-function checkClassOrIdValue(str, from, to, errorArr, typeName) {
+function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
+  var defaults = {
+    typeName: "class"
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
   var nameStartsAt = null;
   var nameEndsAt = null;
   var listOfUniqueNames = [];
@@ -4240,7 +4244,7 @@ function checkClassOrIdValue(str, from, to, errorArr, typeName) {
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
-          message: "Wrong ".concat(typeName, " name."),
+          message: "Wrong ".concat(opts.typeName, " name."),
           fix: null
         });
       }
@@ -4258,7 +4262,7 @@ function checkClassOrIdValue(str, from, to, errorArr, typeName) {
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
-          message: "Duplicate ".concat(typeName, " \"").concat(extractedName, "\"."),
+          message: "Duplicate ".concat(opts.typeName, " \"").concat(extractedName, "\"."),
           fix: {
             ranges: [[deleteFrom, deleteTo]]
           }
@@ -4287,7 +4291,9 @@ function attributeValidateClass(context) {
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
           checkClassOrIdValue(context.str, node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd, errorArr,
-          node.attribName);
+          {
+            typeName: node.attribName
+          });
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-class"
@@ -4962,6 +4968,61 @@ function attributeValidateFace(context) {
   };
 }
 
+function attributeValidateFor(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "for") {
+        if (node.parent.tagName !== "label") {
+          context.report({
+            ruleId: "attribute-validate-for",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
+          var extractedValue = node.attribValue.slice(charStart, charEnd);
+          var message = "Wrong id name.";
+          var fix = null;
+          var idxFrom = charStart + node.attribValueStartAt;
+          var idxTo = charEnd + node.attribValueStartAt;
+          if (Number.isInteger(charStart) && !classNameRegex.test(extractedValue)) {
+            if (Array.from(extractedValue).some(function (val) {
+              return !val.trim().length;
+            })) {
+              message = "Should be one value, no spaces.";
+            } else if (extractedValue.includes("#")) {
+              message = "Remove hash.";
+              var firstHashAt = node.attribValue.indexOf("#");
+              fix = {
+                ranges: [[node.attribValueStartAt + firstHashAt, node.attribValueStartAt + firstHashAt + 1]]
+              };
+              idxFrom = node.attribValueStartAt + firstHashAt;
+              idxTo = node.attribValueStartAt + firstHashAt + 1;
+            }
+            errorArr.push({
+              ruleId: "attribute-validate-for",
+              idxFrom: idxFrom,
+              idxTo: idxTo,
+              message: message,
+              fix: fix
+            });
+          }
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-for"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -4980,7 +5041,9 @@ function attributeValidateId(context) {
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
           checkClassOrIdValue(context.str, node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd, errorArr,
-          node.attribName);
+          {
+            typeName: node.attribName
+          });
           errorArr.forEach(function (errorObj) {
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-id"
@@ -5695,6 +5758,9 @@ defineLazyProp(builtInRules, "attribute-validate-enctype", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-face", function () {
   return attributeValidateFace;
+});
+defineLazyProp(builtInRules, "attribute-validate-for", function () {
+  return attributeValidateFor;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

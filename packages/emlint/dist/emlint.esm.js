@@ -4562,7 +4562,11 @@ function attributeValidateCite(context, ...opts) {
   };
 }
 
-function checkClassOrIdValue(str, from, to, errorArr, typeName) {
+function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
+  const defaults = {
+    typeName: "class"
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   let nameStartsAt = null;
   let nameEndsAt = null;
   const listOfUniqueNames = [];
@@ -4596,7 +4600,7 @@ function checkClassOrIdValue(str, from, to, errorArr, typeName) {
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
-          message: `Wrong ${typeName} name.`,
+          message: `Wrong ${opts.typeName} name.`,
           fix: null
         });
       }
@@ -4618,7 +4622,7 @@ function checkClassOrIdValue(str, from, to, errorArr, typeName) {
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
-          message: `Duplicate ${typeName} "${extractedName}".`,
+          message: `Duplicate ${opts.typeName} "${extractedName}".`,
           fix: {
             ranges: [[deleteFrom, deleteTo]]
           }
@@ -4663,7 +4667,9 @@ function attributeValidateClass(context, ...opts) {
             node.attribValueStartAt + charStart,
             node.attribValueStartAt + charEnd,
             errorArr,
-            node.attribName
+            {
+              typeName: node.attribName
+            }
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -5508,6 +5514,69 @@ function attributeValidateFace(context, ...opts) {
   };
 }
 
+function attributeValidateFor(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "for") {
+        if (node.parent.tagName !== "label") {
+          context.report({
+            ruleId: "attribute-validate-for",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const { charStart, charEnd, errorArr } = checkForWhitespace(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          const extractedValue = node.attribValue.slice(charStart, charEnd);
+          let message = `Wrong id name.`;
+          let fix = null;
+          let idxFrom = charStart + node.attribValueStartAt;
+          let idxTo = charEnd + node.attribValueStartAt;
+          if (
+            Number.isInteger(charStart) &&
+            !classNameRegex.test(extractedValue)
+          ) {
+            if (Array.from(extractedValue).some(val => !val.trim().length)) {
+              message = `Should be one value, no spaces.`;
+            } else if (extractedValue.includes("#")) {
+              message = `Remove hash.`;
+              const firstHashAt = node.attribValue.indexOf("#");
+              fix = {
+                ranges: [
+                  [
+                    node.attribValueStartAt + firstHashAt,
+                    node.attribValueStartAt + firstHashAt + 1
+                  ]
+                ]
+              };
+              idxFrom = node.attribValueStartAt + firstHashAt;
+              idxTo = node.attribValueStartAt + firstHashAt + 1;
+            }
+            errorArr.push({
+              ruleId: "attribute-validate-for",
+              idxFrom,
+              idxTo,
+              message,
+              fix
+            });
+          }
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-for"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5534,7 +5603,9 @@ function attributeValidateId(context, ...opts) {
             node.attribValueStartAt + charStart,
             node.attribValueStartAt + charEnd,
             errorArr,
-            node.attribName
+            {
+              typeName: node.attribName
+            }
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -6587,6 +6658,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-face",
   () => attributeValidateFace
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-for",
+  () => attributeValidateFor
 );
 defineLazyProp(
   builtInRules,
