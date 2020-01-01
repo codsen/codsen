@@ -142,7 +142,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 22763,
+        "size": 22999,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -237,7 +237,7 @@
     },
     {
         "name": "emlint",
-        "size": 167069,
+        "size": 194011,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
@@ -278,7 +278,7 @@
     },
     {
         "name": "html-all-known-attributes",
-        "size": 14360,
+        "size": 14383,
         "imports": []
     },
     {
@@ -599,7 +599,7 @@
     },
     {
         "name": "string-process-comma-separated",
-        "size": 5395,
+        "size": 6385,
         "imports": []
     },
     {
