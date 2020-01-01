@@ -61,7 +61,7 @@ This package has three builds in `dist/` folder:
 
 ## Idea
 
-This package aims to have the most excessive list of all legit attribute names that can be put into HTML. Currently we have a list of 699 attribute names.
+This package aims to have the most excessive list of all legit attribute names that can be put into HTML. Currently we have a list of 701 attribute names.
 
 This includes deprecated attributes, Microsoft-proprietary-ones that email templates use (like `mso-line-height-rule`) and other-ones you've probably never seen before.
 
@@ -69,7 +69,7 @@ This includes deprecated attributes, Microsoft-proprietary-ones that email templ
 
 ## API
 
-This package exports a plain object with a single key, `allHtmlAttribs`. Its value is an array of 699 strings, all known attributes.
+This package exports a plain object with a single key, `allHtmlAttribs`. Its value is an array of 701 strings, all known attributes.
 
 ## Example
 
@@ -107,7 +107,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/html-all-known-attributes.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/html-all-known-attributes
