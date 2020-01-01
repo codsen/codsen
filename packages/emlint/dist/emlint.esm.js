@@ -3943,13 +3943,31 @@ function attributeValidateArchive(context, ...opts) {
           trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
         }
         if (node.parent.tagName === "applet") {
-          trimmedAttrVal.split(",").forEach(uriStr => {
-            if (!isUrl(uriStr)) {
+          processCommaSeparated(node.attribValue, {
+            offset: node.attribValueStartAt,
+            oneSpaceAfterCommaOK: false,
+            leadingWhitespaceOK: true,
+            trailingWhitespaceOK: true,
+            cb: (idxFrom, idxTo) => {
+              if (!isUrl(context.str.slice(idxFrom, idxTo))) {
+                errorArr.push({
+                  idxFrom: idxFrom,
+                  idxTo: idxTo,
+                  message: `Should be an URI.`,
+                  fix: null
+                });
+              }
+            },
+            errCb: (ranges, message, fixable) => {
               errorArr.push({
-                idxFrom: node.attribValueStartAt,
-                idxTo: node.attribValueEndAt,
-                message: `Should be comma-separated list of URI's.`,
-                fix: null
+                idxFrom: ranges[0][0],
+                idxTo: ranges[ranges.length - 1][1],
+                message,
+                fix: fixable
+                  ? {
+                      ranges
+                    }
+                  : null
               });
             }
           });

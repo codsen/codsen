@@ -220,7 +220,7 @@ t.test(`03.01 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, t => {
 });
 
 t.test(
-  `03.02 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - unrecognised`,
+  `03.02 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
   t => {
     const str = `<applet archive="http://codsen.com,tralala">`;
     const linter = new Linter();
@@ -234,9 +234,9 @@ t.test(
     t.match(messages, [
       {
         ruleId: "attribute-validate-archive",
-        idxFrom: 17,
+        idxFrom: 35,
         idxTo: 42,
-        message: `Should be comma-separated list of URI's.`,
+        message: `Should be an URI.`,
         fix: null
       }
     ]);
@@ -259,15 +259,85 @@ t.test(
     t.match(messages, [
       {
         ruleId: "attribute-validate-archive",
-        idxFrom: 17,
-        idxTo: 56,
-        message: `Should be comma-separated list of URI's.`,
+        idxFrom: 35,
+        idxTo: 36,
+        message: `Bad whitespace.`,
         fix: null
       }
     ]);
     t.end();
   }
 );
+
+t.test(`03.04 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, t => {
+  const str = `<applet archive=",http://codsen.com, tralala , ">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-archive": 2
+    }
+  });
+  // can fix:
+  t.equal(
+    applyFixes(str, messages),
+    `<applet archive="http://codsen.com,tralala">`
+  );
+  t.match(messages, [
+    {
+      idxFrom: 46,
+      idxTo: 47,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[46, 47]]
+      },
+      ruleId: "attribute-validate-archive"
+    },
+    {
+      idxFrom: 17,
+      idxTo: 18,
+      message: "Remove separator.",
+      fix: {
+        ranges: [[17, 18]]
+      },
+      ruleId: "attribute-validate-archive"
+    },
+    {
+      idxFrom: 36,
+      idxTo: 37,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[36, 37]]
+      },
+      ruleId: "attribute-validate-archive"
+    },
+    {
+      idxFrom: 37,
+      idxTo: 44,
+      message: "Should be an URI.",
+      fix: null,
+      ruleId: "attribute-validate-archive"
+    },
+    {
+      idxFrom: 44,
+      idxTo: 45,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[44, 45]]
+      },
+      ruleId: "attribute-validate-archive"
+    },
+    {
+      idxFrom: 45,
+      idxTo: 46,
+      message: "Remove separator.",
+      fix: {
+        ranges: [[45, 46]]
+      },
+      ruleId: "attribute-validate-archive"
+    }
+  ]);
+  t.end();
+});
 
 // 04. object tag
 // -----------------------------------------------------------------------------
@@ -288,7 +358,7 @@ t.test(`04.01 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, t => {
 t.test(
   `04.02 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`,
   t => {
-    const str = `<object archive="tra la la">`;
+    const str = `<object archive="tralala">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -301,7 +371,7 @@ t.test(
       {
         ruleId: "attribute-validate-archive",
         idxFrom: 17,
-        idxTo: 26,
+        idxTo: 24,
         message: `Should be space-separated list of URI's.`,
         fix: null
       }

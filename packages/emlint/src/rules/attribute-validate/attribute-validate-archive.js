@@ -1,6 +1,7 @@
 // rule: attribute-validate-archive
 // -----------------------------------------------------------------------------
 
+import processCommaSeparated from "string-process-comma-separated";
 import checkForWhitespace from "../../util/checkForWhitespace";
 import isUrl from "is-url-superb";
 
@@ -11,14 +12,14 @@ function attributeValidateArchive(context, ...opts) {
         `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
       );
       console.log(
-        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `015 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
         )}`
       );
       console.log(
-        `021 attributeValidateArchive(): node = ${JSON.stringify(
+        `022 attributeValidateArchive(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -51,7 +52,7 @@ function attributeValidateArchive(context, ...opts) {
           node.attribValueStartAt
         );
         console.log(
-          `054 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+          `055 attributeValidateArchive(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
             charStart,
             null,
             4
@@ -62,7 +63,7 @@ function attributeValidateArchive(context, ...opts) {
           )}`
         );
         console.log(
-          `065 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `066 attributeValidateArchive(): ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
@@ -80,7 +81,7 @@ function attributeValidateArchive(context, ...opts) {
           trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
         }
         console.log(
-          `083 ${`\u001b[${33}m${`trimmedAttrVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `084 attributeValidateArchive(): ${`\u001b[${33}m${`trimmedAttrVal`}\u001b[${39}m`} = ${JSON.stringify(
             trimmedAttrVal,
             null,
             4
@@ -89,14 +90,46 @@ function attributeValidateArchive(context, ...opts) {
 
         if (node.parent.tagName === "applet") {
           // comma-separated archive list
-          trimmedAttrVal.split(",").forEach(uriStr => {
-            if (!isUrl(uriStr)) {
+          // function below doesn't return anything because it mutates
+          // the passed "errorArr", only if needed of course, pushing errors
+          // onto it
+
+          processCommaSeparated(node.attribValue, {
+            offset: node.attribValueStartAt,
+            oneSpaceAfterCommaOK: false,
+            leadingWhitespaceOK: true,
+            trailingWhitespaceOK: true,
+            cb: (idxFrom, idxTo) => {
+              if (!isUrl(context.str.slice(idxFrom, idxTo))) {
+                errorArr.push({
+                  idxFrom: idxFrom,
+                  idxTo: idxTo,
+                  message: `Should be an URI.`,
+                  fix: null
+                });
+              }
+            },
+            errCb: (ranges, message, fixable) => {
+              console.log(
+                `114 cb(): ${`\u001b[${32}m${`██ INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}; fixable = ${fixable}`
+              );
               errorArr.push({
-                idxFrom: node.attribValueStartAt,
-                idxTo: node.attribValueEndAt,
-                message: `Should be comma-separated list of URI's.`,
-                fix: null
+                idxFrom: ranges[0][0],
+                idxTo: ranges[ranges.length - 1][1],
+                message,
+                fix: fixable
+                  ? {
+                      ranges
+                    }
+                  : null
               });
+              console.log(
+                `127 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                  errorArr,
+                  null,
+                  4
+                )}`
+              );
             }
           });
         } else if (node.parent.tagName === "object") {
@@ -114,7 +147,7 @@ function attributeValidateArchive(context, ...opts) {
         }
 
         errorArr.forEach(errorObj => {
-          console.log(`117 RAISE ERROR`);
+          console.log(`150 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-archive"

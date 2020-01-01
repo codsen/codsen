@@ -410,15 +410,6 @@ t.test(
       },
       {
         ruleId: "attribute-validate-cols",
-        idxFrom: 29,
-        idxTo: 31,
-        message: `Remove whitespace.`,
-        fix: {
-          ranges: [[29, 31]]
-        }
-      },
-      {
-        ruleId: "attribute-validate-cols",
         idxFrom: 28,
         idxTo: 29,
         message: `Remove separator.`,

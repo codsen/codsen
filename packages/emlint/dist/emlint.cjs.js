@@ -3709,13 +3709,29 @@ function attributeValidateArchive(context) {
           trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
         }
         if (node.parent.tagName === "applet") {
-          trimmedAttrVal.split(",").forEach(function (uriStr) {
-            if (!isUrl(uriStr)) {
+          processCommaSeparated(node.attribValue, {
+            offset: node.attribValueStartAt,
+            oneSpaceAfterCommaOK: false,
+            leadingWhitespaceOK: true,
+            trailingWhitespaceOK: true,
+            cb: function cb(idxFrom, idxTo) {
+              if (!isUrl(context.str.slice(idxFrom, idxTo))) {
+                errorArr.push({
+                  idxFrom: idxFrom,
+                  idxTo: idxTo,
+                  message: "Should be an URI.",
+                  fix: null
+                });
+              }
+            },
+            errCb: function errCb(ranges, message, fixable) {
               errorArr.push({
-                idxFrom: node.attribValueStartAt,
-                idxTo: node.attribValueEndAt,
-                message: "Should be comma-separated list of URI's.",
-                fix: null
+                idxFrom: ranges[0][0],
+                idxTo: ranges[ranges.length - 1][1],
+                message: message,
+                fix: fixable ? {
+                  ranges: ranges
+                } : null
               });
             }
           });
