@@ -79,7 +79,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Unit test #13 - uses changelog of **giu 0.13.4** to test automated error fixing, released under MIT License (MIT) Copyright © 2016-2018 Guillermo Grau Panea
 Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated error fixing, released under MIT License (MIT) Copyright © 2016 Jed Watson

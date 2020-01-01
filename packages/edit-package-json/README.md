@@ -225,7 +225,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 

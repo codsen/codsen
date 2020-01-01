@@ -185,7 +185,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>

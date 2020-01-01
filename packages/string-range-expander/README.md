@@ -160,7 +160,7 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2019 Roy Revelt and other contributors
+Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/string-range-expander.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-range-expander
