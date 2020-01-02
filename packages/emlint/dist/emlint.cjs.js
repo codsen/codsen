@@ -5090,6 +5090,38 @@ function attributeValidateFrameborder(context) {
   };
 }
 
+function attributeValidateHeaders(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "headers") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-headers",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
+          checkClassOrIdValue(context.str, node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd, errorArr,
+          {
+            typeName: "id"
+          });
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-headers"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5863,6 +5895,9 @@ defineLazyProp(builtInRules, "attribute-validate-frame", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-frameborder", function () {
   return attributeValidateFrameborder;
+});
+defineLazyProp(builtInRules, "attribute-validate-headers", function () {
+  return attributeValidateHeaders;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

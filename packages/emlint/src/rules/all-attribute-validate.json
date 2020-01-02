@@ -41,6 +41,7 @@
   "attribute-validate-for",
   "attribute-validate-frame",
   "attribute-validate-frameborder",
+  "attribute-validate-headers",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-rules",

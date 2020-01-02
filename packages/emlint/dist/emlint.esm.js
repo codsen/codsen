@@ -5653,6 +5653,45 @@ function attributeValidateFrameborder(context, ...opts) {
   };
 }
 
+function attributeValidateHeaders(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "headers") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-headers",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const { charStart, charEnd, errorArr } = checkForWhitespace(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          checkClassOrIdValue(
+            context.str,
+            node.attribValueStartAt + charStart,
+            node.attribValueStartAt + charEnd,
+            errorArr,
+            {
+              typeName: "id"
+            }
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-headers"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6782,6 +6821,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-frameborder",
   () => attributeValidateFrameborder
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-headers",
+  () => attributeValidateHeaders
 );
 defineLazyProp(
   builtInRules,
