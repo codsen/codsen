@@ -708,6 +708,12 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
             let message = `Bad unit.`;
             if (str.includes("--")) {
               message = `Repeated minus.`;
+            } else if (
+              Array.isArray(opts.theOnlyGoodUnits) &&
+              opts.theOnlyGoodUnits.length &&
+              opts.theOnlyGoodUnits.includes(endPart.trim())
+            ) {
+              message = "Rogue whitespace.";
             } else if (opts.customGenericValueError) {
               message = opts.customGenericValueError;
             } else if (
@@ -5692,6 +5698,45 @@ function attributeValidateHeaders(context, ...opts) {
   };
 }
 
+function attributeValidateHeight(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "height") {
+        if (
+          !["iframe", "td", "th", "img", "object", "applet"].includes(
+            node.parent.tagName
+          )
+        ) {
+          context.report({
+            ruleId: "attribute-validate-height",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            badUnits: ["px"],
+            theOnlyGoodUnits: ["%"],
+            noUnitsIsFine: true,
+            customGenericValueError: `Should be "pixels|%".`
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-height"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6826,6 +6871,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-headers",
   () => attributeValidateHeaders
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-height",
+  () => attributeValidateHeight
 );
 defineLazyProp(
   builtInRules,

@@ -536,6 +536,8 @@ function validateValue(_ref) {
             var _message = "Bad unit.";
             if (str.includes("--")) {
               _message = "Repeated minus.";
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
+              _message = "Rogue whitespace.";
             } else if (opts.customGenericValueError) {
               _message = opts.customGenericValueError;
             } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
@@ -5122,6 +5124,35 @@ function attributeValidateHeaders(context) {
   };
 }
 
+function attributeValidateHeight(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "height") {
+        if (!["iframe", "td", "th", "img", "object", "applet"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-height",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          badUnits: ["px"],
+          theOnlyGoodUnits: ["%"],
+          noUnitsIsFine: true,
+          customGenericValueError: "Should be \"pixels|%\"."
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-height"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5898,6 +5929,9 @@ defineLazyProp(builtInRules, "attribute-validate-frameborder", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-headers", function () {
   return attributeValidateHeaders;
+});
+defineLazyProp(builtInRules, "attribute-validate-height", function () {
+  return attributeValidateHeight;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

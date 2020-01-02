@@ -98,7 +98,7 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
             !opts.theOnlyGoodUnits.includes(endPart)) ||
             (Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart)))
         ) {
-          console.log(`101 inside units eval clauses`);
+          console.log(`101 recognised unit clauses`);
           // special case for "px"
           if (endPart === "px") {
             errorArr.push({
@@ -116,6 +116,13 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
             let message = `Bad unit.`;
             if (str.includes("--")) {
               message = `Repeated minus.`;
+            } else if (
+              Array.isArray(opts.theOnlyGoodUnits) &&
+              opts.theOnlyGoodUnits.length &&
+              opts.theOnlyGoodUnits.includes(endPart.trim())
+            ) {
+              // if trimmed end part matches "good" units, it's the whitespace
+              message = "Rogue whitespace.";
             } else if (opts.customGenericValueError) {
               message = opts.customGenericValueError;
             } else if (
@@ -134,6 +141,7 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
             });
           }
         } else if (!knownUnits.includes(endPart)) {
+          console.log(`144 unrecognised unit clauses`);
           let message = "Unrecognised unit.";
           if (/\d/.test(endPart)) {
             message = "Messy value.";
@@ -175,7 +183,7 @@ function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
 // if it can't fix, key "fix" value is null
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
   console.log(
-    `178 ${`\u001b[${35}m${`validateDigitAndUnit() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+    `186 ${`\u001b[${35}m${`validateDigitAndUnit() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
       [...arguments],
       null,
       4
@@ -199,14 +207,14 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   // we get trimmed string start and end positions, also an encountered errors array
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   console.log(
-    `202 validateDigitAndUnit(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+    `210 validateDigitAndUnit(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
       charStart,
       null,
       4
     )}`
   );
   console.log(
-    `209 validateDigitAndUnit(): ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+    `217 validateDigitAndUnit(): ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
       charEnd,
       null,
       4
@@ -217,7 +225,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
       console.log(
-        `220 validateDigitAndUnit(): opts.canBeCommaSeparated clauses`
+        `228 validateDigitAndUnit(): opts.canBeCommaSeparated clauses`
       );
       // split by comma and process each
       const extractedValues = [];
@@ -229,10 +237,10 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
           console.log(
-            `232 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+            `240 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
           );
           console.log(
-            `235 ██ EXTRACTED VALUE: ${JSON.stringify(
+            `243 ██ EXTRACTED VALUE: ${JSON.stringify(
               str.slice(idxFrom - idxOffset, idxTo - idxOffset),
               null,
               0
@@ -263,7 +271,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         },
         errCb: (ranges, message) => {
           console.log(
-            `266 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+            `274 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
           );
           errorArr.push({
             idxFrom: ranges[0][0],
@@ -274,7 +282,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             }
           });
           console.log(
-            `277 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `285 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -285,7 +293,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 
       // enforce the "extractedValues" count
       console.log(
-        `288 validateDigitAndUnit(): ${`\u001b[${33}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
+        `296 validateDigitAndUnit(): ${`\u001b[${33}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
           extractedValues,
           null,
           4
@@ -303,7 +311,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           fix: null
         });
         console.log(
-          `306 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `314 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
@@ -326,7 +334,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             fix: null
           });
           console.log(
-            `329 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `337 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -343,7 +351,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             fix: null
           });
           console.log(
-            `346 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `354 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -353,7 +361,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
       }
     } else {
       console.log(
-        `356 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole`
+        `364 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole`
       );
       // if the value is not whitelisted, evaluate it
       if (
