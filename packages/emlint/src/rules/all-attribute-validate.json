@@ -43,6 +43,7 @@
   "attribute-validate-frameborder",
   "attribute-validate-headers",
   "attribute-validate-height",
+  "attribute-validate-href",
   "attribute-validate-id",
   "attribute-validate-rowspan",
   "attribute-validate-rules",

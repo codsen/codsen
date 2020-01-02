@@ -1143,6 +1143,13 @@ defineLazyProp(
   () => attributeValidateHeight
 );
 
+import attributeValidateHref from "./rules/attribute-validate/attribute-validate-href";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-href",
+  () => attributeValidateHref
+);
+
 import attributeValidateId from "./rules/attribute-validate/attribute-validate-id";
 defineLazyProp(
   builtInRules,
@@ -1314,7 +1321,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1317 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1324 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
