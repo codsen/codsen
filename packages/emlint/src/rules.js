@@ -1115,6 +1115,13 @@ defineLazyProp(
   () => attributeValidateFor
 );
 
+import attributeValidateFrame from "./rules/attribute-validate/attribute-validate-frame";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-frame",
+  () => attributeValidateFrame
+);
+
 import attributeValidateId from "./rules/attribute-validate/attribute-validate-id";
 defineLazyProp(
   builtInRules,
@@ -1127,6 +1134,13 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-rowspan",
   () => attributeValidateRowspan
+);
+
+import attributeValidateRules from "./rules/attribute-validate/attribute-validate-rules";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rules",
+  () => attributeValidateRules
 );
 
 import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
@@ -1279,7 +1293,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1282 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1296 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

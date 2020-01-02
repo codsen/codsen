@@ -39,7 +39,9 @@
   "attribute-validate-enctype",
   "attribute-validate-face",
   "attribute-validate-for",
+  "attribute-validate-frame",
   "attribute-validate-id",
   "attribute-validate-rowspan",
+  "attribute-validate-rules",
   "attribute-validate-width"
 ]

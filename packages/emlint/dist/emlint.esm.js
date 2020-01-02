@@ -5577,6 +5577,49 @@ function attributeValidateFor(context, ...opts) {
   };
 }
 
+function attributeValidateFrame(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "frame") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-frame",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: [
+              "void",
+              "above",
+              "below",
+              "hsides",
+              "lhs",
+              "rhs",
+              "vsides",
+              "box",
+              "border"
+            ],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-frame"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -5646,6 +5689,39 @@ function attributeValidateRowspan(context, ...opts) {
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-rowspan"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
+function attributeValidateRules(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "rules") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-rules",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["none", "groups", "rows", "cols", "all"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-rules"
             })
           );
         });
@@ -6666,6 +6742,11 @@ defineLazyProp(
 );
 defineLazyProp(
   builtInRules,
+  "attribute-validate-frame",
+  () => attributeValidateFrame
+);
+defineLazyProp(
+  builtInRules,
   "attribute-validate-id",
   () => attributeValidateId
 );
@@ -6673,6 +6754,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-rowspan",
   () => attributeValidateRowspan
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rules",
+  () => attributeValidateRules
 );
 defineLazyProp(
   builtInRules,
