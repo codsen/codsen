@@ -75,14 +75,14 @@ t.test(
 t.test(
   `02.01 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   t => {
-    const str = `<table rules=' void'>`;
+    const str = `<table rules=' rows'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-rules": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table rules='void'>`);
+    t.equal(applyFixes(str, messages), `<table rules='rows'>`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-rules",
@@ -94,6 +94,7 @@ t.test(
         }
       }
     ]);
+    t.is(messages.length, 1);
     t.end();
   }
 );
@@ -101,14 +102,14 @@ t.test(
 t.test(
   `02.02 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   t => {
-    const str = `<table rules='void '>`;
+    const str = `<table rules='rows '>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-rules": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table rules='void'>`);
+    t.equal(applyFixes(str, messages), `<table rules='rows'>`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-rules",
@@ -127,14 +128,14 @@ t.test(
 t.test(
   `02.03 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   t => {
-    const str = `<table rules='  void  \t'>`;
+    const str = `<table rules='  rows  \t'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-rules": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<table rules='void'>`);
+    t.equal(applyFixes(str, messages), `<table rules='rows'>`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-rules",

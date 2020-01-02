@@ -273,6 +273,7 @@ var allBadNamedHTMLEntityRules = [
 ];
 
 function checkForWhitespace(str, idxOffset) {
+  console.log("005 ".concat("\x1B[".concat(35, "m", "checkForWhitespace() called", "\x1B[", 39, "m"), "\ninput args:\n", JSON.stringify(Array.prototype.slice.call(arguments), null, 4)));
   var charStart = 0;
   var charEnd = str.length;
   var trimmedVal;
@@ -294,8 +295,10 @@ function checkForWhitespace(str, idxOffset) {
   }
   if (charEnd && !str[str.length - 1].trim().length) {
     charEnd = stringLeftRight.left(str, str.length - 1) + 1;
+    console.log("040 ".concat("\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ", JSON.stringify(charEnd, null, 4)));
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
+  console.log("049 ".concat("\x1B[".concat(33, "m", "gatheredRanges", "\x1B[", 39, "m"), " = ", JSON.stringify(gatheredRanges, null, 4)));
   if (!gatheredRanges.length) {
     trimmedVal = str;
   } else {
@@ -310,6 +313,7 @@ function checkForWhitespace(str, idxOffset) {
     gatheredRanges = [];
     trimmedVal = str.trim();
   }
+  console.log("069");
   return {
     charStart: charStart,
     charEnd: charEnd,
@@ -498,7 +502,13 @@ function validateValue(_ref) {
       charEnd = _ref.charEnd,
       idxOffset = _ref.idxOffset,
       errorArr = _ref.errorArr;
+  console.log(" ");
+  console.log(" ");
+  console.log(" ");
+  console.log("014 validateValue(): ".concat("\x1B[".concat(32, "m", "INCOMING", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "str", "\x1B[", 39, "m"), " = ", JSON.stringify(str, null, 4), "; ", "\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(opts, null, 4)));
+  console.log("025 validateValue(): INCOMING ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", charStart, "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(charEnd));
   if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
+    console.log("032 validateValue(): no digits, PUSH [".concat(idxOffset + charStart, ", ").concat(idxOffset + charEnd, "]"));
     var message = "Digits missing.";
     if (opts.customGenericValueError) {
       message = opts.customGenericValueError;
@@ -512,6 +522,7 @@ function validateValue(_ref) {
       fix: null
     });
   } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
+    console.log("060 validateValue(): units missing, PUSH [".concat(idxOffset + charStart, ", ").concat(idxOffset + charEnd, "]"));
     errorArr.push({
       idxFrom: idxOffset + charStart,
       idxTo: idxOffset + charEnd,
@@ -519,10 +530,14 @@ function validateValue(_ref) {
       fix: null
     });
   } else {
+    console.log("071 validateValue(): separate digits from units, evaluate both");
     for (var i = charStart; i < charEnd; i++) {
+      console.log("075 validateValue(): ".concat("\x1B[".concat(36, "m", "loop", "\x1B[", 39, "m"), " ", "\x1B[".concat(36, "m", "str[".concat(i, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[i], null, 0)));
       if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0))) {
         var endPart = str.slice(i, charEnd);
+        console.log("089 ".concat("\x1B[".concat(33, "m", "endPart", "\x1B[", 39, "m"), " = ", JSON.stringify(endPart, null, 4)));
         if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
+          console.log("101 inside units eval clauses");
           if (endPart === "px") {
             errorArr.push({
               idxFrom: idxOffset + i,
@@ -568,6 +583,7 @@ function validateValue(_ref) {
   }
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
+  console.log("178 ".concat("\x1B[".concat(35, "m", "validateDigitAndUnit() called", "\x1B[", 39, "m"), "\ninput args:\n", JSON.stringify(Array.prototype.slice.call(arguments), null, 4)));
   var defaultOpts = {
     type: "integer",
     whitelistValues: [],
@@ -584,8 +600,11 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
       errorArr = _checkForWhitespace.errorArr;
+  console.log("202 validateDigitAndUnit(): ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4)));
+  console.log("209 validateDigitAndUnit(): ".concat("\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ", JSON.stringify(charEnd, null, 4)));
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
+      console.log("220 validateDigitAndUnit(): opts.canBeCommaSeparated clauses");
       var extractedValues = [];
       processCommaSeparated(str, {
         offset: idxOffset,
@@ -593,6 +612,8 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
+          console.log("232 cb(): ".concat("\x1B[".concat(32, "m", "INCOMING", "\x1B[", 39, "m"), " idxFrom = ", idxFrom, "; idxTo = ").concat(idxTo));
+          console.log("235 \u2588\u2588 EXTRACTED VALUE: ".concat(JSON.stringify(str.slice(idxFrom - idxOffset, idxTo - idxOffset), null, 0)));
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
             validateValue({
@@ -607,6 +628,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           extractedValues.push(extractedValue);
         },
         errCb: function errCb(ranges, message) {
+          console.log("266 cb(): ".concat("\x1B[".concat(32, "m", "INCOMING", "\x1B[", 39, "m"), " ranges = ", ranges, "; message = ").concat(message));
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
@@ -615,8 +637,10 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               ranges: ranges
             }
           });
+          console.log("277 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         }
       });
+      console.log("288 validateDigitAndUnit(): ".concat("\x1B[".concat(33, "m", "extractedValues", "\x1B[", 39, "m"), " = ", JSON.stringify(extractedValues, null, 4)));
       if (Number.isInteger(opts.enforceCount) && extractedValues.length !== opts.enforceCount) {
         errorArr.push({
           idxFrom: charStart + idxOffset,
@@ -624,6 +648,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           message: "There should be ".concat(opts.enforceCount, " values."),
           fix: null
         });
+        console.log("306 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
       } else if (typeof opts.enforceCount === "string" && ["even", "odd", "uneven", "noneven"].includes(opts.enforceCount.toLowerCase())) {
         if (opts.enforceCount.toLowerCase() === "even" && extractedValues.length % 2 !== 0) {
           errorArr.push({
@@ -632,6 +657,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             message: "Should be an even number of values but found ".concat(extractedValues.length, "."),
             fix: null
           });
+          console.log("329 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         } else if (opts.enforceCount.toLowerCase() !== "even" && extractedValues.length % 2 === 0) {
           errorArr.push({
             idxFrom: charStart + idxOffset,
@@ -639,9 +665,11 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             message: "Should be an odd number of values but found ".concat(extractedValues.length, "."),
             fix: null
           });
+          console.log("346 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         }
       }
     } else {
+      console.log("356 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole");
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
         validateValue({
           str: str,
@@ -659,6 +687,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 
 function includesWithRegex(arr, whatToMatch) {
   if (!Array.isArray(arr) || !arr.length) {
+    console.log("013 includesWithRegex() quick end, return false");
     return false;
   }
   return arr.some(function (val) {
@@ -672,6 +701,7 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
     var fix = null;
     var message = "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\".");
     if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
+      console.log("025 set the message");
       message = "Should be lowercase.";
       fix = {
         ranges: [[charStart + idxOffset, charEnd + idxOffset, extractedValue.toLowerCase()]]
@@ -679,10 +709,12 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
     } else if (Array.isArray(opts.quickPermittedValues) && opts.quickPermittedValues.length && opts.quickPermittedValues.length < 6 && opts.quickPermittedValues.every(function (val) {
       return typeof val === "string";
     }) && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) && opts.quickPermittedValues.join("|").length < 40) {
+      console.log("049 set the message");
       message = "Should be \"".concat(opts.quickPermittedValues.join("|"), "\".");
     } else if (Array.isArray(opts.permittedValues) && opts.permittedValues.length && opts.permittedValues.length < 6 && opts.permittedValues.every(function (val) {
       return typeof val === "string";
     }) && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length) && opts.permittedValues.join("|").length < 40) {
+      console.log("065 set the message");
       message = "Should be \"".concat(opts.permittedValues.join("|"), "\".");
     }
     errorArr.push({
@@ -691,26 +723,33 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
       message: message,
       fix: fix
     });
+    console.log("076 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
   }
 }
 function validateString(str, idxOffset, opts) {
+  console.log("090 ".concat("\x1B[".concat(35, "m", "validateString() called", "\x1B[", 39, "m")));
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
       errorArr = _checkForWhitespace.errorArr;
+  console.log("095 validateString(): ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", charStart, "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(charEnd, ";\n", "\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(errorArr, null, 4)));
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
+      console.log("106 validateString(): ".concat("\x1B[".concat(32, "m", "call processCommaSeparated()", "\x1B[", 39, "m")));
       processCommaSeparated(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
+          console.log("115 cb(): ".concat("\x1B[".concat(32, "m", "INCOMING", "\x1B[", 39, "m"), " idxFrom = ", idxFrom, "; idxTo = ").concat(idxTo));
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
+          console.log("123 \u2588\u2588 EXTRACTED VALUE: ".concat(JSON.stringify(extractedValue, null, 0)));
           validateValue$1(str, idxOffset, opts, idxFrom - idxOffset,
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
+          console.log("139 cb(): ".concat("\x1B[".concat(32, "m", "INCOMING", "\x1B[", 39, "m"), " ranges = ", ranges, "; message = ").concat(message));
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
@@ -719,13 +758,17 @@ function validateString(str, idxOffset, opts) {
               ranges: ranges
             }
           });
+          console.log("150 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         }
       });
     } else {
+      console.log("159 validateString(): single value clauses");
       var extractedValue = str.slice(charStart, charEnd);
+      console.log("163 validateString(): str.slice(charStart, charEnd): ".concat("\x1B[".concat(36, "m", extractedValue, "\x1B[", 39, "m")));
       validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
+  console.log("173 validateString(): ".concat("\x1B[".concat(32, "m", "RETURN", "\x1B[", 39, "m"), " ", JSON.stringify(errorArr, null, 4)));
   return errorArr;
 }
 
@@ -748,6 +791,7 @@ function badCharacterNull(context) {
     character: function character(_ref) {
       var chr = _ref.chr,
           i = _ref.i;
+      console.log("011 ".concat("\x1B[".concat(32, "m", "bad-character-null.js", "\x1B[", 39, "m"), ": inside the rule, chr = \"", chr, "\"; i = ").concat(i));
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -924,10 +968,11 @@ function badCharacterBackspace(context) {
 }
 
 function badCharacterTabulation(context) {
-  var mode = "never";
   for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     originalOpts[_key - 1] = arguments[_key];
   }
+  console.log("".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+  var mode = "never";
   if (Array.isArray(originalOpts) && originalOpts[0] && typeof originalOpts[0] === "string" && originalOpts[0].toLowerCase() === "indentationisfine") {
     mode = "indentationIsFine";
   }
@@ -3008,11 +3053,15 @@ function badCharacterReplacementCharacter(context) {
 function tagSpaceAfterOpeningBracket(context) {
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagSpaceAfterOpeningBracket() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("node = ".concat(JSON.stringify(node, null, 4)));
       var ranges = [];
       if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim().length) {
+        console.log("028 whitespace after opening bracket confirmed");
         ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1)]);
       }
       if (!context.str[node.tagNameStartAt - 1].trim().length) {
+        console.log("034 whitespace before tag name confirmed");
         var charToTheLeftOfTagNameIdx = stringLeftRight.left(context.str, node.tagNameStartAt);
         if (charToTheLeftOfTagNameIdx !== node.start) {
           ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartAt]);
@@ -3039,15 +3088,22 @@ function tagSpaceBeforeClosingSlash(context) {
   }
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagSpaceBeforeClosingSlash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("019 inside rule: node = ".concat(JSON.stringify(node, null, 4)));
       var gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      console.log("021 gapValue = ".concat(JSON.stringify(gapValue, null, 4)));
+      console.log("024 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(33, "m", "context.str[".concat(node.tagNameStartAt, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(context.str[node.tagNameStartAt], null, 4)));
+      console.log("031 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       var mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log("045 tagSpaceBeforeClosingSlash(): ".concat("\x1B[".concat(35, "m", "calculated mode", "\x1B[", 39, "m"), " = \"", mode, "\""));
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
       if (mode === "never" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
+        console.log("058 whitespace present in front of closing slash!");
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -3058,6 +3114,7 @@ function tagSpaceBeforeClosingSlash(context) {
           }
         });
       } else if (mode === "always" && node["void"] && context.str[slashPos] === "/" && leftOfSlashPos === slashPos - 1) {
+        console.log("072 space missing in front of closing slash!");
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -3078,6 +3135,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === "/" && stringLeftRight.left(context.str, node.end - 1) < node.end - 2) {
         var idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
+        console.log("025 whitespace present between slash and bracket!");
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -3096,11 +3154,15 @@ var BACKSLASH = "\\";
 function tagClosingBackslash(context) {
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagClosingBackslash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("".concat("\x1B[".concat(33, "m", "node", "\x1B[", 39, "m"), " = ", JSON.stringify(node, null, 4)));
       var ranges = [];
       if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartAt) && context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)) {
+        console.log("045 backslash in front!");
         for (var i = node.start; i < node.tagNameStartAt; i++) {
           if (context.str[i] === BACKSLASH) {
             ranges.push([i, i + 1]);
+            console.log("054 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " [", i, ", ").concat(i + 1, "]"));
           }
         }
       }
@@ -3110,19 +3172,25 @@ function tagClosingBackslash(context) {
         var backSlashPos = stringLeftRight.left(context.str, node.end - 1);
         var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
         var whatToInsert = node["void"] ? "/" : "";
+        console.log("083 ".concat("\x1B[".concat(35, "m", "initial", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", JSON.stringify(idxFrom, null, 4), "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(whatToInsert, null, 4)));
         if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+          console.log("114 SET ".concat("\x1B[".concat(32, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom));
         }
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           whatToInsert = " ".concat(whatToInsert);
+          console.log("132 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom, "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"").concat(whatToInsert, "\""));
           if (node["void"] && context.str[idxFrom + 1] === " ") {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
+            console.log("140 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", idxFrom, "; ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"").concat(whatToInsert, "\""));
           } else if (!node["void"]) {
             whatToInsert = whatToInsert.trim();
+            console.log("145 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "whatToInsert", "\x1B[", 39, "m"), " = \"", whatToInsert, "\""));
           }
         }
+        console.log("151 ".concat("\x1B[".concat(32, "m", "FINAL", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "idxFrom", "\x1B[", 39, "m"), " = ", JSON.stringify(idxFrom, null, 4)));
         if (node["void"] && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
           whatToInsert = "";
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
@@ -3160,14 +3228,17 @@ function tagVoidSlash(context) {
   }
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagVoidSlash() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
       var mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log("024 tagVoidSlash(): ".concat("\x1B[".concat(35, "m", "calculated mode", "\x1B[", 39, "m"), " = \"", mode, "\""));
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
       var leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
       if (mode === "never" && node["void"] && context.str[slashPos] === "/") {
+        console.log("036 whitespace present in front of closing slash!");
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -3179,8 +3250,11 @@ function tagVoidSlash(context) {
         });
       } else if (mode === "always" && node["void"] && context.str[slashPos] !== "/" && (
       !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
+        console.log("064");
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
+          console.log("075");
           if (context.str[slashPos + 1] === " ") {
+            console.log("080 add slash only");
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -3191,6 +3265,7 @@ function tagVoidSlash(context) {
               }
             });
           } else {
+            console.log("090 add space and slash");
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -3202,6 +3277,7 @@ function tagVoidSlash(context) {
             });
           }
         } else if (context.processedRulesConfig["tag-space-before-closing-slash"] === undefined || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never" || Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0) {
+          console.log("114 add slash only");
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
@@ -3221,9 +3297,15 @@ function tagNameCase(context) {
   var knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagNameCase() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("".concat("\x1B[".concat(33, "m", "node", "\x1B[", 39, "m"), " = ", JSON.stringify(node, null, 4)));
       if (node.tagName && node.recognised === true) {
+        console.log("022 tagNameCase(): recognised tag");
+        console.log("025 tagNameCase(): ".concat("\x1B[".concat(33, "m", "knownUpperCaseTags.includes(node.tagName.toUpperCase())", "\x1B[", 39, "m"), " = ", JSON.stringify(knownUpperCaseTags.includes(node.tagName.toUpperCase()), null, 4)));
+        console.log("032 tagNameCase(): ".concat("\x1B[".concat(33, "m", "node.tagName", "\x1B[", 39, "m"), " = ", JSON.stringify(node.tagName, null, 4)));
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !== node.tagName.toUpperCase()) {
+            console.log("046 tagNameCase(): wrong tag case!");
             var ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName.toUpperCase()]];
             context.report({
               ruleId: "tag-name-case",
@@ -3236,6 +3318,7 @@ function tagNameCase(context) {
             });
           }
         } else if (context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !== node.tagName) {
+          console.log("068 tagNameCase(): wrong tag case!");
           var _ranges = [[node.tagNameStartAt, node.tagNameEndAt, node.tagName]];
           context.report({
             ruleId: "tag-name-case",
@@ -3258,9 +3341,14 @@ function tagIsPresent(context) {
   }
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagIsPresent() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("015 tagIsPresent(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("022 tagIsPresent(): node = ".concat(JSON.stringify(node, null, 4)));
       if (Array.isArray(opts) && opts.length) {
         var temp = matcher([node.tagName], opts);
+        console.log("028 ".concat("\x1B[".concat(33, "m", "matcher([".concat(JSON.stringify(node.tagName, null, 0), "], ").concat(JSON.stringify(opts, null, 0), ")"), "\x1B[", 39, "m"), " = ", JSON.stringify(temp, null, 4)));
         if (matcher([node.tagName], opts).length) {
+          console.log("039 RAISE ERROR [".concat(node.start, ", ").concat(node.end, "]"));
           context.report({
             ruleId: "tag-is-present",
             message: "".concat(node.tagName, " is not allowed."),
@@ -3282,11 +3370,15 @@ function tagBold(context) {
   }
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 tagBold() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 tagBold(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("019 tagBold(): node = ".concat(JSON.stringify(node, null, 4)));
       var suggested = "strong";
       if (Array.isArray(opts) && typeof opts[0] === "string" && opts[0].toLowerCase() === "b") {
         suggested = "b";
       }
       if (node.tagName === "bold") {
+        console.log("031 RAISE ERROR [".concat(node.start, ", ").concat(node.end, "]"));
         context.report({
           ruleId: "tag-bold",
           message: "Tag \"bold\" does not exist in HTML.",
@@ -3302,14 +3394,21 @@ function tagBold(context) {
 }
 
 function attributeDuplicate(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     html: function html(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeDuplicate() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 attributeDuplicate(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeDuplicate(): node = ".concat(JSON.stringify(node, null, 4)));
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         var attrsGatheredSoFar = [];
         for (var i = 0, len = node.attribs.length; i < len; i++) {
           if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
             attrsGatheredSoFar.push(node.attribs[i].attribName);
           } else {
+            console.log("030 attributeDuplicate(): RAISE ERROR");
             context.report({
               ruleId: "attribute-duplicate",
               message: "Duplicate attribute \"".concat(node.attribs[i].attribName, "\"."),
@@ -3325,12 +3424,20 @@ function attributeDuplicate(context) {
 }
 
 function attributeMalformed(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeMalformed() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("016 attributeMalformed(): ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("023 attributeMalformed(): node = ".concat(JSON.stringify(node, null, 4)));
       if (!node.attribNameRecognised) {
+        console.log("030 attributeMalformed(): ".concat("\x1B[".concat(31, "m", "unrecognised attr name!", "\x1B[", 39, "m")));
         var somethingMatched = false;
         for (var i = 0, len = htmlAllKnownAttributes.allHtmlAttribs.length; i < len; i++) {
           if (leven(htmlAllKnownAttributes.allHtmlAttribs[i], node.attribName) === 1) {
+            console.log("036 RAISE ERROR");
             context.report({
               ruleId: "attribute-malformed",
               message: "Probably meant \"".concat(htmlAllKnownAttributes.allHtmlAttribs[i], "\"."),
@@ -3345,6 +3452,7 @@ function attributeMalformed(context) {
           }
         }
         if (!somethingMatched) {
+          console.log("059 RAISE ERROR");
           context.report({
             ruleId: "attribute-malformed",
             message: "Unrecognised attribute \"".concat(node.attribName, "\"."),
@@ -3355,6 +3463,7 @@ function attributeMalformed(context) {
         }
       }
       if (node.attribValueStartAt !== null && context.str[node.attribNameEndAt] !== "=") {
+        console.log("074 RAISE ERROR");
         context.report({
           ruleId: "attribute-malformed",
           message: "Equal is missing.",
@@ -3370,8 +3479,14 @@ function attributeMalformed(context) {
 }
 
 function attributeValidateAbbr(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAbbr() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateAbbr(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "abbr") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -3384,7 +3499,9 @@ function attributeValidateAbbr(context) {
         }
         var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
             errorArr = _checkForWhitespace.errorArr;
+        console.log("041 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("049 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-abbr"
           }));
@@ -3395,8 +3512,14 @@ function attributeValidateAbbr(context) {
 }
 
 function attributeValidateAcceptCharset(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAcceptCharset() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateAcceptCharset(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "accept-charset") {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
@@ -3413,7 +3536,9 @@ function attributeValidateAcceptCharset(context) {
           quickPermittedValues: ["UNKNOWN"],
           permittedValues: knownCharsets
         });
+        console.log("054 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("062 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-accept-charset"
           }));
@@ -3424,8 +3549,14 @@ function attributeValidateAcceptCharset(context) {
 }
 
 function attributeValidateAccept(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAccept() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateAccept(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "accept") {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -3444,7 +3575,9 @@ function attributeValidateAccept(context) {
           canBeCommaSeparated: true,
           noSpaceAfterComma: true
         });
+        console.log("059 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("070 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-accept"
           }));
@@ -3455,8 +3588,14 @@ function attributeValidateAccept(context) {
 }
 
 function attributeValidateAccesskey(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAccesskey() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateAccesskey(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "accesskey") {
         if (!["a", "area", "button", "input", "label", "legend", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -3472,6 +3611,7 @@ function attributeValidateAccesskey(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr,
             trimmedVal = _checkForWhitespace.trimmedVal;
+        console.log("055 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (Number.isInteger(charStart)) {
           if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
             errorArr.push({
@@ -3483,6 +3623,7 @@ function attributeValidateAccesskey(context) {
           }
         }
         errorArr.forEach(function (errorObj) {
+          console.log("079 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-accesskey"
           }));
@@ -3493,8 +3634,14 @@ function attributeValidateAccesskey(context) {
 }
 
 function attributeValidateAction(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAction() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateAction(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "action") {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
@@ -3509,6 +3656,8 @@ function attributeValidateAction(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("044 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("055 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -3518,6 +3667,7 @@ function attributeValidateAction(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("079 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-action"
           }));
@@ -3528,8 +3678,14 @@ function attributeValidateAction(context) {
 }
 
 function attributeValidateAlign(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAlign() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateAlign(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "align") {
         if (!["applet", "caption", "iframe", "img", "input", "object", "legend", "table", "hr", "div", "h1", "h2", "h3", "h4", "h5", "h6", "p", "col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
@@ -3577,7 +3733,9 @@ function attributeValidateAlign(context) {
             canBeCommaSeparated: false
           });
         }
+        console.log("140 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("148 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-align"
           }));
@@ -3588,6 +3746,7 @@ function attributeValidateAlign(context) {
 }
 
 function validateColor(str, idxOffset, opts) {
+  console.log("011 ".concat("\x1B[".concat(35, "m", "validateColor() called", "\x1B[", 39, "m"), "\ninput args:\n", JSON.stringify(Array.prototype.slice.call(arguments), null, 4)));
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
@@ -3595,6 +3754,7 @@ function validateColor(str, idxOffset, opts) {
   if (Number.isInteger(charStart)) {
     var attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
     if (attrVal.length > 1 && isLetter(attrVal[0]) && isLetter(attrVal[1]) && Object.keys(extendedColorNames).includes(attrVal.toLowerCase())) {
+      console.log("043 ".concat("\x1B[".concat(32, "m", "known color name \"".concat(attrVal.toLowerCase(), "\" matched"), "\x1B[", 39, "m")));
       if (!opts.namedCssLevel1OK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
@@ -3623,6 +3783,7 @@ function validateColor(str, idxOffset, opts) {
           fix: null
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
+        console.log("091 ".concat("\x1B[".concat(32, "m", "attribute's value \"".concat(attrVal.toLowerCase(), "\" didn't pass the sixDigitHexColorRegex regex"), "\x1B[", 39, "m")));
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
@@ -3657,8 +3818,13 @@ function validateColor(str, idxOffset, opts) {
 }
 
 function attributeValidateAlink(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAlink() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "alink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -3677,7 +3843,9 @@ function attributeValidateAlink(context) {
           hexSixOK: true,
           hexEightOK: false
         });
+        console.log("048 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("052 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-alink"
           }));
@@ -3688,8 +3856,14 @@ function attributeValidateAlink(context) {
 }
 
 function attributeValidateArchive(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateArchive() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("015 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("022 attributeValidateArchive(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "archive") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -3704,10 +3878,13 @@ function attributeValidateArchive(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("055 attributeValidateArchive(): ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("066 attributeValidateArchive(): ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         var trimmedAttrVal = node.attribValue;
         if (errorArr.length) {
           trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
         }
+        console.log("084 attributeValidateArchive(): ".concat("\x1B[".concat(33, "m", "trimmedAttrVal", "\x1B[", 39, "m"), " = ", JSON.stringify(trimmedAttrVal, null, 4)));
         if (node.parent.tagName === "applet") {
           processCommaSeparated(node.attribValue, {
             offset: node.attribValueStartAt,
@@ -3725,6 +3902,7 @@ function attributeValidateArchive(context) {
               }
             },
             errCb: function errCb(ranges, message, fixable) {
+              console.log("114 cb(): ".concat("\x1B[".concat(32, "m", "\u2588\u2588 INCOMING", "\x1B[", 39, "m"), " ranges = ", ranges, "; message = ").concat(message, "; fixable = ").concat(fixable));
               errorArr.push({
                 idxFrom: ranges[0][0],
                 idxTo: ranges[ranges.length - 1][1],
@@ -3733,6 +3911,7 @@ function attributeValidateArchive(context) {
                   ranges: ranges
                 } : null
               });
+              console.log("127 after errorArr push, ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
             }
           });
         } else if (node.parent.tagName === "object") {
@@ -3748,6 +3927,7 @@ function attributeValidateArchive(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("150 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-archive"
           }));
@@ -3758,8 +3938,14 @@ function attributeValidateArchive(context) {
 }
 
 function attributeValidateAxis(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateAxis() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateAxis(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "axis") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -3772,7 +3958,9 @@ function attributeValidateAxis(context) {
         }
         var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
             errorArr = _checkForWhitespace.errorArr;
+        console.log("041 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("049 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-axis"
           }));
@@ -3788,6 +3976,9 @@ function attributeValidateBackground(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateBackground() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateBackground(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "background") {
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -3803,6 +3994,9 @@ function attributeValidateBackground(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr,
             trimmedVal = _checkForWhitespace.trimmedVal;
+        console.log("048 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("059 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
+        console.log("065 \u2588\u2588 isUrl: ".concat(isUrl(trimmedVal)));
         if (!isUrl(trimmedVal)) {
           if (!Array.from(trimmedVal).some(function (_char) {
             return !_char.trim().length;
@@ -3825,6 +4019,7 @@ function attributeValidateBackground(context) {
           }
         }
         errorArr.forEach(function (errorObj) {
+          console.log("098 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-background"
           }));
@@ -3835,8 +4030,13 @@ function attributeValidateBackground(context) {
 }
 
 function attributeValidateBgcolor(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateBgcolor() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "bgcolor") {
         if (!["table", "tr", "td", "th", "body"].includes(node.parent.tagName)) {
           context.report({
@@ -3855,7 +4055,9 @@ function attributeValidateBgcolor(context) {
           hexSixOK: true,
           hexEightOK: false
         });
+        console.log("050 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("054 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-bgcolor"
           }));
@@ -3866,8 +4068,13 @@ function attributeValidateBgcolor(context) {
 }
 
 function attributeValidateBorder(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateBorder() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "border") {
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -3883,7 +4090,9 @@ function attributeValidateBorder(context) {
           negativeOK: false,
           theOnlyGoodUnits: []
         });
+        console.log("045 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("049 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-border"
           }));
@@ -3894,8 +4103,13 @@ function attributeValidateBorder(context) {
 }
 
 function attributeValidateCellpadding(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCellpadding() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "cellpadding") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -3913,7 +4127,9 @@ function attributeValidateCellpadding(context) {
           badUnits: ["px"],
           customGenericValueError: "Should be integer, either no units or percentage."
         });
+        console.log("048 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("052 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-cellpadding"
           }));
@@ -3924,8 +4140,13 @@ function attributeValidateCellpadding(context) {
 }
 
 function attributeValidateCellspacing(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCellspacing() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "cellspacing") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -3943,7 +4164,9 @@ function attributeValidateCellspacing(context) {
           badUnits: ["px"],
           customGenericValueError: "Should be integer, either no units or percentage."
         });
+        console.log("048 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("052 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-cellspacing"
           }));
@@ -3954,8 +4177,14 @@ function attributeValidateCellspacing(context) {
 }
 
 function attributeValidateChar(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateChar() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateChar(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "char") {
         if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
@@ -3971,6 +4200,7 @@ function attributeValidateChar(context) {
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr,
             trimmedVal = _checkForWhitespace.trimmedVal;
+        console.log("051 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (Number.isInteger(charStart)) {
           if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
             errorArr.push({
@@ -3982,6 +4212,7 @@ function attributeValidateChar(context) {
           }
         }
         errorArr.forEach(function (errorObj) {
+          console.log("074 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-char"
           }));
@@ -3992,8 +4223,14 @@ function attributeValidateChar(context) {
 }
 
 function attributeValidateCharoff(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCharoff() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateCharoff(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "charoff") {
         if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
@@ -4010,6 +4247,7 @@ function attributeValidateCharoff(context) {
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
+        console.log("061 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         if (!node.parent.attribs.some(function (attribObj) {
           return attribObj.attribName === "char";
         })) {
@@ -4021,6 +4259,7 @@ function attributeValidateCharoff(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("079 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-charoff"
           }));
@@ -4031,8 +4270,14 @@ function attributeValidateCharoff(context) {
 }
 
 function attributeValidateCharset(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCharset() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateCharset(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "charset") {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
@@ -4049,7 +4294,9 @@ function attributeValidateCharset(context) {
           quickPermittedValues: [],
           permittedValues: knownCharsets
         });
+        console.log("054 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("062 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-charset"
           }));
@@ -4060,6 +4307,7 @@ function attributeValidateCharset(context) {
 }
 
 function validateVoid(node, context, errorArr, originalOpts) {
+  console.log("005 ".concat("\x1B[".concat(35, "m", "validateVoid() called", "\x1B[", 39, "m"), "\ninput args:\n", JSON.stringify(Array.prototype.slice.call(arguments), null, 4)));
   var defaults = {
     xhtml: false,
     enforceSiblingAttributes: null
@@ -4073,6 +4321,8 @@ function validateVoid(node, context, errorArr, originalOpts) {
       quotesType = "'";
     }
     if (node.attribValue !== node.attribName || context.str.slice(node.attribNameEndAt, node.attribEnd) !== "=".concat(quotesType).concat(node.attribName).concat(quotesType)) {
+      console.log("046 ".concat("\x1B[".concat(31, "m", "XHTML requested", "\x1B[", 39, "m"), " - attrib value is missing!"));
+      console.log("050 ".concat("\x1B[".concat(32, "m", "\u2588\u2588 FINAL RANGES \u2588\u2588", "\x1B[", 39, "m"), ": ", JSON.stringify([node.attribNameEndAt, node.attribEnd, "=".concat(quotesType).concat(node.attribName).concat(quotesType)], null, 4)));
       errorArr.push({
         idxFrom: node.attribNameStartAt,
         idxTo: node.attribNameEndAt,
@@ -4093,7 +4343,9 @@ function validateVoid(node, context, errorArr, originalOpts) {
     });
   }
   if (isObj(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
+    console.log("091 validateVoid(): sibling attributes enforced");
     Object.keys(opts.enforceSiblingAttributes).forEach(function (siblingAttr) {
+      console.log("094 validateVoid(): checking presence of attribute \"".concat(siblingAttr, "\""));
       if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
         return attribObj.attribName === siblingAttr;
       })) {
@@ -4135,6 +4387,9 @@ function attributeValidateChecked(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateChecked() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("020 attributeValidateChecked(): node = ".concat(JSON.stringify(node, null, 4)));
       var opts = {
         xhtml: false
       };
@@ -4161,6 +4416,7 @@ function attributeValidateChecked(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("069 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-checked"
             }));
@@ -4172,8 +4428,14 @@ function attributeValidateChecked(context) {
 }
 
 function attributeValidateCite(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCite() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateCite(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "cite") {
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -4188,6 +4450,8 @@ function attributeValidateCite(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("044 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("055 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -4197,6 +4461,7 @@ function attributeValidateCite(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("079 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-cite"
           }));
@@ -4211,20 +4476,29 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
     typeName: "class"
   };
   var opts = Object.assign({}, defaults, originalOpts);
+  console.log("010 checkClassOrIdValue(): FINAL ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+  console.log("017 checkClassOrIdValue(): ".concat("\x1B[".concat(36, "m", "traverse and extract ".concat(opts.typeName, "s"), "\x1B[", 39, "m")));
   var nameStartsAt = null;
   var nameEndsAt = null;
   var listOfUniqueNames = [];
   for (var i = from; i < to; i++) {
+    console.log("027 ".concat("\x1B[".concat(36, "m", "------------------------------------------------\nstr[".concat(i, "]"), "\x1B[", 39, "m"), " = ", JSON.stringify(str[i], null, 4)));
     if (nameStartsAt === null && str[i].trim().length) {
       nameStartsAt = i;
+      console.log("038 checkClassOrIdValue(): SET ".concat("\x1B[".concat(33, "m", "nameStartsAt", "\x1B[", 39, "m"), " = ", nameStartsAt));
       if (nameEndsAt !== null && str.slice(nameEndsAt, i) !== " ") {
+        console.log("043 checkClassOrIdValue(): problems with whitespace, carved out ".concat(JSON.stringify(str.slice(nameEndsAt, i), null, 4)));
         var ranges = void 0;
         if (str[nameEndsAt] === " ") {
           ranges = [[nameEndsAt + 1, i]];
+          console.log("055 checkClassOrIdValue(): ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "ranges", "\x1B[", 39, "m"), " = ", JSON.stringify(ranges, null, 4)));
         } else if (str[i - 1] === " ") {
           ranges = [[nameEndsAt, i - 1]];
+          console.log("064 checkClassOrIdValue(): ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "ranges", "\x1B[", 39, "m"), " = ", JSON.stringify(ranges, null, 4)));
         } else {
+          console.log("072 checkClassOrIdValue(): worst case scenario, replace the whole whitespace");
           ranges = [[nameEndsAt, i, " "]];
+          console.log("076 checkClassOrIdValue(): ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "ranges", "\x1B[", 39, "m"), " = ", JSON.stringify(ranges, null, 4)));
         }
         errorArr.push({
           idxFrom: nameEndsAt,
@@ -4239,8 +4513,16 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
     }
     if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === to)) {
       nameEndsAt = i + 1 === to ? i + 1 : i;
+      console.log("103 checkClassOrIdValue(): ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "nameEndsAt", "\x1B[", 39, "m"), " = ", nameEndsAt));
+      console.log("106 checkClassOrIdValue(): ".concat("\x1B[".concat(32, "m", "\u2588\u2588", "\x1B[", 39, "m"), " ", "\x1B[".concat(32, "m", "carved out ".concat(opts.typeName, " name"), "\x1B[", 39, "m"), " ", JSON.stringify(str.slice(nameStartsAt, i + 1 === to ? i + 1 : i), null, 0)));
       var extractedName = str.slice(nameStartsAt, i + 1 === to ? i + 1 : i);
       if (!classNameRegex.test(extractedName)) {
+        console.log("117 checkClassOrIdValue(): PUSH ".concat(JSON.stringify({
+          idxFrom: nameStartsAt,
+          idxTo: i + 1 === to ? i + 1 : i,
+          message: "Wrong ".concat(opts.typeName, " name."),
+          fix: null
+        }, null, 4)));
         errorArr.push({
           idxFrom: nameStartsAt,
           idxTo: i + 1 === to ? i + 1 : i,
@@ -4269,13 +4551,25 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
         });
       }
       nameStartsAt = null;
+      console.log("167 checkClassOrIdValue(): ".concat("\x1B[".concat(31, "m", "RESET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "nameStartsAt", "\x1B[", 39, "m"), " = ", nameStartsAt));
     }
+    console.log(" ");
+    console.log(" ");
+    console.log("".concat("\x1B[".concat(90, "m", "1 checkClassOrIdValue(): \u2588\u2588 nameStartsAt = ".concat(nameStartsAt, "; nameEndsAt = ").concat(nameEndsAt), "\x1B[", 39, "m")));
+    console.log(" ");
+    console.log(" ");
   }
 }
 
 function attributeValidateClass(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateClass() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateClass(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "class") {
         if (["base", "basefont", "head", "html", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -4290,11 +4584,14 @@ function attributeValidateClass(context) {
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
+          console.log("052 \n".concat("\x1B[".concat(33, "m", "node.attribValueStartAt + charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(node.attribValueStartAt + charStart, null, 4), "; \n", "\x1B[".concat(33, "m", "node.attribValueStartAt + charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(node.attribValueStartAt + charEnd, null, 4), "; \n", "\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(errorArr, null, 4)));
           checkClassOrIdValue(context.str, node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd, errorArr,
           {
             typeName: node.attribName
           });
+          console.log("078 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\nFINALLY,\n".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), ":\n", JSON.stringify(errorArr, null, 4)));
           errorArr.forEach(function (errorObj) {
+            console.log("086 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-class"
             }));
@@ -4306,8 +4603,14 @@ function attributeValidateClass(context) {
 }
 
 function attributeValidateClassid(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateClassid() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateClassid(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "classid") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -4322,6 +4625,8 @@ function attributeValidateClassid(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("048 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("059 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -4331,6 +4636,7 @@ function attributeValidateClassid(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("083 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-classid"
           }));
@@ -4341,8 +4647,14 @@ function attributeValidateClassid(context) {
 }
 
 function attributeValidateClassid$1(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateClassid() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateClassid(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "clear") {
         if (node.parent.tagName !== "br") {
           context.report({
@@ -4357,6 +4669,8 @@ function attributeValidateClassid$1(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("047 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("058 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!["left", "all", "right", "none"].includes(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -4366,6 +4680,7 @@ function attributeValidateClassid$1(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("081 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-clear"
           }));
@@ -4376,8 +4691,14 @@ function attributeValidateClassid$1(context) {
 }
 
 function attributeValidateCode(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCode() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateCode(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "code") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -4392,7 +4713,10 @@ function attributeValidateCode(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("041 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("052 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("060 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-code"
           }));
@@ -4403,8 +4727,14 @@ function attributeValidateCode(context) {
 }
 
 function attributeValidateCodebase(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCodebase() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateCodebase(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "codebase") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4419,6 +4749,8 @@ function attributeValidateCodebase(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("048 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("059 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -4428,6 +4760,7 @@ function attributeValidateCodebase(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("083 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-codebase"
           }));
@@ -4438,8 +4771,14 @@ function attributeValidateCodebase(context) {
 }
 
 function attributeValidateCodetype(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCodetype() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateCodetype(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "codetype") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -4458,7 +4797,9 @@ function attributeValidateCodetype(context) {
           canBeCommaSeparated: false,
           noSpaceAfterComma: false
         });
+        console.log("082 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("093 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-codetype"
           }));
@@ -4469,8 +4810,13 @@ function attributeValidateCodetype(context) {
 }
 
 function attributeValidateColor(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateColor() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "color") {
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
@@ -4489,7 +4835,9 @@ function attributeValidateColor(context) {
           hexSixOK: true,
           hexEightOK: false
         });
+        console.log("048 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("052 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-color"
           }));
@@ -4500,8 +4848,13 @@ function attributeValidateColor(context) {
 }
 
 function attributeValidateCols(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCols() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "cols") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -4512,6 +4865,7 @@ function attributeValidateCols(context) {
             fix: null
           });
         }
+        console.log("036 attributeValidateCols(): ".concat("\x1B[".concat(33, "m", "node.attribValue", "\x1B[", 39, "m"), " = ", JSON.stringify(node.attribValue, null, 4)));
         var errorArr = [];
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
@@ -4523,15 +4877,18 @@ function attributeValidateCols(context) {
             type: "rational",
             customGenericValueError: "Should be: pixels|%|*."
           });
+          console.log("059 attributeValidateCols(): received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         } else if (node.parent.tagName === "textarea") {
           errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
             type: "integer",
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units."
           });
+          console.log("077 attributeValidateCols(): received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("087 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-cols"
             }));
@@ -4543,8 +4900,13 @@ function attributeValidateCols(context) {
 }
 
 function attributeValidateColspan(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateColspan() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "colspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -4560,7 +4922,9 @@ function attributeValidateColspan(context) {
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
+        console.log("045 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("049 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-colspan"
           }));
@@ -4576,6 +4940,9 @@ function attributeValidateCompact(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCompact() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("020 attributeValidateCompact(): node = ".concat(JSON.stringify(node, null, 4)));
       var opts = {
         xhtml: false
       };
@@ -4600,6 +4967,7 @@ function attributeValidateCompact(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("067 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-compact"
             }));
@@ -4611,8 +4979,14 @@ function attributeValidateCompact(context) {
 }
 
 function attributeValidateContent(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateContent() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateContent(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "content") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -4627,7 +5001,10 @@ function attributeValidateContent(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("045 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("056 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("064 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-content"
           }));
@@ -4638,8 +5015,13 @@ function attributeValidateContent(context) {
 }
 
 function attributeValidateCoords(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateCoords() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "coords") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -4650,6 +5032,7 @@ function attributeValidateCoords(context) {
             fix: null
           });
         } else {
+          console.log("035 attributeValidateCoords(): ".concat("\x1B[".concat(33, "m", "node.attribValue", "\x1B[", 39, "m"), " = ", JSON.stringify(node.attribValue, null, 4)));
           if (!Array.isArray(node.parent.attribs) || !node.parent.attribs.length || !node.parent.attribs.some(function (attrObj) {
             return attrObj.attribName === "shape";
           })) {
@@ -4664,6 +5047,7 @@ function attributeValidateCoords(context) {
             var shapeAttr = node.parent.attribs.filter(function (attrObj) {
               return attrObj.attribName === "shape";
             })[0];
+            console.log("062 ".concat("\x1B[".concat(32, "m", "EXTRACTED", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "shapeAttr", "\x1B[", 39, "m"), " = ", JSON.stringify(shapeAttr, null, 4)));
             var enforceCount = null;
             if (shapeAttr.attribValue === "rect") {
               enforceCount = 4;
@@ -4684,6 +5068,7 @@ function attributeValidateCoords(context) {
             });
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach(function (errorObj) {
+                console.log("098 RAISE ERROR");
                 context.report(Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-coords"
                 }));
@@ -4697,8 +5082,14 @@ function attributeValidateCoords(context) {
 }
 
 function attributeValidateData(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateData() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateData(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "data") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -4713,6 +5104,8 @@ function attributeValidateData(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("044 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("055 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartAt + charStart,
@@ -4722,6 +5115,7 @@ function attributeValidateData(context) {
           });
         }
         errorArr.forEach(function (errorObj) {
+          console.log("079 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-data"
           }));
@@ -4732,8 +5126,14 @@ function attributeValidateData(context) {
 }
 
 function attributeValidateDatetime(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateDatetime() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateDatetime(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "datetime") {
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -4752,7 +5152,9 @@ function attributeValidateDatetime(context) {
           canBeCommaSeparated: false,
           noSpaceAfterComma: false
         });
+        console.log("051 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("062 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-datetime"
           }));
@@ -4768,6 +5170,9 @@ function attributeValidateDeclare(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateDeclare() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("020 attributeValidateDeclare(): node = ".concat(JSON.stringify(node, null, 4)));
       var opts = {
         xhtml: false
       };
@@ -4792,6 +5197,7 @@ function attributeValidateDeclare(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("067 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-declare"
             }));
@@ -4808,6 +5214,9 @@ function attributeValidateDefer(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateDefer() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("020 attributeValidateDefer(): node = ".concat(JSON.stringify(node, null, 4)));
       var opts = {
         xhtml: false
       };
@@ -4832,6 +5241,7 @@ function attributeValidateDefer(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("063 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-defer"
             }));
@@ -4843,8 +5253,14 @@ function attributeValidateDefer(context) {
 }
 
 function attributeValidateDir(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateDir() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateDir(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "dir") {
         if (["applet", "base", "basefont", "br", "frame", "frameset", "iframe", "param", "script"].includes(node.parent.tagName)) {
           context.report({
@@ -4861,7 +5277,9 @@ function attributeValidateDir(context) {
           permittedValues: ["ltr", "rtl"],
           canBeCommaSeparated: false
         });
+        console.log("058 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("066 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-dir"
           }));
@@ -4877,6 +5295,9 @@ function attributeValidateDisabled(context) {
   }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateDisabled() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("020 attributeValidateDisabled(): node = ".concat(JSON.stringify(node, null, 4)));
       var opts = {
         xhtml: false
       };
@@ -4901,6 +5322,7 @@ function attributeValidateDisabled(context) {
         }
         if (errorArr.length) {
           errorArr.forEach(function (errorObj) {
+            console.log("076 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-disabled"
             }));
@@ -4912,8 +5334,14 @@ function attributeValidateDisabled(context) {
 }
 
 function attributeValidateEnctype(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateEnctype() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateEnctype(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "enctype") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -4931,7 +5359,9 @@ function attributeValidateEnctype(context) {
           permittedValues: Object.keys(db),
           canBeCommaSeparated: false
         });
+        console.log("056 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("064 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-enctype"
           }));
@@ -4942,8 +5372,14 @@ function attributeValidateEnctype(context) {
 }
 
 function attributeValidateFace(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateFace() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateFace(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "face") {
         if (node.parent.tagName !== "font") {
           context.report({
@@ -4958,7 +5394,10 @@ function attributeValidateFace(context) {
             charStart = _checkForWhitespace.charStart,
             charEnd = _checkForWhitespace.charEnd,
             errorArr = _checkForWhitespace.errorArr;
+        console.log("041 ".concat("\x1B[".concat(33, "m", "charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(charStart, null, 4), "; ", "\x1B[".concat(33, "m", "charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(charEnd, null, 4)));
+        console.log("052 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("060 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-face"
           }));
@@ -4969,8 +5408,14 @@ function attributeValidateFace(context) {
 }
 
 function attributeValidateFor(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateFor() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("015 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("022 attributeValidateFor(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "for") {
         if (node.parent.tagName !== "label") {
           context.report({
@@ -4985,6 +5430,8 @@ function attributeValidateFor(context) {
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
+          console.log("041 \n".concat("\x1B[".concat(33, "m", "node.attribValueStartAt + charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(node.attribValueStartAt + charStart, null, 4), "; \n", "\x1B[".concat(33, "m", "node.attribValueStartAt + charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(node.attribValueStartAt + charEnd, null, 4), "; \n", "\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(errorArr, null, 4)));
+          console.log("057 ".concat("\x1B[".concat(36, "m", "traverse and extract id's", "\x1B[", 39, "m")));
           var extractedValue = node.attribValue.slice(charStart, charEnd);
           var message = "Wrong id name.";
           var fix = null;
@@ -5012,7 +5459,9 @@ function attributeValidateFor(context) {
               fix: fix
             });
           }
+          console.log("097 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\nFINALLY,\n".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), ":\n", JSON.stringify(errorArr, null, 4)));
           errorArr.forEach(function (errorObj) {
+            console.log("105 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-for"
             }));
@@ -5024,8 +5473,14 @@ function attributeValidateFor(context) {
 }
 
 function attributeValidateFrame(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateFrame() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateFrame(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "frame") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -5051,7 +5506,9 @@ function attributeValidateFrame(context) {
           ],
           canBeCommaSeparated: false
         });
+        console.log("056 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("064 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-frame"
           }));
@@ -5062,8 +5519,14 @@ function attributeValidateFrame(context) {
 }
 
 function attributeValidateId(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateId() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("014 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("021 attributeValidateId(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "id") {
         if (["base", "head", "html", "meta", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
@@ -5078,11 +5541,15 @@ function attributeValidateId(context) {
               charStart = _checkForWhitespace.charStart,
               charEnd = _checkForWhitespace.charEnd,
               errorArr = _checkForWhitespace.errorArr;
+          console.log("044 \n".concat("\x1B[".concat(33, "m", "node.attribValueStartAt + charStart", "\x1B[", 39, "m"), " = ", JSON.stringify(node.attribValueStartAt + charStart, null, 4), "; \n", "\x1B[".concat(33, "m", "node.attribValueStartAt + charEnd", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(node.attribValueStartAt + charEnd, null, 4), "; \n", "\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(errorArr, null, 4)));
+          console.log("060 ".concat("\x1B[".concat(36, "m", "traverse and extract id's", "\x1B[", 39, "m")));
           checkClassOrIdValue(context.str, node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd, errorArr,
           {
             typeName: node.attribName
           });
+          console.log("074 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\nFINALLY,\n".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), ":\n", JSON.stringify(errorArr, null, 4)));
           errorArr.forEach(function (errorObj) {
+            console.log("082 RAISE ERROR");
             context.report(Object.assign({}, errorObj, {
               ruleId: "attribute-validate-id"
             }));
@@ -5094,8 +5561,13 @@ function attributeValidateId(context) {
 }
 
 function attributeValidateRowspan(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateRowspan() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "rowspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -5111,7 +5583,9 @@ function attributeValidateRowspan(context) {
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
+        console.log("045 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("049 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-rowspan"
           }));
@@ -5122,8 +5596,14 @@ function attributeValidateRowspan(context) {
 }
 
 function attributeValidateRules(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateRules() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
+      console.log("020 attributeValidateRules(): node = ".concat(JSON.stringify(node, null, 4)));
       if (node.attribName === "rules") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -5140,7 +5620,9 @@ function attributeValidateRules(context) {
           permittedValues: ["none", "groups", "rows", "cols", "all"],
           canBeCommaSeparated: false
         });
+        console.log("046 ".concat("\x1B[".concat(33, "m", "errorArr", "\x1B[", 39, "m"), " = ", JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("054 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-rules"
           }));
@@ -5151,8 +5633,13 @@ function attributeValidateRules(context) {
 }
 
 function attributeValidateWidth(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
   return {
     attribute: function attribute(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 attributeValidateWidth() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("013 ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       if (node.attribName === "width") {
         if (!["hr", "iframe", "img", "object", "table", "td", "th", "applet", "col", "colgroup", "pre"].includes(node.parent.tagName)) {
           context.report({
@@ -5167,7 +5654,9 @@ function attributeValidateWidth(context) {
           badUnits: ["px"],
           noUnitsIsFine: true
         });
+        console.log("058 received errorArr = ".concat(JSON.stringify(errorArr, null, 4)));
         errorArr.forEach(function (errorObj) {
+          console.log("062 RAISE ERROR");
           context.report(Object.assign({}, errorObj, {
             ruleId: "attribute-validate-width"
           }));
@@ -5182,7 +5671,9 @@ function htmlEntitiesNotEmailFriendly(context) {
     entity: function entity(_ref) {
       var idxFrom = _ref.idxFrom,
           idxTo = _ref.idxTo;
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 htmlEntitiesNotEmailFriendly() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
       if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(context.str.slice(idxFrom + 1, idxTo - 1))) {
+        console.log("020 caught an email-unfriendly entity");
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
@@ -5206,10 +5697,14 @@ function characterEncode(context) {
       var type = _ref.type,
           chr = _ref.chr,
           i = _ref.i;
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 characterEncode() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       var mode = "named";
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log("032 characterEncode(): ".concat("\x1B[".concat(35, "m", "calculated mode", "\x1B[", 39, "m"), " = \"", mode, "\""));
+      console.log("notEmailFriendly[".concat(Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly)[10], "] = ").concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly)[10]]));
       if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr)) && (chr.charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isEnabled(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
         var encodedChr = he.encode(chr, {
           useNamedReferences: mode === "named"
@@ -5217,6 +5712,7 @@ function characterEncode(context) {
         if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
           encodedChr = "&".concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)], ";");
         }
+        console.log("066 ".concat("\x1B[".concat(33, "m", "encodedChr", "\x1B[", 39, "m"), " = ", JSON.stringify(encodedChr, null, 4)));
         var charName = "";
         if (chr.charCodeAt(0) === 160) {
           charName = " no-break space";
@@ -5258,6 +5754,9 @@ function characterUnspacedPunctuation(context) {
   };
   return {
     text: function text(node) {
+      console.log("\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 characterUnspacedPunctuation() \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+      console.log("".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
+      console.log("".concat("\x1B[".concat(33, "m", "node", "\x1B[", 39, "m"), " = ", JSON.stringify(node, null, 4)));
       var defaults = {
         questionMark: {
           whitespaceLeft: "never",
@@ -5284,11 +5783,16 @@ function characterUnspacedPunctuation(context) {
       if (Array.isArray(originalOpts) && originalOpts.length && _typeof(originalOpts[0]) === "object" && originalOpts[0] !== null) {
         opts = Object.assign({}, defaults, originalOpts[0]);
       }
+      console.log("072 ".concat("\x1B[".concat(32, "m", "FINAL CALCULATED", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
       for (var i = node.start; i < node.end; i++) {
+        console.log("082 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 i = ".concat(i));
         var charCode = context.str[i].charCodeAt(0);
         if (charCodeMapping[String(charCode)]) {
+          console.log("caught ".concat(charCodeMapping[String(charCode)], "!"));
           var charName = charCodeMapping[String(charCode)];
           if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
+            console.log("".concat("\x1B[".concat(31, "m", "! BAD SPACE ON THE LEFT !", "\x1B[", 39, "m")));
+            console.log("095 PING [".concat(stringLeftRight.left(context.str, i) + 1, ", ").concat(i, "]"));
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -5301,6 +5805,8 @@ function characterUnspacedPunctuation(context) {
             });
           }
           if (opts[charName].whitespaceRight === "never" && i < node.end - 1 && !context.str[i + 1].trim().length) {
+            console.log("".concat("\x1B[".concat(31, "m", "! BAD SPACE ON THE RIGHT !", "\x1B[", 39, "m")));
+            console.log("115 PING [".concat(i + 1, ", ").concat(stringLeftRight.right(context.str, i), "]"));
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -5313,6 +5819,8 @@ function characterUnspacedPunctuation(context) {
             });
           }
           if (opts[charName].whitespaceLeft === "always" && i && context.str[i - 1].trim().length) {
+            console.log("".concat("\x1B[".concat(31, "m", "! MISSING SPACE ON THE LEFT !", "\x1B[", 39, "m")));
+            console.log("135 PING [".concat(i, ", ").concat(i, ", \" \"]"));
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -5325,6 +5833,8 @@ function characterUnspacedPunctuation(context) {
             });
           }
           if (opts[charName].whitespaceRight === "always" && i < node.end - 1 && context.str[i + 1].trim().length) {
+            console.log("".concat("\x1B[".concat(31, "m", "! MISSING SPACE ON THE RIGHT !", "\x1B[", 39, "m")));
+            console.log("155 PING [".concat(i + 1, ", ").concat(i + 1, ", \" \"]"));
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -5913,6 +6423,7 @@ function normaliseRequestedRules(opts) {
       }
     });
   }
+  console.log("1296 normaliseRequestedRules() FINAL ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " = ", JSON.stringify(res, null, 4)));
   return res;
 }
 
@@ -6246,6 +6757,7 @@ function (_EventEmitter) {
       this.messages = [];
       this.str = str;
       this.config = config;
+      console.log("018 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": verify called for \"", str, "\" and ").concat(JSON.stringify(config, null, 4)));
       if (config) {
         if (_typeof(config) !== "object") {
           throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ".concat(_typeof(config), ". It's equal to:\n").concat(JSON.stringify(config, null, 4)));
@@ -6258,6 +6770,7 @@ function (_EventEmitter) {
         return this.messages;
       }
       var processedRulesConfig = normaliseRequestedRules(config.rules);
+      console.log("056 ".concat("\x1B[".concat(33, "m", "processedRulesConfig", "\x1B[", 39, "m"), " = ", JSON.stringify(processedRulesConfig, null, 4)));
       this.processedRulesConfig = processedRulesConfig;
       Object.keys(processedRulesConfig)
       .filter(function (ruleName) {
@@ -6270,6 +6783,7 @@ function (_EventEmitter) {
           return processedRulesConfig[ruleName][0] > 0;
         }
       }).forEach(function (rule) {
+        console.log("080 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": filtering rule ", rule));
         var rulesFunction;
         if (Array.isArray(processedRulesConfig[rule]) && processedRulesConfig[rule].length > 1) {
           rulesFunction = get(rule).apply(void 0, [_this].concat(_toConsumableArray(processedRulesConfig[rule].slice(1))));
@@ -6279,6 +6793,7 @@ function (_EventEmitter) {
         Object.keys(rulesFunction).forEach(function (consumedNode) {
           _this.on(consumedNode, function () {
             var _rulesFunction;
+            console.log("100 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": ", "\x1B[".concat(33, "m", "consumedNode", "\x1B[", 39, "m"), " = ", JSON.stringify(consumedNode, null, 4)));
             (_rulesFunction = rulesFunction)[consumedNode].apply(_rulesFunction, arguments);
           });
         });
@@ -6300,8 +6815,10 @@ function (_EventEmitter) {
         ruleName === "bad-html-entity" ||
         ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isEnabled(config.rules[ruleName]) || isEnabled(processedRulesConfig[ruleName]));
       })) {
+        console.log("183 linter.js: call stringFixBrokenNamedEntities()");
         stringFixBrokenNamedEntities(str, {
           cb: function cb(obj) {
+            console.log("187 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": ", "\x1B[".concat(33, "m", "obj", "\x1B[", 39, "m"), " = ", JSON.stringify(obj, null, 4)));
             var matchedRulesName;
             var severity;
             if (Object.keys(config.rules).includes("bad-html-entity")) {
@@ -6313,8 +6830,10 @@ function (_EventEmitter) {
                 severity = config.rules["bad-html-entity"];
               }
             } else if (Object.keys(config.rules).some(function (rulesName) {
+              console.log("".concat("\x1B[".concat(36, "m", "--- rulesName: ".concat(rulesName), "\x1B[", 39, "m")));
               if (matcher.isMatch(obj.ruleName, rulesName)) {
                 matchedRulesName = rulesName;
+                console.log("".concat("\x1B[".concat(36, "m", "\"".concat(rulesName, "\" matched!"), "\x1B[", 39, "m")));
                 return true;
               }
             })) {
@@ -6356,6 +6875,7 @@ function (_EventEmitter) {
             }
           },
           entityCatcherCb: function entityCatcherCb(from, to) {
+            console.log("291 linter.js: entityCatcher pinging { from: ".concat(from, ", to: ").concat(to, " }"));
             _this.emit("entity", {
               idxFrom: from,
               idxTo: to
@@ -6366,25 +6886,31 @@ function (_EventEmitter) {
       ["html", "css", "text", "esp", "character"].forEach(function (eventName) {
         _this.removeAllListeners(eventName);
       });
+      console.log("304 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": verify() final return is called;\nthis.messages=", JSON.stringify(this.messages, null, 4)));
       return this.messages;
     }
   }, {
     key: "report",
     value: function report(obj) {
+      console.log("315 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": report() called with ", JSON.stringify(obj, null, 4)));
       var _lineColumn = lineColumn(this.str, obj.idxFrom),
           line = _lineColumn.line,
           col = _lineColumn.col;
       var severity = obj.severity;
+      console.log("325 linter.js: ".concat("\x1B[".concat(33, "m", "this.processedRulesConfig[obj.ruleId]", "\x1B[", 39, "m"), " = ", JSON.stringify(this.processedRulesConfig[obj.ruleId], null, 4)));
       if (!Number.isInteger(obj.severity) && typeof this.processedRulesConfig[obj.ruleId] === "number") {
         severity = this.processedRulesConfig[obj.ruleId];
       } else if (!Number.isInteger(obj.severity)) {
         severity = this.processedRulesConfig[obj.ruleId][0];
       }
+      console.log("340 ".concat("\x1B[".concat(32, "m", "linter.js", "\x1B[", 39, "m"), ": line = ", line, "; column = ").concat(col));
+      console.log("".concat("\x1B[".concat(33, "m", "this.messages", "\x1B[", 39, "m"), " BEFORE: ", JSON.stringify(this.messages, null, 4)));
       this.messages.push(Object.assign({}, {
         line: line,
         column: col,
         severity: severity
       }, obj));
+      console.log("".concat("\x1B[".concat(33, "m", "this.messages", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(this.messages, null, 4)));
     }
   }]);
   return Linter;
