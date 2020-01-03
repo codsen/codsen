@@ -7,33 +7,40 @@ import leven from "leven";
 // it flags up malformed HTML attributes
 
 function attributeMalformed(context, ...opts) {
+  // the following tags will be processed separately
+  const blacklist = ["doctype"];
+
   return {
     attribute: function(node) {
       console.log(
         `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
       );
       console.log(
-        `016 attributeMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `019 attributeMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
         )}`
       );
       console.log(
-        `023 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `026 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       // if Levenshtein distance is 1 and it's not among known attribute names,
       // it's definitely mis-typed
-      if (!node.attribNameRecognised) {
+      if (
+        !node.attribNameRecognised &&
+        !node.attribName.startsWith("xmlns:") &&
+        !blacklist.includes(node.parent.tagName)
+      ) {
         console.log(
-          `030 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
+          `037 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
         );
 
         let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
-            console.log(`036 RAISE ERROR`);
+            console.log(`043 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
@@ -56,7 +63,7 @@ function attributeMalformed(context, ...opts) {
 
         if (!somethingMatched) {
           // the attribute was not recognised
-          console.log(`059 RAISE ERROR`);
+          console.log(`066 RAISE ERROR`);
           context.report({
             ruleId: "attribute-malformed",
             message: `Unrecognised attribute "${node.attribName}".`,
@@ -71,7 +78,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueStartAt !== null &&
         context.str[node.attribNameEndAt] !== "="
       ) {
-        console.log(`074 RAISE ERROR`);
+        console.log(`081 RAISE ERROR`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,

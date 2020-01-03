@@ -19,6 +19,7 @@ import { allHtmlAttribs } from 'html-all-known-attributes';
 import leven from 'leven';
 import db from 'mime-db';
 import isUrl from 'is-url-superb';
+import isLangCode from 'is-language-code';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -3425,9 +3426,14 @@ function attributeDuplicate(context, ...opts) {
 }
 
 function attributeMalformed(context, ...opts) {
+  const blacklist = ["doctype"];
   return {
     attribute: function(node) {
-      if (!node.attribNameRecognised) {
+      if (
+        !node.attribNameRecognised &&
+        !node.attribName.startsWith("xmlns:") &&
+        !blacklist.includes(node.parent.tagName)
+      ) {
         let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
@@ -5781,6 +5787,46 @@ function attributeValidateHref(context, ...opts) {
   };
 }
 
+function attributeValidateHreflang(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "hreflang") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-hreflang",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        const { message } = isLangCode(
+          node.attribValue.slice(charStart, charEnd)
+        );
+        if (message) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-hreflang"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6925,6 +6971,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-href",
   () => attributeValidateHref
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-hreflang",
+  () => attributeValidateHreflang
 );
 defineLazyProp(
   builtInRules,

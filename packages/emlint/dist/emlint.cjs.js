@@ -25,6 +25,7 @@ var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
 var isUrl = _interopDefault(require('is-url-superb'));
+var isLangCode = _interopDefault(require('is-language-code'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
 var lineColumn = _interopDefault(require('line-column'));
@@ -3327,9 +3328,10 @@ function attributeDuplicate(context) {
 }
 
 function attributeMalformed(context) {
+  var blacklist = ["doctype"];
   return {
     attribute: function attribute(node) {
-      if (!node.attribNameRecognised) {
+      if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         var somethingMatched = false;
         for (var i = 0, len = htmlAllKnownAttributes.allHtmlAttribs.length; i < len; i++) {
           if (leven(htmlAllKnownAttributes.allHtmlAttribs[i], node.attribName) === 1) {
@@ -5188,6 +5190,43 @@ function attributeValidateHref(context) {
   };
 }
 
+function attributeValidateHreflang(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "hreflang") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-hreflang",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        var _isLangCode = isLangCode(node.attribValue.slice(charStart, charEnd)),
+            message = _isLangCode.message;
+        if (message) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: message,
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-hreflang"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -5970,6 +6009,9 @@ defineLazyProp(builtInRules, "attribute-validate-height", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-href", function () {
   return attributeValidateHref;
+});
+defineLazyProp(builtInRules, "attribute-validate-hreflang", function () {
+  return attributeValidateHreflang;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

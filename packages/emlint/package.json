@@ -42,7 +42,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c",
     "dev": "node bin/helper && rollup -c --dev",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-height.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-hreflang.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
@@ -137,6 +137,7 @@
     "he": "^1.2.0",
     "html-all-known-attributes": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.12",
+    "is-language-code": "^0.1.0",
     "is-url-superb": "^3.0.0",
     "leven": "^3.1.0",
     "line-column": "^1.0.2",
