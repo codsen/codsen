@@ -708,6 +708,7 @@ var allHtmlAttribs = [
 	"word-break",
 	"word-spacing",
 	"wrap",
+	"xmlns",
 	"z-index"
 ];
 

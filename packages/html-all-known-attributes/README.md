@@ -61,7 +61,7 @@ This package has three builds in `dist/` folder:
 
 ## Idea
 
-This package aims to have the most excessive list of all legit attribute names that can be put into HTML. Currently we have a list of 701 attribute names.
+This package aims to have the most excessive list of all legit attribute names that can be put into HTML. Currently we have a list of 702 attribute names.
 
 This includes deprecated attributes, Microsoft-proprietary-ones that email templates use (like `mso-line-height-rule`) and other-ones you've probably never seen before.
 
@@ -69,7 +69,7 @@ This includes deprecated attributes, Microsoft-proprietary-ones that email templ
 
 ## API
 
-This package exports a plain object with a single key, `allHtmlAttribs`. Its value is an array of 701 strings, all known attributes.
+This package exports a plain object with a single key, `allHtmlAttribs`. Its value is an array of 702 strings, all known attributes.
 
 ## Example
 
