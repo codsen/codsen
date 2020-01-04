@@ -3933,6 +3933,35 @@ function attributeValidateAlink(context, ...opts) {
   };
 }
 
+function attributeValidateAlt(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "alt") {
+        if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-alt",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-alt"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateArchive(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6937,6 +6966,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-alink",
   () => attributeValidateAlink
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-alt",
+  () => attributeValidateAlt
 );
 defineLazyProp(
   builtInRules,

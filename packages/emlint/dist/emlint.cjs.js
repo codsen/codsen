@@ -3691,6 +3691,31 @@ function attributeValidateAlink(context) {
   };
 }
 
+function attributeValidateAlt(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "alt") {
+        if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-alt",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-alt"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateArchive(context) {
   return {
     attribute: function attribute(node) {
@@ -6028,6 +6053,9 @@ defineLazyProp(builtInRules, "attribute-validate-align", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-alink", function () {
   return attributeValidateAlink;
+});
+defineLazyProp(builtInRules, "attribute-validate-alt", function () {
+  return attributeValidateAlt;
 });
 defineLazyProp(builtInRules, "attribute-validate-archive", function () {
   return attributeValidateArchive;

@@ -6,13 +6,13 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 0`,
+  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 0`,
   t => {
-    const str = `<td class="z">`;
+    const str = `<img class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 0
+        "attribute-validate-alt": 0
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -22,13 +22,13 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 1`,
+  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 1`,
   t => {
-    const str = `<td class="z">`;
+    const str = `<img class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 1
+        "attribute-validate-alt": 1
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -38,13 +38,13 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 2`,
+  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 2`,
   t => {
-    const str = `<td class="z">`;
+    const str = `<img class="z">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -54,13 +54,29 @@ t.test(
 );
 
 t.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
+  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, img`,
   t => {
-    const str = `<td axis='something'>`; // <-- notice single quotes
+    const str = `<img alt='something'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, input`,
+  t => {
+    const str = `<input alt="something">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-alt": 2
       }
     });
     t.equal(applyFixes(str, messages), str);
@@ -75,20 +91,20 @@ t.test(
 t.test(
   `02.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<div axis="something">`;
+    const str = `<div alt="something">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-axis",
+        ruleId: "attribute-validate-alt",
         idxFrom: 5,
-        idxTo: 21,
+        idxTo: 20,
         message: `Tag "div" can't have this attribute.`,
         fix: null
       }
@@ -100,20 +116,20 @@ t.test(
 t.test(
   `02.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`,
   t => {
-    const str = `<zzz axis="something" yyy>`;
+    const str = `<zzz alt="something" yyy>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-axis",
+        ruleId: "attribute-validate-alt",
         idxFrom: 5,
-        idxTo: 21,
+        idxTo: 20,
         message: `Tag "zzz" can't have this attribute.`,
         fix: null
       }
@@ -128,18 +144,18 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`,
   t => {
-    const str = `<th axis="">`;
+    const str = `<img alt="">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
       }
     });
     // can't fix:
     t.equal(applyFixes(str, messages), str);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-axis",
+        ruleId: "attribute-validate-alt",
         idxFrom: 10,
         idxTo: 10,
         message: `Missing value.`,
@@ -153,17 +169,17 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`,
   t => {
-    const str = `<th axis=" something ">`;
+    const str = `<img alt=" something ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-validate-axis": 2
+        "attribute-validate-alt": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<th axis="something">`);
+    t.equal(applyFixes(str, messages), `<img alt="something">`);
     t.match(messages, [
       {
-        ruleId: "attribute-validate-axis",
+        ruleId: "attribute-validate-alt",
         idxFrom: 10,
         idxTo: 21,
         message: `Remove whitespace.`,
