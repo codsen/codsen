@@ -5227,6 +5227,33 @@ function attributeValidateHreflang(context) {
   };
 }
 
+function attributeValidateHspace(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "hspace") {
+        if (!["applet", "img", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-hspace",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          theOnlyGoodUnits: [],
+          noUnitsIsFine: true
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-hspace"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -6049,6 +6076,9 @@ defineLazyProp(builtInRules, "attribute-validate-href", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-hreflang", function () {
   return attributeValidateHreflang;
+});
+defineLazyProp(builtInRules, "attribute-validate-hspace", function () {
+  return attributeValidateHspace;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

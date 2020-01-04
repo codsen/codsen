@@ -45,6 +45,7 @@
   "attribute-validate-height",
   "attribute-validate-href",
   "attribute-validate-hreflang",
+  "attribute-validate-hspace",
   "attribute-validate-id",
   "attribute-validate-lang",
   "attribute-validate-rowspan",
