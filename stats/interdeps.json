@@ -237,11 +237,12 @@
     },
     {
         "name": "emlint",
-        "size": 194011,
+        "size": 202753,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
+            "is-language-code",
             "string-fix-broken-named-entities",
             "string-left-right",
             "string-process-comma-separated"
@@ -278,7 +279,7 @@
     },
     {
         "name": "html-all-known-attributes",
-        "size": 14383,
+        "size": 14393,
         "imports": []
     },
     {
@@ -314,6 +315,11 @@
             "string-left-right",
             "string-match-left-right"
         ]
+    },
+    {
+        "name": "is-language-code",
+        "size": 79030,
+        "imports": []
     },
     {
         "name": "js-row-num",

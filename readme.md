@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 104 npm libraries 📦📦📦
+    A lerna monorepo for our 105 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -222,7 +222,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ Miscellaneous Libraries
 
-30 in total.
+31 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -250,6 +250,7 @@ You use them in the Terminal (command line), for example:
 | [`html-img-alt`](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) | Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used. | [![html-img-alt on npm](https://img.shields.io/npm/v/html-img-alt.svg?style=flat-square)](https://www.npmjs.com/package/html-img-alt) | [packages/html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt/) |
 | [`html-table-patcher`](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) | Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly | [![html-table-patcher on npm](https://img.shields.io/npm/v/html-table-patcher.svg?style=flat-square)](https://www.npmjs.com/package/html-table-patcher) | [packages/html-table-patcher](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/) |
 | [`is-html-tag-opening`](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/) | Is given opening bracket a beginning of a tag? | [![is-html-tag-opening on npm](https://img.shields.io/npm/v/is-html-tag-opening.svg?style=flat-square)](https://www.npmjs.com/package/is-html-tag-opening) | [packages/is-html-tag-opening](https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening/) |
+| [`is-language-code`](https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code/) | Is given string a language code (as per IANA) | [![is-language-code on npm](https://img.shields.io/npm/v/is-language-code.svg?style=flat-square)](https://www.npmjs.com/package/is-language-code) | [packages/is-language-code](https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code/) |
 | [`lerna-clean-changelogs`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments/) |
 | [`string-strip-html`](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) | Strips HTML tags from strings. Detects legit unencoded brackets. | [![string-strip-html on npm](https://img.shields.io/npm/v/string-strip-html.svg?style=flat-square)](https://www.npmjs.com/package/string-strip-html) | [packages/string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/) |
