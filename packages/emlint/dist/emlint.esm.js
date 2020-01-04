@@ -6084,6 +6084,35 @@ function attributeValidateLang(context, ...opts) {
   };
 }
 
+function attributeValidateLanguage(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "language") {
+        if (node.parent.tagName !== "script") {
+          context.report({
+            ruleId: "attribute-validate-language",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-language"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7225,6 +7254,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-lang",
   () => attributeValidateLang
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-language",
+  () => attributeValidateLanguage
 );
 defineLazyProp(
   builtInRules,

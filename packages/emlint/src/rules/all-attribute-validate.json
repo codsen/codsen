@@ -52,6 +52,7 @@
   "attribute-validate-ismap",
   "attribute-validate-label",
   "attribute-validate-lang",
+  "attribute-validate-language",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-width"
