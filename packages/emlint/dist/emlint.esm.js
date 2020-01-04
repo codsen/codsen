@@ -6217,6 +6217,43 @@ function attributeValidateRules(context, ...opts) {
   };
 }
 
+function attributeValidateVlink(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "vlink") {
+        if (node.parent.tagName !== "body") {
+          context.report({
+            ruleId: "attribute-validate-vlink",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateColor(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            namedCssLevel1OK: true,
+            namedCssLevel2PlusOK: true,
+            hexThreeOK: false,
+            hexFourOK: false,
+            hexSixOK: true,
+            hexEightOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-vlink"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7311,6 +7348,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-rules",
   () => attributeValidateRules
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-vlink",
+  () => attributeValidateVlink
 );
 defineLazyProp(
   builtInRules,
