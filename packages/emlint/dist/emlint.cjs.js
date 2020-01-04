@@ -5555,6 +5555,37 @@ function attributeValidateRules(context) {
   };
 }
 
+function attributeValidateText(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "text") {
+        if (node.parent.tagName !== "body") {
+          context.report({
+            ruleId: "attribute-validate-text",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateColor(node.attribValue, node.attribValueStartAt, {
+          namedCssLevel1OK: true,
+          namedCssLevel2PlusOK: true,
+          hexThreeOK: false,
+          hexFourOK: false,
+          hexSixOK: true,
+          hexEightOK: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-text"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context) {
   return {
     attribute: function attribute(node) {
@@ -6315,6 +6346,9 @@ defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-rules", function () {
   return attributeValidateRules;
+});
+defineLazyProp(builtInRules, "attribute-validate-text", function () {
+  return attributeValidateText;
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;
