@@ -5498,6 +5498,31 @@ function attributeValidateLink(context) {
   };
 }
 
+function attributeValidateLongdesc(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "longdesc") {
+        if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-longdesc",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-longdesc"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6340,6 +6365,9 @@ defineLazyProp(builtInRules, "attribute-validate-language", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-link", function () {
   return attributeValidateLink;
+});
+defineLazyProp(builtInRules, "attribute-validate-longdesc", function () {
+  return attributeValidateLongdesc;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

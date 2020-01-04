@@ -6150,6 +6150,35 @@ function attributeValidateLink(context, ...opts) {
   };
 }
 
+function attributeValidateLongdesc(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "longdesc") {
+        if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-longdesc",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-longdesc"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7375,6 +7404,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-link",
   () => attributeValidateLink
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-longdesc",
+  () => attributeValidateLongdesc
 );
 defineLazyProp(
   builtInRules,
