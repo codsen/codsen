@@ -5254,6 +5254,35 @@ function attributeValidateHspace(context) {
   };
 }
 
+function attributeValidateHttpequiv(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "http-equiv") {
+        if (node.parent.tagName !== "meta") {
+          context.report({
+            ruleId: "attribute-validate-http-equiv",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: ["content-type", "default-style", "refresh"],
+          canBeCommaSeparated: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-http-equiv"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context) {
   return {
     attribute: function attribute(node) {
@@ -6079,6 +6108,9 @@ defineLazyProp(builtInRules, "attribute-validate-hreflang", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-hspace", function () {
   return attributeValidateHspace;
+});
+defineLazyProp(builtInRules, "attribute-validate-http-equiv", function () {
+  return attributeValidateHttpequiv;
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;

@@ -46,6 +46,7 @@
   "attribute-validate-href",
   "attribute-validate-hreflang",
   "attribute-validate-hspace",
+  "attribute-validate-http-equiv",
   "attribute-validate-id",
   "attribute-validate-lang",
   "attribute-validate-rowspan",

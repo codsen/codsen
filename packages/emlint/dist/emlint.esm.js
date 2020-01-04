@@ -5860,6 +5860,39 @@ function attributeValidateHspace(context, ...opts) {
   };
 }
 
+function attributeValidateHttpequiv(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "http-equiv") {
+        if (node.parent.tagName !== "meta") {
+          context.report({
+            ruleId: "attribute-validate-http-equiv",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["content-type", "default-style", "refresh"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-http-equiv"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7058,6 +7091,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-hspace",
   () => attributeValidateHspace
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-http-equiv",
+  () => attributeValidateHttpequiv
 );
 defineLazyProp(
   builtInRules,
