@@ -5870,6 +5870,50 @@ function attributeValidateId(context, ...opts) {
   };
 }
 
+function attributeValidateLang(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "lang") {
+        if (
+          ["base", "head", "html", "meta", "script", "style", "title"].includes(
+            node.parent.tagName
+          )
+        ) {
+          context.report({
+            ruleId: "attribute-validate-lang",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        const { message } = isLangCode(
+          node.attribValue.slice(charStart, charEnd)
+        );
+        if (message) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message,
+            fix: null
+          });
+        }
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-lang"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -6981,6 +7025,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-id",
   () => attributeValidateId
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-lang",
+  () => attributeValidateLang
 );
 defineLazyProp(
   builtInRules,

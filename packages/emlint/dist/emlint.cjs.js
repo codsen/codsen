@@ -5259,6 +5259,43 @@ function attributeValidateId(context) {
   };
 }
 
+function attributeValidateLang(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "lang") {
+        if (["base", "head", "html", "meta", "script", "style", "title"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-lang",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        var _isLangCode = isLangCode(node.attribValue.slice(charStart, charEnd)),
+            message = _isLangCode.message;
+        if (message) {
+          errorArr.push({
+            idxFrom: node.attribValueStartAt + charStart,
+            idxTo: node.attribValueStartAt + charEnd,
+            message: message,
+            fix: null
+          });
+        }
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-lang"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6015,6 +6052,9 @@ defineLazyProp(builtInRules, "attribute-validate-hreflang", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-id", function () {
   return attributeValidateId;
+});
+defineLazyProp(builtInRules, "attribute-validate-lang", function () {
+  return attributeValidateLang;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
