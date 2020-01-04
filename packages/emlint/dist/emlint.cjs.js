@@ -5380,6 +5380,31 @@ function attributeValidateIsmap(context) {
   };
 }
 
+function attributeValidateLabel(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "label") {
+        if (!["option", "optgroup"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-label",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-label"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateLang(context) {
   return {
     attribute: function attribute(node) {
@@ -6185,6 +6210,9 @@ defineLazyProp(builtInRules, "attribute-validate-id", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-ismap", function () {
   return attributeValidateIsmap;
+});
+defineLazyProp(builtInRules, "attribute-validate-label", function () {
+  return attributeValidateLabel;
 });
 defineLazyProp(builtInRules, "attribute-validate-lang", function () {
   return attributeValidateLang;

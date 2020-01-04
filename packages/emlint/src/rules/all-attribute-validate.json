@@ -50,6 +50,7 @@
   "attribute-validate-http-equiv",
   "attribute-validate-id",
   "attribute-validate-ismap",
+  "attribute-validate-label",
   "attribute-validate-lang",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
