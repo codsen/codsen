@@ -57,6 +57,7 @@
   "attribute-validate-longdesc",
   "attribute-validate-marginheight",
   "attribute-validate-marginwidth",
+  "attribute-validate-maxlength",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

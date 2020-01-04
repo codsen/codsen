@@ -1241,6 +1241,13 @@ defineLazyProp(
   () => attributeValidateMarginwidth
 );
 
+import attributeValidateMaxlength from "./rules/attribute-validate/attribute-validate-maxlength";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-maxlength",
+  () => attributeValidateMaxlength
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1419,7 +1426,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1422 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1429 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

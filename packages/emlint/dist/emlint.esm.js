@@ -6245,6 +6245,40 @@ function attributeValidateMarginwidth(context, ...opts) {
   };
 }
 
+function attributeValidateMaxlength(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "maxlength") {
+        if (node.parent.tagName !== "input") {
+          context.report({
+            ruleId: "attribute-validate-maxlength",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-maxlength"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7485,6 +7519,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-marginwidth",
   () => attributeValidateMarginwidth
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-maxlength",
+  () => attributeValidateMaxlength
 );
 defineLazyProp(
   builtInRules,
