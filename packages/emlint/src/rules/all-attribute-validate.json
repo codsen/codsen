@@ -53,6 +53,7 @@
   "attribute-validate-label",
   "attribute-validate-lang",
   "attribute-validate-language",
+  "attribute-validate-link",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-width"

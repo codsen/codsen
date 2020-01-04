@@ -6113,6 +6113,43 @@ function attributeValidateLanguage(context, ...opts) {
   };
 }
 
+function attributeValidateLink(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "link") {
+        if (node.parent.tagName !== "body") {
+          context.report({
+            ruleId: "attribute-validate-link",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateColor(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            namedCssLevel1OK: true,
+            namedCssLevel2PlusOK: true,
+            hexThreeOK: false,
+            hexFourOK: false,
+            hexSixOK: true,
+            hexEightOK: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-link"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7259,6 +7296,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-language",
   () => attributeValidateLanguage
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-link",
+  () => attributeValidateLink
 );
 defineLazyProp(
   builtInRules,
