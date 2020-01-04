@@ -6179,6 +6179,39 @@ function attributeValidateLongdesc(context, ...opts) {
   };
 }
 
+function attributeValidateMarginheight(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "marginheight") {
+        if (!["frame", "iframe"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-marginheight",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            theOnlyGoodUnits: [],
+            noUnitsIsFine: true
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-marginheight"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7409,6 +7442,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-longdesc",
   () => attributeValidateLongdesc
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-marginheight",
+  () => attributeValidateMarginheight
 );
 defineLazyProp(
   builtInRules,
