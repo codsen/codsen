@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.3.0](https://gitlab.com/codsen/codsen/compare/html-all-known-attributes@1.2.0...html-all-known-attributes@1.3.0) (2020-01-05)
-
+## 1.3.0 (2020-01-05)
 
 ### Features
 
-* add xmlns ([7154f5f](https://gitlab.com/codsen/codsen/commit/7154f5f29f3cdc16a8a561eb5724b537300366d4))
-
-
-
-
+- add xmlns ([7154f5f](https://gitlab.com/codsen/codsen/commit/7154f5f29f3cdc16a8a561eb5724b537300366d4))
 
 ## 1.2.0 (2020-01-01)
 
