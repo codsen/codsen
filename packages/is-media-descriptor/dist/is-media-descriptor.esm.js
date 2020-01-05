@@ -22,14 +22,25 @@ const recognisedMediaTypes = [
   "tty",
   "tv"
 ];
-function isMediaD(str, offset = 0) {
+function isMediaD(str, originalOpts) {
+  const defaults = {
+    offset: 0
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  if (opts.offset && !Number.isInteger(opts.offset)) {
+    throw new Error(
+      `is-media-descriptor: [THROW_ID_01] opts.offset must be an integer, it was given as ${
+        opts.offset
+      } (type ${typeof opts.offset})`
+    );
+  }
+  if (!opts.offset) {
+    opts.offset = 0;
+  }
   if (typeof str !== "string") {
     return [];
   } else if (!str.trim().length) {
     return [];
-  }
-  if (!Number.isInteger(offset)) {
-    offset = 0;
   }
   const mostlyLettersRegex = /^\w+$|^\w*\W\w+$|^\w+\W\w*$/g;
   const res = [];
@@ -41,7 +52,7 @@ function isMediaD(str, offset = 0) {
     if (!str[0].trim().length) {
       for (let i = 0, len = str.length; i < len; i++) {
         if (str[i].trim().length) {
-          ranges.push([0, i]);
+          ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
@@ -50,7 +61,7 @@ function isMediaD(str, offset = 0) {
     if (!str[str.length - 1].trim().length) {
       for (let i = str.length; i--; ) {
         if (str[i].trim().length) {
-          ranges.push([i + 1, str.length]);
+          ranges.push([i + 1 + opts.offset, str.length + opts.offset]);
           nonWhitespaceEnd = i + 1;
           break;
         }
@@ -71,12 +82,16 @@ function isMediaD(str, offset = 0) {
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       if (leven(recognisedMediaTypes[i], trimmedStr) === 1) {
         res.push({
-          idxFrom: nonWhitespaceStart,
-          idxTo: nonWhitespaceEnd,
+          idxFrom: nonWhitespaceStart + opts.offset,
+          idxTo: nonWhitespaceEnd + opts.offset,
           message: `Did you mean "${recognisedMediaTypes[i]}"?`,
           fix: {
             ranges: [
-              [nonWhitespaceStart, nonWhitespaceEnd, recognisedMediaTypes[i]]
+              [
+                nonWhitespaceStart + opts.offset,
+                nonWhitespaceEnd + opts.offset,
+                recognisedMediaTypes[i]
+              ]
             ]
           }
         });

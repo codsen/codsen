@@ -39,6 +39,16 @@ t.test(
   }
 );
 
+t.test(
+  `00.05 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - weird offset`,
+  t => {
+    t.throws(() => {
+      isMediaD("", { offset: true });
+    }, /THROW_ID_01/gm);
+    t.end();
+  }
+);
+
 // 01. recognised values
 // -----------------------------------------------------------------------------
 
@@ -61,6 +71,28 @@ t.test(`01.01 - ${`\u001b[${33}m${`recognised values`}\u001b[${39}m`}`, t => {
   t.end();
 });
 
+t.test(
+  `01.02 - ${`\u001b[${33}m${`recognised values`}\u001b[${39}m`} - with offset`,
+  t => {
+    [
+      "all",
+      "aural",
+      "braille",
+      "embossed",
+      "handheld",
+      "print",
+      "projection",
+      "screen",
+      "speech",
+      "tty",
+      "tv"
+    ].forEach(val => {
+      t.match(isMediaD(val, { offset: 999 }), []);
+    });
+    t.end();
+  }
+);
+
 // 02. whitespace related errors
 // -----------------------------------------------------------------------------
 
@@ -68,15 +100,16 @@ t.test(
   `02.01 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`,
   t => {
     const str = `\tall`;
-    const res = isMediaD(str);
-    t.equal(applyFixes(str, res), `all`);
+    const offset = 90;
+    const res = isMediaD(str, { offset });
+    // t.equal(applyFixes(str, res, offset), `all`);
     t.match(res, [
       {
-        idxFrom: 0,
-        idxTo: 1,
+        idxFrom: 90,
+        idxTo: 91,
         message: "Remove whitespace.",
         fix: {
-          ranges: [[0, 1]]
+          ranges: [[90, 91]]
         }
       }
     ]);
@@ -134,15 +167,16 @@ t.test(
   `03.01 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - minimal case`,
   t => {
     const str = `screeen`;
-    const res = isMediaD(str);
-    t.equal(applyFixes(str, res), `screen`);
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.equal(applyFixes(str, res, offset), `screen`);
     t.match(res, [
       {
-        idxFrom: 0,
-        idxTo: 7,
+        idxFrom: 10,
+        idxTo: 17,
         message: `Did you mean "screen"?`,
         fix: {
-          ranges: [[0, 7]]
+          ranges: [[10, 17]]
         }
       }
     ]);

@@ -57,8 +57,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-media-descriptor.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-media-descriptor.esm.js` | 2 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-media-descriptor.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-media-descriptor.esm.js` | 3 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-media-descriptor.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
@@ -124,9 +124,36 @@ This is not a replacement for validator, this is a linting tool. We will use it 
 
 ## API - Input
 
-**isMediaD(str)** — in other words, a function which takes a string.
+**isMediaD(str, opts)** — in other words, a function which takes a string and options, a plain object.
+
+| Input argument | Type         | Obligatory? | Description                                                                  |
+| -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
+| `arrOfRanges`  | Array        | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
+| `opts`         | Plain object | no          | Optional options go here.                                                    |
+
+For example, all the calls below will yield an empty array (no errors):
+
+```js
+isMediaD();
+isMediaD("");
+isMediaD("screen");
+isMediaD("screen", {});
+isMediaD("screen", null);
+isMediaD("screen", { offset: 0 });
+isMediaD("screen", { offset: 51 });
+```
 
 If an input is not a string or an empty string, an empty array will be returned. API is deliberately very _docile_ because it will be used exclusively inside other programs.
+
+**[⬆ back to top](#)**
+
+### Options object
+
+| `options` object's key | Type    | Obligatory? | Default | Description                                            |
+| ---------------------- | ------- | ----------- | ------- | ------------------------------------------------------ |
+| {                      |         |             |         |
+| `offset`               | Integer | no          | `0`     | All reported indexes will be incremented by this much. |
+| }                      |         |             |         |
 
 **[⬆ back to top](#)**
 
@@ -246,7 +273,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/is-media-descriptor
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
-[cov-img]: https://img.shields.io/badge/coverage-95.35%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.86%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/is-media-descriptor
