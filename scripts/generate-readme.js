@@ -52,7 +52,9 @@ const htmlLibsList = [
   "string-strip-html",
   "detect-is-it-html-or-xhtml",
   "html-table-patcher",
-  "is-html-tag-opening"
+  "is-html-tag-opening",
+  "is-language-code",
+  "is-media-descriptor"
 ];
 
 // note for future self - use package.json "private" key instead:
