@@ -224,10 +224,10 @@ The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/e
 
 There are capable CSS parsers out there, but they are all oriented at parsing the **correct code**. If code errors are serious-enough, parsers will indeed throw certain errors but
 
-a) those errors don't suggest how to fix the code; and
-b) those errors often miss the exact location;
-c) most of the times they mention a _consequence_, not _cause_;
-d) often they lean on the safe side, passing similar values as legit and raise warnings for what is an error (`mi-width`).
+a) those errors don't suggest how to fix the code;<br>
+b) those errors often miss the exact location;<br>
+c) most of the times they mention a _consequence_, not _cause_;<br>
+d) often they lean on the safe side, passing similar values as legit and raise warnings for what is an error (for example, `mi-width`).
 
 For example, https://csstree.github.io/docs/validator.html currently can't catch redundant bracket around `screen` yet http://jigsaw.w3.org/css-validator/#validate_by_input+with_options flags it up:
 
@@ -246,9 +246,9 @@ In general, CSS parsers are aimed at **correct code processing**.
 
 And validators which are built upon such parsers are not really serious validators.
 
-Conceptually, it tool catches errors, and those errors break parsers, how can a tool be based upon a parser?
+Conceptually, if a tool catches errors, and those errors break parsers, how can a tool be based upon a parser?
 
-This program is aimed at **broken code processing**, to power linters, to find _and fix_ broken code, possibly at code-editor-level.
+This program is aimed at **broken code processing**, to power linters, to find _and fix_ broken code, possibly at code-editor-level. It does not work from AST, it processes input as string.
 
 Another problem is that parsers either parse either HTML or CSS. But media descriptor value (`"screen"`) can be both in HTML and in CSS:
 
