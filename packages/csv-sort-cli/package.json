@@ -122,7 +122,7 @@
     "chalk": "^3.0.0",
     "csv-sort": "^3.0.45",
     "globby": "^10.0.1",
-    "inquirer": "^7.0.1",
+    "inquirer": "^7.0.2",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^6.0.0",

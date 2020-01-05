@@ -237,12 +237,13 @@
     },
     {
         "name": "emlint",
-        "size": 202753,
+        "size": 218741,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
             "is-language-code",
+            "is-media-descriptor",
             "string-fix-broken-named-entities",
             "string-left-right",
             "string-process-comma-separated"
@@ -319,6 +320,11 @@
     {
         "name": "is-language-code",
         "size": 79030,
+        "imports": []
+    },
+    {
+        "name": "is-media-descriptor",
+        "size": 2663,
         "imports": []
     },
     {
