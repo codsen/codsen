@@ -62,7 +62,7 @@ function attributeValidateLang(context, ...opts) {
             4
           )}`
         );
-        // validate using "ietf-language-tag-regex" from npm:
+        // validate using "is-language-code" from npm:
         const { message } = isLangCode(
           node.attribValue.slice(charStart, charEnd)
         );

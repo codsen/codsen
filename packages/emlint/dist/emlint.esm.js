@@ -20,6 +20,7 @@ import leven from 'leven';
 import db from 'mime-db';
 import isUrl from 'is-url-superb';
 import isLangCode from 'is-language-code';
+import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import lineColumn from 'line-column';
@@ -6279,6 +6280,41 @@ function attributeValidateMaxlength(context, ...opts) {
   };
 }
 
+function attributeValidateMedia(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "media") {
+        if (!["style", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-media",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { charStart, charEnd, errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr
+          .concat(
+            isMediaD(node.attribValue.slice(charStart, charEnd), {
+              offset: node.attribValueStartAt
+            })
+          )
+          .forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-media"
+              })
+            );
+          });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7524,6 +7560,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-maxlength",
   () => attributeValidateMaxlength
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-media",
+  () => attributeValidateMedia
 );
 defineLazyProp(
   builtInRules,

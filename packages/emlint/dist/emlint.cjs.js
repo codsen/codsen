@@ -26,6 +26,7 @@ var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
 var isUrl = _interopDefault(require('is-url-superb'));
 var isLangCode = _interopDefault(require('is-language-code'));
+var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
 var lineColumn = _interopDefault(require('line-column'));
@@ -5605,6 +5606,35 @@ function attributeValidateMaxlength(context) {
   };
 }
 
+function attributeValidateMedia(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "media") {
+        if (!["style", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-media",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.concat(isMediaD(node.attribValue.slice(charStart, charEnd), {
+          offset: node.attribValueStartAt
+        })).forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-media"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6459,6 +6489,9 @@ defineLazyProp(builtInRules, "attribute-validate-marginwidth", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-maxlength", function () {
   return attributeValidateMaxlength;
+});
+defineLazyProp(builtInRules, "attribute-validate-media", function () {
+  return attributeValidateMedia;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

@@ -6,7 +6,7 @@ const { applyFixes } = require("../../../t-util/util");
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no href, error level 0`,
+  `01.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 0`,
   t => {
     const str = `<html><p>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
     const linter = new Linter();
@@ -22,7 +22,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no href, error level 1`,
+  `01.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 1`,
   t => {
     const str = `<html><p>`;
     const linter = new Linter();
@@ -38,7 +38,7 @@ t.test(
 );
 
 t.test(
-  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no href, error level 2`,
+  `01.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 2`,
   t => {
     const str = `<html><p>`;
     const linter = new Linter();
@@ -152,7 +152,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
+  `03.01 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`,
   t => {
     const str = `<div lang="a-DE">`;
     const linter = new Linter();
@@ -177,7 +177,7 @@ t.test(
 );
 
 t.test(
-  `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit`,
+  `03.02 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`,
   t => {
     const str = `<a lang=" de">`;
     const linter = new Linter();
@@ -203,7 +203,7 @@ t.test(
 );
 
 t.test(
-  `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - invalid language tag and whitespace`,
+  `03.03 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`,
   t => {
     // notice wrong tag name case - it won't get reported because
     // that's different rule and we didn't ask for it
@@ -241,7 +241,7 @@ t.test(
 );
 
 t.test(
-  `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`,
+  `03.04 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`,
   t => {
     const str = `<A lang=" 123 ">`;
     const linter = new Linter();
