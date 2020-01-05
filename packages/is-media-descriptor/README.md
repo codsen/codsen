@@ -106,7 +106,7 @@ It's like "Find Wally" — find an error now:
 }
 ```
 
-PS. It was `screen` with redundant brackets. Yep, won't validate with brackets.
+PS. It was `screen` with redundant brackets.
 
 This program validates that part above, `only (screen) and (min-width : 320px) and (max-width : 500px)`.
 
@@ -128,7 +128,7 @@ This is not a replacement for validator, this is a linting tool. We will use it 
 
 | Input argument | Type         | Obligatory? | Description                                                                  |
 | -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array        | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
+| `str`          | String        | no         | The extracted value of HTML `media` attribute or CSS media query without `@media` or opening bracket. |
 | `opts`         | Plain object | no          | Optional options go here.                                                    |
 
 For example, all the calls below will yield an empty array (no errors):
@@ -143,6 +143,19 @@ isMediaD("screen", { offset: 0 });
 isMediaD("screen", { offset: 51 });
 ```
 
+Bad examples - don't put `@media`, extract the value:
+
+```js
+// program won't work with `@media` - extract the value first!
+isMediaD("@media only (screen) and (min-width: 320px) and (max-width: 500px) {");
+```
+
+Correct input's example would be:
+
+```js
+isMediaD("only (screen) and (min-width: 320px) and (max-width: 500px)");
+```
+
 If an input is not a string or an empty string, an empty array will be returned. API is deliberately very _docile_ because it will be used exclusively inside other programs.
 
 **[⬆ back to top](#)**
@@ -154,6 +167,8 @@ If an input is not a string or an empty string, an empty array will be returned.
 | {                      |         |             |         |
 | `offset`               | Integer | no          | `0`     | All reported indexes will be incremented by this much. |
 | }                      |         |             |         |
+
+Falsey `opt.offset` is fine but truthy non-integer will _throw_.
 
 **[⬆ back to top](#)**
 
