@@ -126,10 +126,10 @@ This is not a replacement for validator, this is a linting tool. We will use it 
 
 **isMediaD(str, opts)** — in other words, a function which takes a string and options, a plain object.
 
-| Input argument | Type         | Obligatory? | Description                                                                  |
-| -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
-| `str`          | String        | no         | The extracted value of HTML `media` attribute or CSS media query without `@media` or opening bracket. |
-| `opts`         | Plain object | no          | Optional options go here.                                                    |
+| Input argument | Type         | Obligatory? | Description                                                                                           |
+| -------------- | ------------ | ----------- | ----------------------------------------------------------------------------------------------------- |
+| `str`          | String       | no          | The extracted value of HTML `media` attribute or CSS media query without `@media` or opening bracket. |
+| `opts`         | Plain object | no          | Optional options go here.                                                                             |
 
 For example, all the calls below will yield an empty array (no errors):
 
@@ -147,7 +147,9 @@ Bad examples - don't put `@media`, extract the value:
 
 ```js
 // program won't work with `@media` - extract the value first!
-isMediaD("@media only (screen) and (min-width: 320px) and (max-width: 500px) {");
+isMediaD(
+  "@media only (screen) and (min-width: 320px) and (max-width: 500px) {"
+);
 ```
 
 Correct input's example would be:

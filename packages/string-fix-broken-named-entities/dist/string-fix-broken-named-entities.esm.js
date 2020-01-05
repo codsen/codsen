@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
-import { entStartsWith, uncertain, decode, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
+import { entStartsWith, decode, uncertain, entEndsWith, brokenNamedEntities, entStartsWithCaseInsensitive, allNamedEntities, maxLength } from 'all-named-html-entities';
 import { left, right, rightSeq, chompLeft, leftSeq } from 'string-left-right';
 
 const isArr = Array.isArray;
@@ -1054,15 +1054,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     ) {
       if (isNumber(str[right(str, right(str, i))])) {
         brokenNumericEntityStartAt = i;
-      }
-    }
-    if (state_AmpersandNotNeeded) {
-      state_AmpersandNotNeeded = false;
-      if (
-        nbsp.nameStartsAt &&
-        (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)
-      ) {
-        nbsp.ampersandNecessary = false;
       }
     }
     if (

@@ -714,12 +714,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         brokenNumericEntityStartAt = i;
       }
     }
-    if (state_AmpersandNotNeeded) {
-      state_AmpersandNotNeeded = false;
-      if (nbsp.nameStartsAt && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
-        nbsp.ampersandNecessary = false;
-      }
-    }
     if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
