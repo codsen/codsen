@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://gitlab.com/codsen/codsen/compare/emlint@2.8.0...emlint@2.9.0) (2020-01-05)
+
+
+### Features
+
+* add xmlns ([7154f5f](https://gitlab.com/codsen/codsen/commit/7154f5f29f3cdc16a8a561eb5724b537300366d4))
+* new rule, `attribute-validate-alt` ([6ec507e](https://gitlab.com/codsen/codsen/commit/6ec507e004b4266f732aa01f280a9e13830a5f13))
+* new rule, `attribute-validate-frameborder` ([c8e580a](https://gitlab.com/codsen/codsen/commit/c8e580aea6ed82f8d43f89f90ad3dbfbf6c7e8bd))
+* new rule, `attribute-validate-headers` ([d582b8a](https://gitlab.com/codsen/codsen/commit/d582b8a082e250ee918fc46bb0119661f262b9c6))
+* new rule, `attribute-validate-height` ([09732a9](https://gitlab.com/codsen/codsen/commit/09732a9e0ad8bac100b577f190a705b37bd8bcf3))
+* new rule, `attribute-validate-href` ([73148d7](https://gitlab.com/codsen/codsen/commit/73148d7a3eae821acea2cb8832b35f25d499cb2e))
+* new rule, `attribute-validate-hreflang` ([a19c9d2](https://gitlab.com/codsen/codsen/commit/a19c9d2ab8471c2a9a772cf7b9df88912038d7fe))
+* new rule, `attribute-validate-hspace` ([eed294b](https://gitlab.com/codsen/codsen/commit/eed294b5992b72a1f0aed9d4f504512b25e45cd5))
+* new rule, `attribute-validate-http-equiv` ([b6436bc](https://gitlab.com/codsen/codsen/commit/b6436bc258346f826673c99d003eaa11a2d0b1ef))
+* new rule, `attribute-validate-ismap` ([e5df842](https://gitlab.com/codsen/codsen/commit/e5df84218d1e128ff3743cfb2ea091cce606bf3e))
+* new rule, `attribute-validate-label` ([5409a92](https://gitlab.com/codsen/codsen/commit/5409a9286d6cd5e2d0895d42d9b6a351f4c13f31))
+* new rule, `attribute-validate-lang` ([dd0f9d2](https://gitlab.com/codsen/codsen/commit/dd0f9d2432be3c32cffdaa3af38473f26e08b434))
+* new rule, `attribute-validate-language` ([06d4312](https://gitlab.com/codsen/codsen/commit/06d4312e4940adcda27c36a39305604e247a9652))
+* new rule, `attribute-validate-link` ([e37e2e0](https://gitlab.com/codsen/codsen/commit/e37e2e0f0b39fe6f59892d79ab34ec6c450601f9))
+* new rule, `attribute-validate-longdesc` ([702fbd2](https://gitlab.com/codsen/codsen/commit/702fbd2773ae2b6ccfd768d756afbe0ab10f4184))
+* new rule, `attribute-validate-marginheight` ([e1f024f](https://gitlab.com/codsen/codsen/commit/e1f024f92f6e96526d2ddc54ad6dc65e9f892ae5))
+* new rule, `attribute-validate-marginwidth` ([47860e4](https://gitlab.com/codsen/codsen/commit/47860e460a68a59612cfe63a38d695fa59e48900))
+* new rule, `attribute-validate-maxlength` ([e7401c0](https://gitlab.com/codsen/codsen/commit/e7401c02e567c9b5713b26ff7cdced10671e63f3))
+* new rule, `attribute-validate-media` ([2d77259](https://gitlab.com/codsen/codsen/commit/2d77259e7249f490bd23468e4c015aad98f3975b))
+* new rule, `attribute-validate-text` ([57f7d8e](https://gitlab.com/codsen/codsen/commit/57f7d8ea02e90b2be03134b276d72f711c50ae5b))
+* new rule, `attribute-validate-vlink` ([55ff0db](https://gitlab.com/codsen/codsen/commit/55ff0dbe0cee7c86cd1a40932251473e61271b8d))
+* new rules, `attribute-validate-frame` and `attribute-validate-rules` ([1d12ae4](https://gitlab.com/codsen/codsen/commit/1d12ae40561e66fdbafcfabc5551295b5d945d8f))
+
+
+
+
+
 ## 2.8.0 (2020-01-01)
 
 ### Features
