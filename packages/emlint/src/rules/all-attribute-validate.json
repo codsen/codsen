@@ -75,6 +75,7 @@
   "attribute-validate-onkeydown",
   "attribute-validate-onkeypress",
   "attribute-validate-onkeyup",
+  "attribute-validate-onload",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

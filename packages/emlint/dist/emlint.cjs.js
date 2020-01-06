@@ -6152,6 +6152,35 @@ function attributeValidateOnkeyup(context) {
   };
 }
 
+function attributeValidateOnload(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onload") {
+        if (node.parent.tagName !== "frameset") {
+          context.report({
+            ruleId: "attribute-validate-onload",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var errorArr = validateScript(node.attribValue, node.attribValueStartAt);
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-onload"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7057,6 +7086,9 @@ defineLazyProp(builtInRules, "attribute-validate-onkeypress", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-onkeyup", function () {
   return attributeValidateOnkeyup;
+});
+defineLazyProp(builtInRules, "attribute-validate-onload", function () {
+  return attributeValidateOnload;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

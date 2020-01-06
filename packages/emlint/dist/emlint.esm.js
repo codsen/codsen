@@ -7026,6 +7026,37 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnload(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onload") {
+        if (node.parent.tagName !== "frameset") {
+          context.report({
+            ruleId: "attribute-validate-onload",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onload"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8356,6 +8387,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onkeyup",
   () => attributeValidateOnkeyup
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onload",
+  () => attributeValidateOnload
 );
 defineLazyProp(
   builtInRules,
