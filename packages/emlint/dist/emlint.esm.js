@@ -6624,6 +6624,35 @@ function attributeValidateNowrap(context, ...originalOpts) {
   };
 }
 
+function attributeValidateObject(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "object") {
+        if (node.parent.tagName !== "applet") {
+          context.report({
+            ruleId: "attribute-validate-object",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-object"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7909,6 +7938,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-nowrap",
   () => attributeValidateNowrap
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-object",
+  () => attributeValidateObject
 );
 defineLazyProp(
   builtInRules,

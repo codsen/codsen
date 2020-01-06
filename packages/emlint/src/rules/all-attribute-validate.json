@@ -66,6 +66,7 @@
   "attribute-validate-noresize",
   "attribute-validate-noshade",
   "attribute-validate-nowrap",
+  "attribute-validate-object",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",
