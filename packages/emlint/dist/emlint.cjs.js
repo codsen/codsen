@@ -5664,6 +5664,46 @@ function attributeValidateMethod(context) {
   };
 }
 
+function attributeValidateMultiple(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = {
+        xhtml: false
+      };
+      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(function (val) {
+        return val.toLowerCase() === "xhtml";
+      })) {
+        opts.xhtml = true;
+      }
+      var errorArr = [];
+      if (node.attribName === "multiple") {
+        if (node.parent.tagName !== "select") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            enforceSiblingAttributes: null
+          }));
+        }
+        if (errorArr.length) {
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-multiple"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6524,6 +6564,9 @@ defineLazyProp(builtInRules, "attribute-validate-media", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-method", function () {
   return attributeValidateMethod;
+});
+defineLazyProp(builtInRules, "attribute-validate-multiple", function () {
+  return attributeValidateMultiple;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
