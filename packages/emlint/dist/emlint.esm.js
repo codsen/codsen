@@ -6832,6 +6832,47 @@ function attributeValidateOndblclick(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnfocus(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onfocus") {
+        if (
+          ![
+            "a",
+            "area",
+            "button",
+            "input",
+            "label",
+            "select",
+            "textarea"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-onfocus",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onfocus"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8142,6 +8183,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-ondblclick",
   () => attributeValidateOndblclick
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onfocus",
+  () => attributeValidateOnfocus
 );
 defineLazyProp(
   builtInRules,
