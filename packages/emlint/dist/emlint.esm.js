@@ -6699,6 +6699,37 @@ function attributeValidateOnblur(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnchange(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onchange") {
+        if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-onchange",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onchange"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7994,6 +8025,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onblur",
   () => attributeValidateOnblur
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onchange",
+  () => attributeValidateOnchange
 );
 defineLazyProp(
   builtInRules,

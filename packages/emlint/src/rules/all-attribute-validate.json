@@ -68,6 +68,7 @@
   "attribute-validate-nowrap",
   "attribute-validate-object",
   "attribute-validate-onblur",
+  "attribute-validate-onchange",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

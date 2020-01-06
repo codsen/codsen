@@ -1318,6 +1318,13 @@ defineLazyProp(
   () => attributeValidateOnblur
 );
 
+import attributeValidateOnchange from "./rules/attribute-validate/attribute-validate-onchange";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onchange",
+  () => attributeValidateOnchange
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1496,7 +1503,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1499 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1506 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

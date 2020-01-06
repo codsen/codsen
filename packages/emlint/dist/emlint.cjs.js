@@ -5949,6 +5949,35 @@ function attributeValidateOnblur(context) {
   };
 }
 
+function attributeValidateOnchange(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onchange") {
+        if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-onchange",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var errorArr = validateScript(node.attribValue, node.attribValueStartAt);
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-onchange"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6833,6 +6862,9 @@ defineLazyProp(builtInRules, "attribute-validate-object", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-onblur", function () {
   return attributeValidateOnblur;
+});
+defineLazyProp(builtInRules, "attribute-validate-onchange", function () {
+  return attributeValidateOnchange;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
