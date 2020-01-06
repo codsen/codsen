@@ -72,6 +72,7 @@
   "attribute-validate-onclick",
   "attribute-validate-ondblclick",
   "attribute-validate-onfocus",
+  "attribute-validate-onkeydown",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",
