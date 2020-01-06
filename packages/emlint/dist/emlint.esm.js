@@ -6730,6 +6730,108 @@ function attributeValidateOnchange(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnclick(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onclick") {
+        if (
+          [
+            "applet",
+            "base",
+            "basefont",
+            "bdo",
+            "br",
+            "font",
+            "frame",
+            "frameset",
+            "head",
+            "html",
+            "iframe",
+            "isindex",
+            "meta",
+            "param",
+            "script",
+            "style",
+            "title"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-onclick",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onclick"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
+function attributeValidateOndblclick(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "ondblclick") {
+        if (
+          [
+            "applet",
+            "base",
+            "basefont",
+            "bdo",
+            "br",
+            "font",
+            "frame",
+            "frameset",
+            "head",
+            "html",
+            "iframe",
+            "isindex",
+            "meta",
+            "param",
+            "script",
+            "style",
+            "title"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-ondblclick",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-ondblclick"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8030,6 +8132,16 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onchange",
   () => attributeValidateOnchange
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onclick",
+  () => attributeValidateOnclick
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-ondblclick",
+  () => attributeValidateOndblclick
 );
 defineLazyProp(
   builtInRules,
