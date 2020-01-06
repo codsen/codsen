@@ -1353,6 +1353,13 @@ defineLazyProp(
   () => attributeValidateOnkeydown
 );
 
+import attributeValidateOnkeypress from "./rules/attribute-validate/attribute-validate-onkeypress";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onkeypress",
+  () => attributeValidateOnkeypress
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1531,7 +1538,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1534 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1541 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
