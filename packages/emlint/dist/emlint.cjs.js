@@ -5769,6 +5769,46 @@ function attributeValidateNohref(context) {
   };
 }
 
+function attributeValidateNoresize(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = {
+        xhtml: false
+      };
+      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(function (val) {
+        return val.toLowerCase() === "xhtml";
+      })) {
+        opts.xhtml = true;
+      }
+      var errorArr = [];
+      if (node.attribName === "noresize") {
+        if (node.parent.tagName !== "frame") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            enforceSiblingAttributes: null
+          }));
+        }
+        if (errorArr.length) {
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-noresize"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6638,6 +6678,9 @@ defineLazyProp(builtInRules, "attribute-validate-name", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-nohref", function () {
   return attributeValidateNohref;
+});
+defineLazyProp(builtInRules, "attribute-validate-noresize", function () {
+  return attributeValidateNoresize;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

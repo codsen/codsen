@@ -63,6 +63,7 @@
   "attribute-validate-multiple",
   "attribute-validate-name",
   "attribute-validate-nohref",
+  "attribute-validate-noresize",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

@@ -6486,6 +6486,52 @@ function attributeValidateNohref(context, ...originalOpts) {
   };
 }
 
+function attributeValidateNoresize(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
+      const errorArr = [];
+      if (node.attribName === "noresize") {
+        if (node.parent.tagName !== "frame") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: null
+            })
+          );
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-noresize"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7756,6 +7802,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-nohref",
   () => attributeValidateNohref
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-noresize",
+  () => attributeValidateNoresize
 );
 defineLazyProp(
   builtInRules,

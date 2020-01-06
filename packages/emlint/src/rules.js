@@ -1283,6 +1283,13 @@ defineLazyProp(
   () => attributeValidateNohref
 );
 
+import attributeValidateNoresize from "./rules/attribute-validate/attribute-validate-noresize";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-noresize",
+  () => attributeValidateNoresize
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1461,7 +1468,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1464 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1471 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
