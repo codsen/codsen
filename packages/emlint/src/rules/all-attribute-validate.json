@@ -64,6 +64,7 @@
   "attribute-validate-name",
   "attribute-validate-nohref",
   "attribute-validate-noresize",
+  "attribute-validate-noshade",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",
