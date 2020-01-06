@@ -6123,6 +6123,35 @@ function attributeValidateOnkeypress(context) {
   };
 }
 
+function attributeValidateOnkeyup(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onkeyup") {
+        if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-onkeyup",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var errorArr = validateScript(node.attribValue, node.attribValueStartAt);
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-onkeyup"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7025,6 +7054,9 @@ defineLazyProp(builtInRules, "attribute-validate-onkeydown", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-onkeypress", function () {
   return attributeValidateOnkeypress;
+});
+defineLazyProp(builtInRules, "attribute-validate-onkeyup", function () {
+  return attributeValidateOnkeyup;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
