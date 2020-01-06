@@ -61,6 +61,7 @@
   "attribute-validate-media",
   "attribute-validate-method",
   "attribute-validate-multiple",
+  "attribute-validate-name",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

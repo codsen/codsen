@@ -6394,6 +6394,52 @@ function attributeValidateMultiple(context, ...originalOpts) {
   };
 }
 
+function attributeValidateName(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "name") {
+        if (
+          ![
+            "button",
+            "textarea",
+            "applet",
+            "select",
+            "form",
+            "frame",
+            "iframe",
+            "img",
+            "a",
+            "input",
+            "object",
+            "map",
+            "param",
+            "meta"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-name",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-name"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7654,6 +7700,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-multiple",
   () => attributeValidateMultiple
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-name",
+  () => attributeValidateName
 );
 defineLazyProp(
   builtInRules,

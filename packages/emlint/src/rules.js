@@ -1269,6 +1269,13 @@ defineLazyProp(
   () => attributeValidateMultiple
 );
 
+import attributeValidateName from "./rules/attribute-validate/attribute-validate-name";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-name",
+  () => attributeValidateName
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1447,7 +1454,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1450 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1457 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
