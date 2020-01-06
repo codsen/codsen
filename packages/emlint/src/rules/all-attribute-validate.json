@@ -59,6 +59,7 @@
   "attribute-validate-marginwidth",
   "attribute-validate-maxlength",
   "attribute-validate-media",
+  "attribute-validate-method",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

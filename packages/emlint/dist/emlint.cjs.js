@@ -5635,6 +5635,35 @@ function attributeValidateMedia(context) {
   };
 }
 
+function attributeValidateMethod(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "method") {
+        if (node.parent.tagName !== "form") {
+          context.report({
+            ruleId: "attribute-validate-method",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: ["get", "post"],
+          canBeCommaSeparated: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-method"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -6492,6 +6521,9 @@ defineLazyProp(builtInRules, "attribute-validate-maxlength", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-media", function () {
   return attributeValidateMedia;
+});
+defineLazyProp(builtInRules, "attribute-validate-method", function () {
+  return attributeValidateMethod;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
