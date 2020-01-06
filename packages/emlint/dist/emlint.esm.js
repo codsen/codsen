@@ -6440,6 +6440,52 @@ function attributeValidateName(context, ...opts) {
   };
 }
 
+function attributeValidateNohref(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = {
+        xhtml: false
+      };
+      if (
+        Array.isArray(originalOpts) &&
+        originalOpts.length &&
+        originalOpts.some(val => val.toLowerCase() === "xhtml")
+      ) {
+        opts.xhtml = true;
+      }
+      const errorArr = [];
+      if (node.attribName === "nohref") {
+        if (node.parent.tagName !== "area") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateVoid(
+            node,
+            context,
+            errorArr,
+            Object.assign({}, opts, {
+              enforceSiblingAttributes: null
+            })
+          );
+        }
+        if (errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-nohref"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7705,6 +7751,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-name",
   () => attributeValidateName
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-nohref",
+  () => attributeValidateNohref
 );
 defineLazyProp(
   builtInRules,
