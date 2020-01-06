@@ -6653,6 +6653,52 @@ function attributeValidateObject(context, ...opts) {
   };
 }
 
+function validateScript(str, idxOffset, opts) {
+  const { errorArr } = checkForWhitespace(str, idxOffset);
+  return errorArr;
+}
+
+function attributeValidateOnblur(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onblur") {
+        if (
+          ![
+            "a",
+            "area",
+            "button",
+            "input",
+            "label",
+            "select",
+            "textarea"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-onblur",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onblur"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -7943,6 +7989,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-object",
   () => attributeValidateObject
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onblur",
+  () => attributeValidateOnblur
 );
 defineLazyProp(
   builtInRules,
