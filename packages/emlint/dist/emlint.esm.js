@@ -7410,7 +7410,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
     attribute: function(node) {
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onunload") {
-        if (node.parent.tagName !== "frameset") {
+        if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onunload",
             idxFrom: node.attribStart,

@@ -29,7 +29,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
 
       if (node.attribName === "onunload") {
         // validate the parent
-        if (node.parent.tagName !== "frameset") {
+        if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onunload",
             idxFrom: node.attribStart,
