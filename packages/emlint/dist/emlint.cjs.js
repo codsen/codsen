@@ -6326,6 +6326,35 @@ function attributeValidateOnmouseup(context) {
   };
 }
 
+function attributeValidateOnreset(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onreset") {
+        if (node.parent.tagName !== "form") {
+          context.report({
+            ruleId: "attribute-validate-onreset",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var errorArr = validateScript(node.attribValue, node.attribValueStartAt);
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-onreset"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7249,6 +7278,9 @@ defineLazyProp(builtInRules, "attribute-validate-onmouseover", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-onmouseup", function () {
   return attributeValidateOnmouseup;
+});
+defineLazyProp(builtInRules, "attribute-validate-onreset", function () {
+  return attributeValidateOnreset;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;
