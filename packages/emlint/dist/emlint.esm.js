@@ -7210,6 +7210,57 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnmouseover(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onmouseover") {
+        if (
+          [
+            "applet",
+            "base",
+            "basefont",
+            "bdo",
+            "br",
+            "font",
+            "frame",
+            "frameset",
+            "head",
+            "html",
+            "iframe",
+            "isindex",
+            "meta",
+            "param",
+            "script",
+            "style",
+            "title"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-onmouseover",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onmouseover"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8560,6 +8611,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onmouseout",
   () => attributeValidateOnmouseout
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onmouseover",
+  () => attributeValidateOnmouseover
 );
 defineLazyProp(
   builtInRules,
