@@ -1388,6 +1388,13 @@ defineLazyProp(
   () => attributeValidateOnmousemove
 );
 
+import attributeValidateOnmouseout from "./rules/attribute-validate/attribute-validate-onmouseout";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onmouseout",
+  () => attributeValidateOnmouseout
+);
+
 import attributeValidateRowspan from "./rules/attribute-validate/attribute-validate-rowspan";
 defineLazyProp(
   builtInRules,
@@ -1566,7 +1573,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1569 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1576 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
