@@ -7374,6 +7374,37 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
   };
 }
 
+function attributeValidateOnselect(context, ...originalOpts) {
+  return {
+    attribute: function(node) {
+      const opts = Object.assign({}, originalOpts);
+      if (node.attribName === "onselect") {
+        if (!["input", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-onselect",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          const errorArr = validateScript(
+            node.attribValue,
+            node.attribValueStartAt
+          );
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-onselect"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8744,6 +8775,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onsubmit",
   () => attributeValidateOnsubmit
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-onselect",
+  () => attributeValidateOnselect
 );
 defineLazyProp(
   builtInRules,

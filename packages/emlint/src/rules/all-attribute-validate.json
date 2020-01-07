@@ -82,6 +82,7 @@
   "attribute-validate-onmouseover",
   "attribute-validate-onmouseup",
   "attribute-validate-onreset",
+  "attribute-validate-onselect",
   "attribute-validate-onsubmit",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
