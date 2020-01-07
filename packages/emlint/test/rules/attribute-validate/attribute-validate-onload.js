@@ -54,9 +54,25 @@ t.test(
 );
 
 t.test(
-  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
+  `01.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, frameset`,
   t => {
     const str = `<frameset onload='js'>`; // <-- notice single quotes
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-onload": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, body`,
+  t => {
+    const str = `<body onload='js'>`; // <-- notice single quotes
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {

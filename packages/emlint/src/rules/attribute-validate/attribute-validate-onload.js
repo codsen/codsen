@@ -25,7 +25,7 @@ function attributeValidateOnload(context, ...originalOpts) {
 
       if (node.attribName === "onload") {
         // validate the parent
-        if (node.parent.tagName !== "frameset") {
+        if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onload",
             idxFrom: node.attribStart,
