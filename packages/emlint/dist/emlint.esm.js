@@ -4604,44 +4604,54 @@ function attributeValidateCite(context, ...opts) {
   };
 }
 
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  const defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  let nameStartsAt = null;
+  let whitespaceStartsAt = null;
+  for (let i = opts.from; i < opts.to; i++) {
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i;
+    }
+    if (
+      whitespaceStartsAt !== null &&
+      (str[i].trim().length || i + 1 === opts.to)
+    ) {
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+      }
+      whitespaceStartsAt = null;
+    }
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i;
+    }
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbValues === "function") {
+        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+      }
+      nameStartsAt = null;
+    }
+  }
+}
+
 function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
   const defaults = {
     typeName: "class"
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  let nameStartsAt = null;
-  let nameEndsAt = null;
   const listOfUniqueNames = [];
-  for (let i = from; i < to; i++) {
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-      if (nameEndsAt !== null && str.slice(nameEndsAt, i) !== " ") {
-        let ranges;
-        if (str[nameEndsAt] === " ") {
-          ranges = [[nameEndsAt + 1, i]];
-        } else if (str[i - 1] === " ") {
-          ranges = [[nameEndsAt, i - 1]];
-        } else {
-          ranges = [[nameEndsAt, i, " "]];
-        }
-        errorArr.push({
-          idxFrom: nameEndsAt,
-          idxTo: i,
-          message: `Should be a single space.`,
-          fix: {
-            ranges
-          }
-        });
-        nameEndsAt = null;
-      }
-    }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === to)) {
-      nameEndsAt = i + 1 === to ? i + 1 : i;
-      const extractedName = str.slice(nameStartsAt, i + 1 === to ? i + 1 : i);
+  splitByWhitespace(
+    str,
+    ([charFrom, charTo]) => {
+      const extractedName = str.slice(charFrom, charTo);
       if (!classNameRegex.test(extractedName)) {
         errorArr.push({
-          idxFrom: nameStartsAt,
-          idxTo: i + 1 === to ? i + 1 : i,
+          idxFrom: charFrom,
+          idxTo: charTo,
           message: `Wrong ${opts.typeName} name.`,
           fix: null
         });
@@ -4649,30 +4659,53 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
       if (!listOfUniqueNames.includes(extractedName)) {
         listOfUniqueNames.push(extractedName);
       } else {
-        let deleteFrom = nameStartsAt;
-        let deleteTo = i + 1 === to ? i + 1 : i;
+        let deleteFrom = charFrom;
+        let deleteTo = charTo;
         const nonWhitespaceCharOnTheRight = right(str, deleteTo);
         if (
           deleteTo >= to ||
           !nonWhitespaceCharOnTheRight ||
           nonWhitespaceCharOnTheRight > to
         ) {
-          deleteFrom = left(str, nameStartsAt) + 1;
+          deleteFrom = left(str, charFrom) + 1;
         } else {
           deleteTo = nonWhitespaceCharOnTheRight;
         }
         errorArr.push({
-          idxFrom: nameStartsAt,
-          idxTo: i + 1 === to ? i + 1 : i,
+          idxFrom: charFrom,
+          idxTo: charTo,
           message: `Duplicate ${opts.typeName} "${extractedName}".`,
           fix: {
             ranges: [[deleteFrom, deleteTo]]
           }
         });
       }
-      nameStartsAt = null;
+    },
+    ([whitespaceFrom, whitespaceTo]) => {
+      if (str.slice(whitespaceFrom, whitespaceTo) !== " ") {
+        let ranges;
+        if (str[whitespaceFrom] === " ") {
+          ranges = [[whitespaceFrom + 1, whitespaceTo]];
+        } else if (str[whitespaceTo - 1] === " ") {
+          ranges = [[whitespaceFrom, whitespaceTo - 1]];
+        } else {
+          ranges = [[whitespaceFrom, whitespaceTo, " "]];
+        }
+        errorArr.push({
+          idxFrom: whitespaceFrom,
+          idxTo: whitespaceTo,
+          message: `Should be a single space.`,
+          fix: {
+            ranges
+          }
+        });
+      }
+    },
+    {
+      from,
+      to
     }
-  }
+  );
 }
 
 function attributeValidateClass(context, ...opts) {

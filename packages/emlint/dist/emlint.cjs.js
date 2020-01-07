@@ -115,6 +115,10 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
 }
@@ -127,12 +131,50 @@ function _arrayWithoutHoles(arr) {
   }
 }
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
 function _iterableToArray(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
 
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
 var allBadCharacterRules = [
@@ -4236,71 +4278,102 @@ function attributeValidateCite(context) {
   };
 }
 
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  var defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  var nameStartsAt = null;
+  var whitespaceStartsAt = null;
+  for (var i = opts.from; i < opts.to; i++) {
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i;
+    }
+    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+      }
+      whitespaceStartsAt = null;
+    }
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i;
+    }
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbValues === "function") {
+        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+      }
+      nameStartsAt = null;
+    }
+  }
+}
+
 function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
   var defaults = {
     typeName: "class"
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  var nameStartsAt = null;
-  var nameEndsAt = null;
   var listOfUniqueNames = [];
-  for (var i = from; i < to; i++) {
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-      if (nameEndsAt !== null && str.slice(nameEndsAt, i) !== " ") {
-        var ranges = void 0;
-        if (str[nameEndsAt] === " ") {
-          ranges = [[nameEndsAt + 1, i]];
-        } else if (str[i - 1] === " ") {
-          ranges = [[nameEndsAt, i - 1]];
-        } else {
-          ranges = [[nameEndsAt, i, " "]];
-        }
-        errorArr.push({
-          idxFrom: nameEndsAt,
-          idxTo: i,
-          message: "Should be a single space.",
-          fix: {
-            ranges: ranges
-          }
-        });
-        nameEndsAt = null;
-      }
+  splitByWhitespace(str, function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        charFrom = _ref2[0],
+        charTo = _ref2[1];
+    var extractedName = str.slice(charFrom, charTo);
+    if (!classNameRegex.test(extractedName)) {
+      errorArr.push({
+        idxFrom: charFrom,
+        idxTo: charTo,
+        message: "Wrong ".concat(opts.typeName, " name."),
+        fix: null
+      });
     }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === to)) {
-      nameEndsAt = i + 1 === to ? i + 1 : i;
-      var extractedName = str.slice(nameStartsAt, i + 1 === to ? i + 1 : i);
-      if (!classNameRegex.test(extractedName)) {
-        errorArr.push({
-          idxFrom: nameStartsAt,
-          idxTo: i + 1 === to ? i + 1 : i,
-          message: "Wrong ".concat(opts.typeName, " name."),
-          fix: null
-        });
-      }
-      if (!listOfUniqueNames.includes(extractedName)) {
-        listOfUniqueNames.push(extractedName);
+    if (!listOfUniqueNames.includes(extractedName)) {
+      listOfUniqueNames.push(extractedName);
+    } else {
+      var deleteFrom = charFrom;
+      var deleteTo = charTo;
+      var nonWhitespaceCharOnTheRight = stringLeftRight.right(str, deleteTo);
+      if (deleteTo >= to || !nonWhitespaceCharOnTheRight || nonWhitespaceCharOnTheRight > to) {
+        deleteFrom = stringLeftRight.left(str, charFrom) + 1;
       } else {
-        var deleteFrom = nameStartsAt;
-        var deleteTo = i + 1 === to ? i + 1 : i;
-        var nonWhitespaceCharOnTheRight = stringLeftRight.right(str, deleteTo);
-        if (deleteTo >= to || !nonWhitespaceCharOnTheRight || nonWhitespaceCharOnTheRight > to) {
-          deleteFrom = stringLeftRight.left(str, nameStartsAt) + 1;
-        } else {
-          deleteTo = nonWhitespaceCharOnTheRight;
-        }
-        errorArr.push({
-          idxFrom: nameStartsAt,
-          idxTo: i + 1 === to ? i + 1 : i,
-          message: "Duplicate ".concat(opts.typeName, " \"").concat(extractedName, "\"."),
-          fix: {
-            ranges: [[deleteFrom, deleteTo]]
-          }
-        });
+        deleteTo = nonWhitespaceCharOnTheRight;
       }
-      nameStartsAt = null;
+      errorArr.push({
+        idxFrom: charFrom,
+        idxTo: charTo,
+        message: "Duplicate ".concat(opts.typeName, " \"").concat(extractedName, "\"."),
+        fix: {
+          ranges: [[deleteFrom, deleteTo]]
+        }
+      });
     }
-  }
+  }, function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        whitespaceFrom = _ref4[0],
+        whitespaceTo = _ref4[1];
+    if (str.slice(whitespaceFrom, whitespaceTo) !== " ") {
+      var ranges;
+      if (str[whitespaceFrom] === " ") {
+        ranges = [[whitespaceFrom + 1, whitespaceTo]];
+      } else if (str[whitespaceTo - 1] === " ") {
+        ranges = [[whitespaceFrom, whitespaceTo - 1]];
+      } else {
+        ranges = [[whitespaceFrom, whitespaceTo, " "]];
+      }
+      errorArr.push({
+        idxFrom: whitespaceFrom,
+        idxTo: whitespaceTo,
+        message: "Should be a single space.",
+        fix: {
+          ranges: ranges
+        }
+      });
+    }
+  }, {
+    from: from,
+    to: to
+  });
 }
 
 function attributeValidateClass(context) {
