@@ -86,6 +86,7 @@
   "attribute-validate-onsubmit",
   "attribute-validate-onunload",
   "attribute-validate-profile",
+  "attribute-validate-prompt",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",

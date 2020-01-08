@@ -3679,7 +3679,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   }
 }
 
-function isAbsoluteUri() {
+function isRelativeUri() {
   return true;
 }
 
@@ -3723,7 +3723,7 @@ function validateValue$2(str, originalOpts, errorArr) {
   const extractedValue = str.slice(opts.from, opts.to);
   if (
     !urlRegex({ exact: true }).test(extractedValue) ||
-    !isAbsoluteUri()
+    !isRelativeUri()
   ) {
     let message = `Should be an URI.`;
     let idxFrom = opts.offset + opts.from;
@@ -7526,6 +7526,35 @@ function attributeValidateProfile(context, ...opts) {
   };
 }
 
+function attributeValidatePrompt(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "prompt") {
+        if (node.parent.tagName !== "isindex") {
+          context.report({
+            ruleId: "attribute-validate-prompt",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-prompt"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8911,6 +8940,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-profile",
   () => attributeValidateProfile
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-prompt",
+  () => attributeValidatePrompt
 );
 defineLazyProp(
   builtInRules,
