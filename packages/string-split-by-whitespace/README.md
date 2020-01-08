@@ -58,6 +58,32 @@ This package has three builds in `dist/` folder:
 
 **[⬆ back to top](#)**
 
+### Idea
+
+Split by a single space is easy - use `String.split(" ")`:
+
+```js
+console.log(JSON.stringify("abc def ghi".split(" "), null, 4));
+// => [
+//      "abc",
+//      "def",
+//      "ghi"
+//    ]
+```
+
+Some basics: term _whitespace_ means any character which `Strim.trim()` to a zero-length string. That's space, tab, LF (what "Enter" key places on a Mac), CR, non-breaking space and handful of others.
+
+But sometimes you need to split the string by whitespace which does not necessarily is a single space.
+
+```js
+const splitByW = require("string-split-by-whitespace");
+const result = splitByW(`\n     \n    a\t \nb    \n      \t`);
+console.log(JSON.stringify(result, null, 4));
+// => ["a", "b"]
+```
+
+Above, we split the string by whitespace consisting of spaces, tabs and linebreaks.
+
 ### API - Input
 
 | Input argument | Type         | Obligatory? | Description                                       |
@@ -79,11 +105,27 @@ The `opts.ignoreRanges` can be an empty array, but if it contains anything else 
 
 **[⬆ back to top](#)**
 
+### API - Output
+
+Program returns array of zero or more strings. Empty string yields empty array.
+
 ### `opts.ignoreRanges`
 
-It works like cropping the ranges. The characters in those ranges will not be included in the result.
+Some basics first. When we say "heads" or "tails", we mean some templating literals that wrap a value. "heads" is frontal part, for example `{{` below, "tails" is ending part, for example `}}` below:
 
-For example, use library [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
+```jinja
+Hi {{ firstName }}!
+```
+
+Now imagine that we extracted _heads_ and _tails_ and we know their ranges: `[[3, 5], [16, 18]]`. (If you select `{{` and `}}` from in front of "Hi" to where each head and tail starts and ends, you'll see that these numbers match).
+
+Now, imagine, we want to split `Hi {{ firstName }}!` into array `["Hi", "firstname", "!"]`.
+
+For that we need to skip two ranges, those of a head and tail.
+
+That's where `opts.ignoreRanges` become handy.
+
+In example below, we used library [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string, then split by whitespace:
 
 ```js
 const input = "some interesting {{text}} {% and %} {{ some more }} text.";
@@ -103,7 +145,7 @@ console.log(`res1 = ${JSON.stringify(res1, null, 4)}`);
 // => ['some', 'interesting', 'text', 'and', 'some', 'more', 'text.']
 ```
 
-Equally, you can ignore whole variables, from _heads_ to _tails_, including variable's names:
+You can ignore whole variables, from _heads_ to _tails_, including variable's names:
 
 ```js
 const input = "some interesting {{text}} {% and %} {{ some more }} text.";
