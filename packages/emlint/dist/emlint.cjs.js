@@ -704,17 +704,22 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 }
 
 function includesWithRegex(arr, whatToMatch) {
+  var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
   return arr.some(function (val) {
-    return isRegExp(val) && whatToMatch.match(val) || typeof val === "string" && whatToMatch === val;
+    return isRegExp(val) && whatToMatch.match(val) || typeof val === "string" && (!opts.caseInsensitive && whatToMatch === val || opts.caseInsensitive && whatToMatch.toLowerCase() === val.toLowerCase());
   });
 }
 
 function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
-  if (!(includesWithRegex(opts.quickPermittedValues, extractedValue) || includesWithRegex(opts.permittedValues, extractedValue))) {
+  if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
+    caseInsensitive: opts.caseInsensitive
+  }) || includesWithRegex(opts.permittedValues, extractedValue, {
+    caseInsensitive: opts.caseInsensitive
+  }))) {
     var fix = null;
     var message = "Unrecognised value: \"".concat(str.slice(charStart, charEnd), "\".");
     if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
@@ -777,6 +782,7 @@ function validateString(str, idxOffset, opts) {
 
 var wholeExtensionRegex = /^\.\w+$/g;
 var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
@@ -6665,6 +6671,40 @@ function attributeValidateReadonly(context) {
   };
 }
 
+function attributeValidateRel(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var caseInsensitive = !Array.isArray(opts) || !opts.includes("enforceLowercase");
+      if (node.attribName === "rel") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rel",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: linkTypes,
+          canBeCommaSeparated: false,
+          caseInsensitive: caseInsensitive
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-rel"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7609,6 +7649,9 @@ defineLazyProp(builtInRules, "attribute-validate-prompt", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-readonly", function () {
   return attributeValidateReadonly;
+});
+defineLazyProp(builtInRules, "attribute-validate-rel", function () {
+  return attributeValidateRel;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

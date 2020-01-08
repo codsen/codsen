@@ -861,14 +861,17 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   return errorArr;
 }
 
-function includesWithRegex(arr, whatToMatch) {
+function includesWithRegex(arr, whatToMatch, opts = {}) {
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
   return arr.some(
     val =>
       (isRegExp(val) && whatToMatch.match(val)) ||
-      (typeof val === "string" && whatToMatch === val)
+      (typeof val === "string" &&
+        ((!opts.caseInsensitive && whatToMatch === val) ||
+          (opts.caseInsensitive &&
+            whatToMatch.toLowerCase() === val.toLowerCase())))
   );
 }
 
@@ -876,8 +879,12 @@ function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
   const extractedValue = str.slice(charStart, charEnd);
   if (
     !(
-      includesWithRegex(opts.quickPermittedValues, extractedValue) ||
-      includesWithRegex(opts.permittedValues, extractedValue)
+      includesWithRegex(opts.quickPermittedValues, extractedValue, {
+        caseInsensitive: opts.caseInsensitive
+      }) ||
+      includesWithRegex(opts.permittedValues, extractedValue, {
+        caseInsensitive: opts.caseInsensitive
+      })
     )
   ) {
     let fix = null;
@@ -971,6 +978,31 @@ function validateString(str, idxOffset, opts) {
 
 const wholeExtensionRegex = /^\.\w+$/g;
 const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+const linkTypes = [
+  "alternate",
+  "appendix",
+  "author",
+  "bookmark",
+  "chapter",
+  "contents",
+  "copyright",
+  "external",
+  "glossary",
+  "help",
+  "index",
+  "license",
+  "next",
+  "nofollow",
+  "noopener",
+  "noreferrer",
+  "prev",
+  "search",
+  "section",
+  "start",
+  "stylesheet",
+  "subsection",
+  "tag"
+];
 function isLetter(str) {
   return (
     typeof str === "string" &&
@@ -7601,6 +7633,42 @@ function attributeValidateReadonly(context, ...originalOpts) {
   };
 }
 
+function attributeValidateRel(context, ...opts) {
+  return {
+    attribute: function(node) {
+      const caseInsensitive =
+        !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
+      if (node.attribName === "rel") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rel",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: linkTypes,
+            canBeCommaSeparated: false,
+            caseInsensitive
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-rel"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8996,6 +9064,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-readonly",
   () => attributeValidateReadonly
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rel",
+  () => attributeValidateRel
 );
 defineLazyProp(
   builtInRules,

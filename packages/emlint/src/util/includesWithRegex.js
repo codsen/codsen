@@ -1,16 +1,21 @@
 import isRegExp from "lodash.isregexp";
 
-function includesWithRegex(arr, whatToMatch) {
-  // console.log(
-  //   `005 includesWithRegex() called to match ${JSON.stringify(
-  //     whatToMatch,
-  //     null,
-  //     0
-  //   )} against:\n${JSON.stringify(arr, null, 4)}`
-  // );
+function includesWithRegex(arr, whatToMatch, opts = {}) {
+  console.log(" ---------- ");
+  console.log(
+    `006 includesWithRegex() called to match ${JSON.stringify(
+      whatToMatch,
+      null,
+      0
+    )} against:\n${JSON.stringify(arr, null, 4)}; opts = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
-    console.log(`013 includesWithRegex() quick end, return false`);
+    console.log(`018 includesWithRegex() quick end, return false`);
     return false;
   }
   // console.log(
@@ -24,7 +29,10 @@ function includesWithRegex(arr, whatToMatch) {
   return arr.some(
     val =>
       (isRegExp(val) && whatToMatch.match(val)) ||
-      (typeof val === "string" && whatToMatch === val)
+      (typeof val === "string" &&
+        ((!opts.caseInsensitive && whatToMatch === val) ||
+          (opts.caseInsensitive &&
+            whatToMatch.toLowerCase() === val.toLowerCase())))
   );
 }
 

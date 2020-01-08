@@ -8,6 +8,31 @@ const wholeExtensionRegex = /^\.\w+$/g;
 // 2019-07-09T15:03:36Z (https://www.npmjs.com/package/iso-datestring-validator)
 // 2011-10-05T14:48:00.000Z (https://www.npmjs.com/package/regex-iso-date)
 const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+const linkTypes = [
+  "alternate",
+  "appendix",
+  "author",
+  "bookmark",
+  "chapter",
+  "contents",
+  "copyright",
+  "external",
+  "glossary",
+  "help",
+  "index",
+  "license",
+  "next",
+  "nofollow",
+  "noopener",
+  "noreferrer",
+  "prev",
+  "search",
+  "section",
+  "start",
+  "stylesheet",
+  "subsection",
+  "tag"
+];
 
 // -----------------------------------------------------------------------------
 
@@ -40,6 +65,7 @@ export {
   wholeExtensionRegex,
   validateString,
   isoDateRegex,
+  linkTypes,
   isEnabled,
   isLetter
 };
