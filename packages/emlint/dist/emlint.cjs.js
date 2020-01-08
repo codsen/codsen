@@ -25,7 +25,6 @@ var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
 var urlRegex = _interopDefault(require('url-regex'));
-var isUrl = _interopDefault(require('is-url-superb'));
 var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
@@ -4009,9 +4008,6 @@ function attributeValidateAxis(context) {
 }
 
 function attributeValidateBackground(context) {
-  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    opts[_key - 1] = arguments[_key];
-  }
   return {
     attribute: function attribute(node) {
       if (node.attribName === "background") {
@@ -4023,38 +4019,16 @@ function attributeValidateBackground(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-background"
+            }));
+          });
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr,
-            trimmedVal = _checkForWhitespace.trimmedVal;
-        if (!isUrl(trimmedVal)) {
-          if (!Array.from(trimmedVal).some(function (_char) {
-            return !_char.trim().length;
-          }) && /\w\.\w/.test(trimmedVal) && /[^\\/]+$/.test(trimmedVal)) {
-            if (!(Array.isArray(opts) && opts.includes("localOK"))) {
-              errorArr.push({
-                idxFrom: node.attribValueStartAt + charStart,
-                idxTo: node.attribValueStartAt + charEnd,
-                message: "Should be an external URI.",
-                fix: null
-              });
-            }
-          } else {
-            errorArr.push({
-              idxFrom: node.attribValueStartAt + charStart,
-              idxTo: node.attribValueStartAt + charEnd,
-              message: "Should be an URI.",
-              fix: null
-            });
-          }
-        }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-background"
-          }));
-        });
       }
     }
   };
@@ -4409,24 +4383,16 @@ function attributeValidateCite(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-cite"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-cite"
-          }));
-        });
       }
     }
   };
@@ -4538,24 +4504,16 @@ function attributeValidateClassid(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-classid"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-classid"
-          }));
-        });
       }
     }
   };
@@ -4635,24 +4593,16 @@ function attributeValidateCodebase(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-codebase"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-codebase"
-          }));
-        });
       }
     }
   };
@@ -4929,24 +4879,16 @@ function attributeValidateData(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-data"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-data"
-          }));
-        });
       }
     }
   };
@@ -5387,24 +5329,16 @@ function attributeValidateHref(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-href"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-href"
-          }));
-        });
       }
     }
   };

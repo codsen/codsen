@@ -69,21 +69,21 @@ t.test(
   }
 );
 
-t.test(
-  `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
-  t => {
-    const str = `<body class="background" background="bg.png">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-background": [2, "localOK"]
-      }
-    });
-    t.equal(applyFixes(str, messages), str);
-    t.same(messages, []);
-    t.end();
-  }
-);
+// t.test(
+//   `01.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`,
+//   t => {
+//     const str = `<body class="background" background="bg.png">`;
+//     const linter = new Linter();
+//     const messages = linter.verify(str, {
+//       rules: {
+//         "attribute-validate-background": [2, "localOK"]
+//       }
+//     });
+//     t.equal(applyFixes(str, messages), str);
+//     t.same(messages, []);
+//     t.end();
+//   }
+// );
 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
@@ -250,30 +250,30 @@ t.test(
   }
 );
 
-t.test(
-  `04.02 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - baseline - local path will yield and error`,
-  t => {
-    const str = `<body background="spacer.gif">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "attribute-validate-background": 2
-      }
-    });
-    // can't fix:
-    t.equal(applyFixes(str, messages), str);
-    t.match(messages, [
-      {
-        ruleId: "attribute-validate-background",
-        idxFrom: 18,
-        idxTo: 28,
-        message: `Should be an external URI.`,
-        fix: null
-      }
-    ]);
-    t.end();
-  }
-);
+// t.test(
+//   `04.02 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - baseline - local path will yield and error`,
+//   t => {
+//     const str = `<body background="spacer.gif">`;
+//     const linter = new Linter();
+//     const messages = linter.verify(str, {
+//       rules: {
+//         "attribute-validate-background": 2
+//       }
+//     });
+//     // can't fix:
+//     t.equal(applyFixes(str, messages), str);
+//     t.match(messages, [
+//       {
+//         ruleId: "attribute-validate-background",
+//         idxFrom: 18,
+//         idxTo: 28,
+//         message: `Should be an URI.`,
+//         fix: null
+//       }
+//     ]);
+//     t.end();
+//   }
+// );
 
 t.test(
   `04.03 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK`,
