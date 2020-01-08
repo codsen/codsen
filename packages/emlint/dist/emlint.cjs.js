@@ -24,6 +24,7 @@ var isRegExp = _interopDefault(require('lodash.isregexp'));
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
+var urlRegex = _interopDefault(require('url-regex'));
 var isUrl = _interopDefault(require('is-url-superb'));
 var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
@@ -3539,11 +3540,202 @@ function attributeValidateAccesskey(context) {
   };
 }
 
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  var defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  var nameStartsAt = null;
+  var whitespaceStartsAt = null;
+  for (var i = opts.from; i < opts.to; i++) {
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i;
+    }
+    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+      }
+      whitespaceStartsAt = null;
+    }
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i;
+    }
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      if (typeof cbValues === "function") {
+        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+      }
+      nameStartsAt = null;
+    }
+  }
+}
+
+function isAbsoluteUri() {
+  return true;
+}
+
+function isSingleSpace(str, originalOpts, errorArr) {
+  var defaults = {
+    from: 0,
+    to: str.length,
+    offset: 0
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  if (str.slice(opts.from, opts.to) !== " ") {
+    var ranges;
+    if (str[opts.from] === " ") {
+      ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
+    } else if (str[opts.to - 1] === " ") {
+      ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
+    } else {
+      ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
+    }
+    errorArr.push({
+      idxFrom: opts.offset + opts.from,
+      idxTo: opts.offset + opts.to,
+      message: "Should be a single space.",
+      fix: {
+        ranges: ranges
+      }
+    });
+  }
+}
+
+function validateValue$2(str, originalOpts, errorArr) {
+  var defaults = {
+    offset: 0,
+    multipleOK: false,
+    from: 0,
+    to: str.length,
+    attribStart: 0,
+    attribEnd: str.length
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  var extractedValue = str.slice(opts.from, opts.to);
+  if (!urlRegex({
+    exact: true
+  }).test(extractedValue) || !isAbsoluteUri()) {
+    var message = "Should be an URI.";
+    var idxFrom = opts.offset + opts.from;
+    var idxTo = opts.offset + opts.to;
+    var whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex());
+    if (Array.isArray(whatCouldBeExtractedAtAllFromRegex)) {
+      if (whatCouldBeExtractedAtAllFromRegex.length > 1 && !opts.multipleOK) {
+        message = "There should be only one URI.";
+      } else {
+        message = "URI's should be separated with a single space.";
+      }
+      idxFrom = opts.offset + opts.attribStart;
+      idxTo = opts.offset + opts.attribEnd;
+    }
+    errorArr.push({
+      idxFrom: idxFrom,
+      idxTo: idxTo,
+      message: message,
+      fix: null
+    });
+  }
+}
+function validateUri(str, originalOpts) {
+  var defaults = {
+    offset: 0,
+    multipleOK: false,
+    separator: "space",
+    oneSpaceAfterCommaOK: false,
+    leadingWhitespaceOK: false,
+    trailingWhitespaceOK: false
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  var _checkForWhitespace = checkForWhitespace(str, opts.offset),
+      charStart = _checkForWhitespace.charStart,
+      charEnd = _checkForWhitespace.charEnd,
+      errorArr = _checkForWhitespace.errorArr;
+  if (Number.isInteger(charStart)) {
+    if (opts.multipleOK) {
+      if (opts.separator === "space") {
+        splitByWhitespace(str, function (_ref) {
+          var _ref2 = _slicedToArray(_ref, 2),
+              charFrom = _ref2[0],
+              charTo = _ref2[1];
+          var extractedName = str.slice(charFrom, charTo);
+          if (extractedName.endsWith(",") && extractedName.length > 1) {
+            errorArr.push({
+              idxFrom: opts.offset + charTo - 1,
+              idxTo: opts.offset + charTo,
+              message: "No commas.",
+              fix: null
+            });
+          } else {
+            validateValue$2(str, Object.assign({}, opts, {
+              from: charFrom,
+              to: charTo,
+              attribStart: charStart,
+              attribEnd: charEnd,
+              offset: opts.offset
+            }), errorArr);
+          }
+        }, function (_ref3) {
+          var _ref4 = _slicedToArray(_ref3, 2),
+              whitespaceFrom = _ref4[0],
+              whitespaceTo = _ref4[1];
+          return isSingleSpace(str, {
+            from: whitespaceFrom,
+            to: whitespaceTo,
+            offset: opts.offset
+          }, errorArr);
+        }, {
+          from: charStart,
+          to: charEnd
+        });
+      } else {
+        processCommaSeparated(str, {
+          offset: opts.offset,
+          oneSpaceAfterCommaOK: false,
+          leadingWhitespaceOK: true,
+          trailingWhitespaceOK: true,
+          cb: function cb(idxFrom, idxTo) {
+            var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset);
+            validateValue$2(str, Object.assign({}, opts, {
+              from: idxFrom - opts.offset,
+              to: idxTo - opts.offset,
+              attribStart: charStart,
+              attribEnd: charEnd,
+              offset: opts.offset
+            }), errorArr);
+          },
+          errCb: function errCb(ranges, message) {
+            var fix = {
+              ranges: ranges
+            };
+            if (!str[ranges[0][0] - opts.offset].trim().length && str[ranges[0][0] - opts.offset - 1] && charStart < ranges[0][0] - 1 && (opts.separator === "space" || str[ranges[0][0] - opts.offset - 1] !== "," && str[ranges[0][1] - opts.offset] !== ",")) {
+              fix = null;
+            }
+            errorArr.push({
+              idxFrom: ranges[0][0],
+              idxTo: ranges[ranges.length - 1][1],
+              message: message,
+              fix: fix
+            });
+          }
+        });
+      }
+    } else {
+      validateValue$2(str, {
+        from: charStart,
+        to: charEnd,
+        offset: opts.offset
+      }, errorArr);
+    }
+  }
+  return errorArr;
+}
+
 function attributeValidateAction(context) {
   return {
     attribute: function attribute(node) {
       if (node.attribName === "action") {
-        if (!["form"].includes(node.parent.tagName)) {
+        if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-action",
             idxFrom: node.attribStart,
@@ -3551,24 +3743,16 @@ function attributeValidateAction(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
-        }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        if (!isUrl(context.str.slice(node.attribValueStartAt + charStart, node.attribValueStartAt + charEnd))) {
-          errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
-            message: "Should be an URI.",
-            fix: null
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-action"
+            }));
           });
         }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-action"
-          }));
-        });
       }
     }
   };
@@ -3771,59 +3955,29 @@ function attributeValidateArchive(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
+        } else {
+          if (node.parent.tagName === "applet") {
+            validateUri(node.attribValue, {
+              offset: node.attribValueStartAt,
+              separator: "comma",
+              multipleOK: true
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-archive"
+              }));
+            });
+          } else if (node.parent.tagName === "object") {
+            validateUri(node.attribValue, {
+              offset: node.attribValueStartAt,
+              separator: "space",
+              multipleOK: true
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-archive"
+              }));
+            });
+          }
         }
-        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
-            charStart = _checkForWhitespace.charStart,
-            charEnd = _checkForWhitespace.charEnd,
-            errorArr = _checkForWhitespace.errorArr;
-        var trimmedAttrVal = node.attribValue;
-        if (errorArr.length) {
-          trimmedAttrVal = node.attribValue.slice(charStart, charEnd);
-        }
-        if (node.parent.tagName === "applet") {
-          processCommaSeparated(node.attribValue, {
-            offset: node.attribValueStartAt,
-            oneSpaceAfterCommaOK: false,
-            leadingWhitespaceOK: true,
-            trailingWhitespaceOK: true,
-            cb: function cb(idxFrom, idxTo) {
-              if (!isUrl(context.str.slice(idxFrom, idxTo))) {
-                errorArr.push({
-                  idxFrom: idxFrom,
-                  idxTo: idxTo,
-                  message: "Should be an URI.",
-                  fix: null
-                });
-              }
-            },
-            errCb: function errCb(ranges, message, fixable) {
-              errorArr.push({
-                idxFrom: ranges[0][0],
-                idxTo: ranges[ranges.length - 1][1],
-                message: message,
-                fix: fixable ? {
-                  ranges: ranges
-                } : null
-              });
-            }
-          });
-        } else if (node.parent.tagName === "object") {
-          trimmedAttrVal.split(" ").forEach(function (uriStr) {
-            if (!isUrl(uriStr)) {
-              errorArr.push({
-                idxFrom: node.attribValueStartAt,
-                idxTo: node.attribValueEndAt,
-                message: "Should be space-separated list of URI's.",
-                fix: null
-              });
-            }
-          });
-        }
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-archive"
-          }));
-        });
       }
     }
   };
@@ -4276,64 +4430,6 @@ function attributeValidateCite(context) {
       }
     }
   };
-}
-
-function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
-  var defaults = {
-    offset: 0,
-    from: 0,
-    to: str.length
-  };
-  var opts = Object.assign({}, defaults, originalOpts);
-  var nameStartsAt = null;
-  var whitespaceStartsAt = null;
-  for (var i = opts.from; i < opts.to; i++) {
-    if (whitespaceStartsAt === null && !str[i].trim().length) {
-      whitespaceStartsAt = i;
-    }
-    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
-      }
-      whitespaceStartsAt = null;
-    }
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-    }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbValues === "function") {
-        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
-      }
-      nameStartsAt = null;
-    }
-  }
-}
-
-function isSingleSpace(str, originalOpts, errorArr) {
-  var defaults = {
-    from: 0,
-    to: str.length,
-    offset: 0
-  };
-  var opts = Object.assign({}, defaults, originalOpts);
-  if (str.slice(opts.from, opts.to) !== " ") {
-    var ranges;
-    if (str[opts.from] === " ") {
-      ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
-    } else if (str[opts.to - 1] === " ") {
-      ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
-    } else {
-      ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
-    }
-    errorArr.push({
-      idxFrom: opts.offset + opts.from,
-      idxTo: opts.offset + opts.to,
-      message: "Should be a single space.",
-      fix: {
-        ranges: ranges
-      }
-    });
-  }
 }
 
 function checkClassOrIdValue(str, originalOpts, errorArr) {
@@ -6541,73 +6637,6 @@ function attributeValidateOnunload(context) {
       }
     }
   };
-}
-
-function isAbsoluteUri() {
-  return true;
-}
-
-function validateValue$2(str, opts, errorArr) {
-  var extractedValue = str.slice(opts.from, opts.to);
-  if (!isUrl(extractedValue) || !isAbsoluteUri()) {
-    errorArr.push({
-      idxFrom: opts.offset + opts.from,
-      idxTo: opts.offset + opts.to,
-      message: "Should be an URI.",
-      fix: null
-    });
-  }
-}
-function validateUri(str, originalOpts) {
-  var defaults = {
-    offset: 0,
-    multipleOK: false,
-    separator: "space",
-    oneSpaceAfterCommaOK: false,
-    leadingWhitespaceOK: false,
-    trailingWhitespaceOK: false
-  };
-  var opts = Object.assign({}, defaults, originalOpts);
-  var _checkForWhitespace = checkForWhitespace(str, opts.offset),
-      charStart = _checkForWhitespace.charStart,
-      charEnd = _checkForWhitespace.charEnd,
-      errorArr = _checkForWhitespace.errorArr;
-  if (Number.isInteger(charStart)) {
-    if (opts.multipleOK) {
-      if (opts.separator === "space") {
-        splitByWhitespace(str, function (_ref) {
-          var _ref2 = _slicedToArray(_ref, 2),
-              charFrom = _ref2[0],
-              charTo = _ref2[1];
-          var extractedName = str.slice(charFrom, charTo);
-          validateValue$2(str, {
-            from: charFrom,
-            to: charTo,
-            offset: opts.offset
-          }, errorArr);
-        }, function (_ref3) {
-          var _ref4 = _slicedToArray(_ref3, 2),
-              whitespaceFrom = _ref4[0],
-              whitespaceTo = _ref4[1];
-          return isSingleSpace(str, {
-            from: whitespaceFrom,
-            to: whitespaceTo,
-            offset: opts.offset
-          }, errorArr);
-        }, {
-          from: charStart,
-          to: charEnd
-        });
-      }
-    } else {
-      validateValue$2(str, {
-        from: charStart,
-        to: charEnd,
-        offset: opts.offset
-      }, errorArr);
-    }
-  }
-  return errorArr;
 }
 
 function attributeValidateProfile(context) {

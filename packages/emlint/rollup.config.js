@@ -64,7 +64,7 @@ export default commandLineArgs => {
         "string-fix-broken-named-entities",
         "string-left-right",
         "string-process-comma-separated",
-        "uri-js"
+        "url-regex"
       ],
       plugins: [
         strip({
@@ -102,7 +102,7 @@ export default commandLineArgs => {
         "string-fix-broken-named-entities",
         "string-left-right",
         "string-process-comma-separated",
-        "uri-js"
+        "url-regex"
       ],
       plugins: [
         strip({

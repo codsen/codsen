@@ -42,7 +42,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c",
     "dev": "node bin/helper && rollup -c --dev",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-class.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/attribute-validate/attribute-validate-profile.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
@@ -151,7 +151,7 @@
     "string-fix-broken-named-entities": "^2.5.5",
     "string-left-right": "^2.3.12",
     "string-process-comma-separated": "^1.2.0",
-    "uri-js": "^4.2.2"
+    "url-regex": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",

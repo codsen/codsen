@@ -177,7 +177,7 @@ t.test(
 );
 
 t.test(
-  `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
+  `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     const str = `<form action=" zzz ">`;
     const linter = new Linter();
@@ -205,6 +205,56 @@ t.test(
         idxFrom: 15,
         idxTo: 18,
         message: `Should be an URI.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, space-separated`,
+  t => {
+    const str = `<form action="https://codsen.com https://detergent.io">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-action": 2
+      }
+    });
+    // can't fix
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-action",
+        idxFrom: 14,
+        idxTo: 53,
+        message: `There should be only one URI.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `03.05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, comma-separated`,
+  t => {
+    const str = `<form action="https://codsen.com,https://detergent.io">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-action": 2
+      }
+    });
+    // can't fix
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-action",
+        idxFrom: 14,
+        idxTo: 53,
+        message: `There should be only one URI.`,
         fix: null
       }
     ]);
