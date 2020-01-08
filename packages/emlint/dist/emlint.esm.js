@@ -4638,9 +4638,39 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   }
 }
 
-function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
+function isSingleSpace(str, originalOpts, errorArr) {
   const defaults = {
-    typeName: "class"
+    from: 0,
+    to: str.length,
+    offset: 0
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  if (str.slice(opts.from, opts.to) !== " ") {
+    let ranges;
+    if (str[opts.from] === " ") {
+      ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
+    } else if (str[opts.to - 1] === " ") {
+      ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
+    } else {
+      ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
+    }
+    errorArr.push({
+      idxFrom: opts.offset + opts.from,
+      idxTo: opts.offset + opts.to,
+      message: `Should be a single space.`,
+      fix: {
+        ranges
+      }
+    });
+  }
+}
+
+function checkClassOrIdValue(str, originalOpts, errorArr) {
+  const defaults = {
+    typeName: "class",
+    from: 0,
+    to: str.length,
+    offset: 0
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const listOfUniqueNames = [];
@@ -4663,9 +4693,9 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
         let deleteTo = charTo;
         const nonWhitespaceCharOnTheRight = right(str, deleteTo);
         if (
-          deleteTo >= to ||
+          deleteTo >= opts.to ||
           !nonWhitespaceCharOnTheRight ||
-          nonWhitespaceCharOnTheRight > to
+          nonWhitespaceCharOnTheRight > opts.to
         ) {
           deleteFrom = left(str, charFrom) + 1;
         } else {
@@ -4681,30 +4711,17 @@ function checkClassOrIdValue(str, from, to, errorArr, originalOpts) {
         });
       }
     },
-    ([whitespaceFrom, whitespaceTo]) => {
-      if (str.slice(whitespaceFrom, whitespaceTo) !== " ") {
-        let ranges;
-        if (str[whitespaceFrom] === " ") {
-          ranges = [[whitespaceFrom + 1, whitespaceTo]];
-        } else if (str[whitespaceTo - 1] === " ") {
-          ranges = [[whitespaceFrom, whitespaceTo - 1]];
-        } else {
-          ranges = [[whitespaceFrom, whitespaceTo, " "]];
-        }
-        errorArr.push({
-          idxFrom: whitespaceFrom,
-          idxTo: whitespaceTo,
-          message: `Should be a single space.`,
-          fix: {
-            ranges
-          }
-        });
-      }
-    },
-    {
-      from,
-      to
-    }
+    ([whitespaceFrom, whitespaceTo]) =>
+      isSingleSpace(
+        str,
+        {
+          from: whitespaceFrom,
+          to: whitespaceTo,
+          offset: opts.offset
+        },
+        errorArr
+      ),
+    opts
   );
 }
 
@@ -4739,12 +4756,13 @@ function attributeValidateClass(context, ...opts) {
           );
           checkClassOrIdValue(
             context.str,
-            node.attribValueStartAt + charStart,
-            node.attribValueStartAt + charEnd,
-            errorArr,
             {
-              typeName: node.attribName
-            }
+              typeName: node.attribName,
+              from: node.attribValueStartAt + charStart,
+              to: node.attribValueStartAt + charEnd,
+              offset: 0
+            },
+            errorArr
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -5747,12 +5765,13 @@ function attributeValidateHeaders(context, ...opts) {
           );
           checkClassOrIdValue(
             context.str,
-            node.attribValueStartAt + charStart,
-            node.attribValueStartAt + charEnd,
-            errorArr,
             {
-              typeName: "id"
-            }
+              typeName: "id",
+              from: node.attribValueStartAt + charStart,
+              to: node.attribValueStartAt + charEnd,
+              offset: 0
+            },
+            errorArr
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -5979,12 +5998,13 @@ function attributeValidateId(context, ...opts) {
           );
           checkClassOrIdValue(
             context.str,
-            node.attribValueStartAt + charStart,
-            node.attribValueStartAt + charEnd,
-            errorArr,
             {
-              typeName: node.attribName
-            }
+              typeName: node.attribName,
+              from: node.attribValueStartAt + charStart,
+              to: node.attribValueStartAt + charEnd,
+              offset: 0
+            },
+            errorArr
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7469,6 +7489,105 @@ function attributeValidateOnunload(context, ...originalOpts) {
   };
 }
 
+function isAbsoluteUri() {
+  return true;
+}
+
+function validateValue$2(str, opts, errorArr) {
+  const extractedValue = str.slice(opts.from, opts.to);
+  if (!isUrl(extractedValue) || !isAbsoluteUri()) {
+    errorArr.push({
+      idxFrom: opts.offset + opts.from,
+      idxTo: opts.offset + opts.to,
+      message: `Should be an URI.`,
+      fix: null
+    });
+  }
+}
+function validateUri(str, originalOpts) {
+  const defaults = {
+    offset: 0,
+    multipleOK: false,
+    separator: "space",
+    oneSpaceAfterCommaOK: false,
+    leadingWhitespaceOK: false,
+    trailingWhitespaceOK: false
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, opts.offset);
+  if (Number.isInteger(charStart)) {
+    if (opts.multipleOK) {
+      if (opts.separator === "space") {
+        splitByWhitespace(
+          str,
+          ([charFrom, charTo]) => {
+            const extractedName = str.slice(charFrom, charTo);
+            validateValue$2(
+              str,
+              {
+                from: charFrom,
+                to: charTo,
+                offset: opts.offset
+              },
+              errorArr
+            );
+          },
+          ([whitespaceFrom, whitespaceTo]) =>
+            isSingleSpace(
+              str,
+              {
+                from: whitespaceFrom,
+                to: whitespaceTo,
+                offset: opts.offset
+              },
+              errorArr
+            ),
+          {
+            from: charStart,
+            to: charEnd
+          }
+        );
+      }
+    } else {
+      validateValue$2(
+        str,
+        { from: charStart, to: charEnd, offset: opts.offset },
+        errorArr
+      );
+    }
+  }
+  return errorArr;
+}
+
+function attributeValidateProfile(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "profile") {
+        if (node.parent.tagName !== "head") {
+          context.report({
+            ruleId: "attribute-validate-profile",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: true
+          }).forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-profile"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -8849,6 +8968,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-onunload",
   () => attributeValidateOnunload
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-profile",
+  () => attributeValidateProfile
 );
 defineLazyProp(
   builtInRules,

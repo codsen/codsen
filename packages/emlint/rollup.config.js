@@ -63,7 +63,8 @@ export default commandLineArgs => {
         "rgba-regex",
         "string-fix-broken-named-entities",
         "string-left-right",
-        "string-process-comma-separated"
+        "string-process-comma-separated",
+        "uri-js"
       ],
       plugins: [
         strip({
@@ -100,7 +101,8 @@ export default commandLineArgs => {
         "rgba-regex",
         "string-fix-broken-named-entities",
         "string-left-right",
-        "string-process-comma-separated"
+        "string-process-comma-separated",
+        "uri-js"
       ],
       plugins: [
         strip({

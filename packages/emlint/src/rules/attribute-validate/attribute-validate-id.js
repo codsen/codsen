@@ -62,16 +62,17 @@ function attributeValidateId(context, ...opts) {
 
           checkClassOrIdValue(
             context.str,
-            node.attribValueStartAt + charStart,
-            node.attribValueStartAt + charEnd,
-            errorArr, // might be mutated, more errors pushed into
             {
-              typeName: node.attribName // class|id|for
-            }
+              typeName: node.attribName, // class|id|for
+              from: node.attribValueStartAt + charStart,
+              to: node.attribValueStartAt + charEnd,
+              offset: 0
+            },
+            errorArr // might be mutated, more errors pushed into
           );
 
           console.log(
-            `074 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `075 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -79,7 +80,7 @@ function attributeValidateId(context, ...opts) {
           );
 
           errorArr.forEach(errorObj => {
-            console.log(`082 RAISE ERROR`);
+            console.log(`083 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-id"
