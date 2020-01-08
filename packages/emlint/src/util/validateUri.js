@@ -1,7 +1,7 @@
 import processCommaSeparated from "string-process-comma-separated";
 import checkForWhitespace from "./checkForWhitespace";
 import splitByWhitespace from "./splitByWhitespace";
-import isAbsoluteUri from "./isAbsoluteUri";
+import isRelativeUri from "./isRelativeUri";
 import isSingleSpace from "./isSingleSpace";
 import urlRegex from "url-regex";
 
@@ -43,7 +43,7 @@ function validateValue(str, originalOpts, errorArr) {
 
   if (
     !urlRegex({ exact: true }).test(extractedValue) ||
-    !isAbsoluteUri(extractedValue)
+    !isRelativeUri(extractedValue)
   ) {
     // message:
     // Should be ${opts.separator}-separated list of URI's.
