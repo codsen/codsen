@@ -7887,6 +7887,39 @@ function attributeValidateScope(context, ...opts) {
   };
 }
 
+function attributeValidateScrolling(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "scrolling") {
+        if (!["frame", "iframe"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-scrolling",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["auto", "yes", "no"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-scrolling"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9250,6 +9283,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-scope",
   () => attributeValidateScope
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-scrolling",
+  () => attributeValidateScrolling
 );
 defineLazyProp(
   builtInRules,
