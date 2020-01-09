@@ -6922,6 +6922,46 @@ function attributeValidateScrolling(context) {
   };
 }
 
+function attributeValidateSelected(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var opts = {
+        xhtml: false
+      };
+      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(function (val) {
+        return val.toLowerCase() === "xhtml";
+      })) {
+        opts.xhtml = true;
+      }
+      var errorArr = [];
+      if (node.attribName === "selected") {
+        if (node.parent.tagName !== "option") {
+          errorArr.push({
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateVoid(node, context, errorArr, Object.assign({}, opts, {
+            enforceSiblingAttributes: null
+          }));
+        }
+        if (errorArr.length) {
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-selected"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -7833,6 +7873,9 @@ defineLazyProp(builtInRules, "attribute-validate-scope", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-scrolling", function () {
   return attributeValidateScrolling;
+});
+defineLazyProp(builtInRules, "attribute-validate-selected", function () {
+  return attributeValidateSelected;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;
