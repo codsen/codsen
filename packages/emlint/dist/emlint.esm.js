@@ -7854,6 +7854,39 @@ function attributeValidateScheme(context, ...opts) {
   };
 }
 
+function attributeValidateScope(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "scope") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-scope",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["row", "col", "rowgroup", "colgroup"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-scope"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9212,6 +9245,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-scheme",
   () => attributeValidateScheme
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-scope",
+  () => attributeValidateScope
 );
 defineLazyProp(
   builtInRules,

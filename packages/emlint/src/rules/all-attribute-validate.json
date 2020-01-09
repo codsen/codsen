@@ -94,6 +94,7 @@
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-scheme",
+  "attribute-validate-scope",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"

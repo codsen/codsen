@@ -6864,6 +6864,35 @@ function attributeValidateScheme(context) {
   };
 }
 
+function attributeValidateScope(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "scope") {
+        if (!["td", "th"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-scope",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: ["row", "col", "rowgroup", "colgroup"],
+          canBeCommaSeparated: false
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-scope"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -7769,6 +7798,9 @@ defineLazyProp(builtInRules, "attribute-validate-rules", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-scheme", function () {
   return attributeValidateScheme;
+});
+defineLazyProp(builtInRules, "attribute-validate-scope", function () {
+  return attributeValidateScope;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;
