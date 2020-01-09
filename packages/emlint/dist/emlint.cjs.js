@@ -6839,6 +6839,31 @@ function attributeValidateRules(context) {
   };
 }
 
+function attributeValidateScheme(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "scheme") {
+        if (node.parent.tagName !== "meta") {
+          context.report({
+            ruleId: "attribute-validate-scheme",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-scheme"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -7741,6 +7766,9 @@ defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-rules", function () {
   return attributeValidateRules;
+});
+defineLazyProp(builtInRules, "attribute-validate-scheme", function () {
+  return attributeValidateScheme;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;
