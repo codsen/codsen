@@ -6705,6 +6705,40 @@ function attributeValidateRel(context) {
   };
 }
 
+function attributeValidateRev(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+  return {
+    attribute: function attribute(node) {
+      var caseInsensitive = !Array.isArray(opts) || !opts.includes("enforceLowercase");
+      if (node.attribName === "rev") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rev",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateString(node.attribValue,
+        node.attribValueStartAt,
+        {
+          permittedValues: linkTypes,
+          canBeCommaSeparated: false,
+          caseInsensitive: caseInsensitive
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-rev"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7652,6 +7686,9 @@ defineLazyProp(builtInRules, "attribute-validate-readonly", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-rel", function () {
   return attributeValidateRel;
+});
+defineLazyProp(builtInRules, "attribute-validate-rev", function () {
+  return attributeValidateRev;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

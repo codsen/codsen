@@ -7669,6 +7669,42 @@ function attributeValidateRel(context, ...opts) {
   };
 }
 
+function attributeValidateRev(context, ...opts) {
+  return {
+    attribute: function(node) {
+      const caseInsensitive =
+        !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
+      if (node.attribName === "rev") {
+        if (!["a", "link"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rev",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: linkTypes,
+            canBeCommaSeparated: false,
+            caseInsensitive
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-rev"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9069,6 +9105,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-rel",
   () => attributeValidateRel
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rev",
+  () => attributeValidateRev
 );
 defineLazyProp(
   builtInRules,

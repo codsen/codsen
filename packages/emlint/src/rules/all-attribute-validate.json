@@ -89,6 +89,7 @@
   "attribute-validate-prompt",
   "attribute-validate-readonly",
   "attribute-validate-rel",
+  "attribute-validate-rev",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",
