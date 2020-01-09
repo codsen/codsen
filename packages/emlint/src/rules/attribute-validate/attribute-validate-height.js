@@ -1,7 +1,7 @@
 // rule: attribute-validate-height
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateHeight(context, ...opts) {
   return {

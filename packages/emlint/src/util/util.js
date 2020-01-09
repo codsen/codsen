@@ -1,5 +1,4 @@
 // validation functions
-import validateDigitAndUnit from "./validateDigitAndUnit";
 import validateString from "./validateString";
 const wholeExtensionRegex = /^\.\w+$/g;
 
@@ -8,6 +7,7 @@ const wholeExtensionRegex = /^\.\w+$/g;
 // 2019-07-09T15:03:36Z (https://www.npmjs.com/package/iso-datestring-validator)
 // 2011-10-05T14:48:00.000Z (https://www.npmjs.com/package/regex-iso-date)
 const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+const fontSizeRegex = /^[+-]?[1-7]$/;
 const linkTypes = [
   "alternate",
   "appendix",
@@ -61,9 +61,9 @@ function isEnabled(maybeARulesValue) {
 // -----------------------------------------------------------------------------
 
 export {
-  validateDigitAndUnit,
   wholeExtensionRegex,
   validateString,
+  fontSizeRegex,
   isoDateRegex,
   linkTypes,
   isEnabled,

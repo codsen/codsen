@@ -1,7 +1,7 @@
 // rule: attribute-validate-width
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateWidth(context, ...opts) {
   return {

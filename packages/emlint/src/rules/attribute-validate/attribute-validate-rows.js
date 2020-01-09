@@ -1,7 +1,7 @@
 // rule: attribute-validate-rows
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateRows(context, ...opts) {
   return {

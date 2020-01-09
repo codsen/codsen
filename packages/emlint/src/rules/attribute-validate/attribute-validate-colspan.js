@@ -1,7 +1,7 @@
 // rule: attribute-validate-colspan
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateColspan(context, ...opts) {
   return {

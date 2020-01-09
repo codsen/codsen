@@ -1,7 +1,7 @@
 // rule: attribute-validate-cellspacing
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCellspacing(context, ...opts) {
   return {

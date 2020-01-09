@@ -1,7 +1,7 @@
 // rule: attribute-validate-hspace
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateHspace(context, ...opts) {
   return {

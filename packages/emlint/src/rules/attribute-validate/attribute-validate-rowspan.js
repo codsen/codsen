@@ -1,7 +1,7 @@
 // rule: attribute-validate-rowspan
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateRowspan(context, ...opts) {
   return {

@@ -1,7 +1,7 @@
 // rule: attribute-validate-coords
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCoords(context, ...opts) {
   return {

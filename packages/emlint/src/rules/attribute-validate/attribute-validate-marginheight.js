@@ -1,7 +1,7 @@
 // rule: attribute-validate-marginheight
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateMarginheight(context, ...opts) {
   return {

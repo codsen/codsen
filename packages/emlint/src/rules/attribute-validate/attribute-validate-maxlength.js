@@ -1,7 +1,7 @@
 // rule: attribute-validate-maxlength
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateMaxlength(context, ...opts) {
   return {

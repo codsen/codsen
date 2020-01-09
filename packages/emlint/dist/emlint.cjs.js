@@ -19,12 +19,12 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
 var processCommaSeparated = _interopDefault(require('string-process-comma-separated'));
 var stringLeftRight = require('string-left-right');
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var isRegExp = _interopDefault(require('lodash.isregexp'));
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
 var urlRegex = _interopDefault(require('url-regex'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
@@ -362,347 +362,6 @@ function checkForWhitespace(str, idxOffset) {
   };
 }
 
-var knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
-var knownCharsets = ["adobe-standard-encoding", "adobe-symbol-encoding", "amiga-1251", "ansi_x3.110-1983", "asmo_449", "big5", "big5-hkscs", "bocu-1", "brf", "bs_4730", "bs_viewdata", "cesu-8", "cp50220", "cp51932", "csa_z243.4-1985-1", "csa_z243.4-1985-2", "csa_z243.4-1985-gr", "csn_369103", "dec-mcs", "din_66003", "dk-us", "ds_2089", "ebcdic-at-de", "ebcdic-at-de-a", "ebcdic-ca-fr", "ebcdic-dk-no", "ebcdic-dk-no-a", "ebcdic-es", "ebcdic-es-a", "ebcdic-es-s", "ebcdic-fi-se", "ebcdic-fi-se-a", "ebcdic-fr", "ebcdic-it", "ebcdic-pt", "ebcdic-uk", "ebcdic-us", "ecma-cyrillic", "es", "es2", "euc-kr", "extended_unix_code_fixed_width_for_japanese", "extended_unix_code_packed_format_for_japanese", "gb18030", "gb2312", "gb_1988-80", "gb_2312-80", "gbk", "gost_19768-74", "greek-ccitt", "greek7", "greek7-old", "hp-desktop", "hp-legal", "hp-math8", "hp-pi-font", "hp-roman8", "hz-gb-2312", "ibm-symbols", "ibm-thai", "ibm00858", "ibm00924", "ibm01140", "ibm01141", "ibm01142", "ibm01143", "ibm01144", "ibm01145", "ibm01146", "ibm01147", "ibm01148", "ibm01149", "ibm037", "ibm038", "ibm1026", "ibm1047", "ibm273", "ibm274", "ibm275", "ibm277", "ibm278", "ibm280", "ibm281", "ibm284", "ibm285", "ibm290", "ibm297", "ibm420", "ibm423", "ibm424", "ibm437", "ibm500", "ibm775", "ibm850", "ibm851", "ibm852", "ibm855", "ibm857", "ibm860", "ibm861", "ibm862", "ibm863", "ibm864", "ibm865", "ibm866", "ibm868", "ibm869", "ibm870", "ibm871", "ibm880", "ibm891", "ibm903", "ibm904", "ibm905", "ibm918", "iec_p27-1", "inis", "inis-8", "inis-cyrillic", "invariant", "iso-10646-j-1", "iso-10646-ucs-2", "iso-10646-ucs-4", "iso-10646-ucs-basic", "iso-10646-unicode-latin1", "iso-10646-utf-1", "iso-11548-1", "iso-2022-cn", "iso-2022-cn-ext", "iso-2022-jp", "iso-2022-jp-2", "iso-2022-kr", "iso-8859-1-windows-3.0-latin-1", "iso-8859-1-windows-3.1-latin-1", "iso-8859-10", "iso-8859-13", "iso-8859-14", "iso-8859-15", "iso-8859-16", "iso-8859-2-windows-latin-2", "iso-8859-9-windows-latin-5", "iso-ir-90", "iso-unicode-ibm-1261", "iso-unicode-ibm-1264", "iso-unicode-ibm-1265", "iso-unicode-ibm-1268", "iso-unicode-ibm-1276", "iso_10367-box", "iso_2033-1983", "iso_5427", "iso_5427:1981", "iso_5428:1980", "iso_646.basic:1983", "iso_646.irv:1983", "iso_6937-2-25", "iso_6937-2-add", "iso_8859-1:1987", "iso_8859-2:1987", "iso_8859-3:1988", "iso_8859-4:1988", "iso_8859-5:1988", "iso_8859-6-e", "iso_8859-6-i", "iso_8859-6:1987", "iso_8859-7:1987", "iso_8859-8-e", "iso_8859-8-i", "iso_8859-8:1988", "iso_8859-9:1989", "iso_8859-supp", "it", "jis_c6220-1969-jp", "jis_c6220-1969-ro", "jis_c6226-1978", "jis_c6226-1983", "jis_c6229-1984-a", "jis_c6229-1984-b", "jis_c6229-1984-b-add", "jis_c6229-1984-hand", "jis_c6229-1984-hand-add", "jis_c6229-1984-kana", "jis_encoding", "jis_x0201", "jis_x0212-1990", "jus_i.b1.002", "jus_i.b1.003-mac", "jus_i.b1.003-serb", "koi7-switched", "koi8-r", "koi8-u", "ks_c_5601-1987", "ksc5636", "kz-1048", "latin-greek", "latin-greek-1", "latin-lap", "macintosh", "microsoft-publishing", "mnem", "mnemonic", "msz_7795.3", "nats-dano", "nats-dano-add", "nats-sefi", "nats-sefi-add", "nc_nc00-10:81", "nf_z_62-010", "nf_z_62-010_(1973)", "ns_4551-1", "ns_4551-2", "osd_ebcdic_df03_irv", "osd_ebcdic_df04_1", "osd_ebcdic_df04_15", "pc8-danish-norwegian", "pc8-turkish", "pt", "pt2", "ptcp154", "scsu", "sen_850200_b", "sen_850200_c", "shift_jis", "t.101-g2", "t.61-7bit", "t.61-8bit", "tis-620", "tscii", "unicode-1-1", "unicode-1-1-utf-7", "unknown-8bit", "us-ascii", "us-dk", "utf-16", "utf-16be", "utf-16le", "utf-32", "utf-32be", "utf-32le", "utf-7", "utf-8", "ventura-international", "ventura-math", "ventura-us", "videotex-suppl", "viqr", "viscii", "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254", "windows-1255", "windows-1256", "windows-1257", "windows-1258", "windows-31j", "windows-874"];
-var basicColorNames = {
-  aqua: "#00ffff",
-  black: "#000000",
-  blue: "#0000ff",
-  fuchsia: "#ff00ff",
-  gray: "#808080",
-  green: "#008000",
-  lime: "#00ff00",
-  maroon: "#800000",
-  navy: "#000080",
-  olive: "#808000",
-  purple: "#800080",
-  red: "#ff0000",
-  silver: "#c0c0c0",
-  teal: "#008080",
-  white: "#ffffff",
-  yellow: "#ffff00"
-};
-var extendedColorNames = {
-  aliceblue: "#f0f8ff",
-  antiquewhite: "#faebd7",
-  aqua: "#00ffff",
-  aquamarine: "#7fffd4",
-  azure: "#f0ffff",
-  beige: "#f5f5dc",
-  bisque: "#ffe4c4",
-  black: "#000000",
-  blanchedalmond: "#ffebcd",
-  blue: "#0000ff",
-  blueviolet: "#8a2be2",
-  brown: "#a52a2a",
-  burlywood: "#deb887",
-  cadetblue: "#5f9ea0",
-  chartreuse: "#7fff00",
-  chocolate: "#d2691e",
-  coral: "#ff7f50",
-  cornflowerblue: "#6495ed",
-  cornsilk: "#fff8dc",
-  crimson: "#dc143c",
-  cyan: "#00ffff",
-  darkblue: "#00008b",
-  darkcyan: "#008b8b",
-  darkgoldenrod: "#b8860b",
-  darkgray: "#a9a9a9",
-  darkgrey: "#a9a9a9",
-  darkgreen: "#006400",
-  darkkhaki: "#bdb76b",
-  darkmagenta: "#8b008b",
-  darkolivegreen: "#556b2f",
-  darkorange: "#ff8c00",
-  darkorchid: "#9932cc",
-  darkred: "#8b0000",
-  darksalmon: "#e9967a",
-  darkseagreen: "#8fbc8f",
-  darkslateblue: "#483d8b",
-  darkslategray: "#2f4f4f",
-  darkslategrey: "#2f4f4f",
-  darkturquoise: "#00ced1",
-  darkviolet: "#9400d3",
-  deeppink: "#ff1493",
-  deepskyblue: "#00bfff",
-  dimgray: "#696969",
-  dimgrey: "#696969",
-  dodgerblue: "#1e90ff",
-  firebrick: "#b22222",
-  floralwhite: "#fffaf0",
-  forestgreen: "#228b22",
-  fuchsia: "#ff00ff",
-  gainsboro: "#dcdcdc",
-  ghostwhite: "#f8f8ff",
-  gold: "#ffd700",
-  goldenrod: "#daa520",
-  gray: "#808080",
-  grey: "#808080",
-  green: "#008000",
-  greenyellow: "#adff2f",
-  honeydew: "#f0fff0",
-  hotpink: "#ff69b4",
-  indianred: "#cd5c5c",
-  indigo: "#4b0082",
-  ivory: "#fffff0",
-  khaki: "#f0e68c",
-  lavender: "#e6e6fa",
-  lavenderblush: "#fff0f5",
-  lawngreen: "#7cfc00",
-  lemonchiffon: "#fffacd",
-  lightblue: "#add8e6",
-  lightcoral: "#f08080",
-  lightcyan: "#e0ffff",
-  lightgoldenrodyellow: "#fafad2",
-  lightgray: "#d3d3d3",
-  lightgrey: "#d3d3d3",
-  lightgreen: "#90ee90",
-  lightpink: "#ffb6c1",
-  lightsalmon: "#ffa07a",
-  lightseagreen: "#20b2aa",
-  lightskyblue: "#87cefa",
-  lightslategray: "#778899",
-  lightslategrey: "#778899",
-  lightsteelblue: "#b0c4de",
-  lightyellow: "#ffffe0",
-  lime: "#00ff00",
-  limegreen: "#32cd32",
-  linen: "#faf0e6",
-  magenta: "#ff00ff",
-  maroon: "#800000",
-  mediumaquamarine: "#66cdaa",
-  mediumblue: "#0000cd",
-  mediumorchid: "#ba55d3",
-  mediumpurple: "#9370db",
-  mediumseagreen: "#3cb371",
-  mediumslateblue: "#7b68ee",
-  mediumspringgreen: "#00fa9a",
-  mediumturquoise: "#48d1cc",
-  mediumvioletred: "#c71585",
-  midnightblue: "#191970",
-  mintcream: "#f5fffa",
-  mistyrose: "#ffe4e1",
-  moccasin: "#ffe4b5",
-  navajowhite: "#ffdead",
-  navy: "#000080",
-  oldlace: "#fdf5e6",
-  olive: "#808000",
-  olivedrab: "#6b8e23",
-  orange: "#ffa500",
-  orangered: "#ff4500",
-  orchid: "#da70d6",
-  palegoldenrod: "#eee8aa",
-  palegreen: "#98fb98",
-  paleturquoise: "#afeeee",
-  palevioletred: "#db7093",
-  papayawhip: "#ffefd5",
-  peachpuff: "#ffdab9",
-  peru: "#cd853f",
-  pink: "#ffc0cb",
-  plum: "#dda0dd",
-  powderblue: "#b0e0e6",
-  purple: "#800080",
-  rebeccapurple: "#663399",
-  red: "#ff0000",
-  rosybrown: "#bc8f8f",
-  royalblue: "#4169e1",
-  saddlebrown: "#8b4513",
-  salmon: "#fa8072",
-  sandybrown: "#f4a460",
-  seagreen: "#2e8b57",
-  seashell: "#fff5ee",
-  sienna: "#a0522d",
-  silver: "#c0c0c0",
-  skyblue: "#87ceeb",
-  slateblue: "#6a5acd",
-  slategray: "#708090",
-  slategrey: "#708090",
-  snow: "#fffafa",
-  springgreen: "#00ff7f",
-  steelblue: "#4682b4",
-  tan: "#d2b48c",
-  teal: "#008080",
-  thistle: "#d8bfd8",
-  tomato: "#ff6347",
-  turquoise: "#40e0d0",
-  violet: "#ee82ee",
-  wheat: "#f5deb3",
-  white: "#ffffff",
-  whitesmoke: "#f5f5f5",
-  yellow: "#ffff00",
-  yellowgreen: "#9acd32"
-};
-var sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
-var classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
-
-function validateValue(_ref) {
-  var str = _ref.str,
-      opts = _ref.opts,
-      charStart = _ref.charStart,
-      charEnd = _ref.charEnd,
-      idxOffset = _ref.idxOffset,
-      errorArr = _ref.errorArr;
-  if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
-    var message = "Digits missing.";
-    if (opts.customGenericValueError) {
-      message = opts.customGenericValueError;
-    } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
-      message = "Should be integer, no units.";
-    }
-    errorArr.push({
-      idxFrom: idxOffset + charStart,
-      idxTo: idxOffset + charEnd,
-      message: message,
-      fix: null
-    });
-  } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
-    errorArr.push({
-      idxFrom: idxOffset + charStart,
-      idxTo: idxOffset + charEnd,
-      message: opts.customGenericValueError || "Units missing.",
-      fix: null
-    });
-  } else {
-    for (var i = charStart; i < charEnd; i++) {
-      if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0))) {
-        var endPart = str.slice(i, charEnd);
-        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
-          if (endPart === "px") {
-            errorArr.push({
-              idxFrom: idxOffset + i,
-              idxTo: idxOffset + charEnd,
-              message: "Remove px.",
-              fix: {
-                ranges: [[idxOffset + i, idxOffset + charEnd]]
-              }
-            });
-          } else {
-            var _message = "Bad unit.";
-            if (str.includes("--")) {
-              _message = "Repeated minus.";
-            } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
-              _message = "Rogue whitespace.";
-            } else if (opts.customGenericValueError) {
-              _message = opts.customGenericValueError;
-            } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
-              _message = "Should be integer, no units.";
-            }
-            errorArr.push({
-              idxFrom: idxOffset + i,
-              idxTo: idxOffset + charEnd,
-              message: _message,
-              fix: null
-            });
-          }
-        } else if (!knownUnits.includes(endPart)) {
-          var _message2 = "Unrecognised unit.";
-          if (/\d/.test(endPart)) {
-            _message2 = "Messy value.";
-          } else if (knownUnits.includes(endPart.trim())) {
-            _message2 = "Rogue whitespace.";
-          }
-          errorArr.push({
-            idxFrom: idxOffset + i,
-            idxTo: idxOffset + charEnd,
-            message: _message2,
-            fix: null
-          });
-        }
-        break;
-      }
-    }
-  }
-}
-function validateDigitAndUnit(str, idxOffset, originalOpts) {
-  var defaultOpts = {
-    type: "integer",
-    whitelistValues: [],
-    theOnlyGoodUnits: null,
-    negativeOK: false,
-    badUnits: [],
-    enforceCount: null,
-    noUnitsIsFine: true,
-    canBeCommaSeparated: false,
-    customGenericValueError: null
-  };
-  var opts = Object.assign({}, defaultOpts, originalOpts);
-  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
-      charStart = _checkForWhitespace.charStart,
-      charEnd = _checkForWhitespace.charEnd,
-      errorArr = _checkForWhitespace.errorArr;
-  if (Number.isInteger(charStart)) {
-    if (opts.canBeCommaSeparated) {
-      var extractedValues = [];
-      processCommaSeparated(str, {
-        offset: idxOffset,
-        oneSpaceAfterCommaOK: false,
-        leadingWhitespaceOK: true,
-        trailingWhitespaceOK: true,
-        cb: function cb(idxFrom, idxTo) {
-          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue({
-              str: str,
-              opts: opts,
-              charStart: idxFrom - idxOffset,
-              charEnd: idxTo - idxOffset,
-              idxOffset: idxOffset,
-              errorArr: errorArr
-            });
-          }
-          extractedValues.push(extractedValue);
-        },
-        errCb: function errCb(ranges, message) {
-          errorArr.push({
-            idxFrom: ranges[0][0],
-            idxTo: ranges[ranges.length - 1][1],
-            message: message,
-            fix: {
-              ranges: ranges
-            }
-          });
-        }
-      });
-      if (Number.isInteger(opts.enforceCount) && extractedValues.length !== opts.enforceCount) {
-        errorArr.push({
-          idxFrom: charStart + idxOffset,
-          idxTo: charEnd + idxOffset,
-          message: "There should be ".concat(opts.enforceCount, " values."),
-          fix: null
-        });
-      } else if (typeof opts.enforceCount === "string" && ["even", "odd", "uneven", "noneven"].includes(opts.enforceCount.toLowerCase())) {
-        if (opts.enforceCount.toLowerCase() === "even" && extractedValues.length % 2 !== 0) {
-          errorArr.push({
-            idxFrom: charStart + idxOffset,
-            idxTo: charEnd + idxOffset,
-            message: "Should be an even number of values but found ".concat(extractedValues.length, "."),
-            fix: null
-          });
-        } else if (opts.enforceCount.toLowerCase() !== "even" && extractedValues.length % 2 === 0) {
-          errorArr.push({
-            idxFrom: charStart + idxOffset,
-            idxTo: charEnd + idxOffset,
-            message: "Should be an odd number of values but found ".concat(extractedValues.length, "."),
-            fix: null
-          });
-        }
-      }
-    } else {
-      if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue({
-          str: str,
-          opts: opts,
-          charStart: charStart,
-          charEnd: charEnd,
-          idxOffset: idxOffset,
-          errorArr: errorArr
-        });
-      }
-    }
-  }
-  return errorArr;
-}
-
 function includesWithRegex(arr, whatToMatch) {
   var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   if (!Array.isArray(arr) || !arr.length) {
@@ -713,7 +372,7 @@ function includesWithRegex(arr, whatToMatch) {
   });
 }
 
-function validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
     caseInsensitive: opts.caseInsensitive
@@ -758,7 +417,7 @@ function validateString(str, idxOffset, opts) {
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          validateValue$1(str, idxOffset, opts, idxFrom - idxOffset,
+          validateValue(str, idxOffset, opts, idxFrom - idxOffset,
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
@@ -774,7 +433,7 @@ function validateString(str, idxOffset, opts) {
       });
     } else {
       var extractedValue = str.slice(charStart, charEnd);
-      validateValue$1(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -782,6 +441,7 @@ function validateString(str, idxOffset, opts) {
 
 var wholeExtensionRegex = /^\.\w+$/g;
 var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+var fontSizeRegex = /^[+-]?[1-7]$/;
 var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
@@ -3447,6 +3107,179 @@ function attributeValidateAbbr(context) {
   };
 }
 
+var knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
+var knownCharsets = ["adobe-standard-encoding", "adobe-symbol-encoding", "amiga-1251", "ansi_x3.110-1983", "asmo_449", "big5", "big5-hkscs", "bocu-1", "brf", "bs_4730", "bs_viewdata", "cesu-8", "cp50220", "cp51932", "csa_z243.4-1985-1", "csa_z243.4-1985-2", "csa_z243.4-1985-gr", "csn_369103", "dec-mcs", "din_66003", "dk-us", "ds_2089", "ebcdic-at-de", "ebcdic-at-de-a", "ebcdic-ca-fr", "ebcdic-dk-no", "ebcdic-dk-no-a", "ebcdic-es", "ebcdic-es-a", "ebcdic-es-s", "ebcdic-fi-se", "ebcdic-fi-se-a", "ebcdic-fr", "ebcdic-it", "ebcdic-pt", "ebcdic-uk", "ebcdic-us", "ecma-cyrillic", "es", "es2", "euc-kr", "extended_unix_code_fixed_width_for_japanese", "extended_unix_code_packed_format_for_japanese", "gb18030", "gb2312", "gb_1988-80", "gb_2312-80", "gbk", "gost_19768-74", "greek-ccitt", "greek7", "greek7-old", "hp-desktop", "hp-legal", "hp-math8", "hp-pi-font", "hp-roman8", "hz-gb-2312", "ibm-symbols", "ibm-thai", "ibm00858", "ibm00924", "ibm01140", "ibm01141", "ibm01142", "ibm01143", "ibm01144", "ibm01145", "ibm01146", "ibm01147", "ibm01148", "ibm01149", "ibm037", "ibm038", "ibm1026", "ibm1047", "ibm273", "ibm274", "ibm275", "ibm277", "ibm278", "ibm280", "ibm281", "ibm284", "ibm285", "ibm290", "ibm297", "ibm420", "ibm423", "ibm424", "ibm437", "ibm500", "ibm775", "ibm850", "ibm851", "ibm852", "ibm855", "ibm857", "ibm860", "ibm861", "ibm862", "ibm863", "ibm864", "ibm865", "ibm866", "ibm868", "ibm869", "ibm870", "ibm871", "ibm880", "ibm891", "ibm903", "ibm904", "ibm905", "ibm918", "iec_p27-1", "inis", "inis-8", "inis-cyrillic", "invariant", "iso-10646-j-1", "iso-10646-ucs-2", "iso-10646-ucs-4", "iso-10646-ucs-basic", "iso-10646-unicode-latin1", "iso-10646-utf-1", "iso-11548-1", "iso-2022-cn", "iso-2022-cn-ext", "iso-2022-jp", "iso-2022-jp-2", "iso-2022-kr", "iso-8859-1-windows-3.0-latin-1", "iso-8859-1-windows-3.1-latin-1", "iso-8859-10", "iso-8859-13", "iso-8859-14", "iso-8859-15", "iso-8859-16", "iso-8859-2-windows-latin-2", "iso-8859-9-windows-latin-5", "iso-ir-90", "iso-unicode-ibm-1261", "iso-unicode-ibm-1264", "iso-unicode-ibm-1265", "iso-unicode-ibm-1268", "iso-unicode-ibm-1276", "iso_10367-box", "iso_2033-1983", "iso_5427", "iso_5427:1981", "iso_5428:1980", "iso_646.basic:1983", "iso_646.irv:1983", "iso_6937-2-25", "iso_6937-2-add", "iso_8859-1:1987", "iso_8859-2:1987", "iso_8859-3:1988", "iso_8859-4:1988", "iso_8859-5:1988", "iso_8859-6-e", "iso_8859-6-i", "iso_8859-6:1987", "iso_8859-7:1987", "iso_8859-8-e", "iso_8859-8-i", "iso_8859-8:1988", "iso_8859-9:1989", "iso_8859-supp", "it", "jis_c6220-1969-jp", "jis_c6220-1969-ro", "jis_c6226-1978", "jis_c6226-1983", "jis_c6229-1984-a", "jis_c6229-1984-b", "jis_c6229-1984-b-add", "jis_c6229-1984-hand", "jis_c6229-1984-hand-add", "jis_c6229-1984-kana", "jis_encoding", "jis_x0201", "jis_x0212-1990", "jus_i.b1.002", "jus_i.b1.003-mac", "jus_i.b1.003-serb", "koi7-switched", "koi8-r", "koi8-u", "ks_c_5601-1987", "ksc5636", "kz-1048", "latin-greek", "latin-greek-1", "latin-lap", "macintosh", "microsoft-publishing", "mnem", "mnemonic", "msz_7795.3", "nats-dano", "nats-dano-add", "nats-sefi", "nats-sefi-add", "nc_nc00-10:81", "nf_z_62-010", "nf_z_62-010_(1973)", "ns_4551-1", "ns_4551-2", "osd_ebcdic_df03_irv", "osd_ebcdic_df04_1", "osd_ebcdic_df04_15", "pc8-danish-norwegian", "pc8-turkish", "pt", "pt2", "ptcp154", "scsu", "sen_850200_b", "sen_850200_c", "shift_jis", "t.101-g2", "t.61-7bit", "t.61-8bit", "tis-620", "tscii", "unicode-1-1", "unicode-1-1-utf-7", "unknown-8bit", "us-ascii", "us-dk", "utf-16", "utf-16be", "utf-16le", "utf-32", "utf-32be", "utf-32le", "utf-7", "utf-8", "ventura-international", "ventura-math", "ventura-us", "videotex-suppl", "viqr", "viscii", "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254", "windows-1255", "windows-1256", "windows-1257", "windows-1258", "windows-31j", "windows-874"];
+var basicColorNames = {
+  aqua: "#00ffff",
+  black: "#000000",
+  blue: "#0000ff",
+  fuchsia: "#ff00ff",
+  gray: "#808080",
+  green: "#008000",
+  lime: "#00ff00",
+  maroon: "#800000",
+  navy: "#000080",
+  olive: "#808000",
+  purple: "#800080",
+  red: "#ff0000",
+  silver: "#c0c0c0",
+  teal: "#008080",
+  white: "#ffffff",
+  yellow: "#ffff00"
+};
+var extendedColorNames = {
+  aliceblue: "#f0f8ff",
+  antiquewhite: "#faebd7",
+  aqua: "#00ffff",
+  aquamarine: "#7fffd4",
+  azure: "#f0ffff",
+  beige: "#f5f5dc",
+  bisque: "#ffe4c4",
+  black: "#000000",
+  blanchedalmond: "#ffebcd",
+  blue: "#0000ff",
+  blueviolet: "#8a2be2",
+  brown: "#a52a2a",
+  burlywood: "#deb887",
+  cadetblue: "#5f9ea0",
+  chartreuse: "#7fff00",
+  chocolate: "#d2691e",
+  coral: "#ff7f50",
+  cornflowerblue: "#6495ed",
+  cornsilk: "#fff8dc",
+  crimson: "#dc143c",
+  cyan: "#00ffff",
+  darkblue: "#00008b",
+  darkcyan: "#008b8b",
+  darkgoldenrod: "#b8860b",
+  darkgray: "#a9a9a9",
+  darkgrey: "#a9a9a9",
+  darkgreen: "#006400",
+  darkkhaki: "#bdb76b",
+  darkmagenta: "#8b008b",
+  darkolivegreen: "#556b2f",
+  darkorange: "#ff8c00",
+  darkorchid: "#9932cc",
+  darkred: "#8b0000",
+  darksalmon: "#e9967a",
+  darkseagreen: "#8fbc8f",
+  darkslateblue: "#483d8b",
+  darkslategray: "#2f4f4f",
+  darkslategrey: "#2f4f4f",
+  darkturquoise: "#00ced1",
+  darkviolet: "#9400d3",
+  deeppink: "#ff1493",
+  deepskyblue: "#00bfff",
+  dimgray: "#696969",
+  dimgrey: "#696969",
+  dodgerblue: "#1e90ff",
+  firebrick: "#b22222",
+  floralwhite: "#fffaf0",
+  forestgreen: "#228b22",
+  fuchsia: "#ff00ff",
+  gainsboro: "#dcdcdc",
+  ghostwhite: "#f8f8ff",
+  gold: "#ffd700",
+  goldenrod: "#daa520",
+  gray: "#808080",
+  grey: "#808080",
+  green: "#008000",
+  greenyellow: "#adff2f",
+  honeydew: "#f0fff0",
+  hotpink: "#ff69b4",
+  indianred: "#cd5c5c",
+  indigo: "#4b0082",
+  ivory: "#fffff0",
+  khaki: "#f0e68c",
+  lavender: "#e6e6fa",
+  lavenderblush: "#fff0f5",
+  lawngreen: "#7cfc00",
+  lemonchiffon: "#fffacd",
+  lightblue: "#add8e6",
+  lightcoral: "#f08080",
+  lightcyan: "#e0ffff",
+  lightgoldenrodyellow: "#fafad2",
+  lightgray: "#d3d3d3",
+  lightgrey: "#d3d3d3",
+  lightgreen: "#90ee90",
+  lightpink: "#ffb6c1",
+  lightsalmon: "#ffa07a",
+  lightseagreen: "#20b2aa",
+  lightskyblue: "#87cefa",
+  lightslategray: "#778899",
+  lightslategrey: "#778899",
+  lightsteelblue: "#b0c4de",
+  lightyellow: "#ffffe0",
+  lime: "#00ff00",
+  limegreen: "#32cd32",
+  linen: "#faf0e6",
+  magenta: "#ff00ff",
+  maroon: "#800000",
+  mediumaquamarine: "#66cdaa",
+  mediumblue: "#0000cd",
+  mediumorchid: "#ba55d3",
+  mediumpurple: "#9370db",
+  mediumseagreen: "#3cb371",
+  mediumslateblue: "#7b68ee",
+  mediumspringgreen: "#00fa9a",
+  mediumturquoise: "#48d1cc",
+  mediumvioletred: "#c71585",
+  midnightblue: "#191970",
+  mintcream: "#f5fffa",
+  mistyrose: "#ffe4e1",
+  moccasin: "#ffe4b5",
+  navajowhite: "#ffdead",
+  navy: "#000080",
+  oldlace: "#fdf5e6",
+  olive: "#808000",
+  olivedrab: "#6b8e23",
+  orange: "#ffa500",
+  orangered: "#ff4500",
+  orchid: "#da70d6",
+  palegoldenrod: "#eee8aa",
+  palegreen: "#98fb98",
+  paleturquoise: "#afeeee",
+  palevioletred: "#db7093",
+  papayawhip: "#ffefd5",
+  peachpuff: "#ffdab9",
+  peru: "#cd853f",
+  pink: "#ffc0cb",
+  plum: "#dda0dd",
+  powderblue: "#b0e0e6",
+  purple: "#800080",
+  rebeccapurple: "#663399",
+  red: "#ff0000",
+  rosybrown: "#bc8f8f",
+  royalblue: "#4169e1",
+  saddlebrown: "#8b4513",
+  salmon: "#fa8072",
+  sandybrown: "#f4a460",
+  seagreen: "#2e8b57",
+  seashell: "#fff5ee",
+  sienna: "#a0522d",
+  silver: "#c0c0c0",
+  skyblue: "#87ceeb",
+  slateblue: "#6a5acd",
+  slategray: "#708090",
+  slategrey: "#708090",
+  snow: "#fffafa",
+  springgreen: "#00ff7f",
+  steelblue: "#4682b4",
+  tan: "#d2b48c",
+  teal: "#008080",
+  thistle: "#d8bfd8",
+  tomato: "#ff6347",
+  turquoise: "#40e0d0",
+  violet: "#ee82ee",
+  wheat: "#f5deb3",
+  white: "#ffffff",
+  whitesmoke: "#f5f5f5",
+  yellow: "#ffff00",
+  yellowgreen: "#9acd32"
+};
+var sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
+var classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+
 function attributeValidateAcceptCharset(context) {
   return {
     attribute: function attribute(node) {
@@ -3607,7 +3440,7 @@ function isSingleSpace(str, originalOpts, errorArr) {
   }
 }
 
-function validateValue$2(str, originalOpts, errorArr) {
+function validateValue$1(str, originalOpts, errorArr) {
   var defaults = {
     offset: 0,
     multipleOK: false,
@@ -3672,7 +3505,7 @@ function validateUri(str, originalOpts) {
               fix: null
             });
           } else {
-            validateValue$2(str, Object.assign({}, opts, {
+            validateValue$1(str, Object.assign({}, opts, {
               from: charFrom,
               to: charTo,
               attribStart: charStart,
@@ -3701,7 +3534,7 @@ function validateUri(str, originalOpts) {
           trailingWhitespaceOK: true,
           cb: function cb(idxFrom, idxTo) {
             var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset);
-            validateValue$2(str, Object.assign({}, opts, {
+            validateValue$1(str, Object.assign({}, opts, {
               from: idxFrom - opts.offset,
               to: idxTo - opts.offset,
               attribStart: charStart,
@@ -3726,7 +3559,7 @@ function validateUri(str, originalOpts) {
         });
       }
     } else {
-      validateValue$2(str, {
+      validateValue$1(str, {
         from: charStart,
         to: charEnd,
         offset: opts.offset
@@ -4069,6 +3902,183 @@ function attributeValidateBgcolor(context) {
       }
     }
   };
+}
+
+function validateValue$2(_ref) {
+  var str = _ref.str,
+      opts = _ref.opts,
+      charStart = _ref.charStart,
+      charEnd = _ref.charEnd,
+      idxOffset = _ref.idxOffset,
+      errorArr = _ref.errorArr;
+  if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
+    var message = "Digits missing.";
+    if (opts.customGenericValueError) {
+      message = opts.customGenericValueError;
+    } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
+      message = "Should be integer, no units.";
+    }
+    errorArr.push({
+      idxFrom: idxOffset + charStart,
+      idxTo: idxOffset + charEnd,
+      message: message,
+      fix: null
+    });
+  } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
+    errorArr.push({
+      idxFrom: idxOffset + charStart,
+      idxTo: idxOffset + charEnd,
+      message: opts.customGenericValueError || "Units missing.",
+      fix: null
+    });
+  } else {
+    for (var i = charStart; i < charEnd; i++) {
+      if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0)) && (str[i] !== "+" || !(opts.plusOK && i === 0))) {
+        var endPart = str.slice(i, charEnd);
+        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
+          if (endPart === "px") {
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message: "Remove px.",
+              fix: {
+                ranges: [[idxOffset + i, idxOffset + charEnd]]
+              }
+            });
+          } else {
+            var _message = "Bad unit.";
+            if (str.match(/-\s*-/g)) {
+              _message = "Repeated minus.";
+            } else if (str.match(/\+\s*\+/g)) {
+              _message = "Repeated plus.";
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
+              _message = "Rogue whitespace.";
+            } else if (opts.customGenericValueError) {
+              _message = opts.customGenericValueError;
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
+              _message = "Should be integer, no units.";
+            }
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message: _message,
+              fix: null
+            });
+          }
+        } else if (!knownUnits.includes(endPart)) {
+          var _message2 = "Unrecognised unit.";
+          if (/\d/.test(endPart)) {
+            _message2 = "Messy value.";
+          } else if (knownUnits.includes(endPart.trim())) {
+            _message2 = "Rogue whitespace.";
+          }
+          errorArr.push({
+            idxFrom: idxOffset + i,
+            idxTo: idxOffset + charEnd,
+            message: _message2,
+            fix: null
+          });
+        }
+        break;
+      }
+    }
+  }
+}
+function validateDigitAndUnit(str, idxOffset, originalOpts) {
+  var defaultOpts = {
+    type: "integer",
+    whitelistValues: [],
+    theOnlyGoodUnits: null,
+    plusOK: false,
+    negativeOK: false,
+    badUnits: [],
+    enforceCount: null,
+    noUnitsIsFine: true,
+    canBeCommaSeparated: false,
+    customGenericValueError: null,
+    skipWhitespaceChecks: false
+  };
+  var opts = Object.assign({}, defaultOpts, originalOpts);
+  var charStart = 0;
+  var charEnd = str.length;
+  var errorArr = [];
+  if (!opts.skipWhitespaceChecks) {
+    var retrievedWhitespaceChecksObj = checkForWhitespace(str, idxOffset);
+    charStart = retrievedWhitespaceChecksObj.charStart;
+    charEnd = retrievedWhitespaceChecksObj.charEnd;
+    errorArr = retrievedWhitespaceChecksObj.errorArr;
+  }
+  if (Number.isInteger(charStart)) {
+    if (opts.canBeCommaSeparated) {
+      var extractedValues = [];
+      processCommaSeparated(str, {
+        offset: idxOffset,
+        oneSpaceAfterCommaOK: false,
+        leadingWhitespaceOK: true,
+        trailingWhitespaceOK: true,
+        cb: function cb(idxFrom, idxTo) {
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
+          if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
+            validateValue$2({
+              str: str,
+              opts: opts,
+              charStart: idxFrom - idxOffset,
+              charEnd: idxTo - idxOffset,
+              idxOffset: idxOffset,
+              errorArr: errorArr
+            });
+          }
+          extractedValues.push(extractedValue);
+        },
+        errCb: function errCb(ranges, message) {
+          errorArr.push({
+            idxFrom: ranges[0][0],
+            idxTo: ranges[ranges.length - 1][1],
+            message: message,
+            fix: {
+              ranges: ranges
+            }
+          });
+        }
+      });
+      if (Number.isInteger(opts.enforceCount) && extractedValues.length !== opts.enforceCount) {
+        errorArr.push({
+          idxFrom: charStart + idxOffset,
+          idxTo: charEnd + idxOffset,
+          message: "There should be ".concat(opts.enforceCount, " values."),
+          fix: null
+        });
+      } else if (typeof opts.enforceCount === "string" && ["even", "odd", "uneven", "noneven"].includes(opts.enforceCount.toLowerCase())) {
+        if (opts.enforceCount.toLowerCase() === "even" && extractedValues.length % 2 !== 0) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: "Should be an even number of values but found ".concat(extractedValues.length, "."),
+            fix: null
+          });
+        } else if (opts.enforceCount.toLowerCase() !== "even" && extractedValues.length % 2 === 0) {
+          errorArr.push({
+            idxFrom: charStart + idxOffset,
+            idxTo: charEnd + idxOffset,
+            message: "Should be an odd number of values but found ".concat(extractedValues.length, "."),
+            fix: null
+          });
+        }
+      }
+    } else {
+      if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
+        validateValue$2({
+          str: str,
+          opts: opts,
+          charStart: charStart,
+          charEnd: charEnd,
+          idxOffset: idxOffset,
+          errorArr: errorArr
+        });
+      }
+    }
+  }
+  return errorArr;
 }
 
 function attributeValidateBorder(context) {
@@ -6991,6 +7001,72 @@ function attributeValidateShape(context) {
   };
 }
 
+function attributeValidateSize(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "size") {
+        if (!["hr", "font", "input", "basefont", "select"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-size",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-size"
+            }));
+          });
+          if (Number.isInteger(charStart)) {
+            var extractedVal = node.attribValue.slice(charStart, charEnd);
+            if (node.parent.tagName === "hr") {
+              validateDigitAndUnit(extractedVal, node.attribValueStartAt + charStart, {
+                type: "integer",
+                negativeOK: false,
+                theOnlyGoodUnits: [],
+                skipWhitespaceChecks: true
+              }).forEach(function (errorObj) {
+                context.report(Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-size"
+                }));
+              });
+            } else if (node.parent.tagName === "font") {
+              if (!extractedVal.match(fontSizeRegex)) {
+                var errorArr2 = validateDigitAndUnit(extractedVal, node.attribValueStartAt + charStart, {
+                  type: "integer",
+                  negativeOK: false,
+                  theOnlyGoodUnits: [],
+                  skipWhitespaceChecks: true,
+                  customGenericValueError: "Should be integer 1-7, plus/minus are optional."
+                });
+                if (!errorArr2.length) {
+                  errorArr2.push({
+                    idxFrom: node.attribValueStartAt + charStart,
+                    idxTo: node.attribValueStartAt + charEnd,
+                    message: "Should be integer 1-7, plus/minus are optional.",
+                    fix: null
+                  });
+                }
+                errorArr2.forEach(function (errorObj) {
+                  context.report(Object.assign({}, errorObj, {
+                    ruleId: "attribute-validate-size"
+                  }));
+                });
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -7908,6 +7984,9 @@ defineLazyProp(builtInRules, "attribute-validate-selected", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-shape", function () {
   return attributeValidateShape;
+});
+defineLazyProp(builtInRules, "attribute-validate-size", function () {
+  return attributeValidateSize;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;

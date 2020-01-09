@@ -1,7 +1,7 @@
 // rule: attribute-validate-charoff
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateCharoff(context, ...opts) {
   return {

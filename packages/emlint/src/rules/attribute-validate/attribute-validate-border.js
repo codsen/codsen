@@ -1,7 +1,7 @@
 // rule: attribute-validate-border
 // -----------------------------------------------------------------------------
 
-import { validateDigitAndUnit } from "../../util/util";
+import validateDigitAndUnit from "../../util/validateDigitAndUnit";
 
 function attributeValidateBorder(context, ...opts) {
   return {

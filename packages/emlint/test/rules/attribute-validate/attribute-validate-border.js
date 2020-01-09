@@ -207,7 +207,41 @@ t.test(
 );
 
 t.test(
-  `03.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`,
+  `03.02 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - value as string, space too`,
+  t => {
+    const str = `<table border=" z">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-border": 2
+      }
+    });
+    // can fix only partially:
+    t.equal(applyFixes(str, messages), `<table border="z">`);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-border",
+        idxFrom: 15,
+        idxTo: 16,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [[15, 16]]
+        }
+      },
+      {
+        ruleId: "attribute-validate-border",
+        idxFrom: 16,
+        idxTo: 17,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`,
   t => {
     const str = `<table border=".">`;
     const linter = new Linter();
@@ -232,7 +266,7 @@ t.test(
 );
 
 t.test(
-  `03.03 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`,
+  `03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`,
   t => {
     const str = `<table border="1.5">`;
     const linter = new Linter();
@@ -256,7 +290,7 @@ t.test(
   }
 );
 
-t.test(`03.04 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
+t.test(`03.05 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, t => {
   const str = `<table border="1px">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
