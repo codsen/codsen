@@ -82,8 +82,8 @@ function attributeValidateSize(context, ...opts) {
                 4
               )}`
             );
-            if (node.parent.tagName === "hr") {
-              console.log(`086 validate hr tag's size`);
+            if (["hr", "input", "select"].includes(node.parent.tagName)) {
+              console.log(`086 validate hr/input/select tag's size`);
               // no need to check whitespace, opts.skipWhitespaceChecks: true
               validateDigitAndUnit(
                 extractedVal,
@@ -102,8 +102,8 @@ function attributeValidateSize(context, ...opts) {
                   })
                 );
               });
-            } else if (node.parent.tagName === "font") {
-              console.log(`106 validate font tag's size`);
+            } else if (["font", "basefont"].includes(node.parent.tagName)) {
+              console.log(`106 validate font/basefont tag's size`);
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,

@@ -715,3 +715,223 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `05.15 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - basefont - plus-space-bad digit`,
+  t => {
+    const str = `<basefont size="+\t99">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 16,
+        idxTo: 20,
+        message: `Should be integer 1-7, plus/minus are optional.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+// 06. input
+// -----------------------------------------------------------------------------
+
+t.test(
+  `06.01 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - string as value`,
+  t => {
+    const str = `<input size="z">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 13,
+        idxTo: 14,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.02 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - dot as value`,
+  t => {
+    const str = `<input size=".">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 13,
+        idxTo: 14,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.03 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - a rational number`,
+  t => {
+    const str = `<input size="1.5">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 14,
+        idxTo: 16,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.04 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - with units`,
+  t => {
+    const str = `<input size="1px">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), `<input size="1">`);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 14,
+        idxTo: 16,
+        message: `Remove px.`,
+        fix: {
+          ranges: [[14, 16]]
+        }
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.05 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - zero`,
+  t => {
+    const str = `<input size="0">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, []);
+    t.end();
+  }
+);
+
+t.test(
+  `06.06 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - value like font's with plus`,
+  t => {
+    const str = `<input size="+2">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 13,
+        idxTo: 15,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.07 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - select - string as value`,
+  t => {
+    const str = `<select size="z">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    // can't fix:
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 14,
+        idxTo: 15,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `06.08 - ${`\u001b[${35}m${`value - input`}\u001b[${39}m`} - select - with units`,
+  t => {
+    const str = `<select size="1px">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-size": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), `<select size="1">`);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-size",
+        idxFrom: 15,
+        idxTo: 17,
+        message: `Remove px.`,
+        fix: {
+          ranges: [[15, 17]]
+        }
+      }
+    ]);
+    t.end();
+  }
+);

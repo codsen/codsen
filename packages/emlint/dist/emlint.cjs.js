@@ -7025,7 +7025,7 @@ function attributeValidateSize(context) {
           });
           if (Number.isInteger(charStart)) {
             var extractedVal = node.attribValue.slice(charStart, charEnd);
-            if (node.parent.tagName === "hr") {
+            if (["hr", "input", "select"].includes(node.parent.tagName)) {
               validateDigitAndUnit(extractedVal, node.attribValueStartAt + charStart, {
                 type: "integer",
                 negativeOK: false,
@@ -7036,7 +7036,7 @@ function attributeValidateSize(context) {
                   ruleId: "attribute-validate-size"
                 }));
               });
-            } else if (node.parent.tagName === "font") {
+            } else if (["font", "basefont"].includes(node.parent.tagName)) {
               if (!extractedVal.match(fontSizeRegex)) {
                 var errorArr2 = validateDigitAndUnit(extractedVal, node.attribValueStartAt + charStart, {
                   type: "integer",

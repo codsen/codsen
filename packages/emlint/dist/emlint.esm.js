@@ -8043,7 +8043,7 @@ function attributeValidateSize(context, ...opts) {
           });
           if (Number.isInteger(charStart)) {
             const extractedVal = node.attribValue.slice(charStart, charEnd);
-            if (node.parent.tagName === "hr") {
+            if (["hr", "input", "select"].includes(node.parent.tagName)) {
               validateDigitAndUnit(
                 extractedVal,
                 node.attribValueStartAt + charStart,
@@ -8060,7 +8060,7 @@ function attributeValidateSize(context, ...opts) {
                   })
                 );
               });
-            } else if (node.parent.tagName === "font") {
+            } else if (["font", "basefont"].includes(node.parent.tagName)) {
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,
