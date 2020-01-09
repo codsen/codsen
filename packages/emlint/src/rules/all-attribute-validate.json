@@ -97,6 +97,7 @@
   "attribute-validate-scope",
   "attribute-validate-scrolling",
   "attribute-validate-selected",
+  "attribute-validate-shape",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"

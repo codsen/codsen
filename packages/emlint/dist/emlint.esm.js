@@ -7966,6 +7966,39 @@ function attributeValidateSelected(context, ...originalOpts) {
   };
 }
 
+function attributeValidateShape(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "shape") {
+        if (!["area", "a"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-shape",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateString(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["default", "rect", "circle", "poly"],
+            canBeCommaSeparated: false
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-shape"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9339,6 +9372,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-selected",
   () => attributeValidateSelected
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-shape",
+  () => attributeValidateShape
 );
 defineLazyProp(
   builtInRules,
