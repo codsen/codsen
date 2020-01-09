@@ -6739,6 +6739,49 @@ function attributeValidateRev(context) {
   };
 }
 
+function attributeValidateRows(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "rows") {
+        if (!["frameset", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rows",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = [];
+        if (node.parent.tagName === "frameset") {
+          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            whitelistValues: ["*"],
+            theOnlyGoodUnits: ["%"],
+            badUnits: ["px"],
+            noUnitsIsFine: true,
+            canBeCommaSeparated: true,
+            type: "rational",
+            customGenericValueError: "Should be: pixels|%|*."
+          });
+        } else if (node.parent.tagName === "textarea") {
+          errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units."
+          });
+        }
+        if (Array.isArray(errorArr) && errorArr.length) {
+          errorArr.forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-rows"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context) {
   return {
     attribute: function attribute(node) {
@@ -7689,6 +7732,9 @@ defineLazyProp(builtInRules, "attribute-validate-rel", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-rev", function () {
   return attributeValidateRev;
+});
+defineLazyProp(builtInRules, "attribute-validate-rows", function () {
+  return attributeValidateRows;
 });
 defineLazyProp(builtInRules, "attribute-validate-rowspan", function () {
   return attributeValidateRowspan;

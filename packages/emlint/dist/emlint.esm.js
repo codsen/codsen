@@ -7705,6 +7705,59 @@ function attributeValidateRev(context, ...opts) {
   };
 }
 
+function attributeValidateRows(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "rows") {
+        if (!["frameset", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-rows",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        let errorArr = [];
+        if (node.parent.tagName === "frameset") {
+          errorArr = validateDigitAndUnit(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              whitelistValues: ["*"],
+              theOnlyGoodUnits: ["%"],
+              badUnits: ["px"],
+              noUnitsIsFine: true,
+              canBeCommaSeparated: true,
+              type: "rational",
+              customGenericValueError: "Should be: pixels|%|*."
+            }
+          );
+        } else if (node.parent.tagName === "textarea") {
+          errorArr = validateDigitAndUnit(
+            node.attribValue,
+            node.attribValueStartAt,
+            {
+              type: "integer",
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units."
+            }
+          );
+        }
+        if (Array.isArray(errorArr) && errorArr.length) {
+          errorArr.forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-rows"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9110,6 +9163,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-rev",
   () => attributeValidateRev
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-rows",
+  () => attributeValidateRows
 );
 defineLazyProp(
   builtInRules,

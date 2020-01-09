@@ -90,6 +90,7 @@
   "attribute-validate-readonly",
   "attribute-validate-rel",
   "attribute-validate-rev",
+  "attribute-validate-rows",
   "attribute-validate-rowspan",
   "attribute-validate-rules",
   "attribute-validate-text",
