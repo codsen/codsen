@@ -184,3 +184,22 @@ t.test(
     t.end();
   }
 );
+
+// 03. hash
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - hash followed by slash`,
+  t => {
+    t.notOk(isRel(`abc/def#ghi/jkl`).res);
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with hash`,
+  t => {
+    t.notOk(isRel(`abc/def#`).res);
+    t.end();
+  }
+);

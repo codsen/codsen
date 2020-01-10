@@ -140,9 +140,22 @@ function isRel(str, originalOpts) {
       message: `Two consecutive question marks.`
     };
   }
+  if (str.endsWith("#")) {
+    return {
+      res: false,
+      message: `Ends with a hash.`
+    };
+  }
+  // slice the rest of the string after the first hash
+  if (str.includes("#") && str.slice(str.indexOf("#") + 1).includes("/")) {
+    return {
+      res: false,
+      message: `Slash follows hash.`
+    };
+  }
 
   // ---------------------------------------------------------------------------
-  console.log(`145 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`158 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null
