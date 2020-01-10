@@ -116,7 +116,7 @@ function isRel(str, originalOpts) {
       message: `Unescaped caret (^) character.`
     };
   }
-  if (str.endsWith(".")) {
+  if (str.endsWith(".") && !str.startsWith(".")) {
     return {
       res: false,
       message: `Ends with dot, is file extension missing?`

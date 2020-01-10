@@ -19,7 +19,7 @@
 - [API - Input](#api-input)
 - [API - Output](#api-output)
 - [Example](#example)
-- [Competition](#competition)
+- [`opts.flagUpUrisWithSchemes`](#optsflagupuriswithschemes)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -58,7 +58,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                          | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-relative-uri.cjs.js` | 3 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-relative-uri.cjs.js` | 4 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-relative-uri.esm.js` | 3 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-relative-uri.umd.js` | 2 KB |
 
@@ -126,11 +126,11 @@ If input is not a string, error will be thrown.
 
 ### Options object
 
-| `options` object's key | Type    | Obligatory? | Default | Description                                            |
-| ---------------------- | ------- | ----------- | ------- | ------------------------------------------------------ |
-| {                      |         |             |         |
-| `flagUpUrisWithSchemes`               | boolean | no          | `true`     | Should we yield `false` on URI's with scheme (`https://` for example)? |
-| }                      |         |             |         |
+| `options` object's key  | Type    | Obligatory? | Default | Description                                                            |
+| ----------------------- | ------- | ----------- | ------- | ---------------------------------------------------------------------- |
+| {                       |         |             |         |
+| `flagUpUrisWithSchemes` | boolean | no          | `true`  | Should we yield `false` on URI's with scheme (`https://` for example)? |
+| }                       |         |             |         |
 
 Falsey `opt.offset` is fine but truthy non-integer will _throw_.
 
@@ -206,6 +206,8 @@ If `opts.flagUpUrisWithSchemes` is set to `true`, this program will proactively 
 
 Another challenge: URI with schema as error is not the same "error", it's not a "real error". To distinguish the two we'll set result object's key `message` to null.
 
+**[⬆ back to top](#)**
+
 ## Contributing
 
 - If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=is-relative-uri%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ais-relative-uri%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
@@ -229,7 +231,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/is-relative-uri
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
-[cov-img]: https://img.shields.io/badge/coverage-90.2%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-89.09%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/is-relative-uri

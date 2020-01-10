@@ -14,16 +14,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "is",
-    "relative",
-    "uri",
-    "reference",
-    "url",
-    "local",
     "href",
+    "is",
     "link",
-    "validate",
-    "string"
+    "local",
+    "reference",
+    "relative",
+    "string",
+    "uri",
+    "url",
+    "validate"
   ],
   "main": "dist/is-relative-uri.cjs.js",
   "module": "dist/is-relative-uri.esm.js",

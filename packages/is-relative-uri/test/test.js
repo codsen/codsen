@@ -80,6 +80,66 @@ t.test(`01.01 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`}`, t => {
   t.end();
 });
 
+// Examples from:
+// https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
+t.test(
+  `01.02 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} Part II`,
+  t => {
+    [
+      "g:h", // -> "g:h"
+      "g", // -> "http://a/b/c/g"
+      "./g", // -> "http://a/b/c/g"
+      "g/", // -> "http://a/b/c/g/"
+      "/g", // -> "http://a/g"
+      "//g", // -> "http://g"
+      "?y", // -> "http://a/b/c/d;p?y"
+      "g?y", // -> "http://a/b/c/g?y"
+      "#s", // -> "http://a/b/c/d;p?q#s"
+      "g#s", // -> "http://a/b/c/g#s"
+      "g?y#s", // -> "http://a/b/c/g?y#s"
+      ";x", // -> "http://a/b/c/;x"
+      "g;x", // -> "http://a/b/c/g;x"
+      "g;x?y#s", // -> "http://a/b/c/g;x?y#s"
+      "", // -> "http://a/b/c/d;p?q"
+      ".", // -> "http://a/b/c/"
+      "./", // -> "http://a/b/c/"
+      "..", // -> "http://a/b/"
+      "../", // -> "http://a/b/"
+      "../g", // -> "http://a/b/g"
+      "../..", // -> "http://a/"
+      "../../", // -> "http://a/"
+      "../../g" // -> "http://a/g"
+    ].forEach(val => {
+      t.ok(isRel(val).res, val);
+    });
+    t.end();
+  }
+);
+
+t.test(
+  `01.03 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  t => {
+    t.ok(isRel(`.`).res);
+    t.end();
+  }
+);
+
+t.test(
+  `01.04 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  t => {
+    t.ok(isRel(`..`).res);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${33}m${`correct values`}\u001b[${39}m`} - isolated cases from above`,
+  t => {
+    t.ok(isRel(`../..`).res);
+    t.end();
+  }
+);
+
 // 02. incorrect values
 // -----------------------------------------------------------------------------
 
