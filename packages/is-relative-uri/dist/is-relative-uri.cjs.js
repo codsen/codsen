@@ -1,7 +1,7 @@
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 1.0.0
+ * Version: 0.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -130,6 +130,18 @@ function isRel(str, originalOpts) {
     return {
       res: false,
       message: "Unescaped caret (^) character."
+    };
+  }
+  if (str.endsWith(".")) {
+    return {
+      res: false,
+      message: "Ends with dot, is file extension missing?"
+    };
+  }
+  if (str.includes("??")) {
+    return {
+      res: false,
+      message: "Two consecutive question marks."
     };
   }
   return {

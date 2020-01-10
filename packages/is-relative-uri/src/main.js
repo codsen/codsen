@@ -128,9 +128,21 @@ function isRel(str, originalOpts) {
       message: `Unescaped caret (^) character.`
     };
   }
+  if (str.endsWith(".")) {
+    return {
+      res: false,
+      message: `Ends with dot, is file extension missing?`
+    };
+  }
+  if (str.includes("??")) {
+    return {
+      res: false,
+      message: `Two consecutive question marks.`
+    };
+  }
 
   // ---------------------------------------------------------------------------
-  console.log(`133 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`145 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null

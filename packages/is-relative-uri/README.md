@@ -113,41 +113,14 @@ This package will be used in `emlint` ([npm](https://www.npmjs.com/package/emlin
 
 ## API - Input
 
-**isMediaD(str, opts)** — in other words, a function which takes a string and options, a plain object.
+**isRel(str, opts)** — in other words, a function which takes a string and options, a plain object.
 
 | Input argument | Type         | Obligatory? | Description                                                                                           |
 | -------------- | ------------ | ----------- | ----------------------------------------------------------------------------------------------------- |
 | `str`          | String       | no          | The extracted value of HTML `media` attribute or CSS media query without `@media` or opening bracket. |
 | `opts`         | Plain object | no          | Optional options go here.                                                                             |
 
-For example, all the calls below will yield an empty array (no errors):
-
-```js
-isMediaD();
-isMediaD("");
-isMediaD("screen");
-isMediaD("screen", {});
-isMediaD("screen", null);
-isMediaD("screen", { offset: 0 });
-isMediaD("screen", { offset: 51 });
-```
-
-Bad examples - don't put `@media`, extract the value:
-
-```js
-// program won't work with `@media` - extract the value first!
-isMediaD(
-  "@media only (screen) and (min-width: 320px) and (max-width: 500px) {"
-);
-```
-
-Correct input's example would be:
-
-```js
-isMediaD("only (screen) and (min-width: 320px) and (max-width: 500px)");
-```
-
-If an input is not a string or an empty string, an empty array will be returned. API is deliberately very _docile_ because it will be used exclusively inside other programs.
+If input is not a string, error will be thrown.
 
 **[⬆ back to top](#)**
 
@@ -156,7 +129,7 @@ If an input is not a string or an empty string, an empty array will be returned.
 | `options` object's key | Type    | Obligatory? | Default | Description                                            |
 | ---------------------- | ------- | ----------- | ------- | ------------------------------------------------------ |
 | {                      |         |             |         |
-| `offset`               | Integer | no          | `0`     | All reported indexes will be incremented by this much. |
+| `flagUpUrisWithSchemes`               | boolean | no          | `true`     | Should we yield `false` on URI's with scheme (`https://` for example)? |
 | }                      |         |             |         |
 
 Falsey `opt.offset` is fine but truthy non-integer will _throw_.
@@ -165,35 +138,47 @@ Falsey `opt.offset` is fine but truthy non-integer will _throw_.
 
 ## API - Output
 
-The program returns an array of zero or more plain objects, each meaning an error. Each object's notation is the same as in EMLint (except there's no `ruleId`):
+Program returns a clone of a plain object similar to:
 
 ```js
 {
-  idxFrom: 21,
-  idxTo: 22,
-  message: `Rogue bracket.`,
-  fix: {
-    ranges: [[21, 22]]
-  }
+  res: false,
+  message: `Unrecognised language subtag, "posix".`
 }
 ```
 
-Quick basics: `idxFrom` and `idxTo` are the same as in `String.slice`, just used for marking.
+or if schema-URI's are flagged up via `opts.flagUpUrisWithSchemes`, message will be `null`:
 
-The `fix` key is either `null` or has value, plain object, with key `ranges`. ESLint uses singular, `range`, EMLint uses `ranges`, plural, because EMLint uses Ranges notation — where ESLint marks "to add" thing separately, EMLint puts it as the third element in ranges array.
+```js
+{
+  res: false,
+  message: null
+}
+```
 
-Ranges as key above and in general are always either `null` or array of arrays.
+or
 
-EMLint and ranges arrays here follow Ranges notation and [all Ranges packages](https://gitlab.com/codsen/codsen#-range-libraries) can be used to process them — [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/), [inverting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert/), [resolving/applying](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) and so on.
+```js
+{
+  res: true,
+  message: null
+}
+```
+
+`res` is always boolean.
+
+`message` is either string (error message) or `null`.
+
+False `res` and `null` message happens only on schema-URI's. By checking is `message` set we distinguish were there real errors.
 
 **[⬆ back to top](#)**
 
 ## Example
 
 ```js
-const isMediaD = require("is-relative-uri");
+const isRel = require("is-relative-uri");
 const str = `screeen`;
-const res = isMediaD(str);
+const res = isRel(str);
 console.log(JSON.stringify(res, null, 4));
 // => [
 //      {
@@ -211,50 +196,15 @@ The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/e
 
 **[⬆ back to top](#)**
 
-## Competition
+## `opts.flagUpUrisWithSchemes`
 
-There are capable CSS parsers out there, but they are all oriented at parsing the **correct code**. If code errors are serious-enough, parsers will indeed throw certain errors but
+When validating the URI's which can be relative (for example, `href` attribute values) one should use two libraries: one to check strict URI's (those with schema) and one with relative URI's (those without schema).
 
-a) those errors don't suggest how to fix the code;<br>
-b) those errors often miss the exact location;<br>
-c) most of the times they mention a _consequence_, not _cause_;<br>
-d) often they lean on the safe side, passing similar values as legit and raise warnings for what is an error (for example, `mi-width`).
+For example, [is-url-superb](https://www.npmjs.com/package/is-url-superb) and this package.
 
-For example, https://csstree.github.io/docs/validator.html currently can't catch redundant bracket around `screen` yet http://jigsaw.w3.org/css-validator/#validate_by_input+with_options flags it up:
+If `opts.flagUpUrisWithSchemes` is set to `true`, this program will proactively search and yield a falsey result.
 
-```css
-@media only (screen) and (min-width: 320px) and (max-width: 500px) {
-  .container {
-    width: 100%;
-  }
-  nav {
-    display: none;
-  }
-}
-```
-
-In general, CSS parsers are aimed at **correct code processing**.
-
-And validators which are built upon such parsers are not really serious validators.
-
-Conceptually, if a tool catches errors, and those errors break parsers, how can a tool be based upon a parser?
-
-This program is aimed at **broken code processing**, to power linters, to find _and fix_ broken code, possibly at code-editor-level. It does not work from AST, it processes input as string.
-
-Another problem is that parsers either parse either HTML or CSS. But media descriptor value (`"screen"`) can be both in HTML and in CSS:
-
-```html
-<style media="screen"></style>
-```
-
-```css
-@media screen {
-}
-```
-
-This program is agnostic, as long as you pass the "cropped" value (like `screen` above).
-
-**[⬆ back to top](#)**
+Another challenge: URI with schema as error is not the same "error", it's not a "real error". To distinguish the two we'll set result object's key `message` to null.
 
 ## Contributing
 

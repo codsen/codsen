@@ -116,3 +116,11 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `02.05 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - ends with dot`,
+  t => {
+    t.notOk(isRel(`path/resource.`).res);
+    t.end();
+  }
+);

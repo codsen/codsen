@@ -118,7 +118,7 @@
   "dependencies": {
     "fs-extra": "^8.1.0",
     "generate-atomic-css": "^1.2.28",
-    "globby": "^10.0.1",
+    "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "meow": "^6.0.0",
     "p-reduce": "^2.1.0",
