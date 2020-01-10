@@ -144,7 +144,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`wrong value`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<body background="zzz">`;
+    const str = `<body background="zz.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -198,14 +198,14 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
-    const str = `<body background=" zzz ">`;
+    const str = `<body background=" zz. ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-background": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<body background="zzz">`);
+    t.equal(applyFixes(str, messages), `<body background="zz.">`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-background",
@@ -294,7 +294,7 @@ t.test(
 t.test(
   `04.04 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK, dot missing`,
   t => {
-    const str = `<body background="spacergif">`;
+    const str = `<body background="spacergif.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -307,7 +307,7 @@ t.test(
       {
         ruleId: "attribute-validate-background",
         idxFrom: 18,
-        idxTo: 27,
+        idxTo: 28,
         message: `Should be an URI.`,
         fix: null
       }

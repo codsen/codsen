@@ -23,6 +23,7 @@ var isRegExp = _interopDefault(require('lodash.isregexp'));
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
+var isRel = _interopDefault(require('is-relative-uri'));
 var urlRegex = _interopDefault(require('url-regex'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var isLangCode = _interopDefault(require('is-language-code'));
@@ -3409,10 +3410,6 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   }
 }
 
-function isRelativeUri() {
-  return true;
-}
-
 function isSingleSpace(str, originalOpts, errorArr) {
   var defaults = {
     from: 0,
@@ -3451,9 +3448,10 @@ function validateValue$1(str, originalOpts, errorArr) {
   };
   var opts = Object.assign({}, defaults, originalOpts);
   var extractedValue = str.slice(opts.from, opts.to);
-  if (!urlRegex({
+  var calcultedIsRel = isRel(extractedValue);
+  if (!(urlRegex({
     exact: true
-  }).test(extractedValue) || !isRelativeUri()) {
+  }).test(extractedValue) || calcultedIsRel.res)) {
     var message = "Should be an URI.";
     var idxFrom = opts.offset + opts.from;
     var idxTo = opts.offset + opts.to;
@@ -8084,7 +8082,7 @@ EventEmitter.defaultMaxListeners = 10;
 EventEmitter.init = function () {
   this.domain = null;
   if (EventEmitter.usingDomains) {
-    if (domain.active && !(this instanceof domain.Domain)) ;
+    if (domain.active ) ;
   }
   if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
     this._events = new EventHandlers();

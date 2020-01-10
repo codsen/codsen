@@ -128,7 +128,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<form action="zzz">`;
+    const str = `<form action="zz.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -179,14 +179,14 @@ t.test(
 t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
-    const str = `<form action=" zzz ">`;
+    const str = `<form action=" zz. ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-action": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<form action="zzz">`);
+    t.equal(applyFixes(str, messages), `<form action="zz.">`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-action",

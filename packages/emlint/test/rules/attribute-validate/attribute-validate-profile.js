@@ -144,7 +144,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two non-URI's`,
   t => {
-    const str = `<head profile="zzz yyy">`;
+    const str = `<head profile="z?? y??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -203,7 +203,7 @@ t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     // notice wrong tag name case:
-    const str = `<HEAD profile=" abc ">`;
+    const str = `<HEAD profile=" abc?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -211,7 +211,7 @@ t.test(
         "tag-name-case": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<head profile="abc">`);
+    t.equal(applyFixes(str, messages), `<head profile="abc??">`);
     t.match(messages, [
       {
         ruleId: "tag-name-case",
@@ -225,19 +225,19 @@ t.test(
       {
         ruleId: "attribute-validate-profile",
         idxFrom: 15,
-        idxTo: 20,
+        idxTo: 22,
         message: `Remove whitespace.`,
         fix: {
           ranges: [
             [15, 16],
-            [19, 20]
+            [21, 22]
           ]
         }
       },
       {
         ruleId: "attribute-validate-profile",
         idxFrom: 16,
-        idxTo: 19,
+        idxTo: 21,
         message: `Should be an URI.`,
         fix: null
       }
@@ -246,11 +246,11 @@ t.test(
   }
 );
 
-t.test(
+t.only(
   `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     // notice wrong tag name case:
-    const str = `<HEAD profile=" abc \tdef ">`;
+    const str = `<HEAD profile=" abc. \tdef. ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -258,7 +258,7 @@ t.test(
         "tag-name-case": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<head profile="abc def">`);
+    t.equal(applyFixes(str, messages), `<head profile="abc. def.">`);
     t.match(messages, [
       {
         ruleId: "tag-name-case",
@@ -272,35 +272,35 @@ t.test(
       {
         ruleId: "attribute-validate-profile",
         idxFrom: 15,
-        idxTo: 25,
+        idxTo: 27,
         message: `Remove whitespace.`,
         fix: {
           ranges: [
             [15, 16],
-            [24, 25]
+            [26, 27]
           ]
         }
       },
       {
         ruleId: "attribute-validate-profile",
         idxFrom: 16,
-        idxTo: 19,
+        idxTo: 20,
         message: `Should be an URI.`,
         fix: null
       },
       {
         ruleId: "attribute-validate-profile",
-        idxFrom: 19,
-        idxTo: 21,
+        idxFrom: 20,
+        idxTo: 22,
         message: `Should be a single space.`,
         fix: {
-          ranges: [[20, 21]]
+          ranges: [[21, 22]]
         }
       },
       {
         ruleId: "attribute-validate-profile",
-        idxFrom: 21,
-        idxTo: 24,
+        idxFrom: 22,
+        idxTo: 26,
         message: `Should be an URI.`,
         fix: null
       }

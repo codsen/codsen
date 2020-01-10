@@ -176,7 +176,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<a href="zzz">`;
+    const str = `<a href="zzz??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -189,7 +189,7 @@ t.test(
       {
         ruleId: "attribute-validate-href",
         idxFrom: 9,
-        idxTo: 12,
+        idxTo: 14,
         message: `Should be an URI.`,
         fix: null
       }
@@ -228,31 +228,31 @@ t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     // notice wrong tag name case:
-    const str = `<A href=" zzz ">`;
+    const str = `<A href=" zzz?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-href": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<A href="zzz">`);
+    t.equal(applyFixes(str, messages), `<A href="zzz??">`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-href",
         idxFrom: 9,
-        idxTo: 14,
+        idxTo: 16,
         message: `Remove whitespace.`,
         fix: {
           ranges: [
             [9, 10],
-            [13, 14]
+            [15, 16]
           ]
         }
       },
       {
         ruleId: "attribute-validate-href",
         idxFrom: 10,
-        idxTo: 13,
+        idxTo: 15,
         message: `Should be an URI.`,
         fix: null
       }

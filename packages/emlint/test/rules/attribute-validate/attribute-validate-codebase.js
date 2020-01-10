@@ -144,7 +144,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<object codebase="zzz">`;
+    const str = `<object codebase="z??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -199,7 +199,7 @@ t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     // notice wrong tag name case:
-    const str = `<OBJecT codebase=" zzz ">`;
+    const str = `<OBJecT codebase=" z?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -207,7 +207,7 @@ t.test(
         "tag-name-case": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<object codebase="zzz">`);
+    t.equal(applyFixes(str, messages), `<object codebase="z??">`);
     t.match(messages, [
       {
         ruleId: "tag-name-case",

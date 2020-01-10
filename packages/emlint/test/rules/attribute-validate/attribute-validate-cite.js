@@ -128,7 +128,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<blockquote cite="zzz">`;
+    const str = `<blockquote cite="z??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -182,14 +182,14 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
-    const str = `<blockquote cite=" zzz ">`;
+    const str = `<blockquote cite=" z?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-cite": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<blockquote cite="zzz">`);
+    t.equal(applyFixes(str, messages), `<blockquote cite="z??">`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-cite",

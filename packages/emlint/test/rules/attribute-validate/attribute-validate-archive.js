@@ -241,7 +241,7 @@ t.test(`03.01 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, t => {
 t.test(
   `03.02 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
   t => {
-    const str = `<applet archive="http://codsen.com,tralala">`;
+    const str = `<applet archive="http://codsen.com,trala..">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -266,7 +266,7 @@ t.test(
 t.test(
   `03.03 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`,
   t => {
-    const str = `<applet archive="abcd,efgh">`;
+    const str = `<applet archive="abc.,def.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -321,7 +321,7 @@ t.test(
 );
 
 t.test(`03.05 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, t => {
-  const str = `<applet archive=",http://codsen.com, tralala , ">`;
+  const str = `<applet archive=",http://codsen.com, tralal. , ">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -331,7 +331,7 @@ t.test(`03.05 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, t => {
   // can fix:
   t.equal(
     applyFixes(str, messages),
-    `<applet archive="http://codsen.com,tralala">`
+    `<applet archive="http://codsen.com,tralal.">`
   );
   t.match(messages, [
     {
@@ -409,7 +409,7 @@ t.test(`04.01 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, t => {
 t.test(
   `04.02 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`,
   t => {
-    const str = `<object archive="tralala">`;
+    const str = `<object archive="tralala.">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -422,7 +422,7 @@ t.test(
       {
         ruleId: "attribute-validate-archive",
         idxFrom: 17,
-        idxTo: 24,
+        idxTo: 25,
         message: `Should be an URI.`,
         fix: null
       }

@@ -128,7 +128,7 @@ t.test(
 t.test(
   `03.01 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   t => {
-    const str = `<object classid="zzz">`;
+    const str = `<object classid="z??">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -180,14 +180,14 @@ t.test(
   `03.03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`,
   t => {
     // notice wrong tag name case:
-    const str = `<OBJecT classid=" zzz ">`;
+    const str = `<OBJecT classid=" z?? ">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "attribute-validate-classid": 2
       }
     });
-    t.equal(applyFixes(str, messages), `<OBJecT classid="zzz">`);
+    t.equal(applyFixes(str, messages), `<OBJecT classid="z??">`);
     t.match(messages, [
       {
         ruleId: "attribute-validate-classid",

@@ -17,6 +17,7 @@ import isRegExp from 'lodash.isregexp';
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import leven from 'leven';
 import db from 'mime-db';
+import isRel from 'is-relative-uri';
 import urlRegex from 'url-regex';
 import isObj from 'lodash.isplainobject';
 import isLangCode from 'is-language-code';
@@ -3502,10 +3503,6 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
   }
 }
 
-function isRelativeUri() {
-  return true;
-}
-
 function isSingleSpace(str, originalOpts, errorArr) {
   const defaults = {
     from: 0,
@@ -3544,10 +3541,8 @@ function validateValue$1(str, originalOpts, errorArr) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const extractedValue = str.slice(opts.from, opts.to);
-  if (
-    !urlRegex({ exact: true }).test(extractedValue) ||
-    !isRelativeUri()
-  ) {
+  const calcultedIsRel = isRel(extractedValue);
+  if (!(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)) {
     let message = `Should be an URI.`;
     let idxFrom = opts.offset + opts.from;
     let idxTo = opts.offset + opts.to;
@@ -9610,7 +9605,7 @@ EventEmitter.defaultMaxListeners = 10;
 EventEmitter.init = function() {
   this.domain = null;
   if (EventEmitter.usingDomains) {
-    if (domain.active && !(this instanceof domain.Domain)) ;
+    if (domain.active ) ;
   }
   if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
     this._events = new EventHandlers();
