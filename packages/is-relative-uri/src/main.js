@@ -55,10 +55,10 @@ function isRel(str, originalOpts) {
   if (str.match(/.\/\s*\//g)) {
     return {
       res: false,
-      message: `Two consecutive slashes surrounded by other characters.`
+      message: `Character followed by two slashes.`
     };
   }
-  if (str.match(/\.\.\./g)) {
+  if (str.includes("...")) {
     return {
       res: false,
       message: `Three consecutive dots.`
@@ -140,6 +140,12 @@ function isRel(str, originalOpts) {
       message: `Two consecutive question marks.`
     };
   }
+  if (str.includes("##")) {
+    return {
+      res: false,
+      message: `Two consecutive hashes.`
+    };
+  }
   if (str.endsWith("#")) {
     return {
       res: false,
@@ -153,9 +159,15 @@ function isRel(str, originalOpts) {
       message: `Slash follows hash.`
     };
   }
+  if (str.match(/\.\.[^/]/g)) {
+    return {
+      res: false,
+      message: `Two dots should be followed by a slash.`
+    };
+  }
 
   // ---------------------------------------------------------------------------
-  console.log(`158 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`170 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null
