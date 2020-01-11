@@ -1619,6 +1619,13 @@ defineLazyProp(
   () => attributeValidateUsemap
 );
 
+import attributeValidateValign from "./rules/attribute-validate/attribute-validate-valign";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-valign",
+  () => attributeValidateValign
+);
+
 import attributeValidateVlink from "./rules/attribute-validate/attribute-validate-vlink";
 defineLazyProp(
   builtInRules,
@@ -1776,7 +1783,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1779 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1786 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

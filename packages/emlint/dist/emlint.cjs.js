@@ -7510,6 +7510,35 @@ function attributeValidateUsemap(context) {
   };
 }
 
+function attributeValidateValign(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "valign") {
+        if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-valign",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateString(node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["top", "middle", "bottom", "baseline"],
+            canBeCommaSeparated: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-valign"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context) {
   return {
     attribute: function attribute(node) {
@@ -8435,6 +8464,9 @@ defineLazyProp(builtInRules, "attribute-validate-type", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-usemap", function () {
   return attributeValidateUsemap;
+});
+defineLazyProp(builtInRules, "attribute-validate-valign", function () {
+  return attributeValidateValign;
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;
