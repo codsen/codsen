@@ -54,7 +54,8 @@ const htmlLibsList = [
   "html-table-patcher",
   "is-html-tag-opening",
   "is-language-code",
-  "is-media-descriptor"
+  "is-media-descriptor",
+  "is-relative-uri"
 ];
 
 // note for future self - use package.json "private" key instead:
