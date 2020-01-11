@@ -7201,6 +7201,36 @@ function attributeValidateStart(context) {
   };
 }
 
+function validateInlineStyle(str, idxOffset, opts) {
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      errorArr = _checkForWhitespace.errorArr;
+  return errorArr;
+}
+
+function attributeValidateStyle(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "style") {
+        if (["base", "basefont", "head", "html", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-style",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateInlineStyle(node.attribValue, node.attribValueStartAt);
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-style"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -8133,6 +8163,9 @@ defineLazyProp(builtInRules, "attribute-validate-standby", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-start", function () {
   return attributeValidateStart;
+});
+defineLazyProp(builtInRules, "attribute-validate-style", function () {
+  return attributeValidateStyle;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;

@@ -8254,6 +8254,51 @@ function attributeValidateStart(context, ...opts) {
   };
 }
 
+function validateInlineStyle(str, idxOffset, opts) {
+  const { errorArr } = checkForWhitespace(str, idxOffset);
+  return errorArr;
+}
+
+function attributeValidateStyle(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "style") {
+        if (
+          [
+            "base",
+            "basefont",
+            "head",
+            "html",
+            "meta",
+            "param",
+            "script",
+            "style",
+            "title"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-style",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateInlineStyle(
+          node.attribValue,
+          node.attribValueStartAt);
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-style"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9657,6 +9702,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-start",
   () => attributeValidateStart
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-style",
+  () => attributeValidateStyle
 );
 defineLazyProp(
   builtInRules,

@@ -103,6 +103,7 @@
   "attribute-validate-src",
   "attribute-validate-standby",
   "attribute-validate-start",
+  "attribute-validate-style",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"
