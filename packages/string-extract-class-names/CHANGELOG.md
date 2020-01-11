@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.9.13](https://gitlab.com/codsen/codsen/compare/string-extract-class-names@5.9.12...string-extract-class-names@5.9.13) (2020-01-11)
-
-**Note:** Version bump only for package string-extract-class-names
-
-
-
-
-
 ## 5.9.0 (2019-09-04)
 
 ### Features

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.16.55](https://gitlab.com/codsen/codsen/compare/chlu-cli@1.16.54...chlu-cli@1.16.55) (2020-01-11)
-
-**Note:** Version bump only for package chlu-cli
-
-
-
-
-
 ## 1.16.50 (2019-11-20)
 
 ### Bug Fixes

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.3.4](https://gitlab.com/codsen/codsen/compare/update-versions@2.3.3...update-versions@2.3.4) (2020-01-11)
-
-**Note:** Version bump only for package update-versions
-
-
-
-
-
 ## 2.3.0 (2019-11-27)
 
 ### Features
