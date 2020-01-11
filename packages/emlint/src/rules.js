@@ -1654,6 +1654,13 @@ defineLazyProp(
   () => attributeValidateVlink
 );
 
+import attributeValidateVspace from "./rules/attribute-validate/attribute-validate-vspace";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-vspace",
+  () => attributeValidateVspace
+);
+
 import attributeValidateWidth from "./rules/attribute-validate/attribute-validate-width";
 defineLazyProp(
   builtInRules,
@@ -1804,7 +1811,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1807 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1814 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

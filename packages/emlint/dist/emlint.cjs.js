@@ -7664,6 +7664,33 @@ function attributeValidateVlink(context) {
   };
 }
 
+function attributeValidateVspace(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "vspace") {
+        if (!["applet", "img", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-vspace",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          theOnlyGoodUnits: [],
+          noUnitsIsFine: true
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-vspace"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateWidth(context) {
   return {
     attribute: function attribute(node) {
@@ -8573,6 +8600,9 @@ defineLazyProp(builtInRules, "attribute-validate-version", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;
+});
+defineLazyProp(builtInRules, "attribute-validate-vspace", function () {
+  return attributeValidateVspace;
 });
 defineLazyProp(builtInRules, "attribute-validate-width", function () {
   return attributeValidateWidth;
