@@ -8156,6 +8156,39 @@ function attributeValidateSpan(context, ...opts) {
   };
 }
 
+function attributeValidateSrc(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "src") {
+        if (
+          !["script", "input", "frame", "iframe", "img"].includes(
+            node.parent.tagName
+          )
+        ) {
+          context.report({
+            ruleId: "attribute-validate-src",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(errorObj => {
+            context.report(
+              Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-src"
+              })
+            );
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9544,6 +9577,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-span",
   () => attributeValidateSpan
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-src",
+  () => attributeValidateSrc
 );
 defineLazyProp(
   builtInRules,

@@ -7119,6 +7119,33 @@ function attributeValidateSpan(context) {
   };
 }
 
+function attributeValidateSrc(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "src") {
+        if (!["script", "input", "frame", "iframe", "img"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-src",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-src"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -8042,6 +8069,9 @@ defineLazyProp(builtInRules, "attribute-validate-size", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-span", function () {
   return attributeValidateSpan;
+});
+defineLazyProp(builtInRules, "attribute-validate-src", function () {
+  return attributeValidateSrc;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;
