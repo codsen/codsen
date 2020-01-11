@@ -8389,6 +8389,37 @@ function attributeValidateTabindex(context, ...opts) {
   };
 }
 
+function attributeValidateTarget(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "target") {
+        if (
+          !["a", "area", "base", "form", "link"].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-target",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-target"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9807,6 +9838,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-tabindex",
   () => attributeValidateTabindex
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-target",
+  () => attributeValidateTarget
 );
 defineLazyProp(
   builtInRules,

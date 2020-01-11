@@ -1584,6 +1584,13 @@ defineLazyProp(
   () => attributeValidateTabindex
 );
 
+import attributeValidateTarget from "./rules/attribute-validate/attribute-validate-target";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-target",
+  () => attributeValidateTarget
+);
+
 import attributeValidateText from "./rules/attribute-validate/attribute-validate-text";
 defineLazyProp(
   builtInRules,
@@ -1748,7 +1755,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1751 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1758 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
