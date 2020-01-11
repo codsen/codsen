@@ -8189,6 +8189,71 @@ function attributeValidateSrc(context, ...opts) {
   };
 }
 
+function attributeValidateStandby(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "standby") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-standby",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-standby"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
+function attributeValidateStart(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "start") {
+        if (node.parent.tagName !== "ol") {
+          context.report({
+            ruleId: "attribute-validate-start",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: false,
+            customPxMessage: `Starting sequence number is not in pixels.`
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-start"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9582,6 +9647,16 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-src",
   () => attributeValidateSrc
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-standby",
+  () => attributeValidateStandby
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-start",
+  () => attributeValidateStart
 );
 defineLazyProp(
   builtInRules,

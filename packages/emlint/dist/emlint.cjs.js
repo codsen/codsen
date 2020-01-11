@@ -7146,6 +7146,61 @@ function attributeValidateSrc(context) {
   };
 }
 
+function attributeValidateStandby(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "standby") {
+        if (node.parent.tagName !== "object") {
+          context.report({
+            ruleId: "attribute-validate-standby",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var _checkForWhitespace = checkForWhitespace(node.attribValue, node.attribValueStartAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-standby"
+          }));
+        });
+      }
+    }
+  };
+}
+
+function attributeValidateStart(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "start") {
+        if (node.parent.tagName !== "ol") {
+          context.report({
+            ruleId: "attribute-validate-start",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units.",
+          zeroOK: false,
+          customPxMessage: "Starting sequence number is not in pixels."
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-start"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -8072,6 +8127,12 @@ defineLazyProp(builtInRules, "attribute-validate-span", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-src", function () {
   return attributeValidateSrc;
+});
+defineLazyProp(builtInRules, "attribute-validate-standby", function () {
+  return attributeValidateStandby;
+});
+defineLazyProp(builtInRules, "attribute-validate-start", function () {
+  return attributeValidateStart;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;

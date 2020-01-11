@@ -101,6 +101,8 @@
   "attribute-validate-size",
   "attribute-validate-span",
   "attribute-validate-src",
+  "attribute-validate-standby",
+  "attribute-validate-start",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"
