@@ -44,28 +44,49 @@ function attributeValidateWidth(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
             fix: null
           });
-        }
-
-        const errorArr = validateDigitAndUnit(
-          node.attribValue,
-          node.attribValueStartAt,
-          {
-            badUnits: ["px"],
-            noUnitsIsFine: true
+        } else {
+          if (node.parent.tagName === "pre") {
+            // number only
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              theOnlyGoodUnits: [],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              console.log(`054 RAISE ERROR`);
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
+          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+            // multilength type
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              theOnlyGoodUnits: ["*", "%"],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              console.log(`068 RAISE ERROR`);
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
+          } else {
+            // normal length
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              console.log(`081 RAISE ERROR`);
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
           }
-        );
-        console.log(
-          `058 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
-
-        errorArr.forEach(errorObj => {
-          console.log(`062 RAISE ERROR`);
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-width"
-            })
-          );
-        });
+        }
       }
     }
   };

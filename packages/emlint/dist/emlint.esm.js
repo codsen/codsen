@@ -8975,22 +8975,43 @@ function attributeValidateWidth(context, ...opts) {
             message: `Tag "${node.parent.tagName}" can't have this attribute.`,
             fix: null
           });
-        }
-        const errorArr = validateDigitAndUnit(
-          node.attribValue,
-          node.attribValueStartAt,
-          {
-            badUnits: ["px"],
-            noUnitsIsFine: true
+        } else {
+          if (node.parent.tagName === "pre") {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              theOnlyGoodUnits: [],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
+          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              theOnlyGoodUnits: ["*", "%"],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
+          } else {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              noUnitsIsFine: true
+            }).forEach(errorObj => {
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-width"
+                })
+              );
+            });
           }
-        );
-        errorArr.forEach(errorObj => {
-          context.report(
-            Object.assign({}, errorObj, {
-              ruleId: "attribute-validate-width"
-            })
-          );
-        });
+        }
       }
     }
   };

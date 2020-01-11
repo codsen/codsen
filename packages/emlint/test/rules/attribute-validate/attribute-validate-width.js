@@ -471,3 +471,96 @@ t.test(
     t.end();
   }
 );
+
+// 04. values
+// -----------------------------------------------------------------------------
+
+t.test(`04.01 - ${`\u001b[${35}m${`values`}\u001b[${39}m`} - hr in ems`, t => {
+  const str = `<hr width="2em">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-width": 2
+    }
+  });
+  t.equal(applyFixes(str, messages), str);
+  t.match(messages, []);
+  t.end();
+});
+
+t.test(
+  `04.02 - ${`\u001b[${35}m${`values`}\u001b[${39}m`} - hr in relative unit`,
+  t => {
+    const str = `<hr width="1*">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-width": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-width",
+        idxFrom: 12,
+        idxTo: 13,
+        message: `Unrecognised unit.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(`04.03 - ${`\u001b[${35}m${`values`}\u001b[${39}m`} - col in ems`, t => {
+  const str = `<col width="2em">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-validate-width": 2
+    }
+  });
+  t.equal(applyFixes(str, messages), str);
+  t.match(messages, []);
+  t.end();
+});
+
+t.test(
+  `04.04 - ${`\u001b[${35}m${`values`}\u001b[${39}m`} - col in relative unit`,
+  t => {
+    const str = `<col width="1*">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-width": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, []);
+    t.end();
+  }
+);
+
+t.test(
+  `04.05 - ${`\u001b[${35}m${`values`}\u001b[${39}m`} - pre in percentages`,
+  t => {
+    const str = `<pre width="50%">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-width": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-width",
+        idxFrom: 14,
+        idxTo: 15,
+        message: `Should be integer, no units.`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);

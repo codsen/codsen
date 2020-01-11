@@ -7703,16 +7703,37 @@ function attributeValidateWidth(context) {
             message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
             fix: null
           });
+        } else {
+          if (node.parent.tagName === "pre") {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              theOnlyGoodUnits: [],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
+          } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              theOnlyGoodUnits: ["*", "%"],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
+          } else {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              badUnits: ["px"],
+              noUnitsIsFine: true
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-width"
+              }));
+            });
+          }
         }
-        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
-          badUnits: ["px"],
-          noUnitsIsFine: true
-        });
-        errorArr.forEach(function (errorObj) {
-          context.report(Object.assign({}, errorObj, {
-            ruleId: "attribute-validate-width"
-          }));
-        });
       }
     }
   };
