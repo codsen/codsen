@@ -15,7 +15,7 @@
 
 - [Install](#install)
 - [Background](#background)
-- [Variations](#variations)
+- [Validating them all](#validating-them-all)
 - [API - Input](#api-input)
 - [API - Output](#api-output)
 - [Example](#example)
@@ -58,56 +58,85 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                          | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-relative-uri.cjs.js` | 4 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-relative-uri.esm.js` | 4 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-relative-uri.umd.js` | 3 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-relative-uri.cjs.js` | 8 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-relative-uri.esm.js` | 8 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-relative-uri.umd.js` | 6 KB |
 
 **[⬆ back to top](#)**
 
 ## Background
 
-If you consider "URI"-type attribute values in HTML, for example `href`, there two kinds of value types, those that start with _scheme_, `http` or `https` or `mailto` or whatever and those that don't.
+For example, HTML attributes `href` have URI-type values.
 
-_Scheme_ `https`:
+This program validates, are URI's, specifically, _relative URI references_, typed correctly. It will not "go to the internet" to check is the actual asset online, it will only tell if you mistyped something.
 
-```html
-<a href="https://www.npmjs.com"></a>
+If you consider "URI"-type attribute values in HTML, for example `href`, there two kinds of value types:
+
+- those that start with _scheme_, `http` or `https` or `mailto` or whatever, and
+- those that don't.
+
+_Scheme_ like `https` is the "normal" way:
+
+```xml
+<a href="https://www.npmjs.com">z</a>
 ```
 
-åNo _scheme_:
+But no _scheme_, so called _relative URI's_ are fine too:
 
-```html
-<a href="index.html"></a>
+```xml
+<a href="//example.com/path/resource.txt">z</a>
+<a href="/path/resource.txt">z</a>
+<a href="path/resource.txt">z</a>
+<a href="/path/resource.txt">z</a>
+<a href="../resource.txt">z</a>
+<a href="./resource.txt">z</a>
+<a href="resource.txt">z</a>
+<a href="#fragment">z</a>
 ```
 
-Now, strictly speaking, values with _scheme_ like `https://www.npmjs.com` are called "URI"s. In practice, "URI" and "URL" is used interchangeably and there are plenty of packages on npm which validate, is it (in strict terms) URI, or not.
+But spec-wise, at least theoretically, these are also fine (see [wikipedia](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references) for more).
 
-Strictly speaking "`index.html`" is not a URI — it's _a URI reference_ or _relative (URI) reference_ [source](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references).
+Considering the base URI of `http://a/b/c/d;p?q`, the following URI's would get resolved accordingly:
 
-There are no packages on npm that validate relative URI's and this package will do it.
+```xml
+<a href="g:h">z</a>     -> "g:h"
+<a href="g">z</a>       -> "http://a/b/c/g"
+<a href="./g">z</a>     -> "http://a/b/c/g"
+<a href="g/">z</a>      -> "http://a/b/c/g/"
+<a href="/g">z</a>      -> "http://a/g"
+<a href="//g">z</a>     -> "http://g"
+<a href="?y">z</a>      -> "http://a/b/c/d;p?y"
+<a href="g?y">z</a>     -> "http://a/b/c/g?y"
+<a href="#s">z</a>      -> "http://a/b/c/d;p?q#s"
+<a href="g#s">z</a>     -> "http://a/b/c/g#s"
+<a href="g?y#s">z</a>   -> "http://a/b/c/g?y#s"
+<a href=";x">z</a>      -> "http://a/b/c/;x"
+<a href="g;x">z</a>     -> "http://a/b/c/g;x"
+<a href="g;x?y#s">z</a> -> "http://a/b/c/g;x?y#s"
+<a href="">z</a>        -> "http://a/b/c/d;p?q"
+<a href=".">z</a>       -> "http://a/b/c/"
+<a href="./">z</a>      -> "http://a/b/c/"
+<a href="..">z</a>      -> "http://a/b/"
+<a href="../">z</a>     -> "http://a/b/"
+<a href="../g">z</a>    -> "http://a/b/g"
+<a href="../..">z</a>   -> "http://a/"
+<a href="../../">z</a>  -> "http://a/"
+<a href="../../g">z</a> -> "http://a/g"
+```
 
 **[⬆ back to top](#)**
 
-## Variations
+## Validating them all
 
-As per Wikipedia's [example](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references), all the following are correct relative URI references:
+As you saw, relative URI's can be pretty much anything, including empty string and random letters like `zzz`.
 
-```html
-//example.com/path/resource.txt /path/resource.txt path/resource.txt
-/path/resource.txt ../resource.txt ./resource.txt resource.txt #fragment
-```
+What do we do?
 
-This package will return `true` for all above. Now, to give you some `false` examples:
+The only thing left is to try to **catch bad patterns**.
 
-```html
-///example.com/path/resource.txt (starts with three slashes) /path// (ends with
-more than one slash) path/resource..txt (two or more consecutive dots)
-.path/resource.txt (dot-letter) .../resource.txt (three dots) .//resource.txt
-(dot-two or more slashes) resource .txt (whitespace anywhere) ##fragment (more
-than one consecutive hash)
-```
+Conceptually, this program tells **if a given string is not messed up** from the perspective of relative URI pattern, as far as our imperfect algorithm sees.
 
-This package will be used in `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) to validate the values of all attributes which have URI-type values.
+Mainly: no whitespace, no repeated things (tripple slashes or double question marks), no slashes or dots after a hash, two dots must not be followed by a letter and others.
 
 **[⬆ back to top](#)**
 
@@ -132,8 +161,6 @@ If input is not a string, error will be thrown.
 | `flagUpUrisWithSchemes` | boolean | no          | `true`  | Should we yield `false` on URI's with scheme (`https://` for example)? |
 | }                       |         |             |         |
 
-Falsey `opt.offset` is fine but truthy non-integer will _throw_.
-
 **[⬆ back to top](#)**
 
 ## API - Output
@@ -143,11 +170,11 @@ Program returns a clone of a plain object similar to:
 ```js
 {
   res: false,
-  message: `Unrecognised language subtag, "posix".`
+  message: `Two consecutive hashes.`
 }
 ```
 
-or if schema-URI's are flagged up via `opts.flagUpUrisWithSchemes`, message will be `null`:
+or if schema-URI's are flagged up via `opts.flagUpUrisWithSchemes`, the `message` value can be `null`:
 
 ```js
 {
@@ -177,22 +204,14 @@ False `res` and `null` message happens only on schema-URI's. By checking is `mes
 
 ```js
 const isRel = require("is-relative-uri");
-const str = `screeen`;
+const str = `.../resource.txt`;
 const res = isRel(str);
 console.log(JSON.stringify(res, null, 4));
-// => [
-//      {
-//        idxFrom: 0,
-//        idxTo: 7,
-//        message: `Did you mean "screen"?`,
-//        fix: {
-//          ranges: [[0, 7]]
-//        }
-//      }
-//    ]
+// => {
+//      res: false,
+//      message: `Two consecutive hashes.`
+//    }
 ```
-
-The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)), ranges value matches the [ranges](https://gitlab.com/codsen/codsen#-range-libraries) spec (in ranges index array, third array element means what to add; only two elements is deletion).
 
 **[⬆ back to top](#)**
 
@@ -202,9 +221,22 @@ When validating the URI's which can be relative (for example, `href` attribute v
 
 For example, [is-url-superb](https://www.npmjs.com/package/is-url-superb) and this package.
 
-If `opts.flagUpUrisWithSchemes` is set to `true`, this program will proactively search and yield a falsey result.
+If `opts.flagUpUrisWithSchemes` is set to `true`, this program will search for schemes and yield a falsey result if it detects a known `<scheme>:` for example `mailto:`.
 
-Another challenge: URI with schema as error is not the same "error", it's not a "real error". To distinguish the two we'll set result object's key `message` to null.
+Another challenge: URI with schema-as-error is not the same "error" — it's not a "real error". To distinguish the two we'll set result object's key `message` to null.
+
+That is, seemingly correct URI will have a message `null`:
+
+```js
+const isRel = require("is-relative-uri");
+const str = `https://codsen.com`;
+const res = isRel(str, { flagUpUrisWithSchemes: true });
+console.log(JSON.stringify(res, null, 4));
+// => {
+//      res: false,
+//      message: null
+//    }
+```
 
 **[⬆ back to top](#)**
 
@@ -231,7 +263,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/is-relative-uri
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
-[cov-img]: https://img.shields.io/badge/coverage-88.89%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-91.04%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/is-relative-uri

@@ -211,3 +211,26 @@ t.test(
     t.end();
   }
 );
+
+// 04. opts.flagUpUrisWithSchemes
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
+  t => {
+    t.notOk(isRel(`mailto:John.Doe@example.com`).res);
+    t.end();
+  }
+);
+
+t.test(
+  `04.01 - ${`\u001b[${33}m${`incorrect values`}\u001b[${39}m`} - default`,
+  t => {
+    t.ok(
+      isRel(`mailto:John.Doe@example.com`, {
+        flagUpUrisWithSchemes: false
+      }).res
+    );
+    t.end();
+  }
+);
