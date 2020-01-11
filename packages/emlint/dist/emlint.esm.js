@@ -4120,6 +4120,27 @@ function attributeValidateBgcolor(context, ...opts) {
 }
 
 function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
+  if (str[charStart] === "0") {
+    if (charEnd === charStart + 1) {
+      if (!opts.zeroOK) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Zero not allowed.`,
+          fix: null
+        });
+      }
+    } else {
+      if ("0123456789".includes(str[charStart + 1])) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: `Number padded with zero.`,
+          fix: null
+        });
+      }
+    }
+  }
   if (
     !"0123456789".includes(str[charStart]) &&
     !"0123456789".includes(str[charEnd - 1])
@@ -4167,13 +4188,18 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
             (Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart)))
         ) {
           if (endPart === "px") {
+            const message = opts.customPxMessage
+              ? opts.customPxMessage
+              : `Remove px.`;
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message: `Remove px.`,
-              fix: {
-                ranges: [[idxOffset + i, idxOffset + charEnd]]
-              }
+              message,
+              fix: opts.customPxMessage
+                ? null
+                : {
+                    ranges: [[idxOffset + i, idxOffset + charEnd]]
+                  }
             });
           } else {
             let message = `Bad unit.`;
@@ -4229,12 +4255,14 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     theOnlyGoodUnits: null,
     plusOK: false,
     negativeOK: false,
+    zeroOK: true,
     badUnits: [],
     enforceCount: null,
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
     customGenericValueError: null,
-    skipWhitespaceChecks: false
+    skipWhitespaceChecks: false,
+    customPxMessage: null
   };
   const opts = Object.assign({}, defaultOpts, originalOpts);
   let charStart = 0;
@@ -8092,6 +8120,42 @@ function attributeValidateSize(context, ...opts) {
   };
 }
 
+function attributeValidateSpan(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "span") {
+        if (!["col", "colgroup"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-span",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: false,
+            customPxMessage: `Columns number is not in pixels.`
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-span"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9475,6 +9539,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-size",
   () => attributeValidateSize
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-span",
+  () => attributeValidateSpan
 );
 defineLazyProp(
   builtInRules,

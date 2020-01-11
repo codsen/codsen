@@ -3909,6 +3909,27 @@ function validateValue$2(_ref) {
       charEnd = _ref.charEnd,
       idxOffset = _ref.idxOffset,
       errorArr = _ref.errorArr;
+  if (str[charStart] === "0") {
+    if (charEnd === charStart + 1) {
+      if (!opts.zeroOK) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Zero not allowed.",
+          fix: null
+        });
+      }
+    } else {
+      if ("0123456789".includes(str[charStart + 1])) {
+        errorArr.push({
+          idxFrom: idxOffset + charStart,
+          idxTo: idxOffset + charEnd,
+          message: "Number padded with zero.",
+          fix: null
+        });
+      }
+    }
+  }
   if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
     var message = "Digits missing.";
     if (opts.customGenericValueError) {
@@ -3935,45 +3956,46 @@ function validateValue$2(_ref) {
         var endPart = str.slice(i, charEnd);
         if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
           if (endPart === "px") {
-            errorArr.push({
-              idxFrom: idxOffset + i,
-              idxTo: idxOffset + charEnd,
-              message: "Remove px.",
-              fix: {
-                ranges: [[idxOffset + i, idxOffset + charEnd]]
-              }
-            });
-          } else {
-            var _message = "Bad unit.";
-            if (str.match(/-\s*-/g)) {
-              _message = "Repeated minus.";
-            } else if (str.match(/\+\s*\+/g)) {
-              _message = "Repeated plus.";
-            } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
-              _message = "Rogue whitespace.";
-            } else if (opts.customGenericValueError) {
-              _message = opts.customGenericValueError;
-            } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
-              _message = "Should be integer, no units.";
-            }
+            var _message = opts.customPxMessage ? opts.customPxMessage : "Remove px.";
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
               message: _message,
+              fix: opts.customPxMessage ? null : {
+                ranges: [[idxOffset + i, idxOffset + charEnd]]
+              }
+            });
+          } else {
+            var _message2 = "Bad unit.";
+            if (str.match(/-\s*-/g)) {
+              _message2 = "Repeated minus.";
+            } else if (str.match(/\+\s*\+/g)) {
+              _message2 = "Repeated plus.";
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
+              _message2 = "Rogue whitespace.";
+            } else if (opts.customGenericValueError) {
+              _message2 = opts.customGenericValueError;
+            } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
+              _message2 = "Should be integer, no units.";
+            }
+            errorArr.push({
+              idxFrom: idxOffset + i,
+              idxTo: idxOffset + charEnd,
+              message: _message2,
               fix: null
             });
           }
         } else if (!knownUnits.includes(endPart)) {
-          var _message2 = "Unrecognised unit.";
+          var _message3 = "Unrecognised unit.";
           if (/\d/.test(endPart)) {
-            _message2 = "Messy value.";
+            _message3 = "Messy value.";
           } else if (knownUnits.includes(endPart.trim())) {
-            _message2 = "Rogue whitespace.";
+            _message3 = "Rogue whitespace.";
           }
           errorArr.push({
             idxFrom: idxOffset + i,
             idxTo: idxOffset + charEnd,
-            message: _message2,
+            message: _message3,
             fix: null
           });
         }
@@ -3989,12 +4011,14 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     theOnlyGoodUnits: null,
     plusOK: false,
     negativeOK: false,
+    zeroOK: true,
     badUnits: [],
     enforceCount: null,
     noUnitsIsFine: true,
     canBeCommaSeparated: false,
     customGenericValueError: null,
-    skipWhitespaceChecks: false
+    skipWhitespaceChecks: false,
+    customPxMessage: null
   };
   var opts = Object.assign({}, defaultOpts, originalOpts);
   var charStart = 0;
@@ -7065,6 +7089,36 @@ function attributeValidateSize(context) {
   };
 }
 
+function attributeValidateSpan(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "span") {
+        if (!["col", "colgroup"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-span",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units.",
+          zeroOK: false,
+          customPxMessage: "Columns number is not in pixels."
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-span"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -7985,6 +8039,9 @@ defineLazyProp(builtInRules, "attribute-validate-shape", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-size", function () {
   return attributeValidateSize;
+});
+defineLazyProp(builtInRules, "attribute-validate-span", function () {
+  return attributeValidateSpan;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;

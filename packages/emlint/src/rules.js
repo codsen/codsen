@@ -1535,6 +1535,13 @@ defineLazyProp(
   () => attributeValidateSize
 );
 
+import attributeValidateSpan from "./rules/attribute-validate/attribute-validate-span";
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-span",
+  () => attributeValidateSpan
+);
+
 import attributeValidateText from "./rules/attribute-validate/attribute-validate-text";
 defineLazyProp(
   builtInRules,
@@ -1699,7 +1706,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1702 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1709 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

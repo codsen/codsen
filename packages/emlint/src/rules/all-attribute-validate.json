@@ -99,6 +99,7 @@
   "attribute-validate-selected",
   "attribute-validate-shape",
   "attribute-validate-size",
+  "attribute-validate-span",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"
