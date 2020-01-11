@@ -114,6 +114,7 @@
   "attribute-validate-valign",
   "attribute-validate-value",
   "attribute-validate-valuetype",
+  "attribute-validate-version",
   "attribute-validate-vlink",
   "attribute-validate-width"
 ]

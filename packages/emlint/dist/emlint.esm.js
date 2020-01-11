@@ -8850,6 +8850,35 @@ function attributeValidateValuetype(context, ...opts) {
   };
 }
 
+function attributeValidateVersion(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "version") {
+        if (node.parent.tagName !== "html") {
+          context.report({
+            ruleId: "attribute-validate-version",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-version"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context, ...opts) {
   return {
     attribute: function(node) {
@@ -10271,6 +10300,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-valuetype",
   () => attributeValidateValuetype
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-version",
+  () => attributeValidateVersion
 );
 defineLazyProp(
   builtInRules,
