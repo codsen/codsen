@@ -105,6 +105,7 @@
   "attribute-validate-start",
   "attribute-validate-style",
   "attribute-validate-summary",
+  "attribute-validate-tabindex",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"

@@ -4164,14 +4164,27 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
   } else if (
     "0123456789".includes(str[charStart]) &&
     "0123456789".includes(str[charEnd - 1]) &&
-    !opts.noUnitsIsFine
+    (!opts.noUnitsIsFine ||
+      (opts.type === "integer" &&
+        opts.maxValue &&
+        str.slice(charStart, charEnd).match(/^\d+$/) &&
+        Number.parseInt(str.slice(charStart, charEnd), 10) > opts.maxValue))
   ) {
-    errorArr.push({
-      idxFrom: idxOffset + charStart,
-      idxTo: idxOffset + charEnd,
-      message: opts.customGenericValueError || `Units missing.`,
-      fix: null
-    });
+    if (!opts.noUnitsIsFine) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: opts.customGenericValueError || `Units missing.`,
+        fix: null
+      });
+    } else {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: `Maximum, ${opts.maxValue} exceeded.`,
+        fix: null
+      });
+    }
   } else {
     for (let i = charStart; i < charEnd; i++) {
       if (
@@ -4262,7 +4275,8 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     canBeCommaSeparated: false,
     customGenericValueError: null,
     skipWhitespaceChecks: false,
-    customPxMessage: null
+    customPxMessage: null,
+    maxValue: null
   };
   const opts = Object.assign({}, defaultOpts, originalOpts);
   let charStart = 0;
@@ -8328,6 +8342,53 @@ function attributeValidateSummary(context, ...opts) {
   };
 }
 
+function attributeValidateTabindex(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "tabindex") {
+        if (
+          ![
+            "a",
+            "area",
+            "button",
+            "input",
+            "object",
+            "select",
+            "textarea"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-tabindex",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const errorArr = validateDigitAndUnit(
+          node.attribValue,
+          node.attribValueStartAt,
+          {
+            type: "integer",
+            theOnlyGoodUnits: [],
+            customGenericValueError: "Should be integer, no units.",
+            zeroOK: true,
+            customPxMessage: `Tabbing order number should not be in pixels.`,
+            maxValue: 32767
+          }
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-tabindex"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9741,6 +9802,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-summary",
   () => attributeValidateSummary
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-tabindex",
+  () => attributeValidateTabindex
 );
 defineLazyProp(
   builtInRules,

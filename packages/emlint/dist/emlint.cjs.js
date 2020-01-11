@@ -3943,13 +3943,22 @@ function validateValue$2(_ref) {
       message: message,
       fix: null
     });
-  } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && !opts.noUnitsIsFine) {
-    errorArr.push({
-      idxFrom: idxOffset + charStart,
-      idxTo: idxOffset + charEnd,
-      message: opts.customGenericValueError || "Units missing.",
-      fix: null
-    });
+  } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && (!opts.noUnitsIsFine || opts.type === "integer" && opts.maxValue && str.slice(charStart, charEnd).match(/^\d+$/) && Number.parseInt(str.slice(charStart, charEnd), 10) > opts.maxValue)) {
+    if (!opts.noUnitsIsFine) {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: opts.customGenericValueError || "Units missing.",
+        fix: null
+      });
+    } else {
+      errorArr.push({
+        idxFrom: idxOffset + charStart,
+        idxTo: idxOffset + charEnd,
+        message: "Maximum, ".concat(opts.maxValue, " exceeded."),
+        fix: null
+      });
+    }
   } else {
     for (var i = charStart; i < charEnd; i++) {
       if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0)) && (str[i] !== "+" || !(opts.plusOK && i === 0))) {
@@ -4018,7 +4027,8 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     canBeCommaSeparated: false,
     customGenericValueError: null,
     skipWhitespaceChecks: false,
-    customPxMessage: null
+    customPxMessage: null,
+    maxValue: null
   };
   var opts = Object.assign({}, defaultOpts, originalOpts);
   var charStart = 0;
@@ -7256,6 +7266,37 @@ function attributeValidateSummary(context) {
   };
 }
 
+function attributeValidateTabindex(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "tabindex") {
+        if (!["a", "area", "button", "input", "object", "select", "textarea"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-tabindex",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        }
+        var errorArr = validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+          type: "integer",
+          theOnlyGoodUnits: [],
+          customGenericValueError: "Should be integer, no units.",
+          zeroOK: true,
+          customPxMessage: "Tabbing order number should not be in pixels.",
+          maxValue: 32767
+        });
+        errorArr.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "attribute-validate-tabindex"
+          }));
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context) {
   return {
     attribute: function attribute(node) {
@@ -8194,6 +8235,9 @@ defineLazyProp(builtInRules, "attribute-validate-style", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-summary", function () {
   return attributeValidateSummary;
+});
+defineLazyProp(builtInRules, "attribute-validate-tabindex", function () {
+  return attributeValidateTabindex;
 });
 defineLazyProp(builtInRules, "attribute-validate-text", function () {
   return attributeValidateText;
