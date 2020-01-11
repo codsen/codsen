@@ -104,6 +104,7 @@
   "attribute-validate-standby",
   "attribute-validate-start",
   "attribute-validate-style",
+  "attribute-validate-summary",
   "attribute-validate-text",
   "attribute-validate-vlink",
   "attribute-validate-width"

@@ -8299,6 +8299,35 @@ function attributeValidateStyle(context, ...opts) {
   };
 }
 
+function attributeValidateSummary(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "summary") {
+        if (node.parent.tagName !== "table") {
+          context.report({
+            ruleId: "attribute-validate-summary",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-summary"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9707,6 +9736,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-style",
   () => attributeValidateStyle
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-summary",
+  () => attributeValidateSummary
 );
 defineLazyProp(
   builtInRules,
