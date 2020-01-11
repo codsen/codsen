@@ -84,6 +84,8 @@ console.log(JSON.stringify(result, null, 4));
 
 Above, we split the string by whitespace consisting of spaces, tabs and linebreaks.
 
+**[⬆ back to top](#)**
+
 ### API - Input
 
 | Input argument | Type         | Obligatory? | Description                                       |
