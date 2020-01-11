@@ -7483,6 +7483,33 @@ function attributeValidateType(context) {
   };
 }
 
+function attributeValidateUsemap(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "usemap") {
+        if (!["img", "input", "object"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-usemap",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateUri(node.attribValue, {
+            offset: node.attribValueStartAt,
+            multipleOK: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-usemap"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context) {
   return {
     attribute: function attribute(node) {
@@ -8405,6 +8432,9 @@ defineLazyProp(builtInRules, "attribute-validate-title", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-type", function () {
   return attributeValidateType;
+});
+defineLazyProp(builtInRules, "attribute-validate-usemap", function () {
+  return attributeValidateUsemap;
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;

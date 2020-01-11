@@ -110,6 +110,7 @@
   "attribute-validate-text",
   "attribute-validate-title",
   "attribute-validate-type",
+  "attribute-validate-usemap",
   "attribute-validate-vlink",
   "attribute-validate-width"
 ]
