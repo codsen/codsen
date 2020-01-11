@@ -113,6 +113,7 @@
   "attribute-validate-usemap",
   "attribute-validate-valign",
   "attribute-validate-value",
+  "attribute-validate-valuetype",
   "attribute-validate-vlink",
   "attribute-validate-width"
 ]

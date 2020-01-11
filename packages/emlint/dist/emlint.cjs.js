@@ -7579,6 +7579,35 @@ function attributeValidateValue(context) {
   };
 }
 
+function attributeValidateValuetype(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "valuetype") {
+        if (node.parent.tagName !== "param") {
+          context.report({
+            ruleId: "attribute-validate-valuetype",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          validateString(node.attribValue,
+          node.attribValueStartAt,
+          {
+            permittedValues: ["data", "ref", "object"],
+            canBeCommaSeparated: false
+          }).forEach(function (errorObj) {
+            context.report(Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-valuetype"
+            }));
+          });
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context) {
   return {
     attribute: function attribute(node) {
@@ -8510,6 +8539,9 @@ defineLazyProp(builtInRules, "attribute-validate-valign", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-value", function () {
   return attributeValidateValue;
+});
+defineLazyProp(builtInRules, "attribute-validate-valuetype", function () {
+  return attributeValidateValuetype;
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;
