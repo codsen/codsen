@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.10.57",
+  "version": "7.10.58",
   "description": "Traverse and edit AST's (like parsed HTML or anything nested)",
   "license": "MIT",
   "engines": {
@@ -125,20 +125,20 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-compare": "^1.12.28",
-    "ast-monkey-traverse": "^1.12.2",
-    "check-types-mini": "^5.7.52",
+    "ast-compare": "^1.12.29",
+    "ast-monkey-traverse": "^1.12.3",
+    "check-types-mini": "^5.7.53",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "type-detect": "^4.0.8",
-    "util-array-object-or-both": "^2.7.51"
+    "util-array-object-or-both": "^2.7.52"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

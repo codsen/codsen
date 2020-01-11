@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.56](https://gitlab.com/codsen/codsen/compare/ast-get-object@1.8.55...ast-get-object@1.8.56) (2020-01-11)
+
+**Note:** Version bump only for package ast-get-object
+
+
+
+
+
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

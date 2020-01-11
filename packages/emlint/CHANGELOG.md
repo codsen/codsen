@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://gitlab.com/codsen/codsen/compare/emlint@2.9.0...emlint@2.10.0) (2020-01-11)
+
+
+### Features
+
+* extend "onunload" attribute validation to body tag ([81a9e5a](https://gitlab.com/codsen/codsen/commit/81a9e5a1f17aa1144b2c23f5a86879ffecd6adfc))
+* extend onload attribute validation to body tag ([a6c61f8](https://gitlab.com/codsen/codsen/commit/a6c61f856e0730ce22a10738fded0114549a5355))
+* extend rule `attribute-validate-size` ([72502c6](https://gitlab.com/codsen/codsen/commit/72502c67f236aa95c3cd7ef4162af24b46542962))
+* improvements to `attribute-validate-width` ([f50e6e7](https://gitlab.com/codsen/codsen/commit/f50e6e72b8da3fd9088fc934f24b380ecc0afc9b))
+* migrate all URI value type attributes to consume validateUri() ([2ab3631](https://gitlab.com/codsen/codsen/commit/2ab363118016f847da5e305deee6577bdad1a3c1))
+* new rule, `attribute-validate-method` ([b233e92](https://gitlab.com/codsen/codsen/commit/b233e92b1e824b49e3bb72cc28a29694cc0e2a33))
+* new rule, `attribute-validate-multiple` ([2465441](https://gitlab.com/codsen/codsen/commit/2465441926917c94ad80946adcc5eb0763310b14))
+* new rule, `attribute-validate-name` ([8870abe](https://gitlab.com/codsen/codsen/commit/8870abe2f6a4d5ca200c885b0cdbcf5b81855ac8))
+* new rule, `attribute-validate-nohref` ([dadcb16](https://gitlab.com/codsen/codsen/commit/dadcb1650c4266eaaf54c4c918a3d44787113a7f))
+* new rule, `attribute-validate-noresize` ([73a63a7](https://gitlab.com/codsen/codsen/commit/73a63a75fe3bdf00b63c27231348da2b39a4218a))
+* new rule, `attribute-validate-noshade` ([250f786](https://gitlab.com/codsen/codsen/commit/250f7867d72fdad637799a15eef62cd01a705faf))
+* new rule, `attribute-validate-nowrap` ([cfea63e](https://gitlab.com/codsen/codsen/commit/cfea63ec5593e19f20550188fc7374a8428774ac))
+* new rule, `attribute-validate-object` ([7f1fed3](https://gitlab.com/codsen/codsen/commit/7f1fed39e53558e0d0d06fdd7056a8ad2e782d8b))
+* new rule, `attribute-validate-onblur` ([3b464bc](https://gitlab.com/codsen/codsen/commit/3b464bc542fd103e1c27a8125d01b1ef54e209e2))
+* new rule, `attribute-validate-onchange` ([188d5b6](https://gitlab.com/codsen/codsen/commit/188d5b6891141d6fbe26839a65ae6ab9bd122339))
+* new rule, `attribute-validate-onfocus` ([1db2ebe](https://gitlab.com/codsen/codsen/commit/1db2ebe44d0bba0750d98fc2ad8566d271328a84))
+* new rule, `attribute-validate-onkeydown` ([19c091a](https://gitlab.com/codsen/codsen/commit/19c091a70905f69ff1192742459d930c51a2488f))
+* new rule, `attribute-validate-onkeypress` ([c5d465a](https://gitlab.com/codsen/codsen/commit/c5d465a3dd43979397aed73fc5f9ba5259dc0107))
+* new rule, `attribute-validate-onkeyup` ([9cdb2ed](https://gitlab.com/codsen/codsen/commit/9cdb2ed8df3c4aa64083c1f2ca0ca7ffa5e02e8b))
+* new rule, `attribute-validate-onload` ([f231e11](https://gitlab.com/codsen/codsen/commit/f231e11ccb72f3b37a6779ce8669c6b53c41ebc6))
+* new rule, `attribute-validate-onmousedown` ([d7323a0](https://gitlab.com/codsen/codsen/commit/d7323a0c3e5d4a9b71ea6f7fa59cdca68a380c6c))
+* new rule, `attribute-validate-onmousemove` ([a64c6a0](https://gitlab.com/codsen/codsen/commit/a64c6a093c2ba26d9f5fd50b471fc3367a7dce77))
+* new rule, `attribute-validate-onmouseout` ([64115da](https://gitlab.com/codsen/codsen/commit/64115dac69088361fea218109ec3c97078a217f6))
+* new rule, `attribute-validate-onmouseover` ([9fd7b85](https://gitlab.com/codsen/codsen/commit/9fd7b85791a06d3d9250f50deecb1f85b9b68220))
+* new rule, `attribute-validate-onmouseup` ([9118dbb](https://gitlab.com/codsen/codsen/commit/9118dbb0264840b72d531e0850d92b1d4563ebd4))
+* new rule, `attribute-validate-onreset` ([4cdb742](https://gitlab.com/codsen/codsen/commit/4cdb7426fc824dc2e4078410057fd8204a3e6701))
+* new rule, `attribute-validate-onselect` ([3834290](https://gitlab.com/codsen/codsen/commit/38342900ae71c2ee87768848f5445c02555070e5))
+* new rule, `attribute-validate-onsubmit` ([f23640a](https://gitlab.com/codsen/codsen/commit/f23640a30ee73084f2ceff8242ca55921f76a408))
+* new rule, `attribute-validate-onunload` ([582be1f](https://gitlab.com/codsen/codsen/commit/582be1f6e561df4bc066b09d2bc7161fc08d1cb8))
+* new rule, `attribute-validate-profile` ([c1e8ba1](https://gitlab.com/codsen/codsen/commit/c1e8ba1c7b376572f5c512cfb083603a97eb7140))
+* new rule, `attribute-validate-prompt` ([003c04f](https://gitlab.com/codsen/codsen/commit/003c04fb7b4637b65454de1ad0821dd5479c979d))
+* new rule, `attribute-validate-readonly` ([5b2f921](https://gitlab.com/codsen/codsen/commit/5b2f92127480d46f085ed9b046a76a00fc25eaad))
+* new rule, `attribute-validate-rel` ([4c991d8](https://gitlab.com/codsen/codsen/commit/4c991d837192a2bdcac6ca7574fffa45a63941cd))
+* new rule, `attribute-validate-rev` ([868fdbb](https://gitlab.com/codsen/codsen/commit/868fdbb7828a56214bac2cd198ab174df22066df))
+* new rule, `attribute-validate-rows` ([f3fa9e1](https://gitlab.com/codsen/codsen/commit/f3fa9e1df1e70ecf3164a334e0f9e36ac33dbe84))
+* new rule, `attribute-validate-scheme` ([2d85432](https://gitlab.com/codsen/codsen/commit/2d854321cc96d78aebf2ae959de61c23c840cf4a))
+* new rule, `attribute-validate-scope` ([666fe2b](https://gitlab.com/codsen/codsen/commit/666fe2b657576736f518a1e46df3d3cece1b5f7e))
+* new rule, `attribute-validate-scrolling` ([e89d60b](https://gitlab.com/codsen/codsen/commit/e89d60b44c6b19f8e0cb0f517899ae0c950c64d0))
+* new rule, `attribute-validate-selected` ([ed3d264](https://gitlab.com/codsen/codsen/commit/ed3d26474a29aac8036d6f7d293f72ed6241cda4))
+* new rule, `attribute-validate-shape` ([6ed0bf4](https://gitlab.com/codsen/codsen/commit/6ed0bf48fe55b57fc0092dd65514ded4b6cd07e3))
+* new rule, `attribute-validate-size` and some rebasing ([b11c805](https://gitlab.com/codsen/codsen/commit/b11c805ac21ccc9e6c38d67827a42ee7a6dd0784))
+* new rule, `attribute-validate-span` ([c03a6bb](https://gitlab.com/codsen/codsen/commit/c03a6bbb7b8243e3f99d90e407bd0f281fd566d8))
+* new rule, `attribute-validate-src` ([38a3154](https://gitlab.com/codsen/codsen/commit/38a3154041f4cf79ea4232ab2405ad9ab808d5ea))
+* new rule, `attribute-validate-start` ([4a9d387](https://gitlab.com/codsen/codsen/commit/4a9d387473e48b8626401bbfd891a436c051b4c5))
+* new rule, `attribute-validate-style` (basic level) ([293fa79](https://gitlab.com/codsen/codsen/commit/293fa79a028d31bfe6fc6ca7fa069c92925fad56))
+* new rule, `attribute-validate-summary` ([a4a0e6e](https://gitlab.com/codsen/codsen/commit/a4a0e6e80571f9e9d4f889148135ac8294c4bfcb))
+* new rule, `attribute-validate-tabindex` ([d9299d8](https://gitlab.com/codsen/codsen/commit/d9299d832b0a180559de7715015c43ea3253f2c8))
+* new rule, `attribute-validate-target` ([d996417](https://gitlab.com/codsen/codsen/commit/d99641702c7fa2214ede95113ab510b7ef73d3c2))
+* new rule, `attribute-validate-title` ([251b854](https://gitlab.com/codsen/codsen/commit/251b8546478da4363856201710fb2b3480820cc3))
+* new rule, `attribute-validate-type` ([29ef159](https://gitlab.com/codsen/codsen/commit/29ef159ed27dfb1e302c88e9c02c75461a1ef478))
+* new rule, `attribute-validate-usemap` ([6a33365](https://gitlab.com/codsen/codsen/commit/6a33365b1aef7e5222fdda8494f7e25b01465df2))
+* new rule, `attribute-validate-valign` ([83e80a9](https://gitlab.com/codsen/codsen/commit/83e80a9a334aed9256b355b4bfdb00516ab5c83b))
+* new rule, `attribute-validate-value` ([716f7f6](https://gitlab.com/codsen/codsen/commit/716f7f61e13d2d0d1389f13ce5394c3dbe5e016f))
+* new rule, `attribute-validate-valuetype` ([fd68ed7](https://gitlab.com/codsen/codsen/commit/fd68ed731778a03dd1e152492dd12ea79cceb420))
+* new rule, `attribute-validate-version` ([e524e00](https://gitlab.com/codsen/codsen/commit/e524e007ebb8232df185fcd6c4670d8b206e08f0))
+* new rule, `attribute-validate-vspace` ([e99b727](https://gitlab.com/codsen/codsen/commit/e99b727185cef17cfa356eecb4f1fbcad007186c))
+* new rules, `attribute-validate-onclick` and `attribute-validate-ondblclick` ([b5d797c](https://gitlab.com/codsen/codsen/commit/b5d797c8a1a76b2fc1489e4ab78f90669dc031d5))
+* separate relative URI checking into a standalone package and then tap it ([c48a622](https://gitlab.com/codsen/codsen/commit/c48a622ecc5469d589d119f893860b87b172f402))
+
+
+
+
+
 ## 2.9.0 (2020-01-05)
 
 ### Features

@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.0.49
+ * Version: 8.0.50
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables

@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "2.2.14",
+  "version": "2.2.15",
   "description": "Iterate through string and optionally a given ranges as if they were one",
   "license": "MIT",
   "engines": {
@@ -112,16 +112,16 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-crop": "^2.0.43",
-    "ranges-invert": "^2.1.30",
+    "ranges-crop": "^2.0.44",
+    "ranges-invert": "^2.1.31",
     "runes": "^0.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

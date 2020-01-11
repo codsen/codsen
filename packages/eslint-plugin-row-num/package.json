@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-row-num",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "ESLint rule to update row numbers on each console.log",
   "license": "MIT",
   "engines": {
@@ -110,15 +110,15 @@
   },
   "dependencies": {
     "import-modules": "^2.0.0",
-    "js-row-num": "^2.7.1"
+    "js-row-num": "^2.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
     "eslint": "^6.8.0",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
