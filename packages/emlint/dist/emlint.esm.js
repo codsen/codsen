@@ -8457,6 +8457,46 @@ function attributeValidateText(context, ...opts) {
   };
 }
 
+function attributeValidateTitle(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "title") {
+        if (
+          [
+            "base",
+            "basefont",
+            "head",
+            "html",
+            "meta",
+            "param",
+            "script",
+            "title"
+          ].includes(node.parent.tagName)
+        ) {
+          context.report({
+            ruleId: "attribute-validate-title",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        }
+        const { errorArr } = checkForWhitespace(
+          node.attribValue,
+          node.attribValueStartAt
+        );
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "attribute-validate-title"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context, ...opts) {
   return {
     attribute: function(node) {
@@ -9848,6 +9888,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-text",
   () => attributeValidateText
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-title",
+  () => attributeValidateTitle
 );
 defineLazyProp(
   builtInRules,

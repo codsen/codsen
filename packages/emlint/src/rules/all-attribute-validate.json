@@ -108,6 +108,7 @@
   "attribute-validate-tabindex",
   "attribute-validate-target",
   "attribute-validate-text",
+  "attribute-validate-title",
   "attribute-validate-vlink",
   "attribute-validate-width"
 ]
