@@ -404,7 +404,14 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
     });
   }
 }
-function validateString(str, idxOffset, opts) {
+function validateString(str, idxOffset, originalOpts) {
+  var defaults = {
+    canBeCommaSeparated: false,
+    caseInsensitive: false,
+    quickPermittedValues: null,
+    permittedValues: null
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
       charStart = _checkForWhitespace.charStart,
       charEnd = _checkForWhitespace.charEnd,
@@ -7378,6 +7385,104 @@ function attributeValidateTitle(context) {
   };
 }
 
+function attributeValidateType(context) {
+  return {
+    attribute: function attribute(node) {
+      if (node.attribName === "type") {
+        if (!["a", "link", "object", "param", "script", "style", "input", "li", "ol", "ul", "button"].includes(node.parent.tagName)) {
+          context.report({
+            ruleId: "attribute-validate-type",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: "Tag \"".concat(node.parent.tagName, "\" can't have this attribute."),
+            fix: null
+          });
+        } else {
+          if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
+              permittedValues: Object.keys(db),
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          } else if (node.parent.tagName === "input") {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["text", "password", "checkbox", "radio", "submit", "reset", "file", "hidden", "image", "button"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          } else if (node.parent.tagName === "li") {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["disc", "square", "circle", "1", "a", "A", "i", "I"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          } else if (node.parent.tagName === "ol") {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["1", "a", "A", "i", "I"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          } else if (node.parent.tagName === "ul") {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["disc", "square", "circle"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          } else if (node.parent.tagName === "button") {
+            validateString(node.attribValue,
+            node.attribValueStartAt,
+            {
+              quickPermittedValues: ["button", "submit", "reset"],
+              permittedValues: null,
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false
+            }).forEach(function (errorObj) {
+              context.report(Object.assign({}, errorObj, {
+                ruleId: "attribute-validate-type"
+              }));
+            });
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context) {
   return {
     attribute: function attribute(node) {
@@ -8297,6 +8402,9 @@ defineLazyProp(builtInRules, "attribute-validate-text", function () {
 });
 defineLazyProp(builtInRules, "attribute-validate-title", function () {
   return attributeValidateTitle;
+});
+defineLazyProp(builtInRules, "attribute-validate-type", function () {
+  return attributeValidateType;
 });
 defineLazyProp(builtInRules, "attribute-validate-vlink", function () {
   return attributeValidateVlink;

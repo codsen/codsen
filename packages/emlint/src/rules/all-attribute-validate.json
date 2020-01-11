@@ -109,6 +109,7 @@
   "attribute-validate-target",
   "attribute-validate-text",
   "attribute-validate-title",
+  "attribute-validate-type",
   "attribute-validate-vlink",
   "attribute-validate-width"
 ]
