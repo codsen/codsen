@@ -8767,6 +8767,56 @@ function attributeValidateValign(context, ...opts) {
   };
 }
 
+function attributeValidateValue(context, ...opts) {
+  return {
+    attribute: function(node) {
+      if (node.attribName === "value") {
+        if (
+          !["input", "option", "param", "button", "li"].includes(
+            node.parent.tagName
+          )
+        ) {
+          context.report({
+            ruleId: "attribute-validate-value",
+            idxFrom: node.attribStart,
+            idxTo: node.attribEnd,
+            message: `Tag "${node.parent.tagName}" can't have this attribute.`,
+            fix: null
+          });
+        } else {
+          if (node.parent.tagName === "li") {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+              type: "integer",
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units.",
+              zeroOK: false,
+              customPxMessage: `Sequence number should not be in pixels.`
+            }).forEach(errorObj => {
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-value"
+                })
+              );
+            });
+          } else {
+            const { errorArr } = checkForWhitespace(
+              node.attribValue,
+              node.attribValueStartAt
+            );
+            errorArr.forEach(errorObj => {
+              context.report(
+                Object.assign({}, errorObj, {
+                  ruleId: "attribute-validate-value"
+                })
+              );
+            });
+          }
+        }
+      }
+    }
+  };
+}
+
 function attributeValidateVlink(context, ...opts) {
   return {
     attribute: function(node) {
@@ -10178,6 +10228,11 @@ defineLazyProp(
   builtInRules,
   "attribute-validate-valign",
   () => attributeValidateValign
+);
+defineLazyProp(
+  builtInRules,
+  "attribute-validate-value",
+  () => attributeValidateValue
 );
 defineLazyProp(
   builtInRules,
