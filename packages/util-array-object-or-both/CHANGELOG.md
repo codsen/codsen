@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.53](https://gitlab.com/codsen/codsen/compare/util-array-object-or-both@2.7.52...util-array-object-or-both@2.7.53) (2020-01-12)
+
+**Note:** Version bump only for package util-array-object-or-both
+
+
+
+
+
 ## 2.7.44 (2019-10-02)
 
 ### Performance Improvements

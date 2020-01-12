@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css-cli",
-  "version": "1.1.29",
+  "version": "1.1.30",
   "description": "Generates and updates all HTML templates' atomic CSS",
   "license": "MIT",
   "engines": {
@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "generate-atomic-css": "^1.2.29",
+    "generate-atomic-css": "^1.2.30",
     "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "meow": "^6.0.0",
@@ -133,10 +133,10 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.3",
+    "eslint-plugin-row-num": "^1.1.4",
     "execa": "^4.0.0",
-    "js-row-num-cli": "^1.6.13",
-    "lect": "^0.11.7",
+    "js-row-num-cli": "^1.6.14",
+    "lect": "^0.11.8",
     "prettier": "^1.19.1",
     "tap": "^14.10.5",
     "tempy": "^0.3.0"

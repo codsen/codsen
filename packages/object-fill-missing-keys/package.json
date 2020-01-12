@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "7.10.9",
+  "version": "7.10.10",
   "description": "Add missing keys into plain objects, according to a reference object",
   "license": "MIT",
   "engines": {
@@ -124,15 +124,15 @@
     "arrayiffy-if-string": "^3.11.26",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "object-all-values-equal-to": "^1.8.8",
-    "object-merge-advanced": "^10.11.11"
+    "object-all-values-equal-to": "^1.8.9",
+    "object-merge-advanced": "^10.11.12"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.13",
-    "lect": "^0.11.7",
+    "js-row-num-cli": "^1.6.14",
+    "lect": "^0.11.8",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

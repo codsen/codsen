@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.8.6
+ * Version: 5.8.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -1381,7 +1381,7 @@ function processCharacter(
   }
 }
 
-var version = "5.8.6";
+var version = "5.8.7";
 
 function det(str, inputOpts) {
   if (typeof str !== "string") {

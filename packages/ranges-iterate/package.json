@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "description": "Iterate a string and any changes within already existing ranges",
   "license": "MIT",
   "engines": {
@@ -123,10 +123,10 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.13",
-    "lect": "^0.11.7",
-    "ranges-apply": "^3.0.47",
-    "ranges-merge": "^4.2.30",
+    "js-row-num-cli": "^1.6.14",
+    "lect": "^0.11.8",
+    "ranges-apply": "^3.0.48",
+    "ranges-merge": "^4.2.31",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
