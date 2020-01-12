@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "2.0.42",
+  "version": "2.0.43",
   "description": "Perform a regex search on string and get a ranges array of findings (or null)",
   "license": "MIT",
   "engines": {
@@ -122,15 +122,15 @@
   },
   "dependencies": {
     "lodash.isregexp": "^4.0.1",
-    "ranges-merge": "^4.2.29"
+    "ranges-merge": "^4.2.30"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
-    "ranges-apply": "^3.0.46",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
+    "ranges-apply": "^3.0.47",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

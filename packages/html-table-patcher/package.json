@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "1.1.39",
+  "version": "1.1.40",
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "engines": {
@@ -132,11 +132,11 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "html-crush": "^1.9.17",
-    "js-row-num-cli": "^1.6.12",
+    "html-crush": "^1.9.18",
+    "js-row-num-cli": "^1.6.13",
     "json-stringify-safe": "^5.0.1",
-    "lect": "^0.11.6",
-    "object-delete-key": "^1.9.13",
+    "lect": "^0.11.7",
+    "object-delete-key": "^1.9.14",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

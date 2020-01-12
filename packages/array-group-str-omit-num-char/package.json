@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "2.1.28",
+  "version": "2.1.29",
   "description": "Groups array of strings by omitting number characters",
   "license": "MIT",
   "engines": {
@@ -125,14 +125,14 @@
   },
   "dependencies": {
     "lodash.uniq": "^4.5.0",
-    "ranges-apply": "^3.0.46"
+    "ranges-apply": "^3.0.47"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

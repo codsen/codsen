@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "3.0.46",
+  "version": "3.0.47",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "engines": {
@@ -118,14 +118,14 @@
   },
   "dependencies": {
     "is-natural-number-string": "^1.0.1",
-    "ranges-merge": "^4.2.29"
+    "ranges-merge": "^4.2.30"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

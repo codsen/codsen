@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "1.12.28",
+  "version": "1.12.29",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "license": "MIT",
   "engines": {
@@ -122,7 +122,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.53",
+    "ast-contains-only-empty-space": "^1.8.54",
     "lodash.clonedeep": "^4.5.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^2.1.0",
@@ -132,8 +132,8 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "benchmark": "^2.1.4",
-    "js-row-num-cli": "^1.6.12",
-    "lect": "^0.11.6",
+    "js-row-num-cli": "^1.6.13",
+    "lect": "^0.11.7",
     "rollup": "^1.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
