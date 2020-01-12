@@ -48,7 +48,7 @@
         "html-table-patcher": 27,
         "is-html-tag-opening": 75,
         "is-language-code": 813,
-        "is-media-descriptor": 46,
+        "is-media-descriptor": 71,
         "is-relative-uri": 76,
         "js-row-num": 72,
         "js-row-num-cli": 10,
@@ -109,12 +109,12 @@
         "util-nonempty": 14
     },
     "totalPackageCount": 107,
-    "totalAssertsCount": 824791,
+    "totalAssertsCount": 824816,
     "minAssertsCount": 2,
     "minAssertsName": "html-all-known-attributes",
     "maxAssertsCount": 746764,
     "maxAssertsName": "detergent",
-    "assertsCountMedian": 50,
-    "assertsCountArithmeticMean": 7708,
+    "assertsCountMedian": 55,
+    "assertsCountArithmeticMean": 7709,
     "assertsCountGeometricMean": 65
 }

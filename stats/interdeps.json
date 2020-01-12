@@ -237,7 +237,7 @@
     },
     {
         "name": "emlint",
-        "size": 293679,
+        "size": 293681,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
@@ -325,7 +325,7 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 2663,
+        "size": 5623,
         "imports": []
     },
     {
@@ -442,7 +442,7 @@
     },
     {
         "name": "object-flatten-referencing",
-        "size": 11383,
+        "size": 11384,
         "imports": [
             "str-indexes-of-plus"
         ]
@@ -548,7 +548,7 @@
     },
     {
         "name": "string-apostrophes",
-        "size": 18069,
+        "size": 18070,
         "imports": [
             "ranges-apply"
         ]
@@ -646,7 +646,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17850,
+        "size": 17852,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
