@@ -53,7 +53,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${32}m${`single-string values`}\u001b[${39}m`}`,
+  `01.01 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`,
   t => {
     [
       "all",
@@ -75,7 +75,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${32}m${`single-string values`}\u001b[${39}m`} - with offset`,
+  `01.02 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offset`,
   t => {
     [
       "all",
@@ -123,16 +123,52 @@ t.test(
   }
 );
 
+t.test(
+  `01.04 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
+  t => {
+    const str = `only`;
+    const res = isMediaD(str);
+    t.equal(applyFixes(str, res), str);
+    t.match(res, [
+      {
+        idxFrom: 0,
+        idxTo: 4,
+        message: "Missing media type or condition.",
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`,
+  t => {
+    const str = `not`;
+    const res = isMediaD(str);
+    t.equal(applyFixes(str, res), str);
+    t.match(res, [
+      {
+        idxFrom: 0,
+        idxTo: 3,
+        message: "Missing media type or condition.",
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
 // 02. whitespace related errors
 // -----------------------------------------------------------------------------
 
 t.test(
-  `02.01 - ${`\u001b[${36}m${`bad whitespace`}\u001b[${39}m`} - leading`,
+  `02.01 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`,
   t => {
     const str = `\tall`;
     const offset = 90;
     const res = isMediaD(str, { offset });
-    // t.equal(applyFixes(str, res, offset), `all`);
+    t.equal(applyFixes(str, res, offset), `all`);
     t.match(res, [
       {
         idxFrom: 90,
@@ -148,7 +184,7 @@ t.test(
 );
 
 t.test(
-  `02.02 - ${`\u001b[${36}m${`bad whitespace`}\u001b[${39}m`} - trailing`,
+  `02.02 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`,
   t => {
     const str = `all\t`;
     const res = isMediaD(str);
@@ -168,7 +204,7 @@ t.test(
 );
 
 t.test(
-  `02.03 - ${`\u001b[${36}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.03 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
   t => {
     const str = `\t\t\tall\t\n`;
     const res = isMediaD(str);
@@ -194,7 +230,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `03.01 - ${`\u001b[${31}m${`levenshtein`}\u001b[${39}m`} - minimal case`,
+  `03.01 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`,
   t => {
     const str = `screeen`;
     const offset = 10;
@@ -215,7 +251,7 @@ t.test(
 );
 
 t.test(
-  `03.02 - ${`\u001b[${31}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`,
+  `03.02 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`,
   t => {
     const str = `\t\t\tal\t\n`;
     const res = isMediaD(str);
@@ -245,60 +281,174 @@ t.test(
   }
 );
 
-// 04. composed values
+// 04. preliminary checks
 // -----------------------------------------------------------------------------
 
-// t.only(
-//   `04.01 - ${`\u001b[${31}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
-//   t => {
-//     const str = `only screen`;
-//     const offset = 10;
-//     const res = isMediaD(str, { offset });
-//     t.is(res, []);
-//     t.equal(applyFixes(str, res, offset), str);
-//     t.end();
-//   }
-// );
-//
-// t.test(
-//   `04.02 - ${`\u001b[${31}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`,
-//   t => {
-//     const str = `not (color)`;
-//     const offset = 10;
-//     const res = isMediaD(str, { offset });
-//     t.match(res, []);
-//     t.equal(applyFixes(str, res, offset), str);
-//     t.end();
-//   }
-// );
-//
-// t.test(
-//   `04.02 - ${`\u001b[${31}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
-//   t => {
-//     const str = `screen and (color)`;
-//     const offset = 10;
-//     const res = isMediaD(str, { offset });
-//     t.match(res, []);
-//     t.equal(applyFixes(str, res, offset), str);
-//     t.end();
-//   }
-// );
+t.test(
+  `04.01 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 1`,
+  t => {
+    const str = `only (screen))`;
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 14 + offset,
+        message: "More closing brackets than opening.",
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `04.02 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 2`,
+  t => {
+    const str = `only ((screen)`;
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 14 + offset,
+        message: "More opening brackets than closing.",
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `04.03 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  t => {
+    const str = `only ())screen(()`;
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 17 + offset,
+        message: "Some closing brackets are before their opening counterparts.",
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `04.04 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`,
+  t => {
+    const str = `only )))))`;
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 10 + offset,
+        message: "More closing brackets than opening.",
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+// 05. composed values
+// -----------------------------------------------------------------------------
+
+t.test(
+  `05.01 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
+  t => {
+    const str = `only screen`;
+    const offset = 60;
+    const res = isMediaD(str, { offset });
+    t.same(res, []);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `05.02 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`,
+  t => {
+    const str = `onlies screen`;
+    const offset = 50;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 6 + offset,
+        message: `Unrecognised media type "onlies".`,
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `05.03 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`,
+  t => {
+    const str = `not (color)`;
+    const offset = 40;
+    const res = isMediaD(str, { offset });
+    t.same(res, []);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(`05.04 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, t => {
+  const str = `only .`;
+  const offset = 30;
+  const res = isMediaD(str, { offset });
+  t.same(res, [
+    {
+      idxFrom: 5 + offset,
+      idxTo: 6 + offset,
+      message: `Unrecognised media type ".".`,
+      fix: null
+    }
+  ]);
+  t.equal(applyFixes(str, res, offset), str);
+  t.end();
+});
+
+t.test(
+  `05.05 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
+  t => {
+    const str = `screen and (color)`;
+    const offset = 20;
+    const res = isMediaD(str, { offset });
+    t.same(res, []);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
 
 // t.test(
-//   `04.03 - ${`\u001b[${31}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
+//   `05.06 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
 //   t => {
 //     const str = `screen and color`;
-//     const offset = 10;
+//     const offset = 88;
 //     const res = isMediaD(str, { offset });
 //     t.match(res, [
 //       {
-//         idxFrom: 10,
-//         idxTo: 17,
+//         idxFrom: 10 + offset,
+//         idxTo: 17 + offset,
 //         message: `Brackets missing around "color".`,
 //         fix: {
 //           ranges: [
-//             [11, 11, `(`],
-//             [16, 16, ")"]
+//             [11 + offset, 11 + offset, `(`],
+//             [16 + offset, 16 + offset, ")"]
 //           ]
 //         }
 //       }

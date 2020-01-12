@@ -78,6 +78,13 @@ function isMediaD(originalStr, originalOpts) {
   }
   if (recognisedMediaTypes.includes(str)) {
     return res;
+  } else if (["only", "not"].includes(str)) {
+    res.push({
+      idxFrom: nonWhitespaceStart + opts.offset,
+      idxTo: nonWhitespaceEnd + opts.offset,
+      message: `Missing media type or condition.`,
+      fix: null
+    });
   } else if (
     str.match(mostlyLettersRegex) &&
     !str.includes("(") &&
@@ -111,10 +118,70 @@ function isMediaD(originalStr, originalOpts) {
       }
     }
   } else {
+    let wrongOrder = false;
+    const [openingBracketCount, closingBracketCount] = Array.from(str).reduce(
+      (acc, curr) => {
+        if (curr === ")") {
+          if (!wrongOrder && acc[1] + 1 > acc[0]) {
+            wrongOrder = true;
+          }
+          return [acc[0], acc[1] + 1];
+        } else if (curr === "(") {
+          return [acc[0] + 1, acc[1]];
+        }
+        return acc;
+      },
+      [0, 0]
+    );
+    if (wrongOrder && openingBracketCount === closingBracketCount) {
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "Some closing brackets are before their opening counterparts.",
+        fix: null
+      });
+    }
+    if (openingBracketCount > closingBracketCount) {
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "More opening brackets than closing.",
+        fix: null
+      });
+    } else if (closingBracketCount > openingBracketCount) {
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "More closing brackets than opening.",
+        fix: null
+      });
+    }
+    if (res.length) {
+      return res;
+    }
     let chunkStartsAt = null;
+    let mediaTypeOrMediaConditionNext = true;
     for (let i = 0, len = str.length; i <= len; i++) {
       if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
         const chunk = str.slice(chunkStartsAt, i);
+        if (mediaTypeOrMediaConditionNext) {
+          if (chunk.startsWith("(")) ; else {
+            if (["only", "not"].includes(chunk.toLowerCase())) ; else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              mediaTypeOrMediaConditionNext = false;
+            } else {
+              res.push({
+                idxFrom: chunkStartsAt + opts.offset,
+                idxTo: i + opts.offset,
+                message: `Unrecognised media type "${str.slice(
+                  chunkStartsAt,
+                  i
+                )}".`,
+                fix: null
+              });
+              break;
+            }
+          }
+        }
         chunkStartsAt = null;
       }
       if (chunkStartsAt === null && str[i] && str[i].trim().length) {

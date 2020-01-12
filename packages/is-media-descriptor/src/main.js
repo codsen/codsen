@@ -152,6 +152,17 @@ function isMediaD(originalStr, originalOpts) {
       `152 whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return res;
+  } else if (["only", "not"].includes(str)) {
+    console.log(
+      `157 PUSH [${nonWhitespaceStart + opts.offset}, ${nonWhitespaceEnd +
+        opts.offset}]`
+    );
+    res.push({
+      idxFrom: nonWhitespaceStart + opts.offset,
+      idxTo: nonWhitespaceEnd + opts.offset,
+      message: `Missing media type or condition.`,
+      fix: null
+    });
   } else if (
     str.match(mostlyLettersRegex) &&
     !str.includes("(") &&
@@ -174,17 +185,17 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     //
-    console.log(`177 mostly-letters clauses`);
+    console.log(`188 mostly-letters clauses`);
 
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       console.log(
-        `181 leven ${recognisedMediaTypes[i]} = ${leven(
+        `192 leven ${recognisedMediaTypes[i]} = ${leven(
           recognisedMediaTypes[i],
           str
         )}`
       );
       if (leven(recognisedMediaTypes[i], str) === 1) {
-        console.log(`187 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        console.log(`198 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -204,9 +215,9 @@ function isMediaD(originalStr, originalOpts) {
 
       if (i === len - 1) {
         // it means nothing was matched
-        console.log(`207 end reached`);
+        console.log(`218 end reached`);
         console.log(
-          `209 PUSH [${`\u001b[${33}m${nonWhitespaceStart +
+          `220 PUSH [${`\u001b[${33}m${nonWhitespaceStart +
             opts.offset}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd +
             opts.offset}\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`
         );
@@ -217,7 +228,7 @@ function isMediaD(originalStr, originalOpts) {
           fix: null
         });
         console.log(
-          `220 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+          `231 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
             res,
             null,
             4
@@ -245,12 +256,99 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
 
+    // PART 1.
+    // ███████████████████████████████████████
+
+    console.log(`262 PART I. Preliminary checks.`);
+
+    // Preventive checks will help to simplify the algorithm - we won't need
+    // to cater for so many edge cases later.
+
+    let wrongOrder = false;
+    const [openingBracketCount, closingBracketCount] = Array.from(str).reduce(
+      (acc, curr) => {
+        if (curr === ")") {
+          // if at any time, there are more closing brackets than opening-ones,
+          // this means order is messed up
+          if (!wrongOrder && acc[1] + 1 > acc[0]) {
+            console.log(
+              `275 set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
+            );
+            wrongOrder = true;
+          }
+          return [acc[0], acc[1] + 1];
+        } else if (curr === "(") {
+          return [acc[0] + 1, acc[1]];
+        }
+        return acc;
+      },
+      [0, 0]
+    );
+
+    // we raise this error only when there is equal amount of brackets,
+    // only the order is messed up:
+    if (wrongOrder && openingBracketCount === closingBracketCount) {
+      console.log(
+        `292 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+      );
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "Some closing brackets are before their opening counterparts.",
+        fix: null
+      });
+    }
+    console.log(
+      `302 ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+        openingBracketCount,
+        null,
+        4
+      )}`
+    );
+    console.log(
+      `309 ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+        closingBracketCount,
+        null,
+        4
+      )}`
+    );
+
+    // these are the "normal" errors - reporting that there were more one kind
+    // of brackets than the other:
+    if (openingBracketCount > closingBracketCount) {
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "More opening brackets than closing.",
+        fix: null
+      });
+    } else if (closingBracketCount > openingBracketCount) {
+      res.push({
+        idxFrom: nonWhitespaceStart + opts.offset,
+        idxTo: nonWhitespaceEnd + opts.offset,
+        message: "More closing brackets than opening.",
+        fix: null
+      });
+    }
+
+    if (res.length) {
+      // report errors early, save resources
+      console.log(`336 early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+      return res;
+    }
+
+    // PART 2.
+    // ███████████████████████████████████████
+
+    console.log(`343 PART II. The main loop.`);
+
     // THE MAIN LOOP
     // ---------------------------------------------------------------------------
 
     let chunkStartsAt = null;
+    let mediaTypeOrMediaConditionNext = true;
 
-    console.log(`253 get to business, loop through`);
+    console.log(`351 get to business, loop through`);
     for (let i = 0, len = str.length; i <= len; i++) {
       //
 
@@ -293,12 +391,57 @@ function isMediaD(originalStr, originalOpts) {
       if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
         // extract the value:
         const chunk = str.slice(chunkStartsAt, i);
-        console.log(`296 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
+        console.log(`394 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
+
+        // we use mediaTypeOrMediaConditionNext to establish where we are
+        // logically - media type/condition might be preceded by not/only or
+        // might be not - that's why we need this flag, to distinguish these
+        // two cases
+        if (mediaTypeOrMediaConditionNext) {
+          console.log(
+            `402 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
+          );
+          // check is the current chunk wrapped with brackets, because if so,
+          // it is media type, and otherwise, it's media condition
+          // see https://drafts.csswg.org/mediaqueries/#media for more
+          if (chunk.startsWith("(")) {
+            console.log(`408 chunk starts with a bracket!`);
+          } else {
+            console.log(`410 chunk does not start with a bracket!`);
+            if (["only", "not"].includes(chunk.toLowerCase())) {
+              console.log(
+                `413 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
+              );
+            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              console.log(
+                `417 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
+              );
+              mediaTypeOrMediaConditionNext = false;
+              console.log(
+                `421 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
+              );
+            } else {
+              // it's an error, something not recognised
+              console.log(`425 PUSH an error`);
+              res.push({
+                idxFrom: chunkStartsAt + opts.offset,
+                idxTo: i + opts.offset,
+                message: `Unrecognised media type "${str.slice(
+                  chunkStartsAt,
+                  i
+                )}".`,
+                fix: null
+              });
+              console.log(`435 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+              break;
+            }
+          }
+        }
 
         // reset
         chunkStartsAt = null;
         console.log(
-          `301 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `444 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -307,7 +450,7 @@ function isMediaD(originalStr, originalOpts) {
       if (chunkStartsAt === null && str[i] && str[i].trim().length) {
         chunkStartsAt = i;
         console.log(
-          `310 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `453 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -326,14 +469,17 @@ function isMediaD(originalStr, originalOpts) {
       console.log(
         `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`
       );
+      console.log(
+        `${`\u001b[${90}m${`mediaTypeOrMediaConditionNext: ${mediaTypeOrMediaConditionNext}`}\u001b[${39}m`}`
+      );
     }
   }
 
   // ---------------------------------------------------------------------------
 
-  console.log(`334 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`480 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   console.log(
-    `336 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `482 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
