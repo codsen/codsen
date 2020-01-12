@@ -28,7 +28,7 @@ function _typeof(obj) {
 }
 
 var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"];
-function isMediaD(str, originalOpts) {
+function isMediaD(originalStr, originalOpts) {
   var defaults = {
     offset: 0
   };
@@ -39,31 +39,31 @@ function isMediaD(str, originalOpts) {
   if (!opts.offset) {
     opts.offset = 0;
   }
-  if (typeof str !== "string") {
+  if (typeof originalStr !== "string") {
     return [];
-  } else if (!str.trim().length) {
+  } else if (!originalStr.trim().length) {
     return [];
   }
-  var mostlyLettersRegex = /^\w+$|^\w*\W\w+$|^\w+\W\w*$/g;
+  var mostlyLettersRegex = /^\w+$/g;
   var res = [];
   var nonWhitespaceStart = 0;
-  var nonWhitespaceEnd = str.length;
-  var trimmedStr = str.trim();
-  if (str !== str.trim()) {
+  var nonWhitespaceEnd = originalStr.length;
+  var str = originalStr.trim();
+  if (originalStr !== originalStr.trim()) {
     var ranges = [];
-    if (!str[0].trim().length) {
-      for (var i = 0, len = str.length; i < len; i++) {
-        if (str[i].trim().length) {
+    if (!originalStr[0].trim().length) {
+      for (var i = 0, len = originalStr.length; i < len; i++) {
+        if (originalStr[i].trim().length) {
           ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
       }
     }
-    if (!str[str.length - 1].trim().length) {
-      for (var _i = str.length; _i--;) {
-        if (str[_i].trim().length) {
-          ranges.push([_i + 1 + opts.offset, str.length + opts.offset]);
+    if (!originalStr[originalStr.length - 1].trim().length) {
+      for (var _i = originalStr.length; _i--;) {
+        if (originalStr[_i].trim().length) {
+          ranges.push([_i + 1 + opts.offset, originalStr.length + opts.offset]);
           nonWhitespaceEnd = _i + 1;
           break;
         }
@@ -78,11 +78,11 @@ function isMediaD(str, originalOpts) {
       }
     });
   }
-  if (recognisedMediaTypes.includes(trimmedStr)) {
+  if (recognisedMediaTypes.includes(str)) {
     return res;
-  } else if (trimmedStr.match(mostlyLettersRegex)) {
+  } else if (str.match(mostlyLettersRegex) && !str.includes("(") && !str.includes(")")) {
     for (var _i2 = 0, _len = recognisedMediaTypes.length; _i2 < _len; _i2++) {
-      if (leven(recognisedMediaTypes[_i2], trimmedStr) === 1) {
+      if (leven(recognisedMediaTypes[_i2], str) === 1) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -92,6 +92,25 @@ function isMediaD(str, originalOpts) {
           }
         });
         break;
+      }
+      if (_i2 === _len - 1) {
+        res.push({
+          idxFrom: nonWhitespaceStart + opts.offset,
+          idxTo: nonWhitespaceEnd + opts.offset,
+          message: "Unrecognised media type \"".concat(str, "\"."),
+          fix: null
+        });
+      }
+    }
+  } else {
+    var chunkStartsAt = null;
+    for (var _i3 = 0, _len2 = str.length; _i3 <= _len2; _i3++) {
+      if (chunkStartsAt !== null && (!str[_i3] || !str[_i3].trim().length)) {
+        var chunk = str.slice(chunkStartsAt, _i3);
+        chunkStartsAt = null;
+      }
+      if (chunkStartsAt === null && str[_i3] && str[_i3].trim().length) {
+        chunkStartsAt = _i3;
       }
     }
   }

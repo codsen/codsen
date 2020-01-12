@@ -33,7 +33,7 @@ const recognisedMediaTypes = [
 // Reference used:
 // https://drafts.csswg.org/mediaqueries/
 
-function isMediaD(str, originalOpts) {
+function isMediaD(originalStr, originalOpts) {
   const defaults = {
     offset: 0
   };
@@ -53,14 +53,20 @@ function isMediaD(str, originalOpts) {
   }
 
   // quick ending
-  if (typeof str !== "string") {
+  if (typeof originalStr !== "string") {
+    console.log(
+      `058 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+    );
     return [];
-  } else if (!str.trim().length) {
+  } else if (!originalStr.trim().length) {
+    console.log(
+      `063 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+    );
     return [];
   }
 
   // allows one non-letter among letters:
-  const mostlyLettersRegex = /^\w+$|^\w*\W\w+$|^\w+\W\w*$/g;
+  const mostlyLettersRegex = /^\w+$/g;
 
   const res = [];
 
@@ -68,9 +74,9 @@ function isMediaD(str, originalOpts) {
   // mark the known index of the first and last non-whitespace
   // character (a'la trim)
   let nonWhitespaceStart = 0;
-  let nonWhitespaceEnd = str.length;
+  let nonWhitespaceEnd = originalStr.length;
 
-  const trimmedStr = str.trim();
+  const str = originalStr.trim();
 
   // ---------------------------------------------------------------------------
 
@@ -84,23 +90,23 @@ function isMediaD(str, originalOpts) {
   //
   // ^ notice rogue space above
 
-  if (str !== str.trim()) {
+  if (originalStr !== originalStr.trim()) {
     const ranges = [];
-    if (!str[0].trim().length) {
+    if (!originalStr[0].trim().length) {
       // traverse forward
-      for (let i = 0, len = str.length; i < len; i++) {
-        if (str[i].trim().length) {
+      for (let i = 0, len = originalStr.length; i < len; i++) {
+        if (originalStr[i].trim().length) {
           ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
       }
     }
-    if (!str[str.length - 1].trim().length) {
+    if (!originalStr[originalStr.length - 1].trim().length) {
       // traverse backwards from the end
-      for (let i = str.length; i--; ) {
-        if (str[i].trim().length) {
-          ranges.push([i + 1 + opts.offset, str.length + opts.offset]);
+      for (let i = originalStr.length; i--; ) {
+        if (originalStr[i].trim().length) {
+          ranges.push([i + 1 + opts.offset, originalStr.length + opts.offset]);
           nonWhitespaceEnd = i + 1;
           break;
         }
@@ -119,28 +125,66 @@ function isMediaD(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `122 ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
+    `128 ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
   );
 
   // quick checks first - cover the most common cases, to make checks the
   // quickest possible when everything's all right
-  if (recognisedMediaTypes.includes(trimmedStr)) {
+  if (recognisedMediaTypes.includes(str)) {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // 1. string-only, like "screen"
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     console.log(
-      `129 whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      `152 whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return res;
-  } else if (trimmedStr.match(mostlyLettersRegex)) {
-    console.log(`133 mostly-letters clauses`);
+  } else if (
+    str.match(mostlyLettersRegex) &&
+    !str.includes("(") &&
+    !str.includes(")")
+  ) {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // 2. string-only, unrecognised like "screeeen"
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    console.log(`177 mostly-letters clauses`);
 
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       console.log(
-        `137 leven ${recognisedMediaTypes[i]} = ${leven(
+        `181 leven ${recognisedMediaTypes[i]} = ${leven(
           recognisedMediaTypes[i],
-          trimmedStr
+          str
         )}`
       );
-      if (leven(recognisedMediaTypes[i], trimmedStr) === 1) {
-        console.log(`143 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      if (leven(recognisedMediaTypes[i], str) === 1) {
+        console.log(`187 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -157,12 +201,144 @@ function isMediaD(str, originalOpts) {
         });
         break;
       }
+
+      if (i === len - 1) {
+        // it means nothing was matched
+        console.log(`207 end reached`);
+        console.log(
+          `209 PUSH [${`\u001b[${33}m${nonWhitespaceStart +
+            opts.offset}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd +
+            opts.offset}\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`
+        );
+        res.push({
+          idxFrom: nonWhitespaceStart + opts.offset,
+          idxTo: nonWhitespaceEnd + opts.offset,
+          message: `Unrecognised media type "${str}".`,
+          fix: null
+        });
+        console.log(
+          `220 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+            res,
+            null,
+            4
+          )}`
+        );
+      }
+      // if break hasn't been triggered yet, if this row has been reached,
+    }
+  } else {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // 3. mixed, like "screen"
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+    // THE MAIN LOOP
+    // ---------------------------------------------------------------------------
+
+    let chunkStartsAt = null;
+
+    console.log(`253 get to business, loop through`);
+    for (let i = 0, len = str.length; i <= len; i++) {
+      //
+
+      //
+      //
+      //
+      //
+      //                                THE TOP
+      //                                ███████
+      //
+      //
+      //
+      //
+
+      // Logging:
+      // -------------------------------------------------------------------------
+      console.log(
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+          str[i] && str[i].trim().length
+            ? str[i]
+            : JSON.stringify(str[i], null, 4)
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+      );
+
+      //
+      //
+      //
+      //
+      //                               MIDDLE
+      //                               ██████
+      //
+      //
+      //
+      //
+
+      // catch the ending of a chunk
+      // we deliberately wander outside of the string length by 1 character
+      // to simplify calculations and to shake up the type complaceancy,
+      // str[i] can be undefined now (on the last traversal cycle)!
+      if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
+        // extract the value:
+        const chunk = str.slice(chunkStartsAt, i);
+        console.log(`296 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
+
+        // reset
+        chunkStartsAt = null;
+        console.log(
+          `301 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        );
+      }
+
+      // catch the beginning of a chunk, without brackets like "print" or
+      // with brackets like (min-resolution: 300dpi)
+      if (chunkStartsAt === null && str[i] && str[i].trim().length) {
+        chunkStartsAt = i;
+        console.log(
+          `310 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+        );
+      }
+
+      //
+      //
+      //
+      //
+      //                               BOTTOM
+      //                               ██████
+      //
+      //
+      //
+      //
+
+      // LOGGING
+      console.log(
+        `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`
+      );
     }
   }
 
   // ---------------------------------------------------------------------------
 
-  console.log(`165 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`334 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(
+    `336 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      res,
+      null,
+      4
+    )}`
+  );
   return res;
 }
 

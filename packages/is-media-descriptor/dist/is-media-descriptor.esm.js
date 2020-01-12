@@ -22,7 +22,7 @@ const recognisedMediaTypes = [
   "tty",
   "tv"
 ];
-function isMediaD(str, originalOpts) {
+function isMediaD(originalStr, originalOpts) {
   const defaults = {
     offset: 0
   };
@@ -37,31 +37,31 @@ function isMediaD(str, originalOpts) {
   if (!opts.offset) {
     opts.offset = 0;
   }
-  if (typeof str !== "string") {
+  if (typeof originalStr !== "string") {
     return [];
-  } else if (!str.trim().length) {
+  } else if (!originalStr.trim().length) {
     return [];
   }
-  const mostlyLettersRegex = /^\w+$|^\w*\W\w+$|^\w+\W\w*$/g;
+  const mostlyLettersRegex = /^\w+$/g;
   const res = [];
   let nonWhitespaceStart = 0;
-  let nonWhitespaceEnd = str.length;
-  const trimmedStr = str.trim();
-  if (str !== str.trim()) {
+  let nonWhitespaceEnd = originalStr.length;
+  const str = originalStr.trim();
+  if (originalStr !== originalStr.trim()) {
     const ranges = [];
-    if (!str[0].trim().length) {
-      for (let i = 0, len = str.length; i < len; i++) {
-        if (str[i].trim().length) {
+    if (!originalStr[0].trim().length) {
+      for (let i = 0, len = originalStr.length; i < len; i++) {
+        if (originalStr[i].trim().length) {
           ranges.push([0 + opts.offset, i + opts.offset]);
           nonWhitespaceStart = i;
           break;
         }
       }
     }
-    if (!str[str.length - 1].trim().length) {
-      for (let i = str.length; i--; ) {
-        if (str[i].trim().length) {
-          ranges.push([i + 1 + opts.offset, str.length + opts.offset]);
+    if (!originalStr[originalStr.length - 1].trim().length) {
+      for (let i = originalStr.length; i--; ) {
+        if (originalStr[i].trim().length) {
+          ranges.push([i + 1 + opts.offset, originalStr.length + opts.offset]);
           nonWhitespaceEnd = i + 1;
           break;
         }
@@ -76,11 +76,15 @@ function isMediaD(str, originalOpts) {
       }
     });
   }
-  if (recognisedMediaTypes.includes(trimmedStr)) {
+  if (recognisedMediaTypes.includes(str)) {
     return res;
-  } else if (trimmedStr.match(mostlyLettersRegex)) {
+  } else if (
+    str.match(mostlyLettersRegex) &&
+    !str.includes("(") &&
+    !str.includes(")")
+  ) {
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
-      if (leven(recognisedMediaTypes[i], trimmedStr) === 1) {
+      if (leven(recognisedMediaTypes[i], str) === 1) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -96,6 +100,25 @@ function isMediaD(str, originalOpts) {
           }
         });
         break;
+      }
+      if (i === len - 1) {
+        res.push({
+          idxFrom: nonWhitespaceStart + opts.offset,
+          idxTo: nonWhitespaceEnd + opts.offset,
+          message: `Unrecognised media type "${str}".`,
+          fix: null
+        });
+      }
+    }
+  } else {
+    let chunkStartsAt = null;
+    for (let i = 0, len = str.length; i <= len; i++) {
+      if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
+        const chunk = str.slice(chunkStartsAt, i);
+        chunkStartsAt = null;
+      }
+      if (chunkStartsAt === null && str[i] && str[i].trim().length) {
+        chunkStartsAt = i;
       }
     }
   }

@@ -57,7 +57,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-media-descriptor.cjs.js` | 3 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-media-descriptor.cjs.js` | 4 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-media-descriptor.esm.js` | 3 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-media-descriptor.umd.js` | 2 KB |
 
@@ -65,50 +65,36 @@ This package has three builds in `dist/` folder:
 
 ## Background
 
-We are talking about so-called _media descriptors_ [older spec](https://www.w3.org/TR/html4/types.html#type-media-descriptors), [newer spec, CSS MQ Level 4, draft at the moment](https://drafts.csswg.org/mediaqueries/).
+We are talking about so-called _media descriptors_ ([older spec](https://www.w3.org/TR/html4/types.html#type-media-descriptors), [newer spec - CSS MQ Level 4, draft at the moment](https://drafts.csswg.org/mediaqueries/)).
 
-This `"print"` is a _media descriptor_ and this program checks it:
+This program checks _media descriptors_ — either in HTML attribute's `media` values OR in CSS styles, everything between `@media`/`@import` and opening curly brace.
+
+For example,
+
+The value `"screen"` below is a _media descriptor_ and this program checks it:
 
 ```html
-<style media="screen"></style>
+<style media="screen"></style> ^^^^^^
 ```
 
 Or this `"print"`:
 
-```html
+```xml
 <link rel="stylesheet" type="text/css" href="print.css" media="print" />
+                                                               ^^^^^
 ```
 
 > "CSS adapted and extended this functionality with its @media and @import rules, adding the ability to query the value of individual features" — https://drafts.csswg.org/mediaqueries/
 
-This program validates this `"screen"` in CSS:
+This program validates this `only screen and (min-width: 320px) and (max-width: 500px)` in CSS:
 
 ```css
-@media screen {
+@media only screen and (min-width: 320px) and (max-width: 500px) {
   * {
     font-family: sans-serif;
   }
 }
 ```
-
-There are tools to validate the media selectors, notably by [W3C](http://jigsaw.w3.org/css-validator/#validate_by_input+with_options) but they will only tell you that parser got an error, not what that error is or how to fix it.
-
-It's like "Find Wally" — find an error now:
-
-```css
-@media only (screen) and (min-width: 320px) and (max-width: 500px) {
-  .container {
-    width: 100%;
-  }
-  nav {
-    display: none;
-  }
-}
-```
-
-PS. It was `screen` with redundant brackets.
-
-This program validates that part above, `only (screen) and (min-width : 320px) and (max-width : 500px)`.
 
 We plan to catch as many errors as possible:
 
@@ -143,7 +129,7 @@ isMediaD("screen", { offset: 0 });
 isMediaD("screen", { offset: 51 });
 ```
 
-Bad examples - don't put `@media`, extract the value:
+⚠️ A bad example is below - don't put `@media`, extract the value:
 
 ```js
 // program won't work with `@media` - extract the value first!
@@ -158,7 +144,7 @@ Correct input's example would be:
 isMediaD("only (screen) and (min-width: 320px) and (max-width: 500px)");
 ```
 
-If an input is not a string or an empty string, an empty array will be returned. API is deliberately very _docile_ because it will be used exclusively inside other programs.
+If an input is not a string or an empty string, an empty array will be returned.
 
 **[⬆ back to top](#)**
 
@@ -191,7 +177,7 @@ The program returns an array of zero or more plain objects, each meaning an erro
 
 Quick basics: `idxFrom` and `idxTo` are the same as in `String.slice`, just used for marking.
 
-The `fix` key is either `null` or has value, plain object, with key `ranges`. ESLint uses singular, `range`, EMLint uses `ranges`, plural, because EMLint uses Ranges notation — where ESLint marks "to add" thing separately, EMLint puts it as the third element in ranges array.
+The `fix` key is either `null` or has value — plain object — with key `ranges`. ESLint uses singular, `range`, EMLint uses `ranges`, plural, because EMLint uses Ranges notation — where ESLint marks "to add" thing separately, EMLint puts it as the third element in ranges array.
 
 Ranges as key above and in general are always either `null` or array of arrays.
 
@@ -224,46 +210,20 @@ The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/e
 
 ## Competition
 
-There are capable CSS parsers out there, but they are all oriented at parsing the **correct code**. If code errors are serious-enough, parsers will indeed throw certain errors but
+There are capable CSS parsers out there, but they are all oriented at parsing the **correct code** and strictly pure HTML or CSS. Code validators built upon such parsers are not really serious validators.
 
-a) those errors don't suggest how to fix the code;<br>
-b) those errors often miss the exact location;<br>
-c) most of the times they mention a _consequence_, not _cause_;<br>
-d) often they lean on the safe side, passing similar values as legit and raise warnings for what is an error (for example, `mi-width`).
+- [W3C](http://jigsaw.w3.org/css-validator/#validate_by_input+with_options)
+- [CSSTree Validator](https://csstree.github.io/docs/validator.html)
 
-For example, https://csstree.github.io/docs/validator.html currently can't catch redundant bracket around `screen` yet http://jigsaw.w3.org/css-validator/#validate_by_input+with_options flags it up:
+Think, if a tool catches errors, and those errors break parsers, and parser drives a tool, how capable is the tool?
 
-```css
-@media only (screen) and (min-width: 320px) and (max-width: 500px) {
-  .container {
-    width: 100%;
-  }
-  nav {
-    display: none;
-  }
-}
-```
+It's similar to:
 
-In general, CSS parsers are aimed at **correct code processing**.
+If a policemen catch thieves, and thieves pay the government each month to pay police wages, how capable is that police?
 
-And validators which are built upon such parsers are not really serious validators.
+Parser is for correct code. For broken code or mixed sources, you need _Rambo_ tool, trained at dealing with bad guys. You need this program.
 
-Conceptually, if a tool catches errors, and those errors break parsers, how can a tool be based upon a parser?
-
-This program is aimed at **broken code processing**, to power linters, to find _and fix_ broken code, possibly at code-editor-level. It does not work from AST, it processes input as string.
-
-Another problem is that parsers either parse either HTML or CSS. But media descriptor value (`"screen"`) can be both in HTML and in CSS:
-
-```html
-<style media="screen"></style>
-```
-
-```css
-@media screen {
-}
-```
-
-This program is agnostic, as long as you pass the "cropped" value (like `screen` above).
+This program is aimed at **broken code processing**, to power linters, to find _and fix_ broken code, possibly at code-editor-level. It does not work from AST; it processes the input as string.
 
 **[⬆ back to top](#)**
 
@@ -290,7 +250,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/is-media-descriptor
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
-[cov-img]: https://img.shields.io/badge/coverage-92.86%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-84.62%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/is-media-descriptor
