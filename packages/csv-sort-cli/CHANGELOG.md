@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.57](https://gitlab.com/codsen/codsen/compare/csv-sort-cli@1.9.56...csv-sort-cli@1.9.57) (2020-01-12)
-
-**Note:** Version bump only for package csv-sort-cli
-
-
-
-
-
 ## 1.9.51 (2019-11-20)
 
 ### Bug Fixes
