@@ -196,7 +196,36 @@ function isMediaD(originalStr, originalOpts) {
     var chunkStartsAt = null;
     var mediaTypeOrMediaConditionNext = true;
     var gatheredChunksArr = [];
+    var whitespaceStartsAt = null;
     for (var _i3 = 0, _len2 = str.length; _i3 <= _len2; _i3++) {
+      if (str[_i3] && str[_i3].trim().length && whitespaceStartsAt !== null) {
+        if (whitespaceStartsAt < _i3 - 1 || str[_i3 - 1] !== " ") {
+          var rangesFrom = whitespaceStartsAt + opts.offset;
+          var rangesTo = _i3 + opts.offset;
+          var rangesInsert = " ";
+          if (whitespaceStartsAt !== _i3 - 1) {
+            if (str[whitespaceStartsAt] === " ") {
+              rangesFrom++;
+              rangesInsert = null;
+            } else if (str[_i3 - 1] === " ") {
+              rangesTo--;
+              rangesInsert = null;
+            }
+          }
+          res.push({
+            idxFrom: whitespaceStartsAt + opts.offset,
+            idxTo: _i3 + opts.offset,
+            message: "Bad whitespace.",
+            fix: {
+              ranges: [rangesInsert ? [rangesFrom, rangesTo, " "] : [rangesFrom, rangesTo]]
+            }
+          });
+        }
+        whitespaceStartsAt = null;
+      }
+      if (str[_i3] && !str[_i3].trim().length && whitespaceStartsAt === null) {
+        whitespaceStartsAt = _i3;
+      }
       if (chunkStartsAt !== null && (!str[_i3] || !str[_i3].trim().length)) {
         var chunk = str.slice(chunkStartsAt, _i3);
         gatheredChunksArr.push(chunk);

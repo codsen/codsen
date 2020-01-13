@@ -348,8 +348,9 @@ function isMediaD(originalStr, originalOpts) {
     let chunkStartsAt = null;
     let mediaTypeOrMediaConditionNext = true;
     const gatheredChunksArr = [];
+    let whitespaceStartsAt = null;
 
-    console.log(`352 get to business, loop through`);
+    console.log(`353 get to business, loop through`);
     for (let i = 0, len = str.length; i <= len; i++) {
       //
 
@@ -385,6 +386,62 @@ function isMediaD(originalStr, originalOpts) {
       //
       //
 
+      // catch the ending of a whitespace chunk
+      if (str[i] && str[i].trim().length && whitespaceStartsAt !== null) {
+        if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
+          console.log(
+            `393 ${`\u001b[${31}m${`BAD WHITESPACE CAUGHT`}\u001b[${39}m`}`
+          );
+          // Depends what whitespace is this. We aim to remove minimal amount
+          // of characters possible. If there is excessive whitespace, we'll
+          // delete all spaces except one instead of deleting all spaces and
+          // inserting a space. That's to minimize the footprint of amends,
+          // also to make merged ranges simpler later.
+
+          // defaults is whole thing replacement:
+          let rangesFrom = whitespaceStartsAt + opts.offset;
+          let rangesTo = i + opts.offset;
+          let rangesInsert = " ";
+          // if whitespace chunk is longer than one, let's try to cut corners:
+          if (whitespaceStartsAt !== i - 1) {
+            console.log(`407 A MULTIPLE WHITESPACE CHARS`);
+            if (str[whitespaceStartsAt] === " ") {
+              rangesFrom++;
+              rangesInsert = null;
+            } else if (str[i - 1] === " ") {
+              rangesTo--;
+              rangesInsert = null;
+            }
+          }
+          res.push({
+            idxFrom: whitespaceStartsAt + opts.offset, // reporting is always whole whitespace
+            idxTo: i + opts.offset, // reporting is always whole whitespace
+            message: `Bad whitespace.`,
+            fix: {
+              ranges: [
+                rangesInsert
+                  ? [rangesFrom, rangesTo, " "]
+                  : [rangesFrom, rangesTo]
+              ]
+            }
+          });
+        }
+
+        // reset
+        whitespaceStartsAt = null;
+        console.log(
+          `433 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = null`
+        );
+      }
+
+      // catch the beginning of a whitespace chunk
+      if (str[i] && !str[i].trim().length && whitespaceStartsAt === null) {
+        whitespaceStartsAt = i;
+        console.log(
+          `441 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+        );
+      }
+
       // catch the ending of a chunk
       // we deliberately wander outside of the string length by 1 character
       // to simplify calculations and to shake up the type complaceancy,
@@ -393,7 +450,7 @@ function isMediaD(originalStr, originalOpts) {
         // extract the value:
         const chunk = str.slice(chunkStartsAt, i);
         gatheredChunksArr.push(chunk);
-        console.log(`396 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
+        console.log(`453 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
 
         // we use mediaTypeOrMediaConditionNext to establish where we are
         // logically - media type/condition might be preceded by not/only or
@@ -401,18 +458,18 @@ function isMediaD(originalStr, originalOpts) {
         // two cases
         if (mediaTypeOrMediaConditionNext) {
           console.log(
-            `404 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
+            `461 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
           );
           // check is the current chunk wrapped with brackets, because if so,
           // it is media type, and otherwise, it's media condition
           // see https://drafts.csswg.org/mediaqueries/#media for more
           if (chunk.startsWith("(")) {
-            console.log(`410 chunk starts with a bracket!`);
+            console.log(`467 chunk starts with a bracket!`);
           } else {
-            console.log(`412 chunk does not start with a bracket!`);
+            console.log(`469 chunk does not start with a bracket!`);
             if (["only", "not"].includes(chunk.toLowerCase())) {
               console.log(
-                `415 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
+                `472 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
               );
               // check for repetition, like "@media only not"
               if (
@@ -421,23 +478,23 @@ function isMediaD(originalStr, originalOpts) {
                   gatheredChunksArr[gatheredChunksArr.length - 1]
                 )
               ) {
-                console.log(`424 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                console.log(`481 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                 res.push({
                   idxFrom: chunkStartsAt + opts.offset,
                   idxTo: i + opts.offset,
                   message: `"${chunk}" instead of a media type.`,
                   fix: null
                 });
-                console.log(`431 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+                console.log(`488 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
                 break;
               }
             } else if (["and"].includes(chunk.toLowerCase())) {
               console.log(
-                `436 ${`\u001b[${32}m${`CHUNK MATCHED WITH JOINER AND`}\u001b[${39}m`}`
+                `493 ${`\u001b[${32}m${`CHUNK MATCHED WITH JOINER AND`}\u001b[${39}m`}`
               );
               // check for missing bits, like "@media only and"
               console.log(
-                `440 ${`\u001b[${33}m${`gatheredChunksArr`}\u001b[${39}m`} = ${JSON.stringify(
+                `497 ${`\u001b[${33}m${`gatheredChunksArr`}\u001b[${39}m`} = ${JSON.stringify(
                   gatheredChunksArr,
                   null,
                   4
@@ -450,27 +507,27 @@ function isMediaD(originalStr, originalOpts) {
                   gatheredChunksArr[gatheredChunksArr.length - 2]
                 )
               ) {
-                console.log(`453 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                console.log(`510 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                 res.push({
                   idxFrom: chunkStartsAt + opts.offset,
                   idxTo: i + opts.offset,
                   message: `"${chunk}" instead of a media type.`,
                   fix: null
                 });
-                console.log(`460 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+                console.log(`517 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
                 break;
               }
             } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               console.log(
-                `465 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
+                `522 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
               );
               mediaTypeOrMediaConditionNext = false;
               console.log(
-                `469 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
+                `526 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
               );
             } else {
               // it's an error, something is not recognised
-              console.log(`473 PUSH an error`);
+              console.log(`530 PUSH an error`);
               res.push({
                 idxFrom: chunkStartsAt + opts.offset,
                 idxTo: i + opts.offset,
@@ -480,13 +537,13 @@ function isMediaD(originalStr, originalOpts) {
                 )}".`,
                 fix: null
               });
-              console.log(`483 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+              console.log(`540 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
               break;
             }
           }
         } else {
           console.log(
-            `489 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was false`
+            `546 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was false`
           );
           // if flag "mediaTypeOrMediaConditionNext" is false, this means we are
           // currently located at after the media type or media condition,
@@ -494,11 +551,11 @@ function isMediaD(originalStr, originalOpts) {
           // "@media screen <here>" or "@media (color) <here>"
           if (chunk === "and") {
             console.log(
-              `497 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = true`
+              `554 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = true`
             );
             mediaTypeOrMediaConditionNext = true;
           } else {
-            console.log(`501 PUSH an error`);
+            console.log(`558 PUSH an error`);
             res.push({
               idxFrom: chunkStartsAt + opts.offset,
               idxTo: i + opts.offset,
@@ -508,7 +565,7 @@ function isMediaD(originalStr, originalOpts) {
               )}".`,
               fix: null
             });
-            console.log(`511 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+            console.log(`568 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
             break;
           }
         }
@@ -516,7 +573,7 @@ function isMediaD(originalStr, originalOpts) {
         // reset
         chunkStartsAt = null;
         console.log(
-          `519 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `576 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -525,7 +582,7 @@ function isMediaD(originalStr, originalOpts) {
       if (chunkStartsAt === null && str[i] && str[i].trim().length) {
         chunkStartsAt = i;
         console.log(
-          `528 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `585 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -545,6 +602,9 @@ function isMediaD(originalStr, originalOpts) {
         `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`
       );
       console.log(
+        `${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`
+      );
+      console.log(
         `${`\u001b[${90}m${`mediaTypeOrMediaConditionNext: ${mediaTypeOrMediaConditionNext}`}\u001b[${39}m`}`
       );
       console.log(
@@ -559,9 +619,9 @@ function isMediaD(originalStr, originalOpts) {
 
   // ---------------------------------------------------------------------------
 
-  console.log(`562 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`622 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   console.log(
-    `564 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `624 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

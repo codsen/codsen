@@ -226,6 +226,111 @@ t.test(
   }
 );
 
+t.test(
+  `02.04 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  t => {
+    const str = `only\tscreen`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 5 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[4 + offset, 5 + offset, " "]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `only screen`);
+    t.end();
+  }
+);
+
+t.test(
+  `02.05 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  t => {
+    const str = `only\t\tscreen`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 6 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[4 + offset, 6 + offset, " "]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `only screen`);
+    t.end();
+  }
+);
+
+t.test(
+  `02.06 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  t => {
+    const str = `only  \tscreen`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 7 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[5 + offset, 7 + offset]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `only screen`);
+    t.end();
+  }
+);
+
+t.test(
+  `02.07 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  t => {
+    const str = `only\t \tscreen`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 7 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[4 + offset, 7 + offset, " "]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `only screen`);
+    t.end();
+  }
+);
+
+t.test(
+  `02.08 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  t => {
+    const str = `only\t  screen`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 7 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[4 + offset, 6 + offset]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `only screen`);
+    t.end();
+  }
+);
+
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
 
@@ -452,7 +557,7 @@ t.test(
   }
 );
 
-// t.only(
+// t.test(
 //   `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
 //   t => {
 //     const str = `screen and color`;
