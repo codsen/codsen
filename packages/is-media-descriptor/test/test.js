@@ -422,8 +422,26 @@ t.test(`05.04 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, t => {
   t.end();
 });
 
+t.test(`05.05 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, t => {
+  ["and", "only", "not"].forEach(val => {
+    const str = `only ${val}`;
+    const offset = 30;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 5 + offset,
+        idxTo: 5 + val.length + offset,
+        message: `"${val}" instead of a media type.`,
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+  });
+  t.end();
+});
+
 t.test(
-  `05.05 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
+  `05.06 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`,
   t => {
     const str = `screen and (color)`;
     const offset = 20;
@@ -434,8 +452,8 @@ t.test(
   }
 );
 
-// t.test(
-//   `05.06 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
+// t.only(
+//   `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
 //   t => {
 //     const str = `screen and color`;
 //     const offset = 88;

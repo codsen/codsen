@@ -161,12 +161,44 @@ function isMediaD(originalStr, originalOpts) {
     }
     let chunkStartsAt = null;
     let mediaTypeOrMediaConditionNext = true;
+    const gatheredChunksArr = [];
     for (let i = 0, len = str.length; i <= len; i++) {
       if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
         const chunk = str.slice(chunkStartsAt, i);
+        gatheredChunksArr.push(chunk);
         if (mediaTypeOrMediaConditionNext) {
           if (chunk.startsWith("(")) ; else {
-            if (["only", "not"].includes(chunk.toLowerCase())) ; else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+            if (["only", "not"].includes(chunk.toLowerCase())) {
+              if (
+                gatheredChunksArr.length > 1 &&
+                ["only", "not"].includes(
+                  gatheredChunksArr[gatheredChunksArr.length - 1]
+                )
+              ) {
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: i + opts.offset,
+                  message: `"${chunk}" instead of a media type.`,
+                  fix: null
+                });
+                break;
+              }
+            } else if (["and"].includes(chunk.toLowerCase())) {
+              if (
+                gatheredChunksArr.length > 1 &&
+                ["only", "not"].includes(
+                  gatheredChunksArr[gatheredChunksArr.length - 2]
+                )
+              ) {
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: i + opts.offset,
+                  message: `"${chunk}" instead of a media type.`,
+                  fix: null
+                });
+                break;
+              }
+            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               mediaTypeOrMediaConditionNext = false;
             } else {
               res.push({
@@ -180,6 +212,21 @@ function isMediaD(originalStr, originalOpts) {
               });
               break;
             }
+          }
+        } else {
+          if (chunk === "and") {
+            mediaTypeOrMediaConditionNext = true;
+          } else {
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message: `Unrecognised media type "${str.slice(
+                chunkStartsAt,
+                i
+              )}".`,
+              fix: null
+            });
+            break;
           }
         }
         chunkStartsAt = null;

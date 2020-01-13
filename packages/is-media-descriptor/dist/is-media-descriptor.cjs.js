@@ -195,12 +195,34 @@ function isMediaD(originalStr, originalOpts) {
     }
     var chunkStartsAt = null;
     var mediaTypeOrMediaConditionNext = true;
+    var gatheredChunksArr = [];
     for (var _i3 = 0, _len2 = str.length; _i3 <= _len2; _i3++) {
       if (chunkStartsAt !== null && (!str[_i3] || !str[_i3].trim().length)) {
         var chunk = str.slice(chunkStartsAt, _i3);
+        gatheredChunksArr.push(chunk);
         if (mediaTypeOrMediaConditionNext) {
           if (chunk.startsWith("(")) ; else {
-            if (["only", "not"].includes(chunk.toLowerCase())) ; else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+            if (["only", "not"].includes(chunk.toLowerCase())) {
+              if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 1])) {
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: _i3 + opts.offset,
+                  message: "\"".concat(chunk, "\" instead of a media type."),
+                  fix: null
+                });
+                break;
+              }
+            } else if (["and"].includes(chunk.toLowerCase())) {
+              if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 2])) {
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: _i3 + opts.offset,
+                  message: "\"".concat(chunk, "\" instead of a media type."),
+                  fix: null
+                });
+                break;
+              }
+            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               mediaTypeOrMediaConditionNext = false;
             } else {
               res.push({
@@ -211,6 +233,18 @@ function isMediaD(originalStr, originalOpts) {
               });
               break;
             }
+          }
+        } else {
+          if (chunk === "and") {
+            mediaTypeOrMediaConditionNext = true;
+          } else {
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: _i3 + opts.offset,
+              message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, _i3), "\"."),
+              fix: null
+            });
+            break;
           }
         }
         chunkStartsAt = null;

@@ -347,8 +347,9 @@ function isMediaD(originalStr, originalOpts) {
 
     let chunkStartsAt = null;
     let mediaTypeOrMediaConditionNext = true;
+    const gatheredChunksArr = [];
 
-    console.log(`351 get to business, loop through`);
+    console.log(`352 get to business, loop through`);
     for (let i = 0, len = str.length; i <= len; i++) {
       //
 
@@ -391,7 +392,8 @@ function isMediaD(originalStr, originalOpts) {
       if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length)) {
         // extract the value:
         const chunk = str.slice(chunkStartsAt, i);
-        console.log(`394 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
+        gatheredChunksArr.push(chunk);
+        console.log(`396 extracted: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`);
 
         // we use mediaTypeOrMediaConditionNext to establish where we are
         // logically - media type/condition might be preceded by not/only or
@@ -399,30 +401,76 @@ function isMediaD(originalStr, originalOpts) {
         // two cases
         if (mediaTypeOrMediaConditionNext) {
           console.log(
-            `402 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
+            `404 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
           );
           // check is the current chunk wrapped with brackets, because if so,
           // it is media type, and otherwise, it's media condition
           // see https://drafts.csswg.org/mediaqueries/#media for more
           if (chunk.startsWith("(")) {
-            console.log(`408 chunk starts with a bracket!`);
+            console.log(`410 chunk starts with a bracket!`);
           } else {
-            console.log(`410 chunk does not start with a bracket!`);
+            console.log(`412 chunk does not start with a bracket!`);
             if (["only", "not"].includes(chunk.toLowerCase())) {
               console.log(
-                `413 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
+                `415 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
               );
+              // check for repetition, like "@media only not"
+              if (
+                gatheredChunksArr.length > 1 &&
+                ["only", "not"].includes(
+                  gatheredChunksArr[gatheredChunksArr.length - 1]
+                )
+              ) {
+                console.log(`424 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: i + opts.offset,
+                  message: `"${chunk}" instead of a media type.`,
+                  fix: null
+                });
+                console.log(`431 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+                break;
+              }
+            } else if (["and"].includes(chunk.toLowerCase())) {
+              console.log(
+                `436 ${`\u001b[${32}m${`CHUNK MATCHED WITH JOINER AND`}\u001b[${39}m`}`
+              );
+              // check for missing bits, like "@media only and"
+              console.log(
+                `440 ${`\u001b[${33}m${`gatheredChunksArr`}\u001b[${39}m`} = ${JSON.stringify(
+                  gatheredChunksArr,
+                  null,
+                  4
+                )}`
+              );
+              // if the chunk in front was "only" or "not", it's an error
+              if (
+                gatheredChunksArr.length > 1 &&
+                ["only", "not"].includes(
+                  gatheredChunksArr[gatheredChunksArr.length - 2]
+                )
+              ) {
+                console.log(`453 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                res.push({
+                  idxFrom: chunkStartsAt + opts.offset,
+                  idxTo: i + opts.offset,
+                  message: `"${chunk}" instead of a media type.`,
+                  fix: null
+                });
+                console.log(`460 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+                break;
+              }
             } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               console.log(
-                `417 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
+                `465 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
               );
               mediaTypeOrMediaConditionNext = false;
               console.log(
-                `421 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
+                `469 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
               );
             } else {
-              // it's an error, something not recognised
-              console.log(`425 PUSH an error`);
+              // it's an error, something is not recognised
+              console.log(`473 PUSH an error`);
               res.push({
                 idxFrom: chunkStartsAt + opts.offset,
                 idxTo: i + opts.offset,
@@ -432,16 +480,43 @@ function isMediaD(originalStr, originalOpts) {
                 )}".`,
                 fix: null
               });
-              console.log(`435 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+              console.log(`483 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
               break;
             }
+          }
+        } else {
+          console.log(
+            `489 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was false`
+          );
+          // if flag "mediaTypeOrMediaConditionNext" is false, this means we are
+          // currently located at after the media type or media condition,
+          // for example, where <here> marks below:
+          // "@media screen <here>" or "@media (color) <here>"
+          if (chunk === "and") {
+            console.log(
+              `497 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = true`
+            );
+            mediaTypeOrMediaConditionNext = true;
+          } else {
+            console.log(`501 PUSH an error`);
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message: `Unrecognised media type "${str.slice(
+                chunkStartsAt,
+                i
+              )}".`,
+              fix: null
+            });
+            console.log(`511 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+            break;
           }
         }
 
         // reset
         chunkStartsAt = null;
         console.log(
-          `444 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `519 RESET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -450,7 +525,7 @@ function isMediaD(originalStr, originalOpts) {
       if (chunkStartsAt === null && str[i] && str[i].trim().length) {
         chunkStartsAt = i;
         console.log(
-          `453 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `528 SET ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
         );
       }
 
@@ -472,14 +547,21 @@ function isMediaD(originalStr, originalOpts) {
       console.log(
         `${`\u001b[${90}m${`mediaTypeOrMediaConditionNext: ${mediaTypeOrMediaConditionNext}`}\u001b[${39}m`}`
       );
+      console.log(
+        `${`\u001b[${90}m${`gatheredChunksArr: ${JSON.stringify(
+          gatheredChunksArr,
+          null,
+          0
+        )}`}\u001b[${39}m`}`
+      );
     }
   }
 
   // ---------------------------------------------------------------------------
 
-  console.log(`480 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`562 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   console.log(
-    `482 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `564 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
