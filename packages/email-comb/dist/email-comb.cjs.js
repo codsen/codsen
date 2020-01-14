@@ -853,37 +853,49 @@ function comb(str, opts) {
         }
       }
       if (!doNothing && bodyClass.valueStart !== null && i > bodyClass.valueStart && (!characterSuitableForNames(chr) || allTails && stringMatchLeftRight.matchRightIncl(str, i, allTails))) {
-        var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
-        if (round === 1) {
-          bodyClassesArr.push(".".concat(carvedClass));
-          if (bodyClass.quoteless) {
-            if (!"\"'".includes(str[i])) {
-              finalIndexesToDelete.push(i, i, "\"");
-            }
-          }
-        } else {
-          if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
-            var expandedRange = expander({
-              str: str,
-              from: bodyClass.valueStart,
-              to: i,
-              ifLeftSideIncludesThisThenCropTightly: "\"'",
-              ifRightSideIncludesThisThenCropTightly: "\"'",
-              wipeAllWhitespaceOnLeft: true
+        if (allHeads && stringMatchLeftRight.matchRightIncl(str, i, allHeads)) {
+          (function () {
+            bodyClass.valueStart = null;
+            bodyClass = resetBodyClassOrId();
+            var matchedHeads = stringMatchLeftRight.matchRightIncl(str, i, allHeads);
+            var findings = opts.backend.find(function (headsTailsObj) {
+              return headsTailsObj.heads === matchedHeads;
             });
-            var whatToInsert = "";
-            if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
-              whatToInsert = " ";
+            doNothingUntil = findings["tails"];
+          })();
+        } else {
+          var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
+          if (round === 1) {
+            bodyClassesArr.push(".".concat(carvedClass));
+            if (bodyClass.quoteless) {
+              if (!"\"'".includes(str[i])) {
+                finalIndexesToDelete.push(i, i, "\"");
+              }
             }
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
           } else {
-            bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
-              finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
+            if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
+              var expandedRange = expander({
+                str: str,
+                from: bodyClass.valueStart,
+                to: i,
+                ifLeftSideIncludesThisThenCropTightly: "\"'",
+                ifRightSideIncludesThisThenCropTightly: "\"'",
+                wipeAllWhitespaceOnLeft: true
+              });
+              var whatToInsert = "";
+              if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
+                whatToInsert = " ";
+              }
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
+            } else {
+              bodyClassOrIdCanBeDeleted = false;
+              if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+                finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
+              }
             }
           }
+          bodyClass.valueStart = null;
         }
-        bodyClass.valueStart = null;
       }
       if (!doNothing && bodyId.valueStart !== null && i > bodyId.valueStart && (!characterSuitableForNames(chr) || allTails && stringMatchLeftRight.matchRightIncl(str, i, allTails))) {
         var carvedId = str.slice(bodyId.valueStart, i);

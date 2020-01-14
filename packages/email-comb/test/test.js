@@ -5314,6 +5314,68 @@ t.test(
   }
 );
 
+t.test("09.07 - esp tag at the end of ignored class", t => {
+  const actual = comb(
+    `<body>
+<table class="module-zzz-{{ loop.index }}">
+`,
+    {
+      whitelist: [
+        "#outlook",
+        ".ExternalClass",
+        ".Mso*",
+        ".module-*",
+        ".ReadMsgBody",
+        ".yshortcuts"
+      ],
+      backend: [
+        {
+          heads: "{{", // define heads and tails in pairs
+          tails: "}}"
+        },
+        {
+          heads: "{%", // second pair
+          tails: "%}"
+        }
+      ]
+    }
+  ).result;
+
+  const intended = `<body>
+<table class="module-zzz-{{ loop.index }}">
+`;
+
+  t.same(actual, intended, "99.07");
+  t.end();
+});
+
+t.test("09.08 - esp tag at the end of ignored class", t => {
+  const actual = comb(
+    `<body>
+<table class="module-zzz-{{ loop.index }}">
+`,
+    {
+      backend: [
+        {
+          heads: "{{", // define heads and tails in pairs
+          tails: "}}"
+        },
+        {
+          heads: "{%", // second pair
+          tails: "%}"
+        }
+      ]
+    }
+  ).result;
+
+  const intended = `<body>
+<table class="module-zzz-{{ loop.index }}">
+`;
+
+  t.same(actual, intended, "99.08");
+  t.end();
+});
+
 // ============================================================
 // 10. Various tests
 // ============================================================
