@@ -70,6 +70,118 @@ function _nonIterableRest() {
 }
 
 var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"];
+function loop(str, opts, res) {
+  var chunkStartsAt = null;
+  var mediaTypeOrMediaConditionNext = true;
+  var gatheredChunksArr = [];
+  var whitespaceStartsAt = null;
+  var chunkWithinBrackets = false;
+  for (var i = 0, len = str.length; i <= len; i++) {
+    if (str[i] === ")") ;
+    if (str[i] === "(") ;
+    if (str[i] && str[i].trim().length && whitespaceStartsAt !== null) {
+      if (str[whitespaceStartsAt - 1] === "(" || str[i] === ")") {
+        res.push({
+          idxFrom: whitespaceStartsAt + opts.offset,
+          idxTo: i + opts.offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]]
+          }
+        });
+      } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
+        var rangesFrom = whitespaceStartsAt + opts.offset;
+        var rangesTo = i + opts.offset;
+        var rangesInsert = " ";
+        if (whitespaceStartsAt !== i - 1) {
+          if (str[whitespaceStartsAt] === " ") {
+            rangesFrom++;
+            rangesInsert = null;
+          } else if (str[i - 1] === " ") {
+            rangesTo--;
+            rangesInsert = null;
+          }
+        }
+        res.push({
+          idxFrom: whitespaceStartsAt + opts.offset,
+          idxTo: i + opts.offset,
+          message: "Bad whitespace.",
+          fix: {
+            ranges: [rangesInsert ? [rangesFrom, rangesTo, " "] : [rangesFrom, rangesTo]]
+          }
+        });
+      }
+      whitespaceStartsAt = null;
+    }
+    if (str[i] && !str[i].trim().length && whitespaceStartsAt === null) {
+      whitespaceStartsAt = i;
+    }
+    if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length || "():".includes(str[i]))) {
+      var chunk = str.slice(chunkStartsAt, i);
+      gatheredChunksArr.push(chunk);
+      if (mediaTypeOrMediaConditionNext) {
+        if (["only", "not"].includes(chunk.toLowerCase())) {
+          if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 1])) {
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message: "\"".concat(chunk, "\" instead of a media type."),
+              fix: null
+            });
+          }
+        } else if (["and"].includes(chunk.toLowerCase())) {
+          if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 2])) {
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message: "\"".concat(chunk, "\" instead of a media type."),
+              fix: null
+            });
+          }
+        } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+          mediaTypeOrMediaConditionNext = false;
+        } else {
+          var chunksValue = str.slice(chunkStartsAt, i);
+          var message = "Unrecognised \"".concat(chunksValue, "\".");
+          if (chunksValue.includes("-")) {
+            message = "Brackets missing around \"".concat(chunksValue, "\"").concat(str[i] === ":" ? " and its value" : "", ".");
+          }
+          if (chunksValue && chunksValue.length && chunksValue.length === 1) {
+            message = "Strange symbol \"".concat(chunksValue, "\".");
+          }
+          res.push({
+            idxFrom: chunkStartsAt + opts.offset,
+            idxTo: i + opts.offset,
+            message: message,
+            fix: null
+          });
+          return;
+        }
+      } else {
+        if (chunk === "and") {
+          mediaTypeOrMediaConditionNext = true;
+        } else {
+          res.push({
+            idxFrom: chunkStartsAt + opts.offset,
+            idxTo: i + opts.offset,
+            message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, i), "\"."),
+            fix: null
+          });
+        }
+      }
+      chunkStartsAt = null;
+      chunkWithinBrackets = false;
+    }
+    if (chunkStartsAt === null && str[i] && str[i].trim().length && str[i] !== ")") {
+      if (str[i] === "(") {
+        chunkWithinBrackets = true;
+      } else if (!chunkWithinBrackets) {
+        chunkStartsAt = i;
+      }
+    }
+  }
+}
+
 function isMediaD(originalStr, originalOpts) {
   var defaults = {
     offset: 0
@@ -193,95 +305,7 @@ function isMediaD(originalStr, originalOpts) {
     if (res.length) {
       return res;
     }
-    var chunkStartsAt = null;
-    var mediaTypeOrMediaConditionNext = true;
-    var gatheredChunksArr = [];
-    var whitespaceStartsAt = null;
-    for (var _i3 = 0, _len2 = str.length; _i3 <= _len2; _i3++) {
-      if (str[_i3] && str[_i3].trim().length && whitespaceStartsAt !== null) {
-        if (whitespaceStartsAt < _i3 - 1 || str[_i3 - 1] !== " ") {
-          var rangesFrom = whitespaceStartsAt + opts.offset;
-          var rangesTo = _i3 + opts.offset;
-          var rangesInsert = " ";
-          if (whitespaceStartsAt !== _i3 - 1) {
-            if (str[whitespaceStartsAt] === " ") {
-              rangesFrom++;
-              rangesInsert = null;
-            } else if (str[_i3 - 1] === " ") {
-              rangesTo--;
-              rangesInsert = null;
-            }
-          }
-          res.push({
-            idxFrom: whitespaceStartsAt + opts.offset,
-            idxTo: _i3 + opts.offset,
-            message: "Bad whitespace.",
-            fix: {
-              ranges: [rangesInsert ? [rangesFrom, rangesTo, " "] : [rangesFrom, rangesTo]]
-            }
-          });
-        }
-        whitespaceStartsAt = null;
-      }
-      if (str[_i3] && !str[_i3].trim().length && whitespaceStartsAt === null) {
-        whitespaceStartsAt = _i3;
-      }
-      if (chunkStartsAt !== null && (!str[_i3] || !str[_i3].trim().length)) {
-        var chunk = str.slice(chunkStartsAt, _i3);
-        gatheredChunksArr.push(chunk);
-        if (mediaTypeOrMediaConditionNext) {
-          if (chunk.startsWith("(")) ; else {
-            if (["only", "not"].includes(chunk.toLowerCase())) {
-              if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 1])) {
-                res.push({
-                  idxFrom: chunkStartsAt + opts.offset,
-                  idxTo: _i3 + opts.offset,
-                  message: "\"".concat(chunk, "\" instead of a media type."),
-                  fix: null
-                });
-                break;
-              }
-            } else if (["and"].includes(chunk.toLowerCase())) {
-              if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 2])) {
-                res.push({
-                  idxFrom: chunkStartsAt + opts.offset,
-                  idxTo: _i3 + opts.offset,
-                  message: "\"".concat(chunk, "\" instead of a media type."),
-                  fix: null
-                });
-                break;
-              }
-            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
-              mediaTypeOrMediaConditionNext = false;
-            } else {
-              res.push({
-                idxFrom: chunkStartsAt + opts.offset,
-                idxTo: _i3 + opts.offset,
-                message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, _i3), "\"."),
-                fix: null
-              });
-              break;
-            }
-          }
-        } else {
-          if (chunk === "and") {
-            mediaTypeOrMediaConditionNext = true;
-          } else {
-            res.push({
-              idxFrom: chunkStartsAt + opts.offset,
-              idxTo: _i3 + opts.offset,
-              message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, _i3), "\"."),
-              fix: null
-            });
-            break;
-          }
-        }
-        chunkStartsAt = null;
-      }
-      if (chunkStartsAt === null && str[_i3] && str[_i3].trim().length) {
-        chunkStartsAt = _i3;
-      }
-    }
+    loop(str, opts, res);
   }
   return res;
 }

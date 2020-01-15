@@ -204,7 +204,7 @@ t.test(
 );
 
 t.test(
-  `02.03 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.03 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading and trailing`,
   t => {
     const str = `\t\t\tall\t\n`;
     const res = isMediaD(str);
@@ -227,7 +227,7 @@ t.test(
 );
 
 t.test(
-  `02.04 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.04 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab whitespace chunk`,
   t => {
     const str = `only\tscreen`;
     const offset = 1;
@@ -248,7 +248,7 @@ t.test(
 );
 
 t.test(
-  `02.05 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.05 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whitespace chunk`,
   t => {
     const str = `only\t\tscreen`;
     const offset = 1;
@@ -269,7 +269,7 @@ t.test(
 );
 
 t.test(
-  `02.06 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.06 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab end`,
   t => {
     const str = `only  \tscreen`;
     const offset = 1;
@@ -290,7 +290,7 @@ t.test(
 );
 
 t.test(
-  `02.07 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.07 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`,
   t => {
     const str = `only\t \tscreen`;
     const offset = 1;
@@ -311,7 +311,7 @@ t.test(
 );
 
 t.test(
-  `02.08 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading and trailing`,
+  `02.08 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start`,
   t => {
     const str = `only\t  screen`;
     const offset = 1;
@@ -330,6 +330,37 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `02.09 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - spaces inside brackets`,
+  t => {
+    const str = `not ( color )`;
+    const offset = 1;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 5 + offset,
+        idxTo: 6 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[5 + offset, 6 + offset]]
+        }
+      },
+      {
+        idxFrom: 11 + offset,
+        idxTo: 12 + offset,
+        message: "Bad whitespace.",
+        fix: {
+          ranges: [[11 + offset, 12 + offset]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), `not (color)`);
+    t.end();
+  }
+);
+
+// TODO - whitespace inside brackets
 
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
@@ -490,7 +521,7 @@ t.test(
       {
         idxFrom: 0 + offset,
         idxTo: 6 + offset,
-        message: `Unrecognised media type "onlies".`,
+        message: `Unrecognised "onlies".`,
         fix: null
       }
     ]);
@@ -519,7 +550,7 @@ t.test(`05.04 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, t => {
     {
       idxFrom: 5 + offset,
       idxTo: 6 + offset,
-      message: `Unrecognised media type ".".`,
+      message: `Strange symbol ".".`,
       fix: null
     }
   ]);
@@ -571,7 +602,7 @@ t.test(
 //         fix: {
 //           ranges: [
 //             [11 + offset, 11 + offset, `(`],
-//             [16 + offset, 16 + offset, ")"]
+//             [16 + offset, 16 + offset, `)`]
 //           ]
 //         }
 //       }
@@ -580,3 +611,58 @@ t.test(
 //     t.end();
 //   }
 // );
+
+// 06. brackets
+// -----------------------------------------------------------------------------
+
+t.test(
+  `06.01 - ${`\u001b[${35}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, healthy`,
+  t => {
+    const str = `speech and (device-aspect-ratio: 16/9)`;
+    const offset = 20;
+    const res = isMediaD(str, { offset });
+    t.same(res, []);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `06.02 - ${`\u001b[${35}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
+  t => {
+    const str = `speech and device-aspect-ratio: 16/9`;
+    const offset = 20;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 11 + offset,
+        idxTo: 30 + offset,
+        message: `Brackets missing around "device-aspect-ratio" and its value.`,
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
+t.test(
+  `06.03 - ${`\u001b[${35}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`,
+  t => {
+    const str = `speech and device-aspect-ratio`;
+    const offset = 20;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 11 + offset,
+        idxTo: 30 + offset,
+        message: `Brackets missing around "device-aspect-ratio".`,
+        fix: null
+      }
+    ]);
+
+    // TODO - uncomment:
+    // t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
