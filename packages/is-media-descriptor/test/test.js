@@ -583,34 +583,34 @@ t.test(
     const offset = 20;
     const res = isMediaD(str, { offset });
     t.same(res, []);
-    t.equal(applyFixes(str, res, offset), str);
     t.end();
   }
 );
 
-// t.test(
-//   `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
-//   t => {
-//     const str = `screen and color`;
-//     const offset = 88;
-//     const res = isMediaD(str, { offset });
-//     t.match(res, [
-//       {
-//         idxFrom: 10 + offset,
-//         idxTo: 17 + offset,
-//         message: `Brackets missing around "color".`,
-//         fix: {
-//           ranges: [
-//             [11 + offset, 11 + offset, `(`],
-//             [16 + offset, 16 + offset, `)`]
-//           ]
-//         }
-//       }
-//     ]);
-//     t.equal(applyFixes(str, res, offset), `screen and (color)`);
-//     t.end();
-//   }
-// );
+// TODO: add fix later when we'll have the list of recognised conditions
+// fix: {
+//   ranges: [
+//     [11 + offset, 11 + offset, `(`],
+//     [16 + offset, 16 + offset, `)`]
+//   ]
+// }
+t.test(
+  `05.07 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`,
+  t => {
+    const str = `screen and color`;
+    const offset = 88;
+    const res = isMediaD(str, { offset });
+    t.match(res, [
+      {
+        idxFrom: 11 + offset,
+        idxTo: 16 + offset,
+        message: `Unrecognised "color".`,
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
 
 // 06. brackets
 // -----------------------------------------------------------------------------
