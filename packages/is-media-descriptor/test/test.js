@@ -360,8 +360,6 @@ t.test(
   }
 );
 
-// TODO - whitespace inside brackets
-
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
 
@@ -660,9 +658,7 @@ t.test(
         fix: null
       }
     ]);
-
-    // TODO - uncomment:
-    // t.equal(applyFixes(str, res, offset), str);
+    t.equal(applyFixes(str, res, offset), str);
     t.end();
   }
 );
