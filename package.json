@@ -50,16 +50,16 @@
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.2",
-    "husky": "^4.0.6",
-    "lect": "^0.11.6",
+    "eslint-plugin-row-num": "^1.1.4",
+    "husky": "^4.0.9",
+    "lect": "^0.11.8",
     "lerna": "^3.20.2",
-    "lerna-clean-changelogs-cli": "^1.2.45",
+    "lerna-clean-changelogs-cli": "^1.2.47",
     "npm-watch": "^0.6.0",
     "prettier": "^1.19.1",
-    "tap-parse-string-to-object": "^1.2.1"
+    "tap-parse-string-to-object": "^1.2.3"
   }
 }

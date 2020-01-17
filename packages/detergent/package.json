@@ -148,8 +148,8 @@
     "string-trim-spaces-only": "^2.8.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "benchmark": "^2.1.4",
     "is-ci": "^2.0.0",
     "js-row-num-cli": "^1.6.14",
@@ -167,7 +167,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-strip": "^1.2.2",
-    "rollup-plugin-terser": "^5.1.3",
-    "tap": "^14.10.5"
+    "rollup-plugin-terser": "^5.2.0",
+    "tap": "^14.10.6"
   }
 }

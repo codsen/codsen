@@ -124,11 +124,11 @@
     "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.4",
@@ -136,7 +136,7 @@
     "js-row-num-cli": "^1.6.14",
     "lect": "^0.11.8",
     "prettier": "^1.19.1",
-    "tap": "^14.10.5",
+    "tap": "^14.10.6",
     "tempy": "^0.3.0"
   }
 }
