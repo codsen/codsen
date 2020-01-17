@@ -259,7 +259,7 @@ function isMediaD(originalStr, originalOpts) {
   } else {
     let wrongOrder = false;
     const [openingBracketCount, closingBracketCount] = Array.from(str).reduce(
-      (acc, curr) => {
+      (acc, curr, idx) => {
         if (curr === ")") {
           if (!wrongOrder && acc[1] + 1 > acc[0]) {
             wrongOrder = true;
@@ -267,6 +267,13 @@ function isMediaD(originalStr, originalOpts) {
           return [acc[0], acc[1] + 1];
         } else if (curr === "(") {
           return [acc[0] + 1, acc[1]];
+        } else if (curr === ";") {
+          res.push({
+            idxFrom: idx + opts.offset,
+            idxTo: idx + 1 + opts.offset,
+            message: "Semicolon found!",
+            fix: null
+          });
         }
         return acc;
       },

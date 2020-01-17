@@ -253,7 +253,7 @@ function isMediaD(originalStr, originalOpts) {
 
     let wrongOrder = false;
     const [openingBracketCount, closingBracketCount] = Array.from(str).reduce(
-      (acc, curr) => {
+      (acc, curr, idx) => {
         if (curr === ")") {
           // if at any time, there are more closing brackets than opening-ones,
           // this means order is messed up
@@ -266,6 +266,13 @@ function isMediaD(originalStr, originalOpts) {
           return [acc[0], acc[1] + 1];
         } else if (curr === "(") {
           return [acc[0] + 1, acc[1]];
+        } else if (curr === ";") {
+          res.push({
+            idxFrom: idx + opts.offset,
+            idxTo: idx + 1 + opts.offset,
+            message: "Semicolon found!",
+            fix: null
+          });
         }
         return acc;
       },
@@ -276,7 +283,7 @@ function isMediaD(originalStr, originalOpts) {
     // only the order is messed up:
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       console.log(
-        `279 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+        `286 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
       );
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
@@ -286,14 +293,14 @@ function isMediaD(originalStr, originalOpts) {
       });
     }
     console.log(
-      `289 ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `296 ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         openingBracketCount,
         null,
         4
       )}`
     );
     console.log(
-      `296 ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `303 ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         closingBracketCount,
         null,
         4
@@ -320,14 +327,14 @@ function isMediaD(originalStr, originalOpts) {
 
     if (res.length) {
       // report errors early, save resources
-      console.log(`323 early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+      console.log(`330 early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
       return res;
     }
 
     // PART 2.
     // ███████████████████████████████████████
 
-    console.log(`330 PART II. The main loop.`);
+    console.log(`337 PART II. The main loop.`);
 
     // THE MAIN LOOP
     // ---------------------------------------------------------------------------
@@ -337,9 +344,9 @@ function isMediaD(originalStr, originalOpts) {
 
   // ---------------------------------------------------------------------------
 
-  console.log(`340 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`347 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   console.log(
-    `342 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `349 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

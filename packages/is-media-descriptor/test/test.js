@@ -494,6 +494,26 @@ t.test(
   }
 );
 
+t.test(
+  `04.05 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon present`,
+  t => {
+    // for example
+    // @media test;,all { body { background:lime } }
+    const str = `test;,all`;
+    const offset = 10;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 4 + offset,
+        idxTo: 5 + offset,
+        message: "Semicolon found!",
+        fix: null
+      }
+    ]);
+    t.end();
+  }
+);
+
 // 05. composed values
 // -----------------------------------------------------------------------------
 

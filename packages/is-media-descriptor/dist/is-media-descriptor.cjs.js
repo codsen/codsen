@@ -265,7 +265,7 @@ function isMediaD(originalStr, originalOpts) {
     }
   } else {
     var wrongOrder = false;
-    var _Array$from$reduce = Array.from(str).reduce(function (acc, curr) {
+    var _Array$from$reduce = Array.from(str).reduce(function (acc, curr, idx) {
       if (curr === ")") {
         if (!wrongOrder && acc[1] + 1 > acc[0]) {
           wrongOrder = true;
@@ -273,6 +273,13 @@ function isMediaD(originalStr, originalOpts) {
         return [acc[0], acc[1] + 1];
       } else if (curr === "(") {
         return [acc[0] + 1, acc[1]];
+      } else if (curr === ";") {
+        res.push({
+          idxFrom: idx + opts.offset,
+          idxTo: idx + 1 + opts.offset,
+          message: "Semicolon found!",
+          fix: null
+        });
       }
       return acc;
     }, [0, 0]),
