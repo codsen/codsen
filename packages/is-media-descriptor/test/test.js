@@ -10,7 +10,7 @@ const { applyFixes } = require("../t-util/util");
 t.test(
   `00.01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`,
   t => {
-    t.match(isMediaD(), []);
+    t.same(isMediaD(), []);
     t.end();
   }
 );
@@ -18,7 +18,7 @@ t.test(
 t.test(
   `00.02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
   t => {
-    t.match(isMediaD(""), []);
+    t.same(isMediaD(""), []);
     t.end();
   }
 );
@@ -26,7 +26,7 @@ t.test(
 t.test(
   `00.03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
   t => {
-    t.match(isMediaD(" "), []);
+    t.same(isMediaD(" "), []);
     t.end();
   }
 );
@@ -34,7 +34,7 @@ t.test(
 t.test(
   `00.04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
   t => {
-    t.match(isMediaD("\n\n\n"), []);
+    t.same(isMediaD("\n\n\n"), []);
     t.end();
   }
 );
@@ -68,7 +68,7 @@ t.test(
       "tty",
       "tv"
     ].forEach(val => {
-      t.match(isMediaD(val), []);
+      t.same(isMediaD(val), []);
     });
     t.end();
   }
@@ -90,7 +90,7 @@ t.test(
       "tty",
       "tv"
     ].forEach(val => {
-      t.match(isMediaD(val, { offset: 999 }), []);
+      t.same(isMediaD(val, { offset: 999 }), []);
     });
     t.end();
   }
@@ -102,7 +102,7 @@ t.test(
     const str = ` zzz`;
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 0 + offset,
         idxTo: 1 + offset,
@@ -129,7 +129,7 @@ t.test(
     const str = `only`;
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), str);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 0,
         idxTo: 4,
@@ -147,7 +147,7 @@ t.test(
     const str = `not`;
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), str);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 0,
         idxTo: 3,
@@ -169,7 +169,7 @@ t.test(
     const offset = 90;
     const res = isMediaD(str, { offset });
     t.equal(applyFixes(str, res, offset), `all`);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 90,
         idxTo: 91,
@@ -189,7 +189,7 @@ t.test(
     const str = `all\t`;
     const res = isMediaD(str);
     // t.equal(applyFixes(str, res), `all`);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 3,
         idxTo: 4,
@@ -209,7 +209,7 @@ t.test(
     const str = `\t\t\tall\t\n`;
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), `all`);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 0, // first element of the first range
         idxTo: 8, // last element of the last range
@@ -370,13 +370,13 @@ t.test(
     const offset = 10;
     const res = isMediaD(str, { offset });
     t.equal(applyFixes(str, res, offset), `screen`);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 10,
         idxTo: 17,
         message: `Did you mean "screen"?`,
         fix: {
-          ranges: [[10, 17]]
+          ranges: [[10, 17, "screen"]]
         }
       }
     ]);
@@ -390,7 +390,7 @@ t.test(
     const str = `\t\t\tal\t\n`;
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), `all`);
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 0, // first element of the first range
         idxTo: 7, // last element of the last range
@@ -618,7 +618,7 @@ t.test(
     const str = `screen and color`;
     const offset = 88;
     const res = isMediaD(str, { offset });
-    t.match(res, [
+    t.same(res, [
       {
         idxFrom: 11 + offset,
         idxTo: 16 + offset,

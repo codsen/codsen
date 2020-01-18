@@ -65,36 +65,18 @@ This package has three builds in `dist/` folder:
 
 ## Background
 
-We are talking about so-called _media descriptors_ ([older spec](https://www.w3.org/TR/html4/types.html#type-media-descriptors), [newer spec - CSS MQ Level 4, draft at the moment](https://drafts.csswg.org/mediaqueries/)).
+We are talking about so-called _media descriptors_ ([older spec](https://www.w3.org/TR/html4/types.html#type-media-descriptors), [newer spec - CSS MQ Level 4, draft at the moment](https://drafts.csswg.org/mediaqueries/)), for example, the part `screen and (color), projection and (color)` in both HTML and CSS:
 
-This program checks _media descriptors_ — either in HTML attribute's `media` values OR in CSS styles, everything between `@media`/`@import` and opening curly brace.
-
-For example,
-
-The value `"screen"` below is a _media descriptor_ and this program checks it:
-
-```xml
-<style media="screen"></style>
-              ^^^^^^
 ```
+<link media="screen and (color), projection and (color)" rel="stylesheet" href="example.css">
 
-Or this `"print"`:
+<link media="screen and (color), projection and (color)" rel="stylesheet" href="example.css" />
 
-```xml
-<link rel="stylesheet" type="text/css" href="print.css" media="print" />
-                                                               ^^^^^
-```
+<?xml-stylesheet media="screen and (color), projection and (color)" rel="stylesheet" href="example.css" ?>
 
-> "CSS adapted and extended this functionality with its @media and @import rules, adding the ability to query the value of individual features" — https://drafts.csswg.org/mediaqueries/
+@import url(example.css) screen and (color), projection and (color);
 
-This program validates this `only screen and (min-width: 320px) and (max-width: 500px)` in CSS:
-
-```css
-@media only screen and (min-width: 320px) and (max-width: 500px) {
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ media descriptor * {
-    font-family: sans-serif;
-  }
-}
+@media screen and (color), projection and (color) { ... }
 ```
 
 We plan to catch as many errors as possible:
@@ -106,6 +88,8 @@ We plan to catch as many errors as possible:
 - ... anything that can happen to media queries and media selectors in general.
 
 This is not a replacement for validator, this is a linting tool. We will use it in `EMLint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)).
+
+Conceptually, CSS spec is very permissive, if it doesn't like something it invalidates that part and moves on. In this light, linting needs to be the opposite.
 
 **[⬆ back to top](#)**
 
@@ -130,7 +114,7 @@ isMediaD("screen", { offset: 0 });
 isMediaD("screen", { offset: 51 });
 ```
 
-⚠️ A bad example is below - don't put `@media`, extract the value:
+⚠️ A bad example is below - don't put `@media`, please extract the value:
 
 ```js
 // program won't work with `@media` - extract the value first!
@@ -139,7 +123,7 @@ isMediaD(
 );
 ```
 
-Correct input's example would be:
+Feed function with extracted value, with no `@media`:
 
 ```js
 isMediaD("only (screen) and (min-width: 320px) and (max-width: 500px)");
@@ -163,7 +147,7 @@ Falsey `opt.offset` is fine but truthy non-integer will _throw_.
 
 ## API - Output
 
-The program returns an array of zero or more plain objects, each meaning an error. Each object's notation is the same as in EMLint (except there's no `ruleId`):
+The program returns an array of zero or more plain objects, each meaning an error. Each object's notation is the same as in `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) (except there's no `ruleId`):
 
 ```js
 {
@@ -180,7 +164,7 @@ Quick basics: `idxFrom` and `idxTo` are the same as in `String.slice`, just used
 
 The `fix` key is either `null` or has value — plain object — with key `ranges`. ESLint uses singular, `range`, EMLint uses `ranges`, plural, because EMLint uses Ranges notation — where ESLint marks "to add" thing separately, EMLint puts it as the third element in ranges array.
 
-Ranges as key above and in general are always either `null` or array of arrays.
+Ranges are always either `null` or array of arrays.
 
 EMLint and ranges arrays here follow Ranges notation and [all Ranges packages](https://gitlab.com/codsen/codsen#-range-libraries) can be used to process them — [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/), [inverting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert/), [resolving/applying](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) and so on.
 
@@ -199,7 +183,7 @@ console.log(JSON.stringify(res, null, 4));
 //        idxTo: 7,
 //        message: `Did you mean "screen"?`,
 //        fix: {
-//          ranges: [[0, 7]]
+//          ranges: [[0, 7, "screen"]]
 //        }
 //      }
 //    ]
