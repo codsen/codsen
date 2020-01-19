@@ -444,7 +444,7 @@ function step13() {
         : ""
     },
         resolve()${
-          pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
+          pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
         },
         cleanup({ comments: "istanbul" })
       ]
@@ -475,7 +475,7 @@ function step13() {
         : ""
     },
         resolve()${
-          pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""
+          pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
         },
         commonjs(),
         babel(),
@@ -515,7 +515,7 @@ function step13() {
       pack.devDependencies["rollup-plugin-node-globals"]
         ? ",\n        globals()"
         : ""
-    }${pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""}${
+    }${pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""}${
       rollupPluginsStrToInsert ? `,\n        ${rollupPluginsStrToInsert}` : ""
     },
         babel(),
@@ -551,7 +551,7 @@ function step13() {
       pack.devDependencies["rollup-plugin-node-globals"]
         ? ",\n        globals()"
         : ""
-    }${pack.devDependencies["rollup-plugin-json"] ? ",\n        json()" : ""}${
+    }${pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""}${
       rollupPluginsStrToInsert ? `,${rollupPluginsStrToInsert}` : ""
     },
         cleanup({ comments: "istanbul" }),
@@ -570,16 +570,16 @@ function step13() {
     pack.devDependencies["rollup-plugin-node-globals"]
       ? `import globals from "rollup-plugin-node-globals";\n`
       : ""
-  }import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
+  }import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
-import strip from "rollup-plugin-strip";
+import strip from "@rollup/plugin-strip";
 import babel from "rollup-plugin-babel";
 ${
-  pack.devDependencies["rollup-plugin-json"]
-    ? `import json from "rollup-plugin-json";\n`
+  pack.devDependencies["@rollup/plugin-json"]
+    ? `import json from "@rollup/plugin-json";\n`
     : ""
 }import pkg from "./package.json";
 

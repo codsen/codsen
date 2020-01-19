@@ -1,4 +1,5 @@
 import leven from "leven";
+// import cssTreeValidate from "./cssTreeValidate";
 import { loop, recognisedMediaTypes } from "./util";
 
 // const recognisedValues = [
@@ -42,12 +43,12 @@ function isMediaD(originalStr, originalOpts) {
   // quick ending
   if (typeof originalStr !== "string") {
     console.log(
-      `045 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `046 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   } else if (!originalStr.trim().length) {
     console.log(
-      `050 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `051 early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   }
@@ -112,7 +113,7 @@ function isMediaD(originalStr, originalOpts) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `115 ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
+    `116 ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
   );
 
   // quick checks first - cover the most common cases, to make checks the
@@ -136,12 +137,12 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     console.log(
-      `139 whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      `140 whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return res;
   } else if (["only", "not"].includes(str)) {
     console.log(
-      `144 PUSH [${nonWhitespaceStart + opts.offset}, ${nonWhitespaceEnd +
+      `145 PUSH [${nonWhitespaceStart + opts.offset}, ${nonWhitespaceEnd +
         opts.offset}]`
     );
     res.push({
@@ -172,17 +173,17 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     //
-    console.log(`175 mostly-letters clauses`);
+    console.log(`176 mostly-letters clauses`);
 
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       console.log(
-        `179 leven ${recognisedMediaTypes[i]} = ${leven(
+        `180 leven ${recognisedMediaTypes[i]} = ${leven(
           recognisedMediaTypes[i],
           str
         )}`
       );
       if (leven(recognisedMediaTypes[i], str) === 1) {
-        console.log(`185 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        console.log(`186 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -202,9 +203,9 @@ function isMediaD(originalStr, originalOpts) {
 
       if (i === len - 1) {
         // it means nothing was matched
-        console.log(`205 end reached`);
+        console.log(`206 end reached`);
         console.log(
-          `207 PUSH [${`\u001b[${33}m${nonWhitespaceStart +
+          `208 PUSH [${`\u001b[${33}m${nonWhitespaceStart +
             opts.offset}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd +
             opts.offset}\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`
         );
@@ -215,7 +216,7 @@ function isMediaD(originalStr, originalOpts) {
           fix: null
         });
         console.log(
-          `218 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+          `219 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
             res,
             null,
             4
@@ -233,7 +234,7 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     //
-    // 3. mixed, like "screen"
+    // 3. mixed, like "screen and (color)"
     //
     //
     //
@@ -246,7 +247,7 @@ function isMediaD(originalStr, originalOpts) {
     // PART 1.
     // ███████████████████████████████████████
 
-    console.log(`249 PART I. Preliminary checks.`);
+    console.log(`250 PART I. Preliminary checks.`);
 
     // Preventive checks will help to simplify the algorithm - we won't need
     // to cater for so many edge cases later.
@@ -259,7 +260,7 @@ function isMediaD(originalStr, originalOpts) {
           // this means order is messed up
           if (!wrongOrder && acc[1] + 1 > acc[0]) {
             console.log(
-              `262 set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
+              `263 set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
             );
             wrongOrder = true;
           }
@@ -283,7 +284,7 @@ function isMediaD(originalStr, originalOpts) {
     // only the order is messed up:
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       console.log(
-        `286 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+        `287 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
       );
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
@@ -293,14 +294,14 @@ function isMediaD(originalStr, originalOpts) {
       });
     }
     console.log(
-      `296 ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `297 ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         openingBracketCount,
         null,
         4
       )}`
     );
     console.log(
-      `303 ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `304 ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         closingBracketCount,
         null,
         4
@@ -327,26 +328,31 @@ function isMediaD(originalStr, originalOpts) {
 
     if (res.length) {
       // report errors early, save resources
-      console.log(`330 early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+      console.log(`331 early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
       return res;
     }
 
     // PART 2.
     // ███████████████████████████████████████
 
-    console.log(`337 PART II. The main loop.`);
-
-    // THE MAIN LOOP
-    // ---------------------------------------------------------------------------
-
+    console.log(`338 PART II. The main loop.`);
     loop(str, opts, res);
+
+    // PART 3.
+    // ███████████████████████████████████████
+
+    if (!res.length) {
+      // finally, if no errors were caught, parse:
+      console.log(`346 PART III. Run through CSS Tree parser.`);
+      // TODO
+    }
   }
 
   // ---------------------------------------------------------------------------
 
-  console.log(`347 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`353 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   console.log(
-    `349 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `355 ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

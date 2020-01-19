@@ -1,12 +1,11 @@
 import builtins from "rollup-plugin-node-builtins";
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
-import strip from "rollup-plugin-strip";
+import strip from "@rollup/plugin-strip";
 import babel from "rollup-plugin-babel";
-import json from "rollup-plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -32,7 +31,6 @@ export default commandLineArgs => {
         }),
         builtins(),
         resolve(),
-        json(),
         commonjs(),
         babel(),
         terser(),
@@ -50,7 +48,6 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
-        json(),
         babel(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
@@ -67,7 +64,6 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
-        json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
@@ -84,7 +80,6 @@ export default commandLineArgs => {
         }),
         builtins(),
         resolve(),
-        json(),
         cleanup({ comments: "istanbul" })
       ]
     }

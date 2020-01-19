@@ -75,10 +75,17 @@ function loop(str, opts, res) {
   var mediaTypeOrMediaConditionNext = true;
   var gatheredChunksArr = [];
   var whitespaceStartsAt = null;
-  var chunkWithinBrackets = false;
+  var bracketOpeningIndexes = [];
   for (var i = 0, len = str.length; i <= len; i++) {
-    if (str[i] === ")") ;
-    if (str[i] === "(") ;
+    if (str[i] === ")") {
+      var lastOpening = bracketOpeningIndexes.pop();
+      loop(str.slice(lastOpening + 1, i), Object.assign({}, opts, {
+        offset: opts.offset + chunkStartsAt
+      }), res);
+    }
+    if (str[i] === "(") {
+      bracketOpeningIndexes.push(i);
+    }
     if (str[i] && str[i].trim().length && whitespaceStartsAt !== null) {
       if (str[whitespaceStartsAt - 1] === "(" || str[i] === ")") {
         res.push({
@@ -170,12 +177,9 @@ function loop(str, opts, res) {
         }
       }
       chunkStartsAt = null;
-      chunkWithinBrackets = false;
     }
     if (chunkStartsAt === null && str[i] && str[i].trim().length && str[i] !== ")") {
-      if (str[i] === "(") {
-        chunkWithinBrackets = true;
-      } else if (!chunkWithinBrackets) {
+      if (str[i] === "(") ; else if (str[i] !== "(") {
         chunkStartsAt = i;
       }
     }
