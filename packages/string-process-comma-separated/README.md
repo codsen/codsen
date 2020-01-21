@@ -17,6 +17,7 @@
 - [Purpose](#purpose)
 - [Usage](#usage)
 - [API](#api)
+- [`opts.innerWhitespaceAllowed`](#optsinnerwhitespaceallowed)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -171,19 +172,20 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 Main thing, you must pass the callbacks in the options object, `cb` and `errCb`:
 
-| An Options Object's key | Type of its value      | Default      | Description                                                                                                                  |
-| ----------------------- | ---------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| {                       |                        |              |
-| `from`                  | Integer or falsey      | `0`          | Where in the string does the comma-separated chunk start                                                                     |
-| `to`                    | Integer or falsey      | `str.length` | Where in the string does the comma-separated chunk end                                                                       |
-| `offset`                | Integer or falsey      | `0`          | Handy when you've been given cropped string and want to report real indexes. Offset adds that number to each reported index. |
-| `leadingWhitespaceOK`   | Boolean                | `false`      | Is whitespace at the beginning of the range OK?                                                                              |
-| `trailingWhitespaceOK`  | Boolean                | `false`      | Is whitespace at the end of the range OK?                                                                                    |
-| `oneSpaceAfterCommaOK`  | Boolean                | `false`      | Can values have space after comma?                                                                                           |
-| `separator`             | String, non-whitespace | `,`          | What is the separator character?                                                                                             |
-| `cb`                    | Function               | `null`       | Function to ping the extracted value ranges to                                                                               |
-| `errCb`                 | Function               | `null`       | Function to ping the errors to                                                                                               |
-| }                       |                        |              |
+| An Options Object's key  | Type of its value      | Default      | Description                                                                                                                  |
+| ------------------------ | ---------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| {                        |                        |              |
+| `from`                   | Integer or falsey      | `0`          | Where in the string does the comma-separated chunk start                                                                     |
+| `to`                     | Integer or falsey      | `str.length` | Where in the string does the comma-separated chunk end                                                                       |
+| `offset`                 | Integer or falsey      | `0`          | Handy when you've been given cropped string and want to report real indexes. Offset adds that number to each reported index. |
+| `leadingWhitespaceOK`    | Boolean                | `false`      | Is whitespace at the beginning of the range OK?                                                                              |
+| `trailingWhitespaceOK`   | Boolean                | `false`      | Is whitespace at the end of the range OK?                                                                                    |
+| `oneSpaceAfterCommaOK`   | Boolean                | `false`      | Can values have space after comma?                                                                                           |
+| `innerWhitespaceAllowed` | Boolean                | `false`      | After we split into chunks, can those chunks have whitespace?                                                                |
+| `separator`              | String, non-whitespace | `,`          | What is the separator character?                                                                                             |
+| `cb`                     | Function               | `null`       | Function to ping the extracted value ranges to                                                                               |
+| `errCb`                  | Function               | `null`       | Function to ping the errors to                                                                                               |
+| }                        |                        |              |
 
 Here is the default options object in one place:
 
@@ -195,6 +197,7 @@ Here is the default options object in one place:
   leadingWhitespaceOK: false,
   trailingWhitespaceOK: false,
   oneSpaceAfterCommaOK: false,
+  innerWhitespaceAllowed: false,
   separator: ",",
   cb: null,
   errCb: null
@@ -326,6 +329,26 @@ Same thing like in `opts.cb` — whatever your callback function returns does no
 ```
 
 This returned string `"whatever"` will be discarded. It's not `Array.map`. Same with this program.
+
+**[⬆ back to top](#)**
+
+## `opts.innerWhitespaceAllowed`
+
+Sometimes comma-separated values are keywords — then we don't want to allow any whitespace between characters:
+
+```
+<input accept=".jpg,.g if,.png">
+                      ^
+```
+
+But sometimes it's fine, like in media queries:
+
+```
+<link rel="stylesheet" media="screen and (max-width: 100px)" href="zzz.css" />
+                                                    ^
+```
+
+Setting `opts.innerWhitespaceAllowed` by default doesn't allow inner whitespace within split chunk but you can turn it off.
 
 **[⬆ back to top](#)**
 
