@@ -1,3 +1,4 @@
+import fs from "fs";
 import rangesApply from "ranges-apply";
 
 function applyFixes(str, messages, offset = 0) {
@@ -26,4 +27,65 @@ function applyFixes(str, messages, offset = 0) {
   );
 }
 
-export { applyFixes };
+// -----------------------------------------------------------------------------
+
+function writeSample(settingsObj) {
+  const linkSample = (query, id) => `<!DOCTYPE html>
+<html>
+<head>
+	<title>${id} link bad</title>
+	<link rel="stylesheet" href="_red.css">
+	<link media="${query}" rel="stylesheet" href="_green.css">
+</head>
+<body>
+	<div class="container">
+		if media queries work, background will be green
+	</div>
+</body>
+</html>`;
+
+  const mediaSample = (query, id) => `<!DOCTYPE html>
+<html>
+<head>
+	<title>${id} media bad</title>
+	<style type="text/css">
+		.container {
+			background-color: red;
+		}
+		@media ${query} {
+			.container {
+				background-color: green;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		if media queries work, background will be green
+	</div>
+</body>
+</html>`;
+
+  fs.writeFileSync(
+    `test/samples/${settingsObj.id}_link_bad.html`,
+    linkSample(settingsObj.str, settingsObj.id)
+  );
+  fs.writeFileSync(
+    `test/samples/${settingsObj.id}_media_bad.html`,
+    mediaSample(settingsObj.str, settingsObj.id)
+  );
+  if (settingsObj.fixed) {
+    fs.writeFileSync(
+      `test/samples/${settingsObj.id}_link_good.html`,
+      linkSample(settingsObj.fixed, settingsObj.id)
+    );
+    fs.writeFileSync(
+      `test/samples/${settingsObj.id}_media_good.html`,
+      mediaSample(settingsObj.fixed, settingsObj.id)
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+export { applyFixes, writeSample };

@@ -12,6 +12,10 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var leven = _interopDefault(require('leven'));
+var csstree = _interopDefault(require('css-tree'));
+var mediaParser = _interopDefault(require('postcss-media-query-parser'));
+var processCommaSep = _interopDefault(require('string-process-comma-separated'));
+require('json-stringify-safe');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -69,19 +73,47 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
+var syntax = csstree.lexer;
+
 var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"];
+var recognisedMediaFeatures = ["width", "min-width", "max-width", "height", "min-height", "max-height", "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation", "resolution", "min-resolution", "max-resolution", "scan", "grid", "update", "overflow-block", "overflow-inline", "color", "min-color", "max-color", "color-index", "min-color-index", "max-color-index", "monochrome", "color-gamut", "pointer", "hover", "any-pointer", "any-hover"];
+var lettersOnlyRegex = /^\w+$/g;
 function loop(str, opts, res) {
   var chunkStartsAt = null;
-  var mediaTypeOrMediaConditionNext = true;
   var gatheredChunksArr = [];
   var whitespaceStartsAt = null;
+  var nextCanBeMediaType = true;
+  var nextCanBeMediaCondition = true;
+  var nextCanBeNotOrOnly = true;
+  var nextCanBeAnd = false;
   var bracketOpeningIndexes = [];
   for (var i = 0, len = str.length; i <= len; i++) {
     if (str[i] === ")") {
       var lastOpening = bracketOpeningIndexes.pop();
-      loop(str.slice(lastOpening + 1, i), Object.assign({}, opts, {
-        offset: opts.offset + chunkStartsAt
-      }), res);
+      var extractedValueWithinBrackets = str.slice(lastOpening + 1, i);
+      if (!extractedValueWithinBrackets.includes("(") && !extractedValueWithinBrackets.includes(")")) {
+        if (extractedValueWithinBrackets.match(lettersOnlyRegex)) {
+          if (!recognisedMediaFeatures.includes(extractedValueWithinBrackets.toLowerCase().trim())) {
+            res.push({
+              idxFrom: lastOpening + 1 + opts.offset,
+              idxTo: i + opts.offset,
+              message: "Unrecognised \"".concat(extractedValueWithinBrackets.trim(), "\"."),
+              fix: null
+            });
+          }
+        }
+      }
+      var regexFromAllKnownMediaTypes = new RegExp(recognisedMediaTypes.join("|"), "gi");
+      var findings = extractedValueWithinBrackets.match(regexFromAllKnownMediaTypes) || [];
+      findings.forEach(function (mediaTypeFound) {
+        var startingIdx = str.indexOf(mediaTypeFound);
+        res.push({
+          idxFrom: startingIdx + opts.offset,
+          idxTo: startingIdx + mediaTypeFound.length + opts.offset,
+          message: "Media type \"".concat(mediaTypeFound, "\" inside brackets."),
+          fix: null
+        });
+      });
     }
     if (str[i] === "(") {
       bracketOpeningIndexes.push(i);
@@ -123,65 +155,109 @@ function loop(str, opts, res) {
     if (str[i] && !str[i].trim().length && whitespaceStartsAt === null) {
       whitespaceStartsAt = i;
     }
-    if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length || "():".includes(str[i]))) {
+    if (chunkStartsAt !== null && (!str[i] || !str[i].trim().length) && !bracketOpeningIndexes.length) {
       var chunk = str.slice(chunkStartsAt, i);
-      gatheredChunksArr.push(chunk);
-      if (mediaTypeOrMediaConditionNext) {
-        if (["only", "not"].includes(chunk.toLowerCase())) {
-          if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 1])) {
-            res.push({
-              idxFrom: chunkStartsAt + opts.offset,
-              idxTo: i + opts.offset,
-              message: "\"".concat(chunk, "\" instead of a media type."),
-              fix: null
-            });
-          }
-        } else if (["and"].includes(chunk.toLowerCase())) {
-          if (gatheredChunksArr.length > 1 && ["only", "not"].includes(gatheredChunksArr[gatheredChunksArr.length - 2])) {
-            res.push({
-              idxFrom: chunkStartsAt + opts.offset,
-              idxTo: i + opts.offset,
-              message: "\"".concat(chunk, "\" instead of a media type."),
-              fix: null
-            });
-          }
-        } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
-          mediaTypeOrMediaConditionNext = false;
-        } else {
-          var chunksValue = str.slice(chunkStartsAt, i);
-          var message = "Unrecognised \"".concat(chunksValue, "\".");
-          if (chunksValue.includes("-")) {
-            message = "Brackets missing around \"".concat(chunksValue, "\"").concat(str[i] === ":" ? " and its value" : "", ".");
-          }
-          if (chunksValue && chunksValue.length && chunksValue.length === 1) {
-            message = "Strange symbol \"".concat(chunksValue, "\".");
-          }
+      gatheredChunksArr.push(chunk.toLowerCase());
+      if (nextCanBeAnd && (!(nextCanBeMediaType || nextCanBeMediaCondition) || chunk === "and")) {
+        if (chunk.toLowerCase() !== "and") {
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
-            message: message,
+            message: "Expected \"and\", found \"".concat(chunk, "\"."),
             fix: null
           });
-          return;
+        } else if (!str[i]) {
+          res.push({
+            idxFrom: chunkStartsAt + opts.offset,
+            idxTo: i + opts.offset,
+            message: "Dangling \"".concat(chunk, "\"."),
+            fix: {
+              ranges: [[str.slice(0, chunkStartsAt).trimEnd().length + opts.offset, i + opts.offset]]
+            }
+          });
         }
+        nextCanBeAnd = false;
+        nextCanBeMediaCondition = true;
+      } else if (nextCanBeNotOrOnly && ["not", "only"].includes(chunk)) {
+        nextCanBeNotOrOnly = false;
+        nextCanBeMediaCondition = false;
+      } else if (nextCanBeMediaType || nextCanBeMediaCondition) {
+        if (chunk.startsWith("(")) {
+          if (nextCanBeMediaCondition) ; else {
+            var message = "Media condition \"".concat(str.slice(chunkStartsAt, i), "\" can't be here.");
+            if (gatheredChunksArr[gatheredChunksArr.length - 2] === "not") {
+              message = "\"not\" can be only in front of media type.";
+            }
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message: message,
+              fix: null
+            });
+          }
+        } else {
+          if (nextCanBeMediaType) {
+            if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              nextCanBeMediaType = false;
+              nextCanBeMediaCondition = false;
+            } else {
+              var _message = "Unrecognised \"".concat(chunk, "\".");
+              if (!chunk.match(/\w/g)) {
+                _message = "Strange symbol".concat(chunk.trim().length === 1 ? "" : "s", " \"").concat(chunk, "\".");
+              } else if (["and", "only", "or", "not"].includes(chunk.toLowerCase())) {
+                _message = "\"".concat(chunk, "\" instead of a media type.");
+              }
+              res.push({
+                idxFrom: chunkStartsAt + opts.offset,
+                idxTo: i + opts.offset,
+                message: _message,
+                fix: null
+              });
+            }
+          } else {
+            var _message2 = "Expected brackets on \"".concat(chunk, "\".");
+            var fix = null;
+            var idxTo = i + opts.offset;
+            if (["not", "else", "or"].includes(chunk.toLowerCase())) {
+              _message2 = "\"".concat(chunk, "\" can't be here.");
+            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              _message2 = "Unexpected media type, try using a comma.";
+            } else if (recognisedMediaFeatures.includes(chunk.toLowerCase())) {
+              _message2 = "Missing brackets.";
+              fix = {
+                ranges: [[chunkStartsAt + opts.offset, chunkStartsAt + opts.offset, "("], [i + opts.offset, i + opts.offset, ")"]]
+              };
+            } else if (str.slice(i).trim().startsWith(":")) {
+              var valueWithoutColon = chunk.slice(0, i).trim();
+              _message2 = "Expected brackets on \"".concat(valueWithoutColon, "\" and its value.");
+              idxTo = chunkStartsAt + valueWithoutColon.length + opts.offset;
+            }
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: idxTo,
+              message: _message2,
+              fix: fix
+            });
+            break;
+          }
+        }
+        nextCanBeAnd = true;
       } else {
-        if (chunk === "and") {
-          mediaTypeOrMediaConditionNext = true;
-        } else {
-          res.push({
-            idxFrom: chunkStartsAt + opts.offset,
-            idxTo: i + opts.offset,
-            message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, i), "\"."),
-            fix: null
-          });
-        }
+        res.push({
+          idxFrom: chunkStartsAt + opts.offset,
+          idxTo: i + opts.offset,
+          message: "Unrecognised media type \"".concat(str.slice(chunkStartsAt, i), "\"."),
+          fix: null
+        });
       }
       chunkStartsAt = null;
+      if (nextCanBeNotOrOnly) {
+        nextCanBeNotOrOnly = false;
+      }
     }
     if (chunkStartsAt === null && str[i] && str[i].trim().length && str[i] !== ")") {
-      if (str[i] === "(") ; else if (str[i] !== "(") {
-        chunkStartsAt = i;
-      }
+      if (str[i] === "(") ;
+      chunkStartsAt = i;
     }
   }
 }
@@ -202,7 +278,6 @@ function isMediaD(originalStr, originalOpts) {
   } else if (!originalStr.trim().length) {
     return [];
   }
-  var mostlyLettersRegex = /^\w+$/g;
   var res = [];
   var nonWhitespaceStart = 0;
   var nonWhitespaceEnd = originalStr.length;
@@ -245,7 +320,7 @@ function isMediaD(originalStr, originalOpts) {
       message: "Missing media type or condition.",
       fix: null
     });
-  } else if (str.match(mostlyLettersRegex) && !str.includes("(") && !str.includes(")")) {
+  } else if (str.match(lettersOnlyRegex) && !str.includes("(") && !str.includes(")")) {
     for (var _i2 = 0, _len = recognisedMediaTypes.length; _i2 < _len; _i2++) {
       if (leven(recognisedMediaTypes[_i2], str) === 1) {
         res.push({
@@ -313,10 +388,45 @@ function isMediaD(originalStr, originalOpts) {
         fix: null
       });
     }
+    if (!res.length && str.match(/\(\s*\)/g)) {
+      var lastOpening = null;
+      var nonWhitespaceFound;
+      for (var _i3 = 0, _len2 = str.length; _i3 < _len2; _i3++) {
+        if (str[_i3] === "(") {
+          lastOpening = _i3;
+          nonWhitespaceFound = false;
+        } else if (str[_i3] === ")") {
+          if (!nonWhitespaceFound) {
+            res.push({
+              idxFrom: lastOpening + opts.offset,
+              idxTo: _i3 + 1 + opts.offset,
+              message: "Empty bracket pair.",
+              fix: null
+            });
+          } else {
+            nonWhitespaceFound = true;
+          }
+        } else if (str[_i3].trim().length) {
+          nonWhitespaceFound = true;
+        }
+      }
+    }
     if (res.length) {
       return res;
     }
-    loop(str, opts, res);
+    processCommaSep(str, {
+      offset: opts.offset,
+      leadingWhitespaceOK: false,
+      trailingWhitespaceOK: false,
+      oneSpaceAfterCommaOK: true,
+      innerWhitespaceAllowed: true,
+      separator: ",",
+      cb: function cb(idxFrom, idxTo) {
+        var parsed = mediaParser(str.slice(idxFrom - opts.offset, idxTo - opts.offset));
+        loop(str, opts, res);
+      },
+      errCb: function errCb(ranges, message) {}
+    });
   }
   return res;
 }

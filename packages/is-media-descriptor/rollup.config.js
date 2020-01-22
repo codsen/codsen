@@ -5,6 +5,7 @@ import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import strip from "@rollup/plugin-strip";
 import babel from "rollup-plugin-babel";
+import json from "@rollup/plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -29,6 +30,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
+        json(),
         commonjs(),
         babel(),
         terser(),
@@ -40,11 +42,18 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["leven"],
+      external: [
+        "css-tree",
+        "json-stringify-safe",
+        "leven",
+        "postcss-media-query-parser",
+        "string-process-comma-separated"
+      ],
       plugins: [
         strip({
           sourceMap: false
         }),
+        json(),
         babel(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
@@ -55,13 +64,35 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["leven"],
+      external: [
+        "css-tree",
+        "json-stringify-safe",
+        "leven",
+        "postcss-media-query-parser",
+        "string-process-comma-separated"
+      ],
       plugins: [
         strip({
           sourceMap: false
         }),
+        json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
+      ]
+    },
+
+    // cssTreeValidate.js build:
+    {
+      input: "src/cssTreeValidate.js",
+      output: [{ file: "dist/cssTreeValidate.cjs.js", format: "cjs" }],
+      external: ["css-tree"],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        resolve(),
+        json(),
+        cleanup({ comments: "istanbul" })
       ]
     },
 
@@ -75,6 +106,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
+        json(),
         cleanup({ comments: "istanbul" })
       ]
     }

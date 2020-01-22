@@ -59,17 +59,27 @@ const deprecatedMediaFeatures = [
   "max-device-aspect-ratio"
 ];
 
+const lettersOnlyRegex = /^\w+$/g;
+const BACKSLASH = `\u005C`;
+
 function loop(str, opts, res) {
+  // opts.offset is passed but we don't Object.assign for perf reasons
+
   let chunkStartsAt = null;
-  let mediaTypeOrMediaConditionNext = true;
   const gatheredChunksArr = [];
   let whitespaceStartsAt = null;
   let chunkWithinBrackets = false;
 
+  // upcoming chunk expectation flags:
+  let nextCanBeMediaType = true;
+  let nextCanBeMediaCondition = true;
+  let nextCanBeNotOrOnly = true;
+  let nextCanBeAnd = false;
+
   // here we keep a note where we are bracket-wise, how deep
   const bracketOpeningIndexes = [];
 
-  console.log(`072 get to business, loop through`);
+  console.log(`082 get to business, loop through`);
 
   for (let i = 0, len = str.length; i <= len; i++) {
     //
@@ -109,35 +119,72 @@ function loop(str, opts, res) {
     // catch closing bracket
     if (str[i] === ")") {
       console.log(
-        `112 caught closing bracket, ${`\u001b[${31}m${`POP`}\u001b[${39}m`}`
+        `122 caught closing bracket, ${`\u001b[${31}m${`POP`}\u001b[${39}m`}`
       );
       const lastOpening = bracketOpeningIndexes.pop();
+      const extractedValueWithinBrackets = str.slice(lastOpening + 1, i);
       console.log(
-        `116 extracted bracket contents: "${str.slice(lastOpening + 1, i)}"`
+        `127 extracted last bracket contents: "${extractedValueWithinBrackets}"`
       );
 
-      // call recursively
-      console.log(
-        `121 ██ recursion starts ██ - offset: opts.offset=${
-          opts.offset
-        } + chunkStartsAt=${chunkStartsAt} => ${opts.offset + chunkStartsAt}`
+      // Preliminary check, will be improved later.
+      // Idea: if extracted chunk in the brackets doesn't have any nested
+      // brackets, we can evaluate it quickly, especially if it does not
+      // contain colon.
+      // For example we extracted "zzz" from:
+      // screen and not (print and (zzz))
+      if (
+        !extractedValueWithinBrackets.includes("(") &&
+        !extractedValueWithinBrackets.includes(")")
+      ) {
+        console.log(`140 util(): final chunk within brackets extracted`);
+        if (extractedValueWithinBrackets.match(lettersOnlyRegex)) {
+          console.log(`142 util(): chunk within brackets is only letters`);
+          if (
+            !recognisedMediaFeatures.includes(
+              extractedValueWithinBrackets.toLowerCase().trim()
+            )
+          ) {
+            console.log(
+              `149 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening +
+                1}, ${i}]`
+            );
+            res.push({
+              idxFrom: lastOpening + 1 + opts.offset,
+              idxTo: i + opts.offset,
+              message: `Unrecognised "${extractedValueWithinBrackets.trim()}".`,
+              fix: null
+            });
+          }
+        }
+      }
+
+      // everything nested like (screen and (color))
+      // and contains media type
+      const regexFromAllKnownMediaTypes = new RegExp(
+        recognisedMediaTypes.join("|"),
+        "gi"
       );
-      loop(
-        str.slice(lastOpening + 1, i),
-        Object.assign({}, opts, {
-          offset: opts.offset + chunkStartsAt
-        }),
-        res
-      );
-      console.log(`██ recursion ends ██ back where str: "${str}" and i: ${i}`);
+      const findings =
+        extractedValueWithinBrackets.match(regexFromAllKnownMediaTypes) || [];
+
+      findings.forEach(mediaTypeFound => {
+        const startingIdx = str.indexOf(mediaTypeFound);
+        res.push({
+          idxFrom: startingIdx + opts.offset,
+          idxTo: startingIdx + mediaTypeFound.length + opts.offset,
+          message: `Media type "${mediaTypeFound}" inside brackets.`,
+          fix: null
+        });
+      });
     }
 
     // catch opening bracket
     if (str[i] === "(") {
-      console.log(`137 caught opening bracket`);
+      console.log(`184 caught opening bracket`);
       bracketOpeningIndexes.push(i);
       console.log(
-        `140 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
+        `187 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
           bracketOpeningIndexes,
           null,
           4
@@ -150,7 +197,7 @@ function loop(str, opts, res) {
       if (str[whitespaceStartsAt - 1] === "(" || str[i] === ")") {
         // if it's whitespace inside brackets, wipe it
         console.log(
-          `153 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt}, ${i}]`
+          `200 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt}, ${i}]`
         );
         res.push({
           idxFrom: whitespaceStartsAt + opts.offset, // reporting is always whole whitespace
@@ -162,7 +209,7 @@ function loop(str, opts, res) {
         });
       } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
         console.log(
-          `165 ${`\u001b[${31}m${`BAD WHITESPACE CAUGHT`}\u001b[${39}m`}`
+          `212 ${`\u001b[${31}m${`BAD WHITESPACE CAUGHT`}\u001b[${39}m`}`
         );
         // Depends what whitespace is this. We aim to remove minimal amount
         // of characters possible. If there is excessive whitespace, we'll
@@ -176,7 +223,7 @@ function loop(str, opts, res) {
         let rangesInsert = " ";
         // if whitespace chunk is longer than one, let's try to cut corners:
         if (whitespaceStartsAt !== i - 1) {
-          console.log(`179 A MULTIPLE WHITESPACE CHARS`);
+          console.log(`226 A MULTIPLE WHITESPACE CHARS`);
           if (str[whitespaceStartsAt] === " ") {
             rangesFrom++;
             rangesInsert = null;
@@ -186,7 +233,7 @@ function loop(str, opts, res) {
           }
         }
         console.log(
-          `189 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt +
+          `236 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt +
             opts.offset}, ${i + opts.offset}]`
         );
         res.push({
@@ -206,7 +253,7 @@ function loop(str, opts, res) {
       // reset
       whitespaceStartsAt = null;
       console.log(
-        `209 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = null`
+        `256 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = null`
       );
     }
 
@@ -214,7 +261,7 @@ function loop(str, opts, res) {
     if (str[i] && !str[i].trim().length && whitespaceStartsAt === null) {
       whitespaceStartsAt = i;
       console.log(
-        `217 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+        `264 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
       );
     }
 
@@ -224,159 +271,273 @@ function loop(str, opts, res) {
     // str[i] can be undefined now (on the last traversal cycle)!
     if (
       chunkStartsAt !== null &&
-      (!str[i] || !str[i].trim().length || "():".includes(str[i]))
+      (!str[i] || !str[i].trim().length) &&
+      !bracketOpeningIndexes.length
     ) {
+      console.log(`277 inside ending of a chunk clauses`);
       // extract the value:
       const chunk = str.slice(chunkStartsAt, i);
-      gatheredChunksArr.push(chunk);
+      gatheredChunksArr.push(chunk.toLowerCase());
       console.log(
-        `233 extracted chunk: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`
+        `282 extracted chunk: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`
       );
 
-      // we use mediaTypeOrMediaConditionNext to establish where we are
+      // we use nextCanBeMediaTypeOrMediaCondition to establish where we are
       // logically - media type/condition might be preceded by not/only or
       // might be not - that's why we need this flag, to distinguish these
       // two cases
-      if (mediaTypeOrMediaConditionNext) {
-        console.log(
-          `242 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was true`
-        );
-        // check is the current chunk wrapped with brackets, because if so,
-        // it is media type, and otherwise, it's media condition
-        // see https://drafts.csswg.org/mediaqueries/#media for more
-
-        if (["only", "not"].includes(chunk.toLowerCase())) {
+      if (
+        nextCanBeAnd &&
+        (!(nextCanBeMediaType || nextCanBeMediaCondition) || chunk === "and")
+      ) {
+        console.log(`293 ${`\u001b[${36}m${`██`}\u001b[${39}m`} AND CLAUSES`);
+        if (chunk.toLowerCase() !== "and") {
+          console.log(`295 ERROR - "and" was expected`);
           console.log(
-            `250 ${`\u001b[${32}m${`CHUNK MATCHED WITH MODIFIER ONLY/NOT`}\u001b[${39}m`}`
-          );
-          // check for repetition, like "@media only not"
-          if (
-            gatheredChunksArr.length > 1 &&
-            ["only", "not"].includes(
-              gatheredChunksArr[gatheredChunksArr.length - 1]
-            )
-          ) {
-            console.log(
-              `260 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
-                opts.offset}, ${i + opts.offset}]`
-            );
-            res.push({
-              idxFrom: chunkStartsAt + opts.offset,
-              idxTo: i + opts.offset,
-              message: `"${chunk}" instead of a media type.`,
-              fix: null
-            });
-            // console.log(`195 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
-            // break;
-          }
-        } else if (["and"].includes(chunk.toLowerCase())) {
-          console.log(
-            `274 ${`\u001b[${32}m${`CHUNK MATCHED WITH JOINER AND`}\u001b[${39}m`}`
-          );
-          // check for missing bits, like "@media only and"
-          console.log(
-            `278 ${`\u001b[${33}m${`gatheredChunksArr`}\u001b[${39}m`} = ${JSON.stringify(
-              gatheredChunksArr,
-              null,
-              4
-            )}`
-          );
-          // if the chunk in front was "only" or "not", it's an error
-          if (
-            gatheredChunksArr.length > 1 &&
-            ["only", "not"].includes(
-              gatheredChunksArr[gatheredChunksArr.length - 2]
-            )
-          ) {
-            console.log(
-              `292 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
-                opts.offset}, ${i + opts.offset}]`
-            );
-            res.push({
-              idxFrom: chunkStartsAt + opts.offset,
-              idxTo: i + opts.offset,
-              message: `"${chunk}" instead of a media type.`,
-              fix: null
-            });
-            // console.log(`224 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
-            // break;
-          }
-        } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
-          console.log(
-            `306 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
-          );
-          mediaTypeOrMediaConditionNext = false;
-          console.log(
-            `310 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = ${mediaTypeOrMediaConditionNext}`
-          );
-        } else {
-          // it's an error, something is not recognised
-          console.log(
-            `315 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} an error [${chunkStartsAt +
-              opts.offset}, ${i + opts.offset}]`
-          );
-          const chunksValue = str.slice(chunkStartsAt, i);
-          let message = `Unrecognised "${chunksValue}".`;
-          if (chunksValue.includes("-")) {
-            message = `Brackets missing around "${chunksValue}"${
-              str[i] === ":" ? ` and its value` : ""
-            }.`;
-          }
-          if (chunksValue && chunksValue.length && chunksValue.length === 1) {
-            message = `Strange symbol "${chunksValue}".`;
-          }
-
-          console.log(
-            `330 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+            `297 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
               opts.offset}, ${i + opts.offset}]`
           );
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
             idxTo: i + opts.offset,
-            message,
+            message: `Expected "and", found "${chunk}".`,
             fix: null
           });
-          console.log(`339 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`}`);
-          return;
+        } else if (!str[i]) {
+          console.log(
+            `308 ${`\u001b[${31}m${`last chunk can't be AND!`}\u001b[${39}m`}`
+          );
+          console.log(
+            `311 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+              opts.offset}, ${i + opts.offset}]`
+          );
+          res.push({
+            idxFrom: chunkStartsAt + opts.offset,
+            idxTo: i + opts.offset,
+            message: `Dangling "${chunk}".`,
+            fix: {
+              ranges: [
+                [
+                  str.slice(0, chunkStartsAt).trimEnd().length + opts.offset,
+                  i + opts.offset
+                ]
+              ]
+            }
+          });
         }
+
+        nextCanBeAnd = false;
+        nextCanBeMediaCondition = true;
+        console.log(
+          `332 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+        );
+      } else if (nextCanBeNotOrOnly && ["not", "only"].includes(chunk)) {
+        console.log(
+          `336 ${`\u001b[${36}m${`██`}\u001b[${39}m`} NOT/ONLY CLAUSES`
+        );
+        nextCanBeNotOrOnly = false;
+        console.log(
+          `340 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`
+        );
+        // nextCanBeMediaType stays true
+        // but nextCanBeMediaCondition is now off because media conditions
+        // can't be preceded by not/only
+        // spec:
+        //
+        // <media-query> = <media-condition>
+        //     | [ not | only ]? <media-type> [ and <media-condition-without-or> ]?
+        // - https://www.w3.org/TR/mediaqueries-4/#typedef-media-condition
+        //
+        nextCanBeMediaCondition = false;
+        console.log(
+          `353 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+        );
+      } else if (nextCanBeMediaType || nextCanBeMediaCondition) {
+        console.log(
+          `357 ${`\u001b[${36}m${`██`}\u001b[${39}m`} MEDIA TYPE/CONDITION CLAUSES`
+        );
+
+        // is it media type or media condition?
+        if (chunk.startsWith("(")) {
+          // resembles media condition
+          console.log(
+            `364 ${`\u001b[${36}m${`chunk resembles media condition`}\u001b[${39}m`}`
+          );
+          // is there a media condition allowed here?
+          if (nextCanBeMediaCondition) {
+            console.log(`368 POSSIBLY FINE, MEDIA CONDITION IS EXPECTED`);
+            // TODO
+          } else {
+            console.log(`371 ERROR, MEDIA CONDITION WAS NOT EXPECTED`);
+            let message = `Media condition "${str.slice(
+              chunkStartsAt,
+              i
+            )}" can't be here.`;
+            // try to pinpoint the error's cause:
+            if (gatheredChunksArr[gatheredChunksArr.length - 2] === "not") {
+              message = `"not" can be only in front of media type.`;
+            }
+
+            console.log(
+              `382 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+                opts.offset}, ${i + opts.offset}]`
+            );
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo: i + opts.offset,
+              message,
+              fix: null
+            });
+          }
+        } else {
+          // resembles media type
+          console.log(
+            `395 ${`\u001b[${36}m${`chunk resembles media type`}\u001b[${39}m`}`
+          );
+          // is there a media type allowed here?
+          if (nextCanBeMediaType) {
+            console.log(`399 POSSIBLY FINE, MEDIA TYPE IS EXPECTED`);
+
+            // is it a recognised type?
+            if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              console.log(
+                `404 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
+              );
+              nextCanBeMediaType = false;
+              nextCanBeMediaCondition = false;
+              console.log(
+                `409 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaType`}\u001b[${39}m`} = ${nextCanBeMediaType}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+              );
+            } else {
+              console.log(
+                `413 ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} - this does not match any known media types`
+              );
+              let message = `Unrecognised "${chunk}".`;
+              if (!chunk.match(/\w/g)) {
+                message = `Strange symbol${
+                  chunk.trim().length === 1 ? "" : "s"
+                } "${chunk}".`;
+              } else if (
+                ["and", "only", "or", "not"].includes(chunk.toLowerCase())
+              ) {
+                message = `"${chunk}" instead of a media type.`;
+              }
+              console.log(
+                `426 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+                  opts.offset}, ${i + opts.offset}], message: "${message}"`
+              );
+              res.push({
+                idxFrom: chunkStartsAt + opts.offset,
+                idxTo: i + opts.offset,
+                message,
+                fix: null
+              });
+            }
+          } else {
+            console.log(
+              `438 ERROR, MEDIA TYPE (OR SOMETHING BRACKET-LESS) WAS NOT EXPECTED`
+            );
+
+            // as a last resort, let's check, maybe it's a known condition but without brackets?
+            let message = `Expected brackets on "${chunk}".`;
+            let fix = null;
+            let idxTo = i + opts.offset;
+            if (["not", "else", "or"].includes(chunk.toLowerCase())) {
+              message = `"${chunk}" can't be here.`;
+            } else if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
+              message = `Unexpected media type, try using a comma.`;
+            } else if (recognisedMediaFeatures.includes(chunk.toLowerCase())) {
+              message = `Missing brackets.`;
+              fix = {
+                ranges: [
+                  [
+                    chunkStartsAt + opts.offset,
+                    chunkStartsAt + opts.offset,
+                    "("
+                  ],
+                  [i + opts.offset, i + opts.offset, ")"]
+                ]
+              };
+            } else if (
+              str
+                .slice(i)
+                .trim()
+                .startsWith(":")
+            ) {
+              console.log(`467 ██ ... and its value`);
+              const valueWithoutColon = chunk.slice(0, i).trim();
+              message = `Expected brackets on "${valueWithoutColon}" and its value.`;
+              idxTo = chunkStartsAt + valueWithoutColon.length + opts.offset;
+            }
+
+            console.log(
+              `474 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+                opts.offset}, ${i +
+                opts.offset}], message: "${message}", fix: ${JSON.stringify(
+                fix,
+                null,
+                4
+              )}`
+            );
+            res.push({
+              idxFrom: chunkStartsAt + opts.offset,
+              idxTo,
+              message,
+              fix
+            });
+
+            console.log(`489 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+            break;
+          }
+        }
+
+        // finally, set the flag for the next chunk's expectations
+        nextCanBeAnd = true;
+        console.log(
+          `497 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}`
+        );
       } else {
         console.log(
-          `344 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} was false`
+          `501 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`ELSE CLAUSES`}\u001b[${39}m`}`
         );
-        // if flag "mediaTypeOrMediaConditionNext" is false, this means we are
+        // if flag "nextCanBeMediaTypeOrMediaCondition" is false, this means we are
         // currently located at after the media type or media condition,
         // for example, where <here> marks below:
         // "@media screen <here>" or "@media (color) <here>"
-        if (chunk === "and") {
-          console.log(
-            `352 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`mediaTypeOrMediaConditionNext`}\u001b[${39}m`} = true`
-          );
-          mediaTypeOrMediaConditionNext = true;
-        } else {
-          console.log(
-            `357 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
-              opts.offset}, ${i + opts.offset}]`
-          );
-          res.push({
-            idxFrom: chunkStartsAt + opts.offset,
-            idxTo: i + opts.offset,
-            message: `Unrecognised media type "${str.slice(
-              chunkStartsAt,
-              i
-            )}".`,
-            fix: null
-          });
-          // console.log(`274 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
-          // break;
-        }
+        console.log(
+          `508 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${chunkStartsAt +
+            opts.offset}, ${i + opts.offset}]`
+        );
+        res.push({
+          idxFrom: chunkStartsAt + opts.offset,
+          idxTo: i + opts.offset,
+          message: `Unrecognised media type "${str.slice(chunkStartsAt, i)}".`,
+          fix: null
+        });
       }
 
       // reset
       chunkStartsAt = null;
       console.log(
-        `377 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}; ${`\u001b[${32}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
+        `522 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}; ${`\u001b[${32}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
       );
       chunkWithinBrackets = false;
+
+      if (nextCanBeNotOrOnly) {
+        nextCanBeNotOrOnly = false;
+        console.log(
+          `529 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`
+        );
+      }
+    } else {
+      // TODO - remove
+      console.log(
+        `535 ELSE - ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`} = ${JSON.stringify(
+          bracketOpeningIndexes,
+          null,
+          4
+        )}`
+      );
     }
 
     // catch the beginning of a chunk, without brackets like "print" or
@@ -394,18 +555,14 @@ function loop(str, opts, res) {
       if (str[i] === "(") {
         chunkWithinBrackets = true;
         console.log(
-          `397 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
-        );
-      } else if (str[i] !== "(") {
-        // chunk within brackets will be fed recursively so we don't
-        // process content after opening chunk - when closing bracket
-        // will be found, brackets content will be extracted and
-        // program will be ran recursively
-        chunkStartsAt = i;
-        console.log(
-          `406 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `558 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
         );
       }
+
+      chunkStartsAt = i;
+      console.log(
+        `564 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+      );
     }
 
     //
@@ -430,7 +587,24 @@ function loop(str, opts, res) {
       `${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`
     );
     console.log(
-      `${`\u001b[${90}m${`mediaTypeOrMediaConditionNext: ${mediaTypeOrMediaConditionNext}`}\u001b[${39}m`}`
+      `${`\u001b[${90}m${`██ nextCanBeNotOrOnly: ${nextCanBeNotOrOnly}`}\u001b[${39}m`} ${`\u001b[${
+        nextCanBeNotOrOnly ? 32 : 31
+      }m${nextCanBeNotOrOnly}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`██ nextCanBeMediaType: `}\u001b[${39}m`} ${`\u001b[${
+        nextCanBeMediaType ? 32 : 31
+      }m${nextCanBeMediaType}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`██ nextCanBeMediaCondition: ${nextCanBeMediaCondition}`}\u001b[${39}m`} ${`\u001b[${
+        nextCanBeMediaCondition ? 32 : 31
+      }m${nextCanBeMediaCondition}\u001b[${39}m`}`
+    );
+    console.log(
+      `${`\u001b[${90}m${`██ nextCanBeAnd: ${nextCanBeAnd}`}\u001b[${39}m`} ${`\u001b[${
+        nextCanBeAnd ? 32 : 31
+      }m${nextCanBeAnd}\u001b[${39}m`}`
     );
     console.log(
       `${`\u001b[${90}m${`gatheredChunksArr: ${JSON.stringify(
@@ -449,4 +623,4 @@ function loop(str, opts, res) {
   }
 }
 
-export { loop, recognisedMediaTypes };
+export { loop, recognisedMediaTypes, lettersOnlyRegex };
