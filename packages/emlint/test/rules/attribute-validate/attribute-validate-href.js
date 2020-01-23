@@ -260,3 +260,32 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `03.04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - whitespace within a legit URL`,
+  t => {
+    const str = `<a href="https://  codsen .com">`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-validate-href": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), `<a href="https://codsen.com">`);
+    t.match(messages, [
+      {
+        ruleId: "attribute-validate-href",
+        idxFrom: 9,
+        idxTo: 30,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges: [
+            [17, 19],
+            [25, 26]
+          ]
+        }
+      }
+    ]);
+    t.end();
+  }
+);

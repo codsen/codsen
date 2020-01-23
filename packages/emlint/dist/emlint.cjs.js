@@ -3401,7 +3401,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     }
     if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
       if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+        cbWhitespace([whitespaceStartsAt + opts.offset, (str[i].trim().length ? i : i + 1) + opts.offset]);
       }
       whitespaceStartsAt = null;
     }
@@ -3410,7 +3410,7 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     }
     if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
       if (typeof cbValues === "function") {
-        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+        cbValues([nameStartsAt + opts.offset, (i + 1 === opts.to ? i + 1 : i) + opts.offset]);
       }
       nameStartsAt = null;
     }
@@ -3456,7 +3456,45 @@ function validateValue$1(str, originalOpts, errorArr) {
   var opts = Object.assign({}, defaults, originalOpts);
   var extractedValue = str.slice(opts.from, opts.to);
   var calcultedIsRel = isRel(extractedValue);
-  if (!(urlRegex({
+  if (Array.from(extractedValue).some(function (val) {
+    return !val.trim().length;
+  })) {
+    var ranges = [];
+    var foundCharacterRanges = [];
+    splitByWhitespace(extractedValue, function (valueRangeArr) {
+      foundCharacterRanges.push(valueRangeArr);
+    }, function (whitespaceRangeArr) {
+      ranges.push(whitespaceRangeArr);
+    }, originalOpts);
+    var countOfURIs = foundCharacterRanges.reduce(function (acc, curr) {
+      if (extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset).match(urlRegex({
+        exact: true
+      }))) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+    var valueWithoutWhitespace = foundCharacterRanges.reduce(function (acc, curr) {
+      return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
+    }, "");
+    if (countOfURIs > 1) {
+      errorArr.push({
+        idxFrom: opts.from + opts.offset,
+        idxTo: opts.to + opts.offset,
+        message: "There should be only one URI.",
+        fix: null
+      });
+    } else {
+      errorArr.push({
+        idxFrom: opts.from + opts.offset,
+        idxTo: opts.to + opts.offset,
+        message: "Remove whitespace.",
+        fix: {
+          ranges: ranges
+        }
+      });
+    }
+  } else if (!(urlRegex({
     exact: true
   }).test(extractedValue) || calcultedIsRel.res)) {
     var message = "Should be an URI.";

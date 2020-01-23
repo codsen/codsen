@@ -3494,7 +3494,10 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       (str[i].trim().length || i + 1 === opts.to)
     ) {
       if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+        cbWhitespace([
+          whitespaceStartsAt + opts.offset,
+          (str[i].trim().length ? i : i + 1) + opts.offset
+        ]);
       }
       whitespaceStartsAt = null;
     }
@@ -3503,7 +3506,10 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
     }
     if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
       if (typeof cbValues === "function") {
-        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+        cbValues([
+          nameStartsAt + opts.offset,
+          (i + 1 === opts.to ? i + 1 : i) + opts.offset
+        ]);
       }
       nameStartsAt = null;
     }
@@ -3549,7 +3555,54 @@ function validateValue$1(str, originalOpts, errorArr) {
   const opts = Object.assign({}, defaults, originalOpts);
   const extractedValue = str.slice(opts.from, opts.to);
   const calcultedIsRel = isRel(extractedValue);
-  if (!(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)) {
+  if (Array.from(extractedValue).some(val => !val.trim().length)) {
+    const ranges = [];
+    const foundCharacterRanges = [];
+    splitByWhitespace(
+      extractedValue,
+      valueRangeArr => {
+        foundCharacterRanges.push(valueRangeArr);
+      },
+      whitespaceRangeArr => {
+        ranges.push(whitespaceRangeArr);
+      },
+      originalOpts
+    );
+    const countOfURIs = foundCharacterRanges.reduce((acc, curr) => {
+      if (
+        extractedValue
+          .slice(curr[0] - opts.offset, curr[1] - opts.offset)
+          .match(urlRegex({ exact: true }))
+      ) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+    const valueWithoutWhitespace = foundCharacterRanges.reduce((acc, curr) => {
+      return (
+        acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset)
+      );
+    }, "");
+    if (countOfURIs > 1) {
+      errorArr.push({
+        idxFrom: opts.from + opts.offset,
+        idxTo: opts.to + opts.offset,
+        message: `There should be only one URI.`,
+        fix: null
+      });
+    } else {
+      errorArr.push({
+        idxFrom: opts.from + opts.offset,
+        idxTo: opts.to + opts.offset,
+        message: `Remove whitespace.`,
+        fix: {
+          ranges
+        }
+      });
+    }
+  } else if (
+    !(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)
+  ) {
     let message = `Should be an URI.`;
     let idxFrom = opts.offset + opts.from;
     let idxTo = opts.offset + opts.to;

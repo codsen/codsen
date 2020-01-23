@@ -41,7 +41,10 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       //   }]`
       // );
       if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt, str[i].trim().length ? i : i + 1]);
+        cbWhitespace([
+          whitespaceStartsAt + opts.offset,
+          (str[i].trim().length ? i : i + 1) + opts.offset
+        ]);
       }
       whitespaceStartsAt = null;
       // console.log(
@@ -74,7 +77,10 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
       //   }]`
       // );
       if (typeof cbValues === "function") {
-        cbValues([nameStartsAt, i + 1 === opts.to ? i + 1 : i]);
+        cbValues([
+          nameStartsAt + opts.offset,
+          (i + 1 === opts.to ? i + 1 : i) + opts.offset
+        ]);
       }
 
       // reset
