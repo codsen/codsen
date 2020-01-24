@@ -42,13 +42,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "css-tree",
-        "json-stringify-safe",
-        "leven",
-        "postcss-media-query-parser",
-        "string-process-comma-separated"
-      ],
+      external: ["leven", "string-process-comma-separated"],
       plugins: [
         strip({
           sourceMap: false
@@ -64,13 +58,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "css-tree",
-        "json-stringify-safe",
-        "leven",
-        "postcss-media-query-parser",
-        "string-process-comma-separated"
-      ],
+      external: ["leven", "string-process-comma-separated"],
       plugins: [
         strip({
           sourceMap: false
@@ -78,21 +66,6 @@ export default commandLineArgs => {
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
-      ]
-    },
-
-    // cssTreeValidate.js build:
-    {
-      input: "src/cssTreeValidate.js",
-      output: [{ file: "dist/cssTreeValidate.cjs.js", format: "cjs" }],
-      external: ["css-tree"],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        json(),
-        cleanup({ comments: "istanbul" })
       ]
     },
 

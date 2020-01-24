@@ -1,9 +1,6 @@
 import leven from "leven";
-import cssTreeValidate from "./cssTreeValidate";
-import mediaParser from "postcss-media-query-parser";
 import { loop, recognisedMediaTypes, lettersOnlyRegex } from "./util";
 import processCommaSep from "string-process-comma-separated";
-import stringify from "json-stringify-safe";
 
 // See https://drafts.csswg.org/mediaqueries/
 // Also https://csstree.github.io/docs/validator.html
@@ -30,12 +27,12 @@ function isMediaD(originalStr, originalOpts) {
   // quick ending
   if (typeof originalStr !== "string") {
     console.log(
-      `033 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `030 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   } else if (!originalStr.trim().length) {
     console.log(
-      `038 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `035 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   }
@@ -97,7 +94,7 @@ function isMediaD(originalStr, originalOpts) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `100 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
+    `097 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
   );
 
   // quick checks first - cover the most common cases, to make checks the
@@ -121,12 +118,12 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     console.log(
-      `124 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      `121 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return res;
   } else if (["only", "not"].includes(str)) {
     console.log(
-      `129 isMediaD(): PUSH [${nonWhitespaceStart +
+      `126 isMediaD(): PUSH [${nonWhitespaceStart +
         opts.offset}, ${nonWhitespaceEnd + opts.offset}]`
     );
     res.push({
@@ -157,17 +154,17 @@ function isMediaD(originalStr, originalOpts) {
     //
     //
     //
-    console.log(`160 isMediaD(): mostly-letters clauses`);
+    console.log(`157 isMediaD(): mostly-letters clauses`);
 
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       console.log(
-        `164 isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
+        `161 isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
           recognisedMediaTypes[i],
           str
         )}`
       );
       if (leven(recognisedMediaTypes[i], str) === 1) {
-        console.log(`170 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        console.log(`167 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -187,9 +184,9 @@ function isMediaD(originalStr, originalOpts) {
 
       if (i === len - 1) {
         // it means nothing was matched
-        console.log(`190 isMediaD(): end reached`);
+        console.log(`187 isMediaD(): end reached`);
         console.log(
-          `192 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${`\u001b[${33}m${nonWhitespaceStart +
+          `189 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${`\u001b[${33}m${nonWhitespaceStart +
             opts.offset}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd +
             opts.offset}\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`
         );
@@ -200,7 +197,7 @@ function isMediaD(originalStr, originalOpts) {
           fix: null
         });
         console.log(
-          `203 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+          `200 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
             res,
             null,
             4
@@ -231,7 +228,7 @@ function isMediaD(originalStr, originalOpts) {
     // ███████████████████████████████████████
 
     console.log(
-      `234 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`
+      `231 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`
     );
 
     // Preventive checks will help to simplify the algorithm - we won't need
@@ -245,7 +242,7 @@ function isMediaD(originalStr, originalOpts) {
           // this means order is messed up
           if (!wrongOrder && acc[1] + 1 > acc[0]) {
             console.log(
-              `248 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
+              `245 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
             );
             wrongOrder = true;
           }
@@ -269,7 +266,7 @@ function isMediaD(originalStr, originalOpts) {
     // only the order is messed up:
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       console.log(
-        `272 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+        `269 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
       );
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
@@ -279,14 +276,14 @@ function isMediaD(originalStr, originalOpts) {
       });
     }
     console.log(
-      `282 isMediaD(): ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `279 isMediaD(): ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         openingBracketCount,
         null,
         4
       )}`
     );
     console.log(
-      `289 isMediaD(): ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `286 isMediaD(): ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         closingBracketCount,
         null,
         4
@@ -312,7 +309,7 @@ function isMediaD(originalStr, originalOpts) {
     }
 
     if (!res.length && str.match(/\(\s*\)/g)) {
-      console.log(`315 empty brackets pair detected`);
+      console.log(`312 empty brackets pair detected`);
       // now find out where
       let lastOpening = null;
       let nonWhitespaceFound;
@@ -323,7 +320,7 @@ function isMediaD(originalStr, originalOpts) {
         } else if (str[i] === ")") {
           if (!nonWhitespaceFound) {
             console.log(
-              `326 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${i +
+              `323 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${i +
                 1}]`
             );
             res.push({
@@ -344,7 +341,7 @@ function isMediaD(originalStr, originalOpts) {
     if (res.length) {
       // report errors early, save resources
       console.log(
-        `347 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+        `344 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
       );
       return res;
     }
@@ -353,7 +350,7 @@ function isMediaD(originalStr, originalOpts) {
     // ███████████████████████████████████████
 
     console.log(
-      `356 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`
+      `353 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`
     );
     // first parse comma-separated chunks
     processCommaSep(str, {
@@ -365,28 +362,14 @@ function isMediaD(originalStr, originalOpts) {
       separator: ",",
       cb: (idxFrom, idxTo) => {
         console.log(
-          `368 isMediaD(): chunk [${idxFrom - opts.offset}, ${idxTo -
+          `365 isMediaD(): chunk [${idxFrom - opts.offset}, ${idxTo -
             opts.offset}] extracted, passing to loop()`
-        );
-        console.log(` `);
-        console.log(` `);
-        console.log(` `);
-        console.log(` `);
-        const parsed = mediaParser(
-          str.slice(idxFrom - opts.offset, idxTo - opts.offset)
-        );
-        console.log(
-          `379 ███████████████████████████████████████\n\n ${`\u001b[${33}m${`parsed`}\u001b[${39}m`} = ${stringify(
-            parsed,
-            null,
-            4
-          )}`
         );
         loop(str, opts, res);
       },
       errCb: (ranges, message) => {
         console.log(
-          `389 isMediaD(): received error range ${JSON.stringify(
+          `372 isMediaD(): received error range ${JSON.stringify(
             ranges,
             null,
             4
@@ -415,10 +398,10 @@ function isMediaD(originalStr, originalOpts) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `418 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
+    `401 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
   );
   console.log(
-    `421 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `404 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

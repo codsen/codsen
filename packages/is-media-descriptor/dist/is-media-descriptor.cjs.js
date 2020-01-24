@@ -12,10 +12,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var leven = _interopDefault(require('leven'));
-var csstree = _interopDefault(require('css-tree'));
-var mediaParser = _interopDefault(require('postcss-media-query-parser'));
 var processCommaSep = _interopDefault(require('string-process-comma-separated'));
-require('json-stringify-safe');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -72,8 +69,6 @@ function _iterableToArrayLimit(arr, i) {
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
-
-var syntax = csstree.lexer;
 
 var recognisedMediaTypes = ["all", "aural", "braille", "embossed", "handheld", "print", "projection", "screen", "speech", "tty", "tv"];
 var recognisedMediaFeatures = ["width", "min-width", "max-width", "height", "min-height", "max-height", "aspect-ratio", "min-aspect-ratio", "max-aspect-ratio", "orientation", "resolution", "min-resolution", "max-resolution", "scan", "grid", "update", "overflow-block", "overflow-inline", "color", "min-color", "max-color", "color-index", "min-color-index", "max-color-index", "monochrome", "color-gamut", "pointer", "hover", "any-pointer", "any-hover"];
@@ -422,7 +417,6 @@ function isMediaD(originalStr, originalOpts) {
       innerWhitespaceAllowed: true,
       separator: ",",
       cb: function cb(idxFrom, idxTo) {
-        var parsed = mediaParser(str.slice(idxFrom - opts.offset, idxTo - opts.offset));
         loop(str, opts, res);
       },
       errCb: function errCb(ranges, message) {}

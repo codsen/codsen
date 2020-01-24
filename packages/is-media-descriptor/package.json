@@ -96,9 +96,7 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": [
-        "cssTreeValidate.js is adapted from csstree-validator function validateString() - MIT licence, Copyright (C) 2016-2018 by Roman Dvornov, https://github.com/csstree/validator/"
-      ]
+      "extras": []
     },
     "npmignore": {
       "badFiles": [],
@@ -124,10 +122,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "css-tree": "^1.0.0-alpha.39",
-    "json-stringify-safe": "^5.0.1",
     "leven": "^3.1.0",
-    "postcss-media-query-parser": "^0.2.3",
     "string-process-comma-separated": "^1.2.0"
   },
   "devDependencies": {

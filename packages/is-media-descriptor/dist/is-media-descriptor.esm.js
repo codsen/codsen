@@ -8,12 +8,7 @@
  */
 
 import leven from 'leven';
-import csstree from 'css-tree';
-import mediaParser from 'postcss-media-query-parser';
 import processCommaSep from 'string-process-comma-separated';
-import 'json-stringify-safe';
-
-const syntax = csstree.lexer;
 
 const recognisedMediaTypes = [
   "all",
@@ -470,9 +465,6 @@ function isMediaD(originalStr, originalOpts) {
       innerWhitespaceAllowed: true,
       separator: ",",
       cb: (idxFrom, idxTo) => {
-        const parsed = mediaParser(
-          str.slice(idxFrom - opts.offset, idxTo - opts.offset)
-        );
         loop(str, opts, res);
       },
       errCb: (ranges, message) => {
