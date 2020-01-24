@@ -221,7 +221,7 @@
     },
     {
         "name": "email-comb",
-        "size": 61787,
+        "size": 62303,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -237,7 +237,7 @@
     },
     {
         "name": "emlint",
-        "size": 293681,
+        "size": 295076,
         "imports": [
             "codsen-tokenizer",
             "html-all-known-attributes",
@@ -325,8 +325,10 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 5623,
-        "imports": []
+        "size": 14253,
+        "imports": [
+            "string-process-comma-separated"
+        ]
     },
     {
         "name": "is-relative-uri",
@@ -390,7 +392,7 @@
     },
     {
         "name": "lect",
-        "size": 74544,
+        "size": 74553,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -428,7 +430,7 @@
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 5285,
+        "size": 5286,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -565,7 +567,7 @@
     },
     {
         "name": "string-collapse-white-space",
-        "size": 18309,
+        "size": 18310,
         "imports": [
             "ranges-apply",
             "ranges-merge",
