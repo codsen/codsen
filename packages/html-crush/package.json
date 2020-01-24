@@ -153,7 +153,7 @@
     "lect": "^0.11.8",
     "node-fetch": "^2.6.0",
     "p-map": "^3.0.0",
-    "rollup": "^1.29.0",
+    "rollup": "^1.29.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",
