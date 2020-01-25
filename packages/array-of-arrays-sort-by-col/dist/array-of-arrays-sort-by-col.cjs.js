@@ -9,11 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isNaturalNumberString = _interopDefault(require('is-natural-number-string'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -48,19 +43,18 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var isArr = Array.isArray;
 function existy(x) {
   return x != null;
 }
 function sortBySubarray(arr) {
   var axis = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  if (!isArr(arr)) {
+  if (!Array.isArray(arr)) {
     throw new Error("array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ".concat(_typeof(arr), ", equal to:\n").concat(JSON.stringify(arr, null, 0)));
   }
   if (!Number.isInteger(axis, {
     includeZero: true
   })) {
-    if (isNaturalNumberString(axis, {
+    if (/^\d*$/.test(axis, {
       includeZero: true
     })) {
       axis = parseInt(axis, 10);
@@ -77,7 +71,7 @@ function sortBySubarray(arr) {
   if (axis >= maxLength) {
     throw new Error("array-of-arrays-sort-by-col: [THROW_ID_03]: The second input argument, index of the column to sort by (axis), is marking the column which does not exist on any of the input arrays. Axis was given as ".concat(axis, " while highest index goes as far as ").concat(maxLength, "."));
   }
-  var resToBeReturned = clone(arr).sort(function (arr1, arr2) {
+  var resToBeReturned = Array.from(arr).sort(function (arr1, arr2) {
     if (arr1[axis] !== arr2[axis]) {
       if (!existy(arr1[axis]) && existy(arr2[axis]) || existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] > arr2[axis]) {
         return 1;

@@ -1,10 +1,3 @@
-/* eslint no-console:0 */
-
-import clone from "lodash.clonedeep";
-import isNaturalNumberString from "is-natural-number-string";
-
-const isArr = Array.isArray;
-
 // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------
 
@@ -28,15 +21,15 @@ function logArray(arr, highlightIdx, colour) {
   return rez;
 }
 
-function logArrayOfArrays(arr, highlightIdx) {
-  console.log(
-    `\n\n\n\n*** logArrayOfArrays:\n${"=".repeat(
-      arr[0].length * 8 + (arr[0].length - 1)
-    )}${arr.reduce((accum, currVal) => {
-      return `${accum}\n${logArray(currVal, highlightIdx)}`;
-    }, "")}\n${"=".repeat(arr[0].length * 8 + (arr[0].length - 1))}\n\n\n`
-  );
-}
+// function logArrayOfArrays(arr, highlightIdx) {
+//   console.log(
+//     `\n\n\n\n*** logArrayOfArrays:\n${"=".repeat(
+//       arr[0].length * 8 + (arr[0].length - 1)
+//     )}${arr.reduce((accum, currVal) => {
+//       return `${accum}\n${logArray(currVal, highlightIdx)}`;
+//     }, "")}\n${"=".repeat(arr[0].length * 8 + (arr[0].length - 1))}\n\n\n`
+//   );
+// }
 
 // EXTERNAL API
 // -----------------------------------------------------------------------------
@@ -44,7 +37,7 @@ function logArrayOfArrays(arr, highlightIdx) {
 function sortBySubarray(arr, axis = 0) {
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-  if (!isArr(arr)) {
+  if (!Array.isArray(arr)) {
     throw new Error(
       `array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ${typeof arr}, equal to:\n${JSON.stringify(
         arr,
@@ -54,7 +47,7 @@ function sortBySubarray(arr, axis = 0) {
     );
   }
   if (!Number.isInteger(axis, { includeZero: true })) {
-    if (isNaturalNumberString(axis, { includeZero: true })) {
+    if (/^\d*$/.test(axis, { includeZero: true })) {
       axis = parseInt(axis, 10);
     } else {
       throw new Error(
@@ -77,7 +70,7 @@ function sortBySubarray(arr, axis = 0) {
     );
   }
 
-  const resToBeReturned = clone(arr).sort((arr1, arr2) => {
+  const resToBeReturned = Array.from(arr).sort((arr1, arr2) => {
     console.log(`===========================================`);
     console.log(logArray(arr1, axis));
     console.log(`${logArray(arr2, axis)}\n`);
@@ -92,7 +85,7 @@ function sortBySubarray(arr, axis = 0) {
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] > arr2[axis])
       ) {
         console.log(
-          `095 return 1 - \u001b[${32}m${`${arr2[axis]} goes first, SWAP`}\u001b[${39}m`
+          `088 return 1 - \u001b[${32}m${`${arr2[axis]} goes first, SWAP`}\u001b[${39}m`
         );
         return 1;
       }
@@ -101,7 +94,7 @@ function sortBySubarray(arr, axis = 0) {
         (existy(arr1[axis]) && existy(arr2[axis]) && arr1[axis] < arr2[axis])
       ) {
         console.log(
-          `104 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
+          `097 return -1 - \u001b[${32}m${`${arr1[axis]} goes first, ALL STAYS AS IS`}\u001b[${39}m`
         );
         return -1;
       }
@@ -133,7 +126,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis - i])) {
             if (arr1[axis - i] < arr2[axis - i]) {
               console.log(
-                `136 return -1 - \u001b[${32}m${`${
+                `129 return -1 - \u001b[${32}m${`${
                   arr1[axis - 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -141,7 +134,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis - i] > arr2[axis - i]) {
               console.log(
-                `144 return 1 - \u001b[${32}m${`${
+                `137 return 1 - \u001b[${32}m${`${
                   arr2[axis - 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -149,7 +142,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `152 return -1 - \u001b[${32}m${`${
+              `145 return -1 - \u001b[${32}m${`${
                 arr1[axis - 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -160,7 +153,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis - i])) {
             console.log(
-              `163 return 1 - \u001b[${32}m${`${
+              `156 return 1 - \u001b[${32}m${`${
                 arr2[axis - 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -178,7 +171,7 @@ function sortBySubarray(arr, axis = 0) {
           if (existy(arr2[axis + i])) {
             if (arr1[axis + i] < arr2[axis + i]) {
               console.log(
-                `181 return -1 - \u001b[${32}m${`${
+                `174 return -1 - \u001b[${32}m${`${
                   arr1[axis + 1]
                 } goes first, ALL STAYS AS IS`}\u001b[${39}m`
               );
@@ -186,7 +179,7 @@ function sortBySubarray(arr, axis = 0) {
             }
             if (arr1[axis + i] > arr2[axis + i]) {
               console.log(
-                `189 return 1 - \u001b[${32}m${`${
+                `182 return 1 - \u001b[${32}m${`${
                   arr2[axis + 1]
                 } goes first, SWAP`}\u001b[${39}m`
               );
@@ -194,7 +187,7 @@ function sortBySubarray(arr, axis = 0) {
             }
           } else {
             console.log(
-              `197 return -1 - \u001b[${32}m${`${
+              `190 return -1 - \u001b[${32}m${`${
                 arr1[axis + 1]
               } goes first, ALL STAYS AS IS`}\u001b[${39}m`
             );
@@ -205,7 +198,7 @@ function sortBySubarray(arr, axis = 0) {
           // it's enough for arr2 not to be null or undefined and it goes on top:
           if (existy(arr2[axis + i])) {
             console.log(
-              `208 return 1 - \u001b[${32}m${`${
+              `201 return 1 - \u001b[${32}m${`${
                 arr2[axis + 1]
               } goes first, SWAP`}\u001b[${39}m`
             );
@@ -216,12 +209,12 @@ function sortBySubarray(arr, axis = 0) {
     }
 
     // 3. if by now any of returns hasn't happened yet, these two rows are equal
-    console.log(`219 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
+    console.log(`212 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
     return 0;
   });
 
-  console.log("\n\n\nRETURNING:");
-  logArrayOfArrays(resToBeReturned, axis);
+  // console.log("\n\n\nRETURNING:");
+  // logArrayOfArrays(resToBeReturned, axis);
 
   return resToBeReturned;
 }

@@ -7,15 +7,11 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
  */
 
-import clone from 'lodash.clonedeep';
-import isNaturalNumberString from 'is-natural-number-string';
-
-const isArr = Array.isArray;
 function existy(x) {
   return x != null;
 }
 function sortBySubarray(arr, axis = 0) {
-  if (!isArr(arr)) {
+  if (!Array.isArray(arr)) {
     throw new Error(
       `array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ${typeof arr}, equal to:\n${JSON.stringify(
         arr,
@@ -25,7 +21,7 @@ function sortBySubarray(arr, axis = 0) {
     );
   }
   if (!Number.isInteger(axis, { includeZero: true })) {
-    if (isNaturalNumberString(axis, { includeZero: true })) {
+    if (/^\d*$/.test(axis, { includeZero: true })) {
       axis = parseInt(axis, 10);
     } else {
       throw new Error(
@@ -46,7 +42,7 @@ function sortBySubarray(arr, axis = 0) {
       `array-of-arrays-sort-by-col: [THROW_ID_03]: The second input argument, index of the column to sort by (axis), is marking the column which does not exist on any of the input arrays. Axis was given as ${axis} while highest index goes as far as ${maxLength}.`
     );
   }
-  const resToBeReturned = clone(arr).sort((arr1, arr2) => {
+  const resToBeReturned = Array.from(arr).sort((arr1, arr2) => {
     if (arr1[axis] !== arr2[axis]) {
       if (
         (!existy(arr1[axis]) && existy(arr2[axis])) ||

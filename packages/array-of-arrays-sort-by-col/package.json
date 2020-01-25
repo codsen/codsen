@@ -118,10 +118,6 @@
     "coverage-report": "json-summary",
     "timeout": 0
   },
-  "dependencies": {
-    "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "^4.5.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
