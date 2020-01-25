@@ -45,8 +45,6 @@ export default commandLineArgs => {
         "ast-monkey-traverse",
         "check-types-mini",
         "is-natural-number-string",
-        "lodash.clonedeep",
-        "type-detect",
         "util-array-object-or-both"
       ],
       plugins: [
@@ -68,8 +66,6 @@ export default commandLineArgs => {
         "ast-monkey-traverse",
         "check-types-mini",
         "is-natural-number-string",
-        "lodash.clonedeep",
-        "type-detect",
         "util-array-object-or-both"
       ],
       plugins: [

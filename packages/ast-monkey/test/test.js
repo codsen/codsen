@@ -4,7 +4,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly
 } = require("../dist/ast-monkey.cjs");
@@ -64,16 +63,6 @@ t.test("01.04 - drop - throws when there's no input", t => {
   t.end();
 });
 
-t.test("01.05 - info - throws when there's no input", t => {
-  t.throws(() => {
-    info();
-  }, /THROW_ID_25/g);
-  t.throws(() => {
-    info(null, {});
-  }, /THROW_ID_25/g);
-  t.end();
-});
-
 t.test("01.06 - get/set - throws when opts.index is missing", t => {
   t.throws(() => {
     get(input);
@@ -95,19 +84,19 @@ t.test(
   t => {
     t.throws(() => {
       get(input, { index: "1.5" });
-    }, /THROW_ID_09/g);
+    }, /THROW_ID_11/g);
     t.throws(() => {
       get(input, { index: 1.5 });
     }, /THROW_ID_11/g);
     t.throws(() => {
       set(input, { index: "1.5", val: "zzz" });
-    }, /THROW_ID_16/g);
+    }, /THROW_ID_17/g);
     t.throws(() => {
       set(input, { index: 1.5, val: "zzz" });
     }, /THROW_ID_17/g);
     t.throws(() => {
       drop(input, { index: "1.5" });
-    }, /THROW_ID_22/g);
+    }, /THROW_ID_23/g);
     t.throws(() => {
       drop(input, { index: 1.5 });
     }, /THROW_ID_23/g);
@@ -1007,7 +996,7 @@ t.test("03.08 - index is real number as string - throws", t => {
         index: "2.1"
       }
     );
-  }, /THROW_ID_09/g);
+  }, /THROW_ID_11/g);
   t.end();
 });
 
@@ -1125,7 +1114,7 @@ t.test("04.06 - throws when inputs are wrong", t => {
         index: "a"
       }
     );
-  }, /THROW_ID_16/g);
+  }, /THROW_ID_17/g);
   t.throws(() => {
     set(
       { a: "a", b: ["c"] },
@@ -1216,25 +1205,10 @@ t.test(
     index = "6.1";
     t.throws(() => {
       drop(input, { index });
-    }, /THROW_ID_22/g);
+    }, /THROW_ID_23/g);
     t.end();
   }
 );
-
-// -----------------------------------------------------------------------------
-// info
-// -----------------------------------------------------------------------------
-
-t.test("06.01 - info", t => {
-  input = {
-    a: "a"
-  };
-  actual = info(input);
-  intended = { a: "a" };
-
-  t.same(actual, intended, "06.01");
-  t.end();
-});
 
 // -----------------------------------------------------------------------------
 // del

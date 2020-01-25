@@ -77,8 +77,8 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 9 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-monkey.cjs.js` | 9 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey.umd.js` | 42 KB |
 
 **[⬆ back to top](#)**
@@ -207,7 +207,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -234,7 +233,7 @@ This method is the most versatile of the `ast-monkey` because you can go "up the
 
 ### .get()
 
-Use method `get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `find()` or you can pick a number manually, possibly choosing one of the indexes from `info()` output.
+Use method `get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `find()` or you can pick a number manually.
 
 Practically, `get()` is typically used on each element of the findings array (which you would get after performing `find()`). Then, depending on your needs, you would write the particular index over using `set()` or delete it using `drop()`.
 
@@ -267,7 +266,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -325,7 +323,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -381,7 +378,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -397,117 +393,6 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //      a: {b: [{c: {d: 'e'}}]},
 //      f: {g: []}
 //    }
-```
-
-**[⬆ back to top](#)**
-
-### .info()
-
-This method lists all the nodes of a given input (AST):
-
-```bash
------------
-    #1
-
-key = "a"
-val = {
-    "b": [
-        {
-            "c": {
-                "d": "e"
-            }
-        }
-    ]
-}
-data.gatherPath = [
-    1
-]
------------
-    #2
-
-key = "b"
-val = [
-    {
-        "c": {
-            "d": "e"
-        }
-    }
-]
-data.gatherPath = [
-    1,
-    2
-]
------------
-    #3
-
-key = {
-    "c": {
-        "d": "e"
-    }
-}
-data.gatherPath = [
-    1,
-    2,
-    3
-]
------------
-    #4
-
-key = "c"
-val = {
-    "d": "e"
-}
-data.gatherPath = [
-    1,
-    2,
-    3,
-    4
-]
------------
-    #5
-
-key = "d"
-val = "e"
-data.gatherPath = [
-    1,
-    2,
-    3,
-    4,
-    5
-]
------------
-    #6
-
-key = "f"
-val = {
-    "g": [
-        "h"
-    ]
-}
-data.gatherPath = [
-    6
-]
------------
-    #7
-
-key = "g"
-val = [
-    "h"
-]
-data.gatherPath = [
-    6,
-    7
-]
------------
-    #8
-
-key = "h"
-data.gatherPath = [
-    6,
-    7,
-    8
-]
------------
 ```
 
 **[⬆ back to top](#)**
@@ -566,7 +451,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -597,7 +481,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -649,7 +532,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -669,7 +551,6 @@ const {
   get,
   set,
   drop,
-  info,
   del,
   arrayFirstOnly,
   traverse
@@ -749,7 +630,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/ast-monkey
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
-[cov-img]: https://img.shields.io/badge/coverage-96.25%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-94.41%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey

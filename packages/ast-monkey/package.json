@@ -129,8 +129,6 @@
     "ast-monkey-traverse": "^1.12.4",
     "check-types-mini": "^5.7.54",
     "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "^4.5.0",
-    "type-detect": "^4.0.8",
     "util-array-object-or-both": "^2.7.53"
   },
   "devDependencies": {
