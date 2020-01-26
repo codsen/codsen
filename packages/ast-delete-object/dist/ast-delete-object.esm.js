@@ -10,14 +10,13 @@
 import clone from 'lodash.clonedeep';
 import compare from 'ast-compare';
 import traverse from 'ast-monkey-traverse';
-import checkTypes from 'check-types-mini';
 
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function deleteObj(originalInput, originalObjToDelete, originalOpts) {
+function deleteObj(originalInput, objToDelete, originalOpts) {
   function existy(x) {
     return x != null;
   }
@@ -26,7 +25,7 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
       "ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!"
     );
   }
-  if (!existy(originalObjToDelete)) {
+  if (!existy(objToDelete)) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!"
     );
@@ -41,11 +40,7 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     hungryForWhitespace: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "ast-delete-object/deleteObj(): [THROW_ID_04*]"
-  });
   let input = clone(originalInput);
-  const objToDelete = clone(originalObjToDelete);
   let current;
   if (
     compare(input, objToDelete, {

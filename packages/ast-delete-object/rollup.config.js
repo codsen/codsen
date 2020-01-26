@@ -43,7 +43,6 @@ export default commandLineArgs => {
       external: [
         "ast-compare",
         "ast-monkey-traverse",
-        "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject"
       ],
@@ -64,7 +63,6 @@ export default commandLineArgs => {
       external: [
         "ast-compare",
         "ast-monkey-traverse",
-        "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject"
       ],

@@ -121,7 +121,6 @@
   "dependencies": {
     "ast-compare": "^1.12.30",
     "ast-monkey-traverse": "^1.12.4",
-    "check-types-mini": "^5.7.54",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },

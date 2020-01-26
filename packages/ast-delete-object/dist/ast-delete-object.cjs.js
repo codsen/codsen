@@ -14,7 +14,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var clone = _interopDefault(require('lodash.clonedeep'));
 var compare = _interopDefault(require('ast-compare'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
-var checkTypes = _interopDefault(require('check-types-mini'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -33,14 +32,14 @@ function _typeof(obj) {
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
-function deleteObj(originalInput, originalObjToDelete, originalOpts) {
+function deleteObj(originalInput, objToDelete, originalOpts) {
   function existy(x) {
     return x != null;
   }
   if (!existy(originalInput)) {
     throw new Error("ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!");
   }
-  if (!existy(originalObjToDelete)) {
+  if (!existy(objToDelete)) {
     throw new Error("ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!");
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
@@ -51,11 +50,7 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     hungryForWhitespace: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "ast-delete-object/deleteObj(): [THROW_ID_04*]"
-  });
   var input = clone(originalInput);
-  var objToDelete = clone(originalObjToDelete);
   var current;
   if (compare(input, objToDelete, {
     hungryForWhitespace: opts.hungryForWhitespace,

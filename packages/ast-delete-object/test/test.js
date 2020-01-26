@@ -2197,26 +2197,6 @@ t.test("05.04 - two keys in objToDelete - default", t => {
     ["elem1", "elem4"],
     "05.04.01"
   );
-  t.throws(() => {
-    deleteObj(
-      [
-        "elem1",
-        {
-          key2: ["\n\n \t \n \n    "],
-          key3: [" ", "\n"],
-          key4: "val4"
-        },
-        "elem4"
-      ],
-      {
-        key2: [],
-        key3: [""]
-      },
-      {
-        hungryForWhitespace: "tralala"
-      }
-    );
-  });
   t.end();
 });
 
@@ -3578,25 +3558,5 @@ t.test("07.01 - does not mutate input args", t => {
     },
     "07.01.02"
   ); // real deal
-  t.end();
-});
-
-// ==========
-// Edge cases
-// ==========
-
-t.test("08.01 - wrong input args", t => {
-  t.throws(() => {
-    deleteObj({ a: "a" }, { a: "a" }, { matchKeysStrictly: "true" });
-  }, /THROW_ID_04/g);
-  t.throws(() => {
-    deleteObj({ a: "a" }, { a: "a" }, { matchKeysStrictly: 1 });
-  }, /THROW_ID_04/g);
-  t.throws(() => {
-    deleteObj({ a: "a" }, { a: "a" }, { hungryForWhitespace: "true" });
-  }, /THROW_ID_04/g);
-  t.throws(() => {
-    deleteObj({ a: "a" }, { a: "a" }, { hungryForWhitespace: 1 });
-  }, /THROW_ID_04/g);
   t.end();
 });
