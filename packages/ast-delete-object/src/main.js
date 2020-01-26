@@ -1,8 +1,13 @@
 import clone from "lodash.clonedeep";
-import isObj from "lodash.isplainobject";
 import compare from "ast-compare";
 import traverse from "ast-monkey-traverse";
 import checkTypes from "check-types-mini";
+
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
 
 function deleteObj(originalInput, originalObjToDelete, originalOpts) {
   function existy(x) {

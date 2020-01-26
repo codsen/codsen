@@ -12,11 +12,27 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var compare = _interopDefault(require('ast-compare'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
 function deleteObj(originalInput, originalObjToDelete, originalOpts) {
   function existy(x) {
     return x != null;
