@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNumStr = _interopDefault(require('is-natural-number-string'));
 var stringMatchLeftRight = require('string-match-left-right');
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 
@@ -29,25 +28,15 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function isStr(something) {
   return typeof something === "string";
 }
-var isArr = Array.isArray;
-function mandatory(i) {
-  throw new Error("string-find-heads-tails: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
-}
-function strFindHeadsTails(str, heads, tails, opts) {
-  if (existy(opts)) {
-    if (_typeof(opts) !== "object") {
-      throw new TypeError("string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(opts), ", equal to: ").concat(opts));
-    } else if (isNumStr(opts.fromIndex, {
-      includeZero: true
-    })) {
-      opts.fromIndex = Number(opts.fromIndex);
-    }
+function strFindHeadsTails(str, heads, tails, originalOpts) {
+  if (originalOpts && !isObj(originalOpts)) {
+    throw new TypeError("string-find-heads-tails: [THROW_ID_01] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ".concat(originalOpts, " (type: ").concat(_typeof(originalOpts), ")"));
   }
   var defaults = {
     fromIndex: 0,
@@ -57,17 +46,11 @@ function strFindHeadsTails(str, heads, tails, opts) {
     matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
     relaxedAPI: false
   };
-  opts = Object.assign({}, defaults, opts);
-  if (!opts.relaxedAPI) {
-    if (str === undefined) {
-      mandatory(1);
-    }
-    if (heads === undefined) {
-      mandatory(2);
-    }
-    if (tails === undefined) {
-      mandatory(3);
-    }
+  var opts = Object.assign({}, defaults, originalOpts);
+  if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
+    opts.fromIndex = Number(opts.fromIndex);
+  } else if (!Number.isInteger(opts.fromIndex) || opts.fromIndex < 0) {
+    throw new TypeError("".concat(opts.source, " [THROW_ID_18] the fourth input argument must be a natural number or zero! Currently it's: ").concat(opts.fromIndex));
   }
   if (!isStr(str) || str.length === 0) {
     if (opts.relaxedAPI) {
@@ -77,12 +60,12 @@ function strFindHeadsTails(str, heads, tails, opts) {
   }
   var culpritsVal;
   var culpritsIndex;
-  if (!isStr(heads) && !isArr(heads)) {
+  if (typeof heads !== "string" && !Array.isArray(heads)) {
     if (opts.relaxedAPI) {
       return [];
     }
     throw new TypeError("string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it's: ".concat(_typeof(heads), ", equal to:\n").concat(JSON.stringify(heads, null, 4)));
-  } else if (isStr(heads)) {
+  } else if (typeof heads === "string") {
     if (heads.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -91,7 +74,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     } else {
       heads = arrayiffy(heads);
     }
-  } else if (isArr(heads)) {
+  } else if (Array.isArray(heads)) {
     if (heads.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -128,7 +111,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       }
     }
   }
-  if (!isStr(tails) && !isArr(tails)) {
+  if (!isStr(tails) && !Array.isArray(tails)) {
     if (opts.relaxedAPI) {
       return [];
     }
@@ -142,7 +125,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     } else {
       tails = arrayiffy(tails);
     }
-  } else if (isArr(tails)) {
+  } else if (Array.isArray(tails)) {
     if (tails.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -186,11 +169,6 @@ function strFindHeadsTails(str, heads, tails, opts) {
     } else if (arrayiffy(tails).includes(str)) {
       throw new Error("".concat(opts.source).concat(s ? ": [THROW_ID_17]" : "", " the whole input string can't be equal to ").concat(isStr(tails) ? "" : "one of ", "tails (").concat(str, ")!"));
     }
-  }
-  if (!(Number.isInteger(opts.fromIndex) && opts.fromIndex >= 0) && !isNumStr(opts.fromIndex, {
-    includeZero: true
-  })) {
-    throw new TypeError("".concat(opts.source).concat(s ? ": [THROW_ID_18]" : "", " the fourth input argument must be a natural number! Currently it's: ").concat(opts.fromIndex));
   }
   var headsAndTailsFirstCharIndexesRange = heads.concat(tails).map(function (value) {
     return value.charAt(0);

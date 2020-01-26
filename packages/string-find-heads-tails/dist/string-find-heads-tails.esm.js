@@ -7,31 +7,22 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
  */
 
-import isNumStr from 'is-natural-number-string';
 import { matchRightIncl } from 'string-match-left-right';
 import arrayiffy from 'arrayiffy-if-string';
 
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function isStr(something) {
   return typeof something === "string";
 }
-const isArr = Array.isArray;
-function mandatory(i) {
-  throw new Error(
-    `string-find-heads-tails: [THROW_ID_01*] Missing ${i}th parameter!`
-  );
-}
-function strFindHeadsTails(str, heads, tails, opts) {
-  if (existy(opts)) {
-    if (typeof opts !== "object") {
-      throw new TypeError(
-        `string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it's: ${typeof opts}, equal to: ${opts}`
-      );
-    } else if (isNumStr(opts.fromIndex, { includeZero: true })) {
-      opts.fromIndex = Number(opts.fromIndex);
-    }
+function strFindHeadsTails(str, heads, tails, originalOpts) {
+  if (originalOpts && !isObj(originalOpts)) {
+    throw new TypeError(
+      `string-find-heads-tails: [THROW_ID_01] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${originalOpts} (type: ${typeof originalOpts})`
+    );
   }
   const defaults = {
     fromIndex: 0,
@@ -41,17 +32,13 @@ function strFindHeadsTails(str, heads, tails, opts) {
     matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
     relaxedAPI: false
   };
-  opts = Object.assign({}, defaults, opts);
-  if (!opts.relaxedAPI) {
-    if (str === undefined) {
-      mandatory(1);
-    }
-    if (heads === undefined) {
-      mandatory(2);
-    }
-    if (tails === undefined) {
-      mandatory(3);
-    }
+  const opts = Object.assign({}, defaults, originalOpts);
+  if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
+    opts.fromIndex = Number(opts.fromIndex);
+  } else if (!Number.isInteger(opts.fromIndex) || opts.fromIndex < 0) {
+    throw new TypeError(
+      `${opts.source} [THROW_ID_18] the fourth input argument must be a natural number or zero! Currently it's: ${opts.fromIndex}`
+    );
   }
   if (!isStr(str) || str.length === 0) {
     if (opts.relaxedAPI) {
@@ -63,7 +50,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
   }
   let culpritsVal;
   let culpritsIndex;
-  if (!isStr(heads) && !isArr(heads)) {
+  if (typeof heads !== "string" && !Array.isArray(heads)) {
     if (opts.relaxedAPI) {
       return [];
     }
@@ -74,7 +61,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
         4
       )}`
     );
-  } else if (isStr(heads)) {
+  } else if (typeof heads === "string") {
     if (heads.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -85,7 +72,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     } else {
       heads = arrayiffy(heads);
     }
-  } else if (isArr(heads)) {
+  } else if (Array.isArray(heads)) {
     if (heads.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -136,7 +123,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       }
     }
   }
-  if (!isStr(tails) && !isArr(tails)) {
+  if (!isStr(tails) && !Array.isArray(tails)) {
     if (opts.relaxedAPI) {
       return [];
     }
@@ -158,7 +145,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     } else {
       tails = arrayiffy(tails);
     }
-  } else if (isArr(tails)) {
+  } else if (Array.isArray(tails)) {
     if (tails.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -231,18 +218,6 @@ function strFindHeadsTails(str, heads, tails, opts) {
         }tails (${str})!`
       );
     }
-  }
-  if (
-    !(Number.isInteger(opts.fromIndex) && opts.fromIndex >= 0) &&
-    !isNumStr(opts.fromIndex, { includeZero: true })
-  ) {
-    throw new TypeError(
-      `${opts.source}${
-        s ? ": [THROW_ID_18]" : ""
-      } the fourth input argument must be a natural number! Currently it's: ${
-        opts.fromIndex
-      }`
-    );
   }
   const headsAndTailsFirstCharIndexesRange = heads
     .concat(tails)

@@ -118,7 +118,6 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.11.26",
-    "is-natural-number-string": "^1.0.1",
     "string-match-left-right": "^3.11.17"
   },
   "devDependencies": {

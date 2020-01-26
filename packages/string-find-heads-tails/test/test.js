@@ -5,132 +5,112 @@ const strFindHeadsTails = require("../dist/string-find-heads-tails.cjs");
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-t.test("01.01 - throws when there's no input", t => {
-  const error = t.throws(() => {
-    strFindHeadsTails();
-  });
-  t.ok(error.message.includes("THROW_ID_01"));
-  t.end();
-});
-
 t.test(
-  "01.02 - throws when the first argument, source string, is not a string",
+  "01.01 - throws when the first argument, source string, is not a string",
   t => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       strFindHeadsTails(1);
-    });
-    const err2 = t.throws(() => {
+    }, /THROW_ID_02/);
+    t.throws(() => {
       strFindHeadsTails(1, "a", "b");
-    });
-    t.ok(err1.message.includes("THROW_ID_01"));
-    t.ok(err2.message.includes("THROW_ID_02"));
+    }, /THROW_ID_02/);
     t.end();
   }
 );
 
+t.test("01.02 - throws when there's no input", t => {
+  t.throws(() => {
+    strFindHeadsTails();
+  }, /THROW_ID_02/);
+  t.end();
+});
+
 t.test("01.03 - throws when the second argument, heads, is not a string", t => {
-  const err1 = t.throws(() => {
-    strFindHeadsTails("a", 1, "a"); // THROW_ID_03
-  });
-  t.ok(err1.message.includes("THROW_ID_03"));
-
-  const err2 = t.throws(() => {
-    strFindHeadsTails("a", 1, "z"); // THROW_ID_03
-  });
-  t.ok(err2.message.includes("THROW_ID_03"));
-
-  const err3 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("a", 1, "a");
-  });
-  t.ok(err3.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err4 = t.throws(() => {
-    strFindHeadsTails("a", "", "z"); // THROW_ID_04
-  });
-  t.ok(err4.message.includes("THROW_ID_04"));
+  t.throws(() => {
+    strFindHeadsTails("a", 1, "z");
+  }, /THROW_ID_03/);
 
-  const err5 = t.throws(() => {
-    strFindHeadsTails("a", [], "z"); // THROW_ID_05
-  });
-  t.ok(err5.message.includes("THROW_ID_05"));
+  t.throws(() => {
+    strFindHeadsTails("a", 1, "a");
+  }, /THROW_ID_03/);
 
-  const err6 = t.throws(() => {
-    strFindHeadsTails("a", ["z", 1, null], ["z"]); // THROW_ID_06
-  });
-  t.ok(err6.message.includes("THROW_ID_06"));
+  t.throws(() => {
+    strFindHeadsTails("a", "", "z");
+  }, /THROW_ID_04/);
 
-  const err7 = t.throws(() => {
-    strFindHeadsTails("a", ["z", 1, undefined], "z"); // THROW_ID_06
-  });
-  t.ok(err7.message.includes("THROW_ID_06"));
+  t.throws(() => {
+    strFindHeadsTails("a", [], "z");
+  }, /THROW_ID_05/);
 
-  const err8 = t.throws(() => {
-    strFindHeadsTails("a", ["z", true], "z"); // THROW_ID_06
-  });
-  t.ok(err8.message.includes("THROW_ID_06"));
+  t.throws(() => {
+    strFindHeadsTails("a", ["z", 1, null], ["z"]);
+  }, /THROW_ID_06/);
 
-  const err9 = t.throws(() => {
-    strFindHeadsTails("a", ["b", ""], "c"); // THROW_ID_07
-  });
-  t.ok(err9.message.includes("THROW_ID_07"));
+  t.throws(() => {
+    strFindHeadsTails("a", ["z", 1, undefined], "z");
+  }, /THROW_ID_06/);
+
+  t.throws(() => {
+    strFindHeadsTails("a", ["z", true], "z");
+  }, /THROW_ID_06/);
+
+  t.throws(() => {
+    strFindHeadsTails("a", ["b", ""], "c");
+  }, /THROW_ID_07/);
+
   t.end();
 });
 
 t.test("01.04 - throws when the third argument, tails, is not a string", t => {
-  const err0 = t.throws(() => {
-    strFindHeadsTails("a", "a"); // THROW_ID_01
-  });
-  t.ok(err0.message.includes("THROW_ID_01"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a");
+  }, /THROW_ID_08/);
 
-  const err1 = t.throws(() => {
-    strFindHeadsTails("a", "a", null); // THROW_ID_08
-  });
-  t.ok(err1.message.includes("THROW_ID_08"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", null);
+  }, /THROW_ID_08/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("a", "a", 1);
-  });
-  t.ok(err2.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
 
-  const err3 = t.throws(() => {
-    strFindHeadsTails("a", "a", ""); // THROW_ID_09
-  });
-  t.ok(err3.message.includes("THROW_ID_09"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", "");
+  }, /THROW_ID_09/);
 
-  const err4 = t.throws(() => {
-    strFindHeadsTails("a", "a", []); // THROW_ID_10
-  });
-  t.ok(err4.message.includes("THROW_ID_10"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", []);
+  }, /THROW_ID_10/);
 
-  const err5 = t.throws(() => {
-    strFindHeadsTails("a", "a", ["z", 1]); // THROW_ID_11
-  });
-  t.ok(err5.message.includes("THROW_ID_11"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", ["z", 1]);
+  }, /THROW_ID_11/);
 
-  const err6 = t.throws(() => {
-    strFindHeadsTails("a", "a", [null]); // THROW_ID_11
-  });
-  t.ok(err6.message.includes("THROW_ID_11"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", [null]);
+  }, /THROW_ID_11/);
 
-  const err7 = t.throws(() => {
-    strFindHeadsTails("a", "a", [true]); // THROW_ID_11
-  });
-  t.ok(err7.message.includes("THROW_ID_11"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", [true]);
+  }, /THROW_ID_11/);
 
-  const err8 = t.throws(() => {
-    strFindHeadsTails("a", "a", ["z", ""]); // THROW_ID_12
-  });
-  t.ok(err8.message.includes("THROW_ID_12"));
+  t.throws(() => {
+    strFindHeadsTails("a", "a", ["z", ""]);
+  }, /THROW_ID_12/);
+
   t.end();
 });
 
 t.test(
   "01.05 - throws when the fourth argument, opts, is of a wrong type",
   t => {
-    const err1 = t.throws(() => {
-      strFindHeadsTails("a", "a", "a", "a"); // THROW_ID_13
-    });
-    t.ok(err1.message.includes("THROW_ID_13"));
+    t.throws(() => {
+      strFindHeadsTails("a", "a", "a", "a");
+    }, /THROW_ID_01/);
 
     t.doesNotThrow(() => {
       strFindHeadsTails("a", "a", "a", null); // falsey is OK
@@ -144,110 +124,103 @@ t.test(
     t.doesNotThrow(() => {
       strFindHeadsTails("a", "a", "a", { fromIndex: 1 }); // canonical
     });
-
-    const err2 = t.throws(() => {
-      strFindHeadsTails("a", "a", "a", { fromIndex: 1.5 }); // not a natural number
-    });
-    t.ok(err2.message.includes("THROW_ID_18"));
-    const err22 = t.throws(() => {
-      strFindHeadsTails("a", "a", "a", { fromIndex: 1.5, source: "TEST 1.8:" }); // not a natural number
-    });
-    t.notOk(err22.message.includes("THROW_ID_18"));
-    t.ok(err22.message.includes("TEST 1.8"));
     t.end();
   }
 );
 
-t.test("01.06 - unmatched heads and tails", t => {
-  const err1 = t.throws(() => {
+t.test("01.06 - opts.fromIndex is not a natural number", t => {
+  // not a natural number
+  t.throws(() => {
+    strFindHeadsTails("a", "a", "a", { fromIndex: 1.5 });
+  }, /THROW_ID_18/);
+  t.end();
+});
+
+t.test("01.07 - opts.fromIndex is not a natural number", t => {
+  // not a natural number
+  t.throws(() => {
+    strFindHeadsTails("a", "a", "a", { fromIndex: 1.5, source: "TEST 1.8:" });
+  }, /THROW_ID_18/);
+  t.end();
+});
+
+t.test("01.08 - unmatched heads and tails", t => {
+  t.throws(() => {
     strFindHeadsTails("abc%%_def_%ghi", "%%_", "_%%");
-  }); // sneaky - tails' second percentage char is missing, hence unrecognised and throws
-  t.ok(err1.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/); // sneaky - tails' second percentage char is missing, hence unrecognised and throws
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abcdef", "x", "e"); // heads not found
-  });
-  t.ok(err2.message.includes("THROW_ID_21"));
+  }, /THROW_ID_21/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abcdef", "x", ["e", "$"]); // heads not found
-  });
-  t.ok(err3.message.includes("THROW_ID_21"));
+  }, /THROW_ID_21/);
 
-  const err4 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abcdef", ["_", "x"], ["e", "$"]); // heads not found
-  });
-  t.ok(err4.message.includes("THROW_ID_21"));
-  const err42 = t.throws(() => {
+  }, /THROW_ID_21/);
+
+  t.throws(() => {
     strFindHeadsTails("abcdef", ["_", "x"], ["e", "$"], {
       source: "TEST 4.2:"
     }); // heads not found
-  });
-  t.notOk(err42.message.includes("THROW_ID_21"));
-  t.ok(err42.message.includes("TEST 4.2"));
+  }, /TEST 4\.2/);
 
-  const err5 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abcdef", "b", "x"); // tails not found
-  });
-  t.ok(err5.message.includes("THROW_ID_22"));
-  const err52 = t.throws(() => {
-    strFindHeadsTails("abcdef", "b", "x", { source: "TEST 5.2:" }); // tails not found
-  });
-  t.notOk(err52.message.includes("THROW_ID_22"));
-  t.ok(err52.message.includes("TEST 5.2"));
+  }, /THROW_ID_22/);
 
-  const err6 = t.throws(() => {
+  t.throws(() => {
+    strFindHeadsTails("abcdef", "b", "x", { source: "TEST 5.2:" }); // tails not found
+  }, /TEST 5\.2/);
+
+  t.throws(() => {
     strFindHeadsTails("abcdef", ["&", "b"], "x"); // tails not found
-  });
-  t.ok(err6.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
 
   t.doesNotThrow(() => {
     strFindHeadsTails("abcdef", "x", "z"); // both heads and tails not found - OK
   });
+
   t.end();
 });
 
-t.test("01.07 - both heads and tails found but wrong order", t => {
-  const err1 = t.throws(() => {
+t.test("01.09 - both heads and tails found but wrong order", t => {
+  t.throws(() => {
     strFindHeadsTails("abc___def---ghi", "---", "___"); // opposite order
-  });
-  t.ok(err1.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abc___def---ghi", ["***", "---"], "___"); // opposite order
-  });
-  t.ok(err2.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("abc___def---ghi", ["***", "---"], ["^^^", "___"]); // opposite order
-  });
-  t.ok(err3.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
 
-  const err4 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("--a__bcdef**", ["--", "__"], ["**", "^^"]); // two consecutive heads
-  });
-  t.ok(err4.message.includes("THROW_ID_19"));
-  const err43 = t.throws(() => {
+  }, /THROW_ID_19/);
+
+  t.throws(() => {
     strFindHeadsTails("--a__bcdef**", ["--", "__"], ["**", "^^"], {
       source: "TEST 4.3:"
     }); // two consecutive heads
-  });
-  t.notOk(err43.message.includes("THROW_ID_19"));
-  t.ok(err43.message.includes("TEST 4.3"));
+  }, /TEST 4\.3/);
 
-  const err5 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("--a**bcdefghij^^", ["--", "__"], ["**", "^^"]); // two consecutive tails
-  });
-  t.ok(err5.message.includes("THROW_ID_21"));
+  }, /THROW_ID_21/);
 
-  const err6 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("--a^^bc__defghij", ["--", "__"], ["**", "^^"]); // second heads unmatched
-  });
-  t.ok(err6.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
+
   t.end();
 });
 
-t.test("01.08 - heads of one type, tails of another", t => {
+t.test("01.10 - heads of one type, tails of another", t => {
   t.same(
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
@@ -270,7 +243,11 @@ t.test("01.08 - heads of one type, tails of another", t => {
     ],
     "01.08 - default behaviour - not strict pair matching"
   );
-  const err1 = t.throws(() => {
+  t.end();
+});
+
+t.test("01.11 - heads of one type, tails of another", t => {
+  t.throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -279,10 +256,12 @@ t.test("01.08 - heads of one type, tails of another", t => {
         matchHeadsAndTailsStrictlyInPairsByTheirOrder: true
       }
     );
-  });
-  t.ok(err1.message.includes("THROW_ID_20"));
+  }, /THROW_ID_20/);
+  t.end();
+});
 
-  const err2 = t.throws(() => {
+t.test("01.12 - heads of one type, tails of another", t => {
+  t.throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -292,11 +271,14 @@ t.test("01.08 - heads of one type, tails of another", t => {
         source: "TEST 1.08:"
       }
     );
-  });
-  t.notOk(err2.message.includes("THROW_ID_20"));
-  t.ok(err2.message.includes("TEST 1.08"));
+  }, /TEST 1\.08/);
+  t.end();
+});
 
-  const err3 = t.throws(() => {
+t.test("01.13 - heads of one type, tails of another", t => {
+  // let's just prove that it error message is not about empty opts.source but
+  // still about the same index mismatch as the tests above
+  t.throws(() => {
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -306,19 +288,12 @@ t.test("01.08 - heads of one type, tails of another", t => {
         source: "" // <------ EMPTY
       }
     );
-  });
-  // let's just prove that it error message is not about empty opts.source but
-  // still about the same index mismatch as the tests above
-  t.ok(
-    err3.message.includes(
-      "the tails the followed it were not of the same index"
-    )
-  );
+  }, /the tails the followed it were not of the same index/);
   t.end();
 });
 
 t.test(
-  "01.09 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder",
+  "01.14 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder",
   t => {
     t.same(
       strFindHeadsTails(
