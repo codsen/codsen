@@ -16,7 +16,7 @@
         "ast-monkey-traverse": 9,
         "bitbucket-slug": 1,
         "chalk": 6,
-        "check-types-mini": 5,
+        "check-types-mini": 4,
         "chlu": 1,
         "codsen-tokenizer": 1,
         "compare-versions": 1,
@@ -54,8 +54,8 @@
         "is-html-tag-opening": 1,
         "is-language-code": 1,
         "is-media-descriptor": 1,
-        "is-natural-number": 3,
-        "is-natural-number-string": 7,
+        "is-natural-number": 2,
+        "is-natural-number-string": 3,
         "is-numeric": 2,
         "is-online": 1,
         "is-relative-uri": 1,
@@ -68,19 +68,19 @@
         "leven": 2,
         "line-column": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 26,
+        "lodash.clonedeep": 24,
         "lodash.deburr": 1,
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 42,
+        "lodash.isplainobject": 40,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
         "lodash.partition": 1,
         "lodash.pull": 2,
         "lodash.pullall": 5,
-        "lodash.trim": 5,
+        "lodash.trim": 4,
         "lodash.uniq": 7,
         "lodash.without": 1,
         "log-symbols": 2,
@@ -143,7 +143,7 @@
         "string-uglify": 1,
         "string-unfancy": 1,
         "through2": 1,
-        "type-detect": 5,
+        "type-detect": 4,
         "unescape-js": 1,
         "update-notifier": 12,
         "url-regex": 1,
@@ -206,10 +206,10 @@
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 42
+            "lodash.isplainobject": 40
         },
         {
-            "lodash.clonedeep": 26
+            "lodash.clonedeep": 24
         },
         {
             "meow": 12
@@ -233,7 +233,7 @@
             "lodash.uniq": 7
         },
         {
-            "is-natural-number-string": 7
+            "write-file-atomic": 6
         }
     ],
     "top10OwnDeps": [
@@ -259,7 +259,7 @@
             "ranges-merge": 7
         },
         {
-            "check-types-mini": 5
+            "check-types-mini": 4
         },
         {
             "object-merge-advanced": 4

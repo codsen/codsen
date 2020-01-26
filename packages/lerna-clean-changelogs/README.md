@@ -205,8 +205,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
 [cov-img]: https://img.shields.io/badge/coverage-95.35%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/lerna-clean-changelogs
+[no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [downloads-img]: https://img.shields.io/npm/dm/lerna-clean-changelogs.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/lerna-clean-changelogs
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square

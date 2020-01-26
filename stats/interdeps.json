@@ -36,14 +36,14 @@
     },
     {
         "name": "ast-compare",
-        "size": 8760,
+        "size": 8714,
         "imports": [
             "ast-contains-only-empty-space"
         ]
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 962,
+        "size": 850,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -57,11 +57,10 @@
     },
     {
         "name": "ast-delete-object",
-        "size": 2176,
+        "size": 2053,
         "imports": [
             "ast-compare",
-            "ast-monkey-traverse",
-            "check-types-mini"
+            "ast-monkey-traverse"
         ]
     },
     {
@@ -92,7 +91,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 9714,
+        "size": 8231,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -392,7 +391,7 @@
     },
     {
         "name": "lect",
-        "size": 74553,
+        "size": 74982,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -470,7 +469,7 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4664,
+        "size": 4501,
         "imports": [
             "ranges-merge"
         ]
@@ -491,7 +490,7 @@
     },
     {
         "name": "ranges-invert",
-        "size": 4316,
+        "size": 4297,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -590,7 +589,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 12868,
+        "size": 12537,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
