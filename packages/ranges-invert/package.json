@@ -112,7 +112,6 @@
     "timeout": 0
   },
   "dependencies": {
-    "is-natural-number": "^4.0.1",
     "ranges-crop": "^2.0.45",
     "ranges-merge": "^4.2.31"
   },

@@ -1,4 +1,3 @@
-import isNatNum from "is-natural-number";
 import mergeRanges from "ranges-merge";
 import rangesCrop from "ranges-crop";
 
@@ -16,7 +15,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
 
   // strLen validation
-  if (!isNatNum(strLen, { includeZero: true })) {
+  if (!Number.isInteger(strLen) || strLen < 0) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
@@ -78,8 +77,10 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     !opts.skipChecks &&
     !arrOfRanges.every((rangeArr, indx) => {
       if (
-        !isNatNum(rangeArr[0], { includeZero: true }) ||
-        !isNatNum(rangeArr[1], { includeZero: true })
+        !Number.isInteger(rangeArr[0]) ||
+        rangeArr[0] < 0 ||
+        !Number.isInteger(rangeArr[1]) ||
+        rangeArr[1] < 0
       ) {
         culpritsIndex = indx;
         return false;
@@ -139,7 +140,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
 
   console.log(
-    `142 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `143 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -158,7 +159,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`161 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`162 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res.push([0, arr[0][0]]);
     }
 
@@ -168,7 +169,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `171 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `172 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

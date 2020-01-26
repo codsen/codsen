@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNatNum = _interopDefault(require('is-natural-number'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 var rangesCrop = _interopDefault(require('ranges-crop'));
 
@@ -34,9 +33,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   if (!isArr(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
-  if (!isNatNum(strLen, {
-    includeZero: true
-  })) {
+  if (!Number.isInteger(strLen) || strLen < 0) {
     throw new TypeError("ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
   }
   if (arrOfRanges === null) {
@@ -65,11 +62,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     throw new TypeError("ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") has not two but ").concat(culpritsLen, " elements!"));
   }
   if (!opts.skipChecks && !arrOfRanges.every(function (rangeArr, indx) {
-    if (!isNatNum(rangeArr[0], {
-      includeZero: true
-    }) || !isNatNum(rangeArr[1], {
-      includeZero: true
-    })) {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
       culpritsIndex = indx;
       return false;
     }
