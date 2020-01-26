@@ -10,10 +10,10 @@
 import traverse from 'ast-monkey-traverse';
 
 function containsOnlyEmptySpace(input) {
-  if (!input || !["object", "string"].includes(typeof input)) {
-    return false;
-  } else if (typeof input === "string") {
+  if (typeof input === "string") {
     return !input.trim().length;
+  } else if (!["object", "string"].includes(typeof input) || !input) {
+    return false;
   }
   let found = true;
   input = traverse(input, (key, val, innerObj, stop) => {

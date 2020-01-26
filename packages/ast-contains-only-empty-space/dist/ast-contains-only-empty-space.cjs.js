@@ -28,10 +28,10 @@ function _typeof(obj) {
 }
 
 function containsOnlyEmptySpace(input) {
-  if (!input || !["object", "string"].includes(_typeof(input))) {
-    return false;
-  } else if (typeof input === "string") {
+  if (typeof input === "string") {
     return !input.trim().length;
+  } else if (!["object", "string"].includes(_typeof(input)) || !input) {
+    return false;
   }
   var found = true;
   input = traverse(input, function (key, val, innerObj, stop) {

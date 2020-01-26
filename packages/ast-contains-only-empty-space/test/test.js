@@ -202,6 +202,11 @@ t.test("03.01 - object containing empty strings", t => {
   t.end();
 });
 
+t.test("03.02 - true empty string", t => {
+  t.equal(empty(""), true);
+  t.end();
+});
+
 // ==============================
 // precautions
 // ==============================
