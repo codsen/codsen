@@ -1,25 +1,17 @@
-/* eslint no-param-reassign:0 */
-
-import trim from "lodash.trim";
-import isObj from "lodash.isplainobject";
 import traverse from "ast-monkey-traverse";
 
 function containsOnlyEmptySpace(input) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  const isArr = Array.isArray;
-  let found = true;
-
-  if (!isArr(input) && !isObj(input) && !isStr(input)) {
+  if (!input || !["object", "string"].includes(typeof input)) {
     return false;
-  } else if (isStr(input)) {
-    return trim(input).length === 0;
+  } else if (typeof input === "string") {
+    return !input.trim().length;
   }
-  input = traverse(input, (key, val) => {
+  let found = true;
+  input = traverse(input, (key, val, innerObj, stop) => {
     const current = val !== undefined ? val : key;
-    if (isStr(current) && trim(current) !== "") {
+    if (typeof current === "string" && current.trim().length) {
       found = false;
+      stop.now = true;
     }
     return current;
   });

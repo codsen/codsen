@@ -11,25 +11,34 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var trim = _interopDefault(require('lodash.trim'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function containsOnlyEmptySpace(input) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  var isArr = Array.isArray;
-  var found = true;
-  if (!isArr(input) && !isObj(input) && !isStr(input)) {
+  if (!input || !["object", "string"].includes(_typeof(input))) {
     return false;
-  } else if (isStr(input)) {
-    return trim(input).length === 0;
+  } else if (typeof input === "string") {
+    return !input.trim().length;
   }
-  input = traverse(input, function (key, val) {
+  var found = true;
+  input = traverse(input, function (key, val, innerObj, stop) {
     var current = val !== undefined ? val : key;
-    if (isStr(current) && trim(current) !== "") {
+    if (typeof current === "string" && current.trim().length) {
       found = false;
+      stop.now = true;
     }
     return current;
   });

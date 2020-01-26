@@ -40,7 +40,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ast-monkey-traverse", "lodash.isplainobject", "lodash.trim"],
+      external: ["ast-monkey-traverse"],
       plugins: [
         strip({
           sourceMap: false
@@ -55,7 +55,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ast-monkey-traverse", "lodash.isplainobject", "lodash.trim"],
+      external: ["ast-monkey-traverse"],
       plugins: [
         strip({
           sourceMap: false
