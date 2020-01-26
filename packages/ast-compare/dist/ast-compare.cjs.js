@@ -36,16 +36,16 @@ function existy(x) {
   return x != null;
 }
 function isObj(something) {
-  return typeDetect(something) === "Object";
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function isStr(something) {
-  return typeDetect(something) === "string";
+  return typeof something === "string";
 }
 function isNum(something) {
-  return typeDetect(something) === "number";
+  return typeof something === "number";
 }
 function isBool(something) {
-  return typeDetect(something) === "boolean";
+  return typeof something === "boolean";
 }
 function isNull(something) {
   return something === null;
@@ -61,24 +61,22 @@ function isBlank(something) {
 function isTheTypeLegit(something) {
   return isObj(something) || isStr(something) || isNum(something) || isBool(something) || isArr(something) || isNull(something);
 }
-function compare(bo, so, originalOpts) {
-  if (bo === undefined) {
+function compare(b, s, originalOpts) {
+  if (b === undefined) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_01] first argument is missing!");
   }
-  if (so === undefined) {
+  if (s === undefined) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_02] second argument is missing!");
   }
-  if (existy(bo) && !isTheTypeLegit(bo)) {
-    throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ".concat(typeDetect(bo), ", equal to: ").concat(JSON.stringify(bo, null, 4)));
+  if (existy(b) && !isTheTypeLegit(b)) {
+    throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ".concat(typeDetect(b), ", equal to: ").concat(JSON.stringify(b, null, 4)));
   }
-  if (existy(so) && !isTheTypeLegit(so)) {
-    throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ".concat(typeDetect(so), ", equal to: ").concat(JSON.stringify(so, null, 4)));
+  if (existy(s) && !isTheTypeLegit(s)) {
+    throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ".concat(typeDetect(s), ", equal to: ").concat(JSON.stringify(s, null, 4)));
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ".concat(typeDetect(originalOpts), " and equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
-  var s = clone(so);
-  var b = clone(bo);
   var sKeys;
   var bKeys;
   var found;
@@ -90,10 +88,10 @@ function compare(bo, so, originalOpts) {
     useWildcards: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(bo) && empty(bo) && isObj(so) && Object.keys(so).length === 0) {
+  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty(b) && isObj(s) && Object.keys(s).length === 0) {
     return true;
   }
-  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo) && empty(so)) && isObj(bo) && Object.keys(bo).length !== 0 && isObj(so) && Object.keys(so).length === 0 || typeDetect(bo) !== typeDetect(so) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo))) {
+  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b) && empty(s)) && isObj(b) && Object.keys(b).length !== 0 && isObj(s) && Object.keys(s).length === 0 || typeDetect(b) !== typeDetect(s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b))) {
     return false;
   }
   if (isStr(b) && isStr(s)) {
@@ -183,8 +181,7 @@ function compare(bo, so, originalOpts) {
         return {
           v: "The given object has key ".concat(sKeys[_i], " which the other-one does not have.")
         };
-      }
-      if (b[sKeys[_i]] !== undefined && !isTheTypeLegit(b[sKeys[_i]])) {
+      } else if (b[sKeys[_i]] !== undefined && !isTheTypeLegit(b[sKeys[_i]])) {
         throw new TypeError("ast-compare/compare(): [THROW_ID_07] The input ".concat(JSON.stringify(b, null, 4), " contains a value of a wrong type, ").concat(typeDetect(b[sKeys[_i]]), " at index ").concat(_i, ", equal to: ").concat(JSON.stringify(b[sKeys[_i]], null, 4)));
       } else if (!isTheTypeLegit(s[sKeys[_i]])) {
         throw new TypeError("ast-compare/compare(): [THROW_ID_08] The input ".concat(JSON.stringify(s, null, 4), " contains a value of a wrong type, ").concat(typeDetect(s[sKeys[_i]]), " at index ").concat(_i, ", equal to: ").concat(JSON.stringify(s[sKeys[_i]], null, 4)));
@@ -199,17 +196,16 @@ function compare(bo, so, originalOpts) {
             v: "The given key ".concat(sKeys[_i], " is of a different type on both objects. On the first-one, it's ").concat(typeDetect(s[sKeys[_i]]), ", on the second-one, it's ").concat(typeDetect(b[sKeys[_i]]))
           };
         }
-      }
-      else if (compare(b[sKeys[_i]], s[sKeys[_i]], opts) !== true) {
-          if (!opts.verboseWhenMismatches) {
-            return {
-              v: false
-            };
-          }
+      } else if (compare(b[sKeys[_i]], s[sKeys[_i]], opts) !== true) {
+        if (!opts.verboseWhenMismatches) {
           return {
-            v: "The given piece ".concat(JSON.stringify(s[sKeys[_i]], null, 4), " and ").concat(JSON.stringify(b[sKeys[_i]], null, 4), " don't match.")
+            v: false
           };
         }
+        return {
+          v: "The given piece ".concat(JSON.stringify(s[sKeys[_i]], null, 4), " and ").concat(JSON.stringify(b[sKeys[_i]], null, 4), " don't match.")
+        };
+      }
     };
     for (var _i = 0, len = sKeys.length; _i < len; _i++) {
       var _ret = _loop(len, _i);

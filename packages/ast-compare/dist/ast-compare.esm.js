@@ -18,16 +18,18 @@ function existy(x) {
   return x != null;
 }
 function isObj(something) {
-  return typeDetect(something) === "Object";
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function isStr(something) {
-  return typeDetect(something) === "string";
+  return typeof something === "string";
 }
 function isNum(something) {
-  return typeDetect(something) === "number";
+  return typeof something === "number";
 }
 function isBool(something) {
-  return typeDetect(something) === "boolean";
+  return typeof something === "boolean";
 }
 function isNull(something) {
   return something === null;
@@ -50,29 +52,29 @@ function isTheTypeLegit(something) {
     isNull(something)
   );
 }
-function compare(bo, so, originalOpts) {
-  if (bo === undefined) {
+function compare(b, s, originalOpts) {
+  if (b === undefined) {
     throw new TypeError(
       "ast-compare/compare(): [THROW_ID_01] first argument is missing!"
     );
   }
-  if (so === undefined) {
+  if (s === undefined) {
     throw new TypeError(
       "ast-compare/compare(): [THROW_ID_02] second argument is missing!"
     );
   }
-  if (existy(bo) && !isTheTypeLegit(bo)) {
+  if (existy(b) && !isTheTypeLegit(b)) {
     throw new TypeError(
       `ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${typeDetect(
-        bo
-      )}, equal to: ${JSON.stringify(bo, null, 4)}`
+        b
+      )}, equal to: ${JSON.stringify(b, null, 4)}`
     );
   }
-  if (existy(so) && !isTheTypeLegit(so)) {
+  if (existy(s) && !isTheTypeLegit(s)) {
     throw new TypeError(
       `ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ${typeDetect(
-        so
-      )}, equal to: ${JSON.stringify(so, null, 4)}`
+        s
+      )}, equal to: ${JSON.stringify(s, null, 4)}`
     );
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
@@ -82,8 +84,6 @@ function compare(bo, so, originalOpts) {
       )} and equal to: ${JSON.stringify(originalOpts, null, 4)}`
     );
   }
-  const s = clone(so);
-  const b = clone(bo);
   let sKeys;
   let bKeys;
   let found;
@@ -98,22 +98,22 @@ function compare(bo, so, originalOpts) {
   if (
     opts.hungryForWhitespace &&
     opts.matchStrictly &&
-    isObj(bo) &&
-    empty(bo) &&
-    isObj(so) &&
-    Object.keys(so).length === 0
+    isObj(b) &&
+    empty(b) &&
+    isObj(s) &&
+    Object.keys(s).length === 0
   ) {
     return true;
   }
   if (
     ((!opts.hungryForWhitespace ||
-      (opts.hungryForWhitespace && !empty(bo) && empty(so))) &&
-      isObj(bo) &&
-      Object.keys(bo).length !== 0 &&
-      isObj(so) &&
-      Object.keys(so).length === 0) ||
-    (typeDetect(bo) !== typeDetect(so) &&
-      (!opts.hungryForWhitespace || (opts.hungryForWhitespace && !empty(bo))))
+      (opts.hungryForWhitespace && !empty(b) && empty(s))) &&
+      isObj(b) &&
+      Object.keys(b).length !== 0 &&
+      isObj(s) &&
+      Object.keys(s).length === 0) ||
+    (typeDetect(b) !== typeDetect(s) &&
+      (!opts.hungryForWhitespace || (opts.hungryForWhitespace && !empty(b))))
   ) {
     return false;
   }
@@ -235,8 +235,7 @@ function compare(bo, so, originalOpts) {
           return false;
         }
         return `The given object has key ${sKeys[i]} which the other-one does not have.`;
-      }
-      if (b[sKeys[i]] !== undefined && !isTheTypeLegit(b[sKeys[i]])) {
+      } else if (b[sKeys[i]] !== undefined && !isTheTypeLegit(b[sKeys[i]])) {
         throw new TypeError(
           `ast-compare/compare(): [THROW_ID_07] The input ${JSON.stringify(
             b,
@@ -276,8 +275,7 @@ function compare(bo, so, originalOpts) {
             s[sKeys[i]]
           )}, on the second-one, it's ${typeDetect(b[sKeys[i]])}`;
         }
-      }
-      else if (compare(b[sKeys[i]], s[sKeys[i]], opts) !== true) {
+      } else if (compare(b[sKeys[i]], s[sKeys[i]], opts) !== true) {
         if (!opts.verboseWhenMismatches) {
           return false;
         }
