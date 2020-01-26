@@ -40,12 +40,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ast-compare",
-        "ast-monkey-traverse",
-        "lodash.clonedeep",
-        "lodash.isplainobject"
-      ],
+      external: ["ast-compare", "ast-monkey-traverse", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false
@@ -60,12 +55,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ast-compare",
-        "ast-monkey-traverse",
-        "lodash.clonedeep",
-        "lodash.isplainobject"
-      ],
+      external: ["ast-compare", "ast-monkey-traverse", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false
