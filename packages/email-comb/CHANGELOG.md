@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.9.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.8.21...email-comb@3.9.0) (2020-01-26)
-
+## 3.9.0 (2020-01-26)
 
 ### Features
 
-* improvements to algorithm when class is joined with a known ESP tag ([366c13b](https://gitlab.com/codsen/codsen/commit/366c13ba291ca46cce96495ba1c1985f3e56e6fa))
-
-
-
-
+- improvements to algorithm when class is joined with a known ESP tag ([366c13b](https://gitlab.com/codsen/codsen/commit/366c13ba291ca46cce96495ba1c1985f3e56e6fa))
 
 ## 3.8.0 (2019-09-17)
 

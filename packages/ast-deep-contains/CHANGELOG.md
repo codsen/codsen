@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.5](https://gitlab.com/codsen/codsen/compare/ast-deep-contains@1.1.4...ast-deep-contains@1.1.5) (2020-01-26)
-
-**Note:** Version bump only for package ast-deep-contains
-
-
-
-
-
 ## 1.1.0 (2019-11-27)
 
 ### Bug Fixes

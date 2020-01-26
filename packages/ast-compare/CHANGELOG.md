@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.13.0](https://gitlab.com/codsen/codsen/compare/ast-compare@1.12.30...ast-compare@1.13.0) (2020-01-26)
-
+## 1.13.0 (2020-01-26)
 
 ### Features
 
-* make the run 11 times faster ([a9ea3f0](https://gitlab.com/codsen/codsen/commit/a9ea3f0da6aa752dac9987aef81cbd047d965ced))
-
-
-
-
+- make the run 11 times faster ([a9ea3f0](https://gitlab.com/codsen/codsen/commit/a9ea3f0da6aa752dac9987aef81cbd047d965ced))
 
 ## 1.12.19 (2019-10-07)
 

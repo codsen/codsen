@@ -3,20 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://gitlab.com/codsen/codsen/compare/is-media-descriptor@1.1.0...is-media-descriptor@1.2.0) (2020-01-26)
-
+## 1.2.0 (2020-01-26)
 
 ### Features
 
-* add more brackets logic cases ([e83bc30](https://gitlab.com/codsen/codsen/commit/e83bc301da7c9a9cf406a13f7bd4993d9b268a4b))
-* only and, only only, only not cases ([0df6970](https://gitlab.com/codsen/codsen/commit/0df697077ff938c59a5aac17faa05cd4f6bb93fe))
-* semicolon safeguards ([f3cccc3](https://gitlab.com/codsen/codsen/commit/f3cccc3f23dce2aad8a8cb57d4836301e71efe69))
-* tests create sample HTML's, improve logic in brackets ([9e96eb7](https://gitlab.com/codsen/codsen/commit/9e96eb7286df5a67012be3916c48c3043017938c))
-* whitespace clauses ([5cb22cc](https://gitlab.com/codsen/codsen/commit/5cb22cc4c91d478568fd3b7919f6e2f5ea8eedfc))
-
-
-
-
+- add more brackets logic cases ([e83bc30](https://gitlab.com/codsen/codsen/commit/e83bc301da7c9a9cf406a13f7bd4993d9b268a4b))
+- only and, only only, only not cases ([0df6970](https://gitlab.com/codsen/codsen/commit/0df697077ff938c59a5aac17faa05cd4f6bb93fe))
+- semicolon safeguards ([f3cccc3](https://gitlab.com/codsen/codsen/commit/f3cccc3f23dce2aad8a8cb57d4836301e71efe69))
+- tests create sample HTML's, improve logic in brackets ([9e96eb7](https://gitlab.com/codsen/codsen/commit/9e96eb7286df5a67012be3916c48c3043017938c))
+- whitespace clauses ([5cb22cc](https://gitlab.com/codsen/codsen/commit/5cb22cc4c91d478568fd3b7919f6e2f5ea8eedfc))
 
 ## 1.1.0 (2020-01-12)
 

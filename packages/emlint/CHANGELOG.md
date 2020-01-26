@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.11.0](https://gitlab.com/codsen/codsen/compare/emlint@2.10.1...emlint@2.11.0) (2020-01-26)
-
+## 2.11.0 (2020-01-26)
 
 ### Features
 
-* improve whitespace recognition within URI's ([ba3446b](https://gitlab.com/codsen/codsen/commit/ba3446b53fcab1639315ebb803c2753e8fd42f0d))
-
-
-
-
+- improve whitespace recognition within URI's ([ba3446b](https://gitlab.com/codsen/codsen/commit/ba3446b53fcab1639315ebb803c2753e8fd42f0d))
 
 ## 2.10.0 (2020-01-11)
 

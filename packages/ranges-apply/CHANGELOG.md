@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.1.0](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.0.48...ranges-apply@3.1.0) (2020-01-26)
-
+## 3.1.0 (2020-01-26)
 
 ### Features
 
-* remove a dependency, speed up the program by 130% ([b787194](https://gitlab.com/codsen/codsen/commit/b787194c39e2e688fc50d63795412ba5339692fd))
-
-
-
-
+- remove a dependency, speed up the program by 130% ([b787194](https://gitlab.com/codsen/codsen/commit/b787194c39e2e688fc50d63795412ba5339692fd))
 
 ## 2.12.0 (2019-01-20)
 
