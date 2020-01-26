@@ -7,10 +7,8 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
  */
 
-import isNumStr from 'is-natural-number-string';
 import rangesMerge from 'ranges-merge';
 
-const isArr = Array.isArray;
 function existy(x) {
   return x != null;
 }
@@ -34,7 +32,7 @@ function rangesApply(str, rangesArr, progressFn) {
   }
   if (rangesArr === null) {
     return str;
-  } else if (!isArr(rangesArr)) {
+  } else if (!Array.isArray(rangesArr)) {
     throw new TypeError(
       `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(
         rangesArr,
@@ -53,11 +51,11 @@ function rangesApply(str, rangesArr, progressFn) {
     );
   }
   if (
-    isArr(rangesArr) &&
-    (Number.isInteger(rangesArr[0], { includeZero: true }) ||
-      isNumStr(rangesArr[0], { includeZero: true })) &&
-    (Number.isInteger(rangesArr[1], { includeZero: true }) ||
-      isNumStr(rangesArr[1], { includeZero: true }))
+    Array.isArray(rangesArr) &&
+    ((Number.isInteger(rangesArr[0]) && rangesArr[0] >= 0) ||
+      /^\d*$/.test(rangesArr[0])) &&
+    ((Number.isInteger(rangesArr[1]) && rangesArr[1] >= 0) ||
+      /^\d*$/.test(rangesArr[1]))
   ) {
     rangesArr = [rangesArr];
   }
@@ -71,7 +69,7 @@ function rangesApply(str, rangesArr, progressFn) {
         progressFn(percentageDone);
       }
     }
-    if (!isArr(el)) {
+    if (!Array.isArray(el)) {
       throw new TypeError(
         `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
           el,
@@ -80,8 +78,8 @@ function rangesApply(str, rangesArr, progressFn) {
         )}, which is ${typeof el}`
       );
     }
-    if (!Number.isInteger(el[0], { includeZero: true })) {
-      if (isNumStr(el[0], { includeZero: true })) {
+    if (!Number.isInteger(el[0]) || el[0] < 0) {
+      if (/^\d*$/.test(el[0])) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
         throw new TypeError(
@@ -97,8 +95,8 @@ function rangesApply(str, rangesArr, progressFn) {
         );
       }
     }
-    if (!Number.isInteger(el[1], { includeZero: true })) {
-      if (isNumStr(el[1], { includeZero: true })) {
+    if (!Number.isInteger(el[1])) {
+      if (/^\d*$/.test(el[1])) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {
         throw new TypeError(
