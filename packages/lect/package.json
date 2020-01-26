@@ -133,7 +133,7 @@
     "fs-extra": "^8.1.0",
     "get-pkg-repo": "^4.1.0",
     "github-slugger": "^1.2.1",
-    "inquirer": "^7.0.3",
+    "inquirer": "^7.0.4",
     "lodash.camelcase": "^4.3.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
@@ -150,7 +150,7 @@
     "p-reduce": "^2.1.0",
     "request": "^2.88.0",
     "semver-compare": "^1.0.0",
-    "semver-regex": "^3.1.0",
+    "semver-regex": "^3.1.1",
     "update-notifier": "^4.0.0",
     "write-file-atomic": "^3.0.1",
     "write-json-file": "^4.2.1"

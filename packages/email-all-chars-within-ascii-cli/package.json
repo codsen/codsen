@@ -119,7 +119,7 @@
     "email-all-chars-within-ascii": "^2.9.53",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
-    "inquirer": "^7.0.3",
+    "inquirer": "^7.0.4",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^6.0.0",
