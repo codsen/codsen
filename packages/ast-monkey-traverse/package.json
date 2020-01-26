@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "1.12.4",
+  "version": "1.12.5",
   "description": "Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
@@ -135,7 +135,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.11.8",
+    "lect": "^0.12.0",
     "lodash.isequal": "^4.5.0",
     "object-path": "^0.11.4",
     "rollup": "^1.29.1",

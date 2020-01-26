@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.54](https://gitlab.com/codsen/codsen/compare/easy-replace@3.7.53...easy-replace@3.7.54) (2020-01-26)
+
+**Note:** Version bump only for package easy-replace
+
+
+
+
+
 ## 3.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

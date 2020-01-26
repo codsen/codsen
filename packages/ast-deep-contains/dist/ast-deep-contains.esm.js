@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * an alternative assertion for Ava's t.deepEqual and Tap's t.same
- * Version: 1.1.4
+ * Version: 1.1.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains

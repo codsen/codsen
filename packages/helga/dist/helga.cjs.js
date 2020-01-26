@@ -1,7 +1,7 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.1.26
+ * Version: 1.1.27
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/helga
@@ -15,7 +15,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var unescapeJs = _interopDefault(require('unescape-js'));
 
-var version = "1.1.26";
+var version = "1.1.27";
 
 var defaults = {
   targetJSON: false

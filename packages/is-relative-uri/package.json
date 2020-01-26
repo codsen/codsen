@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Is given string a relative URI?",
   "license": "MIT",
   "engines": {
@@ -125,8 +125,8 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.11.8",
-    "ranges-apply": "^3.0.48",
+    "lect": "^0.12.0",
+    "ranges-apply": "^3.1.0",
     "rollup": "^1.29.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

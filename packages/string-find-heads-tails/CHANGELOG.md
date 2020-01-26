@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.16.0](https://gitlab.com/codsen/codsen/compare/string-find-heads-tails@3.15.9...string-find-heads-tails@3.16.0) (2020-01-26)
+
+
+### Features
+
+* rewrite a little bit, make program run three times faster ([87a8689](https://gitlab.com/codsen/codsen/commit/87a868904995ff78eacce870433b9f266f61e501))
+
+
+
+
+
 ## 3.15.0 (2019-10-02)
 
 ### Features

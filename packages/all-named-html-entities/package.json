@@ -1,6 +1,6 @@
 {
   "name": "all-named-html-entities",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "description": "List of all named HTML entities",
   "license": "MIT",
   "engines": {
@@ -131,7 +131,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.11.8",
+    "lect": "^0.12.0",
     "rollup": "^1.29.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

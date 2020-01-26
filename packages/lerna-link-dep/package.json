@@ -1,6 +1,6 @@
 {
   "name": "lerna-link-dep",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "CLI to symlink a local package to the current package in Lerna monorepo",
   "license": "MIT",
   "engines": {
@@ -138,9 +138,9 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.4",
-    "js-row-num-cli": "^1.6.14",
-    "lect": "^0.11.8",
+    "eslint-plugin-row-num": "^1.1.5",
+    "js-row-num-cli": "^1.6.15",
+    "lect": "^0.12.0",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
     "tempy": "^0.3.0"

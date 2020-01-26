@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://gitlab.com/codsen/codsen/compare/lect@0.11.8...lect@0.12.0) (2020-01-26)
+
+
+### Features
+
+* when there are no dependencies, don't show "Deps in 2D" badge, show "no deps" badge ([4f31c56](https://gitlab.com/codsen/codsen/commit/4f31c56e284b0420dc01bffa057e1fe4556c77e2))
+
+
+
+
+
 ## 0.11.0 (2019-11-18)
 
 ### Features

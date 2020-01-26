@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://gitlab.com/codsen/codsen/compare/eslint-plugin-row-num@1.1.4...eslint-plugin-row-num@1.1.5) (2020-01-26)
+
+**Note:** Version bump only for package eslint-plugin-row-num
+
+
+
+
+
 ## 1.1.1 (2019-12-14)
 
 ### Bug Fixes

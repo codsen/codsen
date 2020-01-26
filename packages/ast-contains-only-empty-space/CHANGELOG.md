@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://gitlab.com/codsen/codsen/compare/ast-contains-only-empty-space@1.8.55...ast-contains-only-empty-space@1.9.0) (2020-01-26)
+
+
+### Bug Fixes
+
+* fix algorithm when input is an empty string ([99b046a](https://gitlab.com/codsen/codsen/commit/99b046a1ce96b2719f83595f7981e74081565531))
+
+
+### Features
+
+* removed one dependency and sped up the program by 200% ([d1053cc](https://gitlab.com/codsen/codsen/commit/d1053cc48db252c87ca0731813958da42757e07c))
+
+
+
+
+
 ## 1.8.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

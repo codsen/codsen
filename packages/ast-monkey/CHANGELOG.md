@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.11.0](https://gitlab.com/codsen/codsen/compare/ast-monkey@7.10.59...ast-monkey@7.11.0) (2020-01-26)
+
+
+### Features
+
+* remove two dependencies and "info" mode which never worked ([89c06f4](https://gitlab.com/codsen/codsen/commit/89c06f4b8db591fc7d6b9f6cfeb287495985a04d))
+
+
+
+
+
 ## 7.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

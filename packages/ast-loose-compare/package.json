@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.7.55",
+  "version": "1.7.56",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
@@ -120,7 +120,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.8.55",
+    "ast-contains-only-empty-space": "^1.9.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -130,7 +130,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.11.8",
+    "lect": "^0.12.0",
     "rollup": "^1.29.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
