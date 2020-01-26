@@ -14,10 +14,10 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Example](#example)
 - [Background](#background)
 - [API - Input](#api-input)
 - [API - Output](#api-output)
-- [Example](#example)
 - [Competition](#competition)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -60,6 +60,29 @@ This package has three builds in `dist/` folder:
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-media-descriptor.cjs.js` | 15 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-media-descriptor.esm.js` | 14 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-media-descriptor.umd.js` | 9 KB  |
+
+**[⬆ back to top](#)**
+
+## Example
+
+```js
+const isMediaD = require("is-media-descriptor");
+const str = `screeen`;
+const res = isMediaD(str);
+console.log(JSON.stringify(res, null, 4));
+// => [
+//      {
+//        idxFrom: 0,
+//        idxTo: 7,
+//        message: `Did you mean "screen"?`,
+//        fix: {
+//          ranges: [[0, 7, "screen"]]
+//        }
+//      }
+//    ]
+```
+
+The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)), ranges value matches the [ranges](https://gitlab.com/codsen/codsen#-range-libraries) spec (in ranges index array, third array element means what to add; only two elements is deletion).
 
 **[⬆ back to top](#)**
 
@@ -141,7 +164,7 @@ If an input is not a string or an empty string, an empty array will be returned.
 | `offset`               | Integer | no          | `0`     | All reported indexes will be incremented by this much. |
 | }                      |         |             |         |
 
-Falsey `opt.offset` is fine but truthy non-integer will _throw_.
+Falsey `opt.offset` is fine but something truthy which is not a natural number will _throw_.
 
 **[⬆ back to top](#)**
 
@@ -167,29 +190,6 @@ The `fix` key is either `null` or has value — plain object — with key `range
 Ranges are always either `null` or array of arrays.
 
 EMLint and ranges arrays here follow Ranges notation and [all Ranges packages](https://gitlab.com/codsen/codsen#-range-libraries) can be used to process them — [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/), [inverting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert/), [resolving/applying](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/) and so on.
-
-**[⬆ back to top](#)**
-
-## Example
-
-```js
-const isMediaD = require("is-media-descriptor");
-const str = `screeen`;
-const res = isMediaD(str);
-console.log(JSON.stringify(res, null, 4));
-// => [
-//      {
-//        idxFrom: 0,
-//        idxTo: 7,
-//        message: `Did you mean "screen"?`,
-//        fix: {
-//          ranges: [[0, 7, "screen"]]
-//        }
-//      }
-//    ]
-```
-
-The error objects match those of `EMLint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)), ranges value matches the [ranges](https://gitlab.com/codsen/codsen#-range-libraries) spec (in ranges index array, third array element means what to add; only two elements is deletion).
 
 **[⬆ back to top](#)**
 
