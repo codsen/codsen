@@ -44,7 +44,6 @@ export default commandLineArgs => {
         "ast-compare",
         "ast-monkey-traverse",
         "check-types-mini",
-        "is-natural-number-string",
         "util-array-object-or-both"
       ],
       plugins: [
@@ -65,7 +64,6 @@ export default commandLineArgs => {
         "ast-compare",
         "ast-monkey-traverse",
         "check-types-mini",
-        "is-natural-number-string",
         "util-array-object-or-both"
       ],
       plugins: [

@@ -128,7 +128,6 @@
     "ast-compare": "^1.12.30",
     "ast-monkey-traverse": "^1.12.4",
     "check-types-mini": "^5.7.54",
-    "is-natural-number-string": "^1.0.1",
     "util-array-object-or-both": "^2.7.53"
   },
   "devDependencies": {
