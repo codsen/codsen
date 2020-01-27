@@ -93,25 +93,24 @@ t.test('00.08 - throws when "to" is way outside the str boundaries', t => {
 });
 
 t.test("00.09 - throws when opts.extendToOneSide is unrecognised", t => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: 1,
       to: 2,
       extendToOneSide: "zzz"
     });
-  });
-  t.ok(err1.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: 1,
       to: 2,
       extendToOneSide: null
     });
-  });
-  t.ok(err2.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
+
   t.end();
 });
 
