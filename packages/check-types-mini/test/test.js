@@ -4,11 +4,9 @@ const checkTypes = require("../dist/check-types-mini.cjs");
 t.test(
   `01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when all/first args are missing`,
   t => {
-    const error = t.throws(() => {
+    t.throws(() => {
       checkTypes();
-    });
-    t.ok(error.message.includes("THROW_ID_01"));
-    t.ok(error.message.includes("check-types-mini"));
+    }, /THROW_ID_01/);
     t.end();
   }
 );
