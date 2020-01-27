@@ -74,25 +74,21 @@ t.test("1.1 - multiple elements, #1", t => {
     "2"
   );
 
-  const errMsg1 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 3);
-  });
-  t.ok(errMsg1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const errMsg2 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "3");
-  });
-  t.ok(errMsg2.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const errMsg3 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 99);
-  });
-  t.ok(errMsg3.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const errMsg4 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "999");
-  });
-  t.ok(errMsg4.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.end();
 });
@@ -137,18 +133,16 @@ t.test("1.2.4 - multiple elements, #2", t => {
 });
 
 t.test("1.2.5 - multiple elements, #2 - axis outside of the range", t => {
-  const errMsg = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
-  });
-  t.ok(errMsg.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
   t.end();
 });
 
 t.test("1.2.6 - multiple elements, #2 - axis outside of the range", t => {
-  const errMsg = t.throws(() => {
+  t.throws(() => {
     sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
-  });
-  t.ok(errMsg.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
   t.end();
 });
 
@@ -184,15 +178,13 @@ t.test("1.4 - multiple elements, #4 - single elements", t => {
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], 0);
   mixer(t, [[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], "0");
 
-  const errMsg1 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[0], [0], [3], [2], [1]], 1); // second element doesn't exist
-  });
-  t.ok(errMsg1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const errMsg2 = t.throws(() => {
+  t.throws(() => {
     sortByCol([[0], [0], [3], [2], [1]], 99); // 100-th element doesn't exist
-  });
-  t.ok(errMsg2.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
   t.end();
 });
 
@@ -485,32 +477,28 @@ t.test("2.1 - various empty arrays", t => {
 
 t.test("2.2 - throws", t => {
   // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     sortByCol(1);
-  });
-  t.ok(error1.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     sortByCol(true);
-  });
-  t.ok(error2.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     sortByCol("z");
-  });
-  t.ok(error3.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error4 = t.throws(() => {
+  t.throws(() => {
     sortByCol([], "a");
-  });
-  t.ok(error4.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
   t.end();
 });
 
 t.test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
   // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     sortByCol(
       [
         [1, 2, 3],
@@ -518,8 +506,7 @@ t.test("2.3 - throws when sort-by value is outside of any sub-arrays", t => {
       ],
       3 // all sub-arrays' max-length=2 since it's zero-indexed
     );
-  });
-  t.ok(error1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.end();
 });
