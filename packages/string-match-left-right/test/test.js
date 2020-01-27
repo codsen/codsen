@@ -11,20 +11,17 @@ const {
 
 t.test("01.01 - throws", t => {
   // no third arg
-  const err01 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl("zzz", 1);
-  });
-  t.ok(err01.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
 
-  const err02 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", 1);
-  });
-  t.ok(err02.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
 
-  const err03 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl("", 1);
-  });
-  t.ok(err03.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
   t.same(
     matchLeftIncl("", 1, undefined, { relaxedApi: true }),
@@ -34,30 +31,25 @@ t.test("01.01 - throws", t => {
 
   // third arg being wrong
 
-  const err04 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", 1, 1);
-  });
-  t.ok(err04.message.includes("THROW_ID_05"));
+  }, /THROW_ID_05/);
 
-  const err05 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", "aaa", 1);
-  });
-  t.ok(err05.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err06 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", "aaa", "");
-  });
-  t.ok(err06.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err07 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", "aaa", [""]);
-  });
-  t.ok(err07.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err08 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", "aaa", ["", ""]);
-  });
-  t.ok(err08.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.same(
     matchRightIncl("zzz", "aaa", ["", ""], { relaxedApi: true }),
@@ -67,44 +59,37 @@ t.test("01.01 - throws", t => {
 
   // no second arg
 
-  const err09 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl("zzz", null, ["aaa"]);
-  });
-  t.ok(err09.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err10 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", null, ["aaa"]);
-  });
-  t.ok(err10.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err11 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", null, []);
-  });
-  t.ok(err11.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err12 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", null, "");
-  });
-  t.ok(err12.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   // second arg completely missing onwards
 
-  const err13 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl("zzz");
-  });
-  t.ok(err13.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const err14 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz");
-  });
-  t.ok(err14.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   // first arg not string
 
-  const err15 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl(1);
-  });
-  t.ok(err15.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   t.same(
     matchLeftIncl(1, undefined, undefined, { relaxedApi: true }),
@@ -112,67 +97,55 @@ t.test("01.01 - throws", t => {
     "bypassing THROW_ID_01"
   );
 
-  const err16 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl(1);
-  });
-  t.ok(err16.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err17 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl([1]);
-  });
-  t.ok(err17.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err18 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl([1]);
-  });
-  t.ok(err18.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err19 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl(null);
-  });
-  t.ok(err19.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err20 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl(null);
-  });
-  t.ok(err20.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err21 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl();
-  });
-  t.ok(err21.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err22 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl();
-  });
-  t.ok(err22.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const err23 = t.throws(() => {
+  t.throws(() => {
     matchLeftIncl(-1);
-  });
-  t.ok(err23.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   // fourth arg not a plain object
-  const err24 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", 1, ["aaa"], true);
-  });
-  t.ok(err24.message.includes("THROW_ID_06"));
+  }, /THROW_ID_06/);
 
   // opts.trimBeforeMatching wrong type
-  const err25 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", 1, ["aaa"], {
       trimBeforeMatching: "z"
     });
-  });
-  t.ok(err25.message.includes("THROW_ID_09"));
+  }, /THROW_ID_09/);
 
-  const err26 = t.throws(() => {
+  t.throws(() => {
     matchRightIncl("zzz", 1, ["aaa"], {
       trimBeforeMatching: []
     });
-  });
-  t.ok(err26.message.includes("THROW_ID_09"));
-  t.ok(err26.message.includes("trimCharsBeforeMatching"));
+  }, /trimCharsBeforeMatching/);
 
   t.end();
 });
@@ -2062,12 +2035,11 @@ t.test(
         cb: char => char === "c"
       })
     );
-    const err = t.throws(() => {
+    t.throws(() => {
       matchLeft("abc", 1, null, {
         i: true
       });
-    });
-    t.ok(err.message.includes("THROW_ID_08"));
+    }, /THROW_ID_08/);
     t.end();
   }
 );
@@ -2087,12 +2059,11 @@ t.test(
         cb: char => char === "b"
       })
     );
-    const err = t.throws(() => {
+    t.throws(() => {
       matchLeftIncl("abc", 1, "", {
         i: true
       });
-    });
-    t.ok(err.message.includes("THROW_ID_08"));
+    }, /THROW_ID_08/);
     t.end();
   }
 );
@@ -2112,12 +2083,11 @@ t.test(
         cb: char => char === "a"
       })
     );
-    const err = t.throws(() => {
+    t.throws(() => {
       matchRight("abc", 1, "", {
         i: true
       });
-    });
-    t.ok(err.message.includes("THROW_ID_08"));
+    }, /THROW_ID_08/);
     t.end();
   }
 );
@@ -2137,12 +2107,11 @@ t.test(
         cb: char => char === "b"
       })
     );
-    const err = t.throws(() => {
+    t.throws(() => {
       matchRightIncl("abc", 1, "", {
         i: true
       });
-    });
-    t.ok(err.message.includes("THROW_ID_08"));
+    }, /THROW_ID_08/);
     t.end();
   }
 );
