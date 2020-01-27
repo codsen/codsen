@@ -3817,25 +3817,21 @@ t.test(
 
 t.test("05.01 - wrong inputs result in throw'ing", t => {
   // pinning throws by throw ID:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     comb();
-  });
-  t.ok(error1.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     comb(true);
-  });
-  t.ok(error2.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     comb(null);
-  });
-  t.ok(error3.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
-  const error4 = t.throws(() => {
+  t.throws(() => {
     comb({ a: "b" });
-  });
-  t.ok(error4.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   t.doesNotThrow(() => {
     comb("");
@@ -3847,20 +3843,17 @@ t.test("05.01 - wrong inputs result in throw'ing", t => {
 });
 
 t.test("05.02 - wrong opts", t => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     comb("", 1);
-  });
-  t.ok(error1.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     comb("", true);
-  });
-  t.ok(error2.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     comb("", { whitelist: 1 });
-  });
-  t.ok(error3.message.includes("THROW_ID_03"));
+  }, /THROW_ID_02/);
 
   t.doesNotThrow(() => {
     comb("", {});
@@ -3872,10 +3865,9 @@ t.test("05.02 - wrong opts", t => {
     comb("", undefined);
   });
 
-  const error4 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { whitelist: true });
-  });
-  t.ok(error4.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.doesNotThrow(() => {
     comb("zzz", { whitelist: [] });
@@ -3887,34 +3879,29 @@ t.test("05.02 - wrong opts", t => {
     comb("zzz", { whitelist: "a" });
   });
 
-  const error5 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { whitelist: [true] });
-  });
-  t.ok(error5.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
 
   // opts.backend
-  const error6 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { backend: 1 });
-  });
-  t.ok(error6.message.includes("THROW_ID_05"));
+  }, /THROW_ID_05/);
 
-  const error7 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { backend: "a" });
-  });
-  t.ok(error7.message.includes("THROW_ID_05"));
+  }, /THROW_ID_05/);
 
-  const error8 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { backend: ["a"] }); // sneaky
-  });
-  t.ok(error8.message.includes("THROW_ID_06"));
+  }, /THROW_ID_06/);
 
   t.doesNotThrow(() => {
     comb("zzz", { backend: [{}] }); // empty arrays are permitted
   });
-  const error9 = t.throws(() => {
+  t.throws(() => {
     comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
-  });
-  t.ok(error9.message.includes("THROW_ID_07"));
+  }, /THROW_ID_07/);
   t.end();
 });
 
@@ -3925,10 +3912,9 @@ t.test("05.03 - opts.uglify wrong", t => {
   t.doesNotThrow(() => {
     comb("z", { uglify: 1 });
   });
-  const error1 = t.throws(() => {
+  t.throws(() => {
     comb("z", { uglify: "z" });
-  });
-  t.ok(error1.message.includes("THROW_ID_08"));
+  }, /THROW_ID_08/);
   t.end();
 });
 
@@ -3939,10 +3925,9 @@ t.test("05.04 - opts.reportProgressFunc wrong", t => {
   t.doesNotThrow(() => {
     comb("z", { reportProgressFunc: false });
   });
-  const error1 = t.throws(() => {
+  t.throws(() => {
     comb("z", { reportProgressFunc: "z" });
-  });
-  t.ok(error1.message.includes("THROW_ID_09"));
+  }, /THROW_ID_09/);
   t.end();
 });
 
@@ -6619,7 +6604,7 @@ t.test(
     );
 
     // short input string should report only when passing at 50%:
-    const error1 = t.throws(() => {
+    t.throws(() => {
       comb(
         `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6645,8 +6630,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         { reportProgressFunc: shouldveBeenCalled }
       );
-    });
-    t.match(error1.message, /50/);
+    }, /50/);
 
     // long input (>1000 chars long) should report at each natural number percentage passed:
 
@@ -6716,7 +6700,7 @@ t.test(
     }
 
     // short input string should report only when passing at 50%:
-    const error1 = t.throws(() => {
+    t.throws(() => {
       comb(
         `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -6746,8 +6730,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
           reportProgressFuncTo: 86
         }
       );
-    });
-    t.match(error1.message, /32/);
+    }, /32/);
 
     t.end();
   }
