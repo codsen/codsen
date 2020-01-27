@@ -9,56 +9,48 @@ const clone = require("lodash.clonedeep");
 
 t.test("00.01 - ranges array is not array", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     crop(null);
-  });
-  t.ok(error1.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
   t.end();
 });
 
 t.test("00.02 - str len is not a number", t => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2]], null);
-  });
-  t.ok(error1.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2]], "2");
-  });
-  t.ok(error2.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2]], [2]);
-  });
-  t.ok(error3.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
-  const error4 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2]], false);
-  });
-  t.ok(error4.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
   t.end();
 });
 
 t.test("00.03 - array of ranges is actually a single range", t => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     crop([1, 2], 3);
-  });
-  t.ok(error1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     crop([1, 2, "zzzz"], 3);
-  });
-  t.ok(error2.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
   t.end();
 });
 
 t.test("00.04 - something's wrong with range arrays's contents", t => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     crop([[1, "2"]], 3);
-  });
-  t.ok(error1.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
 
-  const error2 = t.throws(() => {
+  t.throws(() => {
     crop(
       [
         [1, 2],
@@ -66,15 +58,13 @@ t.test("00.04 - something's wrong with range arrays's contents", t => {
       ],
       3
     );
-  });
-  t.ok(error2.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
 
-  const error3 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2], [4, 5], "zzz"], 3);
-  });
-  t.ok(error3.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
 
-  const error4 = t.throws(() => {
+  t.throws(() => {
     crop(
       [
         [1, 2],
@@ -82,23 +72,20 @@ t.test("00.04 - something's wrong with range arrays's contents", t => {
       ],
       3
     );
-  });
-  t.ok(error4.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
 
-  const error5 = t.throws(() => {
+  t.throws(() => {
     crop([[1, 2], [true]], 3);
-  });
-  t.ok(error5.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
   t.end();
 });
 
 t.test(
   "00.05 - third argument within one of given ranges if of a wrong type",
   t => {
-    const error1 = t.throws(() => {
+    t.throws(() => {
       crop([[1, 2, 1]], 3);
-    });
-    t.ok(error1.message.includes("THROW_ID_05"));
+    }, /THROW_ID_05/);
     t.end();
   }
 );
