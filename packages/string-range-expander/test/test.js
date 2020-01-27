@@ -5,95 +5,81 @@ const e = require("../dist/string-range-expander.cjs");
 // -----------------------------------------------------------------------------
 
 t.test("00.01 - throws on Boolean input", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e(true);
-  });
-  t.ok(err.message.includes("THROW_ID_01"));
-  t.ok(err.message.includes("boolean"));
+  }, /THROW_ID_01/);
   t.end();
 });
 
 t.test("00.02 - throws on missing input", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e();
-  });
-  t.ok(err.message.includes("THROW_ID_01"));
-  t.ok(err.message.includes("missing completely"));
+  }, /missing completely/);
   t.end();
 });
 
 t.test("00.03 - throws on null input", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e(null);
-  });
-  t.ok(err.message.includes("THROW_ID_01"));
-  t.ok(err.message.includes("null"));
+  }, /THROW_ID_01/);
   t.end();
 });
 
 t.test("00.03 - throws on string input", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e("zzz");
-  });
-  t.ok(err.message.includes("THROW_ID_01"));
-  t.ok(err.message.includes("string"));
+  }, /THROW_ID_01/);
   t.end();
 });
 
 t.test("00.04 - throws on empty plain object", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e({});
-  });
-  t.ok(err.message.includes("THROW_ID_02"));
-  t.ok(err.message.includes("without any keys"));
+  }, /THROW_ID_02/);
   t.end();
 });
 
 t.test('00.05 - throws when "from" is not a number', t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: "0",
       to: 0
     });
-  });
-  t.ok(err.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
   t.end();
 });
 
 t.test('00.06 - throws when "to" is not a number', t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: 0,
       to: "0"
     });
-  });
-  t.ok(err.message.includes("THROW_ID_04"));
+  }, /THROW_ID_04/);
   t.end();
 });
 
 t.test('00.07 - throws when "from" is outside the str boundaries', t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: 10,
       to: 20
     });
-  });
-  t.ok(err.message.includes("THROW_ID_05"));
+  }, /THROW_ID_05/);
   t.end();
 });
 
 t.test('00.08 - throws when "to" is way outside the str boundaries', t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     e({
       str: "aaa",
       from: 0,
       to: 4
     });
-  });
-  t.ok(err.message.includes("THROW_ID_06"));
+  }, /THROW_ID_06/);
 
   // but 3 (= str.length) is OK:
   t.doesNotThrow(() => {
