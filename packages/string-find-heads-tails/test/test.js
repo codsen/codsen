@@ -438,11 +438,11 @@ t.test("02.02 - multi-char markers", t => {
     ],
     "02.02.01"
   );
-  const err1 = t.throws(() => {
-    strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", { fromIndex: 4 });
-  }); // fromIndex prevented heads from being caught. Tails were caught, but
+  // fromIndex prevented heads from being caught. Tails were caught, but
   // since opts.throwWhenSomethingWrongIsDetected is on, error is thrown.
-  t.ok(err1.message.includes("THROW_ID_21"));
+  t.throws(() => {
+    strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", { fromIndex: 4 });
+  }, /THROW_ID_21/);
 
   t.same(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", {
@@ -509,10 +509,9 @@ t.test(
 );
 
 t.test("02.04 - sneaky tails precede heads", t => {
-  const err = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%");
-  });
-  t.ok(err.message.includes("THROW_ID_22"));
+  }, /THROW_ID_22/);
 
   t.same(
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%", {
@@ -582,48 +581,45 @@ t.test("02.06 - input is equal to heads or tails", t => {
     "02.06.04"
   );
   // only this settings combo will cause a throw:
-  const err1 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false
     });
-  }); // equal to heads
-  t.ok(err1.message.includes("THROW_ID_16"));
-  const err12 = t.throws(() => {
+  }, /THROW_ID_16/);
+
+  t.throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
       source: "TEST 1.6"
     });
-  }); // equal to heads
-  t.notOk(err12.message.includes("THROW_ID_16"));
-  t.ok(err12.message.includes("TEST 1.6"));
+  }, /TEST 1\.6/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
       source: "someLib [CUSTOM_THROW_99]:"
     });
-  }); // equal to heads
-  t.ok(err2.message.includes("CUSTOM"));
+  }, /CUSTOM/);
 
-  const err3 = t.throws(() => {
+  // equal to tails
+  t.throws(() => {
     strFindHeadsTails("_%%", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false
     });
-  }); // equal to tails
-  t.ok(err3.message.includes("THROW_ID_17"));
-  const err32 = t.throws(() => {
+  }, /THROW_ID_17/);
+
+  t.throws(() => {
     strFindHeadsTails("_%%", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: false,
       source: "TEST 3.2"
     });
-  }); // equal to tails
-  t.notOk(err32.message.includes("THROW_ID_17"));
-  t.ok(err32.message.includes("TEST 3.2"));
+  }, /TEST 3\.2/);
+
   t.end();
 });
 
