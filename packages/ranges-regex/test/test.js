@@ -8,76 +8,66 @@ const rangesApply = require("ranges-apply");
 
 t.test("00.01 - first input argument is missing", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     rare();
-  });
-  t.ok(error1.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   // with second arg:
-  const error2 = t.throws(() => {
+  t.throws(() => {
     rare(undefined, "zzzzz");
-  });
-  t.ok(error2.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   // with third arg:
-  const error3 = t.throws(() => {
+  t.throws(() => {
     rare(undefined, undefined, "zzzzz");
-  });
-  t.ok(error3.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   // with both second and third arg:
-  const error4 = t.throws(() => {
+  t.throws(() => {
     rare(undefined, "yyyyy", "zzzzz");
-  });
-  t.ok(error4.message.includes("THROW_ID_01"));
+  }, /THROW_ID_01/);
 
   t.end();
 });
 
 t.test("00.02 - first input argument is not a regex", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     rare("zzzz", "yyyy");
-  });
-  t.ok(error1.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
   // with third arg:
-  const error2 = t.throws(() => {
+  t.throws(() => {
     rare("zzzz", "yyyy", "xxxxx");
-  });
-  t.ok(error2.message.includes("THROW_ID_02"));
+  }, /THROW_ID_02/);
 
   t.end();
 });
 
 t.test("00.03 - second input argument is missing", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     rare(/z/g);
-  });
-  t.ok(error1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   // plus third arg:
-  const error2 = t.throws(() => {
+  t.throws(() => {
     rare(/z/g, undefined, "zzzz");
-  });
-  t.ok(error2.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.end();
 });
 
 t.test("00.04 - second input argument is not string", t => {
   // throw pinning:
-  const error1 = t.throws(() => {
+  t.throws(() => {
     rare(/z/g, true);
-  });
-  t.ok(error1.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   // with third arg:
-  const error2 = t.throws(() => {
+  t.throws(() => {
     rare(/z/g, true, "zzzzzz");
-  });
-  t.ok(error2.message.includes("THROW_ID_03"));
+  }, /THROW_ID_03/);
 
   t.end();
 });
