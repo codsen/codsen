@@ -40,10 +40,7 @@ function rangesCrop(arrOfRanges, strLen) {
   // validate are range indexes natural numbers:
   if (
     !arrOfRanges.every((rangeArr, indx) => {
-      if (
-        !Number.isInteger(rangeArr[0]) ||
-        !Number.isInteger(rangeArr[1])
-      ) {
+      if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
         culpritsIndex = indx;
         return false;
       }
@@ -99,7 +96,7 @@ function rangesCrop(arrOfRanges, strLen) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `102 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `099 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
       arrOfRanges,
       null,
       4
@@ -114,26 +111,26 @@ function rangesCrop(arrOfRanges, strLen) {
     .map(singleRangeArr => {
       if (singleRangeArr[1] > strLen) {
         console.log(
-          `117 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
+          `114 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
         );
         if (singleRangeArr[2] !== undefined) {
           console.log(
-            `121 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            `118 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         console.log(
-          `126 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+          `123 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
         );
         return [singleRangeArr[0], strLen];
       }
       console.log(
-        `131 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+        `128 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
       );
       return singleRangeArr;
     });
   console.log(
-    `136 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+    `133 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

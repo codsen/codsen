@@ -62,7 +62,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-sort.cjs.js` | 13 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 14 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 34 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 33 KB |
 
 **[⬆ back to top](#)**
 
@@ -156,7 +156,7 @@ List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Co
 [node-url]: https://www.npmjs.com/package/csv-sort
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
-[cov-img]: https://img.shields.io/badge/coverage-97.92%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-97.89%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort

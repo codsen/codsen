@@ -142,9 +142,7 @@ class Ranges {
     const from = /^\d*$/.test(originalFrom)
       ? parseInt(originalFrom, 10)
       : originalFrom;
-    const to = /^\d*$/.test(originalTo)
-      ? parseInt(originalTo, 10)
-      : originalTo;
+    const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
 
     if (isNum(addVal)) {
       addVal = String(addVal);
@@ -153,7 +151,7 @@ class Ranges {
     // validation
     if (isNum(from) && isNum(to)) {
       console.log(
-        `156 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
+        `154 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
       );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
@@ -166,7 +164,7 @@ class Ranges {
         );
       }
       console.log(
-        `169 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+        `167 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
           addVal,
           null,
           4
@@ -181,7 +179,7 @@ class Ranges {
         from === this.last()[1]
       ) {
         console.log(
-          `184 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
+          `182 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
         );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -189,12 +187,12 @@ class Ranges {
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) {
-          console.log(`192 this.last()[2] = ${this.last()[2]}`);
-          console.log(`193 addVal = ${addVal}`);
+          console.log(`190 this.last()[2] = ${this.last()[2]}`);
+          console.log(`191 addVal = ${addVal}`);
         }
 
         if (this.last()[2] !== null && existy(addVal)) {
-          console.log(`197`);
+          console.log(`195`);
           let calculatedVal =
             existy(this.last()[2]) &&
             this.last()[2].length > 0 &&
@@ -202,7 +200,7 @@ class Ranges {
               ? this.last()[2] + addVal
               : addVal;
           console.log(
-            `205 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `203 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -215,7 +213,7 @@ class Ranges {
             );
           }
           console.log(
-            `218 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `216 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -226,10 +224,10 @@ class Ranges {
             this.last()[2] = calculatedVal;
           }
         }
-        console.log(`229`);
+        console.log(`227`);
       } else {
         console.log(
-          `232 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
+          `230 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
         );
         if (!this.slices) {
           this.slices = [];
@@ -248,16 +246,16 @@ class Ranges {
               ]
             : [from, to];
         console.log(
-          `251 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
+          `249 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
         );
         this.slices.push(whatToPush);
         console.log(
-          `255 this.slices = ${JSON.stringify(this.slices, null, 4)};`
+          `253 this.slices = ${JSON.stringify(this.slices, null, 4)};`
         );
       }
     } else {
       console.log(
-        `260 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
+        `258 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
       );
       // Error somewhere!
       // Let's find out where.
@@ -282,7 +280,7 @@ class Ranges {
         );
       }
     }
-    console.log(`285`);
+    console.log(`283`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()

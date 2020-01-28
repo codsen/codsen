@@ -54,8 +54,6 @@
         "is-html-tag-opening": 1,
         "is-language-code": 1,
         "is-media-descriptor": 1,
-        "is-natural-number": 2,
-        "is-natural-number-string": 3,
         "is-numeric": 2,
         "is-online": 1,
         "is-relative-uri": 1,
@@ -68,12 +66,12 @@
         "leven": 2,
         "line-column": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 24,
+        "lodash.clonedeep": 23,
         "lodash.deburr": 1,
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 40,
+        "lodash.isplainobject": 39,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
@@ -206,10 +204,10 @@
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 40
+            "lodash.isplainobject": 39
         },
         {
-            "lodash.clonedeep": 24
+            "lodash.clonedeep": 23
         },
         {
             "meow": 12

@@ -41,10 +41,7 @@ function rangesCrop(arrOfRanges, strLen) {
   let culpritsIndex;
   if (
     !arrOfRanges.every((rangeArr, indx) => {
-      if (
-        !Number.isInteger(rangeArr[0]) ||
-        !Number.isInteger(rangeArr[1])
-      ) {
+      if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
         culpritsIndex = indx;
         return false;
       }

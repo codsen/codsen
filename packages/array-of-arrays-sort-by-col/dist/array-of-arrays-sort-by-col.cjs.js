@@ -51,12 +51,8 @@ function sortBySubarray(arr) {
   if (!Array.isArray(arr)) {
     throw new Error("array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ".concat(_typeof(arr), ", equal to:\n").concat(JSON.stringify(arr, null, 0)));
   }
-  if (!Number.isInteger(axis, {
-    includeZero: true
-  })) {
-    if (/^\d*$/.test(axis, {
-      includeZero: true
-    })) {
+  if (!Number.isInteger(axis)) {
+    if (/^\d*$/.test(axis)) {
       axis = parseInt(axis, 10);
     } else {
       throw new Error("array-of-arrays-sort-by-col: [THROW_ID_02]: The second input argument, index of the column to sort by (axis), is not integer (incl. zero)! It's currently given as:\n".concat(JSON.stringify(axis, null, 0)));

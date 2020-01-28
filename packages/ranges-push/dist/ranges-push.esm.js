@@ -106,9 +106,7 @@ class Ranges {
     const from = /^\d*$/.test(originalFrom)
       ? parseInt(originalFrom, 10)
       : originalFrom;
-    const to = /^\d*$/.test(originalTo)
-      ? parseInt(originalTo, 10)
-      : originalTo;
+    const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
     if (isNum(addVal)) {
       addVal = String(addVal);
     }

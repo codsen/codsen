@@ -36,14 +36,14 @@
     },
     {
         "name": "ast-compare",
-        "size": 8714,
+        "size": 8713,
         "imports": [
             "ast-contains-only-empty-space"
         ]
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 850,
+        "size": 849,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -91,7 +91,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 8231,
+        "size": 8230,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -220,7 +220,7 @@
     },
     {
         "name": "email-comb",
-        "size": 62303,
+        "size": 62301,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -415,7 +415,7 @@
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 2176,
+        "size": 2177,
         "imports": []
     },
     {
@@ -438,7 +438,7 @@
     },
     {
         "name": "object-flatten-all-arrays",
-        "size": 2000,
+        "size": 2001,
         "imports": []
     },
     {
@@ -459,7 +459,7 @@
     },
     {
         "name": "object-no-new-keys",
-        "size": 3572,
+        "size": 3573,
         "imports": []
     },
     {
@@ -469,14 +469,14 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4501,
+        "size": 4500,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-crop",
-        "size": 3308,
+        "size": 3215,
         "imports": [
             "ranges-merge"
         ]
@@ -518,7 +518,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7502,
+        "size": 7424,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -534,7 +534,7 @@
     },
     {
         "name": "ranges-sort",
-        "size": 2751,
+        "size": 2711,
         "imports": []
     },
     {
@@ -544,7 +544,7 @@
     },
     {
         "name": "str-indexes-of-plus",
-        "size": 2364,
+        "size": 2275,
         "imports": []
     },
     {
@@ -575,7 +575,7 @@
     },
     {
         "name": "string-convert-indexes",
-        "size": 5307,
+        "size": 5237,
         "imports": [
             "ast-monkey"
         ]
@@ -674,7 +674,7 @@
     },
     {
         "name": "string-trim-spaces-only",
-        "size": 2131,
+        "size": 2132,
         "imports": []
     },
     {

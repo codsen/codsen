@@ -3853,7 +3853,7 @@ t.test("05.02 - wrong opts", t => {
 
   t.throws(() => {
     comb("", { whitelist: 1 });
-  }, /THROW_ID_02/);
+  }, /THROW_ID_03/);
 
   t.doesNotThrow(() => {
     comb("", {});

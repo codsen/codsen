@@ -56,7 +56,7 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-contains-only-empty-space.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-contains-only-empty-space.esm.js` | 850 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-contains-only-empty-space.esm.js` | 849 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-contains-only-empty-space.umd.js` | 11 KB |
 
 **[⬆ back to top](#)**

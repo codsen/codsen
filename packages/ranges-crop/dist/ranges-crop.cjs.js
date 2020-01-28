@@ -38,9 +38,7 @@ function rangesCrop(arrOfRanges, strLen) {
   if (!isArr(arrOfRanges)) {
     throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
-  if (!Number.isInteger(strLen, {
-    includeZero: true
-  })) {
+  if (!Number.isInteger(strLen)) {
     throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
   }
   if (arrOfRanges.length === 0) {
@@ -48,11 +46,7 @@ function rangesCrop(arrOfRanges, strLen) {
   }
   var culpritsIndex;
   if (!arrOfRanges.every(function (rangeArr, indx) {
-    if (!Number.isInteger(rangeArr[0], {
-      includeZero: true
-    }) || !Number.isInteger(rangeArr[1], {
-      includeZero: true
-    })) {
+    if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
       culpritsIndex = indx;
       return false;
     }

@@ -80,9 +80,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
-  return /^\d*$/.test(str, {
-    includeZero: true
-  }) ? parseInt(str, 10) : str;
+  return /^\d*$/.test(str) ? parseInt(str, 10) : str;
 }
 var Ranges =
 function () {
@@ -139,12 +137,8 @@ function () {
       } else if (!existy(originalFrom) && existy(originalTo)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
       }
-      var from = /^\d*$/.test(originalFrom, {
-        includeZero: true
-      }) ? parseInt(originalFrom, 10) : originalFrom;
-      var to = /^\d*$/.test(originalTo, {
-        includeZero: true
-      }) ? parseInt(originalTo, 10) : originalTo;
+      var from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
+      var to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
       if (isNum(addVal)) {
         addVal = String(addVal);
       }
