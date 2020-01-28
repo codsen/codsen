@@ -1,4 +1,8 @@
-import isObj from "lodash.isplainobject";
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
 
 function isEmpty(input) {
   let i;

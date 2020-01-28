@@ -7,8 +7,11 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty
  */
 
-import isObj from 'lodash.isplainobject';
-
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
 function isEmpty(input) {
   let i;
   let len;
