@@ -11,7 +11,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
-  return /^\d*$/.test(str, { includeZero: true }) ? parseInt(str, 10) : str;
+  return /^\d*$/.test(str) ? parseInt(str, 10) : str;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,10 +139,10 @@ class Ranges {
         )})`
       );
     }
-    const from = /^\d*$/.test(originalFrom, { includeZero: true })
+    const from = /^\d*$/.test(originalFrom)
       ? parseInt(originalFrom, 10)
       : originalFrom;
-    const to = /^\d*$/.test(originalTo, { includeZero: true })
+    const to = /^\d*$/.test(originalTo)
       ? parseInt(originalTo, 10)
       : originalTo;
 

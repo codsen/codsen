@@ -46,8 +46,8 @@ function sortBySubarray(arr, axis = 0) {
       )}`
     );
   }
-  if (!Number.isInteger(axis, { includeZero: true })) {
-    if (/^\d*$/.test(axis, { includeZero: true })) {
+  if (!Number.isInteger(axis)) {
+    if (/^\d*$/.test(axis)) {
       axis = parseInt(axis, 10);
     } else {
       throw new Error(

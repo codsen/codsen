@@ -26,7 +26,7 @@ function rangesCrop(arrOfRanges, strLen) {
       )}`
     );
   }
-  if (!Number.isInteger(strLen, { includeZero: true })) {
+  if (!Number.isInteger(strLen)) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
@@ -42,8 +42,8 @@ function rangesCrop(arrOfRanges, strLen) {
   if (
     !arrOfRanges.every((rangeArr, indx) => {
       if (
-        !Number.isInteger(rangeArr[0], { includeZero: true }) ||
-        !Number.isInteger(rangeArr[1], { includeZero: true })
+        !Number.isInteger(rangeArr[0]) ||
+        !Number.isInteger(rangeArr[1])
       ) {
         culpritsIndex = indx;
         return false;
