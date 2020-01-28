@@ -1,6 +1,3 @@
-import isNatNum from "is-natural-number";
-const isArr = Array.isArray;
-
 //
 //                              /\___/\
 //                             ( o   o )
@@ -15,7 +12,7 @@ const isArr = Array.isArray;
 
 function rangesSort(arrOfRanges, originalOptions) {
   // arrOfRanges validation
-  if (!isArr(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges)) {
     throw new TypeError(
       `ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -67,8 +64,10 @@ function rangesSort(arrOfRanges, originalOptions) {
   if (
     !arrOfRanges.every((rangeArr, indx) => {
       if (
-        !isNatNum(rangeArr[0], { includeZero: true }) ||
-        !isNatNum(rangeArr[1], { includeZero: true })
+        !Number.isInteger(rangeArr[0]) ||
+        rangeArr[0] < 0 ||
+        !Number.isInteger(rangeArr[1]) ||
+        rangeArr[1] < 0
       ) {
         culpritsIndex = indx;
         return false;

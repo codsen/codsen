@@ -111,9 +111,6 @@
     "coverage-report": "json-summary",
     "timeout": 0
   },
-  "dependencies": {
-    "is-natural-number": "^4.0.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",

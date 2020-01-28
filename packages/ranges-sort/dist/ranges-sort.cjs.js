@@ -9,10 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isNatNum = _interopDefault(require('is-natural-number'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -27,9 +23,8 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function rangesSort(arrOfRanges, originalOptions) {
-  if (!isArr(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges)) {
     throw new TypeError("ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
   if (arrOfRanges.length === 0) {
@@ -53,11 +48,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
   }
   if (!arrOfRanges.every(function (rangeArr, indx) {
-    if (!isNatNum(rangeArr[0], {
-      includeZero: true
-    }) || !isNatNum(rangeArr[1], {
-      includeZero: true
-    })) {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
       culpritsIndex = indx;
       return false;
     }
