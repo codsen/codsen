@@ -12,14 +12,30 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var compare = _interopDefault(require('ast-compare'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 
 function existy(x) {
   return x != null;
 }
 function truthy(x) {
   return x !== false && existy(x);
+}
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function getObj(originalAst, keyValPair, replacementContentsArr) {
   var result = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
@@ -71,5 +87,8 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
   }
   return result;
 }
+function externalApi(originalAst, keyValPair, replacementContentsArr) {
+  return getObj(originalAst, keyValPair, replacementContentsArr);
+}
 
-module.exports = getObj;
+module.exports = externalApi;

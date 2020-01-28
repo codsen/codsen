@@ -29,8 +29,7 @@ t.test("01.01 - get - one plain object as result", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "01.01"
+    ]
   );
   t.end();
 });
@@ -65,8 +64,7 @@ t.test("01.02 - get - two plain object as result", t => {
         content: "whatnot",
         attributes: "as well"
       }
-    ],
-    "01.02"
+    ]
   );
   t.end();
 });
@@ -111,8 +109,7 @@ t.test("01.03 - get - topmost level container is object", t => {
         content: "ISO-123",
         something: "as well"
       }
-    ],
-    "01.03"
+    ]
   );
   t.end();
 });
@@ -141,8 +138,7 @@ t.test("01.04 - get - search value is object", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "01.04"
+    ]
   );
   t.end();
 });
@@ -171,8 +167,7 @@ t.test("01.05 - get - search value is array", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "01.05"
+    ]
   );
   t.end();
 });
@@ -201,8 +196,7 @@ t.test("01.06 - get - search value is nested array", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "01.06"
+    ]
   );
   t.end();
 });
@@ -251,8 +245,7 @@ t.test("01.07 - get - search value is nested object", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "01.07"
+    ]
   );
   t.end();
 });
@@ -298,8 +291,42 @@ t.test("01.08 - get - numerous everything", t => {
         b: "b",
         d: "d"
       }
-    ],
-    "01.08"
+    ]
+  );
+  t.end();
+});
+
+t.test("01.09 - rogue 4th input arg given", t => {
+  t.same(
+    getObj(
+      [
+        {
+          tag: "meta",
+          content: "UTF-8",
+          something: "else"
+        },
+        {
+          tag: "title",
+          attrs: "Text of the title"
+        }
+      ],
+      {
+        tag: "meta"
+      },
+      null,
+      [
+        {
+          zzz: "yyy"
+        }
+      ]
+    ),
+    [
+      {
+        tag: "meta",
+        content: "UTF-8",
+        something: "else"
+      }
+    ]
   );
   t.end();
 });
@@ -343,8 +370,7 @@ t.test("02.01 - set - one plain object", t => {
         tag: "title",
         attrs: "Text of the title"
       }
-    ],
-    "02.01"
+    ]
   );
   t.end();
 });
@@ -394,8 +420,7 @@ t.test("02.02 - set - two plain object", t => {
         tag: "style",
         content: ""
       }
-    ],
-    "02.02"
+    ]
   );
   t.end();
 });
@@ -462,8 +487,7 @@ t.test(
             something: "as well"
           }
         ]
-      },
-      "02.03"
+      }
     );
     t.end();
   }
@@ -506,8 +530,7 @@ t.test(
           tag: "title",
           attrs: "Text of the title"
         }
-      ],
-      "02.04"
+      ]
     );
     t.end();
   }
@@ -548,8 +571,7 @@ t.test("02.05 - set - search value is array - updated value array", t => {
         tag: "title",
         attrs: "Text of the title"
       }
-    ],
-    "02.05"
+    ]
   );
   t.end();
 });
@@ -587,8 +609,7 @@ t.test("02.06 - set - search value is nested array - deleted finding", t => {
         tag: [["two"]],
         attrs: "Text of the title"
       }
-    ],
-    "02.06"
+    ]
   );
   t.end();
 });
@@ -658,8 +679,7 @@ t.test("02.07 - set - edit skipping similar, false search result", t => {
         content: "UTF-8",
         something: "else"
       }
-    ],
-    "02.07"
+    ]
   );
   t.end();
 });
@@ -727,8 +747,52 @@ t.test("02.08 - set - numerous everything, wrong order", t => {
           ]
         ]
       ]
-    ],
-    "02.08"
+    ]
+  );
+  t.end();
+});
+
+t.test("02.09 - rogue 4th input arg", t => {
+  t.same(
+    getObj(
+      [
+        {
+          tag: "meta",
+          content: "UTF-8",
+          something: "else"
+        },
+        {
+          tag: "title",
+          attrs: "Text of the title"
+        }
+      ],
+      {
+        tag: "meta"
+      },
+      [
+        {
+          tag: "meta",
+          content_changed: "UTF-8",
+          something: "changed"
+        }
+      ],
+      [
+        {
+          zzz: "yyy"
+        }
+      ]
+    ),
+    [
+      {
+        tag: "meta",
+        content_changed: "UTF-8",
+        something: "changed"
+      },
+      {
+        tag: "title",
+        attrs: "Text of the title"
+      }
+    ]
   );
   t.end();
 });

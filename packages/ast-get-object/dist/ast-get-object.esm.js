@@ -8,7 +8,6 @@
  */
 
 import compare from 'ast-compare';
-import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
 function existy(x) {
@@ -16,6 +15,11 @@ function existy(x) {
 }
 function truthy(x) {
   return x !== false && existy(x);
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   if (!existy(originalAst)) {
@@ -73,5 +77,8 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   }
   return result;
 }
+function externalApi(originalAst, keyValPair, replacementContentsArr) {
+  return getObj(originalAst, keyValPair, replacementContentsArr);
+}
 
-export default getObj;
+export default externalApi;

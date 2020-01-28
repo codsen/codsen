@@ -1,10 +1,4 @@
-/* eslint prefer-destructuring:0 */
-
-// ===================================
-// R E Q U I R E' S
-
 import compare from "ast-compare";
-import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
 
 // ===================================
@@ -15,6 +9,11 @@ function existy(x) {
 }
 function truthy(x) {
   return x !== false && existy(x);
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 
 /**
@@ -105,4 +104,10 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   return result;
 }
 
-export default getObj;
+// second function is necessary to shielf the 4th input argument which is
+// for internal use only.
+function externalApi(originalAst, keyValPair, replacementContentsArr) {
+  return getObj(originalAst, keyValPair, replacementContentsArr);
+}
+
+export default externalApi;

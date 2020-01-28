@@ -40,7 +40,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ast-compare", "lodash.clonedeep", "lodash.isplainobject"],
+      external: ["ast-compare", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false
@@ -55,7 +55,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ast-compare", "lodash.clonedeep", "lodash.isplainobject"],
+      external: ["ast-compare", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false
