@@ -8,7 +8,6 @@
  */
 
 import clone from 'lodash.clonedeep';
-import isObj from 'lodash.isplainobject';
 
 const isArr = Array.isArray;
 function trimFirstDot(str) {
@@ -17,8 +16,10 @@ function trimFirstDot(str) {
   }
   return str;
 }
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function astMonkeyTraverse(tree1, cb1) {
   const stop = { now: false };
@@ -27,8 +28,6 @@ function astMonkeyTraverse(tree1, cb1) {
     let i;
     let len;
     let res;
-    let allKeys;
-    let key;
     innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
     innerObj.depth += 1;
     if (isArr(tree)) {
@@ -62,14 +61,12 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     } else if (isObj(tree)) {
-      allKeys = Object.keys(tree);
-      for (i = 0, len = allKeys.length; i < len; i++) {
-        if (stop.now) {
+      for (const key in tree) {
+        if (stop.now && key != null) {
           break;
         }
-        key = allKeys[i];
         const path = `${innerObj.path}.${key}`;
-        if (innerObj.depth === 0 && existy(key)) {
+        if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);

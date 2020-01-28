@@ -12,7 +12,20 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 
 var isArr = Array.isArray;
 function trimFirstDot(str) {
@@ -21,8 +34,8 @@ function trimFirstDot(str) {
   }
   return str;
 }
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function astMonkeyTraverse(tree1, cb1) {
   var stop = {
@@ -33,8 +46,6 @@ function astMonkeyTraverse(tree1, cb1) {
     var i;
     var len;
     var res;
-    var allKeys;
-    var key;
     innerObj = Object.assign({
       depth: -1,
       path: ""
@@ -65,14 +76,12 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     } else if (isObj(tree)) {
-      allKeys = Object.keys(tree);
-      for (i = 0, len = allKeys.length; i < len; i++) {
-        if (stop.now) {
+      for (var key in tree) {
+        if (stop.now && key != null) {
           break;
         }
-        key = allKeys[i];
         var _path = "".concat(innerObj.path, ".").concat(key);
-        if (innerObj.depth === 0 && existy(key)) {
+        if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
