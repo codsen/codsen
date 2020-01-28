@@ -46,7 +46,6 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "lodash.clonedeep",
         "lodash.includes",
-        "lodash.isplainobject",
         "lodash.uniq",
         "util-nonempty"
       ],
@@ -70,7 +69,6 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "lodash.clonedeep",
         "lodash.includes",
-        "lodash.isplainobject",
         "lodash.uniq",
         "util-nonempty"
       ],

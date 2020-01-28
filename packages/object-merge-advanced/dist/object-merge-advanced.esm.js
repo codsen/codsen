@@ -7,7 +7,6 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
  */
 
-import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 import includes from 'array-includes-with-glob';
 import lodashIncludes from 'lodash.includes';
@@ -27,6 +26,11 @@ function isBool(something) {
 }
 function isFun(something) {
   return typeof something === "function";
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 const isArr = Array.isArray;
 function arrayContainsStr(arr) {

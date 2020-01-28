@@ -11,7 +11,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var includes = _interopDefault(require('array-includes-with-glob'));
 var lodashIncludes = _interopDefault(require('lodash.includes'));
@@ -45,6 +44,9 @@ function isBool(something) {
 }
 function isFun(something) {
   return typeof something === "function";
+}
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 var isArr = Array.isArray;
 function arrayContainsStr(arr) {
