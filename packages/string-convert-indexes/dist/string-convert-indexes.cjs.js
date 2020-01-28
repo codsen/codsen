@@ -14,9 +14,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var astMonkey = require('ast-monkey');
-var isInt = _interopDefault(require('is-natural-number'));
-var isNumStr = _interopDefault(require('is-natural-number-string'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
@@ -33,11 +30,63 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function existy(x) {
   return x != null;
 }
 function isStr(something) {
   return typeof something === "string";
+}
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function mandatory(i) {
   throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
@@ -74,11 +123,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     id: 0
   };
   var toDoList = [];
-  if (isInt(indexes, {
-    includeZero: true
-  }) || isNumStr(indexes, {
-    includeZero: true
-  })) {
+  if (Number.isInteger(indexes) && indexes >= 0 || /^\d*$/.test(indexes)) {
     toDoList = [{
       id: 1,
       val: indexes
@@ -87,12 +132,8 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     indexes = astMonkey.traverse(indexes, function (key, val) {
       data.id += 1;
       data.val = val !== undefined ? val : key;
-      if (isInt(data.val, {
-        includeZero: true
-      }) || isNumStr(data.val, {
-        includeZero: true
-      })) {
-        toDoList.push(clone(data));
+      if (Number.isInteger(data.val) && data.val >= 0 || /^\d*$/.test(data.val)) {
+        toDoList.push(_objectSpread2({}, data));
       }
       return data.val;
     });
@@ -144,11 +185,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       }
     }
   }
-  if (isInt(indexes, {
-    includeZero: true
-  }) || isNumStr(indexes, {
-    includeZero: true
-  })) {
+  if (Number.isInteger(indexes) && indexes >= 0 || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
   var res = clone(indexes);

@@ -40,13 +40,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "ast-monkey",
-        "is-natural-number",
-        "is-natural-number-string",
-        "lodash.clonedeep",
-        "lodash.isplainobject"
-      ],
+      external: ["ast-monkey", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false
@@ -61,13 +55,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "ast-monkey",
-        "is-natural-number",
-        "is-natural-number-string",
-        "lodash.clonedeep",
-        "lodash.isplainobject"
-      ],
+      external: ["ast-monkey", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false

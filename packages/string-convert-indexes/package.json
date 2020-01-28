@@ -117,10 +117,7 @@
   },
   "dependencies": {
     "ast-monkey": "^7.11.0",
-    "is-natural-number": "^4.0.1",
-    "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.isplainobject": "^4.0.6"
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

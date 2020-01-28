@@ -1,9 +1,4 @@
-/* eslint no-param-reassign:0, max-len:0 */
-
 import { set, traverse } from "ast-monkey";
-import isInt from "is-natural-number";
-import isNumStr from "is-natural-number-string";
-import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
 
 function existy(x) {
@@ -11,6 +6,11 @@ function existy(x) {
 }
 function isStr(something) {
   return typeof something === "string";
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function mandatory(i) {
   throw new Error(
@@ -70,10 +70,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   // ---------------------------------------------------------------------------
 
   // if it's a number, there's no need to traverse:
-  if (
-    isInt(indexes, { includeZero: true }) ||
-    isNumStr(indexes, { includeZero: true })
-  ) {
+  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     toDoList = [
       {
         id: 1,
@@ -87,10 +84,10 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       data.id += 1;
       data.val = val !== undefined ? val : key;
       if (
-        isInt(data.val, { includeZero: true }) ||
-        isNumStr(data.val, { includeZero: true })
+        (Number.isInteger(data.val) && data.val >= 0) ||
+        /^\d*$/.test(data.val)
       ) {
-        toDoList.push(clone(data));
+        toDoList.push({ ...data });
       }
       return data.val;
     });
@@ -123,7 +120,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       `* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`
     );
     console.log(
-      `126 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
+      `123 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
     );
     //
     //    PART 1. Bean-counting
@@ -143,11 +140,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       if (surrogateDetected !== true) {
         unicodeIndex += 1;
         console.log(
-          `146 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+          `143 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
         );
         surrogateDetected = true;
         console.log(
-          `150 ! surrogateDetected now ${JSON.stringify(
+          `147 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -159,7 +156,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
         // but reset the flag, because astral symbols come in pairs
         surrogateDetected = false;
         console.log(
-          `162 ! surrogateDetected now ${JSON.stringify(
+          `159 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -172,13 +169,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       // bump the counter:
       unicodeIndex += 1;
       console.log(
-        `175 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+        `172 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
       );
       // reset the flag:
       if (surrogateDetected === true) {
         surrogateDetected = false;
         console.log(
-          `181 ! surrogateDetected now ${JSON.stringify(
+          `178 ! surrogateDetected now ${JSON.stringify(
             surrogateDetected,
             null,
             4
@@ -260,12 +257,9 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   //       ==============
 
   console.log("\n\n\n");
-  console.log(`263 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
+  console.log(`260 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
-  if (
-    isInt(indexes, { includeZero: true }) ||
-    isNumStr(indexes, { includeZero: true })
-  ) {
+  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
 

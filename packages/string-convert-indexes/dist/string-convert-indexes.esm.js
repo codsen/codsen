@@ -8,9 +8,6 @@
  */
 
 import { traverse, set } from 'ast-monkey';
-import isInt from 'is-natural-number';
-import isNumStr from 'is-natural-number-string';
-import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
 function existy(x) {
@@ -18,6 +15,11 @@ function existy(x) {
 }
 function isStr(something) {
   return typeof something === "string";
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function mandatory(i) {
   throw new Error(
@@ -58,10 +60,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
   const data = { id: 0 };
   let toDoList = [];
-  if (
-    isInt(indexes, { includeZero: true }) ||
-    isNumStr(indexes, { includeZero: true })
-  ) {
+  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     toDoList = [
       {
         id: 1,
@@ -73,10 +72,10 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       data.id += 1;
       data.val = val !== undefined ? val : key;
       if (
-        isInt(data.val, { includeZero: true }) ||
-        isNumStr(data.val, { includeZero: true })
+        (Number.isInteger(data.val) && data.val >= 0) ||
+        /^\d*$/.test(data.val)
       ) {
-        toDoList.push(clone(data));
+        toDoList.push({ ...data });
       }
       return data.val;
     });
@@ -147,10 +146,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       }
     }
   }
-  if (
-    isInt(indexes, { includeZero: true }) ||
-    isNumStr(indexes, { includeZero: true })
-  ) {
+  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
   let res = clone(indexes);
