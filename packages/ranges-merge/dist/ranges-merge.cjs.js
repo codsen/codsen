@@ -12,8 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var sortRanges = _interopDefault(require('ranges-sort'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -29,9 +27,32 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
 function mergeRanges(arrOfRanges, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
+  }
+  function isObj(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
@@ -66,9 +87,11 @@ function mergeRanges(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
     }
   } else {
-    opts = clone(defaults);
+    opts = Object.assign({}, defaults);
   }
-  var filtered = clone(arrOfRanges).filter(
+  var filtered = arrOfRanges.map(function (subarr) {
+    return _toConsumableArray(subarr);
+  }).filter(
   function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });

@@ -8,12 +8,15 @@
  */
 
 import sortRanges from 'ranges-sort';
-import clone from 'lodash.clonedeep';
-import isObj from 'lodash.isplainobject';
 
 function mergeRanges(arrOfRanges, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
+  }
+  function isObj(something) {
+    return (
+      something && typeof something === "object" && !Array.isArray(something)
+    );
   }
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
@@ -76,11 +79,13 @@ function mergeRanges(arrOfRanges, originalOpts) {
       );
     }
   } else {
-    opts = clone(defaults);
+    opts = Object.assign({}, defaults);
   }
-  const filtered = clone(arrOfRanges).filter(
-    rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
-  );
+  const filtered = arrOfRanges
+    .map(subarr => [...subarr])
+    .filter(
+      rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
+    );
   let sortedRanges;
   let lastPercentageDone;
   let percentageDone;
