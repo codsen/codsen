@@ -288,7 +288,7 @@ t.test(
       },
       "18.02.02"
     );
-    // opts.hardMergeEverything, NO CB:
+    // opts.hardMergeEverything, CB:
     t.same(
       mergeAdvanced(
         {
