@@ -120,8 +120,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.9.0",
-    "lodash.isplainobject": "^4.0.6"
+    "ast-contains-only-empty-space": "^1.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

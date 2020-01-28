@@ -12,7 +12,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var isPlainObject = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -28,6 +27,9 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
 function looseCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
@@ -51,7 +53,7 @@ function looseCompare(bigObj, smallObj, res) {
   if (Array.isArray(bigObj) && Array.isArray(smallObj)) {
     if (smallObj.length > 0) {
       for (i = 0, len = smallObj.length; i < len; i++) {
-        if (Array.isArray(smallObj[i]) || isPlainObject(smallObj[i])) {
+        if (Array.isArray(smallObj[i]) || isObj(smallObj[i])) {
           res = looseCompare(bigObj[i], smallObj[i], res);
           if (!res) {
             return false;
@@ -71,11 +73,11 @@ function looseCompare(bigObj, smallObj, res) {
       res = false;
       return false;
     }
-  } else if (isPlainObject(bigObj) && isPlainObject(smallObj)) {
+  } else if (isObj(bigObj) && isObj(smallObj)) {
     if (Object.keys(smallObj).length > 0) {
       var keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
-        if (Array.isArray(smallObj[keysArr[i]]) || isPlainObject(smallObj[keysArr[i]]) || typeof smallObj[keysArr[i]] === "string") {
+        if (Array.isArray(smallObj[keysArr[i]]) || isObj(smallObj[keysArr[i]]) || typeof smallObj[keysArr[i]] === "string") {
           res = looseCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
           if (!res) {
             return false;
@@ -111,5 +113,8 @@ function looseCompare(bigObj, smallObj, res) {
   }
   return res;
 }
+function externalApi(bigObj, smallObj) {
+  return looseCompare(bigObj, smallObj);
+}
 
-module.exports = looseCompare;
+module.exports = externalApi;
