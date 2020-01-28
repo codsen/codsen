@@ -9,10 +9,6 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isNumStr = _interopDefault(require('is-natural-number-string'));
-
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -43,16 +39,10 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (!isStr(searchValue)) {
     throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ".concat(_typeof(searchValue)));
   }
-  if (arguments.length >= 3 && !Number.isInteger(fromIndex, {
-    includeZero: true
-  }) && !isNumStr(fromIndex, {
-    includeZero: true
-  })) {
+  if (arguments.length >= 3 && !Number.isInteger(fromIndex) && !(isStr(fromIndex) && /^\d*$/.test(fromIndex))) {
     throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ".concat(fromIndex));
   }
-  if (isNumStr(fromIndex, {
-    includeZero: true
-  })) {
+  if (/^\d*$/.test(fromIndex)) {
     fromIndex = Number(fromIndex);
   }
   var strArr = Array.from(str);

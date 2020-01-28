@@ -1,5 +1,3 @@
-import isNumStr from "is-natural-number-string";
-
 function existy(x) {
   return x != null;
 }
@@ -23,14 +21,14 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   }
   if (
     arguments.length >= 3 &&
-    !Number.isInteger(fromIndex, { includeZero: true }) &&
-    !isNumStr(fromIndex, { includeZero: true })
+    !Number.isInteger(fromIndex) &&
+    !(isStr(fromIndex) && /^\d*$/.test(fromIndex))
   ) {
     throw new TypeError(
       `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`
     );
   }
-  if (isNumStr(fromIndex, { includeZero: true })) {
+  if (/^\d*$/.test(fromIndex)) {
     fromIndex = Number(fromIndex);
   }
   const strArr = Array.from(str);
