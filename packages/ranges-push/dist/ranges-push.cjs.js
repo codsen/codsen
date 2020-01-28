@@ -12,9 +12,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
-var isNumStr = _interopDefault(require('is-natural-number-string'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
-var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -75,13 +73,14 @@ function _nonIterableSpread() {
 function existy(x) {
   return x != null;
 }
-var isArr = Array.isArray;
-var isNum = Number.isInteger;
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
 function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
-  return isNumStr(str, {
+  return /^\d*$/.test(str, {
     includeZero: true
   }) ? parseInt(str, 10) : str;
 }
@@ -119,13 +118,13 @@ function () {
       if (!existy(originalFrom) && !existy(originalTo)) {
         return;
       } else if (existy(originalFrom) && !existy(originalTo)) {
-        if (isArr(originalFrom)) {
+        if (Array.isArray(originalFrom)) {
           if (originalFrom.length) {
             if (originalFrom.some(function (el) {
-              return isArr(el);
+              return Array.isArray(el);
             })) {
               originalFrom.forEach(function (thing) {
-                if (isArr(thing)) {
+                if (Array.isArray(thing)) {
                   _this.add.apply(_this, _toConsumableArray(thing));
                 }
               });
@@ -140,10 +139,10 @@ function () {
       } else if (!existy(originalFrom) && existy(originalTo)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
       }
-      var from = isNumStr(originalFrom, {
+      var from = /^\d*$/.test(originalFrom, {
         includeZero: true
       }) ? parseInt(originalFrom, 10) : originalFrom;
-      var to = isNumStr(originalTo, {
+      var to = /^\d*$/.test(originalTo, {
         includeZero: true
       }) ? parseInt(originalTo, 10) : originalTo;
       if (isNum(addVal)) {
@@ -153,7 +152,7 @@ function () {
         if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
         }
-        if (existy(this.slices) && isArr(this.last()) && from === this.last()[1]) {
+        if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
           this.last()[1] = to;
           if (this.last()[2] === null || addVal === null) ;
           if (this.last()[2] !== null && existy(addVal)) {
@@ -216,11 +215,11 @@ function () {
   }, {
     key: "replace",
     value: function replace(givenRanges) {
-      if (isArr(givenRanges) && givenRanges.length) {
-        if (!(isArr(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+      if (Array.isArray(givenRanges) && givenRanges.length) {
+        if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
           throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
         } else {
-          this.slices = clone(givenRanges);
+          this.slices = Array.from(givenRanges);
         }
       } else {
         this.slices = undefined;

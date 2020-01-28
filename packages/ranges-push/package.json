@@ -117,8 +117,6 @@
     "timeout": 0
   },
   "dependencies": {
-    "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "^4.5.0",
     "ranges-merge": "^4.2.32",
     "string-collapse-leading-whitespace": "^2.0.13",
     "string-trim-spaces-only": "^2.8.10"

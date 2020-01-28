@@ -8,20 +8,19 @@
  */
 
 import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';
-import isNumStr from 'is-natural-number-string';
 import mergeRanges from 'ranges-merge';
-import clone from 'lodash.clonedeep';
 
 function existy(x) {
   return x != null;
 }
-const isArr = Array.isArray;
-const isNum = Number.isInteger;
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
 function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
-  return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
+  return /^\d*$/.test(str, { includeZero: true }) ? parseInt(str, 10) : str;
 }
 class Ranges {
   constructor(originalOpts) {
@@ -61,11 +60,11 @@ class Ranges {
     if (!existy(originalFrom) && !existy(originalTo)) {
       return;
     } else if (existy(originalFrom) && !existy(originalTo)) {
-      if (isArr(originalFrom)) {
+      if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
-          if (originalFrom.some(el => isArr(el))) {
+          if (originalFrom.some(el => Array.isArray(el))) {
             originalFrom.forEach(thing => {
-              if (isArr(thing)) {
+              if (Array.isArray(thing)) {
                 this.add(...thing);
               }
             });
@@ -104,10 +103,10 @@ class Ranges {
         )})`
       );
     }
-    const from = isNumStr(originalFrom, { includeZero: true })
+    const from = /^\d*$/.test(originalFrom, { includeZero: true })
       ? parseInt(originalFrom, 10)
       : originalFrom;
-    const to = isNumStr(originalTo, { includeZero: true })
+    const to = /^\d*$/.test(originalTo, { includeZero: true })
       ? parseInt(originalTo, 10)
       : originalTo;
     if (isNum(addVal)) {
@@ -125,7 +124,7 @@ class Ranges {
       }
       if (
         existy(this.slices) &&
-        isArr(this.last()) &&
+        Array.isArray(this.last()) &&
         from === this.last()[1]
       ) {
         this.last()[1] = to;
@@ -214,8 +213,8 @@ class Ranges {
     this.slices = undefined;
   }
   replace(givenRanges) {
-    if (isArr(givenRanges) && givenRanges.length) {
-      if (!(isArr(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+    if (Array.isArray(givenRanges) && givenRanges.length) {
+      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error(
           `ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(
             givenRanges[0],
@@ -224,7 +223,7 @@ class Ranges {
           )} should be an array and its first element should be an integer, a string index.`
         );
       } else {
-        this.slices = clone(givenRanges);
+        this.slices = Array.from(givenRanges);
       }
     } else {
       this.slices = undefined;

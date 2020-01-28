@@ -1,18 +1,17 @@
 import collapseLeadingWhitespace from "string-collapse-leading-whitespace";
-import isNumStr from "is-natural-number-string";
 import mergeRanges from "ranges-merge";
-import clone from "lodash.clonedeep";
 
 function existy(x) {
   return x != null;
 }
-const isArr = Array.isArray;
-const isNum = Number.isInteger;
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
 function isStr(something) {
   return typeof something === "string";
 }
 function prepNumStr(str) {
-  return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
+  return /^\d*$/.test(str, { includeZero: true }) ? parseInt(str, 10) : str;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +46,7 @@ class Ranges {
     }
     // so it's correct, let's get it in:
     console.log(
-      `050 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
+      `049 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
     );
     this.opts = opts;
   }
@@ -57,7 +56,7 @@ class Ranges {
   add(originalFrom, originalTo, addVal, ...etc) {
     console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
     console.log(
-      `060 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`
+      `059 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`
     );
     if (etc.length > 0) {
       throw new TypeError(
@@ -70,17 +69,17 @@ class Ranges {
     }
 
     if (!existy(originalFrom) && !existy(originalTo)) {
-      console.log(`073 nothing happens`);
+      console.log(`072 nothing happens`);
       return;
     } else if (existy(originalFrom) && !existy(originalTo)) {
-      if (isArr(originalFrom)) {
+      if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
-          if (originalFrom.some(el => isArr(el))) {
+          if (originalFrom.some(el => Array.isArray(el))) {
             originalFrom.forEach(thing => {
-              if (isArr(thing)) {
+              if (Array.isArray(thing)) {
                 // recursively feed this subarray, hopefully it's an array
                 console.log(
-                  `083 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+                  `082 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                     thing,
                     null,
                     4
@@ -88,7 +87,7 @@ class Ranges {
                 );
                 this.add(...thing);
                 console.log("\n\n\n");
-                console.log("091 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+                console.log("090 ██ END OF RECURSION, BACK TO NORMAL FLOW");
                 console.log("\n\n\n");
               }
               // just skip other cases
@@ -101,7 +100,7 @@ class Ranges {
           ) {
             // recursively pass in those values
             console.log(
-              `104 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+              `103 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                 originalFrom,
                 null,
                 4
@@ -109,7 +108,7 @@ class Ranges {
             );
             this.add(...originalFrom);
             console.log("\n\n\n");
-            console.log("112 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+            console.log("111 ██ END OF RECURSION, BACK TO NORMAL FLOW");
             console.log("\n\n\n");
           }
         }
@@ -140,10 +139,10 @@ class Ranges {
         )})`
       );
     }
-    const from = isNumStr(originalFrom, { includeZero: true })
+    const from = /^\d*$/.test(originalFrom, { includeZero: true })
       ? parseInt(originalFrom, 10)
       : originalFrom;
-    const to = isNumStr(originalTo, { includeZero: true })
+    const to = /^\d*$/.test(originalTo, { includeZero: true })
       ? parseInt(originalTo, 10)
       : originalTo;
 
@@ -154,7 +153,7 @@ class Ranges {
     // validation
     if (isNum(from) && isNum(to)) {
       console.log(
-        `157 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
+        `156 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`
       );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
@@ -167,7 +166,7 @@ class Ranges {
         );
       }
       console.log(
-        `170 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+        `169 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
           addVal,
           null,
           4
@@ -178,11 +177,11 @@ class Ranges {
       // Does the incoming "from" value match the existing last element's "to" value?
       if (
         existy(this.slices) &&
-        isArr(this.last()) &&
+        Array.isArray(this.last()) &&
         from === this.last()[1]
       ) {
         console.log(
-          `185 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
+          `184 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`
         );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -190,12 +189,12 @@ class Ranges {
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) {
-          console.log(`193 this.last()[2] = ${this.last()[2]}`);
-          console.log(`194 addVal = ${addVal}`);
+          console.log(`192 this.last()[2] = ${this.last()[2]}`);
+          console.log(`193 addVal = ${addVal}`);
         }
 
         if (this.last()[2] !== null && existy(addVal)) {
-          console.log(`198`);
+          console.log(`197`);
           let calculatedVal =
             existy(this.last()[2]) &&
             this.last()[2].length > 0 &&
@@ -203,7 +202,7 @@ class Ranges {
               ? this.last()[2] + addVal
               : addVal;
           console.log(
-            `206 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `205 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -216,7 +215,7 @@ class Ranges {
             );
           }
           console.log(
-            `219 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `218 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
               calculatedVal,
               null,
               4
@@ -227,10 +226,10 @@ class Ranges {
             this.last()[2] = calculatedVal;
           }
         }
-        console.log(`230`);
+        console.log(`229`);
       } else {
         console.log(
-          `233 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
+          `232 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
         );
         if (!this.slices) {
           this.slices = [];
@@ -249,16 +248,16 @@ class Ranges {
               ]
             : [from, to];
         console.log(
-          `252 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
+          `251 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
         );
         this.slices.push(whatToPush);
         console.log(
-          `256 this.slices = ${JSON.stringify(this.slices, null, 4)};`
+          `255 this.slices = ${JSON.stringify(this.slices, null, 4)};`
         );
       }
     } else {
       console.log(
-        `261 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
+        `260 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`
       );
       // Error somewhere!
       // Let's find out where.
@@ -283,7 +282,7 @@ class Ranges {
         );
       }
     }
-    console.log(`286`);
+    console.log(`285`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
@@ -326,11 +325,11 @@ class Ranges {
   // R E P L A C E ()
   // ==========
   replace(givenRanges) {
-    if (isArr(givenRanges) && givenRanges.length) {
+    if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
       // Let's put safety latch against such cases
-      if (!(isArr(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
         throw new Error(
           `ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(
             givenRanges[0],
@@ -339,7 +338,7 @@ class Ranges {
           )} should be an array and its first element should be an integer, a string index.`
         );
       } else {
-        this.slices = clone(givenRanges);
+        this.slices = Array.from(givenRanges);
       }
     } else {
       this.slices = undefined;
