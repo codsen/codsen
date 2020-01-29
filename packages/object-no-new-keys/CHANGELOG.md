@@ -5,9 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.8.0 (2019-10-02)
 
-### Features
-
-- remove option type checking to make program run around 54 times faster ([5acc5f6](https://gitlab.com/codsen/codsen/commit/5acc5f6))
+- ✨ Remove option type checking to make program run around 54 times faster ([5acc5f6](https://gitlab.com/codsen/codsen/commit/5acc5f6))
 
 ## 2.7.0 (2019-01-20)
 

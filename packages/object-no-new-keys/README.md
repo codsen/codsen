@@ -5,7 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+![no dependencies][no-deps-img]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -59,7 +59,7 @@ This package has three builds in `dist/` folder:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ---- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-no-new-keys.cjs.js` | 4 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-no-new-keys.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-no-new-keys.umd.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-no-new-keys.umd.js` | 2 KB |
 
 **[⬆ back to top](#)**
 
@@ -77,11 +77,23 @@ Personally, I use this library to look for any rogue keys in email template cont
 
 ## API
 
-**nnk(input, reference\[, opts])**
+**nnk(input, reference\[, opts])** - in other words, it's a function which takes two obligatory arguments and third, optional.
 
-Returns zero or more long array of the paths to each key/element in the `input` which does not exist in `reference`.
+### API - Function's Input
 
-### `opts` - an Optional Options Object
+| Function's argument                                                                                                                                                                  | Key value's type                                                                                         | Obligatory? | Description        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------- | ------------------ |
+| `input`                                                                                                                                                                              | Normally, a plain object or array — but can be whatever in which case the results will be an empty array | yes         | What to work upon. |
+| `reference | Same, normally, a plain object or array — but can be whatever type in which case result will be empty array | yes | The reference against which we'll match the`input`. |
+| `opts | Plain object | no | Optional options object                                                                                                                                  |
+
+**[⬆ back to top](#)**
+
+### API - Function's Output
+
+Returns an array of zero or more paths to each key/element in the `input` which does not exist in `reference`.
+
+### API - `opts` - an Optional Options Object
 
 **Defaults**:
 
@@ -162,6 +174,8 @@ const res = nnk(
 );
 console.log("nnk = " + JSON.stringify(nnk, null, 4));
 // => ['a', 'b']
+// meaning, path "a" and path "b" were missing
+// path notation uses [] to mark array's contents
 ```
 
 works with arrays too:
@@ -235,10 +249,9 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/object-no-new-keys
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys
-[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.86%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/object-no-new-keys
+[no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [downloads-img]: https://img.shields.io/npm/dm/object-no-new-keys.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-no-new-keys
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square

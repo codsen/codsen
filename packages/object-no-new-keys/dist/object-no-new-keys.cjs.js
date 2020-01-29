@@ -9,28 +9,39 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
+  return _typeof(obj);
+}
 
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
 function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
-  var isArr = Array.isArray;
+  if (originalOptsOuter && !isObj(originalOptsOuter)) {
+    throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ".concat(JSON.stringify(originalOptsOuter, null, 4), " (type ").concat(_typeof(originalOptsOuter), ")"));
+  }
   var defaults = {
     mode: 2
   };
-  if (Number.isFinite(originalOptsOuter)) {
-    if (!Number.isInteger(originalOptsOuter)) {
-      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_03] The third argument, options object, is not only not an object, it's not even an integer! It's currently: ".concat(originalOptsOuter, " and computer doesn't like it very much."));
-    } else {
-      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] Please pass a plain object with a key \"mode\" set to 1 or 2, not the number ".concat(originalOptsOuter, " directly! Computer doesn't like that."));
-    }
-  }
   var optsOuter = Object.assign({}, defaults, originalOptsOuter);
-  if (typeof optsOuter.mode === "string") {
-    optsOuter.mode = parseInt(optsOuter.mode, 10);
-  }
-  if (optsOuter.mode !== 1 && optsOuter.mode !== 2) {
-    throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, \"".concat(optsOuter.mode, "\" while it should be either natural number 1 or 2."));
+  if (typeof optsOuter.mode === "string" && ["1", "2"].includes(optsOuter.mode)) {
+    if (optsOuter.mode === "1") {
+      optsOuter.mode = 1;
+    } else {
+      optsOuter.mode = 2;
+    }
+  } else if (![1, 2].includes(optsOuter.mode)) {
+    throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be \"1\" or \"2\" (string or number).");
   }
   function objectNoNewKeysInternal(input, reference, opts, innerVar) {
     var temp;
@@ -46,7 +57,7 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
             temp = innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
             innerVar.res.push(temp);
-          } else if (isObj(input[key]) || isArr(input[key])) {
+          } else if (isObj(input[key]) || Array.isArray(input[key])) {
             temp = {
               path: innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key,
               res: innerVar.res
@@ -59,8 +70,8 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           return innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
         }));
       }
-    } else if (isArr(input)) {
-      if (isArr(reference)) {
+    } else if (Array.isArray(input)) {
+      if (Array.isArray(reference)) {
         for (var i = 0, len = input.length; i < len; i++) {
           temp = {
             path: "".concat(innerVar.path.length > 0 ? innerVar.path : "", "[").concat(i, "]"),

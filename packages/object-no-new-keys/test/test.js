@@ -347,18 +347,24 @@ t.test("03.02 - plain object vs ..., can be inner recursion situation", t => {
   t.end();
 });
 
-t.test("03.03 - more complex plain object vs ...", t => {
-  t.same(
-    nnk({
-      a: "a",
-      b: ["b"],
-      c: {
-        d: "d"
-      }
-    }),
-    ["a", "b", "c"],
-    "03.03.01 - vs undefined (deeper levels won't be traversed if parents are not matching)"
-  );
+t.test(
+  "03.03 - more complex plain object vs undefined (deeper levels won't be traversed if parents are not matching)",
+  t => {
+    t.same(
+      nnk({
+        a: "a",
+        b: ["b"],
+        c: {
+          d: "d"
+        }
+      }),
+      ["a", "b", "c"]
+    );
+    t.end();
+  }
+);
+
+t.test("03.04 - more complex plain object vs empty object", t => {
   t.same(
     nnk(
       {
@@ -370,14 +376,13 @@ t.test("03.03 - more complex plain object vs ...", t => {
       },
       {}
     ),
-    ["a", "b", "c"],
-    "03.03.02 - vs empty object"
+    ["a", "b", "c"]
   );
   t.end();
 });
 
-t.test("03.04 - more complex plain object vs ...", t => {
-  t.same(nnk("a", "b"), [], "03.04");
+t.test("03.05 - string vs string", t => {
+  t.same(nnk("a", "b"), []);
   t.end();
 });
 
@@ -388,22 +393,22 @@ t.test("03.04 - more complex plain object vs ...", t => {
 t.test("04.01 - mode.opts customised to a wrong type - throws", t => {
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, { mode: "z" });
-  });
+  }, /THROW_ID_01/);
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, { mode: 1.5 });
-  });
+  }, /THROW_ID_01/);
   t.end();
 });
 
 t.test("04.02 - mode is given as integer - throws", t => {
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, 1);
-  });
+  }, /THROW_ID_02/);
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, 2);
-  });
+  }, /THROW_ID_02/);
   t.throws(() => {
     nnk({ a: "a" }, { b: "b" }, 2.5);
-  });
+  }, /THROW_ID_02/);
   t.end();
 });
