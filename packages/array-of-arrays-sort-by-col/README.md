@@ -5,7 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
-![no dependencies][no-deps-img]
+[![no dependencies][no-deps-img]][no-deps-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -191,6 +191,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [cov-img]: https://img.shields.io/badge/coverage-93.22%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
+[no-deps-url]: https://www.npmjs.com/package/array-of-arrays-sort-by-col?activeTab=dependencies
 [downloads-img]: https://img.shields.io/npm/dm/array-of-arrays-sort-by-col.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/array-of-arrays-sort-by-col
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square

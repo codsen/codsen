@@ -1384,6 +1384,7 @@ function step6() {
   const backToTop = `**[${get("various.back_to_top.label") ||
     "⬆  back to top"}](${get("various.back_to_top.url") || "#"})**`;
   const noDepsBadge = `https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square`;
+  const noDepsUrl = `https://www.npmjs.com/package/${pack.name}?activeTab=dependencies`;
   if (
     objectPath.has(pack, "various.back_to_top.enabled") &&
     !pack.various.back_to_top.enabled
@@ -1468,7 +1469,7 @@ function step6() {
 
         // if there are no deps, don't show "deps in 2D":
         if (name === "deps2d" && !pack.dependencies) {
-          return `${totalConcatenatedString}![no dependencies][no-deps-img]\n`;
+          return `${totalConcatenatedString}[![no dependencies][no-deps-img]][no-deps-url]\n`;
         }
 
         // Now reduce into string depending if badges are switched on or off or setting's missing
@@ -1564,7 +1565,7 @@ function step6() {
         // Now reduce footer badge links into string depending are they switched on or
         // not or setting is missing (means "on")
         if (!pack.dependencies && name === "deps2d") {
-          return `${res}[no-deps-img]: ${noDepsBadge}\n\n`;
+          return `${res}[no-deps-img]: ${noDepsBadge}\n[no-deps-url]: ${noDepsUrl}\n\n`;
         } else if (
           !objectPath.has(pack, `lect.badges.${name}`) ||
           pack.lect.badges[name]
@@ -1698,7 +1699,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1701 clause #3`);
+        console.log(`1702 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
