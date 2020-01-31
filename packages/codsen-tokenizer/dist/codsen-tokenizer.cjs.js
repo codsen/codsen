@@ -105,6 +105,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   };
   function tokenReset() {
     token = clone(tokenDefault);
+    return token;
   }
   var attrib = {};
   var attribDefault = {
@@ -204,16 +205,35 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   function pingTagCb(incomingToken) {
     if (tagCb) {
       tagCb(clone(incomingToken));
-      tokenReset();
     }
   }
   function dumpCurrentToken(token, i) {
-    if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && str[i - 1] && !str[i - 1].trim().length) {
+    if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim().length || str[i] === "<")) {
       token.end = stringLeftRight.left(str, i) + 1;
-      pingTagCb(token);
-      token.start = stringLeftRight.left(str, i) + 1;
-      token.end = null;
-      token.type = "text";
+      if (str[token.end - 1] !== ">") {
+        var cutOffIndex = token.tagNameEndAt;
+        if (Array.isArray(token.attribs) && token.attribs.length) {
+          for (var _i = 0, _len = token.attribs.length; _i < _len; _i++) {
+            if (token.attribs[_i].attribNameRecognised) {
+              cutOffIndex = token.attribs[_i].attribEnd;
+            } else {
+              break;
+            }
+          }
+        }
+        token.end = cutOffIndex;
+        pingTagCb(token);
+        token = tokenReset();
+        token.start = cutOffIndex;
+        token.type = "text";
+      } else {
+        pingTagCb(token);
+        token = tokenReset();
+        if (!str[i - 1].trim().length) {
+          token.start = stringLeftRight.left(str, i) + 1;
+          token.type = "text";
+        }
+      }
     }
     if (token.start !== null) {
       if (token.end === null) {
@@ -273,7 +293,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       }
     }
     if (!doNothing) {
-      if (!layers.length && str[i] === "<" && (isTagOpening(str, i) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+      if (str[i] === "<" && (token.type === "text" && isTagOpening(str, i) || !layers.length) && (isTagOpening(str, i) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
         trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
@@ -372,11 +392,11 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
             token.type = "css";
           }
         } else {
-          attribReset();
+          tokenReset();
           token.start = i;
           token.type = "text";
-          token.attribs = [];
           attribReset();
+          layers = [];
         }
       }
     }

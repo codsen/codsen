@@ -4,7 +4,7 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test("01.01 - text-tag-text", t => {
   const gathered = [];
   ct("  <a>z", obj => {
     gathered.push(obj);
@@ -29,12 +29,12 @@ t.test(t => {
         end: 6
       }
     ],
-    "01.01 - text-tag-text"
+    "01.01"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.02 - text only", t => {
   const gathered = [];
   ct("  ", obj => {
     gathered.push(obj);
@@ -48,12 +48,12 @@ t.test(t => {
         end: 2
       }
     ],
-    "01.02 - text only"
+    "01.02"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.03 - opening tag only", t => {
   const gathered = [];
   ct("<a>", obj => {
     gathered.push(obj);
@@ -72,12 +72,12 @@ t.test(t => {
         end: 3
       }
     ],
-    "01.03 - opening tag only"
+    "01.03"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.04 - closing tag only", t => {
   const gathered = [];
   ct("</a>", obj => {
     gathered.push(obj);
@@ -96,13 +96,13 @@ t.test(t => {
         end: 4
       }
     ],
-    "01.04 - closing tag only"
+    "01.04"
   );
   t.end();
 });
 
 // notice the tag name case is upper:
-t.test(t => {
+t.test("01.05 - self-closing tag only", t => {
   const gathered = [];
   ct("<BR/>", obj => {
     gathered.push(obj);
@@ -121,12 +121,12 @@ t.test(t => {
         end: 5
       }
     ],
-    "01.05 - self-closing tag only"
+    "01.05"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.06 - multiple tags", t => {
   const gathered = [];
   ct("<a><b><c>", obj => {
     gathered.push(obj);
@@ -150,12 +150,12 @@ t.test(t => {
         end: 9
       }
     ],
-    "01.06 - multiple tags"
+    "01.06"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.07 - closing bracket in the attribute's value", t => {
   const gathered = [];
   ct(`<a alt=">">`, obj => {
     gathered.push(obj);
@@ -169,12 +169,12 @@ t.test(t => {
         end: 11
       }
     ],
-    "01.07 - closing bracket in the attribute's value"
+    "01.07"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.08 - closing bracket layers of nested quotes", t => {
   const gathered = [];
   ct(`<a alt='"'">"'"'>`, obj => {
     gathered.push(obj);
@@ -188,12 +188,12 @@ t.test(t => {
         end: 17
       }
     ],
-    "01.08 - closing bracket layers of nested quotes"
+    "01.08"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.09 - bracket as text", t => {
   const gathered = [];
   ct("a < b", obj => {
     gathered.push(obj);
@@ -207,12 +207,12 @@ t.test(t => {
         end: 5
       }
     ],
-    "01.09 - bracket as text"
+    "01.09"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.10 - tag followed by brackets", t => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, obj => {
     gathered.push(obj);
@@ -263,12 +263,12 @@ t.test(t => {
         end: 37
       }
     ],
-    "01.10 - tag followed by brackets"
+    "01.10"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.11 - html comment", t => {
   const gathered = [];
   ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", obj => {
     gathered.push(obj);
@@ -298,12 +298,12 @@ t.test(t => {
         end: 40
       }
     ],
-    "01.11 - html comment"
+    "01.11"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.12 - html5 doctype", t => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", obj => {
     gathered.push(obj);
@@ -328,12 +328,12 @@ t.test(t => {
         end: 17
       }
     ],
-    "01.12 - html5 doctype"
+    "01.12"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.13 - xhtml doctype", t => {
   const gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -374,12 +374,12 @@ t.test(t => {
         end: 191
       }
     ],
-    "01.13 - xhtml doctype"
+    "01.13"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.14 - xhtml DTD doctype", t => {
   const gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -432,12 +432,12 @@ t.test(t => {
         end: 230
       }
     ],
-    "01.14 - xhtml DTD doctype"
+    "01.14"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.15 - void tags", t => {
   const gathered = [];
   ct("<br>", obj => {
     gathered.push(obj);
@@ -452,12 +452,12 @@ t.test(t => {
         void: true
       }
     ],
-    "01.15 - void tags"
+    "01.15"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.16 - recognised tags", t => {
   const gathered = [];
   ct("<content>", obj => {
     gathered.push(obj);
@@ -473,12 +473,12 @@ t.test(t => {
         recognised: true
       }
     ],
-    "01.16 - recognised tags"
+    "01.16"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.17 - unrecognised tags", t => {
   const gathered = [];
   ct("<contentz>", obj => {
     gathered.push(obj);
@@ -494,12 +494,12 @@ t.test(t => {
         recognised: false
       }
     ],
-    "01.17 - unrecognised tags"
+    "01.17"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.18 - wrong case but still recognised tags", t => {
   const gathered = [];
   ct("</tablE>", obj => {
     gathered.push(obj);
@@ -515,12 +515,12 @@ t.test(t => {
         recognised: true
       }
     ],
-    "01.18 - wrong case but still recognised tags"
+    "01.18"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.19 - correct HTML5 doctype", t => {
   const gathered = [];
   ct("<!DOCTYPE html>", obj => {
     gathered.push(obj);
@@ -536,12 +536,12 @@ t.test(t => {
         recognised: true
       }
     ],
-    "01.19 - correct HTML5 doctype"
+    "01.19"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.20 - correct HTML5 doctype", t => {
   const gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -561,12 +561,12 @@ t.test(t => {
         recognised: true
       }
     ],
-    "01.20 - correct HTML5 doctype"
+    "01.20"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("01.21 - tag names with numbers", t => {
   const gathered = [];
   ct("<h1>", obj => {
     gathered.push(obj);
@@ -586,7 +586,75 @@ t.test(t => {
         end: 4
       }
     ],
-    "01.21 - tag names with numbers"
+    "01.21"
+  );
+  t.end();
+});
+
+t.test("01.22 - exact match, tag pair with whitespace", t => {
+  const gathered = [];
+  ct("<a href> </a>", obj => {
+    gathered.push(obj);
+  });
+  t.same(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 8,
+        tagNameStartAt: 1,
+        tagNameEndAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartAt: 3,
+            attribNameEndAt: 7,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValue: null,
+            attribValueStartAt: null,
+            attribValueEndAt: null,
+            attribStart: 3,
+            attribEnd: 7
+          }
+        ]
+      },
+      {
+        type: "text",
+        start: 8,
+        end: 9,
+        tail: null,
+        kind: null,
+        attribs: []
+      },
+      {
+        type: "html",
+        start: 9,
+        end: 13,
+        tagNameStartAt: 11,
+        tagNameEndAt: 12,
+        tagName: "a",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        tail: null,
+        kind: null,
+        attribs: []
+      }
+    ],
+    "01.22"
   );
   t.end();
 });
@@ -594,7 +662,7 @@ t.test(t => {
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test("02.01 - CDATA - correct", t => {
   const gathered = [];
   ct(`<![CDATA[x<y]]>`, obj => {
     gathered.push(obj);
@@ -611,12 +679,12 @@ t.test(t => {
         kind: "cdata"
       }
     ],
-    "02.01 - CDATA - correct"
+    "02.01"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("02.02 - CDATA - messed up 1", t => {
   const gathered = [];
   ct(`<[CDATA[x<y]]>`, obj => {
     gathered.push(obj);
@@ -633,12 +701,12 @@ t.test(t => {
         kind: "cdata"
       }
     ],
-    "02.02 - CDATA - messed up 1"
+    "02.02"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("02.03 - CDATA - messed up 2", t => {
   const gathered = [];
   ct(`<!CDATA[x<y]]>`, obj => {
     gathered.push(obj);
@@ -655,12 +723,12 @@ t.test(t => {
         kind: "cdata"
       }
     ],
-    "02.03 - CDATA - messed up 2"
+    "02.03"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("02.04 - CDATA - messed up 3", t => {
   const gathered = [];
   ct(`<![ CData[x<y]]>`, obj => {
     gathered.push(obj);
@@ -677,7 +745,7 @@ t.test(t => {
         kind: "cdata"
       }
     ],
-    "02.04 - CDATA - messed up 3"
+    "02.04"
   );
   t.end();
 });
@@ -685,7 +753,7 @@ t.test(t => {
 // 03. XML
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test("03.01 - XML - correct", t => {
   const gathered = [];
   ct(`<?xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
@@ -702,12 +770,12 @@ t.test(t => {
         kind: "xml"
       }
     ],
-    "03.01 - XML - correct"
+    "03.01"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("03.02 - XML - incorrect 1", t => {
   const gathered = [];
   ct(`< ?xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
@@ -724,12 +792,12 @@ t.test(t => {
         kind: "xml"
       }
     ],
-    "03.02 - XML - incorrect 1"
+    "03.02"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("03.03 - XML - incorrect 2", t => {
   const gathered = [];
   ct(`<? xml version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
@@ -746,12 +814,12 @@ t.test(t => {
         kind: "xml"
       }
     ],
-    "03.02 - XML - incorrect 2"
+    "03.03"
   );
   t.end();
 });
 
-t.test(t => {
+t.test("03.04 - XML - incorrect 3", t => {
   const gathered = [];
   ct(`< ?XML version="1.0" encoding="UTF-8"?>`, obj => {
     gathered.push(obj);
@@ -768,7 +836,7 @@ t.test(t => {
         kind: "xml"
       }
     ],
-    "03.03 - XML - incorrect 3"
+    "03.04"
   );
   t.end();
 });

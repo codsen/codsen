@@ -9,14 +9,18 @@ t.test("01.01 - ESP literals among text get reported", t => {
   ct(`{% zz %}`, obj => {
     gathered.push(obj);
   });
-  t.match(gathered, [
-    {
-      type: "esp",
-      start: 0,
-      end: 8,
-      tail: "%}"
-    }
-  ]);
+  t.match(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 8,
+        tail: "%}"
+      }
+    ],
+    "01.01"
+  );
   t.end();
 });
 
@@ -25,24 +29,28 @@ t.test("01.02 - ESP literals among text get reported", t => {
   ct(`ab {% if something %} cd`, obj => {
     gathered.push(obj);
   });
-  t.match(gathered, [
-    {
-      type: "text",
-      start: 0,
-      end: 3
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 21,
-      tail: "%}"
-    },
-    {
-      type: "text",
-      start: 21,
-      end: 24
-    }
-  ]);
+  t.match(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 3
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 21,
+        tail: "%}"
+      },
+      {
+        type: "text",
+        start: 21,
+        end: 24
+      }
+    ],
+    "01.02"
+  );
   t.end();
 });
 
@@ -51,24 +59,28 @@ t.test("01.03 - ESP literals surrounded by HTML tags", t => {
   ct(`<a>{% if something %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.match(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 21,
-      tail: "%}"
-    },
-    {
-      type: "html",
-      start: 21,
-      end: 24
-    }
-  ]);
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 21,
+        tail: "%}"
+      },
+      {
+        type: "html",
+        start: 21,
+        end: 24
+      }
+    ],
+    "01.03"
+  );
   t.end();
 });
 
@@ -77,18 +89,22 @@ t.test("01.04", t => {
   ct(`<a b="{% if something %}"><c>`, obj => {
     gathered.push(obj);
   });
-  t.match(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 26
-    },
-    {
-      type: "html",
-      start: 26,
-      end: 29
-    }
-  ]);
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 26
+      },
+      {
+        type: "html",
+        start: 26,
+        end: 29
+      }
+    ],
+    "01.04"
+  );
   t.end();
 });
 
@@ -97,28 +113,32 @@ t.test("01.05 - ESP literals surrounded by HTML tags, tight", t => {
   ct(`<a>{% if a<b and c>d '"'''' ><>< %}<b>`, obj => {
     gathered.push(obj);
   });
-  t.match(gathered, [
-    {
-      type: "html",
-      start: 0,
-      end: 3
-    },
-    {
-      type: "esp",
-      start: 3,
-      end: 35,
-      tail: "%}"
-    },
-    {
-      type: "html",
-      start: 35,
-      end: 38
-    }
-  ]);
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 3
+      },
+      {
+        type: "esp",
+        start: 3,
+        end: 35,
+        tail: "%}"
+      },
+      {
+        type: "html",
+        start: 35,
+        end: 38
+      }
+    ],
+    "01.05"
+  );
   t.end();
 });
 
-t.test(t => {
+t.test("01.06 - ESP tag with The Killer Triplet", t => {
   const gathered = [];
   ct(`<a b="c{{ z("'") }}"><b>`, obj => {
     gathered.push(obj);
@@ -142,7 +162,7 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test("01.07 - Killer triplet within URL, ESP literal", t => {
   const gathered = [];
   ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, obj => {
     gathered.push(obj);
@@ -166,7 +186,7 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test("01.08 - Killer triplet within URL - full version", t => {
   const gathered = [];
   ct(
     `<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}"><b>`,
@@ -193,7 +213,7 @@ t.test(t => {
   t.end();
 });
 
-t.test(t => {
+t.test("01.09 - Responsys-style ESP tag", t => {
   const gathered = [];
   ct(`<a>$(something)<b>`, obj => {
     gathered.push(obj);
@@ -218,13 +238,13 @@ t.test(t => {
         end: 18
       }
     ],
-    "01.09 - Responsys-style ESP tag"
+    "01.09"
   );
   t.end();
 });
 
 // heuristically detecting tails and again new heads
-t.test(t => {
+t.test("01.10 - two nunjucks tags, same pattern set of two, tight", t => {
   const gathered = [];
   ct(`{%- a -%}{%- b -%}`, obj => {
     gathered.push(obj);
@@ -243,13 +263,13 @@ t.test(t => {
         end: 18
       }
     ],
-    "01.10 - two nunjucks tags, same pattern set of two, tight"
+    "01.10"
   );
   t.end();
 });
 
 // heuristically detecting tails and again new heads, this time slightly different
-t.test(t => {
+t.test("01.11 - two nunjucks tags, different pattern set of two, tight", t => {
   const gathered = [];
   ct(`{%- if count > 1 -%}{% if count > 1 %}`, obj => {
     gathered.push(obj);
@@ -268,13 +288,13 @@ t.test(t => {
         end: 38
       }
     ],
-    "01.11 - two nunjucks tags, different pattern set of two, tight"
+    "01.11"
   );
   t.end();
 });
 
 // heuristically detecting tails and again new heads
-t.test(t => {
+t.test("01.12 - different set, *|zzz|*", t => {
   const gathered = [];
   ct(`*|zzz|**|yyy|*`, obj => {
     gathered.push(obj);
@@ -293,39 +313,42 @@ t.test(t => {
         end: 14
       }
     ],
-    "01.12 - different set, *|zzz|*"
+    "01.12"
   );
   t.end();
 });
 
-t.test(t => {
-  const gathered = [];
-  ct(`*|zzz*|*|yyy|*`, obj => {
-    gathered.push(obj);
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "esp",
-        start: 0,
-        end: 7
-      },
-      {
-        type: "esp",
-        start: 7,
-        end: 14
-      }
-    ],
-    "01.13 - error, two ESP tags joined, first one ends with heads instead of tails"
-  );
-  t.end();
-});
+t.test(
+  "01.13 - error, two ESP tags joined, first one ends with heads instead of tails",
+  t => {
+    const gathered = [];
+    ct(`*|zzz*|*|yyy|*`, obj => {
+      gathered.push(obj);
+    });
+    t.match(
+      gathered,
+      [
+        {
+          type: "esp",
+          start: 0,
+          end: 7
+        },
+        {
+          type: "esp",
+          start: 7,
+          end: 14
+        }
+      ],
+      "01.13"
+    );
+    t.end();
+  }
+);
 
 // 02. false positives
 // -----------------------------------------------------------------------------
 
-t.test(t => {
+t.test("02.01 - false positives - double perc", t => {
   const gathered = [];
   ct(`<table width="100%%">`, obj => {
     gathered.push(obj);
