@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "1.1.32",
+  "version": "1.1.33",
   "description": "Iterate a string and any changes within already existing ranges",
   "license": "MIT",
   "engines": {
@@ -126,9 +126,9 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.0",
-    "ranges-apply": "^3.1.0",
-    "ranges-merge": "^4.2.32",
+    "lect": "^0.12.1",
+    "ranges-apply": "^3.1.1",
+    "ranges-merge": "^4.3.0",
     "rollup": "^1.31.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

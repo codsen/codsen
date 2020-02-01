@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://gitlab.com/codsen/codsen/compare/ast-loose-compare@1.7.56...ast-loose-compare@1.8.0) (2020-02-01)
+
+
+### Features
+
+* shield third input arg from external access, also remove one dependency ([31c0117](https://gitlab.com/codsen/codsen/commit/31c0117c4c33d3493c5110f7b0c4b99fd24d65a3))
+
+
+
+
+
 ## 1.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

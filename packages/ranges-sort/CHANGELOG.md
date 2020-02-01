@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0](https://gitlab.com/codsen/codsen/compare/ranges-sort@3.10.47...ranges-sort@3.11.0) (2020-02-01)
+
+
+### Features
+
+* remove all dependencies ([3c8fda8](https://gitlab.com/codsen/codsen/commit/3c8fda875584044b54a3f27e7406b71881f3b6a6))
+
+
+
+
+
 ## 3.10.39 (2019-10-02)
 
 ### Performance Improvements

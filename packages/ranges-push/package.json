@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.6.16",
+  "version": "3.7.0",
   "description": "Manage the array of ranges referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
@@ -117,9 +117,9 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-merge": "^4.2.32",
+    "ranges-merge": "^4.3.0",
     "string-collapse-leading-whitespace": "^2.0.13",
-    "string-trim-spaces-only": "^2.8.10"
+    "string-trim-spaces-only": "^2.8.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -128,7 +128,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.0",
+    "lect": "^0.12.1",
     "rollup": "^1.31.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

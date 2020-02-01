@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-sort-by-col",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "description": "sort array of arrays by column, rippling the sorting outwards from that column",
   "license": "MIT",
   "engines": {
@@ -126,7 +126,7 @@
     "@rollup/plugin-strip": "^1.3.1",
     "array-shuffle": "^1.0.1",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.0",
+    "lect": "^0.12.1",
     "rollup": "^1.31.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

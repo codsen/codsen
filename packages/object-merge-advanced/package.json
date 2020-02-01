@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "10.11.13",
+  "version": "10.11.14",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "engines": {
@@ -118,7 +118,7 @@
   },
   "dependencies": {
     "array-includes-all": "^2.0.0",
-    "array-includes-with-glob": "^2.12.30",
+    "array-includes-with-glob": "^2.12.31",
     "arrayiffy-if-string": "^3.11.27",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
@@ -133,7 +133,7 @@
     "@rollup/plugin-strip": "^1.3.1",
     "benchmark": "^2.1.4",
     "deep-equal": "^2.0.1",
-    "lect": "^0.12.0",
+    "lect": "^0.12.1",
     "rollup": "^1.31.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",

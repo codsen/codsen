@@ -1,7 +1,7 @@
 {
   "name": "p-progress-bastardised",
   "private": "true",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Create a promise that reports progress",
   "license": "MIT",
   "repository": "sindresorhus/p-progress",
