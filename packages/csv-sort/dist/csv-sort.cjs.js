@@ -17,6 +17,8 @@ var currency = _interopDefault(require('currency.js'));
 var isNumeric = _interopDefault(require('is-numeric'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

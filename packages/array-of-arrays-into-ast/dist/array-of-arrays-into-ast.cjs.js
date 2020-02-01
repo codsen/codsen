@@ -15,6 +15,8 @@ var checkTypes = _interopDefault(require('check-types-mini'));
 var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

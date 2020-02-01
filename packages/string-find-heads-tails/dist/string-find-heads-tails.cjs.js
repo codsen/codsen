@@ -15,6 +15,8 @@ var stringMatchLeftRight = require('string-match-left-right');
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

@@ -34,6 +34,8 @@ var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

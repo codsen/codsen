@@ -30,6 +30,8 @@ var uniq = _interopDefault(require('lodash.uniq'));
 var matcher = _interopDefault(require('matcher'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

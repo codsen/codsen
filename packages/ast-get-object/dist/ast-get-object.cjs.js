@@ -15,6 +15,8 @@ var compare = _interopDefault(require('ast-compare'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

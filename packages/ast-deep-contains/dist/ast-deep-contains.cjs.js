@@ -15,6 +15,8 @@ var objectPath = _interopDefault(require('object-path'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

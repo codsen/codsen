@@ -20,6 +20,8 @@ var nonEmpty = _interopDefault(require('util-nonempty'));
 var includesAll = _interopDefault(require('array-includes-all'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

@@ -17,6 +17,8 @@ var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringCharacterIsAstralSurrogate = require('string-character-is-astral-surrogate');
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

@@ -14,7 +14,14 @@
     "node": ">=8"
   },
   "scripts": {
-    "test": "echo 'skip tests'"
+    "coverage": "exit 0",
+    "dev": "exit 0",
+    "format": "exit 0",
+    "lect": "lect",
+    "lint": "exit 0",
+    "prettier": "exit 0",
+    "test": "exit 0",
+    "unittest": "exit 0"
   },
   "files": [
     "index.js",

@@ -15,6 +15,8 @@ var leven = _interopDefault(require('leven'));
 var processCommaSep = _interopDefault(require('string-process-comma-separated'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

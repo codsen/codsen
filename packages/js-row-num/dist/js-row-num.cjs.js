@@ -15,6 +15,8 @@ var Ranges = _interopDefault(require('ranges-push'));
 var apply = _interopDefault(require('ranges-apply'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

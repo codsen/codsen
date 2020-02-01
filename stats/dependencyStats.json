@@ -66,12 +66,12 @@
         "leven": 2,
         "line-column": 1,
         "lodash.camelcase": 1,
-        "lodash.clonedeep": 23,
+        "lodash.clonedeep": 22,
         "lodash.deburr": 1,
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 39,
+        "lodash.isplainobject": 32,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
@@ -97,7 +97,7 @@
         "p-filter": 2,
         "p-map": 3,
         "p-one": 1,
-        "p-progress": 1,
+        "p-progress-bastardised": 1,
         "p-reduce": 8,
         "package-json-editor": 1,
         "pacote": 1,
@@ -176,7 +176,7 @@
         "js-row-num-cli": 14,
         "json-stringify-safe": 1,
         "lect": 107,
-        "lodash.clonedeep": 4,
+        "lodash.clonedeep": 5,
         "lodash.isequal": 1,
         "map-stream": 1,
         "node-fetch": 1,
@@ -184,7 +184,6 @@
         "object-delete-key": 1,
         "object-path": 4,
         "p-map": 5,
-        "p-progress": 1,
         "posthtml-parser": 1,
         "prettier": 14,
         "ranges-apply": 6,
@@ -204,10 +203,10 @@
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 39
+            "lodash.isplainobject": 32
         },
         {
-            "lodash.clonedeep": 23
+            "lodash.clonedeep": 22
         },
         {
             "meow": 12

@@ -14,6 +14,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var sortRanges = _interopDefault(require('ranges-sort'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

@@ -17,6 +17,8 @@ var stringLeftRight = require('string-left-right');
 var apply = _interopDefault(require('ranges-apply'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

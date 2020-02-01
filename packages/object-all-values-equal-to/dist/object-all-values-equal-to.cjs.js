@@ -15,6 +15,8 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 var isEq = _interopDefault(require('lodash.isequal'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

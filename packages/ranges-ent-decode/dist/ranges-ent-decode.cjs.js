@@ -16,6 +16,8 @@ var mergeRanges = _interopDefault(require('ranges-merge'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

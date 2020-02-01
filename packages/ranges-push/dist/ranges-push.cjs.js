@@ -15,6 +15,8 @@ var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading
 var mergeRanges = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

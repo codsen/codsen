@@ -65,7 +65,7 @@
     },
     {
         "name": "ast-get-object",
-        "size": 2070,
+        "size": 2295,
         "imports": [
             "ast-compare"
         ]
@@ -79,12 +79,12 @@
     },
     {
         "name": "ast-is-empty",
-        "size": 1110,
+        "size": 1189,
         "imports": []
     },
     {
         "name": "ast-loose-compare",
-        "size": 2923,
+        "size": 3046,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -101,7 +101,7 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2750,
+        "size": 2687,
         "imports": []
     },
     {
@@ -141,7 +141,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 22999,
+        "size": 24342,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -391,7 +391,7 @@
     },
     {
         "name": "lect",
-        "size": 74982,
+        "size": 75115,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -450,7 +450,7 @@
     },
     {
         "name": "object-merge-advanced",
-        "size": 14747,
+        "size": 14827,
         "imports": [
             "array-includes-with-glob",
             "arrayiffy-if-string",
@@ -459,7 +459,7 @@
     },
     {
         "name": "object-no-new-keys",
-        "size": 3573,
+        "size": 3378,
         "imports": []
     },
     {
@@ -503,7 +503,7 @@
     },
     {
         "name": "ranges-merge",
-        "size": 4931,
+        "size": 5029,
         "imports": [
             "ranges-sort"
         ]
@@ -689,7 +689,7 @@
     },
     {
         "name": "update-versions",
-        "size": 12449,
+        "size": 12608,
         "imports": [
             "edit-package-json"
         ]

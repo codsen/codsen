@@ -18,6 +18,8 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 var isStringInt = _interopDefault(require('is-string-int'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;

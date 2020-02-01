@@ -32,6 +32,8 @@ var ansiRegex = _interopDefault(require('ansi-regex'));
 var Ranges = _interopDefault(require('ranges-push'));
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
