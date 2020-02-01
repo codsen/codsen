@@ -1,0 +1,45 @@
+{
+  "name": "p-progress-bastardised",
+  "private": "true",
+  "version": "0.4.1",
+  "description": "Create a promise that reports progress",
+  "license": "MIT",
+  "repository": "sindresorhus/p-progress",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "test": "echo 'skip tests'"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "promise",
+    "progress",
+    "events",
+    "event",
+    "async",
+    "function",
+    "await",
+    "promises",
+    "bluebird"
+  ],
+  "dependencies": {
+    "p-map": "^3.0.0"
+  },
+  "devDependencies": {
+    "ava": "^3.1.0",
+    "delay": "^4.3.0",
+    "in-range": "^2.0.0",
+    "time-span": "^3.1.0",
+    "tsd": "^0.11.0",
+    "xo": "^0.25.3"
+  }
+}

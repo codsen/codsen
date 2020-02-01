@@ -132,15 +132,15 @@
     "log-update": "^3.3.0",
     "meow": "^6.0.0",
     "object-path": "^0.11.4",
-    "p-progress": "^0.4.1",
+    "p-progress-bastardised": "^0.4.1",
     "p-reduce": "^2.1.0",
     "pacote": "^10.3.1",
     "update-notifier": "^4.0.0",
     "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",

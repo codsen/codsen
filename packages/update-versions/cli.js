@@ -12,7 +12,7 @@ const write = require("write-file-atomic");
 
 const globby = require("globby");
 const pReduce = require("p-reduce");
-const PProgress = require("p-progress");
+const PProgress = require("p-progress-bastardised");
 const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");
@@ -193,6 +193,10 @@ if (cli.flags) {
           })
         );
         allProgressPromise2.onProgress(val => {
+          // console.log(
+          //   `197 ${`\u001b[${32}m${`CALL PROGRESS():`} ${val *
+          //     0.75}\u001b[${39}m`}`
+          // );
           progress(val * 0.75);
         });
         await allProgressPromise2;
