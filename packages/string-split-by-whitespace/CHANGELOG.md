@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.6.56](https://gitlab.com/codsen/codsen/compare/string-split-by-whitespace@1.6.55...string-split-by-whitespace@1.6.56) (2020-02-01)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-
-
-
-
 ## 1.6.46 (2019-10-05)
 
 ### Performance Improvements

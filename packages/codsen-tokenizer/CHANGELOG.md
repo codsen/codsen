@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.6.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.5.4...codsen-tokenizer@2.6.0) (2020-02-01)
-
+## 2.6.0 (2020-02-01)
 
 ### Features
 
-* improvements to unclosed tag recognition ([d861dd4](https://gitlab.com/codsen/codsen/commit/d861dd40fedabb21f922e8ced1bfb45982e407d4))
-* missing HTML closing bracket ([c858340](https://gitlab.com/codsen/codsen/commit/c858340f9a95beff746303ca0ac3649f75ab0167))
-
-
-
-
+- improvements to unclosed tag recognition ([d861dd4](https://gitlab.com/codsen/codsen/commit/d861dd40fedabb21f922e8ced1bfb45982e407d4))
+- missing HTML closing bracket ([c858340](https://gitlab.com/codsen/codsen/commit/c858340f9a95beff746303ca0ac3649f75ab0167))
 
 ## 2.5.0 (2020-01-01)
 

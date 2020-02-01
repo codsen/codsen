@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.49](https://gitlab.com/codsen/codsen/compare/csv-split-easy@3.0.48...csv-split-easy@3.0.49) (2020-02-01)
-
-**Note:** Version bump only for package csv-split-easy
-
-
-
-
-
 ## 3.0.37 (2019-10-05)
 
 ### Performance Improvements

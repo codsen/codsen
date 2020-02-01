@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.3.0](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.2.32...ranges-merge@4.3.0) (2020-02-01)
-
+## 4.3.0 (2020-02-01)
 
 ### Features
 
-* remove a dependency, rebase a little ([625ba18](https://gitlab.com/codsen/codsen/commit/625ba1871fe12efe1f36fbbb4f67b7025d5905a9))
-
-
-
-
+- remove a dependency, rebase a little ([625ba18](https://gitlab.com/codsen/codsen/commit/625ba1871fe12efe1f36fbbb4f67b7025d5905a9))
 
 ## 4.2.0 (2019-06-01)
 

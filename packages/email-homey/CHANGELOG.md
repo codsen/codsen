@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.52](https://gitlab.com/codsen/codsen/compare/email-homey@2.7.51...email-homey@2.7.52) (2020-02-01)
-
-**Note:** Version bump only for package email-homey
-
-
-
-
-
 ## 2.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

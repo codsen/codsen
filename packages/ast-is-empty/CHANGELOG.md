@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.10.0](https://gitlab.com/codsen/codsen/compare/ast-is-empty@1.9.55...ast-is-empty@1.10.0) (2020-02-01)
-
+## 1.10.0 (2020-02-01)
 
 ### Features
 
-* remove the last and only dependency ([e06e6ae](https://gitlab.com/codsen/codsen/commit/e06e6ae009de22a1a37830c8d14dfdf5686a0834))
-
-
-
-
+- remove the last and only dependency ([e06e6ae](https://gitlab.com/codsen/codsen/commit/e06e6ae009de22a1a37830c8d14dfdf5686a0834))
 
 ## 1.9.0 (2019-01-20)
 

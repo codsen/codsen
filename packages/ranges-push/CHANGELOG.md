@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.7.0](https://gitlab.com/codsen/codsen/compare/ranges-push@3.6.16...ranges-push@3.7.0) (2020-02-01)
-
+## 3.7.0 (2020-02-01)
 
 ### Features
 
-* remove couple dependencies and rebase a little bit ([616b47d](https://gitlab.com/codsen/codsen/commit/616b47df0ef6a5a72f766d690b0169608e39a4d9))
-
-
-
-
+- remove couple dependencies and rebase a little bit ([616b47d](https://gitlab.com/codsen/codsen/commit/616b47df0ef6a5a72f766d690b0169608e39a4d9))
 
 ## 3.6.0 (2019-09-14)
 

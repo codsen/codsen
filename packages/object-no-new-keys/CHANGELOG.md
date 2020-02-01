@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.9.0](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.8.10...object-no-new-keys@2.9.0) (2020-02-01)
-
+## 2.9.0 (2020-02-01)
 
 ### Features
 
-* rebase a little bit, remove a dependency, improve the input arg validation ([7718957](https://gitlab.com/codsen/codsen/commit/77189572e18e032c74c95a909144636c9a9f96af))
-
-
-
-
+- rebase a little bit, remove a dependency, improve the input arg validation ([7718957](https://gitlab.com/codsen/codsen/commit/77189572e18e032c74c95a909144636c9a9f96af))
 
 ## 2.8.0 (2019-10-02)
 

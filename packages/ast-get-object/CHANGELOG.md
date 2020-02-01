@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.9.0](https://gitlab.com/codsen/codsen/compare/ast-get-object@1.8.58...ast-get-object@1.9.0) (2020-02-01)
-
+## 1.9.0 (2020-02-01)
 
 ### Features
 
-* shield the 4th input arg from outer access ([8f51d51](https://gitlab.com/codsen/codsen/commit/8f51d51c1077247280dc7438e563145c92ec1cb0))
-
-
-
-
+- shield the 4th input arg from outer access ([8f51d51](https://gitlab.com/codsen/codsen/commit/8f51d51c1077247280dc7438e563145c92ec1cb0))
 
 ## 1.8.0 (2019-01-20)
 
