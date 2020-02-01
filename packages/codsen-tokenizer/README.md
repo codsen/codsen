@@ -15,6 +15,7 @@
 
 - [Install](#install)
 - [Highlights](#highlights)
+- [Versus competition](#versus-competition)
 - [API](#api)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -54,21 +55,82 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/codsen-tokenizer.cjs.js` | 22 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/codsen-tokenizer.esm.js` | 22 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/codsen-tokenizer.umd.js` | 42 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/codsen-tokenizer.cjs.js` | 23 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/codsen-tokenizer.esm.js` | 24 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/codsen-tokenizer.umd.js` | 43 KB |
 
 **[⬆ back to top](#)**
 
 ## Highlights
 
-- Finds boundaries between mixed code: html, css, esp tags, EOL characters etc
+This tokenizer is aimed at processing **broken code**, HTML mixed with other languages.
+
 - Aimed at broken code — you won't surprise the parser — tokenizer will surprise _you_
+- Finds boundaries between mixed code: html, css, esp tags, EOL characters etc
 - Heuristical ESP (Email Service Provider) and templating tag recognition, including all major ESP's on the market tested extra
 
 **[⬆ back to top](#)**
 
+## Versus competition
+
+Here are all the common parsers/tokenizers in the market currently:
+
+- Angular
+- HTMLParser2
+- Hyntax
+- Parse5
+- PostHTML-parser
+- svelte
+- vue
+
+Some of them promise to be resilient to code errors but that's only promises. In real life neither one of the above can properly tackle the simplest example:
+
+```
+<div> div class="zz"></div></div>
+```
+
+Try yourself in https://astexplorer.net/
+
+If human programmer looked at the snippet above, what would they see?
+
+Well, an opening div, a div with missing opening bracket and two closing divs.
+
+That's what this parser will ping to a given callback, four tokens:
+
+```
+{
+    "type": "html",
+    "start": 0,
+    "end": 5,
+    ...
+},
+{
+    "type": "text",
+    "start": 5,
+    "end": 21,
+    ...
+},
+{
+    "type": "html",
+    "start": 21,
+    "end": 27,
+    ...
+},
+{
+    "type": "html",
+    "start": 27,
+    "end": 33,
+    ...
+}
+```
+
+The purpose of this tokenizer is to find boundaries between text, html, css and unknown templating language chunks/tokens. It's up to you what you are going to do with that info — `emlint` ([npm](https://www.npmjs.com/package/emlint)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/)) for example, will use it to flag up code errors.
+
+**[⬆ back to top](#)**
+
 ## API
+
+It will be published once the API stabilises.
 
 ## Contributing
 
@@ -93,7 +155,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/codsen-tokenizer
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
-[cov-img]: https://img.shields.io/badge/coverage-92.56%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-92.84%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/codsen-tokenizer

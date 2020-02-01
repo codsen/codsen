@@ -9,14 +9,17 @@ t.test("01.01 - ESP literals among text get reported", t => {
   ct(`{% zz %}`, obj => {
     gathered.push(obj);
   });
-  t.match(
+  t.same(
     gathered,
     [
       {
         type: "esp",
         start: 0,
         end: 8,
-        tail: "%}"
+        head: "{%",
+        tail: "%}",
+        kind: null,
+        attribs: []
       }
     ],
     "01.01"

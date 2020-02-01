@@ -39,13 +39,16 @@ t.test("01.02 - text only", t => {
   ct("  ", obj => {
     gathered.push(obj);
   });
-  t.match(
+  t.same(
     gathered,
     [
       {
         type: "text",
         start: 0,
-        end: 2
+        end: 2,
+        tail: null,
+        kind: null,
+        attribs: []
       }
     ],
     "01.02"
@@ -58,18 +61,24 @@ t.test("01.03 - opening tag only", t => {
   ct("<a>", obj => {
     gathered.push(obj);
   });
-  t.match(
+  t.same(
     gathered,
     [
       {
         type: "html",
+        start: 0,
+        end: 3,
         tagNameStartAt: 1,
         tagNameEndAt: 2,
         tagName: "a",
+        recognised: true,
         closing: false,
         void: false,
-        start: 0,
-        end: 3
+        pureHTML: true,
+        esp: [],
+        tail: null,
+        kind: null,
+        attribs: []
       }
     ],
     "01.03"
@@ -82,18 +91,24 @@ t.test("01.04 - closing tag only", t => {
   ct("</a>", obj => {
     gathered.push(obj);
   });
-  t.match(
+  t.same(
     gathered,
     [
       {
         type: "html",
+        start: 0,
+        end: 4,
         tagNameStartAt: 2,
         tagNameEndAt: 3,
         tagName: "a",
+        recognised: true,
         closing: true,
         void: false,
-        start: 0,
-        end: 4
+        pureHTML: true,
+        esp: [],
+        tail: null,
+        kind: null,
+        attribs: []
       }
     ],
     "01.04"
@@ -655,6 +670,50 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
       }
     ],
     "01.22"
+  );
+  t.end();
+});
+
+t.test("01.23 - closing tag with attributes", t => {
+  const gathered = [];
+  ct(`</a class="z">`, obj => {
+    gathered.push(obj);
+  });
+  t.same(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 14,
+        tagNameStartAt: 2,
+        tagNameEndAt: 3,
+        tagName: "a",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "class",
+            attribStart: 4,
+            attribEnd: 13,
+            attribNameRecognised: true,
+            attribNameStartAt: 4,
+            attribNameEndAt: 9,
+            attribOpeningQuoteAt: 10,
+            attribClosingQuoteAt: 12,
+            attribValue: "z",
+            attribValueStartAt: 11,
+            attribValueEndAt: 12
+          }
+        ]
+      }
+    ],
+    "01.23"
   );
   t.end();
 });

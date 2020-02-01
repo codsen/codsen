@@ -297,6 +297,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
   };
   function tokenReset() {
     token = clone(tokenDefault);
+    attribReset();
     return token;
   }
   let attrib = {};
@@ -408,13 +409,25 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       ((str[i - 1] && !str[i - 1].trim().length) || str[i] === "<")
     ) {
       token.end = left(str, i) + 1;
-      if (str[token.end - 1] !== ">") {
+      if (token.type === "html" && str[token.end - 1] !== ">") {
         let cutOffIndex = token.tagNameEndAt;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (let i = 0, len = token.attribs.length; i < len; i++) {
             if (token.attribs[i].attribNameRecognised) {
               cutOffIndex = token.attribs[i].attribEnd;
+              if (
+                str[cutOffIndex + 1] &&
+                !str[cutOffIndex].trim().length &&
+                str[cutOffIndex + 1].trim().length
+              ) {
+                cutOffIndex++;
+              }
             } else {
+              if (i === 0) {
+                token.attribs = [];
+              } else {
+                token.attribs = token.attribs.splice(0, i);
+              }
               break;
             }
           }
@@ -438,6 +451,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         token.end = i;
       }
       pingTagCb(token);
+      tokenReset();
     }
   }
   function initHtmlToken() {
@@ -596,6 +610,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
                 token.end = i + lengthOfClosingEspChunk;
               }
               dumpCurrentToken(token, i);
+              tokenReset();
             }
             layers.pop();
           } else if (layers.length && matchLayerFirst(str, i)) {
@@ -605,6 +620,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
                 token.end = i + lengthOfClosingEspChunk;
               }
               dumpCurrentToken(token, i);
+              tokenReset();
             }
             layers = [];
           } else {
@@ -622,6 +638,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
               )
             ) {
               dumpCurrentToken(token, i);
+              tokenReset();
               token.start = i;
               token.type = "esp";
               token.tail = flipEspTag(wholeEspTagLump);
@@ -637,21 +654,24 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
           if (!str[i].trim().length) {
+            tokenReset();
             token.start = i;
             token.type = "text";
             token.end = right(str, i) || str.length;
             pingTagCb(token);
             if (right(str, i)) {
+              tokenReset();
               token.start = right(str, i);
               token.type = "css";
               doNothing = right(str, i);
             }
           } else {
+            tokenReset();
             token.start = i;
             token.type = "css";
           }
         } else {
-          tokenReset();
+          token = tokenReset();
           token.start = i;
           token.type = "text";
           attribReset();
