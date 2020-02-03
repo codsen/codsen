@@ -11,7 +11,6 @@ import { allHtmlAttribs } from 'html-all-known-attributes';
 import { matchRight } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
 import isTagOpening from 'is-html-tag-opening';
-import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
 const allHTMLTagsKnownToHumanity = [
@@ -201,6 +200,11 @@ function flipEspTag(str) {
   return res;
 }
 
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
 const voidTags = [
   "area",
   "base",

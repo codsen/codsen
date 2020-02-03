@@ -15,7 +15,6 @@ var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
 var isTagOpening = _interopDefault(require('is-html-tag-opening'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
 function _typeof(obj) {
@@ -61,6 +60,9 @@ function flipEspTag(str) {
   return res;
 }
 
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var espChars = "{}%-$_()*|";
 var espLumpBlacklist = [")|(", "|(", ")(", "()", "%)", "*)", "**"];
