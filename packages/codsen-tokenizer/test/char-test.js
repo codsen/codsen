@@ -6,8 +6,10 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(t => {
   const gathered = [];
-  ct("<a>z1", null, obj => {
-    gathered.push(obj);
+  ct("<a>z1", {
+    charCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(

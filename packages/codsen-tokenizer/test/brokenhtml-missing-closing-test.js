@@ -9,8 +9,10 @@ t.test(
   `01.01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   t => {
     const gathered = [];
-    ct(`<a\n<b>`, obj => {
-      gathered.push(obj);
+    ct(`<a\n<b>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.same(
       gathered,
@@ -66,8 +68,10 @@ t.test(
   `01.02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`,
   t => {
     const gathered = [];
-    ct(`<a href="z" click here</a>`, obj => {
-      gathered.push(obj);
+    ct(`<a href="z" click here</a>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.same(
       gathered,
@@ -141,8 +145,10 @@ t.test(
   t => {
     const gathered = [];
     // notice space at index 11:
-    ct(`<a href="z" click here</a>`, obj => {
-      gathered.push(obj);
+    ct(`<a href="z" click here</a>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,
@@ -174,8 +180,10 @@ t.test(
   t => {
     const gathered = [];
     // notice space at index 11:
-    ct(`<a href="z"  click here</a>`, obj => {
-      gathered.push(obj);
+    ct(`<a href="z"  click here</a>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,
@@ -206,8 +214,10 @@ t.test(
   `02.03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`,
   t => {
     const gathered = [];
-    ct(`<a href="z"click here</a>`, obj => {
-      gathered.push(obj);
+    ct(`<a href="z"click here</a>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,

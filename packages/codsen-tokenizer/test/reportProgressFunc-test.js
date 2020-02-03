@@ -3,14 +3,12 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test(t => {
   const gathered = [];
-  ct(
-    "abc",
-    token => {
+  ct("abc", {
+    reportProgressFunc: null,
+    tagCb: token => {
       gathered.push(token);
-    },
-    null,
-    { reportProgressFunc: null }
-  );
+    }
+  });
   t.match(
     gathered,
     [
@@ -27,14 +25,12 @@ t.test(t => {
 
 t.test(t => {
   const gathered = [];
-  ct(
-    "abc",
-    token => {
+  ct("abc", {
+    reportProgressFunc: false,
+    tagCb: token => {
       gathered.push(token);
-    },
-    null,
-    { reportProgressFunc: false }
-  );
+    }
+  });
   t.match(
     gathered,
     [
@@ -58,14 +54,12 @@ t.test(t => {
   // short input string should report only when passing at 50%:
   t.throws(
     () => {
-      ct(
-        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30),
-        token => {
+      ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30), {
+        reportProgressFunc: shouldveBeenCalled,
+        tagCb: token => {
           gathered.push(token);
-        },
-        null,
-        { reportProgressFunc: shouldveBeenCalled }
-      );
+        }
+      });
     },
     /50/,
     `01.03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
@@ -84,12 +78,9 @@ t.test(t => {
 
   // 1. our function will mutate the counter variable:
   t.pass(
-    ct(
-      `aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50),
-      () => {},
-      null,
-      { reportProgressFunc: countingFunction }
-    )
+    ct(`aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50), {
+      reportProgressFunc: countingFunction
+    })
   );
 
   // 2. check the counter variable:
@@ -108,16 +99,11 @@ t.test(t => {
   // short input string should report only when passing at 50%:
   t.throws(
     () => {
-      ct(
-        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20),
-        () => {},
-        null,
-        {
-          reportProgressFunc: shouldveBeenCalled,
-          reportProgressFuncFrom: 21,
-          reportProgressFuncTo: 86
-        }
-      );
+      ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20), {
+        reportProgressFunc: shouldveBeenCalled,
+        reportProgressFuncFrom: 21,
+        reportProgressFuncTo: 86
+      });
     },
     /32/g,
     `01.05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
@@ -140,8 +126,6 @@ t.test(t => {
       `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(
         50
       ),
-      () => {},
-      null,
       {
         reportProgressFunc: countingFunction,
         reportProgressFuncFrom: 21,

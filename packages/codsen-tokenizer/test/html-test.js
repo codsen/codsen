@@ -6,8 +6,10 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test("01.01 - text-tag-text", t => {
   const gathered = [];
-  ct("  <a>z", obj => {
-    gathered.push(obj);
+  ct("  <a>z", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(
@@ -36,8 +38,10 @@ t.test("01.01 - text-tag-text", t => {
 
 t.test("01.02 - text only", t => {
   const gathered = [];
-  ct("  ", obj => {
-    gathered.push(obj);
+  ct("  ", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.same(
     gathered,
@@ -58,8 +62,10 @@ t.test("01.02 - text only", t => {
 
 t.test("01.03 - opening tag only", t => {
   const gathered = [];
-  ct("<a>", obj => {
-    gathered.push(obj);
+  ct("<a>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.same(
     gathered,
@@ -88,8 +94,10 @@ t.test("01.03 - opening tag only", t => {
 
 t.test("01.04 - closing tag only", t => {
   const gathered = [];
-  ct("</a>", obj => {
-    gathered.push(obj);
+  ct("</a>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.same(
     gathered,
@@ -119,8 +127,10 @@ t.test("01.04 - closing tag only", t => {
 // notice the tag name case is upper:
 t.test("01.05 - self-closing tag only", t => {
   const gathered = [];
-  ct("<BR/>", obj => {
-    gathered.push(obj);
+  ct("<BR/>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -143,8 +153,10 @@ t.test("01.05 - self-closing tag only", t => {
 
 t.test("01.06 - multiple tags", t => {
   const gathered = [];
-  ct("<a><b><c>", obj => {
-    gathered.push(obj);
+  ct("<a><b><c>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -172,8 +184,10 @@ t.test("01.06 - multiple tags", t => {
 
 t.test("01.07 - closing bracket in the attribute's value", t => {
   const gathered = [];
-  ct(`<a alt=">">`, obj => {
-    gathered.push(obj);
+  ct(`<a alt=">">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -191,8 +205,10 @@ t.test("01.07 - closing bracket in the attribute's value", t => {
 
 t.test("01.08 - closing bracket layers of nested quotes", t => {
   const gathered = [];
-  ct(`<a alt='"'">"'"'>`, obj => {
-    gathered.push(obj);
+  ct(`<a alt='"'">"'"'>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -210,8 +226,10 @@ t.test("01.08 - closing bracket layers of nested quotes", t => {
 
 t.test("01.09 - bracket as text", t => {
   const gathered = [];
-  ct("a < b", obj => {
-    gathered.push(obj);
+  ct("a < b", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -229,8 +247,10 @@ t.test("01.09 - bracket as text", t => {
 
 t.test("01.10 - tag followed by brackets", t => {
   const gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, obj => {
-    gathered.push(obj);
+  ct(`<a>"something"<span>'here'</span></a>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -285,8 +305,10 @@ t.test("01.10 - tag followed by brackets", t => {
 
 t.test("01.11 - html comment", t => {
   const gathered = [];
-  ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", obj => {
-    gathered.push(obj);
+  ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -320,8 +342,10 @@ t.test("01.11 - html comment", t => {
 
 t.test("01.12 - html5 doctype", t => {
   const gathered = [];
-  ct("a<!DOCTYPE html>b", obj => {
-    gathered.push(obj);
+  ct("a<!DOCTYPE html>b", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -355,8 +379,10 @@ t.test("01.13 - xhtml doctype", t => {
   "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="ar" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">z`,
-    obj => {
-      gathered.push(obj);
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     }
   );
   t.match(
@@ -402,8 +428,10 @@ t.test("01.14 - xhtml DTD doctype", t => {
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">z`,
-    obj => {
-      gathered.push(obj);
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     }
   );
   t.match(
@@ -454,8 +482,10 @@ t.test("01.14 - xhtml DTD doctype", t => {
 
 t.test("01.15 - void tags", t => {
   const gathered = [];
-  ct("<br>", obj => {
-    gathered.push(obj);
+  ct("<br>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -474,8 +504,10 @@ t.test("01.15 - void tags", t => {
 
 t.test("01.16 - recognised tags", t => {
   const gathered = [];
-  ct("<content>", obj => {
-    gathered.push(obj);
+  ct("<content>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -495,8 +527,10 @@ t.test("01.16 - recognised tags", t => {
 
 t.test("01.17 - unrecognised tags", t => {
   const gathered = [];
-  ct("<contentz>", obj => {
-    gathered.push(obj);
+  ct("<contentz>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -516,8 +550,10 @@ t.test("01.17 - unrecognised tags", t => {
 
 t.test("01.18 - wrong case but still recognised tags", t => {
   const gathered = [];
-  ct("</tablE>", obj => {
-    gathered.push(obj);
+  ct("</tablE>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -537,8 +573,10 @@ t.test("01.18 - wrong case but still recognised tags", t => {
 
 t.test("01.19 - correct HTML5 doctype", t => {
   const gathered = [];
-  ct("<!DOCTYPE html>", obj => {
-    gathered.push(obj);
+  ct("<!DOCTYPE html>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -561,8 +599,10 @@ t.test("01.20 - correct HTML5 doctype", t => {
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">`,
-    obj => {
-      gathered.push(obj);
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     }
   );
   t.match(
@@ -583,8 +623,10 @@ t.test("01.20 - correct HTML5 doctype", t => {
 
 t.test("01.21 - tag names with numbers", t => {
   const gathered = [];
-  ct("<h1>", obj => {
-    gathered.push(obj);
+  ct("<h1>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -608,8 +650,10 @@ t.test("01.21 - tag names with numbers", t => {
 
 t.test("01.22 - exact match, tag pair with whitespace", t => {
   const gathered = [];
-  ct("<a href> </a>", obj => {
-    gathered.push(obj);
+  ct("<a href> </a>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.same(
     gathered,
@@ -676,8 +720,10 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
 
 t.test("01.23 - closing tag with attributes", t => {
   const gathered = [];
-  ct(`</a class="z">`, obj => {
-    gathered.push(obj);
+  ct(`</a class="z">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.same(
     gathered,
@@ -723,8 +769,10 @@ t.test("01.23 - closing tag with attributes", t => {
 
 t.test("02.01 - CDATA - correct", t => {
   const gathered = [];
-  ct(`<![CDATA[x<y]]>`, obj => {
-    gathered.push(obj);
+  ct(`<![CDATA[x<y]]>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -745,8 +793,10 @@ t.test("02.01 - CDATA - correct", t => {
 
 t.test("02.02 - CDATA - messed up 1", t => {
   const gathered = [];
-  ct(`<[CDATA[x<y]]>`, obj => {
-    gathered.push(obj);
+  ct(`<[CDATA[x<y]]>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -767,8 +817,10 @@ t.test("02.02 - CDATA - messed up 1", t => {
 
 t.test("02.03 - CDATA - messed up 2", t => {
   const gathered = [];
-  ct(`<!CDATA[x<y]]>`, obj => {
-    gathered.push(obj);
+  ct(`<!CDATA[x<y]]>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -789,8 +841,10 @@ t.test("02.03 - CDATA - messed up 2", t => {
 
 t.test("02.04 - CDATA - messed up 3", t => {
   const gathered = [];
-  ct(`<![ CData[x<y]]>`, obj => {
-    gathered.push(obj);
+  ct(`<![ CData[x<y]]>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -814,8 +868,10 @@ t.test("02.04 - CDATA - messed up 3", t => {
 
 t.test("03.01 - XML - correct", t => {
   const gathered = [];
-  ct(`<?xml version="1.0" encoding="UTF-8"?>`, obj => {
-    gathered.push(obj);
+  ct(`<?xml version="1.0" encoding="UTF-8"?>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -836,8 +892,10 @@ t.test("03.01 - XML - correct", t => {
 
 t.test("03.02 - XML - incorrect 1", t => {
   const gathered = [];
-  ct(`< ?xml version="1.0" encoding="UTF-8"?>`, obj => {
-    gathered.push(obj);
+  ct(`< ?xml version="1.0" encoding="UTF-8"?>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -858,8 +916,10 @@ t.test("03.02 - XML - incorrect 1", t => {
 
 t.test("03.03 - XML - incorrect 2", t => {
   const gathered = [];
-  ct(`<? xml version="1.0" encoding="UTF-8"?>`, obj => {
-    gathered.push(obj);
+  ct(`<? xml version="1.0" encoding="UTF-8"?>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -880,8 +940,10 @@ t.test("03.03 - XML - incorrect 2", t => {
 
 t.test("03.04 - XML - incorrect 3", t => {
   const gathered = [];
-  ct(`< ?XML version="1.0" encoding="UTF-8"?>`, obj => {
-    gathered.push(obj);
+  ct(`< ?XML version="1.0" encoding="UTF-8"?>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,

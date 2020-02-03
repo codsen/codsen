@@ -6,8 +6,10 @@ const ct = require("../dist/codsen-tokenizer.cjs");
 
 t.test("01.01 - CSS in the head", t => {
   const gathered = [];
-  ct(`<style>\n.d-h{z}\n</style>`, obj => {
-    gathered.push(obj);
+  ct(`<style>\n.d-h{z}\n</style>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,
@@ -47,8 +49,10 @@ t.test("01.01 - CSS in the head", t => {
 
 t.test("01.02 - CSS, no whitespace inside", t => {
   const gathered = [];
-  ct(`<meta><style>.d-h{z}</style>`, obj => {
-    gathered.push(obj);
+  ct(`<meta><style>.d-h{z}</style>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
   t.match(
     gathered,

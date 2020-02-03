@@ -8,8 +8,10 @@ t.test(
   `01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`,
   t => {
     const gathered = [];
-    ct(`<a b="c" d='e'>`, obj => {
-      gathered.push(obj);
+    ct(`<a b="c" d='e'>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -53,8 +55,10 @@ t.test(
   `01.02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`,
   t => {
     const gathered = [];
-    ct(`<TD nowrap class="z">`, obj => {
-      gathered.push(obj);
+    ct(`<TD nowrap class="z">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -98,8 +102,10 @@ t.test(
   `01.03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   t => {
     const gathered = [];
-    ct(`</Td>`, obj => {
-      gathered.push(obj);
+    ct(`</Td>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -129,8 +135,10 @@ t.test(
   `01.04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`,
   t => {
     const gathered = [];
-    ct(`</tD >`, obj => {
-      gathered.push(obj);
+    ct(`</tD >`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -219,8 +227,10 @@ t.test(
   `02.01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`,
   t => {
     const gathered = [];
-    ct(`<a b"c" d'e'>`, obj => {
-      gathered.push(obj);
+    ct(`<a b"c" d'e'>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -308,8 +318,10 @@ t.test(
 
 t.test(`02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`, t => {
   const gathered = [];
-  ct(`<a b=="c" d=='e'>`, obj => {
-    gathered.push(obj);
+  ct(`<a b=="c" d=='e'>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -352,8 +364,10 @@ t.test(
   `02.04 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - empty attr value`,
   t => {
     const gathered = [];
-    ct(`<body alink="">`, obj => {
-      gathered.push(obj);
+    ct(`<body alink="">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -393,8 +407,10 @@ t.test(
 
 t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
   const gathered = [];
-  ct(`<body alink="rgb()">`, obj => {
-    gathered.push(obj);
+  ct(`<body alink="rgb()">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -436,8 +452,10 @@ t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
 
 t.test(`03.01`, t => {
   const gathered = [];
-  ct(`<td nowrap>`, obj => {
-    gathered.push(obj);
+  ct(`<td nowrap>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -476,8 +494,10 @@ t.test(`03.01`, t => {
 
 t.test(`03.02 - slash in the end`, t => {
   const gathered = [];
-  ct(`<td nowrap/>`, obj => {
-    gathered.push(obj);
+  ct(`<td nowrap/>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -516,8 +536,10 @@ t.test(`03.02 - slash in the end`, t => {
 
 t.test(`03.03 - slash in front`, t => {
   const gathered = [];
-  ct(`</td nowrap>`, obj => {
-    gathered.push(obj);
+  ct(`</td nowrap>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -556,8 +578,10 @@ t.test(`03.03 - slash in front`, t => {
 
 t.test(`03.04 - now crazier`, t => {
   const gathered = [];
-  ct(`</td nowrap yo yo/>`, obj => {
-    gathered.push(obj);
+  ct(`</td nowrap yo yo/>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -620,8 +644,10 @@ t.test(`03.04 - now crazier`, t => {
 
 t.test(`03.05 - unrecognised tag`, t => {
   const gathered = [];
-  ct(`<zzz accept-charset="utf-8" yyy>`, obj => {
-    gathered.push(obj);
+  ct(`<zzz accept-charset="utf-8" yyy>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -675,8 +701,10 @@ t.test(`03.05 - unrecognised tag`, t => {
 
 t.test(`04.01 - attr value without quotes`, t => {
   const gathered = [];
-  ct(`<abc de=fg hi="jkl">`, obj => {
-    gathered.push(obj);
+  ct(`<abc de=fg hi="jkl">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -727,8 +755,10 @@ t.test(`04.01 - attr value without quotes`, t => {
 
 t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
   const gathered = [];
-  ct(`<abc de=fg/>`, obj => {
-    gathered.push(obj);
+  ct(`<abc de=fg/>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -767,8 +797,10 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
 
 t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
   const gathered = [];
-  ct(`<abc de=fg>`, obj => {
-    gathered.push(obj);
+  ct(`<abc de=fg>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -847,8 +879,10 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
 
 t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
   const gathered = [];
-  ct(`<abc de =">\ntext<div class="z">`, obj => {
-    gathered.push(obj);
+  ct(`<abc de =">\ntext<div class="z">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -929,8 +963,10 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
 
 t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
   const gathered = [];
-  ct(`<abc de="> "a" > "z"`, obj => {
-    gathered.push(obj);
+  ct(`<abc de="> "a" > "z"`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -978,8 +1014,10 @@ t.test(
   `05.03 - two errors: space before equal and closing quotes missing`,
   t => {
     const gathered = [];
-    ct(`<input type="radio" checked =">`, obj => {
-      gathered.push(obj);
+    ct(`<input type="radio" checked =">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -1033,8 +1071,10 @@ t.test(
   `05.04 - two errors: space before equal and closing quotes missing, text follows`,
   t => {
     const gathered = [];
-    ct(`<input type="radio" checked ="> x y z `, obj => {
-      gathered.push(obj);
+    ct(`<input type="radio" checked ="> x y z `, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
 
     t.match(gathered, [
@@ -1093,8 +1133,10 @@ t.test(
 
 t.test(`05.05 - two asterisks as an attribute's value`, t => {
   const gathered = [];
-  ct(`<frameset cols="**">`, obj => {
-    gathered.push(obj);
+  ct(`<frameset cols="**">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -1133,8 +1175,10 @@ t.test(`05.05 - two asterisks as an attribute's value`, t => {
 
 t.test(`05.06 - many asterisks as an attribute's value`, t => {
   const gathered = [];
-  ct(`<frameset cols="******">`, obj => {
-    gathered.push(obj);
+  ct(`<frameset cols="******">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [
@@ -1176,8 +1220,10 @@ t.test(`05.06 - many asterisks as an attribute's value`, t => {
 
 t.test(`06.01 - two attrs, one recognised one not`, t => {
   const gathered = [];
-  ct(`<table class="aa" bbb="cc">`, obj => {
-    gathered.push(obj);
+  ct(`<table class="aa" bbb="cc">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 
   t.match(gathered, [

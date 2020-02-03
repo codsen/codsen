@@ -9,8 +9,10 @@ t.test(
   `01.01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`,
   t => {
     const gathered = [];
-    ct(`a < b class="">`, obj => {
-      gathered.push(obj);
+    ct(`a < b class="">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,
@@ -39,8 +41,10 @@ t.test(
   `02.01 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   t => {
     const gathered = [];
-    ct(`<br${BACKSLASH}>`, obj => {
-      gathered.push(obj);
+    ct(`<br${BACKSLASH}>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,
@@ -61,8 +65,10 @@ t.test(
   `02.02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   t => {
     const gathered = [];
-    ct(`<${BACKSLASH}br${BACKSLASH}>`, obj => {
-      gathered.push(obj);
+    ct(`<${BACKSLASH}br${BACKSLASH}>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.match(
       gathered,
@@ -83,8 +89,10 @@ t.test(
   `02.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
   t => {
     const gathered = [];
-    ct(`< ${BACKSLASH} br ${BACKSLASH} >`, obj => {
-      gathered.push(obj);
+    ct(`< ${BACKSLASH} br ${BACKSLASH} >`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
     });
     t.same(
       gathered,

@@ -9,8 +9,10 @@ const runPerf = require(path.resolve("../../scripts/run-perf.js"));
 const ct = require("../");
 const testme = () => {
   const gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, obj => {
-    gathered.push(obj);
+  ct(`<a>"something"<span>'here'</span></a>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
   });
 };
 

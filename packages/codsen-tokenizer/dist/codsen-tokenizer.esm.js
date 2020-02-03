@@ -201,11 +201,6 @@ function flipEspTag(str) {
   return res;
 }
 
-const defaults = {
-  reportProgressFunc: null,
-  reportProgressFuncFrom: 0,
-  reportProgressFuncTo: 100
-};
 const voidTags = [
   "area",
   "base",
@@ -224,7 +219,7 @@ const voidTags = [
 ];
 const espChars = `{}%-$_()*|`;
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "%)", "*)", "**"];
-function tokenizer(str, tagCb, charCb, originalOpts) {
+function tokenizer(str, originalOpts) {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
@@ -240,46 +235,53 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
       );
     }
   }
-  if (tagCb && typeof tagCb !== "function") {
-    throw new Error(
-      `codsen-tokenizer: [THROW_ID_03] the second input argument, callback function, should be a function but it was given as type ${typeof tagCb}, equal to ${JSON.stringify(
-        tagCb,
-        null,
-        4
-      )}`
-    );
-  }
-  if (charCb && typeof charCb !== "function") {
-    throw new Error(
-      `codsen-tokenizer: [THROW_ID_04] the second input argument, callback function, should be a function but it was given as type ${typeof charCb}, equal to ${JSON.stringify(
-        charCb,
-        null,
-        4
-      )}`
-    );
-  }
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
-      `codsen-tokenizer: [THROW_ID_05] the third input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
+      `codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
         null,
         4
       )}`
     );
   }
-  const opts = Object.assign({}, defaults, originalOpts);
-  if (
-    opts.reportProgressFunc &&
-    typeof opts.reportProgressFunc !== "function"
-  ) {
-    throw new TypeError(
-      `codsen-tokenizer: [THROW_ID_06] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
-        opts.reportProgressFunc,
+  if (originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(
+        originalOpts.tagCb,
         null,
         4
-      )} (${typeof opts.reportProgressFunc})`
+      )}`
     );
   }
+  if (originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(
+        originalOpts.charCb,
+        null,
+        4
+      )}`
+    );
+  }
+  if (
+    originalOpts.reportProgressFunc &&
+    typeof originalOpts.reportProgressFunc !== "function"
+  ) {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(
+        originalOpts.reportProgressFunc,
+        null,
+        4
+      )}`
+    );
+  }
+  const defaults = {
+    reportProgressFunc: null,
+    reportProgressFuncFrom: 0,
+    reportProgressFuncTo: 100,
+    tagCb: null,
+    charCb: null
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   let currentPercentageDone;
   let lastPercentage = 0;
   const len = str.length;
@@ -392,13 +394,13 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
     return matchLayerLast(str, i, true);
   }
   function pingCharCb(incomingToken) {
-    if (charCb) {
-      charCb(incomingToken);
+    if (opts.charCb) {
+      opts.charCb(incomingToken);
     }
   }
   function pingTagCb(incomingToken) {
-    if (tagCb) {
-      tagCb(clone(incomingToken));
+    if (opts.tagCb) {
+      opts.tagCb(clone(incomingToken));
     }
   }
   function dumpCurrentToken(token, i) {
@@ -903,7 +905,7 @@ function tokenizer(str, tagCb, charCb, originalOpts) {
         attribReset();
       }
     }
-    if (charCb) {
+    if (opts.charCb) {
       pingCharCb({
         type: token.type,
         chr: str[i],
