@@ -13,7 +13,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var tokenizer = _interopDefault(require('codsen-tokenizer'));
+var parser = _interopDefault(require('codsen-parser'));
 var defineLazyProp = _interopDefault(require('define-lazy-prop'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var matcher = _interopDefault(require('matcher'));
@@ -9107,17 +9107,20 @@ function (_EventEmitter) {
           });
         });
       });
-      tokenizer(str, function (obj) {
-        _this.emit(obj.type, obj);
-        if (obj.type === "html" && Array.isArray(obj.attribs) && obj.attribs.length) {
-          obj.attribs.forEach(function (attribObj) {
-            _this.emit("attribute", Object.assign({}, attribObj, {
-              parent: Object.assign({}, obj)
-            }));
-          });
+      parser(str, {
+        tagCb: function tagCb(obj) {
+          _this.emit(obj.type, obj);
+          if (obj.type === "html" && Array.isArray(obj.attribs) && obj.attribs.length) {
+            obj.attribs.forEach(function (attribObj) {
+              _this.emit("attribute", Object.assign({}, attribObj, {
+                parent: Object.assign({}, obj)
+              }));
+            });
+          }
+        },
+        charCb: function charCb(obj) {
+          _this.emit("character", obj);
         }
-      }, function (obj) {
-        _this.emit("character", obj);
       });
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "all" ||

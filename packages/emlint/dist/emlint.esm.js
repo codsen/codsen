@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
-import tokenizer from 'codsen-tokenizer';
+import parser from 'codsen-parser';
 import defineLazyProp from 'define-lazy-prop';
 import clone from 'lodash.clonedeep';
 import matcher from 'matcher';
@@ -10957,9 +10957,8 @@ class Linter extends EventEmitter {
           });
         });
       });
-    tokenizer(
-      str,
-      obj => {
+    parser(str, {
+      tagCb: obj => {
         this.emit(obj.type, obj);
         if (
           obj.type === "html" &&
@@ -10976,10 +10975,10 @@ class Linter extends EventEmitter {
           });
         }
       },
-      obj => {
+      charCb: obj => {
         this.emit("character", obj);
       }
-    );
+    });
     if (
       Object.keys(config.rules).some(
         ruleName =>

@@ -45,7 +45,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "codsen-tokenizer",
+        "codsen-parser",
         "define-lazy-prop",
         "he",
         "html-all-known-attributes",
@@ -84,7 +84,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "codsen-tokenizer",
+        "codsen-parser",
         "define-lazy-prop",
         "he",
         "html-all-known-attributes",
