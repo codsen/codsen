@@ -67,9 +67,9 @@
             typeof this.text1 === "string"
           ) {
             const gathered = [];
-            tokenizer(this.text1, obj => {
+            tokenizer(this.text1, {tagCb: obj => {
               gathered.push(obj);
-            });
+            }});
             return JSON.stringify(gathered, null, 4)
           }
           console.log('099 nothing given');
