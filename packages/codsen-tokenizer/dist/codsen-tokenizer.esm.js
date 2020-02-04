@@ -248,7 +248,11 @@ function tokenizer(str, originalOpts) {
       )}`
     );
   }
-  if (originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (
+    isObj(originalOpts) &&
+    originalOpts.tagCb &&
+    typeof originalOpts.tagCb !== "function"
+  ) {
     throw new Error(
       `codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(
         originalOpts.tagCb,
@@ -257,7 +261,11 @@ function tokenizer(str, originalOpts) {
       )}`
     );
   }
-  if (originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (
+    isObj(originalOpts) &&
+    originalOpts.charCb &&
+    typeof originalOpts.charCb !== "function"
+  ) {
     throw new Error(
       `codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(
         originalOpts.charCb,
@@ -267,6 +275,7 @@ function tokenizer(str, originalOpts) {
     );
   }
   if (
+    isObj(originalOpts) &&
     originalOpts.reportProgressFunc &&
     typeof originalOpts.reportProgressFunc !== "function"
   ) {
