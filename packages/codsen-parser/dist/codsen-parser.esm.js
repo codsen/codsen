@@ -30,6 +30,29 @@ function pathNext(str) {
   return str;
 }
 
+function decrementStringNumber(str) {
+  if (/^\d*$/.test(str)) {
+    return Number.parseInt(str, 10) - 1;
+  }
+  return str;
+}
+function pathPrev(str) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  const extractedValue = str.slice(str.lastIndexOf(".") + 1);
+  if (extractedValue === "0") {
+    return null;
+  } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+    return `${str.slice(0, str.lastIndexOf(".") + 1)}${decrementStringNumber(
+      str.slice(str.lastIndexOf(".") + 1)
+    )}`;
+  } else if (/^\d*$/.test(str)) {
+    return `${decrementStringNumber(str)}`;
+  }
+  return null;
+}
+
 function pathUp(str) {
   if (typeof str === "string") {
     if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
@@ -129,12 +152,26 @@ function cparser(str, originalOpts) {
       )}`
     );
   }
+  if (
+    isObj(originalOpts) &&
+    originalOpts.errCb &&
+    typeof originalOpts.errCb !== "function"
+  ) {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ${typeof originalOpts.errCb}, equal to ${JSON.stringify(
+        originalOpts.errCb,
+        null,
+        4
+      )}`
+    );
+  }
   const defaults = {
     reportProgressFunc: null,
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100,
     tagCb: null,
-    charCb: null
+    charCb: null,
+    errCb: null
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const res = [];
@@ -154,6 +191,7 @@ function cparser(str, originalOpts) {
       } else if (
         tokenObj.type === "html" &&
         tokenObj.closing &&
+        typeof path === "string" &&
         path.includes(".")
       ) {
         path = pathNext(pathUp(path));
@@ -168,6 +206,27 @@ function cparser(str, originalOpts) {
         !tokenObj.closing
       ) {
         nestNext = true;
+      }
+      const previousPath = pathPrev(path);
+      let previousTagsToken;
+      if (previousPath) {
+        previousTagsToken = op.get(res, previousPath);
+      }
+      if (
+        tokenObj.type === "html" &&
+        tokenObj.closing &&
+        (!previousPath ||
+          !isObj(previousTagsToken) ||
+          previousTagsToken.type !== "html" ||
+          previousTagsToken.tagName !== tokenObj.tagName)
+      ) {
+        if (opts.errCb) {
+          opts.errCb({
+            ruleId: "tag-missing-opening",
+            idxFrom: tokenObj.start,
+            idxTo: tokenObj.end
+          });
+        }
       }
       op.set(res, path, Object.assign({ children: [] }, tokenObj));
     },

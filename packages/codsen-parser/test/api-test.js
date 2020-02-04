@@ -53,7 +53,16 @@ t.throws(
   "00.06"
 );
 
-t.test("00.07 - opts.tagCb", t => {
+t.throws(
+  "00.07 - opts.errCb is wrong",
+  () => {
+    cparser("a", { errCb: "z" });
+  },
+  /THROW_ID_07/g,
+  "00.07"
+);
+
+t.test("00.08 - opts.tagCb", t => {
   const gathered = [];
   cparser("  <a>z", {
     tagCb: obj => {
@@ -80,12 +89,12 @@ t.test("00.07 - opts.tagCb", t => {
         end: 6
       }
     ],
-    "00.07"
+    "00.08"
   );
   t.end();
 });
 
-t.test("00.08 - opts.charCb", t => {
+t.test("00.09 - opts.charCb", t => {
   const gathered = [];
   cparser("<a>z1", {
     charCb: obj => {
@@ -122,7 +131,7 @@ t.test("00.08 - opts.charCb", t => {
         type: "text"
       }
     ],
-    "00.08"
+    "00.09"
   );
   t.end();
 });

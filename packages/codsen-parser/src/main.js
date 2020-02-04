@@ -1,5 +1,6 @@
 import tokenizer from "codsen-tokenizer";
 import pathNext from "./util/pathNext";
+import pathPrev from "./util/pathPrev";
 import pathUp from "./util/pathUp";
 import op from "object-path";
 
@@ -95,6 +96,19 @@ function cparser(str, originalOpts) {
       )}`
     );
   }
+  if (
+    isObj(originalOpts) &&
+    originalOpts.errCb &&
+    typeof originalOpts.errCb !== "function"
+  ) {
+    throw new Error(
+      `codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ${typeof originalOpts.errCb}, equal to ${JSON.stringify(
+        originalOpts.errCb,
+        null,
+        4
+      )}`
+    );
+  }
 
   //
   //
@@ -111,7 +125,8 @@ function cparser(str, originalOpts) {
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100,
     tagCb: null,
-    charCb: null
+    charCb: null,
+    errCb: null
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -166,9 +181,9 @@ function cparser(str, originalOpts) {
       //
       //
 
-      console.log(`-`.repeat(100));
+      console.log(`-`.repeat(80));
       console.log(
-        `171 ██ ${`\u001b[${33}m${`INCOMING TOKEN`}\u001b[${39}m`}:\n${JSON.stringify(
+        `186 ██ ${`\u001b[${33}m${`INCOMING TOKEN`}\u001b[${39}m`}:\n${JSON.stringify(
           {
             type: tokenObj.type,
             tagName: tokenObj.tagName,
@@ -200,29 +215,26 @@ function cparser(str, originalOpts) {
 
         // 2. go deeper
         // "1.children.3" -> "1.children.3.children.0"
-        console.log(`203 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
+        console.log(`218 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
         path = `${path}.children.0`;
       } else if (
         tokenObj.type === "html" &&
         tokenObj.closing &&
+        typeof path === "string" &&
         path.includes(".")
       ) {
         // goes up and then bumps,
         // "1.children.3" -> "2"
-        console.log(`212 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
+        console.log(`228 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
         path = pathNext(pathUp(path));
-
-        // but check, does this closing tag have an
-        // opening counterpart
-        //
       } else if (!path) {
         // it's the first element - push the token into index 0
-        console.log(`220 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
+        console.log(`232 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
         path = "0";
       } else {
         // bumps the index,
         // "1.children.3" -> "1.children.4"
-        console.log(`225 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
+        console.log(`237 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
         path = pathNext(path);
       }
 
@@ -235,8 +247,49 @@ function cparser(str, originalOpts) {
         nestNext = true;
       }
 
+      // check, does this closing tag have an
+      // opening counterpart
+      const previousPath = pathPrev(path);
       console.log(
-        `239 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        `254 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
+          previousPath,
+          null,
+          4
+        )}`
+      );
+      let previousTagsToken;
+      if (previousPath) {
+        previousTagsToken = op.get(res, previousPath);
+      }
+      console.log(
+        `265 ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} = ${JSON.stringify(
+          previousTagsToken,
+          null,
+          4
+        )}`
+      );
+      if (
+        tokenObj.type === "html" &&
+        tokenObj.closing &&
+        (!previousPath ||
+          !isObj(previousTagsToken) ||
+          previousTagsToken.type !== "html" ||
+          previousTagsToken.tagName !== tokenObj.tagName)
+      ) {
+        console.log(
+          `280 ${`\u001b[${31}m${`██ tag-missing-opening`}\u001b[${39}m`}`
+        );
+        if (opts.errCb) {
+          opts.errCb({
+            ruleId: "tag-missing-opening",
+            idxFrom: tokenObj.start,
+            idxTo: tokenObj.end
+          });
+        }
+      }
+
+      console.log(
+        `292 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
           res,
           null,
           4
@@ -244,7 +297,7 @@ function cparser(str, originalOpts) {
       );
       op.set(res, path, Object.assign({ children: [] }, tokenObj));
       console.log(
-        `247 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `300 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -252,7 +305,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `255 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `308 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -287,10 +340,10 @@ function cparser(str, originalOpts) {
     },
     charCb: opts.charCb
   });
-  console.log(`-`.repeat(100));
+  console.log(`-`.repeat(80));
 
   console.log(
-    `293 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `346 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

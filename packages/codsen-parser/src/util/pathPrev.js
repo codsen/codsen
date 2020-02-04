@@ -14,11 +14,11 @@ function decrementStringNumber(str) {
 // the path notation is object-path
 function pathPrev(str) {
   if (typeof str !== "string" || !str.length) {
-    return str;
+    return null;
   }
   const extractedValue = str.slice(str.lastIndexOf(".") + 1);
   if (extractedValue === "0") {
-    return str;
+    return null;
   } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${decrementStringNumber(
       str.slice(str.lastIndexOf(".") + 1)
@@ -26,7 +26,7 @@ function pathPrev(str) {
   } else if (/^\d*$/.test(str)) {
     return `${decrementStringNumber(str)}`;
   }
-  return str;
+  return null;
 }
 
 export default pathPrev;
