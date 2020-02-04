@@ -48,7 +48,18 @@ function pathUp(str) {
   return str;
 }
 
-const tagsThatNest = ["div"];
+const tagsThatNest = [
+  "a",
+  "b",
+  "div",
+  "em",
+  "i",
+  "span",
+  "strong",
+  "table",
+  "td",
+  "tr"
+];
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -140,7 +151,11 @@ function cparser(str, originalOpts) {
       if (nestNext) {
         nestNext = false;
         path = `${path}.children.0`;
-      } else if (tokenObj.type === "html" && tokenObj.closing) {
+      } else if (
+        tokenObj.type === "html" &&
+        tokenObj.closing &&
+        path.includes(".")
+      ) {
         path = pathNext(pathUp(path));
       } else if (!path) {
         path = "0";

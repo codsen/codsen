@@ -136,3 +136,93 @@ t.test("01.04 - basics - two div pairs", t => {
   );
   t.end();
 });
+
+t.test("01.05 - basics - mixed combo", t => {
+  t.match(
+    cparser("<br>z</a>"),
+    [
+      {
+        type: "html",
+        tagName: "br",
+        closing: false,
+        start: 0,
+        end: 4,
+        children: []
+      },
+      {
+        type: "text",
+        start: 4,
+        end: 5
+      },
+      {
+        type: "html",
+        tagName: "a",
+        closing: true,
+        start: 5,
+        end: 9,
+        children: []
+      }
+    ],
+    "01.05"
+  );
+  t.end();
+});
+
+t.test("01.06 - basics - two nested pairs", t => {
+  t.match(
+    cparser("<div>1<a>2</a>3</div>"),
+    [
+      {
+        type: "html",
+        tagName: "div",
+        closing: false,
+        start: 0,
+        end: 5,
+        children: [
+          {
+            type: "text",
+            start: 5,
+            end: 6
+          },
+          {
+            type: "html",
+            tagName: "a",
+            closing: false,
+            start: 6,
+            end: 9,
+            children: [
+              {
+                type: "text",
+                start: 9,
+                end: 10
+              }
+            ]
+          },
+          {
+            type: "html",
+            tagName: "a",
+            closing: true,
+            start: 10,
+            end: 14,
+            children: []
+          },
+          {
+            type: "text",
+            start: 14,
+            end: 15
+          }
+        ]
+      },
+      {
+        type: "html",
+        tagName: "div",
+        closing: true,
+        start: 15,
+        end: 21,
+        children: []
+      }
+    ],
+    "01.06"
+  );
+  t.end();
+});

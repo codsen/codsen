@@ -42,7 +42,7 @@
     function isObj(something) {
       return typeof isObj === "object";
     }
-    const tokenizer = codsenTokenizer;
+    const cparser = codsenParser;
     const myStorage = window.localStorage;
     window.Event = new Vue();
     new Vue({
@@ -52,7 +52,7 @@
       },
       mounted: function () {
         console.log(`068 called mounted()`);
-        const retrieved = myStorage.getItem("tokenizer")
+        const retrieved = myStorage.getItem("parser")
         if (typeof retrieved === "string" && retrieved.length) {
           this.text1 = retrieved;
         } else {
@@ -66,11 +66,7 @@
           if (
             typeof this.text1 === "string"
           ) {
-            const gathered = [];
-            tokenizer(this.text1, obj => {
-              gathered.push(obj);
-            });
-            return JSON.stringify(gathered, null, 4)
+            return JSON.stringify(cparser(this.text1), null, 4)
           }
           console.log('099 nothing given');
           return isStr(this.text1) && this.text1.length ? this.text1 : "";
@@ -81,9 +77,9 @@
           console.log(`113 dump to local storage`);
           // dump the input into the local storage:
           if (isStr(this.text1) && this.text1.length) {
-            myStorage.setItem("tokenizer", this.text1)
+            myStorage.setItem("parser", this.text1)
           } else {
-            myStorage.setItem("tokenizer", "")
+            myStorage.setItem("parser", "")
           }
         }
       }
