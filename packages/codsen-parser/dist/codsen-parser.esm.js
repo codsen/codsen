@@ -8,7 +8,47 @@
  */
 
 import tokenizer from 'codsen-tokenizer';
+import op from 'object-path';
 
+function incrementStringNumber(str) {
+  if (/^\d*$/.test(str)) {
+    return Number.parseInt(str, 10) + 1;
+  }
+  return str;
+}
+function pathNext(str) {
+  if (typeof str !== "string" || !str.length) {
+    return str;
+  }
+  if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
+    return `${str.slice(0, str.lastIndexOf(".") + 1)}${incrementStringNumber(
+      str.slice(str.lastIndexOf(".") + 1)
+    )}`;
+  } else if (/^\d*$/.test(str)) {
+    return `${incrementStringNumber(str)}`;
+  }
+  return str;
+}
+
+function pathUp(str) {
+  if (typeof str === "string") {
+    if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
+      return "0";
+    }
+    let dotsCount = 0;
+    for (let i = str.length; i--; ) {
+      if (str[i] === ".") {
+        dotsCount++;
+      }
+      if (dotsCount === 2) {
+        return str.slice(0, i);
+      }
+    }
+  }
+  return str;
+}
+
+const tagsThatNest = ["div"];
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -39,7 +79,11 @@ function cparser(str, originalOpts) {
       )}`
     );
   }
-  if (originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (
+    isObj(originalOpts) &&
+    originalOpts.tagCb &&
+    typeof originalOpts.tagCb !== "function"
+  ) {
     throw new Error(
       `codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(
         originalOpts.tagCb,
@@ -48,7 +92,11 @@ function cparser(str, originalOpts) {
       )}`
     );
   }
-  if (originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (
+    isObj(originalOpts) &&
+    originalOpts.charCb &&
+    typeof originalOpts.charCb !== "function"
+  ) {
     throw new Error(
       `codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(
         originalOpts.charCb,
@@ -58,6 +106,7 @@ function cparser(str, originalOpts) {
     );
   }
   if (
+    isObj(originalOpts) &&
     originalOpts.reportProgressFunc &&
     typeof originalOpts.reportProgressFunc !== "function"
   ) {
@@ -77,7 +126,39 @@ function cparser(str, originalOpts) {
     charCb: null
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  tokenizer(str, opts);
+  const res = [];
+  let path;
+  let nestNext = false;
+  tokenizer(str, {
+    reportProgressFunc: opts.reportProgressFunc,
+    reportProgressFuncFrom: opts.reportProgressFuncFrom,
+    reportProgressFuncTo: opts.reportProgressFuncTo,
+    tagCb: tokenObj => {
+      if (typeof opts.tagCb === "function") {
+        opts.tagCb(tokenObj);
+      }
+      if (nestNext) {
+        nestNext = false;
+        path = `${path}.children.0`;
+      } else if (tokenObj.type === "html" && tokenObj.closing) {
+        path = pathNext(pathUp(path));
+      } else if (!path) {
+        path = "0";
+      } else {
+        path = pathNext(path);
+      }
+      if (
+        tokenObj.type === "html" &&
+        tagsThatNest.includes(tokenObj.tagName) &&
+        !tokenObj.closing
+      ) {
+        nestNext = true;
+      }
+      op.set(res, path, Object.assign({ children: [] }, tokenObj));
+    },
+    charCb: opts.charCb
+  });
+  return res;
 }
 
 export default cparser;

@@ -40,7 +40,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["codsen-tokenizer"],
+      external: ["codsen-tokenizer", "object-path"],
       plugins: [
         strip({
           sourceMap: false
@@ -55,27 +55,13 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["codsen-tokenizer"],
+      external: ["codsen-tokenizer", "object-path"],
       plugins: [
         strip({
           sourceMap: false
         }),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
-      ]
-    },
-
-    // util.js build:
-    {
-      input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
-      external: [],
-      plugins: [
-        strip({
-          sourceMap: false
-        }),
-        resolve(),
-        cleanup({ comments: "istanbul" })
       ]
     }
   ];
