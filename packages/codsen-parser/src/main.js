@@ -90,7 +90,21 @@ function cparser(str, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
-  tokenizer(str, opts);
+  tokenizer(str, {
+    reportProgressFunc: opts.reportProgressFunc,
+    reportProgressFuncFrom: opts.reportProgressFuncFrom,
+    reportProgressFuncTo: opts.reportProgressFuncTo,
+    tagCb: tokenObj => {
+      // pass to consumers if opts.tagCb is set
+      if (typeof opts.tagCb === "function") {
+        opts.tagCb(tokenObj);
+      }
+
+      // consume the token ourselves
+      // TODO
+    },
+    charCb: opts.charCb
+  });
 
   //
   //
