@@ -85,11 +85,14 @@ t.test(
   }
 );
 
+// various
+// -----------------------------------------------------------------------------
+
 t.test(
-  `02.03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`,
+  `03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`,
   t => {
     const gathered = [];
-    ct(`< ${BACKSLASH} br ${BACKSLASH} >`, {
+    ct(`</div`, {
       tagCb: obj => {
         gathered.push(obj);
       }
@@ -98,17 +101,17 @@ t.test(
       gathered,
       [
         {
-          tagNameStartAt: 4,
-          tagNameEndAt: 6,
-          tagName: "br",
+          tagNameStartAt: 2,
+          tagNameEndAt: 5,
+          tagName: "div",
           recognised: true,
-          closing: false,
-          void: true,
+          closing: true,
+          void: false,
           pureHTML: true,
           esp: [],
           type: "html",
           start: 0,
-          end: 10,
+          end: 5,
           tail: null,
           kind: null,
           attribs: []

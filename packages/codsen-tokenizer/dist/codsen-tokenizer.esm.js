@@ -466,7 +466,7 @@ function tokenizer(str, originalOpts) {
         token.end = i;
       }
       pingTagCb(token);
-      tokenReset();
+      token = tokenReset();
     }
   }
   function initHtmlToken() {
@@ -484,8 +484,8 @@ function tokenizer(str, originalOpts) {
       token
     );
   }
-  for (let i = 0; i < len; i++) {
-    if (opts.reportProgressFunc) {
+  for (let i = 0; i <= len; i++) {
+    if (str[i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
         if (i === midLen) {
           opts.reportProgressFunc(
@@ -668,7 +668,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (token.start === null || token.end === i) {
         if (styleStarts) {
-          if (!str[i].trim().length) {
+          if (str[i] && !str[i].trim().length) {
             tokenReset();
             token.start = i;
             token.type = "text";
@@ -685,7 +685,7 @@ function tokenizer(str, originalOpts) {
             token.start = i;
             token.type = "css";
           }
-        } else {
+        } else if (str[i]) {
           token = tokenReset();
           token.start = i;
           token.type = "text";
@@ -796,8 +796,8 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartAt, i);
       attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName);
-      if (!str[i].trim().length && str[right(str, i)] === "=") ; else if (
-        !str[i].trim().length ||
+      if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") ; else if (
+        (str[i] && !str[i].trim().length) ||
         str[i] === ">" ||
         (str[i] === "/" && str[right(str, i)] === ">")
       ) {
@@ -925,8 +925,8 @@ function tokenizer(str, originalOpts) {
         i
       });
     }
-    if (!str[i + 1] && token.start !== null) {
-      token.end = i + 1;
+    if (!str[i] && token.start !== null) {
+      token.end = i;
       pingTagCb(token);
     }
   }
