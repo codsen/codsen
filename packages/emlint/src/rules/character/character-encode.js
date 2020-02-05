@@ -3,7 +3,7 @@
 
 import he from "he";
 import { notEmailFriendly } from "html-entities-not-email-friendly";
-import { isEnabled } from "../../util/util";
+import { isAnEnabledValue } from "../../util/util";
 
 // Catches characters outside ASCII and suggests encoding.
 // Applies only to "text" scope
@@ -45,7 +45,7 @@ function characterEncode(context, ...opts) {
           !Object.keys(context.processedRulesConfig).includes(
             "bad-character-non-breaking-space"
           ) ||
-          !isEnabled(
+          !isAnEnabledValue(
             context.processedRulesConfig["bad-character-non-breaking-space"]
           ))
       ) {

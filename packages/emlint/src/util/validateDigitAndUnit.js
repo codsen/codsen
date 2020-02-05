@@ -1,7 +1,7 @@
 import processCommaSeparated from "string-process-comma-separated";
 import checkForWhitespace from "./checkForWhitespace";
 import { knownUnits } from "./constants";
-import isObj from "lodash.isplainobject";
+import { isObj } from "./util";
 
 // opts.type: integer|rational
 function validateValue({ str, opts, charStart, charEnd, idxOffset, errorArr }) {

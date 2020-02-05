@@ -12,7 +12,7 @@ import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import clone from "lodash.clonedeep";
 import matcher from "matcher";
 const builtInRules = {};
-import { isEnabled } from "./util/util";
+import { isAnEnabledValue } from "./util/util";
 
 // CHARACTER-LEVEL rules
 // -----------------------------------------------------------------------------
@@ -1715,7 +1715,7 @@ function normaliseRequestedRules(opts) {
   const res = {};
   // first, if there are known group rules such as "bad-character", set
   // them as a foundation:
-  if (Object.keys(opts).includes("all") && isEnabled(opts.all)) {
+  if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
     Object.keys(builtInRules).forEach(ruleName => {
       res[ruleName] = opts.all;
     });

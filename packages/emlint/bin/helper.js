@@ -6,6 +6,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const nonFileBasedTagRules = require("../src/util/nonFileBasedTagRules.json");
 
 // bake the "bad-character" rules list JSON:
 
@@ -28,7 +29,7 @@ const allTagRules = fs
 
 fs.writeFileSync(
   path.resolve("src/rules/all-tag.json"),
-  JSON.stringify(allTagRules.sort(), null, 2)
+  JSON.stringify(nonFileBasedTagRules.concat(allTagRules).sort(), null, 2)
 );
 
 // bake the "attribute" rules list JSON:

@@ -25,7 +25,6 @@ var leven = _interopDefault(require('leven'));
 var db = _interopDefault(require('mime-db'));
 var isRel = _interopDefault(require('is-relative-uri'));
 var urlRegex = _interopDefault(require('url-regex'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
@@ -299,6 +298,7 @@ var allTagRules = [
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
+	"tag-missing-opening",
 	"tag-name-case",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
@@ -453,14 +453,30 @@ var wholeExtensionRegex = /^\.\w+$/g;
 var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
 var fontSizeRegex = /^[+-]?[1-7]$/;
 var linkTypes = ["alternate", "appendix", "author", "bookmark", "chapter", "contents", "copyright", "external", "glossary", "help", "index", "license", "next", "nofollow", "noopener", "noreferrer", "prev", "search", "section", "start", "stylesheet", "subsection", "tag"];
+var astErrMessages = {
+  "tag-missing-opening": "Opening tag is missing."
+};
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
-function isEnabled(maybeARulesValue) {
+function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
   } else if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
     return maybeARulesValue[0];
+  }
+  return 0;
+}
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
+}
+function isAnEnabledRule(config, ruleId) {
+  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
+    return config[ruleId];
+  } else if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
+    return config[ruleId.split("-")[0]];
+  } else if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
+    return config.all;
   }
   return 0;
 }
@@ -7812,7 +7828,7 @@ function characterEncode(context) {
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
       }
-      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr)) && (chr.charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isEnabled(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
+      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr)) && (chr.charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
         var encodedChr = he.encode(chr, {
           useNamedReferences: mode === "named"
         });
@@ -8682,7 +8698,7 @@ function get(something) {
 }
 function normaliseRequestedRules(opts) {
   var res = {};
-  if (Object.keys(opts).includes("all") && isEnabled(opts.all)) {
+  if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
     Object.keys(builtInRules).forEach(function (ruleName) {
       res[ruleName] = opts.all;
     });
@@ -9120,12 +9136,25 @@ function (_EventEmitter) {
         },
         charCb: function charCb(obj) {
           _this.emit("character", obj);
+        },
+        errCb: function errCb(obj) {
+          var currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
+          if (currentRulesSeverity) {
+            var message = "Something is wrong.";
+            if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
+              message = astErrMessages[obj.ruleId];
+            }
+            _this.report(Object.assign({
+              message: message,
+              severity: currentRulesSeverity
+            }, obj));
+          }
         }
       });
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "all" ||
         ruleName === "bad-html-entity" ||
-        ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isEnabled(config.rules[ruleName]) || isEnabled(processedRulesConfig[ruleName]));
+        ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName]));
       })) {
         stringFixBrokenNamedEntities(str, {
           cb: function cb(obj) {
@@ -9204,7 +9233,7 @@ function (_EventEmitter) {
       var severity = obj.severity;
       if (!Number.isInteger(obj.severity) && typeof this.processedRulesConfig[obj.ruleId] === "number") {
         severity = this.processedRulesConfig[obj.ruleId];
-      } else if (!Number.isInteger(obj.severity)) {
+      } else if (!Number.isInteger(obj.severity) && Array.isArray(this.processedRulesConfig[obj.ruleId])) {
         severity = this.processedRulesConfig[obj.ruleId][0];
       }
       this.messages.push(Object.assign({}, {

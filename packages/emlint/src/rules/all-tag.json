@@ -2,6 +2,7 @@
   "tag-bold",
   "tag-closing-backslash",
   "tag-is-present",
+  "tag-missing-opening",
   "tag-name-case",
   "tag-space-after-opening-bracket",
   "tag-space-before-closing-slash",

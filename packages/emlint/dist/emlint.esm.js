@@ -19,7 +19,6 @@ import leven from 'leven';
 import db from 'mime-db';
 import isRel from 'is-relative-uri';
 import urlRegex from 'url-regex';
-import isObj from 'lodash.isplainobject';
 import isLangCode from 'is-language-code';
 import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
@@ -146,6 +145,7 @@ var allTagRules = [
 	"tag-bold",
 	"tag-closing-backslash",
 	"tag-is-present",
+	"tag-missing-opening",
 	"tag-name-case",
 	"tag-space-after-opening-bracket",
 	"tag-space-before-closing-slash",
@@ -355,6 +355,9 @@ const linkTypes = [
   "subsection",
   "tag"
 ];
+const astErrMessages = {
+  "tag-missing-opening": "Opening tag is missing."
+};
 function isLetter(str) {
   return (
     typeof str === "string" &&
@@ -362,7 +365,7 @@ function isLetter(str) {
     str.toUpperCase() !== str.toLowerCase()
   );
 }
-function isEnabled(maybeARulesValue) {
+function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
   } else if (
@@ -372,6 +375,27 @@ function isEnabled(maybeARulesValue) {
     maybeARulesValue[0] > 0
   ) {
     return maybeARulesValue[0];
+  }
+  return 0;
+}
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
+function isAnEnabledRule(config, ruleId) {
+  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
+    return config[ruleId];
+  } else if (
+    ruleId.includes("-") &&
+    Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])
+  ) {
+    return config[ruleId.split("-")[0]];
+  } else if (
+    isObj(config) &&
+    Object.prototype.hasOwnProperty.call(config, "all")
+  ) {
+    return config.all;
   }
   return 0;
 }
@@ -9115,7 +9139,7 @@ function characterEncode(context, ...opts) {
           !Object.keys(context.processedRulesConfig).includes(
             "bad-character-non-breaking-space"
           ) ||
-          !isEnabled(
+          !isAnEnabledValue(
             context.processedRulesConfig["bad-character-non-breaking-space"]
           ))
       ) {
@@ -10444,7 +10468,7 @@ function get(something) {
 }
 function normaliseRequestedRules(opts) {
   const res = {};
-  if (Object.keys(opts).includes("all") && isEnabled(opts.all)) {
+  if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
     Object.keys(builtInRules).forEach(ruleName => {
       res[ruleName] = opts.all;
     });
@@ -10977,6 +11001,18 @@ class Linter extends EventEmitter {
       },
       charCb: obj => {
         this.emit("character", obj);
+      },
+      errCb: obj => {
+        const currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
+        if (currentRulesSeverity) {
+          let message = `Something is wrong.`;
+          if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
+            message = astErrMessages[obj.ruleId];
+          }
+          this.report(
+            Object.assign({ message, severity: currentRulesSeverity }, obj)
+          );
+        }
       }
     });
     if (
@@ -10990,8 +11026,8 @@ class Linter extends EventEmitter {
               ["bad-malformed-numeric-character-entity"],
               ruleName
             )) &&
-          (isEnabled(config.rules[ruleName]) ||
-            isEnabled(processedRulesConfig[ruleName]))
+          (isAnEnabledValue(config.rules[ruleName]) ||
+            isAnEnabledValue(processedRulesConfig[ruleName]))
       )
     ) {
       stringFixBrokenNamedEntities(str, {
@@ -11084,7 +11120,10 @@ class Linter extends EventEmitter {
       typeof this.processedRulesConfig[obj.ruleId] === "number"
     ) {
       severity = this.processedRulesConfig[obj.ruleId];
-    } else if (!Number.isInteger(obj.severity)) {
+    } else if (
+      !Number.isInteger(obj.severity) &&
+      Array.isArray(this.processedRulesConfig[obj.ruleId])
+    ) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     this.messages.push(Object.assign({}, { line, column: col, severity }, obj));

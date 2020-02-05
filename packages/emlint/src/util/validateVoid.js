@@ -1,4 +1,4 @@
-import isObj from "lodash.isplainobject";
+import { isObj } from "./util";
 
 function validateVoid(node, context, errorArr, originalOpts) {
   console.log(
