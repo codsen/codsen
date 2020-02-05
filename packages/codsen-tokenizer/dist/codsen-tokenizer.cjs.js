@@ -564,7 +564,7 @@ function tokenizer(str, originalOpts) {
         attribReset();
       }
     }
-    if (opts.charCb) {
+    if (str[i] && opts.charCb) {
       pingCharCb({
         type: token.type,
         chr: str[i],

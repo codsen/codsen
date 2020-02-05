@@ -1786,7 +1786,7 @@ function tokenizer(str, originalOpts) {
     // ping charCb
     // -------------------------------------------------------------------------
 
-    if (opts.charCb) {
+    if (str[i] && opts.charCb) {
       console.log(
         `1791 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {

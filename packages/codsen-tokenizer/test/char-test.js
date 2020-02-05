@@ -12,7 +12,7 @@ t.test(t => {
     }
   });
 
-  t.match(
+  t.same(
     gathered,
     [
       {
