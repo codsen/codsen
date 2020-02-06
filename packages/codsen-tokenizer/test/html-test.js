@@ -961,3 +961,74 @@ t.test("03.04 - XML - incorrect 3", t => {
   );
   t.end();
 });
+
+// 04. CSS
+// -----------------------------------------------------------------------------
+
+t.only("04.01 - CSS - healthy", t => {
+  const gathered = [];
+  ct(
+    `<style type="text/css">
+.a[b] {c:d;}
+</style>
+<body>
+`,
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    }
+  );
+  t.match(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 23,
+        tagName: "style"
+      },
+      {
+        type: "text",
+        start: 23,
+        end: 24
+      },
+      {
+        type: "css",
+        start: 24,
+        end: 36
+      },
+      {
+        type: "text",
+        start: 36,
+        end: 37
+      },
+      {
+        type: "html",
+        start: 37,
+        end: 45,
+        tagName: "style",
+        closing: true
+      },
+      {
+        type: "text",
+        start: 45,
+        end: 46
+      },
+      {
+        type: "html",
+        start: 46,
+        end: 52,
+        tagName: "body"
+      },
+      {
+        type: "text",
+        start: 52,
+        end: 53
+      }
+    ],
+    "04.01"
+  );
+  t.is(gathered.length, 8, "04.02");
+  t.end();
+});
