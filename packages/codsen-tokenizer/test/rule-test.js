@@ -1,11 +1,11 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
 
-// 01. CSS
+// 01. simple
 // -----------------------------------------------------------------------------
 
 t.test(
-  `01.01 - ${`\u001b[${36}m${`css`}\u001b[${39}m`} - one rule, no linebreaks`,
+  `01.01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
   t => {
     const gathered = [];
     ct(`<style>.a-b{c}</style>`, {
@@ -50,7 +50,7 @@ t.test(
 );
 
 t.test(
-  `01.02 - ${`\u001b[${36}m${`css`}\u001b[${39}m`} - one rule, linebreaks`,
+  `01.02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
   t => {
     const gathered = [];
     ct(
