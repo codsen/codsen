@@ -193,7 +193,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 
-function isNum(something) {
+function isNumOrNumStr(something) {
   return (
     (typeof something === "string" &&
       something.charCodeAt(0) >= 48 &&
@@ -252,12 +252,12 @@ export {
   isLowerCaseLetter,
   isUppercaseLetter,
   secondToLastChar,
+  isNumOrNumStr,
   isLatinLetter,
   isLowercase,
   flipEspTag,
   secondChar,
   firstChar,
   lastChar,
-  isStr,
-  isNum
+  isStr
 };

@@ -187,7 +187,7 @@ function isUppercaseLetter(char) {
 function isStr(something) {
   return typeof something === "string";
 }
-function isNum(something) {
+function isNumOrNumStr(something) {
   return (
     (typeof something === "string" &&
       something.charCodeAt(0) >= 48 &&
@@ -240,7 +240,7 @@ exports.flipEspTag = flipEspTag;
 exports.isLatinLetter = isLatinLetter;
 exports.isLowerCaseLetter = isLowerCaseLetter;
 exports.isLowercase = isLowercase;
-exports.isNum = isNum;
+exports.isNumOrNumStr = isNumOrNumStr;
 exports.isStr = isStr;
 exports.isUppercaseLetter = isUppercaseLetter;
 exports.lastChar = lastChar;
