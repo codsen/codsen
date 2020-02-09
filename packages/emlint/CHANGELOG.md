@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://gitlab.com/codsen/codsen/compare/emlint@2.11.1...emlint@2.12.0) (2020-02-09)
+
+
+### Features
+
+* new rule, `tag-missing-opening` ([1d5d596](https://gitlab.com/codsen/codsen/commit/1d5d596501cebb289cffad6d5f354148d0c6538c))
+* switch to codsen-parser ([e9d7080](https://gitlab.com/codsen/codsen/commit/e9d7080a50967e582aa73948d7d0cd80fcc5d20c))
+
+
+
+
+
 ## 2.11.0 (2020-01-26)
 
 ### Features

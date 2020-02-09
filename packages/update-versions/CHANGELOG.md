@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://gitlab.com/codsen/codsen/compare/update-versions@2.3.7...update-versions@2.4.0) (2020-02-09)
+
+
+### Features
+
+* move the bastardised p-progress in as a local dep ([63a280c](https://gitlab.com/codsen/codsen/commit/63a280ce2a1143c805b206c6ee1b894f98a168b0)), closes [#28](https://gitlab.com/codsen/codsen/issues/28)
+
+
+
+
+
 ## 2.3.0 (2019-11-27)
 
 ### Features

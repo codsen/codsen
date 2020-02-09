@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS",
   "license": "MIT",
   "engines": {
@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "html-all-known-attributes": "^1.3.1",
-    "is-html-tag-opening": "^1.5.4",
+    "is-html-tag-opening": "^1.6.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "string-left-right": "^2.3.16",

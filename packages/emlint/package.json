@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.11.1",
+  "version": "2.12.0",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "engines": {
@@ -132,7 +132,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "codsen-parser": "^0.0.1",
+    "codsen-parser": "^0.1.0",
     "define-lazy-prop": "^2.0.0",
     "he": "^1.2.0",
     "html-all-known-attributes": "^1.3.1",

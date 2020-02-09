@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "3.9.1",
+  "version": "3.9.2",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {
@@ -123,7 +123,7 @@
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.61",
     "ast-is-empty": "^1.10.0",
-    "codsen-tokenizer": "^2.6.0",
+    "codsen-tokenizer": "^2.7.0",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
