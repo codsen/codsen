@@ -852,6 +852,46 @@ t.test("02.04 - CDATA - messed up 3", t => {
   t.end();
 });
 
+t.test("02.05 - CDATA - with line breaks", t => {
+  const gathered = [];
+  ct(
+    `a\n<![CDATA[
+  The <, &, ', and " can be used,
+  *and* %MyParamEntity; can be expanded.
+]]>\nb`,
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    }
+  );
+  t.match(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2
+      },
+      {
+        type: "html",
+        start: 2,
+        end: 90,
+        void: false,
+        recognised: true,
+        kind: "cdata"
+      },
+      {
+        type: "text",
+        start: 90,
+        end: 92
+      }
+    ],
+    "02.05"
+  );
+  t.end();
+});
+
 // 03. XML
 // -----------------------------------------------------------------------------
 
@@ -947,6 +987,71 @@ t.test("03.04 - XML - incorrect 3", t => {
       }
     ],
     "03.04"
+  );
+  t.end();
+});
+
+// 04. custom tags
+// -----------------------------------------------------------------------------
+
+t.test("04.01 - unrecognised tag name", t => {
+  const gathered = [];
+  ct("<something>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+  t.same(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 11,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 10,
+        tagName: "something",
+        recognised: false,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
+      }
+    ],
+    "04.01"
+  );
+  t.end();
+});
+
+t.test("04.02 - unrecognised tag name with dash", t => {
+  const gathered = [];
+  ct("<something-here>", {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+  t.same(
+    gathered,
+    [
+      {
+        type: "html",
+        start: 0,
+        end: 16,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 15,
+        tagName: "something-here",
+        recognised: false,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
+      }
+    ],
+    "04.01"
   );
   t.end();
 });

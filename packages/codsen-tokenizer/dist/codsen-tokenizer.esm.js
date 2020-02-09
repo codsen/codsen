@@ -171,6 +171,11 @@ function isLatinLetter(char) {
       (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
   );
 }
+function charSuitableForTagName(char) {
+  return /[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/i.test(
+    char
+  );
+}
 function charSuitableForHTMLAttrName(char) {
   return (
     isLatinLetter(char) ||
@@ -567,7 +572,11 @@ function tokenizer(str, originalOpts) {
         token = tokenReset();
       }
     }
-    if (!doNothing && ["html", "esp", "css"].includes(token.type)) {
+    if (
+      !doNothing &&
+      ["html", "esp", "css"].includes(token.type) &&
+      token.kind !== "cdata"
+    ) {
       if (
         [`"`, `'`, `(`, `)`].includes(str[i]) &&
         !(
@@ -681,8 +690,14 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (
         str[i] === "<" &&
-        ((token.type === "text" && isTagOpening(str, i)) || !layers.length) &&
-        (isTagOpening(str, i) ||
+        ((token.type === "text" &&
+          isTagOpening(str, i, {
+            allowCustomTagNames: true
+          })) ||
+          !layers.length) &&
+        (isTagOpening(str, i, {
+          allowCustomTagNames: true
+        }) ||
           str.startsWith("!--", i + 1) ||
           matchRight(str, i, ["doctype", "xml", "cdata"], {
             i: true,
@@ -910,7 +925,7 @@ function tokenizer(str, originalOpts) {
       Number.isInteger(token.tagNameStartsAt) &&
       !Number.isInteger(token.tagNameEndsAt)
     ) {
-      if (!isLatinLetter(str[i]) && !/^\d*$/.test(str[i])) {
+      if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
         if (voidTags.includes(token.tagName)) {
@@ -940,6 +955,7 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "html" &&
+      token.kind !== "cdata" &&
       Number.isInteger(attrib.attribNameStartsAt) &&
       i > attrib.attribNameStartsAt &&
       attrib.attribNameEndsAt === null &&
@@ -962,6 +978,7 @@ function tokenizer(str, originalOpts) {
       !doNothing &&
       str[i] &&
       token.type === "html" &&
+      token.kind !== "cdata" &&
       Number.isInteger(token.tagNameEndsAt) &&
       i > token.tagNameEndsAt &&
       attrib.attribStart === null &&

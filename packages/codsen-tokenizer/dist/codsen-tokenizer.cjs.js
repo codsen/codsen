@@ -40,6 +40,9 @@ function isStr(something) {
 function isLatinLetter(_char4) {
   return isStr(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
 }
+function charSuitableForTagName(_char5) {
+  return /[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/i.test(_char5);
+}
 function charSuitableForHTMLAttrName(_char6) {
   return isLatinLetter(_char6) || _char6.charCodeAt(0) >= 48 && _char6.charCodeAt(0) <= 57 || [":", "-"].includes(_char6);
 }
@@ -346,7 +349,7 @@ function tokenizer(str, originalOpts) {
         token = tokenReset();
       }
     }
-    if (!doNothing && ["html", "esp", "css"].includes(token.type)) {
+    if (!doNothing && ["html", "esp", "css"].includes(token.type) && token.kind !== "cdata") {
       if (["\"", "'", "(", ")"].includes(str[i]) && !(
       ["\"", "'"].includes(str[stringLeftRight.left(str, i)]) && str[stringLeftRight.left(str, i)] === str[stringLeftRight.right(str, i)])) {
         if (matchLayerLast(str, i)) {
@@ -410,7 +413,11 @@ function tokenizer(str, originalOpts) {
       selectorChunkStartedAt = undefined;
     }
     if (!doNothing) {
-      if (str[i] === "<" && (token.type === "text" && isTagOpening(str, i) || !layers.length) && (isTagOpening(str, i) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+      if (str[i] === "<" && (token.type === "text" && isTagOpening(str, i, {
+        allowCustomTagNames: true
+      }) || !layers.length) && (isTagOpening(str, i, {
+        allowCustomTagNames: true
+      }) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
         trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
@@ -560,7 +567,7 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing && token.type === "html" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
-      if (!isLatinLetter(str[i]) && !/^\d*$/.test(str[i])) {
+      if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
         if (voidTags.includes(token.tagName)) {
@@ -579,7 +586,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (!doNothing && token.type === "html" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
+    if (!doNothing && token.type === "html" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.includes(attrib.attribName);
@@ -589,7 +596,7 @@ function tokenizer(str, originalOpts) {
         attribReset();
       }
     }
-    if (!doNothing && str[i] && token.type === "html" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
+    if (!doNothing && str[i] && token.type === "html" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
       attrib.attribStart = i;
       attrib.attribNameStartsAt = i;
     }
