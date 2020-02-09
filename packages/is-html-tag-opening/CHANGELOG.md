@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.6.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.5.4...is-html-tag-opening@1.6.0) (2020-02-09)
-
+## 1.6.0 (2020-02-09)
 
 ### Features
 
-* opts.allowCustomTagNames ([1771e43](https://gitlab.com/codsen/codsen/commit/1771e431a356f96a745befdbfc7cdd5a9329b296))
-
-
-
-
+- opts.allowCustomTagNames ([1771e43](https://gitlab.com/codsen/codsen/commit/1771e431a356f96a745befdbfc7cdd5a9329b296))
 
 ## 1.5.0 (2019-12-27)
 

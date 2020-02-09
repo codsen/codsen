@@ -3,26 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.7.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.6.0...codsen-tokenizer@2.7.0) (2020-02-09)
-
+## 2.7.0 (2020-02-09)
 
 ### Bug Fixes
 
-* don't ping last undefined character to charCb ([284b50c](https://gitlab.com/codsen/codsen/commit/284b50cdfd968c26b2858a0efd2697a7a7d67d90))
-* turn off styleStarts ([def78e0](https://gitlab.com/codsen/codsen/commit/def78e04f960261381c16408bcd19bfe73d77c4c))
-
+- don't ping last undefined character to charCb ([284b50c](https://gitlab.com/codsen/codsen/commit/284b50cdfd968c26b2858a0efd2697a7a7d67d90))
+- turn off styleStarts ([def78e0](https://gitlab.com/codsen/codsen/commit/def78e04f960261381c16408bcd19bfe73d77c4c))
 
 ### Features
 
-* "rule" token type ([e95c9ab](https://gitlab.com/codsen/codsen/commit/e95c9ab0f9e0fd2d1df629aa13d75d317b310c61))
-* extend loop range until length + 1 ([8095bb9](https://gitlab.com/codsen/codsen/commit/8095bb9b5527125c06e61e904c914533f4fff9eb))
-* improvements to cdata tag recognition ([b84491b](https://gitlab.com/codsen/codsen/commit/b84491ba6197d75b4614b54f399b3f06621e5e7b))
-* single-layer at rules with nested whitespace (text) tokens ([3bc51b5](https://gitlab.com/codsen/codsen/commit/3bc51b5f651fab92985bfe39a7fb7c70ad2425e5))
-* tighten up opts input check types ([3b80e1d](https://gitlab.com/codsen/codsen/commit/3b80e1dcccad69c74ca959d7035a8f038baddbb7))
-
-
-
-
+- "rule" token type ([e95c9ab](https://gitlab.com/codsen/codsen/commit/e95c9ab0f9e0fd2d1df629aa13d75d317b310c61))
+- extend loop range until length + 1 ([8095bb9](https://gitlab.com/codsen/codsen/commit/8095bb9b5527125c06e61e904c914533f4fff9eb))
+- improvements to cdata tag recognition ([b84491b](https://gitlab.com/codsen/codsen/commit/b84491ba6197d75b4614b54f399b3f06621e5e7b))
+- single-layer at rules with nested whitespace (text) tokens ([3bc51b5](https://gitlab.com/codsen/codsen/commit/3bc51b5f651fab92985bfe39a7fb7c70ad2425e5))
+- tighten up opts input check types ([3b80e1d](https://gitlab.com/codsen/codsen/commit/3b80e1dcccad69c74ca959d7035a8f038baddbb7))
 
 ## 2.6.0 (2020-02-01)
 
