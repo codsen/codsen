@@ -318,6 +318,35 @@ t.test(`05.15 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   t.end();
 });
 
+t.test(
+  `05.16 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - custom html tags with dashes`,
+  t => {
+    const s1 = `<something-here>`;
+    t.false(is(s1, 0));
+    t.ok(
+      is(s1, 0, {
+        allowCustomTagNames: true
+      })
+    );
+    t.end();
+  }
+);
+
+// https://www.fileformat.info/info/unicode/char/1f600/index.htm
+t.test(
+  `05.17 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - custom html tags with dashes`,
+  t => {
+    const s1 = `<emoji-\uD83D\uDE00>`;
+    t.false(is(s1, 0));
+    t.ok(
+      is(s1, 0, {
+        allowCustomTagNames: true
+      })
+    );
+    t.end();
+  }
+);
+
 // 06. broken code
 // -----------------------------------------------------------------------------
 

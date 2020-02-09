@@ -23,21 +23,52 @@ function isNotLetter(_char) {
 }
 function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
+  console.log("152 ".concat("\x1B[".concat(33, "m", "idx", "\x1B[", 39, "m"), " = ", "\x1B[".concat(31, "m", idx, "\x1B[", 39, "m"), ", \"", str[idx], "\""));
+  var defaults = {
+    allowCustomTagNames: false
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
   var r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
+  var r5 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
   var r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
+  var r6 = /^<\s*\w+\s+[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
   var r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
+  var r7 = /^<\s*\/?\s*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
   var r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  var r8 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
   var whatToTest = idx ? str.slice(idx) : str;
   var passed = false;
-  if (r1.test(whatToTest)) {
-    passed = true;
-  } else if (r2.test(whatToTest)) {
-    passed = true;
-  } else if (r3.test(whatToTest)) {
-    passed = true;
-  } else if (r4.test(whatToTest)) {
-    passed = true;
-  } else if (str[idx] === "<" && str[idx + 1] && (["/", BACKSLASH].includes(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx + 1, knownHtmlTags, {
+  if (opts.allowCustomTagNames) {
+    if (r5.test(whatToTest)) {
+      console.log("199 ".concat("\x1B[".concat(31, "m", "R5", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r6.test(whatToTest)) {
+      console.log("202 ".concat("\x1B[".concat(31, "m", "R6", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r7.test(whatToTest)) {
+      console.log("205 ".concat("\x1B[".concat(31, "m", "R7", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r8.test(whatToTest)) {
+      console.log("208 ".concat("\x1B[".concat(31, "m", "R8", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    }
+  } else {
+    if (r1.test(whatToTest)) {
+      console.log("213 ".concat("\x1B[".concat(31, "m", "R1", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r2.test(whatToTest)) {
+      console.log("216 ".concat("\x1B[".concat(31, "m", "R2", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r3.test(whatToTest)) {
+      console.log("219 ".concat("\x1B[".concat(31, "m", "R3", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    } else if (r4.test(whatToTest)) {
+      console.log("222 ".concat("\x1B[".concat(31, "m", "R4", "\x1B[", 39, "m"), " passed"));
+      passed = true;
+    }
+  }
+  if (!passed && str[idx] === "<" && str[idx + 1] && (["/", BACKSLASH].includes(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx + 1, knownHtmlTags, {
     cb: isNotLetter,
     i: true
   }) || !isNotLetter(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, {
@@ -53,7 +84,9 @@ function isOpening(str) {
   }))) {
     passed = true;
   }
+  console.log("264 ".concat("\x1B[".concat(33, "m", "isNotLetter(str[".concat(idx + 1, "])"), "\x1B[", 39, "m"), " = ", JSON.stringify(isNotLetter(str[idx + 1]), null, 4)));
   var res = isStr(str) && idx < str.length && passed;
+  console.log("272 return ".concat("\x1B[".concat(36, "m", res, "\x1B[", 39, "m")));
   return res;
 }
 
