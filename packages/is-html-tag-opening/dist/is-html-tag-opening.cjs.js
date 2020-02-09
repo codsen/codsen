@@ -24,7 +24,6 @@ function isNotLetter(_char) {
 function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
-  console.log("152 ".concat("\x1B[".concat(33, "m", "idx", "\x1B[", 39, "m"), " = ", "\x1B[".concat(31, "m", idx, "\x1B[", 39, "m"), ", \"", str[idx], "\""));
   var defaults = {
     allowCustomTagNames: false
   };
@@ -41,30 +40,22 @@ function isOpening(str) {
   var passed = false;
   if (opts.allowCustomTagNames) {
     if (r5.test(whatToTest)) {
-      console.log("199 ".concat("\x1B[".concat(31, "m", "R5", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log("202 ".concat("\x1B[".concat(31, "m", "R6", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r7.test(whatToTest)) {
-      console.log("205 ".concat("\x1B[".concat(31, "m", "R7", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log("208 ".concat("\x1B[".concat(31, "m", "R8", "\x1B[", 39, "m"), " passed"));
       passed = true;
     }
   } else {
     if (r1.test(whatToTest)) {
-      console.log("213 ".concat("\x1B[".concat(31, "m", "R1", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log("216 ".concat("\x1B[".concat(31, "m", "R2", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r3.test(whatToTest)) {
-      console.log("219 ".concat("\x1B[".concat(31, "m", "R3", "\x1B[", 39, "m"), " passed"));
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log("222 ".concat("\x1B[".concat(31, "m", "R4", "\x1B[", 39, "m"), " passed"));
       passed = true;
     }
   }
@@ -84,9 +75,7 @@ function isOpening(str) {
   }))) {
     passed = true;
   }
-  console.log("264 ".concat("\x1B[".concat(33, "m", "isNotLetter(str[".concat(idx + 1, "])"), "\x1B[", 39, "m"), " = ", JSON.stringify(isNotLetter(str[idx + 1]), null, 4)));
   var res = isStr(str) && idx < str.length && passed;
-  console.log("272 return ".concat("\x1B[".concat(36, "m", res, "\x1B[", 39, "m")));
   return res;
 }
 
