@@ -39,7 +39,7 @@ function attributeValidateSize(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
 
           console.log(
@@ -87,7 +87,7 @@ function attributeValidateSize(context, ...opts) {
               // no need to check whitespace, opts.skipWhitespaceChecks: true
               validateDigitAndUnit(
                 extractedVal,
-                node.attribValueStartAt + charStart,
+                node.attribValueStartsAt + charStart,
                 {
                   type: "integer",
                   negativeOK: false,
@@ -107,7 +107,7 @@ function attributeValidateSize(context, ...opts) {
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,
-                  node.attribValueStartAt + charStart,
+                  node.attribValueStartsAt + charStart,
                   {
                     type: "integer",
                     negativeOK: false,
@@ -123,8 +123,8 @@ function attributeValidateSize(context, ...opts) {
                   // in which case, we raise a generic error against whole
                   // attribute's value
                   errorArr2.push({
-                    idxFrom: node.attribValueStartAt + charStart,
-                    idxTo: node.attribValueStartAt + charEnd,
+                    idxFrom: node.attribValueStartsAt + charStart,
+                    idxTo: node.attribValueStartsAt + charEnd,
                     message: `Should be integer 1-7, plus/minus are optional.`,
                     fix: null
                   });

@@ -44,7 +44,7 @@ function attributeValidateRows(context, ...opts) {
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               whitelistValues: ["*"],
               theOnlyGoodUnits: ["%"],
@@ -66,7 +66,7 @@ function attributeValidateRows(context, ...opts) {
           // each character must be a digit
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               type: "integer",
               theOnlyGoodUnits: [],

@@ -2453,13 +2453,13 @@ function tagSpaceAfterOpeningBracket(context) {
       ) {
         ranges.push([node.start + 1, right(context.str, node.start + 1)]);
       }
-      if (!context.str[node.tagNameStartAt - 1].trim().length) {
+      if (!context.str[node.tagNameStartsAt - 1].trim().length) {
         const charToTheLeftOfTagNameIdx = left(
           context.str,
-          node.tagNameStartAt
+          node.tagNameStartsAt
         );
         if (charToTheLeftOfTagNameIdx !== node.start) {
-          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartAt]);
+          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartsAt]);
         }
       }
       if (ranges.length) {
@@ -2478,7 +2478,7 @@ function tagSpaceAfterOpeningBracket(context) {
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
     html: function(node) {
-      const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
@@ -2546,10 +2546,10 @@ function tagClosingBackslash(context) {
       const ranges = [];
       if (
         Number.isInteger(node.start) &&
-        Number.isInteger(node.tagNameStartAt) &&
-        context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)
+        Number.isInteger(node.tagNameStartsAt) &&
+        context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
       ) {
-        for (let i = node.start; i < node.tagNameStartAt; i++) {
+        for (let i = node.start; i < node.tagNameStartsAt; i++) {
           if (context.str[i] === BACKSLASH) {
             ranges.push([i, i + 1]);
           }
@@ -2730,36 +2730,36 @@ function tagNameCase(context) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (
-            context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+            context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
             node.tagName.toUpperCase()
           ) {
             const ranges = [
               [
-                node.tagNameStartAt,
-                node.tagNameEndAt,
+                node.tagNameStartsAt,
+                node.tagNameEndsAt,
                 node.tagName.toUpperCase()
               ]
             ];
             context.report({
               ruleId: "tag-name-case",
               message: "Bad tag name case.",
-              idxFrom: node.tagNameStartAt,
-              idxTo: node.tagNameEndAt,
+              idxFrom: node.tagNameStartsAt,
+              idxTo: node.tagNameEndsAt,
               fix: { ranges }
             });
           }
         } else if (
-          context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+          context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
           node.tagName
         ) {
           const ranges = [
-            [node.tagNameStartAt, node.tagNameEndAt, node.tagName]
+            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]
           ];
           context.report({
             ruleId: "tag-name-case",
             message: "Bad tag name case.",
-            idxFrom: node.tagNameStartAt,
-            idxTo: node.tagNameEndAt,
+            idxFrom: node.tagNameStartsAt,
+            idxTo: node.tagNameEndsAt,
             fix: { ranges }
           });
         }
@@ -2804,7 +2804,9 @@ function tagBold(context, ...opts) {
           message: `Tag "bold" does not exist in HTML.`,
           idxFrom: node.start,
           idxTo: node.end,
-          fix: { ranges: [[node.tagNameStartAt, node.tagNameEndAt, suggested]] }
+          fix: {
+            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
+          }
         });
       }
     }
@@ -2849,13 +2851,13 @@ function attributeMalformed(context, ...opts) {
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
-              idxFrom: node.attribNameStartAt,
-              idxTo: node.attribNameEndAt,
+              idxFrom: node.attribNameStartsAt,
+              idxTo: node.attribNameEndsAt,
               fix: {
                 ranges: [
                   [
-                    node.attribNameStartAt,
-                    node.attribNameEndAt,
+                    node.attribNameStartsAt,
+                    node.attribNameEndsAt,
                     allHtmlAttribs[i]
                   ]
                 ]
@@ -2869,22 +2871,21 @@ function attributeMalformed(context, ...opts) {
           context.report({
             ruleId: "attribute-malformed",
             message: `Unrecognised attribute "${node.attribName}".`,
-            idxFrom: node.attribNameStartAt,
-            idxTo: node.attribNameEndAt,
+            idxFrom: node.attribNameStartsAt,
+            idxTo: node.attribNameEndsAt,
             fix: null
           });
         }
-      }
-      if (
-        node.attribValueStartAt !== null &&
-        context.str[node.attribNameEndAt] !== "="
+      } else if (
+        node.attribValueStartsAt !== null &&
+        context.str[node.attribNameEndsAt] !== "="
       ) {
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd,
-          fix: { ranges: [[node.attribNameEndAt, node.attribNameEndAt, "="]] }
+          fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
         });
       }
     }
@@ -2906,7 +2907,7 @@ function attributeValidateAbbr(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -3382,7 +3383,7 @@ function attributeValidateAcceptCharset(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             canBeCommaSeparated: true,
             noSpaceAfterComma: true,
@@ -3417,7 +3418,7 @@ function attributeValidateAccept(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             quickPermittedValues: [
               "audio/*",
@@ -3473,7 +3474,7 @@ function attributeValidateAccesskey(context, ...opts) {
         }
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         if (Number.isInteger(charStart)) {
           if (
@@ -3481,8 +3482,8 @@ function attributeValidateAccesskey(context, ...opts) {
             !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
           ) {
             errorArr.push({
-              idxFrom: node.attribValueStartAt + charStart,
-              idxTo: node.attribValueStartAt + charEnd,
+              idxFrom: node.attribValueStartsAt + charStart,
+              idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character (escaped or not).`,
               fix: null
             });
@@ -3773,7 +3774,7 @@ function attributeValidateAction(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -3833,7 +3834,7 @@ function attributeValidateAlign(context, ...opts) {
         if (["legend", "caption"].includes(node.parent.tagName.toLowerCase())) {
           errorArr = validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["top", "bottom", "left", "right"],
               canBeCommaSeparated: false
@@ -3846,7 +3847,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           errorArr = validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["top", "middle", "bottom", "left", "right"],
               canBeCommaSeparated: false
@@ -3857,7 +3858,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           errorArr = validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right"],
               canBeCommaSeparated: false
@@ -3870,7 +3871,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           errorArr = validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right", "justify"],
               canBeCommaSeparated: false
@@ -3890,7 +3891,7 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           errorArr = validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["left", "center", "right", "justify", "char"],
               canBeCommaSeparated: false
@@ -4011,7 +4012,7 @@ function attributeValidateAlink(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -4048,7 +4049,7 @@ function attributeValidateAlt(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -4077,7 +4078,7 @@ function attributeValidateArchive(context, ...opts) {
         } else {
           if (node.parent.tagName === "applet") {
             validateUri(node.attribValue, {
-              offset: node.attribValueStartAt,
+              offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true
             }).forEach(errorObj => {
@@ -4089,7 +4090,7 @@ function attributeValidateArchive(context, ...opts) {
             });
           } else if (node.parent.tagName === "object") {
             validateUri(node.attribValue, {
-              offset: node.attribValueStartAt,
+              offset: node.attribValueStartsAt,
               separator: "space",
               multipleOK: true
             }).forEach(errorObj => {
@@ -4121,7 +4122,7 @@ function attributeValidateAxis(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -4149,7 +4150,7 @@ function attributeValidateBackground(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -4181,7 +4182,7 @@ function attributeValidateBgcolor(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -4483,7 +4484,7 @@ function attributeValidateBorder(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             negativeOK: false,
@@ -4517,7 +4518,7 @@ function attributeValidateCellpadding(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             negativeOK: false,
@@ -4554,7 +4555,7 @@ function attributeValidateCellspacing(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             negativeOK: false,
@@ -4602,7 +4603,7 @@ function attributeValidateChar(context, ...opts) {
         }
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         if (Number.isInteger(charStart)) {
           if (
@@ -4610,8 +4611,8 @@ function attributeValidateChar(context, ...opts) {
             !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
           ) {
             errorArr.push({
-              idxFrom: node.attribValueStartAt + charStart,
-              idxTo: node.attribValueStartAt + charEnd,
+              idxFrom: node.attribValueStartsAt + charStart,
+              idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character.`,
               fix: null
             });
@@ -4655,7 +4656,7 @@ function attributeValidateCharoff(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             negativeOK: true,
@@ -4702,7 +4703,7 @@ function attributeValidateCharset(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             canBeCommaSeparated: false,
             noSpaceAfterComma: false,
@@ -4743,17 +4744,17 @@ function validateVoid(node, context, errorArr, originalOpts) {
     }
     if (
       node.attribValue !== node.attribName ||
-      context.str.slice(node.attribNameEndAt, node.attribEnd) !==
+      context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       errorArr.push({
-        idxFrom: node.attribNameStartAt,
-        idxTo: node.attribNameEndAt,
+        idxFrom: node.attribNameStartsAt,
+        idxTo: node.attribNameEndsAt,
         message: `It's XHTML, add value, ="${node.attribName}".`,
         fix: {
           ranges: [
             [
-              node.attribNameEndAt,
+              node.attribNameEndsAt,
               node.attribEnd,
               `=${quotesType}${node.attribName}${quotesType}`
             ]
@@ -4763,11 +4764,11 @@ function validateVoid(node, context, errorArr, originalOpts) {
     }
   } else if (node.attribValue !== null) {
     errorArr.push({
-      idxFrom: node.attribNameEndAt,
+      idxFrom: node.attribNameEndsAt,
       idxTo: node.attribEnd,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndAt, node.attribEnd]]
+        ranges: [[node.attribNameEndsAt, node.attribEnd]]
       }
     });
   }
@@ -4804,8 +4805,8 @@ function validateVoid(node, context, errorArr, originalOpts) {
         let idxTo;
         for (let i = 0, len = node.parent.attribs.length; i < len; i++) {
           if (node.parent.attribs[i].attribName === siblingAttr) {
-            idxFrom = node.parent.attribs[i].attribValueStartAt;
-            idxTo = node.parent.attribs[i].attribValueEndAt;
+            idxFrom = node.parent.attribs[i].attribValueStartsAt;
+            idxTo = node.parent.attribs[i].attribValueEndsAt;
             break;
           }
         }
@@ -4885,7 +4886,7 @@ function attributeValidateCite(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -4987,14 +4988,14 @@ function attributeValidateClass(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           checkClassOrIdValue(
             context.str,
             {
               typeName: node.attribName,
-              from: node.attribValueStartAt + charStart,
-              to: node.attribValueStartAt + charEnd,
+              from: node.attribValueStartsAt + charStart,
+              to: node.attribValueStartsAt + charEnd,
               offset: 0
             },
             errorArr
@@ -5026,7 +5027,7 @@ function attributeValidateClassid(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -5056,19 +5057,19 @@ function attributeValidateClassid$1(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         if (
           !["left", "all", "right", "none"].includes(
             context.str.slice(
-              node.attribValueStartAt + charStart,
-              node.attribValueStartAt + charEnd
+              node.attribValueStartsAt + charStart,
+              node.attribValueStartsAt + charEnd
             )
           )
         ) {
           errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
+            idxFrom: node.attribValueStartsAt + charStart,
+            idxTo: node.attribValueStartsAt + charEnd,
             message: `Should be: left|all|right|none.`,
             fix: null
           });
@@ -5100,7 +5101,7 @@ function attributeValidateCode(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -5128,7 +5129,7 @@ function attributeValidateCodebase(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -5158,7 +5159,7 @@ function attributeValidateCodetype(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             quickPermittedValues: [
               "application/javascript",
@@ -5223,7 +5224,7 @@ function attributeValidateColor(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -5262,7 +5263,7 @@ function attributeValidateCols(context, ...opts) {
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               whitelistValues: ["*"],
               theOnlyGoodUnits: ["%"],
@@ -5276,7 +5277,7 @@ function attributeValidateCols(context, ...opts) {
         } else if (node.parent.tagName === "textarea") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               type: "integer",
               theOnlyGoodUnits: [],
@@ -5313,7 +5314,7 @@ function attributeValidateColspan(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -5393,7 +5394,7 @@ function attributeValidateContent(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -5446,7 +5447,7 @@ function attributeValidateCoords(context, ...opts) {
             }
             const errorArr = validateDigitAndUnit(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 whitelistValues: null,
                 theOnlyGoodUnits: [],
@@ -5488,7 +5489,7 @@ function attributeValidateData(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -5518,7 +5519,7 @@ function attributeValidateDatetime(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             quickPermittedValues: [isoDateRegex],
             permittedValues: null,
@@ -5657,7 +5658,7 @@ function attributeValidateDir(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["ltr", "rtl"],
             canBeCommaSeparated: false
@@ -5745,7 +5746,7 @@ function attributeValidateEnctype(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             quickPermittedValues: [
               "application/x-www-form-urlencoded",
@@ -5783,7 +5784,7 @@ function attributeValidateFace(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -5812,13 +5813,13 @@ function attributeValidateFor(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           const extractedValue = node.attribValue.slice(charStart, charEnd);
           let message = `Wrong id name.`;
           let fix = null;
-          let idxFrom = charStart + node.attribValueStartAt;
-          let idxTo = charEnd + node.attribValueStartAt;
+          let idxFrom = charStart + node.attribValueStartsAt;
+          let idxTo = charEnd + node.attribValueStartsAt;
           if (
             Number.isInteger(charStart) &&
             !classNameRegex.test(extractedValue)
@@ -5831,13 +5832,13 @@ function attributeValidateFor(context, ...opts) {
               fix = {
                 ranges: [
                   [
-                    node.attribValueStartAt + firstHashAt,
-                    node.attribValueStartAt + firstHashAt + 1
+                    node.attribValueStartsAt + firstHashAt,
+                    node.attribValueStartsAt + firstHashAt + 1
                   ]
                 ]
               };
-              idxFrom = node.attribValueStartAt + firstHashAt;
-              idxTo = node.attribValueStartAt + firstHashAt + 1;
+              idxFrom = node.attribValueStartsAt + firstHashAt;
+              idxTo = node.attribValueStartsAt + firstHashAt + 1;
             }
             errorArr.push({
               ruleId: "attribute-validate-for",
@@ -5875,7 +5876,7 @@ function attributeValidateFrame(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: [
               "void",
@@ -5918,7 +5919,7 @@ function attributeValidateFrameborder(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["0", "1"],
             canBeCommaSeparated: false
@@ -5951,14 +5952,14 @@ function attributeValidateHeaders(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           checkClassOrIdValue(
             context.str,
             {
               typeName: "id",
-              from: node.attribValueStartAt + charStart,
-              to: node.attribValueStartAt + charEnd,
+              from: node.attribValueStartsAt + charStart,
+              to: node.attribValueStartsAt + charEnd,
               offset: 0
             },
             errorArr
@@ -5995,7 +5996,7 @@ function attributeValidateHeight(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             badUnits: ["px"],
             theOnlyGoodUnits: ["%"],
@@ -6029,7 +6030,7 @@ function attributeValidateHref(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -6059,15 +6060,15 @@ function attributeValidateHreflang(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         const { message } = isLangCode(
           node.attribValue.slice(charStart, charEnd)
         );
         if (message) {
           errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
+            idxFrom: node.attribValueStartsAt + charStart,
+            idxTo: node.attribValueStartsAt + charEnd,
             message,
             fix: null
           });
@@ -6099,7 +6100,7 @@ function attributeValidateHspace(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
             noUnitsIsFine: true
@@ -6132,7 +6133,7 @@ function attributeValidateHttpequiv(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["content-type", "default-style", "refresh"],
             canBeCommaSeparated: false
@@ -6169,14 +6170,14 @@ function attributeValidateId(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           checkClassOrIdValue(
             context.str,
             {
               typeName: node.attribName,
-              from: node.attribValueStartAt + charStart,
-              to: node.attribValueStartAt + charEnd,
+              from: node.attribValueStartsAt + charStart,
+              to: node.attribValueStartsAt + charEnd,
               offset: 0
             },
             errorArr
@@ -6255,7 +6256,7 @@ function attributeValidateLabel(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -6288,15 +6289,15 @@ function attributeValidateLang(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         const { message } = isLangCode(
           node.attribValue.slice(charStart, charEnd)
         );
         if (message) {
           errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
+            idxFrom: node.attribValueStartsAt + charStart,
+            idxTo: node.attribValueStartsAt + charEnd,
             message,
             fix: null
           });
@@ -6328,7 +6329,7 @@ function attributeValidateLanguage(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -6357,7 +6358,7 @@ function attributeValidateLink(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -6394,7 +6395,7 @@ function attributeValidateLongdesc(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -6423,7 +6424,7 @@ function attributeValidateMarginheight(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
             noUnitsIsFine: true
@@ -6456,7 +6457,7 @@ function attributeValidateMarginwidth(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
             noUnitsIsFine: true
@@ -6489,7 +6490,7 @@ function attributeValidateMaxlength(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -6523,12 +6524,12 @@ function attributeValidateMedia(context, ...opts) {
         }
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr
           .concat(
             isMediaD(node.attribValue.slice(charStart, charEnd), {
-              offset: node.attribValueStartAt
+              offset: node.attribValueStartsAt
             })
           )
           .forEach(errorObj => {
@@ -6558,7 +6559,7 @@ function attributeValidateMethod(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["get", "post"],
             canBeCommaSeparated: false
@@ -6654,7 +6655,7 @@ function attributeValidateName(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -6867,7 +6868,7 @@ function attributeValidateObject(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -6912,7 +6913,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -6943,7 +6944,7 @@ function attributeValidateOnchange(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -6994,7 +6995,7 @@ function attributeValidateOnclick(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7045,7 +7046,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7086,7 +7087,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7137,7 +7138,7 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7188,7 +7189,7 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7239,7 +7240,7 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7270,7 +7271,7 @@ function attributeValidateOnload(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7321,7 +7322,7 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7372,7 +7373,7 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7423,7 +7424,7 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7474,7 +7475,7 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7525,7 +7526,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7556,7 +7557,7 @@ function attributeValidateOnreset(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7587,7 +7588,7 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7618,7 +7619,7 @@ function attributeValidateOnselect(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7649,7 +7650,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
         } else {
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -7678,7 +7679,7 @@ function attributeValidateProfile(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: true
           }).forEach(errorObj => {
             context.report(
@@ -7708,7 +7709,7 @@ function attributeValidatePrompt(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -7785,7 +7786,7 @@ function attributeValidateRel(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
@@ -7821,7 +7822,7 @@ function attributeValidateRev(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: linkTypes,
             canBeCommaSeparated: false,
@@ -7857,7 +7858,7 @@ function attributeValidateRows(context, ...opts) {
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               whitelistValues: ["*"],
               theOnlyGoodUnits: ["%"],
@@ -7871,7 +7872,7 @@ function attributeValidateRows(context, ...opts) {
         } else if (node.parent.tagName === "textarea") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               type: "integer",
               theOnlyGoodUnits: [],
@@ -7908,7 +7909,7 @@ function attributeValidateRowspan(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -7942,7 +7943,7 @@ function attributeValidateRules(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["none", "groups", "rows", "cols", "all"],
             canBeCommaSeparated: false
@@ -7975,7 +7976,7 @@ function attributeValidateScheme(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8004,7 +8005,7 @@ function attributeValidateScope(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["row", "col", "rowgroup", "colgroup"],
             canBeCommaSeparated: false
@@ -8037,7 +8038,7 @@ function attributeValidateScrolling(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["auto", "yes", "no"],
             canBeCommaSeparated: false
@@ -8116,7 +8117,7 @@ function attributeValidateShape(context, ...opts) {
         }
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             permittedValues: ["default", "rect", "circle", "poly"],
             canBeCommaSeparated: false
@@ -8153,7 +8154,7 @@ function attributeValidateSize(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           errorArr.forEach(errorObj => {
             context.report(
@@ -8167,7 +8168,7 @@ function attributeValidateSize(context, ...opts) {
             if (["hr", "input", "select"].includes(node.parent.tagName)) {
               validateDigitAndUnit(
                 extractedVal,
-                node.attribValueStartAt + charStart,
+                node.attribValueStartsAt + charStart,
                 {
                   type: "integer",
                   negativeOK: false,
@@ -8185,7 +8186,7 @@ function attributeValidateSize(context, ...opts) {
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,
-                  node.attribValueStartAt + charStart,
+                  node.attribValueStartsAt + charStart,
                   {
                     type: "integer",
                     negativeOK: false,
@@ -8196,8 +8197,8 @@ function attributeValidateSize(context, ...opts) {
                 );
                 if (!errorArr2.length) {
                   errorArr2.push({
-                    idxFrom: node.attribValueStartAt + charStart,
-                    idxTo: node.attribValueStartAt + charEnd,
+                    idxFrom: node.attribValueStartsAt + charStart,
+                    idxTo: node.attribValueStartsAt + charEnd,
                     message: `Should be integer 1-7, plus/minus are optional.`,
                     fix: null
                   });
@@ -8233,7 +8234,7 @@ function attributeValidateSpan(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -8272,7 +8273,7 @@ function attributeValidateSrc(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -8302,7 +8303,7 @@ function attributeValidateStandby(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8331,7 +8332,7 @@ function attributeValidateStart(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -8384,7 +8385,7 @@ function attributeValidateStyle(context, ...opts) {
         }
         const errorArr = validateInlineStyle(
           node.attribValue,
-          node.attribValueStartAt);
+          node.attribValueStartsAt);
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
@@ -8412,7 +8413,7 @@ function attributeValidateSummary(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8451,7 +8452,7 @@ function attributeValidateTabindex(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             theOnlyGoodUnits: [],
@@ -8490,7 +8491,7 @@ function attributeValidateTarget(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8519,7 +8520,7 @@ function attributeValidateText(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -8567,7 +8568,7 @@ function attributeValidateTitle(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8615,7 +8616,7 @@ function attributeValidateType(context, ...opts) {
           ) {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: [
                   "application/javascript",
@@ -8662,7 +8663,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "input") {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: [
                   "text",
@@ -8690,7 +8691,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "li") {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: [
                   "disc",
@@ -8716,7 +8717,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "ol") {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: ["1", "a", "A", "i", "I"],
                 permittedValues: null,
@@ -8733,7 +8734,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "ul") {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: ["disc", "square", "circle"],
                 permittedValues: null,
@@ -8750,7 +8751,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "button") {
             validateString(
               node.attribValue,
-              node.attribValueStartAt,
+              node.attribValueStartsAt,
               {
                 quickPermittedValues: ["button", "submit", "reset"],
                 permittedValues: null,
@@ -8785,7 +8786,7 @@ function attributeValidateUsemap(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             context.report(
@@ -8826,7 +8827,7 @@ function attributeValidateValign(context, ...opts) {
         } else {
           validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["top", "middle", "bottom", "baseline"],
               canBeCommaSeparated: false
@@ -8862,7 +8863,7 @@ function attributeValidateValue(context, ...opts) {
           });
         } else {
           if (node.parent.tagName === "li") {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
@@ -8878,7 +8879,7 @@ function attributeValidateValue(context, ...opts) {
           } else {
             const { errorArr } = checkForWhitespace(
               node.attribValue,
-              node.attribValueStartAt
+              node.attribValueStartsAt
             );
             errorArr.forEach(errorObj => {
               context.report(
@@ -8909,7 +8910,7 @@ function attributeValidateValuetype(context, ...opts) {
         } else {
           validateString(
             node.attribValue,
-            node.attribValueStartAt,
+            node.attribValueStartsAt,
             {
               permittedValues: ["data", "ref", "object"],
               canBeCommaSeparated: false
@@ -8942,7 +8943,7 @@ function attributeValidateVersion(context, ...opts) {
         }
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         errorArr.forEach(errorObj => {
           context.report(
@@ -8971,7 +8972,7 @@ function attributeValidateVlink(context, ...opts) {
         }
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
@@ -9008,7 +9009,7 @@ function attributeValidateVspace(context, ...opts) {
         }
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             theOnlyGoodUnits: [],
             noUnitsIsFine: true
@@ -9054,7 +9055,7 @@ function attributeValidateWidth(context, ...opts) {
           });
         } else {
           if (node.parent.tagName === "pre") {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               theOnlyGoodUnits: [],
               noUnitsIsFine: true
             }).forEach(errorObj => {
@@ -9065,7 +9066,7 @@ function attributeValidateWidth(context, ...opts) {
               );
             });
           } else if (["colgroup", "col"].includes(node.parent.tagName)) {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               theOnlyGoodUnits: ["*", "%"],
               noUnitsIsFine: true
@@ -9077,7 +9078,7 @@ function attributeValidateWidth(context, ...opts) {
               );
             });
           } else {
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               noUnitsIsFine: true
             }).forEach(errorObj => {

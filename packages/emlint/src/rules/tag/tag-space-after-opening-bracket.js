@@ -18,7 +18,7 @@ function tagSpaceAfterOpeningBracket(context) {
       );
       console.log(`node = ${JSON.stringify(node, null, 4)}`);
       const ranges = [];
-      // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartAt);
+      // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
 
       // 1. if there's whitespace after opening bracket
       if (
@@ -30,15 +30,15 @@ function tagSpaceAfterOpeningBracket(context) {
       }
 
       // 2. if there's whitespace before tag name
-      if (!context.str[node.tagNameStartAt - 1].trim().length) {
+      if (!context.str[node.tagNameStartsAt - 1].trim().length) {
         console.log(`034 whitespace before tag name confirmed`);
         const charToTheLeftOfTagNameIdx = left(
           context.str,
-          node.tagNameStartAt
+          node.tagNameStartsAt
         );
         if (charToTheLeftOfTagNameIdx !== node.start) {
           // we don't want duplication
-          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartAt]);
+          ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartsAt]);
         }
       }
 

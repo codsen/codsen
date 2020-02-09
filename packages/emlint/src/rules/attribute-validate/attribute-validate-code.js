@@ -35,7 +35,7 @@ function attributeValidateCode(context, ...opts) {
         // only validate the whitespace
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `041 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(

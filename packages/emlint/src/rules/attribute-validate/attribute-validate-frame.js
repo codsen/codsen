@@ -35,7 +35,7 @@ function attributeValidateFrame(context, ...opts) {
         // https://www.w3.org/TR/html4/struct/tables.html#adef-frame
         const errorArr = validateString(
           node.attribValue, // value
-          node.attribValueStartAt, // offset
+          node.attribValueStartsAt, // offset
           {
             permittedValues: [
               "void", // No sides. This is the default value.

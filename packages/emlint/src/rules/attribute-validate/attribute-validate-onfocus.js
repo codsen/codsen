@@ -51,7 +51,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `057 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(

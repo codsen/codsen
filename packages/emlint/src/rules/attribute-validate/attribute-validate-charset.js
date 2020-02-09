@@ -42,7 +42,7 @@ function attributeValidateCharset(context, ...opts) {
         // https://www.w3.org/TR/html4/interact/forms.html#adef-charset
         const errorArr = validateString(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             canBeCommaSeparated: false,
             noSpaceAfterComma: false,

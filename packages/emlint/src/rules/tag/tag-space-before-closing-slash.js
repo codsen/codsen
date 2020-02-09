@@ -17,12 +17,12 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
       );
       console.log(`019 inside rule: node = ${JSON.stringify(node, null, 4)}`);
-      const gapValue = context.str.slice(node.start + 1, node.tagNameStartAt);
+      const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       console.log(`021 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
 
       console.log(
-        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartAt}]`}\u001b[${39}m`} = ${JSON.stringify(
-          context.str[node.tagNameStartAt],
+        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartsAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+          context.str[node.tagNameStartsAt],
           null,
           4
         )}`

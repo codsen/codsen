@@ -47,7 +47,7 @@ function attributeValidateWidth(context, ...opts) {
         } else {
           if (node.parent.tagName === "pre") {
             // number only
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               theOnlyGoodUnits: [],
               noUnitsIsFine: true
             }).forEach(errorObj => {
@@ -60,7 +60,7 @@ function attributeValidateWidth(context, ...opts) {
             });
           } else if (["colgroup", "col"].includes(node.parent.tagName)) {
             // multilength type
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               theOnlyGoodUnits: ["*", "%"],
               noUnitsIsFine: true
@@ -74,7 +74,7 @@ function attributeValidateWidth(context, ...opts) {
             });
           } else {
             // normal length
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               badUnits: ["px"],
               noUnitsIsFine: true
             }).forEach(errorObj => {

@@ -44,7 +44,7 @@ function attributeValidateValign(context, ...opts) {
         } else {
           validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "middle", "bottom", "baseline"],
               canBeCommaSeparated: false

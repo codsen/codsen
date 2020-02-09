@@ -40,14 +40,14 @@ function tagNameCase(context) {
           // node.tagName will arrive lowercased, so we have to retrieve
           // the real characters by slicing from ranges
           if (
-            context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+            context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
             node.tagName.toUpperCase()
           ) {
             console.log(`046 tagNameCase(): wrong tag case!`);
             const ranges = [
               [
-                node.tagNameStartAt,
-                node.tagNameEndAt,
+                node.tagNameStartsAt,
+                node.tagNameEndsAt,
                 node.tagName.toUpperCase()
               ]
             ];
@@ -55,26 +55,26 @@ function tagNameCase(context) {
             context.report({
               ruleId: "tag-name-case",
               message: "Bad tag name case.",
-              idxFrom: node.tagNameStartAt,
-              idxTo: node.tagNameEndAt,
+              idxFrom: node.tagNameStartsAt,
+              idxTo: node.tagNameEndsAt,
               fix: { ranges }
             });
           }
           // else - FINE
         } else if (
-          context.str.slice(node.tagNameStartAt, node.tagNameEndAt) !==
+          context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
           node.tagName
         ) {
           console.log(`068 tagNameCase(): wrong tag case!`);
           const ranges = [
-            [node.tagNameStartAt, node.tagNameEndAt, node.tagName]
+            [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]
           ];
 
           context.report({
             ruleId: "tag-name-case",
             message: "Bad tag name case.",
-            idxFrom: node.tagNameStartAt,
-            idxTo: node.tagNameEndAt,
+            idxFrom: node.tagNameStartsAt,
+            idxTo: node.tagNameEndsAt,
             fix: { ranges }
           });
         }

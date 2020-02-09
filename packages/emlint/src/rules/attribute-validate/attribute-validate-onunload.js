@@ -41,7 +41,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `047 attributeValidateOnunload(): received errorArr = ${JSON.stringify(

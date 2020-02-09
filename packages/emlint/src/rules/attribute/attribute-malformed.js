@@ -44,13 +44,13 @@ function attributeMalformed(context, ...opts) {
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
-              idxFrom: node.attribNameStartAt,
-              idxTo: node.attribNameEndAt, // second elem. from last range
+              idxFrom: node.attribNameStartsAt,
+              idxTo: node.attribNameEndsAt, // second elem. from last range
               fix: {
                 ranges: [
                   [
-                    node.attribNameStartAt,
-                    node.attribNameEndAt,
+                    node.attribNameStartsAt,
+                    node.attribNameEndsAt,
                     allHtmlAttribs[i]
                   ]
                 ]
@@ -63,20 +63,20 @@ function attributeMalformed(context, ...opts) {
 
         if (!somethingMatched) {
           // the attribute was not recognised
-          console.log(`066 RAISE ERROR`);
+          console.log(
+            `067 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+          );
           context.report({
             ruleId: "attribute-malformed",
             message: `Unrecognised attribute "${node.attribName}".`,
-            idxFrom: node.attribNameStartAt,
-            idxTo: node.attribNameEndAt,
+            idxFrom: node.attribNameStartsAt,
+            idxTo: node.attribNameEndsAt,
             fix: null
           });
         }
-      }
-
-      if (
-        node.attribValueStartAt !== null &&
-        context.str[node.attribNameEndAt] !== "="
+      } else if (
+        node.attribValueStartsAt !== null &&
+        context.str[node.attribNameEndsAt] !== "="
       ) {
         console.log(`081 RAISE ERROR`);
         context.report({
@@ -84,7 +84,7 @@ function attributeMalformed(context, ...opts) {
           message: `Equal is missing.`,
           idxFrom: node.attribStart,
           idxTo: node.attribEnd, // second elem. from last range
-          fix: { ranges: [[node.attribNameEndAt, node.attribNameEndAt, "="]] }
+          fix: { ranges: [[node.attribNameEndsAt, node.attribNameEndsAt, "="]] }
         });
       }
     }

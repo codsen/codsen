@@ -39,7 +39,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     // for example - only value check is not enough
     if (
       node.attribValue !== node.attribName ||
-      context.str.slice(node.attribNameEndAt, node.attribEnd) !==
+      context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       console.log(
@@ -49,7 +49,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
       console.log(
         `050 ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
           [
-            node.attribNameEndAt,
+            node.attribNameEndsAt,
             node.attribEnd,
             `=${quotesType}${node.attribName}${quotesType}`
           ],
@@ -59,13 +59,13 @@ function validateVoid(node, context, errorArr, originalOpts) {
       );
 
       errorArr.push({
-        idxFrom: node.attribNameStartAt,
-        idxTo: node.attribNameEndAt,
+        idxFrom: node.attribNameStartsAt,
+        idxTo: node.attribNameEndsAt,
         message: `It's XHTML, add value, ="${node.attribName}".`,
         fix: {
           ranges: [
             [
-              node.attribNameEndAt,
+              node.attribNameEndsAt,
               node.attribEnd,
               `=${quotesType}${node.attribName}${quotesType}`
             ]
@@ -75,11 +75,11 @@ function validateVoid(node, context, errorArr, originalOpts) {
     }
   } else if (node.attribValue !== null) {
     errorArr.push({
-      idxFrom: node.attribNameEndAt,
+      idxFrom: node.attribNameEndsAt,
       idxTo: node.attribEnd,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndAt, node.attribEnd]]
+        ranges: [[node.attribNameEndsAt, node.attribEnd]]
       }
     });
   }
@@ -127,8 +127,8 @@ function validateVoid(node, context, errorArr, originalOpts) {
         let idxTo;
         for (let i = 0, len = node.parent.attribs.length; i < len; i++) {
           if (node.parent.attribs[i].attribName === siblingAttr) {
-            idxFrom = node.parent.attribs[i].attribValueStartAt;
-            idxTo = node.parent.attribs[i].attribValueEndAt;
+            idxFrom = node.parent.attribs[i].attribValueStartsAt;
+            idxTo = node.parent.attribs[i].attribValueEndsAt;
             break;
           }
         }

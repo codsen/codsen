@@ -34,7 +34,7 @@ function attributeValidateShape(context, ...opts) {
 
         const errorArr = validateString(
           node.attribValue, // value
-          node.attribValueStartAt, // offset
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["default", "rect", "circle", "poly"],
             canBeCommaSeparated: false

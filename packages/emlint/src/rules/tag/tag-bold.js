@@ -34,7 +34,9 @@ function tagBold(context, ...opts) {
           message: `Tag "bold" does not exist in HTML.`,
           idxFrom: node.start,
           idxTo: node.end, // second elem. from last range
-          fix: { ranges: [[node.tagNameStartAt, node.tagNameEndAt, suggested]] }
+          fix: {
+            ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
+          }
         });
       }
     }

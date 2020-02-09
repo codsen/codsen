@@ -54,7 +54,7 @@ function attributeValidateType(context, ...opts) {
           ) {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
                   "application/javascript",
@@ -102,7 +102,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "input") {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
                   "text",
@@ -131,7 +131,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "li") {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: [
                   "disc",
@@ -158,7 +158,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "ol") {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["1", "a", "A", "i", "I"],
                 permittedValues: null,
@@ -176,7 +176,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "ul") {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["disc", "square", "circle"],
                 permittedValues: null,
@@ -194,7 +194,7 @@ function attributeValidateType(context, ...opts) {
           } else if (node.parent.tagName === "button") {
             validateString(
               node.attribValue, // value
-              node.attribValueStartAt, // offset
+              node.attribValueStartsAt, // offset
               {
                 quickPermittedValues: ["button", "submit", "reset"],
                 permittedValues: null,

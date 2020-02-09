@@ -61,7 +61,7 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `067 attributeValidateOnkeypress(): received errorArr = ${JSON.stringify(

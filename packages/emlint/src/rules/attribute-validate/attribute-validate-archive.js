@@ -41,7 +41,7 @@ function attributeValidateArchive(context, ...opts) {
             // Call validation upon the whole attribute's value. Validator includes
             // whitespace checks.
             validateUri(node.attribValue, {
-              offset: node.attribValueStartAt,
+              offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true
             }).forEach(errorObj => {
@@ -57,7 +57,7 @@ function attributeValidateArchive(context, ...opts) {
             // Call validation upon the whole attribute's value. Validator includes
             // whitespace checks.
             validateUri(node.attribValue, {
-              offset: node.attribValueStartAt,
+              offset: node.attribValueStartsAt,
               separator: "space", // or "comma"
               multipleOK: true
             }).forEach(errorObj => {

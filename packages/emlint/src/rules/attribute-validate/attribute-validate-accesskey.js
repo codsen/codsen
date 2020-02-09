@@ -49,7 +49,7 @@ function attributeValidateAccesskey(context, ...opts) {
         // only check for rogue whitespace - value can be any string
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `055 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -67,8 +67,8 @@ function attributeValidateAccesskey(context, ...opts) {
             !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
           ) {
             errorArr.push({
-              idxFrom: node.attribValueStartAt + charStart,
-              idxTo: node.attribValueStartAt + charEnd,
+              idxFrom: node.attribValueStartsAt + charStart,
+              idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character (escaped or not).`,
               fix: null
             });

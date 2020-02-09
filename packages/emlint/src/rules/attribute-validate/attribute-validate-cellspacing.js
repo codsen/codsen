@@ -34,7 +34,7 @@ function attributeValidateCellspacing(context, ...opts) {
 
         const errorArr = validateDigitAndUnit(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             type: "integer",
             negativeOK: false,

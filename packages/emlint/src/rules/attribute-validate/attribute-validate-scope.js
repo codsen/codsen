@@ -34,7 +34,7 @@ function attributeValidateScope(context, ...opts) {
 
         const errorArr = validateString(
           node.attribValue, // value
-          node.attribValueStartAt, // offset
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["row", "col", "rowgroup", "colgroup"],
             canBeCommaSeparated: false

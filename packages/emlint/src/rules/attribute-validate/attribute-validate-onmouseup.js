@@ -61,7 +61,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `067 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(

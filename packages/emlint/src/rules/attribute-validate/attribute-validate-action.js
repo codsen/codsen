@@ -34,7 +34,7 @@ function attributeValidateAction(context, ...opts) {
           // Call validation upon whole attribute's value. Validator includes
           // whitespace checks.
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             console.log(`040 RAISE ERROR`);

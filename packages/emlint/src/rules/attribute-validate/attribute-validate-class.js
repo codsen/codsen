@@ -46,15 +46,15 @@ function attributeValidateClass(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
-            `052 \n${`\u001b[${33}m${`node.attribValueStartAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValueStartAt + charStart,
+            `052 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
               null,
               4
-            )}; \n${`\u001b[${33}m${`node.attribValueStartAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValueStartAt + charEnd,
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
               null,
               4
             )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -68,8 +68,8 @@ function attributeValidateClass(context, ...opts) {
             context.str,
             {
               typeName: node.attribName, // class|id|for
-              from: node.attribValueStartAt + charStart,
-              to: node.attribValueStartAt + charEnd,
+              from: node.attribValueStartsAt + charStart,
+              to: node.attribValueStartsAt + charEnd,
               offset: 0
             },
             errorArr // might be mutated, more errors pushed into

@@ -34,7 +34,7 @@ function attributeValidateColor(context, ...opts) {
 
         const errorArr = validateColor(
           node.attribValue,
-          node.attribValueStartAt,
+          node.attribValueStartsAt,
           {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,

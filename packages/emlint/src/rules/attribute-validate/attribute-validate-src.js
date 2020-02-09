@@ -36,7 +36,7 @@ function attributeValidateSrc(context, ...opts) {
           });
         } else {
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
             console.log(`042 RAISE ERROR`);

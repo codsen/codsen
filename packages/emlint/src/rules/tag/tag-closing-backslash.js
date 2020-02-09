@@ -39,11 +39,11 @@ function tagClosingBackslash(context) {
 
       if (
         Number.isInteger(node.start) &&
-        Number.isInteger(node.tagNameStartAt) &&
-        context.str.slice(node.start, node.tagNameStartAt).includes(BACKSLASH)
+        Number.isInteger(node.tagNameStartsAt) &&
+        context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
       ) {
         console.log(`045 backslash in front!`);
-        for (let i = node.start; i < node.tagNameStartAt; i++) {
+        for (let i = node.start; i < node.tagNameStartsAt; i++) {
           // fish-out all backslashes
           if (context.str[i] === BACKSLASH) {
             // just delete the backslash because it doesn't belong here

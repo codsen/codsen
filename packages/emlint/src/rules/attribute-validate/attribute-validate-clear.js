@@ -38,10 +38,10 @@ function attributeValidateClassid(context, ...opts) {
 
         // beware, the charStart and charEnd are not offset, their "zero" is
         // start of an attribute's value, so if you use them, you need to
-        // offset to the true index, you must add "node.attribValueStartAt" value
+        // offset to the true index, you must add "node.attribValueStartsAt" value
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `047 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
@@ -64,14 +64,14 @@ function attributeValidateClassid(context, ...opts) {
         if (
           !["left", "all", "right", "none"].includes(
             context.str.slice(
-              node.attribValueStartAt + charStart,
-              node.attribValueStartAt + charEnd
+              node.attribValueStartsAt + charStart,
+              node.attribValueStartsAt + charEnd
             )
           )
         ) {
           errorArr.push({
-            idxFrom: node.attribValueStartAt + charStart,
-            idxTo: node.attribValueStartAt + charEnd,
+            idxFrom: node.attribValueStartsAt + charStart,
+            idxTo: node.attribValueStartsAt + charEnd,
             message: `Should be: left|all|right|none.`,
             fix: null
           });

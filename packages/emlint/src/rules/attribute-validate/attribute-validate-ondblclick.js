@@ -61,7 +61,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `067 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(

@@ -41,7 +41,7 @@ function attributeValidateLongdesc(context, ...opts) {
 
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `047 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(

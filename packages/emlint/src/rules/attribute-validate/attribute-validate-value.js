@@ -39,7 +39,7 @@ function attributeValidateValue(context, ...opts) {
           // if parent is OK
           if (node.parent.tagName === "li") {
             // value is number
-            validateDigitAndUnit(node.attribValue, node.attribValueStartAt, {
+            validateDigitAndUnit(node.attribValue, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
@@ -57,7 +57,7 @@ function attributeValidateValue(context, ...opts) {
             // all others - value is CDATA
             const { errorArr } = checkForWhitespace(
               node.attribValue,
-              node.attribValueStartAt
+              node.attribValueStartsAt
             );
 
             errorArr.forEach(errorObj => {

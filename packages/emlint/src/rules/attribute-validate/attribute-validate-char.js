@@ -45,7 +45,7 @@ function attributeValidateChar(context, ...opts) {
 
         const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `051 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -62,8 +62,8 @@ function attributeValidateChar(context, ...opts) {
             !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
           ) {
             errorArr.push({
-              idxFrom: node.attribValueStartAt + charStart,
-              idxTo: node.attribValueStartAt + charEnd,
+              idxFrom: node.attribValueStartsAt + charStart,
+              idxTo: node.attribValueStartsAt + charEnd,
               message: `Should be a single character.`,
               fix: null
             });

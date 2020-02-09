@@ -38,7 +38,7 @@ function attributeValidateScrolling(context, ...opts) {
 
         const errorArr = validateString(
           node.attribValue, // value
-          node.attribValueStartAt, // offset
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["auto", "yes", "no"],
             canBeCommaSeparated: false

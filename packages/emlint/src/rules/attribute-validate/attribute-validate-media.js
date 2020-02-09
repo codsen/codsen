@@ -35,10 +35,10 @@ function attributeValidateMedia(context, ...opts) {
 
         // beware, the charStart and charEnd are not offset, their "zero" is
         // start of an attribute's value, so if you use them, you need to
-        // offset to the true index, you must add "node.attribValueStartAt" value
+        // offset to the true index, you must add "node.attribValueStartsAt" value
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `044 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
@@ -62,7 +62,7 @@ function attributeValidateMedia(context, ...opts) {
         errorArr
           .concat(
             isMediaD(node.attribValue.slice(charStart, charEnd), {
-              offset: node.attribValueStartAt
+              offset: node.attribValueStartsAt
             })
           )
           .forEach(errorObj => {

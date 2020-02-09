@@ -40,7 +40,7 @@ function attributeValidateCodetype(context, ...opts) {
         // check in two parts, first, a quick try, match the most common values only
         const errorArr = validateString(
           node.attribValue, // value
-          node.attribValueStartAt, // offset
+          node.attribValueStartsAt, // offset
           {
             quickPermittedValues: [
               "application/javascript",

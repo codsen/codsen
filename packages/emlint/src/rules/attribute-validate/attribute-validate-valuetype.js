@@ -37,7 +37,7 @@ function attributeValidateValuetype(context, ...opts) {
         } else {
           validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["data", "ref", "object"],
               canBeCommaSeparated: false

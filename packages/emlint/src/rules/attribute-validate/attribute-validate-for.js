@@ -35,15 +35,15 @@ function attributeValidateFor(context, ...opts) {
         } else {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
-            `041 \n${`\u001b[${33}m${`node.attribValueStartAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValueStartAt + charStart,
+            `041 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
               null,
               4
-            )}; \n${`\u001b[${33}m${`node.attribValueStartAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
-              node.attribValueStartAt + charEnd,
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
               null,
               4
             )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -61,8 +61,8 @@ function attributeValidateFor(context, ...opts) {
 
           let message = `Wrong id name.`;
           let fix = null;
-          let idxFrom = charStart + node.attribValueStartAt;
-          let idxTo = charEnd + node.attribValueStartAt;
+          let idxFrom = charStart + node.attribValueStartsAt;
+          let idxTo = charEnd + node.attribValueStartsAt;
           if (
             Number.isInteger(charStart) &&
             !classNameRegex.test(extractedValue)
@@ -75,13 +75,13 @@ function attributeValidateFor(context, ...opts) {
               fix = {
                 ranges: [
                   [
-                    node.attribValueStartAt + firstHashAt,
-                    node.attribValueStartAt + firstHashAt + 1
+                    node.attribValueStartsAt + firstHashAt,
+                    node.attribValueStartsAt + firstHashAt + 1
                   ]
                 ]
               };
-              idxFrom = node.attribValueStartAt + firstHashAt;
-              idxTo = node.attribValueStartAt + firstHashAt + 1;
+              idxFrom = node.attribValueStartsAt + firstHashAt;
+              idxTo = node.attribValueStartsAt + firstHashAt + 1;
             }
 
             errorArr.push({

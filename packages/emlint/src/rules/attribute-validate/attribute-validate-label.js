@@ -35,7 +35,7 @@ function attributeValidateLabel(context, ...opts) {
         // only check for rogue whitespace - value can be any CDATA
         const { errorArr } = checkForWhitespace(
           node.attribValue,
-          node.attribValueStartAt
+          node.attribValueStartsAt
         );
         console.log(
           `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(

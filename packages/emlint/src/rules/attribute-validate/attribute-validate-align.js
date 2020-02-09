@@ -67,7 +67,7 @@ function attributeValidateAlign(context, ...opts) {
           // top|bottom|left|right
           errorArr = validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "bottom", "left", "right"],
               canBeCommaSeparated: false
@@ -81,7 +81,7 @@ function attributeValidateAlign(context, ...opts) {
           // top|middle|bottom|left|right
           errorArr = validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["top", "middle", "bottom", "left", "right"],
               canBeCommaSeparated: false
@@ -93,7 +93,7 @@ function attributeValidateAlign(context, ...opts) {
           // left|center|right
           errorArr = validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right"],
               canBeCommaSeparated: false
@@ -107,7 +107,7 @@ function attributeValidateAlign(context, ...opts) {
           // left|center|right|justify
           errorArr = validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify"],
               canBeCommaSeparated: false
@@ -128,7 +128,7 @@ function attributeValidateAlign(context, ...opts) {
           // left|center|right|justify|char
           errorArr = validateString(
             node.attribValue, // value
-            node.attribValueStartAt, // offset
+            node.attribValueStartsAt, // offset
             {
               permittedValues: ["left", "center", "right", "justify", "char"],
               canBeCommaSeparated: false

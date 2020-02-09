@@ -197,7 +197,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   t.end();
 });
 
-t.test(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
+t.only(`02.02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, t => {
   const str = `<td zzzz="w100p">`;
   const linter = new Linter();
   const messages = linter.verify(str, {

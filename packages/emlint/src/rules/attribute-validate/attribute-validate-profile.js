@@ -38,7 +38,7 @@ function attributeValidateProfile(context, ...opts) {
           // Call validation upon whole attribute's value. Validator includes
           // whitespace checks.
           validateUri(node.attribValue, {
-            offset: node.attribValueStartAt,
+            offset: node.attribValueStartsAt,
             multipleOK: true
           }).forEach(errorObj => {
             console.log(`044 RAISE ERROR`);

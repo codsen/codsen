@@ -41,7 +41,7 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `047 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(

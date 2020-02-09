@@ -47,7 +47,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
           // validate the script value
           const errorArr = validateScript(
             node.attribValue,
-            node.attribValueStartAt
+            node.attribValueStartsAt
           );
           console.log(
             `053 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
