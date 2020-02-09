@@ -22,25 +22,25 @@ t.test(
         attribs: [
           {
             attribName: "b",
-            attribNameStartAt: 3,
-            attribNameEndAt: 4,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 4,
             attribOpeningQuoteAt: 5,
             attribClosingQuoteAt: 7,
             attribValue: "c",
-            attribValueStartAt: 6,
-            attribValueEndAt: 7,
+            attribValueStartsAt: 6,
+            attribValueEndsAt: 7,
             attribStart: 3,
             attribEnd: 8
           },
           {
             attribName: "d",
-            attribNameStartAt: 9,
-            attribNameEndAt: 10,
+            attribNameStartsAt: 9,
+            attribNameEndsAt: 10,
             attribOpeningQuoteAt: 11,
             attribClosingQuoteAt: 13,
             attribValue: "e",
-            attribValueStartAt: 12,
-            attribValueEndAt: 13,
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 13,
             attribStart: 9,
             attribEnd: 14
           }
@@ -69,25 +69,25 @@ t.test(
         attribs: [
           {
             attribName: "nowrap",
-            attribNameStartAt: 4,
-            attribNameEndAt: 10,
+            attribNameStartsAt: 4,
+            attribNameEndsAt: 10,
             attribOpeningQuoteAt: null,
             attribClosingQuoteAt: null,
             attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
             attribStart: 4,
             attribEnd: 10
           },
           {
             attribName: "class",
-            attribNameStartAt: 11,
-            attribNameEndAt: 16,
+            attribNameStartsAt: 11,
+            attribNameEndsAt: 16,
             attribOpeningQuoteAt: 17,
             attribClosingQuoteAt: 19,
             attribValue: "z",
-            attribValueStartAt: 18,
-            attribValueEndAt: 19,
+            attribValueStartsAt: 18,
+            attribValueEndsAt: 19,
             attribStart: 11,
             attribEnd: 20
           }
@@ -110,8 +110,8 @@ t.test(
 
     t.match(gathered, [
       {
-        tagNameStartAt: 2,
-        tagNameEndAt: 4,
+        tagNameStartsAt: 2,
+        tagNameEndsAt: 4,
         tagName: "td",
         recognised: true,
         closing: true,
@@ -143,8 +143,8 @@ t.test(
 
     t.match(gathered, [
       {
-        tagNameStartAt: 2,
-        tagNameEndAt: 4,
+        tagNameStartsAt: 2,
+        tagNameEndsAt: 4,
         tagName: "td",
         recognised: true,
         closing: true,
@@ -190,26 +190,26 @@ t.test(
 //               value: `{% if something %} class="z"{% endif %}`
 //             },
 //             attribName: "class",
-//             attribNameStartAt: 22,
-//             attribNameEndAt: 27,
+//             attribNameStartsAt: 22,
+//             attribNameEndsAt: 27,
 //             attribOpeningQuoteAt: 28,
 //             attribClosingQuoteAt: 30,
 //             attribValue: "z",
-//             attribValueStartAt: 29,
-//             attribValueEndAt: 30,
+//             attribValueStartsAt: 29,
+//             attribValueEndsAt: 30,
 //             attribStart: 22,
 //             attribEnd: 31
 //           },
 //           {
 //             parent: null,
 //             attribName: "id",
-//             attribNameStartAt: 43,
-//             attribNameEndAt: 45,
+//             attribNameStartsAt: 43,
+//             attribNameEndsAt: 45,
 //             attribOpeningQuoteAt: 46,
 //             attribClosingQuoteAt: 48,
 //             attribValue: "y",
-//             attribValueStartAt: 47,
-//             attribValueEndAt: 48,
+//             attribValueStartsAt: 47,
+//             attribValueEndsAt: 48,
 //             attribStart: 43,
 //             attribEnd: 49
 //           }
@@ -241,25 +241,25 @@ t.test(
         attribs: [
           {
             attribName: "b",
-            attribNameStartAt: 3,
-            attribNameEndAt: 4,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 4,
             attribOpeningQuoteAt: 4,
             attribClosingQuoteAt: 6,
             attribValue: "c",
-            attribValueStartAt: 5,
-            attribValueEndAt: 6,
+            attribValueStartsAt: 5,
+            attribValueEndsAt: 6,
             attribStart: 3,
             attribEnd: 7
           },
           {
             attribName: "d",
-            attribNameStartAt: 8,
-            attribNameEndAt: 9,
+            attribNameStartsAt: 8,
+            attribNameEndsAt: 9,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 11,
             attribValue: "e",
-            attribValueStartAt: 10,
-            attribValueEndAt: 11,
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 11,
             attribStart: 8,
             attribEnd: 12
           }
@@ -287,25 +287,25 @@ t.test(
 //         attribs: [
 //           {
 //             attribName: "b",
-//             attribNameStartAt: 3,
-//             attribNameEndAt: 4,
+//             attribNameStartsAt: 3,
+//             attribNameEndsAt: 4,
 //             attribOpeningQuoteAt: 5,
 //             attribClosingQuoteAt: 7,
 //             attribValue: "c",
-//             attribValueStartAt: 6,
-//             attribValueEndAt: 7,
+//             attribValueStartsAt: 6,
+//             attribValueEndsAt: 7,
 //             attribStart: 3,
 //             attribEnd: 8
 //           },
 //           {
 //             attribName: "d",
-//             attribNameStartAt: 9,
-//             attribNameEndAt: 10,
+//             attribNameStartsAt: 9,
+//             attribNameEndsAt: 10,
 //             attribOpeningQuoteAt: 11,
 //             attribClosingQuoteAt: 13,
 //             attribValue: "e",
-//             attribValueStartAt: 12,
-//             attribValueEndAt: 13,
+//             attribValueStartsAt: 12,
+//             attribValueEndsAt: 13,
 //             attribStart: 9,
 //             attribEnd: 14
 //           }
@@ -332,25 +332,25 @@ t.test(`02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`, t => {
       attribs: [
         {
           attribName: "b",
-          attribNameStartAt: 3,
-          attribNameEndAt: 4,
+          attribNameStartsAt: 3,
+          attribNameEndsAt: 4,
           attribOpeningQuoteAt: 6,
           attribClosingQuoteAt: 8,
           attribValue: "c",
-          attribValueStartAt: 7,
-          attribValueEndAt: 8,
+          attribValueStartsAt: 7,
+          attribValueEndsAt: 8,
           attribStart: 3,
           attribEnd: 9
         },
         {
           attribName: "d",
-          attribNameStartAt: 10,
-          attribNameEndAt: 11,
+          attribNameStartsAt: 10,
+          attribNameEndsAt: 11,
           attribOpeningQuoteAt: 13,
           attribClosingQuoteAt: 15,
           attribValue: "e",
-          attribValueStartAt: 14,
-          attribValueEndAt: 15,
+          attribValueStartsAt: 14,
+          attribValueEndsAt: 15,
           attribStart: 10,
           attribEnd: 16
         }
@@ -372,8 +372,8 @@ t.test(
 
     t.match(gathered, [
       {
-        tagNameStartAt: 1,
-        tagNameEndAt: 5,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
         tagName: "body",
         recognised: true,
         closing: false,
@@ -388,13 +388,13 @@ t.test(
         attribs: [
           {
             attribName: "alink",
-            attribNameStartAt: 6,
-            attribNameEndAt: 11,
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 11,
             attribOpeningQuoteAt: 12,
             attribClosingQuoteAt: 13,
             attribValue: "",
-            attribValueStartAt: 13,
-            attribValueEndAt: 13,
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 13,
             attribStart: 6,
             attribEnd: 14
           }
@@ -415,8 +415,8 @@ t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 5,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 5,
       tagName: "body",
       recognised: true,
       closing: false,
@@ -431,13 +431,13 @@ t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
       attribs: [
         {
           attribName: "alink",
-          attribNameStartAt: 6,
-          attribNameEndAt: 11,
+          attribNameStartsAt: 6,
+          attribNameEndsAt: 11,
           attribOpeningQuoteAt: 12,
           attribClosingQuoteAt: 18,
           attribValue: "rgb()",
-          attribValueStartAt: 13,
-          attribValueEndAt: 18,
+          attribValueStartsAt: 13,
+          attribValueEndsAt: 18,
           attribStart: 6,
           attribEnd: 19
         }
@@ -460,8 +460,8 @@ t.test(`03.01`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 3,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 3,
       tagName: "td",
       recognised: true,
       closing: false,
@@ -476,13 +476,13 @@ t.test(`03.01`, t => {
       attribs: [
         {
           attribName: "nowrap",
-          attribNameStartAt: 4,
-          attribNameEndAt: 10,
+          attribNameStartsAt: 4,
+          attribNameEndsAt: 10,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 4,
           attribEnd: 10
         }
@@ -502,8 +502,8 @@ t.test(`03.02 - slash in the end`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 3,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 3,
       tagName: "td",
       recognised: true,
       closing: false,
@@ -518,13 +518,13 @@ t.test(`03.02 - slash in the end`, t => {
       attribs: [
         {
           attribName: "nowrap",
-          attribNameStartAt: 4,
-          attribNameEndAt: 10,
+          attribNameStartsAt: 4,
+          attribNameEndsAt: 10,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 4,
           attribEnd: 10
         }
@@ -544,8 +544,8 @@ t.test(`03.03 - slash in front`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 2,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 2,
+      tagNameEndsAt: 4,
       tagName: "td",
       recognised: true,
       closing: true,
@@ -560,13 +560,13 @@ t.test(`03.03 - slash in front`, t => {
       attribs: [
         {
           attribName: "nowrap",
-          attribNameStartAt: 5,
-          attribNameEndAt: 11,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 11,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 5,
           attribEnd: 11
         }
@@ -586,8 +586,8 @@ t.test(`03.04 - now crazier`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 2,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 2,
+      tagNameEndsAt: 4,
       tagName: "td",
       recognised: true,
       closing: true,
@@ -602,37 +602,37 @@ t.test(`03.04 - now crazier`, t => {
       attribs: [
         {
           attribName: "nowrap",
-          attribNameStartAt: 5,
-          attribNameEndAt: 11,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 11,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 5,
           attribEnd: 11
         },
         {
           attribName: "yo",
-          attribNameStartAt: 12,
-          attribNameEndAt: 14,
+          attribNameStartsAt: 12,
+          attribNameEndsAt: 14,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 12,
           attribEnd: 14
         },
         {
           attribName: "yo",
-          attribNameStartAt: 15,
-          attribNameEndAt: 17,
+          attribNameStartsAt: 15,
+          attribNameEndsAt: 17,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 15,
           attribEnd: 17
         }
@@ -652,8 +652,8 @@ t.test(`03.05 - unrecognised tag`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "zzz",
       recognised: false,
       closing: false,
@@ -663,30 +663,29 @@ t.test(`03.05 - unrecognised tag`, t => {
       type: "html",
       start: 0,
       end: 32,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "accept-charset",
-          attribNameStartAt: 5,
-          attribNameEndAt: 19,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 19,
           attribOpeningQuoteAt: 20,
           attribClosingQuoteAt: 26,
           attribValue: "utf-8",
-          attribValueStartAt: 21,
-          attribValueEndAt: 26,
+          attribValueStartsAt: 21,
+          attribValueEndsAt: 26,
           attribStart: 5,
           attribEnd: 27
         },
         {
           attribName: "yyy",
-          attribNameStartAt: 28,
-          attribNameEndAt: 31,
+          attribNameStartsAt: 28,
+          attribNameEndsAt: 31,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 28,
           attribEnd: 31
         }
@@ -709,8 +708,8 @@ t.test(`04.01 - attr value without quotes`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "abc",
       recognised: false,
       closing: false,
@@ -725,25 +724,25 @@ t.test(`04.01 - attr value without quotes`, t => {
       attribs: [
         {
           attribName: "de",
-          attribNameStartAt: 5,
-          attribNameEndAt: 7,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 7,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: "fg",
-          attribValueStartAt: 8,
-          attribValueEndAt: 10,
+          attribValueStartsAt: 8,
+          attribValueEndsAt: 10,
           attribStart: 5,
           attribEnd: 10
         },
         {
           attribName: "hi",
-          attribNameStartAt: 11,
-          attribNameEndAt: 13,
+          attribNameStartsAt: 11,
+          attribNameEndsAt: 13,
           attribOpeningQuoteAt: 14,
           attribClosingQuoteAt: 18,
           attribValue: "jkl",
-          attribValueStartAt: 15,
-          attribValueEndAt: 18,
+          attribValueStartsAt: 15,
+          attribValueEndsAt: 18,
           attribStart: 11,
           attribEnd: 19
         }
@@ -763,8 +762,8 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "abc",
       recognised: false,
       closing: false,
@@ -779,13 +778,13 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
       attribs: [
         {
           attribName: "de",
-          attribNameStartAt: 5,
-          attribNameEndAt: 7,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 7,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: "fg",
-          attribValueStartAt: 8,
-          attribValueEndAt: 10,
+          attribValueStartsAt: 8,
+          attribValueEndsAt: 10,
           attribStart: 5,
           attribEnd: 10
         }
@@ -805,8 +804,8 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
 
   t.match(gathered, [
     {
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "abc",
       recognised: false,
       closing: false,
@@ -816,18 +815,17 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
       type: "html",
       start: 0,
       end: 11,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "de",
-          attribNameStartAt: 5,
-          attribNameEndAt: 7,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 7,
           attribOpeningQuoteAt: null,
           attribClosingQuoteAt: null,
           attribValue: "fg",
-          attribValueStartAt: 8,
-          attribValueEndAt: 10,
+          attribValueStartsAt: 8,
+          attribValueEndsAt: 10,
           attribStart: 5,
           attribEnd: 10
         }
@@ -888,8 +886,8 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
   t.match(gathered, [
     {
       type: "html",
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "abc",
       recognised: false,
       closing: false,
@@ -898,18 +896,17 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
       esp: [],
       start: 0,
       end: 11,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "de",
-          attribNameStartAt: 5,
-          attribNameEndAt: 7,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 7,
           attribOpeningQuoteAt: 9,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 5,
           attribEnd: 10
         }
@@ -918,15 +915,12 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
     {
       type: "text",
       start: 11,
-      end: 16,
-      tail: null,
-      kind: null,
-      attribs: []
+      end: 16
     },
     {
       type: "html",
-      tagNameStartAt: 17,
-      tagNameEndAt: 20,
+      tagNameStartsAt: 17,
+      tagNameEndsAt: 20,
       tagName: "div",
       recognised: true,
       closing: false,
@@ -935,18 +929,17 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
       esp: [],
       start: 16,
       end: 31,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "class",
-          attribNameStartAt: 21,
-          attribNameEndAt: 26,
+          attribNameStartsAt: 21,
+          attribNameEndsAt: 26,
           attribOpeningQuoteAt: 27,
           attribClosingQuoteAt: 29,
           attribValue: "z",
-          attribValueStartAt: 28,
-          attribValueEndAt: 29,
+          attribValueStartsAt: 28,
+          attribValueEndsAt: 29,
           attribStart: 21,
           attribEnd: 30
         }
@@ -972,8 +965,8 @@ t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
   t.match(gathered, [
     {
       type: "html",
-      tagNameStartAt: 1,
-      tagNameEndAt: 4,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 4,
       tagName: "abc",
       recognised: false,
       closing: false,
@@ -982,18 +975,17 @@ t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
       esp: [],
       start: 0,
       end: 10,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "de",
-          attribNameStartAt: 5,
-          attribNameEndAt: 7,
+          attribNameStartsAt: 5,
+          attribNameEndsAt: 7,
           attribOpeningQuoteAt: 8,
           attribClosingQuoteAt: null,
           attribValue: null,
-          attribValueStartAt: null,
-          attribValueEndAt: null,
+          attribValueStartsAt: null,
+          attribValueEndsAt: null,
           attribStart: 5,
           attribEnd: 9
         }
@@ -1002,9 +994,7 @@ t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
     {
       type: "text",
       start: 10,
-      end: 20,
-      tail: null,
-      kind: null
+      end: 20
     }
   ]);
   t.end();
@@ -1023,8 +1013,8 @@ t.test(
     t.match(gathered, [
       {
         type: "html",
-        tagNameStartAt: 1,
-        tagNameEndAt: 6,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
         tagName: "input",
         recognised: true,
         closing: false,
@@ -1033,30 +1023,29 @@ t.test(
         esp: [],
         start: 0,
         end: 31,
-        tail: null,
         kind: null,
         attribs: [
           {
             attribName: "type",
-            attribNameStartAt: 7,
-            attribNameEndAt: 11,
+            attribNameStartsAt: 7,
+            attribNameEndsAt: 11,
             attribOpeningQuoteAt: 12,
             attribClosingQuoteAt: 18,
             attribValue: "radio",
-            attribValueStartAt: 13,
-            attribValueEndAt: 18,
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
             attribStart: 7,
             attribEnd: 19
           },
           {
             attribName: "checked",
-            attribNameStartAt: 20,
-            attribNameEndAt: 27,
+            attribNameStartsAt: 20,
+            attribNameEndsAt: 27,
             attribOpeningQuoteAt: 29,
             attribClosingQuoteAt: null,
             attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
             attribStart: 20,
             attribEnd: 30
           }
@@ -1080,8 +1069,8 @@ t.test(
     t.match(gathered, [
       {
         type: "html",
-        tagNameStartAt: 1,
-        tagNameEndAt: 6,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
         tagName: "input",
         recognised: true,
         closing: false,
@@ -1090,30 +1079,29 @@ t.test(
         esp: [],
         start: 0,
         end: 31,
-        tail: null,
         kind: null,
         attribs: [
           {
             attribName: "type",
-            attribNameStartAt: 7,
-            attribNameEndAt: 11,
+            attribNameStartsAt: 7,
+            attribNameEndsAt: 11,
             attribOpeningQuoteAt: 12,
             attribClosingQuoteAt: 18,
             attribValue: "radio",
-            attribValueStartAt: 13,
-            attribValueEndAt: 18,
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
             attribStart: 7,
             attribEnd: 19
           },
           {
             attribName: "checked",
-            attribNameStartAt: 20,
-            attribNameEndAt: 27,
+            attribNameStartsAt: 20,
+            attribNameEndsAt: 27,
             attribOpeningQuoteAt: 29,
             attribClosingQuoteAt: null,
             attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
             attribStart: 20,
             attribEnd: 30
           }
@@ -1142,8 +1130,8 @@ t.test(`05.05 - two asterisks as an attribute's value`, t => {
   t.match(gathered, [
     {
       type: "html",
-      tagNameStartAt: 1,
-      tagNameEndAt: 9,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 9,
       tagName: "frameset",
       recognised: true,
       closing: false,
@@ -1152,18 +1140,17 @@ t.test(`05.05 - two asterisks as an attribute's value`, t => {
       esp: [],
       start: 0,
       end: 20,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "cols",
-          attribNameStartAt: 10,
-          attribNameEndAt: 14,
+          attribNameStartsAt: 10,
+          attribNameEndsAt: 14,
           attribOpeningQuoteAt: 15,
           attribClosingQuoteAt: 18,
           attribValue: "**",
-          attribValueStartAt: 16,
-          attribValueEndAt: 18,
+          attribValueStartsAt: 16,
+          attribValueEndsAt: 18,
           attribStart: 10,
           attribEnd: 19
         }
@@ -1184,8 +1171,8 @@ t.test(`05.06 - many asterisks as an attribute's value`, t => {
   t.match(gathered, [
     {
       type: "html",
-      tagNameStartAt: 1,
-      tagNameEndAt: 9,
+      tagNameStartsAt: 1,
+      tagNameEndsAt: 9,
       tagName: "frameset",
       recognised: true,
       closing: false,
@@ -1194,18 +1181,17 @@ t.test(`05.06 - many asterisks as an attribute's value`, t => {
       esp: [],
       start: 0,
       end: 24,
-      tail: null,
       kind: null,
       attribs: [
         {
           attribName: "cols",
-          attribNameStartAt: 10,
-          attribNameEndAt: 14,
+          attribNameStartsAt: 10,
+          attribNameEndsAt: 14,
           attribOpeningQuoteAt: 15,
           attribClosingQuoteAt: 22,
           attribValue: "******",
-          attribValueStartAt: 16,
-          attribValueEndAt: 22,
+          attribValueStartsAt: 16,
+          attribValueEndsAt: 22,
           attribStart: 10,
           attribEnd: 23
         }

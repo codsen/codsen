@@ -18,8 +18,8 @@ t.test(
       gathered,
       [
         {
-          tagNameStartAt: 1,
-          tagNameEndAt: 2,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
           tagName: "a",
           recognised: true,
           closing: false,
@@ -29,21 +29,17 @@ t.test(
           type: "html",
           start: 0,
           end: 2,
-          tail: null,
           kind: null,
           attribs: []
         },
         {
           type: "text",
           start: 2,
-          end: 3,
-          tail: null,
-          kind: null,
-          attribs: []
+          end: 3
         },
         {
-          tagNameStartAt: 4,
-          tagNameEndAt: 5,
+          tagNameStartsAt: 4,
+          tagNameEndsAt: 5,
           tagName: "b",
           recognised: true,
           closing: false,
@@ -53,7 +49,6 @@ t.test(
           type: "html",
           start: 3,
           end: 6,
-          tail: null,
           kind: null,
           attribs: []
         }
@@ -80,27 +75,26 @@ t.test(
           start: 0,
           end: 12,
           type: "html",
-          tagNameStartAt: 1,
-          tagNameEndAt: 2,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
           tagName: "a",
           recognised: true,
           closing: false,
           void: false,
           pureHTML: true,
           esp: [],
-          tail: null,
           kind: null,
           attribs: [
             {
               attribName: "href",
               attribNameRecognised: true,
-              attribNameStartAt: 3,
-              attribNameEndAt: 7,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 7,
               attribOpeningQuoteAt: 8,
               attribClosingQuoteAt: 10,
               attribValue: "z",
-              attribValueStartAt: 9,
-              attribValueEndAt: 10,
+              attribValueStartsAt: 9,
+              attribValueEndsAt: 10,
               attribStart: 3,
               attribEnd: 11
             }
@@ -109,24 +103,20 @@ t.test(
         {
           start: 12,
           end: 22,
-          type: "text",
-          tail: null,
-          kind: null,
-          attribs: []
+          type: "text"
         },
         {
           start: 22,
           end: 26,
           type: "html",
-          tagNameStartAt: 24,
-          tagNameEndAt: 25,
+          tagNameStartsAt: 24,
+          tagNameEndsAt: 25,
           tagName: "a",
           recognised: true,
           closing: true,
           void: false,
           pureHTML: true,
           esp: [],
-          tail: null,
           kind: null,
           attribs: []
         }

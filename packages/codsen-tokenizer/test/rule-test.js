@@ -19,8 +19,7 @@ t.test(
         {
           type: "html",
           start: 0,
-          end: 7,
-          kind: "style"
+          end: 7
         },
         {
           type: "rule",
@@ -39,8 +38,7 @@ t.test(
         {
           type: "html",
           start: 14,
-          end: 22,
-          kind: "style"
+          end: 22
         }
       ],
       "01.01"
@@ -69,8 +67,7 @@ t.test(
         {
           type: "html",
           start: 0,
-          end: 7,
-          kind: "style"
+          end: 7
         },
         {
           type: "text",
@@ -99,8 +96,7 @@ t.test(
         {
           type: "html",
           start: 16,
-          end: 24,
-          kind: "style"
+          end: 24
         }
       ],
       "01.02"

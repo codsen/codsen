@@ -101,8 +101,8 @@ t.test(
       gathered,
       [
         {
-          tagNameStartAt: 2,
-          tagNameEndAt: 5,
+          tagNameStartsAt: 2,
+          tagNameEndsAt: 5,
           tagName: "div",
           recognised: true,
           closing: true,
@@ -112,7 +112,6 @@ t.test(
           type: "html",
           start: 0,
           end: 5,
-          tail: null,
           kind: null,
           attribs: []
         }

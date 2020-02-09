@@ -49,10 +49,7 @@ t.test("01.02 - text only", t => {
       {
         type: "text",
         start: 0,
-        end: 2,
-        tail: null,
-        kind: null,
-        attribs: []
+        end: 2
       }
     ],
     "01.02"
@@ -74,15 +71,14 @@ t.test("01.03 - opening tag only", t => {
         type: "html",
         start: 0,
         end: 3,
-        tagNameStartAt: 1,
-        tagNameEndAt: 2,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
         tagName: "a",
         recognised: true,
         closing: false,
         void: false,
         pureHTML: true,
         esp: [],
-        tail: null,
         kind: null,
         attribs: []
       }
@@ -106,15 +102,14 @@ t.test("01.04 - closing tag only", t => {
         type: "html",
         start: 0,
         end: 4,
-        tagNameStartAt: 2,
-        tagNameEndAt: 3,
+        tagNameStartsAt: 2,
+        tagNameEndsAt: 3,
         tagName: "a",
         recognised: true,
         closing: true,
         void: false,
         pureHTML: true,
         esp: [],
-        tail: null,
         kind: null,
         attribs: []
       }
@@ -137,8 +132,8 @@ t.test("01.05 - self-closing tag only", t => {
     [
       {
         type: "html",
-        tagNameStartAt: 1,
-        tagNameEndAt: 3,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 3,
         tagName: "br",
         closing: false,
         void: true,
@@ -633,8 +628,8 @@ t.test("01.21 - tag names with numbers", t => {
     [
       {
         type: "html",
-        tagNameStartAt: 1,
-        tagNameEndAt: 3,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 3,
         tagName: "h1",
         closing: false,
         recognised: true,
@@ -662,27 +657,26 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
         type: "html",
         start: 0,
         end: 8,
-        tagNameStartAt: 1,
-        tagNameEndAt: 2,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
         tagName: "a",
         recognised: true,
         closing: false,
         void: false,
         pureHTML: true,
         esp: [],
-        tail: null,
         kind: null,
         attribs: [
           {
             attribName: "href",
             attribNameRecognised: true,
-            attribNameStartAt: 3,
-            attribNameEndAt: 7,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 7,
             attribOpeningQuoteAt: null,
             attribClosingQuoteAt: null,
             attribValue: null,
-            attribValueStartAt: null,
-            attribValueEndAt: null,
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
             attribStart: 3,
             attribEnd: 7
           }
@@ -691,24 +685,20 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
       {
         type: "text",
         start: 8,
-        end: 9,
-        tail: null,
-        kind: null,
-        attribs: []
+        end: 9
       },
       {
         type: "html",
         start: 9,
         end: 13,
-        tagNameStartAt: 11,
-        tagNameEndAt: 12,
+        tagNameStartsAt: 11,
+        tagNameEndsAt: 12,
         tagName: "a",
         recognised: true,
         closing: true,
         void: false,
         pureHTML: true,
         esp: [],
-        tail: null,
         kind: null,
         attribs: []
       }
@@ -732,15 +722,14 @@ t.test("01.23 - closing tag with attributes", t => {
         type: "html",
         start: 0,
         end: 14,
-        tagNameStartAt: 2,
-        tagNameEndAt: 3,
+        tagNameStartsAt: 2,
+        tagNameEndsAt: 3,
         tagName: "a",
         recognised: true,
         closing: true,
         void: false,
         pureHTML: true,
         esp: [],
-        tail: null,
         kind: null,
         attribs: [
           {
@@ -748,13 +737,13 @@ t.test("01.23 - closing tag with attributes", t => {
             attribStart: 4,
             attribEnd: 13,
             attribNameRecognised: true,
-            attribNameStartAt: 4,
-            attribNameEndAt: 9,
+            attribNameStartsAt: 4,
+            attribNameEndsAt: 9,
             attribOpeningQuoteAt: 10,
             attribClosingQuoteAt: 12,
             attribValue: "z",
-            attribValueStartAt: 11,
-            attribValueEndAt: 12
+            attribValueStartsAt: 11,
+            attribValueEndsAt: 12
           }
         ]
       }

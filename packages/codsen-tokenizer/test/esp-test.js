@@ -20,8 +20,7 @@ t.test("01.01 - ESP literals among text get reported", t => {
         end: 8,
         head: "{%",
         tail: "%}",
-        kind: null,
-        attribs: []
+        kind: null
       }
     ],
     "01.01"
@@ -395,13 +394,13 @@ t.test("02.01 - false positives - double perc", t => {
         attribs: [
           {
             attribName: "width",
-            attribNameStartAt: 7,
-            attribNameEndAt: 12,
+            attribNameStartsAt: 7,
+            attribNameEndsAt: 12,
             attribOpeningQuoteAt: 13,
             attribClosingQuoteAt: 19,
             attribValue: "100%%",
-            attribValueStartAt: 14,
-            attribValueEndAt: 19,
+            attribValueStartsAt: 14,
+            attribValueEndsAt: 19,
             attribStart: 7,
             attribEnd: 20
           }
