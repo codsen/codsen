@@ -18,7 +18,8 @@
         "chalk": 6,
         "check-types-mini": 4,
         "chlu": 1,
-        "codsen-tokenizer": 1,
+        "codsen-parser": 1,
+        "codsen-tokenizer": 2,
         "compare-versions": 1,
         "csv-sort": 1,
         "csv-split-easy": 1,
@@ -71,7 +72,7 @@
         "lodash.includes": 3,
         "lodash.intersection": 3,
         "lodash.isequal": 1,
-        "lodash.isplainobject": 32,
+        "lodash.isplainobject": 30,
         "lodash.isregexp": 2,
         "lodash.merge": 1,
         "lodash.min": 1,
@@ -92,12 +93,11 @@
         "object-flatten-all-arrays": 1,
         "object-merge-advanced": 4,
         "object-no-new-keys": 1,
-        "object-path": 5,
+        "object-path": 6,
         "object-set-all-values-to": 1,
         "p-filter": 2,
-        "p-map": 3,
+        "p-map": 4,
         "p-one": 1,
-        "p-progress-bastardised": 1,
         "p-reduce": 8,
         "package-json-editor": 1,
         "pacote": 1,
@@ -151,17 +151,17 @@
         "write-json-file": 1
     },
     "devDependencies": {
-        "@babel/core": 107,
+        "@babel/core": 108,
         "@babel/polyfill": 1,
-        "@babel/preset-env": 107,
-        "@rollup/plugin-commonjs": 107,
+        "@babel/preset-env": 108,
+        "@rollup/plugin-commonjs": 108,
         "@rollup/plugin-json": 32,
-        "@rollup/plugin-node-resolve": 107,
-        "@rollup/plugin-strip": 107,
+        "@rollup/plugin-node-resolve": 108,
+        "@rollup/plugin-strip": 108,
         "array-shuffle": 1,
         "ast-deep-contains": 1,
         "ast-monkey-traverse": 1,
-        "benchmark": 95,
+        "benchmark": 96,
         "deep-equal": 1,
         "eslint": 15,
         "eslint-config-prettier": 14,
@@ -175,7 +175,7 @@
         "is-ci": 1,
         "js-row-num-cli": 14,
         "json-stringify-safe": 1,
-        "lect": 107,
+        "lect": 108,
         "lodash.clonedeep": 5,
         "lodash.isequal": 1,
         "map-stream": 1,
@@ -183,27 +183,27 @@
         "object-boolean-combinations": 1,
         "object-delete-key": 1,
         "object-path": 4,
-        "p-map": 5,
+        "p-map": 4,
         "posthtml-parser": 1,
         "prettier": 14,
         "ranges-apply": 6,
         "ranges-merge": 1,
-        "rollup": 94,
-        "rollup-plugin-ascii": 94,
-        "rollup-plugin-babel": 94,
-        "rollup-plugin-banner": 94,
-        "rollup-plugin-cleanup": 94,
+        "rollup": 95,
+        "rollup-plugin-ascii": 95,
+        "rollup-plugin-babel": 95,
+        "rollup-plugin-banner": 95,
+        "rollup-plugin-cleanup": 95,
         "rollup-plugin-node-builtins": 9,
         "rollup-plugin-node-globals": 1,
-        "rollup-plugin-terser": 94,
+        "rollup-plugin-terser": 95,
         "string-find-heads-tails": 1,
-        "tap": 107,
+        "tap": 108,
         "tempy": 12,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 32
+            "lodash.isplainobject": 30
         },
         {
             "lodash.clonedeep": 22
@@ -230,7 +230,7 @@
             "lodash.uniq": 7
         },
         {
-            "write-file-atomic": 6
+            "object-path": 6
         }
     ],
     "top10OwnDeps": [

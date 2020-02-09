@@ -65,7 +65,7 @@
     },
     {
         "name": "ast-get-object",
-        "size": 2295,
+        "size": 2294,
         "imports": [
             "ast-compare"
         ]
@@ -84,7 +84,7 @@
     },
     {
         "name": "ast-loose-compare",
-        "size": 3046,
+        "size": 3045,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -140,8 +140,15 @@
         ]
     },
     {
+        "name": "codsen-parser",
+        "size": 6357,
+        "imports": [
+            "codsen-tokenizer"
+        ]
+    },
+    {
         "name": "codsen-tokenizer",
-        "size": 24342,
+        "size": 30692,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -220,10 +227,11 @@
     },
     {
         "name": "email-comb",
-        "size": 62301,
+        "size": 62351,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
+            "codsen-tokenizer",
             "ranges-apply",
             "ranges-push",
             "regex-empty-conditional-comments",
@@ -236,9 +244,9 @@
     },
     {
         "name": "emlint",
-        "size": 295076,
+        "size": 296485,
         "imports": [
-            "codsen-tokenizer",
+            "codsen-parser",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
             "is-language-code",
@@ -311,7 +319,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 3707,
+        "size": 4782,
         "imports": [
             "string-left-right",
             "string-match-left-right"
@@ -459,7 +467,7 @@
     },
     {
         "name": "object-no-new-keys",
-        "size": 3378,
+        "size": 3377,
         "imports": []
     },
     {
@@ -503,7 +511,7 @@
     },
     {
         "name": "ranges-merge",
-        "size": 5029,
+        "size": 5028,
         "imports": [
             "ranges-sort"
         ]
@@ -518,7 +526,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7424,
+        "size": 7423,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -534,7 +542,7 @@
     },
     {
         "name": "ranges-sort",
-        "size": 2711,
+        "size": 2710,
         "imports": []
     },
     {
@@ -689,7 +697,7 @@
     },
     {
         "name": "update-versions",
-        "size": 12608,
+        "size": 12603,
         "imports": [
             "edit-package-json"
         ]
