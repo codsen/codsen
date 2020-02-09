@@ -47,8 +47,8 @@ export default commandLineArgs => {
       external: [
         "array-pull-all-with-glob",
         "ast-is-empty",
+        "codsen-tokenizer",
         "lodash.intersection",
-        "lodash.isplainobject",
         "lodash.pullall",
         "lodash.uniq",
         "matcher",
@@ -80,8 +80,8 @@ export default commandLineArgs => {
       external: [
         "array-pull-all-with-glob",
         "ast-is-empty",
+        "codsen-tokenizer",
         "lodash.intersection",
-        "lodash.isplainobject",
         "lodash.pullall",
         "lodash.uniq",
         "matcher",

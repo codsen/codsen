@@ -9023,7 +9023,7 @@
     }
   }
 
-  function genData (el) {
+  function gEndsAta (el) {
     var data = '';
     if (el.staticClass) {
       data += "staticClass:" + (el.staticClass) + ",";
@@ -9037,7 +9037,7 @@
   var klass$1 = {
     staticKeys: ['staticClass'],
     transformNode: transformNode,
-    genData: genData
+    gEndsAta: gEndsAta
   };
 
   /*  */
@@ -9068,7 +9068,7 @@
     }
   }
 
-  function genData$1 (el) {
+  function gEndsAta$1 (el) {
     var data = '';
     if (el.staticStyle) {
       data += "staticStyle:" + (el.staticStyle) + ",";
@@ -9082,7 +9082,7 @@
   var style$1 = {
     staticKeys: ['staticStyle'],
     transformNode: transformNode$1,
-    genData: genData$1
+    gEndsAta: gEndsAta$1
   };
 
   /*  */
@@ -10794,7 +10794,7 @@
     this.options = options;
     this.warn = options.warn || baseWarn;
     this.transforms = pluckModuleFunction(options.modules, 'transformCode');
-    this.dataGenFns = pluckModuleFunction(options.modules, 'genData');
+    this.dataGenFns = pluckModuleFunction(options.modules, 'gEndsAta');
     this.directives = extend(extend({}, baseDirectives), options.directives);
     var isReservedTag = options.isReservedTag || no;
     this.maybeComponent = function (el) { return !!el.component || !isReservedTag(el.tag); };
@@ -10842,7 +10842,7 @@
       } else {
         var data;
         if (!el.plain || (el.pre && state.maybeComponent(el))) {
-          data = genData$2(el, state);
+          data = gEndsAta$2(el, state);
         }
 
         var children = el.inlineTemplate ? null : genChildren(el, state, true);
@@ -10968,7 +10968,7 @@
       '})'
   }
 
-  function genData$2 (el, state) {
+  function gEndsAta$2 (el, state) {
     var data = '{';
 
     // directives first.
@@ -11257,7 +11257,7 @@
     state
   ) {
     var children = el.inlineTemplate ? null : genChildren(el, state, true);
-    return ("_c(" + componentName + "," + (genData$2(el, state)) + (children ? ("," + children) : '') + ")")
+    return ("_c(" + componentName + "," + (gEndsAta$2(el, state)) + (children ? ("," + children) : '') + ")")
   }
 
   function genProps (props) {

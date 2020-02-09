@@ -21,7 +21,6 @@ var intersection = _interopDefault(require('lodash.intersection'));
 var expander = _interopDefault(require('string-range-expander'));
 var stringLeftRight = require('string-left-right');
 var stringUglify = require('string-uglify');
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var applyRanges = _interopDefault(require('ranges-apply'));
 var pullAll = _interopDefault(require('lodash.pullall'));
 var isEmpty = _interopDefault(require('ast-is-empty'));
@@ -89,6 +88,9 @@ function comb(str, opts) {
   function characterSuitableForNames(_char) {
     return /[-_A-Za-z0-9]/.test(_char);
   }
+  function isObj(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
+  }
   function hasOwnProp(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
@@ -134,7 +136,7 @@ function comb(str, opts) {
   var bodyItsTheFirstClassOrId;
   var bogusHTMLComment;
   var ruleChunkStartedAt;
-  var headSelectorChunkStartedAt;
+  var selectorChunkStartedAt;
   var selectorChunkCanBeDeleted = false;
   var singleSelectorStartedAt;
   var singleSelectorType;
@@ -254,7 +256,7 @@ function comb(str, opts) {
   };
   var _loop = function _loop(round) {
     checkingInsideCurlyBraces = false;
-    headSelectorChunkStartedAt = null;
+    selectorChunkStartedAt = null;
     selectorChunkCanBeDeleted = false;
     bodyClassOrIdCanBeDeleted = true;
     headWholeLineCanBeDeleted = true;
@@ -458,7 +460,7 @@ function comb(str, opts) {
         if (ruleChunkStartedAt) {
           ruleChunkStartedAt = i + 1;
         }
-        headSelectorChunkStartedAt = null;
+        selectorChunkStartedAt = null;
         selectorChunkCanBeDeleted = false;
         headWholeLineCanBeDeleted = true;
         singleSelectorStartedAt = null;
@@ -496,7 +498,7 @@ function comb(str, opts) {
                 totalCounter++;
                 if (str[_y] === ">") {
                   ruleChunkStartedAt = _y + 1;
-                  headSelectorChunkStartedAt = _y + 1;
+                  selectorChunkStartedAt = _y + 1;
                   i = _y;
                   continue stepouter;
                 }
@@ -529,15 +531,15 @@ function comb(str, opts) {
             }
           }
         }
-        if (headSelectorChunkStartedAt === null) {
+        if (selectorChunkStartedAt === null) {
           if (chr.trim().length !== 0 && chr !== "}" && chr !== ";" && !(str[i] === "/" && str[i + 1] === "*")) {
             selectorChunkCanBeDeleted = false;
-            headSelectorChunkStartedAt = i;
+            selectorChunkStartedAt = i;
           }
         } else {
           if (",{".includes(chr)) {
             var sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
-            currentChunk = str.slice(headSelectorChunkStartedAt, sliceTo);
+            currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
             if (round === 1) {
               if (whitespaceStartedAt) {
                 if (chr === "," && whitespaceStartedAt < i) {
@@ -551,11 +553,11 @@ function comb(str, opts) {
               headSelectorsArr.push(currentChunk);
             } else {
               if (selectorChunkCanBeDeleted) {
-                var fromIndex = headSelectorChunkStartedAt;
+                var fromIndex = selectorChunkStartedAt;
                 var toIndex = i;
                 var tempFindingIndex = void 0;
                 if (chr === "{" && str[fromIndex - 1] !== ">" && str[fromIndex - 1] !== "}") {
-                  for (var _y2 = headSelectorChunkStartedAt; _y2--;) {
+                  for (var _y2 = selectorChunkStartedAt; _y2--;) {
                     totalCounter++;
                     if (str[_y2].trim().length !== 0 && str[_y2] !== ",") {
                       fromIndex = _y2 + 1;
@@ -608,7 +610,7 @@ function comb(str, opts) {
               }
             }
             if (chr !== "{") {
-              headSelectorChunkStartedAt = null;
+              selectorChunkStartedAt = null;
             } else if (round === 2) {
               if (!headWholeLineCanBeDeleted && lastKeptChunksCommaAt !== null && onlyDeletedChunksFollow) {
                 var deleteUpTo = lastKeptChunksCommaAt + 1;

@@ -3,26 +3,11 @@
 const t = require("tap");
 const { comb } = require("../dist/email-comb.cjs");
 
-const allKindsOfLineBreaks = /\r?\n|\r/g;
-
-// uncomment to test different line endings: 1) \n, 2) \r, 3) \r\n
-function replaceToRN(str) {
-  return str.replace(allKindsOfLineBreaks, "\r\n");
-}
-
-function replaceToN(str) {
-  return str.replace(allKindsOfLineBreaks, "\n");
-}
-
-function replaceToR(str) {
-  return str.replace(allKindsOfLineBreaks, "\r");
-}
-
 // ==============================
 // testing basic class/id removal
 // ==============================
 
-t.test("01.01 - mvp #1", t => {
+t.only("01.01 - mvp #1", t => {
   const source = `<head>
 <style type="text/css">
   .unused1[z] {a:1;}
@@ -42,9 +27,7 @@ t.test("01.01 - mvp #1", t => {
 </body>
 `;
 
-  t.equal(comb(replaceToN(source)).result, replaceToN(intended), "01.01.01");
-  t.equal(comb(replaceToRN(source)).result, replaceToRN(intended), "01.01.02");
-  t.equal(comb(replaceToR(source)).result, replaceToR(intended), "01.01.03");
+  t.equal(comb(source).result, intended, "01.01");
   t.end();
 });
 
@@ -70,9 +53,7 @@ t.test("01.02 - mvp #2", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.02.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.02.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.02.03");
+  t.equal(comb(source).result, intended, "01.02");
   t.end();
 });
 
@@ -102,9 +83,7 @@ t.test("01.03 - removes @charset", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.03.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.03.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.03.03");
+  t.equal(comb(source).result, intended, "01.03");
   t.end();
 });
 
@@ -129,9 +108,7 @@ t.test("01.04 - multiple classes and id's", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.04.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.04.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.04.03");
+  t.equal(comb(source).result, intended, "01.04");
   t.end();
 });
 
@@ -154,9 +131,7 @@ t.test("01.05 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.05.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.05.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.05.03");
+  t.equal(comb(source).result, intended, "01.05");
   t.end();
 });
 
@@ -179,9 +154,7 @@ t.test("01.06 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.06.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.06.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.06.03");
+  t.equal(comb(source).result, intended, "01.06.01");
   t.end();
 });
 
@@ -205,9 +178,7 @@ t.test("01.07 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.equal(replaceToN(comb(source).result), replaceToN(intended), "01.07.01");
-  t.equal(replaceToRN(comb(source).result), replaceToRN(intended), "01.07.02");
-  t.equal(replaceToR(comb(source).result), replaceToR(intended), "01.07.03");
+  t.equal(comb(source).result, intended, "01.07.01");
   t.end();
 });
 
@@ -230,9 +201,7 @@ t.test("01.08 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.08.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.08.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.08.03");
+  t.equal(actual, intended, "01.08.01");
   t.end();
 });
 
@@ -255,9 +224,7 @@ t.test("01.09 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.09.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.09.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.09.03");
+  t.equal(actual, intended, "01.09.01");
   t.end();
 });
 
@@ -277,9 +244,7 @@ t.test("01.10 - sandwitched used and unused", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.10.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.10.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.10.03");
+  t.equal(actual, intended, "01.10.01");
   t.end();
 });
 
@@ -302,9 +267,7 @@ t.test("01.11 - mixed: classes and tag names", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.11.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.11.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.11.03");
+  t.equal(actual, intended, "01.11");
   t.end();
 });
 
@@ -340,19 +303,13 @@ t.test("01.12 - removes unused classes and uglifies at the same time", t => {
   const actualNotUglified = comb(source, { uglify: false }).result;
   const actual2 = comb(source, { uglify: 1 }).result;
 
-  t.equal(replaceToN(actual), replaceToN(uglified), "01.12.01");
-  t.equal(replaceToRN(actual), replaceToRN(uglified), "01.12.02");
-  t.equal(replaceToR(actual), replaceToR(uglified), "01.12.03");
+  t.equal(actual, uglified, "01.12.01");
 
   // uglify option given as number:
-  t.equal(replaceToN(actual2), replaceToN(uglified), "01.12.04");
-  t.equal(replaceToRN(actual2), replaceToRN(uglified), "01.12.05");
-  t.equal(replaceToR(actual2), replaceToR(uglified), "01.12.06");
+  t.equal(actual2, uglified, "01.12.04");
 
   // not uglified:
-  t.equal(replaceToN(actualNotUglified), replaceToN(intended), "01.12.07");
-  t.equal(replaceToRN(actualNotUglified), replaceToRN(intended), "01.12.08");
-  t.equal(replaceToR(actualNotUglified), replaceToR(intended), "01.12.09");
+  t.equal(actualNotUglified, intended, "01.12.07");
 
   // uglification disabled:
   const actual3 = comb(source, { uglify: false }).result;
@@ -383,9 +340,7 @@ t.test("01.13 - adhoc #1", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.13.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.13.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.13.03");
+  t.equal(actual, intended, "01.13");
   t.end();
 });
 
@@ -408,9 +363,7 @@ t.test("01.14 - adhoc 2", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.14.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.14.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.14.03");
+  t.equal(actual, intended, "01.14");
   t.end();
 });
 
@@ -433,9 +386,7 @@ t.test("01.15 - adhoc 3", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.15.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.15.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.15.03");
+  t.equal(actual, intended, "01.15");
   t.end();
 });
 
@@ -459,9 +410,7 @@ t.test("01.16 - mixed classes and non-classes", t => {
 </body>
 `;
 
-  t.equal(replaceToN(actual), replaceToN(intended), "01.16.01");
-  t.equal(replaceToRN(actual), replaceToRN(intended), "01.16.02");
-  t.equal(replaceToR(actual), replaceToR(intended), "01.16.03");
+  t.equal(actual, intended, "01.16");
   t.end();
 });
 

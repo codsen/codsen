@@ -15,7 +15,6 @@ import intersection from 'lodash.intersection';
 import expander from 'string-range-expander';
 import { left, right } from 'string-left-right';
 import { uglifyArr } from 'string-uglify';
-import isObj from 'lodash.isplainobject';
 import applyRanges from 'ranges-apply';
 import pullAll from 'lodash.pullall';
 import isEmpty from 'ast-is-empty';
@@ -44,6 +43,11 @@ function comb(str, opts) {
   const lineBreaksToDelete = new Ranges();
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
+  }
+  function isObj(something) {
+    return (
+      something && typeof something === "object" && !Array.isArray(something)
+    );
   }
   function hasOwnProp(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
@@ -97,7 +101,7 @@ function comb(str, opts) {
   let bodyItsTheFirstClassOrId;
   let bogusHTMLComment;
   let ruleChunkStartedAt;
-  let headSelectorChunkStartedAt;
+  let selectorChunkStartedAt;
   let selectorChunkCanBeDeleted = false;
   let singleSelectorStartedAt;
   let singleSelectorType;
@@ -283,7 +287,7 @@ function comb(str, opts) {
   };
   for (let round = 1; round <= 2; round++) {
     checkingInsideCurlyBraces = false;
-    headSelectorChunkStartedAt = null;
+    selectorChunkStartedAt = null;
     selectorChunkCanBeDeleted = false;
     bodyClassOrIdCanBeDeleted = true;
     headWholeLineCanBeDeleted = true;
@@ -597,7 +601,7 @@ function comb(str, opts) {
         if (ruleChunkStartedAt) {
           ruleChunkStartedAt = i + 1;
         }
-        headSelectorChunkStartedAt = null;
+        selectorChunkStartedAt = null;
         selectorChunkCanBeDeleted = false;
         headWholeLineCanBeDeleted = true;
         singleSelectorStartedAt = null;
@@ -648,7 +652,7 @@ function comb(str, opts) {
                 totalCounter++;
                 if (str[y] === ">") {
                   ruleChunkStartedAt = y + 1;
-                  headSelectorChunkStartedAt = y + 1;
+                  selectorChunkStartedAt = y + 1;
                   i = y;
                   continue stepouter;
                 }
@@ -699,7 +703,7 @@ function comb(str, opts) {
             }
           }
         }
-        if (headSelectorChunkStartedAt === null) {
+        if (selectorChunkStartedAt === null) {
           if (
             chr.trim().length !== 0 &&
             chr !== "}" &&
@@ -707,12 +711,12 @@ function comb(str, opts) {
             !(str[i] === "/" && str[i + 1] === "*")
           ) {
             selectorChunkCanBeDeleted = false;
-            headSelectorChunkStartedAt = i;
+            selectorChunkStartedAt = i;
           }
         } else {
           if (",{".includes(chr)) {
             const sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
-            currentChunk = str.slice(headSelectorChunkStartedAt, sliceTo);
+            currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
             if (round === 1) {
               if (whitespaceStartedAt) {
                 if (chr === "," && whitespaceStartedAt < i) {
@@ -727,7 +731,7 @@ function comb(str, opts) {
               headSelectorsArr.push(currentChunk);
             } else {
               if (selectorChunkCanBeDeleted) {
-                let fromIndex = headSelectorChunkStartedAt;
+                let fromIndex = selectorChunkStartedAt;
                 let toIndex = i;
                 let tempFindingIndex;
                 if (
@@ -735,7 +739,7 @@ function comb(str, opts) {
                   str[fromIndex - 1] !== ">" &&
                   str[fromIndex - 1] !== "}"
                 ) {
-                  for (let y = headSelectorChunkStartedAt; y--; ) {
+                  for (let y = selectorChunkStartedAt; y--; ) {
                     totalCounter++;
                     if (str[y].trim().length !== 0 && str[y] !== ",") {
                       fromIndex = y + 1;
@@ -792,7 +796,7 @@ function comb(str, opts) {
               }
             }
             if (chr !== "{") {
-              headSelectorChunkStartedAt = null;
+              selectorChunkStartedAt = null;
             } else if (round === 2) {
               if (
                 !headWholeLineCanBeDeleted &&

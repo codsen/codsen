@@ -123,8 +123,8 @@
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.61",
     "ast-is-empty": "^1.10.0",
+    "codsen-tokenizer": "^2.6.0",
     "lodash.intersection": "^4.4.0",
-    "lodash.isplainobject": "^4.0.6",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^2.1.0",
