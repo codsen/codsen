@@ -10,7 +10,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
     [
       {
         children: [],
-        type: "html",
+        type: "tag",
         start: 0,
         end: 5,
         tagNameStartsAt: 1,
@@ -26,7 +26,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
       },
       {
         children: [],
-        type: "html",
+        type: "tag",
         start: 5,
         end: 11,
         tagNameStartsAt: 7,
@@ -60,7 +60,7 @@ t.test(
               end: 9
             }
           ],
-          type: "html",
+          type: "tag",
           start: 0,
           end: 7,
           tagNameStartsAt: 1,
@@ -76,7 +76,7 @@ t.test(
         },
         {
           children: [],
-          type: "html",
+          type: "tag",
           start: 9,
           end: 17,
           tagNameStartsAt: 11,
@@ -111,7 +111,7 @@ t.test(
               end: 7
             }
           ],
-          type: "html",
+          type: "tag",
           start: 0,
           end: 5,
           tagNameStartsAt: 1,
@@ -127,7 +127,7 @@ t.test(
         },
         {
           children: [],
-          type: "html",
+          type: "tag",
           start: 7,
           end: 13,
           tagNameStartsAt: 9,

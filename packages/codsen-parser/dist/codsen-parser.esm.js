@@ -189,7 +189,7 @@ function cparser(str, originalOpts) {
         nestNext = false;
         path = `${path}.children.0`;
       } else if (
-        tokenObj.type === "html" &&
+        tokenObj.type === "tag" &&
         tokenObj.closing &&
         typeof path === "string" &&
         path.includes(".")
@@ -200,7 +200,7 @@ function cparser(str, originalOpts) {
       } else {
         path = pathNext(path);
       }
-      if (tokenObj.type === "html" && !tokenObj.void && !tokenObj.closing) {
+      if (tokenObj.type === "tag" && !tokenObj.void && !tokenObj.closing) {
         nestNext = true;
       }
       const previousPath = pathPrev(path);
@@ -209,11 +209,11 @@ function cparser(str, originalOpts) {
         previousTagsToken = op.get(res, previousPath);
       }
       if (
-        tokenObj.type === "html" &&
+        tokenObj.type === "tag" &&
         tokenObj.closing &&
         (!previousPath ||
           !isObj(previousTagsToken) ||
-          previousTagsToken.type !== "html" ||
+          previousTagsToken.type !== "tag" ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         if (opts.errCb) {
@@ -227,10 +227,7 @@ function cparser(str, originalOpts) {
       op.set(
         res,
         path,
-        Object.assign(
-          tokenObj.type === "html" ? { children: [] } : {},
-          tokenObj
-        )
+        Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
     },
     charCb: opts.charCb

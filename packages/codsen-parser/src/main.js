@@ -226,7 +226,7 @@ function cparser(str, originalOpts) {
         console.log(`226 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
         path = `${path}.children.0`;
       } else if (
-        tokenObj.type === "html" &&
+        tokenObj.type === "tag" &&
         tokenObj.closing &&
         typeof path === "string" &&
         path.includes(".")
@@ -247,7 +247,7 @@ function cparser(str, originalOpts) {
       }
 
       // activate the nestNext
-      if (tokenObj.type === "html" && !tokenObj.void && !tokenObj.closing) {
+      if (tokenObj.type === "tag" && !tokenObj.void && !tokenObj.closing) {
         nestNext = true;
       }
 
@@ -281,11 +281,11 @@ function cparser(str, originalOpts) {
         )}`
       );
       if (
-        tokenObj.type === "html" &&
+        tokenObj.type === "tag" &&
         tokenObj.closing &&
         (!previousPath ||
           !isObj(previousTagsToken) ||
-          previousTagsToken.type !== "html" ||
+          previousTagsToken.type !== "tag" ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         console.log(
@@ -310,13 +310,10 @@ function cparser(str, originalOpts) {
       op.set(
         res,
         path,
-        Object.assign(
-          tokenObj.type === "html" ? { children: [] } : {},
-          tokenObj
-        )
+        Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
       console.log(
-        `319 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `316 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -324,7 +321,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `327 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `324 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -362,7 +359,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `365 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `362 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

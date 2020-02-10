@@ -11,7 +11,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
 </style>`),
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 7,
         tagNameStartsAt: 1,
@@ -53,7 +53,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
       },
       {
         children: [],
-        type: "html",
+        type: "tag",
         start: 26,
         end: 34,
         tagNameStartsAt: 28,

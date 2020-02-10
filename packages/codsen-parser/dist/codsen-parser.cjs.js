@@ -141,14 +141,14 @@ function cparser(str, originalOpts) {
       !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing))) {
         nestNext = false;
         path = "".concat(path, ".children.0");
-      } else if (tokenObj.type === "html" && tokenObj.closing && typeof path === "string" && path.includes(".")) {
+      } else if (tokenObj.type === "tag" && tokenObj.closing && typeof path === "string" && path.includes(".")) {
         path = pathNext(pathUp(path));
       } else if (!path) {
         path = "0";
       } else {
         path = pathNext(path);
       }
-      if (tokenObj.type === "html" && !tokenObj["void"] && !tokenObj.closing) {
+      if (tokenObj.type === "tag" && !tokenObj["void"] && !tokenObj.closing) {
         nestNext = true;
       }
       var previousPath = pathPrev(path);
@@ -156,7 +156,7 @@ function cparser(str, originalOpts) {
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      if (tokenObj.type === "html" && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.type !== "html" || previousTagsToken.tagName !== tokenObj.tagName)) {
+      if (tokenObj.type === "tag" && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.type !== "tag" || previousTagsToken.tagName !== tokenObj.tagName)) {
         if (opts.errCb) {
           opts.errCb({
             ruleId: "tag-missing-opening",
@@ -165,7 +165,7 @@ function cparser(str, originalOpts) {
           });
         }
       }
-      op.set(res, path, Object.assign(tokenObj.type === "html" ? {
+      op.set(res, path, Object.assign(tokenObj.type === "tag" ? {
         children: []
       } : {}, tokenObj));
     },

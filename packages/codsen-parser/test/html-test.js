@@ -9,13 +9,13 @@ t.test("01.01 - basics - two tags", t => {
     cparser("<div><div>"),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         start: 0,
         end: 5,
         children: [
           {
-            type: "html",
+            type: "tag",
             tagName: "div",
             start: 5,
             end: 10,
@@ -39,7 +39,7 @@ t.test("01.02 - basics - text and tag", t => {
         end: 1
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         start: 1,
         end: 6,
@@ -56,7 +56,7 @@ t.test("01.03 - basics - tag text tag", t => {
     cparser("<div>a<div>"),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         start: 0,
         end: 5,
@@ -67,7 +67,7 @@ t.test("01.03 - basics - tag text tag", t => {
             end: 6
           },
           {
-            type: "html",
+            type: "tag",
             tagName: "div",
             start: 6,
             end: 11,
@@ -86,7 +86,7 @@ t.test("01.04 - basics - two div pairs", t => {
     cparser("<div>a</div><div>b</div>"),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: false,
         start: 0,
@@ -100,7 +100,7 @@ t.test("01.04 - basics - two div pairs", t => {
         ]
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: true,
         start: 6,
@@ -108,7 +108,7 @@ t.test("01.04 - basics - two div pairs", t => {
         children: []
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: false,
         start: 12,
@@ -122,7 +122,7 @@ t.test("01.04 - basics - two div pairs", t => {
         ]
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: true,
         start: 18,
@@ -140,7 +140,7 @@ t.test("01.05 - basics - mixed combo", t => {
     cparser("<br>z</a>"),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "br",
         closing: false,
         start: 0,
@@ -153,7 +153,7 @@ t.test("01.05 - basics - mixed combo", t => {
         end: 5
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: true,
         start: 5,
@@ -171,7 +171,7 @@ t.test("01.06 - basics - two nested pairs", t => {
     cparser("<div>1<a>2</a>3</div>"),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: false,
         start: 0,
@@ -183,7 +183,7 @@ t.test("01.06 - basics - two nested pairs", t => {
             end: 6
           },
           {
-            type: "html",
+            type: "tag",
             tagName: "a",
             closing: false,
             start: 6,
@@ -197,7 +197,7 @@ t.test("01.06 - basics - two nested pairs", t => {
             ]
           },
           {
-            type: "html",
+            type: "tag",
             tagName: "a",
             closing: true,
             start: 10,
@@ -212,7 +212,7 @@ t.test("01.06 - basics - two nested pairs", t => {
         ]
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "div",
         closing: true,
         start: 15,

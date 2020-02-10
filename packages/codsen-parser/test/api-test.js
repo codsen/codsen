@@ -79,7 +79,7 @@ t.test("00.08 - opts.tagCb", t => {
         end: 2
       },
       {
-        type: "html",
+        type: "tag",
         start: 2,
         end: 5
       },
@@ -108,17 +108,17 @@ t.test("00.09 - opts.charCb", t => {
       {
         chr: "<",
         i: 0,
-        type: "html"
+        type: "tag"
       },
       {
         chr: "a",
         i: 1,
-        type: "html"
+        type: "tag"
       },
       {
         chr: ">",
         i: 2,
-        type: "html"
+        type: "tag"
       },
       {
         chr: "z",

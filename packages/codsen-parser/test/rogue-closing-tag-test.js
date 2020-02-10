@@ -11,7 +11,7 @@ t.test("01.01 - rogue closing - one tag only", t => {
     }),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: true,
         start: 0,
@@ -45,7 +45,7 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
     }),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "br",
         closing: false,
         start: 0,
@@ -58,7 +58,7 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
         end: 5
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: true,
         start: 5,
@@ -82,7 +82,7 @@ t.test("01.02 - rogue closing - previous token is text-type", t => {
   t.end();
 });
 
-t.test("01.03 - rogue closing - previous token is html-type", t => {
+t.test("01.03 - rogue closing - previous token is tag-type", t => {
   const gatheredErr = [];
   t.match(
     cparser("<br></a>", {
@@ -92,7 +92,7 @@ t.test("01.03 - rogue closing - previous token is html-type", t => {
     }),
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "br",
         closing: false,
         start: 0,
@@ -100,7 +100,7 @@ t.test("01.03 - rogue closing - previous token is html-type", t => {
         children: []
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: true,
         start: 4,
