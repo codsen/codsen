@@ -119,3 +119,19 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `01.06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`,
+  t => {
+    const str = "<style>\n\n</style>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "tag-missing-opening": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str, "01.06.01");
+    t.same(messages, [], "01.06.02");
+    t.end();
+  }
+);
