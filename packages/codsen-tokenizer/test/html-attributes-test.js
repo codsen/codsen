@@ -16,7 +16,7 @@ t.test(
 
     t.match(gathered, [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 15,
         attribs: [
@@ -63,7 +63,7 @@ t.test(
 
     t.match(gathered, [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 21,
         attribs: [
@@ -118,7 +118,7 @@ t.test(
         void: false,
         pureHTML: true,
         esp: [],
-        type: "html",
+        type: "tag",
         start: 0,
         end: 5,
         tail: null,
@@ -151,7 +151,7 @@ t.test(
         void: false,
         pureHTML: true,
         esp: [],
-        type: "html",
+        type: "tag",
         start: 0,
         end: 6,
         tail: null,
@@ -174,7 +174,7 @@ t.test(
 //     gathered,
 //     [
 //       {
-//         type: "html",
+//         type: "tag",
 //         start: 0,
 //         end: 50,
 //         attribs: [
@@ -235,7 +235,7 @@ t.test(
 
     t.match(gathered, [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 13,
         attribs: [
@@ -281,7 +281,7 @@ t.test(
 //     gathered,
 //     [
 //       {
-//         type: "html",
+//         type: "tag",
 //         start: 0,
 //         end: 13,
 //         attribs: [
@@ -326,7 +326,7 @@ t.test(`02.03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       start: 0,
       end: 17,
       attribs: [
@@ -380,7 +380,7 @@ t.test(
         void: false,
         pureHTML: true,
         esp: [],
-        type: "html",
+        type: "tag",
         start: 0,
         end: 15,
         tail: null,
@@ -423,7 +423,7 @@ t.test(`02.05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - rgb()`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 20,
       tail: null,
@@ -468,7 +468,7 @@ t.test(`03.01`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 11,
       tail: null,
@@ -510,7 +510,7 @@ t.test(`03.02 - slash in the end`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 12,
       tail: null,
@@ -552,7 +552,7 @@ t.test(`03.03 - slash in front`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 12,
       tail: null,
@@ -594,7 +594,7 @@ t.test(`03.04 - now crazier`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 19,
       tail: null,
@@ -660,7 +660,7 @@ t.test(`03.05 - unrecognised tag`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 32,
       kind: null,
@@ -716,7 +716,7 @@ t.test(`04.01 - attr value without quotes`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 20,
       tail: null,
@@ -770,7 +770,7 @@ t.test(`04.02 - attr value without quotes leads to tag's end`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 12,
       tail: null,
@@ -812,7 +812,7 @@ t.test(`04.03 - attr value without quotes leads to tag's end`, t => {
       void: false,
       pureHTML: true,
       esp: [],
-      type: "html",
+      type: "tag",
       start: 0,
       end: 11,
       kind: null,
@@ -885,7 +885,7 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       tagNameStartsAt: 1,
       tagNameEndsAt: 4,
       tagName: "abc",
@@ -918,7 +918,7 @@ t.test(`05.01 - attr value without quotes leads to tag's end`, t => {
       end: 16
     },
     {
-      type: "html",
+      type: "tag",
       tagNameStartsAt: 17,
       tagNameEndsAt: 20,
       tagName: "div",
@@ -964,7 +964,7 @@ t.test(`05.02 - missing closing quote, cheeky raw text bracket follows`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       tagNameStartsAt: 1,
       tagNameEndsAt: 4,
       tagName: "abc",
@@ -1012,7 +1012,7 @@ t.test(
 
     t.match(gathered, [
       {
-        type: "html",
+        type: "tag",
         tagNameStartsAt: 1,
         tagNameEndsAt: 6,
         tagName: "input",
@@ -1068,7 +1068,7 @@ t.test(
 
     t.match(gathered, [
       {
-        type: "html",
+        type: "tag",
         tagNameStartsAt: 1,
         tagNameEndsAt: 6,
         tagName: "input",
@@ -1129,7 +1129,7 @@ t.test(`05.05 - two asterisks as an attribute's value`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       tagNameStartsAt: 1,
       tagNameEndsAt: 9,
       tagName: "frameset",
@@ -1170,7 +1170,7 @@ t.test(`05.06 - many asterisks as an attribute's value`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       tagNameStartsAt: 1,
       tagNameEndsAt: 9,
       tagName: "frameset",
@@ -1214,7 +1214,7 @@ t.test(`06.01 - two attrs, one recognised one not`, t => {
 
   t.match(gathered, [
     {
-      type: "html",
+      type: "tag",
       tagName: "table",
       recognised: true,
       start: 0,

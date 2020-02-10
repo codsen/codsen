@@ -17,7 +17,7 @@ t.test(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 7
         },
@@ -36,7 +36,7 @@ t.test(
           ]
         },
         {
-          type: "html",
+          type: "tag",
           start: 14,
           end: 22
         }
@@ -65,7 +65,7 @@ t.test(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 7
         },
@@ -94,7 +94,7 @@ t.test(
           end: 16
         },
         {
-          type: "html",
+          type: "tag",
           start: 16,
           end: 24
         }

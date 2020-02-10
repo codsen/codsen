@@ -29,7 +29,7 @@ t.todo("01.01 - outlook conditionals with xml", t => {
         end: 3
       },
       {
-        type: "html",
+        type: "tag",
         start: 2,
         end: 5
       },

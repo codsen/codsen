@@ -17,7 +17,7 @@ t.test(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 7
         },
@@ -49,7 +49,7 @@ t.test(
           closingCurlyAt: 22
         },
         {
-          type: "html",
+          type: "tag",
           start: 23,
           end: 31
         }
@@ -73,7 +73,7 @@ t.todo(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 7
         },
@@ -105,7 +105,7 @@ t.todo(
           closingCurlyAt: 22
         },
         {
-          type: "html",
+          type: "tag",
           start: 23,
           end: 31
         }
@@ -137,7 +137,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 7
       },
@@ -189,7 +189,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
         end: 54
       },
       {
-        type: "html",
+        type: "tag",
         start: 54,
         end: 62
       }

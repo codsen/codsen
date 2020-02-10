@@ -21,7 +21,7 @@ t.test("01.01 - text-tag-text", t => {
         end: 2
       },
       {
-        type: "html",
+        type: "tag",
         start: 2,
         end: 5
       },
@@ -68,7 +68,7 @@ t.test("01.03 - opening tag only", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 3,
         tagNameStartsAt: 1,
@@ -99,7 +99,7 @@ t.test("01.04 - closing tag only", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 4,
         tagNameStartsAt: 2,
@@ -131,7 +131,7 @@ t.test("01.05 - self-closing tag only", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         tagNameStartsAt: 1,
         tagNameEndsAt: 3,
         tagName: "br",
@@ -157,17 +157,17 @@ t.test("01.06 - multiple tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 3
       },
       {
-        type: "html",
+        type: "tag",
         start: 3,
         end: 6
       },
       {
-        type: "html",
+        type: "tag",
         start: 6,
         end: 9
       }
@@ -188,7 +188,7 @@ t.test("01.07 - closing bracket in the attribute's value", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 11
       }
@@ -209,7 +209,7 @@ t.test("01.08 - closing bracket layers of nested quotes", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 17
       }
@@ -251,7 +251,7 @@ t.test("01.10 - tag followed by brackets", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: false,
         void: false,
@@ -264,7 +264,7 @@ t.test("01.10 - tag followed by brackets", t => {
         end: 14
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "span",
         closing: false,
         void: false,
@@ -277,7 +277,7 @@ t.test("01.10 - tag followed by brackets", t => {
         end: 26
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "span",
         closing: true,
         void: false,
@@ -285,7 +285,7 @@ t.test("01.10 - tag followed by brackets", t => {
         end: 33
       },
       {
-        type: "html",
+        type: "tag",
         tagName: "a",
         closing: true,
         void: false,
@@ -309,12 +309,12 @@ t.test("01.11 - html comment", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 7
       },
       {
-        type: "html",
+        type: "tag",
         start: 7,
         end: 33,
         kind: "comment"
@@ -325,7 +325,7 @@ t.test("01.11 - html comment", t => {
         end: 34
       },
       {
-        type: "html",
+        type: "tag",
         start: 34,
         end: 40
       }
@@ -351,7 +351,7 @@ t.test("01.12 - html5 doctype", t => {
         end: 1
       },
       {
-        type: "html",
+        type: "tag",
         start: 1,
         end: 16,
         kind: "doctype"
@@ -389,7 +389,7 @@ t.test("01.13 - xhtml doctype", t => {
         end: 1
       },
       {
-        type: "html",
+        type: "tag",
         start: 1,
         end: 126,
         kind: "doctype"
@@ -400,7 +400,7 @@ t.test("01.13 - xhtml doctype", t => {
         end: 127
       },
       {
-        type: "html",
+        type: "tag",
         start: 127,
         end: 190
       },
@@ -438,7 +438,7 @@ t.test("01.14 - xhtml DTD doctype", t => {
         end: 1
       },
       {
-        type: "html",
+        type: "tag",
         start: 1,
         end: 39,
         kind: "xml"
@@ -449,7 +449,7 @@ t.test("01.14 - xhtml DTD doctype", t => {
         end: 41
       },
       {
-        type: "html",
+        type: "tag",
         start: 41,
         end: 160,
         kind: "doctype"
@@ -460,7 +460,7 @@ t.test("01.14 - xhtml DTD doctype", t => {
         end: 162
       },
       {
-        type: "html",
+        type: "tag",
         start: 162,
         end: 229
       },
@@ -486,7 +486,7 @@ t.test("01.15 - void tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 4,
         void: true
@@ -508,7 +508,7 @@ t.test("01.16 - recognised tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 9,
         void: false,
@@ -531,7 +531,7 @@ t.test("01.17 - unrecognised tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 10,
         void: false,
@@ -554,7 +554,7 @@ t.test("01.18 - wrong case but still recognised tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 8,
         void: false,
@@ -577,7 +577,7 @@ t.test("01.19 - correct HTML5 doctype", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 15,
         void: false,
@@ -604,7 +604,7 @@ t.test("01.20 - correct HTML5 doctype", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 105,
         void: false,
@@ -627,7 +627,7 @@ t.test("01.21 - tag names with numbers", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         tagNameStartsAt: 1,
         tagNameEndsAt: 3,
         tagName: "h1",
@@ -654,7 +654,7 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 8,
         tagNameStartsAt: 1,
@@ -688,7 +688,7 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
         end: 9
       },
       {
-        type: "html",
+        type: "tag",
         start: 9,
         end: 13,
         tagNameStartsAt: 11,
@@ -719,7 +719,7 @@ t.test("01.23 - closing tag with attributes", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 14,
         tagNameStartsAt: 2,
@@ -767,7 +767,7 @@ t.test("02.01 - CDATA - correct", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 15,
         void: false,
@@ -791,7 +791,7 @@ t.test("02.02 - CDATA - messed up 1", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 14,
         void: false,
@@ -815,7 +815,7 @@ t.test("02.03 - CDATA - messed up 2", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 14,
         void: false,
@@ -839,7 +839,7 @@ t.test("02.04 - CDATA - messed up 3", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 16,
         void: false,
@@ -874,7 +874,7 @@ t.test("02.05 - CDATA - with line breaks", t => {
         end: 2
       },
       {
-        type: "html",
+        type: "tag",
         start: 2,
         end: 90,
         void: false,
@@ -906,7 +906,7 @@ t.test("03.01 - XML - correct", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 38,
         void: false,
@@ -930,7 +930,7 @@ t.test("03.02 - XML - incorrect 1", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 39,
         void: false,
@@ -954,7 +954,7 @@ t.test("03.03 - XML - incorrect 2", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 39,
         void: false,
@@ -978,7 +978,7 @@ t.test("03.04 - XML - incorrect 3", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 39,
         void: false,
@@ -1005,7 +1005,7 @@ t.test("04.01 - unrecognised tag name", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 11,
         tagNameStartsAt: 1,
@@ -1036,7 +1036,7 @@ t.test("04.02 - unrecognised tag name with dash", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 16,
         tagNameStartsAt: 1,

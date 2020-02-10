@@ -26,7 +26,7 @@ t.test(
           void: false,
           pureHTML: true,
           esp: [],
-          type: "html",
+          type: "tag",
           start: 0,
           end: 2,
           kind: null,
@@ -46,7 +46,7 @@ t.test(
           void: false,
           pureHTML: true,
           esp: [],
-          type: "html",
+          type: "tag",
           start: 3,
           end: 6,
           kind: null,
@@ -74,7 +74,7 @@ t.test(
         {
           start: 0,
           end: 12,
-          type: "html",
+          type: "tag",
           tagNameStartsAt: 1,
           tagNameEndsAt: 2,
           tagName: "a",
@@ -108,7 +108,7 @@ t.test(
         {
           start: 22,
           end: 26,
-          type: "html",
+          type: "tag",
           tagNameStartsAt: 24,
           tagNameEndsAt: 25,
           tagName: "a",
@@ -146,7 +146,7 @@ t.test(
         {
           start: 0,
           end: 12, // not 11
-          type: "html"
+          type: "tag"
         },
         {
           start: 12, // not 11
@@ -156,7 +156,7 @@ t.test(
         {
           start: 22,
           end: 26,
-          type: "html"
+          type: "tag"
         }
       ],
       "02.01"
@@ -181,7 +181,7 @@ t.test(
         {
           start: 0,
           end: 11, // not 13
-          type: "html"
+          type: "tag"
         },
         {
           start: 11, // not 13
@@ -191,7 +191,7 @@ t.test(
         {
           start: 23,
           end: 27,
-          type: "html"
+          type: "tag"
         }
       ],
       "02.02"
@@ -215,7 +215,7 @@ t.test(
         {
           start: 0,
           end: 11,
-          type: "html"
+          type: "tag"
         },
         {
           start: 11,
@@ -225,7 +225,7 @@ t.test(
         {
           start: 21,
           end: 25,
-          type: "html"
+          type: "tag"
         }
       ],
       "02.03"

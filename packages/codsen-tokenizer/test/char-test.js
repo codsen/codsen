@@ -18,17 +18,17 @@ t.test(t => {
       {
         chr: "<",
         i: 0,
-        type: "html"
+        type: "tag"
       },
       {
         chr: "a",
         i: 1,
-        type: "html"
+        type: "tag"
       },
       {
         chr: ">",
         i: 2,
-        type: "html"
+        type: "tag"
       },
       {
         chr: "z",

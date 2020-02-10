@@ -23,7 +23,7 @@ t.test(
           end: 2
         },
         {
-          type: "html",
+          type: "tag",
           start: 2,
           end: 15
         }
@@ -50,7 +50,7 @@ t.test(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 5
         }
@@ -74,7 +74,7 @@ t.test(
       gathered,
       [
         {
-          type: "html",
+          type: "tag",
           start: 0,
           end: 6
         }
@@ -109,7 +109,7 @@ t.test(
           void: false,
           pureHTML: true,
           esp: [],
-          type: "html",
+          type: "tag",
           start: 0,
           end: 5,
           kind: null,

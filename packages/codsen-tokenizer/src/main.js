@@ -458,7 +458,7 @@ function tokenizer(str, originalOpts) {
           4
         )} + ${JSON.stringify(str[token.end], null, 4)})`
       );
-      if (token.type === "html" && str[token.end - 1] !== ">") {
+      if (token.type === "tag" && str[token.end - 1] !== ">") {
         console.log(
           `463 ${`\u001b[${35}m${`██ UNCLOSED TAG CASES`}\u001b[${39}m`}`
         );
@@ -614,7 +614,7 @@ function tokenizer(str, originalOpts) {
   function initToken(type, start) {
     // we mutate the object on the parent scope, so no Object.assign here
     attribReset();
-    if (type === "html") {
+    if (type === "tag") {
       token.type = type;
       token.start = start;
       token.end = null;
@@ -829,7 +829,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
     if (
       !doNothing &&
-      ["html", "esp", "css"].includes(token.type) &&
+      ["tag", "esp", "css"].includes(token.type) &&
       token.kind !== "cdata"
     ) {
       console.log(`835 inside layers clauses`);
@@ -1159,7 +1159,7 @@ function tokenizer(str, originalOpts) {
 
         // add other HTML-specific keys onto the object
         // second arg is "start" key:
-        initToken("html", i);
+        initToken("tag", i);
 
         console.log(
           `1165 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
@@ -1407,7 +1407,7 @@ function tokenizer(str, originalOpts) {
 
             if (
               !(
-                token.type === "html" &&
+                token.type === "tag" &&
                 (token.kind === "comment" ||
                   // it's attribute's contents:
                   (Number.isInteger(attrib.attribStart) &&
@@ -1550,7 +1550,7 @@ function tokenizer(str, originalOpts) {
     // catch the ending of a token
     // -------------------------------------------------------------------------
     if (!doNothing) {
-      if (token.type === "html" && !layers.length && str[i] === ">") {
+      if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
         console.log(
           `1556 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
@@ -1751,7 +1751,7 @@ function tokenizer(str, originalOpts) {
 
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       Number.isInteger(token.tagNameStartsAt) &&
       !Number.isInteger(token.tagNameEndsAt)
     ) {
@@ -1801,7 +1801,7 @@ function tokenizer(str, originalOpts) {
 
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       !Number.isInteger(token.tagNameStartsAt) &&
       Number.isInteger(token.start) &&
       token.start < i
@@ -1843,7 +1843,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       token.kind !== "cdata" &&
       Number.isInteger(attrib.attribNameStartsAt) &&
       i > attrib.attribNameStartsAt &&
@@ -1891,7 +1891,7 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       str[i] &&
-      token.type === "html" &&
+      token.type === "tag" &&
       token.kind !== "cdata" &&
       Number.isInteger(token.tagNameEndsAt) &&
       i > token.tagNameEndsAt &&
@@ -1945,7 +1945,7 @@ function tokenizer(str, originalOpts) {
 
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       Number.isInteger(attrib.attribValueStartsAt) &&
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
@@ -2012,7 +2012,7 @@ function tokenizer(str, originalOpts) {
 
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       !Number.isInteger(attrib.attribValueStartsAt) &&
       Number.isInteger(attrib.attribNameEndsAt) &&
       attrib.attribNameEndsAt <= i &&
@@ -2062,7 +2062,7 @@ function tokenizer(str, originalOpts) {
     // mean the tag ending and maybe the closing quotes are missing?
     if (
       str[i] === ">" &&
-      token.type === "html" &&
+      token.type === "tag" &&
       attrib.attribStart !== null &&
       attrib.attribEnd === null
     ) {

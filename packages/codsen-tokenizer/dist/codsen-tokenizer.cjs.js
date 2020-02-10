@@ -216,7 +216,7 @@ function tokenizer(str, originalOpts) {
   function dumpCurrentToken(token, i) {
     if (!["text", "esp"].includes(token.type) && token.start !== null && token.start < i && (str[i - 1] && !str[i - 1].trim().length || str[i] === "<")) {
       token.end = stringLeftRight.left(str, i) + 1;
-      if (token.type === "html" && str[token.end - 1] !== ">") {
+      if (token.type === "tag" && str[token.end - 1] !== ">") {
         var cutOffIndex = token.tagNameEndsAt;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (var _i = 0, _len = token.attribs.length; _i < _len; _i++) {
@@ -260,7 +260,7 @@ function tokenizer(str, originalOpts) {
   }
   function initToken(type, start) {
     attribReset();
-    if (type === "html") {
+    if (type === "tag") {
       token.type = type;
       token.start = start;
       token.end = null;
@@ -349,7 +349,7 @@ function tokenizer(str, originalOpts) {
         token = tokenReset();
       }
     }
-    if (!doNothing && ["html", "esp", "css"].includes(token.type) && token.kind !== "cdata") {
+    if (!doNothing && ["tag", "esp", "css"].includes(token.type) && token.kind !== "cdata") {
       if (["\"", "'", "(", ")"].includes(str[i]) && !(
       ["\"", "'"].includes(str[stringLeftRight.left(str, i)]) && str[stringLeftRight.left(str, i)] === str[stringLeftRight.right(str, i)])) {
         if (matchLayerLast(str, i)) {
@@ -425,7 +425,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         tokenReset();
-        initToken("html", i);
+        initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;
         }
@@ -487,7 +487,7 @@ function tokenizer(str, originalOpts) {
               guessedClosingLump: flipEspTag(wholeEspTagLump),
               position: i
             });
-            if (!(token.type === "html" && (token.kind === "comment" ||
+            if (!(token.type === "tag" && (token.kind === "comment" ||
             Number.isInteger(attrib.attribStart) && !Number.isInteger(attrib.attribEnd)))) {
               dumpCurrentToken(token, i);
               initToken("esp", i);
@@ -526,7 +526,7 @@ function tokenizer(str, originalOpts) {
       selectorChunkStartedAt = i;
     }
     if (!doNothing) {
-      if (token.type === "html" && !layers.length && str[i] === ">") {
+      if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";
@@ -566,7 +566,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (!doNothing && token.type === "html" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
+    if (!doNothing && token.type === "tag" && Number.isInteger(token.tagNameStartsAt) && !Number.isInteger(token.tagNameEndsAt)) {
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
@@ -576,7 +576,7 @@ function tokenizer(str, originalOpts) {
         token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
       }
     }
-    if (!doNothing && token.type === "html" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && token.start < i) {
+    if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && token.start < i) {
       if (str[i] === "/") {
         token.closing = true;
       } else if (isLatinLetter(str[i])) {
@@ -586,7 +586,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (!doNothing && token.type === "html" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
+    if (!doNothing && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(attrib.attribNameStartsAt) && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.includes(attrib.attribName);
@@ -596,7 +596,7 @@ function tokenizer(str, originalOpts) {
         attribReset();
       }
     }
-    if (!doNothing && str[i] && token.type === "html" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
+    if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && Number.isInteger(token.tagNameEndsAt) && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
       attrib.attribStart = i;
       attrib.attribNameStartsAt = i;
     }
@@ -610,7 +610,7 @@ function tokenizer(str, originalOpts) {
         tokenReset();
       }
     }
-    if (!doNothing && token.type === "html" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+    if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[i])) {
         if (str[attrib.attribOpeningQuoteAt] === str[i] && !layers.some(function (layerObj) {
           return layerObj.type === "esp";
@@ -630,7 +630,7 @@ function tokenizer(str, originalOpts) {
         attribReset();
       }
     }
-    if (!doNothing && token.type === "html" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i].trim().length) {
+    if (!doNothing && token.type === "tag" && !Number.isInteger(attrib.attribValueStartsAt) && Number.isInteger(attrib.attribNameEndsAt) && attrib.attribNameEndsAt <= i && str[i].trim().length) {
       if (str[i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, i)]) && !espChars.includes(str[stringLeftRight.right(str, i)])
       ) {
           attrib.attribValueStartsAt = stringLeftRight.right(str, i);
@@ -641,7 +641,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (str[i] === ">" && token.type === "html" && attrib.attribStart !== null && attrib.attribEnd === null) {
+    if (str[i] === ">" && token.type === "tag" && attrib.attribStart !== null && attrib.attribEnd === null) {
       var thisIsRealEnding = false;
       if (str[i + 1]) {
         for (var _y3 = i + 1; _y3 < len; _y3++) {

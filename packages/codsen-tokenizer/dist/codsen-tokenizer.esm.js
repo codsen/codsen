@@ -420,7 +420,7 @@ function tokenizer(str, originalOpts) {
       ((str[i - 1] && !str[i - 1].trim().length) || str[i] === "<")
     ) {
       token.end = left(str, i) + 1;
-      if (token.type === "html" && str[token.end - 1] !== ">") {
+      if (token.type === "tag" && str[token.end - 1] !== ">") {
         let cutOffIndex = token.tagNameEndsAt;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (let i = 0, len = token.attribs.length; i < len; i++) {
@@ -474,7 +474,7 @@ function tokenizer(str, originalOpts) {
   }
   function initToken(type, start) {
     attribReset();
-    if (type === "html") {
+    if (type === "tag") {
       token.type = type;
       token.start = start;
       token.end = null;
@@ -574,7 +574,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      ["html", "esp", "css"].includes(token.type) &&
+      ["tag", "esp", "css"].includes(token.type) &&
       token.kind !== "cdata"
     ) {
       if (
@@ -709,7 +709,7 @@ function tokenizer(str, originalOpts) {
           dumpCurrentToken(token, i);
         }
         tokenReset();
-        initToken("html", i);
+        initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;
         }
@@ -804,7 +804,7 @@ function tokenizer(str, originalOpts) {
             });
             if (
               !(
-                token.type === "html" &&
+                token.type === "tag" &&
                 (token.kind === "comment" ||
                   (Number.isInteger(attrib.attribStart) &&
                     !Number.isInteger(attrib.attribEnd)))
@@ -862,7 +862,7 @@ function tokenizer(str, originalOpts) {
       selectorChunkStartedAt = i;
     }
     if (!doNothing) {
-      if (token.type === "html" && !layers.length && str[i] === ">") {
+      if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
       } else if (
         token.type === "esp" &&
@@ -921,7 +921,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       Number.isInteger(token.tagNameStartsAt) &&
       !Number.isInteger(token.tagNameEndsAt)
     ) {
@@ -938,7 +938,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       !Number.isInteger(token.tagNameStartsAt) &&
       Number.isInteger(token.start) &&
       token.start < i
@@ -954,7 +954,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       token.kind !== "cdata" &&
       Number.isInteger(attrib.attribNameStartsAt) &&
       i > attrib.attribNameStartsAt &&
@@ -977,7 +977,7 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       str[i] &&
-      token.type === "html" &&
+      token.type === "tag" &&
       token.kind !== "cdata" &&
       Number.isInteger(token.tagNameEndsAt) &&
       i > token.tagNameEndsAt &&
@@ -1003,7 +1003,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       Number.isInteger(attrib.attribValueStartsAt) &&
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
@@ -1035,7 +1035,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       !doNothing &&
-      token.type === "html" &&
+      token.type === "tag" &&
       !Number.isInteger(attrib.attribValueStartsAt) &&
       Number.isInteger(attrib.attribNameEndsAt) &&
       attrib.attribNameEndsAt <= i &&
@@ -1056,7 +1056,7 @@ function tokenizer(str, originalOpts) {
     }
     if (
       str[i] === ">" &&
-      token.type === "html" &&
+      token.type === "tag" &&
       attrib.attribStart !== null &&
       attrib.attribEnd === null
     ) {

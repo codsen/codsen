@@ -71,7 +71,7 @@ t.test("01.03 - ESP literals surrounded by HTML tags", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 3
       },
@@ -82,7 +82,7 @@ t.test("01.03 - ESP literals surrounded by HTML tags", t => {
         tail: "%}"
       },
       {
-        type: "html",
+        type: "tag",
         start: 21,
         end: 24
       }
@@ -103,12 +103,12 @@ t.test("01.04", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 26
       },
       {
-        type: "html",
+        type: "tag",
         start: 26,
         end: 29
       }
@@ -129,7 +129,7 @@ t.test("01.05 - ESP literals surrounded by HTML tags, tight", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 3
       },
@@ -140,7 +140,7 @@ t.test("01.05 - ESP literals surrounded by HTML tags, tight", t => {
         tail: "%}"
       },
       {
-        type: "html",
+        type: "tag",
         start: 35,
         end: 38
       }
@@ -161,12 +161,12 @@ t.test("01.06 - ESP tag with The Killer Triplet", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 21
       },
       {
-        type: "html",
+        type: "tag",
         start: 21,
         end: 24
       }
@@ -187,12 +187,12 @@ t.test("01.07 - Killer triplet within URL, ESP literal", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 49
       },
       {
-        type: "html",
+        type: "tag",
         start: 49,
         end: 52
       }
@@ -216,12 +216,12 @@ t.test("01.08 - Killer triplet within URL - full version", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 111
       },
       {
-        type: "html",
+        type: "tag",
         start: 111,
         end: 114
       }
@@ -242,7 +242,7 @@ t.test("01.09 - Responsys-style ESP tag", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         start: 0,
         end: 3
       },
@@ -253,7 +253,7 @@ t.test("01.09 - Responsys-style ESP tag", t => {
         tail: ")$"
       },
       {
-        type: "html",
+        type: "tag",
         start: 15,
         end: 18
       }
@@ -387,7 +387,7 @@ t.test("02.01 - false positives - double perc", t => {
     gathered,
     [
       {
-        type: "html",
+        type: "tag",
         tagName: "table",
         start: 0,
         end: 21,
