@@ -127,7 +127,7 @@ class Linter extends EventEmitter {
         this.emit(obj.type, obj);
         // plus, for type:html also ping each attribute
         if (
-          obj.type === "html" &&
+          obj.type === "tag" &&
           Array.isArray(obj.attribs) &&
           obj.attribs.length
         ) {
@@ -327,7 +327,7 @@ class Linter extends EventEmitter {
     }
 
     // remove all listeners
-    ["html", "css", "text", "esp", "character"].forEach(eventName => {
+    ["tag", "css", "text", "esp", "character"].forEach(eventName => {
       this.removeAllListeners(eventName);
     });
 

@@ -7,7 +7,7 @@ import matcher from "matcher";
 
 function tagIsPresent(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       console.log(
         `███████████████████████████████████████ tagIsPresent() ███████████████████████████████████████`
       );

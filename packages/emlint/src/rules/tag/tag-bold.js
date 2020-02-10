@@ -5,7 +5,7 @@
 
 function tagBold(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       console.log(
         `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
       );

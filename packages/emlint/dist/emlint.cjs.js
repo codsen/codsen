@@ -2745,7 +2745,7 @@ function badCharacterReplacementCharacter(context) {
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       var ranges = [];
       if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim().length) {
         ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1)]);
@@ -2776,7 +2776,7 @@ function tagSpaceBeforeClosingSlash(context) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       var gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       var mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
@@ -2812,7 +2812,7 @@ function tagSpaceBeforeClosingSlash(context) {
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
       context.str[stringLeftRight.left(context.str, node.end - 1)] === "/" && stringLeftRight.left(context.str, node.end - 1) < node.end - 2) {
         var idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
@@ -2833,7 +2833,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
 var BACKSLASH = "\\";
 function tagClosingBackslash(context) {
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       var ranges = [];
       if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)) {
         for (var i = node.start; i < node.tagNameStartsAt; i++) {
@@ -2897,7 +2897,7 @@ function tagVoidSlash(context) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       var mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
@@ -2958,7 +2958,7 @@ function tagVoidSlash(context) {
 function tagNameCase(context) {
   var knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !== node.tagName.toUpperCase()) {
@@ -2995,7 +2995,7 @@ function tagIsPresent(context) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       if (Array.isArray(opts) && opts.length) {
         var temp = matcher([node.tagName], opts);
         if (matcher([node.tagName], opts).length) {
@@ -3019,7 +3019,7 @@ function tagBold(context) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       var suggested = "strong";
       if (Array.isArray(opts) && typeof opts[0] === "string" && opts[0].toLowerCase() === "b") {
         suggested = "b";
@@ -3041,7 +3041,7 @@ function tagBold(context) {
 
 function attributeDuplicate(context) {
   return {
-    html: function html(node) {
+    tag: function tag(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         var attrsGatheredSoFar = [];
         for (var i = 0, len = node.attribs.length; i < len; i++) {
@@ -9125,7 +9125,7 @@ function (_EventEmitter) {
       parser(str, {
         tagCb: function tagCb(obj) {
           _this.emit(obj.type, obj);
-          if (obj.type === "html" && Array.isArray(obj.attribs) && obj.attribs.length) {
+          if (obj.type === "tag" && Array.isArray(obj.attribs) && obj.attribs.length) {
             obj.attribs.forEach(function (attribObj) {
               _this.emit("attribute", Object.assign({}, attribObj, {
                 parent: Object.assign({}, obj)
@@ -9218,7 +9218,7 @@ function (_EventEmitter) {
           }
         });
       }
-      ["html", "css", "text", "esp", "character"].forEach(function (eventName) {
+      ["tag", "css", "text", "esp", "character"].forEach(function (eventName) {
         _this.removeAllListeners(eventName);
       });
       return this.messages;

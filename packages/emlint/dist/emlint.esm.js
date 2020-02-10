@@ -2445,7 +2445,7 @@ function badCharacterReplacementCharacter(context) {
 
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    html: function(node) {
+    tag: function(node) {
       const ranges = [];
       if (
         typeof context.str[node.start + 1] === "string" &&
@@ -2477,7 +2477,7 @@ function tagSpaceAfterOpeningBracket(context) {
 
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
@@ -2519,7 +2519,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
 
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    html: function(node) {
+    tag: function(node) {
       if (
         Number.isInteger(node.end) &&
         context.str[node.end - 1] === ">" &&
@@ -2542,7 +2542,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
 const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
-    html: function(node) {
+    tag: function(node) {
       const ranges = [];
       if (
         Number.isInteger(node.start) &&
@@ -2637,7 +2637,7 @@ function tagClosingBackslash(context) {
 const BACKSLASH$1 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       let mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
@@ -2726,7 +2726,7 @@ function tagVoidSlash(context, ...opts) {
 function tagNameCase(context) {
   const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
-    html: function(node) {
+    tag: function(node) {
       if (node.tagName && node.recognised === true) {
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (
@@ -2770,7 +2770,7 @@ function tagNameCase(context) {
 
 function tagIsPresent(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       if (Array.isArray(opts) && opts.length) {
         const temp = matcher([node.tagName], opts);
         if (matcher([node.tagName], opts).length) {
@@ -2789,7 +2789,7 @@ function tagIsPresent(context, ...opts) {
 
 function tagBold(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       let suggested = "strong";
       if (
         Array.isArray(opts) &&
@@ -2815,7 +2815,7 @@ function tagBold(context, ...opts) {
 
 function attributeDuplicate(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         const attrsGatheredSoFar = [];
         for (let i = 0, len = node.attribs.length; i < len; i++) {
@@ -10986,7 +10986,7 @@ class Linter extends EventEmitter {
       tagCb: obj => {
         this.emit(obj.type, obj);
         if (
-          obj.type === "html" &&
+          obj.type === "tag" &&
           Array.isArray(obj.attribs) &&
           obj.attribs.length
         ) {
@@ -11108,7 +11108,7 @@ class Linter extends EventEmitter {
         }
       });
     }
-    ["html", "css", "text", "esp", "character"].forEach(eventName => {
+    ["tag", "css", "text", "esp", "character"].forEach(eventName => {
       this.removeAllListeners(eventName);
     });
     return this.messages;

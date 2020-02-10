@@ -13,7 +13,7 @@ const BACKSLASH = "\u005C";
 
 function tagClosingBackslash(context) {
   return {
-    html: function(node) {
+    tag: function(node) {
       console.log(
         `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
       );

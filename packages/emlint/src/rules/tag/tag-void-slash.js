@@ -9,7 +9,7 @@ const BACKSLASH = "\u005C";
 
 function tagVoidSlash(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       console.log(
         `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
       );

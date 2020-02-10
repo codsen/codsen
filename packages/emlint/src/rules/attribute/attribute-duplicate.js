@@ -5,7 +5,7 @@
 
 function attributeDuplicate(context, ...opts) {
   return {
-    html: function(node) {
+    tag: function(node) {
       console.log(
         `███████████████████████████████████████ attributeDuplicate() ███████████████████████████████████████`
       );
