@@ -71,18 +71,6 @@ function pathUp(str) {
   return str;
 }
 
-const tagsThatNest = [
-  "a",
-  "b",
-  "div",
-  "em",
-  "i",
-  "span",
-  "strong",
-  "table",
-  "td",
-  "tr"
-];
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -212,11 +200,7 @@ function cparser(str, originalOpts) {
       } else {
         path = pathNext(path);
       }
-      if (
-        tokenObj.type === "html" &&
-        tagsThatNest.includes(tokenObj.tagName) &&
-        !tokenObj.closing
-      ) {
+      if (tokenObj.type === "html" && !tokenObj.void && !tokenObj.closing) {
         nestNext = true;
       }
       const previousPath = pathPrev(path);
@@ -240,7 +224,14 @@ function cparser(str, originalOpts) {
           });
         }
       }
-      op.set(res, path, Object.assign({ children: [] }, tokenObj));
+      op.set(
+        res,
+        path,
+        Object.assign(
+          tokenObj.type === "html" ? { children: [] } : {},
+          tokenObj
+        )
+      );
     },
     charCb: opts.charCb
   });

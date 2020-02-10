@@ -36,8 +36,7 @@ t.test("01.02 - basics - text and tag", t => {
       {
         type: "text",
         start: 0,
-        end: 1,
-        children: []
+        end: 1
       },
       {
         type: "html",
@@ -65,8 +64,7 @@ t.test("01.03 - basics - tag text tag", t => {
           {
             type: "text",
             start: 5,
-            end: 6,
-            children: []
+            end: 6
           },
           {
             type: "html",
