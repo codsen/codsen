@@ -185,7 +185,19 @@ function cparser(str, originalOpts) {
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
-      if (nestNext) {
+      let prevToken = op.get(res, path);
+      if (!isObj(prevToken)) {
+        prevToken = null;
+      }
+      if (
+        nestNext &&
+        (!prevToken ||
+          !(
+            prevToken.tagName === tokenObj.tagName &&
+            !prevToken.closing &&
+            tokenObj.closing
+          ))
+      ) {
         nestNext = false;
         path = `${path}.children.0`;
       } else if (
