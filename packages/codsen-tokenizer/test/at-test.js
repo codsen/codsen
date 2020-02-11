@@ -198,3 +198,86 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
   );
   t.end();
 });
+
+t.test(
+  `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
+  t => {
+    const gathered = [];
+    ct(
+      `<style>
+@media (max-width: 600px) {
+  zzz
+}
+</style>`,
+      {
+        tagCb: obj => {
+          gathered.push(obj);
+        }
+      }
+    );
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 7
+        },
+        {
+          type: "text",
+          start: 7,
+          end: 8
+        },
+        {
+          type: "text",
+          start: 35,
+          end: 38
+        },
+        {
+          type: "rule",
+          start: 38,
+          end: 41,
+          openingCurlyAt: null,
+          closingCurlyAt: null,
+          selectors: [
+            {
+              value: "zzz",
+              selectorStart: 38,
+              selectorEnd: 41
+            }
+          ]
+        },
+        {
+          type: "text",
+          start: 41,
+          end: 42
+        },
+        {
+          type: "at",
+          start: 8,
+          end: 43,
+          identifier: "media",
+          identifierStartsAt: 9,
+          identifierEndsAt: 14,
+          query: "(max-width: 600px)",
+          queryStartsAt: 15,
+          queryEndsAt: 33,
+          openingCurlyAt: 34,
+          closingCurlyAt: 42
+        },
+        {
+          type: "text",
+          start: 43,
+          end: 44
+        },
+        {
+          type: "tag",
+          start: 44,
+          end: 52
+        }
+      ],
+      "01.02"
+    );
+    t.end();
+  }
+);

@@ -557,15 +557,29 @@ function tokenizer(str, originalOpts) {
       layers = [];
     }
     if (!doNothing && atRuleWaitingForClosingCurlie()) {
-      if ((token.type === null || token.type === "text") && str[i] === "}") {
-        dumpCurrentToken(token, i);
-        const poppedToken = layers.pop();
-        token = poppedToken.token;
-        token.closingCurlyAt = i;
-        token.end = i + 1;
-        pingTagCb(token);
-        token = tokenReset();
-        doNothing = i + 1;
+      if (str[i] === "}") {
+        if (
+          token.type === null ||
+          token.type === "text" ||
+          (token.type === "rule" && token.openingCurlyAt === null)
+        ) {
+          if (token.type === "rule") {
+            token.end = left(str, i) + 1;
+            pingTagCb(token);
+            token = tokenReset();
+            if (left(str, i) < i - 1) {
+              initToken("text", left(str, i) + 1);
+            }
+          }
+          dumpCurrentToken(token, i);
+          const poppedToken = layers.pop();
+          token = poppedToken.token;
+          token.closingCurlyAt = i;
+          token.end = i + 1;
+          pingTagCb(token);
+          token = tokenReset();
+          doNothing = i + 1;
+        }
       } else if (token.type === "text" && str[i].trim().length) {
         token.end = i;
         pingTagCb(token);
