@@ -382,7 +382,7 @@ function tokenizer(str, originalOpts) {
       } else {
         token.queryEndsAt = stringLeftRight.left(str, i) + 1;
       }
-      token.query = str.slice(token.queryStartsAt, i);
+      token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
     }
     if (!doNothing && token.type === "at" && str[i] === "{" && token.identifier && !Number.isInteger(token.openingCurlyAt)) {
       token.openingCurlyAt = i;

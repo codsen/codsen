@@ -635,7 +635,7 @@ function tokenizer(str, originalOpts) {
       } else {
         token.queryEndsAt = left(str, i) + 1;
       }
-      token.query = str.slice(token.queryStartsAt, i);
+      token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
     }
     if (
       !doNothing &&

@@ -966,11 +966,11 @@ function tokenizer(str, originalOpts) {
         //                         ^
         //            that would be index of this bracket
       }
-      token.query = str.slice(token.queryStartsAt, i);
+      token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
       console.log(
         `971 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${
           token.queryEndsAt
-        }; ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = ${token.query}`
+        }; ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = "${token.query}"`
       );
     }
 
