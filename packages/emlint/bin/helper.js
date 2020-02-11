@@ -32,6 +32,18 @@ fs.writeFileSync(
   JSON.stringify(nonFileBasedTagRules.concat(allTagRules).sort(), null, 2)
 );
 
+// bake the "media" rules list JSON:
+
+const allMediaRules = fs
+  .readdirSync(path.resolve("src/rules/media/"))
+  .filter(val => val.startsWith("media-"))
+  .map(val => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-media.json"),
+  JSON.stringify(allMediaRules.sort(), null, 2)
+);
+
 // bake the "attribute" rules list JSON:
 
 const allAttribRules = fs

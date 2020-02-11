@@ -9299,6 +9299,23 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
   };
 }
 
+function mediaMalformed(context, ...opts) {
+  return {
+    at: function(node) {
+      const errors = isMediaD(node.query, {
+        offset: node.queryStartsAt
+      });
+      errors.forEach(errorObj => {
+        context.report(
+          Object.assign({}, errorObj, {
+            ruleId: "media-malformed"
+          })
+        );
+      });
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -10464,6 +10481,7 @@ defineLazyProp(
   "character-unspaced-punctuation",
   () => characterUnspacedPunctuation
 );
+defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 function get(something) {
   return builtInRules[something];
 }
@@ -11108,7 +11126,7 @@ class Linter extends EventEmitter {
         }
       });
     }
-    ["tag", "css", "text", "esp", "character"].forEach(eventName => {
+    ["tag", "at", "rule", "text", "esp", "character"].forEach(eventName => {
       this.removeAllListeners(eventName);
     });
     return this.messages;

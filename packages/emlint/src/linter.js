@@ -327,7 +327,7 @@ class Linter extends EventEmitter {
     }
 
     // remove all listeners
-    ["tag", "css", "text", "esp", "character"].forEach(eventName => {
+    ["tag", "at", "rule", "text", "esp", "character"].forEach(eventName => {
       this.removeAllListeners(eventName);
     });
 

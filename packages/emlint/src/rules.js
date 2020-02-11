@@ -1694,6 +1694,13 @@ defineLazyProp(
   () => characterUnspacedPunctuation
 );
 
+// MEDIA (QUERY) rules
+// -----------------------------------------------------------------------------
+// rules running from "at" nodes
+
+import mediaMalformed from "./rules/media/media-malformed";
+defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1811,7 +1818,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1814 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1821 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

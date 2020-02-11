@@ -7959,6 +7959,21 @@ function characterUnspacedPunctuation(context) {
   };
 }
 
+function mediaMalformed(context) {
+  return {
+    at: function at(node) {
+      var errors = isMediaD(node.query, {
+        offset: node.queryStartsAt
+      });
+      errors.forEach(function (errorObj) {
+        context.report(Object.assign({}, errorObj, {
+          ruleId: "media-malformed"
+        }));
+      });
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -8692,6 +8707,9 @@ defineLazyProp(builtInRules, "character-encode", function () {
 defineLazyProp(builtInRules, "character-unspaced-punctuation", function () {
   return characterUnspacedPunctuation;
 });
+defineLazyProp(builtInRules, "media-malformed", function () {
+  return mediaMalformed;
+});
 function get(something) {
   return builtInRules[something];
 }
@@ -9218,7 +9236,7 @@ function (_EventEmitter) {
           }
         });
       }
-      ["tag", "css", "text", "esp", "character"].forEach(function (eventName) {
+      ["tag", "at", "rule", "text", "esp", "character"].forEach(function (eventName) {
         _this.removeAllListeners(eventName);
       });
       return this.messages;
