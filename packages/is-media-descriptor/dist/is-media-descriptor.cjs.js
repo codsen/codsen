@@ -84,7 +84,7 @@ function loop(str, opts, res) {
   var nextCanBeNotOrOnly = true;
   var nextCanBeAnd = false;
   var bracketOpeningIndexes = [];
-  for (var i = 0, len = str.length; i <= len; i++) {
+  for (var i = opts.idxFrom; i <= opts.idxTo; i++) {
     if (str[i] === ")") {
       var lastOpening = bracketOpeningIndexes.pop();
       var extractedValueWithinBrackets = str.slice(lastOpening + 1, i);
@@ -419,7 +419,10 @@ function isMediaD(originalStr, originalOpts) {
       innerWhitespaceAllowed: true,
       separator: ",",
       cb: function cb(idxFrom, idxTo) {
-        loop(str, opts, res);
+        loop(str, Object.assign({}, opts, {
+          idxFrom: idxFrom - opts.offset,
+          idxTo: idxTo - opts.offset
+        }), res);
       },
       errCb: function errCb(ranges, message) {}
     });

@@ -365,11 +365,18 @@ function isMediaD(originalStr, originalOpts) {
           `365 isMediaD(): chunk [${idxFrom - opts.offset}, ${idxTo -
             opts.offset}] extracted, passing to loop()`
         );
-        loop(str, opts, res);
+        loop(
+          str,
+          Object.assign({}, opts, {
+            idxFrom: idxFrom - opts.offset,
+            idxTo: idxTo - opts.offset
+          }),
+          res
+        );
       },
       errCb: (ranges, message) => {
         console.log(
-          `372 isMediaD(): received error range ${JSON.stringify(
+          `379 isMediaD(): received error range ${JSON.stringify(
             ranges,
             null,
             4
@@ -398,10 +405,10 @@ function isMediaD(originalStr, originalOpts) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `401 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
+    `408 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
   );
   console.log(
-    `404 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `411 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

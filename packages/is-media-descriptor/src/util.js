@@ -80,7 +80,7 @@ function loop(str, opts, res) {
 
   console.log(`081 get to business, loop through`);
 
-  for (let i = 0, len = str.length; i <= len; i++) {
+  for (let i = opts.idxFrom; i <= opts.idxTo; i++) {
     //
 
     //
@@ -617,6 +617,13 @@ function loop(str, opts, res) {
         bracketOpeningIndexes,
         null,
         0
+      )}`}\u001b[${39}m`}`
+    );
+    console.log(
+      `██ ${`\u001b[${90}m${`res: ${JSON.stringify(
+        res,
+        null,
+        4
       )}`}\u001b[${39}m`}`
     );
   }

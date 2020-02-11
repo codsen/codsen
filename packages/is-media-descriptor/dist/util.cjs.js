@@ -57,7 +57,7 @@ function loop(str, opts, res) {
   let nextCanBeNotOrOnly = true;
   let nextCanBeAnd = false;
   const bracketOpeningIndexes = [];
-  for (let i = 0, len = str.length; i <= len; i++) {
+  for (let i = opts.idxFrom; i <= opts.idxTo; i++) {
     if (str[i] === ")") {
       const lastOpening = bracketOpeningIndexes.pop();
       const extractedValueWithinBrackets = str.slice(lastOpening + 1, i);

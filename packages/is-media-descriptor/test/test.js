@@ -1039,6 +1039,30 @@ t.test(
   }
 );
 
+t.test(
+  `05.14 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`,
+  t => {
+    const str = `screeen and (color), projection and (color)`;
+    writeSample({
+      id: "05.14",
+      str
+      // fixed
+    });
+    const offset = 0;
+    const res = isMediaD(str, { offset });
+    t.same(res, [
+      {
+        idxFrom: 0 + offset,
+        idxTo: 7 + offset,
+        message: `Unrecognised "screeen".`,
+        fix: null
+      }
+    ]);
+    t.equal(applyFixes(str, res, offset), str);
+    t.end();
+  }
+);
+
 // 06. brackets
 // -----------------------------------------------------------------------------
 
