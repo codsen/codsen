@@ -9302,16 +9302,18 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
 function mediaMalformed(context, ...opts) {
   return {
     at: function(node) {
-      const errors = isMediaD(node.query, {
-        offset: node.queryStartsAt
-      });
-      errors.forEach(errorObj => {
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "media-malformed"
-          })
-        );
-      });
+      if (node.identifier === "media") {
+        const errors = isMediaD(node.query, {
+          offset: node.queryStartsAt
+        });
+        errors.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "media-malformed"
+            })
+          );
+        });
+      }
     }
   };
 }

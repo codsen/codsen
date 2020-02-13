@@ -26,25 +26,27 @@ function mediaMalformed(context, ...opts) {
         `026 mediaMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      const errors = isMediaD(node.query, {
-        offset: node.queryStartsAt
-      });
-      console.log(
-        `033 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
-          errors,
-          null,
-          4
-        )}`
-      );
-
-      errors.forEach(errorObj => {
-        console.log(`041 RAISE ERROR`);
-        context.report(
-          Object.assign({}, errorObj, {
-            ruleId: "media-malformed"
-          })
+      if (node.identifier === "media") {
+        const errors = isMediaD(node.query, {
+          offset: node.queryStartsAt
+        });
+        console.log(
+          `034 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
+            errors,
+            null,
+            4
+          )}`
         );
-      });
+
+        errors.forEach(errorObj => {
+          console.log(`042 RAISE ERROR`);
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "media-malformed"
+            })
+          );
+        });
+      }
 
       // if (node.tagName === "bold") {
       //   console.log(`037 RAISE ERROR [${node.start}, ${node.end}]`);

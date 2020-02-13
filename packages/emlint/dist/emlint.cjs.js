@@ -7962,14 +7962,16 @@ function characterUnspacedPunctuation(context) {
 function mediaMalformed(context) {
   return {
     at: function at(node) {
-      var errors = isMediaD(node.query, {
-        offset: node.queryStartsAt
-      });
-      errors.forEach(function (errorObj) {
-        context.report(Object.assign({}, errorObj, {
-          ruleId: "media-malformed"
-        }));
-      });
+      if (node.identifier === "media") {
+        var errors = isMediaD(node.query, {
+          offset: node.queryStartsAt
+        });
+        errors.forEach(function (errorObj) {
+          context.report(Object.assign({}, errorObj, {
+            ruleId: "media-malformed"
+          }));
+        });
+      }
     }
   };
 }

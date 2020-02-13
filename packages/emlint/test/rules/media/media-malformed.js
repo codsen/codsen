@@ -83,3 +83,24 @@ t.test(`01.04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`, t => {
   ]);
   t.end();
 });
+
+// 02. False positives
+// -----------------------------------------------------------------------------
+
+t.test(
+  `02.01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - not media`,
+  t => {
+    const str = `<style>
+  @supports screeen and (color), projection and (color) {zzz}
+</style>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "media-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str);
+    t.same(messages, []);
+    t.end();
+  }
+);
