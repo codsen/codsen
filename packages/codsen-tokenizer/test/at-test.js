@@ -30,8 +30,8 @@ t.test(
           selectors: [
             {
               value: ".b",
-              selectorStart: 17,
-              selectorEnd: 19
+              selectorStarts: 17,
+              selectorEnds: 19
             }
           ]
         },
@@ -86,8 +86,8 @@ t.todo(
           selectors: [
             {
               value: ".b",
-              selectorStart: 17,
-              selectorEnd: 19
+              selectorStarts: 17,
+              selectorEnds: 19
             }
           ]
         },
@@ -119,7 +119,7 @@ t.todo(
 // 01. simple
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
+t.only(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
   const gathered = [];
   ct(
     `<style>
@@ -157,11 +157,13 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
         end: 51,
         openingCurlyAt: 45,
         closingCurlyAt: 50,
+        selectorsStart: 38,
+        selectorsEnd: 44,
         selectors: [
           {
             value: ".xx[z]",
-            selectorStart: 38,
-            selectorEnd: 44
+            selectorStarts: 38,
+            selectorEnds: 44
           }
         ]
       },
@@ -242,8 +244,8 @@ t.test(
           selectors: [
             {
               value: "zzz",
-              selectorStart: 38,
-              selectorEnd: 41
+              selectorStarts: 38,
+              selectorEnds: 41
             }
           ]
         },
