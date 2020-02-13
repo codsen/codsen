@@ -60,11 +60,11 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
   t => {
     const gathered = [];
-    ct(`@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}`, {
+    ct(`<style>@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}</style>`, {
       tagCb: obj => {
         gathered.push(obj);
       }
@@ -79,35 +79,82 @@ t.todo(
         },
         {
           type: "rule",
-          start: 17,
-          end: 22,
-          openingCurlyAt: 19,
-          closingCurlyAt: 21,
+          start: 13,
+          end: 21,
+          openingCurlyAt: 15,
+          closingCurlyAt: 20,
+          selectorsStart: 13,
+          selectorsEnd: 15,
           selectors: [
             {
-              value: ".b",
-              selectorStarts: 17,
-              selectorEnds: 19
+              value: ".c",
+              selectorStarts: 13,
+              selectorEnds: 15
+            }
+          ]
+        },
+        {
+          type: "rule",
+          start: 27,
+          end: 35,
+          openingCurlyAt: 29,
+          closingCurlyAt: 34,
+          selectorsStart: 27,
+          selectorsEnd: 29,
+          selectors: [
+            {
+              value: ".h",
+              selectorStarts: 27,
+              selectorEnds: 29
+            }
+          ]
+        },
+        {
+          type: "at",
+          start: 21,
+          end: 36,
+          identifier: "f",
+          identifierStartsAt: 22,
+          identifierEndsAt: 23,
+          query: "g",
+          queryStartsAt: 24,
+          queryEndsAt: 25,
+          openingCurlyAt: 26,
+          closingCurlyAt: 35
+        },
+        {
+          type: "rule",
+          start: 36,
+          end: 44,
+          openingCurlyAt: 38,
+          closingCurlyAt: 43,
+          selectorsStart: 36,
+          selectorsEnd: 38,
+          selectors: [
+            {
+              value: ".k",
+              selectorStarts: 36,
+              selectorEnds: 38
             }
           ]
         },
         {
           type: "at",
           start: 7,
-          end: 23,
-          identifier: "media",
+          end: 45,
+          identifier: "a",
           identifierStartsAt: 8,
-          identifierEndsAt: 13,
-          query: "a",
-          queryStartsAt: 14,
-          queryEndsAt: 15,
-          openingCurlyAt: 16,
-          closingCurlyAt: 22
+          identifierEndsAt: 9,
+          query: "b",
+          queryStartsAt: 10,
+          queryEndsAt: 11,
+          openingCurlyAt: 12,
+          closingCurlyAt: 44
         },
         {
           type: "tag",
-          start: 23,
-          end: 31
+          start: 45,
+          end: 53
         }
       ],
       "00.02"
