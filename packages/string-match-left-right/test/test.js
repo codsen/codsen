@@ -4347,7 +4347,7 @@ t.test(
   `13.05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`,
   t => {
     t.equal(
-      matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
+      matchRight("ab      cd ef", 1, "cde", { trimBeforeMatching: true }),
       "cde"
     );
     t.end();
