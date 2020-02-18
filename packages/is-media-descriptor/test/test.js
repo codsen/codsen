@@ -514,6 +514,32 @@ t.test(
   }
 );
 
+t.only(
+  `02.12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
+  t => {
+    const str = `screen `;
+    const fixed = `screen`;
+    writeSample({
+      id: "02.12",
+      str,
+      fixed
+    });
+    const res = isMediaD(str);
+    t.same(res, [
+      {
+        idxFrom: 6,
+        idxTo: 7,
+        message: "Remove whitespace.",
+        fix: {
+          ranges: [[6, 7]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, res), fixed);
+    t.end();
+  }
+);
+
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
 
@@ -1292,3 +1318,20 @@ t.test(
     t.end();
   }
 );
+
+// 07. comma
+// -----------------------------------------------------------------------------
+
+t.test(`07.01 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, t => {
+  const str = `screen, print`;
+  writeSample({
+    id: "07.01",
+    str
+    // fixed
+  });
+  const offset = 1;
+  const res = isMediaD(str, { offset });
+  t.same(res, []);
+  t.equal(applyFixes(str, res, offset), str);
+  t.end();
+});
