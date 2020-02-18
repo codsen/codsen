@@ -147,6 +147,11 @@ const allHTMLTagsKnownToHumanity = [
   "xmp"
 ];
 
+// contains all common templating language head/tail marker characters:
+const espChars = `{}%-$_()*|`;
+
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
+
 function lastChar(str) {
   if (!isStr(str) || !str.length) {
     return "";
@@ -260,6 +265,7 @@ export {
   charSuitableForTagName,
   isLowerCaseLetter,
   isUppercaseLetter,
+  espLumpBlacklist,
   secondToLastChar,
   isNumOrNumStr,
   isLatinLetter,
@@ -268,5 +274,6 @@ export {
   secondChar,
   firstChar,
   lastChar,
+  espChars,
   isStr
 };

@@ -8,10 +8,37 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRight } from 'string-match-left-right';
+import { matchRight, matchLeft } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
-import isTagOpening from 'is-html-tag-opening';
 import clone from 'lodash.clonedeep';
+import isTagOpening from 'is-html-tag-opening';
+
+function startsComment(str, i, token) {
+  return (
+    ((str[i] === "<" && matchRight(str, i, ["!-", "!["])) ||
+      (str[i] === "-" && matchRight(str, i, ["->"]))) &&
+    (token.type !== "esp" || token.tail.includes(str[i]))
+  );
+}
+
+function startsTag(str, i, token, layers) {
+  return (
+    str[i] === "<" &&
+    ((token.type === "text" &&
+      isTagOpening(str, i, {
+        allowCustomTagNames: true
+      })) ||
+      !layers.length) &&
+    (isTagOpening(str, i, {
+      allowCustomTagNames: true
+    }) ||
+      matchRight(str, i, ["doctype", "xml", "cdata"], {
+        i: true,
+        trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+      })) &&
+    (token.type !== "esp" || token.tail.includes(str[i]))
+  );
+}
 
 const allHTMLTagsKnownToHumanity = [
   "a",
@@ -160,6 +187,8 @@ const allHTMLTagsKnownToHumanity = [
   "wbr",
   "xmp"
 ];
+const espChars = `{}%-$_()*|`;
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 function isStr(something) {
   return typeof something === "string";
 }
@@ -197,6 +226,26 @@ function flipEspTag(str) {
   return res;
 }
 
+function startsEsp(str, i, token, layers, styleStarts) {
+  return (
+    espChars.includes(str[i]) &&
+    str[i + 1] &&
+    espChars.includes(str[i + 1]) &&
+    token.type !== "rule" &&
+    token.type !== "at" &&
+    !(str[i] === "-" && str[i + 1] === "-") &&
+    !(
+      (
+        "0123456789".includes(str[left(str, i)]) &&
+        (!str[i + 2] ||
+          [`"`, `'`, ";"].includes(str[i + 2]) ||
+          !str[i + 2].trim().length)
+      )
+    ) &&
+    !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])))
+  );
+}
+
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -218,8 +267,6 @@ const voidTags = [
   "track",
   "wbr"
 ];
-const espChars = `{}%-$_()*|`;
-const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 const charsThatEndCSSChunks = ["{", "}", ","];
 function tokenizer(str, originalOpts) {
   if (!isStr(str)) {
@@ -488,6 +535,12 @@ function tokenizer(str, originalOpts) {
       token.esp = [];
       token.kind = null;
       token.attribs = [];
+    } else if (type === "comment") {
+      token.type = type;
+      token.start = start;
+      token.end = null;
+      token.kind = "simple";
+      token.closing = false;
     } else if (type === "rule") {
       token.type = type;
       token.start = start;
@@ -709,34 +762,14 @@ function tokenizer(str, originalOpts) {
       token.selectorsEnd = i;
     }
     if (!doNothing) {
-      if (
-        str[i] === "<" &&
-        ((token.type === "text" &&
-          isTagOpening(str, i, {
-            allowCustomTagNames: true
-          })) ||
-          !layers.length) &&
-        (isTagOpening(str, i, {
-          allowCustomTagNames: true
-        }) ||
-          str.startsWith("!--", i + 1) ||
-          matchRight(str, i, ["doctype", "xml", "cdata"], {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) &&
-        (token.type !== "esp" || token.tail.includes(str[i]))
-      ) {
-        if (token.type && Number.isInteger(token.start) && token.start !== i) {
-          dumpCurrentToken(token, i);
-        }
+      if (startsTag(str, i, token, layers)) {
+        dumpCurrentToken(token, i);
         tokenReset();
         initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;
         }
-        if (matchRight(str, i, "!--")) {
-          token.kind = "comment";
-        } else if (
+        if (
           matchRight(str, i, "doctype", {
             i: true,
             trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
@@ -758,23 +791,17 @@ function tokenizer(str, originalOpts) {
         ) {
           token.kind = "xml";
         }
-      } else if (
-        espChars.includes(str[i]) &&
-        str[i + 1] &&
-        espChars.includes(str[i + 1]) &&
-        token.type !== "rule" &&
-        token.type !== "at" &&
-        !(str[i] === "-" && str[i + 1] === "-") &&
-        !(
-          (
-            "0123456789".includes(str[left(str, i)]) &&
-            (!str[i + 2] ||
-              [`"`, `'`, ";"].includes(str[i + 2]) ||
-              !str[i + 2].trim().length)
-          )
-        ) &&
-        !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])))
-      ) {
+      } else if (startsComment(str, i, token)) {
+        dumpCurrentToken(token, i);
+        tokenReset();
+        initToken("comment", i);
+        if (str[i] === "-") {
+          token.closing = true;
+        }
+        if (styleStarts) {
+          styleStarts = false;
+        }
+      } else if (startsEsp(str, i, token, layers, styleStarts)) {
         let wholeEspTagLump = "";
         for (let y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -900,6 +927,18 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
+        token.end = i + 1;
+      } else if (
+        token.type === "comment" &&
+        !layers.length &&
+        token.kind === "simple" &&
+        ((str[token.start] === "<" &&
+          str[i] === "-" &&
+          matchLeft(str, i, "!-")) ||
+          (str[token.start] === "-" &&
+            str[i] === ">" &&
+            matchLeft(str, i, "--")))
+      ) {
         token.end = i + 1;
       } else if (
         token.type === "esp" &&

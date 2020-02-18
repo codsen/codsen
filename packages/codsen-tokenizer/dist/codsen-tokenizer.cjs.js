@@ -14,8 +14,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var stringMatchLeftRight = require('string-match-left-right');
 var stringLeftRight = require('string-left-right');
-var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var isTagOpening = _interopDefault(require('is-html-tag-opening'));
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -33,7 +33,26 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function startsComment(str, i, token) {
+  return (
+    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "!["]) || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"])) && (token.type !== "esp" || token.tail.includes(str[i]))
+  );
+}
+
+function startsTag(str, i, token, layers) {
+  return str[i] === "<" && (token.type === "text" && isTagOpening(str, i, {
+    allowCustomTagNames: true
+  }) || !layers.length) && (isTagOpening(str, i, {
+    allowCustomTagNames: true
+  }) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+    i: true,
+    trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+  })) && (token.type !== "esp" || token.tail.includes(str[i]));
+}
+
 var allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
+var espChars = "{}%-$_()*|";
+var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 function isStr(something) {
   return typeof something === "string";
 }
@@ -60,12 +79,15 @@ function flipEspTag(str) {
   return res;
 }
 
+function startsEsp(str, i, token, layers, styleStarts) {
+  return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && str[i + 1] === "-") && !(
+  "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])));
+}
+
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
-var espChars = "{}%-$_()*|";
-var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 var charsThatEndCSSChunks = ["{", "}", ","];
 function tokenizer(str, originalOpts) {
   if (!isStr(str)) {
@@ -274,6 +296,12 @@ function tokenizer(str, originalOpts) {
       token.esp = [];
       token.kind = null;
       token.attribs = [];
+    } else if (type === "comment") {
+      token.type = type;
+      token.start = start;
+      token.end = null;
+      token.kind = "simple";
+      token.closing = false;
     } else if (type === "rule") {
       token.type = type;
       token.start = start;
@@ -426,25 +454,14 @@ function tokenizer(str, originalOpts) {
       token.selectorsEnd = i;
     }
     if (!doNothing) {
-      if (str[i] === "<" && (token.type === "text" && isTagOpening(str, i, {
-        allowCustomTagNames: true
-      }) || !layers.length) && (isTagOpening(str, i, {
-        allowCustomTagNames: true
-      }) || str.startsWith("!--", i + 1) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
-        i: true,
-        trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-      })) && (token.type !== "esp" || token.tail.includes(str[i]))) {
-        if (token.type && Number.isInteger(token.start) && token.start !== i) {
-          dumpCurrentToken(token, i);
-        }
+      if (startsTag(str, i, token, layers)) {
+        dumpCurrentToken(token, i);
         tokenReset();
         initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;
         }
-        if (stringMatchLeftRight.matchRight(str, i, "!--")) {
-          token.kind = "comment";
-        } else if (stringMatchLeftRight.matchRight(str, i, "doctype", {
+        if (stringMatchLeftRight.matchRight(str, i, "doctype", {
           i: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         })) {
@@ -460,8 +477,17 @@ function tokenizer(str, originalOpts) {
         })) {
           token.kind = "xml";
         }
-      } else if (espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && str[i + 1] === "-") && !(
-      "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])))) {
+      } else if (startsComment(str, i, token)) {
+        dumpCurrentToken(token, i);
+        tokenReset();
+        initToken("comment", i);
+        if (str[i] === "-") {
+          token.closing = true;
+        }
+        if (styleStarts) {
+          styleStarts = false;
+        }
+      } else if (startsEsp(str, i, token, layers, styleStarts)) {
         var wholeEspTagLump = "";
         for (var y = i; y < len; y++) {
           if (espChars.includes(str[y])) {
@@ -555,6 +581,8 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
+        token.end = i + 1;
+      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && stringMatchLeftRight.matchLeft(str, i, "!-") || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--"))) {
         token.end = i + 1;
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";

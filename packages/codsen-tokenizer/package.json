@@ -28,7 +28,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --dev",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
+    "devunittest_bak": "npm run dev && ./node_modules/.bin/tap --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/html-comments.js\" --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",
@@ -131,7 +132,7 @@
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
     "lect": "^0.12.1",
-    "rollup": "^1.31.0",
+    "rollup": "^1.31.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

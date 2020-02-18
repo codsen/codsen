@@ -149,6 +149,8 @@ const allHTMLTagsKnownToHumanity = [
   "wbr",
   "xmp"
 ];
+const espChars = `{}%-$_()*|`;
+const espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
 function lastChar(str) {
   if (!isStr(str) || !str.length) {
     return "";
@@ -237,6 +239,8 @@ function flipEspTag(str) {
 exports.allHTMLTagsKnownToHumanity = allHTMLTagsKnownToHumanity;
 exports.charSuitableForHTMLAttrName = charSuitableForHTMLAttrName;
 exports.charSuitableForTagName = charSuitableForTagName;
+exports.espChars = espChars;
+exports.espLumpBlacklist = espLumpBlacklist;
 exports.firstChar = firstChar;
 exports.flipEspTag = flipEspTag;
 exports.isLatinLetter = isLatinLetter;

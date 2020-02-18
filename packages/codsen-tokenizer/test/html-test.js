@@ -298,44 +298,7 @@ t.test("01.10 - tag followed by brackets", t => {
   t.end();
 });
 
-t.test("01.11 - html comment", t => {
-  const gathered = [];
-  ct("<table><!--[if (gte mso 9)|(IE)]>\n<table", {
-    tagCb: obj => {
-      gathered.push(obj);
-    }
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 7
-      },
-      {
-        type: "tag",
-        start: 7,
-        end: 33,
-        kind: "comment"
-      },
-      {
-        type: "text",
-        start: 33,
-        end: 34
-      },
-      {
-        type: "tag",
-        start: 34,
-        end: 40
-      }
-    ],
-    "01.11"
-  );
-  t.end();
-});
-
-t.test("01.12 - html5 doctype", t => {
+t.test("01.11 - html5 doctype", t => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: obj => {
@@ -362,12 +325,12 @@ t.test("01.12 - html5 doctype", t => {
         end: 17
       }
     ],
-    "01.12"
+    "01.11"
   );
   t.end();
 });
 
-t.test("01.13 - xhtml doctype", t => {
+t.test("01.12 - xhtml doctype", t => {
   const gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -410,12 +373,12 @@ t.test("01.13 - xhtml doctype", t => {
         end: 191
       }
     ],
-    "01.13"
+    "01.12"
   );
   t.end();
 });
 
-t.test("01.14 - xhtml DTD doctype", t => {
+t.test("01.13 - xhtml DTD doctype", t => {
   const gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -470,12 +433,12 @@ t.test("01.14 - xhtml DTD doctype", t => {
         end: 230
       }
     ],
-    "01.14"
+    "01.13"
   );
   t.end();
 });
 
-t.test("01.15 - void tags", t => {
+t.test("01.14 - void tags", t => {
   const gathered = [];
   ct("<br>", {
     tagCb: obj => {
@@ -492,12 +455,12 @@ t.test("01.15 - void tags", t => {
         void: true
       }
     ],
-    "01.15"
+    "01.14"
   );
   t.end();
 });
 
-t.test("01.16 - recognised tags", t => {
+t.test("01.15 - recognised tags", t => {
   const gathered = [];
   ct("<content>", {
     tagCb: obj => {
@@ -515,12 +478,12 @@ t.test("01.16 - recognised tags", t => {
         recognised: true
       }
     ],
-    "01.16"
+    "01.15"
   );
   t.end();
 });
 
-t.test("01.17 - unrecognised tags", t => {
+t.test("01.16 - unrecognised tags", t => {
   const gathered = [];
   ct("<contentz>", {
     tagCb: obj => {
@@ -538,12 +501,12 @@ t.test("01.17 - unrecognised tags", t => {
         recognised: false
       }
     ],
-    "01.17"
+    "01.16"
   );
   t.end();
 });
 
-t.test("01.18 - wrong case but still recognised tags", t => {
+t.test("01.17 - wrong case but still recognised tags", t => {
   const gathered = [];
   ct("</tablE>", {
     tagCb: obj => {
@@ -561,12 +524,12 @@ t.test("01.18 - wrong case but still recognised tags", t => {
         recognised: true
       }
     ],
-    "01.18"
+    "01.17"
   );
   t.end();
 });
 
-t.test("01.19 - correct HTML5 doctype", t => {
+t.test("01.18 - correct HTML5 doctype", t => {
   const gathered = [];
   ct("<!DOCTYPE html>", {
     tagCb: obj => {
@@ -584,12 +547,12 @@ t.test("01.19 - correct HTML5 doctype", t => {
         recognised: true
       }
     ],
-    "01.19"
+    "01.18"
   );
   t.end();
 });
 
-t.test("01.20 - correct HTML5 doctype", t => {
+t.test("01.19 - correct HTML5 doctype", t => {
   const gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -611,12 +574,12 @@ t.test("01.20 - correct HTML5 doctype", t => {
         recognised: true
       }
     ],
-    "01.20"
+    "01.19"
   );
   t.end();
 });
 
-t.test("01.21 - tag names with numbers", t => {
+t.test("01.20 - tag names with numbers", t => {
   const gathered = [];
   ct("<h1>", {
     tagCb: obj => {
@@ -638,12 +601,12 @@ t.test("01.21 - tag names with numbers", t => {
         end: 4
       }
     ],
-    "01.21"
+    "01.20"
   );
   t.end();
 });
 
-t.test("01.22 - exact match, tag pair with whitespace", t => {
+t.test("01.21 - exact match, tag pair with whitespace", t => {
   const gathered = [];
   ct("<a href> </a>", {
     tagCb: obj => {
@@ -703,12 +666,12 @@ t.test("01.22 - exact match, tag pair with whitespace", t => {
         attribs: []
       }
     ],
-    "01.22"
+    "01.21"
   );
   t.end();
 });
 
-t.test("01.23 - closing tag with attributes", t => {
+t.test("01.22 - closing tag with attributes", t => {
   const gathered = [];
   ct(`</a class="z">`, {
     tagCb: obj => {
@@ -748,7 +711,7 @@ t.test("01.23 - closing tag with attributes", t => {
         ]
       }
     ],
-    "01.23"
+    "01.22"
   );
   t.end();
 });
