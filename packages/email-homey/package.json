@@ -118,9 +118,9 @@
     "globby": "^11.0.0",
     "lodash.uniq": "^4.5.0",
     "log-symbols": "^3.0.0",
-    "meow": "^6.0.0",
+    "meow": "^6.0.1",
     "string-splice": "^1.3.0",
-    "update-notifier": "^4.0.0"
+    "update-notifier": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

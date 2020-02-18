@@ -120,10 +120,10 @@
     "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^6.6.16",
-    "meow": "^6.0.0",
+    "meow": "^6.0.1",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
-    "update-notifier": "^4.0.0"
+    "update-notifier": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -143,6 +143,6 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.3.0"
+    "tempy": "^0.4.0"
   }
 }

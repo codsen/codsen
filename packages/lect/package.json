@@ -142,16 +142,16 @@
     "lodash.uniq": "^4.5.0",
     "log-symbols": "^3.0.0",
     "matcher": "^2.1.0",
-    "meow": "^6.0.0",
+    "meow": "^6.0.1",
     "object-delete-key": "^1.9.17",
     "object-merge-advanced": "^10.11.14",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
     "p-reduce": "^2.1.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "semver-compare": "^1.0.0",
     "semver-regex": "^3.1.1",
-    "update-notifier": "^4.0.0",
+    "update-notifier": "^4.1.0",
     "write-file-atomic": "^3.0.1",
     "write-json-file": "^4.3.0"
   },
@@ -172,6 +172,6 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.3.0"
+    "tempy": "^0.4.0"
   }
 }

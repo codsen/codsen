@@ -122,9 +122,9 @@
     "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "js-row-num": "^2.7.5",
-    "meow": "^6.0.0",
+    "meow": "^6.0.1",
     "p-reduce": "^2.1.0",
-    "update-notifier": "^4.0.0",
+    "update-notifier": "^4.1.0",
     "write-file-atomic": "^3.0.1"
   },
   "devDependencies": {
@@ -145,6 +145,6 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.3.0"
+    "tempy": "^0.4.0"
   }
 }

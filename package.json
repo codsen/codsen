@@ -54,7 +54,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-row-num": "^1.1.6",
-    "husky": "^4.2.1",
+    "husky": "^4.2.3",
     "lect": "^0.12.1",
     "lerna": "^3.20.2",
     "lerna-clean-changelogs-cli": "^1.2.49",

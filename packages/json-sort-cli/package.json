@@ -121,11 +121,11 @@
     "globby": "^11.0.0",
     "is-d": "^1.0.0",
     "lodash.isplainobject": "^4.0.6",
-    "meow": "^6.0.0",
+    "meow": "^6.0.1",
     "p-filter": "^2.1.0",
     "p-reduce": "^2.1.0",
     "sorted-object": "^2.0.1",
-    "update-notifier": "^4.0.0"
+    "update-notifier": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -146,6 +146,6 @@
     "p-map": "^3.0.0",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.3.0"
+    "tempy": "^0.4.0"
   }
 }

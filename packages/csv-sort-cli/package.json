@@ -125,8 +125,8 @@
     "inquirer": "^7.0.4",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
-    "meow": "^6.0.0",
-    "update-notifier": "^4.0.0"
+    "meow": "^6.0.1",
+    "update-notifier": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -147,6 +147,6 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.3.0"
+    "tempy": "^0.4.0"
   }
 }
