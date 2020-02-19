@@ -50,9 +50,6 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
     var charsToCheckCount = special ? 1 : strToMatch.length;
     for (var i = fromIndexInclusive, len = str.length; i < len; i++) {
       var current = str[i];
-      if (opts.skipWhitespace && !str[i].trim().length && str[i + 1]) {
-        continue;
-      }
       if (stringCharacterIsAstralSurrogate.isHighSurrogate(str[i]) && stringCharacterIsAstralSurrogate.isLowSurrogate(str[i + 1])) {
         current = str[i] + str[i + 1];
       }
@@ -116,9 +113,6 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
   }
   var charsToCheckCount = special ? 1 : strToMatch.length;
   for (var i = fromIndexInclusive + 1; i--;) {
-    if (opts.skipWhitespace && !str[i].trim().length && str[i - 1]) {
-      continue;
-    }
     if (opts.trimBeforeMatching && str[i].trim() === "") {
       if (i === 0 && special && strToMatch === "EOL") {
         return true;
@@ -167,7 +161,6 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var defaults = {
     i: false,
-    skipWhitespace: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
     relaxedApi: false

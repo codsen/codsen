@@ -29,9 +29,6 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
     let charsToCheckCount = special ? 1 : strToMatch.length;
     for (let i = fromIndexInclusive, len = str.length; i < len; i++) {
       let current = str[i];
-      if (opts.skipWhitespace && !str[i].trim().length && str[i + 1]) {
-        continue;
-      }
       if (isHighSurrogate(str[i]) && isLowSurrogate(str[i + 1])) {
         current = str[i] + str[i + 1];
       }
@@ -124,9 +121,6 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
   }
   let charsToCheckCount = special ? 1 : strToMatch.length;
   for (let i = fromIndexInclusive + 1; i--; ) {
-    if (opts.skipWhitespace && !str[i].trim().length && str[i - 1]) {
-      continue;
-    }
     if (opts.trimBeforeMatching && str[i].trim() === "") {
       if (i === 0 && special && strToMatch === "EOL") {
         return true;
@@ -185,7 +179,6 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   const defaults = {
     i: false,
-    skipWhitespace: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
     relaxedApi: false
