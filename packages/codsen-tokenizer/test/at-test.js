@@ -1,6 +1,5 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
-import clone from "lodash.clonedeep";
 
 // 00. MVP
 // -----------------------------------------------------------------------------
@@ -15,7 +14,7 @@ t.test(
       }
     });
     t.match(
-      clone(gathered),
+      gathered,
       [
         {
           type: "tag",
@@ -71,7 +70,7 @@ t.todo(
       }
     });
     t.match(
-      clone(gathered),
+      gathered,
       [
         {
           type: "tag",
@@ -182,7 +181,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
     }
   );
   t.match(
-    clone(gathered),
+    gathered,
     [
       {
         type: "tag",
