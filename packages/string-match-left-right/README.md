@@ -18,6 +18,7 @@
 - [Using a callback - `opts.cb`](#using-a-callback-optscb)
 - [Matching relying only on a callback](#matching-relying-only-on-a-callback)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
+- [`opts.skipWhitespace`](#optsskipwhitespace)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
 - [Matching the beginning of ending of the string](#matching-the-beginning-of-ending-of-the-string)
 - [Unicode is somewhat supported](#unicode-is-somewhat-supported)
@@ -106,6 +107,13 @@ Returns Boolean `false` or value of the string that was matched, that is,
 - if `whatToMatch` was a string, then returns it, OR
 - if `whatToMatch` was an array, then returns the first match from this array's elements.
 
+This is so that a) you knew which value was matched; b) could retrieve the "reference" of what was matched.
+
+```js
+console.log(matchRightIncl("abcdef", 2, ["X", "C"], { i: true }));
+// => "C"
+```
+
 **[⬆ back to top](#)**
 
 ### Optional Options Object's API:
@@ -117,6 +125,7 @@ Returns Boolean `false` or value of the string that was matched, that is,
 | `cb`                      | Function                                                       | no          | `undefined` | If you feed a function to this key, that function will be called with the remainder of the string. Which side, it depends on which side method (left side for `matchLeft` and `matchLeftIncl` and others for right accordingly) is being called. The result of this callback will be joined using "AND" logical operator to calculate the final result. I use `cb` mainly to check for whitespace. |
 | `trimBeforeMatching`      | Boolean                                                        | no          | `false`     | If set to `true`, there can be whitespace before what's being checked starts. Basically, this means, substring can begin (when using right side methods) or end (when using left side methods) with a whitespace.                                                                                                                                                                                  |
 | `trimCharsBeforeMatching` | String or Array of zero or more strings, each 1 character-long | no          | `[]`        | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.                                                                                                                                      |
+| `skipWhitespace`          | Boolean                                                        | no          | `false`     | If set to `true`, whitespace characters (those that trim to zero-length, that's space, tab, CR, LF and so on) will be skipped and won't yield `false` result.                                                                                                                                                                                                                                      |
 | `relaxedApi`              | Boolean                                                        | no          | `false`     | If set to `true`, missing/falsey input arguments will not `throw` an error but instantly cause a result, Boolean `false`. In other words, it's bypass for errors with ID's `THROW_ID_01`, `THROW_ID_02` and `THROW_ID_03`.                                                                                                                                                                         |
 | }                         |                                                                |             |             |
 
@@ -127,7 +136,9 @@ Here it is with defaults, in one place, ready for copying:
   i: false,
   cb: undefined,
   trimBeforeMatching: false,
-  trimCharsBeforeMatching: []
+  skipWhitespace: false,
+  trimCharsBeforeMatching: [],
+  relaxedApi: false
 }
 ```
 
@@ -356,6 +367,42 @@ By the way it's not on by default because such scenarios are rare. Default compa
 
 **[⬆ back to top](#)**
 
+## `opts.skipWhitespace`
+
+Sometimes you want to allow spaces to be present between characters.
+
+For example, maybe you're programming a linter and you want to detect when somebody adds a rogue space:
+
+```
+a<! --z
+```
+
+The piece above resembles an opening HTML comment tag, let's alert the user!
+
+Conceptually, we'd first ensure tokenizer would recognise the `<! --` as opening comment tag. Then, we'd check all opening tags, are they 4 characters-long. Because if they're not, they've got rogue whitespace.
+
+And this program would do the matching, skipping spaces.
+
+Below, we start at index 1, second character, `<` and match right, including it:
+
+```js
+console.log(matchRightIncl("a< ! - -z", 1, ["<![", "<!--"]));
+// => false
+```
+
+but:
+
+```js
+console.log(
+  matchRightIncl("a< ! - -z", 1, ["<![", "<!--"], {
+    skipWhitespace: true
+  })
+);
+// => "<!--"
+```
+
+**[⬆ back to top](#)**
+
 ## `opts.trimCharsBeforeMatching`
 
 For example, [string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
@@ -419,7 +466,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-match-left-right
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-[cov-img]: https://img.shields.io/badge/coverage-96.27%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-96.33%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-match-left-right

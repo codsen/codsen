@@ -257,6 +257,25 @@ t.test(
   }
 );
 
+t.test(
+  `02.05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     with spaces`,
+  t => {
+    t.equal(
+      matchLeftIncl("a b c d e f", 6, ["klmn", "abcd"]),
+      false,
+      "02.04.01"
+    );
+    t.equal(
+      matchLeftIncl("a b c d e f", 6, ["klmn", "abcd"], {
+        skipWhitespace: true
+      }),
+      "abcd",
+      "02.04"
+    );
+    t.end();
+  }
+);
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
@@ -374,6 +393,28 @@ t.test(
   }
 );
 
+t.test(
+  `04.05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     jumps over spaces`,
+  t => {
+    t.equal(matchRightIncl("a< ! - -z", 1, ["<![", "<!--"]), false, "04.05.01");
+    t.equal(
+      matchRightIncl("a< ! - -z", 1, ["<![", "<!--"], {
+        skipWhitespace: true
+      }),
+      "<!--",
+      "04.05.02"
+    );
+    t.equal(
+      matchRightIncl("a< ! - z", 1, ["<![", "<!--"], {
+        skipWhitespace: true
+      }),
+      false,
+      "04.05.03"
+    );
+    t.end();
+  }
+);
+
 // 5. matchRight()
 // -----------------------------------------------------------------------------
 
@@ -393,6 +434,14 @@ t.test(
 
     t.equal(
       matchRight("ab      cdef", 1, "cd", { trimBeforeMatching: true }),
+      "cd"
+    );
+    t.equal(
+      matchRight("ab      cdef", 1, "cd", { skipWhitespace: true }),
+      "cd"
+    );
+    t.equal(
+      matchRight("ab      c def", 1, "cd", { skipWhitespace: true }),
       "cd"
     );
 
