@@ -35,7 +35,7 @@ function _typeof(obj) {
 
 function startsComment(str, i, token) {
   return (
-    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "!["]) || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"])) && (token.type !== "esp" || token.tail.includes(str[i]))
+    (stringMatchLeftRight.matchRightIncl(str, i, ["<!-", "<!["]) || stringMatchLeftRight.matchRightIncl(str, i, ["-->"])) && (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
 

@@ -53,6 +53,55 @@ t.test(
   }
 );
 
+t.todo(
+  `01.02 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - broken simple case, with space`,
+  t => {
+    const gathered = [];
+    ct(`a<! --b-- >c`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 6,
+          kind: "simple",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 6,
+          end: 7
+        },
+        {
+          type: "comment",
+          start: 7,
+          end: 11,
+          kind: "simple",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 11,
+          end: 12
+        }
+      ],
+      "01.01"
+    );
+    t.end();
+  }
+);
+
 // 02. outlook conditionals
 // -----------------------------------------------------------------------------
 

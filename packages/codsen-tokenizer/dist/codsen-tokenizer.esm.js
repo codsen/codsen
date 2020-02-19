@@ -8,15 +8,15 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRight, matchLeft } from 'string-match-left-right';
+import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
 import clone from 'lodash.clonedeep';
 import isTagOpening from 'is-html-tag-opening';
 
 function startsComment(str, i, token) {
   return (
-    ((str[i] === "<" && matchRight(str, i, ["!-", "!["])) ||
-      (str[i] === "-" && matchRight(str, i, ["->"]))) &&
+    (matchRightIncl(str, i, ["<!-", "<!["]) ||
+      matchRightIncl(str, i, ["-->"])) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }

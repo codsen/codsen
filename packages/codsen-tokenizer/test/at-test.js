@@ -60,7 +60,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
   t => {
     const gathered = [];
@@ -248,7 +248,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
   t.end();
 });
 
-t.todo(
+t.test(
   `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
   t => {
     const gathered = [];
