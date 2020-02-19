@@ -1,5 +1,6 @@
 const t = require("tap");
 const ct = require("../dist/codsen-tokenizer.cjs");
+import clone from "lodash.clonedeep";
 
 // 00. MVP
 // -----------------------------------------------------------------------------
@@ -14,7 +15,7 @@ t.test(
       }
     });
     t.match(
-      gathered,
+      clone(gathered),
       [
         {
           type: "tag",
@@ -60,7 +61,7 @@ t.test(
   }
 );
 
-t.test(
+t.todo(
   `00.02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`,
   t => {
     const gathered = [];
@@ -70,7 +71,7 @@ t.test(
       }
     });
     t.match(
-      gathered,
+      clone(gathered),
       [
         {
           type: "tag",
@@ -181,7 +182,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
     }
   );
   t.match(
-    gathered,
+    clone(gathered),
     [
       {
         type: "tag",
@@ -248,7 +249,7 @@ t.test(`01.01 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - one rule`, t => {
   t.end();
 });
 
-t.test(
+t.todo(
   `01.02 - ${`\u001b[${35}m${`at-rule`}\u001b[${39}m`} - rule is nonsense`,
   t => {
     const gathered = [];

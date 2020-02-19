@@ -543,7 +543,7 @@ function tokenizer(str, originalOpts) {
             token.end = stringLeftRight.right(str, i) || str.length;
             pingTagCb(token);
             tokenReset();
-            if (stringLeftRight.right(str, i) && str[stringLeftRight.right(str, i)] !== "}") {
+            if (stringLeftRight.right(str, i) && !["{", "}", "<"].includes(str[stringLeftRight.right(str, i)])) {
               var idxOnTheRight = stringLeftRight.right(str, i);
               initToken(str[idxOnTheRight] === "@" ? "at" : "rule", idxOnTheRight);
               if (str[i + 1] && !str[i + 1].trim().length) {

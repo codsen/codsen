@@ -28,8 +28,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c --dev",
-    "devunittest_bak": "npm run dev && ./node_modules/.bin/tap --only",
-    "devunittest": "npm run dev && npm run tap -- \"test/html-comments.js\" --only",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\"",

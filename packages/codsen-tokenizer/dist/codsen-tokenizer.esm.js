@@ -873,7 +873,10 @@ function tokenizer(str, originalOpts) {
             token.end = right(str, i) || str.length;
             pingTagCb(token);
             tokenReset();
-            if (right(str, i) && str[right(str, i)] !== "}") {
+            if (
+              right(str, i) &&
+              !["{", "}", "<"].includes(str[right(str, i)])
+            ) {
               const idxOnTheRight = right(str, i);
               initToken(
                 str[idxOnTheRight] === "@" ? "at" : "rule",
