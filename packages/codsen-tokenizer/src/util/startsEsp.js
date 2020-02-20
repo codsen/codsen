@@ -1,4 +1,4 @@
-import { left } from "string-left-right";
+import { left, right } from "string-left-right";
 import { espChars } from "../util";
 
 // This is an extracted logic which detects where token of a particular kind
@@ -22,7 +22,10 @@ function startsEsp(str, i, token, layers, styleStarts) {
           !str[i + 2].trim().length)
       )
     ) &&
-    !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])))
+    !(
+      styleStarts &&
+      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+    )
   );
 }
 

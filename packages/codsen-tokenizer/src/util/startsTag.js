@@ -18,6 +18,7 @@ function startsTag(str, i, token, layers) {
     }) ||
       matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
+        trimBeforeMatching: true,
         trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) &&
     (token.type !== "esp" || token.tail.includes(str[i]))

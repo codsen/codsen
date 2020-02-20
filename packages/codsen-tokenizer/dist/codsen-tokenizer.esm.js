@@ -8,15 +8,21 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
+import { matchRight, matchLeft } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
 import clone from 'lodash.clonedeep';
 import isTagOpening from 'is-html-tag-opening';
 
 function startsComment(str, i, token) {
   return (
-    (matchRightIncl(str, i, ["<!-", "<!["]) ||
-      matchRightIncl(str, i, ["-->"])) &&
+    ((str[i] === "<" &&
+      matchRight(str, i, ["!-", "!["], {
+        trimBeforeMatching: true
+      })) ||
+      (str[i] === "-" &&
+        matchRight(str, i, ["->"], {
+          trimBeforeMatching: true
+        }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
@@ -34,6 +40,7 @@ function startsTag(str, i, token, layers) {
     }) ||
       matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
+        trimBeforeMatching: true,
         trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
       })) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
@@ -242,7 +249,10 @@ function startsEsp(str, i, token, layers, styleStarts) {
           !str[i + 2].trim().length)
       )
     ) &&
-    !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])))
+    !(
+      styleStarts &&
+      ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+    )
   );
 }
 
@@ -937,10 +947,14 @@ function tokenizer(str, originalOpts) {
         token.kind === "simple" &&
         ((str[token.start] === "<" &&
           str[i] === "-" &&
-          matchLeft(str, i, "!-")) ||
+          matchLeft(str, i, "!-", {
+            trimBeforeMatching: true
+          })) ||
           (str[token.start] === "-" &&
             str[i] === ">" &&
-            matchLeft(str, i, "--")))
+            matchLeft(str, i, "--", {
+              trimBeforeMatching: true
+            })))
       ) {
         token.end = i + 1;
       } else if (

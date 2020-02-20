@@ -53,7 +53,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `01.02 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - broken simple case, with space`,
   t => {
     const gathered = [];
@@ -96,7 +96,7 @@ t.todo(
           end: 12
         }
       ],
-      "01.01"
+      "01.02"
     );
     t.end();
   }

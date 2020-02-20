@@ -35,7 +35,11 @@ function _typeof(obj) {
 
 function startsComment(str, i, token) {
   return (
-    (stringMatchLeftRight.matchRightIncl(str, i, ["<!-", "<!["]) || stringMatchLeftRight.matchRightIncl(str, i, ["-->"])) && (token.type !== "esp" || token.tail.includes(str[i]))
+    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "!["], {
+      trimBeforeMatching: true
+    }) || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
+      trimBeforeMatching: true
+    })) && (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
 
@@ -46,6 +50,7 @@ function startsTag(str, i, token, layers) {
     allowCustomTagNames: true
   }) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
+    trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
   })) && (token.type !== "esp" || token.tail.includes(str[i]));
 }
@@ -81,7 +86,7 @@ function flipEspTag(str) {
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && str[i + 1] === "-") && !(
-  "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[i + 1])));
+  "0123456789".includes(str[stringLeftRight.left(str, i)]) && (!str[i + 2] || ["\"", "'", ";"].includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[stringLeftRight.right(str, i)])));
 }
 
 function isObj(something) {
@@ -582,7 +587,11 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
-      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && stringMatchLeftRight.matchLeft(str, i, "!-") || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--"))) {
+      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && stringMatchLeftRight.matchLeft(str, i, "!-", {
+        trimBeforeMatching: true
+      }) || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
+        trimBeforeMatching: true
+      }))) {
         token.end = i + 1;
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";
