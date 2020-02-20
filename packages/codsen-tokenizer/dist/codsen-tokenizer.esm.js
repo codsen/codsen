@@ -1056,6 +1056,9 @@ function tokenizer(str, originalOpts) {
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
+        if (token.tagName === "xml" && token.closing && !token.kind) {
+          token.kind = "xml";
+        }
         if (voidTags.includes(token.tagName)) {
           token.void = true;
         }

@@ -106,7 +106,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `02.01 - ${`\u001b[${35}m${`outlook conditionals`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
+  `02.01 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
   t => {
     const gathered = [];
     ct(`a<!--[if gte mso 9]>x<![endif]-->z`, {
@@ -154,8 +154,8 @@ t.test(
   }
 );
 
-t.todo(
-  `02.02 - ${`\u001b[${35}m${`outlook conditionals`}\u001b[${39}m`} - outlook conditionals with xml, complex`,
+t.test(
+  `02.02 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, complex`,
   t => {
     const gathered = [];
     ct(
@@ -183,17 +183,40 @@ t.todo(
         {
           type: "comment",
           start: 3,
-          end: 22
+          end: 22,
+          kind: "only",
+          closing: false
         },
         {
           type: "tag",
           start: 22,
-          end: 27
+          end: 27,
+          kind: "xml",
+          closing: false
         },
         {
           type: "text",
-          start: 5,
-          end: 6
+          start: 27,
+          end: 135
+        },
+        {
+          type: "tag",
+          start: 135,
+          end: 141,
+          kind: "xml",
+          closing: true
+        },
+        {
+          type: "comment",
+          start: 141,
+          end: 153,
+          kind: "only",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 153,
+          end: 156
         }
       ],
       "02.02"
@@ -203,7 +226,7 @@ t.todo(
 );
 
 t.test(
-  `02.03 - ${`\u001b[${35}m${`outlook conditionals`}\u001b[${39}m`} - outlook conditionals with xml, minimal, tag inside`,
+  `02.03 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, minimal, tag inside`,
   t => {
     const gathered = [];
     ct(`<a><!--[if gte mso 9]><b><![endif]--><i>`, {
