@@ -37,9 +37,9 @@ function startsComment(str, i, token) {
   return (
     (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "!["], {
       trimBeforeMatching: true
-    }) || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
+    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
       trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing)) && (token.type !== "esp" || token.tail.includes(str[i]))
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not")) && (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
 
@@ -410,7 +410,7 @@ function tokenizer(str, originalOpts) {
             });
           }
         }
-      } else if (token.type === "comment" && ["only", "only-not"].includes(token.kind)) {
+      } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
         if (["[", "]"].includes(str[i])) {
           if (matchLayerLast(str, i)) {
             layers.pop();
@@ -605,7 +605,7 @@ function tokenizer(str, originalOpts) {
         token.selectorsEnd = i + 1;
       }
     }
-    if (token.type === "comment" && ["only", "only-not"].includes(token.kind)) {
+    if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
       if (str[i] === "[") ;
     }
     if (!doNothing) {
@@ -616,13 +616,26 @@ function tokenizer(str, originalOpts) {
       }) || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
         trimBeforeMatching: true
       }))) {
-        if (stringMatchLeftRight.matchRightIncl(str, i, ["-[if"])) {
+        if (stringMatchLeftRight.matchRightIncl(str, i, ["-[if"], {
+          trimBeforeMatching: true
+        })) {
           token.kind = "only";
+        } else if (stringMatchLeftRight.matchRightIncl(str, i, ["-<![endif"], {
+          trimBeforeMatching: true
+        })) {
+          token.kind = "not";
+          token.closing = true;
         } else {
           token.end = i + 1;
         }
       } else if (token.type === "comment" && !layers.length && str[i] === ">") {
-        token.end = i + 1;
+        if (stringMatchLeftRight.matchRight(str, i, "<!-->", {
+          trimBeforeMatching: true
+        })) {
+          token.kind = "not";
+        } else {
+          token.end = i + 1;
+        }
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[i])) {
         var wholeEspTagClosing = "";
         for (var _y2 = i; _y2 < len; _y2++) {

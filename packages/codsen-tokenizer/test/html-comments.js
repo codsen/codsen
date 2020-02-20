@@ -102,7 +102,7 @@ t.test(
   }
 );
 
-// 02. outlook conditionals
+// 02. outlook conditionals: only
 // -----------------------------------------------------------------------------
 
 t.test(
@@ -274,6 +274,60 @@ t.test(
   }
 );
 
+// 03. outlook conditionals: only-not
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${33}m${`kind - only not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
+  t => {
+    const gathered = [];
+    ct(`a<!--[if !mso]><!-->x<!--<![endif]-->z`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 20,
+          kind: "not",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 20,
+          end: 21
+        },
+        {
+          type: "comment",
+          start: 21,
+          end: 37,
+          kind: "not",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 37,
+          end: 38
+        }
+      ],
+      "03.01"
+    );
+    t.end();
+  }
+);
+
+// -----------------------------------------------------------------------------
+
 // For a reference:
 // ===============
 
@@ -286,10 +340,10 @@ t.test(
 // </o:OfficeDocumentSettings>
 // </xml><![endif]-->def
 
-// <!--[if !mso]><!-->
-//     <img src="gif">
-// <!--<![endif]-->
-
 // <!--[if mso]>
 //     <img src="fallback">
 // <![endif]-->
+
+// <!--[if !mso]><!-->
+//     <img src="gif">
+// <!--<![endif]-->

@@ -18,12 +18,14 @@ function startsComment(str, i, token) {
     ((str[i] === "<" &&
       matchRight(str, i, ["!-", "!["], {
         trimBeforeMatching: true
-      })) ||
+      }) &&
+      (token.type !== "comment" || token.kind !== "not")) ||
       (str[i] === "-" &&
         matchRight(str, i, ["->"], {
           trimBeforeMatching: true
         }) &&
-        (token.type !== "comment" || !token.closing))) &&
+        (token.type !== "comment" ||
+          (!token.closing && token.kind !== "not")))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
@@ -684,7 +686,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         token.type === "comment" &&
-        ["only", "only-not"].includes(token.kind)
+        ["only", "not"].includes(token.kind)
       ) {
         if ([`[`, `]`].includes(str[i])) {
           if (matchLayerLast(str, i)) {
@@ -964,7 +966,7 @@ function tokenizer(str, originalOpts) {
         token.selectorsEnd = i + 1;
       }
     }
-    if (token.type === "comment" && ["only", "only-not"].includes(token.kind)) {
+    if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
       if (str[i] === "[") ;
     }
     if (!doNothing) {
@@ -985,13 +987,32 @@ function tokenizer(str, originalOpts) {
               trimBeforeMatching: true
             })))
       ) {
-        if (matchRightIncl(str, i, ["-[if"])) {
+        if (
+          matchRightIncl(str, i, ["-[if"], {
+            trimBeforeMatching: true
+          })
+        ) {
           token.kind = "only";
+        } else if (
+          matchRightIncl(str, i, ["-<![endif"], {
+            trimBeforeMatching: true
+          })
+        ) {
+          token.kind = "not";
+          token.closing = true;
         } else {
           token.end = i + 1;
         }
       } else if (token.type === "comment" && !layers.length && str[i] === ">") {
-        token.end = i + 1;
+        if (
+          matchRight(str, i, "<!-->", {
+            trimBeforeMatching: true
+          })
+        ) {
+          token.kind = "not";
+        } else {
+          token.end = i + 1;
+        }
       } else if (
         token.type === "esp" &&
         token.end === null &&

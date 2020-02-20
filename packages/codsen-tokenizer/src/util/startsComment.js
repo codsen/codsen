@@ -10,12 +10,14 @@ function startsComment(str, i, token) {
     ((str[i] === "<" &&
       matchRight(str, i, ["!-", "!["], {
         trimBeforeMatching: true
-      })) ||
+      }) &&
+      (token.type !== "comment" || token.kind !== "not")) ||
       (str[i] === "-" &&
         matchRight(str, i, ["->"], {
           trimBeforeMatching: true
         }) &&
-        (token.type !== "comment" || !token.closing))) &&
+        (token.type !== "comment" ||
+          (!token.closing && token.kind !== "not")))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
