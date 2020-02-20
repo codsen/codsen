@@ -8,7 +8,7 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRight, matchLeft } from 'string-match-left-right';
+import { matchRight, matchRightIncl, matchLeft } from 'string-match-left-right';
 import { left, right } from 'string-left-right';
 import clone from 'lodash.clonedeep';
 import isTagOpening from 'is-html-tag-opening';
@@ -22,7 +22,8 @@ function startsComment(str, i, token) {
       (str[i] === "-" &&
         matchRight(str, i, ["->"], {
           trimBeforeMatching: true
-        }))) &&
+        }) &&
+        (token.type !== "comment" || !token.closing))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
@@ -222,7 +223,9 @@ function charSuitableForHTMLAttrName(char) {
 function flipEspTag(str) {
   let res = "";
   for (let i = 0, len = str.length; i < len; i++) {
-    if (str[i] === "{") {
+    if (str[i] === "[") {
+      res = `]${res}`;
+    } else if (str[i] === "{") {
       res = `}${res}`;
     } else if (str[i] === "(") {
       res = `)${res}`;
@@ -655,28 +658,44 @@ function tokenizer(str, originalOpts) {
       dumpCurrentToken(token, i);
       layers = [];
     }
-    if (
-      !doNothing &&
-      ["tag", "esp", "css"].includes(token.type) &&
-      token.kind !== "cdata"
-    ) {
+    if (!doNothing) {
       if (
-        [`"`, `'`, `(`, `)`].includes(str[i]) &&
-        !(
-          (
-            [`"`, `'`].includes(str[left(str, i)]) &&
-            str[left(str, i)] === str[right(str, i)]
-          )
-        )
+        ["tag", "esp", "rule", "at"].includes(token.type) &&
+        token.kind !== "cdata"
       ) {
-        if (matchLayerLast(str, i)) {
-          layers.pop();
-        } else {
-          layers.push({
-            type: "simple",
-            value: str[i],
-            position: i
-          });
+        if (
+          [`"`, `'`, `(`, `)`].includes(str[i]) &&
+          !(
+            (
+              [`"`, `'`].includes(str[left(str, i)]) &&
+              str[left(str, i)] === str[right(str, i)]
+            )
+          )
+        ) {
+          if (matchLayerLast(str, i)) {
+            layers.pop();
+          } else {
+            layers.push({
+              type: "simple",
+              value: str[i],
+              position: i
+            });
+          }
+        }
+      } else if (
+        token.type === "comment" &&
+        ["only", "only-not"].includes(token.kind)
+      ) {
+        if ([`[`, `]`].includes(str[i])) {
+          if (matchLayerLast(str, i)) {
+            layers.pop();
+          } else {
+            layers.push({
+              type: "simple",
+              value: str[i],
+              position: i
+            });
+          }
         }
       }
     }
@@ -807,6 +826,13 @@ function tokenizer(str, originalOpts) {
         initToken("comment", i);
         if (str[i] === "-") {
           token.closing = true;
+        } else if (
+          matchRightIncl(str, i, ["<![e", "<[endif", "<!endif"], {
+            trimBeforeMatching: true
+          })
+        ) {
+          token.closing = true;
+          token.kind = "only";
         }
         if (styleStarts) {
           styleStarts = false;
@@ -938,6 +964,9 @@ function tokenizer(str, originalOpts) {
         token.selectorsEnd = i + 1;
       }
     }
+    if (token.type === "comment" && ["only", "only-not"].includes(token.kind)) {
+      if (str[i] === "[") ;
+    }
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
@@ -956,6 +985,12 @@ function tokenizer(str, originalOpts) {
               trimBeforeMatching: true
             })))
       ) {
+        if (matchRightIncl(str, i, ["-[if"])) {
+          token.kind = "only";
+        } else {
+          token.end = i + 1;
+        }
+      } else if (token.type === "comment" && !layers.length && str[i] === ">") {
         token.end = i + 1;
       } else if (
         token.type === "esp" &&

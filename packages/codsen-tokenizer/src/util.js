@@ -248,7 +248,9 @@ function charSuitableForHTMLAttrName(char) {
 function flipEspTag(str) {
   let res = "";
   for (let i = 0, len = str.length; i < len; i++) {
-    if (str[i] === "{") {
+    if (str[i] === "[") {
+      res = `]${res}`;
+    } else if (str[i] === "{") {
       res = `}${res}`;
     } else if (str[i] === "(") {
       res = `)${res}`;
