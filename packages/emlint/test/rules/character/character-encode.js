@@ -302,7 +302,7 @@ t.test(
 t.test(
   `04.01 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
   t => {
-    const str = `<>'"&`;
+    const str = `><'"&`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -316,9 +316,9 @@ t.test(
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded less than character.",
+        message: "Unencoded greater than character.",
         fix: {
-          ranges: [[0, 1, "&lt;"]]
+          ranges: [[0, 1, "&gt;"]]
         }
       },
       {
@@ -327,9 +327,9 @@ t.test(
         idxFrom: 1,
         idxTo: 2,
         line: 1,
-        message: "Unencoded greater than character.",
+        message: "Unencoded less than character.",
         fix: {
-          ranges: [[1, 2, "&gt;"]]
+          ranges: [[1, 2, "&lt;"]]
         }
       },
       {
@@ -355,7 +355,7 @@ t.test(
         }
       }
     ]);
-    t.equal(applyFixes(str, messages), "&lt;&gt;'&quot;&amp;");
+    t.equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;");
     t.end();
   }
 );
@@ -363,7 +363,7 @@ t.test(
 t.test(
   `04.02 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
   t => {
-    const str = `<>'"&`;
+    const str = `><'"&`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -377,9 +377,9 @@ t.test(
         idxFrom: 0,
         idxTo: 1,
         line: 1,
-        message: "Unencoded less than character.",
+        message: "Unencoded greater than character.",
         fix: {
-          ranges: [[0, 1, "&#x3C;"]]
+          ranges: [[0, 1, "&#x3E;"]]
         }
       },
       {
@@ -388,9 +388,9 @@ t.test(
         idxFrom: 1,
         idxTo: 2,
         line: 1,
-        message: "Unencoded greater than character.",
+        message: "Unencoded less than character.",
         fix: {
-          ranges: [[1, 2, "&#x3E;"]]
+          ranges: [[1, 2, "&#x3C;"]]
         }
       },
       {
@@ -416,7 +416,7 @@ t.test(
         }
       }
     ]);
-    t.equal(applyFixes(str, messages), "&#x3C;&#x3E;'&#x22;&#x26;");
+    t.equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;");
     t.end();
   }
 );
