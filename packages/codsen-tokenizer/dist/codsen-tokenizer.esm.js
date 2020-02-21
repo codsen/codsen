@@ -917,6 +917,7 @@ function tokenizer(str, originalOpts) {
             initToken("text", i);
             token.end = right(str, i) || str.length;
             pingTagCb(token);
+            doNothing = token.end;
             tokenReset();
             if (
               right(str, i) &&

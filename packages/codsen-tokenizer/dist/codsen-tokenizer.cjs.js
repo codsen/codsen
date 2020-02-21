@@ -573,6 +573,7 @@ function tokenizer(str, originalOpts) {
             initToken("text", i);
             token.end = stringLeftRight.right(str, i) || str.length;
             pingTagCb(token);
+            doNothing = token.end;
             tokenReset();
             if (stringLeftRight.right(str, i) && !["{", "}", "<"].includes(str[stringLeftRight.right(str, i)])) {
               var idxOnTheRight = stringLeftRight.right(str, i);

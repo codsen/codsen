@@ -716,6 +716,50 @@ t.test("01.22 - closing tag with attributes", t => {
   t.end();
 });
 
+t.test("01.23 - empty style tag pair", t => {
+  const gathered = [];
+  ct(`<style>\n\n</style>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false
+      },
+      {
+        type: "text",
+        start: 7,
+        end: 9
+      },
+      {
+        type: "tag",
+        start: 9,
+        end: 17,
+        tagNameStartsAt: 11,
+        tagNameEndsAt: 16,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false
+      }
+    ],
+    "01.23"
+  );
+  t.end();
+});
+
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
