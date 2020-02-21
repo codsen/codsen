@@ -1,4 +1,5 @@
 import isTagOpening from "is-html-tag-opening";
+import { right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
 
 // This is an extracted logic which detects where token of a particular kind
@@ -13,9 +14,10 @@ function startsTag(str, i, token, layers) {
         allowCustomTagNames: true
       })) ||
       !layers.length) &&
-    (isTagOpening(str, i, {
-      allowCustomTagNames: true
-    }) ||
+    (str[right(str, i)] === ">" ||
+      isTagOpening(str, i, {
+        allowCustomTagNames: true
+      }) ||
       matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
         trimBeforeMatching: true,

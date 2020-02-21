@@ -39,14 +39,17 @@ function startsComment(str, i, token) {
       trimBeforeMatching: true
     }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
       trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not")) && (token.type !== "esp" || token.tail.includes(str[i]))
+    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !stringMatchLeftRight.matchLeft(str, i, "<", {
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["-", "!"]
+    })) && (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
 
 function startsTag(str, i, token, layers) {
   return str[i] === "<" && (token.type === "text" && isTagOpening(str, i, {
     allowCustomTagNames: true
-  }) || !layers.length) && (isTagOpening(str, i, {
+  }) || !layers.length) && (str[stringLeftRight.right(str, i)] === ">" || isTagOpening(str, i, {
     allowCustomTagNames: true
   }) || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
@@ -476,8 +479,10 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (startsTag(str, i, token, layers)) {
-        dumpCurrentToken(token, i);
-        tokenReset();
+        if (token.type && token.start !== null) {
+          dumpCurrentToken(token, i);
+          tokenReset();
+        }
         initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;

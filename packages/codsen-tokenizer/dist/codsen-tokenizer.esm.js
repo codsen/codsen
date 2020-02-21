@@ -8,8 +8,8 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRight, matchRightIncl, matchLeft } from 'string-match-left-right';
-import { left, right } from 'string-left-right';
+import { matchRight, matchLeft, matchRightIncl } from 'string-match-left-right';
+import { right, left } from 'string-left-right';
 import clone from 'lodash.clonedeep';
 import isTagOpening from 'is-html-tag-opening';
 
@@ -25,7 +25,11 @@ function startsComment(str, i, token) {
           trimBeforeMatching: true
         }) &&
         (token.type !== "comment" ||
-          (!token.closing && token.kind !== "not")))) &&
+          (!token.closing && token.kind !== "not")) &&
+        !matchLeft(str, i, "<", {
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["-", "!"]
+        }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
@@ -38,9 +42,10 @@ function startsTag(str, i, token, layers) {
         allowCustomTagNames: true
       })) ||
       !layers.length) &&
-    (isTagOpening(str, i, {
-      allowCustomTagNames: true
-    }) ||
+    (str[right(str, i)] === ">" ||
+      isTagOpening(str, i, {
+        allowCustomTagNames: true
+      }) ||
       matchRight(str, i, ["doctype", "xml", "cdata"], {
         i: true,
         trimBeforeMatching: true,
@@ -794,8 +799,10 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (startsTag(str, i, token, layers)) {
-        dumpCurrentToken(token, i);
-        tokenReset();
+        if (token.type && token.start !== null) {
+          dumpCurrentToken(token, i);
+          tokenReset();
+        }
         initToken("tag", i);
         if (styleStarts) {
           styleStarts = false;
