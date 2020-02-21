@@ -78,7 +78,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
 // 02. media
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `02.01 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
   t => {
     t.same(

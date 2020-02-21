@@ -46,7 +46,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
   t.end();
 });
 
-t.test(
+t.only(
   `01.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   t => {
     t.same(
