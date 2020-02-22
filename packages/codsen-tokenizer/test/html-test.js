@@ -33,6 +33,7 @@ t.test("01.01 - text-tag-text", t => {
     ],
     "01.01"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
@@ -143,6 +144,7 @@ t.test("01.05 - self-closing tag only", t => {
     ],
     "01.05"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -174,6 +176,7 @@ t.test("01.06 - multiple tags", t => {
     ],
     "01.06"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
@@ -195,6 +198,7 @@ t.test("01.07 - closing bracket in the attribute's value", t => {
     ],
     "01.07"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -216,6 +220,7 @@ t.test("01.08 - closing bracket layers of nested quotes", t => {
     ],
     "01.08"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -237,6 +242,7 @@ t.test("01.09 - bracket as text", t => {
     ],
     "01.09"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -295,6 +301,7 @@ t.test("01.10 - tag followed by brackets", t => {
     ],
     "01.10"
   );
+  t.is(gathered.length, 6);
   t.end();
 });
 
@@ -327,6 +334,7 @@ t.test("01.11 - html5 doctype", t => {
     ],
     "01.11"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
@@ -375,6 +383,7 @@ t.test("01.12 - xhtml doctype", t => {
     ],
     "01.12"
   );
+  t.is(gathered.length, 5);
   t.end();
 });
 
@@ -435,6 +444,7 @@ t.test("01.13 - xhtml DTD doctype", t => {
     ],
     "01.13"
   );
+  t.is(gathered.length, 7);
   t.end();
 });
 
@@ -457,6 +467,7 @@ t.test("01.14 - void tags", t => {
     ],
     "01.14"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -480,6 +491,7 @@ t.test("01.15 - recognised tags", t => {
     ],
     "01.15"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -503,6 +515,7 @@ t.test("01.16 - unrecognised tags", t => {
     ],
     "01.16"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -526,6 +539,7 @@ t.test("01.17 - wrong case but still recognised tags", t => {
     ],
     "01.17"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -549,6 +563,7 @@ t.test("01.18 - correct HTML5 doctype", t => {
     ],
     "01.18"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -576,6 +591,7 @@ t.test("01.19 - correct HTML5 doctype", t => {
     ],
     "01.19"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -603,6 +619,7 @@ t.test("01.20 - tag names with numbers", t => {
     ],
     "01.20"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -668,6 +685,7 @@ t.test("01.21 - exact match, tag pair with whitespace", t => {
     ],
     "01.21"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
@@ -713,6 +731,7 @@ t.test("01.22 - closing tag with attributes", t => {
     ],
     "01.22"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -757,6 +776,7 @@ t.test("01.23 - empty style tag pair", t => {
     ],
     "01.23"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
@@ -784,6 +804,7 @@ t.test("02.01 - CDATA - correct", t => {
     ],
     "02.01"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -808,6 +829,7 @@ t.test("02.02 - CDATA - messed up 1", t => {
     ],
     "02.02"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -832,6 +854,7 @@ t.test("02.03 - CDATA - messed up 2", t => {
     ],
     "02.03"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -856,6 +879,7 @@ t.test("02.04 - CDATA - messed up 3", t => {
     ],
     "02.04"
   );
+  t.is(gathered.length, 1);
   t.end();
 });
 
@@ -896,6 +920,7 @@ t.test("02.05 - CDATA - with line breaks", t => {
     ],
     "02.05"
   );
+  t.is(gathered.length, 3);
   t.end();
 });
 
