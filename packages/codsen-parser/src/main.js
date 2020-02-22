@@ -286,10 +286,11 @@ function cparser(str, originalOpts) {
         (!previousPath ||
           !isObj(previousTagsToken) ||
           previousTagsToken.type !== "tag" ||
-          previousTagsToken.tagName !== tokenObj.tagName)
+          previousTagsToken.tagName !== tokenObj.tagName ||
+          previousTagsToken.closing)
       ) {
         console.log(
-          `292 ${`\u001b[${31}m${`██ tag-missing-opening`}\u001b[${39}m`}`
+          `293 ${`\u001b[${31}m${`██ tag-missing-opening`}\u001b[${39}m`}`
         );
         if (opts.errCb) {
           opts.errCb({
@@ -301,7 +302,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `304 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        `305 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
           res,
           null,
           4
@@ -313,7 +314,7 @@ function cparser(str, originalOpts) {
         Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
       console.log(
-        `316 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `317 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -321,7 +322,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `324 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `325 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -359,7 +360,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `362 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `363 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

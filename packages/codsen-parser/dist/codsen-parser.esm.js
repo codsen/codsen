@@ -214,7 +214,8 @@ function cparser(str, originalOpts) {
         (!previousPath ||
           !isObj(previousTagsToken) ||
           previousTagsToken.type !== "tag" ||
-          previousTagsToken.tagName !== tokenObj.tagName)
+          previousTagsToken.tagName !== tokenObj.tagName ||
+          previousTagsToken.closing)
       ) {
         if (opts.errCb) {
           opts.errCb({

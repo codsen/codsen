@@ -1,10 +1,10 @@
 const t = require("tap");
 const cparser = require("../dist/codsen-parser.cjs");
 
-// 01. basics
+// 00. no error
 // -----------------------------------------------------------------------------
 
-t.test(`01.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
+t.test(`00.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
   t.same(
     cparser(`<div></div>`),
     [
@@ -41,13 +41,13 @@ t.test(`01.01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, t => {
         attribs: []
       }
     ],
-    "01.01"
+    "00.01"
   );
   t.end();
 });
 
-t.only(
-  `01.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
+t.test(
+  `00.02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   t => {
     t.same(
       cparser(`<style>\n\n</style>`),
@@ -91,14 +91,14 @@ t.only(
           attribs: []
         }
       ],
-      "01.02"
+      "00.02"
     );
     t.end();
   }
 );
 
 t.test(
-  `01.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
+  `00.03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   t => {
     t.same(
       cparser(`<div>\n\n</div>`),
@@ -142,8 +142,74 @@ t.test(
           attribs: []
         }
       ],
-      "01.03"
+      "00.03"
     );
     t.end();
   }
 );
+
+// 01. basic
+// -----------------------------------------------------------------------------
+
+t.test(`01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two tags`, t => {
+  const gatheredErr = [];
+  t.match(
+    cparser(`<div><a>z</a></div></div>`, {
+      errCb: errObj => gatheredErr.push(errObj)
+    }),
+    [
+      {
+        children: [
+          {
+            children: [
+              {
+                type: "text",
+                start: 8,
+                end: 9
+              }
+            ],
+            type: "tag",
+            start: 5,
+            end: 8,
+            closing: false
+          },
+          {
+            type: "tag",
+            start: 9,
+            end: 13,
+            closing: true
+          }
+        ],
+        type: "tag",
+        start: 0,
+        end: 5,
+        closing: false
+      },
+      {
+        type: "tag",
+        start: 13,
+        end: 19,
+        closing: true
+      },
+      {
+        type: "tag",
+        start: 19,
+        end: 25,
+        closing: true
+      }
+    ],
+    "01.01.01"
+  );
+  t.match(
+    gatheredErr,
+    [
+      {
+        ruleId: "tag-missing-opening",
+        idxFrom: 19,
+        idxTo: 25
+      }
+    ],
+    "01.01.02"
+  );
+  t.end();
+});

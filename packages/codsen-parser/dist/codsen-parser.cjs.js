@@ -156,7 +156,7 @@ function cparser(str, originalOpts) {
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      if (tokenObj.type === "tag" && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.type !== "tag" || previousTagsToken.tagName !== tokenObj.tagName)) {
+      if (tokenObj.type === "tag" && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.type !== "tag" || previousTagsToken.tagName !== tokenObj.tagName || previousTagsToken.closing)) {
         if (opts.errCb) {
           opts.errCb({
             ruleId: "tag-missing-opening",
