@@ -280,21 +280,33 @@ function cparser(str, originalOpts) {
           4
         )}`
       );
+      console.log(
+        `284 ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
+          tokenObj.closing,
+          null,
+          4
+        )}`
+      );
+
       if (
-        tokenObj.type === "tag" &&
+        ["tag", "comment"].includes(tokenObj.type) &&
         tokenObj.closing &&
         (!previousPath ||
           !isObj(previousTagsToken) ||
-          previousTagsToken.type !== "tag" ||
-          previousTagsToken.tagName !== tokenObj.tagName ||
-          previousTagsToken.closing)
+          previousTagsToken.closing ||
+          previousTagsToken.type !== tokenObj.type ||
+          previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         console.log(
-          `293 ${`\u001b[${31}m${`██ tag-missing-opening`}\u001b[${39}m`}`
+          `301 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+            tokenObj.type === "comment" ? tokenObj.kind : ""
+          }-missing-opening`}\u001b[${39}m`}`
         );
         if (opts.errCb) {
           opts.errCb({
-            ruleId: "tag-missing-opening",
+            ruleId: `${tokenObj.type}${
+              tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+            }-missing-opening`,
             idxFrom: tokenObj.start,
             idxTo: tokenObj.end
           });
@@ -302,7 +314,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `305 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        `317 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
           res,
           null,
           4
@@ -314,7 +326,7 @@ function cparser(str, originalOpts) {
         Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
       console.log(
-        `317 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `329 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -322,7 +334,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `325 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `337 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -360,7 +372,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `363 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `375 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

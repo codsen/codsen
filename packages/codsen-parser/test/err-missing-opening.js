@@ -213,3 +213,144 @@ t.test(`01.01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two tags`, t => {
   );
   t.end();
 });
+
+// 02. comment tag, "simple"
+// -----------------------------------------------------------------------------
+
+t.test(
+  `02.01 - ${`\u001b[${33}m${`comment "simple"`}\u001b[${39}m`} - basic`,
+  t => {
+    const gatheredErr = [];
+    t.same(
+      cparser(`x-->z`, {
+        errCb: errObj => gatheredErr.push(errObj)
+      }),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 4,
+          kind: "simple",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 4,
+          end: 5
+        }
+      ],
+      "02.01.01"
+    );
+    t.match(
+      gatheredErr,
+      [
+        {
+          ruleId: "comment-simple-missing-opening",
+          idxFrom: 1,
+          idxTo: 4
+        }
+      ],
+      "02.01.02"
+    );
+    t.end();
+  }
+);
+
+// 03. (outlook) conditional, "only"
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${33}m${`conditional "only"`}\u001b[${39}m`} - basic`,
+  t => {
+    const gatheredErr = [];
+    t.same(
+      cparser(`x<![endif]-->z`, {
+        errCb: errObj => gatheredErr.push(errObj)
+      }),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 13,
+          kind: "only",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 13,
+          end: 14
+        }
+      ],
+      "03.01.01"
+    );
+    t.match(
+      gatheredErr,
+      [
+        {
+          ruleId: "comment-only-missing-opening",
+          idxFrom: 1,
+          idxTo: 13
+        }
+      ],
+      "03.01.02"
+    );
+    t.end();
+  }
+);
+
+// 04. outlook conditional, "not"
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${33}m${`conditional "not"`}\u001b[${39}m`} - basic`,
+  t => {
+    const gatheredErr = [];
+    t.same(
+      cparser(`x<!--<![endif]-->z`, {
+        errCb: errObj => gatheredErr.push(errObj)
+      }),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 17,
+          kind: "not",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 17,
+          end: 18
+        }
+      ],
+      "04.01.01"
+    );
+    t.match(
+      gatheredErr,
+      [
+        {
+          ruleId: "comment-not-missing-opening",
+          idxFrom: 1,
+          idxTo: 17
+        }
+      ],
+      "04.01.02"
+    );
+    t.end();
+  }
+);

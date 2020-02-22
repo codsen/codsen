@@ -209,17 +209,19 @@ function cparser(str, originalOpts) {
         previousTagsToken = op.get(res, previousPath);
       }
       if (
-        tokenObj.type === "tag" &&
+        ["tag", "comment"].includes(tokenObj.type) &&
         tokenObj.closing &&
         (!previousPath ||
           !isObj(previousTagsToken) ||
-          previousTagsToken.type !== "tag" ||
-          previousTagsToken.tagName !== tokenObj.tagName ||
-          previousTagsToken.closing)
+          previousTagsToken.closing ||
+          previousTagsToken.type !== tokenObj.type ||
+          previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         if (opts.errCb) {
           opts.errCb({
-            ruleId: "tag-missing-opening",
+            ruleId: `${tokenObj.type}${
+              tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
+            }-missing-opening`,
             idxFrom: tokenObj.start,
             idxTo: tokenObj.end
           });

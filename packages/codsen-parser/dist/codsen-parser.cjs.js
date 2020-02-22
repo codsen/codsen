@@ -156,10 +156,10 @@ function cparser(str, originalOpts) {
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      if (tokenObj.type === "tag" && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.type !== "tag" || previousTagsToken.tagName !== tokenObj.tagName || previousTagsToken.closing)) {
+      if (["tag", "comment"].includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
         if (opts.errCb) {
           opts.errCb({
-            ruleId: "tag-missing-opening",
+            ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
             idxFrom: tokenObj.start,
             idxTo: tokenObj.end
           });
