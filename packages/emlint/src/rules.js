@@ -1701,6 +1701,37 @@ defineLazyProp(
 import mediaMalformed from "./rules/media/media-malformed";
 defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 
+// COMMENT TAG rules
+// -----------------------------------------------------------------------------
+// some of them running from tokenizer nodes:
+//
+// 1.
+// type="comment", kind="simple"
+// (<!-- content -->)
+//
+// 2.
+// type="comment", kind="only"
+// (<!--[if gte mso 9]> content <![endif]-->)
+//
+// 3.
+// type="comment", kind="not"
+// (<!--[if !mso]><!--> content <!--<![endif]-->)
+//
+
+import commentOnlyClosingMalformed from "./rules/comment/comment-only-closing-malformed";
+defineLazyProp(
+  builtInRules,
+  "comment-only-closing-malformed",
+  () => commentOnlyClosingMalformed
+);
+
+import commentOnlyOpeningMalformed from "./rules/comment/comment-only-opening-malformed";
+defineLazyProp(
+  builtInRules,
+  "comment-only-opening-malformed",
+  () => commentOnlyOpeningMalformed
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1818,7 +1849,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1821 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1852 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

@@ -9318,6 +9318,75 @@ function mediaMalformed(context, ...opts) {
   };
 }
 
+function validateCommentClosing(str, idxOffset, opts) {
+  const errorArr = [];
+  splitByWhitespace(str, null, ([from, to]) => {
+    errorArr.push({
+      ruleId: "comment-only-closing-malformed",
+      idxFrom: idxOffset,
+      idxTo: str.length + idxOffset,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[from + idxOffset, to + idxOffset]]
+      }
+    });
+  });
+  if (str[0] === "<") {
+    const secondCharIdx = right(str, 0);
+    if (str[secondCharIdx] !== "!") {
+      errorArr.push({
+        ruleId: "comment-only-closing-malformed",
+        idxFrom: idxOffset,
+        idxTo: str.length + idxOffset,
+        message: "Exclamation mark missing.",
+        fix: {
+          ranges: [[1 + idxOffset, 1 + idxOffset, "!"]]
+        }
+      });
+    }
+  }
+  return errorArr;
+}
+
+function commentOnlyClosingMalformed(context, ...opts) {
+  return {
+    comment: function(node) {
+      if (node.closing) {
+        const errorArr = validateCommentClosing(node.value, node.start);
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "comment-only-closing-malformed"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
+function validateCommentClosing$1(str, idxOffset, opts) {
+  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  return errorArr;
+}
+
+function commentOnlyOpeningMalformed(context, ...opts) {
+  return {
+    comment: function(node) {
+      if (node.closing) {
+        const errorArr = validateCommentClosing$1(node.value, node.start);
+        errorArr.forEach(errorObj => {
+          context.report(
+            Object.assign({}, errorObj, {
+              ruleId: "comment-only-opening-malformed"
+            })
+          );
+        });
+      }
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -10484,6 +10553,16 @@ defineLazyProp(
   () => characterUnspacedPunctuation
 );
 defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
+defineLazyProp(
+  builtInRules,
+  "comment-only-closing-malformed",
+  () => commentOnlyClosingMalformed
+);
+defineLazyProp(
+  builtInRules,
+  "comment-only-opening-malformed",
+  () => commentOnlyOpeningMalformed
+);
 function get(something) {
   return builtInRules[something];
 }
