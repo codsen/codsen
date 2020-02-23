@@ -170,19 +170,6 @@ function cparser(str, originalOpts) {
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
     tagCb: tokenObj => {
-      console.log(`-`.repeat(80));
-      console.log(
-        `173 ██ ${`\u001b[${33}m${`INCOMING TOKEN`}\u001b[${39}m`}:\n${JSON.stringify(
-          {
-            type: tokenObj.type,
-            tagName: tokenObj.tagName,
-            start: tokenObj.start,
-            end: tokenObj.end
-          },
-          null,
-          4
-        )}`
-      );
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
@@ -190,13 +177,6 @@ function cparser(str, originalOpts) {
       if (!isObj(prevToken)) {
         prevToken = null;
       }
-      console.log(
-        `203 FIY, ${`\u001b[${33}m${`prevToken`}\u001b[${39}m`} = ${JSON.stringify(
-          prevToken,
-          null,
-          4
-        )}`
-      );
       if (
         nestNext &&
         (!prevToken ||
@@ -207,20 +187,16 @@ function cparser(str, originalOpts) {
           ))
       ) {
         nestNext = false;
-        console.log(`226 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
         path = `${path}.children.0`;
       } else if (
         tokenObj.closing &&
         typeof path === "string" &&
         path.includes(".")
       ) {
-        console.log(`235 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
         path = pathNext(pathUp(path));
       } else if (!path) {
-        console.log(`239 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
         path = "0";
       } else {
-        console.log(`244 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
         path = pathNext(path);
       }
       if (
@@ -229,43 +205,12 @@ function cparser(str, originalOpts) {
         !tokenObj.closing
       ) {
         nestNext = true;
-        console.log(
-          `256 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
-        );
       }
-      console.log(
-        `261 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-          path,
-          null,
-          4
-        )}`
-      );
       const previousPath = pathPrev(path);
-      console.log(
-        `272 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
-          previousPath,
-          null,
-          4
-        )}`
-      );
       let previousTagsToken;
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      console.log(
-        `283 ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} = ${JSON.stringify(
-          previousTagsToken,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `290 ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
-          tokenObj.closing,
-          null,
-          4
-        )}`
-      );
       if (
         ["tag", "comment"].includes(tokenObj.type) &&
         tokenObj.closing &&
@@ -275,11 +220,6 @@ function cparser(str, originalOpts) {
           previousTagsToken.type !== tokenObj.type ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
-        console.log(
-          `307 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
-            tokenObj.type === "comment" ? tokenObj.kind : ""
-          }-missing-opening`}\u001b[${39}m`}`
-        );
         if (opts.errCb) {
           opts.errCb({
             ruleId: `${tokenObj.type}${
@@ -290,49 +230,14 @@ function cparser(str, originalOpts) {
           });
         }
       }
-      console.log(
-        `323 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
-          res,
-          null,
-          4
-        )}`
-      );
       op.set(
         res,
         path,
         Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
-      console.log(
-        `335 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
-          res,
-          null,
-          4
-        )}`
-      );
-      console.log(
-        `343 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-          path,
-          null,
-          4
-        )}`
-      );
-      console.log(`${`\u001b[${90}m${`---`}\u001b[${39}m`}`);
-      console.log(
-        `${`\u001b[${90}m${`██ nestNext = ${`\u001b[${
-          nestNext ? 32 : 31
-        }m${nestNext}\u001b[${39}m`}`}\u001b[${39}m`}`
-      );
     },
     charCb: opts.charCb
   });
-  console.log(`-`.repeat(80));
-  console.log(
-    `381 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
-      res,
-      null,
-      4
-    )}`
-  );
   return res;
 }
 

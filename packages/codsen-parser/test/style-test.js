@@ -14,6 +14,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
         type: "tag",
         start: 0,
         end: 7,
+        value: `<style>`,
         tagNameStartsAt: 1,
         tagNameEndsAt: 6,
         tagName: "style",
@@ -28,12 +29,14 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
           {
             type: "text",
             start: 7,
-            end: 8
+            end: 8,
+            value: "\n"
           },
           {
             type: "rule",
             start: 8,
             end: 25,
+            value: `.red{color: red;}`,
             openingCurlyAt: 12,
             closingCurlyAt: 24,
             selectorsStart: 8,
@@ -49,7 +52,8 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
           {
             type: "text",
             start: 25,
-            end: 26
+            end: 26,
+            value: `\n`
           }
         ]
       },
@@ -58,6 +62,7 @@ t.test(`01.01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, t => {
         type: "tag",
         start: 26,
         end: 34,
+        value: `</style>`,
         tagNameStartsAt: 28,
         tagNameEndsAt: 33,
         tagName: "style",
@@ -93,17 +98,20 @@ t.test(
             {
               type: "text",
               start: 7,
-              end: 8
+              end: 8,
+              value: "\n"
             },
             {
               type: "text",
               start: 27,
-              end: 28
+              end: 28,
+              value: "\n"
             },
             {
               type: "rule",
               start: 28,
               end: 37,
+              value: `.a, .b {}`,
               openingCurlyAt: 35,
               closingCurlyAt: 36,
               selectorsStart: 28,
@@ -124,12 +132,14 @@ t.test(
             {
               type: "text",
               start: 37,
-              end: 38
+              end: 38,
+              value: "\n"
             },
             {
               type: "at",
               start: 8,
               end: 39,
+              value: `@media screen and {\n.a, .b {}\n}`,
               identifier: "media",
               identifierStartsAt: 9,
               identifierEndsAt: 14,
@@ -142,12 +152,14 @@ t.test(
             {
               type: "text",
               start: 39,
-              end: 40
+              end: 40,
+              value: "\n"
             }
           ],
           type: "tag",
           start: 0,
           end: 7,
+          value: `<style>`,
           tagNameStartsAt: 1,
           tagNameEndsAt: 6,
           tagName: "style",
@@ -164,6 +176,7 @@ t.test(
           type: "tag",
           start: 40,
           end: 48,
+          value: `</style>`,
           tagNameStartsAt: 42,
           tagNameEndsAt: 47,
           tagName: "style",
