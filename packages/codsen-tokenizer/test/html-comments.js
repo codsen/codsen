@@ -106,7 +106,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `02.01 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
+  `02.01 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, minimal`,
   t => {
     const gathered = [];
     ct(`a<!--[if gte mso 9]>x<![endif]-->z`, {
@@ -155,7 +155,7 @@ t.test(
 );
 
 t.test(
-  `02.02 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, complex`,
+  `02.02 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`,
   t => {
     const gathered = [];
     ct(
@@ -226,7 +226,7 @@ t.test(
 );
 
 t.test(
-  `02.03 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals with xml, minimal, tag inside`,
+  `02.03 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`,
   t => {
     const gathered = [];
     ct(`<a><!--[if gte mso 9]><b><![endif]--><i>`, {
@@ -269,6 +269,82 @@ t.test(
         }
       ],
       "02.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.04 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - missing excl. mark`,
+  t => {
+    const gathered = [];
+    ct(`<!--[if gte mso 9]>x<[endif]-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--[if gte mso 9]>",
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20,
+          value: "x"
+        },
+        {
+          type: "comment",
+          start: 20,
+          end: 31,
+          value: "<[endif]-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.05 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - empty conditional`,
+  t => {
+    const gathered = [];
+    ct(`<!--[if gte mso 9]><![endif]-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "comment",
+          start: 19,
+          end: 31,
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.05"
     );
     t.end();
   }

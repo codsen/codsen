@@ -101,6 +101,9 @@ t.test(
       gathered,
       [
         {
+          start: 0,
+          end: 5,
+          value: "</div",
           tagNameStartsAt: 2,
           tagNameEndsAt: 5,
           tagName: "div",
@@ -110,8 +113,6 @@ t.test(
           pureHTML: true,
           esp: [],
           type: "tag",
-          start: 0,
-          end: 5,
           kind: null,
           attribs: []
         }

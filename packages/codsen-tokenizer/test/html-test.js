@@ -50,7 +50,8 @@ t.test("01.02 - text only", t => {
       {
         type: "text",
         start: 0,
-        end: 2
+        end: 2,
+        value: "  "
       }
     ],
     "01.02"
@@ -72,6 +73,7 @@ t.test("01.03 - opening tag only", t => {
         type: "tag",
         start: 0,
         end: 3,
+        value: "<a>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -103,6 +105,7 @@ t.test("01.04 - closing tag only", t => {
         type: "tag",
         start: 0,
         end: 4,
+        value: "</a>",
         tagNameStartsAt: 2,
         tagNameEndsAt: 3,
         tagName: "a",
@@ -637,6 +640,7 @@ t.test("01.21 - exact match, tag pair with whitespace", t => {
         type: "tag",
         start: 0,
         end: 8,
+        value: "<a href>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -665,12 +669,14 @@ t.test("01.21 - exact match, tag pair with whitespace", t => {
       {
         type: "text",
         start: 8,
-        end: 9
+        end: 9,
+        value: " "
       },
       {
         type: "tag",
         start: 9,
         end: 13,
+        value: "</a>",
         tagNameStartsAt: 11,
         tagNameEndsAt: 12,
         tagName: "a",
@@ -703,6 +709,7 @@ t.test("01.22 - closing tag with attributes", t => {
         type: "tag",
         start: 0,
         end: 14,
+        value: `</a class="z">`,
         tagNameStartsAt: 2,
         tagNameEndsAt: 3,
         tagName: "a",
@@ -1040,6 +1047,7 @@ t.test("04.01 - unrecognised tag name", t => {
         type: "tag",
         start: 0,
         end: 11,
+        value: `<something>`,
         tagNameStartsAt: 1,
         tagNameEndsAt: 10,
         tagName: "something",
@@ -1071,6 +1079,7 @@ t.test("04.02 - unrecognised tag name with dash", t => {
         type: "tag",
         start: 0,
         end: 16,
+        value: `<something-here>`,
         tagNameStartsAt: 1,
         tagNameEndsAt: 15,
         tagName: "something-here",

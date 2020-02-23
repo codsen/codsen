@@ -16,7 +16,7 @@ import isTagOpening from 'is-html-tag-opening';
 function startsComment(str, i, token) {
   return (
     ((str[i] === "<" &&
-      matchRight(str, i, ["!-", "!["], {
+      matchRight(str, i, ["!-", "![", "[endif"], {
         trimBeforeMatching: true
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
@@ -487,6 +487,7 @@ function tokenizer(str, originalOpts) {
       ((str[i - 1] && !str[i - 1].trim().length) || str[i] === "<")
     ) {
       token.end = left(str, i) + 1;
+      token.value = str.slice(token.start, token.end);
       if (token.type === "tag" && str[token.end - 1] !== ">") {
         let cutOffIndex = token.tagNameEndsAt;
         if (Array.isArray(token.attribs) && token.attribs.length) {
@@ -511,6 +512,7 @@ function tokenizer(str, originalOpts) {
           }
         }
         token.end = cutOffIndex;
+        token.value = str.slice(token.start, token.end);
         pingTagCb(token);
         token = tokenReset();
         initToken("text", cutOffIndex);
@@ -525,6 +527,7 @@ function tokenizer(str, originalOpts) {
     if (token.start !== null) {
       if (token.end === null && token.start !== i) {
         token.end = i;
+        token.value = str.slice(token.start, token.end);
       }
       pingTagCb(token);
       token = tokenReset();
@@ -545,6 +548,7 @@ function tokenizer(str, originalOpts) {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
       token.tagNameStartsAt = null;
       token.tagNameEndsAt = null;
       token.tagName = null;
@@ -559,12 +563,14 @@ function tokenizer(str, originalOpts) {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
       token.kind = "simple";
       token.closing = false;
     } else if (type === "rule") {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
       token.openingCurlyAt = null;
       token.closingCurlyAt = null;
       token.selectorsStart = null;
@@ -574,6 +580,7 @@ function tokenizer(str, originalOpts) {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
       token.identifier = null;
       token.identifierStartsAt = null;
       token.identifierEndsAt = null;
@@ -586,10 +593,12 @@ function tokenizer(str, originalOpts) {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
     } else if (type === "esp") {
       token.type = type;
       token.start = start;
       token.end = null;
+      token.value = null;
       token.head = null;
       token.tail = null;
       token.kind = null;
@@ -637,6 +646,7 @@ function tokenizer(str, originalOpts) {
         ) {
           if (token.type === "rule") {
             token.end = left(str, i) + 1;
+            token.value = str.slice(token.start, token.end);
             pingTagCb(token);
             token = tokenReset();
             if (left(str, i) < i - 1) {
@@ -648,12 +658,14 @@ function tokenizer(str, originalOpts) {
           token = poppedToken.token;
           token.closingCurlyAt = i;
           token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
           pingTagCb(token);
           token = tokenReset();
           doNothing = i + 1;
         }
       } else if (token.type === "text" && str[i].trim().length) {
         token.end = i;
+        token.value = str.slice(token.start, token.end);
         pingTagCb(token);
         token = tokenReset();
       }
@@ -754,6 +766,7 @@ function tokenizer(str, originalOpts) {
         if (charIdxOnTheRight > i + 1) {
           initToken("text", i + 1);
           token.end = charIdxOnTheRight;
+          token.value = str.slice(token.start, token.end);
           pingTagCb(token);
         }
         tokenReset();
@@ -868,6 +881,7 @@ function tokenizer(str, originalOpts) {
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
                 token.end = i + lengthOfClosingEspChunk;
+                token.value = str.slice(token.start, token.end);
               }
               dumpCurrentToken(token, i);
               tokenReset();
@@ -878,6 +892,7 @@ function tokenizer(str, originalOpts) {
             if (token.type === "esp") {
               if (!Number.isInteger(token.end)) {
                 token.end = i + lengthOfClosingEspChunk;
+                token.value = str.slice(token.start, token.end);
               }
               dumpCurrentToken(token, i);
               tokenReset();
@@ -916,6 +931,7 @@ function tokenizer(str, originalOpts) {
             tokenReset();
             initToken("text", i);
             token.end = right(str, i) || str.length;
+            token.value = str.slice(token.start, token.end);
             pingTagCb(token);
             doNothing = token.end;
             tokenReset();
@@ -980,6 +996,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
+        token.value = str.slice(token.start, token.end);
       } else if (
         token.type === "comment" &&
         !layers.length &&
@@ -1010,6 +1027,7 @@ function tokenizer(str, originalOpts) {
           token.closing = true;
         } else {
           token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
         }
       } else if (token.type === "comment" && !layers.length && str[i] === ">") {
         if (
@@ -1020,6 +1038,7 @@ function tokenizer(str, originalOpts) {
           token.kind = "not";
         } else {
           token.end = i + 1;
+          token.value = str.slice(token.start, token.end);
         }
       } else if (
         token.type === "esp" &&
@@ -1039,9 +1058,11 @@ function tokenizer(str, originalOpts) {
           const headsFirstChar = token.head[0];
           if (wholeEspTagClosing.endsWith(token.head)) {
             token.end = i + wholeEspTagClosing.length - token.head.length;
+            token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           } else if (wholeEspTagClosing.startsWith(token.tail)) {
             token.end = i + token.tail.length;
+            token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           } else if (
             (!token.tail.includes(headsFirstChar) &&
@@ -1064,14 +1085,17 @@ function tokenizer(str, originalOpts) {
                 .every(char => firstPartOfWholeEspTagClosing.includes(char))
             ) {
               token.end = i + firstPartOfWholeEspTagClosing.length;
+              token.value = str.slice(token.start, token.end);
               doNothing = token.end;
             }
           } else {
             token.end = i + wholeEspTagClosing.length;
+            token.value = str.slice(token.start, token.end);
             doNothing = token.end;
           }
         } else {
           token.end = i + wholeEspTagClosing.length;
+          token.value = str.slice(token.start, token.end);
           doNothing = token.end;
         }
       }
@@ -1157,6 +1181,7 @@ function tokenizer(str, originalOpts) {
       ) {
         token.closingCurlyAt = i;
         token.end = i + 1;
+        token.value = str.slice(token.start, token.end);
         pingTagCb(token);
         tokenReset();
       }
@@ -1247,6 +1272,7 @@ function tokenizer(str, originalOpts) {
       }
       if (thisIsRealEnding) {
         token.end = i + 1;
+        token.value = str.slice(token.start, token.end);
         if (
           Number.isInteger(attrib.attribValueStartsAt) &&
           attrib.attribValueStartsAt < i &&
@@ -1271,6 +1297,7 @@ function tokenizer(str, originalOpts) {
     }
     if (!str[i] && token.start !== null) {
       token.end = i;
+      token.value = str.slice(token.start, token.end);
       pingTagCb(token);
     }
   }

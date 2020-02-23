@@ -18,6 +18,9 @@ t.test(
       gathered,
       [
         {
+          start: 0,
+          end: 2,
+          value: "<a",
           tagNameStartsAt: 1,
           tagNameEndsAt: 2,
           tagName: "a",
@@ -27,17 +30,20 @@ t.test(
           pureHTML: true,
           esp: [],
           type: "tag",
-          start: 0,
-          end: 2,
           kind: null,
           attribs: []
         },
         {
           type: "text",
           start: 2,
-          end: 3
+          end: 3,
+          value: "\n"
         },
         {
+          type: "tag",
+          start: 3,
+          end: 6,
+          value: "<b>",
           tagNameStartsAt: 4,
           tagNameEndsAt: 5,
           tagName: "b",
@@ -46,9 +52,6 @@ t.test(
           void: false,
           pureHTML: true,
           esp: [],
-          type: "tag",
-          start: 3,
-          end: 6,
           kind: null,
           attribs: []
         }
@@ -74,6 +77,7 @@ t.test(
         {
           start: 0,
           end: 12,
+          value: `<a href="z" `,
           type: "tag",
           tagNameStartsAt: 1,
           tagNameEndsAt: 2,
@@ -101,14 +105,16 @@ t.test(
           ]
         },
         {
+          type: "text",
           start: 12,
           end: 22,
-          type: "text"
+          value: "click here"
         },
         {
+          type: "tag",
           start: 22,
           end: 26,
-          type: "tag",
+          value: "</a>",
           tagNameStartsAt: 24,
           tagNameEndsAt: 25,
           tagName: "a",

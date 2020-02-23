@@ -18,6 +18,7 @@ t.test("01.01 - ESP literals among text get reported", t => {
         type: "esp",
         start: 0,
         end: 8,
+        value: "{% zz %}",
         head: "{%",
         tail: "%}",
         kind: null
