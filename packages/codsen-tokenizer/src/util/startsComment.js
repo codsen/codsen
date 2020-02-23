@@ -17,6 +17,7 @@ function startsComment(str, i, token) {
           "[endif",
           "!endif",
           "1endif",
+          "1[endif",
           "[!endif",
           "]!endif",
           "!]endif"

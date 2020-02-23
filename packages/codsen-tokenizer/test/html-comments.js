@@ -354,7 +354,7 @@ t.test(
   `02.06 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - swapped excl. mark`,
   t => {
     const gathered = [];
-    ct(`<!--[if gte mso 9]>x<![endif]-->`, {
+    ct(`<!--[if gte mso 9]>x<[!endif]-->`, {
       tagCb: obj => {
         gathered.push(obj);
       }
@@ -384,6 +384,46 @@ t.test(
         }
       ],
       "02.06"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.07 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - 1 instead of !`,
+  t => {
+    const gathered = [];
+    ct(`<!--[if gte mso 9]>x<1[endif]-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20
+        },
+        {
+          type: "comment",
+          start: 20,
+          end: 32,
+          value: "<1[endif]-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.07"
     );
     t.end();
   }

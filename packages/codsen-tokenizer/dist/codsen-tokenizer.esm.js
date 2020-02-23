@@ -25,6 +25,7 @@ function startsComment(str, i, token) {
           "[endif",
           "!endif",
           "1endif",
+          "1[endif",
           "[!endif",
           "]!endif",
           "!]endif"
@@ -875,6 +876,7 @@ function tokenizer(str, originalOpts) {
               "<![e",
               "<[endif",
               "<!endif",
+              "<1[endif",
               "<1endif",
               "<[!endif",
               "<]!endif",
