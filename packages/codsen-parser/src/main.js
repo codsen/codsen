@@ -226,33 +226,39 @@ function cparser(str, originalOpts) {
         console.log(`226 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
         path = `${path}.children.0`;
       } else if (
-        tokenObj.type === "tag" &&
         tokenObj.closing &&
         typeof path === "string" &&
         path.includes(".")
       ) {
         // goes up and then bumps,
         // "1.children.3" -> "2"
-        console.log(`236 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
+        console.log(`235 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
         path = pathNext(pathUp(path));
       } else if (!path) {
         // it's the first element - push the token into index 0
-        console.log(`240 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
+        console.log(`239 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
         path = "0";
       } else {
         // bumps the index,
         // "1.children.3" -> "1.children.4"
-        console.log(`245 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
+        console.log(`244 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
         path = pathNext(path);
       }
 
       // activate the nestNext
-      if (tokenObj.type === "tag" && !tokenObj.void && !tokenObj.closing) {
+      if (
+        ["tag", "comment"].includes(tokenObj.type) &&
+        !tokenObj.void &&
+        !tokenObj.closing
+      ) {
         nestNext = true;
+        console.log(
+          `256 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
+        );
       }
 
       console.log(
-        `255 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `261 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -263,7 +269,7 @@ function cparser(str, originalOpts) {
       // opening counterpart
       const previousPath = pathPrev(path);
       console.log(
-        `266 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
+        `272 ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
           previousPath,
           null,
           4
@@ -274,14 +280,14 @@ function cparser(str, originalOpts) {
         previousTagsToken = op.get(res, previousPath);
       }
       console.log(
-        `277 ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} = ${JSON.stringify(
+        `283 ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} = ${JSON.stringify(
           previousTagsToken,
           null,
           4
         )}`
       );
       console.log(
-        `284 ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
+        `290 ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
           tokenObj.closing,
           null,
           4
@@ -298,7 +304,7 @@ function cparser(str, originalOpts) {
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         console.log(
-          `301 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+          `307 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
             tokenObj.type === "comment" ? tokenObj.kind : ""
           }-missing-opening`}\u001b[${39}m`}`
         );
@@ -314,7 +320,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `317 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        `323 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
           res,
           null,
           4
@@ -326,7 +332,7 @@ function cparser(str, originalOpts) {
         Object.assign(tokenObj.type === "tag" ? { children: [] } : {}, tokenObj)
       );
       console.log(
-        `329 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `335 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -334,7 +340,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `337 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `343 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -372,7 +378,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `375 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `381 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4
