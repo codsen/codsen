@@ -1,61 +1,53 @@
-import { right } from "string-left-right";
 import splitByWhitespace from "./splitByWhitespace";
 
-function validateCommentClosing(str, idxOffset, opts) {
+function validateCommentClosing(token) {
+  const reference = {
+    simple: "-->",
+    only: "<![endif]-->",
+    not: "<!--<![endif]-->"
+  };
+
   const errorArr = [];
 
   console.log(
-    `008 validateCommentClosing(): ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
-      str,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `015 validateCommentClosing(): ${`\u001b[${33}m${`idxOffset`}\u001b[${39}m`} = ${JSON.stringify(
-      idxOffset,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `022 validateCommentClosing(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
+    `013 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+      token,
       null,
       4
     )}`
   );
 
   // first, tackle any inner whitespace
-  splitByWhitespace(str, null, ([from, to]) => {
+  splitByWhitespace(token.value, null, ([from, to]) => {
     errorArr.push({
       ruleId: "comment-only-closing-malformed",
-      idxFrom: idxOffset,
-      idxTo: str.length + idxOffset,
+      idxFrom: token.start,
+      idxTo: token.end,
       message: "Remove whitespace.",
       fix: {
-        ranges: [[from + idxOffset, to + idxOffset]]
+        ranges: [[from + token.start, to + token.start]]
       }
     });
   });
 
-  if (str[0] === "<") {
-    const secondCharIdx = right(str, 0);
-    if (str[secondCharIdx] !== "!") {
-      // report missing excl. mark
-      errorArr.push({
-        ruleId: "comment-only-closing-malformed",
-        idxFrom: idxOffset,
-        idxTo: str.length + idxOffset,
-        message: "Exclamation mark missing.",
-        fix: {
-          ranges: [[1 + idxOffset, 1 + idxOffset, "!"]]
-        }
-      });
-    } else {
-      // TODO
-    }
+  // if all is fine, end quick
+  if (
+    (token.kind === "simple" && token.value === "-->") ||
+    (token.kind === "only" && token.value === "<![endif]-->") ||
+    (token.kind === "not" && token.value === "<!--<![endif]-->")
+  ) {
+    return errorArr;
   }
+  // if processing continues, it means something more is wrong
+  errorArr.push({
+    ruleId: "comment-only-closing-malformed",
+    idxFrom: token.start,
+    idxTo: token.end,
+    message: "Malformed closing comment tag.",
+    fix: {
+      ranges: [[token.start, token.end, reference[token.kind]]]
+    }
+  });
 
   return errorArr;
 }

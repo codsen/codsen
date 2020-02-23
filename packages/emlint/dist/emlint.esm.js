@@ -9318,33 +9318,40 @@ function mediaMalformed(context, ...opts) {
   };
 }
 
-function validateCommentClosing(str, idxOffset, opts) {
+function validateCommentClosing(token) {
+  const reference = {
+    simple: "-->",
+    only: "<![endif]-->",
+    not: "<!--<![endif]-->"
+  };
   const errorArr = [];
-  splitByWhitespace(str, null, ([from, to]) => {
+  splitByWhitespace(token.value, null, ([from, to]) => {
     errorArr.push({
       ruleId: "comment-only-closing-malformed",
-      idxFrom: idxOffset,
-      idxTo: str.length + idxOffset,
+      idxFrom: token.start,
+      idxTo: token.end,
       message: "Remove whitespace.",
       fix: {
-        ranges: [[from + idxOffset, to + idxOffset]]
+        ranges: [[from + token.start, to + token.start]]
       }
     });
   });
-  if (str[0] === "<") {
-    const secondCharIdx = right(str, 0);
-    if (str[secondCharIdx] !== "!") {
-      errorArr.push({
-        ruleId: "comment-only-closing-malformed",
-        idxFrom: idxOffset,
-        idxTo: str.length + idxOffset,
-        message: "Exclamation mark missing.",
-        fix: {
-          ranges: [[1 + idxOffset, 1 + idxOffset, "!"]]
-        }
-      });
-    }
+  if (
+    (token.kind === "simple" && token.value === "-->") ||
+    (token.kind === "only" && token.value === "<![endif]-->") ||
+    (token.kind === "not" && token.value === "<!--<![endif]-->")
+  ) {
+    return errorArr;
   }
+  errorArr.push({
+    ruleId: "comment-only-closing-malformed",
+    idxFrom: token.start,
+    idxTo: token.end,
+    message: "Malformed closing comment tag.",
+    fix: {
+      ranges: [[token.start, token.end, reference[token.kind]]]
+    }
+  });
   return errorArr;
 }
 
@@ -9352,7 +9359,7 @@ function commentOnlyClosingMalformed(context, ...opts) {
   return {
     comment: function(node) {
       if (node.closing) {
-        const errorArr = validateCommentClosing(node.value, node.start);
+        const errorArr = validateCommentClosing(node);
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
@@ -9365,8 +9372,8 @@ function commentOnlyClosingMalformed(context, ...opts) {
   };
 }
 
-function validateCommentClosing$1(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+function validateCommentOpening(node) {
+  const errorArr = [];
   return errorArr;
 }
 
@@ -9374,7 +9381,7 @@ function commentOnlyOpeningMalformed(context, ...opts) {
   return {
     comment: function(node) {
       if (node.closing) {
-        const errorArr = validateCommentClosing$1(node.value, node.start);
+        const errorArr = validateCommentOpening();
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {

@@ -1,26 +1,11 @@
 // import { right } from "string-left-right";
-import checkForWhitespace from "./checkForWhitespace";
 
-function validateCommentClosing(str, idxOffset, opts) {
-  const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+function validateCommentOpening(node) {
+  const errorArr = [];
 
   console.log(
-    `008 validateCommentClosing(): ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
-      str,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `015 validateCommentClosing(): ${`\u001b[${33}m${`idxOffset`}\u001b[${39}m`} = ${JSON.stringify(
-      idxOffset,
-      null,
-      4
-    )}`
-  );
-  console.log(
-    `022 validateCommentClosing(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-      opts,
+    `007 validateCommentOpening(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+      node,
       null,
       4
     )}`
@@ -31,4 +16,4 @@ function validateCommentClosing(str, idxOffset, opts) {
   return errorArr;
 }
 
-export default validateCommentClosing;
+export default validateCommentOpening;

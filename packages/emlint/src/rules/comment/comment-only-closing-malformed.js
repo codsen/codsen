@@ -26,15 +26,13 @@ function commentOnlyClosingMalformed(context, ...opts) {
 
       if (node.closing) {
         // run the tag's value past the validator function
-        const errorArr = validateCommentClosing(node.value, node.start, {
-          commentType: "only"
-        });
+        const errorArr = validateCommentClosing(node);
         console.log(
-          `033 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `031 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach(errorObj => {
-          console.log(`037 commentOnlyClosingMalformed(): RAISE ERROR`);
+          console.log(`035 commentOnlyClosingMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "comment-only-closing-malformed"

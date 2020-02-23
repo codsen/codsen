@@ -7976,36 +7976,39 @@ function mediaMalformed(context) {
   };
 }
 
-function validateCommentClosing(str, idxOffset, opts) {
+function validateCommentClosing(token) {
+  var reference = {
+    simple: "-->",
+    only: "<![endif]-->",
+    not: "<!--<![endif]-->"
+  };
   var errorArr = [];
-  splitByWhitespace(str, null, function (_ref) {
+  splitByWhitespace(token.value, null, function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         from = _ref2[0],
         to = _ref2[1];
     errorArr.push({
       ruleId: "comment-only-closing-malformed",
-      idxFrom: idxOffset,
-      idxTo: str.length + idxOffset,
+      idxFrom: token.start,
+      idxTo: token.end,
       message: "Remove whitespace.",
       fix: {
-        ranges: [[from + idxOffset, to + idxOffset]]
+        ranges: [[from + token.start, to + token.start]]
       }
     });
   });
-  if (str[0] === "<") {
-    var secondCharIdx = stringLeftRight.right(str, 0);
-    if (str[secondCharIdx] !== "!") {
-      errorArr.push({
-        ruleId: "comment-only-closing-malformed",
-        idxFrom: idxOffset,
-        idxTo: str.length + idxOffset,
-        message: "Exclamation mark missing.",
-        fix: {
-          ranges: [[1 + idxOffset, 1 + idxOffset, "!"]]
-        }
-      });
-    }
+  if (token.kind === "simple" && token.value === "-->" || token.kind === "only" && token.value === "<![endif]-->" || token.kind === "not" && token.value === "<!--<![endif]-->") {
+    return errorArr;
   }
+  errorArr.push({
+    ruleId: "comment-only-closing-malformed",
+    idxFrom: token.start,
+    idxTo: token.end,
+    message: "Malformed closing comment tag.",
+    fix: {
+      ranges: [[token.start, token.end, reference[token.kind]]]
+    }
+  });
   return errorArr;
 }
 
@@ -8013,7 +8016,7 @@ function commentOnlyClosingMalformed(context) {
   return {
     comment: function comment(node) {
       if (node.closing) {
-        var errorArr = validateCommentClosing(node.value, node.start);
+        var errorArr = validateCommentClosing(node);
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "comment-only-closing-malformed"
@@ -8024,9 +8027,8 @@ function commentOnlyClosingMalformed(context) {
   };
 }
 
-function validateCommentClosing$1(str, idxOffset, opts) {
-  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
-      errorArr = _checkForWhitespace.errorArr;
+function validateCommentOpening(node) {
+  var errorArr = [];
   return errorArr;
 }
 
@@ -8034,7 +8036,7 @@ function commentOnlyOpeningMalformed(context) {
   return {
     comment: function comment(node) {
       if (node.closing) {
-        var errorArr = validateCommentClosing$1(node.value, node.start);
+        var errorArr = validateCommentOpening();
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "comment-only-opening-malformed"
