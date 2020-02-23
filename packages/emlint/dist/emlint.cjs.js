@@ -29,6 +29,8 @@ var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
+var astMonkey = require('ast-monkey');
+var objectPath = _interopDefault(require('object-path'));
 var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
@@ -458,6 +460,21 @@ var astErrMessages = {
 };
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
+}
+function pathTwoUp(str) {
+  var foundDots = str.match(/\./g);
+  if (!Array.isArray(foundDots) && foundDots.length > 1) {
+    return null;
+  }
+  var firstDotMet = false;
+  for (var y = str.length; y--;) {
+    if (str[y] === ".") {
+      if (firstDotMet) {
+        return str.slice(0, y);
+      }
+      firstDotMet = true;
+    }
+  }
 }
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
@@ -7814,50 +7831,80 @@ function htmlEntitiesNotEmailFriendly(context) {
   };
 }
 
+function processStr(str, offset, context, mode) {
+  for (var i = 0, len = str.length; i < len; i++) {
+    if ((str[i].charCodeAt(0) > 127 || "<>\"&".includes(str[i])) && (str[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
+      var encodedChr = he.encode(str[i], {
+        useNamedReferences: mode === "named"
+      });
+      if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
+        encodedChr = "&".concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)], ";");
+      }
+      var charName = "";
+      if (str[i].charCodeAt(0) === 160) {
+        charName = " no-break space";
+      } else if (str[i].charCodeAt(0) === 38) {
+        charName = " ampersand";
+      } else if (str[i].charCodeAt(0) === 60) {
+        charName = " less than";
+      } else if (str[i].charCodeAt(0) === 62) {
+        charName = " greater than";
+      } else if (str[i].charCodeAt(0) === 34) {
+        charName = " double quotes";
+      } else if (str[i].charCodeAt(0) === 163) {
+        charName = " pound sign";
+      }
+      context.report({
+        ruleId: "character-encode",
+        message: "Unencoded".concat(charName, " character."),
+        idxFrom: i + offset,
+        idxTo: i + 1 + offset,
+        fix: {
+          ranges: [[i + offset, i + 1 + offset, encodedChr]]
+        }
+      });
+    }
+  }
+}
 function characterEncode(context) {
   for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    character: function character(_ref) {
-      var type = _ref.type,
-          chr = _ref.chr,
-          i = _ref.i;
-      var mode = "named";
-      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
-        mode = opts[0];
-      }
-      if (type === "text" && typeof chr === "string" && (chr.charCodeAt(0) > 127 || "<>\"&".includes(chr)) && (chr.charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
-        var encodedChr = he.encode(chr, {
-          useNamedReferences: mode === "named"
-        });
-        if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
-          encodedChr = "&".concat(htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)], ";");
+    ast: function ast(_ast) {
+      astMonkey.traverse(_ast, function (key, val, innerObj) {
+        var current = val !== undefined ? val : key;
+        if (!isObj(current) || current.type !== "text") {
+          return current;
         }
-        var charName = "";
-        if (chr.charCodeAt(0) === 160) {
-          charName = " no-break space";
-        } else if (chr.charCodeAt(0) === 38) {
-          charName = " ampersand";
-        } else if (chr.charCodeAt(0) === 60) {
-          charName = " less than";
-        } else if (chr.charCodeAt(0) === 62) {
-          charName = " greater than";
-        } else if (chr.charCodeAt(0) === 34) {
-          charName = " double quotes";
-        } else if (chr.charCodeAt(0) === 163) {
-          charName = " pound sign";
+        var mode = "named";
+        if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+          mode = opts[0];
         }
-        context.report({
-          ruleId: "character-encode",
-          message: "Unencoded".concat(charName, " character."),
-          idxFrom: i,
-          idxTo: i + 1,
-          fix: {
-            ranges: [[i, i + 1, encodedChr]]
+        var grandparentToken;
+        if (current.value.includes("->")) {
+          var pathTwoUpVal = pathTwoUp(innerObj.path);
+          grandparentToken = objectPath.get(_ast, pathTwoUpVal);
+        }
+        if (innerObj.parentType === "array" && isObj(grandparentToken) && grandparentToken.type === "comment" && grandparentToken.kind === "simple" && !grandparentToken.closing && isAnEnabledValue(context.processedRulesConfig["comment-closing-malformed"])) {
+          var suspiciousEndingStartsAt = current.value.indexOf("->");
+          context.report({
+            ruleId: "comment-closing-malformed",
+            message: "Malformed closing comment tag.",
+            idxFrom: current.start + suspiciousEndingStartsAt,
+            idxTo: current.start + suspiciousEndingStartsAt + 2,
+            fix: {
+              ranges: [[current.start + suspiciousEndingStartsAt, current.start + suspiciousEndingStartsAt + 2, "-->"]]
+            }
+          });
+          if (suspiciousEndingStartsAt < current.value.length - 2) {
+            processStr(current.value.slice(suspiciousEndingStartsAt + 2), current.start + suspiciousEndingStartsAt + 2, context, mode);
           }
-        });
-      }
+        } else {
+          processStr(current.value, current.start, context, mode);
+        }
+        return current;
+      });
     }
   };
 }
@@ -8012,14 +8059,14 @@ function validateCommentClosing(token) {
   return errorArr;
 }
 
-function commentOnlyClosingMalformed(context) {
+function commentClosingMalformed(context) {
   return {
     comment: function comment(node) {
       if (node.closing) {
         var errorArr = validateCommentClosing(node);
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
-            ruleId: "comment-only-closing-malformed"
+            ruleId: "comment-closing-malformed"
           }));
         });
       }
@@ -8032,14 +8079,14 @@ function validateCommentOpening(node) {
   return errorArr;
 }
 
-function commentOnlyOpeningMalformed(context) {
+function commentOpeningMalformed(context) {
   return {
     comment: function comment(node) {
       if (node.closing) {
         var errorArr = validateCommentOpening();
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
-            ruleId: "comment-only-opening-malformed"
+            ruleId: "comment-opening-malformed"
           }));
         });
       }
@@ -8783,11 +8830,11 @@ defineLazyProp(builtInRules, "character-unspaced-punctuation", function () {
 defineLazyProp(builtInRules, "media-malformed", function () {
   return mediaMalformed;
 });
-defineLazyProp(builtInRules, "comment-only-closing-malformed", function () {
-  return commentOnlyClosingMalformed;
+defineLazyProp(builtInRules, "comment-closing-malformed", function () {
+  return commentClosingMalformed;
 });
-defineLazyProp(builtInRules, "comment-only-opening-malformed", function () {
-  return commentOnlyOpeningMalformed;
+defineLazyProp(builtInRules, "comment-opening-malformed", function () {
+  return commentOpeningMalformed;
 });
 function get(something) {
   return builtInRules[something];
@@ -9219,7 +9266,7 @@ function (_EventEmitter) {
           });
         });
       });
-      parser(str, {
+      this.emit("ast", parser(str, {
         tagCb: function tagCb(obj) {
           _this.emit(obj.type, obj);
           if (obj.type === "tag" && Array.isArray(obj.attribs) && obj.attribs.length) {
@@ -9246,7 +9293,7 @@ function (_EventEmitter) {
             }, obj));
           }
         }
-      });
+      }));
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "all" ||
         ruleName === "bad-html-entity" ||

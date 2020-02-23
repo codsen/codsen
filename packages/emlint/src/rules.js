@@ -1718,18 +1718,18 @@ defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 // (<!--[if !mso]><!--> content <!--<![endif]-->)
 //
 
-import commentOnlyClosingMalformed from "./rules/comment/comment-only-closing-malformed";
+import commentClosingMalformed from "./rules/comment/comment-closing-malformed";
 defineLazyProp(
   builtInRules,
-  "comment-only-closing-malformed",
-  () => commentOnlyClosingMalformed
+  "comment-closing-malformed",
+  () => commentClosingMalformed
 );
 
-import commentOnlyOpeningMalformed from "./rules/comment/comment-only-opening-malformed";
+import commentOpeningMalformed from "./rules/comment/comment-opening-malformed";
 defineLazyProp(
   builtInRules,
-  "comment-only-opening-malformed",
-  () => commentOnlyOpeningMalformed
+  "comment-opening-malformed",
+  () => commentOpeningMalformed
 );
 
 // EXPORTS

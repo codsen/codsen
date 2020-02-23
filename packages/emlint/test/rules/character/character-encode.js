@@ -420,3 +420,35 @@ t.test(
     t.end();
   }
 );
+
+// 05. mixed rules
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.03 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
+  t => {
+    const str = "a<!--b->c";
+    const fixed = "a<!--b-->c";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-encode": 2,
+        "comment-closing-malformed": 2
+      }
+    });
+    t.match(messages, [
+      {
+        ruleId: "comment-closing-malformed",
+        severity: 2,
+        idxFrom: 6,
+        idxTo: 8,
+        message: `Malformed closing comment tag.`,
+        fix: {
+          ranges: [[6, 8, "-->"]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, messages), fixed);
+    t.end();
+  }
+);

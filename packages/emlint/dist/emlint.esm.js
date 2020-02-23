@@ -23,6 +23,8 @@ import isLangCode from 'is-language-code';
 import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
+import { traverse } from 'ast-monkey';
+import objectPath from 'object-path';
 import lineColumn from 'line-column';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
@@ -364,6 +366,21 @@ function isLetter(str) {
     str.length === 1 &&
     str.toUpperCase() !== str.toLowerCase()
   );
+}
+function pathTwoUp(str) {
+  const foundDots = str.match(/\./g);
+  if (!Array.isArray(foundDots) && foundDots.length > 1) {
+    return null;
+  }
+  let firstDotMet = false;
+  for (let y = str.length; y--; ) {
+    if (str[y] === ".") {
+      if (firstDotMet) {
+        return str.slice(0, y);
+      }
+      firstDotMet = true;
+    }
+  }
 }
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
@@ -9125,61 +9142,112 @@ function htmlEntitiesNotEmailFriendly(context) {
   };
 }
 
+function processStr(str, offset, context, mode) {
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (
+      (str[i].charCodeAt(0) > 127 || `<>"&`.includes(str[i])) &&
+      (str[i].charCodeAt(0) !== 160 ||
+        !Object.keys(context.processedRulesConfig).includes(
+          "bad-character-non-breaking-space"
+        ) ||
+        !isAnEnabledValue(
+          context.processedRulesConfig["bad-character-non-breaking-space"]
+        ))
+    ) {
+      let encodedChr = he.encode(str[i], {
+        useNamedReferences: mode === "named"
+      });
+      if (
+        Object.keys(notEmailFriendly).includes(
+          encodedChr.slice(1, encodedChr.length - 1)
+        )
+      ) {
+        encodedChr = `&${
+          notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)]
+        };`;
+      }
+      let charName = "";
+      if (str[i].charCodeAt(0) === 160) {
+        charName = " no-break space";
+      } else if (str[i].charCodeAt(0) === 38) {
+        charName = " ampersand";
+      } else if (str[i].charCodeAt(0) === 60) {
+        charName = " less than";
+      } else if (str[i].charCodeAt(0) === 62) {
+        charName = " greater than";
+      } else if (str[i].charCodeAt(0) === 34) {
+        charName = " double quotes";
+      } else if (str[i].charCodeAt(0) === 163) {
+        charName = " pound sign";
+      }
+      context.report({
+        ruleId: "character-encode",
+        message: `Unencoded${charName} character.`,
+        idxFrom: i + offset,
+        idxTo: i + 1 + offset,
+        fix: {
+          ranges: [[i + offset, i + 1 + offset, encodedChr]]
+        }
+      });
+    }
+  }
+}
 function characterEncode(context, ...opts) {
   return {
-    character: function({ type, chr, i }) {
-      let mode = "named";
-      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
-        mode = opts[0];
-      }
-      if (
-        type === "text" &&
-        typeof chr === "string" &&
-        (chr.charCodeAt(0) > 127 || `<>"&`.includes(chr)) &&
-        (chr.charCodeAt(0) !== 160 ||
-          !Object.keys(context.processedRulesConfig).includes(
-            "bad-character-non-breaking-space"
-          ) ||
-          !isAnEnabledValue(
-            context.processedRulesConfig["bad-character-non-breaking-space"]
-          ))
-      ) {
-        let encodedChr = he.encode(chr, {
-          useNamedReferences: mode === "named"
-        });
+    ast: function(ast) {
+      traverse(ast, (key, val, innerObj) => {
+        const current = val !== undefined ? val : key;
+        if (!isObj(current) || current.type !== "text") {
+          return current;
+        }
+        let mode = "named";
+        if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+          mode = opts[0];
+        }
+        let grandparentToken;
+        if (current.value.includes("->")) {
+          const pathTwoUpVal = pathTwoUp(innerObj.path);
+          grandparentToken = objectPath.get(ast, pathTwoUpVal);
+        }
         if (
-          Object.keys(notEmailFriendly).includes(
-            encodedChr.slice(1, encodedChr.length - 1)
+          innerObj.parentType === "array" &&
+          isObj(grandparentToken) &&
+          grandparentToken.type === "comment" &&
+          grandparentToken.kind === "simple" &&
+          !grandparentToken.closing &&
+          isAnEnabledValue(
+            context.processedRulesConfig["comment-closing-malformed"]
           )
         ) {
-          encodedChr = `&${
-            notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)]
-          };`;
-        }
-        let charName = "";
-        if (chr.charCodeAt(0) === 160) {
-          charName = " no-break space";
-        } else if (chr.charCodeAt(0) === 38) {
-          charName = " ampersand";
-        } else if (chr.charCodeAt(0) === 60) {
-          charName = " less than";
-        } else if (chr.charCodeAt(0) === 62) {
-          charName = " greater than";
-        } else if (chr.charCodeAt(0) === 34) {
-          charName = " double quotes";
-        } else if (chr.charCodeAt(0) === 163) {
-          charName = " pound sign";
-        }
-        context.report({
-          ruleId: "character-encode",
-          message: `Unencoded${charName} character.`,
-          idxFrom: i,
-          idxTo: i + 1,
-          fix: {
-            ranges: [[i, i + 1, encodedChr]]
+          const suspiciousEndingStartsAt = current.value.indexOf("->");
+          context.report({
+            ruleId: "comment-closing-malformed",
+            message: `Malformed closing comment tag.`,
+            idxFrom: current.start + suspiciousEndingStartsAt,
+            idxTo: current.start + suspiciousEndingStartsAt + 2,
+            fix: {
+              ranges: [
+                [
+                  current.start + suspiciousEndingStartsAt,
+                  current.start + suspiciousEndingStartsAt + 2,
+                  "-->"
+                ]
+              ]
+            }
+          });
+          if (suspiciousEndingStartsAt < current.value.length - 2) {
+            processStr(
+              current.value.slice(suspiciousEndingStartsAt + 2),
+              current.start + suspiciousEndingStartsAt + 2,
+              context,
+              mode
+            );
           }
-        });
-      }
+        } else {
+          processStr(current.value, current.start, context, mode);
+        }
+        return current;
+      });
     }
   };
 }
@@ -9355,7 +9423,7 @@ function validateCommentClosing(token) {
   return errorArr;
 }
 
-function commentOnlyClosingMalformed(context, ...opts) {
+function commentClosingMalformed(context, ...opts) {
   return {
     comment: function(node) {
       if (node.closing) {
@@ -9363,7 +9431,7 @@ function commentOnlyClosingMalformed(context, ...opts) {
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-only-closing-malformed"
+              ruleId: "comment-closing-malformed"
             })
           );
         });
@@ -9377,7 +9445,7 @@ function validateCommentOpening(node) {
   return errorArr;
 }
 
-function commentOnlyOpeningMalformed(context, ...opts) {
+function commentOpeningMalformed(context, ...opts) {
   return {
     comment: function(node) {
       if (node.closing) {
@@ -9385,7 +9453,7 @@ function commentOnlyOpeningMalformed(context, ...opts) {
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
-              ruleId: "comment-only-opening-malformed"
+              ruleId: "comment-opening-malformed"
             })
           );
         });
@@ -10562,13 +10630,13 @@ defineLazyProp(
 defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 defineLazyProp(
   builtInRules,
-  "comment-only-closing-malformed",
-  () => commentOnlyClosingMalformed
+  "comment-closing-malformed",
+  () => commentClosingMalformed
 );
 defineLazyProp(
   builtInRules,
-  "comment-only-opening-malformed",
-  () => commentOnlyOpeningMalformed
+  "comment-opening-malformed",
+  () => commentOpeningMalformed
 );
 function get(something) {
   return builtInRules[something];
@@ -11088,40 +11156,49 @@ class Linter extends EventEmitter {
           });
         });
       });
-    parser(str, {
-      tagCb: obj => {
-        this.emit(obj.type, obj);
-        if (
-          obj.type === "tag" &&
-          Array.isArray(obj.attribs) &&
-          obj.attribs.length
-        ) {
-          obj.attribs.forEach(attribObj => {
-            this.emit(
-              "attribute",
-              Object.assign({}, attribObj, {
-                parent: Object.assign({}, obj)
-              })
-            );
-          });
-        }
-      },
-      charCb: obj => {
-        this.emit("character", obj);
-      },
-      errCb: obj => {
-        const currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
-        if (currentRulesSeverity) {
-          let message = `Something is wrong.`;
-          if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
-            message = astErrMessages[obj.ruleId];
+    this.emit(
+      "ast",
+      parser(str, {
+        tagCb: obj => {
+          this.emit(obj.type, obj);
+          if (
+            obj.type === "tag" &&
+            Array.isArray(obj.attribs) &&
+            obj.attribs.length
+          ) {
+            obj.attribs.forEach(attribObj => {
+              this.emit(
+                "attribute",
+                Object.assign({}, attribObj, {
+                  parent: Object.assign({}, obj)
+                })
+              );
+            });
           }
-          this.report(
-            Object.assign({ message, severity: currentRulesSeverity }, obj)
+        },
+        charCb: obj => {
+          this.emit("character", obj);
+        },
+        errCb: obj => {
+          const currentRulesSeverity = isAnEnabledRule(
+            config.rules,
+            obj.ruleId
           );
+          if (currentRulesSeverity) {
+            let message = `Something is wrong.`;
+            if (
+              isObj(obj) &&
+              Object.keys(astErrMessages).includes(obj.ruleId)
+            ) {
+              message = astErrMessages[obj.ruleId];
+            }
+            this.report(
+              Object.assign({ message, severity: currentRulesSeverity }, obj)
+            );
+          }
         }
-      }
-    });
+      })
+    );
     if (
       Object.keys(config.rules).some(
         ruleName =>

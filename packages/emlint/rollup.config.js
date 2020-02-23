@@ -45,6 +45,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "ast-monkey",
         "codsen-parser",
         "define-lazy-prop",
         "he",
@@ -60,6 +61,7 @@ export default commandLineArgs => {
         "lodash.isregexp",
         "matcher",
         "mime-db",
+        "object-path",
         "rgba-regex",
         "string-fix-broken-named-entities",
         "string-left-right",
@@ -83,6 +85,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "ast-monkey",
         "codsen-parser",
         "define-lazy-prop",
         "he",
@@ -98,6 +101,7 @@ export default commandLineArgs => {
         "lodash.isregexp",
         "matcher",
         "mime-db",
+        "object-path",
         "rgba-regex",
         "string-fix-broken-named-entities",
         "string-left-right",

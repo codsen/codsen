@@ -114,78 +114,90 @@ class Linter extends EventEmitter {
       });
 
     // tokenizer emits the objects, rules consume them
-    parser(str, {
-      tagCb: obj => {
-        // tag-level callback
-        console.log(
-          `121 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-            obj,
-            null,
-            4
-          )}`
-        );
-        this.emit(obj.type, obj);
-        // plus, for type:html also ping each attribute
-        if (
-          obj.type === "tag" &&
-          Array.isArray(obj.attribs) &&
-          obj.attribs.length
-        ) {
-          obj.attribs.forEach(attribObj => {
-            this.emit(
-              "attribute",
-              Object.assign({}, attribObj, {
-                parent: Object.assign({}, obj)
-              })
-            );
-          });
-        }
-      },
-      charCb: obj => {
-        // character-level callback
-        // console.log(
-        //   `147 ██ ${`\u001b[${35}m${`linter/charCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-        //     obj,
-        //     null,
-        //     4
-        //   )}`
-        // );
-        this.emit("character", obj);
-      },
-      errCb: obj => {
-        console.log(
-          `157 ██ ${`\u001b[${35}m${`linter/errCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-            obj,
-            null,
-            4
-          )}`
-        );
-        console.log(
-          `164 ${`\u001b[${33}m${`config.rules`}\u001b[${39}m`} = ${JSON.stringify(
-            config.rules,
-            null,
-            4
-          )}`
-        );
-
-        // check, is rule enabled at the first place:
-        const currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
-        if (currentRulesSeverity) {
-          let message = `Something is wrong.`;
-
-          if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
-            message = astErrMessages[obj.ruleId];
-          }
-
+    // we emit the output of parser, the AST object, but along the way
+    // we also "ping" tokens coming from tokenizer, see callbacks below
+    // tagCb() and charCb() and errCb()
+    this.emit(
+      "ast",
+      parser(str, {
+        tagCb: obj => {
+          // tag-level callback
           console.log(
-            `181 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} "${message}"`
+            `126 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              obj,
+              null,
+              4
+            )}`
           );
-          this.report(
-            Object.assign({ message, severity: currentRulesSeverity }, obj)
+          this.emit(obj.type, obj);
+          // plus, for type:html also ping each attribute
+          if (
+            obj.type === "tag" &&
+            Array.isArray(obj.attribs) &&
+            obj.attribs.length
+          ) {
+            obj.attribs.forEach(attribObj => {
+              this.emit(
+                "attribute",
+                Object.assign({}, attribObj, {
+                  parent: Object.assign({}, obj)
+                })
+              );
+            });
+          }
+        },
+        charCb: obj => {
+          // character-level callback
+          // console.log(
+          //   `147 ██ ${`\u001b[${35}m${`linter/charCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+          //     obj,
+          //     null,
+          //     4
+          //   )}`
+          // );
+          this.emit("character", obj);
+        },
+        errCb: obj => {
+          console.log(
+            `162 ██ ${`\u001b[${35}m${`linter/errCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              obj,
+              null,
+              4
+            )}`
           );
+          console.log(
+            `169 ${`\u001b[${33}m${`config.rules`}\u001b[${39}m`} = ${JSON.stringify(
+              config.rules,
+              null,
+              4
+            )}`
+          );
+
+          // check, is rule enabled at the first place:
+          const currentRulesSeverity = isAnEnabledRule(
+            config.rules,
+            obj.ruleId
+          );
+          if (currentRulesSeverity) {
+            let message = `Something is wrong.`;
+
+            if (
+              isObj(obj) &&
+              Object.keys(astErrMessages).includes(obj.ruleId)
+            ) {
+              message = astErrMessages[obj.ruleId];
+            }
+
+            console.log(
+              `192 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} "${message}"`
+            );
+            this.report(
+              Object.assign({ message, severity: currentRulesSeverity }, obj)
+            );
+          }
         }
-      }
-    });
+      })
+    );
 
     //
     //
@@ -217,11 +229,11 @@ class Linter extends EventEmitter {
             isAnEnabledValue(processedRulesConfig[ruleName]))
       )
     ) {
-      console.log(`220 linter.js: call stringFixBrokenNamedEntities()`);
+      console.log(`232 linter.js: call stringFixBrokenNamedEntities()`);
       stringFixBrokenNamedEntities(str, {
         cb: obj => {
           console.log(
-            `224 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+            `236 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
               obj,
               null,
               4
@@ -325,7 +337,7 @@ class Linter extends EventEmitter {
         },
         entityCatcherCb: (from, to) => {
           console.log(
-            `328 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
+            `340 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
           );
           this.emit("entity", { idxFrom: from, idxTo: to });
         }
@@ -338,7 +350,7 @@ class Linter extends EventEmitter {
     });
 
     console.log(
-      `341 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
+      `353 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
         this.messages,
         null,
         4
@@ -349,7 +361,7 @@ class Linter extends EventEmitter {
 
   report(obj) {
     console.log(
-      `352 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+      `364 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
         obj,
         null,
         4
@@ -359,7 +371,7 @@ class Linter extends EventEmitter {
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity = obj.severity; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `362 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `374 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -377,7 +389,7 @@ class Linter extends EventEmitter {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
     console.log(
-      `380 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `392 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
       `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
