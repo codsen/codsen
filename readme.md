@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 107 npm libraries 📦📦📦
+    A lerna monorepo for our 108 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -225,7 +225,7 @@ You use them in the Terminal (command line), for example:
 
 ## 🛠️ Miscellaneous Libraries
 
-33 in total.
+34 in total.
 
 | Library's name | Purpose | The&nbsp;link&nbsp;to&nbsp;npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -239,6 +239,7 @@ You use them in the Terminal (command line), for example:
 | [`charcode-is-valid-xml-name-character`](https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character/) | Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name) | [![charcode-is-valid-xml-name-character on npm](https://img.shields.io/npm/v/charcode-is-valid-xml-name-character.svg?style=flat-square)](https://www.npmjs.com/package/charcode-is-valid-xml-name-character) | [packages/charcode-is-valid-xml-name-character](https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character/) |
 | [`check-types-mini`](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) | Check the types of your options object's values after user has customised them | [![check-types-mini on npm](https://img.shields.io/npm/v/check-types-mini.svg?style=flat-square)](https://www.npmjs.com/package/check-types-mini) | [packages/check-types-mini](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/) |
 | [`chlu`](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu on npm](https://img.shields.io/npm/v/chlu.svg?style=flat-square)](https://www.npmjs.com/package/chlu) | [packages/chlu](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/) |
+| [`codsen-parser`](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/) | Parser aiming at broken code, especially HTML & CSS | [![codsen-parser on npm](https://img.shields.io/npm/v/codsen-parser.svg?style=flat-square)](https://www.npmjs.com/package/codsen-parser) | [packages/codsen-parser](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/) |
 | [`codsen-tokenizer`](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/) | Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS | [![codsen-tokenizer on npm](https://img.shields.io/npm/v/codsen-tokenizer.svg?style=flat-square)](https://www.npmjs.com/package/codsen-tokenizer) | [packages/codsen-tokenizer](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer/) |
 | [`color-shorthand-hex-to-six-digit`](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit/) |
 | [`detect-is-it-html-or-xhtml`](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) | Answers, is the string input string more an HTML or XHTML (or neither) | [![detect-is-it-html-or-xhtml on npm](https://img.shields.io/npm/v/detect-is-it-html-or-xhtml.svg?style=flat-square)](https://www.npmjs.com/package/detect-is-it-html-or-xhtml) | [packages/detect-is-it-html-or-xhtml](https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml/) |

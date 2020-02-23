@@ -141,14 +141,14 @@
     },
     {
         "name": "codsen-parser",
-        "size": 6357,
+        "size": 6718,
         "imports": [
             "codsen-tokenizer"
         ]
     },
     {
         "name": "codsen-tokenizer",
-        "size": 30692,
+        "size": 37040,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -244,8 +244,9 @@
     },
     {
         "name": "emlint",
-        "size": 296485,
+        "size": 301376,
         "imports": [
+            "ast-monkey",
             "codsen-parser",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
@@ -332,7 +333,7 @@
     },
     {
         "name": "is-media-descriptor",
-        "size": 14253,
+        "size": 14410,
         "imports": [
             "string-process-comma-separated"
         ]
@@ -697,7 +698,7 @@
     },
     {
         "name": "update-versions",
-        "size": 12603,
+        "size": 12596,
         "imports": [
             "edit-package-json"
         ]

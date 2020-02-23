@@ -12,7 +12,7 @@
         "ast-deep-contains": 1,
         "ast-get-values-by-key": 1,
         "ast-is-empty": 2,
-        "ast-monkey": 2,
+        "ast-monkey": 3,
         "ast-monkey-traverse": 9,
         "bitbucket-slug": 1,
         "chalk": 6,
@@ -93,11 +93,12 @@
         "object-flatten-all-arrays": 1,
         "object-merge-advanced": 4,
         "object-no-new-keys": 1,
-        "object-path": 6,
+        "object-path": 7,
         "object-set-all-values-to": 1,
         "p-filter": 2,
         "p-map": 4,
         "p-one": 1,
+        "p-progress": 1,
         "p-reduce": 8,
         "package-json-editor": 1,
         "pacote": 1,
@@ -230,7 +231,7 @@
             "lodash.uniq": 7
         },
         {
-            "object-path": 6
+            "object-path": 7
         }
     ],
     "top10OwnDeps": [
