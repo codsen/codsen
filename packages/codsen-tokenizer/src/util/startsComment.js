@@ -8,7 +8,26 @@ function startsComment(str, i, token) {
   return (
     // the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
     ((str[i] === "<" &&
-      matchRight(str, i, ["!-", "![", "[endif"], {
+      matchRight(
+        str,
+        i,
+        [
+          "!-",
+          "![",
+          "[endif",
+          "!endif",
+          "1endif",
+          "[!endif",
+          "]!endif",
+          "!]endif"
+        ],
+        {
+          i: true,
+          trimBeforeMatching: true
+        }
+      ) &&
+      !matchRight(str, i, ["![cdata", "[cdata", "!cdata"], {
+        i: true,
         trimBeforeMatching: true
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||

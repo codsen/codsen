@@ -16,7 +16,26 @@ import isTagOpening from 'is-html-tag-opening';
 function startsComment(str, i, token) {
   return (
     ((str[i] === "<" &&
-      matchRight(str, i, ["!-", "![", "[endif"], {
+      matchRight(
+        str,
+        i,
+        [
+          "!-",
+          "![",
+          "[endif",
+          "!endif",
+          "1endif",
+          "[!endif",
+          "]!endif",
+          "!]endif"
+        ],
+        {
+          i: true,
+          trimBeforeMatching: true
+        }
+      ) &&
+      !matchRight(str, i, ["![cdata", "[cdata", "!cdata"], {
+        i: true,
         trimBeforeMatching: true
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
@@ -849,9 +868,22 @@ function tokenizer(str, originalOpts) {
         if (str[i] === "-") {
           token.closing = true;
         } else if (
-          matchRightIncl(str, i, ["<![e", "<[endif", "<!endif"], {
-            trimBeforeMatching: true
-          })
+          matchRightIncl(
+            str,
+            i,
+            [
+              "<![e",
+              "<[endif",
+              "<!endif",
+              "<1endif",
+              "<[!endif",
+              "<]!endif",
+              "<!]endif"
+            ],
+            {
+              trimBeforeMatching: true
+            }
+          )
         ) {
           token.closing = true;
           token.kind = "only";

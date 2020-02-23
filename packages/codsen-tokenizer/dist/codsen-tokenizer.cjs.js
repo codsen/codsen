@@ -35,7 +35,11 @@ function _typeof(obj) {
 
 function startsComment(str, i, token) {
   return (
-    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "![", "[endif"], {
+    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "![", "[endif", "!endif", "1endif", "[!endif", "]!endif", "!]endif"], {
+      i: true,
+      trimBeforeMatching: true
+    }) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "[cdata", "!cdata"], {
+      i: true,
       trimBeforeMatching: true
     }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
       trimBeforeMatching: true
@@ -522,7 +526,7 @@ function tokenizer(str, originalOpts) {
         initToken("comment", i);
         if (str[i] === "-") {
           token.closing = true;
-        } else if (stringMatchLeftRight.matchRightIncl(str, i, ["<![e", "<[endif", "<!endif"], {
+        } else if (stringMatchLeftRight.matchRightIncl(str, i, ["<![e", "<[endif", "<!endif", "<1endif", "<[!endif", "<]!endif", "<!]endif"], {
           trimBeforeMatching: true
         })) {
           token.closing = true;
