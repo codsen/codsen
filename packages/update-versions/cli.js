@@ -12,7 +12,7 @@ const write = require("write-file-atomic");
 
 const globby = require("globby");
 const pReduce = require("p-reduce");
-const PProgress = require("./util/p-progress");
+const PProgress = require("p-progress");
 const meow = require("meow");
 const updateNotifier = require("update-notifier");
 const isObj = require("lodash.isplainobject");

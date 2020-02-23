@@ -134,6 +134,7 @@
     "meow": "^6.0.1",
     "object-path": "^0.11.4",
     "p-map": "^3.0.0",
+    "p-progress": "^0.4.2",
     "p-reduce": "^2.1.0",
     "pacote": "^11.0.0",
     "update-notifier": "^4.1.0",
