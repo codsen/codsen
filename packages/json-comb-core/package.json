@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "6.6.16",
+  "version": "6.6.17",
   "description": "The inner core of json-comb",
   "license": "MIT",
   "engines": {

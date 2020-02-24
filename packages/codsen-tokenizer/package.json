@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "Tokenizer for mixed inputs aiming at broken code, especially HTML & CSS",
   "license": "MIT",
   "engines": {

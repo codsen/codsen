@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.1.0...codsen-parser@0.2.0) (2020-02-24)
+
+
+### Bug Fixes
+
+* missing tag opening rule - demand that closing tag's previous tag would be not closing ([ceff20b](https://gitlab.com/codsen/codsen/commit/ceff20b01d27debd4e789150504e7488c9fdbc12))
+* nested tags ([5846347](https://gitlab.com/codsen/codsen/commit/584634757cf5514f3db9c3b20c211f7f855aa7e8))
+
+
+### Features
+
+* empty tag pair, one opening one closing tag ([47b212d](https://gitlab.com/codsen/codsen/commit/47b212d2ba3c479ae5df422b58883cd99d7adae4))
+* extend missing closing tag rules to comment tags ([50996e5](https://gitlab.com/codsen/codsen/commit/50996e56ceafdb0ed6474d023b5971ec8cc266a9))
+* nest commment tags how it should be done ([5f132a4](https://gitlab.com/codsen/codsen/commit/5f132a45e20eb7bd8ec0472a8094a6350d76ced7))
+* update to the tokenizer's latest api ([29134fa](https://gitlab.com/codsen/codsen/commit/29134fa826203dda8dac40863253a8415b23484f))
+
+
+
+
+
 ## 0.1.0 (2020-02-09)
 
 ### Features

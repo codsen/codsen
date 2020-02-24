@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://gitlab.com/codsen/codsen/compare/emlint@2.12.0...emlint@2.13.0) (2020-02-24)
+
+
+### Features
+
+* complete the rule `media-malformed` ([cac1c17](https://gitlab.com/codsen/codsen/commit/cac1c17d93f8ba7ba79755af6eba21aefbea36e3))
+* new rule, `media-malformed` ([863878c](https://gitlab.com/codsen/codsen/commit/863878c4c767020b391d7931c4affb6105bc13e9))
+* new rules, `comment-only-closing-malformed` & `comment-only-opening-malformed` ([84f9319](https://gitlab.com/codsen/codsen/commit/84f931979c5511e4c94e5e076f437f542ca49e8a))
+* recognise broken html simple closing comments with missing dashes ([88874b6](https://gitlab.com/codsen/codsen/commit/88874b60aa2876cb08f566c72434f1f0ae342f14))
+* recognise more broken closing comment tag cases ([fe77d70](https://gitlab.com/codsen/codsen/commit/fe77d70bb7b24c3563c7eea300ce29ce7f87e345))
+
+
+
+
+
 ## 2.12.0 (2020-02-09)
 
 ### Features

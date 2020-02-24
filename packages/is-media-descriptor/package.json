@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Is given string a valid media descriptor (including media query)?",
   "license": "MIT",
   "engines": {

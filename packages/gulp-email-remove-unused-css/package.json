@@ -1,6 +1,6 @@
 {
   "name": "gulp-email-remove-unused-css",
-  "version": "3.6.71",
+  "version": "3.6.72",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "license": "MIT",
   "engines": {
@@ -115,7 +115,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "email-comb": "^3.9.2",
+    "email-comb": "^3.9.3",
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {

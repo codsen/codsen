@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {

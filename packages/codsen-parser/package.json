@@ -1,6 +1,6 @@
 {
   "name": "codsen-parser",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Parser aiming at broken code, especially HTML & CSS",
   "license": "MIT",
   "engines": {
@@ -116,7 +116,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "codsen-tokenizer": "^2.7.0",
+    "codsen-tokenizer": "^2.8.0",
     "object-path": "^0.11.4"
   },
   "devDependencies": {
