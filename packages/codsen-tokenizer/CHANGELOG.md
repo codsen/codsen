@@ -3,33 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.8.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.7.0...codsen-tokenizer@2.8.0) (2020-02-24)
-
+## 2.8.0 (2020-02-24)
 
 ### Bug Fixes
 
-* a donothing skip was missing ([b79dafc](https://gitlab.com/codsen/codsen/commit/b79dafce493277df6f68fa9bd9e067e25468fa9e))
-* make all tests pass ([2c48aa1](https://gitlab.com/codsen/codsen/commit/2c48aa10247aa81e3defc750853ee7ba52b247c4))
-* recognise rule chunks without curly braces (very likely broken) ([f4245a3](https://gitlab.com/codsen/codsen/commit/f4245a3d5ed91c5e5713f4519ff31645ce841b9f))
-* set the extracted selector's value to be trimmed in the end too ([1efc1bd](https://gitlab.com/codsen/codsen/commit/1efc1bd7beae29359deacb49fc01d16c86910d0c))
-* set XML closing tag kind ([b1ab96f](https://gitlab.com/codsen/codsen/commit/b1ab96f33140bfd0a358a1d5a0fba5eaa43b02f6))
-
+- a donothing skip was missing ([b79dafc](https://gitlab.com/codsen/codsen/commit/b79dafce493277df6f68fa9bd9e067e25468fa9e))
+- make all tests pass ([2c48aa1](https://gitlab.com/codsen/codsen/commit/2c48aa10247aa81e3defc750853ee7ba52b247c4))
+- recognise rule chunks without curly braces (very likely broken) ([f4245a3](https://gitlab.com/codsen/codsen/commit/f4245a3d5ed91c5e5713f4519ff31645ce841b9f))
+- set the extracted selector's value to be trimmed in the end too ([1efc1bd](https://gitlab.com/codsen/codsen/commit/1efc1bd7beae29359deacb49fc01d16c86910d0c))
+- set XML closing tag kind ([b1ab96f](https://gitlab.com/codsen/codsen/commit/b1ab96f33140bfd0a358a1d5a0fba5eaa43b02f6))
 
 ### Features
 
-* add token.value ([3a85934](https://gitlab.com/codsen/codsen/commit/3a859341ca31845d93fc581223cb89cf4ef73cdd))
-* allow spaces between comment tokens ([902e5cc](https://gitlab.com/codsen/codsen/commit/902e5cc77a27ff9cf399568c2454f6c5f2459c2e))
-* improvements to startsComment detection function from util ([9c0e0c0](https://gitlab.com/codsen/codsen/commit/9c0e0c092fc739dabc4b22c913756191c064f2b6))
-* include more erroneous comment tag cases to be recognised ([ea41247](https://gitlab.com/codsen/codsen/commit/ea4124782107e508d94f2dca08492001c1359256))
-* recognise conditional "evewyehere except" comments (type="comment", kind="not") ([e310798](https://gitlab.com/codsen/codsen/commit/e310798c5e9e10944a9a7f8d72ea838f7cca8501))
-* recognise more broken tags and broken comment tags ([72e1e32](https://gitlab.com/codsen/codsen/commit/72e1e3263be167ffa80fdd51a462ed0fa4e6d273))
-* recognise outlook/ie conditional comments (kind "only", type "comment") ([5ef68fa](https://gitlab.com/codsen/codsen/commit/5ef68fa793400923e7074f6c62b213b0d6fb361e))
-* recognise rogue closing quotes in css ([3be0ec5](https://gitlab.com/codsen/codsen/commit/3be0ec5d70f68b56c104f85adbe6de3ee3ba0ed3))
-* simple comment tokens recognised both opening and closing ([bd53904](https://gitlab.com/codsen/codsen/commit/bd5390479e6e38d4b56b48358263e66d0ad42071))
-
-
-
-
+- add token.value ([3a85934](https://gitlab.com/codsen/codsen/commit/3a859341ca31845d93fc581223cb89cf4ef73cdd))
+- allow spaces between comment tokens ([902e5cc](https://gitlab.com/codsen/codsen/commit/902e5cc77a27ff9cf399568c2454f6c5f2459c2e))
+- improvements to startsComment detection function from util ([9c0e0c0](https://gitlab.com/codsen/codsen/commit/9c0e0c092fc739dabc4b22c913756191c064f2b6))
+- include more erroneous comment tag cases to be recognised ([ea41247](https://gitlab.com/codsen/codsen/commit/ea4124782107e508d94f2dca08492001c1359256))
+- recognise conditional "evewyehere except" comments (type="comment", kind="not") ([e310798](https://gitlab.com/codsen/codsen/commit/e310798c5e9e10944a9a7f8d72ea838f7cca8501))
+- recognise more broken tags and broken comment tags ([72e1e32](https://gitlab.com/codsen/codsen/commit/72e1e3263be167ffa80fdd51a462ed0fa4e6d273))
+- recognise outlook/ie conditional comments (kind "only", type "comment") ([5ef68fa](https://gitlab.com/codsen/codsen/commit/5ef68fa793400923e7074f6c62b213b0d6fb361e))
+- recognise rogue closing quotes in css ([3be0ec5](https://gitlab.com/codsen/codsen/commit/3be0ec5d70f68b56c104f85adbe6de3ee3ba0ed3))
+- simple comment tokens recognised both opening and closing ([bd53904](https://gitlab.com/codsen/codsen/commit/bd5390479e6e38d4b56b48358263e66d0ad42071))
 
 ## 2.7.0 (2020-02-09)
 
