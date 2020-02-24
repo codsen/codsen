@@ -7,7 +7,7 @@ const {
   getSetFooterLink,
   getRow,
   filterDate
-} = require("../dist/util.esm");
+} = require("../dist/util.cjs");
 
 // 01. isTitle
 // -------
