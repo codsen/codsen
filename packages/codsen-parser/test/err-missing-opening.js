@@ -241,6 +241,7 @@ t.test(
           value: `x`
         },
         {
+          children: [],
           type: "comment",
           start: 1,
           end: 4,
@@ -291,6 +292,7 @@ t.test(
           value: `x`
         },
         {
+          children: [],
           type: "comment",
           start: 1,
           end: 13,
@@ -341,6 +343,7 @@ t.test(
           value: `x`
         },
         {
+          children: [],
           type: "comment",
           start: 1,
           end: 17,

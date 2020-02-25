@@ -46,6 +46,225 @@ t.test(
   }
 );
 
+t.test(
+  `01.02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`,
+  t => {
+    t.match(
+      cparser("a<!--b->c"),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+          value: "a"
+        },
+        {
+          type: "comment",
+          kind: "simple",
+          start: 1,
+          end: 5,
+          value: "<!--",
+          closing: false,
+          children: [
+            {
+              type: "text",
+              start: 5,
+              end: 6,
+              value: "b"
+            }
+          ]
+        },
+        {
+          type: "comment",
+          kind: "simple",
+          start: 6,
+          end: 8,
+          value: "->",
+          closing: true,
+          children: []
+        },
+        {
+          type: "text",
+          start: 8,
+          end: 9,
+          value: "c"
+        }
+      ],
+      "01.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`,
+  t => {
+    t.match(
+      cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1,
+          value: "a"
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 5,
+          value: "<!--",
+          children: [
+            {
+              children: [
+                {
+                  children: [
+                    {
+                      children: [
+                        {
+                          type: "text",
+                          start: 20,
+                          end: 21,
+                          value: "."
+                        }
+                      ],
+                      type: "tag",
+                      start: 16,
+                      end: 20,
+                      value: "<td>"
+                    },
+                    {
+                      children: [],
+                      type: "tag",
+                      start: 21,
+                      end: 26,
+                      value: "</td>"
+                    }
+                  ],
+                  type: "tag",
+                  start: 12,
+                  end: 16,
+                  value: "<tr>"
+                },
+                {
+                  children: [],
+                  type: "tag",
+                  start: 26,
+                  end: 31,
+                  value: "</tr>"
+                }
+              ],
+              type: "tag",
+              start: 5,
+              end: 12,
+              value: "<table>"
+            },
+            {
+              children: [],
+              type: "tag",
+              start: 31,
+              end: 39,
+              value: "</table>"
+            }
+          ]
+        },
+        {
+          type: "comment",
+          start: 39,
+          end: 41,
+          value: "->",
+          kind: "simple",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 41,
+          end: 42,
+          value: "c"
+        }
+      ],
+      "01.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`,
+  t => {
+    t.match(
+      cparser("x<a>y->b"),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          children: [
+            {
+              type: "text", // <--------- !!!!
+              start: 4,
+              end: 8,
+              value: "y->b"
+            }
+          ],
+          type: "tag",
+          start: 1,
+          end: 4,
+          value: "<a>"
+        }
+      ],
+      "01.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
+  t => {
+    t.match(
+      cparser("<!--x<a>-->y->b"),
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 4,
+          value: "<!--",
+          children: [
+            {
+              type: "text",
+              start: 4,
+              end: 5,
+              value: "x"
+            },
+            {
+              type: "tag",
+              start: 5,
+              end: 8,
+              value: "<a>"
+            }
+          ]
+        },
+        {
+          type: "comment",
+          start: 8,
+          end: 11,
+          value: "-->"
+        },
+        {
+          type: "text", // <--------- !!!!
+          start: 11,
+          end: 15,
+          value: "y->b"
+        }
+      ],
+      "01.05"
+    );
+    t.end();
+  }
+);
+
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 

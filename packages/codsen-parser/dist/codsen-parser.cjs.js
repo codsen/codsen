@@ -72,7 +72,7 @@ function pathPrev(str) {
 function pathUp(str) {
   if (typeof str === "string") {
     if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-      return "0";
+      return null;
     }
     var dotsCount = 0;
     for (var i = str.length; i--;) {
@@ -89,6 +89,9 @@ function pathUp(str) {
 
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
+}
+function layerPending(layers, tokenObj) {
+  return tokenObj.closing && layers.length && layers[layers.length - 1].type === tokenObj.type && layers[layers.length - 1].closing === false;
 }
 function cparser(str, originalOpts) {
   if (typeof str !== "string") {
@@ -122,6 +125,7 @@ function cparser(str, originalOpts) {
     errCb: null
   };
   var opts = Object.assign({}, defaults, originalOpts);
+  var layers = [];
   var res = [];
   var path;
   var nestNext = false;
@@ -138,11 +142,15 @@ function cparser(str, originalOpts) {
         prevToken = null;
       }
       if (nestNext && (
-      !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing))) {
+      !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
         nestNext = false;
         path = "".concat(path, ".children.0");
       } else if (tokenObj.closing && typeof path === "string" && path.includes(".")) {
         path = pathNext(pathUp(path));
+        if (layerPending(layers, tokenObj)) {
+          layers.pop();
+          nestNext = false;
+        }
       } else if (!path) {
         path = "0";
       } else {
@@ -150,8 +158,16 @@ function cparser(str, originalOpts) {
       }
       if (["tag", "comment"].includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
         nestNext = true;
+        if (tokenObj.type === "comment") {
+          layers.push(tokenObj);
+        }
       }
       var previousPath = pathPrev(path);
+      var parentPath = pathUp(path);
+      var parentTagsToken;
+      if (parentPath) {
+        parentTagsToken = op.get(res, parentPath);
+      }
       var previousTagsToken;
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
@@ -165,9 +181,42 @@ function cparser(str, originalOpts) {
           });
         }
       }
-      op.set(res, path, Object.assign(tokenObj.type === "tag" ? {
-        children: []
-      } : {}, tokenObj));
+      if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && tokenObj.value.includes("->")) {
+        var suspiciousEndingStartsAt = tokenObj.value.indexOf("->");
+        if (suspiciousEndingStartsAt > 0) {
+          op.set(res, path, Object.assign({}, tokenObj, {
+            end: tokenObj.start + suspiciousEndingStartsAt,
+            value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
+          }));
+          if (["tag", "comment"].includes(tokenObj.type)) {
+            tokenObj.children = [];
+          }
+        }
+        path = pathNext(pathUp(path));
+        op.set(res, path, {
+          type: "comment",
+          kind: "simple",
+          closing: true,
+          start: tokenObj.start + suspiciousEndingStartsAt,
+          end: tokenObj.start + suspiciousEndingStartsAt + 2,
+          value: "->",
+          children: []
+        });
+        if (suspiciousEndingStartsAt < tokenObj.value.length - 2) {
+          path = pathNext(path);
+          op.set(res, path, {
+            type: "text",
+            start: tokenObj.start + suspiciousEndingStartsAt + 2,
+            end: tokenObj.end,
+            value: tokenObj.value.slice(suspiciousEndingStartsAt + 2)
+          });
+        }
+      } else {
+        if (["tag", "comment"].includes(tokenObj.type)) {
+          tokenObj.children = [];
+        }
+        op.set(res, path, tokenObj);
+      }
     },
     charCb: opts.charCb
   });

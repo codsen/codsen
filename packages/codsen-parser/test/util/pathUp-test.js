@@ -2,22 +2,22 @@ const t = require("tap");
 import p from "../../src/util/pathUp";
 
 t.test("01 - empty str", t => {
-  t.same(p(""), "0", "01");
+  t.same(p(""), null, "01");
   t.end();
 });
 
 t.test("02 - upon first element", t => {
-  t.same(p("0"), "0", "02");
+  t.same(p("0"), null, "02");
   t.end();
 });
 
 t.test("03 - upon second element", t => {
-  t.same(p("1"), "0", "03");
+  t.same(p("1"), null, "03");
   t.end();
 });
 
 t.test("04 - non-numeric", t => {
-  t.same(p("1.z"), "0", "04");
+  t.same(p("1.z"), null, "04");
   t.end();
 });
 
