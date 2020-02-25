@@ -237,6 +237,12 @@ function flipEspTag(str) {
   }
   return res;
 }
+function isTagNameRecognised(tagName) {
+  return (
+    allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) ||
+    ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
+  );
+}
 
 exports.allHTMLTagsKnownToHumanity = allHTMLTagsKnownToHumanity;
 exports.charSuitableForHTMLAttrName = charSuitableForHTMLAttrName;
@@ -250,6 +256,7 @@ exports.isLowerCaseLetter = isLowerCaseLetter;
 exports.isLowercase = isLowercase;
 exports.isNumOrNumStr = isNumOrNumStr;
 exports.isStr = isStr;
+exports.isTagNameRecognised = isTagNameRecognised;
 exports.isUppercaseLetter = isUppercaseLetter;
 exports.lastChar = lastChar;
 exports.secondChar = secondChar;

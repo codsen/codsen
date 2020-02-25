@@ -92,6 +92,9 @@ function flipEspTag(str) {
   }
   return res;
 }
+function isTagNameRecognised(tagName) {
+  return allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && str[i + 1] === "-") && !(
@@ -279,6 +282,7 @@ function tokenizer(str, originalOpts) {
         }
         if (Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.tagNameEndsAt) && !token.tagName) {
           token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
+          token.recognised = isTagNameRecognised(token.tagName);
         }
         pingTagCb(token);
         token = tokenReset();
@@ -726,7 +730,7 @@ function tokenizer(str, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token["void"] = true;
         }
-        token.recognised = allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
+        token.recognised = isTagNameRecognised(token.tagName);
       }
     }
     if (!doNothing && token.type === "tag" && !Number.isInteger(token.tagNameStartsAt) && Number.isInteger(token.start) && token.start < i) {

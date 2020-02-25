@@ -262,6 +262,12 @@ function flipEspTag(str) {
   }
   return res;
 }
+function isTagNameRecognised(tagName) {
+  return (
+    allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) ||
+    ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
+  );
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return (
@@ -542,6 +548,7 @@ function tokenizer(str, originalOpts) {
           !token.tagName
         ) {
           token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
+          token.recognised = isTagNameRecognised(token.tagName);
         }
         pingTagCb(token);
         token = tokenReset();
@@ -1161,9 +1168,7 @@ function tokenizer(str, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token.void = true;
         }
-        token.recognised =
-          allHTMLTagsKnownToHumanity.includes(token.tagName.toLowerCase()) ||
-          ["doctype", "cdata", "xml"].includes(token.tagName.toLowerCase());
+        token.recognised = isTagNameRecognised(token.tagName);
       }
     }
     if (

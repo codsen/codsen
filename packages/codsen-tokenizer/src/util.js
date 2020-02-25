@@ -261,10 +261,18 @@ function flipEspTag(str) {
   return res;
 }
 
+function isTagNameRecognised(tagName) {
+  return (
+    allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) ||
+    ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
+  );
+}
+
 export {
   charSuitableForHTMLAttrName,
   allHTMLTagsKnownToHumanity,
   charSuitableForTagName,
+  isTagNameRecognised,
   isLowerCaseLetter,
   isUppercaseLetter,
   espLumpBlacklist,

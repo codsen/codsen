@@ -255,23 +255,35 @@ t.test(`03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, t => {
     [
       {
         type: "tag",
+        start: 0,
+        end: 3,
+        value: "<a>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
+        recognised: true,
         closing: false,
-        start: 0,
-        end: 3,
-        value: "<a>"
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
       },
       {
         type: "tag",
+        start: 3,
+        end: 6,
+        value: "<b>",
         tagNameStartsAt: 4,
         tagNameEndsAt: 5,
         tagName: "b",
+        recognised: true,
         closing: false,
-        start: 3,
-        end: 6,
-        value: "<b>"
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
       },
       {
         type: "text",
@@ -281,23 +293,35 @@ t.test(`03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, t => {
       },
       {
         type: "tag",
+        start: 7,
+        end: 10,
+        value: "</b",
         tagNameStartsAt: 9,
         tagNameEndsAt: 10,
         tagName: "b",
+        recognised: true,
         closing: true,
-        start: 7,
-        end: 10,
-        value: "</b"
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
       },
       {
         type: "tag",
+        start: 10,
+        end: 14,
+        value: "</a>",
         tagNameStartsAt: 12,
         tagNameEndsAt: 13,
         tagName: "a",
+        recognised: true,
         closing: true,
-        start: 10,
-        end: 14,
-        value: "</a>"
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
       }
     ],
     "03.01"
