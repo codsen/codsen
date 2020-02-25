@@ -32,6 +32,7 @@ var he = _interopDefault(require('he'));
 var astMonkey = require('ast-monkey');
 var objectPath = _interopDefault(require('object-path'));
 var lineColumn = _interopDefault(require('line-column'));
+var traverse = _interopDefault(require('ast-monkey-traverse'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
 function _typeof(obj) {
@@ -9266,17 +9267,7 @@ function (_EventEmitter) {
           });
         });
       });
-      this.emit("ast", parser(str, {
-        tagCb: function tagCb(obj) {
-          _this.emit(obj.type, obj);
-          if (obj.type === "tag" && Array.isArray(obj.attribs) && obj.attribs.length) {
-            obj.attribs.forEach(function (attribObj) {
-              _this.emit("attribute", Object.assign({}, attribObj, {
-                parent: Object.assign({}, obj)
-              }));
-            });
-          }
-        },
+      this.emit("ast", traverse(parser(str, {
         charCb: function charCb(obj) {
           _this.emit("character", obj);
         },
@@ -9293,6 +9284,20 @@ function (_EventEmitter) {
             }, obj));
           }
         }
+      }),
+      function (key, val) {
+        var current = val !== undefined ? val : key;
+        if (isObj(current)) {
+          _this.emit(current.type, current);
+          if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {
+            current.attribs.forEach(function (attribObj) {
+              _this.emit("attribute", Object.assign({}, attribObj, {
+                parent: Object.assign({}, current)
+              }));
+            });
+          }
+        }
+        return current;
       }));
       if (Object.keys(config.rules).some(function (ruleName) {
         return (ruleName === "all" ||

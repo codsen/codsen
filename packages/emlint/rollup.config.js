@@ -46,6 +46,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-monkey",
+        "ast-monkey-traverse",
         "codsen-parser",
         "define-lazy-prop",
         "he",
@@ -86,6 +87,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "ast-monkey",
+        "ast-monkey-traverse",
         "codsen-parser",
         "define-lazy-prop",
         "he",

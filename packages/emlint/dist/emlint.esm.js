@@ -26,6 +26,7 @@ import he from 'he';
 import { traverse } from 'ast-monkey';
 import objectPath from 'object-path';
 import lineColumn from 'line-column';
+import traverse$1 from 'ast-monkey-traverse';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
 var allBadCharacterRules = [
@@ -11158,46 +11159,52 @@ class Linter extends EventEmitter {
       });
     this.emit(
       "ast",
-      parser(str, {
-        tagCb: obj => {
-          this.emit(obj.type, obj);
-          if (
-            obj.type === "tag" &&
-            Array.isArray(obj.attribs) &&
-            obj.attribs.length
-          ) {
-            obj.attribs.forEach(attribObj => {
-              this.emit(
-                "attribute",
-                Object.assign({}, attribObj, {
-                  parent: Object.assign({}, obj)
-                })
-              );
-            });
-          }
-        },
-        charCb: obj => {
-          this.emit("character", obj);
-        },
-        errCb: obj => {
-          const currentRulesSeverity = isAnEnabledRule(
-            config.rules,
-            obj.ruleId
-          );
-          if (currentRulesSeverity) {
-            let message = `Something is wrong.`;
-            if (
-              isObj(obj) &&
-              Object.keys(astErrMessages).includes(obj.ruleId)
-            ) {
-              message = astErrMessages[obj.ruleId];
-            }
-            this.report(
-              Object.assign({ message, severity: currentRulesSeverity }, obj)
+      traverse$1(
+        parser(str, {
+          charCb: obj => {
+            this.emit("character", obj);
+          },
+          errCb: obj => {
+            const currentRulesSeverity = isAnEnabledRule(
+              config.rules,
+              obj.ruleId
             );
+            if (currentRulesSeverity) {
+              let message = `Something is wrong.`;
+              if (
+                isObj(obj) &&
+                Object.keys(astErrMessages).includes(obj.ruleId)
+              ) {
+                message = astErrMessages[obj.ruleId];
+              }
+              this.report(
+                Object.assign({ message, severity: currentRulesSeverity }, obj)
+              );
+            }
           }
+        }),
+        (key, val) => {
+          const current = val !== undefined ? val : key;
+          if (isObj(current)) {
+            this.emit(current.type, current);
+            if (
+              current.type === "tag" &&
+              Array.isArray(current.attribs) &&
+              current.attribs.length
+            ) {
+              current.attribs.forEach(attribObj => {
+                this.emit(
+                  "attribute",
+                  Object.assign({}, attribObj, {
+                    parent: Object.assign({}, current)
+                  })
+                );
+              });
+            }
+          }
+          return current;
         }
-      })
+      )
     );
     if (
       Object.keys(config.rules).some(
