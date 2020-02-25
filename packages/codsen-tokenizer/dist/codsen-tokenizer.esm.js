@@ -509,7 +509,7 @@ function tokenizer(str, originalOpts) {
       token.end = left(str, i) + 1;
       token.value = str.slice(token.start, token.end);
       if (token.type === "tag" && str[token.end - 1] !== ">") {
-        let cutOffIndex = token.tagNameEndsAt;
+        let cutOffIndex = token.tagNameEndsAt || i;
         if (Array.isArray(token.attribs) && token.attribs.length) {
           for (let i = 0, len = token.attribs.length; i < len; i++) {
             if (token.attribs[i].attribNameRecognised) {
@@ -533,6 +533,16 @@ function tokenizer(str, originalOpts) {
         }
         token.end = cutOffIndex;
         token.value = str.slice(token.start, token.end);
+        if (!token.tagNameEndsAt) {
+          token.tagNameEndsAt = cutOffIndex;
+        }
+        if (
+          Number.isInteger(token.tagNameStartsAt) &&
+          Number.isInteger(token.tagNameEndsAt) &&
+          !token.tagName
+        ) {
+          token.tagName = str.slice(token.tagNameStartsAt, cutOffIndex);
+        }
         pingTagCb(token);
         token = tokenReset();
         initToken("text", cutOffIndex);
@@ -549,7 +559,9 @@ function tokenizer(str, originalOpts) {
         token.end = i;
         token.value = str.slice(token.start, token.end);
       }
-      pingTagCb(token);
+      if (token.start !== null && token.end !== null) {
+        pingTagCb(token);
+      }
       token = tokenReset();
     }
   }

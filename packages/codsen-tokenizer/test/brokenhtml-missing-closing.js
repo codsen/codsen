@@ -240,6 +240,73 @@ t.test(
   }
 );
 
+// 03. missing bracket followed by opening bracket
+// -----------------------------------------------------------------------------
+
+t.test(`03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, t => {
+  const gathered = [];
+  ct(`<a><b>c</b</a>`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        closing: false,
+        start: 0,
+        end: 3,
+        value: "<a>"
+      },
+      {
+        type: "tag",
+        tagNameStartsAt: 4,
+        tagNameEndsAt: 5,
+        tagName: "b",
+        closing: false,
+        start: 3,
+        end: 6,
+        value: "<b>"
+      },
+      {
+        type: "text",
+        start: 6,
+        end: 7,
+        value: "c"
+      },
+      {
+        type: "tag",
+        tagNameStartsAt: 9,
+        tagNameEndsAt: 10,
+        tagName: "b",
+        closing: true,
+        start: 7,
+        end: 10,
+        value: "</b"
+      },
+      {
+        type: "tag",
+        tagNameStartsAt: 12,
+        tagNameEndsAt: 13,
+        tagName: "a",
+        closing: true,
+        start: 10,
+        end: 14,
+        value: "</a>"
+      }
+    ],
+    "03.01"
+  );
+  t.end();
+});
+
+// -----------------------------------------------------------------------------
+
 // TODO
 
 // - tag pair: truncated at the various levels of the attribute:
