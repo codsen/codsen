@@ -23,10 +23,8 @@ import isLangCode from 'is-language-code';
 import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
-import { traverse } from 'ast-monkey';
-import objectPath from 'object-path';
 import lineColumn from 'line-column';
-import traverse$1 from 'ast-monkey-traverse';
+import traverse from 'ast-monkey-traverse';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
 var allBadCharacterRules = [
@@ -367,21 +365,6 @@ function isLetter(str) {
     str.length === 1 &&
     str.toUpperCase() !== str.toLowerCase()
   );
-}
-function pathTwoUp(str) {
-  const foundDots = str.match(/\./g);
-  if (!Array.isArray(foundDots) && foundDots.length > 1) {
-    return null;
-  }
-  let firstDotMet = false;
-  for (let y = str.length; y--; ) {
-    if (str[y] === ".") {
-      if (firstDotMet) {
-        return str.slice(0, y);
-      }
-      firstDotMet = true;
-    }
-  }
 }
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
@@ -9195,60 +9178,12 @@ function processStr(str, offset, context, mode) {
 }
 function characterEncode(context, ...opts) {
   return {
-    ast: function(ast) {
-      traverse(ast, (key, val, innerObj) => {
-        const current = val !== undefined ? val : key;
-        if (!isObj(current) || current.type !== "text") {
-          return current;
-        }
-        let mode = "named";
-        if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
-          mode = opts[0];
-        }
-        let grandparentToken;
-        if (current.value.includes("->")) {
-          const pathTwoUpVal = pathTwoUp(innerObj.path);
-          grandparentToken = objectPath.get(ast, pathTwoUpVal);
-        }
-        if (
-          innerObj.parentType === "array" &&
-          isObj(grandparentToken) &&
-          grandparentToken.type === "comment" &&
-          grandparentToken.kind === "simple" &&
-          !grandparentToken.closing &&
-          isAnEnabledValue(
-            context.processedRulesConfig["comment-closing-malformed"]
-          )
-        ) {
-          const suspiciousEndingStartsAt = current.value.indexOf("->");
-          context.report({
-            ruleId: "comment-closing-malformed",
-            message: `Malformed closing comment tag.`,
-            idxFrom: current.start + suspiciousEndingStartsAt,
-            idxTo: current.start + suspiciousEndingStartsAt + 2,
-            fix: {
-              ranges: [
-                [
-                  current.start + suspiciousEndingStartsAt,
-                  current.start + suspiciousEndingStartsAt + 2,
-                  "-->"
-                ]
-              ]
-            }
-          });
-          if (suspiciousEndingStartsAt < current.value.length - 2) {
-            processStr(
-              current.value.slice(suspiciousEndingStartsAt + 2),
-              current.start + suspiciousEndingStartsAt + 2,
-              context,
-              mode
-            );
-          }
-        } else {
-          processStr(current.value, current.start, context, mode);
-        }
-        return current;
-      });
+    text: function(token) {
+      let mode = "named";
+      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      processStr(token.value, token.start, context, mode);
     }
   };
 }
@@ -11159,7 +11094,7 @@ class Linter extends EventEmitter {
       });
     this.emit(
       "ast",
-      traverse$1(
+      traverse(
         parser(str, {
           charCb: obj => {
             this.emit("character", obj);

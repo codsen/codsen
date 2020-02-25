@@ -29,8 +29,6 @@ var isLangCode = _interopDefault(require('is-language-code'));
 var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
-var astMonkey = require('ast-monkey');
-var objectPath = _interopDefault(require('object-path'));
 var lineColumn = _interopDefault(require('line-column'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
@@ -461,21 +459,6 @@ var astErrMessages = {
 };
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
-}
-function pathTwoUp(str) {
-  var foundDots = str.match(/\./g);
-  if (!Array.isArray(foundDots) && foundDots.length > 1) {
-    return null;
-  }
-  var firstDotMet = false;
-  for (var y = str.length; y--;) {
-    if (str[y] === ".") {
-      if (firstDotMet) {
-        return str.slice(0, y);
-      }
-      firstDotMet = true;
-    }
-  }
 }
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
@@ -7872,40 +7855,12 @@ function characterEncode(context) {
     opts[_key - 1] = arguments[_key];
   }
   return {
-    ast: function ast(_ast) {
-      astMonkey.traverse(_ast, function (key, val, innerObj) {
-        var current = val !== undefined ? val : key;
-        if (!isObj(current) || current.type !== "text") {
-          return current;
-        }
-        var mode = "named";
-        if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
-          mode = opts[0];
-        }
-        var grandparentToken;
-        if (current.value.includes("->")) {
-          var pathTwoUpVal = pathTwoUp(innerObj.path);
-          grandparentToken = objectPath.get(_ast, pathTwoUpVal);
-        }
-        if (innerObj.parentType === "array" && isObj(grandparentToken) && grandparentToken.type === "comment" && grandparentToken.kind === "simple" && !grandparentToken.closing && isAnEnabledValue(context.processedRulesConfig["comment-closing-malformed"])) {
-          var suspiciousEndingStartsAt = current.value.indexOf("->");
-          context.report({
-            ruleId: "comment-closing-malformed",
-            message: "Malformed closing comment tag.",
-            idxFrom: current.start + suspiciousEndingStartsAt,
-            idxTo: current.start + suspiciousEndingStartsAt + 2,
-            fix: {
-              ranges: [[current.start + suspiciousEndingStartsAt, current.start + suspiciousEndingStartsAt + 2, "-->"]]
-            }
-          });
-          if (suspiciousEndingStartsAt < current.value.length - 2) {
-            processStr(current.value.slice(suspiciousEndingStartsAt + 2), current.start + suspiciousEndingStartsAt + 2, context, mode);
-          }
-        } else {
-          processStr(current.value, current.start, context, mode);
-        }
-        return current;
-      });
+    text: function text(token) {
+      var mode = "named";
+      if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
+        mode = opts[0];
+      }
+      processStr(token.value, token.start, context, mode);
     }
   };
 }
