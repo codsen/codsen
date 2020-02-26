@@ -152,7 +152,7 @@
     "semver-compare": "^1.0.0",
     "semver-regex": "^3.1.1",
     "update-notifier": "^4.1.0",
-    "write-file-atomic": "^3.0.1",
+    "write-file-atomic": "^3.0.3",
     "write-json-file": "^4.3.0"
   },
   "devDependencies": {

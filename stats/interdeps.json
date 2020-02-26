@@ -141,14 +141,14 @@
     },
     {
         "name": "codsen-parser",
-        "size": 6718,
+        "size": 8748,
         "imports": [
             "codsen-tokenizer"
         ]
     },
     {
         "name": "codsen-tokenizer",
-        "size": 37040,
+        "size": 37573,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -244,9 +244,10 @@
     },
     {
         "name": "emlint",
-        "size": 301376,
+        "size": 299546,
         "imports": [
             "ast-monkey",
+            "ast-monkey-traverse",
             "codsen-parser",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",

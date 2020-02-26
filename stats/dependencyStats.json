@@ -13,7 +13,7 @@
         "ast-get-values-by-key": 1,
         "ast-is-empty": 2,
         "ast-monkey": 3,
-        "ast-monkey-traverse": 9,
+        "ast-monkey-traverse": 10,
         "bitbucket-slug": 1,
         "chalk": 6,
         "check-types-mini": 4,
@@ -242,13 +242,13 @@
             "string-left-right": 12
         },
         {
+            "ast-monkey-traverse": 10
+        },
+        {
             "arrayiffy-if-string": 10
         },
         {
             "ranges-push": 10
-        },
-        {
-            "ast-monkey-traverse": 9
         },
         {
             "string-match-left-right": 9

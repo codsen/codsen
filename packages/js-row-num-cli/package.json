@@ -125,7 +125,7 @@
     "meow": "^6.0.1",
     "p-reduce": "^2.1.0",
     "update-notifier": "^4.1.0",
-    "write-file-atomic": "^3.0.1"
+    "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
