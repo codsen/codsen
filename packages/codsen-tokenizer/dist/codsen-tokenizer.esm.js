@@ -8,7 +8,7 @@
  */
 
 import { allHtmlAttribs } from 'html-all-known-attributes';
-import { matchRight, matchLeft, matchRightIncl } from 'string-match-left-right';
+import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 import { right, left } from 'string-left-right';
 import clone from 'lodash.clonedeep';
 import isTagOpening from 'is-html-tag-opening';
@@ -1056,9 +1056,13 @@ function tokenizer(str, originalOpts) {
         token.kind === "simple" &&
         ((str[token.start] === "<" &&
           str[i] === "-" &&
-          matchLeft(str, i, "!-", {
+          (matchLeft(str, i, "!-", {
             trimBeforeMatching: true
-          })) ||
+          }) ||
+            (matchLeftIncl(str, i, "!-", {
+              trimBeforeMatching: true
+            }) &&
+              str[i + 1] !== "-"))) ||
           (str[token.start] === "-" &&
             str[i] === ">" &&
             matchLeft(str, i, "--", {

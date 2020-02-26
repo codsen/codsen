@@ -650,9 +650,11 @@ function tokenizer(str, originalOpts) {
       if (token.type === "tag" && !layers.length && str[i] === ">") {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
-      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && stringMatchLeftRight.matchLeft(str, i, "!-", {
+      } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && (stringMatchLeftRight.matchLeft(str, i, "!-", {
         trimBeforeMatching: true
-      }) || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
+      }) || stringMatchLeftRight.matchLeftIncl(str, i, "!-", {
+        trimBeforeMatching: true
+      }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
         trimBeforeMatching: true
       }))) {
         if (stringMatchLeftRight.matchRightIncl(str, i, ["-[if"], {
