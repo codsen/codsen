@@ -29,13 +29,13 @@ function isOpening(str) {
   };
   var opts = Object.assign({}, defaults, originalOpts);
   var r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
-  var r5 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
+  var r5 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
   var r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
-  var r6 = /^<\s*\w+\s+[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
+  var r6 = /^<\s*\w+\s+[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
   var r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
-  var r7 = /^<\s*\/?\s*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
+  var r7 = /^<\s*\/?\s*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
   var r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
-  var r8 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
+  var r8 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
   var whatToTest = idx ? str.slice(idx) : str;
   var passed = false;
   if (opts.allowCustomTagNames) {

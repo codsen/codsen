@@ -164,7 +164,7 @@ function isOpening(str, idx = 0, originalOpts) {
   // for example <br>, <br/>
   const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
   // its custom-html tag version:
-  const r5 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
+  const r5 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
   // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
   // of which emoji can be assembled. This is a very rough match, aiming to
   // catch as much as possible, not the validation-level match.
@@ -176,19 +176,19 @@ function isOpening(str, idx = 0, originalOpts) {
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
   const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
   // its custom-html tag version:
-  const r6 = /^<\s*\w+\s+[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
+  const r6 = /^<\s*\w+\s+[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
 
   // =======
   // r3. closing/self-closing tags
   const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
   // its custom-html tag version:
-  const r7 = /^<\s*\/?\s*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
+  const r7 = /^<\s*\/?\s*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
 
   // =======
   // r4. opening tag with attributes,
   const r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
   // its custom-html tag version:
-  const r8 = /^<[\\ \t\r\n/]*[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
+  const r8 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
 
   // =======
   const whatToTest = idx ? str.slice(idx) : str;

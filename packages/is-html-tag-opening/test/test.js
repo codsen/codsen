@@ -407,3 +407,24 @@ t.test(
     t.end();
   }
 );
+
+// 07. custom HTML tag names
+// -----------------------------------------------------------------------------
+
+t.test(
+  `07.01 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash`,
+  t => {
+    const s1 = `<-a-b>`;
+    t.false(is(s1, 0));
+    t.end();
+  }
+);
+
+t.test(
+  `07.02 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - dash between chars`,
+  t => {
+    const s1 = `<a-b>`;
+    t.ok(is(s1, 0));
+    t.end();
+  }
+);
