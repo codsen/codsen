@@ -218,7 +218,7 @@ t.test(
       gathered,
       [
         {
-          type: "tag",
+          type: "text",
           tagNameStartsAt: null,
           tagNameEndsAt: null,
           tagName: null,
@@ -226,8 +226,9 @@ t.test(
           end: 3
         }
       ],
-      "02.01"
+      "02.01.01"
     );
+    t.is(gathered.length, 1, "02.01.02");
     t.end();
   }
 );
@@ -246,7 +247,7 @@ t.test(
       gathered,
       [
         {
-          type: "tag",
+          type: "text",
           tagNameStartsAt: null,
           tagNameEndsAt: null,
           tagName: null,
@@ -254,8 +255,9 @@ t.test(
           end: 4
         }
       ],
-      "02.02"
+      "02.02.01"
     );
+    t.is(gathered.length, 1, "02.02.02");
     t.end();
   }
 );
@@ -274,7 +276,7 @@ t.test(
       gathered,
       [
         {
-          type: "tag",
+          type: "text",
           tagNameStartsAt: null,
           tagNameEndsAt: null,
           tagName: null,

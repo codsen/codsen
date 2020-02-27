@@ -7,6 +7,11 @@ import { matchRight } from "string-match-left-right";
 // so we extracted into a function.
 
 function startsTag(str, i, token, layers) {
+  console.log(
+    `011 ██ startsTag(): ${isTagOpening(str, i, {
+      allowCustomTagNames: true
+    })}`
+  );
   return (
     str[i] === "<" &&
     ((token.type === "text" &&

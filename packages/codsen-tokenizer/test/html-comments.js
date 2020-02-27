@@ -190,7 +190,47 @@ t.test(
           value: "c"
         }
       ],
-      "01.03"
+      "01.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `01.05 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  t => {
+    const gathered = [];
+    ct(`a<--b-->c`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 5,
+          value: "a<--b"
+        },
+        {
+          type: "comment",
+          start: 5,
+          end: 8,
+          value: "-->",
+          kind: "simple",
+          closing: true
+        },
+        {
+          type: "text",
+          start: 8,
+          end: 9,
+          value: "c"
+        }
+      ],
+      "01.05"
     );
     t.end();
   }
