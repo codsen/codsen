@@ -160,11 +160,21 @@ function isOpening(str, idx = 0, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
 
   // =======
+
+  const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
+
+  // generalChar does not include the dash, -
+  const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
+
+  // =======
   // r1. tag without attributes
   // for example <br>, <br/>
-  const r1 = /^<[\\ \t\r\n/]*\w+[\\ \t\r\n/]*>/g;
+  const r1 = new RegExp(`^<${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
   // its custom-html tag version:
-  const r5 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+[\\ \t\r\n/]*>/g;
+  const r5 = new RegExp(
+    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
+    "g"
+  );
   // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
   // of which emoji can be assembled. This is a very rough match, aiming to
   // catch as much as possible, not the validation-level match.
@@ -174,52 +184,65 @@ function isOpening(str, idx = 0, originalOpts) {
 
   // =======
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
-  const r2 = /^<\s*\w+\s+\w+(?:-\w+)?\s*=\s*['"\w]/g;
+  const r2 = new RegExp(`^<\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
   // its custom-html tag version:
-  const r6 = /^<\s*\w+\s+[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:-\w+)?\s*=\s*['"\w]/g;
+  const r6 = new RegExp(
+    `^<\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
+  );
 
   // =======
   // r3. closing/self-closing tags
-  const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
+  const r3 = new RegExp(`^<\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
   // its custom-html tag version:
-  const r7 = /^<\s*\/?\s*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+\s*\/?\s*>/g;
+  const r7 = new RegExp(
+    `^<\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
+    "g"
+  );
 
   // =======
   // r4. opening tag with attributes,
-  const r4 = /^<[\\ \t\r\n/]*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  const r4 = new RegExp(
+    `^<${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    "g"
+  );
   // its custom-html tag version:
-  const r8 = /^<[\\ \t\r\n/]*[^-][.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF]+(?:\s*\w+)*\s*\w+=['"]/g;
+  const r8 = new RegExp(
+    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    "g"
+  );
 
   // =======
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
 
   if (opts.allowCustomTagNames) {
+    console.log(`219 inside opts.allowCustomTagNames clauses`);
     if (r5.test(whatToTest)) {
-      console.log(`199 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      console.log(`221 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log(`202 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      console.log(`224 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r7.test(whatToTest)) {
-      console.log(`205 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      console.log(`227 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log(`208 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      console.log(`230 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     }
   } else {
+    console.log(`234 outside opts.allowCustomTagNames clauses`);
     if (r1.test(whatToTest)) {
-      console.log(`213 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+      console.log(`236 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`216 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      console.log(`239 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r3.test(whatToTest)) {
-      console.log(`219 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+      console.log(`242 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`222 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      console.log(`245 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
       passed = true;
     }
   }
@@ -259,9 +282,17 @@ function isOpening(str, idx = 0, originalOpts) {
     passed = true;
   }
 
+  console.log(
+    `286 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+      passed,
+      null,
+      4
+    )}`
+  );
+
   //
   console.log(
-    `264 ${`\u001b[${33}m${`isNotLetter(str[${idx +
+    `295 ${`\u001b[${33}m${`isNotLetter(str[${idx +
       1}])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
@@ -269,7 +300,7 @@ function isOpening(str, idx = 0, originalOpts) {
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`272 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`303 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 
