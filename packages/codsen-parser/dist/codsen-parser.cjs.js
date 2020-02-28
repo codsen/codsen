@@ -134,14 +134,6 @@ function cparser(str, originalOpts) {
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
     tagCb: function tagCb(tokenObj) {
-      console.log("-".repeat(80));
-      console.log("185 \u2588\u2588 ".concat("\x1B[".concat(33, "m", "INCOMING TOKEN", "\x1B[", 39, "m"), ":\n", JSON.stringify({
-        type: tokenObj.type,
-        tagName: tokenObj.tagName,
-        start: tokenObj.start,
-        end: tokenObj.end,
-        value: tokenObj.value
-      }, null, 4)));
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
@@ -149,55 +141,38 @@ function cparser(str, originalOpts) {
       if (!isObj(prevToken)) {
         prevToken = null;
       }
-      console.log("216 FIY, ".concat("\x1B[".concat(33, "m", "prevToken", "\x1B[", 39, "m"), " = ", JSON.stringify(prevToken, null, 4)));
       if (nestNext && (
       !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
         nestNext = false;
-        console.log("240 ".concat("\x1B[".concat(35, "m", "\u2588\u2588 NEST", "\x1B[", 39, "m")));
         path = "".concat(path, ".children.0");
       } else if (tokenObj.closing && typeof path === "string" && path.includes(".")) {
-        console.log("249 ".concat("\x1B[".concat(35, "m", "\u2588\u2588 UP", "\x1B[", 39, "m")));
         path = pathNext(pathUp(path));
         if (layerPending(layers, tokenObj)) {
           layers.pop();
-          console.log("255 POP layers, now equals to: ".concat(JSON.stringify(layers, null, 4)));
           nestNext = false;
-          console.log("260 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "nestNext", "\x1B[", 39, "m"), ": ", nestNext));
         }
       } else if (!path) {
-        console.log("265 ".concat("\x1B[".concat(35, "m", "\u2588\u2588 FIRST", "\x1B[", 39, "m")));
         path = "0";
       } else {
-        console.log("270 ".concat("\x1B[".concat(35, "m", "\u2588\u2588 BUMP", "\x1B[", 39, "m")));
         path = pathNext(path);
       }
       if (["tag", "comment"].includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
         nestNext = true;
-        console.log("282 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "nestNext", "\x1B[", 39, "m"), " = true"));
         if (tokenObj.type === "comment") {
           layers.push(tokenObj);
-          console.log("288 ".concat("\x1B[".concat(32, "m", "PUSH", "\x1B[", 39, "m"), " to layers, which is now: ", JSON.stringify(layers, null, 4)));
         }
       }
-      console.log("298 FIY, ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", path));
       var previousPath = pathPrev(path);
       var parentPath = pathUp(path);
-      console.log("313 ".concat("\x1B[".concat(33, "m", "parentPath", "\x1B[", 39, "m"), " = ", JSON.stringify(parentPath, null, 4)));
       var parentTagsToken;
       if (parentPath) {
         parentTagsToken = op.get(res, parentPath);
       }
-      console.log("325 ".concat("\x1B[".concat(33, "m", "parentTagsToken", "\x1B[", 39, "m"), " at path \"", "\x1B[".concat(33, "m", parentPath, "\x1B[", 39, "m"), "\" - ", JSON.stringify(Object.assign({}, parentTagsToken, {
-        children: "..."
-      }), null, 4)));
       var previousTagsToken;
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      console.log("337 ".concat("\x1B[".concat(33, "m", "previousTagsToken", "\x1B[", 39, "m"), " at path \"", "\x1B[".concat(33, "m", previousPath, "\x1B[", 39, "m"), "\" - ", JSON.stringify(previousTagsToken, null, 4)));
-      console.log("344 ".concat("\x1B[".concat(33, "m", "tokenObj.closing", "\x1B[", 39, "m"), " = ", JSON.stringify(tokenObj.closing, null, 4)));
       if (["tag", "comment"].includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-        console.log("361 ".concat("\x1B[".concat(31, "m", "\u2588\u2588 RAISE ERROR ".concat(tokenObj.type, "-").concat(tokenObj.type === "comment" ? tokenObj.kind : "", "-missing-opening"), "\x1B[", 39, "m")));
         if (opts.errCb) {
           opts.errCb({
             ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
@@ -206,16 +181,11 @@ function cparser(str, originalOpts) {
           });
         }
       }
-      console.log("377 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " BEFORE: ", JSON.stringify(res, null, 4)));
       var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
       if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
-        console.log("395 ".concat("\x1B[".concat(31, "m", "\u2588\u2588 intervention needed", "\x1B[", 39, "m")));
         var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
         var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
-        console.log("405 SUSPICIOUS ENDING: [".concat("\x1B[".concat(33, "m", "suspiciousEndingStartsAt", "\x1B[", 39, "m"), " = ", JSON.stringify(suspiciousEndingStartsAt, null, 4), ", ", "\x1B[".concat(33, "m", "suspiciousEndingEndsAt", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(suspiciousEndingEndsAt, null, 4), "] - value: \"").concat(tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt), "\""));
         if (suspiciousEndingStartsAt > 0) {
-          console.log("424 ".concat("\x1B[".concat(32, "m", "ADD", "\x1B[", 39, "m"), " text leading up to \"->\""));
-          console.log("427 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " BEFORE: ", JSON.stringify(res, null, 4)));
           op.set(res, path, Object.assign({}, tokenObj, {
             end: tokenObj.start + suspiciousEndingStartsAt,
             value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
@@ -223,11 +193,8 @@ function cparser(str, originalOpts) {
           if (["tag", "comment"].includes(tokenObj.type)) {
             tokenObj.children = [];
           }
-          console.log("445 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(res, null, 4)));
         }
-        console.log("456 OLD ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", path));
         path = pathNext(pathUp(path));
-        console.log("460 NEW ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", path));
         op.set(res, path, {
           type: "comment",
           kind: "simple",
@@ -237,35 +204,24 @@ function cparser(str, originalOpts) {
           value: tokenObj.value.slice(suspiciousEndingStartsAt, suspiciousEndingEndsAt),
           children: []
         });
-        console.log("475 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(res, null, 4)));
         if (suspiciousEndingEndsAt < tokenObj.value.length) {
-          console.log("486 OLD ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", path));
           path = pathNext(path);
-          console.log("490 NEW ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", path));
           op.set(res, path, {
             type: "text",
             start: tokenObj.start + suspiciousEndingEndsAt,
             end: tokenObj.end,
             value: tokenObj.value.slice(suspiciousEndingEndsAt)
           });
-          console.log("499 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(res, null, 4)));
         }
       } else {
-        console.log("507 setting as usual");
         if (["tag", "comment"].includes(tokenObj.type)) {
           tokenObj.children = [];
         }
         op.set(res, path, tokenObj);
       }
-      console.log("515 ".concat("\x1B[".concat(33, "m", "res", "\x1B[", 39, "m"), " AFTER: ", JSON.stringify(res, null, 4)));
-      console.log("523 ENDING ".concat("\x1B[".concat(33, "m", "path", "\x1B[", 39, "m"), " = ", JSON.stringify(path, null, 4)));
-      console.log("".concat("\x1B[".concat(90, "m", "---", "\x1B[", 39, "m")));
-      console.log("".concat("\x1B[".concat(90, "m", "\u2588\u2588 nestNext = ".concat("\x1B[".concat(nestNext ? 32 : 31, "m").concat(nestNext, "\x1B[", 39, "m")), "\x1B[", 39, "m")));
     },
     charCb: opts.charCb
   });
-  console.log("-".repeat(80));
-  console.log("561 ".concat("\x1B[".concat(32, "m", "FINAL RETURN", "\x1B[", 39, "m"), " ", JSON.stringify(res, null, 4)));
   return res;
 }
 
