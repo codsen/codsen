@@ -93,20 +93,13 @@ t.test("01.03 - ESP literals surrounded by HTML tags", t => {
   t.end();
 });
 
-t.only("01.04", t => {
+t.test("01.04", t => {
   const gathered = [];
   ct(`<a b="{% if something %}"><c>`, {
     tagCb: obj => {
       gathered.push(obj);
     }
   });
-  console.log(
-    `${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-      gathered,
-      null,
-      4
-    )}`
-  );
   t.match(
     gathered,
     [
