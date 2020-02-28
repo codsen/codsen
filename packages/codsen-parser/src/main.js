@@ -383,23 +383,37 @@ function cparser(str, originalOpts) {
 
       // case of "a<!--b->c", current token being "text" type, value "b->c"
 
+      const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
       if (
         tokenObj.type === "text" &&
         isObj(parentTagsToken) &&
         parentTagsToken.type === "comment" &&
         parentTagsToken.kind === "simple" &&
-        tokenObj.value.includes("->")
+        suspiciousCommentTagEndingRegExp.test(tokenObj.value)
       ) {
         console.log(
-          `394 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+          `395 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
         );
-        const suspiciousEndingStartsAt = tokenObj.value.indexOf("->");
+        const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
+          tokenObj.value
+        ).index;
+        const suspiciousEndingEndsAt =
+          suspiciousEndingStartsAt +
+          tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
+          1;
         console.log(
-          `398 ${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `405 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             suspiciousEndingStartsAt,
             null,
             4
-          )}`
+          )}, ${`\u001b[${33}m${`suspiciousEndingEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            suspiciousEndingEndsAt,
+            null,
+            4
+          )}] - value: "${tokenObj.value.slice(
+            suspiciousEndingStartsAt,
+            suspiciousEndingEndsAt
+          )}"`
         );
 
         // part 1.
@@ -407,10 +421,10 @@ function cparser(str, originalOpts) {
         // at this level, under this path:
         if (suspiciousEndingStartsAt > 0) {
           console.log(
-            `410 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
+            `424 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
           );
           console.log(
-            `413 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+            `427 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
               res,
               null,
               4
@@ -428,7 +442,7 @@ function cparser(str, originalOpts) {
             tokenObj.children = [];
           }
           console.log(
-            `431 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `445 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
@@ -439,23 +453,26 @@ function cparser(str, originalOpts) {
         // part 2.
         // further, the "->" goes as closing token at parent level
         console.log(
-          `442 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `456 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         path = pathNext(pathUp(path));
         console.log(
-          `446 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `460 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         op.set(res, path, {
           type: "comment",
           kind: "simple",
           closing: true,
           start: tokenObj.start + suspiciousEndingStartsAt,
-          end: tokenObj.start + suspiciousEndingStartsAt + 2,
-          value: "->",
+          end: tokenObj.start + suspiciousEndingEndsAt,
+          value: tokenObj.value.slice(
+            suspiciousEndingStartsAt,
+            suspiciousEndingEndsAt
+          ),
           children: []
         });
         console.log(
-          `458 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+          `475 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
             res,
             null,
             4
@@ -464,22 +481,22 @@ function cparser(str, originalOpts) {
 
         // part 3.
         // if any text follows "->" add that after
-        if (suspiciousEndingStartsAt < tokenObj.value.length - 2) {
+        if (suspiciousEndingEndsAt < tokenObj.value.length) {
           console.log(
-            `469 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `486 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           path = pathNext(path);
           console.log(
-            `473 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `490 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           op.set(res, path, {
             type: "text",
-            start: tokenObj.start + suspiciousEndingStartsAt + 2,
+            start: tokenObj.start + suspiciousEndingEndsAt,
             end: tokenObj.end,
-            value: tokenObj.value.slice(suspiciousEndingStartsAt + 2)
+            value: tokenObj.value.slice(suspiciousEndingEndsAt)
           });
           console.log(
-            `482 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `499 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
@@ -487,7 +504,7 @@ function cparser(str, originalOpts) {
           );
         }
       } else {
-        console.log(`490 setting as usual`);
+        console.log(`507 setting as usual`);
         if (["tag", "comment"].includes(tokenObj.type)) {
           tokenObj.children = [];
         }
@@ -495,7 +512,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `498 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `515 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -503,7 +520,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `506 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `523 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -541,7 +558,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `544 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `561 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

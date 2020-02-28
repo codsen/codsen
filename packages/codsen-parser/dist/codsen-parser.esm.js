@@ -179,6 +179,20 @@ function cparser(str, originalOpts) {
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
     tagCb: tokenObj => {
+      console.log(`-`.repeat(80));
+      console.log(
+        `185 ██ ${`\u001b[${33}m${`INCOMING TOKEN`}\u001b[${39}m`}:\n${JSON.stringify(
+          {
+            type: tokenObj.type,
+            tagName: tokenObj.tagName,
+            start: tokenObj.start,
+            end: tokenObj.end,
+            value: tokenObj.value
+          },
+          null,
+          4
+        )}`
+      );
       if (typeof opts.tagCb === "function") {
         opts.tagCb(tokenObj);
       }
@@ -186,6 +200,13 @@ function cparser(str, originalOpts) {
       if (!isObj(prevToken)) {
         prevToken = null;
       }
+      console.log(
+        `216 FIY, ${`\u001b[${33}m${`prevToken`}\u001b[${39}m`} = ${JSON.stringify(
+          prevToken,
+          null,
+          4
+        )}`
+      );
       if (
         nestNext &&
         (!prevToken ||
@@ -197,20 +218,30 @@ function cparser(str, originalOpts) {
         !layerPending(layers, tokenObj)
       ) {
         nestNext = false;
+        console.log(`240 ${`\u001b[${35}m${`██ NEST`}\u001b[${39}m`}`);
         path = `${path}.children.0`;
       } else if (
         tokenObj.closing &&
         typeof path === "string" &&
         path.includes(".")
       ) {
+        console.log(`249 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
         path = pathNext(pathUp(path));
         if (layerPending(layers, tokenObj)) {
           layers.pop();
+          console.log(
+            `255 POP layers, now equals to: ${JSON.stringify(layers, null, 4)}`
+          );
           nestNext = false;
+          console.log(
+            `260 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`}: ${nestNext}`
+          );
         }
       } else if (!path) {
+        console.log(`265 ${`\u001b[${35}m${`██ FIRST`}\u001b[${39}m`}`);
         path = "0";
       } else {
+        console.log(`270 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
         path = pathNext(path);
       }
       if (
@@ -219,20 +250,61 @@ function cparser(str, originalOpts) {
         !tokenObj.closing
       ) {
         nestNext = true;
+        console.log(
+          `282 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
+        );
         if (tokenObj.type === "comment") {
           layers.push(tokenObj);
+          console.log(
+            `288 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
+              layers,
+              null,
+              4
+            )}`
+          );
         }
       }
+      console.log(
+        `298 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+      );
       const previousPath = pathPrev(path);
       const parentPath = pathUp(path);
+      console.log(
+        `313 ${`\u001b[${33}m${`parentPath`}\u001b[${39}m`} = ${JSON.stringify(
+          parentPath,
+          null,
+          4
+        )}`
+      );
       let parentTagsToken;
       if (parentPath) {
         parentTagsToken = op.get(res, parentPath);
       }
+      console.log(
+        `325 ${`\u001b[${33}m${`parentTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${parentPath}\u001b[${39}m`}" - ${JSON.stringify(
+          Object.assign({}, parentTagsToken, { children: "..." }),
+          null,
+          4
+        )}`
+      );
       let previousTagsToken;
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
+      console.log(
+        `337 ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${previousPath}\u001b[${39}m`}" - ${JSON.stringify(
+          previousTagsToken,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `344 ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
+          tokenObj.closing,
+          null,
+          4
+        )}`
+      );
       if (
         ["tag", "comment"].includes(tokenObj.type) &&
         tokenObj.closing &&
@@ -242,6 +314,11 @@ function cparser(str, originalOpts) {
           previousTagsToken.type !== tokenObj.type ||
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
+        console.log(
+          `361 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+            tokenObj.type === "comment" ? tokenObj.kind : ""
+          }-missing-opening`}\u001b[${39}m`}`
+        );
         if (opts.errCb) {
           opts.errCb({
             ruleId: `${tokenObj.type}${
@@ -252,15 +329,56 @@ function cparser(str, originalOpts) {
           });
         }
       }
+      console.log(
+        `377 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+          res,
+          null,
+          4
+        )}`
+      );
+      const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
       if (
         tokenObj.type === "text" &&
         isObj(parentTagsToken) &&
         parentTagsToken.type === "comment" &&
         parentTagsToken.kind === "simple" &&
-        tokenObj.value.includes("->")
+        suspiciousCommentTagEndingRegExp.test(tokenObj.value)
       ) {
-        const suspiciousEndingStartsAt = tokenObj.value.indexOf("->");
+        console.log(
+          `395 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+        );
+        const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
+          tokenObj.value
+        ).index;
+        const suspiciousEndingEndsAt =
+          suspiciousEndingStartsAt +
+          tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
+          1;
+        console.log(
+          `405 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            suspiciousEndingStartsAt,
+            null,
+            4
+          )}, ${`\u001b[${33}m${`suspiciousEndingEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            suspiciousEndingEndsAt,
+            null,
+            4
+          )}] - value: "${tokenObj.value.slice(
+            suspiciousEndingStartsAt,
+            suspiciousEndingEndsAt
+          )}"`
+        );
         if (suspiciousEndingStartsAt > 0) {
+          console.log(
+            `424 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
+          );
+          console.log(
+            `427 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+              res,
+              null,
+              4
+            )}`
+          );
           op.set(
             res,
             path,
@@ -272,35 +390,100 @@ function cparser(str, originalOpts) {
           if (["tag", "comment"].includes(tokenObj.type)) {
             tokenObj.children = [];
           }
+          console.log(
+            `445 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+              res,
+              null,
+              4
+            )}`
+          );
         }
+        console.log(
+          `456 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+        );
         path = pathNext(pathUp(path));
+        console.log(
+          `460 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+        );
         op.set(res, path, {
           type: "comment",
           kind: "simple",
           closing: true,
           start: tokenObj.start + suspiciousEndingStartsAt,
-          end: tokenObj.start + suspiciousEndingStartsAt + 2,
-          value: "->",
+          end: tokenObj.start + suspiciousEndingEndsAt,
+          value: tokenObj.value.slice(
+            suspiciousEndingStartsAt,
+            suspiciousEndingEndsAt
+          ),
           children: []
         });
-        if (suspiciousEndingStartsAt < tokenObj.value.length - 2) {
+        console.log(
+          `475 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            res,
+            null,
+            4
+          )}`
+        );
+        if (suspiciousEndingEndsAt < tokenObj.value.length) {
+          console.log(
+            `486 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          );
           path = pathNext(path);
+          console.log(
+            `490 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          );
           op.set(res, path, {
             type: "text",
-            start: tokenObj.start + suspiciousEndingStartsAt + 2,
+            start: tokenObj.start + suspiciousEndingEndsAt,
             end: tokenObj.end,
-            value: tokenObj.value.slice(suspiciousEndingStartsAt + 2)
+            value: tokenObj.value.slice(suspiciousEndingEndsAt)
           });
+          console.log(
+            `499 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+              res,
+              null,
+              4
+            )}`
+          );
         }
       } else {
+        console.log(`507 setting as usual`);
         if (["tag", "comment"].includes(tokenObj.type)) {
           tokenObj.children = [];
         }
         op.set(res, path, tokenObj);
       }
+      console.log(
+        `515 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+          res,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `523 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+          path,
+          null,
+          4
+        )}`
+      );
+      console.log(`${`\u001b[${90}m${`---`}\u001b[${39}m`}`);
+      console.log(
+        `${`\u001b[${90}m${`██ nestNext = ${`\u001b[${
+          nestNext ? 32 : 31
+        }m${nestNext}\u001b[${39}m`}`}\u001b[${39}m`}`
+      );
     },
     charCb: opts.charCb
   });
+  console.log(`-`.repeat(80));
+  console.log(
+    `561 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+      res,
+      null,
+      4
+    )}`
+  );
   return res;
 }
 

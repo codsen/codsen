@@ -265,6 +265,48 @@ t.test(
   }
 );
 
+t.test(
+  `01.06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`,
+  t => {
+    t.match(
+      cparser(`a<!--b--!>c`),
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          kind: "simple",
+          start: 1,
+          end: 5,
+          children: [
+            {
+              type: "text",
+              start: 5,
+              end: 6
+            }
+          ]
+        },
+        {
+          type: "comment",
+          kind: "simple",
+          start: 6,
+          end: 10
+        },
+        {
+          type: "text",
+          start: 10,
+          end: 11
+        }
+      ],
+      "01.06"
+    );
+    t.end();
+  }
+);
+
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
