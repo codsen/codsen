@@ -276,6 +276,48 @@ t.test(
   }
 );
 
+t.only(
+  `01.07 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
+  t => {
+    const gathered = [];
+    ct(`<!- -z-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          kind: "simple",
+          start: 0,
+          end: 5,
+          value: "<!- -",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 5,
+          end: 6,
+          value: "z"
+        },
+        {
+          type: "comment",
+          start: 6,
+          end: 9,
+          value: "-->",
+          kind: "simple",
+          closing: true
+        }
+      ],
+      "01.07"
+    );
+    t.end();
+  }
+);
+
 // 02. outlook conditionals: only
 // -----------------------------------------------------------------------------
 

@@ -1887,9 +1887,21 @@ function tokenizer(str, originalOpts) {
             `1887 ${`\u001b[${32}m${`${token.kind} comment token's ending caught`}\u001b[${39}m`}`
           );
           token.end = i + 1;
+
+          // tokenizer will catch <!- as opening, so we need to extend
+          // for correct cases with two dashes <!--
+          if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
+            token.end = right(str, i) + 1;
+            console.log(
+              `1896 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
+          }
+
           token.value = str.slice(token.start, token.end);
           console.log(
-            `1892 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            `1904 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
               token.end
             }`
           );
@@ -1905,22 +1917,22 @@ function tokenizer(str, originalOpts) {
           })
         ) {
           console.log(
-            `1908 that's end of opening type="comment", kind="only" comment`
+            `1920 that's end of opening type="comment", kind="only" comment`
           );
           token.kind = "not";
           console.log(
-            `1912 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `1924 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
         } else {
           console.log(
-            `1918 that's end of opening type="comment", kind="not" comment`
+            `1930 that's end of opening type="comment", kind="not" comment`
           );
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
           console.log(
-            `1923 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            `1935 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
               token.end
             }`
           );
@@ -1931,7 +1943,7 @@ function tokenizer(str, originalOpts) {
         isStr(token.tail) &&
         token.tail.includes(str[i])
       ) {
-        console.log(`1934 POSSIBLE ESP TAILS`);
+        console.log(`1946 POSSIBLE ESP TAILS`);
         // extract the whole lump of ESP tag characters:
         let wholeEspTagClosing = "";
 
@@ -1942,7 +1954,7 @@ function tokenizer(str, originalOpts) {
             break;
           }
         }
-        console.log(`1945 wholeEspTagClosing = ${wholeEspTagClosing}`);
+        console.log(`1957 wholeEspTagClosing = ${wholeEspTagClosing}`);
 
         // now, imagine the new heads start, for example,
         // {%- z -%}{%-
@@ -1952,7 +1964,7 @@ function tokenizer(str, originalOpts) {
         // find the breaking point where tails end
         if (wholeEspTagClosing.length > token.head.length) {
           console.log(
-            `1955 wholeEspTagClosing.length = ${`\u001b[${33}m${
+            `1967 wholeEspTagClosing.length = ${`\u001b[${33}m${
               wholeEspTagClosing.length
             }\u001b[${39}m`} > token.head.length = ${`\u001b[${33}m${
               token.head.length
@@ -1980,7 +1992,7 @@ function tokenizer(str, originalOpts) {
           //
           const headsFirstChar = token.head[0];
           if (wholeEspTagClosing.endsWith(token.head)) {
-            console.log(`1983 - chunk ends with the same heads`);
+            console.log(`1995 - chunk ends with the same heads`);
             // we have a situation like
             // zzz *|aaaa|**|bbb|*
             //           ^
@@ -2003,18 +2015,6 @@ function tokenizer(str, originalOpts) {
             token.end = i + wholeEspTagClosing.length - token.head.length;
             token.value = str.slice(token.start, token.end);
             console.log(
-              `2006 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
-                token.end
-              }`
-            );
-            doNothing = token.end;
-            console.log(
-              `2012 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
-            );
-          } else if (wholeEspTagClosing.startsWith(token.tail)) {
-            token.end = i + token.tail.length;
-            token.value = str.slice(token.start, token.end);
-            console.log(
               `2018 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
                 token.end
               }`
@@ -2023,13 +2023,25 @@ function tokenizer(str, originalOpts) {
             console.log(
               `2024 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
             );
+          } else if (wholeEspTagClosing.startsWith(token.tail)) {
+            token.end = i + token.tail.length;
+            token.value = str.slice(token.start, token.end);
+            console.log(
+              `2030 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                token.end
+              }`
+            );
+            doNothing = token.end;
+            console.log(
+              `2036 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            );
           } else if (
             (!token.tail.includes(headsFirstChar) &&
               wholeEspTagClosing.includes(headsFirstChar)) ||
             wholeEspTagClosing.endsWith(token.head) ||
             wholeEspTagClosing.startsWith(token.tail)
           ) {
-            console.log(`2032`);
+            console.log(`2044`);
             // We're very luck because heads and tails are using different
             // characters, possibly opposite brackets of some kind.
             // That's Nunjucks, Responsys but no eDialog patterns.
@@ -2064,17 +2076,17 @@ function tokenizer(str, originalOpts) {
                 .split("")
                 .every(char => firstPartOfWholeEspTagClosing.includes(char))
             ) {
-              console.log(`2067 definitely tails + new heads`);
+              console.log(`2079 definitely tails + new heads`);
               token.end = i + firstPartOfWholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
               console.log(
-                `2071 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+                `2083 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
                   token.end
                 }`
               );
               doNothing = token.end;
               console.log(
-                `2077 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+                `2089 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
               );
             }
           } else {
@@ -2090,28 +2102,28 @@ function tokenizer(str, originalOpts) {
             token.end = i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
             console.log(
-              `2093 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+              `2105 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
                 token.end
               }`
             );
             doNothing = token.end;
             console.log(
-              `2099 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+              `2111 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
             );
           }
-          console.log(`2102`);
+          console.log(`2114`);
         } else {
           // we consider this whole chunk is tails.
           token.end = i + wholeEspTagClosing.length;
           token.value = str.slice(token.start, token.end);
           console.log(
-            `2108 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+            `2120 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
               token.end
             }`
           );
           doNothing = token.end;
           console.log(
-            `2114 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
+            `2126 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
           );
         }
       }
@@ -2127,20 +2139,20 @@ function tokenizer(str, originalOpts) {
       Number.isInteger(token.tagNameStartsAt) &&
       !Number.isInteger(token.tagNameEndsAt)
     ) {
-      console.log(`2130 catch the end of a tag name clauses`);
+      console.log(`2142 catch the end of a tag name clauses`);
 
       // tag names can be with numbers, h1
       if (!str[i] || !charSuitableForTagName(str[i])) {
         token.tagNameEndsAt = i;
         console.log(
-          `2136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
+          `2148 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameEndsAt`}\u001b[${39}m`} = ${
             token.tagNameEndsAt
           }`
         );
 
         token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
         console.log(
-          `2143 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
+          `2155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagName`}\u001b[${39}m`} = ${
             token.tagName
           }`
         );
@@ -2148,7 +2160,7 @@ function tokenizer(str, originalOpts) {
         if (token.tagName === "xml" && token.closing && !token.kind) {
           token.kind = "xml";
           console.log(
-            `2151 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+            `2163 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
               token.kind
             }`
           );
@@ -2160,7 +2172,7 @@ function tokenizer(str, originalOpts) {
         if (voidTags.includes(token.tagName)) {
           token.void = true;
           console.log(
-            `2163 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
+            `2175 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.void`}\u001b[${39}m`} = ${
               token.void
             }`
           );
@@ -2169,7 +2181,7 @@ function tokenizer(str, originalOpts) {
         token.recognised = isTagNameRecognised(token.tagName);
 
         console.log(
-          `2172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
+          `2184 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.recognised`}\u001b[${39}m`} = ${
             token.recognised
           }`
         );
@@ -2192,14 +2204,14 @@ function tokenizer(str, originalOpts) {
       if (str[i] === "/") {
         token.closing = true;
         console.log(
-          `2195 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+          `2207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
             token.closing
           }`
         );
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartsAt = i;
         console.log(
-          `2202 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartsAt`}\u001b[${39}m`} = ${
+          `2214 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.tagNameStartsAt`}\u001b[${39}m`} = ${
             token.tagNameStartsAt
           }`
         );
@@ -2208,7 +2220,7 @@ function tokenizer(str, originalOpts) {
         if (!token.closing) {
           token.closing = false;
           console.log(
-            `2211 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
+            `2223 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
               token.closing
             }`
           );
@@ -2230,12 +2242,12 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndsAt === null &&
       !charSuitableForHTMLAttrName(str[i])
     ) {
-      console.log(`2233 inside catch the tag attribute name end clauses`);
+      console.log(`2245 inside catch the tag attribute name end clauses`);
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = allHtmlAttribs.includes(attrib.attribName);
       console.log(
-        `2238 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
+        `2250 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
           attrib.attribNameEndsAt
         }; ${`\u001b[${33}m${`attrib.attribName`}\u001b[${39}m`} = ${JSON.stringify(
           attrib.attribName,
@@ -2246,7 +2258,7 @@ function tokenizer(str, originalOpts) {
 
       // maybe there's a space in front of equal, <div class= "">
       if (str[i] && !str[i].trim().length && str[right(str, i)] === "=") {
-        console.log(`2249 equal on the right`);
+        console.log(`2261 equal on the right`);
       } else if (
         (str[i] && !str[i].trim().length) ||
         str[i] === ">" ||
@@ -2255,7 +2267,7 @@ function tokenizer(str, originalOpts) {
         // a value-less attribute
         attrib.attribEnd = i;
         console.log(
-          `2258 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
+          `2270 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribNameEndsAt`}\u001b[${39}m`} = ${
             attrib.attribEnd
           }`
         );
@@ -2278,11 +2290,11 @@ function tokenizer(str, originalOpts) {
       attrib.attribStart === null &&
       charSuitableForHTMLAttrName(str[i])
     ) {
-      console.log(`2281 inside catch the tag attribute name start clauses`);
+      console.log(`2293 inside catch the tag attribute name start clauses`);
       attrib.attribStart = i;
       attrib.attribNameStartsAt = i;
       console.log(
-        `2285 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStart`}\u001b[${39}m`} = ${
+        `2297 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStart`}\u001b[${39}m`} = ${
           attrib.attribStart
         }; ${`\u001b[${33}m${`attrib.attribNameStartsAt`}\u001b[${39}m`} = ${
           attrib.attribNameStartsAt
@@ -2297,7 +2309,7 @@ function tokenizer(str, originalOpts) {
       if (str[i] === "{" && !Number.isInteger(token.openingCurlyAt)) {
         token.openingCurlyAt = i;
         console.log(
-          `2300 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
+          `2312 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.openingCurlyAt`}\u001b[${39}m`} = ${
             token.openingCurlyAt
           }`
         );
@@ -2310,12 +2322,12 @@ function tokenizer(str, originalOpts) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
         console.log(
-          `2313 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closingCurlyAt`}\u001b[${39}m`} = ${
+          `2325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closingCurlyAt`}\u001b[${39}m`} = ${
             token.closingCurlyAt
           }; ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${token.end}`
         );
 
-        console.log(`2318 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+        console.log(`2330 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
         pingTagCb(token);
         tokenReset();
       }
@@ -2331,20 +2343,20 @@ function tokenizer(str, originalOpts) {
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
     ) {
-      console.log(`2334 inside catching end of a tag attr clauses`);
+      console.log(`2346 inside catching end of a tag attr clauses`);
       if (`'"`.includes(str[i])) {
         // TODO - detect mismatching quotes
         if (
           str[attrib.attribOpeningQuoteAt] === str[i] &&
           !layers.some(layerObj => layerObj.type === "esp")
         ) {
-          console.log(`2341 opening and closing quotes matched!`);
+          console.log(`2353 opening and closing quotes matched!`);
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
           attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
           attrib.attribEnd = i + 1;
           console.log(
-            `2347 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
+            `2359 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
               attrib.attribClosingQuoteAt
             }; ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
               attrib.attribValueEndsAt
@@ -2367,13 +2379,13 @@ function tokenizer(str, originalOpts) {
       ) {
         // ^ either whitespace or tag's closing or ESP literal's start ends
         // the attribute's value if there are no quotes
-        console.log(`2370 opening quote was missing, terminate attr val here`);
+        console.log(`2382 opening quote was missing, terminate attr val here`);
 
         attrib.attribValueEndsAt = i;
         attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
         attrib.attribEnd = i;
         console.log(
-          `2376 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
+          `2388 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
             attrib.attribValueEndsAt
           }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
             attrib.attribValue
@@ -2399,7 +2411,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndsAt <= i &&
       str[i].trim().length
     ) {
-      console.log(`2402 inside catching attr value start clauses`);
+      console.log(`2414 inside catching attr value start clauses`);
       if (
         str[i] === "=" &&
         !`'"=`.includes(str[right(str, i)]) &&
@@ -2407,7 +2419,7 @@ function tokenizer(str, originalOpts) {
       ) {
         attrib.attribValueStartsAt = right(str, i);
         console.log(
-          `2410 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
+          `2422 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartsAt
           }`
         );
@@ -2417,7 +2429,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribValueStartsAt = i + 1;
         }
         console.log(
-          `2420 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
+          `2432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribOpeningQuoteAt`}\u001b[${39}m`} = ${
             attrib.attribOpeningQuoteAt
           }; ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
             attrib.attribValueStartsAt
@@ -2448,7 +2460,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribEnd === null
     ) {
       console.log(
-        `2451 ${`\u001b[${31}m${`██`}\u001b[${39}m`} bracket within attribute's value`
+        `2463 ${`\u001b[${31}m${`██`}\u001b[${39}m`} bracket within attribute's value`
       );
       // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
@@ -2467,7 +2479,7 @@ function tokenizer(str, originalOpts) {
         // Traverse then
         for (let y = i + 1; y < len; y++) {
           console.log(
-            `2470 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+            `2482 ${`\u001b[${36}m${`str[${y}] = ${JSON.stringify(
               str[y],
               null,
               0
@@ -2480,14 +2492,14 @@ function tokenizer(str, originalOpts) {
             str[y] === str[attrib.attribOpeningQuoteAt]
           ) {
             console.log(
-              `2483 closing quote (${
+              `2495 closing quote (${
                 str[attrib.attribOpeningQuoteAt]
               }) found, ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
             );
             if (y !== i + 1 && str[y - 1] !== "=") {
               thisIsRealEnding = true;
               console.log(
-                `2490 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+                `2502 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
               );
             }
             break;
@@ -2498,35 +2510,35 @@ function tokenizer(str, originalOpts) {
           } else if (str[y] === "<") {
             thisIsRealEnding = true;
             console.log(
-              `2501 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              `2513 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
             );
 
             // TODO - pop only if type === "simple" and it's the same opening
             // quotes of this attribute
             layers.pop();
             console.log(
-              `2508 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
+              `2520 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`}, now:\n${JSON.stringify(
                 layers,
                 null,
                 4
               )}`
             );
 
-            console.log(`2515 break`);
+            console.log(`2527 break`);
             break;
           } else if (!str[y + 1]) {
             // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
             console.log(
-              `2521 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
+              `2533 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`thisIsRealEnding`}\u001b[${39}m`} = ${thisIsRealEnding}`
             );
 
-            console.log(`2524 break`);
+            console.log(`2536 break`);
             break;
           }
         }
       } else {
-        console.log(`2529 string ends so this was the bracket`);
+        console.log(`2541 string ends so this was the bracket`);
         thisIsRealEnding = true;
       }
 
@@ -2543,7 +2555,7 @@ function tokenizer(str, originalOpts) {
         token.end = i + 1;
         token.value = str.slice(token.start, token.end);
         console.log(
-          `2546 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
+          `2558 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
             token.end
           }`
         );
@@ -2565,14 +2577,14 @@ function tokenizer(str, originalOpts) {
 
         attrib.attribEnd = i;
         console.log(
-          `2568 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
+          `2580 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
             attrib.attribEnd
           }`
         );
 
         // 2. push and wipe
         console.log(
-          `2575 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
+          `2587 ${`\u001b[${32}m${`attrib wipe, push and reset`}\u001b[${39}m`}`
         );
         token.attribs.push(clone(attrib));
         attribReset();
@@ -2601,7 +2613,7 @@ function tokenizer(str, originalOpts) {
 
     if (str[i] && opts.charCb) {
       console.log(
-        `2604 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+        `2616 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
           {
             type: token.type,
             chr: str[i],
@@ -2632,7 +2644,7 @@ function tokenizer(str, originalOpts) {
     if (!str[i] && token.start !== null) {
       token.end = i;
       token.value = str.slice(token.start, token.end);
-      console.log(`2635 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
+      console.log(`2647 ${`\u001b[${32}m${`PING`}\u001b[${39}m`}`);
       pingTagCb(token);
     }
 
