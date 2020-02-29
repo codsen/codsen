@@ -84,8 +84,7 @@ function isStr(something) {
 function prepNumStr(str) {
   return /^\d*$/.test(str) ? parseInt(str, 10) : str;
 }
-var Ranges =
-function () {
+var Ranges = function () {
   function Ranges(originalOpts) {
     _classCallCheck(this, Ranges);
     var defaults = {

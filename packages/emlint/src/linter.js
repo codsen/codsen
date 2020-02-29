@@ -82,9 +82,9 @@ class Linter extends EventEmitter {
         }
       })
       .forEach(rule => {
-        console.log(
-          `086 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
-        );
+        // console.log(
+        //   `086 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
+        // );
         // extract all the options, second array element onwards - the length is indeterminable
         let rulesFunction;
         if (
@@ -102,13 +102,13 @@ class Linter extends EventEmitter {
         }
         Object.keys(rulesFunction).forEach(consumedNode => {
           this.on(consumedNode, (...args) => {
-            console.log(
-              `106 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
-                consumedNode,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `106 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
+            //     consumedNode,
+            //     null,
+            //     4
+            //   )}`
+            // );
             rulesFunction[consumedNode](...args);
           });
         });

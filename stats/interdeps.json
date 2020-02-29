@@ -141,14 +141,14 @@
     },
     {
         "name": "codsen-parser",
-        "size": 8748,
+        "size": 9125,
         "imports": [
             "codsen-tokenizer"
         ]
     },
     {
         "name": "codsen-tokenizer",
-        "size": 37573,
+        "size": 37727,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 299546,
+        "size": 431023,
         "imports": [
             "ast-monkey",
             "ast-monkey-traverse",
@@ -321,7 +321,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 4782,
+        "size": 4908,
         "imports": [
             "string-left-right",
             "string-match-left-right"
@@ -401,7 +401,7 @@
     },
     {
         "name": "lect",
-        "size": 75115,
+        "size": 75333,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -603,6 +603,13 @@
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
+        ]
+    },
+    {
+        "name": "string-find-malformed",
+        "size": 4114,
+        "imports": [
+            "string-left-right"
         ]
     },
     {

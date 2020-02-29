@@ -3,9 +3,6 @@
   "version": "2.13.0",
   "description": "Pluggable email template code linter",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/emlint",
   "author": {
@@ -42,7 +39,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c",
     "dev": "node bin/helper && rollup -c --dev",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/character/character-encode.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/comment/comment-opening-malformed.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
@@ -157,8 +154,8 @@
     "url-regex": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -175,7 +172,7 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "ranges-apply": "^3.1.1",
-    "rollup": "^1.31.1",
+    "rollup": "^1.32.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

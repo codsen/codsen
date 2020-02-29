@@ -3,9 +3,6 @@
   "version": "5.8.9",
   "description": "a tool to prepare text for pasting into HTML",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://detergent.io",
   "author": {
@@ -148,8 +145,8 @@
     "string-trim-spaces-only": "^2.8.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -160,7 +157,7 @@
     "lodash.clonedeep": "^4.5.0",
     "object-boolean-combinations": "^2.11.54",
     "object-path": "^0.11.4",
-    "rollup": "^1.31.1",
+    "rollup": "^1.32.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-banner": "^0.2.1",

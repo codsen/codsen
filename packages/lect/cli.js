@@ -236,6 +236,11 @@ async function step14(receivedPack) {
   objectPath.del(receivedPack, "lect.contribution_types");
   objectPath.del(receivedPack, "lect.contributors");
 
+  // let's remove Engines key because we don't test against particular Node
+  // versions, plus we've got 3 builds!!! Maybe transpiled CJS is ES5 but ESM
+  // is way higher.
+  objectPath.del(receivedPack, "engines");
+
   // // if it's a tap-tested package, remove all AVA references
   // if (objectPath.has(receivedPack, "devDependencies.tap")) {
   //   objectPath.del(receivedPack, "devDependencies.ava");
@@ -1060,7 +1065,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1063 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1068 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1699,7 +1704,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1702 clause #3`);
+        console.log(`1707 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1

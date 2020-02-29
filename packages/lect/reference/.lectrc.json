@@ -329,7 +329,7 @@
       "rollup-plugin-terser": "^3.0.0"
     },
     "engines": {
-      "node": ">=8.9"
+      "node": ">=10"
     },
     "esm": {
       "await": true,

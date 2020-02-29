@@ -3,9 +3,6 @@
   "version": "1.6.16",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli",
   "author": {
@@ -128,8 +125,8 @@
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",

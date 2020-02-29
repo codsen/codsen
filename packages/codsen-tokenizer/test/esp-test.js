@@ -412,3 +412,9 @@ t.test("02.01 - false positives - double perc", t => {
   );
   t.end();
 });
+
+// Java:
+// <%@ ... %>
+// <c:forEach ... > (no slash)
+// <jsp:useBean ... />
+// <c:set ... />

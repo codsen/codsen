@@ -3,9 +3,6 @@
   "version": "5.1.0",
   "description": "All-in-one: HTML special character encoder, invisible character cleaner and English style improvement tool",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://detergent.io",
   "author": {

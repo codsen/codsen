@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 108 npm libraries 📦📦📦
+    A lerna monorepo for our 109 npm libraries 📦📦📦
 
 We, Codsen Ltd, provide consulting services since 2014.
 
@@ -110,7 +110,7 @@ It is equally vital to support _mixed code_ because both web page and email temp
 
 ## 🎻 String Processing Libraries
 
-28 in total.
+29 in total.
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -132,6 +132,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-convert-indexes`](https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes/) | Convert string character indexes from JS native index-based to Unicode character-count-based and backwards. | [![string-convert-indexes on npm](https://img.shields.io/npm/v/string-convert-indexes.svg?style=flat-square)](https://www.npmjs.com/package/string-convert-indexes) | [packages/string-convert-indexes](https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes/) |
 | [`string-extract-class-names`](https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names/) | Extract class (or id) name from a string | [![string-extract-class-names on npm](https://img.shields.io/npm/v/string-extract-class-names.svg?style=flat-square)](https://www.npmjs.com/package/string-extract-class-names) | [packages/string-extract-class-names](https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names/) |
 | [`string-find-heads-tails`](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails/) | Search for string pairs. A special case of string search algorithm. | [![string-find-heads-tails on npm](https://img.shields.io/npm/v/string-find-heads-tails.svg?style=flat-square)](https://www.npmjs.com/package/string-find-heads-tails) | [packages/string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails/) |
+| [`string-find-malformed`](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed/) | Search for a malformed string. Think of Levenshtein distance but in search. | [![string-find-malformed on npm](https://img.shields.io/npm/v/string-find-malformed.svg?style=flat-square)](https://www.npmjs.com/package/string-find-malformed) | [packages/string-find-malformed](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed/) |
 | [`string-fix-broken-named-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/) | Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes | [![string-fix-broken-named-entities on npm](https://img.shields.io/npm/v/string-fix-broken-named-entities.svg?style=flat-square)](https://www.npmjs.com/package/string-fix-broken-named-entities) | [packages/string-fix-broken-named-entities](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/) |
 | [`string-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) | Look what's to the left or the right of a given index within a string | [![string-left-right on npm](https://img.shields.io/npm/v/string-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-left-right) | [packages/string-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) |
 | [`string-match-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) | Do substrings match what's on the left or right of a given index? | [![string-match-left-right on npm](https://img.shields.io/npm/v/string-match-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-match-left-right) | [packages/string-match-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) |

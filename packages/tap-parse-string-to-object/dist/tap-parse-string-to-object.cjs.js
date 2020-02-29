@@ -55,8 +55,7 @@ function stringPingLineByLine(str, cb) {
     }
   }
 }
-var Counter =
-function () {
+var Counter = function () {
   function Counter() {
     _classCallCheck(this, Counter);
     this.canCount = false;

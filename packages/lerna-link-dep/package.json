@@ -3,9 +3,6 @@
   "version": "1.1.16",
   "description": "CLI to symlink a local package to the current package in Lerna monorepo",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep",
   "author": {
@@ -127,8 +124,8 @@
     "update-notifier": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",

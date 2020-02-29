@@ -168,6 +168,13 @@ var allBadNamedHTMLEntityRules = [
 ];
 
 function checkForWhitespace(str, idxOffset) {
+  console.log(
+    `005 ${`\u001b[${35}m${`checkForWhitespace() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
   let charStart = 0;
   let charEnd = str.length;
   let trimmedVal;
@@ -189,8 +196,22 @@ function checkForWhitespace(str, idxOffset) {
   }
   if (charEnd && !str[str.length - 1].trim().length) {
     charEnd = left(str, str.length - 1) + 1;
+    console.log(
+      `040 ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+        charEnd,
+        null,
+        4
+      )}`
+    );
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
+  console.log(
+    `049 ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+      gatheredRanges,
+      null,
+      4
+    )}`
+  );
   if (!gatheredRanges.length) {
     trimmedVal = str;
   } else {
@@ -203,11 +224,25 @@ function checkForWhitespace(str, idxOffset) {
     gatheredRanges = [];
     trimmedVal = str.trim();
   }
+  console.log(`069`);
   return { charStart, charEnd, errorArr, trimmedVal };
 }
 
 function includesWithRegex(arr, whatToMatch, opts = {}) {
+  console.log(" ---------- ");
+  console.log(
+    `006 includesWithRegex() called to match ${JSON.stringify(
+      whatToMatch,
+      null,
+      0
+    )} against:\n${JSON.stringify(arr, null, 4)}; opts = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   if (!Array.isArray(arr) || !arr.length) {
+    console.log(`018 includesWithRegex() quick end, return false`);
     return false;
   }
   return arr.some(
@@ -222,6 +257,13 @@ function includesWithRegex(arr, whatToMatch, opts = {}) {
 
 function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
   const extractedValue = str.slice(charStart, charEnd);
+  console.log(
+    `011 validateString/validateValue ${`\u001b[${33}m${`extractedValue`}\u001b[${39}m`} = ${JSON.stringify(
+      extractedValue,
+      null,
+      4
+    )}`
+  );
   if (
     !(
       includesWithRegex(opts.quickPermittedValues, extractedValue, {
@@ -232,6 +274,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       })
     )
   ) {
+    console.log(`027 validateString/validateValue`);
     let fix = null;
     let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
     if (
@@ -241,6 +284,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       ) ||
       includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
     ) {
+      console.log(`037 validateString/validateValue: set the message`);
       message = `Should be lowercase.`;
       fix = {
         ranges: [
@@ -259,6 +303,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) &&
       opts.quickPermittedValues.join("|").length < 40
     ) {
+      console.log(`061 validateString/validateValue set the message`);
       message = `Should be "${opts.quickPermittedValues.join("|")}".`;
     } else if (
       Array.isArray(opts.permittedValues) &&
@@ -269,6 +314,7 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
         !opts.quickPermittedValues.length) &&
       opts.permittedValues.join("|").length < 40
     ) {
+      console.log(`077 validateString/validateValue set the message`);
       message = `Should be "${opts.permittedValues.join("|")}".`;
     }
     errorArr.push({
@@ -277,9 +323,23 @@ function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
       message,
       fix
     });
+    console.log(
+      `088 validateString/validateValue after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+        errorArr,
+        null,
+        4
+      )}`
+    );
   }
 }
 function validateString(str, idxOffset, originalOpts) {
+  console.log(
+    `102 ██ ${`\u001b[${35}m${`validateString() called`}\u001b[${39}m`}; opts = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   const defaults = {
     canBeCommaSeparated: false,
     caseInsensitive: false,
@@ -288,17 +348,37 @@ function validateString(str, idxOffset, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  console.log(
+    `120 validateString(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd};\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+      errorArr,
+      null,
+      4
+    )}`
+  );
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
+      console.log(
+        `131 validateString(): ${`\u001b[${32}m${`call processCommaSeparated()`}\u001b[${39}m`}`
+      );
       processCommaSeparated(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
+          console.log(
+            `140 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+          );
           const extractedValue = str.slice(
             idxFrom - idxOffset,
             idxTo - idxOffset
+          );
+          console.log(
+            `148 ██ validateString(): EXTRACTED VALUE: ${JSON.stringify(
+              extractedValue,
+              null,
+              0
+            )}`
           );
           validateValue(
             str,
@@ -310,6 +390,9 @@ function validateString(str, idxOffset, originalOpts) {
           );
         },
         errCb: (ranges, message) => {
+          console.log(
+            `168 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+          );
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
@@ -318,13 +401,31 @@ function validateString(str, idxOffset, originalOpts) {
               ranges
             }
           });
+          console.log(
+            `179 validateString(): after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         }
       });
     } else {
+      console.log(`188 validateString(): single value clauses`);
       const extractedValue = str.slice(charStart, charEnd);
+      console.log(
+        `192 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${extractedValue}\u001b[${39}m`}`
+      );
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
+  console.log(
+    `202 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+      errorArr,
+      null,
+      4
+    )}`
+  );
   return errorArr;
 }
 
@@ -385,7 +486,22 @@ function isObj(something) {
   );
 }
 function isAnEnabledRule(config, ruleId) {
+  console.log(
+    `097 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`config`}\u001b[${39}m`} = ${JSON.stringify(
+      config,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `104 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+      ruleId,
+      null,
+      4
+    )}`
+  );
   if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
+    console.log(`112 RETURN ${config[ruleId]}`);
     return config[ruleId];
   } else if (
     ruleId.includes("-") &&
@@ -396,6 +512,7 @@ function isAnEnabledRule(config, ruleId) {
     isObj(config) &&
     Object.prototype.hasOwnProperty.call(config, "all")
   ) {
+    console.log(`123 RETURN ${config.all}`);
     return config.all;
   }
   return 0;
@@ -404,6 +521,9 @@ function isAnEnabledRule(config, ruleId) {
 function badCharacterNull(context) {
   return {
     character: function({ chr, i }) {
+      console.log(
+        `011 ${`\u001b[${32}m${`bad-character-null.js`}\u001b[${39}m`}: inside the rule, chr = "${chr}"; i = ${i}`
+      );
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -564,6 +684,13 @@ function badCharacterBackspace(context) {
 }
 
 function badCharacterTabulation(context, ...originalOpts) {
+  console.log(
+    `${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      originalOpts,
+      null,
+      4
+    )}`
+  );
   let mode = "never";
   if (
     Array.isArray(originalOpts) &&
@@ -2447,14 +2574,20 @@ function badCharacterReplacementCharacter(context) {
 function tagSpaceAfterOpeningBracket(context) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagSpaceAfterOpeningBracket() ███████████████████████████████████████`
+      );
+      console.log(`node = ${JSON.stringify(node, null, 4)}`);
       const ranges = [];
       if (
         typeof context.str[node.start + 1] === "string" &&
         !context.str[node.start + 1].trim().length
       ) {
+        console.log(`028 whitespace after opening bracket confirmed`);
         ranges.push([node.start + 1, right(context.str, node.start + 1)]);
       }
       if (!context.str[node.tagNameStartsAt - 1].trim().length) {
+        console.log(`034 whitespace before tag name confirmed`);
         const charToTheLeftOfTagNameIdx = left(
           context.str,
           node.tagNameStartsAt
@@ -2479,11 +2612,33 @@ function tagSpaceAfterOpeningBracket(context) {
 function tagSpaceBeforeClosingSlash(context, ...opts) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
+      );
+      console.log(`019 inside rule: node = ${JSON.stringify(node, null, 4)}`);
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
+      console.log(`021 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
+      console.log(
+        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartsAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+          context.str[node.tagNameStartsAt],
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `031 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       let mode = "never";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log(
+        `045 tagSpaceBeforeClosingSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+      );
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
       const leftOfSlashPos = left(context.str, slashPos);
@@ -2493,6 +2648,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         context.str[slashPos] === "/" &&
         leftOfSlashPos < slashPos - 1
       ) {
+        console.log(`058 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -2506,6 +2662,7 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
         context.str[slashPos] === "/" &&
         leftOfSlashPos === slashPos - 1
       ) {
+        console.log(`072 space missing in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",
@@ -2528,6 +2685,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
         left(context.str, node.end - 1) < node.end - 2
       ) {
         const idxFrom = left(context.str, node.end - 1) + 1;
+        console.log(`025 whitespace present between slash and bracket!`);
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
@@ -2544,15 +2702,29 @@ const BACKSLASH = "\u005C";
 function tagClosingBackslash(context) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagClosingBackslash() ███████████████████████████████████████`
+      );
+      console.log(
+        `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const ranges = [];
       if (
         Number.isInteger(node.start) &&
         Number.isInteger(node.tagNameStartsAt) &&
         context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH)
       ) {
+        console.log(`045 backslash in front!`);
         for (let i = node.start; i < node.tagNameStartsAt; i++) {
           if (context.str[i] === BACKSLASH) {
             ranges.push([i, i + 1]);
+            console.log(
+              `054 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}]`
+            );
           }
         }
       }
@@ -2567,6 +2739,17 @@ function tagClosingBackslash(context) {
         const backSlashPos = left(context.str, node.end - 1);
         let idxFrom = left(context.str, backSlashPos) + 1;
         let whatToInsert = node.void ? "/" : "";
+        console.log(
+          `083 ${`\u001b[${35}m${`initial`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+            idxFrom,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = ${JSON.stringify(
+            whatToInsert,
+            null,
+            4
+          )}`
+        );
         if (
           context.processedRulesConfig["tag-space-before-closing-slash"] &&
           ((Number.isInteger(
@@ -2585,6 +2768,9 @@ function tagClosingBackslash(context) {
               ][1] === "never"))
         ) {
           idxFrom = left(context.str, backSlashPos) + 1;
+          console.log(
+            `114 SET ${`\u001b[${32}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}`
+          );
         }
         if (
           Array.isArray(
@@ -2597,13 +2783,29 @@ function tagClosingBackslash(context) {
         ) {
           idxFrom = left(context.str, backSlashPos) + 1;
           whatToInsert = ` ${whatToInsert}`;
+          console.log(
+            `132 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+          );
           if (node.void && context.str[idxFrom + 1] === " ") {
             idxFrom++;
             whatToInsert = whatToInsert.trim();
+            console.log(
+              `140 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${idxFrom}; ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            );
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
+            console.log(
+              `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToInsert`}\u001b[${39}m`} = "${whatToInsert}"`
+            );
           }
         }
+        console.log(
+          `151 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+            idxFrom,
+            null,
+            4
+          )}`
+        );
         if (
           node.void &&
           Array.isArray(context.processedRulesConfig["tag-void-slash"]) &&
@@ -2639,14 +2841,21 @@ const BACKSLASH$1 = "\u005C";
 function tagVoidSlash(context, ...opts) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagVoidSlash() ███████████████████████████████████████`
+      );
       let mode = "always";
       if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log(
+        `024 tagVoidSlash(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+      );
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
       const leftOfSlashPos = left(context.str, slashPos);
       if (mode === "never" && node.void && context.str[slashPos] === "/") {
+        console.log(`036 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -2673,6 +2882,7 @@ function tagVoidSlash(context, ...opts) {
                   "always"))
           ))
       ) {
+        console.log(`064`);
         if (
           Array.isArray(
             context.processedRulesConfig["tag-space-before-closing-slash"]
@@ -2680,7 +2890,9 @@ function tagVoidSlash(context, ...opts) {
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
+          console.log(`075`);
           if (context.str[slashPos + 1] === " ") {
+            console.log(`080 add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2689,6 +2901,7 @@ function tagVoidSlash(context, ...opts) {
               fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] }
             });
           } else {
+            console.log(`090 add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -2711,6 +2924,7 @@ function tagVoidSlash(context, ...opts) {
           ) &&
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
+          console.log(`114 add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
@@ -2728,12 +2942,38 @@ function tagNameCase(context) {
   const knownUpperCaseTags = ["DOCTYPE", "CDATA"];
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagNameCase() ███████████████████████████████████████`
+      );
+      console.log(
+        `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.tagName && node.recognised === true) {
+        console.log(`022 tagNameCase(): recognised tag`);
+        console.log(
+          `025 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
+            knownUpperCaseTags.includes(node.tagName.toUpperCase()),
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `032 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
+            node.tagName,
+            null,
+            4
+          )}`
+        );
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
           if (
             context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
             node.tagName.toUpperCase()
           ) {
+            console.log(`046 tagNameCase(): wrong tag case!`);
             const ranges = [
               [
                 node.tagNameStartsAt,
@@ -2753,6 +2993,7 @@ function tagNameCase(context) {
           context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
           node.tagName
         ) {
+          console.log(`068 tagNameCase(): wrong tag case!`);
           const ranges = [
             [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]
           ];
@@ -2772,9 +3013,34 @@ function tagNameCase(context) {
 function tagIsPresent(context, ...opts) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagIsPresent() ███████████████████████████████████████`
+      );
+      console.log(
+        `015 tagIsPresent(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `022 tagIsPresent(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (Array.isArray(opts) && opts.length) {
         const temp = matcher([node.tagName], opts);
+        console.log(
+          `028 ${`\u001b[${33}m${`matcher([${JSON.stringify(
+            node.tagName,
+            null,
+            0
+          )}], ${JSON.stringify(
+            opts,
+            null,
+            0
+          )})`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`
+        );
         if (matcher([node.tagName], opts).length) {
+          console.log(`039 RAISE ERROR [${node.start}, ${node.end}]`);
           context.report({
             ruleId: "tag-is-present",
             message: `${node.tagName} is not allowed.`,
@@ -2791,6 +3057,17 @@ function tagIsPresent(context, ...opts) {
 function tagBold(context, ...opts) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 tagBold(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(`019 tagBold(): node = ${JSON.stringify(node, null, 4)}`);
       let suggested = "strong";
       if (
         Array.isArray(opts) &&
@@ -2800,6 +3077,7 @@ function tagBold(context, ...opts) {
         suggested = "b";
       }
       if (node.tagName === "bold") {
+        console.log(`031 RAISE ERROR [${node.start}, ${node.end}]`);
         context.report({
           ruleId: "tag-bold",
           message: `Tag "bold" does not exist in HTML.`,
@@ -2817,12 +3095,26 @@ function tagBold(context, ...opts) {
 function attributeDuplicate(context, ...opts) {
   return {
     tag: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeDuplicate() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 attributeDuplicate(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeDuplicate(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
         const attrsGatheredSoFar = [];
         for (let i = 0, len = node.attribs.length; i < len; i++) {
           if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
             attrsGatheredSoFar.push(node.attribs[i].attribName);
           } else {
+            console.log(`030 attributeDuplicate(): RAISE ERROR`);
             context.report({
               ruleId: "attribute-duplicate",
               message: `Duplicate attribute "${node.attribs[i].attribName}".`,
@@ -2841,14 +3133,31 @@ function attributeMalformed(context, ...opts) {
   const blacklist = ["doctype"];
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeMalformed() ███████████████████████████████████████`
+      );
+      console.log(
+        `019 attributeMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `026 attributeMalformed(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (
         !node.attribNameRecognised &&
         !node.attribName.startsWith("xmlns:") &&
         !blacklist.includes(node.parent.tagName)
       ) {
+        console.log(
+          `037 attributeMalformed(): ${`\u001b[${31}m${`unrecognised attr name!`}\u001b[${39}m`}`
+        );
         let somethingMatched = false;
         for (let i = 0, len = allHtmlAttribs.length; i < len; i++) {
           if (leven(allHtmlAttribs[i], node.attribName) === 1) {
+            console.log(`043 RAISE ERROR`);
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${allHtmlAttribs[i]}".`,
@@ -2869,6 +3178,9 @@ function attributeMalformed(context, ...opts) {
           }
         }
         if (!somethingMatched) {
+          console.log(
+            `067 RAISE ERROR, [${node.attribNameStartsAt}, ${node.attribNameEndsAt}]`
+          );
           context.report({
             ruleId: "attribute-malformed",
             message: `Unrecognised attribute "${node.attribName}".`,
@@ -2881,6 +3193,7 @@ function attributeMalformed(context, ...opts) {
         node.attribValueStartsAt !== null &&
         context.str[node.attribNameEndsAt] !== "="
       ) {
+        console.log(`081 RAISE ERROR`);
         context.report({
           ruleId: "attribute-malformed",
           message: `Equal is missing.`,
@@ -2896,6 +3209,19 @@ function attributeMalformed(context, ...opts) {
 function attributeValidateAbbr(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAbbr() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAbbr(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "abbr") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -2910,7 +3236,15 @@ function attributeValidateAbbr(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-abbr"
@@ -3372,6 +3706,23 @@ const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 function attributeValidateAcceptCharset(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAcceptCharset() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateAcceptCharset(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "accept-charset") {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
@@ -3392,7 +3743,15 @@ function attributeValidateAcceptCharset(context, ...opts) {
             permittedValues: knownCharsets
           }
         );
+        console.log(
+          `054 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`062 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-accept-charset"
@@ -3407,6 +3766,19 @@ function attributeValidateAcceptCharset(context, ...opts) {
 function attributeValidateAccept(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAccept() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateAccept(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "accept") {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -3438,7 +3810,15 @@ function attributeValidateAccept(context, ...opts) {
             noSpaceAfterComma: true
           }
         );
+        console.log(
+          `059 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`070 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-accept"
@@ -3453,6 +3833,23 @@ function attributeValidateAccept(context, ...opts) {
 function attributeValidateAccesskey(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAccesskey() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAccesskey(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "accesskey") {
         if (
           ![
@@ -3477,6 +3874,13 @@ function attributeValidateAccesskey(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `055 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         if (Number.isInteger(charStart)) {
           if (
             trimmedVal.length > 1 &&
@@ -3491,6 +3895,7 @@ function attributeValidateAccesskey(context, ...opts) {
           }
         }
         errorArr.forEach(errorObj => {
+          console.log(`079 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-accesskey"
@@ -3549,15 +3954,51 @@ function isSingleSpace(str, originalOpts, errorArr) {
     offset: 0
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  console.log(`010 opts.from = ${opts.from}; opts.to = ${opts.to}`);
   if (str.slice(opts.from, opts.to) !== " ") {
+    console.log(
+      `013 isSingleSpace(): problems with whitespace, carved out ${JSON.stringify(
+        str.slice(opts.from, opts.to),
+        null,
+        4
+      )}`
+    );
     let ranges;
     if (str[opts.from] === " ") {
       ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
+      console.log(
+        `025 isSingleSpace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          ranges,
+          null,
+          4
+        )}`
+      );
     } else if (str[opts.to - 1] === " ") {
       ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
+      console.log(
+        `034 isSingleSpace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          ranges,
+          null,
+          4
+        )}`
+      );
     } else {
+      console.log(
+        `042 isSingleSpace(): worst case scenario, replace the whole whitespace`
+      );
       ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
+      console.log(
+        `046 isSingleSpace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          ranges,
+          null,
+          4
+        )}`
+      );
     }
+    console.log(
+      `056 isSingleSpace(): [[${opts.offset + opts.from}, ${opts.offset +
+        opts.to}]]`
+    );
     errorArr.push({
       idxFrom: opts.offset + opts.from,
       idxTo: opts.offset + opts.to,
@@ -3570,6 +4011,10 @@ function isSingleSpace(str, originalOpts, errorArr) {
 }
 
 function validateValue$1(str, originalOpts, errorArr) {
+  console.log(" ");
+  console.log(
+    `011 ${`\u001b[${32}m${`validateUri/validateValue() called`}\u001b[${39}m`}`
+  );
   const defaults = {
     offset: 0,
     multipleOK: false,
@@ -3579,7 +4024,26 @@ function validateValue$1(str, originalOpts, errorArr) {
     attribEnd: str.length
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  console.log(" ");
   const extractedValue = str.slice(opts.from, opts.to);
+  console.log(
+    `026 validateUri/validateValue(): ${`\u001b[${33}m${`extractedValue`}\u001b[${39}m`} = ${JSON.stringify(
+      extractedValue,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `033 validateUri/validateValue(): CALCULATED ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `040 validateUri/validateValue(): real range: [${opts.offset +
+      opts.from}, ${opts.offset + opts.to}]`
+  );
   const calcultedIsRel = isRel(extractedValue);
   if (Array.from(extractedValue).some(val => !val.trim().length)) {
     const ranges = [];
@@ -3587,14 +4051,41 @@ function validateValue$1(str, originalOpts, errorArr) {
     splitByWhitespace(
       extractedValue,
       valueRangeArr => {
+        console.log(
+          `055 validateUri/validateValue(): ${`\u001b[${33}m${`valueRangeArr`}\u001b[${39}m`} = ${JSON.stringify(
+            valueRangeArr,
+            null,
+            4
+          )}`
+        );
         foundCharacterRanges.push(valueRangeArr);
       },
       whitespaceRangeArr => {
+        console.log(
+          `065 validateUri/validateValue(): ${`\u001b[${33}m${`whitespaceRangeArr`}\u001b[${39}m`} = ${JSON.stringify(
+            whitespaceRangeArr,
+            null,
+            4
+          )}`
+        );
         ranges.push(whitespaceRangeArr);
       },
       originalOpts
     );
+    console.log(
+      `077 validateUri/validateValue(): ${`\u001b[${33}m${`foundCharacterRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        foundCharacterRanges,
+        null,
+        4
+      )}`
+    );
     const countOfURIs = foundCharacterRanges.reduce((acc, curr) => {
+      console.log(
+        `085 ███████████████████████████████████████ checking "${extractedValue.slice(
+          curr[0] - opts.offset,
+          curr[1] - opts.offset
+        )}"`
+      );
       if (
         extractedValue
           .slice(curr[0] - opts.offset, curr[1] - opts.offset)
@@ -3604,12 +4095,27 @@ function validateValue$1(str, originalOpts, errorArr) {
       }
       return acc;
     }, 0);
+    console.log(
+      `100 validateUri/validateValue(): ${`\u001b[${33}m${`countOfURIs`}\u001b[${39}m`} = ${JSON.stringify(
+        countOfURIs,
+        null,
+        4
+      )}`
+    );
     const valueWithoutWhitespace = foundCharacterRanges.reduce((acc, curr) => {
       return (
         acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset)
       );
     }, "");
+    console.log(
+      `114 validateUri/validateValue(): ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+        valueWithoutWhitespace,
+        null,
+        4
+      )}`
+    );
     if (countOfURIs > 1) {
+      console.log(`122 message: "There should be only one URI."`);
       errorArr.push({
         idxFrom: opts.from + opts.offset,
         idxTo: opts.to + opts.offset,
@@ -3617,6 +4123,7 @@ function validateValue$1(str, originalOpts, errorArr) {
         fix: null
       });
     } else {
+      console.log(`130 message: "Remove whitespace."`);
       errorArr.push({
         idxFrom: opts.from + opts.offset,
         idxTo: opts.to + opts.offset,
@@ -3629,10 +4136,18 @@ function validateValue$1(str, originalOpts, errorArr) {
   } else if (
     !(urlRegex({ exact: true }).test(extractedValue) || calcultedIsRel.res)
   ) {
+    console.log(`143 validateUri/validateValue(): ██ inside not-URL clauses`);
     let message = `Should be an URI.`;
     let idxFrom = opts.offset + opts.from;
     let idxTo = opts.offset + opts.to;
     const whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex());
+    console.log(
+      `156 validateUri/validateValue(): ${`\u001b[${33}m${`whatCouldBeExtractedAtAllFromRegex`}\u001b[${39}m`} = ${JSON.stringify(
+        whatCouldBeExtractedAtAllFromRegex,
+        null,
+        4
+      )}`
+    );
     if (Array.isArray(whatCouldBeExtractedAtAllFromRegex)) {
       if (whatCouldBeExtractedAtAllFromRegex.length > 1 && !opts.multipleOK) {
         message = `There should be only one URI.`;
@@ -3642,6 +4157,9 @@ function validateValue$1(str, originalOpts, errorArr) {
       idxFrom = opts.offset + opts.attribStart;
       idxTo = opts.offset + opts.attribEnd;
     }
+    console.log(
+      `175 validateUri/validateValue(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [[${idxFrom}, ${idxTo}]]; message = "${message}"`
+    );
     errorArr.push({
       idxFrom,
       idxTo,
@@ -3651,6 +4169,9 @@ function validateValue$1(str, originalOpts, errorArr) {
   }
 }
 function validateUri(str, originalOpts) {
+  console.log(
+    `188 incoming originalOpts = ${JSON.stringify(originalOpts, null, 4)}`
+  );
   const defaults = {
     offset: 0,
     multipleOK: false,
@@ -3660,15 +4181,58 @@ function validateUri(str, originalOpts) {
     trailingWhitespaceOK: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  console.log(
+    `200 validateUri(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, opts.offset);
+  console.log(
+    `211 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}`
+  );
+  console.log(
+    `214 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd}`
+  );
+  console.log(
+    `217 validateUri: from checkForWhitespace() received ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+      errorArr,
+      null,
+      4
+    )}`
+  );
   if (Number.isInteger(charStart)) {
+    console.log(
+      `228 validateUri: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        opts,
+        null,
+        4
+      )}`
+    );
     if (opts.multipleOK) {
       if (opts.separator === "space") {
+        console.log(`237 validateUri: use splitByWhitespace()`);
         splitByWhitespace(
           str,
           ([charFrom, charTo]) => {
+            console.log(
+              `242 validateUri: charFrom = ${charFrom}; charTo = ${charTo}`
+            );
             const extractedName = str.slice(charFrom, charTo);
+            console.log(
+              `246 validateUri: ${`\u001b[${33}m${`extractedName`}\u001b[${39}m`} = ${JSON.stringify(
+                extractedName,
+                null,
+                4
+              )}`
+            );
             if (extractedName.endsWith(",") && extractedName.length > 1) {
+              console.log(
+                `256 validateUri: PUSH [${opts.offset +
+                  charTo -
+                  1}, ${opts.offset + charTo}]`
+              );
               errorArr.push({
                 idxFrom: opts.offset + charTo - 1,
                 idxTo: opts.offset + charTo,
@@ -3705,15 +4269,26 @@ function validateUri(str, originalOpts) {
           }
         );
       } else {
+        console.log(`297 validateUri: use processCommaSeparated()`);
         processCommaSeparated(str, {
           offset: opts.offset,
           oneSpaceAfterCommaOK: false,
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: (idxFrom, idxTo) => {
+            console.log(
+              `305 validateUri: ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+            );
             const extractedValue = str.slice(
               idxFrom - opts.offset,
               idxTo - opts.offset
+            );
+            console.log(
+              `313 validateUri: ██ EXTRACTED VALUE: ${JSON.stringify(
+                extractedValue,
+                null,
+                0
+              )}`
             );
             validateValue$1(
               str,
@@ -3728,6 +4303,13 @@ function validateUri(str, originalOpts) {
             );
           },
           errCb: (ranges, message) => {
+            console.log(
+              `338 validateUri: ${`\u001b[${32}m${`INCOMING errCb`}\u001b[${39}m`} ranges = ${JSON.stringify(
+                ranges,
+                null,
+                4
+              )}; message = ${message}`
+            );
             let fix = {
               ranges
             };
@@ -3739,6 +4321,9 @@ function validateUri(str, originalOpts) {
                 (str[ranges[0][0] - opts.offset - 1] !== "," &&
                   str[ranges[0][1] - opts.offset] !== ","))
             ) {
+              console.log(
+                `361 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} fix = null`
+              );
               fix = null;
             }
             errorArr.push({
@@ -3747,10 +4332,18 @@ function validateUri(str, originalOpts) {
               message,
               fix
             });
+            console.log(
+              `373 validateUri: after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
           }
         });
       }
     } else {
+      console.log(`383 validateUri: the whole attribute should be validated`);
       validateValue$1(
         str,
         { from: charStart, to: charEnd, offset: opts.offset },
@@ -3764,6 +4357,19 @@ function validateUri(str, originalOpts) {
 function attributeValidateAction(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAction() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAction(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "action") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -3778,6 +4384,7 @@ function attributeValidateAction(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`040 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-action"
@@ -3793,6 +4400,19 @@ function attributeValidateAction(context, ...opts) {
 function attributeValidateAlign(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAlign(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "align") {
         if (
           ![
@@ -3899,7 +4519,15 @@ function attributeValidateAlign(context, ...opts) {
             }
           );
         }
+        console.log(
+          `140 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`148 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-align"
@@ -3912,6 +4540,13 @@ function attributeValidateAlign(context, ...opts) {
 }
 
 function validateColor(str, idxOffset, opts) {
+  console.log(
+    `011 ${`\u001b[${35}m${`validateColor() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
     const attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
@@ -3921,6 +4556,9 @@ function validateColor(str, idxOffset, opts) {
       isLetter(attrVal[1]) &&
       Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
     ) {
+      console.log(
+        `043 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
+      );
       if (!opts.namedCssLevel1OK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
@@ -3965,6 +4603,9 @@ function validateColor(str, idxOffset, opts) {
           fix: null
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
+        console.log(
+          `091 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
+        );
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
@@ -4001,6 +4642,16 @@ function validateColor(str, idxOffset, opts) {
 function attributeValidateAlink(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAlink() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "alink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -4023,7 +4674,11 @@ function attributeValidateAlink(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-alink"
@@ -4038,6 +4693,19 @@ function attributeValidateAlink(context, ...opts) {
 function attributeValidateAlt(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAlt() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAlt(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "alt") {
         if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
           context.report({
@@ -4052,7 +4720,15 @@ function attributeValidateAlt(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-alt"
@@ -4067,6 +4743,23 @@ function attributeValidateAlt(context, ...opts) {
 function attributeValidateArchive(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateArchive() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateArchive(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "archive") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4083,6 +4776,7 @@ function attributeValidateArchive(context, ...opts) {
               separator: "comma",
               multipleOK: true
             }).forEach(errorObj => {
+              console.log(`048 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-archive"
@@ -4095,6 +4789,7 @@ function attributeValidateArchive(context, ...opts) {
               separator: "space",
               multipleOK: true
             }).forEach(errorObj => {
+              console.log(`064 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-archive"
@@ -4111,6 +4806,19 @@ function attributeValidateArchive(context, ...opts) {
 function attributeValidateAxis(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateAxis() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateAxis(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "axis") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -4125,7 +4833,15 @@ function attributeValidateAxis(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-axis"
@@ -4140,6 +4856,23 @@ function attributeValidateAxis(context, ...opts) {
 function attributeValidateBackground(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateBackground() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateBackground(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "background") {
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -4154,6 +4887,7 @@ function attributeValidateBackground(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`044 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-background"
@@ -4169,6 +4903,16 @@ function attributeValidateBackground(context, ...opts) {
 function attributeValidateBgcolor(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateBgcolor() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "bgcolor") {
         if (
           !["table", "tr", "td", "th", "body"].includes(node.parent.tagName)
@@ -4193,7 +4937,11 @@ function attributeValidateBgcolor(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-bgcolor"
@@ -4206,6 +4954,23 @@ function attributeValidateBgcolor(context, ...opts) {
 }
 
 function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr }) {
+  console.log(` `);
+  console.log(` `);
+  console.log(` `);
+  console.log(
+    `014 validateValue(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+      str,
+      null,
+      4
+    )}; ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `025 validateValue(): INCOMING ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd}`
+  );
   if (str[charStart] === "0") {
     if (charEnd === charStart + 1) {
       if (!opts.zeroOK) {
@@ -4231,6 +4996,10 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
     !"0123456789".includes(str[charStart]) &&
     !"0123456789".includes(str[charEnd - 1])
   ) {
+    console.log(
+      `059 validateValue(): no digits, PUSH [${idxOffset +
+        charStart}, ${idxOffset + charEnd}]`
+    );
     let message = `Digits missing.`;
     if (opts.customGenericValueError) {
       message = opts.customGenericValueError;
@@ -4256,7 +5025,12 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
         str.slice(charStart, charEnd).match(/^\d+$/) &&
         Number.parseInt(str.slice(charStart, charEnd), 10) > opts.maxValue))
   ) {
+    console.log(`090 validateValue(): inside digits-only clauses`);
     if (!opts.noUnitsIsFine) {
+      console.log(
+        `093 validateValue(): units missing, PUSH [${idxOffset +
+          charStart}, ${idxOffset + charEnd}]`
+      );
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
@@ -4264,6 +5038,10 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
         fix: null
       });
     } else {
+      console.log(
+        `104 validateValue(): maximum exceeded, PUSH [${idxOffset +
+          charStart}, ${idxOffset + charEnd}]`
+      );
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
@@ -4272,7 +5050,17 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
       });
     }
   } else {
+    console.log(
+      `116 validateValue(): separate digits from units, evaluate both`
+    );
     for (let i = charStart; i < charEnd; i++) {
+      console.log(
+        `120 validateValue(): ${`\u001b[${36}m${`loop`}\u001b[${39}m`} ${`\u001b[${36}m${`str[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+          str[i],
+          null,
+          0
+        )}`
+      );
       if (
         !"0123456789".includes(str[i]) &&
         (str[i] !== "." || opts.type !== "rational") &&
@@ -4280,12 +5068,20 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
         (str[i] !== "+" || !(opts.plusOK && i === 0))
       ) {
         const endPart = str.slice(i, charEnd);
+        console.log(
+          `135 ${`\u001b[${33}m${`endPart`}\u001b[${39}m`} = ${JSON.stringify(
+            endPart,
+            null,
+            4
+          )}`
+        );
         if (
           isObj(opts) &&
           ((Array.isArray(opts.theOnlyGoodUnits) &&
             !opts.theOnlyGoodUnits.includes(endPart)) ||
             (Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart)))
         ) {
+          console.log(`147 recognised unit clauses`);
           if (endPart === "px") {
             const message = opts.customPxMessage
               ? opts.customPxMessage
@@ -4329,6 +5125,7 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
             });
           }
         } else if (!knownUnits.includes(endPart)) {
+          console.log(`197 unrecognised unit clauses`);
           let message = "Unrecognised unit.";
           if (/\d/.test(endPart)) {
             message = "Messy value.";
@@ -4348,6 +5145,13 @@ function validateValue$2({ str, opts, charStart, charEnd, idxOffset, errorArr })
   }
 }
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
+  console.log(
+    `239 ${`\u001b[${35}m${`validateDigitAndUnit() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
   const defaultOpts = {
     type: "integer",
     whitelistValues: [],
@@ -4374,8 +5178,26 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     charEnd = retrievedWhitespaceChecksObj.charEnd;
     errorArr = retrievedWhitespaceChecksObj.errorArr;
   }
+  console.log(
+    `279 validateDigitAndUnit(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+      charStart,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `286 validateDigitAndUnit(): ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+      charEnd,
+      null,
+      4
+    )}`
+  );
   if (Number.isInteger(charStart)) {
+    console.log(`295 validateDigitAndUnit(): it is integer.`);
     if (opts.canBeCommaSeparated) {
+      console.log(
+        `298 validateDigitAndUnit(): opts.canBeCommaSeparated clauses`
+      );
       const extractedValues = [];
       processCommaSeparated(str, {
         offset: idxOffset,
@@ -4383,6 +5205,16 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
+          console.log(
+            `310 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+          );
+          console.log(
+            `313 ██ EXTRACTED VALUE: ${JSON.stringify(
+              str.slice(idxFrom - idxOffset, idxTo - idxOffset),
+              null,
+              0
+            )}`
+          );
           const extractedValue = str.slice(
             idxFrom - idxOffset,
             idxTo - idxOffset
@@ -4403,6 +5235,9 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           extractedValues.push(extractedValue);
         },
         errCb: (ranges, message) => {
+          console.log(
+            `344 cb(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+          );
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
@@ -4411,8 +5246,22 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
               ranges
             }
           });
+          console.log(
+            `355 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         }
       });
+      console.log(
+        `366 validateDigitAndUnit(): ${`\u001b[${33}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
+          extractedValues,
+          null,
+          4
+        )}`
+      );
       if (
         Number.isInteger(opts.enforceCount) &&
         extractedValues.length !== opts.enforceCount
@@ -4423,6 +5272,13 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           message: `There should be ${opts.enforceCount} values.`,
           fix: null
         });
+        console.log(
+          `384 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
       } else if (
         typeof opts.enforceCount === "string" &&
         ["even", "odd", "uneven", "noneven"].includes(
@@ -4439,6 +5295,13 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             message: `Should be an even number of values but found ${extractedValues.length}.`,
             fix: null
           });
+          console.log(
+            `407 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         } else if (
           opts.enforceCount.toLowerCase() !== "even" &&
           extractedValues.length % 2 === 0
@@ -4449,9 +5312,19 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
             message: `Should be an odd number of values but found ${extractedValues.length}.`,
             fix: null
           });
+          console.log(
+            `424 after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         }
       }
     } else {
+      console.log(
+        `434 validateDigitAndUnit(): opts.canBeCommaSeparated is off, process the whole`
+      );
       if (
         !Array.isArray(opts.whitelistValues) ||
         !opts.whitelistValues.includes(str.slice(charStart, charEnd))
@@ -4473,6 +5346,16 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
 function attributeValidateBorder(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateBorder() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "border") {
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -4492,7 +5375,11 @@ function attributeValidateBorder(context, ...opts) {
             theOnlyGoodUnits: []
           }
         );
+        console.log(
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-border"
@@ -4507,6 +5394,16 @@ function attributeValidateBorder(context, ...opts) {
 function attributeValidateCellpadding(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCellpadding() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "cellpadding") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4529,7 +5426,11 @@ function attributeValidateCellpadding(context, ...opts) {
               "Should be integer, either no units or percentage."
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-cellpadding"
@@ -4544,6 +5445,16 @@ function attributeValidateCellpadding(context, ...opts) {
 function attributeValidateCellspacing(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCellspacing() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "cellspacing") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -4566,7 +5477,11 @@ function attributeValidateCellspacing(context, ...opts) {
               "Should be integer, either no units or percentage."
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-cellspacing"
@@ -4581,6 +5496,19 @@ function attributeValidateCellspacing(context, ...opts) {
 function attributeValidateChar(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateChar() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateChar(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "char") {
         if (
           ![
@@ -4606,6 +5534,13 @@ function attributeValidateChar(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `051 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         if (Number.isInteger(charStart)) {
           if (
             trimmedVal.length > 1 &&
@@ -4620,6 +5555,7 @@ function attributeValidateChar(context, ...opts) {
           }
         }
         errorArr.forEach(errorObj => {
+          console.log(`074 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-char"
@@ -4634,6 +5570,23 @@ function attributeValidateChar(context, ...opts) {
 function attributeValidateCharoff(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCharoff() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateCharoff(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "charoff") {
         if (
           ![
@@ -4665,6 +5618,9 @@ function attributeValidateCharoff(context, ...opts) {
             customGenericValueError: "Should be integer, no units."
           }
         );
+        console.log(
+          `061 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         if (
           !node.parent.attribs.some(
             attribObj => attribObj.attribName === "char"
@@ -4678,6 +5634,7 @@ function attributeValidateCharoff(context, ...opts) {
           });
         }
         errorArr.forEach(errorObj => {
+          console.log(`079 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-charoff"
@@ -4692,6 +5649,23 @@ function attributeValidateCharoff(context, ...opts) {
 function attributeValidateCharset(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCharset() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateCharset(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "charset") {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
@@ -4712,7 +5686,15 @@ function attributeValidateCharset(context, ...opts) {
             permittedValues: knownCharsets
           }
         );
+        console.log(
+          `054 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`062 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-charset"
@@ -4725,6 +5707,13 @@ function attributeValidateCharset(context, ...opts) {
 }
 
 function validateVoid(node, context, errorArr, originalOpts) {
+  console.log(
+    `005 ${`\u001b[${35}m${`validateVoid() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
   const defaults = {
     xhtml: false,
     enforceSiblingAttributes: null
@@ -4748,6 +5737,20 @@ function validateVoid(node, context, errorArr, originalOpts) {
       context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
+      console.log(
+        `046 ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
+      );
+      console.log(
+        `050 ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
+          [
+            node.attribNameEndsAt,
+            node.attribEnd,
+            `=${quotesType}${node.attribName}${quotesType}`
+          ],
+          null,
+          4
+        )}`
+      );
       errorArr.push({
         idxFrom: node.attribNameStartsAt,
         idxTo: node.attribNameEndsAt,
@@ -4777,7 +5780,11 @@ function validateVoid(node, context, errorArr, originalOpts) {
     isObj(opts.enforceSiblingAttributes) &&
     Object.keys(opts.enforceSiblingAttributes).length
   ) {
+    console.log(`091 validateVoid(): sibling attributes enforced`);
     Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
+      console.log(
+        `094 validateVoid(): checking presence of attribute "${siblingAttr}"`
+      );
       if (
         Array.isArray(node.parent.attribs) &&
         !node.parent.attribs.some(
@@ -4828,6 +5835,23 @@ function validateVoid(node, context, errorArr, originalOpts) {
 function attributeValidateChecked(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateChecked() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateChecked(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -4861,6 +5885,7 @@ function attributeValidateChecked(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`069 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-checked"
@@ -4876,6 +5901,19 @@ function attributeValidateChecked(context, ...originalOpts) {
 function attributeValidateCite(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCite() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateCite(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "cite") {
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -4890,6 +5928,7 @@ function attributeValidateCite(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`040 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-cite"
@@ -4910,12 +5949,35 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
     offset: 0
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  console.log(
+    `015 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `022 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
+  );
   const listOfUniqueNames = [];
   splitByWhitespace(
     str,
     ([charFrom, charTo]) => {
+      console.log(`045 charFrom = ${charFrom}; charTo = ${charTo}`);
       const extractedName = str.slice(charFrom, charTo);
       if (!classNameRegex.test(extractedName)) {
+        console.log(
+          `050 splitByWhitespace(): PUSH ${JSON.stringify(
+            {
+              idxFrom: charFrom,
+              idxTo: charTo,
+              message: `Wrong ${opts.typeName} name.`,
+              fix: null
+            },
+            null,
+            4
+          )}`
+        );
         errorArr.push({
           idxFrom: charFrom,
           idxTo: charTo,
@@ -4965,6 +6027,19 @@ function checkClassOrIdValue(str, originalOpts, errorArr) {
 function attributeValidateClass(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateClass() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateClass(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "class") {
         if (
           [
@@ -4991,6 +6066,21 @@ function attributeValidateClass(context, ...opts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `052 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           checkClassOrIdValue(
             context.str,
             {
@@ -5001,7 +6091,15 @@ function attributeValidateClass(context, ...opts) {
             },
             errorArr
           );
+          console.log(
+            `079 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`087 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-class"
@@ -5017,6 +6115,23 @@ function attributeValidateClass(context, ...opts) {
 function attributeValidateClassid(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateClassid() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateClassid(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "classid") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5031,6 +6146,7 @@ function attributeValidateClassid(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`044 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-classid"
@@ -5046,6 +6162,23 @@ function attributeValidateClassid(context, ...opts) {
 function attributeValidateClassid$1(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateClassid() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateClassid(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "clear") {
         if (node.parent.tagName !== "br") {
           context.report({
@@ -5059,6 +6192,24 @@ function attributeValidateClassid$1(context, ...opts) {
         const { charStart, charEnd, errorArr } = checkForWhitespace(
           node.attribValue,
           node.attribValueStartsAt
+        );
+        console.log(
+          `047 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `058 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
         );
         if (
           !["left", "all", "right", "none"].includes(
@@ -5076,6 +6227,7 @@ function attributeValidateClassid$1(context, ...opts) {
           });
         }
         errorArr.forEach(errorObj => {
+          console.log(`081 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-clear"
@@ -5090,6 +6242,19 @@ function attributeValidateClassid$1(context, ...opts) {
 function attributeValidateCode(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCode() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateCode(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "code") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -5104,7 +6269,26 @@ function attributeValidateCode(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `052 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`060 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-code"
@@ -5119,6 +6303,23 @@ function attributeValidateCode(context, ...opts) {
 function attributeValidateCodebase(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCodebase() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateCodebase(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "codebase") {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -5133,6 +6334,7 @@ function attributeValidateCodebase(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`042 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-codebase"
@@ -5148,6 +6350,23 @@ function attributeValidateCodebase(context, ...opts) {
 function attributeValidateCodetype(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCodetype() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateCodetype(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "codetype") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5198,7 +6417,15 @@ function attributeValidateCodetype(context, ...opts) {
             noSpaceAfterComma: false
           }
         );
+        console.log(
+          `082 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`093 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-codetype"
@@ -5213,6 +6440,16 @@ function attributeValidateCodetype(context, ...opts) {
 function attributeValidateColor(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateColor() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "color") {
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
@@ -5235,7 +6472,11 @@ function attributeValidateColor(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-color"
@@ -5250,6 +6491,16 @@ function attributeValidateColor(context, ...opts) {
 function attributeValidateCols(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCols() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "cols") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -5260,6 +6511,13 @@ function attributeValidateCols(context, ...opts) {
             fix: null
           });
         }
+        console.log(
+          `036 attributeValidateCols(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+            node.attribValue,
+            null,
+            4
+          )}`
+        );
         let errorArr = [];
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
@@ -5275,6 +6533,13 @@ function attributeValidateCols(context, ...opts) {
               customGenericValueError: "Should be: pixels|%|*."
             }
           );
+          console.log(
+            `059 attributeValidateCols(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         } else if (node.parent.tagName === "textarea") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
@@ -5285,9 +6550,17 @@ function attributeValidateCols(context, ...opts) {
               customGenericValueError: "Should be integer, no units."
             }
           );
+          console.log(
+            `077 attributeValidateCols(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`087 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-cols"
@@ -5303,6 +6576,16 @@ function attributeValidateCols(context, ...opts) {
 function attributeValidateColspan(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateColspan() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "colspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -5322,7 +6605,11 @@ function attributeValidateColspan(context, ...opts) {
             customGenericValueError: "Should be integer, no units."
           }
         );
+        console.log(
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-colspan"
@@ -5337,6 +6624,23 @@ function attributeValidateColspan(context, ...opts) {
 function attributeValidateCompact(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCompact() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateCompact(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -5368,6 +6672,7 @@ function attributeValidateCompact(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-compact"
@@ -5383,6 +6688,23 @@ function attributeValidateCompact(context, ...originalOpts) {
 function attributeValidateContent(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateContent() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateContent(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "content") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -5397,7 +6719,26 @@ function attributeValidateContent(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `056 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-content"
@@ -5412,6 +6753,16 @@ function attributeValidateContent(context, ...opts) {
 function attributeValidateCoords(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateCoords() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "coords") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -5422,6 +6773,13 @@ function attributeValidateCoords(context, ...opts) {
             fix: null
           });
         } else {
+          console.log(
+            `035 attributeValidateCoords(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValue,
+              null,
+              4
+            )}`
+          );
           if (
             !Array.isArray(node.parent.attribs) ||
             !node.parent.attribs.length ||
@@ -5438,6 +6796,13 @@ function attributeValidateCoords(context, ...opts) {
             const shapeAttr = node.parent.attribs.filter(
               attrObj => attrObj.attribName === "shape"
             )[0];
+            console.log(
+              `062 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`shapeAttr`}\u001b[${39}m`} = ${JSON.stringify(
+                shapeAttr,
+                null,
+                4
+              )}`
+            );
             let enforceCount = null;
             if (shapeAttr.attribValue === "rect") {
               enforceCount = 4;
@@ -5462,6 +6827,7 @@ function attributeValidateCoords(context, ...opts) {
             );
             if (Array.isArray(errorArr) && errorArr.length) {
               errorArr.forEach(errorObj => {
+                console.log(`098 RAISE ERROR`);
                 context.report(
                   Object.assign({}, errorObj, {
                     ruleId: "attribute-validate-coords"
@@ -5479,6 +6845,19 @@ function attributeValidateCoords(context, ...opts) {
 function attributeValidateData(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateData() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateData(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "data") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -5493,6 +6872,7 @@ function attributeValidateData(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`038 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-data"
@@ -5508,6 +6888,23 @@ function attributeValidateData(context, ...opts) {
 function attributeValidateDatetime(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateDatetime() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateDatetime(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "datetime") {
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
@@ -5528,7 +6925,15 @@ function attributeValidateDatetime(context, ...opts) {
             noSpaceAfterComma: false
           }
         );
+        console.log(
+          `051 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`062 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-datetime"
@@ -5543,6 +6948,23 @@ function attributeValidateDatetime(context, ...opts) {
 function attributeValidateDeclare(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateDeclare() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateDeclare(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -5574,6 +6996,7 @@ function attributeValidateDeclare(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-declare"
@@ -5589,6 +7012,19 @@ function attributeValidateDeclare(context, ...originalOpts) {
 function attributeValidateDefer(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateDefer() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateDefer(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = {
         xhtml: false
       };
@@ -5620,6 +7056,7 @@ function attributeValidateDefer(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`063 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-defer"
@@ -5635,6 +7072,19 @@ function attributeValidateDefer(context, ...originalOpts) {
 function attributeValidateDir(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateDir() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateDir(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "dir") {
         if (
           [
@@ -5665,7 +7115,15 @@ function attributeValidateDir(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `058 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`066 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-dir"
@@ -5680,6 +7138,23 @@ function attributeValidateDir(context, ...opts) {
 function attributeValidateDisabled(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateDisabled() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateDisabled(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -5720,6 +7195,7 @@ function attributeValidateDisabled(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`076 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-disabled"
@@ -5735,6 +7211,23 @@ function attributeValidateDisabled(context, ...originalOpts) {
 function attributeValidateEnctype(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateEnctype() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateEnctype(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "enctype") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -5758,7 +7251,15 @@ function attributeValidateEnctype(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `056 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-enctype"
@@ -5773,6 +7274,19 @@ function attributeValidateEnctype(context, ...opts) {
 function attributeValidateFace(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateFace() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateFace(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "face") {
         if (node.parent.tagName !== "font") {
           context.report({
@@ -5787,7 +7301,26 @@ function attributeValidateFace(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `052 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`060 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-face"
@@ -5802,6 +7335,19 @@ function attributeValidateFace(context, ...opts) {
 function attributeValidateFor(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateFor() ███████████████████████████████████████`
+      );
+      console.log(
+        `015 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `022 attributeValidateFor(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "for") {
         if (node.parent.tagName !== "label") {
           context.report({
@@ -5815,6 +7361,24 @@ function attributeValidateFor(context, ...opts) {
           const { charStart, charEnd, errorArr } = checkForWhitespace(
             node.attribValue,
             node.attribValueStartsAt
+          );
+          console.log(
+            `041 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+          console.log(
+            `057 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
           );
           const extractedValue = node.attribValue.slice(charStart, charEnd);
           let message = `Wrong id name.`;
@@ -5849,7 +7413,15 @@ function attributeValidateFor(context, ...opts) {
               fix
             });
           }
+          console.log(
+            `097 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`105 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-for"
@@ -5865,6 +7437,19 @@ function attributeValidateFor(context, ...opts) {
 function attributeValidateFrame(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateFrame() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateFrame(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "frame") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -5893,7 +7478,15 @@ function attributeValidateFrame(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `056 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`064 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-frame"
@@ -5908,6 +7501,23 @@ function attributeValidateFrame(context, ...opts) {
 function attributeValidateFrameborder(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateFrameborder() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateFrameborder(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "frameborder") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -5926,7 +7536,15 @@ function attributeValidateFrameborder(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `050 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-frameborder"
@@ -5941,6 +7559,23 @@ function attributeValidateFrameborder(context, ...opts) {
 function attributeValidateHeaders(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHeaders() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateHeaders(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "headers") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -5955,6 +7590,24 @@ function attributeValidateHeaders(context, ...opts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `044 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+          console.log(
+            `060 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
+          );
           checkClassOrIdValue(
             context.str,
             {
@@ -5965,7 +7618,15 @@ function attributeValidateHeaders(context, ...opts) {
             },
             errorArr
           );
+          console.log(
+            `075 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`083 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-headers"
@@ -5981,6 +7642,19 @@ function attributeValidateHeaders(context, ...opts) {
 function attributeValidateHeight(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHeight() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateHeight(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "height") {
         if (
           !["iframe", "td", "th", "img", "object", "applet"].includes(
@@ -6005,7 +7679,11 @@ function attributeValidateHeight(context, ...opts) {
             customGenericValueError: `Should be "pixels|%".`
           }
         );
+        console.log(
+          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-height"
@@ -6020,6 +7698,19 @@ function attributeValidateHeight(context, ...opts) {
 function attributeValidateHref(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHref() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateHref(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "href") {
         if (!["a", "area", "link", "base"].includes(node.parent.tagName)) {
           context.report({
@@ -6034,6 +7725,7 @@ function attributeValidateHref(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`038 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-href"
@@ -6049,6 +7741,23 @@ function attributeValidateHref(context, ...opts) {
 function attributeValidateHreflang(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHreflang() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateHreflang(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "hreflang") {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6063,8 +7772,33 @@ function attributeValidateHreflang(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `048 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `059 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         const { message } = isLangCode(
           node.attribValue.slice(charStart, charEnd)
+        );
+        console.log(
+          `070 attributeValidateHreflang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+            message,
+            null,
+            4
+          )}`
         );
         if (message) {
           errorArr.push({
@@ -6075,6 +7809,7 @@ function attributeValidateHreflang(context, ...opts) {
           });
         }
         errorArr.forEach(errorObj => {
+          console.log(`086 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-hreflang"
@@ -6089,6 +7824,16 @@ function attributeValidateHreflang(context, ...opts) {
 function attributeValidateHspace(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHspace() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "hspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -6107,7 +7852,11 @@ function attributeValidateHspace(context, ...opts) {
             noUnitsIsFine: true
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-hspace"
@@ -6122,6 +7871,23 @@ function attributeValidateHspace(context, ...opts) {
 function attributeValidateHttpequiv(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateHttpequiv() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateHttpequiv(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "http-equiv") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -6140,7 +7906,15 @@ function attributeValidateHttpequiv(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `050 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-http-equiv"
@@ -6155,6 +7929,19 @@ function attributeValidateHttpequiv(context, ...opts) {
 function attributeValidateId(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateId() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateId(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "id") {
         if (
           ["base", "head", "html", "meta", "script", "style", "title"].includes(
@@ -6173,6 +7960,24 @@ function attributeValidateId(context, ...opts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `044 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charStart,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`node.attribValueStartsAt + charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              node.attribValueStartsAt + charEnd,
+              null,
+              4
+            )}; \n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+          console.log(
+            `060 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
+          );
           checkClassOrIdValue(
             context.str,
             {
@@ -6183,7 +7988,15 @@ function attributeValidateId(context, ...opts) {
             },
             errorArr
           );
+          console.log(
+            `075 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`083 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-id"
@@ -6199,6 +8012,19 @@ function attributeValidateId(context, ...opts) {
 function attributeValidateIsmap(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateIsmap() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateIsmap(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6230,6 +8056,7 @@ function attributeValidateIsmap(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`063 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-ismap"
@@ -6245,6 +8072,19 @@ function attributeValidateIsmap(context, ...originalOpts) {
 function attributeValidateLabel(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateLabel() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateLabel(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "label") {
         if (!["option", "optgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -6259,7 +8099,15 @@ function attributeValidateLabel(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-label"
@@ -6274,6 +8122,19 @@ function attributeValidateLabel(context, ...opts) {
 function attributeValidateLang(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateLang() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateLang(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "lang") {
         if (
           ["base", "head", "html", "meta", "script", "style", "title"].includes(
@@ -6292,8 +8153,33 @@ function attributeValidateLang(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `048 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `059 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         const { message } = isLangCode(
           node.attribValue.slice(charStart, charEnd)
+        );
+        console.log(
+          `070 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+            message,
+            null,
+            4
+          )}`
         );
         if (message) {
           errorArr.push({
@@ -6304,6 +8190,7 @@ function attributeValidateLang(context, ...opts) {
           });
         }
         errorArr.forEach(errorObj => {
+          console.log(`086 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-lang"
@@ -6318,6 +8205,23 @@ function attributeValidateLang(context, ...opts) {
 function attributeValidateLanguage(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateLanguage() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateLanguage(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "language") {
         if (node.parent.tagName !== "script") {
           context.report({
@@ -6332,7 +8236,15 @@ function attributeValidateLanguage(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-language"
@@ -6347,6 +8259,16 @@ function attributeValidateLanguage(context, ...opts) {
 function attributeValidateLink(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateLink() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "link") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -6369,7 +8291,11 @@ function attributeValidateLink(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-link"
@@ -6384,6 +8310,23 @@ function attributeValidateLink(context, ...opts) {
 function attributeValidateLongdesc(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateLongdesc() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateLongdesc(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "longdesc") {
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6398,7 +8341,15 @@ function attributeValidateLongdesc(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `047 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`055 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-longdesc"
@@ -6413,6 +8364,16 @@ function attributeValidateLongdesc(context, ...opts) {
 function attributeValidateMarginheight(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMarginheight() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "marginheight") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6431,7 +8392,11 @@ function attributeValidateMarginheight(context, ...opts) {
             noUnitsIsFine: true
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-marginheight"
@@ -6446,6 +8411,16 @@ function attributeValidateMarginheight(context, ...opts) {
 function attributeValidateMarginwidth(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMarginwidth() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "marginwidth") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -6464,7 +8439,11 @@ function attributeValidateMarginwidth(context, ...opts) {
             noUnitsIsFine: true
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-marginwidth"
@@ -6479,6 +8458,16 @@ function attributeValidateMarginwidth(context, ...opts) {
 function attributeValidateMaxlength(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMaxlength() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "maxlength") {
         if (node.parent.tagName !== "input") {
           context.report({
@@ -6498,7 +8487,11 @@ function attributeValidateMaxlength(context, ...opts) {
             customGenericValueError: "Should be integer, no units."
           }
         );
+        console.log(
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-maxlength"
@@ -6513,6 +8506,19 @@ function attributeValidateMaxlength(context, ...opts) {
 function attributeValidateMedia(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMedia() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "media") {
         if (!["style", "link"].includes(node.parent.tagName)) {
           context.report({
@@ -6527,6 +8533,24 @@ function attributeValidateMedia(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `044 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            charStart,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            charEnd,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `055 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr
           .concat(
             isMediaD(node.attribValue.slice(charStart, charEnd), {
@@ -6534,6 +8558,7 @@ function attributeValidateMedia(context, ...opts) {
             })
           )
           .forEach(errorObj => {
+            console.log(`069 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-media"
@@ -6548,6 +8573,19 @@ function attributeValidateMedia(context, ...opts) {
 function attributeValidateMethod(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMethod() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateMethod(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "method") {
         if (node.parent.tagName !== "form") {
           context.report({
@@ -6566,7 +8604,15 @@ function attributeValidateMethod(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `046 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-method"
@@ -6581,6 +8627,23 @@ function attributeValidateMethod(context, ...opts) {
 function attributeValidateMultiple(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateMultiple() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateMultiple(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6612,6 +8675,7 @@ function attributeValidateMultiple(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-multiple"
@@ -6627,6 +8691,19 @@ function attributeValidateMultiple(context, ...originalOpts) {
 function attributeValidateName(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateName() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateName(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "name") {
         if (
           ![
@@ -6658,7 +8735,15 @@ function attributeValidateName(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `058 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`066 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-name"
@@ -6673,6 +8758,19 @@ function attributeValidateName(context, ...opts) {
 function attributeValidateNohref(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateNohref() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateNohref(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6704,6 +8802,7 @@ function attributeValidateNohref(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`063 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-nohref"
@@ -6719,6 +8818,23 @@ function attributeValidateNohref(context, ...originalOpts) {
 function attributeValidateNoresize(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateNoresize() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateNoresize(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6750,6 +8866,7 @@ function attributeValidateNoresize(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-noresize"
@@ -6765,6 +8882,23 @@ function attributeValidateNoresize(context, ...originalOpts) {
 function attributeValidateNoshade(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateNoshade() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateNoshade(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6796,6 +8930,7 @@ function attributeValidateNoshade(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-noshade"
@@ -6811,6 +8946,19 @@ function attributeValidateNoshade(context, ...originalOpts) {
 function attributeValidateNowrap(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateNowrap() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateNowrap(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = {
         xhtml: false
       };
@@ -6842,6 +8990,7 @@ function attributeValidateNowrap(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`063 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-nowrap"
@@ -6857,6 +9006,19 @@ function attributeValidateNowrap(context, ...originalOpts) {
 function attributeValidateObject(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateObject() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateObject(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "object") {
         if (node.parent.tagName !== "applet") {
           context.report({
@@ -6871,7 +9033,15 @@ function attributeValidateObject(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-object"
@@ -6884,6 +9054,20 @@ function attributeValidateObject(context, ...opts) {
 }
 
 function validateScript(str, idxOffset, opts) {
+  console.log(
+    `005 ${`\u001b[${35}m${`validateScript() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `013 validateScript(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   const { errorArr } = checkForWhitespace(str, idxOffset);
   return errorArr;
 }
@@ -6891,6 +9075,19 @@ function validateScript(str, idxOffset, opts) {
 function attributeValidateOnblur(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnblur() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnblur(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onblur") {
         if (
@@ -6916,7 +9113,15 @@ function attributeValidateOnblur(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `053 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`061 attributeValidateOnblur(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onblur"
@@ -6932,6 +9137,23 @@ function attributeValidateOnblur(context, ...originalOpts) {
 function attributeValidateOnchange(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnchange() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnchange(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onchange") {
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
@@ -6947,7 +9169,15 @@ function attributeValidateOnchange(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `047 attributeValidateOnchange(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`055 attributeValidateOnchange(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onchange"
@@ -6963,6 +9193,23 @@ function attributeValidateOnchange(context, ...originalOpts) {
 function attributeValidateOnclick(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnclick() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnclick(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onclick") {
         if (
@@ -6998,7 +9245,15 @@ function attributeValidateOnclick(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnclick(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnclick(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onclick"
@@ -7014,6 +9269,23 @@ function attributeValidateOnclick(context, ...originalOpts) {
 function attributeValidateOndblclick(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOndblclick() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOndblclick(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "ondblclick") {
         if (
@@ -7049,7 +9321,15 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOndblclick(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-ondblclick"
@@ -7065,6 +9345,23 @@ function attributeValidateOndblclick(context, ...originalOpts) {
 function attributeValidateOnfocus(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnfocus() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnfocus(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onfocus") {
         if (
@@ -7090,7 +9387,15 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `057 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`065 attributeValidateOnfocus(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onfocus"
@@ -7106,6 +9411,23 @@ function attributeValidateOnfocus(context, ...originalOpts) {
 function attributeValidateOnkeydown(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnkeydown() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnkeydown(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeydown") {
         if (
@@ -7141,7 +9463,15 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnkeydown(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnkeydown(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onkeydown"
@@ -7157,6 +9487,23 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
 function attributeValidateOnkeypress(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnkeypress() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnkeypress(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeypress") {
         if (
@@ -7192,7 +9539,15 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnkeypress(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnkeypress(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onkeypress"
@@ -7208,6 +9563,23 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
 function attributeValidateOnkeyup(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnkeyup() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnkeyup(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onkeyup") {
         if (
@@ -7243,7 +9615,15 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnkeyup(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnkeyup(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onkeyup"
@@ -7259,6 +9639,19 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
 function attributeValidateOnload(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnload() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnload(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -7274,7 +9667,15 @@ function attributeValidateOnload(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `043 attributeValidateOnload(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`051 attributeValidateOnload(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onload"
@@ -7290,6 +9691,23 @@ function attributeValidateOnload(context, ...originalOpts) {
 function attributeValidateOnmousedown(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnmousedown() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnmousedown(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousedown") {
         if (
@@ -7325,7 +9743,15 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnmousedown(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnmousedown(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onmousedown"
@@ -7341,6 +9767,23 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
 function attributeValidateOnmousemove(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnmousemove() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnmousemove(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmousemove") {
         if (
@@ -7376,7 +9819,15 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnmousemove(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnmousemove(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onmousemove"
@@ -7392,6 +9843,23 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
 function attributeValidateOnmouseout(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnmouseout() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnmouseout(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseout") {
         if (
@@ -7427,7 +9895,15 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnmouseout(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnmouseout(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onmouseout"
@@ -7443,6 +9919,23 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
 function attributeValidateOnmouseover(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnmouseover() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnmouseover(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseover") {
         if (
@@ -7478,7 +9971,15 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnmouseover(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnmouseover(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onmouseover"
@@ -7494,6 +9995,23 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
 function attributeValidateOnmouseup(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnmouseup() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnmouseup(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onmouseup") {
         if (
@@ -7529,7 +10047,15 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `067 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`075 attributeValidateOnmouseup(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onmouseup"
@@ -7545,6 +10071,23 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
 function attributeValidateOnreset(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnreset() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnreset(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onreset") {
         if (node.parent.tagName !== "form") {
@@ -7560,7 +10103,15 @@ function attributeValidateOnreset(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `047 attributeValidateOnreset(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`055 attributeValidateOnreset(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onreset"
@@ -7576,6 +10127,23 @@ function attributeValidateOnreset(context, ...originalOpts) {
 function attributeValidateOnsubmit(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnsubmit() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnsubmit(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onsubmit") {
         if (node.parent.tagName !== "form") {
@@ -7591,7 +10159,15 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `047 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`055 attributeValidateOnsubmit(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onsubmit"
@@ -7607,6 +10183,23 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
 function attributeValidateOnselect(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnselect() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnselect(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onselect") {
         if (!["input", "textarea"].includes(node.parent.tagName)) {
@@ -7622,7 +10215,15 @@ function attributeValidateOnselect(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `047 attributeValidateOnselect(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`055 attributeValidateOnselect(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onselect"
@@ -7638,6 +10239,23 @@ function attributeValidateOnselect(context, ...originalOpts) {
 function attributeValidateOnunload(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateOnunload() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateOnunload(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = Object.assign({}, originalOpts);
       if (node.attribName === "onunload") {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
@@ -7653,7 +10271,15 @@ function attributeValidateOnunload(context, ...originalOpts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `047 attributeValidateOnunload(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`055 attributeValidateOnunload(): RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-onunload"
@@ -7669,6 +10295,23 @@ function attributeValidateOnunload(context, ...originalOpts) {
 function attributeValidateProfile(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateProfile() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateProfile(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "profile") {
         if (node.parent.tagName !== "head") {
           context.report({
@@ -7683,6 +10326,7 @@ function attributeValidateProfile(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: true
           }).forEach(errorObj => {
+            console.log(`044 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-profile"
@@ -7698,6 +10342,19 @@ function attributeValidateProfile(context, ...opts) {
 function attributeValidatePrompt(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidatePrompt() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidatePrompt(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "prompt") {
         if (node.parent.tagName !== "isindex") {
           context.report({
@@ -7712,7 +10369,15 @@ function attributeValidatePrompt(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-prompt"
@@ -7727,6 +10392,23 @@ function attributeValidatePrompt(context, ...opts) {
 function attributeValidateReadonly(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateReadonly() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateReadonly(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -7758,6 +10440,7 @@ function attributeValidateReadonly(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-readonly"
@@ -7773,6 +10456,19 @@ function attributeValidateReadonly(context, ...originalOpts) {
 function attributeValidateRel(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateRel() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateRel(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rel") {
@@ -7794,7 +10490,15 @@ function attributeValidateRel(context, ...opts) {
             caseInsensitive
           }
         );
+        console.log(
+          `050 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-rel"
@@ -7809,6 +10513,19 @@ function attributeValidateRel(context, ...opts) {
 function attributeValidateRev(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateRev() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateRev(): node = ${JSON.stringify(node, null, 4)}`
+      );
       const caseInsensitive =
         !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
       if (node.attribName === "rev") {
@@ -7830,7 +10547,15 @@ function attributeValidateRev(context, ...opts) {
             caseInsensitive
           }
         );
+        console.log(
+          `050 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`058 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-rev"
@@ -7845,6 +10570,16 @@ function attributeValidateRev(context, ...opts) {
 function attributeValidateRows(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateRows() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "rows") {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
@@ -7855,6 +10590,13 @@ function attributeValidateRows(context, ...opts) {
             fix: null
           });
         }
+        console.log(
+          `036 attributeValidateRows(): ${`\u001b[${33}m${`node.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+            node.attribValue,
+            null,
+            4
+          )}`
+        );
         let errorArr = [];
         if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
@@ -7870,6 +10612,13 @@ function attributeValidateRows(context, ...opts) {
               customGenericValueError: "Should be: pixels|%|*."
             }
           );
+          console.log(
+            `059 attributeValidateRows(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         } else if (node.parent.tagName === "textarea") {
           errorArr = validateDigitAndUnit(
             node.attribValue,
@@ -7880,9 +10629,17 @@ function attributeValidateRows(context, ...opts) {
               customGenericValueError: "Should be integer, no units."
             }
           );
+          console.log(
+            `077 attributeValidateRows(): received errorArr = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
         }
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`087 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-rows"
@@ -7898,6 +10655,16 @@ function attributeValidateRows(context, ...opts) {
 function attributeValidateRowspan(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateRowspan() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "rowspan") {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
@@ -7917,7 +10684,11 @@ function attributeValidateRowspan(context, ...opts) {
             customGenericValueError: "Should be integer, no units."
           }
         );
+        console.log(
+          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-rowspan"
@@ -7932,6 +10703,19 @@ function attributeValidateRowspan(context, ...opts) {
 function attributeValidateRules(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateRules() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateRules(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "rules") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -7950,7 +10734,15 @@ function attributeValidateRules(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `046 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-rules"
@@ -7965,6 +10757,19 @@ function attributeValidateRules(context, ...opts) {
 function attributeValidateScheme(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateScheme() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateScheme(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "scheme") {
         if (node.parent.tagName !== "meta") {
           context.report({
@@ -7979,7 +10784,15 @@ function attributeValidateScheme(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `041 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`049 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-scheme"
@@ -7994,6 +10807,19 @@ function attributeValidateScheme(context, ...opts) {
 function attributeValidateScope(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateScope() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateScope(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "scope") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
@@ -8012,7 +10838,15 @@ function attributeValidateScope(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-scope"
@@ -8027,6 +10861,23 @@ function attributeValidateScope(context, ...opts) {
 function attributeValidateScrolling(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateScrolling() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateScrolling(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "scrolling") {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
@@ -8045,7 +10896,15 @@ function attributeValidateScrolling(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `049 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`057 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-scrolling"
@@ -8060,6 +10919,23 @@ function attributeValidateScrolling(context, ...opts) {
 function attributeValidateSelected(context, ...originalOpts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateSelected() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateSelected(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const opts = {
         xhtml: false
       };
@@ -8091,6 +10967,7 @@ function attributeValidateSelected(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach(errorObj => {
+            console.log(`067 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-selected"
@@ -8106,6 +10983,19 @@ function attributeValidateSelected(context, ...originalOpts) {
 function attributeValidateShape(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateShape() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateShape(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "shape") {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
@@ -8124,7 +11014,15 @@ function attributeValidateShape(context, ...opts) {
             canBeCommaSeparated: false
           }
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-shape"
@@ -8139,6 +11037,16 @@ function attributeValidateShape(context, ...opts) {
 function attributeValidateSize(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateSize() ███████████████████████████████████████`
+      );
+      console.log(
+        `015 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "size") {
         if (
           !["hr", "font", "input", "basefont", "select"].includes(
@@ -8157,7 +11065,18 @@ function attributeValidateSize(context, ...opts) {
             node.attribValue,
             node.attribValueStartsAt
           );
+          console.log(
+            `046 attributeValidateSize(): charStart = ${charStart}; charEnd = ${charEnd}`
+          );
+          console.log(
+            `049 attributeValidateSize(): ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
           errorArr.forEach(errorObj => {
+            console.log(`060 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-size"
@@ -8166,7 +11085,15 @@ function attributeValidateSize(context, ...opts) {
           });
           if (Number.isInteger(charStart)) {
             const extractedVal = node.attribValue.slice(charStart, charEnd);
+            console.log(
+              `079 attributeValidateSize(): ${`\u001b[${33}m${`extractedVal`}\u001b[${39}m`} = ${JSON.stringify(
+                extractedVal,
+                null,
+                4
+              )}`
+            );
             if (["hr", "input", "select"].includes(node.parent.tagName)) {
+              console.log(`086 validate hr/input/select tag's size`);
               validateDigitAndUnit(
                 extractedVal,
                 node.attribValueStartsAt + charStart,
@@ -8177,6 +11104,7 @@ function attributeValidateSize(context, ...opts) {
                   skipWhitespaceChecks: true
                 }
               ).forEach(errorObj => {
+                console.log(`098 RAISE ERROR`);
                 context.report(
                   Object.assign({}, errorObj, {
                     ruleId: "attribute-validate-size"
@@ -8184,6 +11112,7 @@ function attributeValidateSize(context, ...opts) {
                 );
               });
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
+              console.log(`106 validate font/basefont tag's size`);
               if (!extractedVal.match(fontSizeRegex)) {
                 const errorArr2 = validateDigitAndUnit(
                   extractedVal,
@@ -8205,6 +11134,7 @@ function attributeValidateSize(context, ...opts) {
                   });
                 }
                 errorArr2.forEach(errorObj => {
+                  console.log(`134 RAISE ERROR`);
                   context.report(
                     Object.assign({}, errorObj, {
                       ruleId: "attribute-validate-size"
@@ -8223,6 +11153,16 @@ function attributeValidateSize(context, ...opts) {
 function attributeValidateSpan(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateSpan() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "span") {
         if (!["col", "colgroup"].includes(node.parent.tagName)) {
           context.report({
@@ -8244,7 +11184,11 @@ function attributeValidateSpan(context, ...opts) {
             customPxMessage: `Columns number is not in pixels.`
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-span"
@@ -8259,6 +11203,19 @@ function attributeValidateSpan(context, ...opts) {
 function attributeValidateSrc(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateSrc() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateSrc(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "src") {
         if (
           !["script", "input", "frame", "iframe", "img"].includes(
@@ -8277,6 +11234,7 @@ function attributeValidateSrc(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`042 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-src"
@@ -8292,6 +11250,23 @@ function attributeValidateSrc(context, ...opts) {
 function attributeValidateStandby(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateStandby() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateStandby(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "standby") {
         if (node.parent.tagName !== "object") {
           context.report({
@@ -8306,7 +11281,15 @@ function attributeValidateStandby(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-standby"
@@ -8321,6 +11304,16 @@ function attributeValidateStandby(context, ...opts) {
 function attributeValidateStart(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateStart() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "start") {
         if (node.parent.tagName !== "ol") {
           context.report({
@@ -8342,7 +11335,11 @@ function attributeValidateStart(context, ...opts) {
             customPxMessage: `Starting sequence number is not in pixels.`
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-start"
@@ -8355,6 +11352,20 @@ function attributeValidateStart(context, ...opts) {
 }
 
 function validateInlineStyle(str, idxOffset, opts) {
+  console.log(
+    `005 ${`\u001b[${35}m${`validateInlineStyle() called`}\u001b[${39}m`}\ninput args:\n${JSON.stringify(
+      [...arguments],
+      null,
+      4
+    )}`
+  );
+  console.log(
+    `013 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   const { errorArr } = checkForWhitespace(str, idxOffset);
   return errorArr;
 }
@@ -8362,6 +11373,16 @@ function validateInlineStyle(str, idxOffset, opts) {
 function attributeValidateStyle(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "style") {
         if (
           [
@@ -8386,8 +11407,14 @@ function attributeValidateStyle(context, ...opts) {
         }
         const errorArr = validateInlineStyle(
           node.attribValue,
-          node.attribValueStartsAt);
+          node.attribValueStartsAt,
+          {}
+        );
+        console.log(
+          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`054 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-style"
@@ -8402,6 +11429,23 @@ function attributeValidateStyle(context, ...opts) {
 function attributeValidateSummary(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateSummary() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateSummary(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "summary") {
         if (node.parent.tagName !== "table") {
           context.report({
@@ -8416,7 +11460,15 @@ function attributeValidateSummary(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-summary"
@@ -8431,6 +11483,16 @@ function attributeValidateSummary(context, ...opts) {
 function attributeValidateTabindex(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateTabindex() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "tabindex") {
         if (
           ![
@@ -8463,7 +11525,11 @@ function attributeValidateTabindex(context, ...opts) {
             maxValue: 32767
           }
         );
+        console.log(
+          `055 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`059 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-tabindex"
@@ -8478,6 +11544,19 @@ function attributeValidateTabindex(context, ...opts) {
 function attributeValidateTarget(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateTarget() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateTarget(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "target") {
         if (
           !["a", "area", "base", "form", "link"].includes(node.parent.tagName)
@@ -8494,7 +11573,15 @@ function attributeValidateTarget(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `043 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`051 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-target"
@@ -8509,6 +11596,16 @@ function attributeValidateTarget(context, ...opts) {
 function attributeValidateText(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateText() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "text") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -8531,7 +11628,11 @@ function attributeValidateText(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-text"
@@ -8546,6 +11647,19 @@ function attributeValidateText(context, ...opts) {
 function attributeValidateTitle(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateTitle() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateTitle(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "title") {
         if (
           [
@@ -8571,7 +11685,15 @@ function attributeValidateTitle(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `052 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`060 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-title"
@@ -8586,6 +11708,19 @@ function attributeValidateTitle(context, ...opts) {
 function attributeValidateType(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateType() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `021 attributeValidateType(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "type") {
         if (
           ![
@@ -8655,6 +11790,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`095 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8683,6 +11819,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`124 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8709,6 +11846,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`151 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8726,6 +11864,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`169 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8743,6 +11882,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`187 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8760,6 +11900,7 @@ function attributeValidateType(context, ...opts) {
                 noSpaceAfterComma: false
               }
             ).forEach(errorObj => {
+              console.log(`205 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-type"
@@ -8776,6 +11917,19 @@ function attributeValidateType(context, ...opts) {
 function attributeValidateUsemap(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateUsemap() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateUsemap(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "usemap") {
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -8790,6 +11944,7 @@ function attributeValidateUsemap(context, ...opts) {
             offset: node.attribValueStartsAt,
             multipleOK: false
           }).forEach(errorObj => {
+            console.log(`038 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-usemap"
@@ -8805,6 +11960,19 @@ function attributeValidateUsemap(context, ...opts) {
 function attributeValidateValign(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateValign() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateValign(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.attribName === "valign") {
         if (
           ![
@@ -8834,6 +12002,7 @@ function attributeValidateValign(context, ...opts) {
               canBeCommaSeparated: false
             }
           ).forEach(errorObj => {
+            console.log(`053 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-valign"
@@ -8849,6 +12018,16 @@ function attributeValidateValign(context, ...opts) {
 function attributeValidateValue(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateValue() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "value") {
         if (
           !["input", "option", "param", "button", "li"].includes(
@@ -8871,6 +12050,7 @@ function attributeValidateValue(context, ...opts) {
               zeroOK: false,
               customPxMessage: `Sequence number should not be in pixels.`
             }).forEach(errorObj => {
+              console.log(`049 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-value"
@@ -8883,6 +12063,7 @@ function attributeValidateValue(context, ...opts) {
               node.attribValueStartsAt
             );
             errorArr.forEach(errorObj => {
+              console.log(`064 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-value"
@@ -8899,6 +12080,23 @@ function attributeValidateValue(context, ...opts) {
 function attributeValidateValuetype(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateValuetype() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateValuetype(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "valuetype") {
         if (node.parent.tagName !== "param") {
           context.report({
@@ -8917,6 +12115,7 @@ function attributeValidateValuetype(context, ...opts) {
               canBeCommaSeparated: false
             }
           ).forEach(errorObj => {
+            console.log(`046 RAISE ERROR`);
             context.report(
               Object.assign({}, errorObj, {
                 ruleId: "attribute-validate-valuetype"
@@ -8932,6 +12131,23 @@ function attributeValidateValuetype(context, ...opts) {
 function attributeValidateVersion(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateVersion() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 attributeValidateVersion(): node = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "version") {
         if (node.parent.tagName !== "html") {
           context.report({
@@ -8946,7 +12162,15 @@ function attributeValidateVersion(context, ...opts) {
           node.attribValue,
           node.attribValueStartsAt
         );
+        console.log(
+          `045 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            errorArr,
+            null,
+            4
+          )}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`053 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-version"
@@ -8961,6 +12185,16 @@ function attributeValidateVersion(context, ...opts) {
 function attributeValidateVlink(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateVlink() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "vlink") {
         if (node.parent.tagName !== "body") {
           context.report({
@@ -8983,7 +12217,11 @@ function attributeValidateVlink(context, ...opts) {
             hexEightOK: false
           }
         );
+        console.log(
+          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`052 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-vlink"
@@ -8998,6 +12236,16 @@ function attributeValidateVlink(context, ...opts) {
 function attributeValidateVspace(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateVspace() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "vspace") {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
@@ -9016,7 +12264,11 @@ function attributeValidateVspace(context, ...opts) {
             noUnitsIsFine: true
           }
         );
+        console.log(
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`048 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "attribute-validate-vspace"
@@ -9031,6 +12283,16 @@ function attributeValidateVspace(context, ...opts) {
 function attributeValidateWidth(context, ...opts) {
   return {
     attribute: function(node) {
+      console.log(
+        `███████████████████████████████████████ attributeValidateWidth() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       if (node.attribName === "width") {
         if (
           ![
@@ -9060,6 +12322,7 @@ function attributeValidateWidth(context, ...opts) {
               theOnlyGoodUnits: [],
               noUnitsIsFine: true
             }).forEach(errorObj => {
+              console.log(`054 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width"
@@ -9072,6 +12335,7 @@ function attributeValidateWidth(context, ...opts) {
               theOnlyGoodUnits: ["*", "%"],
               noUnitsIsFine: true
             }).forEach(errorObj => {
+              console.log(`068 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width"
@@ -9083,6 +12347,7 @@ function attributeValidateWidth(context, ...opts) {
               badUnits: ["px"],
               noUnitsIsFine: true
             }).forEach(errorObj => {
+              console.log(`081 RAISE ERROR`);
               context.report(
                 Object.assign({}, errorObj, {
                   ruleId: "attribute-validate-width"
@@ -9099,11 +12364,15 @@ function attributeValidateWidth(context, ...opts) {
 function htmlEntitiesNotEmailFriendly(context) {
   return {
     entity: function({ idxFrom, idxTo }) {
+      console.log(
+        `███████████████████████████████████████ htmlEntitiesNotEmailFriendly() ███████████████████████████████████████`
+      );
       if (
         Object.keys(notEmailFriendly).includes(
           context.str.slice(idxFrom + 1, idxTo - 1)
         )
       ) {
+        console.log(`020 caught an email-unfriendly entity`);
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
@@ -9150,6 +12419,13 @@ function processStr(str, offset, context, mode) {
           notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)]
         };`;
       }
+      console.log(
+        `035 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
+          encodedChr,
+          null,
+          4
+        )}`
+      );
       let charName = "";
       if (str[i].charCodeAt(0) === 160) {
         charName = " no-break space";
@@ -9179,10 +12455,23 @@ function processStr(str, offset, context, mode) {
 function characterEncode(context, ...opts) {
   return {
     text: function(token) {
+      console.log(
+        `███████████████████████████████████████ characterEncode() ███████████████████████████████████████`
+      );
+      console.log(
+        `${`\u001b[${36}m${`token: ${JSON.stringify(
+          token,
+          null,
+          4
+        )}`}\u001b[${39}m`}`
+      );
       let mode = "named";
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
       }
+      console.log(
+        `125 characterEncode(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+      );
       processStr(token.value, token.start, context, mode);
     }
   };
@@ -9198,6 +12487,23 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
   };
   return {
     text: function(node) {
+      console.log(
+        `███████████████████████████████████████ characterUnspacedPunctuation() ███████████████████████████████████████`
+      );
+      console.log(
+        `${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
       const defaults = {
         questionMark: {
           whitespaceLeft: "never",
@@ -9229,15 +12535,28 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
       ) {
         opts = Object.assign({}, defaults, originalOpts[0]);
       }
+      console.log(
+        `072 ${`\u001b[${32}m${`FINAL CALCULATED`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
       for (let i = node.start; i < node.end; i++) {
+        console.log(`082 ███████████████████████████████████████ i = ${i}`);
         const charCode = context.str[i].charCodeAt(0);
         if (charCodeMapping[String(charCode)]) {
+          console.log(`caught ${charCodeMapping[String(charCode)]}!`);
           const charName = charCodeMapping[String(charCode)];
           if (
             opts[charName].whitespaceLeft === "never" &&
             i &&
             !context.str[i - 1].trim().length
           ) {
+            console.log(
+              `${`\u001b[${31}m${`! BAD SPACE ON THE LEFT !`}\u001b[${39}m`}`
+            );
+            console.log(`095 PING [${left(context.str, i) + 1}, ${i}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -9254,6 +12573,10 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             i < node.end - 1 &&
             !context.str[i + 1].trim().length
           ) {
+            console.log(
+              `${`\u001b[${31}m${`! BAD SPACE ON THE RIGHT !`}\u001b[${39}m`}`
+            );
+            console.log(`115 PING [${i + 1}, ${right(context.str, i)}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -9270,6 +12593,10 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             i &&
             context.str[i - 1].trim().length
           ) {
+            console.log(
+              `${`\u001b[${31}m${`! MISSING SPACE ON THE LEFT !`}\u001b[${39}m`}`
+            );
+            console.log(`135 PING [${i}, ${i}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -9286,6 +12613,10 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             i < node.end - 1 &&
             context.str[i + 1].trim().length
           ) {
+            console.log(
+              `${`\u001b[${31}m${`! MISSING SPACE ON THE RIGHT !`}\u001b[${39}m`}`
+            );
+            console.log(`155 PING [${i + 1}, ${i + 1}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -9306,11 +12637,32 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
 function mediaMalformed(context, ...opts) {
   return {
     at: function(node) {
+      console.log(
+        `███████████████████████████████████████ mediaMalformed() ███████████████████████████████████████`
+      );
+      console.log(
+        `019 mediaMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `026 mediaMalformed(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.identifier === "media") {
         const errors = isMediaD(node.query, {
           offset: node.queryStartsAt
         });
+        console.log(
+          `034 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
+            errors,
+            null,
+            4
+          )}`
+        );
         errors.forEach(errorObj => {
+          console.log(`042 RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "media-malformed"
@@ -9328,25 +12680,65 @@ function validateCommentClosing(token) {
     only: "<![endif]-->",
     not: "<!--<![endif]-->"
   };
-  const errorArr = [];
-  splitByWhitespace(token.value, null, ([from, to]) => {
-    errorArr.push({
-      ruleId: "comment-only-closing-malformed",
-      idxFrom: token.start,
-      idxTo: token.end,
-      message: "Remove whitespace.",
-      fix: {
-        ranges: [[from + token.start, to + token.start]]
-      }
-    });
-  });
+  console.log(
+    `011 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+      token,
+      null,
+      4
+    )}`
+  );
   if (
     (token.kind === "simple" && token.value === "-->") ||
     (token.kind === "only" && token.value === "<![endif]-->") ||
     (token.kind === "not" && token.value === "<!--<![endif]-->")
   ) {
+    return [];
+  }
+  const errorArr = [];
+  let valueWithoutWhitespace = "";
+  splitByWhitespace(
+    token.value,
+    ([charFrom, charTo]) => {
+      valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(
+        charFrom,
+        charTo
+      )}`;
+    },
+    ([whitespaceFrom, whitespaceTo]) => {
+      errorArr.push({
+        ruleId: "comment-only-closing-malformed",
+        idxFrom: token.start,
+        idxTo: token.end,
+        message: "Remove whitespace.",
+        fix: {
+          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
+        }
+      });
+    }
+  );
+  console.log(
+    `055 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+      valueWithoutWhitespace,
+      null,
+      4
+    )}`
+  );
+  if (
+    (token.kind === "simple" && valueWithoutWhitespace === "-->") ||
+    (token.kind === "only" && valueWithoutWhitespace === "<![endif]-->") ||
+    (token.kind === "not" && valueWithoutWhitespace === "<!--<![endif]-->")
+  ) {
+    console.log(`069 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
     return errorArr;
   }
+  console.log(`074 validateCommentClosing(): something is wrong`);
+  console.log(
+    `076 validateCommentClosing(): errorArr so far: ${JSON.stringify(
+      errorArr,
+      null,
+      4
+    )}`
+  );
   errorArr.push({
     ruleId: "comment-only-closing-malformed",
     idxFrom: token.start,
@@ -9362,9 +12754,26 @@ function validateCommentClosing(token) {
 function commentClosingMalformed(context, ...opts) {
   return {
     comment: function(node) {
+      console.log(
+        `███████████████████████████████████████ commentClosingMalformed() ███████████████████████████████████████`
+      );
+      console.log(
+        `013 commentClosingMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `020 commentClosingMalformed(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.closing) {
         const errorArr = validateCommentClosing(node);
+        console.log(
+          `027 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`031 commentClosingMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "comment-closing-malformed"
@@ -9378,15 +12787,68 @@ function commentClosingMalformed(context, ...opts) {
 
 function validateCommentOpening(node) {
   const errorArr = [];
+  console.log(
+    `007 validateCommentOpening(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+      node,
+      null,
+      4
+    )}`
+  );
   return errorArr;
+}
+
+function findAllInstancesOf(node, whatToFindArr, errorCb) {
+  if (
+    node &&
+    Array.isArray(whatToFindArr) &&
+    whatToFindArr.length &&
+    typeof errorCb === "function"
+  ) {
+    console.log(`011 findAllInstancesOf: TODO`);
+  }
 }
 
 function commentOpeningMalformed(context, ...opts) {
   return {
-    comment: function(node) {
+    text: node => {
+      console.log(
+        `███████████████████████████████████████ commentOpeningMalformed() TEXT ███████████████████████████████████████`
+      );
+      console.log(
+        `014 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
+      );
+      findAllInstancesOf(node, [], errorObj => {
+        console.log(
+          `018 commentOpeningMalformed() / findAllInstancesOf(): RAISE ERROR`
+        );
+        context.report(
+          Object.assign({}, errorObj, {
+            ruleId: "comment-opening-malformed"
+          })
+        );
+      });
+    },
+    comment: node => {
+      console.log(
+        `███████████████████████████████████████ commentOpeningMalformed() COMMENT ███████████████████████████████████████`
+      );
+      console.log(
+        `032 commentOpeningMalformed(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `039 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
+      );
       if (node.closing) {
-        const errorArr = validateCommentOpening();
+        const errorArr = validateCommentOpening(node);
+        console.log(
+          `046 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+        );
         errorArr.forEach(errorObj => {
+          console.log(`050 commentOpeningMalformed(): RAISE ERROR`);
           context.report(
             Object.assign({}, errorObj, {
               ruleId: "comment-opening-malformed"
@@ -10659,6 +14121,13 @@ function normaliseRequestedRules(opts) {
       }
     });
   }
+  console.log(
+    `1852 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      res,
+      null,
+      4
+    )}`
+  );
   return res;
 }
 
@@ -11039,6 +14508,13 @@ class Linter extends EventEmitter {
     this.messages = [];
     this.str = str;
     this.config = config;
+    console.log(
+      `024 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify called for "${str}" and ${JSON.stringify(
+        config,
+        null,
+        4
+      )}`
+    );
     if (config) {
       if (typeof config !== "object") {
         throw new Error(
@@ -11063,6 +14539,13 @@ class Linter extends EventEmitter {
       return this.messages;
     }
     const processedRulesConfig = normaliseRequestedRules(config.rules);
+    console.log(
+      `062 ${`\u001b[${33}m${`processedRulesConfig`}\u001b[${39}m`} = ${JSON.stringify(
+        processedRulesConfig,
+        null,
+        4
+      )}`
+    );
     this.processedRulesConfig = processedRulesConfig;
     Object.keys(processedRulesConfig)
       .filter(ruleName => get(ruleName))
@@ -11100,6 +14583,20 @@ class Linter extends EventEmitter {
             this.emit("character", obj);
           },
           errCb: obj => {
+            console.log(
+              `163 ██ ${`\u001b[${35}m${`linter/errCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+                obj,
+                null,
+                4
+              )}`
+            );
+            console.log(
+              `170 ${`\u001b[${33}m${`config.rules`}\u001b[${39}m`} = ${JSON.stringify(
+                config.rules,
+                null,
+                4
+              )}`
+            );
             const currentRulesSeverity = isAnEnabledRule(
               config.rules,
               obj.ruleId
@@ -11112,6 +14609,9 @@ class Linter extends EventEmitter {
               ) {
                 message = astErrMessages[obj.ruleId];
               }
+              console.log(
+                `193 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} "${message}"`
+              );
               this.report(
                 Object.assign({ message, severity: currentRulesSeverity }, obj)
               );
@@ -11121,6 +14621,13 @@ class Linter extends EventEmitter {
         (key, val) => {
           const current = val !== undefined ? val : key;
           if (isObj(current)) {
+            console.log(
+              `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+                current,
+                null,
+                4
+              )}`
+            );
             this.emit(current.type, current);
             if (
               current.type === "tag" &&
@@ -11156,8 +14663,16 @@ class Linter extends EventEmitter {
             isAnEnabledValue(processedRulesConfig[ruleName]))
       )
     ) {
+      console.log(`268 linter.js: call stringFixBrokenNamedEntities()`);
       stringFixBrokenNamedEntities(str, {
         cb: obj => {
+          console.log(
+            `272 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              obj,
+              null,
+              4
+            )}`
+          );
           let matchedRulesName;
           let severity;
           if (Object.keys(config.rules).includes("bad-html-entity")) {
@@ -11170,8 +14685,14 @@ class Linter extends EventEmitter {
             }
           } else if (
             Object.keys(config.rules).some(rulesName => {
+              console.log(
+                `${`\u001b[${36}m${`--- rulesName: ${rulesName}`}\u001b[${39}m`}`
+              );
               if (matcher.isMatch(obj.ruleName, rulesName)) {
                 matchedRulesName = rulesName;
+                console.log(
+                  `${`\u001b[${36}m${`"${rulesName}" matched!`}\u001b[${39}m`}`
+                );
                 return true;
               }
             })
@@ -11229,6 +14750,9 @@ class Linter extends EventEmitter {
           }
         },
         entityCatcherCb: (from, to) => {
+          console.log(
+            `376 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
+          );
           this.emit("entity", { idxFrom: from, idxTo: to });
         }
       });
@@ -11236,11 +14760,32 @@ class Linter extends EventEmitter {
     ["tag", "at", "rule", "text", "esp", "character"].forEach(eventName => {
       this.removeAllListeners(eventName);
     });
+    console.log(
+      `389 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
+        this.messages,
+        null,
+        4
+      )}`
+    );
     return this.messages;
   }
   report(obj) {
+    console.log(
+      `400 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: report() called with ${JSON.stringify(
+        obj,
+        null,
+        4
+      )}`
+    );
     const { line, col } = lineColumn(this.str, obj.idxFrom);
     let severity = obj.severity;
+    console.log(
+      `410 linter.js: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+        this.processedRulesConfig[obj.ruleId],
+        null,
+        4
+      )}`
+    );
     if (
       !Number.isInteger(obj.severity) &&
       typeof this.processedRulesConfig[obj.ruleId] === "number"
@@ -11252,7 +14797,24 @@ class Linter extends EventEmitter {
     ) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
+    console.log(
+      `428 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+    );
+    console.log(
+      `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+        this.messages,
+        null,
+        4
+      )}`
+    );
     this.messages.push(Object.assign({}, { line, column: col, severity }, obj));
+    console.log(
+      `${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        this.messages,
+        null,
+        4
+      )}`
+    );
   }
 }
 

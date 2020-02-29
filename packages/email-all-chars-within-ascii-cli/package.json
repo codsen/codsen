@@ -3,9 +3,6 @@
   "version": "1.10.56",
   "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "license": "MIT",
-  "engines": {
-    "node": ">=8.9"
-  },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli",
   "author": {
@@ -119,15 +116,15 @@
     "email-all-chars-within-ascii": "^2.9.55",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
-    "inquirer": "^7.0.4",
+    "inquirer": "^7.0.5",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^6.0.1",
     "update-notifier": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
