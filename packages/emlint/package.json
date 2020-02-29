@@ -148,6 +148,7 @@
     "mime-db": "^1.43.0",
     "object-path": "^0.11.4",
     "rgba-regex": "^1.0.0",
+    "string-find-malformed": "^1.0.0",
     "string-fix-broken-named-entities": "^2.5.9",
     "string-left-right": "^2.3.16",
     "string-process-comma-separated": "^1.2.2",

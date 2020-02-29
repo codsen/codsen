@@ -5,44 +5,19 @@ const { applyFixes } = require("../../../t-util/util");
 // 01. type="simple"
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `01.01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, letter inside`,
   t => {
     const str = `<--z-->`;
+    const fixed = `<!--z-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.01.01");
-    t.match(
-      messages,
-      [
-        {
-          line: 1,
-          column: 5,
-          severity: 2,
-          message: "Something is wrong.",
-          ruleId: "comment-simple-missing-opening",
-          idxFrom: 4,
-          idxTo: 7
-        },
-        {
-          line: 1,
-          column: 1,
-          severity: 2,
-          ruleId: "character-encode",
-          message: "Unencoded less than character.",
-          idxFrom: 0,
-          idxTo: 1,
-          fix: {
-            ranges: [[0, 1, "&lt;"]]
-          }
-        }
-      ],
-      "01.01.02"
-    );
+    t.equal(applyFixes(str, messages), fixed, "01.01.01");
+    t.match(messages, [], "01.01.02");
     t.end();
   }
 );
