@@ -96,6 +96,9 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         pendingMatchesArr[z].patienceLeft = pendingMatchesArr[z].patienceLeft - 1;
         if (str[stringLeftRight.right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
           pendingMatchesArr[z].pendingToCheck.shift();
+          if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
+            pendingMatchesArr[z].pendingToCheck.shift();
+          }
         }
       } else {
         wasThisLetterMatched = true;

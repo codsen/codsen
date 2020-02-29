@@ -236,3 +236,26 @@ t.test(`02.06 - whitespace`, t => {
   );
   t.end();
 });
+
+t.test(`02.07 - repeated characters after failed match`, t => {
+  const gathered = [];
+  strFindMalformed(
+    "<--z",
+    "<!--",
+    obj => {
+      gathered.push(obj);
+    },
+    null
+  );
+  t.same(
+    gathered,
+    [
+      {
+        idxFrom: 0,
+        idxTo: 3
+      }
+    ],
+    "02.06"
+  );
+  t.end();
+});
