@@ -22,7 +22,7 @@ function commentClosingMalformed(context, ...opts) {
 
       if (node.closing) {
         // run the tag's value past the validator function
-        const errorArr = validateCommentClosing(node);
+        const errorArr = validateCommentClosing(node) || [];
         console.log(
           `027 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );

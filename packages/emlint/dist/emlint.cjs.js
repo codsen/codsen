@@ -8029,7 +8029,7 @@ function commentClosingMalformed(context) {
   return {
     comment: function comment(node) {
       if (node.closing) {
-        var errorArr = validateCommentClosing(node);
+        var errorArr = validateCommentClosing(node) || [];
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "comment-closing-malformed"
@@ -8040,9 +8040,39 @@ function commentClosingMalformed(context) {
   };
 }
 
-function validateCommentOpening(node) {
+function validateCommentOpening(token) {
+  var reference = {
+    simple: /<!--/g,
+    only: /<!--\[[^\]]+\]>/g,
+    not: /<!--\[[^\]]+\]><!-->/g
+  };
+  if (token.kind === "simple" && reference.simple.test(token.value) || token.kind === "only" && reference.only.test(token.value) || token.kind === "not" && reference.not(token.value)) {
+    return [];
+  }
   var errorArr = [];
-  return errorArr;
+  var valueWithoutWhitespace = "";
+  splitByWhitespace(token.value, function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        charFrom = _ref2[0],
+        charTo = _ref2[1];
+    valueWithoutWhitespace = "".concat(valueWithoutWhitespace).concat(token.value.slice(charFrom, charTo));
+  }, function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        whitespaceFrom = _ref4[0],
+        whitespaceTo = _ref4[1];
+    errorArr.push({
+      ruleId: "comment-only-closing-malformed",
+      idxFrom: token.start,
+      idxTo: token.end,
+      message: "Remove whitespace.",
+      fix: {
+        ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
+      }
+    });
+  });
+  if (token.kind === "simple" && reference.simple.test(valueWithoutWhitespace) || token.kind === "only" && reference.only.test(valueWithoutWhitespace) || token.kind === "not" && reference.not(valueWithoutWhitespace)) {
+    return errorArr;
+  }
 }
 
 function commentOpeningMalformed(context) {
@@ -8061,8 +8091,8 @@ function commentOpeningMalformed(context) {
       });
     },
     comment: function comment(node) {
-      if (node.closing) {
-        var errorArr = validateCommentOpening();
+      if (!node.closing) {
+        var errorArr = validateCommentOpening(node) || [];
         errorArr.forEach(function (errorObj) {
           context.report(Object.assign({}, errorObj, {
             ruleId: "comment-opening-malformed"

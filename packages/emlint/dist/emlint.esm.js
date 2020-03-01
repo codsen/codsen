@@ -9381,7 +9381,7 @@ function commentClosingMalformed(context, ...opts) {
   return {
     comment: function(node) {
       if (node.closing) {
-        const errorArr = validateCommentClosing(node);
+        const errorArr = validateCommentClosing(node) || [];
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {
@@ -9394,9 +9394,49 @@ function commentClosingMalformed(context, ...opts) {
   };
 }
 
-function validateCommentOpening(node) {
+function validateCommentOpening(token) {
+  const reference = {
+    simple: /<!--/g,
+    only: /<!--\[[^\]]+\]>/g,
+    not: /<!--\[[^\]]+\]><!-->/g
+  };
+  if (
+    (token.kind === "simple" && reference.simple.test(token.value)) ||
+    (token.kind === "only" && reference.only.test(token.value)) ||
+    (token.kind === "not" && reference.not(token.value))
+  ) {
+    return [];
+  }
   const errorArr = [];
-  return errorArr;
+  let valueWithoutWhitespace = "";
+  splitByWhitespace(
+    token.value,
+    ([charFrom, charTo]) => {
+      valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(
+        charFrom,
+        charTo
+      )}`;
+    },
+    ([whitespaceFrom, whitespaceTo]) => {
+      errorArr.push({
+        ruleId: "comment-only-closing-malformed",
+        idxFrom: token.start,
+        idxTo: token.end,
+        message: "Remove whitespace.",
+        fix: {
+          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
+        }
+      });
+    }
+  );
+  if (
+    (token.kind === "simple" &&
+      reference.simple.test(valueWithoutWhitespace)) ||
+    (token.kind === "only" && reference.only.test(valueWithoutWhitespace)) ||
+    (token.kind === "not" && reference.not(valueWithoutWhitespace))
+  ) {
+    return errorArr;
+  }
 }
 
 function commentOpeningMalformed(context, ...opts) {
@@ -9422,8 +9462,8 @@ function commentOpeningMalformed(context, ...opts) {
       );
     },
     comment: node => {
-      if (node.closing) {
-        const errorArr = validateCommentOpening();
+      if (!node.closing) {
+        const errorArr = validateCommentOpening(node) || [];
         errorArr.forEach(errorObj => {
           context.report(
             Object.assign({}, errorObj, {

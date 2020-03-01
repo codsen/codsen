@@ -17,119 +17,254 @@ t.test(
       }
     });
     t.equal(applyFixes(str, messages), fixed, "01.01.01");
-    t.match(messages, [], "01.01.02");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 3,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[0, 3, "<!--"]]
+          }
+        }
+      ],
+      "01.01.02"
+    );
+    t.is(messages.length, 1, "01.01.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`,
   t => {
     const str = `<--<img class="z"/>-->`;
+    const fixed = `<!--<img class="z"/>-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "comment-opening-malformed": 2
+        "comment-opening-malformed": 1
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.02.01");
-    t.match(messages, [], "01.02.02");
+    t.equal(applyFixes(str, messages), fixed, "01.02.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 1,
+          idxFrom: 0,
+          idxTo: 3,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[0, 3, "<!--"]]
+          }
+        }
+      ],
+      "01.02.02"
+    );
+    t.is(messages.length, 1, "01.02.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`,
   t => {
-    const str = `< !--z-->`;
+    const str = `.< !--z-->`;
+    const fixed = `.<!--z-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.03.01");
-    t.match(messages, [], "01.03.02");
+    t.equal(applyFixes(str, messages), fixed, "01.03.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 1,
+          idxTo: 6,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[2, 3]]
+          }
+        }
+      ],
+      "01.03.02"
+    );
+    t.is(messages.length, 1, "01.03.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`,
   t => {
     const str = `< !--<img class="z"/>-->`;
+    const fixed = `<!--<img class="z"/>-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.04.01");
-    t.match(messages, [], "01.04.02");
+    t.equal(applyFixes(str, messages), fixed, "01.04.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 5,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[1, 2]]
+          }
+        }
+      ],
+      "01.04.02"
+    );
+    t.is(messages.length, 1, "01.04.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`,
   t => {
     const str = `<! --z-->`;
+    const fixed = `<!--z-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.05.01");
-    t.match(messages, [], "01.05.02");
+    t.equal(applyFixes(str, messages), fixed, "01.05.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 5,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[2, 3]]
+          }
+        }
+      ],
+      "01.05.02"
+    );
+    t.is(messages.length, 1, "01.05.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`,
   t => {
     const str = `<! --<img class="z"/>-->`;
+    const fixed = `<!--<img class="z"/>-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.06.01");
-    t.match(messages, [], "01.06.02");
+    t.equal(applyFixes(str, messages), fixed, "01.06.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 5,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[2, 3]]
+          }
+        }
+      ],
+      "01.06.02"
+    );
+    t.is(messages.length, 1, "01.06.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`,
   t => {
     const str = `<!- -z-->`;
+    const fixed = `<!--z-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.05.01");
-    t.match(messages, [], "01.05.02");
+    t.equal(applyFixes(str, messages), fixed, "01.07.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 5,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[3, 4]]
+          }
+        }
+      ],
+      "01.07.02"
+    );
+    t.is(messages.length, 1, "01.07.03");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `01.08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`,
   t => {
     const str = `<!- -<img class="z"/>-->`;
+    const fixed = `<!--<img class="z"/>-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "01.06.01");
-    t.match(messages, [], "01.06.02");
+    t.equal(applyFixes(str, messages), fixed, "01.08.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 5,
+          message: `Remove whitespace.`,
+          fix: {
+            ranges: [[3, 4]]
+          }
+        }
+      ],
+      "01.08.02"
+    );
+    t.is(messages.length, 1, "01.08.03");
     t.end();
   }
 );

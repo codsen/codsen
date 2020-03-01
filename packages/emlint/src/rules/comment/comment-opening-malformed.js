@@ -50,9 +50,9 @@ function commentOpeningMalformed(context, ...opts) {
         `050 commentOpeningMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
-      if (node.closing) {
+      if (!node.closing) {
         // run the tag's value past the validator function
-        const errorArr = validateCommentOpening(node);
+        const errorArr = validateCommentOpening(node) || [];
         console.log(
           `057 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
