@@ -276,7 +276,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `01.07 - ${`\u001b[${36}m${`regular`}\u001b[${39}m`} - dash missing`,
   t => {
     const gathered = [];
