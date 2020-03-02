@@ -255,7 +255,30 @@ t.test(`02.07 - repeated characters after failed match`, t => {
         idxTo: 3
       }
     ],
-    "02.06"
+    "02.07"
+  );
+  t.end();
+});
+
+t.test(`02.08 - repeated characters after failed match`, t => {
+  const gathered = [];
+  strFindMalformed(
+    "<!-[if mso]>",
+    "<!--[",
+    obj => {
+      gathered.push(obj);
+    },
+    null
+  );
+  t.same(
+    gathered,
+    [
+      {
+        idxFrom: 0,
+        idxTo: 4
+      }
+    ],
+    "02.08"
   );
   t.end();
 });

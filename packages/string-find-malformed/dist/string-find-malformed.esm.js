@@ -70,12 +70,23 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
       wasThisLetterMatched = false;
       if (
-        !(
-          Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
-          pendingMatchesArr[z].pendingToCheck.length &&
-          str[i] === pendingMatchesArr[z].pendingToCheck[0]
-        )
+        Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
+        pendingMatchesArr[z].pendingToCheck.length &&
+        str[i] === pendingMatchesArr[z].pendingToCheck[0]
       ) {
+        wasThisLetterMatched = true;
+        pendingMatchesArr[z].pendingToCheck.shift();
+      } else if (
+        Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
+        pendingMatchesArr[z].pendingToCheck.length &&
+        str[i] === pendingMatchesArr[z].pendingToCheck[1]
+      ) {
+        wasThisLetterMatched = true;
+        pendingMatchesArr[z].pendingToCheck.shift();
+        pendingMatchesArr[z].pendingToCheck.shift();
+        pendingMatchesArr[z].patienceLeft =
+          pendingMatchesArr[z].patienceLeft - 1;
+      } else {
         pendingMatchesArr[z].patienceLeft =
           pendingMatchesArr[z].patienceLeft - 1;
         if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
@@ -84,9 +95,6 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
             pendingMatchesArr[z].pendingToCheck.shift();
           }
         }
-      } else {
-        wasThisLetterMatched = true;
-        pendingMatchesArr[z].pendingToCheck.shift();
       }
     }
     pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);

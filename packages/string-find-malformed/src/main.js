@@ -153,8 +153,11 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
       `153 ${`\u001b[${34}m${`I. tend the existing entries in pendingMatchesArr[]`}\u001b[${39}m`}`
     );
     for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
+      console.log(" ");
+      console.log(`-----------------------------------`);
+      console.log(" ");
       console.log(
-        `157 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+        `160 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
           pendingMatchesArr[z],
           null,
           4
@@ -163,16 +166,60 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
 
       wasThisLetterMatched = false;
       if (
-        !(
-          Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
-          pendingMatchesArr[z].pendingToCheck.length &&
-          str[i] === pendingMatchesArr[z].pendingToCheck[0]
-        )
+        Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
+        pendingMatchesArr[z].pendingToCheck.length &&
+        str[i] === pendingMatchesArr[z].pendingToCheck[0]
       ) {
+        console.log(`173 CASE I. Happy path - matched.`);
+        wasThisLetterMatched = true;
+        console.log(
+          `176 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
+        );
+
+        // if matched, shift() it
+        pendingMatchesArr[z].pendingToCheck.shift();
+        console.log(
+          `182 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
+            pendingMatchesArr[z].pendingToCheck,
+            null,
+            4
+          )}`
+        );
+      } else if (
+        Array.isArray(pendingMatchesArr[z].pendingToCheck) &&
+        pendingMatchesArr[z].pendingToCheck.length &&
+        str[i] === pendingMatchesArr[z].pendingToCheck[1]
+      ) {
+        console.log(`193 CASE II. Next-one matched instead.`);
+        wasThisLetterMatched = true;
+        console.log(
+          `196 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} wasThisLetterMatched = ${wasThisLetterMatched}`
+        );
+
+        // if matched, shift() it
+        pendingMatchesArr[z].pendingToCheck.shift();
+        pendingMatchesArr[z].pendingToCheck.shift();
+        console.log(
+          `203 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now = ${JSON.stringify(
+            pendingMatchesArr[z].pendingToCheck,
+            null,
+            4
+          )}`
+        );
+
         pendingMatchesArr[z].patienceLeft =
           pendingMatchesArr[z].patienceLeft - 1;
         console.log(
-          `175 ${`\u001b[${31}m${`REDUCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
+          `213 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
+            pendingMatchesArr[z].patienceLeft
+          }`
+        );
+        //
+      } else {
+        pendingMatchesArr[z].patienceLeft =
+          pendingMatchesArr[z].patienceLeft - 1;
+        console.log(
+          `222 ${`\u001b[${31}m${`DECREASE PATIENCE`}\u001b[${39}m`} ${`\u001b[${33}m${`patienceLeft`}\u001b[${39}m`} = ${
             pendingMatchesArr[z].patienceLeft
           }`
         );
@@ -180,26 +227,46 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         // we look up the next character, if it matches, we don't pop it
         if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
           console.log(
-            `183 the following character didn't match "${pendingMatchesArr[z].pendingToCheck[0]}" so we pop() it`
+            `230 ██ str[${right(str, i)}] = "${
+              str[right(str, i)]
+            }" DIDN'T MATCH pendingMatchesArr[${z}].pendingToCheck[0] = "${
+              pendingMatchesArr[z].pendingToCheck[0]
+            }"`
           );
           pendingMatchesArr[z].pendingToCheck.shift();
+          console.log(
+            `238 ${`\u001b[${31}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
+              pendingMatchesArr[z].pendingToCheck,
+              null,
+              4
+            )}`
+          );
 
           // after popping, match the current character at str[i] is it
           // equal to the first element of recently-shifted
           // pendingMatchesArr[z].pendingToCheck:
+          console.log(
+            `249 ${`\u001b[${32}m${`CHECK`}\u001b[${39}m`}, does str[${i}]=${
+              str[i]
+            } === pendingMatchesArr[${z}].pendingToCheck[0]=${
+              pendingMatchesArr[z].pendingToCheck[0]
+            }`
+          );
           if (str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
             pendingMatchesArr[z].pendingToCheck.shift();
+            console.log(
+              `258 pendingMatchesArr[z].pendingToCheck now: ${JSON.stringify(
+                pendingMatchesArr[z].pendingToCheck,
+                null,
+                4
+              )}`
+            );
           }
         }
-      } else {
-        wasThisLetterMatched = true;
-        // if matched, shift() it
-        pendingMatchesArr[z].pendingToCheck.shift();
-        console.log(
-          `199 ${`\u001b[${32}m${`SHIFT`}\u001b[${39}m`} pendingMatchesArr[z].pendingToCheck`
-        );
       }
     }
+    console.log(" ");
+    console.log(`-----------------------------------`);
     pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
 
     // out of all objects which deplete pendingToCheck[] to zero length,
@@ -212,14 +279,14 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
 
     if (Array.isArray(tempArr) && tempArr.length) {
       console.log(
-        `215 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
+        `282 ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
           tempArr,
           null,
           4
         )}`
       );
       console.log(
-        `222 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
+        `289 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
           {
             idxFrom: Math.min(...tempArr) + opts.stringOffset,
             idxTo: i + (wasThisLetterMatched ? 1 : 0) + opts.stringOffset
@@ -245,11 +312,11 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     }
 
     console.log(
-      `248 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
+      `315 ${`\u001b[${34}m${`II. check the current character, maybe it matches something new`}\u001b[${39}m`}`
     );
     for (let y = 0; y < len2; y++) {
       console.log(
-        `252 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
+        `319 ${`\u001b[${36}m${`=== matching index: ${y}, that's characters str[${i}]="${str[i]}" vs. refStr[${y}]="${refStr[y]}" ===`}\u001b[${39}m`}`
       );
 
       if (str[i] === refStr[y]) {
@@ -259,7 +326,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
           pendingToCheck: Array.from(refStr.slice(y + 1))
         };
         console.log(
-          `262 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+          `329 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
             whatToPush,
             null,
             4
