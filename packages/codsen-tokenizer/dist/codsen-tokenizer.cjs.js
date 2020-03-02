@@ -673,7 +673,10 @@ function tokenizer(str, originalOpts) {
           }
           token.value = str.slice(token.start, token.end);
         }
-      } else if (token.type === "comment" && !layers.length && str[i] === ">") {
+      } else if (token.type === "comment" && str[i] === ">" && (!layers.length || str[stringLeftRight.right(str, i)] === "<")) {
+        if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
+          layers.pop();
+        }
         if (stringMatchLeftRight.matchRight(str, i, "<!-->", {
           trimBeforeMatching: true
         })) {

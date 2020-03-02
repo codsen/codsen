@@ -645,6 +645,40 @@ t.test(
   }
 );
 
+t.test(
+  `02.08 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - 1 instead of !`,
+  t => {
+    const gathered = [];
+    ct(`<!--[if !mso><!-->a`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 18,
+          value: "<!--[if !mso><!-->",
+          kind: "not",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 18,
+          end: 19,
+          value: "a"
+        }
+      ],
+      "02.08"
+    );
+    t.end();
+  }
+);
+
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 
