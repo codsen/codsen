@@ -155,7 +155,8 @@ function isOpening(str, idx = 0, originalOpts) {
   );
 
   const defaults = {
-    allowCustomTagNames: false
+    allowCustomTagNames: false,
+    skipOpeningBracket: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
 
@@ -169,10 +170,17 @@ function isOpening(str, idx = 0, originalOpts) {
   // =======
   // r1. tag without attributes
   // for example <br>, <br/>
-  const r1 = new RegExp(`^<${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
+  const r1 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}\\w+${whitespaceChunk}>`,
+    "g"
+  );
   // its custom-html tag version:
   const r5 = new RegExp(
-    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
     "g"
   );
   // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
@@ -184,30 +192,46 @@ function isOpening(str, idx = 0, originalOpts) {
 
   // =======
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
-  const r2 = new RegExp(`^<\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
+  const r2 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`,
+    "g"
+  );
   // its custom-html tag version:
   const r6 = new RegExp(
-    `^<\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
   );
 
   // =======
   // r3. closing/self-closing tags
-  const r3 = new RegExp(`^<\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
+  const r3 = new RegExp(
+    `^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
+    "g"
+  );
   // its custom-html tag version:
   const r7 = new RegExp(
-    `^<\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
     "g"
   );
 
   // =======
   // r4. opening tag with attributes,
   const r4 = new RegExp(
-    `^<${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
   // its custom-html tag version:
   const r8 = new RegExp(
-    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
 
@@ -215,75 +239,113 @@ function isOpening(str, idx = 0, originalOpts) {
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
 
+  console.log(
+    `243 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+  );
+
   if (opts.allowCustomTagNames) {
-    console.log(`219 inside opts.allowCustomTagNames clauses`);
+    console.log(`247 inside opts.allowCustomTagNames clauses`);
     if (r5.test(whatToTest)) {
-      console.log(`221 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      console.log(`249 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log(`224 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      console.log(`252 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r7.test(whatToTest)) {
-      console.log(`227 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      console.log(`255 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log(`230 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      console.log(`258 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     }
   } else {
-    console.log(`234 outside opts.allowCustomTagNames clauses`);
+    console.log(`262 outside opts.allowCustomTagNames clauses`);
     if (r1.test(whatToTest)) {
-      console.log(`236 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+      console.log(`264 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`239 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      console.log(`267 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r3.test(whatToTest)) {
-      console.log(`242 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+      console.log(`270 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`245 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      console.log(`273 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
       passed = true;
     }
   }
 
+  console.log(
+    `279 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+      passed,
+      null,
+      4
+    )}`
+  );
+
   // applicable for both
   if (
     !passed &&
-    str[idx] === "<" &&
+    (opts.skipOpeningBracket || str[idx] === "<") &&
     str[idx + 1] &&
-    ((["/", BACKSLASH].includes(str[idx + 1]) &&
-      matchRight(str, idx + 1, knownHtmlTags, {
+    ((["/", BACKSLASH].includes(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+      matchRight(str, idx + (opts.skipOpeningBracket ? 0 : 1), knownHtmlTags, {
         cb: isNotLetter,
         i: true
       })) ||
-      (!isNotLetter(str[idx + 1]) &&
-        matchRight(str, idx, knownHtmlTags, {
-          cb: isNotLetter,
-          i: true,
-          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-        })) ||
-      (isNotLetter(str[idx + 1]) &&
-        matchRight(str, idx, knownHtmlTags, {
-          // enhanced isNotLetter()
-          cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
-            return (
-              (char === undefined ||
-                (char.toUpperCase() === char.toLowerCase() &&
-                  !`0123456789`.includes(char))) &&
-              (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
-                str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
-            );
-          },
-          i: true,
-          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-        })))
+      (!isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+        matchRight(
+          str,
+          idx + (opts.skipOpeningBracket ? -1 : 0),
+          knownHtmlTags,
+          {
+            cb: isNotLetter,
+            i: true,
+            trimCharsBeforeMatching: [
+              "/",
+              BACKSLASH,
+              "!",
+              " ",
+              "\t",
+              "\n",
+              "\r"
+            ]
+          }
+        )) ||
+      (isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+        matchRight(
+          str,
+          idx + (opts.skipOpeningBracket ? -1 : 0),
+          knownHtmlTags,
+          {
+            // enhanced isNotLetter()
+            cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
+              return (
+                (char === undefined ||
+                  (char.toUpperCase() === char.toLowerCase() &&
+                    !`0123456789`.includes(char))) &&
+                (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
+                  str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
+              );
+            },
+            i: true,
+            trimCharsBeforeMatching: [
+              "/",
+              BACKSLASH,
+              "!",
+              " ",
+              "\t",
+              "\n",
+              "\r"
+            ]
+          }
+        )))
   ) {
     passed = true;
   }
 
   console.log(
-    `286 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `348 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -292,7 +354,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `295 ${`\u001b[${33}m${`isNotLetter(str[${idx +
+    `357 ${`\u001b[${33}m${`isNotLetter(str[${idx +
       1}])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
@@ -300,7 +362,7 @@ function isOpening(str, idx = 0, originalOpts) {
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`303 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`365 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

@@ -25,19 +25,20 @@ function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
   var defaults = {
-    allowCustomTagNames: false
+    allowCustomTagNames: false,
+    skipOpeningBracket: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
   var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
-  var r1 = new RegExp("^<".concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, ">"), "g");
-  var r5 = new RegExp("^<".concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*").concat(whitespaceChunk, ">"), "g");
-  var r2 = new RegExp("^<\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]", "g");
-  var r6 = new RegExp("^<\\s*\\w+\\s+[".concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
-  var r3 = new RegExp("^<\\s*\\/?\\s*\\w+\\s*\\/?\\s*>", "g");
-  var r7 = new RegExp("^<\\s*\\/?\\s*[".concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
-  var r4 = new RegExp("^<".concat(whitespaceChunk, "\\w+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
-  var r8 = new RegExp("^<".concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
+  var r1 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, ">"), "g");
+  var r5 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*").concat(whitespaceChunk, ">"), "g");
+  var r2 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]"), "g");
+  var r6 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\w+\\s+[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
+  var r3 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>"), "g");
+  var r7 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
+  var r4 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
+  var r8 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
   var whatToTest = idx ? str.slice(idx) : str;
   var passed = false;
   if (opts.allowCustomTagNames) {
@@ -61,14 +62,14 @@ function isOpening(str) {
       passed = true;
     }
   }
-  if (!passed && str[idx] === "<" && str[idx + 1] && (["/", BACKSLASH].includes(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx + 1, knownHtmlTags, {
+  if (!passed && (opts.skipOpeningBracket || str[idx] === "<") && str[idx + 1] && (["/", BACKSLASH].includes(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? 0 : 1), knownHtmlTags, {
     cb: isNotLetter,
     i: true
-  }) || !isNotLetter(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, {
+  }) || !isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? -1 : 0), knownHtmlTags, {
     cb: isNotLetter,
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-  }) || isNotLetter(str[idx + 1]) && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, {
+  }) || isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? -1 : 0), knownHtmlTags, {
     cb: function cb(_char2, theRemainderOfTheString, indexOfTheFirstOutsideChar) {
       return (_char2 === undefined || _char2.toUpperCase() === _char2.toLowerCase() && !"0123456789".includes(_char2)) && (str[stringLeftRight.right(str, indexOfTheFirstOutsideChar - 1)] === "/" || str[stringLeftRight.right(str, indexOfTheFirstOutsideChar - 1)] === ">");
     },

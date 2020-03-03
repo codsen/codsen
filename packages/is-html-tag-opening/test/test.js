@@ -6,118 +6,201 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 t.test(`01.01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s1 = `<a>`;
-  t.ok(is(s1), "01.01.01");
-  t.ok(is(s1, 0), "01.01.02");
+  const str = `<a>`;
+  t.ok(is(str), "01.01.01");
+  t.ok(is(str, 0), "01.01.02");
   t.ok(
-    is(s1, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.01.03"
+  );
+
+  t.false(is(str, 1), "01.01.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.01.05"
   );
   t.end();
 });
 
 t.test(`01.02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s2 = `<img>`;
-  t.ok(is(s2), "01.02.01");
-  t.ok(is(s2, 0), "01.02.02");
+  const str = `<img>`;
+  t.ok(is(str), "01.02.01");
+  t.ok(is(str, 0), "01.02.02");
   t.ok(
-    is(s2, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.02.03"
+  );
+
+  t.false(is(str, 1), "01.02.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.02.05"
   );
   t.end();
 });
 
 t.test(`01.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s3 = `<img alt="">`;
-  t.ok(is(s3), "01.03.01");
-  t.ok(is(s3, 0), "01.03.02");
+  const str = `<img alt="">`;
+  t.ok(is(str), "01.03.01");
+  t.ok(is(str, 0), "01.03.02");
   t.ok(
-    is(s3, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.03.03"
+  );
+
+  t.false(is(str, 1), "01.03.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.03.05"
   );
   t.end();
 });
 
 t.test(`01.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s4 = `<img alt="zzz">`;
-  t.ok(is(s4), "01.04.01");
-  t.ok(is(s4, 0), "01.04.02");
+  const str = `<img alt="zzz">`;
+  t.ok(is(str), "01.04.01");
+  t.ok(is(str, 0), "01.04.02");
   t.ok(
-    is(s4, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.04.03"
+  );
+
+  t.false(is(str, 1), "01.04.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.04.05"
   );
   t.end();
 });
 
 t.test(`01.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s5 = `<td nowrap>`;
-  t.ok(is(s5), "01.05.01"); // <---- true because tag name was recognised
-  t.ok(is(s5, 0), "01.05.02");
+  const str = `<td nowrap>`;
+  t.ok(is(str), "01.05.01"); // <---- true because tag name was recognised
+  t.ok(is(str, 0), "01.05.02");
   t.ok(
-    is(s5, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.05.03"
+  );
+
+  t.false(is(str, 1), "01.05.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.05.05"
   );
   t.end();
 });
 
 t.test(`01.06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s5 = `<zzz nowrap>`;
-  t.false(is(s5), "01.06.01"); // <---- false because tag name was not recognised and there were no attrs
-  t.false(is(s5, 0), "01.06.02");
+  const str = `<zzz nowrap>`;
+  t.false(is(str), "01.06.01"); // <---- false because tag name was not recognised and there were no attrs
+  t.false(is(str, 0), "01.06.02");
   t.false(
-    is(s5, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.06.03"
+  );
+
+  t.false(is(str, 1), "01.06.04");
+  t.false(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.06.05"
   );
   t.end();
 });
 
 t.test(`01.07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s6 = `<td class="klm" nowrap>`;
-  t.ok(is(s6), "01.07.01");
-  t.ok(is(s6, 0), "01.07.02");
+  const str = `<td class="klm" nowrap>`;
+  t.ok(is(str), "01.07.01");
+  t.ok(is(str, 0), "01.07.02");
   t.ok(
-    is(s6, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.07.03"
+  );
+
+  t.false(is(str, 1), "01.07.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.07.05"
   );
   t.end();
 });
 
 t.test(`01.08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s7 = `<td nowrap class="klm">`;
-  t.ok(is(s7), "01.08.01");
-  t.ok(is(s7, 0), "01.08.02");
+  const str = `<td nowrap class="klm">`;
+  t.ok(is(str), "01.08.01");
+  t.ok(is(str, 0), "01.08.02");
   t.ok(
-    is(s7, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.08.03"
+  );
+
+  t.false(is(str, 1), "01.08.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.08.05"
   );
   t.end();
 });
 
 t.test(`01.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const s8 = `<td nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap class="klm"`;
-  t.ok(is(s8), "01.09.01");
-  t.ok(is(s8, 0), "01.09.02");
+  const str = `<td nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap class="klm"`;
+  t.ok(is(str), "01.09.01");
+  t.ok(is(str, 0), "01.09.02");
   t.ok(
-    is(s8, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "01.09.03"
+  );
+
+  t.false(is(str, 1), "01.09.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.09.05"
+  );
+  t.end();
+});
+
+t.test(`01.10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
+  const str = `<td nowrap>`;
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "01.10"
   );
   t.end();
 });
@@ -127,66 +210,106 @@ t.test(`01.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
 
 t.test(`02.01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
   // closing tag
-  const s1 = `</td>`;
-  t.ok(is(s1), "02.01.01");
-  t.ok(is(s1, 0), "02.01.02");
+  const str = `</td>`;
+  t.ok(is(str), "02.01.01");
+  t.ok(is(str, 0), "02.01.02");
   t.ok(
-    is(s1, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "02.01.03"
+  );
+
+  t.false(is(str, 1), "02.01.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "02.01.05"
   );
   t.end();
 });
 
 t.test(`02.02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
-  const s2 = `</ td>`;
-  t.ok(is(s2), "02.02.01");
-  t.ok(is(s2, 0), "02.02.02");
+  const str = `</ td>`;
+  t.ok(is(str), "02.02.01");
+  t.ok(is(str, 0), "02.02.02");
   t.ok(
-    is(s2, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "02.02.03"
+  );
+
+  t.false(is(str, 1), "02.02.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "02.02.05"
   );
   t.end();
 });
 
 t.test(`02.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
-  const s3 = `< / td>`;
-  t.ok(is(s3), "02.03.01");
-  t.ok(is(s3, 0), "02.03.02");
+  const str = `< / td>`;
+  t.ok(is(str), "02.03.01");
+  t.ok(is(str, 0), "02.03.02");
   t.ok(
-    is(s3, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "02.03.03"
+  );
+
+  t.false(is(str, 1), "02.03.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "02.03.05"
   );
   t.end();
 });
 
 t.test(`02.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
-  const s4 = `</ td >`;
-  t.ok(is(s4), "02.04.01");
-  t.ok(is(s4, 0), "02.04.02");
+  const str = `</ td >`;
+  t.ok(is(str), "02.04.01");
+  t.ok(is(str, 0), "02.04.02");
   t.ok(
-    is(s4, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "02.04.03"
+  );
+
+  t.false(is(str, 1), "02.04.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "02.04.05"
   );
   t.end();
 });
 
 t.test(`02.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
-  const s5 = `< / td >`;
-  t.ok(is(s5), "02.05.01");
-  t.ok(is(s5, 0), "02.05.02");
+  const str = `< / td >`;
+  t.ok(is(str), "02.05.01");
+  t.ok(is(str, 0), "02.05.02");
   t.ok(
-    is(s5, 0, {
+    is(str, 0, {
       allowCustomTagNames: true
     }),
     "02.05.03"
+  );
+
+  t.false(is(str, 1), "02.05.04");
+  t.ok(
+    is(str, 1, {
+      skipOpeningBracket: true
+    }),
+    "02.05.05"
   );
   t.end();
 });
@@ -197,14 +320,22 @@ t.test(`02.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - closing tag`, t => {
 t.test(
   `03.01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s1 = `<br/>`;
-    t.ok(is(s1), "03.01.01");
-    t.ok(is(s1, 0), "03.01.02");
+    const str = `<br/>`;
+    t.ok(is(str), "03.01.01");
+    t.ok(is(str, 0), "03.01.02");
     t.ok(
-      is(s1, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.01.03"
+    );
+
+    t.false(is(str, 1), "03.01.04");
+    t.ok(
+      is(str, 1, {
+        skipOpeningBracket: true
+      }),
+      "03.01.05"
     );
     t.end();
   }
@@ -213,14 +344,22 @@ t.test(
 t.test(
   `03.02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s2 = `< br/>`;
-    t.ok(is(s2), "03.02.01");
-    t.ok(is(s2, 0), "03.02.02");
+    const str = `< br/>`;
+    t.ok(is(str), "03.02.01");
+    t.ok(is(str, 0), "03.02.02");
     t.ok(
-      is(s2, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.02.03"
+    );
+
+    t.false(is(str, 2), "03.02.04");
+    t.ok(
+      is(str, 2, {
+        skipOpeningBracket: true
+      }),
+      "03.02.05"
     );
     t.end();
   }
@@ -229,14 +368,22 @@ t.test(
 t.test(
   `03.03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s3 = `<br />`;
-    t.ok(is(s3), "03.03.01");
-    t.ok(is(s3, 0), "03.03.02");
+    const str = `<br />`;
+    t.ok(is(str), "03.03.01");
+    t.ok(is(str, 0), "03.03.02");
     t.ok(
-      is(s3, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.03.03"
+    );
+
+    t.false(is(str, 1), "03.03.04");
+    t.ok(
+      is(str, 1, {
+        skipOpeningBracket: true
+      }),
+      "03.03.05"
     );
     t.end();
   }
@@ -245,14 +392,22 @@ t.test(
 t.test(
   `03.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s4 = `<br/ >`;
-    t.ok(is(s4), "03.04.01");
-    t.ok(is(s4, 0), "03.04.02");
+    const str = `<br/ >`;
+    t.ok(is(str), "03.04.01");
+    t.ok(is(str, 0), "03.04.02");
     t.ok(
-      is(s4, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.04.03"
+    );
+
+    t.false(is(str, 1), "03.04.04");
+    t.ok(
+      is(str, 1, {
+        skipOpeningBracket: true
+      }),
+      "03.04.05"
     );
     t.end();
   }
@@ -261,14 +416,22 @@ t.test(
 t.test(
   `03.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s5 = `<br / >`;
-    t.ok(is(s5), "03.05.01");
-    t.ok(is(s5, 0), "03.05.02");
+    const str = `<br / >`;
+    t.ok(is(str), "03.05.01");
+    t.ok(is(str, 0), "03.05.02");
     t.ok(
-      is(s5, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.05.03"
+    );
+
+    t.false(is(str, 1), "03.05.04");
+    t.ok(
+      is(str, 1, {
+        skipOpeningBracket: true
+      }),
+      "03.05.05"
     );
     t.end();
   }
@@ -277,14 +440,22 @@ t.test(
 t.test(
   `03.06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   t => {
-    const s6 = `< br / >`;
-    t.ok(is(s6), "03.06.01");
-    t.ok(is(s6, 0), "03.06.02");
+    const str = `< br / >`;
+    t.ok(is(str), "03.06.01");
+    t.ok(is(str, 0), "03.06.02");
     t.ok(
-      is(s6, 0, {
+      is(str, 0, {
         allowCustomTagNames: true
       }),
       "03.06.03"
+    );
+
+    t.false(is(str, 1), "03.06.04");
+    t.ok(
+      is(str, 1, {
+        skipOpeningBracket: true
+      }),
+      "03.06.05"
     );
     t.end();
   }

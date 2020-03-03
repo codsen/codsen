@@ -157,31 +157,55 @@ function isNotLetter(char) {
 }
 function isOpening(str, idx = 0, originalOpts) {
   const defaults = {
-    allowCustomTagNames: false
+    allowCustomTagNames: false,
+    skipOpeningBracket: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
   const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
-  const r1 = new RegExp(`^<${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
-  const r5 = new RegExp(
-    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
+  const r1 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}\\w+${whitespaceChunk}>`,
     "g"
   );
-  const r2 = new RegExp(`^<\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
-  const r6 = new RegExp(
-    `^<\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
+  const r5 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
+    "g"
   );
-  const r3 = new RegExp(`^<\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
+  const r2 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`,
+    "g"
+  );
+  const r6 = new RegExp(
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
+  );
+  const r3 = new RegExp(
+    `^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
+    "g"
+  );
   const r7 = new RegExp(
-    `^<\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
     "g"
   );
   const r4 = new RegExp(
-    `^<${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
   const r8 = new RegExp(
-    `^<${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^${
+      opts.skipOpeningBracket ? "" : "<"
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
   const whatToTest = idx ? str.slice(idx) : str;
@@ -209,33 +233,59 @@ function isOpening(str, idx = 0, originalOpts) {
   }
   if (
     !passed &&
-    str[idx] === "<" &&
+    (opts.skipOpeningBracket || str[idx] === "<") &&
     str[idx + 1] &&
-    ((["/", BACKSLASH].includes(str[idx + 1]) &&
-      matchRight(str, idx + 1, knownHtmlTags, {
+    ((["/", BACKSLASH].includes(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+      matchRight(str, idx + (opts.skipOpeningBracket ? 0 : 1), knownHtmlTags, {
         cb: isNotLetter,
         i: true
       })) ||
-      (!isNotLetter(str[idx + 1]) &&
-        matchRight(str, idx, knownHtmlTags, {
-          cb: isNotLetter,
-          i: true,
-          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-        })) ||
-      (isNotLetter(str[idx + 1]) &&
-        matchRight(str, idx, knownHtmlTags, {
-          cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
-            return (
-              (char === undefined ||
-                (char.toUpperCase() === char.toLowerCase() &&
-                  !`0123456789`.includes(char))) &&
-              (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
-                str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
-            );
-          },
-          i: true,
-          trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-        })))
+      (!isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+        matchRight(
+          str,
+          idx + (opts.skipOpeningBracket ? -1 : 0),
+          knownHtmlTags,
+          {
+            cb: isNotLetter,
+            i: true,
+            trimCharsBeforeMatching: [
+              "/",
+              BACKSLASH,
+              "!",
+              " ",
+              "\t",
+              "\n",
+              "\r"
+            ]
+          }
+        )) ||
+      (isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
+        matchRight(
+          str,
+          idx + (opts.skipOpeningBracket ? -1 : 0),
+          knownHtmlTags,
+          {
+            cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
+              return (
+                (char === undefined ||
+                  (char.toUpperCase() === char.toLowerCase() &&
+                    !`0123456789`.includes(char))) &&
+                (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
+                  str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
+              );
+            },
+            i: true,
+            trimCharsBeforeMatching: [
+              "/",
+              BACKSLASH,
+              "!",
+              " ",
+              "\t",
+              "\n",
+              "\r"
+            ]
+          }
+        )))
   ) {
     passed = true;
   }
