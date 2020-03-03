@@ -95,6 +95,16 @@ function flipEspTag(str) {
 function isTagNameRecognised(tagName) {
   return allHTMLTagsKnownToHumanity.includes(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
 }
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (var i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    } else if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+  return false;
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && str[i + 1] === "-") && !(
@@ -657,9 +667,11 @@ function tokenizer(str, originalOpts) {
       }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
         trimBeforeMatching: true
       }))) {
-        if (stringMatchLeftRight.matchRightIncl(str, i, ["-[if"], {
+        if (str[i] === "-" && (stringMatchLeftRight.matchRight(str, i, ["[if"], {
           trimBeforeMatching: true
-        })) {
+        }) || stringMatchLeftRight.matchRight(str, i, ["if"], {
+          trimBeforeMatching: true
+        }) && xBeforeYOnTheRight(str, i, "]", ">"))) {
           token.kind = "only";
         } else if (stringMatchLeftRight.matchRightIncl(str, i, ["-<![endif"], {
           trimBeforeMatching: true

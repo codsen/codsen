@@ -679,6 +679,33 @@ t.test(
   }
 );
 
+t.test(
+  `02.09 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - opening square bracket missing`,
+  t => {
+    const gathered = [];
+    ct(`<!--if mso]>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 12,
+          kind: "only",
+          closing: false
+        }
+      ],
+      "02.07"
+    );
+    t.end();
+  }
+);
+
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 

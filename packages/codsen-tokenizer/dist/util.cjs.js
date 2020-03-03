@@ -243,6 +243,16 @@ function isTagNameRecognised(tagName) {
     ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
   );
 }
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    } else if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+  return false;
+}
 
 exports.allHTMLTagsKnownToHumanity = allHTMLTagsKnownToHumanity;
 exports.charSuitableForHTMLAttrName = charSuitableForHTMLAttrName;
@@ -261,3 +271,4 @@ exports.isUppercaseLetter = isUppercaseLetter;
 exports.lastChar = lastChar;
 exports.secondChar = secondChar;
 exports.secondToLastChar = secondToLastChar;
+exports.xBeforeYOnTheRight = xBeforeYOnTheRight;

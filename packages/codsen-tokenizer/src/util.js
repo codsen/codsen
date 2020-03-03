@@ -268,11 +268,30 @@ function isTagNameRecognised(tagName) {
   );
 }
 
+// Tells, if substring x goes before substring y on the right
+// side of "str", starting at index "startingIdx".
+// Used to troubleshoot dirty broken code.
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      // if x was first, Bob's your uncle, that's truthy result
+      return true;
+    } else if (str.startsWith(y, i)) {
+      // since we're in this clause, x failed, so if y matched,
+      // this means y precedes x
+      return false;
+    }
+  }
+  // default result
+  return false;
+}
+
 export {
   charSuitableForHTMLAttrName,
   allHTMLTagsKnownToHumanity,
   charSuitableForTagName,
   isTagNameRecognised,
+  xBeforeYOnTheRight,
   isLowerCaseLetter,
   isUppercaseLetter,
   espLumpBlacklist,

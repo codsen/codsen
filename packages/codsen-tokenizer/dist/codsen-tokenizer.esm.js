@@ -268,6 +268,16 @@ function isTagNameRecognised(tagName) {
     ["doctype", "cdata", "xml"].includes(tagName.toLowerCase())
   );
 }
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    } else if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+  return false;
+}
 
 function startsEsp(str, i, token, layers, styleStarts) {
   return (
@@ -1070,9 +1080,14 @@ function tokenizer(str, originalOpts) {
             })))
       ) {
         if (
-          matchRightIncl(str, i, ["-[if"], {
+          str[i] === "-" &&
+          (matchRight(str, i, ["[if"], {
             trimBeforeMatching: true
-          })
+          }) ||
+            (matchRight(str, i, ["if"], {
+              trimBeforeMatching: true
+            }) &&
+              xBeforeYOnTheRight(str, i, "]", ">")))
         ) {
           token.kind = "only";
         } else if (
