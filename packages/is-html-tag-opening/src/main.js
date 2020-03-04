@@ -1,4 +1,4 @@
-import { matchRight, matchRightIncl } from "string-match-left-right";
+import { matchRight } from "string-match-left-right";
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
   "a",
@@ -290,18 +290,17 @@ function isOpening(str, idx = 0, originalOpts) {
   };
   if (
     !passed &&
-    ((opts.skipOpeningBracket &&
-      matchRightIncl(str, idx, knownHtmlTags, matchingOptions)) ||
-      (str[idx] === "<" &&
-        str[idx + 1].trim().length &&
-        matchRight(str, idx, knownHtmlTags, matchingOptions)))
+    !opts.skipOpeningBracket &&
+    str[idx] === "<" &&
+    str[idx + 1].trim().length &&
+    matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`300 SET passed = true`);
+    console.log(`299 SET passed = true`);
   }
 
   console.log(
-    `304 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `303 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -310,7 +309,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `313 ${`\u001b[${33}m${`isNotLetter(str[${idx +
+    `312 ${`\u001b[${33}m${`isNotLetter(str[${idx +
       1}])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
@@ -318,7 +317,7 @@ function isOpening(str, idx = 0, originalOpts) {
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`321 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`320 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

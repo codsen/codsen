@@ -101,7 +101,7 @@ t.test(`01.05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   );
 
   t.false(is(str, 1), "01.05.04");
-  t.ok(
+  t.false(
     is(str, 1, {
       skipOpeningBracket: true
     }),
@@ -190,17 +190,6 @@ t.test(`01.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
       skipOpeningBracket: true
     }),
     "01.09.05"
-  );
-  t.end();
-});
-
-t.test(`01.10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
-  const str = `<td nowrap>`;
-  t.ok(
-    is(str, 1, {
-      skipOpeningBracket: true
-    }),
-    "01.10"
   );
   t.end();
 });
@@ -937,6 +926,32 @@ t.test(
         allowCustomTagNames: true
       }),
       "07.05"
+    );
+    t.end();
+  }
+);
+
+// 08. false positives
+// -----------------------------------------------------------------------------
+
+t.test(
+  `08.01 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`,
+  t => {
+    const str = `> b`;
+    t.false(is(str, 2), "08.01");
+    t.end();
+  }
+);
+
+t.test(
+  `08.02 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`,
+  t => {
+    const str = `> b`;
+    t.false(
+      is(str, 2, {
+        skipOpeningBracket: true
+      }),
+      "08.02"
     );
     t.end();
   }

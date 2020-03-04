@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
  */
 
-import { matchRightIncl, matchRight } from 'string-match-left-right';
+import { matchRight } from 'string-match-left-right';
 
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
@@ -237,11 +237,10 @@ function isOpening(str, idx = 0, originalOpts) {
   };
   if (
     !passed &&
-    ((opts.skipOpeningBracket &&
-      matchRightIncl(str, idx, knownHtmlTags, matchingOptions)) ||
-      (str[idx] === "<" &&
-        str[idx + 1].trim().length &&
-        matchRight(str, idx, knownHtmlTags, matchingOptions)))
+    !opts.skipOpeningBracket &&
+    str[idx] === "<" &&
+    str[idx + 1].trim().length &&
+    matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
   }

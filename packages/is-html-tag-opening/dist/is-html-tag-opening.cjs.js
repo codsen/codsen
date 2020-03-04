@@ -66,7 +66,7 @@ function isOpening(str) {
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
   };
-  if (!passed && (opts.skipOpeningBracket && stringMatchLeftRight.matchRightIncl(str, idx, knownHtmlTags, matchingOptions) || str[idx] === "<" && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions))) {
+  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions)) {
     passed = true;
   }
   var res = isStr(str) && idx < str.length && passed;
