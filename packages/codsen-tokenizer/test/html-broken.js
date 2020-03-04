@@ -289,3 +289,44 @@ t.test(
     t.end();
   }
 );
+
+// 03. missing opening bracket
+// -----------------------------------------------------------------------------
+
+t.test(
+  `03.01 - ${`\u001b[${33}m${`missing opening bracket`}\u001b[${39}m`} - tight`,
+  t => {
+    const gathered = [];
+    ct(`<a>img src="z"/><a>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 3
+        },
+        {
+          type: "tag",
+          start: 3,
+          end: 16,
+          value: `img src="z"/>`,
+          tagName: "img"
+        },
+        {
+          type: "tag",
+          start: 16,
+          end: 19
+        }
+      ],
+      "03.01"
+    );
+    t.is(gathered.length, 3, "03.02");
+    t.end();
+  }
+);

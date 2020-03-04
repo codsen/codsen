@@ -56,21 +56,24 @@ function startsComment(str, i, token) {
 
 function startsTag(str, i, token, layers) {
   return (
-    str[i] === "<" &&
-    ((token.type === "text" &&
-      isTagOpening(str, i, {
-        allowCustomTagNames: true
-      })) ||
-      !layers.length) &&
-    (str[right(str, i)] === ">" ||
-      isTagOpening(str, i, {
+    str[i] &&
+    str[i].trim().length &&
+    (!layers.length || token.type === "text") &&
+    ((str[i] === "<" &&
+      (isTagOpening(str, i, {
         allowCustomTagNames: true
       }) ||
-      matchRight(str, i, ["doctype", "xml", "cdata"], {
-        i: true,
-        trimBeforeMatching: true,
-        trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-      })) &&
+        str[right(str, i)] === ">" ||
+        matchRight(str, i, ["doctype", "xml", "cdata"], {
+          i: true,
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+        }))) ||
+      (str[left(str, i)] === ">" &&
+        isTagOpening(str, i, {
+          allowCustomTagNames: true,
+          skipOpeningBracket: true
+        }))) &&
     (token.type !== "esp" || token.tail.includes(str[i]))
   );
 }
@@ -1209,7 +1212,7 @@ function tokenizer(str, originalOpts) {
       token.type === "tag" &&
       !Number.isInteger(token.tagNameStartsAt) &&
       Number.isInteger(token.start) &&
-      token.start < i
+      (token.start < i || str[token.start] !== "<")
     ) {
       if (str[i] === "/") {
         token.closing = true;
