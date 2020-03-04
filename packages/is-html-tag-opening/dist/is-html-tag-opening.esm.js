@@ -7,8 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
  */
 
-import { matchRight } from 'string-match-left-right';
-import { right } from 'string-left-right';
+import { matchRightIncl, matchRight } from 'string-match-left-right';
 
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
@@ -231,61 +230,18 @@ function isOpening(str, idx = 0, originalOpts) {
       passed = true;
     }
   }
+  const matchingOptions = {
+    cb: isNotLetter,
+    i: true,
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  };
   if (
     !passed &&
-    (opts.skipOpeningBracket || str[idx] === "<") &&
-    str[idx + 1] &&
-    ((["/", BACKSLASH].includes(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
-      matchRight(str, idx + (opts.skipOpeningBracket ? 0 : 1), knownHtmlTags, {
-        cb: isNotLetter,
-        i: true
-      })) ||
-      (!isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
-        matchRight(
-          str,
-          idx + (opts.skipOpeningBracket ? -1 : 0),
-          knownHtmlTags,
-          {
-            cb: isNotLetter,
-            i: true,
-            trimCharsBeforeMatching: [
-              "/",
-              BACKSLASH,
-              "!",
-              " ",
-              "\t",
-              "\n",
-              "\r"
-            ]
-          }
-        )) ||
-      (isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) &&
-        matchRight(
-          str,
-          idx + (opts.skipOpeningBracket ? -1 : 0),
-          knownHtmlTags,
-          {
-            cb: (char, theRemainderOfTheString, indexOfTheFirstOutsideChar) => {
-              return (
-                (char === undefined ||
-                  (char.toUpperCase() === char.toLowerCase() &&
-                    !`0123456789`.includes(char))) &&
-                (str[right(str, indexOfTheFirstOutsideChar - 1)] === "/" ||
-                  str[right(str, indexOfTheFirstOutsideChar - 1)] === ">")
-              );
-            },
-            i: true,
-            trimCharsBeforeMatching: [
-              "/",
-              BACKSLASH,
-              "!",
-              " ",
-              "\t",
-              "\n",
-              "\r"
-            ]
-          }
-        )))
+    ((opts.skipOpeningBracket &&
+      matchRightIncl(str, idx, knownHtmlTags, matchingOptions)) ||
+      (str[idx] === "<" &&
+        str[idx + 1].trim().length &&
+        matchRight(str, idx, knownHtmlTags, matchingOptions)))
   ) {
     passed = true;
   }

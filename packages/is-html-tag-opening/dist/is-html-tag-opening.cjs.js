@@ -10,7 +10,6 @@
 'use strict';
 
 var stringMatchLeftRight = require('string-match-left-right');
-var stringLeftRight = require('string-left-right');
 
 var BACKSLASH = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype",
@@ -62,20 +61,12 @@ function isOpening(str) {
       passed = true;
     }
   }
-  if (!passed && (opts.skipOpeningBracket || str[idx] === "<") && str[idx + 1] && (["/", BACKSLASH].includes(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? 0 : 1), knownHtmlTags, {
-    cb: isNotLetter,
-    i: true
-  }) || !isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? -1 : 0), knownHtmlTags, {
+  var matchingOptions = {
     cb: isNotLetter,
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-  }) || isNotLetter(str[idx + (opts.skipOpeningBracket ? 0 : 1)]) && stringMatchLeftRight.matchRight(str, idx + (opts.skipOpeningBracket ? -1 : 0), knownHtmlTags, {
-    cb: function cb(_char2, theRemainderOfTheString, indexOfTheFirstOutsideChar) {
-      return (_char2 === undefined || _char2.toUpperCase() === _char2.toLowerCase() && !"0123456789".includes(_char2)) && (str[stringLeftRight.right(str, indexOfTheFirstOutsideChar - 1)] === "/" || str[stringLeftRight.right(str, indexOfTheFirstOutsideChar - 1)] === ">");
-    },
-    i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-  }))) {
+  };
+  if (!passed && (opts.skipOpeningBracket && stringMatchLeftRight.matchRightIncl(str, idx, knownHtmlTags, matchingOptions) || str[idx] === "<" && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions))) {
     passed = true;
   }
   var res = isStr(str) && idx < str.length && passed;
