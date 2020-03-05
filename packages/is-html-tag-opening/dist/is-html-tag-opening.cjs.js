@@ -18,7 +18,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function isNotLetter(_char) {
-  return _char === undefined || _char.toUpperCase() === _char.toLowerCase() && !"0123456789".includes(_char);
+  return _char === undefined || _char.toUpperCase() === _char.toLowerCase() && !"0123456789".includes(_char) && _char !== "=";
 }
 function isOpening(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;

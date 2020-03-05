@@ -194,6 +194,24 @@ t.test(`01.09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
   t.end();
 });
 
+t.test(`01.10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, t => {
+  const str = `<html dir="ltr">`;
+  t.false(is(str, 6), "01.10.01");
+  t.false(
+    is(str, 6, {
+      allowCustomTagNames: true
+    }),
+    "01.10.02"
+  );
+  t.false(
+    is(str, 6, {
+      skipOpeningBracket: true
+    }),
+    "01.10.03"
+  );
+  t.end();
+});
+
 // 02. closing tag
 // -----------------------------------------------------------------------------
 

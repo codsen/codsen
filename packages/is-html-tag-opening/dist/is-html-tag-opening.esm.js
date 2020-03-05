@@ -151,7 +151,9 @@ function isStr(something) {
 function isNotLetter(char) {
   return (
     char === undefined ||
-    (char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char))
+    (char.toUpperCase() === char.toLowerCase() &&
+      !`0123456789`.includes(char) &&
+      char !== "=")
   );
 }
 function isOpening(str, idx = 0, originalOpts) {
