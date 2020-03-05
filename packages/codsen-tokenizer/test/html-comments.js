@@ -646,7 +646,7 @@ t.test(
 );
 
 t.test(
-  `02.08 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - 1 instead of !`,
+  `02.08 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - missing closing bracket`,
   t => {
     const gathered = [];
     ct(`<!--[if !mso><!-->a`, {

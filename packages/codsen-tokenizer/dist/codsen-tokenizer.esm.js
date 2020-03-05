@@ -54,30 +54,6 @@ function startsComment(str, i, token) {
   );
 }
 
-function startsTag(str, i, token, layers) {
-  return (
-    str[i] &&
-    str[i].trim().length &&
-    (!layers.length || token.type === "text") &&
-    ((str[i] === "<" &&
-      (isTagOpening(str, i, {
-        allowCustomTagNames: true
-      }) ||
-        str[right(str, i)] === ">" ||
-        matchRight(str, i, ["doctype", "xml", "cdata"], {
-          i: true,
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-        }))) ||
-      (str[left(str, i)] === ">" &&
-        isTagOpening(str, i, {
-          allowCustomTagNames: true,
-          skipOpeningBracket: true
-        }))) &&
-    (token.type !== "esp" || token.tail.includes(str[i]))
-  );
-}
-
 const allHTMLTagsKnownToHumanity = [
   "a",
   "abbr",
@@ -239,9 +215,7 @@ function isLatinLetter(char) {
   );
 }
 function charSuitableForTagName(char) {
-  return /[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/i.test(
-    char
-  );
+  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
 }
 function charSuitableForHTMLAttrName(char) {
   return (
@@ -280,6 +254,35 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     }
   }
   return false;
+}
+
+const BACKSLASH = "\u005C";
+function startsTag(str, i, token, layers) {
+  return (
+    str[i] &&
+    str[i].trim().length &&
+    (!layers.length || token.type === "text") &&
+    !["doctype", "xml"].includes(token.kind) &&
+    ((str[i] === "<" &&
+      (isTagOpening(str, i, {
+        allowCustomTagNames: true
+      }) ||
+        str[right(str, i)] === ">" ||
+        matchRight(str, i, ["doctype", "xml", "cdata"], {
+          i: true,
+          trimBeforeMatching: true,
+          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+        }))) ||
+      (isLatinLetter(str[i]) &&
+        (!str[i - 1] ||
+          (!isLatinLetter(str[i - 1]) &&
+            !["<", "/", "!", BACKSLASH].includes(str[left(str, i)]))) &&
+        isTagOpening(str, i, {
+          allowCustomTagNames: false,
+          skipOpeningBracket: true
+        }))) &&
+    (token.type !== "esp" || token.tail.includes(str[i]))
+  );
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {

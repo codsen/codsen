@@ -1,6 +1,8 @@
 import isTagOpening from "is-html-tag-opening";
 import { left, right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
+import { isLatinLetter } from "../util";
+const BACKSLASH = "\u005C";
 
 // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
@@ -8,14 +10,21 @@ import { matchRight } from "string-match-left-right";
 
 function startsTag(str, i, token, layers) {
   console.log(
-    `011 ██ startsTag(): ${isTagOpening(str, i, {
+    `013 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
       allowCustomTagNames: true
+    })}`
+  );
+  console.log(
+    `018 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true
     })}`
   );
   return (
     str[i] &&
     str[i].trim().length &&
     (!layers.length || token.type === "text") &&
+    !["doctype", "xml"].includes(token.kind) &&
     ((str[i] === "<" &&
       (isTagOpening(str, i, {
         allowCustomTagNames: true
@@ -26,9 +35,12 @@ function startsTag(str, i, token, layers) {
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
         }))) ||
-      (str[left(str, i)] === ">" &&
+      (isLatinLetter(str[i]) &&
+        (!str[i - 1] ||
+          (!isLatinLetter(str[i - 1]) &&
+            !["<", "/", "!", BACKSLASH].includes(str[left(str, i)]))) &&
         isTagOpening(str, i, {
-          allowCustomTagNames: true,
+          allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true
         }))) &&
     // (

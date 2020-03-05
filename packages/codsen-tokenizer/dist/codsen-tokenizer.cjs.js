@@ -50,20 +50,6 @@ function startsComment(str, i, token) {
   );
 }
 
-function startsTag(str, i, token, layers) {
-  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (str[i] === "<" && (isTagOpening(str, i, {
-    allowCustomTagNames: true
-  }) || str[stringLeftRight.right(str, i)] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
-    i: true,
-    trimBeforeMatching: true,
-    trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || str[stringLeftRight.left(str, i)] === ">" && isTagOpening(str, i, {
-    allowCustomTagNames: true,
-    skipOpeningBracket: true
-  })) && (
-  token.type !== "esp" || token.tail.includes(str[i]));
-}
-
 var allHTMLTagsKnownToHumanity = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"];
 var espChars = "{}%-$_()*|";
 var espLumpBlacklist = [")|(", "|(", ")(", "()", "{}", "%)", "*)", "**"];
@@ -74,7 +60,7 @@ function isLatinLetter(_char4) {
   return isStr(_char4) && _char4.length === 1 && (_char4.charCodeAt(0) > 64 && _char4.charCodeAt(0) < 91 || _char4.charCodeAt(0) > 96 && _char4.charCodeAt(0) < 123);
 }
 function charSuitableForTagName(_char5) {
-  return /[.\-_a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/i.test(_char5);
+  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(_char5);
 }
 function charSuitableForHTMLAttrName(_char6) {
   return isLatinLetter(_char6) || _char6.charCodeAt(0) >= 48 && _char6.charCodeAt(0) <= 57 || [":", "-"].includes(_char6);
@@ -106,6 +92,21 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
     }
   }
   return false;
+}
+
+var BACKSLASH = "\\";
+function startsTag(str, i, token, layers) {
+  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isTagOpening(str, i, {
+    allowCustomTagNames: true
+  }) || str[stringLeftRight.right(str, i)] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
+    i: true,
+    trimBeforeMatching: true,
+    trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[stringLeftRight.left(str, i)])) && isTagOpening(str, i, {
+    allowCustomTagNames: false,
+    skipOpeningBracket: true
+  })) && (
+  token.type !== "esp" || token.tail.includes(str[i]));
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {

@@ -329,6 +329,44 @@ t.test(`03.01 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, t => {
   t.end();
 });
 
+// 04. EOL ends the input and tag abruptly ends
+// -----------------------------------------------------------------------------
+
+t.test(
+  `04.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`,
+  t => {
+    const gathered = [];
+    ct(`</div`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.same(
+      gathered,
+      [
+        {
+          start: 0,
+          end: 5,
+          value: "</div",
+          tagNameStartsAt: 2,
+          tagNameEndsAt: 5,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          type: "tag",
+          kind: null,
+          attribs: []
+        }
+      ],
+      "04.01"
+    );
+    t.end();
+  }
+);
+
 // -----------------------------------------------------------------------------
 
 // TODO

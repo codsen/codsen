@@ -787,6 +787,76 @@ t.test("01.23 - empty style tag pair", t => {
   t.end();
 });
 
+t.test("01.24 - line break", t => {
+  const gathered = [];
+  ct(`a<a>\nb`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1,
+        value: "a"
+      },
+      {
+        type: "tag",
+        start: 1,
+        end: 4,
+        value: "<a>",
+        tagNameStartsAt: 2,
+        tagNameEndsAt: 3,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
+      },
+      {
+        type: "text",
+        start: 4,
+        end: 6,
+        value: "\nb"
+      }
+    ],
+    "01.24"
+  );
+  t.is(gathered.length, 3);
+  t.end();
+});
+
+t.test("01.25 - dir attribute is also a known valid tag name", t => {
+  const gathered = [];
+  ct(`<html dir="ltr">`, {
+    tagCb: obj => {
+      gathered.push(obj);
+    }
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 16,
+        value: `<html dir="ltr">`
+      }
+    ],
+    "01.23"
+  );
+  t.is(gathered.length, 1);
+  t.end();
+});
+
 // 02. CDATA
 // -----------------------------------------------------------------------------
 
