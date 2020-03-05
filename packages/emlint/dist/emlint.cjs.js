@@ -8014,7 +8014,6 @@ function validateCommentClosing(token) {
     return errorArr;
   }
   errorArr.push({
-    ruleId: "comment-only-closing-malformed",
     idxFrom: token.start,
     idxTo: token.end,
     message: "Malformed closing comment tag.",
@@ -8051,28 +8050,46 @@ function validateCommentOpening(token) {
   }
   var errorArr = [];
   var valueWithoutWhitespace = "";
-  splitByWhitespace(token.value, function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        charFrom = _ref2[0],
-        charTo = _ref2[1];
-    valueWithoutWhitespace = "".concat(valueWithoutWhitespace).concat(token.value.slice(charFrom, charTo));
-  }, function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-        whitespaceFrom = _ref4[0],
-        whitespaceTo = _ref4[1];
-    errorArr.push({
-      ruleId: "comment-only-closing-malformed",
-      idxFrom: token.start,
-      idxTo: token.end,
-      message: "Remove whitespace.",
-      fix: {
-        ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
-      }
+  if (token.kind === "simple") {
+    splitByWhitespace(token.value, function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          charFrom = _ref2[0],
+          charTo = _ref2[1];
+      valueWithoutWhitespace = "".concat(valueWithoutWhitespace).concat(token.value.slice(charFrom, charTo));
+    }, function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          whitespaceFrom = _ref4[0],
+          whitespaceTo = _ref4[1];
+      errorArr.push({
+        ruleId: "comment-only-closing-malformed",
+        idxFrom: token.start,
+        idxTo: token.end,
+        message: "Remove whitespace.",
+        fix: {
+          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
+        }
+      });
     });
-  });
+  }
   if (token.kind === "simple" && reference.simple.test(valueWithoutWhitespace) || token.kind === "only" && reference.only.test(valueWithoutWhitespace) || token.kind === "not" && reference.not(valueWithoutWhitespace)) {
     return errorArr;
   }
+  if (token.kind === "only") {
+    findMalformed(token.value, "<!--[", function (_ref5) {
+      var idxFrom = _ref5.idxFrom,
+          idxTo = _ref5.idxTo;
+      errorArr.push({
+        idxFrom: token.start,
+        idxTo: token.end,
+        message: "Malformed opening comment tag.",
+        ruleId: "comment-opening-malformed",
+        fix: {
+          ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+        }
+      });
+    });
+  }
+  return errorArr;
 }
 
 function commentOpeningMalformed(context) {

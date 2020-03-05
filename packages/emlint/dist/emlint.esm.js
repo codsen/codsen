@@ -9366,7 +9366,6 @@ function validateCommentClosing(token) {
     return errorArr;
   }
   errorArr.push({
-    ruleId: "comment-only-closing-malformed",
     idxFrom: token.start,
     idxTo: token.end,
     message: "Malformed closing comment tag.",
@@ -9409,26 +9408,28 @@ function validateCommentOpening(token) {
   }
   const errorArr = [];
   let valueWithoutWhitespace = "";
-  splitByWhitespace(
-    token.value,
-    ([charFrom, charTo]) => {
-      valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(
-        charFrom,
-        charTo
-      )}`;
-    },
-    ([whitespaceFrom, whitespaceTo]) => {
-      errorArr.push({
-        ruleId: "comment-only-closing-malformed",
-        idxFrom: token.start,
-        idxTo: token.end,
-        message: "Remove whitespace.",
-        fix: {
-          ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
-        }
-      });
-    }
-  );
+  if (token.kind === "simple") {
+    splitByWhitespace(
+      token.value,
+      ([charFrom, charTo]) => {
+        valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(
+          charFrom,
+          charTo
+        )}`;
+      },
+      ([whitespaceFrom, whitespaceTo]) => {
+        errorArr.push({
+          ruleId: "comment-only-closing-malformed",
+          idxFrom: token.start,
+          idxTo: token.end,
+          message: "Remove whitespace.",
+          fix: {
+            ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
+          }
+        });
+      }
+    );
+  }
   if (
     (token.kind === "simple" &&
       reference.simple.test(valueWithoutWhitespace)) ||
@@ -9437,6 +9438,20 @@ function validateCommentOpening(token) {
   ) {
     return errorArr;
   }
+  if (token.kind === "only") {
+    findMalformed(token.value, "<!--[", ({ idxFrom, idxTo }) => {
+      errorArr.push({
+        idxFrom: token.start,
+        idxTo: token.end,
+        message: "Malformed opening comment tag.",
+        ruleId: "comment-opening-malformed",
+        fix: {
+          ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+        }
+      });
+    });
+  }
+  return errorArr;
 }
 
 function commentOpeningMalformed(context, ...opts) {

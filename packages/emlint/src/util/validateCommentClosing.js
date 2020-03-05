@@ -80,7 +80,6 @@ function validateCommentClosing(token) {
     )}`
   );
   errorArr.push({
-    ruleId: "comment-only-closing-malformed",
     idxFrom: token.start,
     idxTo: token.end,
     message: "Malformed closing comment tag.",
