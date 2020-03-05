@@ -40,6 +40,11 @@ function isOpening(str) {
   var r8 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
   var whatToTest = idx ? str.slice(idx) : str;
   var passed = false;
+  var matchingOptions = {
+    cb: isNotLetter,
+    i: true,
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  };
   if (opts.allowCustomTagNames) {
     if (r5.test(whatToTest)) {
       passed = true;
@@ -50,7 +55,11 @@ function isOpening(str) {
     } else if (r8.test(whatToTest)) {
       passed = true;
     }
-  } else {
+  } else if (stringMatchLeftRight.matchRightIncl(str, idx, knownHtmlTags, {
+    cb: isNotLetter,
+    i: true,
+    trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  })) {
     if (r1.test(whatToTest)) {
       passed = true;
     } else if (r2.test(whatToTest)) {
@@ -61,11 +70,6 @@ function isOpening(str) {
       passed = true;
     }
   }
-  var matchingOptions = {
-    cb: isNotLetter,
-    i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-  };
   if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim().length && stringMatchLeftRight.matchRight(str, idx, knownHtmlTags, matchingOptions)) {
     passed = true;
   }

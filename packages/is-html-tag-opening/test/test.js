@@ -588,7 +588,7 @@ t.test(`05.01 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<a b="ccc"<d>`;
   t.ok(is(s1, 0), "05.01.01");
   t.false(is(s1, 6), "05.01.02");
-  t.ok(is(s1, 10), "05.01.03");
+  t.false(is(s1, 10), "05.01.03");
 
   t.ok(
     is(s1, 0, {
@@ -712,7 +712,10 @@ t.test(`05.08 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
 
 t.test(`05.09 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<zzz accept="utf-8" yyy>`;
-  t.ok(is(s1, 0), "05.09.01");
+  // by default, custom tag names are not allowed:
+  t.false(is(s1, 0), "05.09.01");
+
+  // but enabling them result is positive
   t.ok(
     is(s1, 0, {
       allowCustomTagNames: true
@@ -724,7 +727,7 @@ t.test(`05.09 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
 
 t.test(`05.10 - ${`\u001b[${36}m${`ad-hoc`}\u001b[${39}m`} - ad-hoc`, t => {
   const s1 = `<zzz accept-charset="utf-8" yyy>`;
-  t.ok(is(s1, 0), "05.10.01");
+  t.false(is(s1, 0), "05.10.01");
   t.ok(
     is(s1, 0, {
       allowCustomTagNames: true
@@ -851,7 +854,7 @@ t.test(
   `06.06 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - quotes missing`,
   t => {
     const s1 = `<abc de=fg hi="jkl">`;
-    t.ok(is(s1, 0), "06.06.01");
+    t.false(is(s1, 0), "06.06.01");
     t.ok(
       is(s1, 0, {
         allowCustomTagNames: true
@@ -907,7 +910,7 @@ t.test(
   `07.04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - one letter tag, allowCustomTagNames=off`,
   t => {
     const s1 = `<c>`;
-    t.ok(
+    t.false(
       is(s1, 0, {
         allowCustomTagNames: false
       }),
@@ -952,6 +955,21 @@ t.test(
         skipOpeningBracket: true
       }),
       "08.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `08.03 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`,
+  t => {
+    const str = `bc img src="z"/>`;
+    t.false(
+      is(str, 0, {
+        allowCustomTagNames: false,
+        skipOpeningBracket: true
+      }),
+      "08.03"
     );
     t.end();
   }

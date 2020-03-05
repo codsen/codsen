@@ -1,4 +1,4 @@
-import { matchRight } from "string-match-left-right";
+import { matchRight, matchRightIncl } from "string-match-left-right";
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
   "a",
@@ -237,57 +237,64 @@ function isOpening(str, idx = 0, originalOpts) {
   // =======
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
-
-  console.log(
-    `242 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
-  );
-
-  if (opts.allowCustomTagNames) {
-    console.log(`246 inside opts.allowCustomTagNames clauses`);
-    if (r5.test(whatToTest)) {
-      console.log(`248 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r6.test(whatToTest)) {
-      console.log(`251 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r7.test(whatToTest)) {
-      console.log(`254 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r8.test(whatToTest)) {
-      console.log(`257 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
-      passed = true;
-    }
-  } else {
-    console.log(`261 outside opts.allowCustomTagNames clauses`);
-    if (r1.test(whatToTest)) {
-      console.log(`263 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r2.test(whatToTest)) {
-      console.log(`266 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r3.test(whatToTest)) {
-      console.log(`269 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
-      passed = true;
-    } else if (r4.test(whatToTest)) {
-      console.log(`272 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
-      passed = true;
-    }
-  }
-
-  console.log(
-    `278 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
-      passed,
-      null,
-      4
-    )}`
-  );
-
   // if the result is still falsey, we match against the known HTML tag names list
   const matchingOptions = {
     cb: isNotLetter,
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
   };
+
+  console.log(
+    `248 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+  );
+
+  if (opts.allowCustomTagNames) {
+    console.log(`252 inside opts.allowCustomTagNames clauses`);
+    if (r5.test(whatToTest)) {
+      console.log(`254 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r6.test(whatToTest)) {
+      console.log(`257 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r7.test(whatToTest)) {
+      console.log(`260 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r8.test(whatToTest)) {
+      console.log(`263 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      passed = true;
+    }
+  } else if (
+    matchRightIncl(str, idx, knownHtmlTags, {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    })
+  ) {
+    console.log(`273 outside opts.allowCustomTagNames clauses`);
+    if (r1.test(whatToTest)) {
+      console.log(`275 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r2.test(whatToTest)) {
+      console.log(`278 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r3.test(whatToTest)) {
+      console.log(`281 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+      passed = true;
+    } else if (r4.test(whatToTest)) {
+      console.log(r4);
+      console.log(`285 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      passed = true;
+    }
+  }
+
+  console.log(
+    `291 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+      passed,
+      null,
+      4
+    )}`
+  );
+
   if (
     !passed &&
     !opts.skipOpeningBracket &&
@@ -296,11 +303,11 @@ function isOpening(str, idx = 0, originalOpts) {
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`299 SET passed = true`);
+    console.log(`306 SET passed = true`);
   }
 
   console.log(
-    `303 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `310 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -309,7 +316,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `312 ${`\u001b[${33}m${`isNotLetter(str[${idx +
+    `319 ${`\u001b[${33}m${`isNotLetter(str[${idx +
       1}])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
       null,
@@ -317,7 +324,7 @@ function isOpening(str, idx = 0, originalOpts) {
     )}`
   );
   const res = isStr(str) && idx < str.length && passed;
-  console.log(`320 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`327 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

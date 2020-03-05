@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
  */
 
-import { matchRight } from 'string-match-left-right';
+import { matchRightIncl, matchRight } from 'string-match-left-right';
 
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
@@ -209,6 +209,11 @@ function isOpening(str, idx = 0, originalOpts) {
   );
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
+  const matchingOptions = {
+    cb: isNotLetter,
+    i: true,
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  };
   if (opts.allowCustomTagNames) {
     if (r5.test(whatToTest)) {
       passed = true;
@@ -219,7 +224,13 @@ function isOpening(str, idx = 0, originalOpts) {
     } else if (r8.test(whatToTest)) {
       passed = true;
     }
-  } else {
+  } else if (
+    matchRightIncl(str, idx, knownHtmlTags, {
+      cb: isNotLetter,
+      i: true,
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    })
+  ) {
     if (r1.test(whatToTest)) {
       passed = true;
     } else if (r2.test(whatToTest)) {
@@ -230,11 +241,6 @@ function isOpening(str, idx = 0, originalOpts) {
       passed = true;
     }
   }
-  const matchingOptions = {
-    cb: isNotLetter,
-    i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-  };
   if (
     !passed &&
     !opts.skipOpeningBracket &&
