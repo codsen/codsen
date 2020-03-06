@@ -19,16 +19,6 @@ t.test("01.01 - throws", t => {
     matchRightIncl("zzz", 1);
   }, /THROW_ID_08/);
 
-  t.throws(() => {
-    matchLeftIncl("", 1);
-  }, /THROW_ID_02/);
-
-  t.same(
-    matchLeftIncl("", 1, undefined, { relaxedApi: true }),
-    false,
-    "bypassing THROW_ID_02"
-  );
-
   // third arg being wrong
 
   t.throws(() => {
@@ -50,12 +40,6 @@ t.test("01.01 - throws", t => {
   t.throws(() => {
     matchRightIncl("zzz", "aaa", ["", ""]);
   }, /THROW_ID_03/);
-
-  t.same(
-    matchRightIncl("zzz", "aaa", ["", ""], { relaxedApi: true }),
-    false,
-    "bypassing THROW_ID_03"
-  );
 
   // no second arg
 
@@ -84,50 +68,6 @@ t.test("01.01 - throws", t => {
   t.throws(() => {
     matchRightIncl("zzz");
   }, /THROW_ID_03/);
-
-  // first arg not string
-
-  t.throws(() => {
-    matchLeftIncl(1);
-  }, /THROW_ID_01/);
-
-  t.same(
-    matchLeftIncl(1, undefined, undefined, { relaxedApi: true }),
-    false,
-    "bypassing THROW_ID_01"
-  );
-
-  t.throws(() => {
-    matchRightIncl(1);
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchLeftIncl([1]);
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchRightIncl([1]);
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchLeftIncl(null);
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchRightIncl(null);
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchLeftIncl();
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchRightIncl();
-  }, /THROW_ID_01/);
-
-  t.throws(() => {
-    matchLeftIncl(-1);
-  }, /THROW_ID_01/);
 
   // fourth arg not a plain object
   t.throws(() => {
@@ -173,13 +113,7 @@ t.test(
     );
     t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "bcd"]), "bcd");
     t.equal(matchLeftIncl("abcdefghi", 3, ["aaa", "zzz"]), false);
-    t.throws(() => {
-      matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"]);
-    });
-    t.equal(
-      matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"], { relaxedApi: true }),
-      false
-    );
+    t.equal(matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"]), false);
 
     t.equal(
       matchLeftIncl("zxab      cdef", 9, ["zz", "ab"], {
@@ -188,20 +122,21 @@ t.test(
       "ab",
       "02.01.07.1"
     );
+
     t.equal(
-      matchLeftIncl("zxab      cdef", 9, "ab", { trimBeforeMatching: true }),
+      matchLeftIncl("zxab      cdef", 9, ["zz", "ab"], {
+        trimBeforeMatching: true,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, "x");
+          t.equal(theRemainderOfTheString, "zx");
+          t.equal(index, 1);
+          return true;
+        }
+      }),
       "ab",
       "02.01.07.2"
     );
 
-    matchLeftIncl("zxab      cdef", 9, ["zz", "ab"], {
-      trimBeforeMatching: true,
-      cb: (char, theRemainderOfTheString, index) => {
-        t.equal(char, "x");
-        t.equal(theRemainderOfTheString, "zx");
-        t.equal(index, 1);
-      }
-    });
     t.end();
   }
 );
@@ -257,6 +192,70 @@ t.test(
   }
 );
 
+t.test(
+  `02.05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
+  t => {
+    t.equal(matchLeftIncl("abc", 2, "c"), "c", "02.05.01 - control");
+    t.equal(
+      matchLeftIncl("abc", 2, "c", {
+        maxMismatches: 1
+      }),
+      "c",
+      "02.05.02 - matching"
+    );
+
+    // at least something from the set must have been matched! In this case,
+    // the set is one character and it was not matched, so no characters from
+    // the set were matched
+    t.equal(
+      matchLeftIncl("abc", 2, "x", {
+        maxMismatches: 1
+      }),
+      false,
+      "02.05.03 - mismatching"
+    );
+    t.end();
+  }
+);
+
+t.todo(
+  `02.06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
+  t => {
+    const opts = {
+      maxMismatches: 1
+    };
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], opts),
+      "bcd",
+      "02.06.01 - b mismatching"
+    );
+    // t.equal(
+    //   matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+    //     maxMismatches: 1
+    //   }),
+    //   "bcd",
+    //   "02.06.02 - c mismatching"
+    // );
+    // t.equal(
+    //   matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+    //     maxMismatches: 1
+    //   }),
+    //   "bcd",
+    //   "02.06.03 - d mismatching"
+    // );
+
+    // // ensure that opts object was not mutated:
+    // t.match(
+    //   opts,
+    //   {
+    //     maxMismatches: 1
+    //   },
+    //   "02.06.04"
+    // );
+    t.end();
+  }
+);
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
@@ -276,13 +275,7 @@ t.test(
     );
     t.equal(matchLeft("abcdefghi", 3, ["aaa", "bc"]), "bc");
     t.equal(matchLeft("abcdefghi", 3, ["aaa", "zzz"]), false);
-    t.throws(() => {
-      matchLeft("abcdefghi", 99, ["aaa", "zzz"]);
-    });
-    t.equal(
-      matchLeft("abcdefghi", 99, ["aaa", "zzz"], { relaxedApi: true }),
-      false
-    );
+    t.equal(matchLeft("abcdefghi", 99, ["aaa", "zzz"]), false);
     t.equal(matchLeft("abc", 2, "zab"), false);
     t.end();
   }
@@ -307,25 +300,21 @@ t.test(
     t.equal(matchRightIncl("abcdef", 2, "cde"), "cde");
     t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde");
     t.equal(matchRightIncl("abcdef", 2, ["gjd", "cde"]), "cde");
-    t.throws(() => {
-      matchRightIncl("abcdef", 99, ["cde"]);
-      matchRightIncl("abcdef", 99, ["cde"], { relaxedApi: false });
-    });
-    t.equal(matchRightIncl("abcdef", 99, ["cde"], { relaxedApi: true }), false);
+    t.equal(matchRightIncl("abcdef", 99, ["cde"]), false);
 
     t.equal(
-      matchRightIncl("ab      cdef", 2, "cd", { trimBeforeMatching: true }),
+      matchRightIncl("ab      cdef", 2, "cd", {
+        trimBeforeMatching: true,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, "e");
+          t.equal(theRemainderOfTheString, "ef");
+          t.equal(index, 10);
+          return true;
+        }
+      }),
       "cd"
     );
 
-    matchRightIncl("ab      cdef", 2, "cd", {
-      trimBeforeMatching: true,
-      cb: (char, theRemainderOfTheString, index) => {
-        t.equal(char, "e");
-        t.equal(theRemainderOfTheString, "ef");
-        t.equal(index, 10);
-      }
-    });
     t.end();
   }
 );
@@ -358,17 +347,32 @@ t.test(
 t.test(
   `04.04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`,
   t => {
+    const matcher = (char, theRemainderOfTheString, index) => {
+      t.equal(char, undefined);
+      t.equal(theRemainderOfTheString, "");
+      t.equal(index, 6);
+    };
+
+    // both functions should receive the same values in the callbacks:
     t.equal(
       matchRightIncl("abcdef", 3, ["def"], {
-        cb: (char, theRemainderOfTheString, index) => {
-          t.equal(char, undefined);
-          t.equal(theRemainderOfTheString, "");
-          t.equal(index, 6);
+        cb: (...args) => {
+          matcher(...args);
           return true;
         }
       }),
       "def",
-      "04.04"
+      "04.04.01"
+    );
+    t.equal(
+      matchRight("abcdef", 2, ["def"], {
+        cb: (...args) => {
+          matcher(...args);
+          return true;
+        }
+      }),
+      "def",
+      "04.04.02"
     );
     t.end();
   }
@@ -386,10 +390,7 @@ t.test(
     t.equal(matchRight("abcdef", 2, ["def"]), "def");
     t.equal(matchRight("abcdef", 2, ["defg"]), false);
 
-    t.throws(() => {
-      matchRight("abcdef", 99, ["defg"]);
-    });
-    t.equal(matchRight("abcdef", 99, ["defg"], { relaxedApi: true }), false);
+    t.equal(matchRight("abcdef", 99, ["defg"]), false);
 
     t.equal(
       matchRight("ab      cdef", 1, "cd", { trimBeforeMatching: true }),
@@ -469,14 +470,7 @@ t.test(
       }),
       false
     );
-    t.throws(() => {
-      matchLeftIncl("a", 13, "class=", { cb: isSpace });
-    });
-    t.equal(
-      matchLeftIncl("a", 13, "class=", { cb: isSpace, relaxedApi: true }),
-      false,
-      "06.01.05 - result will fail because substring is not matched"
-    );
+    t.equal(matchLeftIncl("a", 13, "class=", { cb: isSpace }), false);
 
     // PART 1. CONTROL.
     // the first part (string matching) is true, "b" is to the left of the character at index #2.
@@ -1121,687 +1115,6 @@ t.test(
   }
 );
 
-t.test(
-  `07.04 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${36}m${"marching across emoji"}\u001b[${39}m`} - matchRight()`,
-  t => {
-    t.equal(
-      matchRight("abc 🧢 def", 4, ["def"], {
-        trimCharsBeforeMatching: [" "]
-      }),
-      "def"
-    );
-    t.equal(
-      matchRight("abc 🧢 def", 5, ["def"], {
-        trimCharsBeforeMatching: [" "]
-      }),
-      "def"
-    );
-    t.equal(
-      matchRight("abc \uD83E\uDDE2 def", 4, ["def"], {
-        trimCharsBeforeMatching: [" "],
-        cb: (char, theRemainderOfTheString, index) => {
-          t.equal(char, undefined);
-          t.equal(theRemainderOfTheString, "");
-          t.equal(index, 10);
-          return true;
-        }
-      }),
-      "def",
-      "07.04.03* - pinning all cb values"
-    );
-    t.equal(
-      matchRight("abc \uD83E\uDDE2 defgh", 4, ["def"], {
-        trimCharsBeforeMatching: [" "],
-        cb: (char, theRemainderOfTheString, index) => {
-          t.equal(char, "g");
-          t.equal(theRemainderOfTheString, "gh");
-          t.equal(index, 10);
-          return true;
-        }
-      }),
-      "def",
-      "07.04.07* - pinning all cb values"
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `07.05 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"trimming emoji"}\u001b[${39}m`} - matchLeft()`,
-  t => {
-    //
-    // \uD83E = 55358
-    // \uDDE2 = 56802
-    // \uD83D = 55357
-    // \uDC4C = 56396
-    //
-
-    const testIndex = 9;
-    const str1 = "abc \uD83E\uDDE2\uD83D\uDC4C def";
-    t.equal(
-      matchLeft(
-        str1,
-        testIndex, // location of "d"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            // console.log(`${`\u001b[${33}m${'str[testIndex]'}\u001b[${39}m`} = ${JSON.stringify(str1[testIndex], null, 4)}`)
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.01* - jumps past two spaces and emoji - simplified"
-    );
-
-    t.equal(
-      // UNESCAPED EQUIVALENT:
-      // matchLeft('😋bc 👌🧢 def', 9, ['💯!', 'bc'], {
-      //   trimCharsBeforeMatching: ['🧢', '👌', ' '],
-
-      matchLeft(
-        "\uD83D\uDE0Bbc \uD83D\uDC4C\uD83E\uDDE2 def",
-        10,
-        ["\uD83D\uDCAF!", "bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(
-              char,
-              "\uD83D\uDE0B", // 😋
-              "07.05.06"
-            );
-            t.equal(
-              theRemainderOfTheString,
-              "\uD83D\uDE0B", // 😋
-              "07.05.07"
-            );
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.05* - jumps past two spaces and emoji - complete, proper"
-    );
-
-    t.equal(
-      matchLeft(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        9, // location of "d"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.09*"
-    );
-
-    t.equal(
-      matchLeft(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        8, // location of "d"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.13*"
-    );
-
-    t.equal(
-      matchLeft(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        7, // location of "\uDC4C"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.17*"
-    );
-
-    t.equal(
-      matchLeft(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        6, // location of "\uD83D"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.21*"
-    );
-
-    t.equal(
-      matchLeft(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        5, // location of "\uDDE2"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.05.25*"
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `07.06 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"trimming emoji"}\u001b[${39}m`} - matchRight()`,
-  t => {
-    //
-    // \uD83E = 55358
-    // \uDDE2 = 56802
-    // \uD83D = 55357
-    // \uDC4C = 56396
-    //
-
-    t.equal(
-      matchRight(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        2, // location of "c"
-        ["de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "f");
-            t.equal(theRemainderOfTheString, "f");
-            t.equal(
-              index,
-              11, // remember we count indexes, so emoji counts as two
-              "07.06.04"
-            );
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.06.01* - jumps past two spaces and emoji - simplified"
-    );
-
-    t.equal(
-      // UNESCAPED EQUIVALENT:
-      // matchRight('💯bc 👌🧢 d😋e💯', 9, ['💯!', 'd😋'], {
-      //   trimCharsBeforeMatching: ['🧢', '👌', ' '],
-
-      matchRight(
-        "\uD83D\uDCAFbc \uD83D\uDC4C\uD83E\uDDE2 d\uD83D\uDE0Be\uD83D\uDCAF",
-        3, // c
-        ["\uD83D\uDCAF!", "d\uD83D\uDE0B"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "e");
-            t.equal(
-              theRemainderOfTheString,
-              "e\uD83D\uDCAF", // e💯
-              "07.06.07"
-            );
-            t.equal(index, 13);
-            return true;
-          }
-        }
-      ),
-      "d\uD83D\uDE0B", // d😋
-      "07.06.05* - jumps past two spaces and emoji - complete, proper"
-    );
-
-    t.equal(
-      matchRight(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        4, // location of "\uD83E"
-        ["de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "f");
-            t.equal(theRemainderOfTheString, "f");
-            t.equal(
-              index,
-              11, // remember we count indexes, so emoji counts as two
-              "07.06.12"
-            );
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.06.09*"
-    );
-
-    t.equal(
-      matchRight(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        5, // location of "\uDDE2"
-        ["de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "f");
-            t.equal(theRemainderOfTheString, "f");
-            t.equal(
-              index,
-              11, // remember we count indexes, so emoji counts as two
-              "07.06.16"
-            );
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.06.13*"
-    );
-
-    t.equal(
-      matchRight(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        6, // location of "\uD83D"
-        ["de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "f");
-            t.equal(theRemainderOfTheString, "f");
-            t.equal(
-              index,
-              11, // remember we count indexes, so emoji counts as two
-              "07.06.20"
-            );
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.06.17*"
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `07.07 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"trimming emoji"}\u001b[${39}m`} - matchLeftIncl()`,
-  t => {
-    //
-    // \uD83E = 55358
-    // \uDDE2 = 56802
-    // \uD83D = 55357
-    // \uDC4C = 56396
-    //
-
-    t.equal(
-      matchLeftIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        4,
-        ["\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDCAF");
-            t.equal(theRemainderOfTheString, "\uD83D\uDCAF");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.01*"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        5,
-        ["\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDCAF");
-            t.equal(theRemainderOfTheString, "\uD83D\uDCAF");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.05*"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        5, // in the middle of third emoji
-        ["\uD83D\uDCAF\uD83E\uDDE2", "\uD83E\uDDE2\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDCAF");
-            t.equal(theRemainderOfTheString, "\uD83D\uDCAF");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.09* - inclusive, starting in the middle between the surrogates"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        4, // at \uD83D
-        ["\uD83D\uDCAF\uD83E\uDDE2", "\uD83E\uDDE2\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDCAF");
-            t.equal(theRemainderOfTheString, "\uD83D\uDCAF");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.10* - inclusive, starting in the middle between the surrogates"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        6, // location of "\uD83D"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.07.14*"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "abc \uD83E\uDDE2\uD83D\uDC4C def",
-        7, // location of "\uDC4C"
-        ["bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "a");
-            t.equal(theRemainderOfTheString, "a");
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.07.18*"
-    );
-
-    t.equal(
-      // UNESCAPED EQUIVALENT:
-      // matchLeftIncl('😋bc 👌🧢 def', 9, ['💯!', 'bc'], {
-      //   trimCharsBeforeMatching: ['🧢', '👌', ' '],
-
-      matchLeftIncl(
-        "\uD83D\uDE0Bbc \uD83D\uDC4C\uD83E\uDDE2 def",
-        9,
-        ["\uD83D\uDCAF!", "bc"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(
-              char,
-              "\uD83D\uDE0B", // 😋
-              "07.07.23"
-            );
-            t.equal(
-              theRemainderOfTheString,
-              "\uD83D\uDE0B", // 😋
-              "07.07.24"
-            );
-            t.equal(index, 0);
-            return true;
-          }
-        }
-      ),
-      "bc",
-      "07.07.22*"
-    );
-
-    t.equal(
-      matchLeftIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        4,
-        ["\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, undefined);
-            t.equal(theRemainderOfTheString, "");
-            t.equal(index, undefined);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.26*"
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `07.08 - ${`\u001b[${34}m${"emoji"}\u001b[${39}m`} - ${`\u001b[${35}m${"trimming emoji"}\u001b[${39}m`} - matchRightIncl()`,
-  t => {
-    //
-    // \uD83E = 55358
-    // \uDDE2 = 56802
-    // \uD83D = 55357
-    // \uDC4C = 56396
-    //
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        0,
-        ["\uD83D\uDCAF\uD83E\uDDE2", "\uD83E\uDDE2\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDC4C");
-            t.equal(theRemainderOfTheString, "\uD83D\uDC4C");
-            t.equal(index, 4);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAF\uD83E\uDDE2",
-      "07.08.01*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        1,
-        ["\uD83D\uDCAF\uD83E\uDDE2", "\uD83E\uDDE2\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "\uD83D\uDC4C");
-            t.equal(theRemainderOfTheString, "\uD83D\uDC4C");
-            t.equal(index, 4);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAF\uD83E\uDDE2",
-      "07.08.05*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAFz\uD83D\uDC4Cy",
-        0,
-        ["lallala\uD83D\uDCAF", "\uD83D\uDCAFz\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "y");
-            t.equal(theRemainderOfTheString, "y");
-            t.equal(index, 5);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAFz\uD83D\uDC4C",
-      "07.08.09*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAFz\uD83D\uDC4Cy",
-        1,
-        ["lallala\uD83D\uDCAF", "\uD83D\uDCAFz\uD83D\uDC4C"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "y");
-            t.equal(theRemainderOfTheString, "y");
-            t.equal(index, 5);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAFz\uD83D\uDC4C",
-      "07.08.13*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "abc \uD83E\uDDE2\uD83D\uDC4C defg",
-        6, // location of "\uD83D"
-        ["de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " "],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, "f");
-            t.equal(theRemainderOfTheString, "fg");
-            t.equal(index, 11);
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.08.14*"
-    );
-
-    t.equal(
-      // UNESCAPED EQUIVALENT:
-      // matchRightIncl('😋bc 👌🧢 de😋', 3, ['💯!', 'bc'], {
-      //   trimCharsBeforeMatching: ['🧢', '👌', ' '],
-
-      matchRightIncl(
-        "\uD83D\uDE0Bbc \uD83D\uDC4C\uD83E\uDDE2 de\uD83D\uDE0B",
-        3,
-        ["\uD83D\uDCAF!", "de"],
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2", "\uD83D\uDC4C", " ", "c"],
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(
-              char,
-              "\uD83D\uDE0B", // 😋
-              "07.08.23"
-            );
-            t.equal(
-              theRemainderOfTheString,
-              "\uD83D\uDE0B", // 😋
-              "07.08.24"
-            );
-            t.equal(index, 12);
-            return true;
-          }
-        }
-      ),
-      "de",
-      "07.08.22*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        0,
-        ["\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, undefined);
-            t.equal(theRemainderOfTheString, "");
-            t.equal(index, 6);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-      "07.08.26*"
-    );
-
-    t.equal(
-      matchRightIncl(
-        "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-        1,
-        ["\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C", "\uD83E\uDDE2\uD83E\uDDE2"],
-        {
-          cb: (char, theRemainderOfTheString, index) => {
-            t.equal(char, undefined);
-            t.equal(theRemainderOfTheString, "");
-            t.equal(index, 6);
-            return true;
-          }
-        }
-      ),
-      "\uD83D\uDCAF\uD83E\uDDE2\uD83D\uDC4C",
-      "07.07.30*"
-    );
-    t.end();
-  }
-);
-
 // 8. opts.cb and opts.cb callbacks
 // -----------------------------------------------------------------------------
 
@@ -1910,7 +1223,7 @@ t.test(
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["</", ">"], { cb: startsWithDiv }),
-      "</", // fails because space (before "class") is not accounted for
+      "</", // succeeds because div follows "</"
       "08.02.03"
     );
     t.equal(
@@ -2463,500 +1776,6 @@ t.test(
         trimCharsBeforeMatching: ["b", "c"],
         cb: char => char === "+"
       })
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `09.13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      - ${`\u001b[${32}m${"emoji"}\u001b[${39}m`} + ${`\u001b[${36}m${"trims"}\u001b[${39}m`}`,
-  t => {
-    t.false(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        cb: char => char === "a"
-      })
-    );
-    t.ok(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        cb: char => char === "\uD83E\uDDE2"
-      })
-    );
-    t.ok(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        i: true, // <--- does not matter
-        cb: char => char === "\uD83E\uDDE2"
-      })
-    );
-    t.ok(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        cb: char => char === "a",
-        trimCharsBeforeMatching: ["\uD83E\uDDE2"]
-      })
-    );
-    t.false(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        cb: char => char === "A",
-        trimCharsBeforeMatching: ["\uD83E\uDDE2"]
-      })
-    );
-    t.ok(
-      matchLeft("a\uD83E\uDDE2b", 3, null, {
-        i: true, // <--- does not matter
-        cb: char => char.toLowerCase() === "A".toLowerCase(),
-        trimCharsBeforeMatching: ["\uD83E\uDDE2"]
-      })
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `09.14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     - ${`\u001b[${32}m${"emoji"}\u001b[${39}m`} + ${`\u001b[${36}m${"trims"}\u001b[${39}m`}`,
-  t => {
-    // following tests go in pairs to check starting at the middle between surrogates:
-
-    // is b on the right?
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1,
-        null,
-        {
-          i: true, // also, check case-insensitive
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2,
-        null,
-        {
-          i: true, // also, check case-insensitive
-          cb: char => char === "b"
-        }
-      )
-    );
-
-    // is emoji on the right?
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1,
-        null,
-        {
-          i: true, // also, check case-insensitive
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2,
-        null,
-        {
-          i: true, // also, check case-insensitive
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
-    );
-
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
-    );
-
-    // Some ad-hoc tests. With trims.
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: char => char === "\uD83D\uDC4C" // 🧢
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "\uD83D\uDC4C" // 👌
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: char => char === "\uD83E\uDDE2" // 🧢
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        0, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "b"
-        }
-      )
-    );
-
-    // is b on the right? - One emoji to trim, starting at 1
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "B"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char.toLowerCase() === "B".toLowerCase()
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "B"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: char => char === "B"
-        }
-      )
-    );
-
-    // is b on the right? - One emoji to trim, starting at 2
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char === "B"
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char.toLowerCase() === "B".toLowerCase()
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83E\uDDE2"],
-          cb: char => char.toLowerCase() === "B".toLowerCase()
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"], // <--- wrong character trimmed
-          cb: char => char === "b"
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"], // <--- wrong character trimmed
-          cb: char => char === "B"
-        }
-      )
-    );
-
-    // cheeky overrides
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => false
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => true
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => false
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => true
-        }
-      )
-    );
-
-    // cheeky + opts.i
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => false
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        1, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => true
-        }
-      )
-    );
-    t.false(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => false
-        }
-      )
-    );
-    t.ok(
-      matchRight(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        2, // <--- !
-        null,
-        {
-          i: true,
-          trimCharsBeforeMatching: ["\uD83D\uDC4C"],
-          cb: () => true
-        }
-      )
-    );
-    t.end();
-  }
-);
-
-t.test(
-  `09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  - ${`\u001b[${32}m${"emoji"}\u001b[${39}m`} + ${`\u001b[${36}m${"trims"}\u001b[${39}m`}`,
-  t => {
-    matchLeftIncl(
-      "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-      3,
-      null,
-      {
-        cb: (char, theRemainderOfTheString, index) => {
-          t.equal(char, "\uD83E\uDDE2");
-          t.equal(theRemainderOfTheString, "a\uD83D\uDC4C\uD83E\uDDE2");
-          t.equal(index, 3);
-          return char === "a";
-        }
-      }
-    );
-    t.false(
-      matchLeftIncl(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        3,
-        null,
-        {
-          cb: char => char === "a"
-        }
-      )
-    );
-    t.false(
-      matchLeftIncl(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        3,
-        null,
-        {
-          cb: char => char === "\uD83D\uDC4C"
-        }
-      )
-    );
-    t.ok(
-      matchLeftIncl(
-        "a\uD83D\uDC4C\uD83E\uDDE2b", // a👌🧢b
-        3,
-        null,
-        {
-          cb: char => char === "\uD83E\uDDE2"
-        }
-      )
     );
     t.end();
   }
@@ -3627,7 +2446,7 @@ t.test(
   }
 );
 
-t.test(
+t.only(
   `16.02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   t => {
     t.equal(
@@ -3675,11 +2494,7 @@ t.test(
   t => {
     matchRight("a", 0, () => "EOL", {
       cb: (...args) => {
-        t.same(
-          args,
-          [undefined, undefined, undefined], // because there's nothing outside-right of index 0
-          "10.04.05 - useless cb"
-        );
+        t.same(args, [], "10.04.05 - useless cb");
         return true;
       }
     });
@@ -4406,10 +3221,3 @@ t.test(`13.09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, t => {
   );
   t.end();
 });
-
-// cap emoji
-// \uD83E charCodeAt = 55358
-// \uDDE2 charCodeAt = 56802
-
-// \uD83D charCodeAt = 55357
-// \uDC4C charCodeAt = 56396

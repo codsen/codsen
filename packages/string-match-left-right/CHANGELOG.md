@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## CHANGES
+
+- ✨ Remove anything emoji-related to make things run faster. Emoji can be of varying length and previous algorithm worked only for 2 character-long emojis only anyway. And there can be emoji as long as 8 characters.
+- ✨ Remove `opts.relaxedApi` - now it's always relaxed. Idea is, this is an internal library, if parent programs want to check something, let them do so.
+
 ## 3.11.0 (2019-08-08)
 
 ### Features

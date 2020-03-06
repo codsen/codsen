@@ -71,6 +71,20 @@ export default commandLineArgs => {
         cleanup({ comments: "istanbul" }),
         banner(licensePiece)
       ]
+    },
+
+    // main_old.js build:
+    {
+      input: "src/main_old.js",
+      output: [{ file: "dist/main_old.cjs.js", format: "cjs" }],
+      external: [, "arrayiffy-if-string"],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        resolve(),
+        cleanup({ comments: "istanbul" })
+      ]
     }
   ];
 

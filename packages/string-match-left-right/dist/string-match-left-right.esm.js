@@ -8,168 +8,68 @@
  */
 
 import arrayiffy from 'arrayiffy-if-string';
-import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function isAstral(char) {
-  if (typeof char !== "string") {
-    return false;
-  }
-  return char.charCodeAt(0) >= 55296 && char.charCodeAt(0) <= 57343;
+function isStr(something) {
+  return typeof something === "string";
 }
-function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
-  const strToMatchVal =
-    typeof strToMatch === "function" ? strToMatch() : strToMatch;
-  if (fromIndexInclusive >= str.length && special && strToMatchVal === "EOL") {
-    return strToMatchVal;
-  }
-  if (fromIndexInclusive <= str.length) {
-    let charsToCheckCount = special ? 1 : strToMatch.length;
-    for (let i = fromIndexInclusive, len = str.length; i < len; i++) {
-      let current = str[i];
-      if (isHighSurrogate(str[i]) && isLowSurrogate(str[i + 1])) {
-        current = str[i] + str[i + 1];
-      }
-      if (isLowSurrogate(str[i]) && isHighSurrogate(str[i - 1])) {
-        current = str[i - 1] + str[i];
-      }
-      if (opts.trimBeforeMatching && str[i].trim() === "") {
-        continue;
-      }
-      if (
-        (!opts.i && opts.trimCharsBeforeMatching.includes(current)) ||
-        (opts.i &&
-          opts.trimCharsBeforeMatching
-            .map(val => val.toLowerCase())
-            .includes(current.toLowerCase()))
-      ) {
-        if (current.length === 2) {
-          i += 1;
-        }
-        continue;
-      }
-      let whatToCompareTo = strToMatch[strToMatch.length - charsToCheckCount];
-      if (
-        isHighSurrogate(whatToCompareTo) &&
-        strToMatch[strToMatch.length - charsToCheckCount + 1] &&
-        isLowSurrogate(strToMatch[strToMatch.length - charsToCheckCount + 1])
-      ) {
-        whatToCompareTo =
-          strToMatch[strToMatch.length - charsToCheckCount] +
-          strToMatch[strToMatch.length - charsToCheckCount + 1];
-      }
-      if (
-        (!opts.i && current === whatToCompareTo) ||
-        (opts.i && current.toLowerCase() === whatToCompareTo.toLowerCase())
-      ) {
-        charsToCheckCount -= current.length;
-        if (charsToCheckCount < 1) {
-          let aboutToReturn = i - strToMatch.length + current.length;
-          if (
-            aboutToReturn >= 0 &&
-            isLowSurrogate(str[aboutToReturn]) &&
-            str[aboutToReturn - 1] &&
-            isHighSurrogate(str[aboutToReturn - 1])
-          ) {
-            aboutToReturn -= 1;
-          }
-          return aboutToReturn >= 0 ? aboutToReturn : 0;
-        }
-        if (current.length === 2 && isHighSurrogate(str[i])) {
-          i += 1;
-        }
-      } else {
-        return false;
-      }
-    }
-    if (charsToCheckCount > 0) {
-      if (special && strToMatchVal === "EOL") {
-        return true;
-      }
-      return false;
-    }
-  } else if (!opts.relaxedApi) {
-    throw new Error(
-      `string-match-left-right/marchForward(): [THROW_ID_102] second argument, fromIndexInclusive is ${fromIndexInclusive} beyond the input string length, ${str.length}.`
-    );
-  } else {
-    return false;
-  }
-}
-function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
+function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
   const strToMatchVal =
     typeof strToMatch === "function" ? strToMatch() : strToMatch;
   if (fromIndexInclusive < 0 && special && strToMatchVal === "EOL") {
     return strToMatchVal;
   }
-  if (fromIndexInclusive >= str.length) {
-    if (!opts.relaxedApi) {
-      throw new Error(
-        `string-match-left-right/marchBackward(): [THROW_ID_203] second argument, starting index, should not be beyond the last character of the input string! Currently the first argument's last character's index is ${
-          str.length
-        } but the second argument is beyond it:\n${JSON.stringify(
-          fromIndexInclusive,
-          null,
-          4
-        )}`
-      );
-    } else {
-      return false;
-    }
+  if (fromIndexInclusive >= str.length && !special) {
+    return false;
   }
   let charsToCheckCount = special ? 1 : strToMatch.length;
-  for (let i = fromIndexInclusive + 1; i--; ) {
+  let i = fromIndexInclusive;
+  while (str[i]) {
+    const nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
-      if (i === 0 && special && strToMatch === "EOL") {
+      if (!str[nextIdx] && special && strToMatch === "EOL") {
         return true;
       }
+      i = getNextIdx(i);
       continue;
     }
-    let currentCharacter = str[i];
-    if (isLowSurrogate(str[i]) && isHighSurrogate(str[i - 1])) {
-      currentCharacter = str[i - 1] + str[i];
-    } else if (isHighSurrogate(str[i]) && isLowSurrogate(str[i + 1])) {
-      currentCharacter = str[i] + str[i + 1];
-    }
     if (
-      (!opts.i && opts.trimCharsBeforeMatching.includes(currentCharacter)) ||
+      (!opts.i && opts.trimCharsBeforeMatching.includes(str[i])) ||
       (opts.i &&
         opts.trimCharsBeforeMatching
           .map(val => val.toLowerCase())
-          .includes(currentCharacter.toLowerCase()))
+          .includes(str[i].toLowerCase()))
     ) {
-      if (currentCharacter.length === 2) {
-        i -= 1;
-      }
-      if (special && strToMatch === "EOL" && i === 0) {
+      if (special && strToMatch === "EOL" && !str[nextIdx]) {
         return true;
       }
+      i = getNextIdx(i);
       continue;
     }
-    let charToCompareAgainst = strToMatch[charsToCheckCount - 1];
-    if (isLowSurrogate(charToCompareAgainst)) {
-      charToCompareAgainst = `${strToMatch[charsToCheckCount - 2]}${
-        strToMatch[charsToCheckCount - 1]
-      }`;
-      charsToCheckCount -= 1;
-      i -= 1;
-    }
+    const charToCompareAgainst =
+      nextIdx > i
+        ? strToMatch[strToMatch.length - charsToCheckCount]
+        : strToMatch[charsToCheckCount - 1];
     if (
-      (!opts.i && currentCharacter === charToCompareAgainst) ||
-      (opts.i &&
-        currentCharacter.toLowerCase() === charToCompareAgainst.toLowerCase())
+      (!opts.i && str[i] === charToCompareAgainst) ||
+      (opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase())
     ) {
       charsToCheckCount -= 1;
       if (charsToCheckCount < 1) {
-        return i >= 0 ? i : 0;
+        return i;
       }
     } else {
-      return false;
+      if (opts.maxMismatches) {
+        opts.maxMismatches = opts.maxMismatches - 1;
+      } else {
+        return false;
+      }
     }
+    i = getNextIdx(i);
   }
   if (charsToCheckCount > 0) {
     if (special && strToMatchVal === "EOL") {
@@ -183,7 +83,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     i: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
-    relaxedApi: false
+    maxMismatches: 0,
+    firstMustMatch: true,
+    lastMustMatch: true
   };
   if (
     isObj(originalOpts) &&
@@ -201,47 +103,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   const opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el =>
-    typeof el === "string" ? el : String(el)
+    isStr(el) ? el : String(el)
   );
-  let culpritsIndex;
-  let culpritsVal;
-  if (
-    opts.trimCharsBeforeMatching.some((el, i) => {
-      if (el.length > 1 && !isAstral(el)) {
-        culpritsIndex = i;
-        culpritsVal = el;
-        return true;
-      }
-      return false;
-    })
-  ) {
-    throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
-    );
-  }
-  if (typeof str !== "string") {
-    if (opts.relaxedApi) {
-      return false;
-    }
-    throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_01] the first argument should be a string. Currently it's of a type: ${typeof str}, equal to:\n${JSON.stringify(
-        str,
-        null,
-        4
-      )}`
-    );
+  if (!isStr(str)) {
+    return false;
   } else if (str.length === 0) {
-    if (opts.relaxedApi) {
-      return false;
-    }
-    throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!`
-    );
+    return false;
   }
-  if (!(Number.isInteger(position) && position >= 0)) {
-    if (opts.relaxedApi) {
-      return false;
-    }
+  if (!Number.isInteger(position) || position < 0) {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(
         position,
@@ -252,7 +121,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   let whatToMatch;
   let special;
-  if (typeof originalWhatToMatch === "string") {
+  if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -279,45 +148,45 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}`
     );
   }
+  let culpritsIndex;
+  let culpritsVal;
+  if (
+    opts.trimCharsBeforeMatching.some((el, i) => {
+      if (el.length > 1) {
+        culpritsIndex = i;
+        culpritsVal = el;
+        return true;
+      }
+      return false;
+    })
+  ) {
+    throw new Error(
+      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
+    );
+  }
   if (
     !whatToMatch ||
     !Array.isArray(whatToMatch) ||
     (Array.isArray(whatToMatch) && !whatToMatch.length) ||
     (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
-      typeof whatToMatch[0] === "string" &&
+      isStr(whatToMatch[0]) &&
       whatToMatch[0].trim().length === 0)
   ) {
     if (typeof opts.cb === "function") {
       let firstCharOutsideIndex;
       let startingPosition = position;
-      if (
-        mode === "matchRight" &&
-        isHighSurrogate(str[position]) &&
-        isLowSurrogate(str[position + 1])
-      ) {
-        startingPosition += 1;
-      }
       if (mode === "matchLeftIncl" || mode === "matchRight") {
         startingPosition += 1;
       }
       if (mode.startsWith("matchLeft")) {
         for (let y = startingPosition; y--; ) {
-          if (
-            isLowSurrogate(str[y]) &&
-            isHighSurrogate(str[y - 1])
-          ) {
-            continue;
-          }
-          let currentChar = str[y];
-          if (isHighSurrogate(str[y]) && isLowSurrogate(str[y + 1])) {
-            currentChar = str[y] + str[y + 1];
-          }
+          const currentChar = str[y];
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
-                currentChar.trim() !== "")) &&
+                currentChar.trim().length)) &&
             (opts.trimCharsBeforeMatching.length === 0 ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
@@ -325,67 +194,45 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
             firstCharOutsideIndex = y;
             break;
           }
-          if (isLowSurrogate(str[y - 1]) && isHighSurrogate(str[y - 2])) {
-            y -= 1;
-          }
         }
       } else if (mode.startsWith("matchRight")) {
         for (let y = startingPosition; y < str.length; y++) {
-          let currentChar = str[y];
-          if (isHighSurrogate(str[y]) && isLowSurrogate(str[y + 1])) {
-            currentChar = str[y] + str[y + 1];
-          }
+          const currentChar = str[y];
           if (
             (!opts.trimBeforeMatching ||
-              (opts.trimBeforeMatching && currentChar.trim() !== "")) &&
+              (opts.trimBeforeMatching && currentChar.trim().length)) &&
             (opts.trimCharsBeforeMatching.length === 0 ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
             firstCharOutsideIndex = y;
             break;
           }
-          if (isHighSurrogate(str[y]) && isLowSurrogate(str[y + 1])) {
-            y += 1;
-          }
         }
       }
       if (firstCharOutsideIndex === undefined) {
         return false;
       }
-      let wholeCharacterOutside = str[firstCharOutsideIndex];
-      if (
-        isHighSurrogate(str[firstCharOutsideIndex]) &&
-        isLowSurrogate(str[firstCharOutsideIndex + 1])
-      ) {
-        wholeCharacterOutside =
-          str[firstCharOutsideIndex] + str[firstCharOutsideIndex + 1];
-      }
-      if (
-        isLowSurrogate(str[firstCharOutsideIndex]) &&
-        isHighSurrogate(str[firstCharOutsideIndex - 1])
-      ) {
-        wholeCharacterOutside =
-          str[firstCharOutsideIndex - 1] + str[firstCharOutsideIndex];
-        firstCharOutsideIndex -= 1;
-      }
-      let indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-      if (
-        isHighSurrogate(str[firstCharOutsideIndex]) &&
-        isLowSurrogate(str[firstCharOutsideIndex + 1])
-      ) {
-        indexOfTheCharacterAfter += 1;
-      }
-      let secondArg;
+      const wholeCharacterOutside = str[firstCharOutsideIndex];
+      const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+      let theRemainderOfTheString = "";
       if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-        secondArg = str.slice(0, indexOfTheCharacterAfter);
+        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
       }
       if (mode.startsWith("matchLeft")) {
-        return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
+        return opts.cb(
+          wholeCharacterOutside,
+          theRemainderOfTheString,
+          firstCharOutsideIndex
+        );
       }
       if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-        secondArg = str.slice(firstCharOutsideIndex);
+        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
-      return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
+      return opts.cb(
+        wholeCharacterOutside,
+        theRemainderOfTheString,
+        firstCharOutsideIndex
+      );
     }
     let extraNote = "";
     if (!originalOpts) {
@@ -405,21 +252,15 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       let restOfStringInFront = "";
       let startingPosition = position;
       if (mode === "matchLeft") {
-        if (
-          isAstral(str[i - 1]) &&
-          isAstral(str[i - 2])
-        ) {
-          startingPosition -= 2;
-        } else {
-          startingPosition -= 1;
-        }
+        startingPosition -= 1;
       }
-      const found = marchBackward(
+      const found = march(
         str,
         startingPosition,
         whatToMatchVal,
         opts,
-        special
+        special,
+        i => i - 1
       );
       if (
         found &&
@@ -438,31 +279,13 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           ? whatToMatchVal()
           : false;
       }
-      if (Number.isInteger(found) && found > 0) {
+      if (Number.isInteger(found) && found) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];
         restOfStringInFront = str.slice(0, found);
       }
       if (
-        isLowSurrogate(str[indexOfTheCharacterInFront]) &&
-        str[indexOfTheCharacterInFront - 1] &&
-        isHighSurrogate(str[indexOfTheCharacterInFront - 1])
-      ) {
-        indexOfTheCharacterInFront -= 1;
-        fullCharacterInFront =
-          str[indexOfTheCharacterInFront - 1] + str[indexOfTheCharacterInFront];
-      }
-      if (
-        isHighSurrogate(str[indexOfTheCharacterInFront]) &&
-        str[indexOfTheCharacterInFront + 1] &&
-        isLowSurrogate(str[indexOfTheCharacterInFront + 1])
-      ) {
-        fullCharacterInFront =
-          str[indexOfTheCharacterInFront] + str[indexOfTheCharacterInFront + 1];
-        restOfStringInFront = str.slice(0, indexOfTheCharacterInFront + 2);
-      }
-      if (
-        found !== false &&
+        Number.isInteger(found) &&
         (opts.cb
           ? opts.cb(
               fullCharacterInFront,
@@ -479,20 +302,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
     special = typeof whatToMatch[i] === "function";
     const whatToMatchVal = whatToMatch[i];
-    let startingPosition = position + (mode === "matchRight" ? 1 : 0);
-    if (
-      mode === "matchRight" &&
-      isHighSurrogate(str[startingPosition - 1]) &&
-      isLowSurrogate(str[startingPosition])
-    ) {
-      startingPosition += 1;
-    }
-    const found = marchForward(
+    const startingPosition = position + (mode === "matchRight" ? 1 : 0);
+    const found = march(
       str,
       startingPosition,
       whatToMatchVal,
       opts,
-      special
+      special,
+      i => i + 1
     );
     if (
       found &&
@@ -500,44 +317,33 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       typeof whatToMatchVal === "function" &&
       whatToMatchVal() === "EOL"
     ) {
-      let fullCharacterInFront;
-      let restOfStringInFront;
-      let indexOfTheCharacterInFront;
-      return whatToMatchVal() &&
-        (opts.cb
-          ? opts.cb(
-              fullCharacterInFront,
-              restOfStringInFront,
-              indexOfTheCharacterInFront
-            )
-          : true)
+      return whatToMatchVal() && (opts.cb ? opts.cb() : true)
         ? whatToMatchVal()
         : false;
     }
     let indexOfTheCharacterAfter;
-    let fullCharacterAfter;
-    if (Number.isInteger(found) && str[found + whatToMatchVal.length - 1]) {
-      indexOfTheCharacterAfter = found + whatToMatchVal.length;
-      fullCharacterAfter = str[indexOfTheCharacterAfter];
-      if (
-        isHighSurrogate(str[indexOfTheCharacterAfter]) &&
-        isLowSurrogate(str[indexOfTheCharacterAfter + 1])
-      ) {
-        fullCharacterAfter =
-          str[indexOfTheCharacterAfter] + str[indexOfTheCharacterAfter + 1];
-      }
+    let characterAfter;
+    if (Number.isInteger(found)) {
+      indexOfTheCharacterAfter = found + 1;
     }
-    let secondArg;
+    if (str[indexOfTheCharacterAfter]) {
+      characterAfter = str[indexOfTheCharacterAfter];
+    }
+    let theRemainderOfTheString = "";
     if (
       Number.isInteger(indexOfTheCharacterAfter) &&
       indexOfTheCharacterAfter >= 0
     ) {
-      secondArg = str.slice(indexOfTheCharacterAfter);
+      theRemainderOfTheString = str.slice(indexOfTheCharacterAfter);
     }
     if (
       found !== false &&
       (opts.cb
-        ? opts.cb(fullCharacterAfter, secondArg, indexOfTheCharacterAfter)
+        ? opts.cb(
+            characterAfter,
+            theRemainderOfTheString,
+            indexOfTheCharacterAfter
+          )
         : true)
     ) {
       return whatToMatchVal;
