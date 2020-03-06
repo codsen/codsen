@@ -10,8 +10,10 @@
 import arrayiffy from 'arrayiffy-if-string';
 import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
 }
 function isAstral(char) {
   if (typeof char !== "string") {
@@ -53,7 +55,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
       let whatToCompareTo = strToMatch[strToMatch.length - charsToCheckCount];
       if (
         isHighSurrogate(whatToCompareTo) &&
-        existy(strToMatch[strToMatch.length - charsToCheckCount + 1]) &&
+        strToMatch[strToMatch.length - charsToCheckCount + 1] &&
         isLowSurrogate(strToMatch[strToMatch.length - charsToCheckCount + 1])
       ) {
         whatToCompareTo =
@@ -70,7 +72,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
           if (
             aboutToReturn >= 0 &&
             isLowSurrogate(str[aboutToReturn]) &&
-            existy(str[aboutToReturn - 1]) &&
+            str[aboutToReturn - 1] &&
             isHighSurrogate(str[aboutToReturn - 1])
           ) {
             aboutToReturn -= 1;
@@ -184,8 +186,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     relaxedApi: false
   };
   if (
-    typeof originalOpts === "object" &&
-    originalOpts !== null &&
+    isObj(originalOpts) &&
     Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") &&
     typeof originalOpts.trimBeforeMatching !== "boolean"
   ) {
@@ -255,7 +256,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
-  } else if (!existy(originalWhatToMatch)) {
+  } else if (!originalWhatToMatch) {
     whatToMatch = originalWhatToMatch;
   } else if (typeof originalWhatToMatch === "function") {
     whatToMatch = [];
@@ -269,7 +270,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}`
     );
   }
-  if (existy(originalOpts) && typeof originalOpts !== "object") {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(
         originalOpts,
@@ -279,7 +280,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     );
   }
   if (
-    !existy(whatToMatch) ||
+    !whatToMatch ||
     !Array.isArray(whatToMatch) ||
     (Array.isArray(whatToMatch) && !whatToMatch.length) ||
     (Array.isArray(whatToMatch) &&
@@ -387,7 +388,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
     }
     let extraNote = "";
-    if (!existy(originalOpts)) {
+    if (!originalOpts) {
       extraNote =
         " More so, the whole options object, the fourth input argument, is missing!";
     }
@@ -437,14 +438,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           ? whatToMatchVal()
           : false;
       }
-      if (existy(found) && found > 0) {
+      if (Number.isInteger(found) && found > 0) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];
         restOfStringInFront = str.slice(0, found);
       }
       if (
         isLowSurrogate(str[indexOfTheCharacterInFront]) &&
-        existy(str[indexOfTheCharacterInFront - 1]) &&
+        str[indexOfTheCharacterInFront - 1] &&
         isHighSurrogate(str[indexOfTheCharacterInFront - 1])
       ) {
         indexOfTheCharacterInFront -= 1;
@@ -453,7 +454,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       }
       if (
         isHighSurrogate(str[indexOfTheCharacterInFront]) &&
-        existy(str[indexOfTheCharacterInFront + 1]) &&
+        str[indexOfTheCharacterInFront + 1] &&
         isLowSurrogate(str[indexOfTheCharacterInFront + 1])
       ) {
         fullCharacterInFront =
@@ -515,7 +516,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
     let indexOfTheCharacterAfter;
     let fullCharacterAfter;
-    if (existy(found) && existy(str[found + whatToMatchVal.length - 1])) {
+    if (Number.isInteger(found) && str[found + whatToMatchVal.length - 1]) {
       indexOfTheCharacterAfter = found + whatToMatchVal.length;
       fullCharacterAfter = str[indexOfTheCharacterAfter];
       if (
@@ -527,7 +528,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       }
     }
     let secondArg;
-    if (existy(indexOfTheCharacterAfter) && indexOfTheCharacterAfter >= 0) {
+    if (
+      Number.isInteger(indexOfTheCharacterAfter) &&
+      indexOfTheCharacterAfter >= 0
+    ) {
       secondArg = str.slice(indexOfTheCharacterAfter);
     }
     if (

@@ -32,8 +32,8 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function existy(x) {
-  return x != null;
+function isObj(something) {
+  return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 function isAstral(_char) {
   if (typeof _char !== "string") {
@@ -68,14 +68,14 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
         continue;
       }
       var whatToCompareTo = strToMatch[strToMatch.length - charsToCheckCount];
-      if (stringCharacterIsAstralSurrogate.isHighSurrogate(whatToCompareTo) && existy(strToMatch[strToMatch.length - charsToCheckCount + 1]) && stringCharacterIsAstralSurrogate.isLowSurrogate(strToMatch[strToMatch.length - charsToCheckCount + 1])) {
+      if (stringCharacterIsAstralSurrogate.isHighSurrogate(whatToCompareTo) && strToMatch[strToMatch.length - charsToCheckCount + 1] && stringCharacterIsAstralSurrogate.isLowSurrogate(strToMatch[strToMatch.length - charsToCheckCount + 1])) {
         whatToCompareTo = strToMatch[strToMatch.length - charsToCheckCount] + strToMatch[strToMatch.length - charsToCheckCount + 1];
       }
       if (!opts.i && current === whatToCompareTo || opts.i && current.toLowerCase() === whatToCompareTo.toLowerCase()) {
         charsToCheckCount -= current.length;
         if (charsToCheckCount < 1) {
           var aboutToReturn = i - strToMatch.length + current.length;
-          if (aboutToReturn >= 0 && stringCharacterIsAstralSurrogate.isLowSurrogate(str[aboutToReturn]) && existy(str[aboutToReturn - 1]) && stringCharacterIsAstralSurrogate.isHighSurrogate(str[aboutToReturn - 1])) {
+          if (aboutToReturn >= 0 && stringCharacterIsAstralSurrogate.isLowSurrogate(str[aboutToReturn]) && str[aboutToReturn - 1] && stringCharacterIsAstralSurrogate.isHighSurrogate(str[aboutToReturn - 1])) {
             aboutToReturn -= 1;
           }
           return aboutToReturn >= 0 ? aboutToReturn : 0;
@@ -165,7 +165,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimCharsBeforeMatching: [],
     relaxedApi: false
   };
-  if (_typeof(originalOpts) === "object" && originalOpts !== null && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
   var opts = Object.assign({}, defaults, originalOpts);
@@ -208,7 +208,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
-  } else if (!existy(originalWhatToMatch)) {
+  } else if (!originalWhatToMatch) {
     whatToMatch = originalWhatToMatch;
   } else if (typeof originalWhatToMatch === "function") {
     whatToMatch = [];
@@ -216,11 +216,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   } else {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
   }
-  if (existy(originalOpts) && _typeof(originalOpts) !== "object") {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
-  if (!existy(whatToMatch) ||
-  !Array.isArray(whatToMatch) ||
+  if (!whatToMatch || !Array.isArray(whatToMatch) ||
   Array.isArray(whatToMatch) && !whatToMatch.length ||
   Array.isArray(whatToMatch) && whatToMatch.length === 1 && typeof whatToMatch[0] === "string" && whatToMatch[0].trim().length === 0
   ) {
@@ -294,7 +293,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
       }
       var extraNote = "";
-      if (!existy(originalOpts)) {
+      if (!originalOpts) {
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
       throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
@@ -319,16 +318,16 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
       }
-      if (existy(found) && found > 0) {
+      if (Number.isInteger(found) && found > 0) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];
         restOfStringInFront = str.slice(0, found);
       }
-      if (stringCharacterIsAstralSurrogate.isLowSurrogate(str[indexOfTheCharacterInFront]) && existy(str[indexOfTheCharacterInFront - 1]) && stringCharacterIsAstralSurrogate.isHighSurrogate(str[indexOfTheCharacterInFront - 1])) {
+      if (stringCharacterIsAstralSurrogate.isLowSurrogate(str[indexOfTheCharacterInFront]) && str[indexOfTheCharacterInFront - 1] && stringCharacterIsAstralSurrogate.isHighSurrogate(str[indexOfTheCharacterInFront - 1])) {
         indexOfTheCharacterInFront -= 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront - 1] + str[indexOfTheCharacterInFront];
       }
-      if (stringCharacterIsAstralSurrogate.isHighSurrogate(str[indexOfTheCharacterInFront]) && existy(str[indexOfTheCharacterInFront + 1]) && stringCharacterIsAstralSurrogate.isLowSurrogate(str[indexOfTheCharacterInFront + 1])) {
+      if (stringCharacterIsAstralSurrogate.isHighSurrogate(str[indexOfTheCharacterInFront]) && str[indexOfTheCharacterInFront + 1] && stringCharacterIsAstralSurrogate.isLowSurrogate(str[indexOfTheCharacterInFront + 1])) {
         fullCharacterInFront = str[indexOfTheCharacterInFront] + str[indexOfTheCharacterInFront + 1];
         restOfStringInFront = str.slice(0, indexOfTheCharacterInFront + 2);
       }
@@ -354,7 +353,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
     var _indexOfTheCharacterAfter = void 0;
     var fullCharacterAfter = void 0;
-    if (existy(_found) && existy(str[_found + _whatToMatchVal.length - 1])) {
+    if (Number.isInteger(_found) && str[_found + _whatToMatchVal.length - 1]) {
       _indexOfTheCharacterAfter = _found + _whatToMatchVal.length;
       fullCharacterAfter = str[_indexOfTheCharacterAfter];
       if (stringCharacterIsAstralSurrogate.isHighSurrogate(str[_indexOfTheCharacterAfter]) && stringCharacterIsAstralSurrogate.isLowSurrogate(str[_indexOfTheCharacterAfter + 1])) {
@@ -362,7 +361,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       }
     }
     var _secondArg = void 0;
-    if (existy(_indexOfTheCharacterAfter) && _indexOfTheCharacterAfter >= 0) {
+    if (Number.isInteger(_indexOfTheCharacterAfter) && _indexOfTheCharacterAfter >= 0) {
       _secondArg = str.slice(_indexOfTheCharacterAfter);
     }
     if (_found !== false && (opts.cb ? opts.cb(fullCharacterAfter, _secondArg, _indexOfTheCharacterAfter) : true)) {
