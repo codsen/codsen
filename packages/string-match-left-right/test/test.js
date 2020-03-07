@@ -1792,7 +1792,7 @@ t.test(
   }
 );
 
-t.test(
+t.only(
   `10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
   t => {
     t.equal(
