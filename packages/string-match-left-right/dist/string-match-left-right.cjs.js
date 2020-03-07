@@ -81,16 +81,18 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
         var _charToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount - 1] : strToMatch[charsToCheckCount - 2];
         if (_charToCompareAgainst && (!opts.i && str[i] === _charToCompareAgainst || opts.i && str[i].toLowerCase() === _charToCompareAgainst.toLowerCase())) {
           charsToCheckCount -= 2;
-          if (charsToCheckCount < 1) {
-            return i;
-          }
         } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
           return lastWasMismatched;
         }
       }
       else if (opts.maxMismatches && i) {
           opts.maxMismatches = opts.maxMismatches - 1;
-          lastWasMismatched = i;
+          var nextCharToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount - 1] : strToMatch[charsToCheckCount - 2];
+          if (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) {
+            charsToCheckCount -= 2;
+          } else {
+            lastWasMismatched = i;
+          }
         } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
           return 0;
         } else {
@@ -99,6 +101,9 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     }
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
+    }
+    if (charsToCheckCount < 1) {
+      return i;
     }
     i = getNextIdx(i);
   }
