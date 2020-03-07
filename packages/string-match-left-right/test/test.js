@@ -2494,7 +2494,7 @@ t.test(
   t => {
     matchRight("a", 0, () => "EOL", {
       cb: (...args) => {
-        t.same(args, [], "10.04.05 - useless cb");
+        t.same(args, [undefined, "", undefined], "10.04.05 - useless cb");
         return true;
       }
     });

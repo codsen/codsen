@@ -313,7 +313,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!isStr(str)) {
     return false;
-  } else if (str.length === 0) {
+  } else if (!str.length) {
     return false;
   }
 
@@ -402,7 +402,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
       isStr(whatToMatch[0]) &&
-      whatToMatch[0].trim().length === 0) // [""]
+      !whatToMatch[0].trim().length) // [""]
   ) {
     if (typeof opts.cb === "function") {
       console.log("408");
@@ -414,7 +414,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         startingPosition += 1;
       }
 
-      if (mode.startsWith("matchLeft")) {
+      if (mode[5] === "L") {
         for (let y = startingPosition; y--; ) {
           // assemble the value of the current character
           const currentChar = str[y];
@@ -424,7 +424,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
                 currentChar.trim().length)) &&
-            (opts.trimCharsBeforeMatching.length === 0 ||
+            (!opts.trimCharsBeforeMatching.length ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
           ) {
@@ -447,7 +447,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar.trim().length)) &&
-            (opts.trimCharsBeforeMatching.length === 0 ||
+            (!opts.trimCharsBeforeMatching.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
             console.log("453 breaking!");
@@ -468,7 +468,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
         theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
       }
-      if (mode.startsWith("matchLeft")) {
+      if (mode[5] === "L") {
         console.log(`472 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
         return opts.cb(
           wholeCharacterOutside,
@@ -504,172 +504,44 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // result is merged using logical "AND" - meaning both have to be true to yield
   // final result "true".
 
-  if (mode.startsWith("matchLeft")) {
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
-      console.log(
-        `\n760 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
-      );
-
-      special = typeof whatToMatch[i] === "function";
-      console.log(`514 special = ${special}`);
-
-      console.log(
-        `517 🔥 whatToMatch no. ${i} = ${
-          whatToMatch[i]
-        } (type ${typeof whatToMatch[i]})`
-      );
-      console.log(`521 🔥 special = ${special}`);
-
-      // since input can be function, we need to grab the value explicitly:
-      const whatToMatchVal = whatToMatch[i];
-
-      // console.log(`782 typeof whatToMatchVal = ${typeof whatToMatchVal}`);
-      // console.log(
-      //   `784 ${`\u001b[${33}m${`whatToMatchVal()`}\u001b[${39}m`} = ${JSON.stringify(
-      //     whatToMatchVal(),
-      //     null,
-      //     4
-      //   )} (typeof whatToMatchVal = ${typeof whatToMatchVal})`
-      // );
-
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
-
-      if (mode === "matchLeft") {
-        // Depends if the current character is surrogate.
-        // Imagine, you've got blue hat emoji: \uD83E\uDDE2 to the left of your
-        // current character at current index. In order to "jump left by one character"
-        // you have to subtract the index by two, not by one.
-        //
-        startingPosition -= 1;
-      }
-      console.log(
-        `549 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
-          startingPosition,
-          null,
-          4
-        )}\n* whatToMatchVal = "${whatToMatchVal}"\n`
-      );
-      console.log("\n\n\n\n\n\n");
-      console.log(
-        `557 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
-      );
-      const found = march(
-        str,
-        startingPosition,
-        whatToMatchVal,
-        opts,
-        special,
-        i => i - 1
-      );
-      console.log(
-        `568 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
-      );
-      console.log(
-        `571 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
-          found,
-          null,
-          4
-        )}`
-      );
-
-      // if marchBackward returned positive result and it was "special" case,
-      // Bob's your uncle, here's the result:
-      if (
-        found &&
-        special &&
-        typeof whatToMatchVal === "function" &&
-        whatToMatchVal() === "EOL"
-      ) {
-        console.log(`586 returning whatToMatchVal() = ${whatToMatchVal()}`);
-        return whatToMatchVal() &&
-          (opts.cb
-            ? opts.cb(
-                fullCharacterInFront,
-                restOfStringInFront,
-                indexOfTheCharacterInFront
-              )
-            : true)
-          ? whatToMatchVal()
-          : false;
-      }
-
-      // now, the "found" is the index of the first character of what was found.
-      // we need to calculate the character to the left of it, which might be emoji
-      // so its first character might be either "minus one index" (normal character)
-      // or "minus two indexes" (emoji). Let's calculate that:
-
-      if (Number.isInteger(found) && found) {
-        indexOfTheCharacterInFront = found - 1;
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-        restOfStringInFront = str.slice(0, found);
-      }
-
-      console.log(
-        `611 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
-          indexOfTheCharacterInFront,
-          null,
-          4
-        )}
-        ${`\u001b[${33}m${`fullCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
-          fullCharacterInFront,
-          null,
-          4
-        )}
-        ${`\u001b[${33}m${`restOfStringInFront`}\u001b[${39}m`} = ${JSON.stringify(
-          restOfStringInFront,
-          null,
-          4
-        )}`
-      );
-
-      if (
-        Number.isInteger(found) &&
-        (opts.cb
-          ? opts.cb(
-              fullCharacterInFront,
-              restOfStringInFront,
-              indexOfTheCharacterInFront
-            )
-          : true)
-      ) {
-        console.log(
-          `639 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
-            whatToMatchVal,
-            null,
-            4
-          )}`
-        );
-        return whatToMatchVal;
-      }
-    }
-    console.log(`648 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
-    return false;
-  }
-  // ELSE - matchRight & matchRightIncl
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
-    special = typeof whatToMatch[i] === "function";
     console.log(
-      `655 🔥 whatToMatch no. ${i} = ${
+      `\n760 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
+    );
+
+    special = typeof whatToMatch[i] === "function";
+    console.log(`513 special = ${special}`);
+
+    console.log(
+      `516 🔥 whatToMatch no. ${i} = ${
         whatToMatch[i]
       } (type ${typeof whatToMatch[i]})`
     );
-    console.log(`659 🔥 special = ${special}`);
+    console.log(`520 🔥 special = ${special}`);
 
+    // since input can be function, we need to grab the value explicitly:
     const whatToMatchVal = whatToMatch[i];
 
-    const startingPosition = position + (mode === "matchRight" ? 1 : 0);
-    // compensate for emoji, since if currently we've sat upon emoji,
-    // we need to add not one but two to reference the "character on the right"
-    console.log(
-      `667 \u001b[${32}m${"startingPosition"}\u001b[${39}m = ${startingPosition}`
-    );
+    let fullCharacterInFront;
+    let indexOfTheCharacterInFront;
+    let restOfStringInFront = "";
 
-    console.log("\n\n\n\n\n\n");
+    let startingPosition = position;
+    if (mode === "matchRight") {
+      startingPosition++;
+    } else if (mode === "matchLeft") {
+      startingPosition--;
+    }
+
     console.log(
-      `672 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
+      `537 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
+        startingPosition,
+        null,
+        4
+      )}\n* whatToMatchVal = "${whatToMatchVal}"\n`
+    );
+    console.log(
+      `544 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
     );
     const found = march(
       str,
@@ -677,20 +549,20 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       whatToMatchVal,
       opts,
       special,
-      i => i + 1
+      i => (mode[5] === "L" ? i - 1 : i + 1)
     );
     console.log(
-      `683 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
+      `555 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
     );
     console.log(
-      `686 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
+      `558 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
         found,
         null,
         4
       )}`
     );
 
-    // if marchForward returned positive result and it was a "special" case,
+    // if marchBackward returned positive result and it was "special" case,
     // Bob's your uncle, here's the result:
     if (
       found &&
@@ -698,65 +570,84 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       typeof whatToMatchVal === "function" &&
       whatToMatchVal() === "EOL"
     ) {
-      console.log(`701 returning whatToMatchVal() = ${whatToMatchVal()}`);
-      return whatToMatchVal() && (opts.cb ? opts.cb() : true)
+      console.log(`573 returning whatToMatchVal() = ${whatToMatchVal()}`);
+      return whatToMatchVal() &&
+        (opts.cb
+          ? opts.cb(
+              fullCharacterInFront,
+              restOfStringInFront,
+              indexOfTheCharacterInFront
+            )
+          : true)
         ? whatToMatchVal()
         : false;
     }
 
-    let indexOfTheCharacterAfter;
-    let characterAfter;
+    // now, the "found" is the index of the first character of what was found.
+    // we need to calculate the character to the left of it, which might be emoji
+    // so its first character might be either "minus one index" (normal character)
+    // or "minus two indexes" (emoji). Let's calculate that:
 
     if (Number.isInteger(found)) {
-      indexOfTheCharacterAfter = found + 1;
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft")
+        ? found - 1
+        : found + 1;
+
+      //
+      if (mode[5] === "L") {
+        restOfStringInFront = str.slice(0, found);
+      } else {
+        restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+      }
     }
 
-    if (str[indexOfTheCharacterAfter]) {
-      characterAfter = str[indexOfTheCharacterAfter];
+    if (indexOfTheCharacterInFront < 0) {
+      indexOfTheCharacterInFront = undefined;
+    }
+
+    if (str[indexOfTheCharacterInFront]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront];
     }
 
     console.log(
-      `719 ${`\u001b[${33}m${"characterAfter"}\u001b[${39}m`} = ${JSON.stringify(
-        characterAfter,
+      `613 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
+        indexOfTheCharacterInFront,
+        null,
+        4
+      )}
+        ${`\u001b[${33}m${`fullCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
+        fullCharacterInFront,
+        null,
+        4
+      )}
+        ${`\u001b[${33}m${`restOfStringInFront`}\u001b[${39}m`} = ${JSON.stringify(
+        restOfStringInFront,
         null,
         4
       )}`
     );
-    console.log(
-      `726 ${`\u001b[${33}m${"indexOfTheCharacterAfter"}\u001b[${39}m`} = ${JSON.stringify(
-        indexOfTheCharacterAfter,
-        null,
-        4
-      )}\n`
-    );
-    console.log(
-      `733 ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
-        whatToMatchVal,
-        null,
-        4
-      )} (${typeof whatToMatchVal})`
-    );
 
-    let theRemainderOfTheString = "";
     if (
-      Number.isInteger(indexOfTheCharacterAfter) &&
-      indexOfTheCharacterAfter >= 0
-    ) {
-      theRemainderOfTheString = str.slice(indexOfTheCharacterAfter);
-    }
-    if (
-      found !== false &&
+      Number.isInteger(found) &&
       (opts.cb
         ? opts.cb(
-            characterAfter,
-            theRemainderOfTheString,
-            indexOfTheCharacterAfter
+            fullCharacterInFront,
+            restOfStringInFront,
+            indexOfTheCharacterInFront
           )
         : true)
     ) {
+      console.log(
+        `641 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
+          whatToMatchVal,
+          null,
+          4
+        )}`
+      );
       return whatToMatchVal;
     }
   }
+  console.log(`650 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
   return false;
 }
 

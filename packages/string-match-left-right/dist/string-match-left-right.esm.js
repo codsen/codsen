@@ -107,7 +107,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   );
   if (!isStr(str)) {
     return false;
-  } else if (str.length === 0) {
+  } else if (!str.length) {
     return false;
   }
   if (!Number.isInteger(position) || position < 0) {
@@ -171,7 +171,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
       isStr(whatToMatch[0]) &&
-      whatToMatch[0].trim().length === 0)
+      !whatToMatch[0].trim().length)
   ) {
     if (typeof opts.cb === "function") {
       let firstCharOutsideIndex;
@@ -179,7 +179,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (mode === "matchLeftIncl" || mode === "matchRight") {
         startingPosition += 1;
       }
-      if (mode.startsWith("matchLeft")) {
+      if (mode[5] === "L") {
         for (let y = startingPosition; y--; ) {
           const currentChar = str[y];
           if (
@@ -187,7 +187,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
                 currentChar.trim().length)) &&
-            (opts.trimCharsBeforeMatching.length === 0 ||
+            (!opts.trimCharsBeforeMatching.length ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
           ) {
@@ -201,7 +201,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar.trim().length)) &&
-            (opts.trimCharsBeforeMatching.length === 0 ||
+            (!opts.trimCharsBeforeMatching.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
             firstCharOutsideIndex = y;
@@ -218,7 +218,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
         theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
       }
-      if (mode.startsWith("matchLeft")) {
+      if (mode[5] === "L") {
         return opts.cb(
           wholeCharacterOutside,
           theRemainderOfTheString,
@@ -243,73 +243,25 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       `string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`
     );
   }
-  if (mode.startsWith("matchLeft")) {
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
-      special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
-      if (mode === "matchLeft") {
-        startingPosition -= 1;
-      }
-      const found = march(
-        str,
-        startingPosition,
-        whatToMatchVal,
-        opts,
-        special,
-        i => i - 1
-      );
-      if (
-        found &&
-        special &&
-        typeof whatToMatchVal === "function" &&
-        whatToMatchVal() === "EOL"
-      ) {
-        return whatToMatchVal() &&
-          (opts.cb
-            ? opts.cb(
-                fullCharacterInFront,
-                restOfStringInFront,
-                indexOfTheCharacterInFront
-              )
-            : true)
-          ? whatToMatchVal()
-          : false;
-      }
-      if (Number.isInteger(found) && found) {
-        indexOfTheCharacterInFront = found - 1;
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-        restOfStringInFront = str.slice(0, found);
-      }
-      if (
-        Number.isInteger(found) &&
-        (opts.cb
-          ? opts.cb(
-              fullCharacterInFront,
-              restOfStringInFront,
-              indexOfTheCharacterInFront
-            )
-          : true)
-      ) {
-        return whatToMatchVal;
-      }
-    }
-    return false;
-  }
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
     special = typeof whatToMatch[i] === "function";
     const whatToMatchVal = whatToMatch[i];
-    const startingPosition = position + (mode === "matchRight" ? 1 : 0);
+    let fullCharacterInFront;
+    let indexOfTheCharacterInFront;
+    let restOfStringInFront = "";
+    let startingPosition = position;
+    if (mode === "matchRight") {
+      startingPosition++;
+    } else if (mode === "matchLeft") {
+      startingPosition--;
+    }
     const found = march(
       str,
       startingPosition,
       whatToMatchVal,
       opts,
       special,
-      i => i + 1
+      i => (mode[5] === "L" ? i - 1 : i + 1)
     );
     if (
       found &&
@@ -317,32 +269,40 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       typeof whatToMatchVal === "function" &&
       whatToMatchVal() === "EOL"
     ) {
-      return whatToMatchVal() && (opts.cb ? opts.cb() : true)
+      return whatToMatchVal() &&
+        (opts.cb
+          ? opts.cb(
+              fullCharacterInFront,
+              restOfStringInFront,
+              indexOfTheCharacterInFront
+            )
+          : true)
         ? whatToMatchVal()
         : false;
     }
-    let indexOfTheCharacterAfter;
-    let characterAfter;
     if (Number.isInteger(found)) {
-      indexOfTheCharacterAfter = found + 1;
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft")
+        ? found - 1
+        : found + 1;
+      if (mode[5] === "L") {
+        restOfStringInFront = str.slice(0, found);
+      } else {
+        restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+      }
     }
-    if (str[indexOfTheCharacterAfter]) {
-      characterAfter = str[indexOfTheCharacterAfter];
+    if (indexOfTheCharacterInFront < 0) {
+      indexOfTheCharacterInFront = undefined;
     }
-    let theRemainderOfTheString = "";
+    if (str[indexOfTheCharacterInFront]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront];
+    }
     if (
-      Number.isInteger(indexOfTheCharacterAfter) &&
-      indexOfTheCharacterAfter >= 0
-    ) {
-      theRemainderOfTheString = str.slice(indexOfTheCharacterAfter);
-    }
-    if (
-      found !== false &&
+      Number.isInteger(found) &&
       (opts.cb
         ? opts.cb(
-            characterAfter,
-            theRemainderOfTheString,
-            indexOfTheCharacterAfter
+            fullCharacterInFront,
+            restOfStringInFront,
+            indexOfTheCharacterInFront
           )
         : true)
     ) {

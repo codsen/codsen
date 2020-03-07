@@ -106,7 +106,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   });
   if (!isStr(str)) {
     return false;
-  } else if (str.length === 0) {
+  } else if (!str.length) {
     return false;
   }
   if (!Number.isInteger(position) || position < 0) {
@@ -143,7 +143,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   if (!whatToMatch || !Array.isArray(whatToMatch) ||
   Array.isArray(whatToMatch) && !whatToMatch.length ||
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && whatToMatch[0].trim().length === 0
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim().length
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex;
@@ -151,10 +151,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         if (mode === "matchLeftIncl" || mode === "matchRight") {
           startingPosition += 1;
         }
-        if (mode.startsWith("matchLeft")) {
+        if (mode[5] === "L") {
           for (var y = startingPosition; y--;) {
             var currentChar = str[y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (opts.trimCharsBeforeMatching.length === 0 || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
@@ -162,7 +162,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         } else if (mode.startsWith("matchRight")) {
           for (var _y = startingPosition; _y < str.length; _y++) {
             var _currentChar = str[_y];
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim().length) && (opts.trimCharsBeforeMatching.length === 0 || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim().length) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
               firstCharOutsideIndex = _y;
               break;
             }
@@ -177,7 +177,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
           theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
         }
-        if (mode.startsWith("matchLeft")) {
+        if (mode[5] === "L") {
           return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
         }
         if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
@@ -191,58 +191,40 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       }
       throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
     }
-  if (mode.startsWith("matchLeft")) {
-    for (var i = 0, len = whatToMatch.length; i < len; i++) {
-      special = typeof whatToMatch[i] === "function";
-      var whatToMatchVal = whatToMatch[i];
-      var fullCharacterInFront = void 0;
-      var indexOfTheCharacterInFront = void 0;
-      var restOfStringInFront = "";
-      var _startingPosition = position;
-      if (mode === "matchLeft") {
-        _startingPosition -= 1;
-      }
-      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i) {
-        return i - 1;
-      });
-      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
-        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-      }
-      if (Number.isInteger(found) && found) {
-        indexOfTheCharacterInFront = found - 1;
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-        restOfStringInFront = str.slice(0, found);
-      }
-      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
-        return whatToMatchVal;
-      }
+  for (var i = 0, len = whatToMatch.length; i < len; i++) {
+    special = typeof whatToMatch[i] === "function";
+    var whatToMatchVal = whatToMatch[i];
+    var fullCharacterInFront = void 0;
+    var indexOfTheCharacterInFront = void 0;
+    var restOfStringInFront = "";
+    var _startingPosition = position;
+    if (mode === "matchRight") {
+      _startingPosition++;
+    } else if (mode === "matchLeft") {
+      _startingPosition--;
     }
-    return false;
-  }
-  for (var _i = 0, _len = whatToMatch.length; _i < _len; _i++) {
-    special = typeof whatToMatch[_i] === "function";
-    var _whatToMatchVal = whatToMatch[_i];
-    var _startingPosition2 = position + (mode === "matchRight" ? 1 : 0);
-    var _found = march(str, _startingPosition2, _whatToMatchVal, opts, special, function (i) {
-      return i + 1;
+    var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i) {
+      return mode[5] === "L" ? i - 1 : i + 1;
     });
-    if (_found && special && typeof _whatToMatchVal === "function" && _whatToMatchVal() === "EOL") {
-      return _whatToMatchVal() && (opts.cb ? opts.cb() : true) ? _whatToMatchVal() : false;
+    if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
+      return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
     }
-    var _indexOfTheCharacterAfter = void 0;
-    var characterAfter = void 0;
-    if (Number.isInteger(_found)) {
-      _indexOfTheCharacterAfter = _found + 1;
+    if (Number.isInteger(found)) {
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
+      if (mode[5] === "L") {
+        restOfStringInFront = str.slice(0, found);
+      } else {
+        restOfStringInFront = str.slice(indexOfTheCharacterInFront);
+      }
     }
-    if (str[_indexOfTheCharacterAfter]) {
-      characterAfter = str[_indexOfTheCharacterAfter];
+    if (indexOfTheCharacterInFront < 0) {
+      indexOfTheCharacterInFront = undefined;
     }
-    var _theRemainderOfTheString = "";
-    if (Number.isInteger(_indexOfTheCharacterAfter) && _indexOfTheCharacterAfter >= 0) {
-      _theRemainderOfTheString = str.slice(_indexOfTheCharacterAfter);
+    if (str[indexOfTheCharacterInFront]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront];
     }
-    if (_found !== false && (opts.cb ? opts.cb(characterAfter, _theRemainderOfTheString, _indexOfTheCharacterAfter) : true)) {
-      return _whatToMatchVal;
+    if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
+      return whatToMatchVal;
     }
   }
   return false;
