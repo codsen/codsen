@@ -218,7 +218,7 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `02.06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
   t => {
     const opts = {
@@ -227,31 +227,44 @@ t.todo(
     t.equal(
       matchLeftIncl("_abc.efghi", 4, ["bcd"], opts),
       "bcd",
-      "02.06.01 - b mismatching"
+      "02.06.01 - d mismatching"
     );
-    // t.equal(
-    //   matchLeftIncl("_ab.defghi", 4, ["bcd"], {
-    //     maxMismatches: 1
-    //   }),
-    //   "bcd",
-    //   "02.06.02 - c mismatching"
-    // );
-    // t.equal(
-    //   matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
-    //     maxMismatches: 1
-    //   }),
-    //   "bcd",
-    //   "02.06.03 - d mismatching"
-    // );
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], opts),
+      "bcd",
+      "02.06.02 - c mismatching"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], opts),
+      "bcd",
+      "02.06.03 - b mismatching"
+    );
+    t.equal(
+      matchLeftIncl(".cdefghi", 2, ["bcd"], opts),
+      "bcd",
+      "02.06.04 - string starts with the value"
+    );
+    t.equal(
+      matchLeftIncl("cdefghi", 1, ["bcd"], opts),
+      "bcd",
+      "02.06.05 - last char to match would be outside of the str"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 99
+      }),
+      "bcd",
+      "02.06.06"
+    );
 
-    // // ensure that opts object was not mutated:
-    // t.match(
-    //   opts,
-    //   {
-    //     maxMismatches: 1
-    //   },
-    //   "02.06.04"
-    // );
+    // ensure that opts object was not mutated:
+    t.match(
+      opts,
+      {
+        maxMismatches: 1
+      },
+      "02.06.07"
+    );
     t.end();
   }
 );
@@ -1792,7 +1805,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`,
   t => {
     t.equal(
@@ -2446,7 +2459,7 @@ t.test(
   }
 );
 
-t.only(
+t.test(
   `16.02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`,
   t => {
     t.equal(

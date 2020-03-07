@@ -46,6 +46,8 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     return false;
   }
   var charsToCheckCount = special ? 1 : strToMatch.length;
+  var lastWasMismatched = false;
+  var atLeastSomethingWasMatched = false;
   var i = fromIndexInclusive;
   while (str[i]) {
     var nextIdx = getNextIdx(i);
@@ -67,22 +69,44 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     }
     var charToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount] : strToMatch[charsToCheckCount - 1];
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+      if (!atLeastSomethingWasMatched) {
+        atLeastSomethingWasMatched = true;
+      }
       charsToCheckCount -= 1;
       if (charsToCheckCount < 1) {
         return i;
       }
     } else {
-      if (opts.maxMismatches) {
-        opts.maxMismatches = opts.maxMismatches - 1;
-      } else {
-        return false;
+      if (lastWasMismatched !== false) {
+        var _charToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount - 1] : strToMatch[charsToCheckCount - 2];
+        if (_charToCompareAgainst && (!opts.i && str[i] === _charToCompareAgainst || opts.i && str[i].toLowerCase() === _charToCompareAgainst.toLowerCase())) {
+          charsToCheckCount -= 2;
+          if (charsToCheckCount < 1) {
+            return i;
+          }
+        } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+          return lastWasMismatched;
+        }
       }
+      else if (opts.maxMismatches && i) {
+          opts.maxMismatches = opts.maxMismatches - 1;
+          lastWasMismatched = i;
+        } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+          return 0;
+        } else {
+          return false;
+        }
+    }
+    if (lastWasMismatched !== false && lastWasMismatched !== i) {
+      lastWasMismatched = false;
     }
     i = getNextIdx(i);
   }
   if (charsToCheckCount > 0) {
     if (special && strToMatchVal === "EOL") {
       return true;
+    } else if (opts.maxMismatches >= charsToCheckCount) {
+      return lastWasMismatched || 0;
     }
     return false;
   }
