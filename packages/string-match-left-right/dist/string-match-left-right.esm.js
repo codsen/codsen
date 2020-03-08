@@ -88,7 +88,7 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
         opts.maxMismatches = opts.maxMismatches - 1;
         const nextCharToCompareAgainst =
           nextIdx > i
-            ? strToMatch[strToMatch.length - charsToCheckCount - 1]
+            ? strToMatch[strToMatch.length - charsToCheckCount + 1]
             : strToMatch[charsToCheckCount - 2];
         if (
           (!opts.i && str[i] === nextCharToCompareAgainst) ||

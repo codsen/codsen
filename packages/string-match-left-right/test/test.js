@@ -470,6 +470,105 @@ t.test(
   }
 );
 
+t.test(
+  `05.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`,
+  t => {
+    t.equal(
+      matchRight("a<!->z", 0, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, "z");
+          t.equal(theRemainderOfTheString, "z");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.05.01"
+    );
+    t.equal(
+      matchRightIncl("a<!->z", 1, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, "z");
+          t.equal(theRemainderOfTheString, "z");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.05.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, space follows`,
+  t => {
+    t.equal(
+      matchRight("a<!-> ", 0, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, " ");
+          t.equal(theRemainderOfTheString, " ");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.06.01"
+    );
+    t.equal(
+      matchRightIncl("a<!-> ", 1, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, " ");
+          t.equal(theRemainderOfTheString, " ");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.06.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`,
+  t => {
+    t.equal(
+      matchRight("a<!->", 0, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, undefined);
+          t.equal(theRemainderOfTheString, "");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.07.01"
+    );
+    t.equal(
+      matchRightIncl("a<!->", 1, ["<!-->"], {
+        maxMismatches: 1,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, undefined);
+          t.equal(theRemainderOfTheString, "");
+          t.equal(index, 5);
+          return true;
+        }
+      }),
+      "<!-->",
+      "05.07.02"
+    );
+    t.end();
+  }
+);
+
 // 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 

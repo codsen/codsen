@@ -87,7 +87,7 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
       }
       else if (opts.maxMismatches && i) {
           opts.maxMismatches = opts.maxMismatches - 1;
-          var nextCharToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount - 1] : strToMatch[charsToCheckCount - 2];
+          var nextCharToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount + 1] : strToMatch[charsToCheckCount - 2];
           if (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) {
             charsToCheckCount -= 2;
           } else {
