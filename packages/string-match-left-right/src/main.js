@@ -279,16 +279,17 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
         console.log(" ");
 
         if (
-          (!opts.i && str[i] === nextCharToCompareAgainst) ||
-          (opts.i &&
-            str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())
+          nextCharToCompareAgainst &&
+          ((!opts.i && str[i] === nextCharToCompareAgainst) ||
+            (opts.i &&
+              str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()))
         ) {
           console.log(" ");
-          console.log(`287 ${`\u001b[${32}m${`MATCHED!`}\u001b[${39}m`}`);
+          console.log(`288 ${`\u001b[${32}m${`MATCHED!`}\u001b[${39}m`}`);
           console.log(" ");
           charsToCheckCount -= 2;
           console.log(
-            `291 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`charsToCheckCount`}\u001b[${39}m`} = ${JSON.stringify(
+            `292 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`charsToCheckCount`}\u001b[${39}m`} = ${JSON.stringify(
               charsToCheckCount,
               null,
               4
@@ -303,10 +304,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
         charsToCheckCount === 1 &&
         atLeastSomethingWasMatched
       ) {
-        console.log(`306 LAST CHARACTER. RETURN 0.`);
+        console.log(`307 LAST CHARACTER. RETURN 0.`);
         return 0;
       } else {
-        console.log(`309 ${`\u001b[${31}m${`RETURN false.`}\u001b[${39}m`}`);
+        console.log(`310 ${`\u001b[${31}m${`RETURN false.`}\u001b[${39}m`}`);
         return false;
       }
     }
@@ -316,14 +317,14 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
       console.log(
-        `319 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWasMismatched`}\u001b[${39}m`} = ${lastWasMismatched}`
+        `320 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWasMismatched`}\u001b[${39}m`} = ${lastWasMismatched}`
       );
     }
 
     // if all was matched, happy days
     if (charsToCheckCount < 1) {
       console.log(
-        `326 all chars matched, ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} i: ${i}; charsToCheckCount = ${charsToCheckCount}`
+        `327 all chars matched, ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} i: ${i}; charsToCheckCount = ${charsToCheckCount}`
       );
       return i;
     }
@@ -364,20 +365,20 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     );
   }
 
-  console.log(`367 AFTER THE WHILE LOOP`);
+  console.log(`368 AFTER THE WHILE LOOP`);
 
   if (charsToCheckCount > 0) {
     if (special && strToMatchVal === "EOL") {
       console.log(
-        `372 charsToCheckCount = ${charsToCheckCount};\nwent past the beginning of the string and EOL was queried to ${`\u001b[${32}m${`return TRUE`}\u001b[${39}m`}`
+        `373 charsToCheckCount = ${charsToCheckCount};\nwent past the beginning of the string and EOL was queried to ${`\u001b[${32}m${`return TRUE`}\u001b[${39}m`}`
       );
       return true;
     } else if (opts.maxMismatches >= charsToCheckCount) {
-      console.log(`376 RETURN ${lastWasMismatched || 0}`);
+      console.log(`377 RETURN ${lastWasMismatched || 0}`);
       return lastWasMismatched || 0;
     }
     console.log(
-      `380 ${`\u001b[${31}m${`charsToCheckCount = ${charsToCheckCount} THEREFORE, returning FALSE`}\u001b[${39}m`}`
+      `381 ${`\u001b[${31}m${`charsToCheckCount = ${charsToCheckCount} THEREFORE, returning FALSE`}\u001b[${39}m`}`
     );
     return false;
   }
@@ -471,25 +472,25 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   let special;
   if (isStr(originalWhatToMatch)) {
-    console.log("474");
+    console.log("475");
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
-    console.log("477");
+    console.log("478");
     whatToMatch = originalWhatToMatch;
   } else if (!originalWhatToMatch) {
-    console.log("480");
+    console.log("481");
     whatToMatch = originalWhatToMatch;
   } else if (typeof originalWhatToMatch === "function") {
-    console.log("483");
+    console.log("484");
     whatToMatch = [];
     whatToMatch.push(originalWhatToMatch);
     console.log(
-      `487 whatToMatch = ${whatToMatch}; Array.isArray(whatToMatch) = ${Array.isArray(
+      `488 whatToMatch = ${whatToMatch}; Array.isArray(whatToMatch) = ${Array.isArray(
         whatToMatch
       )}; whatToMatch.length = ${whatToMatch.length}`
     );
   } else {
-    console.log("492");
+    console.log("493");
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(
         originalWhatToMatch,
@@ -501,7 +502,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   console.log("\n\n");
   console.log(
-    `504 whatToMatch = ${whatToMatch}; typeof whatToMatch = ${typeof whatToMatch}`
+    `505 whatToMatch = ${whatToMatch}; typeof whatToMatch = ${typeof whatToMatch}`
   );
 
   if (originalOpts && !isObj(originalOpts)) {
@@ -546,7 +547,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       !whatToMatch[0].trim().length) // [""]
   ) {
     if (typeof opts.cb === "function") {
-      console.log("549");
+      console.log("550");
       let firstCharOutsideIndex;
 
       // matchLeft() or matchRightIncl() methods start at index "position"
@@ -578,7 +579,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           // assemble the value of the current character
           const currentChar = str[y];
           console.log(
-            `581 ${`\u001b[${33}m${"currentChar"}\u001b[${39}m`} = ${JSON.stringify(
+            `582 ${`\u001b[${33}m${"currentChar"}\u001b[${39}m`} = ${JSON.stringify(
               currentChar,
               null,
               4
@@ -591,14 +592,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
             (!opts.trimCharsBeforeMatching.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
-            console.log("594 breaking!");
+            console.log("595 breaking!");
             firstCharOutsideIndex = y;
             break;
           }
         }
       }
       if (firstCharOutsideIndex === undefined) {
-        console.log("601 RETURN false");
+        console.log("602 RETURN false");
         return false;
       }
 
@@ -610,7 +611,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
       }
       if (mode[5] === "L") {
-        console.log(`613 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
+        console.log(`614 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
         return opts.cb(
           wholeCharacterOutside,
           theRemainderOfTheString,
@@ -622,7 +623,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
         theRemainderOfTheString = str.slice(firstCharOutsideIndex);
       }
-      console.log(`625 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
+      console.log(`626 ${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
       return opts.cb(
         wholeCharacterOutside,
         theRemainderOfTheString,
@@ -651,14 +652,14 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     );
 
     special = typeof whatToMatch[i] === "function";
-    console.log(`654 special = ${special}`);
+    console.log(`655 special = ${special}`);
 
     console.log(
-      `657 🔥 whatToMatch no. ${i} = ${
+      `658 🔥 whatToMatch no. ${i} = ${
         whatToMatch[i]
       } (type ${typeof whatToMatch[i]})`
     );
-    console.log(`661 🔥 special = ${special}`);
+    console.log(`662 🔥 special = ${special}`);
 
     // since input can be function, we need to grab the value explicitly:
     const whatToMatchVal = whatToMatch[i];
@@ -675,7 +676,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
 
     console.log(
-      `678 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
+      `679 \u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
         startingPosition,
         null,
         4
@@ -683,7 +684,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     );
     console.log("\n\n\n\n\n\n");
     console.log(
-      `686 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
+      `687 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`
     );
     const found = march(
       str,
@@ -694,10 +695,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       i => (mode[5] === "L" ? i - 1 : i + 1)
     );
     console.log(
-      `697 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
+      `698 ███████████████████████████████████████ march() ENDED ABOVE ███████████████████████████████████████\n\n\n\n\n\n`
     );
     console.log(
-      `700 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
+      `701 \u001b[${33}m${"found"}\u001b[${39}m = ${JSON.stringify(
         found,
         null,
         4
@@ -712,7 +713,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       typeof whatToMatchVal === "function" &&
       whatToMatchVal() === "EOL"
     ) {
-      console.log(`715 returning whatToMatchVal() = ${whatToMatchVal()}`);
+      console.log(`716 returning whatToMatchVal() = ${whatToMatchVal()}`);
       return whatToMatchVal() &&
         (opts.cb
           ? opts.cb(
@@ -752,7 +753,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     }
 
     console.log(
-      `755 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
+      `756 FINAL ${`\u001b[${33}m${`indexOfTheCharacterInFront`}\u001b[${39}m`} = ${JSON.stringify(
         indexOfTheCharacterInFront,
         null,
         4
@@ -780,7 +781,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         : true)
     ) {
       console.log(
-        `783 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
+        `784 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${JSON.stringify(
           whatToMatchVal,
           null,
           4
@@ -789,7 +790,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       return whatToMatchVal;
     }
   }
-  console.log(`792 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
+  console.log(`793 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
   return false;
 }
 

@@ -91,9 +91,10 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
             ? strToMatch[strToMatch.length - charsToCheckCount + 1]
             : strToMatch[charsToCheckCount - 2];
         if (
-          (!opts.i && str[i] === nextCharToCompareAgainst) ||
-          (opts.i &&
-            str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())
+          nextCharToCompareAgainst &&
+          ((!opts.i && str[i] === nextCharToCompareAgainst) ||
+            (opts.i &&
+              str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()))
         ) {
           charsToCheckCount -= 2;
         } else {
