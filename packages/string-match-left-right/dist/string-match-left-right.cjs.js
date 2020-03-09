@@ -84,15 +84,28 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
           charsToCheckCount -= 2;
         } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
           return lastWasMismatched;
+        } else {
+          mismatchesCount--;
         }
       }
       else if (opts.maxMismatches && mismatchesCount && i && (
         !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
           mismatchesCount--;
-          var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1] : whatToMatchVal[charsToCheckCount - 2];
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
-            charsToCheckCount -= 2;
-          } else {
+          var somethingFound = false;
+          for (var y = 0; y <= mismatchesCount; y++) {
+            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            var nextCharInSource = str[getNextIdx(i)];
+            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+              charsToCheckCount -= 2;
+              somethingFound = true;
+              break;
+            } else if (nextCharInSource && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+              charsToCheckCount -= 1;
+              somethingFound = true;
+              break;
+            }
+          }
+          if (!somethingFound) {
             lastWasMismatched = i;
           }
         } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
