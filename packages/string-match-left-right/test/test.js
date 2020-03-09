@@ -569,6 +569,27 @@ t.test(
   }
 );
 
+t.test(
+  `05.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`,
+  t => {
+    t.equal(
+      matchRight("a<--b", 1, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+        cb: (characterAfter, theRemainderOfTheString, index) => {
+          t.equal(characterAfter, "b");
+          t.equal(theRemainderOfTheString, "b");
+          t.equal(index, 4);
+          return true;
+        }
+      }),
+      "!--",
+      "05.08.01"
+    );
+    t.end();
+  }
+);
+
 // 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 
