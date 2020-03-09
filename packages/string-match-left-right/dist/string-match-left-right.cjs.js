@@ -78,7 +78,7 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
         return i;
       }
     } else {
-      if (lastWasMismatched !== false) {
+      if (opts.maxMismatches && lastWasMismatched !== false) {
         var _charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1] : whatToMatchVal[charsToCheckCount - 2];
         if (_charToCompareAgainst && (!opts.i && str[i] === _charToCompareAgainst || opts.i && str[i].toLowerCase() === _charToCompareAgainst.toLowerCase())) {
           charsToCheckCount -= 2;
@@ -86,9 +86,9 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
           return lastWasMismatched;
         }
       }
-      else if (opts.maxMismatches && i && (
+      else if (opts.maxMismatches && mismatchesCount && i && (
         !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-          mismatchesCount = mismatchesCount - 1;
+          mismatchesCount--;
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1] : whatToMatchVal[charsToCheckCount - 2];
           if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
             charsToCheckCount -= 2;

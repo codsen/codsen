@@ -76,7 +76,7 @@ function march(
         return i;
       }
     } else {
-      if (lastWasMismatched !== false) {
+      if (opts.maxMismatches && lastWasMismatched !== false) {
         const charToCompareAgainst =
           nextIdx > i
             ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1]
@@ -94,10 +94,11 @@ function march(
       }
       else if (
         opts.maxMismatches &&
+        mismatchesCount &&
         i &&
         (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)
       ) {
-        mismatchesCount = mismatchesCount - 1;
+        mismatchesCount--;
         const nextCharToCompareAgainst =
           nextIdx > i
             ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1]

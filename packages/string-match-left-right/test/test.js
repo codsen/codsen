@@ -732,7 +732,22 @@ t.test(
         trimBeforeMatching: true
       }),
       false,
-      "05.09.01"
+      "05.10"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc`,
+  t => {
+    t.equal(
+      matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 19, ["<!-->"], {
+        trimBeforeMatching: true,
+        maxMismatches: 1
+      }),
+      false,
+      "05.11"
     );
     t.end();
   }
