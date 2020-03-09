@@ -17,23 +17,31 @@ function isObj(something) {
 function isStr(something) {
   return typeof something === "string";
 }
-function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
-  const strToMatchVal =
-    typeof strToMatch === "function" ? strToMatch() : strToMatch;
-  if (fromIndexInclusive < 0 && special && strToMatchVal === "EOL") {
-    return strToMatchVal;
+function march(
+  str,
+  fromIndexInclusive,
+  whatToMatchVal,
+  opts,
+  special,
+  getNextIdx
+) {
+  const whatToMatchValVal =
+    typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+  if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
+    return whatToMatchValVal;
   }
   if (fromIndexInclusive >= str.length && !special) {
     return false;
   }
-  let charsToCheckCount = special ? 1 : strToMatch.length;
+  let charsToCheckCount = special ? 1 : whatToMatchVal.length;
   let lastWasMismatched = false;
   let atLeastSomethingWasMatched = false;
+  let mismatchesCount = opts.maxMismatches;
   let i = fromIndexInclusive;
   while (str[i]) {
     const nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
-      if (!str[nextIdx] && special && strToMatch === "EOL") {
+      if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
         return true;
       }
       i = getNextIdx(i);
@@ -46,7 +54,7 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
           .map(val => val.toLowerCase())
           .includes(str[i].toLowerCase()))
     ) {
-      if (special && strToMatch === "EOL" && !str[nextIdx]) {
+      if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
         return true;
       }
       i = getNextIdx(i);
@@ -54,8 +62,8 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     }
     const charToCompareAgainst =
       nextIdx > i
-        ? strToMatch[strToMatch.length - charsToCheckCount]
-        : strToMatch[charsToCheckCount - 1];
+        ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount]
+        : whatToMatchVal[charsToCheckCount - 1];
     if (
       (!opts.i && str[i] === charToCompareAgainst) ||
       (opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase())
@@ -71,8 +79,8 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
       if (lastWasMismatched !== false) {
         const charToCompareAgainst =
           nextIdx > i
-            ? strToMatch[strToMatch.length - charsToCheckCount - 1]
-            : strToMatch[charsToCheckCount - 2];
+            ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1]
+            : whatToMatchVal[charsToCheckCount - 2];
         if (
           charToCompareAgainst &&
           ((!opts.i && str[i] === charToCompareAgainst) ||
@@ -84,12 +92,16 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
           return lastWasMismatched;
         }
       }
-      else if (opts.maxMismatches && i) {
-        opts.maxMismatches = opts.maxMismatches - 1;
+      if (
+        opts.maxMismatches &&
+        i &&
+        (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)
+      ) {
+        mismatchesCount = mismatchesCount - 1;
         const nextCharToCompareAgainst =
           nextIdx > i
-            ? strToMatch[strToMatch.length - charsToCheckCount + 1]
-            : strToMatch[charsToCheckCount - 2];
+            ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1]
+            : whatToMatchVal[charsToCheckCount - 2];
         if (
           nextCharToCompareAgainst &&
           ((!opts.i && str[i] === nextCharToCompareAgainst) ||
@@ -119,7 +131,7 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     i = getNextIdx(i);
   }
   if (charsToCheckCount > 0) {
-    if (special && strToMatchVal === "EOL") {
+    if (special && whatToMatchValVal === "EOL") {
       return true;
     } else if (opts.maxMismatches >= charsToCheckCount) {
       return lastWasMismatched || 0;
@@ -133,8 +145,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
     maxMismatches: 0,
-    firstMustMatch: true,
-    lastMustMatch: true
+    firstMustMatch: false,
+    lastMustMatch: false
   };
   if (
     isObj(originalOpts) &&

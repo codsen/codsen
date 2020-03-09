@@ -37,22 +37,23 @@ function isObj(something) {
 function isStr(something) {
   return typeof something === "string";
 }
-function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
-  var strToMatchVal = typeof strToMatch === "function" ? strToMatch() : strToMatch;
-  if (fromIndexInclusive < 0 && special && strToMatchVal === "EOL") {
-    return strToMatchVal;
+function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
+  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+  if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
+    return whatToMatchValVal;
   }
   if (fromIndexInclusive >= str.length && !special) {
     return false;
   }
-  var charsToCheckCount = special ? 1 : strToMatch.length;
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
   var lastWasMismatched = false;
   var atLeastSomethingWasMatched = false;
+  var mismatchesCount = opts.maxMismatches;
   var i = fromIndexInclusive;
   while (str[i]) {
     var nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
-      if (!str[nextIdx] && special && strToMatch === "EOL") {
+      if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
         return true;
       }
       i = getNextIdx(i);
@@ -61,13 +62,13 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(function (val) {
       return val.toLowerCase();
     }).includes(str[i].toLowerCase())) {
-      if (special && strToMatch === "EOL" && !str[nextIdx]) {
+      if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
         return true;
       }
       i = getNextIdx(i);
       continue;
     }
-    var charToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount] : strToMatch[charsToCheckCount - 1];
+    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
@@ -78,26 +79,27 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
       }
     } else {
       if (lastWasMismatched !== false) {
-        var _charToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount - 1] : strToMatch[charsToCheckCount - 2];
+        var _charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1] : whatToMatchVal[charsToCheckCount - 2];
         if (_charToCompareAgainst && (!opts.i && str[i] === _charToCompareAgainst || opts.i && str[i].toLowerCase() === _charToCompareAgainst.toLowerCase())) {
           charsToCheckCount -= 2;
         } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
           return lastWasMismatched;
         }
       }
-      else if (opts.maxMismatches && i) {
-          opts.maxMismatches = opts.maxMismatches - 1;
-          var nextCharToCompareAgainst = nextIdx > i ? strToMatch[strToMatch.length - charsToCheckCount + 1] : strToMatch[charsToCheckCount - 2];
-          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
-            charsToCheckCount -= 2;
-          } else {
-            lastWasMismatched = i;
-          }
-        } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
-          return 0;
+      if (opts.maxMismatches && i && (
+      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+        mismatchesCount = mismatchesCount - 1;
+        var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1] : whatToMatchVal[charsToCheckCount - 2];
+        if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+          charsToCheckCount -= 2;
         } else {
-          return false;
+          lastWasMismatched = i;
         }
+      } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+        return 0;
+      } else {
+        return false;
+      }
     }
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
@@ -108,7 +110,7 @@ function march(str, fromIndexInclusive, strToMatch, opts, special, getNextIdx) {
     i = getNextIdx(i);
   }
   if (charsToCheckCount > 0) {
-    if (special && strToMatchVal === "EOL") {
+    if (special && whatToMatchValVal === "EOL") {
       return true;
     } else if (opts.maxMismatches >= charsToCheckCount) {
       return lastWasMismatched || 0;
@@ -122,8 +124,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
     maxMismatches: 0,
-    firstMustMatch: true,
-    lastMustMatch: true
+    firstMustMatch: false,
+    lastMustMatch: false
   };
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));

@@ -197,11 +197,18 @@ t.test(
   t => {
     t.equal(matchLeftIncl("abc", 2, "c"), "c", "02.05.01 - control");
     t.equal(
-      matchLeftIncl("abc", 2, "c", {
+      matchLeftIncl("abcd", 2, "c", {
         maxMismatches: 1
       }),
       "c",
       "02.05.02 - matching"
+    );
+    t.equal(
+      matchLeft("abcd", 3, "c", {
+        maxMismatches: 1
+      }),
+      "c",
+      "02.05.03"
     );
 
     // at least something from the set must have been matched! In this case,
@@ -211,8 +218,15 @@ t.test(
       matchLeftIncl("abc", 2, "x", {
         maxMismatches: 1
       }),
-      false,
-      "02.05.03 - mismatching"
+      false, // <-- because at least one character must have been matched (general rule)
+      "02.05.04 - mismatching"
+    );
+    t.equal(
+      matchLeft("abc", 2, "x", {
+        maxMismatches: 1
+      }),
+      false, // <-- because at least one character must have been matched (general rule)
+      "02.05.05"
     );
     t.end();
   }
@@ -226,7 +240,14 @@ t.test(
         maxMismatches: 1
       }),
       "bcd",
-      "02.06"
+      "02.06.01"
+    );
+    t.equal(
+      matchLeft("_abdefghi", 4, ["bcd"], {
+        maxMismatches: 1
+      }),
+      "bcd",
+      "02.06.02"
     );
     t.end();
   }
@@ -313,6 +334,62 @@ t.test(
   t => {
     t.equal(matchLeft("abc", 2, "B"), false, "03.02.01 - control");
     t.equal(matchLeft("abc", 2, "B", { i: true }), "B", "03.02.02 - opts.i");
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, first character didn't match, yet positive result`,
+  t => {
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1
+      }),
+      "bcd",
+      "03.03.01"
+    );
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      false,
+      "03.03.02"
+    );
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      "bcd",
+      "03.03.03"
+    );
+
+    // now the same for matchLeft():
+
+    t.equal(
+      matchLeft("_abc.efghi", 4, ["bz"], {
+        maxMismatches: 1
+      }),
+      "bz",
+      "03.03.04"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 4, ["bz"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      false,
+      "03.03.05"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 4, ["zc"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      "zc",
+      "03.03.06"
+    );
     t.end();
   }
 );
@@ -570,22 +647,77 @@ t.test(
 );
 
 t.test(
-  `05.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`,
+  `05.08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, fail`,
   t => {
     t.equal(
       matchRight("a<--b", 1, ["!--"], {
         maxMismatches: 1,
-        trimBeforeMatching: true,
-        cb: (characterAfter, theRemainderOfTheString, index) => {
-          t.equal(characterAfter, "b");
-          t.equal(theRemainderOfTheString, "b");
-          t.equal(index, 4);
-          return true;
-        }
+        trimBeforeMatching: true
       }),
       "!--",
       "05.08.01"
     );
+
+    // enforcing the exclamation mark:
+    t.equal(
+      matchRight("a<--b", 1, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+        firstMustMatch: true
+      }),
+      false,
+      "05.08.02"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `05.09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`,
+  t => {
+    t.equal(
+      matchRight("a<!-b", 1, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true
+      }),
+      "!--",
+      "05.09.01"
+    );
+
+    // enforcing the exclamation mark:
+    t.equal(
+      matchRight("a<!-b", 1, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+        firstMustMatch: true
+      }),
+      "!--",
+      "05.09.02"
+    );
+
+    // now matchRightIncl():
+
+    t.equal(
+      matchRightIncl("a<!-b", 2, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true
+      }),
+      "!--",
+      "05.09.03"
+    );
+
+    // enforcing the exclamation mark:
+    t.equal(
+      matchRightIncl("a<!-b", 2, ["!--"], {
+        maxMismatches: 1,
+        trimBeforeMatching: true,
+        firstMustMatch: true
+      }),
+      "!--",
+      "05.09.04"
+    );
+
     t.end();
   }
 );
