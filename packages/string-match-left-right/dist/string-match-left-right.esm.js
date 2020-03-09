@@ -92,7 +92,7 @@ function march(
           return lastWasMismatched;
         }
       }
-      if (
+      else if (
         opts.maxMismatches &&
         i &&
         (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)
@@ -133,7 +133,10 @@ function march(
   if (charsToCheckCount > 0) {
     if (special && whatToMatchValVal === "EOL") {
       return true;
-    } else if (opts.maxMismatches >= charsToCheckCount) {
+    } else if (
+      opts.maxMismatches >= charsToCheckCount &&
+      atLeastSomethingWasMatched
+    ) {
       return lastWasMismatched || 0;
     }
     return false;

@@ -86,20 +86,20 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
           return lastWasMismatched;
         }
       }
-      if (opts.maxMismatches && i && (
-      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-        mismatchesCount = mismatchesCount - 1;
-        var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1] : whatToMatchVal[charsToCheckCount - 2];
-        if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
-          charsToCheckCount -= 2;
+      else if (opts.maxMismatches && i && (
+        !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+          mismatchesCount = mismatchesCount - 1;
+          var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1] : whatToMatchVal[charsToCheckCount - 2];
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+            charsToCheckCount -= 2;
+          } else {
+            lastWasMismatched = i;
+          }
+        } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+          return 0;
         } else {
-          lastWasMismatched = i;
+          return false;
         }
-      } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
-        return 0;
-      } else {
-        return false;
-      }
     }
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
@@ -112,7 +112,7 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
   if (charsToCheckCount > 0) {
     if (special && whatToMatchValVal === "EOL") {
       return true;
-    } else if (opts.maxMismatches >= charsToCheckCount) {
+    } else if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
       return lastWasMismatched || 0;
     }
     return false;

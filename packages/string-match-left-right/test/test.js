@@ -722,6 +722,22 @@ t.test(
   }
 );
 
+t.test(
+  `05.10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`,
+  t => {
+    t.equal(
+      matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 1, ["![cdata"], {
+        i: true,
+        maxMismatches: 1,
+        trimBeforeMatching: true
+      }),
+      false,
+      "05.09.01"
+    );
+    t.end();
+  }
+);
+
 // 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 
