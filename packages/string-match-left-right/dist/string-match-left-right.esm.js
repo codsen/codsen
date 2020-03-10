@@ -36,8 +36,9 @@ function march(
   let charsToCheckCount = special ? 1 : whatToMatchVal.length;
   let lastWasMismatched = false;
   let atLeastSomethingWasMatched = false;
-  let mismatchesCount = opts.maxMismatches;
+  let patience = opts.maxMismatches;
   let i = fromIndexInclusive;
+  let somethingFound = false;
   while (str[i]) {
     const nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
@@ -68,6 +69,9 @@ function march(
       (!opts.i && str[i] === charToCompareAgainst) ||
       (opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase())
     ) {
+      if (!somethingFound) {
+        somethingFound = true;
+      }
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
       }
@@ -76,33 +80,14 @@ function march(
         return i;
       }
     } else {
-      if (opts.maxMismatches && lastWasMismatched !== false) {
-        const charToCompareAgainst =
-          nextIdx > i
-            ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1]
-            : whatToMatchVal[charsToCheckCount - 2];
-        if (
-          charToCompareAgainst &&
-          ((!opts.i && str[i] === charToCompareAgainst) ||
-            (opts.i &&
-              str[i].toLowerCase() === charToCompareAgainst.toLowerCase()))
-        ) {
-          charsToCheckCount -= 2;
-        } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
-          return lastWasMismatched;
-        } else {
-          mismatchesCount--;
-        }
-      }
-      else if (
+      if (
         opts.maxMismatches &&
-        mismatchesCount &&
+        patience &&
         i &&
         (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)
       ) {
-        mismatchesCount--;
-        let somethingFound = false;
-        for (let y = 0; y <= mismatchesCount; y++) {
+        patience--;
+        for (let y = 0; y <= patience; y++) {
           const nextCharToCompareAgainst =
             nextIdx > i
               ? whatToMatchVal[
@@ -130,6 +115,12 @@ function march(
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
+          } else if (
+            nextCharToCompareAgainst === undefined &&
+            patience >= 0 &&
+            somethingFound
+          ) {
+            return i;
           }
         }
         if (!somethingFound) {

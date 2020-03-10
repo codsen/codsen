@@ -865,6 +865,45 @@ t.test(
   }
 );
 
+t.test(
+  `05.19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  t => {
+    t.equal(
+      matchRight(`abc<!--[if gte mso 9]><xml>`, 3, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true
+      }),
+      "!--",
+      "05.19"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`,
+  t => {
+    t.equal(
+      matchRight(
+        `a<!--[if]><z>
+<AAAch>>
+</o:Offict`,
+        1,
+        ["![cdata"],
+        {
+          i: true,
+          maxMismatches: 1,
+          trimBeforeMatching: true
+        }
+      ),
+      false,
+      "05.20"
+    );
+    t.end();
+  }
+);
+
 // 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 

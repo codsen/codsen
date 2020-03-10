@@ -48,8 +48,9 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
   var charsToCheckCount = special ? 1 : whatToMatchVal.length;
   var lastWasMismatched = false;
   var atLeastSomethingWasMatched = false;
-  var mismatchesCount = opts.maxMismatches;
+  var patience = opts.maxMismatches;
   var i = fromIndexInclusive;
+  var somethingFound = false;
   while (str[i]) {
     var nextIdx = getNextIdx(i);
     if (opts.trimBeforeMatching && str[i].trim() === "") {
@@ -70,6 +71,9 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
     }
     var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
     if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+      if (!somethingFound) {
+        somethingFound = true;
+      }
       if (!atLeastSomethingWasMatched) {
         atLeastSomethingWasMatched = true;
       }
@@ -78,41 +82,32 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
         return i;
       }
     } else {
-      if (opts.maxMismatches && lastWasMismatched !== false) {
-        var _charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount - 1] : whatToMatchVal[charsToCheckCount - 2];
-        if (_charToCompareAgainst && (!opts.i && str[i] === _charToCompareAgainst || opts.i && str[i].toLowerCase() === _charToCompareAgainst.toLowerCase())) {
-          charsToCheckCount -= 2;
-        } else if (charsToCheckCount === 1 && atLeastSomethingWasMatched) {
-          return lastWasMismatched;
-        } else {
-          mismatchesCount--;
+      if (opts.maxMismatches && patience && i && (
+      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+        patience--;
+        for (var y = 0; y <= patience; y++) {
+          var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+          var nextCharInSource = str[getNextIdx(i)];
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+            charsToCheckCount -= 2;
+            somethingFound = true;
+            break;
+          } else if (nextCharInSource && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+            charsToCheckCount -= 1;
+            somethingFound = true;
+            break;
+          } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound) {
+            return i;
+          }
         }
+        if (!somethingFound) {
+          lastWasMismatched = i;
+        }
+      } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+        return 0;
+      } else {
+        return false;
       }
-      else if (opts.maxMismatches && mismatchesCount && i && (
-        !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-          mismatchesCount--;
-          var somethingFound = false;
-          for (var y = 0; y <= mismatchesCount; y++) {
-            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            var nextCharInSource = str[getNextIdx(i)];
-            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
-              charsToCheckCount -= 2;
-              somethingFound = true;
-              break;
-            } else if (nextCharInSource && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
-              charsToCheckCount -= 1;
-              somethingFound = true;
-              break;
-            }
-          }
-          if (!somethingFound) {
-            lastWasMismatched = i;
-          }
-        } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
-          return 0;
-        } else {
-          return false;
-        }
     }
     if (lastWasMismatched !== false && lastWasMismatched !== i) {
       lastWasMismatched = false;
