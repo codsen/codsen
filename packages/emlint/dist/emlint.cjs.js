@@ -8045,7 +8045,7 @@ function validateCommentOpening(token) {
     only: /<!--\[[^\]]+\]>/g,
     not: /<!--\[[^\]]+\]><!-->/g
   };
-  if (token.kind === "simple" && reference.simple.test(token.value) || token.kind === "only" && reference.only.test(token.value) || token.kind === "not" && reference.not(token.value)) {
+  if (token.kind === "simple" && reference.simple.test(token.value) || token.kind === "only" && reference.only.test(token.value) || token.kind === "not" && reference.not.test(token.value)) {
     return [];
   }
   var errorArr = [];
@@ -8071,20 +8071,37 @@ function validateCommentOpening(token) {
       });
     });
   }
-  if (token.kind === "simple" && reference.simple.test(valueWithoutWhitespace) || token.kind === "only" && reference.only.test(valueWithoutWhitespace) || token.kind === "not" && reference.not(valueWithoutWhitespace)) {
+  if (token.kind === "simple" && reference.simple.test(valueWithoutWhitespace) || token.kind === "only" && reference.only.test(valueWithoutWhitespace) || token.kind === "not" && reference.not.test(valueWithoutWhitespace)) {
     return errorArr;
   }
-  if (token.kind === "only") {
+  if (["only", "not"].includes(token.kind)) {
     findMalformed(token.value, "<!--[", function (_ref5) {
       var idxFrom = _ref5.idxFrom,
           idxTo = _ref5.idxTo;
+      if (idxFrom === token.start) {
+        errorArr.push({
+          idxFrom: token.start,
+          idxTo: token.end,
+          message: "Malformed opening comment tag.",
+          ruleId: "comment-opening-malformed",
+          fix: {
+            ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          }
+        });
+      }
+    });
+  }
+  if (token.kind === "not") {
+    findMalformed(token.value, "]><!-->", function (_ref6) {
+      var idxFrom = _ref6.idxFrom,
+          idxTo = _ref6.idxTo;
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
         ruleId: "comment-opening-malformed",
         fix: {
-          ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });

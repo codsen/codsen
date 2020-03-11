@@ -365,10 +365,13 @@ t.todo(`02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - TBC`, t => {
 // 03. type="not"
 // -----------------------------------------------------------------------------
 
-t.todo(
+t.test(
   `03.01 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closing bracket`,
   t => {
     const str = `<!--[if !mso><!-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
@@ -377,13 +380,28 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.01.01");
-    t.match(messages, [], "03.01.02");
+    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 18,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[12, 18, "]><!-->"]]
+          }
+        }
+      ],
+      "03.01.02"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `03.02 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`,
   t => {
     const str = `<!--  [if !mso]><!-->
@@ -399,12 +417,27 @@ t.todo(
       }
     });
     t.equal(applyFixes(str, messages), fixed, "03.02.01");
-    t.match(messages, [], "03.02.02");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 21,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[0, 7, "<!--["]]
+          }
+        }
+      ],
+      "03.02.02"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `03.03 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`,
   t => {
     const str = `<!-[if !mso]><!-->
@@ -420,19 +453,34 @@ t.todo(
       }
     });
     t.equal(applyFixes(str, messages), fixed, "03.03.01");
-    t.match(messages, [], "03.03.02");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 18,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[0, 4, "<!--["]]
+          }
+        }
+      ],
+      "03.03.02"
+    );
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `03.04 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`,
   t => {
     const str = `<!--[if !mso]><!->
   <img src="gif"/>
 <!--<![endif]-->`;
     const fixed = `<!--[if !mso]><!-->
-<img src="gif"/>
+  <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -441,7 +489,22 @@ t.todo(
       }
     });
     t.equal(applyFixes(str, messages), fixed, "03.04.01");
-    t.match(messages, [], "03.04.02");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-opening-malformed",
+          severity: 2,
+          idxFrom: 0,
+          idxTo: 18,
+          message: `Malformed opening comment tag.`,
+          fix: {
+            ranges: [[12, 18, "]><!-->"]]
+          }
+        }
+      ],
+      "03.04.02"
+    );
     t.end();
   }
 );

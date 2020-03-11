@@ -20,7 +20,7 @@ function validateCommentOpening(token) {
   if (
     (token.kind === "simple" && reference.simple.test(token.value)) ||
     (token.kind === "only" && reference.only.test(token.value)) ||
-    (token.kind === "not" && reference.not(token.value))
+    (token.kind === "not" && reference.not.test(token.value))
   ) {
     return [];
   }
@@ -68,7 +68,7 @@ function validateCommentOpening(token) {
     (token.kind === "simple" &&
       reference.simple.test(valueWithoutWhitespace)) ||
     (token.kind === "only" && reference.only.test(valueWithoutWhitespace)) ||
-    (token.kind === "not" && reference.not(valueWithoutWhitespace))
+    (token.kind === "not" && reference.not.test(valueWithoutWhitespace))
   ) {
     console.log(`073 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
     return errorArr;
@@ -84,17 +84,39 @@ function validateCommentOpening(token) {
     )}`
   );
 
-  if (token.kind === "only") {
+  // check the opening tag's beginning:
+  if (["only", "not"].includes(token.kind)) {
     // if beginning is malformed:
     findMalformed(token.value, "<!--[", ({ idxFrom, idxTo }) => {
-      console.log(`090 DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`);
+      // take precaution, "not" type openings have very similar
+      // ending, <!--> which will get caught as well here!
+      if (idxFrom === token.start) {
+        console.log(`094 DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`);
+        errorArr.push({
+          idxFrom: token.start,
+          idxTo: token.end,
+          message: "Malformed opening comment tag.",
+          ruleId: "comment-opening-malformed",
+          fix: {
+            ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          }
+        });
+      }
+    });
+  }
+
+  // check the ending part:
+  if (token.kind === "not") {
+    // if ending of the opening is malformed:
+    findMalformed(token.value, "]><!-->", ({ idxFrom, idxTo }) => {
+      console.log(`112 DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`);
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
         ruleId: "comment-opening-malformed",
         fix: {
-          ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });

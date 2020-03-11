@@ -9402,7 +9402,7 @@ function validateCommentOpening(token) {
   if (
     (token.kind === "simple" && reference.simple.test(token.value)) ||
     (token.kind === "only" && reference.only.test(token.value)) ||
-    (token.kind === "not" && reference.not(token.value))
+    (token.kind === "not" && reference.not.test(token.value))
   ) {
     return [];
   }
@@ -9434,19 +9434,34 @@ function validateCommentOpening(token) {
     (token.kind === "simple" &&
       reference.simple.test(valueWithoutWhitespace)) ||
     (token.kind === "only" && reference.only.test(valueWithoutWhitespace)) ||
-    (token.kind === "not" && reference.not(valueWithoutWhitespace))
+    (token.kind === "not" && reference.not.test(valueWithoutWhitespace))
   ) {
     return errorArr;
   }
-  if (token.kind === "only") {
+  if (["only", "not"].includes(token.kind)) {
     findMalformed(token.value, "<!--[", ({ idxFrom, idxTo }) => {
+      if (idxFrom === token.start) {
+        errorArr.push({
+          idxFrom: token.start,
+          idxTo: token.end,
+          message: "Malformed opening comment tag.",
+          ruleId: "comment-opening-malformed",
+          fix: {
+            ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          }
+        });
+      }
+    });
+  }
+  if (token.kind === "not") {
+    findMalformed(token.value, "]><!-->", ({ idxFrom, idxTo }) => {
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
         ruleId: "comment-opening-malformed",
         fix: {
-          ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+          ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });
