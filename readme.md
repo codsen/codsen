@@ -2,10 +2,6 @@
 
     A lerna monorepo for our 109 npm libraries 📦📦📦
 
-We, Codsen Ltd, provide consulting services since 2014.
-
-In 2019, people downloaded our libraries [3 million times](https://npm-stat.com/charts.html?author=royston)!
-
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#-flagship-libraries)

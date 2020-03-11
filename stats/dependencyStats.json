@@ -128,8 +128,9 @@
         "string-collapse-white-space": 1,
         "string-extract-class-names": 1,
         "string-find-heads-tails": 1,
+        "string-find-malformed": 1,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 13,
+        "string-left-right": 12,
         "string-match-left-right": 9,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -239,7 +240,7 @@
             "ranges-apply": 15
         },
         {
-            "string-left-right": 13
+            "string-left-right": 12
         },
         {
             "ast-monkey-traverse": 10
