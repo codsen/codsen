@@ -322,7 +322,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `02.01 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, minimal`,
+  `02.01 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal`,
   t => {
     const gathered = [];
     ct(`a<!--[if gte mso 9]>x<![endif]-->z`, {
@@ -371,7 +371,7 @@ t.test(
 );
 
 t.test(
-  `02.02 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`,
+  `02.02 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`,
   t => {
     const gathered = [];
     ct(
@@ -442,7 +442,7 @@ t.test(
 );
 
 t.test(
-  `02.03 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`,
+  `02.03 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`,
   t => {
     const gathered = [];
     ct(`<a><!--[if gte mso 9]><b><![endif]--><i>`, {
@@ -491,7 +491,7 @@ t.test(
 );
 
 t.test(
-  `02.04 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - missing excl. mark`,
+  `02.04 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing excl. mark`,
   t => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<[endif]-->`, {
@@ -533,7 +533,7 @@ t.test(
 );
 
 t.test(
-  `02.05 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - empty conditional`,
+  `02.05 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - empty conditional`,
   t => {
     const gathered = [];
     ct(`<!--[if gte mso 9]><![endif]-->`, {
@@ -567,7 +567,7 @@ t.test(
 );
 
 t.test(
-  `02.06 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - swapped excl. mark`,
+  `02.06 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - swapped excl. mark`,
   t => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<[!endif]-->`, {
@@ -606,7 +606,7 @@ t.test(
 );
 
 t.test(
-  `02.07 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - 1 instead of !`,
+  `02.07 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - 1 instead of !`,
   t => {
     const gathered = [];
     ct(`<!--[if gte mso 9]>x<1[endif]-->`, {
@@ -646,7 +646,7 @@ t.test(
 );
 
 t.test(
-  `02.08 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - missing closing bracket`,
+  `02.08 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing closing bracket`,
   t => {
     const gathered = [];
     ct(`<!--[if !mso><!-->a`, {
@@ -680,7 +680,7 @@ t.test(
 );
 
 t.test(
-  `02.09 - ${`\u001b[${35}m${`kind - only`}\u001b[${39}m`} - opening square bracket missing`,
+  `02.09 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
   t => {
     const gathered = [];
     ct(`<!--if mso]>`, {
@@ -710,7 +710,7 @@ t.test(
 // -----------------------------------------------------------------------------
 
 t.test(
-  `03.01 - ${`\u001b[${33}m${`kind - only not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
+  `03.01 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`,
   t => {
     const gathered = [];
     ct(`a<!--[if !mso]><!-->x<!--<![endif]-->z`, {
@@ -753,6 +753,43 @@ t.test(
         }
       ],
       "03.01"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.02 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`,
+  t => {
+    const gathered = [];
+    ct(`a<!--[if !mso]><!->z`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 1
+        },
+        {
+          type: "comment",
+          start: 1,
+          end: 19,
+          kind: "not",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20
+        }
+      ],
+      "03.02"
     );
     t.end();
   }

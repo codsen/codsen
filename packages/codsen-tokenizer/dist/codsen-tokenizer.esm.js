@@ -16,27 +16,19 @@ import isTagOpening from 'is-html-tag-opening';
 function startsComment(str, i, token) {
   return (
     ((str[i] === "<" &&
-      matchRight(
-        str,
-        i,
-        [
-          "!-",
-          "![",
-          "[endif",
-          "!endif",
-          "1endif",
-          "1[endif",
-          "[!endif",
-          "]!endif",
-          "!]endif"
-        ],
-        {
+      (matchRight(str, i, ["!--"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        trimBeforeMatching: true
+      }) ||
+        matchRight(str, i, ["![endif]"], {
           i: true,
+          maxMismatches: 2,
           trimBeforeMatching: true
-        }
-      ) &&
-      !matchRight(str, i, ["![cdata", "[cdata", "!cdata"], {
+        })) &&
+      !matchRight(str, i, ["![cdata"], {
         i: true,
+        maxMismatches: 1,
         trimBeforeMatching: true
       }) &&
       (token.type !== "comment" || token.kind !== "not")) ||
@@ -904,23 +896,10 @@ function tokenizer(str, originalOpts) {
         if (str[i] === "-") {
           token.closing = true;
         } else if (
-          matchRightIncl(
-            str,
-            i,
-            [
-              "<![e",
-              "<[endif",
-              "<!endif",
-              "<1[endif",
-              "<1endif",
-              "<[!endif",
-              "<]!endif",
-              "<!]endif"
-            ],
-            {
-              trimBeforeMatching: true
-            }
-          )
+          matchRightIncl(str, i, ["<![endif]-->"], {
+            trimBeforeMatching: true,
+            maxMismatches: 2
+          })
         ) {
           token.closing = true;
           token.kind = "only";
@@ -1082,7 +1061,8 @@ function tokenizer(str, originalOpts) {
           (str[token.start] === "-" &&
             str[i] === ">" &&
             matchLeft(str, i, "--", {
-              trimBeforeMatching: true
+              trimBeforeMatching: true,
+              maxMismatches: 1
             })))
       ) {
         if (
@@ -1098,7 +1078,8 @@ function tokenizer(str, originalOpts) {
           token.kind = "only";
         } else if (
           matchRightIncl(str, i, ["-<![endif"], {
-            trimBeforeMatching: true
+            trimBeforeMatching: true,
+            maxMismatches: 2
           })
         ) {
           token.kind = "not";
@@ -1123,8 +1104,9 @@ function tokenizer(str, originalOpts) {
           layers.pop();
         }
         if (
-          matchRight(str, i, "<!-->", {
-            trimBeforeMatching: true
+          matchRight(str, i, ["<!-->"], {
+            trimBeforeMatching: true,
+            maxMismatches: 1
           })
         ) {
           token.kind = "not";

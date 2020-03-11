@@ -35,11 +35,17 @@ function _typeof(obj) {
 
 function startsComment(str, i, token) {
   return (
-    (str[i] === "<" && stringMatchLeftRight.matchRight(str, i, ["!-", "![", "[endif", "!endif", "1endif", "1[endif", "[!endif", "]!endif", "!]endif"], {
-      i: true,
+    (str[i] === "<" && (stringMatchLeftRight.matchRight(str, i, ["!--"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
       trimBeforeMatching: true
-    }) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "[cdata", "!cdata"], {
+    }) || stringMatchLeftRight.matchRight(str, i, ["![endif]"], {
       i: true,
+      maxMismatches: 2,
+      trimBeforeMatching: true
+    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata"], {
+      i: true,
+      maxMismatches: 1,
       trimBeforeMatching: true
     }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && stringMatchLeftRight.matchRight(str, i, ["->"], {
       trimBeforeMatching: true
@@ -551,8 +557,9 @@ function tokenizer(str, originalOpts) {
         initToken("comment", i);
         if (str[i] === "-") {
           token.closing = true;
-        } else if (stringMatchLeftRight.matchRightIncl(str, i, ["<![e", "<[endif", "<!endif", "<1[endif", "<1endif", "<[!endif", "<]!endif", "<!]endif"], {
-          trimBeforeMatching: true
+        } else if (stringMatchLeftRight.matchRightIncl(str, i, ["<![endif]-->"], {
+          trimBeforeMatching: true,
+          maxMismatches: 2
         })) {
           token.closing = true;
           token.kind = "only";
@@ -668,7 +675,8 @@ function tokenizer(str, originalOpts) {
       }) || stringMatchLeftRight.matchLeftIncl(str, i, "!-", {
         trimBeforeMatching: true
       }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && stringMatchLeftRight.matchLeft(str, i, "--", {
-        trimBeforeMatching: true
+        trimBeforeMatching: true,
+        maxMismatches: 1
       }))) {
         if (str[i] === "-" && (stringMatchLeftRight.matchRight(str, i, ["[if"], {
           trimBeforeMatching: true
@@ -677,7 +685,8 @@ function tokenizer(str, originalOpts) {
         }) && xBeforeYOnTheRight(str, i, "]", ">"))) {
           token.kind = "only";
         } else if (stringMatchLeftRight.matchRightIncl(str, i, ["-<![endif"], {
-          trimBeforeMatching: true
+          trimBeforeMatching: true,
+          maxMismatches: 2
         })) {
           token.kind = "not";
           token.closing = true;
@@ -692,8 +701,9 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(layers) && layers.length && layers[layers.length - 1].value === "[") {
           layers.pop();
         }
-        if (stringMatchLeftRight.matchRight(str, i, "<!-->", {
-          trimBeforeMatching: true
+        if (stringMatchLeftRight.matchRight(str, i, ["<!-->"], {
+          trimBeforeMatching: true,
+          maxMismatches: 1
         })) {
           token.kind = "not";
         } else {

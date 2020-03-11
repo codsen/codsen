@@ -84,3 +84,32 @@ t.test(
     t.end();
   }
 );
+
+// 03. Various
+// -----------------------------------------------------------------------------
+
+t.only(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
+  const gathered = [];
+  ct(
+    `a<!--[if]><z>
+<AAAch>>
+</o:Offict`,
+    {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    }
+  );
+  t.match(
+    gathered,
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 1
+      }
+    ],
+    "03.01"
+  );
+  t.end();
+});

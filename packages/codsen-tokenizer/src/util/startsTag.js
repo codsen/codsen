@@ -9,17 +9,17 @@ const BACKSLASH = "\u005C";
 // so we extracted into a function.
 
 function startsTag(str, i, token, layers) {
-  console.log(
-    `013 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
-      allowCustomTagNames: true
-    })}`
-  );
-  console.log(
-    `018 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
-      allowCustomTagNames: false,
-      skipOpeningBracket: true
-    })}`
-  );
+  // console.log(
+  //   `013 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
+  //     allowCustomTagNames: true
+  //   })}`
+  // );
+  // console.log(
+  //   `018 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
+  //     allowCustomTagNames: false,
+  //     skipOpeningBracket: true
+  //   })}`
+  // );
   return (
     str[i] &&
     str[i].trim().length &&
