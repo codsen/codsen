@@ -116,8 +116,8 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.6",
-    "@babel/preset-env": "^7.8.6",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -134,7 +134,7 @@
     "map-stream": "^0.0.7",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.4.0",
+    "tempy": "^0.5.0",
     "vinyl-string": "^1.0.2"
   }
 }

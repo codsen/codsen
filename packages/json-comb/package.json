@@ -118,13 +118,13 @@
     "is-d": "^1.0.0",
     "json-comb-core": "^6.6.17",
     "meow": "^6.0.1",
-    "p-map": "^3.0.0",
+    "p-map": "^4.0.0",
     "p-reduce": "^2.1.0",
     "update-notifier": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.6",
-    "@babel/preset-env": "^7.8.6",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -140,6 +140,6 @@
     "lect": "^0.12.1",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
-    "tempy": "^0.4.0"
+    "tempy": "^0.5.0"
   }
 }
