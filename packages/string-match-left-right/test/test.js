@@ -304,6 +304,126 @@ t.test(
   }
 );
 
+t.test(
+  `02.08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.maxMismatches === 1, three char set`,
+  t => {
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "bcd",
+      "02.08.01"
+    );
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "02.08.02"
+    );
+
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "bcd",
+      "02.08.03"
+    );
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "02.08.04"
+    );
+
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "bcd",
+      "02.08.05"
+    );
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "bcd",
+      "02.08.06"
+    );
+
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "bcd",
+      "02.08.07"
+    );
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      "bcd",
+      "02.08.08"
+    );
+
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      false,
+      "02.08.09"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "02.08.10"
+    );
+
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "bcd",
+      "02.08.11"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "bcd",
+      "02.08.12"
+    );
+    t.end();
+  }
+);
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
@@ -339,56 +459,393 @@ t.test(
 );
 
 t.test(
-  `03.03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, first character didn't match, yet positive result`,
+  `03.03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, three-char set`,
   t => {
+    //
+    // first char, "d" is dot
     t.equal(
-      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
-        maxMismatches: 1
+      matchLeft("_abc.efghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: false // that's "b"
       }),
       "bcd",
       "03.03.01"
     );
     t.equal(
-      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+      matchLeft("_abc.efghi", 5, ["bcd"], {
         maxMismatches: 1,
-        firstMustMatch: true
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: false // that's "b"
       }),
-      false,
+      false, // because "d" was not matched
       "03.03.02"
     );
     t.equal(
-      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+      matchLeft("_abc.efghi", 5, ["bcd"], {
         maxMismatches: 1,
-        firstMustMatch: true
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: true // that's "b"
       }),
       "bcd",
       "03.03.03"
     );
-
-    // now the same for matchLeft():
-
     t.equal(
-      matchLeft("_abc.efghi", 4, ["bz"], {
-        maxMismatches: 1
-      }),
-      "bz",
-      "03.03.04"
-    );
-    t.equal(
-      matchLeft("_abc.efghi", 4, ["bz"], {
+      matchLeft("_abc.efghi", 5, ["bcd"], {
         maxMismatches: 1,
-        firstMustMatch: true
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: true // that's "b"
       }),
       false,
+      "03.03.04"
+    );
+
+    //
+    // second char, "c" is dot
+    t.equal(
+      matchLeft("_ab.defghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: false // that's "b"
+      }),
+      "bcd",
       "03.03.05"
+    );
+    t.equal(
+      matchLeft("_ab.defghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: false // that's "b"
+      }),
+      "bcd",
+      "03.03.06"
+    );
+    t.equal(
+      matchLeft("_ab.defghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: true // that's "b"
+      }),
+      "bcd",
+      "03.03.07"
+    );
+    t.equal(
+      matchLeft("_ab.defghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: true // that's "b"
+      }),
+      "bcd",
+      "03.03.08"
+    );
+
+    //
+    // third char, "b" is dot
+    t.equal(
+      matchLeft("_a.cdefghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: true // that's "b"
+      }),
+      false,
+      "03.03.09"
+    );
+    t.equal(
+      matchLeft("_a.cdefghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: true // that's "b"
+      }),
+      false,
+      "03.03.10"
+    );
+    t.equal(
+      matchLeft("_a.cdefghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: false // that's "b"
+      }),
+      "bcd",
+      "03.03.11"
+    );
+    t.equal(
+      matchLeft("_a.cdefghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: true, // that's "d"
+        lastMustMatch: false // that's "b"
+      }),
+      "bcd",
+      "03.03.12"
+    );
+
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, two-char set`,
+  t => {
+    // lastMustMatch=false
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["zc"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "03.04.01"
     );
     t.equal(
       matchLeft("_abc.efghi", 4, ["zc"], {
         maxMismatches: 1,
-        firstMustMatch: true
+        firstMustMatch: true,
+        lastMustMatch: false
       }),
       "zc",
-      "03.03.06"
+      "03.04.02"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "03.04.03"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cz",
+      "03.04.04"
+    );
+
+    // lastMustMatch=true
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["zc"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "03.04.05"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 4, ["zc"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "03.04.06"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "03.04.07"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "cz",
+      "03.04.08"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, protruding value`,
+  t => {
+    //
+    // firstMustMatch = true
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      false,
+      "03.05.01"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 2,
+        firstMustMatch: true
+      }),
+      false,
+      "03.05.02"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 3,
+        firstMustMatch: true
+      }),
+      false,
+      "03.05.03"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 4,
+        firstMustMatch: true
+      }),
+      false,
+      "03.05.04"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 5,
+        firstMustMatch: true
+      }),
+      ".....d",
+      "03.05.05"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 99,
+        firstMustMatch: true
+      }),
+      ".....d",
+      "03.05.06"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 0,
+        firstMustMatch: true
+      }),
+      false,
+      "03.05.07"
+    );
+
+    //
+    // firstMustMatch = false
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 1,
+        firstMustMatch: false
+      }),
+      false,
+      "03.05.08"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 2,
+        firstMustMatch: false
+      }),
+      false,
+      "03.05.09"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 3,
+        firstMustMatch: false
+      }),
+      false,
+      "03.05.10"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 4,
+        firstMustMatch: false
+      }),
+      false,
+      "03.05.11"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 5,
+        firstMustMatch: false
+      }),
+      ".....d",
+      "03.05.12"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 99,
+        firstMustMatch: false
+      }),
+      ".....d",
+      "03.05.13"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, [".....d"], {
+        maxMismatches: 0,
+        firstMustMatch: false
+      }),
+      false,
+      "03.05.14"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, non-protruding value`,
+  t => {
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 1,
+        firstMustMatch: true
+      }),
+      false,
+      "03.06.01"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 2,
+        firstMustMatch: true
+      }),
+      false,
+      "03.06.02"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 3,
+        firstMustMatch: true
+      }),
+      false,
+      "03.06.03"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 4,
+        firstMustMatch: true
+      }),
+      "....d",
+      "03.06.04"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 5,
+        firstMustMatch: true
+      }),
+      "....d",
+      "03.06.05"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 99,
+        firstMustMatch: true
+      }),
+      "....d",
+      "03.06.06"
+    );
+    t.equal(
+      matchLeft("_abcdef", 5, ["....d"], {
+        maxMismatches: 0,
+        firstMustMatch: true
+      }),
+      false,
+      "03.06.07"
     );
     t.end();
   }
@@ -477,6 +934,152 @@ t.test(
       }),
       "def",
       "04.04.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `04.05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMismatches - middle of the string`,
+  t => {
+    t.equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "04.05.01");
+
+    // first char, "c" mismatching
+    t.equal(matchRightIncl("ab.def", 2, ["cde"]), false, "04.05.02");
+    t.equal(
+      matchRightIncl("ab.def", 2, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "04.05.03"
+    );
+    t.equal(
+      matchRightIncl("ab.def", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "04.05.04"
+    );
+    t.equal(
+      matchRightIncl("ab.def", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "04.05.05"
+    );
+    t.equal(
+      matchRightIncl("ab.def", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "cde",
+      "04.05.06"
+    );
+    t.equal(
+      matchRightIncl("ab.def", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "04.05.07"
+    );
+
+    // second char, "d" mismatching
+    t.equal(matchRightIncl("abc.ef", 2, ["cde"]), false, "04.05.08");
+    t.equal(
+      matchRightIncl("abc.ef", 2, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "04.05.09"
+    );
+    t.equal(
+      matchRightIncl("abc.ef", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      "cde",
+      "04.05.10"
+    );
+    t.equal(
+      matchRightIncl("abc.ef", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "cde",
+      "04.05.11"
+    );
+    t.equal(
+      matchRightIncl("abc.ef", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "cde",
+      "04.05.12"
+    );
+    t.equal(
+      matchRightIncl("abc.ef", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "04.05.13"
+    );
+
+    // third char, "e" mismatching
+    t.equal(matchRightIncl("abcd.f", 2, ["cde"]), false, "04.05.14");
+    t.equal(
+      matchRightIncl("abcd.f", 2, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "04.05.15"
+    );
+    t.equal(
+      matchRightIncl("abcd.f", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "04.05.16"
+    );
+    t.equal(
+      matchRightIncl("abcd.f", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "cde",
+      "04.05.17"
+    );
+    t.equal(
+      matchRightIncl("abcd.f", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      false,
+      "04.05.18"
+    );
+    t.equal(
+      matchRightIncl("abcd.f", 2, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "04.05.19"
     );
     t.end();
   }
@@ -899,6 +1502,152 @@ t.test(
       ),
       false,
       "05.20"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `05.21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatches - 3-char string`,
+  t => {
+    t.equal(matchRight("abcdef", 1, ["cde"]), "cde", "05.21.01");
+
+    // first char, "c" mismatching
+    t.equal(matchRight("ab.def", 1, ["cde"]), false, "05.21.02");
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "05.21.03"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "05.21.04"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      false,
+      "05.21.05"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "cde",
+      "05.21.06"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "05.21.07"
+    );
+
+    // second char, "d" mismatching
+    t.equal(matchRight("abc.ef", 1, ["cde"]), false, "05.21.08");
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "05.21.09"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      "cde",
+      "05.21.10"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "cde",
+      "05.21.11"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      "cde",
+      "05.21.12"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "05.21.13"
+    );
+
+    // third char, "e" mismatching
+    t.equal(matchRight("abcd.f", 1, ["cde"]), false, "05.21.14");
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1
+      }),
+      "cde",
+      "05.21.15"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true
+      }),
+      false,
+      "05.21.16"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false
+      }),
+      "cde",
+      "05.21.17"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true
+      }),
+      false,
+      "05.21.18"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false
+      }),
+      "cde",
+      "05.21.19"
     );
     t.end();
   }

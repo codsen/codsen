@@ -83,7 +83,7 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
       }
     } else {
       if (opts.maxMismatches && patience && i && (
-      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+      !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length) && (!opts.lastMustMatch || charsToCheckCount !== 1)) {
         patience--;
         for (var y = 0; y <= patience; y++) {
           var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
@@ -103,7 +103,7 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
         if (!somethingFound) {
           lastWasMismatched = i;
         }
-      } else if (i === 0 && charsToCheckCount === 1 && atLeastSomethingWasMatched) {
+      } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
         return 0;
       } else {
         return false;

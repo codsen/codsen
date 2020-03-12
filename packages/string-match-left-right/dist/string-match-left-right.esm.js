@@ -84,7 +84,8 @@ function march(
         opts.maxMismatches &&
         patience &&
         i &&
-        (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)
+        (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length) &&
+        (!opts.lastMustMatch || charsToCheckCount !== 1)
       ) {
         patience--;
         for (let y = 0; y <= patience; y++) {
@@ -129,6 +130,7 @@ function march(
       } else if (
         i === 0 &&
         charsToCheckCount === 1 &&
+        !opts.lastMustMatch &&
         atLeastSomethingWasMatched
       ) {
         return 0;
