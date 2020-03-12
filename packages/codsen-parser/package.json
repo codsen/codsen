@@ -114,7 +114,9 @@
   },
   "dependencies": {
     "codsen-tokenizer": "^2.8.0",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.4",
+    "string-find-malformed": "^1.0.0",
+    "string-left-right": "^2.3.16"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",

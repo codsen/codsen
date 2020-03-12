@@ -11,7 +11,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var strFindMalformed = _interopDefault(require('string-find-malformed'));
 var tokenizer = _interopDefault(require('codsen-tokenizer'));
+var stringLeftRight = require('string-left-right');
 var op = _interopDefault(require('object-path'));
 
 function _typeof(obj) {
@@ -129,6 +131,7 @@ function cparser(str, originalOpts) {
   var res = [];
   var path;
   var nestNext = false;
+  var tokensWithChildren = ["tag", "comment"];
   tokenizer(str, {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
@@ -156,7 +159,7 @@ function cparser(str, originalOpts) {
       } else {
         path = pathNext(path);
       }
-      if (["tag", "comment"].includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
+      if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
         nestNext = true;
         if (tokenObj.type === "comment") {
           layers.push(tokenObj);
@@ -172,15 +175,6 @@ function cparser(str, originalOpts) {
       if (previousPath) {
         previousTagsToken = op.get(res, previousPath);
       }
-      if (["tag", "comment"].includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
-        if (opts.errCb) {
-          opts.errCb({
-            ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
-            idxFrom: tokenObj.start,
-            idxTo: tokenObj.end
-          });
-        }
-      }
       var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
       if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
         var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
@@ -190,7 +184,7 @@ function cparser(str, originalOpts) {
             end: tokenObj.start + suspiciousEndingStartsAt,
             value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
           }));
-          if (["tag", "comment"].includes(tokenObj.type)) {
+          if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
         }
@@ -213,11 +207,54 @@ function cparser(str, originalOpts) {
             value: tokenObj.value.slice(suspiciousEndingEndsAt)
           });
         }
+      } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj(previousTagsToken) && previousTagsToken.type === "text" && previousTagsToken.value.trim().length && "<!-".includes(previousTagsToken.value[stringLeftRight.left(previousTagsToken.value, previousTagsToken.value.length)])) {
+        var capturedMalformedTagRanges = [];
+        strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
+          capturedMalformedTagRanges.push(obj);
+        }, {
+          maxDistance: 2
+        });
+        if (capturedMalformedTagRanges.length && !stringLeftRight.right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+          var malformedRange = capturedMalformedTagRanges.pop();
+          if (!stringLeftRight.left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj(previousTagsToken)) {
+            if (tokensWithChildren.includes(tokenObj.type)) {
+              tokenObj.children = [];
+            }
+            path = previousPath;
+            op.set(res, path, Object.assign({}, tokenObj, {
+              start: malformedRange.idxFrom + previousTagsToken.start,
+              kind: "not",
+              value: "".concat(previousTagsToken.value).concat(tokenObj.value)
+            }));
+          } else if (previousPath && isObj(previousTagsToken)) {
+            op.set(res, previousPath, Object.assign({}, previousTagsToken, {
+              end: malformedRange.idxFrom + previousTagsToken.start,
+              value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
+            }));
+            if (tokensWithChildren.includes(tokenObj.type)) {
+              tokenObj.children = [];
+            }
+            op.set(res, path, Object.assign({}, tokenObj, {
+              start: malformedRange.idxFrom + previousTagsToken.start,
+              kind: "not",
+              value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
+            }));
+          }
+        }
       } else {
-        if (["tag", "comment"].includes(tokenObj.type)) {
+        if (tokensWithChildren.includes(tokenObj.type)) {
           tokenObj.children = [];
         }
         op.set(res, path, tokenObj);
+      }
+      if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+        if (opts.errCb) {
+          opts.errCb({
+            ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
+            idxFrom: tokenObj.start,
+            idxTo: tokenObj.end
+          });
+        }
       }
     },
     charCb: opts.charCb

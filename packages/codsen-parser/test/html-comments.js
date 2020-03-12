@@ -351,7 +351,7 @@ t.test(`02.01 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, t => {
   t.end();
 });
 
-// 03. conditional "only" type comments
+// 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
 t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, t => {
@@ -394,3 +394,166 @@ t.test(`03.01 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, t => {
   );
   t.end();
 });
+
+t.test(
+  `03.02 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`,
+  t => {
+    t.match(
+      cparser(`<img/>!--<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6
+        },
+        {
+          type: "comment",
+          start: 6,
+          end: 21,
+          kind: "not",
+          closing: true
+        }
+      ],
+      "03.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.03 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`,
+  t => {
+    t.match(
+      cparser(`<img/><--<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6
+        },
+        {
+          type: "comment",
+          start: 6,
+          end: 21,
+          kind: "not",
+          closing: true
+        }
+      ],
+      "03.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.04 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`,
+  t => {
+    t.match(
+      cparser(`<img/><1--<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6
+        },
+        {
+          type: "comment",
+          start: 6,
+          end: 22,
+          kind: "not",
+          closing: true
+        }
+      ],
+      "03.04"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.05 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  t => {
+    t.match(
+      cparser(`<img/><!-<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6
+        },
+        {
+          type: "comment",
+          start: 6,
+          end: 21,
+          kind: "not",
+          closing: true
+        }
+      ],
+      "03.05"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.06 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  t => {
+    t.match(
+      cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6,
+          value: "<img/>"
+        },
+        {
+          type: "text",
+          start: 6,
+          end: 18,
+          value: "<1--<1--<1--"
+        },
+        {
+          type: "comment",
+          start: 18,
+          end: 34,
+          value: `<1--<![endif]-->`,
+          kind: "not",
+          closing: true
+        }
+      ],
+      "03.06"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.07 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
+  t => {
+    t.match(
+      cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 6
+        },
+        {
+          type: "text",
+          start: 6,
+          end: 26
+        },
+        {
+          type: "comment",
+          start: 26,
+          end: 38,
+          kind: "only",
+          closing: true
+        }
+      ],
+      "03.07"
+    );
+    t.end();
+  }
+);

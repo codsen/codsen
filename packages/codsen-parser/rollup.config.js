@@ -40,7 +40,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["codsen-tokenizer", "object-path"],
+      external: [
+        "codsen-tokenizer",
+        "object-path",
+        "string-find-malformed",
+        "string-left-right"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -55,7 +60,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["codsen-tokenizer", "object-path"],
+      external: [
+        "codsen-tokenizer",
+        "object-path",
+        "string-find-malformed",
+        "string-left-right"
+      ],
       plugins: [
         strip({
           sourceMap: false
