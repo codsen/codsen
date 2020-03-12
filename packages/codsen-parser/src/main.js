@@ -370,6 +370,23 @@ function cparser(str, originalOpts) {
       // case of "a<!--b->c", current token being "text" type, value "b->c"
 
       const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
+      let parentsLastChildTokenValue;
+      let parentsLastChildTokenPath;
+      if (
+        isObj(previousTagsToken) &&
+        Array.isArray(previousTagsToken.children) &&
+        previousTagsToken.children.length &&
+        previousTagsToken.children[previousTagsToken.children.length - 1]
+      ) {
+        parentsLastChildTokenValue =
+          previousTagsToken.children[previousTagsToken.children.length - 1];
+        parentsLastChildTokenPath = `${previousPath}.children.${op.get(
+          res,
+          previousPath
+        ).children.length - 1}`;
+      }
+
+      let tokenTakenCareOf = false;
 
       if (
         tokenObj.type === "text" &&
@@ -379,7 +396,7 @@ function cparser(str, originalOpts) {
         suspiciousCommentTagEndingRegExp.test(tokenObj.value)
       ) {
         console.log(
-          `382 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+          `399 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
         );
         const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
           tokenObj.value
@@ -389,7 +406,7 @@ function cparser(str, originalOpts) {
           tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") +
           1;
         console.log(
-          `392 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `409 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             suspiciousEndingStartsAt,
             null,
             4
@@ -408,10 +425,10 @@ function cparser(str, originalOpts) {
         // at this level, under this path:
         if (suspiciousEndingStartsAt > 0) {
           console.log(
-            `411 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
+            `428 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
           );
           console.log(
-            `414 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+            `431 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
               res,
               null,
               4
@@ -429,7 +446,7 @@ function cparser(str, originalOpts) {
             tokenObj.children = [];
           }
           console.log(
-            `432 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `449 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
@@ -440,11 +457,11 @@ function cparser(str, originalOpts) {
         // part 2.
         // further, the "->" goes as closing token at parent level
         console.log(
-          `443 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `460 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         path = pathNext(pathUp(path));
         console.log(
-          `447 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+          `464 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
         );
         op.set(res, path, {
           type: "comment",
@@ -459,7 +476,7 @@ function cparser(str, originalOpts) {
           children: []
         });
         console.log(
-          `462 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+          `479 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
             res,
             null,
             4
@@ -470,11 +487,11 @@ function cparser(str, originalOpts) {
         // if any text follows "->" add that after
         if (suspiciousEndingEndsAt < tokenObj.value.length) {
           console.log(
-            `473 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `490 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           path = pathNext(path);
           console.log(
-            `477 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `494 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
           );
           op.set(res, path, {
             type: "text",
@@ -483,139 +500,342 @@ function cparser(str, originalOpts) {
             value: tokenObj.value.slice(suspiciousEndingEndsAt)
           });
           console.log(
-            `486 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+            `503 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
               4
             )}`
           );
         }
+
+        // part 4.
+        // stop token from being pushed in the ELSE clauses below
+        tokenTakenCareOf = true;
+        //
       } else if (
         tokenObj.type === "comment" &&
         tokenObj.kind === "only" &&
-        isObj(previousTagsToken) &&
-        previousTagsToken.type === "text" &&
-        previousTagsToken.value.trim().length &&
-        "<!-".includes(
-          previousTagsToken.value[
-            left(previousTagsToken.value, previousTagsToken.value.length)
-          ]
-        )
+        isObj(previousTagsToken)
       ) {
-        // if "only" kind token is preceded by something that resembles
-        // opening HTML comment ("simple" kind), that might be first part
-        // of "not" kind comment:
-        //
-        // <img/><--<![endif]-->
-        //       ^
-        //      excl. mark missing on the first part ("<!--")
-        console.log(
-          `513 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
-        );
-        // strFindMalformed
-        const capturedMalformedTagRanges = [];
-        // Contents will be objects like:
-        // {
-        //   idxFrom: 3,
-        //   idxTo: 9
-        // }
-        strFindMalformed(
-          previousTagsToken.value,
-          "<!--",
-          obj => {
-            capturedMalformedTagRanges.push(obj);
-          },
-          {
-            maxDistance: 2
-          }
-        );
-        console.log(
-          `533 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
-            capturedMalformedTagRanges,
-            null,
-            4
-          )}`
-        );
+        // check "only" kind comment-type tokens for malformed front parts,
+        // "<!--", which would turn them into "not" kind comment-type tokens
         if (
-          capturedMalformedTagRanges.length &&
-          !right(
-            previousTagsToken.value,
-            capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1]
-              .idxTo - 1
+          previousTagsToken.type === "text" &&
+          previousTagsToken.value.trim().length &&
+          "<!-".includes(
+            previousTagsToken.value[
+              left(previousTagsToken.value, previousTagsToken.value.length)
+            ]
           )
         ) {
-          // pick the last
-          // imagine, there were multiple malformed opening comments:
-          // <img/><1--<1--<1--<1--<![endif]-->
-          const malformedRange = capturedMalformedTagRanges.pop();
+          // if "only" kind token is preceded by something that resembles
+          // opening HTML comment ("simple" kind), that might be first part
+          // of "not" kind comment:
+          //
+          // <img/><--<![endif]-->
+          //       ^
+          //      excl. mark missing on the first part ("<!--")
           console.log(
-            `552 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
-              malformedRange,
+            `539 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+          );
+          // strFindMalformed
+          const capturedMalformedTagRanges = [];
+          // Contents will be objects like:
+          // {
+          //   idxFrom: 3,
+          //   idxTo: 9
+          // }
+          strFindMalformed(
+            previousTagsToken.value,
+            "<!--",
+            obj => {
+              capturedMalformedTagRanges.push(obj);
+            },
+            {
+              maxDistance: 2
+            }
+          );
+          console.log(
+            `559 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              capturedMalformedTagRanges,
               null,
               4
             )}`
           );
-
-          // is the whole text token to be merged into the closing comment token,
-          // or were there characters in front of text token which remain and
-          // form the shorter, text token?
-
           if (
-            !left(previousTagsToken.value, malformedRange.idxFrom) &&
-            previousPath &&
-            isObj(previousTagsToken)
+            capturedMalformedTagRanges.length &&
+            !right(
+              previousTagsToken.value,
+              capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1]
+                .idxTo - 1
+            )
           ) {
-            // if there are no whitespace characters to the left of "from" index
-            // of the malformed "<!--", this means whole token is a malformed
-            // value and needs to be merged into current "comment" type token
-            // and its kind should be changed from "only" to "not".
-            if (tokensWithChildren.includes(tokenObj.type)) {
-              tokenObj.children = [];
-            }
-            // path becomes the path of previous, text token - we overwrite it
-            path = previousPath;
-            op.set(
-              res,
-              path,
-              Object.assign({}, tokenObj, {
-                start: malformedRange.idxFrom + previousTagsToken.start,
-                kind: "not",
-                value: `${previousTagsToken.value}${tokenObj.value}`
-              })
-            );
-          } else if (previousPath && isObj(previousTagsToken)) {
-            // if there are text characters which are not part of "<!--",
-            // shorten the text token, push a new comment token
-
-            // 1. tweak the "text" token
-            op.set(
-              res,
-              previousPath,
-              Object.assign({}, previousTagsToken, {
-                end: malformedRange.idxFrom + previousTagsToken.start,
-                value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
-              })
+            console.log(`573 picking the last malformed range`);
+            // pick the last
+            // imagine, there were multiple malformed opening comments:
+            // <img/><1--<1--<1--<1--<![endif]-->
+            const malformedRange = capturedMalformedTagRanges.pop();
+            console.log(
+              `579 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
+                malformedRange,
+                null,
+                4
+              )}`
             );
 
-            // 2. tweak the current "comment" token
-            if (tokensWithChildren.includes(tokenObj.type)) {
-              tokenObj.children = [];
+            // is the whole text token to be merged into the closing comment token,
+            // or were there characters in front of text token which remain and
+            // form the shorter, text token?
+
+            if (
+              !left(previousTagsToken.value, malformedRange.idxFrom) &&
+              previousPath &&
+              isObj(previousTagsToken)
+            ) {
+              console.log(`595 whole token is malformed <!--`);
+              // if there are no whitespace characters to the left of "from" index
+              // of the malformed "<!--", this means whole token is a malformed
+              // value and needs to be merged into current "comment" type token
+              // and its kind should be changed from "only" to "not".
+              if (tokensWithChildren.includes(tokenObj.type)) {
+                tokenObj.children = [];
+              }
+              // path becomes the path of previous, text token - we overwrite it
+              path = previousPath;
+              op.set(
+                res,
+                path,
+                Object.assign({}, tokenObj, {
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value}${tokenObj.value}`
+                })
+              );
+
+              // stop token from being pushed in the ELSE clauses below
+              tokenTakenCareOf = true;
+            } else if (previousPath && isObj(previousTagsToken)) {
+              console.log(`618 there are characters in front of <!--`);
+              // if there are text characters which are not part of "<!--",
+              // shorten the text token, push a new comment token
+
+              // 1. tweak the "text" token
+              op.set(
+                res,
+                previousPath,
+                Object.assign({}, previousTagsToken, {
+                  end: malformedRange.idxFrom + previousTagsToken.start,
+                  value: previousTagsToken.value.slice(
+                    0,
+                    malformedRange.idxFrom
+                  )
+                })
+              );
+
+              // 2. tweak the current "comment" token
+              if (tokensWithChildren.includes(tokenObj.type)) {
+                tokenObj.children = [];
+              }
+              op.set(
+                res,
+                path,
+                Object.assign({}, tokenObj, {
+                  start: malformedRange.idxFrom + previousTagsToken.start,
+                  kind: "not",
+                  value: `${previousTagsToken.value.slice(
+                    malformedRange.idxFrom
+                  )}${tokenObj.value}`
+                })
+              );
+
+              // stop token from being pushed in the ELSE clauses below
+              tokenTakenCareOf = true;
             }
-            op.set(
-              res,
-              path,
-              Object.assign({}, tokenObj, {
-                start: malformedRange.idxFrom + previousTagsToken.start,
-                kind: "not",
-                value: `${previousTagsToken.value.slice(
-                  malformedRange.idxFrom
-                )}${tokenObj.value}`
-              })
+          }
+        } else if (
+          isObj(parentsLastChildTokenValue) &&
+          parentsLastChildTokenValue.type === "text" &&
+          parentsLastChildTokenValue.value.trim().length &&
+          "<!-".includes(
+            parentsLastChildTokenValue.value[
+              left(
+                parentsLastChildTokenValue.value,
+                parentsLastChildTokenValue.value.length
+              )
+            ]
+          )
+        ) {
+          // the text token might be in parent token's children array, as
+          // last element, for example, consider the AST of:
+          // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
+          //
+          console.log(
+            `673 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+          );
+          // strFindMalformed
+          const capturedMalformedTagRanges = [];
+          // Contents will be objects like:
+          // {
+          //   idxFrom: 3,
+          //   idxTo: 9
+          // }
+          strFindMalformed(
+            parentsLastChildTokenValue.value,
+            "<!--",
+            obj => {
+              capturedMalformedTagRanges.push(obj);
+            },
+            {
+              maxDistance: 2
+            }
+          );
+          console.log(
+            `693 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              capturedMalformedTagRanges,
+              null,
+              4
+            )}`
+          );
+          if (
+            capturedMalformedTagRanges.length &&
+            !right(
+              parentsLastChildTokenValue.value,
+              capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1]
+                .idxTo - 1
+            )
+          ) {
+            console.log(`707 picking the last malformed range`);
+            // pick the last
+            // imagine, there were multiple malformed opening comments:
+            // <!--[if !mso]><!--><img src="gif"/>!--!--!--!--<![endif]-->
+            const malformedRange = capturedMalformedTagRanges.pop();
+            console.log(
+              `713 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
+                malformedRange,
+                null,
+                4
+              )}`
             );
+
+            // is the whole text token to be merged into the closing comment token,
+            // or were there characters in front of text token which remain and
+            // form the shorter, text token?
+
+            if (
+              !left(parentsLastChildTokenValue.value, malformedRange.idxFrom) &&
+              previousPath &&
+              isObj(parentsLastChildTokenValue)
+            ) {
+              console.log(`729 whole token is malformed <!--`);
+              // if there are no whitespace characters to the left of "from" index
+              // of the malformed "<!--", this means whole token is a malformed
+              // value and needs to be merged into current "comment" type token
+              // and its kind should be changed from "only" to "not".
+              if (tokensWithChildren.includes(tokenObj.type)) {
+                tokenObj.children = [];
+              }
+
+              // 1. Insert current node. The path for current token remains the same - text node was among
+              // the previous token's children tokens
+              op.set(
+                res,
+                path,
+                Object.assign({}, tokenObj, {
+                  start:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
+                })
+              );
+
+              // 2. Delete the text node.
+              console.log(
+                `753 ██ ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
+                  previousPath,
+                  null,
+                  4
+                )}`
+              );
+              console.log(
+                `760 DELETING TEXT NODE - RES BEFORE: ${JSON.stringify(
+                  res,
+                  null,
+                  4
+                )}`
+              );
+              op.del(
+                res,
+                `${previousPath}.children.${op.get(res, previousPath).children
+                  .length - 1}`
+              );
+              console.log(
+                `772 DELETING TEXT NODE - RES AFTER: ${JSON.stringify(
+                  res,
+                  null,
+                  4
+                )}`
+              );
+
+              // stop token from being pushed in the ELSE clauses below
+              tokenTakenCareOf = true;
+            } else if (
+              previousPath &&
+              isObj(parentsLastChildTokenValue) &&
+              parentsLastChildTokenPath
+            ) {
+              console.log(`786 there are characters preceding <!--`);
+              // if there are text characters which are not part of "<!--",
+              // shorten the text token, push a new comment token
+
+              console.log(
+                `791 FIY, ${`\u001b[${33}m${`parentsLastChildTokenPath`}\u001b[${39}m`} = ${JSON.stringify(
+                  parentsLastChildTokenPath,
+                  null,
+                  4
+                )}`
+              );
+
+              // 1. tweak the "text" token
+              op.set(
+                res,
+                parentsLastChildTokenPath,
+                Object.assign({}, parentsLastChildTokenValue, {
+                  end:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  value: parentsLastChildTokenValue.value.slice(
+                    0,
+                    malformedRange.idxFrom
+                  )
+                })
+              );
+
+              // 2. tweak the current "comment" token
+              if (tokensWithChildren.includes(tokenObj.type)) {
+                tokenObj.children = [];
+              }
+              op.set(
+                res,
+                path,
+                Object.assign({}, tokenObj, {
+                  start:
+                    malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  kind: "not",
+                  value: `${parentsLastChildTokenValue.value.slice(
+                    malformedRange.idxFrom
+                  )}${tokenObj.value}`
+                })
+              );
+
+              // stop token from being pushed in the ELSE clauses below
+              tokenTakenCareOf = true;
+            }
           }
         }
-      } else {
-        console.log(`618 setting as usual`);
+      }
+
+      // if token was not pushed yet, push it
+      if (!tokenTakenCareOf) {
+        console.log(`838 setting as usual`);
         if (tokensWithChildren.includes(tokenObj.type)) {
           tokenObj.children = [];
         }
@@ -623,7 +843,7 @@ function cparser(str, originalOpts) {
       }
 
       console.log(
-        `626 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+        `846 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
           res,
           null,
           4
@@ -631,7 +851,7 @@ function cparser(str, originalOpts) {
       );
 
       console.log(
-        `634 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+        `854 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
           path,
           null,
           4
@@ -652,7 +872,7 @@ function cparser(str, originalOpts) {
           previousTagsToken.tagName !== tokenObj.tagName)
       ) {
         console.log(
-          `655 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
+          `875 ${`\u001b[${31}m${`██ RAISE ERROR ${tokenObj.type}-${
             tokenObj.type === "comment" ? tokenObj.kind : ""
           }-missing-opening`}\u001b[${39}m`}`
         );
@@ -700,7 +920,7 @@ function cparser(str, originalOpts) {
   console.log(`-`.repeat(80));
 
   console.log(
-    `703 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `923 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
       res,
       null,
       4

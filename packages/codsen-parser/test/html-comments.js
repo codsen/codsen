@@ -557,3 +557,212 @@ t.test(
     t.end();
   }
 );
+
+t.test(
+  `03.08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
+  t => {
+    // below, two tokens,
+    // "<img src="gif"/>"
+    // and
+    // "!--"
+    // would sit inside opening comment, inside its children[] value array
+    t.same(
+      cparser(`<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`),
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--[if !mso]><!-->",
+          kind: "not",
+          closing: false,
+          children: [
+            {
+              type: "tag",
+              start: 19,
+              end: 35,
+              value: '<img src="gif"/>',
+              tagNameStartsAt: 20,
+              tagNameEndsAt: 23,
+              tagName: "img",
+              recognised: true,
+              closing: false,
+              void: true,
+              pureHTML: true,
+              esp: [],
+              kind: null,
+              attribs: [
+                {
+                  attribName: "src",
+                  attribNameRecognised: true,
+                  attribNameStartsAt: 24,
+                  attribNameEndsAt: 27,
+                  attribOpeningQuoteAt: 28,
+                  attribClosingQuoteAt: 32,
+                  attribValue: "gif",
+                  attribValueStartsAt: 29,
+                  attribValueEndsAt: 32,
+                  attribStart: 24,
+                  attribEnd: 33
+                }
+              ],
+              children: []
+            }
+          ]
+        },
+        {
+          type: "comment",
+          start: 35,
+          end: 50,
+          value: "!--<![endif]-->",
+          kind: "not",
+          closing: true,
+          children: []
+        }
+      ],
+      "03.08"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `03.09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`,
+  t => {
+    // below, two tokens,
+    // "<img src="gif"/>"
+    // and
+    // "!--"
+    // would sit inside opening comment, inside its children[] value array
+    t.same(
+      cparser(`<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->`),
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--[if !mso]><!-->",
+          kind: "not",
+          closing: false,
+          children: [
+            {
+              type: "tag",
+              start: 19,
+              end: 35,
+              value: '<img src="gif"/>',
+              tagNameStartsAt: 20,
+              tagNameEndsAt: 23,
+              tagName: "img",
+              recognised: true,
+              closing: false,
+              void: true,
+              pureHTML: true,
+              esp: [],
+              kind: null,
+              attribs: [
+                {
+                  attribName: "src",
+                  attribNameRecognised: true,
+                  attribNameStartsAt: 24,
+                  attribNameEndsAt: 27,
+                  attribOpeningQuoteAt: 28,
+                  attribClosingQuoteAt: 32,
+                  attribValue: "gif",
+                  attribValueStartsAt: 29,
+                  attribValueEndsAt: 32,
+                  attribStart: 24,
+                  attribEnd: 33
+                }
+              ],
+              children: []
+            },
+            {
+              type: "text",
+              start: 35,
+              end: 38,
+              value: "zzz"
+            }
+          ]
+        },
+        {
+          type: "comment",
+          start: 38,
+          end: 53,
+          value: "!--<![endif]-->",
+          kind: "not",
+          closing: true,
+          children: []
+        }
+      ],
+      "03.09"
+    );
+    t.end();
+  }
+);
+
+t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, t => {
+  // clauses are triggered but nothing's found from characters: <, ! and -
+  t.same(
+    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
+    [
+      {
+        type: "comment",
+        start: 0,
+        end: 19,
+        value: "<!--[if !mso]><!-->",
+        kind: "not",
+        closing: false,
+        children: [
+          {
+            type: "tag",
+            start: 19,
+            end: 35,
+            value: '<img src="gif"/>',
+            tagNameStartsAt: 20,
+            tagNameEndsAt: 23,
+            tagName: "img",
+            recognised: true,
+            closing: false,
+            void: true,
+            pureHTML: true,
+            esp: [],
+            kind: null,
+            attribs: [
+              {
+                attribName: "src",
+                attribNameRecognised: true,
+                attribNameStartsAt: 24,
+                attribNameEndsAt: 27,
+                attribOpeningQuoteAt: 28,
+                attribClosingQuoteAt: 32,
+                attribValue: "gif",
+                attribValueStartsAt: 29,
+                attribValueEndsAt: 32,
+                attribStart: 24,
+                attribEnd: 33
+              }
+            ],
+            children: []
+          },
+          {
+            type: "text",
+            start: 35,
+            end: 39,
+            value: "zzz-"
+          }
+        ]
+      },
+      {
+        type: "comment",
+        start: 39,
+        end: 51,
+        value: "<![endif]-->",
+        kind: "only",
+        closing: true,
+        children: []
+      }
+    ],
+    "03.10"
+  );
+  t.end();
+});
