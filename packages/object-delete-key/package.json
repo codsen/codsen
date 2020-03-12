@@ -136,12 +136,12 @@
     "benchmark": "^2.1.4",
     "lect": "^0.12.1",
     "posthtml-parser": "^0.4.2",
-    "rollup": "^2.0.2",
+    "rollup": "^2.0.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.1.1",
-    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-terser": "^5.3.0",
     "tap": "^14.10.6"
   }
 }
