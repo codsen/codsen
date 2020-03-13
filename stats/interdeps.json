@@ -141,14 +141,16 @@
     },
     {
         "name": "codsen-parser",
-        "size": 9125,
+        "size": 15882,
         "imports": [
-            "codsen-tokenizer"
+            "codsen-tokenizer",
+            "string-find-malformed",
+            "string-left-right"
         ]
     },
     {
         "name": "codsen-tokenizer",
-        "size": 38579,
+        "size": 38584,
         "imports": [
             "html-all-known-attributes",
             "is-html-tag-opening",
@@ -244,7 +246,7 @@
     },
     {
         "name": "emlint",
-        "size": 302694,
+        "size": 302934,
         "imports": [
             "ast-monkey",
             "ast-monkey-traverse",
@@ -627,7 +629,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 12689,
+        "size": 12820,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
