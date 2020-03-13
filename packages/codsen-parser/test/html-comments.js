@@ -766,3 +766,29 @@ t.test(`03.10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, t => {
   );
   t.end();
 });
+
+t.test(`03.11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`, t => {
+  // clauses are triggered but nothing's found from characters: <, ! and -
+  t.same(
+    cparser(`zzz<<![endif]-->`),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 4,
+        value: "zzz<"
+      },
+      {
+        type: "comment",
+        start: 4,
+        end: 16,
+        value: "<![endif]-->",
+        kind: "only",
+        closing: true,
+        children: []
+      }
+    ],
+    "03.11"
+  );
+  t.end();
+});
