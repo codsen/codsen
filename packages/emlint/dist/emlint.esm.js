@@ -9235,6 +9235,13 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
         if (charCodeMapping[String(charCode)]) {
           const charName = charCodeMapping[String(charCode)];
           if (
+            charName === "exclamationMark" &&
+            context.str[right(context.str, i)] === "-" &&
+            context.str[right(context.str, right(context.str, i))] === "-"
+          ) {
+            return;
+          }
+          if (
             opts[charName].whitespaceLeft === "never" &&
             i &&
             !context.str[i - 1].trim().length

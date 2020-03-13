@@ -7909,6 +7909,9 @@ function characterUnspacedPunctuation(context) {
         var charCode = context.str[i].charCodeAt(0);
         if (charCodeMapping[String(charCode)]) {
           var charName = charCodeMapping[String(charCode)];
+          if (charName === "exclamationMark" && context.str[stringLeftRight.right(context.str, i)] === "-" && context.str[stringLeftRight.right(context.str, stringLeftRight.right(context.str, i))] === "-") {
+            return;
+          }
           if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",

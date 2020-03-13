@@ -194,21 +194,30 @@ t.test(
 // 02. type="only"
 // -----------------------------------------------------------------------------
 
-t.test(`02.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off`, t => {
-  const str = "<!--[if mso]>x<[endif]-->";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "comment-closing-malformed": 0
-    }
-  });
-  t.equal(applyFixes(str, messages), str, "02.01.01");
-  t.same(messages, [], "02.01.02");
-  t.end();
-});
+// For your reference:
+
+// <!--[if mso]>
+//     <img src="fallback">
+// <![endif]-->
 
 t.test(
-  `02.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level`,
+  `02.01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missing`,
+  t => {
+    const str = "<!--[if mso]>x<[endif]-->";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-closing-malformed": 0
+      }
+    });
+    t.equal(applyFixes(str, messages), str, "02.01.01");
+    t.same(messages, [], "02.01.02");
+    t.end();
+  }
+);
+
+t.test(
+  `02.02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl mark missing`,
   t => {
     const str = "<!--[if mso]>x<[endif]-->";
     const fixed = "<!--[if mso]>x<![endif]-->";
@@ -274,4 +283,70 @@ t.test(
 // 03. type="not"
 // -----------------------------------------------------------------------------
 
-// TODO
+// For your reference:
+
+// <!--[if !mso]><!-->
+//     <img src="gif"/>
+// <!--<![endif]-->
+
+t.only(
+  `03.01 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`,
+  t => {
+    const str = `<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": 2,
+        "comment-closing-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "03.01.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "comment-closing-malformed",
+          severity: 2,
+          idxFrom: 35,
+          idxTo: 50,
+          message: `Malformed closing comment tag.`,
+          fix: {
+            ranges: [[35, 50, "<!--<![endif]-->"]]
+          }
+        }
+      ],
+      "03.01.02"
+    );
+    t.end();
+  }
+);
+
+t.todo(`03.0? - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - TBC`, t => {
+  const str = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+  const fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "comment-closing-malformed": 2
+    }
+  });
+  t.equal(applyFixes(str, messages), fixed, "03.0?.01");
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "comment-closing-malformed",
+        severity: 2,
+        idxFrom: 14,
+        idxTo: 26,
+        message: `Malformed closing comment tag.`,
+        fix: {
+          ranges: [[14, 26, "<![endif]-->"]]
+        }
+      }
+    ],
+    "03.0?.02"
+  );
+  t.end();
+});

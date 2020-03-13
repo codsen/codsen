@@ -84,6 +84,18 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
         if (charCodeMapping[String(charCode)]) {
           console.log(`caught ${charCodeMapping[String(charCode)]}!`);
           const charName = charCodeMapping[String(charCode)];
+
+          // precautions first.
+          // if it's an exclamation mark and two dashes follow, we bail right away
+          if (
+            charName === "exclamationMark" &&
+            context.str[right(context.str, i)] === "-" &&
+            context.str[right(context.str, right(context.str, i))] === "-"
+          ) {
+            console.log(`095 PATTERN "!--" DETECTED, BAILING`);
+            return;
+          }
+
           if (
             opts[charName].whitespaceLeft === "never" &&
             i &&
@@ -92,7 +104,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! BAD SPACE ON THE LEFT !`}\u001b[${39}m`}`
             );
-            console.log(`095 PING [${left(context.str, i) + 1}, ${i}]`);
+            console.log(`107 PING [${left(context.str, i) + 1}, ${i}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1, // TODO set the severity
@@ -112,7 +124,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! BAD SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`115 PING [${i + 1}, ${right(context.str, i)}]`);
+            console.log(`127 PING [${i + 1}, ${right(context.str, i)}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -132,7 +144,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE LEFT !`}\u001b[${39}m`}`
             );
-            console.log(`135 PING [${i}, ${i}, " "]`);
+            console.log(`147 PING [${i}, ${i}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,
@@ -152,7 +164,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`155 PING [${i + 1}, ${i + 1}, " "]`);
+            console.log(`167 PING [${i + 1}, ${i + 1}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               severity: 1,

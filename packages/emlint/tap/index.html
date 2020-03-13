@@ -12,9 +12,6 @@
         background-color: #1c2c34;
         font-family: sans-serif;
       }
-      textarea {
-        color: #bec5cf; /* white-ish */
-      }
       .w50p {
         width: 49%;
         height: 90%;
@@ -26,19 +23,44 @@
       .fl {
         float: left;
       }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .top {
+        flex: 0 10em;
+      }
+      .bottom {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+      }
+      textarea {
+        color: #bec5cf; /* white-ish */
+        height: 100%;
+      }
+      .t1, .t2 {
+        height: 100%;
+        width: 49%;
+        flex: auto;
+      }
+      .t3 {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
 
     <div id="app">
-      <div>
-        <textarea ref="in" class="w50p" v-model="text1" rows="10" placeholder="put html here" style="font-family: monospace;"></textarea>
-        <textarea ref="out" class="w50p" v-model="text2" rows="10" style="font-family: monospace;"></textarea>
+      <div class="top">
+        <textarea class="t1" ref="in" class="w50p" v-model="text1" placeholder="put html here" style="font-family: monospace;"></textarea>
+        <textarea class=t2 ref="out" class="w50p" v-model="text2" style="font-family: monospace;"></textarea>
       </div>
-      <br>
-      <div>
-        found issues:<br>
-        <textarea v-model="list" rows="10" style="width: 98%; height: 25%; font-family: monospace;"></textarea>
+      <div class="bottom">
+        <textarea class=t3 v-model="list" style="font-family: monospace;"></textarea>
       </div>
     </div>
 
