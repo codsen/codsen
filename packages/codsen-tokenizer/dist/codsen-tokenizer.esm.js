@@ -26,7 +26,7 @@ function startsComment(str, i, token) {
           maxMismatches: 2,
           trimBeforeMatching: true
         })) &&
-      !matchRight(str, i, ["![cdata"], {
+      !matchRight(str, i, ["![cdata", "<"], {
         i: true,
         maxMismatches: 1,
         trimBeforeMatching: true

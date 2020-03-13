@@ -43,7 +43,7 @@ function startsComment(str, i, token) {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true
-    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata"], {
+    })) && !stringMatchLeftRight.matchRight(str, i, ["![cdata", "<"], {
       i: true,
       maxMismatches: 1,
       trimBeforeMatching: true

@@ -700,7 +700,41 @@ t.test(
           closing: false
         }
       ],
-      "02.07"
+      "02.09"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.10 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`,
+  t => {
+    const gathered = [];
+    ct(`zzz<<![endif]-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.same(
+      gathered,
+      [
+        {
+          type: "text",
+          start: 0,
+          end: 4,
+          value: "zzz<"
+        },
+        {
+          type: "comment",
+          start: 4,
+          end: 16,
+          value: "<![endif]-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.10"
     );
     t.end();
   }
