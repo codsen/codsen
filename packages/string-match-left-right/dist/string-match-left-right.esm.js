@@ -108,6 +108,7 @@ function march(
             break;
           } else if (
             nextCharInSource &&
+            nextCharToCompareAgainst &&
             ((!opts.i && nextCharInSource === nextCharToCompareAgainst) ||
               (opts.i &&
                 nextCharInSource.toLowerCase() ===

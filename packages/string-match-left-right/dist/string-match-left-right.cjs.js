@@ -92,7 +92,7 @@ function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextId
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
-          } else if (nextCharInSource && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase())) {
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
