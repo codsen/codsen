@@ -107,7 +107,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(`107 PING [${left(context.str, i) + 1}, ${i}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1, // TODO set the severity
               idxFrom: left(context.str, i) + 1,
               idxTo: i,
               message: "Remove the whitespace.",
@@ -124,10 +123,9 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! BAD SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`127 PING [${i + 1}, ${right(context.str, i)}]`);
+            console.log(`126 PING [${i + 1}, ${right(context.str, i)}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i + 1,
               idxTo: right(context.str, i),
               message: "Remove the whitespace.",
@@ -144,10 +142,9 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE LEFT !`}\u001b[${39}m`}`
             );
-            console.log(`147 PING [${i}, ${i}, " "]`);
+            console.log(`145 PING [${i}, ${i}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",
@@ -164,10 +161,9 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`167 PING [${i + 1}, ${i + 1}, " "]`);
+            console.log(`164 PING [${i + 1}, ${i + 1}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",

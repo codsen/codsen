@@ -9248,7 +9248,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           ) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: left(context.str, i) + 1,
               idxTo: i,
               message: "Remove the whitespace.",
@@ -9264,7 +9263,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           ) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i + 1,
               idxTo: right(context.str, i),
               message: "Remove the whitespace.",
@@ -9280,7 +9278,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           ) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",
@@ -9296,7 +9293,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           ) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",

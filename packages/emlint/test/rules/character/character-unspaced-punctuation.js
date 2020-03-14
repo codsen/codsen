@@ -62,6 +62,43 @@ t.test(
   }
 );
 
+t.test(
+  `01.03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link`,
+  t => {
+    const str = "<a>Click me!Now?Yes!</a>";
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "character-unspaced-punctuation": 2
+      }
+    });
+    t.match(messages, [
+      {
+        ruleId: "character-unspaced-punctuation",
+        severity: 2,
+        idxFrom: 11,
+        idxTo: 12,
+        message: "Add a space.",
+        fix: {
+          ranges: [[12, 12, " "]]
+        }
+      },
+      {
+        ruleId: "character-unspaced-punctuation",
+        severity: 2,
+        idxFrom: 15,
+        idxTo: 16,
+        message: "Add a space.",
+        fix: {
+          ranges: [[16, 16, " "]]
+        }
+      }
+    ]);
+    t.equal(applyFixes(str, messages), "<a>Click me! Now? Yes!</a>");
+    t.end();
+  }
+);
+
 // 02. with config
 // -----------------------------------------------------------------------------
 

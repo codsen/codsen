@@ -7915,7 +7915,6 @@ function characterUnspacedPunctuation(context) {
           if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: stringLeftRight.left(context.str, i) + 1,
               idxTo: i,
               message: "Remove the whitespace.",
@@ -7927,7 +7926,6 @@ function characterUnspacedPunctuation(context) {
           if (opts[charName].whitespaceRight === "never" && i < node.end - 1 && !context.str[i + 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i + 1,
               idxTo: stringLeftRight.right(context.str, i),
               message: "Remove the whitespace.",
@@ -7939,7 +7937,6 @@ function characterUnspacedPunctuation(context) {
           if (opts[charName].whitespaceLeft === "always" && i && context.str[i - 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",
@@ -7951,7 +7948,6 @@ function characterUnspacedPunctuation(context) {
           if (opts[charName].whitespaceRight === "always" && i < node.end - 1 && context.str[i + 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
-              severity: 1,
               idxFrom: i,
               idxTo: i + 1,
               message: "Add a space.",
