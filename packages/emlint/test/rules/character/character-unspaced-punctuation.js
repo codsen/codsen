@@ -155,68 +155,65 @@ t.test(
   }
 );
 
-t.test(
-  `02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - text inside anchor link, left side missing`,
-  t => {
-    const str = "-Les pommes ou les oranges?-Les pommes!";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "character-unspaced-punctuation": [
-          1,
-          {
-            questionMark: {
-              whitespaceLeft: "always",
-              whitespaceRight: "always"
-            },
-            exclamationMark: {
-              whitespaceLeft: "always",
-              whitespaceRight: "always"
-            },
-            semicolon: {
-              whitespaceLeft: "never",
-              whitespaceRight: "always"
-            }
+t.test(`02.02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - French`, t => {
+  const str = "-Les pommes ou les oranges?-Les pommes!";
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "character-unspaced-punctuation": [
+        2,
+        {
+          questionMark: {
+            whitespaceLeft: "always",
+            whitespaceRight: "always"
+          },
+          exclamationMark: {
+            whitespaceLeft: "always",
+            whitespaceRight: "always"
+          },
+          semicolon: {
+            whitespaceLeft: "never",
+            whitespaceRight: "always"
           }
-        ]
+        }
+      ]
+    }
+  });
+  t.match(messages, [
+    {
+      ruleId: "character-unspaced-punctuation",
+      severity: 2,
+      idxFrom: 26,
+      idxTo: 27,
+      message: "Add a space.",
+      fix: {
+        ranges: [[26, 26, " "]]
       }
-    });
-    t.match(messages, [
-      {
-        ruleId: "character-unspaced-punctuation",
-        severity: 1,
-        idxFrom: 26,
-        idxTo: 27,
-        message: "Add a space.",
-        fix: {
-          ranges: [[26, 26, " "]]
-        }
-      },
-      {
-        ruleId: "character-unspaced-punctuation",
-        severity: 1,
-        idxFrom: 26,
-        idxTo: 27,
-        message: "Add a space.",
-        fix: {
-          ranges: [[27, 27, " "]]
-        }
-      },
-      {
-        ruleId: "character-unspaced-punctuation",
-        severity: 1,
-        idxFrom: 38,
-        idxTo: 39,
-        message: "Add a space.",
-        fix: {
-          ranges: [[38, 38, " "]]
-        }
+    },
+    {
+      ruleId: "character-unspaced-punctuation",
+      severity: 2,
+      idxFrom: 26,
+      idxTo: 27,
+      message: "Add a space.",
+      fix: {
+        ranges: [[27, 27, " "]]
       }
-    ]);
-    t.equal(
-      applyFixes(str, messages),
-      "-Les pommes ou les oranges ? -Les pommes !"
-    );
-    t.end();
-  }
-);
+    },
+    {
+      ruleId: "character-unspaced-punctuation",
+      severity: 2,
+      idxFrom: 38,
+      idxTo: 39,
+      message: "Add a space.",
+      fix: {
+        ranges: [[38, 38, " "]]
+      }
+    }
+  ]);
+  t.equal(
+    applyFixes(str, messages),
+    "-Les pommes ou les oranges ? -Les pommes !"
+  );
+  t.end();
+});
