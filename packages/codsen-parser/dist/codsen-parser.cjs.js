@@ -11,9 +11,10 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var astMonkeyUtil = require('ast-monkey-util');
 var strFindMalformed = _interopDefault(require('string-find-malformed'));
-var tokenizer = _interopDefault(require('codsen-tokenizer'));
 var stringLeftRight = require('string-left-right');
+var tokenizer = _interopDefault(require('codsen-tokenizer'));
 var op = _interopDefault(require('object-path'));
 
 function _typeof(obj) {
@@ -30,63 +31,6 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
-}
-
-function incrementStringNumber(str) {
-  if (/^\d*$/.test(str)) {
-    return Number.parseInt(str, 10) + 1;
-  }
-  return str;
-}
-function pathNext(str) {
-  if (typeof str !== "string" || !str.length) {
-    return str;
-  }
-  if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-    return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(incrementStringNumber(str.slice(str.lastIndexOf(".") + 1)));
-  } else if (/^\d*$/.test(str)) {
-    return "".concat(incrementStringNumber(str));
-  }
-  return str;
-}
-
-function decrementStringNumber(str) {
-  if (/^\d*$/.test(str)) {
-    return Number.parseInt(str, 10) - 1;
-  }
-  return str;
-}
-function pathPrev(str) {
-  if (typeof str !== "string" || !str.length) {
-    return null;
-  }
-  var extractedValue = str.slice(str.lastIndexOf(".") + 1);
-  if (extractedValue === "0") {
-    return null;
-  } else if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-    return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(decrementStringNumber(str.slice(str.lastIndexOf(".") + 1)));
-  } else if (/^\d*$/.test(str)) {
-    return "".concat(decrementStringNumber(str));
-  }
-  return null;
-}
-
-function pathUp(str) {
-  if (typeof str === "string") {
-    if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-      return null;
-    }
-    var dotsCount = 0;
-    for (var i = str.length; i--;) {
-      if (str[i] === ".") {
-        dotsCount++;
-      }
-      if (dotsCount === 2) {
-        return str.slice(0, i);
-      }
-    }
-  }
-  return str;
 }
 
 function isObj(something) {
@@ -149,7 +93,7 @@ function cparser(str, originalOpts) {
         nestNext = false;
         path = "".concat(path, ".children.0");
       } else if (tokenObj.closing && typeof path === "string" && path.includes(".")) {
-        path = pathNext(pathUp(path));
+        path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
         if (layerPending(layers, tokenObj)) {
           layers.pop();
           nestNext = false;
@@ -157,7 +101,7 @@ function cparser(str, originalOpts) {
       } else if (!path) {
         path = "0";
       } else {
-        path = pathNext(path);
+        path = astMonkeyUtil.pathNext(path);
       }
       if (tokensWithChildren.includes(tokenObj.type) && !tokenObj["void"] && !tokenObj.closing) {
         nestNext = true;
@@ -165,8 +109,8 @@ function cparser(str, originalOpts) {
           layers.push(tokenObj);
         }
       }
-      var previousPath = pathPrev(path);
-      var parentPath = pathUp(path);
+      var previousPath = astMonkeyUtil.pathPrev(path);
+      var parentPath = astMonkeyUtil.pathUp(path);
       var parentTagsToken;
       if (parentPath) {
         parentTagsToken = op.get(res, parentPath);
@@ -195,7 +139,7 @@ function cparser(str, originalOpts) {
             tokenObj.children = [];
           }
         }
-        path = pathNext(pathUp(path));
+        path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
         op.set(res, path, {
           type: "comment",
           kind: "simple",
@@ -206,7 +150,7 @@ function cparser(str, originalOpts) {
           children: []
         });
         if (suspiciousEndingEndsAt < tokenObj.value.length) {
-          path = pathNext(path);
+          path = astMonkeyUtil.pathNext(path);
           op.set(res, path, {
             type: "text",
             start: tokenObj.start + suspiciousEndingEndsAt,

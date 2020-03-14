@@ -41,6 +41,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "ast-monkey-util",
         "codsen-tokenizer",
         "object-path",
         "string-find-malformed",
@@ -61,6 +62,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "ast-monkey-util",
         "codsen-tokenizer",
         "object-path",
         "string-find-malformed",
