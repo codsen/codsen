@@ -88,7 +88,7 @@ t.test(
 // 03. Various
 // -----------------------------------------------------------------------------
 
-t.todo(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
+t.test(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
   const gathered = [];
   ct(
     `a<!--[if]><z>
@@ -100,13 +100,44 @@ t.todo(`03.01 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, t => {
       }
     }
   );
-  t.match(
+  t.same(
     gathered,
     [
       {
         type: "text",
         start: 0,
-        end: 1
+        end: 1,
+        value: "a"
+      },
+      {
+        type: "comment",
+        start: 1,
+        end: 10,
+        value: "<!--[if]>",
+        kind: "only",
+        closing: false
+      },
+      {
+        type: "tag",
+        start: 10,
+        end: 13,
+        value: "<z>",
+        tagNameStartsAt: 11,
+        tagNameEndsAt: 12,
+        tagName: "z",
+        recognised: false,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: []
+      },
+      {
+        type: "text",
+        start: 13,
+        end: 33,
+        value: "\n<AAAch>>\n</o:Offict"
       }
     ],
     "03.01"
