@@ -289,7 +289,7 @@ t.test(
 //     <img src="gif"/>
 // <!--<![endif]-->
 
-t.only(
+t.test(
   `03.01 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`,
   t => {
     const str = `<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`;

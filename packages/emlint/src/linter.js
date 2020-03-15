@@ -206,13 +206,13 @@ class Linter extends EventEmitter {
             // We need to pick the objects of a type we need: "tag", "comment" etc.
 
             // tag-level callback
-            console.log(
-              `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-                current,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+            //     current,
+            //     null,
+            //     4
+            //   )}`
+            // );
             this.emit(current.type, current);
             // plus, for type:html also ping each attribute
             if (

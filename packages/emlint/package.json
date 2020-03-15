@@ -39,7 +39,7 @@
   "scripts": {
     "build": "node bin/helper && rollup -c",
     "dev": "node bin/helper && rollup -c --dev",
-    "devunittest": "npm run dev && npm run tap -- \"test/rules/character/character-unspaced-punctuation.js\" --only",
+    "devunittest": "npm run dev && npm run tap -- \"test/rules/comment/comment-mismatching-pair.js\" --only",
     "devunittest2": "npm run dev && ./node_modules/.bin/tap --only",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
@@ -129,8 +129,8 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey": "^7.11.1",
     "ast-monkey-traverse": "^1.12.6",
+    "ast-monkey-util": "^1.0.0",
     "codsen-parser": "^0.2.0",
     "define-lazy-prop": "^2.0.0",
     "he": "^1.2.0",

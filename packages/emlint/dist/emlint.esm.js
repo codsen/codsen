@@ -24,8 +24,10 @@ import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import findMalformed from 'string-find-malformed';
-import lineColumn from 'line-column';
 import traverse from 'ast-monkey-traverse';
+import { pathPrev } from 'ast-monkey-util';
+import op from 'object-path';
+import lineColumn from 'line-column';
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
 
 var allBadCharacterRules = [
@@ -9509,6 +9511,55 @@ function commentOpeningMalformed(context, ...opts) {
   };
 }
 
+function commentMismatchingPair(context, ...opts) {
+  return {
+    ast: function(node) {
+      traverse(
+        node,
+        (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          if (isObj(current)) {
+            if (current.type === "comment" && current.closing) {
+              const previousToken = op.get(node, pathPrev(innerObj.path));
+              if (
+                isObj(previousToken) &&
+                previousToken.type === "comment" &&
+                !previousToken.closing
+              ) {
+                if (previousToken.kind === "not" && current.kind === "only") {
+                  context.report({
+                    ruleId: "comment-mismatching-pair",
+                    message: `Add "<!--".`,
+                    idxFrom: current.start,
+                    idxTo: current.end,
+                    fix: {
+                      ranges: [[current.start, current.start, "<!--"]]
+                    }
+                  });
+                } else if (
+                  previousToken.kind === "only" &&
+                  current.kind === "not"
+                ) {
+                  context.report({
+                    ruleId: "comment-mismatching-pair",
+                    message: `Remove "<!--".`,
+                    idxFrom: current.start,
+                    idxTo: current.end,
+                    fix: {
+                      ranges: [[current.start, current.end, "<![endif]-->"]]
+                    }
+                  });
+                }
+              }
+            }
+          }
+          return current;
+        }
+      );
+    }
+  };
+}
+
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
 defineLazyProp(
@@ -10684,6 +10735,11 @@ defineLazyProp(
   builtInRules,
   "comment-opening-malformed",
   () => commentOpeningMalformed
+);
+defineLazyProp(
+  builtInRules,
+  "comment-mismatching-pair",
+  () => commentMismatchingPair
 );
 function get(something) {
   return builtInRules[something];

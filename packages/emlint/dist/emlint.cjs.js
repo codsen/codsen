@@ -30,8 +30,10 @@ var isMediaD = _interopDefault(require('is-media-descriptor'));
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = _interopDefault(require('he'));
 var findMalformed = _interopDefault(require('string-find-malformed'));
-var lineColumn = _interopDefault(require('line-column'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
+var astMonkeyUtil = require('ast-monkey-util');
+var op = _interopDefault(require('object-path'));
+var lineColumn = _interopDefault(require('line-column'));
 var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
 
 function _typeof(obj) {
@@ -8136,6 +8138,46 @@ function commentOpeningMalformed(context) {
   };
 }
 
+function commentMismatchingPair(context) {
+  return {
+    ast: function ast(node) {
+      traverse(node,
+      function (key, val, innerObj) {
+        var current = val !== undefined ? val : key;
+        if (isObj(current)) {
+          if (current.type === "comment" && current.closing) {
+            var previousToken = op.get(node, astMonkeyUtil.pathPrev(innerObj.path));
+            if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
+              if (previousToken.kind === "not" && current.kind === "only") {
+                context.report({
+                  ruleId: "comment-mismatching-pair",
+                  message: "Add \"<!--\".",
+                  idxFrom: current.start,
+                  idxTo: current.end,
+                  fix: {
+                    ranges: [[current.start, current.start, "<!--"]]
+                  }
+                });
+              } else if (previousToken.kind === "only" && current.kind === "not") {
+                context.report({
+                  ruleId: "comment-mismatching-pair",
+                  message: "Remove \"<!--\".",
+                  idxFrom: current.start,
+                  idxTo: current.end,
+                  fix: {
+                    ranges: [[current.start, current.end, "<![endif]-->"]]
+                  }
+                });
+              }
+            }
+          }
+        }
+        return current;
+      });
+    }
+  };
+}
+
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
   return badCharacterNull;
@@ -8877,6 +8919,9 @@ defineLazyProp(builtInRules, "comment-closing-malformed", function () {
 });
 defineLazyProp(builtInRules, "comment-opening-malformed", function () {
   return commentOpeningMalformed;
+});
+defineLazyProp(builtInRules, "comment-mismatching-pair", function () {
+  return commentMismatchingPair;
 });
 function get(something) {
   return builtInRules[something];

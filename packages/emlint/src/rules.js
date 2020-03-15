@@ -1732,6 +1732,13 @@ defineLazyProp(
   () => commentOpeningMalformed
 );
 
+import commentMismatchingPair from "./rules/comment/comment-mismatching-pair";
+defineLazyProp(
+  builtInRules,
+  "comment-mismatching-pair",
+  () => commentMismatchingPair
+);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1849,7 +1856,7 @@ function normaliseRequestedRules(opts) {
   }
 
   console.log(
-    `1852 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1859 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
