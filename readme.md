@@ -1,6 +1,6 @@
 # Codsen
 
-    A lerna monorepo for our 109 npm libraries 📦📦📦
+    A lerna monorepo for our 110 npm libraries 📦📦📦
 
 ## 💡 Table of Contents
 
@@ -146,7 +146,7 @@ They process string inputs, which might be text, code or something else as long 
 
 ## 🔮 Object Processing Libraries
 
-21 in total.
+22 in total.
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, `{ name: "Bob" }`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
 
@@ -167,6 +167,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`ast-get-values-by-key`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/) | Read or edit parsed HTML (or AST in general) | [![ast-get-values-by-key on npm](https://img.shields.io/npm/v/ast-get-values-by-key.svg?style=flat-square)](https://www.npmjs.com/package/ast-get-values-by-key) | [packages/ast-get-values-by-key](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/) |
 | [`ast-is-empty`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty/) | Find out, is nested array/object/string/AST tree is empty | [![ast-is-empty on npm](https://img.shields.io/npm/v/ast-is-empty.svg?style=flat-square)](https://www.npmjs.com/package/ast-is-empty) | [packages/ast-is-empty](https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty/) |
 | [`ast-loose-compare`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare/) | Compare anything: AST, objects, arrays and strings | [![ast-loose-compare on npm](https://img.shields.io/npm/v/ast-loose-compare.svg?style=flat-square)](https://www.npmjs.com/package/ast-loose-compare) | [packages/ast-loose-compare](https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare/) |
+| [`ast-monkey-util`](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util/) | Utility library of various AST helper functions | [![ast-monkey-util on npm](https://img.shields.io/npm/v/ast-monkey-util.svg?style=flat-square)](https://www.npmjs.com/package/ast-monkey-util) | [packages/ast-monkey-util](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util/) |
 | [`object-all-values-equal-to`](https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to/) | Does the AST/nested-plain-object/array/whatever contain only one kind of value? | [![object-all-values-equal-to on npm](https://img.shields.io/npm/v/object-all-values-equal-to.svg?style=flat-square)](https://www.npmjs.com/package/object-all-values-equal-to) | [packages/object-all-values-equal-to](https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to/) |
 | [`object-boolean-combinations`](https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations/) | Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides. | [![object-boolean-combinations on npm](https://img.shields.io/npm/v/object-boolean-combinations.svg?style=flat-square)](https://www.npmjs.com/package/object-boolean-combinations) | [packages/object-boolean-combinations](https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations/) |
 | [`object-delete-key`](https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key/) | Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards. | [![object-delete-key on npm](https://img.shields.io/npm/v/object-delete-key.svg?style=flat-square)](https://www.npmjs.com/package/object-delete-key) | [packages/object-delete-key](https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key/) |

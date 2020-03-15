@@ -105,6 +105,11 @@
         "imports": []
     },
     {
+        "name": "ast-monkey-util",
+        "size": 1473,
+        "imports": []
+    },
+    {
         "name": "bitbucket-slug",
         "size": 726,
         "imports": []
@@ -141,8 +146,9 @@
     },
     {
         "name": "codsen-parser",
-        "size": 15882,
+        "size": 14416,
         "imports": [
+            "ast-monkey-util",
             "codsen-tokenizer",
             "string-find-malformed",
             "string-left-right"
@@ -246,10 +252,10 @@
     },
     {
         "name": "emlint",
-        "size": 302934,
+        "size": 304615,
         "imports": [
-            "ast-monkey",
             "ast-monkey-traverse",
+            "ast-monkey-util",
             "codsen-parser",
             "html-all-known-attributes",
             "html-entities-not-email-friendly",
