@@ -3,26 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.14.0](https://gitlab.com/codsen/codsen/compare/emlint@2.13.0...emlint@2.14.0) (2020-03-16)
-
+## 2.14.0 (2020-03-16)
 
 ### Bug Fixes
 
-* fix the severity reporting for `character-unspaced-punctuation` rule ([dce4064](https://gitlab.com/codsen/codsen/commit/dce406414ba5ba53f0417add197a7edee151a5b6))
-
+- fix the severity reporting for `character-unspaced-punctuation` rule ([dce4064](https://gitlab.com/codsen/codsen/commit/dce406414ba5ba53f0417add197a7edee151a5b6))
 
 ### Features
 
-* correctly recognise !-- pattern, don't trigger unspaced-punctuation ([d3ae0d8](https://gitlab.com/codsen/codsen/commit/d3ae0d87da68cba134c9ce804e35308ce4d47d66))
-* emit token events from the traversed AST (instead of directly from tokenizer) ([ee460c0](https://gitlab.com/codsen/codsen/commit/ee460c0a114a52b2ab9d78c4f9a0fad9c05af139))
-* improvements to opening comment tag recognition ([9dfacc4](https://gitlab.com/codsen/codsen/commit/9dfacc4b28d825641a0149581a4cdceca1a6f290))
-* make character-encode rule to consume text type nodes, to traverse them ([d5ee8b5](https://gitlab.com/codsen/codsen/commit/d5ee8b5bb6c2488779a42a1a15facd4745518359))
-* new rule, `comment-mismatching-pair` ([72bcb44](https://gitlab.com/codsen/codsen/commit/72bcb44ae7f1439c80e93e2cb95a5a2900dcb0fe))
-* tap `string-find-malformed` and implement the broken simple opening comment search ([53807d0](https://gitlab.com/codsen/codsen/commit/53807d09e4b1909c81978e2720b3d45ac2cfeef7))
-
-
-
-
+- correctly recognise !-- pattern, don't trigger unspaced-punctuation ([d3ae0d8](https://gitlab.com/codsen/codsen/commit/d3ae0d87da68cba134c9ce804e35308ce4d47d66))
+- emit token events from the traversed AST (instead of directly from tokenizer) ([ee460c0](https://gitlab.com/codsen/codsen/commit/ee460c0a114a52b2ab9d78c4f9a0fad9c05af139))
+- improvements to opening comment tag recognition ([9dfacc4](https://gitlab.com/codsen/codsen/commit/9dfacc4b28d825641a0149581a4cdceca1a6f290))
+- make character-encode rule to consume text type nodes, to traverse them ([d5ee8b5](https://gitlab.com/codsen/codsen/commit/d5ee8b5bb6c2488779a42a1a15facd4745518359))
+- new rule, `comment-mismatching-pair` ([72bcb44](https://gitlab.com/codsen/codsen/commit/72bcb44ae7f1439c80e93e2cb95a5a2900dcb0fe))
+- tap `string-find-malformed` and implement the broken simple opening comment search ([53807d0](https://gitlab.com/codsen/codsen/commit/53807d09e4b1909c81978e2720b3d45ac2cfeef7))
 
 ## 2.13.0 (2020-02-24)
 

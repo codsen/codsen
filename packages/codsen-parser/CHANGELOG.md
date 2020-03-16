@@ -3,19 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.3.0](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.2.0...codsen-parser@0.3.0) (2020-03-16)
-
+## 0.3.0 (2020-03-16)
 
 ### Features
 
-* catch even more broken closing comment cases ([edf1bae](https://gitlab.com/codsen/codsen/commit/edf1baed7fbed1fb4d90162f1e27bc1e0eec6563))
-* improve the comment tag recognition, also broken "->" recognition ([49a2ddc](https://gitlab.com/codsen/codsen/commit/49a2ddc9b6f6e14c3c9e36c03c2352e90149979e))
-* recognise malformed front part of "not" kind comment in preceding text token ([b388754](https://gitlab.com/codsen/codsen/commit/b388754b0a1a54e92ae94e47d0b7f0d14b2a7b4c))
-* recognise malformed opening comment tag's first part within nested preceding token ([71092b6](https://gitlab.com/codsen/codsen/commit/71092b695dd54b8230045af8a4379bd9fa4e20a4))
-
-
-
-
+- catch even more broken closing comment cases ([edf1bae](https://gitlab.com/codsen/codsen/commit/edf1baed7fbed1fb4d90162f1e27bc1e0eec6563))
+- improve the comment tag recognition, also broken "->" recognition ([49a2ddc](https://gitlab.com/codsen/codsen/commit/49a2ddc9b6f6e14c3c9e36c03c2352e90149979e))
+- recognise malformed front part of "not" kind comment in preceding text token ([b388754](https://gitlab.com/codsen/codsen/commit/b388754b0a1a54e92ae94e47d0b7f0d14b2a7b4c))
+- recognise malformed opening comment tag's first part within nested preceding token ([71092b6](https://gitlab.com/codsen/codsen/commit/71092b695dd54b8230045af8a4379bd9fa4e20a4))
 
 ## 0.2.0 (2020-02-24)
 
