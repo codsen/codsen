@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, keep indentation etc intact
- * Version: 0.1.18
+ * Version: 0.1.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json

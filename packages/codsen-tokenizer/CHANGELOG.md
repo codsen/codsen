@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.8.0...codsen-tokenizer@2.9.0) (2020-03-16)
+
+
+### Bug Fixes
+
+* add missing value, token.recognised on the broken tags ([95fd011](https://gitlab.com/codsen/codsen/commit/95fd011fa0e9d9a17ce6fb9806a152670880e0db))
+* correct the incomplete simple opening HTML tag token ([08620a6](https://gitlab.com/codsen/codsen/commit/08620a6bd11309e623d0ecd8bad6f8a3d870310e))
+* fix correct opening simple HTML comment ranges ([04b88bc](https://gitlab.com/codsen/codsen/commit/04b88bcc3eed6db8a12ceb8d73088342edac776d))
+* recognise repeated opening brackets in comment tags ([6d22f81](https://gitlab.com/codsen/codsen/commit/6d22f81b5a0061aef4c969570ea00379e29fb86d))
+
+
+### Features
+
+* algorithm improvements and some housekeeping ([c479af9](https://gitlab.com/codsen/codsen/commit/c479af90b5bfb1c81dd5733224ecafa1703bc9b7))
+* detect opening "if" kind comments without opening square bracket ([607fc23](https://gitlab.com/codsen/codsen/commit/607fc237d33dff4b1702303fc0b74bcd19f4cace))
+* improve the recognition to "not" kind conditional opening without closing bracket ([23d6771](https://gitlab.com/codsen/codsen/commit/23d677141b967c6380fb490b72d88955b3e5634c))
+* recognise missing opening brackets ([a182bb1](https://gitlab.com/codsen/codsen/commit/a182bb15b95b3c93d6b6d8ba94eff0807d935311))
+* recognise tags abruptly ended after tag name ([6398167](https://gitlab.com/codsen/codsen/commit/639816701b826d126eeb633face549b7ffd995a5))
+
+
+
+
+
 ## 2.8.0 (2020-02-24)
 
 ### Bug Fixes

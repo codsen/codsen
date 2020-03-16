@@ -1,6 +1,6 @@
 {
   "name": "csv-sort-cli",
-  "version": "1.9.59",
+  "version": "1.9.60",
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -117,7 +117,7 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "csv-sort": "^3.0.49",
+    "csv-sort": "^3.0.50",
     "globby": "^11.0.0",
     "inquirer": "^7.1.0",
     "lodash.pullall": "^4.2.0",
@@ -137,11 +137,11 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-row-num": "^1.1.6",
+    "eslint-plugin-row-num": "^1.1.7",
     "execa": "^4.0.0",
     "fs-extra": "^8.1.0",
-    "js-row-num-cli": "^1.6.16",
-    "lect": "^0.12.1",
+    "js-row-num-cli": "^1.6.17",
+    "lect": "^0.12.2",
     "prettier": "^1.19.1",
     "tap": "^14.10.6",
     "tempy": "^0.5.0"
