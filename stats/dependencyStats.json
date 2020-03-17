@@ -132,7 +132,7 @@
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
         "string-left-right": 13,
-        "string-match-left-right": 9,
+        "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
@@ -250,10 +250,10 @@
             "arrayiffy-if-string": 10
         },
         {
-            "ranges-push": 10
+            "string-match-left-right": 10
         },
         {
-            "string-match-left-right": 9
+            "ranges-push": 10
         },
         {
             "ranges-merge": 7

@@ -127,7 +127,7 @@
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-strip": "^1.3.2",
     "benchmark": "^2.1.4",
-    "lect": "^0.12.1",
+    "lect": "^0.12.2",
     "lodash.clonedeep": "^4.5.0",
     "rollup": "^2.0.6",
     "rollup-plugin-ascii": "^0.0.3",
