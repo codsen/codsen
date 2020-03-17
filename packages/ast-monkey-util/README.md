@@ -2,7 +2,7 @@
   <h1>🐒<br>ast-monkey-util</h1>
 </div>
 
-<div align="center"><p>Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)</p></div>
+<div align="center"><p>Utility library of AST helper functions</p></div>
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
@@ -121,7 +121,9 @@ console.log(pathUp("9.children.1.children.2"));
 // => "9.children.1"
 ```
 
-Practically, if you think, `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) root is array. The first element thusly is always a number - that some object, a node, meaning tag or text or whatever.
+Practically, if you think, `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) root is array. It contains zero or more plain objects, each representing a tag, a chunk of text, a comment tag and so on.
+
+Since root element is array, paths of those plain objects are digits: `0`, `1`, `5.children.0` and so on.
 
 In `codsen-parser` ([npm](https://www.npmjs.com/package/codsen-parser)/[monorepo](https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser/)) AST's, child nodes are nested within `children` key - its value is array:
 
@@ -204,8 +206,8 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
 [cov-img]: https://img.shields.io/badge/coverage-96.88%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey-util
+[no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
+[no-deps-url]: https://www.npmjs.com/package/ast-monkey-util?activeTab=dependencies
 [downloads-img]: https://img.shields.io/npm/dm/ast-monkey-util.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ast-monkey-util
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square

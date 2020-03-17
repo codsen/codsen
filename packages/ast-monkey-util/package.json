@@ -1,7 +1,7 @@
 {
   "name": "ast-monkey-util",
   "version": "1.1.0",
-  "description": "Utility library of various AST helper functions",
+  "description": "Utility library of AST helper functions",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util",

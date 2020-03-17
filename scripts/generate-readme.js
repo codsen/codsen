@@ -23,6 +23,7 @@ const rangeLibsList = [
 const objectLibsList = [
   "ast-monkey",
   "ast-monkey-traverse",
+  "ast-monkey-util",
   "json-comb-core",
   "json-variables",
   "object-merge-advanced"
