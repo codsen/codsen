@@ -12,7 +12,8 @@ function startsEsp(str, i, token, layers, styleStarts) {
     espChars.includes(str[i + 1]) &&
     token.type !== "rule" &&
     token.type !== "at" &&
-    !(str[i] === "-" && str[i + 1] === "-") &&
+    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
+    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
     !(
       // insurance against repeated percentages
       (

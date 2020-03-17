@@ -740,6 +740,88 @@ t.test(
   }
 );
 
+t.test(
+  `02.11 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - curly brackets`,
+  t => {
+    const gathered = [];
+    ct(`<!--{if gte mso 9}>x<!{endif}-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--{if gte mso 9}>",
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20
+        },
+        {
+          type: "comment",
+          start: 20,
+          end: 32,
+          value: "<!{endif}-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.11"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `02.12 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - parentheses`,
+  t => {
+    const gathered = [];
+    ct(`<!--(if gte mso 9)>x<!(endif)-->`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+
+    t.match(
+      gathered,
+      [
+        {
+          type: "comment",
+          start: 0,
+          end: 19,
+          value: "<!--(if gte mso 9)>",
+          kind: "only",
+          closing: false
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20
+        },
+        {
+          type: "comment",
+          start: 20,
+          end: 32,
+          value: "<!(endif)-->",
+          kind: "only",
+          closing: true
+        }
+      ],
+      "02.12"
+    );
+    t.end();
+  }
+);
+
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 

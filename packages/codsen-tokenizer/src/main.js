@@ -1818,7 +1818,7 @@ function tokenizer(str, originalOpts) {
       ) {
         if (
           str[i] === "-" &&
-          (matchRight(str, i, ["[if"], {
+          (matchRight(str, i, ["[if", "(if", "{if"], {
             trimBeforeMatching: true
           }) ||
             (matchRight(str, i, ["if"], {

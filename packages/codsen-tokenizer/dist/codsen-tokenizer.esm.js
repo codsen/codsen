@@ -284,7 +284,8 @@ function startsEsp(str, i, token, layers, styleStarts) {
     espChars.includes(str[i + 1]) &&
     token.type !== "rule" &&
     token.type !== "at" &&
-    !(str[i] === "-" && str[i + 1] === "-") &&
+    !(str[i] === "-" && "-{(".includes(str[i + 1])) &&
+    !("})".includes(str[i]) && "-".includes(str[i + 1])) &&
     !(
       (
         "0123456789".includes(str[left(str, i)]) &&
@@ -1067,7 +1068,7 @@ function tokenizer(str, originalOpts) {
       ) {
         if (
           str[i] === "-" &&
-          (matchRight(str, i, ["[if"], {
+          (matchRight(str, i, ["[if", "(if", "{if"], {
             trimBeforeMatching: true
           }) ||
             (matchRight(str, i, ["if"], {
