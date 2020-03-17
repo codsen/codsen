@@ -346,8 +346,53 @@ t.test(
   }
 );
 
-t.todo(`02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - TBC`, t => {
+t.test(
+  `02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`,
+  t => {
+    const str = `<!--[if mso>
+  <img src="z"/>
+<![endif]-->`;
+    const fixed = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.03.01");
+    t.is(messages.length, 1, "02.03.03");
+    t.end();
+  }
+);
+
+t.test(
+  `02.04 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - messed up ending - swapped characters > and ]`,
+  t => {
+    const str = `<!--[if mso>]
+  <img src="z"/>
+<![endif]-->`;
+    const fixed = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.04.01");
+    t.is(messages.length, 1, "02.04.03");
+    t.end();
+  }
+);
+
+t.todo(`02.05 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - TBC`, t => {
   const str = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+  const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
   const linter = new Linter();
@@ -356,9 +401,9 @@ t.todo(`02.03 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - TBC`, t => {
       "comment-opening-malformed": 2
     }
   });
-  t.equal(applyFixes(str, messages), str, "02.03.01");
-  t.match(messages, [], "02.03.02");
-  t.is(messages.length, 1, "02.03.03");
+  t.equal(applyFixes(str, messages), fixed, "02.05.01");
+  t.match(messages, [], "02.05.02");
+  t.is(messages.length, 1, "02.05.03");
   t.end();
 });
 

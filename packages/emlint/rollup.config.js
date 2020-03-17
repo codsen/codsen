@@ -47,6 +47,7 @@ export default commandLineArgs => {
       external: [
         "ast-monkey",
         "ast-monkey-traverse",
+        "ast-monkey-util",
         "codsen-parser",
         "define-lazy-prop",
         "he",
@@ -89,6 +90,7 @@ export default commandLineArgs => {
       external: [
         "ast-monkey",
         "ast-monkey-traverse",
+        "ast-monkey-util",
         "codsen-parser",
         "define-lazy-prop",
         "he",

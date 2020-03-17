@@ -8062,7 +8062,6 @@ function validateCommentOpening(token) {
           whitespaceFrom = _ref4[0],
           whitespaceTo = _ref4[1];
       errorArr.push({
-        ruleId: "comment-only-closing-malformed",
         idxFrom: token.start,
         idxTo: token.end,
         message: "Remove whitespace.",
@@ -8084,7 +8083,6 @@ function validateCommentOpening(token) {
           idxFrom: token.start,
           idxTo: token.end,
           message: "Malformed opening comment tag.",
-          ruleId: "comment-opening-malformed",
           fix: {
             ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
           }
@@ -8100,12 +8098,27 @@ function validateCommentOpening(token) {
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
-        ruleId: "comment-opening-malformed",
         fix: {
           ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });
+  } else if (token.kind === "only") {
+    for (var i = token.value.length; i--;) {
+      if (token.value[i].trim().length && !">]".includes(token.value[i])) {
+        if (token.value.slice(i + 1) !== "]>") {
+          errorArr.push({
+            idxFrom: token.start,
+            idxTo: token.end,
+            message: "Malformed opening comment tag.",
+            fix: {
+              ranges: [[i + 1 + token.start, token.end, "]>"]]
+            }
+          });
+        }
+        break;
+      }
+    }
   }
   return errorArr;
 }

@@ -66,14 +66,16 @@ function validateCommentClosing(token) {
     (token.kind === "only" && valueWithoutWhitespace === "<![endif]-->") ||
     (token.kind === "not" && valueWithoutWhitespace === "<!--<![endif]-->")
   ) {
-    console.log(`069 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+    console.log(
+      `070 validateCommentClosing(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+    );
     return errorArr;
   }
 
   // if processing continues, it means something more is wrong
-  console.log(`074 validateCommentClosing(): something is wrong`);
+  console.log(`076 validateCommentClosing(): something is wrong`);
   console.log(
-    `076 validateCommentClosing(): errorArr so far: ${JSON.stringify(
+    `078 validateCommentClosing(): errorArr so far: ${JSON.stringify(
       errorArr,
       null,
       4

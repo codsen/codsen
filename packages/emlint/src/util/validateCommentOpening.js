@@ -22,6 +22,7 @@ function validateCommentOpening(token) {
     (token.kind === "only" && reference.only.test(token.value)) ||
     (token.kind === "not" && reference.not.test(token.value))
   ) {
+    console.log(`025 validateCommentOpening(): REGEX PASSES, EARLY EXIT`);
     return [];
   }
 
@@ -31,6 +32,7 @@ function validateCommentOpening(token) {
   let valueWithoutWhitespace = "";
 
   if (token.kind === "simple") {
+    console.log(`035 validateCommentOpening(): simple comment clauses`);
     // first, tackle any inner whitespace
     splitByWhitespace(
       token.value,
@@ -42,7 +44,6 @@ function validateCommentOpening(token) {
       },
       ([whitespaceFrom, whitespaceTo]) => {
         errorArr.push({
-          ruleId: "comment-only-closing-malformed",
           idxFrom: token.start,
           idxTo: token.end,
           message: "Remove whitespace.",
@@ -55,7 +56,7 @@ function validateCommentOpening(token) {
   }
 
   console.log(
-    `058 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+    `059 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
       valueWithoutWhitespace,
       null,
       4
@@ -70,14 +71,14 @@ function validateCommentOpening(token) {
     (token.kind === "only" && reference.only.test(valueWithoutWhitespace)) ||
     (token.kind === "not" && reference.not.test(valueWithoutWhitespace))
   ) {
-    console.log(`073 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+    console.log(`074 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
     return errorArr;
   }
 
   // if processing continues, it means something more is wrong
-  console.log(`078 validateCommentClosing(): something is wrong`);
+  console.log(`079 validateCommentOpening(): something is wrong`);
   console.log(
-    `080 validateCommentClosing(): errorArr so far: ${JSON.stringify(
+    `081 validateCommentOpening(): errorArr so far: ${JSON.stringify(
       errorArr,
       null,
       4
@@ -91,12 +92,13 @@ function validateCommentOpening(token) {
       // take precaution, "not" type openings have very similar
       // ending, <!--> which will get caught as well here!
       if (idxFrom === token.start) {
-        console.log(`094 DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`);
+        console.log(
+          `096 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
+        );
         errorArr.push({
           idxFrom: token.start,
           idxTo: token.end,
           message: "Malformed opening comment tag.",
-          ruleId: "comment-opening-malformed",
           fix: {
             ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
           }
@@ -107,19 +109,42 @@ function validateCommentOpening(token) {
 
   // check the ending part:
   if (token.kind === "not") {
+    console.log(`112 validateCommentOpening(): "not"-kind comment clauses`);
     // if ending of the opening is malformed:
     findMalformed(token.value, "]><!-->", ({ idxFrom, idxTo }) => {
-      console.log(`112 DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`);
+      console.log(
+        `116 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
+      );
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
-        ruleId: "comment-opening-malformed",
         fix: {
           ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });
+  } else if (token.kind === "only") {
+    console.log(`128 validateCommentOpening(): "only"-kind comment clauses`);
+    // plan: take the value, chomp all ">" and "]" characters
+    // from the end of it, then if anything's suspicious,
+    // replace all that with tight "]>".
+
+    for (let i = token.value.length; i--; ) {
+      if (token.value[i].trim().length && !">]".includes(token.value[i])) {
+        if (token.value.slice(i + 1) !== "]>") {
+          errorArr.push({
+            idxFrom: token.start,
+            idxTo: token.end,
+            message: "Malformed opening comment tag.",
+            fix: {
+              ranges: [[i + 1 + token.start, token.end, "]>"]]
+            }
+          });
+        }
+        break;
+      }
+    }
   }
 
   return errorArr;
