@@ -151,6 +151,7 @@
     "string-find-malformed": "^1.1.0",
     "string-fix-broken-named-entities": "^2.5.9",
     "string-left-right": "^2.3.16",
+    "string-match-left-right": "^4.0.0",
     "string-process-comma-separated": "^1.2.2",
     "url-regex": "^5.0.0"
   },

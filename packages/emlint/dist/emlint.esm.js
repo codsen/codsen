@@ -24,6 +24,7 @@ import isMediaD from 'is-media-descriptor';
 import { notEmailFriendly } from 'html-entities-not-email-friendly';
 import he from 'he';
 import findMalformed from 'string-find-malformed';
+import { matchRight } from 'string-match-left-right';
 import traverse from 'ast-monkey-traverse';
 import { pathPrev } from 'ast-monkey-util';
 import op from 'object-path';
@@ -9442,15 +9443,26 @@ function validateCommentOpening(token) {
   ) {
     return errorArr;
   }
+  let wrongBracketType;
   if (["only", "not"].includes(token.kind)) {
     findMalformed(token.value, "<!--[", ({ idxFrom, idxTo }) => {
+      let finalIdxTo = idxTo;
       if (idxFrom === token.start) {
+        if (
+          "{(".includes(token.value[idxTo]) &&
+          matchRight(token.value, idxTo, "if", {
+            trimBeforeMatching: true
+          })
+        ) {
+          wrongBracketType = true;
+          finalIdxTo++;
+        }
         errorArr.push({
           idxFrom: token.start,
           idxTo: token.end,
           message: "Malformed opening comment tag.",
           fix: {
-            ranges: [[idxFrom + token.start, idxTo + token.start, "<!--["]]
+            ranges: [[idxFrom + token.start, finalIdxTo + token.start, "<!--["]]
           }
         });
       }
@@ -9458,25 +9470,36 @@ function validateCommentOpening(token) {
   }
   if (token.kind === "not") {
     findMalformed(token.value, "]><!-->", ({ idxFrom, idxTo }) => {
+      let finalIdxFrom = idxFrom;
+      if (
+        "})".includes(token.value[idxFrom - 1]) &&
+        wrongBracketType
+      ) {
+        finalIdxFrom--;
+      }
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
         message: "Malformed opening comment tag.",
         fix: {
-          ranges: [[idxFrom + token.start, idxTo + token.start, "]><!-->"]]
+          ranges: [[finalIdxFrom + token.start, idxTo + token.start, "]><!-->"]]
         }
       });
     });
   } else if (token.kind === "only") {
     for (let i = token.value.length; i--; ) {
       if (token.value[i].trim().length && !">]".includes(token.value[i])) {
+        let rangeStart = i + 1;
+        if ("})".includes(token.value[i]) && wrongBracketType) {
+          rangeStart--;
+        }
         if (token.value.slice(i + 1) !== "]>") {
           errorArr.push({
             idxFrom: token.start,
             idxTo: token.end,
             message: "Malformed opening comment tag.",
             fix: {
-              ranges: [[i + 1 + token.start, token.end, "]>"]]
+              ranges: [[rangeStart + token.start, token.end, "]>"]]
             }
           });
         }

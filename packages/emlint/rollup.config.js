@@ -68,6 +68,7 @@ export default commandLineArgs => {
         "string-find-malformed",
         "string-fix-broken-named-entities",
         "string-left-right",
+        "string-match-left-right",
         "string-process-comma-separated",
         "url-regex"
       ],
@@ -111,6 +112,7 @@ export default commandLineArgs => {
         "string-find-malformed",
         "string-fix-broken-named-entities",
         "string-left-right",
+        "string-match-left-right",
         "string-process-comma-separated",
         "url-regex"
       ],

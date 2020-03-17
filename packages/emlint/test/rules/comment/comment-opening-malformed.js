@@ -388,24 +388,45 @@ t.test(
   }
 );
 
-t.todo(`02.05 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - TBC`, t => {
-  const str = `<!--[if mso]>
+t.test(
+  `02.05 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`,
+  t => {
+    const str = `<!--(if mso)>
   <img src="z"/>
 <![endif]-->`;
-  const fixed = `<!--[if mso]>
+    const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "comment-opening-malformed": 2
-    }
-  });
-  t.equal(applyFixes(str, messages), fixed, "02.05.01");
-  t.match(messages, [], "02.05.02");
-  t.is(messages.length, 1, "02.05.03");
-  t.end();
-});
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.05.01");
+    t.end();
+  }
+);
+
+t.test(
+  `02.06 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`,
+  t => {
+    const str = `<!--{if mso}>
+  <img src="z"/>
+<![endif]-->`;
+    const fixed = `<!--[if mso]>
+  <img src="z"/>
+<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "02.06.01");
+    t.end();
+  }
+);
 
 // 03. type="not"
 // -----------------------------------------------------------------------------
@@ -554,10 +575,13 @@ t.test(
   }
 );
 
-t.todo(
+t.test(
   `03.05 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`,
   t => {
     const str = `<!--[if !mso]><!--z>
+  <img src="gif"/>
+<!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
@@ -566,13 +590,12 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.05.01");
-    t.match(messages, [], "03.05.02");
+    t.equal(applyFixes(str, messages), fixed, "03.05");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `03.06 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - whitespace between parts`,
   t => {
     const str = `<!--[if !mso]>\n\n<!-->
@@ -587,17 +610,15 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), fixed, "03.06.01");
-    t.match(messages, [], "03.06.02");
+    t.equal(applyFixes(str, messages), fixed, "03.06");
     t.end();
   }
 );
 
-t.todo(
-  `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - first part missing`,
+t.test(
+  `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
   t => {
-    const str = `<!-->
-  <img src="gif"/>
+    const str = `<!--[if !mso]><!-->
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -606,15 +627,18 @@ t.todo(
       }
     });
     t.equal(applyFixes(str, messages), str, "03.07.01");
-    t.match(messages, [], "03.07.02");
+    t.same(messages, [], "03.07.02");
     t.end();
   }
 );
 
-t.todo(
+t.test(
   `03.08 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`,
   t => {
     const str = `<!--(if !mso)><!-->
+      <img src="gif"/>
+      <!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
     const linter = new Linter();
@@ -623,14 +647,33 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.08.01");
-    t.match(messages, [], "03.08.02");
+    t.equal(applyFixes(str, messages), fixed, "03.08");
+    t.end();
+  }
+);
+
+t.test(
+  `03.09 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`,
+  t => {
+    const str = `<!--{if !mso}><!-->
+      <img src="gif"/>
+      <!--<![endif]-->`;
+    const fixed = `<!--[if !mso]><!-->
+      <img src="gif"/>
+      <!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), fixed, "03.09");
     t.end();
   }
 );
 
 t.todo(
-  `03.09 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
+  `03.10 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`,
   t => {
     const str = `<!--if !mso><!-->
   <img src="gif"/>
@@ -641,16 +684,15 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.09.01");
-    t.match(messages, [], "03.09.02");
+    t.equal(applyFixes(str, messages), str, "03.10");
     t.end();
   }
 );
 
 t.todo(
-  `03.10 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
+  `03.11 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`,
   t => {
-    const str = `<!--[if !mso><!--><!-->
+    const str = `<!--[if !mso]><!--><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
@@ -659,26 +701,7 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.10.01");
-    t.match(messages, [], "03.10.02");
-    t.end();
-  }
-);
-
-t.todo(
-  `03.11 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, letter`,
-  t => {
-    const str = `<!--[if !mso><!--><!--z-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
-      rules: {
-        "comment-opening-malformed": 2
-      }
-    });
-    t.equal(applyFixes(str, messages), str, "03.11.01");
-    t.match(messages, [], "03.11.02");
+    t.equal(applyFixes(str, messages), str, "03.11");
     t.end();
   }
 );
@@ -686,7 +709,7 @@ t.todo(
 t.todo(
   `03.12 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is full empty comment`,
   t => {
-    const str = `<!--[if !mso><!---->
+    const str = `<!--[if !mso]><!---->
   <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
@@ -734,11 +757,14 @@ t.todo(
   }
 );
 
-// ensure that tails are not raising issues for the head!
+// various other
+// -----------------------------------------------------------------------------
+
 t.todo(
-  `03.15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - empty healthy outlook conditional`,
+  `03.07 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - first part missing`,
   t => {
-    const str = `<!--[if !mso><!-->
+    const str = `<!-->
+  <img src="gif"/>
 <!--<![endif]-->`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -746,8 +772,28 @@ t.todo(
         "comment-opening-malformed": 2
       }
     });
-    t.equal(applyFixes(str, messages), str, "03.15.01");
-    t.match(messages, [], "03.15.02");
+    t.equal(applyFixes(str, messages), str, "03.07.01");
+    t.match(messages, [], "03.07.02");
     t.end();
   }
 );
+
+t.todo(
+  `03.12 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, letter`,
+  t => {
+    const str = `<!--[if !mso><!--><!--z-->
+  <img src="gif"/>
+<!--<![endif]-->`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "comment-opening-malformed": 2
+      }
+    });
+    t.equal(applyFixes(str, messages), str, "03.12.01");
+    t.match(messages, [], "03.12.02");
+    t.end();
+  }
+);
+
+// TODO: ensure that tails are not raising issues for the head!
