@@ -33,6 +33,55 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
@@ -75,6 +124,7 @@ function cparser(str, originalOpts) {
   var res = [];
   var path;
   var nestNext = false;
+  var lastProcessedToken = {};
   var tokensWithChildren = ["tag", "comment"];
   tokenizer(str, {
     reportProgressFunc: opts.reportProgressFunc,
@@ -88,11 +138,12 @@ function cparser(str, originalOpts) {
       if (!isObj(prevToken)) {
         prevToken = null;
       }
-      if (nestNext && (
-      !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
+      if (nestNext &&
+      !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
         nestNext = false;
         path = "".concat(path, ".children.0");
-      } else if (tokenObj.closing && typeof path === "string" && path.includes(".")) {
+      } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (
+      !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
         path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
         if (layerPending(layers, tokenObj)) {
           layers.pop();
@@ -249,6 +300,7 @@ function cparser(str, originalOpts) {
           });
         }
       }
+      lastProcessedToken = _objectSpread2({}, tokenObj);
     },
     charCb: opts.charCb
   });

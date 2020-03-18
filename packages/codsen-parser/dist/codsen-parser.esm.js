@@ -116,6 +116,7 @@ function cparser(str, originalOpts) {
   const res = [];
   let path;
   let nestNext = false;
+  let lastProcessedToken = {};
   const tokensWithChildren = ["tag", "comment"];
   tokenizer(str, {
     reportProgressFunc: opts.reportProgressFunc,
@@ -131,6 +132,7 @@ function cparser(str, originalOpts) {
       }
       if (
         nestNext &&
+        !tokenObj.closing &&
         (!prevToken ||
           !(
             prevToken.tagName === tokenObj.tagName &&
@@ -144,7 +146,10 @@ function cparser(str, originalOpts) {
       } else if (
         tokenObj.closing &&
         typeof path === "string" &&
-        path.includes(".")
+        path.includes(".") &&
+        (!tokenObj.tagName ||
+          lastProcessedToken.tagName !== tokenObj.tagName ||
+          lastProcessedToken.closing)
       ) {
         path = pathNext(pathUp(path));
         if (layerPending(layers, tokenObj)) {
@@ -444,6 +449,7 @@ function cparser(str, originalOpts) {
           });
         }
       }
+      lastProcessedToken = { ...tokenObj };
     },
     charCb: opts.charCb
   });

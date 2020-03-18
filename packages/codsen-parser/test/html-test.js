@@ -224,3 +224,117 @@ t.test("01.06 - basics - two nested pairs", t => {
   );
   t.end();
 });
+
+t.test("01.07 - basics - three nested pairs, empty", t => {
+  t.match(
+    cparser("<table><tr><td></td></tr></table>"),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<table>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "table",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: [],
+        children: [
+          {
+            type: "tag",
+            start: 7,
+            end: 11,
+            value: "<tr>",
+            tagNameStartsAt: 8,
+            tagNameEndsAt: 10,
+            tagName: "tr",
+            recognised: true,
+            closing: false,
+            void: false,
+            pureHTML: true,
+            esp: [],
+            kind: null,
+            attribs: [],
+            children: [
+              {
+                type: "tag",
+                start: 11,
+                end: 15,
+                value: "<td>",
+                tagNameStartsAt: 12,
+                tagNameEndsAt: 14,
+                tagName: "td",
+                recognised: true,
+                closing: false,
+                void: false,
+                pureHTML: true,
+                esp: [],
+                kind: null,
+                attribs: [],
+                children: []
+              },
+              {
+                type: "tag",
+                start: 15,
+                end: 20,
+                value: "</td>",
+                tagNameStartsAt: 17,
+                tagNameEndsAt: 19,
+                tagName: "td",
+                recognised: true,
+                closing: true,
+                void: false,
+                pureHTML: true,
+                esp: [],
+                kind: null,
+                attribs: [],
+                children: []
+              }
+            ]
+          },
+          {
+            type: "tag",
+            start: 20,
+            end: 25,
+            value: "</tr>",
+            tagNameStartsAt: 22,
+            tagNameEndsAt: 24,
+            tagName: "tr",
+            recognised: true,
+            closing: true,
+            void: false,
+            pureHTML: true,
+            esp: [],
+            kind: null,
+            attribs: [],
+            children: []
+          }
+        ]
+      },
+      {
+        type: "tag",
+        start: 25,
+        end: 33,
+        value: "</table>",
+        tagNameStartsAt: 27,
+        tagNameEndsAt: 32,
+        tagName: "table",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        esp: [],
+        kind: null,
+        attribs: [],
+        children: []
+      }
+    ],
+    "01.07"
+  );
+  t.end();
+});
