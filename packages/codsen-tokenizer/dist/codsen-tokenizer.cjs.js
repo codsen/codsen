@@ -197,7 +197,7 @@ function tokenizer(str, originalOpts) {
     }
     var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
     if (whichLayerToMatch.type === "simple") {
-      return str[i] === flipEspTag(whichLayerToMatch.value);
+      return !whichLayerToMatch.value || str[i] === flipEspTag(whichLayerToMatch.value);
     } else if (whichLayerToMatch.type === "esp") {
       var _ret = function () {
         if (!espChars.includes(str[i])) {
@@ -803,12 +803,14 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[i])) {
-        if (str[attrib.attribOpeningQuoteAt] === str[i] && !layers.some(function (layerObj) {
+        if ((attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i]) && !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         })) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
-          attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+          if (Number.isInteger(attrib.attribValueStartsAt)) {
+            attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+          }
           attrib.attribEnd = i + 1;
           token.attribs.push(clone(attrib));
           attribReset();
@@ -825,6 +827,11 @@ function tokenizer(str, originalOpts) {
       if (str[i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, i)]) && !espChars.includes(str[stringLeftRight.right(str, i)])
       ) {
           attrib.attribValueStartsAt = stringLeftRight.right(str, i);
+          layers.push({
+            type: "simple",
+            value: null,
+            position: attrib.attribValueStartsAt
+          });
         } else if ("'\"".includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;
         if (str[i + 1]) {

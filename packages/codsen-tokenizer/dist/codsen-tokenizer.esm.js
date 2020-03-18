@@ -441,7 +441,10 @@ function tokenizer(str, originalOpts) {
       ? layers[0]
       : layers[layers.length - 1];
     if (whichLayerToMatch.type === "simple") {
-      return str[i] === flipEspTag(whichLayerToMatch.value);
+      return (
+        !whichLayerToMatch.value ||
+        str[i] === flipEspTag(whichLayerToMatch.value)
+      );
     } else if (whichLayerToMatch.type === "esp") {
       if (!espChars.includes(str[i])) {
         return false;
@@ -1268,12 +1271,15 @@ function tokenizer(str, originalOpts) {
     ) {
       if (`'"`.includes(str[i])) {
         if (
-          str[attrib.attribOpeningQuoteAt] === str[i] &&
+          (attrib.attribOpeningQuoteAt === null ||
+            str[attrib.attribOpeningQuoteAt] === str[i]) &&
           !layers.some(layerObj => layerObj.type === "esp")
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
-          attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+          if (Number.isInteger(attrib.attribValueStartsAt)) {
+            attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
+          }
           attrib.attribEnd = i + 1;
           token.attribs.push(clone(attrib));
           attribReset();
@@ -1305,6 +1311,11 @@ function tokenizer(str, originalOpts) {
         !espChars.includes(str[right(str, i)])
       ) {
         attrib.attribValueStartsAt = right(str, i);
+        layers.push({
+          type: "simple",
+          value: null,
+          position: attrib.attribValueStartsAt
+        });
       } else if (`'"`.includes(str[i])) {
         attrib.attribOpeningQuoteAt = i;
         if (str[i + 1]) {
