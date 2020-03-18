@@ -1271,9 +1271,11 @@ function tokenizer(str, originalOpts) {
     ) {
       if (`'"`.includes(str[i])) {
         if (
-          (attrib.attribOpeningQuoteAt === null ||
+          ((attrib.attribOpeningQuoteAt === null ||
             str[attrib.attribOpeningQuoteAt] === str[i]) &&
-          !layers.some(layerObj => layerObj.type === "esp")
+            !layers.some(layerObj => layerObj.type === "esp")) ||
+          (`'"`.includes(str[attrib.attribOpeningQuoteAt]) &&
+            !xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "="))
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
@@ -1281,6 +1283,10 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
+          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            layers.pop();
+            layers.pop();
+          }
           token.attribs.push(clone(attrib));
           attribReset();
         }

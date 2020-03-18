@@ -1241,7 +1241,7 @@ t.test(`06.01 - two attrs, one recognised one not`, t => {
 // 07. broken
 // -----------------------------------------------------------------------------
 
-t.only(
+t.test(
   `07.01 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - missing opening quote`,
   t => {
     const gathered = [];
@@ -1317,22 +1317,307 @@ t.only(
   }
 );
 
-t.todo(
+t.test(
   `07.02 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes`,
   t => {
     const gathered = [];
-    ct(`<span width='100">`, {
+    ct(`<span width='100"><span width='100">`, {
       tagCb: obj => {
         gathered.push(obj);
       }
     });
-    t.match(gathered, [], "07.02");
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: `<span width='100">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: 16,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 6,
+              attribEnd: 17
+            }
+          ]
+        },
+        {
+          type: "tag",
+          start: 18,
+          end: 36,
+          value: `<span width='100">`,
+          tagNameStartsAt: 19,
+          tagNameEndsAt: 23,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 24,
+              attribNameEndsAt: 29,
+              attribOpeningQuoteAt: 30,
+              attribClosingQuoteAt: 34,
+              attribValue: "100",
+              attribValueStartsAt: 31,
+              attribValueEndsAt: 34,
+              attribStart: 24,
+              attribEnd: 35
+            }
+          ]
+        }
+      ],
+      "07.02"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.03 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`,
+  t => {
+    const gathered = [];
+    ct(`<span abc="Someone's" xyz="Someone's">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 38,
+          value: `<span abc="Someone's" xyz="Someone's">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "abc",
+              attribNameRecognised: false,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 9,
+              attribOpeningQuoteAt: 10,
+              attribClosingQuoteAt: 20,
+              attribValue: "Someone's",
+              attribValueStartsAt: 11,
+              attribValueEndsAt: 20,
+              attribStart: 6,
+              attribEnd: 21
+            },
+            {
+              attribName: "xyz",
+              attribNameRecognised: false,
+              attribNameStartsAt: 22,
+              attribNameEndsAt: 25,
+              attribOpeningQuoteAt: 26,
+              attribClosingQuoteAt: 36,
+              attribValue: "Someone's",
+              attribValueStartsAt: 27,
+              attribValueEndsAt: 36,
+              attribStart: 22,
+              attribEnd: 37
+            }
+          ]
+        }
+      ],
+      "07.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.03 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, the other way`,
+  t => {
+    const gathered = [];
+    ct(`<span width="100'><span width="100'>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: `<span width="100'>`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: 16,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 6,
+              attribEnd: 17
+            }
+          ]
+        },
+        {
+          type: "tag",
+          start: 18,
+          end: 36,
+          value: `<span width="100'>`,
+          tagNameStartsAt: 19,
+          tagNameEndsAt: 23,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 24,
+              attribNameEndsAt: 29,
+              attribOpeningQuoteAt: 30,
+              attribClosingQuoteAt: 34,
+              attribValue: "100",
+              attribValueStartsAt: 31,
+              attribValueEndsAt: 34,
+              attribStart: 24,
+              attribEnd: 35
+            }
+          ]
+        }
+      ],
+      "07.03"
+    );
+    t.end();
+  }
+);
+
+t.test(
+  `07.04 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, opposite pairs`,
+  t => {
+    const gathered = [];
+    ct(`<span width="100'><span width='100">`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.same(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 18,
+          value: `<span width="100'>`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 5,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 6,
+              attribNameEndsAt: 11,
+              attribOpeningQuoteAt: 12,
+              attribClosingQuoteAt: 16,
+              attribValue: "100",
+              attribValueStartsAt: 13,
+              attribValueEndsAt: 16,
+              attribStart: 6,
+              attribEnd: 17
+            }
+          ]
+        },
+        {
+          type: "tag",
+          start: 18,
+          end: 36,
+          value: `<span width='100">`,
+          tagNameStartsAt: 19,
+          tagNameEndsAt: 23,
+          tagName: "span",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          esp: [],
+          kind: null,
+          attribs: [
+            {
+              attribName: "width",
+              attribNameRecognised: true,
+              attribNameStartsAt: 24,
+              attribNameEndsAt: 29,
+              attribOpeningQuoteAt: 30,
+              attribClosingQuoteAt: 34,
+              attribValue: "100",
+              attribValueStartsAt: 31,
+              attribValueEndsAt: 34,
+              attribStart: 24,
+              attribEnd: 35
+            }
+          ]
+        }
+      ],
+      "07.04"
+    );
     t.end();
   }
 );
 
 t.todo(
-  `07.03 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated`,
+  `07.05 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated`,
   t => {
     const gathered = [];
     ct(
@@ -1401,56 +1686,18 @@ t.todo(
           attribs: []
         }
       ],
-      "07.03"
+      "07.05"
     );
     t.end();
   }
 );
 
 t.todo(
-  `07.04 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
+  `07.06 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`,
   t => {
     const gathered = [];
     ct(
       `<span width="" 100">
-  zzz
-</span>`,
-      {
-        tagCb: obj => {
-          gathered.push(obj);
-        }
-      }
-    );
-    t.match(gathered, [], "07.04");
-    t.end();
-  }
-);
-
-t.todo(
-  `07.05 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
-  t => {
-    const gathered = [];
-    ct(
-      `<span width="" 100'>
-  zzz
-</span>`,
-      {
-        tagCb: obj => {
-          gathered.push(obj);
-        }
-      }
-    );
-    t.match(gathered, [], "07.05");
-    t.end();
-  }
-);
-
-t.todo(
-  `07.06 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
-  t => {
-    const gathered = [];
-    ct(
-      `<span width='' 100'>
   zzz
 </span>`,
       {
@@ -1465,11 +1712,11 @@ t.todo(
 );
 
 t.todo(
-  `07.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
+  `07.07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`,
   t => {
     const gathered = [];
     ct(
-      `<span width=  100'>
+      `<span width="" 100'>
   zzz
 </span>`,
       {
@@ -1484,11 +1731,11 @@ t.todo(
 );
 
 t.todo(
-  `07.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
+  `07.08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`,
   t => {
     const gathered = [];
     ct(
-      `<span width=  100>
+      `<span width='' 100'>
   zzz
 </span>`,
       {
@@ -1503,11 +1750,11 @@ t.todo(
 );
 
 t.todo(
-  `07.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`,
+  `07.09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`,
   t => {
     const gathered = [];
     ct(
-      `<span width=  zzz>
+      `<span width=  100'>
   zzz
 </span>`,
       {
@@ -1522,11 +1769,11 @@ t.todo(
 );
 
 t.todo(
-  `07.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `07.10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`,
   t => {
     const gathered = [];
     ct(
-      `<span width=  zzz/>
+      `<span width=  100>
   zzz
 </span>`,
       {
@@ -1541,11 +1788,11 @@ t.todo(
 );
 
 t.todo(
-  `07.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
+  `07.11 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`,
   t => {
     const gathered = [];
     ct(
-      `<span width=height=100">
+      `<span width=  zzz>
   zzz
 </span>`,
       {
@@ -1560,11 +1807,11 @@ t.todo(
 );
 
 t.todo(
-  `07.12 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
+  `07.12 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   t => {
     const gathered = [];
     ct(
-      `<span width= height=100">
+      `<span width=  zzz/>
   zzz
 </span>`,
       {
@@ -1579,11 +1826,11 @@ t.todo(
 );
 
 t.todo(
-  `07.13 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
+  `07.13 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`,
   t => {
     const gathered = [];
     ct(
-      `<span width=100">
+      `<span width=height=100">
   zzz
 </span>`,
       {
@@ -1598,38 +1845,48 @@ t.todo(
 );
 
 t.todo(
-  `07.14 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
+  `07.14 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`,
   t => {
     const gathered = [];
-    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
-      tagCb: obj => {
-        gathered.push(obj);
+    ct(
+      `<span width= height=100">
+  zzz
+</span>`,
+      {
+        tagCb: obj => {
+          gathered.push(obj);
+        }
       }
-    });
+    );
     t.match(gathered, [], "07.14");
     t.end();
   }
 );
 
 t.todo(
-  `07.15 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
+  `07.15 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
   t => {
     const gathered = [];
-    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
-      tagCb: obj => {
-        gathered.push(obj);
+    ct(
+      `<span width=100">
+  zzz
+</span>`,
+      {
+        tagCb: obj => {
+          gathered.push(obj);
+        }
       }
-    });
+    );
     t.match(gathered, [], "07.15");
     t.end();
   }
 );
 
 t.todo(
-  `07.16 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
+  `07.16 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
   t => {
     const gathered = [];
-    ct(`<table width='100 border='0 cellpadding='0 cellspacing='0>`, {
+    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
       tagCb: obj => {
         gathered.push(obj);
       }
@@ -1640,7 +1897,35 @@ t.todo(
 );
 
 t.todo(
-  `07.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
+  `07.17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`,
+  t => {
+    const gathered = [];
+    ct(`<table width=100 border=0 cellpadding=0 cellspacing=0>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.match(gathered, [], "07.17");
+    t.end();
+  }
+);
+
+t.todo(
+  `07.18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`,
+  t => {
+    const gathered = [];
+    ct(`<table width='100 border='0 cellpadding='0 cellspacing='0>`, {
+      tagCb: obj => {
+        gathered.push(obj);
+      }
+    });
+    t.match(gathered, [], "07.18");
+    t.end();
+  }
+);
+
+t.todo(
+  `07.19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`,
   t => {
     const gathered = [];
     ct(`<table width=100' border=0' cellpadding=0' cellspacing=0'>`, {
@@ -1648,7 +1933,7 @@ t.todo(
         gathered.push(obj);
       }
     });
-    t.match(gathered, [], "07.17");
+    t.match(gathered, [], "07.19");
     t.end();
   }
 );

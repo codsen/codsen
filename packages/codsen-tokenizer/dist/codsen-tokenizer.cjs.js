@@ -803,15 +803,21 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing && token.type === "tag" && Number.isInteger(attrib.attribValueStartsAt) && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[i])) {
-        if ((attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i]) && !layers.some(function (layerObj) {
+        if (
+        (attrib.attribOpeningQuoteAt === null || str[attrib.attribOpeningQuoteAt] === str[i]) && !layers.some(function (layerObj) {
           return layerObj.type === "esp";
-        })) {
+        }) ||
+        "'\"".includes(str[attrib.attribOpeningQuoteAt]) && !xBeforeYOnTheRight(str, i, str[attrib.attribOpeningQuoteAt], "=")) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
           if (Number.isInteger(attrib.attribValueStartsAt)) {
             attrib.attribValue = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
+          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            layers.pop();
+            layers.pop();
+          }
           token.attribs.push(clone(attrib));
           attribReset();
         }
